@@ -3,18 +3,20 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
+  define_freetown
   let(:question) do
     create(:question,
            :with_follower,
-           forum: freetown,
-           creator: create(:profile_direct_email))
+           parent: freetown.edge,
+           options: {
+            creator: create(:profile_direct_email)
+           })
   end
   let(:subject) do
     create(:motion,
            :with_arguments,
            :with_group_responses,
-           forum: freetown)
+           parent: question.edge)
   end
 
   ####################################
@@ -144,7 +146,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   let(:no_create_without_question) do
-    forum = create(:forum)
+    forum = create_forum
     create(:rule,
            model_type: 'Motion',
            action: 'create_without_question?',
@@ -167,7 +169,7 @@ class MotionsControllerTest < ActionController::TestCase
     general_create(
       no_create_member,
       false,
-      forum: no_create_without_question,
+      forum: no_create_without_question.id,
       changes: [['Motion.count', 0], ['Activity.count', 0]])
 
     assert_not_authorized
@@ -177,7 +179,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'member should post create without create_without_question with question' do
     general_create(
       no_create_member,
-      forum: no_create_without_question,
+      forum: no_create_without_question.id,
       attrs: attributes_for(:motion, forum: freetown).merge(question_id: no_create_question),
       changes: create_changes_array)
 
@@ -188,11 +190,11 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Moderator
   ####################################
-  let(:project) { create(:project, :with_follower, forum: freetown) }
+  let(:project) { create(:project, :with_follower, parent: freetown.edge) }
   let!(:project_question) do
     create(:question,
            :with_follower,
-           forum: freetown,
+           parent: project.edge,
            project: project,
            creator: create(:profile_direct_email))
   end
@@ -313,7 +315,7 @@ class MotionsControllerTest < ActionController::TestCase
              id: subject
     end
 
-    assert_redirected_to freetown
+    assert_redirected_to question
   end
 
   test 'manager should delete destroy' do
@@ -328,7 +330,7 @@ class MotionsControllerTest < ActionController::TestCase
              id: subject
     end
 
-    assert_redirected_to freetown
+    assert_redirected_to question
   end
 
   ####################################
@@ -346,7 +348,7 @@ class MotionsControllerTest < ActionController::TestCase
              id: subject
     end
 
-    assert_redirected_to freetown
+    assert_redirected_to question
   end
 
   test 'owner should delete destroy' do
@@ -361,7 +363,7 @@ class MotionsControllerTest < ActionController::TestCase
              id: subject
     end
 
-    assert_redirected_to freetown
+    assert_redirected_to question
   end
 
   ####################################
@@ -369,13 +371,13 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  let(:forum_from) { create(:forum) }
-  let(:forum_to) { create(:forum) }
+  let(:forum_from) { create_forum }
+  let(:forum_to) { create_forum }
   let(:motion_move) do
     create(:motion,
            :with_arguments,
            :with_votes,
-           forum: forum_from)
+           parent: forum_from.edge)
   end
 
   test "staff should put update others' motion" do

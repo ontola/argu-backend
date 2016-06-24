@@ -1,7 +1,7 @@
 class UpdateMotion < UpdateService
   include Wisper::Publisher
 
-  def initialize(motion, attributes = {}, options = {})
+  def initialize(motion, attributes: {}, options: {})
     @motion = motion
     super
   end

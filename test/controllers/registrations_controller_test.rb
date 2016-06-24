@@ -4,7 +4,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   include TestHelper
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum) }
+  define_freetown
   let(:user) { create(:user) }
   let(:place) { create(:place) }
   let(:page) { create(:page) }
@@ -86,9 +86,9 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'user should delete destroy with content' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    create :motion, publisher: user, creator: user.profile, forum: freetown
-    create :question, publisher: user, creator: user.profile, forum: freetown
-    create :argument, motion: Motion.last, publisher: user, creator: user.profile, forum: freetown
+    create :motion, publisher: user, creator: user.profile, parent: freetown.edge
+    create :question, publisher: user, creator: user.profile, parent: freetown.edge
+    create :argument, parent: Motion.last.edge, publisher: user, creator: user.profile
 
     sign_in user
 
@@ -105,9 +105,9 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'user should delete destroy with content published by page' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    create :motion, publisher: user, creator: page.profile, forum: freetown
-    create :question, publisher: user, creator: page.profile, forum: freetown
-    create :argument, motion: Motion.last, publisher: user, creator: page.profile, forum: freetown
+    create :motion, publisher: user, creator: page.profile, parent: freetown.edge
+    create :question, publisher: user, creator: page.profile, parent: freetown.edge
+    create :argument, publisher: user, creator: page.profile, parent: motion.edge
 
     sign_in user
 

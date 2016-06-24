@@ -19,6 +19,11 @@ class Vote < ActiveRecord::Base
   validates :voteable, :voter, :forum, :for, presence: true
 
   ##########methods###########
+  # Needed for ActivityListener#audit_data
+  def display_name
+    "#{self.for} vote for #{voteable.display_name}"
+  end
+
   def for?(item)
     self.for.to_s === item.to_s
   end

@@ -3,17 +3,18 @@ require 'test_helper'
 class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  define_freetown
+
   setup do
-    @freetown, @freetown_owner = create_forum_owner_pair
+    @freetown = freetown
+    @freetown_owner = freetown.edge.parent.owner.owner.profileable
     create(:membership, forum: @freetown, profile: @freetown_owner.profile)
   end
 
-  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
   subject do
-    q = create(:question, forum: freetown)
-    create(:motion, forum: freetown, question: q)
-    create(:motion, forum: freetown, question: q, is_trashed: true)
-    q
+    create(:question,
+           :with_motions,
+           parent: freetown.edge)
   end
 
   ####################################
@@ -395,8 +396,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should put convert' do
     question = subject
     create(:vote,
-           forum: freetown,
-           voteable: question)
+           parent: question)
 
     sign_in staff
 
@@ -426,7 +426,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  let(:freetown_to) { create(:forum) }
+  let(:freetown_to) { create_forum }
 
   # Currently only staffers can convert items
   test 'should put move! without motions' do
@@ -477,7 +477,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assigns(:question).motions.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
-    assert_equal 2, assigns(:question).motions.length
+    assert_equal 4, assigns(:question).motions.count
     assigns(:question).activities.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end

@@ -2,21 +2,27 @@
 class CreateBlogPost < PublishedCreateService
   include Wisper::Publisher
 
-  def initialize(blog_post, attributes = {}, options = {})
-    @blog_post = blog_post
+  def initialize(parent, attributes: {}, options: {})
     super
-    resource.build_happening(forum: attributes[:forum],
-                             created_at: attributes[:happened_at],
-                             owner: resource.creator,
-                             key: 'blog_post.happened',
-                             recipient: resource.blog_postable) if attributes[:happened_at].present?
+    assign_forum_from_edge_tree
+    walk_parents
+    build_happening if attributes[:happened_at].present?
   end
 
-  def resource
-    @blog_post
+  def resource_klass
+    BlogPost
   end
 
   private
+
+  def build_happening
+    resource.build_happening(
+      forum: resource.forum,
+      created_at: @attributes[:happened_at],
+      owner: resource.creator,
+      key: 'blog_post.happened',
+      recipient: resource.blog_postable)
+  end
 
   def object_attributes=(obj)
     if obj.is_a? Activity
@@ -26,5 +32,9 @@ class CreateBlogPost < PublishedCreateService
       obj.key ||= 'blog_post.happened'
       obj.recipient ||= resource.blog_postable
     end
+  end
+
+  def walk_parents
+    resource.blog_postable = resource.edge.parent.owner
   end
 end

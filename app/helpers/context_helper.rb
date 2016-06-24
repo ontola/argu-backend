@@ -1,20 +1,19 @@
 module ContextHelper
   # Renders a to_parent breadcrumb block
   def  to_parent(parent = nil)
-    if parent.present?
-      if policy(parent).show?
-        render partial: 'contextualize/to_parent',
-               locals: {
-                 parent: parent
-               }
-      end
-    elsif current_context.parent_initialized?
-      if policy(current_context.parent.model).show?
-        render partial: 'contextualize/to_parent',
-               locals: {
-                 parent: current_context.parent.single_model
-               }
-      end
+    if parent.blank?
+      parent =
+        if authenticated_resource.edge.owner_type == 'Forum'
+          authenticated_resource.edge
+        else
+          authenticated_resource.edge.parent.owner
+        end
+    end
+    if policy(parent).show?
+      render partial: 'contextualize/to_parent',
+             locals: {
+               parent: parent
+             }
     end
   end
 

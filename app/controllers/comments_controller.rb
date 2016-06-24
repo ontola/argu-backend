@@ -44,8 +44,6 @@ class CommentsController < AuthorizedController
 
   # POST /resource/1/comments
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_comment_successful) do |c|
       redirect_to polymorphic_url(c.commentable, anchor: c.identifier),
                   notice: t('type_create_success', type: t('comments.type'))
@@ -62,8 +60,6 @@ class CommentsController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     update_service.on(:update_comment_successful) do |comment|
       respond_to do |format|
         format.html do
@@ -99,8 +95,6 @@ class CommentsController < AuthorizedController
 
   # DELETE /arguments/1/comments/1?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     destroy_service.on(:destroy_comment_successful) do |comment|
       respond_to do |format|
         format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id) }
@@ -121,8 +115,6 @@ class CommentsController < AuthorizedController
 
   # DELETE /arguments/1/comments/1
   def trash
-    trash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                 publisher: current_user))
     trash_service.on(:trash_comment_successful) do |comment|
       respond_to do |format|
         format.html do
@@ -147,8 +139,6 @@ class CommentsController < AuthorizedController
   # PUT /arguments/1/comments/1/untrash
   # PUT /arguments/1/comments/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     untrash_service.on(:untrash_comment_successful) do |comment|
       respond_to do |format|
         format.html do
@@ -210,15 +200,8 @@ class CommentsController < AuthorizedController
     commentable_type.capitalize.constantize
   end
 
-  def create_service
-    @create_service ||= CreateComment.new(
-      Comment.new,
-      resource_new_params.merge(permit_params),
-      service_options)
-  end
-
   def destroy_service
-    @destroy_service ||= DestroyComment.new(resource_by_id)
+    @destroy_service ||= DestroyComment.new(resource_by_id, options: service_options)
   end
 
   def new_comment_params
@@ -262,17 +245,17 @@ class CommentsController < AuthorizedController
   end
 
   def trash_service
-    @trash_service ||= TrashComment.new(resource_by_id)
+    @trash_service ||= TrashComment.new(resource_by_id, options: service_options)
   end
 
   def untrash_service
-    @untrash_service ||= UntrashComment.new(resource_by_id)
+    @untrash_service ||= UntrashComment.new(resource_by_id, options: service_options)
   end
 
   def update_service
     @update_service ||= UpdateComment.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attributes: permit_params,
+      options: service_options)
   end
 end

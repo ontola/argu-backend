@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class RuleTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
   let!(:freetown_owner) { create_owner(freetown) }
   let(:freetown_manager) { create_manager(freetown) }
 
@@ -26,9 +27,10 @@ class RuleTest < ActionDispatch::IntegrationTest
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
   let(:member_argument) do
     create(:argument,
-           forum: freetown,
+           parent: motion.edge,
            creator: member.profile)
   end
   let(:no_show_users) do

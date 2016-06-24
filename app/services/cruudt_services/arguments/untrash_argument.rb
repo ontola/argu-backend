@@ -1,7 +1,7 @@
 class UntrashArgument < UntrashService
   include Wisper::Publisher
 
-  def initialize(argument, options = {})
+  def initialize(argument, attributes: {}, options: {})
     @argument = argument
     super
   end

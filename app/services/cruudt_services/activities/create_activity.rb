@@ -2,7 +2,7 @@
 class CreateActivity < CreateService
   include Wisper::Publisher
 
-  def initialize(activity, attributes = {})
+  def initialize(activity, attributes: {}, options: {})
     @activity = activity
     super
   end

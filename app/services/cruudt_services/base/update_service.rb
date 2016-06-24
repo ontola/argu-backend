@@ -2,11 +2,18 @@
 # @author Fletcher91 <thom@argu.co>
 class UpdateService < ApplicationService
   # @note Call super when overriding.
-  def initialize(resource, attributes = {}, options = {})
+  # @param [Hash] attributes The attributes to update the model with
+  # @option attributes [Edge, Integer] :parent Virtual attribute for updating the models' parent
+  def initialize(resource, attributes: {}, options: {})
+    update_parent(attributes.delete(:parent))
     super
   end
 
   private
+
+  def object_attributes=(obj)
+    raise 'Required interface not implemented'
+  end
 
   def service_action
     :update
@@ -14,5 +21,10 @@ class UpdateService < ApplicationService
 
   def service_method
     :save!
+  end
+
+  def update_parent(parent)
+    return unless parent
+    resource.edge.parent = parent.is_a?(Edge) ? parent : Edge.find(parent)
   end
 end

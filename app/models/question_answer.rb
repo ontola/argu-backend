@@ -4,10 +4,10 @@ class QuestionAnswer
 
   validates_presence_of :question, :motion
 
-  attr_accessor :question, :motion
+  attr_accessor :question, :motion, :options
 
-  def initialize(question: nil, motion: nil)
-    @question, @motion = question, motion
+  def initialize(question: nil, motion: nil, options: {})
+    @question, @motion, @options = question, motion, options
   end
 
   def persisted?
@@ -21,7 +21,16 @@ class QuestionAnswer
   def save
     if same_forum
       Question.transaction do
-        @motion.update question_id: @question.id
+        UpdateMotion
+          .new(@motion,
+               attributes: {
+                 parent: @question.edge,
+                 question_id: @question.id
+               },
+               options: @options)
+          .on(:update_motion_successful) { return true }
+          .on(:update_motion_failed) { return false }
+          .commit
       end
     end
   end

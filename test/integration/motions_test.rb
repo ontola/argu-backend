@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class MotionsTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
+  define_freetown
 
   ####################################
   # As User

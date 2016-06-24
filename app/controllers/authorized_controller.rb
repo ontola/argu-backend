@@ -6,7 +6,7 @@ class AuthorizedController < ApplicationController
                 except: %i(show move move! convert convert!)
   before_action :authorize_show, only: :show
   before_action :authorize_action
-  helper_method :authenticated_context, :collect_banners
+  helper_method :authenticated_resource, :authenticated_context, :collect_banners
 
   rescue_from Argu::NotAMemberError, with: :handle_not_a_member_error
 
@@ -146,7 +146,14 @@ class AuthorizedController < ApplicationController
   #   create_service # => CreateComment<commentable_id: 6, parent_id: 5>
   #   create_service.commit # => true (Comment created)
   def create_service
-    raise 'Required interface method not implemented'
+    @create_service ||= service_klass.new(
+      get_parent_resource.edge,
+      attributes: resource_new_params.merge(permit_params),
+      options: service_options)
+  end
+
+  def service_klass
+    "Create#{params[:controller].classify}".safe_constantize
   end
 
   def current_context
@@ -181,10 +188,14 @@ class AuthorizedController < ApplicationController
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    controller_name
-      .classify
-      .constantize
-      .new resource_new_params
+    authenticated_context
+      .edge
+      .children
+      .new(owner: controller_name
+                    .classify
+                    .constantize
+                    .new(resource_new_params))
+      .owner
   end
 
   # @private

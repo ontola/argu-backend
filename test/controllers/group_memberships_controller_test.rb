@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class GroupMembershipsControllerTest < ActionController::TestCase
@@ -8,7 +9,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     @group = create(:group, forum: @holland)
   end
 
-  let(:holland) { create(:forum, name: 'holland') }
+  let(:holland) { create_forum(name: 'holland') }
   let!(:group) { create(:group, forum: holland) }
 
   ####################################

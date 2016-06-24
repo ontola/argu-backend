@@ -1,15 +1,6 @@
 FactoryGirl.define do
   factory :comment, traits: [:set_publisher] do
-    commentable { passed_in?(:commentable) ? commentable : create(:argument, forum: forum) }
-    forum do
-      if passed_in?(:forum)
-        forum
-      elsif passed_in?(:commentable)
-        commentable.forum
-      else
-        create(:forum)
-      end
-    end
+    association :commentable, factory: :argument
     association :publisher, factory: [:user, :follows_reactions_directly]
     creator do
       if passed_in?(:creator)

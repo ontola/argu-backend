@@ -562,7 +562,6 @@ ActiveRecord::Schema.define(version: 20160621114640) do
     t.string   "channel"
     t.integer  "creator_id",       null: false
     t.integer  "publisher_id"
-    t.json     "parameters"
   end
 
   create_table "question_answers", force: :cascade do |t|

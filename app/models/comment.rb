@@ -73,7 +73,7 @@ class Comment < ActiveRecord::Base
   end
 
   def touch_parent
-    get_parent.model.touch
+    parent_model.touch
   end
 
   def increment_counter_cache

@@ -30,7 +30,7 @@ section.section--details
           .span
             =motion.total_vote_count
     - if local_assigns[:show_profile]
-      = render partial: 'profiles/detail_profile', locals: {resource: motion}
+      =render partial: 'profiles/detail_profile', locals: {resource: motion}
     - if local_assigns[:show_vote_results]
       .details-parts
         =react_component_store 'VoteStats', props: motion_vote_counts(motion)

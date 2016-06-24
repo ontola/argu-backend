@@ -3,7 +3,7 @@
 class UpdateProject < UpdateService
   include Wisper::Publisher
 
-  def initialize(project, attributes = {}, options = {})
+  def initialize(project, attributes: {}, options: {})
     @project = project
     super
   end

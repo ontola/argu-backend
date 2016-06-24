@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class FlowControllerTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown') }
-  let(:subject) { create(:motion, forum: freetown) }
+  define_freetown
+  let(:subject) { create(:motion, parent: freetown.edge) }
 
   ####################################
   # As Guest

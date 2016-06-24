@@ -1,77 +1,124 @@
-class TraitListener
-  def initialize(resource)
-    @resource = resource
-  end
+# frozen_string_literal: true
 
-  # Adds 3 pro and 3 con arguments to the resource
-  def with_arguments
-    FactoryGirl.create_list(
-      :argument, 3,
-      motion: @resource,
-      forum: @resource.forum)
-    FactoryGirl.create_list(
-      :argument, 3,
-      motion: @resource,
-      forum: @resource.forum,
-      pro: false,
-      is_trashed: true)
-  end
+module Argu
+  module TestHelpers
+    class TraitListener
+      include FactoryGirl::Syntax::Methods
 
-  # Adds a follower to the edge of the resource
-  # See {Follow}
-  # @note Adds an extra {Notification} on associated resource creation
-  def with_follower
-    FactoryGirl.create(
-      :follow,
-      follower: FactoryGirl.create(:user, :follows_reactions_directly),
-      followable: @resource.edge)
-  end
+      def initialize(resource)
+        @resource = resource
+      end
 
-  # Adds a discussion group with 2 GroupResponses and a visible and a hidden group without reponses
-  # to the forum of the resource
-  def with_group_responses
-    FactoryGirl.create_list(
-      :group_response, 2,
-      group: FactoryGirl.create(
-        :group,
-        visibility: :discussion,
-        forum: @resource.forum))
-    FactoryGirl.create(
-      :group,
-      visibility: :hidden,
-      forum: @resource.forum)
-    FactoryGirl.create(
-      :group,
-      visibility: :visible,
-      forum: @resource.forum)
-  end
+      # Adds 3 pro and 3 con arguments to the resource
+      def with_arguments
+        3.times do
+          CreateArgument
+            .new(@resource.edge,
+                 attributes: attributes_for(:argument),
+                 options: service_options)
+            .commit
+          CreateArgument
+            .new(@resource.edge,
+                 attributes: attributes_for(:argument)
+                   .merge(
+                     pro: false,
+                     is_trashed: true
+                   ),
+                 options: service_options)
+            .commit
+        end
+      end
 
-  # Adds 2 published and 2 trashed motions to the resource
-  def with_motions
-    FactoryGirl.create_list(
-      :motion, 2,
-      question: question,
-      forum: question.forum)
-    FactoryGirl.create_list(
-      :motion, 2,
-      question: question,
-      forum: question.forum,
-      is_trashed: true)
-  end
+      # Adds a follower to the edge of the resource
+      # See {Follow}
+      # @note Adds an extra {Notification} on associated resource creation
+      def with_follower
+        FactoryGirl.create(
+          :follow,
+          follower: FactoryGirl.create(:user, :follows_reactions_directly),
+          followable: @resource.edge)
+      end
 
-  # Adds 2 pro, 2 neutral and 2 con votes to the resource
-  def with_votes
-    FactoryGirl.create_list(
-      :vote, 2,
-      voteable: @resource,
-      for: :pro)
-    FactoryGirl.create_list(
-      :vote, 2,
-      voteable: @resource,
-      for: :neutral)
-    FactoryGirl.create_list(
-      :vote, 2,
-      voteable: @resource,
-      for: :con)
+      # Adds a discussion group with 2 GroupResponses and a visible and a hidden group without reponses
+      # to the forum of the resource
+      def with_group_responses
+        group = FactoryGirl.create(:group, visibility: :discussion, forum: @resource.forum)
+        2.times do
+          CreateGroupResponse
+            .new(@resource.edge,
+                 attributes: {group: group},
+                 options: service_options)
+            .commit
+        end
+        FactoryGirl.create(
+          :group,
+          visibility: :hidden,
+          forum: @resource.forum)
+        FactoryGirl.create(
+          :group,
+          visibility: :visible,
+          forum: @resource.forum)
+      end
+
+      # Adds 2 published and 2 trashed motions to the resource
+      def with_motions
+        2.times do
+          CreateMotion
+            .new(
+              @resource.edge,
+              attributes: attributes_for(:motion),
+              options: service_options)
+            .commit
+          CreateMotion
+            .new(
+              @resource.edge,
+              attributes: attributes_for(:motion)
+                .merge(is_trashed: true),
+              options: service_options)
+            .commit
+        end
+      end
+
+      # Adds 2 pro, 2 neutral and 2 con votes to the resource
+      def with_votes
+        2.times do
+          CreateVote
+            .new(
+              @resource.edge,
+              attributes: vote_attrs(:pro),
+              options: service_options)
+            .commit
+          CreateVote
+            .new(
+              @resource.edge,
+              attributes: vote_attrs(:neutral),
+              options: service_options)
+            .commit
+          CreateVote
+            .new(
+              @resource.edge,
+              attributes: vote_attrs(:con),
+              options: service_options)
+            .commit
+        end
+      end
+
+      private
+
+      def service_options
+        user = create(:user)
+        {
+          creator: user.profile,
+          publisher: user
+        }
+      end
+
+      def vote_attrs(side)
+        {
+          voteable: @resource,
+          for: side
+        }
+      end
+    end
   end
 end

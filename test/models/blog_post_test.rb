@@ -1,9 +1,19 @@
 require 'test_helper'
 
 class BlogPostTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum)}
-  let(:project) { create(:project, start_date: DateTime.yesterday, end_date: DateTime.tomorrow, forum: freetown) }
-  subject{ create(:blog_post, blog_postable: project, happened_at: DateTime.current, forum: project.forum) }
+  define_freetown
+  let(:project) do
+    create(:project,
+           start_date: DateTime.yesterday,
+           end_date: DateTime.tomorrow,
+           parent: freetown)
+  end
+  subject do
+    create(:blog_post,
+           blog_postable: project,
+           happened_at: DateTime.current,
+           parent: project.edge)
+  end
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end

@@ -1,7 +1,7 @@
 class UntrashMotion < UntrashService
   include Wisper::Publisher
 
-  def initialize(motion, options = {})
+  def initialize(motion, attributes: {}, options: {})
     @motion = motion
     super
   end

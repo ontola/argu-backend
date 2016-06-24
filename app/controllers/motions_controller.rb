@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class MotionsController < AuthorizedController
   include NestedResourceHelper
-  before_action :get_context, only: [:index, :new, :create]
   skip_before_action :authorize_action, :check_if_member, only: :index
 
   def index
@@ -56,7 +55,7 @@ class MotionsController < AuthorizedController
 
   # GET /motions/1/edit
   def edit
-    @motion = Motion.find_by_id(params[:id])
+    @motion = authenticated_resource!
     authorize @motion
     respond_to do |format|
       format.html { render 'form', locals: {motion: @motion} }
@@ -66,8 +65,6 @@ class MotionsController < AuthorizedController
   # POST /motions
   # POST /motions.json
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_motion_successful) do |motion|
       respond_to do |format|
         first = current_profile.motions.count == 1 || nil
@@ -90,8 +87,6 @@ class MotionsController < AuthorizedController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    update_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     update_service.on(:update_motion_successful) do |motion|
       respond_to do |format|
         if params[:motion].present? &&
@@ -116,10 +111,8 @@ class MotionsController < AuthorizedController
   # DELETE /motions/1?destroy=true
   # DELETE /motions/1.json?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     destroy_service.on(:destroy_motion_successful) do |motion|
-      parent = motion.get_parent.model.try(:first) || motion.get_parent.model
+      parent = motion.edge.parent.owner
       respond_to do |format|
         format.html { redirect_to parent, notice: t('type_destroy_success', type: t('motions.type')) }
         format.json { head :no_content }
@@ -137,10 +130,8 @@ class MotionsController < AuthorizedController
   # DELETE /motions/1
   # DELETE /motions/1.json
   def trash
-    trash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                 publisher: current_user))
     trash_service.on(:trash_motion_successful) do |motion|
-      parent = motion.get_parent.model.try(:first) || motion.get_parent.model
+      parent = motion.edge.parent.owner
       respond_to do |format|
         format.html { redirect_to parent, notice: t('type_trash_success', type: t('motions.type')) }
         format.json { head :no_content }
@@ -158,8 +149,6 @@ class MotionsController < AuthorizedController
   # PUT /motions/1/untrash
   # PUT /motions/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     untrash_service.on(:untrash_motion_successful) do |motion|
       respond_to do |format|
         format.html { redirect_to motion, notice: t('type_untrash_success', type: t('motions.type')) }
@@ -177,7 +166,7 @@ class MotionsController < AuthorizedController
 
   # GET /motions/1/convert
   def convert
-    @motion = Motion.find_by_id params[:motion_id]
+    @motion = authenticated_resource!
     authorize @motion, :move?
 
     respond_to do |format|
@@ -187,7 +176,7 @@ class MotionsController < AuthorizedController
   end
 
   def convert!
-    @motion = Motion.find(params[:motion_id]).lock!
+    @motion = authenticated_resource!.lock!
     authorize @motion, :move?
     authorize @motion.forum, :update?
 
@@ -203,7 +192,7 @@ class MotionsController < AuthorizedController
 
   # GET /motions/1/move
   def move
-    @motion = Motion.find_by_id params[:motion_id]
+    @motion = authenticated_resource!
     authorize @motion, :move?
 
     respond_to do |format|
@@ -213,7 +202,7 @@ class MotionsController < AuthorizedController
   end
 
   def move!
-    @motion = Motion.find(params[:motion_id])
+    @motion = authenticated_resource!
     authorize @motion, :move?
     @forum = Forum.find permit_params[:forum_id]
     authorize @forum, :update?
@@ -261,26 +250,12 @@ class MotionsController < AuthorizedController
     authorize @motion, :show?
   end
 
-  def create_service
-    @create_service ||= CreateMotion.new(
-      Motion.new,
-      resource_new_params.merge(permit_params),
-      service_options)
-  end
-
   def destroy_service
-    @destroy_service ||= DestroyMotion.new(resource_by_id)
-  end
-
-  def get_context
-    if params[:question_id].present? || defined?(params[:motion][:question_id]) &&
-        params[:motion][:question_id].present?
-      @question = Question.find(params[:question_id] || params[:motion][:question_id])
-    end
+    @destroy_service ||= DestroyMotion.new(resource_by_id, options: service_options)
   end
 
   def permit_params
-    return unless params[:motion].present?
+    return {} unless params[:motion].present?
     params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
@@ -297,17 +272,19 @@ class MotionsController < AuthorizedController
   end
 
   def trash_service
-    @trash_service ||= TrashMotion.new(resource_by_id)
+    @trash_service ||= TrashMotion.new(resource_by_id,
+                                       options: service_options)
   end
 
   def untrash_service
-    @untrash_service ||= UntrashMotion.new(resource_by_id)
+    @untrash_service ||= UntrashMotion.new(resource_by_id,
+                                           options: service_options)
   end
 
   def update_service
     @update_service ||= UpdateMotion.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attributes: permit_params,
+      options: service_options)
   end
 end

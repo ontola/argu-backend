@@ -2,12 +2,19 @@
 class CreateComment < PublishedCreateService
   include Wisper::Publisher
 
-  def initialize(comment, attributes = {}, options = {})
-    @comment = comment
+  def initialize(parent, attributes: {}, options: {})
     super
+    assign_forum_from_edge_tree
+    walk_parents
   end
 
-  def resource
-    @comment
+  def resource_klass
+    Comment
+  end
+
+  private
+
+  def walk_parents
+    resource.commentable = resource.edge.parent.owner
   end
 end

@@ -1,7 +1,7 @@
 class UpdatePhase < UpdateService
   include Wisper::Publisher
 
-  def initialize(phase, attributes = {}, options = {})
+  def initialize(phase, attributes: {}, options: {})
     @phase = phase
     @phase.end_date = Time.current if attributes[:finish_phase] == 'true'
     super

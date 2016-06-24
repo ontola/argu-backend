@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :motion do
-    forum { passed_in?(:forum) ? forum : create(:forum) }
     publisher { passed_in?(:publisher) ? publisher : create(:user) }
     creator do
       if passed_in?(:creator)

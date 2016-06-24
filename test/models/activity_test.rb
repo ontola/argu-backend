@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class ActivityTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum) }
-  subject { create(:activity, forum: freetown) }
+  define_freetown
+  subject { create(:activity, parent: freetown) }
 
   def test_valid
     assert subject.valid?

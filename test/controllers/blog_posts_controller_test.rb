@@ -3,27 +3,25 @@ require 'test_helper'
 class BlogPostsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
-  let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
-  let(:project) { create(:project, argu_publication: build(:publication), forum: freetown) }
+  define_freetown
+  let!(:page) { argu }
+  let!(:owner) { page.owner.profileable }
+  let(:project) { create(:project, argu_publication: build(:publication), parent: freetown.edge) }
   let!(:moderator) { create_member(freetown) }
   let!(:subject) do
     create(:blog_post,
            argu_publication: build(:publication),
-           blog_postable: project,
            happened_at: DateTime.current,
-           forum: freetown)
+           parent: project.edge)
   end
   let!(:trashed_subject) do
     create(:blog_post,
            argu_publication: build(:publication),
-           blog_postable: project,
            happened_at: DateTime.current,
            trashed_at: Time.current,
-           forum: freetown)
+           parent: project.edge)
   end
-  let(:unpublished) { create(:blog_post, blog_postable: project, forum: freetown) }
+  let(:unpublished) { create(:blog_post, parent: project.edge) }
 
   ####################################
   # Guest, User, Member share features

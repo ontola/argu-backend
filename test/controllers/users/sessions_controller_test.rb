@@ -4,7 +4,7 @@ class Users::SessionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let(:user) { create(:user) }
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
 
   test 'should login' do
     @request.env['devise.mapping'] = Devise.mappings[:user]

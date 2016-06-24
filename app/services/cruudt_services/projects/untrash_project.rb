@@ -1,7 +1,7 @@
 class UntrashProject < UntrashService
   include Wisper::Publisher
 
-  def initialize(project, options = {})
+  def initialize(project, attributes: {}, options: {})
     @project = project
     super
   end

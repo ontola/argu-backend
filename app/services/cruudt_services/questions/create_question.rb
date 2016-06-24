@@ -2,13 +2,13 @@
 class CreateQuestion < PublishedCreateService
   include Wisper::Publisher
 
-  def initialize(question, attributes = {}, options = {})
-    @question = question
+  def initialize(parent, attributes: {}, options: {})
     super
+    assign_forum_from_edge_tree
   end
 
-  def resource
-    @question
+  def resource_klass
+    Question
   end
 
   private

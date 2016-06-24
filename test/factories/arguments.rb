@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :argument do
-    forum { passed_in?(:forum) ? forum : create(:forum) }
+    association :forum
+    association :motion
     publisher { passed_in?(:publisher) ? publisher : create(:user) }
     creator do
       if passed_in?(:creator)
@@ -9,7 +10,6 @@ FactoryGirl.define do
         publisher.present? ? publisher.profile : create(:profile)
       end
     end
-    motion { passed_in?(:motion) ? motion : create(:motion, forum: forum) }
     pro true
     sequence(:title) { |i| "fg argument title #{i}end" }
     sequence(:content) { |i| "fg argument content #{i}end" }

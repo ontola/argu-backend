@@ -1,6 +1,8 @@
-class PublishedCreateService < CreateService
+# frozen_string_literal: true
+
+class PublishedCreateService < ContentCreateService
   # @note Call super when overriding.
-  def initialize(resource, attributes = {}, options = {})
+  def initialize(parent, attributes: {}, options: {})
     attributes[:publisher] = options.fetch(:publisher)
     attributes[:creator] = options.fetch(:creator)
     super

@@ -3,7 +3,7 @@ require 'test_helper'
 class OmniauthTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
   let!(:user3) do
     create(:user,
            email: 'user3@argu.co',

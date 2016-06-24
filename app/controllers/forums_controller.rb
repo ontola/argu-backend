@@ -24,9 +24,9 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
-    projects = policy_scope(@forum.projects.published.trashed(show_trashed?))
-    questions = policy_scope(@forum.questions.published.trashed(show_trashed?))
-    motions = policy_scope(@forum.motions.published.trashed(show_trashed?))
+    projects = policy_scope(@forum.projects.includes(:edge).published.trashed(show_trashed?))
+    questions = policy_scope(@forum.questions.includes(:edge).published.trashed(show_trashed?))
+    motions = policy_scope(@forum.motions.includes(:edge).published.trashed(show_trashed?))
 
     if policy(@forum).show?
       @items = Kaminari

@@ -1,7 +1,7 @@
 class UntrashQuestion < UntrashService
   include Wisper::Publisher
 
-  def initialize(question, options = {})
+  def initialize(question, attributes: {}, options: {})
     @question = question
     super
   end

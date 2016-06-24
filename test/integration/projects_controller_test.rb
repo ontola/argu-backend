@@ -1,16 +1,18 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
-  let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
-  let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
+  define_freetown
+  let!(:owner) { argu.owner.profileable }
+  let!(:page) { argu }
+
   let!(:moderator) { create_moderator(freetown) }
   let!(:subject) do
     p = create(:project,
                argu_publication: build(:publication),
-               forum: freetown)
+               parent: freetown.edge)
     create(:stepup,
            record: p,
            forum: freetown,
@@ -29,9 +31,9 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     create(:project,
            argu_publication: build(:publication),
            trashed_at: Time.current,
-           forum: freetown)
+           parent: freetown.edge)
   end
-  let(:unpublished) { create(:project, forum: freetown) }
+  let(:unpublished) { create(:project, parent: freetown.edge) }
 
   ####################################
   # As Guest
@@ -357,7 +359,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                           ['Phase.count', 1]]
   end
 
-  test 'owner should post create publish ' do
+  test 'owner should post create publish' do
     sign_in owner
     general_create_publish 302,
                            [['Project.count', 1],

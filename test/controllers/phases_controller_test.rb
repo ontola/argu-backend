@@ -3,13 +3,13 @@ require 'test_helper'
 class PhasesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
-  let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
-  let!(:project) { create(:project, argu_publication: build(:publication), forum: freetown) }
-  let!(:unpublished_project) { create(:project, forum: freetown) }
-  let(:subject) { create(:phase, project: project, forum: freetown) }
-  let(:unpublished_subject) { create(:phase, project: unpublished_project, forum: freetown) }
+  define_freetown
+  let!(:page) { argu }
+  let!(:owner) { argu.owner.profileable }
+  let!(:project) { create(:project, argu_publication: build(:publication), parent: freetown.edge) }
+  let!(:unpublished_project) { create(:project, parent: freetown.edge) }
+  let(:subject) { create(:phase, parent: project.edge) }
+  let(:unpublished_subject) { create(:phase, parent: unpublished_project.edge) }
 
   ####################################
   # As Guest

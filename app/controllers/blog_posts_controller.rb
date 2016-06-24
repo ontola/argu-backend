@@ -9,8 +9,6 @@ class BlogPostsController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html { redirect_to blog_post }
@@ -49,8 +47,6 @@ class BlogPostsController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     update_service.on(:update_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html { redirect_to blog_post }
@@ -69,8 +65,6 @@ class BlogPostsController < AuthorizedController
   # DELETE /blog_posts/1?destroy=true
   # DELETE /blog_posts/1.json?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     destroy_service.on(:destroy_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html do
@@ -92,8 +86,6 @@ class BlogPostsController < AuthorizedController
   # DELETE /blog_posts/1
   # DELETE /blog_posts/1.json
   def trash
-    trash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                 publisher: current_user))
     trash_service.on(:trash_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html do
@@ -115,8 +107,6 @@ class BlogPostsController < AuthorizedController
   # PUT /blog_posts/1/untrash
   # PUT /blog_posts/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     untrash_service.on(:untrash_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html { redirect_to blog_post, notice: t('type_untrash_success', type: t('blog_posts.type')) }
@@ -134,15 +124,8 @@ class BlogPostsController < AuthorizedController
 
   private
 
-  def create_service
-    @create_service ||= CreateBlogPost.new(
-      BlogPost.new,
-      permit_params.merge(resource_new_params),
-      service_options)
-  end
-
   def destroy_service
-    @destroy_service ||= DestroyBlogPost.new(resource_by_id)
+    @destroy_service ||= DestroyBlogPost.new(resource_by_id, options: service_options)
   end
 
   def new_resource_from_params
@@ -170,17 +153,17 @@ class BlogPostsController < AuthorizedController
   end
 
   def trash_service
-    @trash_service ||= TrashBlogPost.new(resource_by_id)
+    @trash_service ||= TrashBlogPost.new(resource_by_id, options: service_options)
   end
 
   def untrash_service
-    @untrash_service ||= UntrashBlogPost.new(resource_by_id)
+    @untrash_service ||= UntrashBlogPost.new(resource_by_id, options: service_options)
   end
 
   def update_service
     @update_service ||= UpdateBlogPost.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attributes: permit_params,
+      options: service_options)
   end
 end

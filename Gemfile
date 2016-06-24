@@ -12,6 +12,8 @@ gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
 
+gem 'active_record_query_trace'
+
 ################## DB ########################
 gem 'pg', '0.18.2'
 

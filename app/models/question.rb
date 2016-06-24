@@ -7,7 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :project, inverse_of: :questions
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
-  has_many :motions, dependent: :nullify
+  has_many :motions, dependent: :nullify, inverse_of: :question
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   def self.counter_culture_opts
@@ -80,6 +80,10 @@ class Question < ActiveRecord::Base
       .where('updated_at < :date', date: updated_at)
       .order('updated_at')
       .last
+  end
+
+  def parent_changed?
+    project && project.changed?
   end
 
   def previous(show_trashed = false)

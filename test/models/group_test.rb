@@ -1,7 +1,9 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-  subject { create(:group) }
+  define_freetown
+  subject { create(:group, forum: freetown.edge) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s

@@ -3,7 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum) }
+  define_freetown
 
   ####################################
   # As Guest
@@ -59,8 +59,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  let(:amsterdam) { create(:forum) }
-  let(:utrecht) { create(:forum) }
+  let(:amsterdam) { create_forum }
+  let(:utrecht) { create_forum }
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }
 
   test 'user should get show' do
@@ -148,14 +148,14 @@ class UsersControllerTest < ActionController::TestCase
   private
 
   def initialize_user2_votes
-    motion1 = create(:motion, forum: utrecht)
-    motion3 = create(:motion, forum: amsterdam, creator: user2.profile)
-    motion4 = create(:motion, forum: freetown, creator: user2.profile, is_trashed: true)
-    argument1 = create(:argument, forum: utrecht, motion: motion1)
-    create(:vote, voteable: motion1, for: :neutral, forum: utrecht, voter: user2.profile)
-    create(:vote, voteable: motion3, for: :pro, forum: amsterdam, voter: user2.profile)
-    create(:vote, voteable: argument1, for: :neutral, forum: utrecht, voter: user2.profile)
-    create(:vote, voteable: motion4, for: :pro, forum: utrecht, voter: user2.profile)
+    motion1 = create(:motion, parent: utrecht.edge)
+    motion3 = create(:motion, parent: amsterdam.edge, creator: user2.profile)
+    motion4 = create(:motion, parent: freetown.edge, creator: user2.profile, is_trashed: true)
+    argument1 = create(:argument, parent: motion1.edge)
+    create(:vote, voteable: motion1, for: :neutral, parent: motion1.edge, voter: user2.profile)
+    create(:vote, voteable: motion3, for: :pro, parent: motion3.edge, voter: user2.profile)
+    create(:vote, voteable: argument1, for: :neutral, parent: argument1.edge, voter: user2.profile)
+    create(:vote, voteable: motion4, for: :pro, parent: motion4.edge, voter: user2.profile)
     user2
   end
 end

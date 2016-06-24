@@ -3,33 +3,37 @@ require 'test_helper'
 class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum) }
+  define_freetown
   let!(:motion) do
     create(:motion,
            :with_follower,
-           forum: freetown,
-           creator: create(:user, :follows_reactions_directly, :viewed_notifications_hour_ago).profile)
+           parent: freetown.edge,
+           creator: create(:user,
+                           :follows_reactions_directly,
+                           :viewed_notifications_hour_ago)
+                      .profile)
   end
   let(:argument) do
     create(:argument,
-           forum: freetown,
-           motion: motion)
+           parent: motion.edge)
   end
 
-  let(:project) { create(:project, forum: freetown) }
-  let(:project_motion) { create(:motion, forum: freetown, project: project) }
+  let(:project) { create(:project, parent: freetown.edge) }
+  let(:project_motion) { create(:motion, parent: project.edge) }
   let(:project_argument) do
     create(:argument,
-           forum: freetown,
-           motion: project_motion)
+           parent: project_motion.edge)
   end
 
-  let(:pub_project) { create(:project, argu_publication: build(:publication), forum: freetown) }
-  let(:pub_project_motion) { create(:motion, forum: freetown, project: pub_project) }
+  let(:pub_project) do
+    create(:project,
+           argu_publication: build(:publication),
+           parent: freetown.edge)
+  end
+  let(:pub_project_motion) { create(:motion, parent: pub_project.edge) }
   let(:pub_project_argument) do
     create(:argument,
-           forum: freetown,
-           motion: pub_project_motion)
+           parent: pub_project_motion.edge)
   end
 
   ####################################
@@ -111,8 +115,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   let(:member) { create_member(freetown) }
   let(:member_argument) do
     create(:argument,
-           forum: freetown,
-           motion: motion,
+           parent: motion.edge,
            creator: member.profile)
   end
 

@@ -1,14 +1,16 @@
+# frozen_string_literal: true
 
 class CreateMotion < PublishedCreateService
   include Wisper::Publisher
 
-  def initialize(motion, attributes = {}, options = {})
-    @motion = motion
+  def initialize(parent, attributes: {}, options: {})
     super
+    assign_forum_from_edge_tree
+    resource.question_id = parent.owner_id if parent.owner_type == 'Question'
   end
 
-  def resource
-    @motion
+  def resource_klass
+    Motion
   end
 
   private

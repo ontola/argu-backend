@@ -1,16 +1,16 @@
 require 'test_helper'
 
 class PhaseTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum) }
-  let(:project) { create(:project, forum: freetown) }
-  subject{ create(:phase, id: 1, project: project, forum: project.forum) }
-  let!(:next_phase) { create(:phase, id: 2, project: project, forum: project.forum) }
+  define_freetown
+  let(:project) { create(:project, parent: freetown.edge) }
+  subject { create(:phase, id: 1, project: project, parent: project.edge) }
+  let!(:next_phase) { create(:phase, id: 2, project: project, parent: project.edge) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'Update start_date of next phase' do
+  test 'update start_date of next phase' do
     subject
     project.phases.reload
     assert_equal subject, project.phases.first

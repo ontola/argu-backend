@@ -1,7 +1,7 @@
 class UpdateGroupResponse < UpdateService
   include Wisper::Publisher
 
-  def initialize(group_response, attributes = {}, options = {})
+  def initialize(group_response, attributes: {}, options: {})
     @group_response = group_response
     super
   end

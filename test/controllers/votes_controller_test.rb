@@ -3,9 +3,9 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, name: :freetown) }
-  let(:motion) { create(:motion, forum: freetown) }
-  let!(:vote) { create(:vote, voteable: motion) }
+  define_freetown
+  let(:motion) { create(:motion, parent: freetown.edge) }
+  let!(:vote) { create(:vote, parent: motion.edge) }
 
   ####################################
   # As Guest
@@ -79,7 +79,7 @@ class VotesControllerTest < ActionController::TestCase
 
   test 'should not create new vote when existing one is present' do
     create(:vote,
-           voteable: motion,
+           parent: motion.edge,
            voter: member.profile,
            publisher: member,
            for: 'neutral')
@@ -101,7 +101,7 @@ class VotesControllerTest < ActionController::TestCase
 
   test 'should delete destroy own vote' do
     vote = create(:vote,
-                  voteable: motion,
+                  parent: motion.edge,
                   voter: member.profile,
                   for: 'neutral')
     sign_in member

@@ -3,8 +3,8 @@ require 'test_helper'
 class ProjectTest < ActiveSupport::TestCase
   include ModelTestBase
 
-  let(:freetown) { create(:forum) }
-  subject { create(:project, forum: freetown) }
+  define_freetown
+  subject { create(:project, parent: freetown.edge) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

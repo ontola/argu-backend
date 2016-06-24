@@ -186,7 +186,7 @@ module ApplicationHelper
   # :nodoc:
   def can_show_display_name?(preview)
     if preview.respond_to?(:get_parent)
-      preview.get_parent.model.open?
+      preview.parent_model.open?
     elsif preview.class == Profile
       true
     end

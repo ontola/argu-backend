@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
@@ -6,6 +7,12 @@ class StaticPagesControllerTest < ActionController::TestCase
                       :dismiss_announcement]
 
   let(:user) { create(:user) }
+  define_freetown
+  let(:question) { create(:question, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: question.edge) }
+  let(:vote) { create(:vote, parent: motion.edge) }
+  let(:argument) { create(:argument, parent: motion.edge) }
+  let(:comment) { create(:comment, parent: argument.edge) }
 
   ####################################
   # As User
@@ -30,14 +37,10 @@ class StaticPagesControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let!(:freetown) { create(:forum) }
   let(:staff) { create(:user, :staff) }
 
   test 'staff should get activity feed' do
-    activities = []
-    %i(t_question t_motion t_argument t_comment t_vote).each do |trait|
-      activities << create(:activity, trait, forum: freetown)
-    end
+    trigger_activity_creation
     sign_in staff
     create_member(freetown, staff)
 
@@ -50,15 +53,22 @@ class StaticPagesControllerTest < ActionController::TestCase
   let(:staff_nomember) { create(:user, :staff) }
 
   test 'staff should get activity feed without memberships' do
-    activities = []
-    %i(t_question t_motion t_argument t_comment t_vote).each do |trait|
-      activities << create(:activity, trait, forum: freetown)
-    end
+    trigger_activity_creation
     sign_in staff_nomember
 
     get :home
 
     assert_response 200
     assert assigns(:activities).blank?
+  end
+
+  private
+
+  def activities
+    Activity.all.to_a
+  end
+
+  def trigger_activity_creation
+    [comment, vote]
   end
 end

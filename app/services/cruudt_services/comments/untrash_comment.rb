@@ -1,7 +1,7 @@
 class UntrashComment < UntrashService
   include Wisper::Publisher
 
-  def initialize(comment, options = {})
+  def initialize(comment, attributes: {}, options: {})
     @comment = comment
     super
   end

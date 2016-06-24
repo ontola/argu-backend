@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class AccessTokenTest < ActiveSupport::TestCase
@@ -5,7 +6,12 @@ class AccessTokenTest < ActiveSupport::TestCase
   # :forum, :vwal is used here instead of :populated_forum_vwal
   # Since populated creates an access token making the
   # association explicitly set defeating the purpose of the test
-  let(:venice) { create(:forum, :vwal) }
+  let(:venice) do
+    create_forum(attributes: {
+      visible_with_a_link: true,
+      visibility: Forum.visibilities[:hidden]
+    })
+  end
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s

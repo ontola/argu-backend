@@ -1,9 +1,15 @@
 
 class Edge < ActiveRecord::Base
   belongs_to :owner,
-             polymorphic: true
-  belongs_to :parent
-  belongs_to :user
+             autosave: true,
+             inverse_of: :edge,
+             polymorphic: true,
+             required: true
+  belongs_to :parent,
+             class_name: 'Edge',
+             inverse_of: :children
+  belongs_to :user,
+             required: true
   has_many :children,
            class_name: 'Edge',
            inverse_of: :parent,
@@ -19,6 +25,8 @@ class Edge < ActiveRecord::Base
 
   acts_as_followable
   has_ltree_hierarchy
+
+  delegate :display_name, to: :owner
 
   # For Rails 5 attributes
   # The user that has created the edge's owner.

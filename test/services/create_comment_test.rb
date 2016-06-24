@@ -1,11 +1,13 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class CreateCommentTest < ActiveSupport::TestCase
-  let!(:freetown) { create :forum }
+  define_freetown
   let(:user) { create_member(freetown) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
   let(:commentable) do
     create(:argument,
-           forum: freetown)
+           parent: motion.edge)
   end
   let(:comment_attributes) do
     attributes_for(:comment)

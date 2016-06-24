@@ -1,4 +1,5 @@
 class ArgumentsController < AuthorizedController
+  include NestedResourceHelper
   # GET /arguments/1
   # GET /arguments/1.json
   def show
@@ -44,8 +45,6 @@ class ArgumentsController < AuthorizedController
   # POST /arguments
   # POST /arguments.json
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_argument_successful) do |argument|
       respond_to do |format|
         argument = permit_params[:motion_id].blank? ? argument : argument.motion
@@ -65,8 +64,6 @@ class ArgumentsController < AuthorizedController
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update
-    update_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     update_service.on(:update_argument_successful) do |argument|
       respond_to do |format|
         format.html { redirect_to argument, notice: t('arguments.notices.updated') }
@@ -85,8 +82,6 @@ class ArgumentsController < AuthorizedController
   # DELETE /arguments/1?destroy=true
   # DELETE /arguments/1.json?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     destroy_service.on(:destroy_argument_successful) do |argument|
       respond_to do |format|
         format.html do
@@ -108,8 +103,6 @@ class ArgumentsController < AuthorizedController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def trash
-    trash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                 publisher: current_user))
     trash_service.on(:trash_argument_successful) do |argument|
       respond_to do |format|
         format.html do
@@ -131,8 +124,6 @@ class ArgumentsController < AuthorizedController
   # PUT /arguments/1/untrash
   # PUT /arguments/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     untrash_service.on(:untrash_argument_successful) do |argument|
       respond_to do |format|
         format.html { redirect_to argument, notice: t('type_untrash_success', type: t('arguments.type')) }
@@ -165,15 +156,19 @@ class ArgumentsController < AuthorizedController
   end
 
   def create_service
-    @create_service ||= CreateArgument.new(
-      Argument.new,
-      permit_params.merge(
-        forum: authenticated_context),
-      service_options(auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile))
+    @create_service ||= service_klass.new(
+      get_parent_resource.edge,
+      attributes: resource_new_params.merge(permit_params),
+      options: service_options)
   end
 
   def destroy_service
-    @destroy_service ||= DestroyArgument.new(resource_by_id)
+    @destroy_service ||= DestroyArgument.new(resource_by_id, options: service_options)
+  end
+
+  def get_parent_resource(opts = request.path_parameters, url_params = params)
+    return super unless params[:action] == 'new' || params[:action] == 'create'
+    Motion.find(params[:motion_id] || params[:argument][:motion_id])
   end
 
   def permit_params
@@ -184,18 +179,24 @@ class ArgumentsController < AuthorizedController
     super.merge(motion_id: params[:motion_id])
   end
 
+  def service_options(opts = {})
+    super(opts.merge(auto_vote:
+                       params.dig(:argument, :auto_vote) == 'true' &&
+                         current_profile == current_user.profile))
+  end
+
   def trash_service
-    @trash_service ||= TrashArgument.new(resource_by_id)
+    @trash_service ||= TrashArgument.new(resource_by_id, options: service_options)
   end
 
   def untrash_service
-    @untrash_service ||= UntrashArgument.new(resource_by_id)
+    @untrash_service ||= UntrashArgument.new(resource_by_id, options: service_options)
   end
 
   def update_service
     @update_service ||= UpdateArgument.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attributes: permit_params,
+      options: service_options)
   end
 end

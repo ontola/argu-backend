@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum) }
-  let(:capetown) { create(:forum, name: 'capetown') }
+  define_freetown
+  let(:capetown) { create_forum(name: 'capetown') }
   subject { create_member(freetown).profile }
 
   def test_valid

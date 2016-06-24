@@ -1,8 +1,14 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class BlogPostPublishingTest < ActionDispatch::IntegrationTest
-  let(:freetown) { create(:forum) }
-  let(:project) { create(:project, :with_follower, argu_publication: build(:publication), forum: freetown) }
+  define_freetown
+  let(:project) do
+    create(:project,
+           :with_follower,
+           argu_publication: build(:publication),
+           parent: freetown)
+  end
 
   ####################################
   # As Member

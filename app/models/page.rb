@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
-  has_many :forums, dependent: :restrict_with_exception
+  has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
   has_many :memberships, class_name: 'PageMembership', dependent: :destroy
   has_many :members, through: :memberships, source: :profile
   has_many :managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'

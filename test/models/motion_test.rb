@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class MotionTest < ActiveSupport::TestCase
-  subject { create(:motion, :with_arguments) }
+  define_freetown
+  subject { create(:motion, :with_arguments, parent: freetown.edge) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

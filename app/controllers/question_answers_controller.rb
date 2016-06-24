@@ -1,4 +1,6 @@
 class QuestionAnswersController < ApplicationController
+  helper_method :collect_banners
+
   # GET /question_answers/new
   def new
     @question = Question.find(permit_params[:question_id])
@@ -17,7 +19,9 @@ class QuestionAnswersController < ApplicationController
     @motion = Motion.find(permit_params[:motion_id])
     @forum = @question.forum
 
-    @question_answer = QuestionAnswer.new(question: @question, motion: @motion)
+    @question_answer = QuestionAnswer.new(question: @question,
+                                          motion: @motion,
+                                          options: service_options)
     authorize @question_answer, :create?
 
     respond_to do |format|
@@ -33,7 +37,17 @@ class QuestionAnswersController < ApplicationController
 
   private
 
+  def collect_banners
+  end
+
   def permit_params
     params.require(:question_answer).permit(*policy(@question_answer || QuestionAnswer).permitted_attributes)
+  end
+
+  def service_options(options = {})
+    {
+      creator: current_profile,
+      publisher: current_user
+    }.merge(options)
   end
 end

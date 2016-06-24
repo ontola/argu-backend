@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VotesController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_member, only: :destroy
@@ -55,14 +57,6 @@ class VotesController < AuthorizedController
         format.js { head :not_modified }
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
       elsif @vote.update(for: for_param)
-        create_activity_with_cleanup @vote,
-                                     action: :create,
-                                     parameters: {for: @vote.for},
-                                     recipient: @vote.voteable,
-                                     owner: current_profile,
-                                     forum_id: @vote.forum.id
-        @model.reload
-        save_vote_to_stats @vote
         format.json { render location: @vote }
         format.js
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
@@ -153,10 +147,5 @@ class VotesController < AuthorizedController
     redirect_url = URI.parse(url_for([:new, get_parent_resource, :vote, only_path: true]))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
-  end
-
-  # noinspection RubyUnusedLocalVariable
-  def save_vote_to_stats(vote)
-    # TODO: @implement this
   end
 end

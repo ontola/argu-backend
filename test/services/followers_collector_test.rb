@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class FollowersCollectorTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum) }
-  let(:project) { create(:project, forum: freetown) }
+  define_freetown
+  let(:project) { create(:project, parent: freetown.edge) }
   let!(:follow) { create(:follow, followable: project.edge) }
   let!(:news_follow) { create(:news_follow, followable: project.edge) }
 

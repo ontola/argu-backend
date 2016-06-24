@@ -1,17 +1,21 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class MailReceiversCollectorTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum) }
+  define_freetown
   let(:publisher) { create(:user, :follows_reactions_never, :follows_news_never) }
-  let(:project) { create(:project, forum: freetown, publisher: publisher) }
+  let(:project) { create(:project, parent: freetown.edge, publisher: publisher) }
   let(:argument) do
     create(:argument,
-           forum: freetown,
            publisher: publisher,
-           motion: create(:motion, forum: freetown, publisher: publisher))
+           parent: create(:motion, parent: freetown.edge, publisher: publisher).edge)
   end
   let(:blog_post) do
-    create(:blog_post, publisher: publisher, happened_at: DateTime.current, blog_postable: project, forum: freetown)
+    create(:blog_post,
+           publisher: publisher,
+           happened_at: DateTime.current,
+           blog_postable: project,
+           parent: freetown.edge)
   end
 
   test 'should collect direct followers for notifications' do

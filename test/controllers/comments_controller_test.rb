@@ -3,32 +3,38 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum) }
+  define_freetown
+  let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) do
     create(:argument,
            :with_follower,
-           forum: freetown,
+           parent: motion.edge,
            creator: create(:profile_direct_email))
   end
   let(:comment) do
     create(:comment,
            creator: member.profile,
+           parent: argument.edge,
            commentable: argument)
   end
 
-  let(:cairo) { create(:forum, :closed) }
-  let(:closed_argument) { create(:argument, forum: cairo) }
+  define_cairo
+  let(:motion_cairo) { create(:motion, parent: cairo.edge) }
+  let(:closed_argument) { create(:argument, parent: motion_cairo.edge) }
   let(:cairo_comment) do
     create(:comment,
            creator: member.profile,
+           parent: closed_argument.edge,
            commentable: closed_argument)
   end
 
-  let(:second_cairo) { create(:forum, :closed) }
-  let(:second_closed_argument) { create(:argument, forum: second_cairo) }
+  define_cairo('second_cairo')
+  let(:motion_second_cairo) { create(:motion, parent: second_cairo.edge) }
+  let(:second_closed_argument) { create(:argument, parent: motion_second_cairo.edge) }
   let(:second_cairo_comment) do
     create(:comment,
            creator: member.profile,
+           parent: second_closed_argument.edge,
            commentable: second_closed_argument)
   end
 
@@ -209,8 +215,8 @@ class CommentsControllerTest < ActionController::TestCase
 
   test 'staff should destroy comments' do
     comment = create(:comment,
-                     commentable: create(:argument,
-                                         forum: freetown),
+                     parent: create(:argument,
+                                    parent: motion.edge).edge,
                      creator: member.profile)
     create_list(:notification,
                 10,

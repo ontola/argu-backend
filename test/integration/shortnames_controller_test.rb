@@ -4,8 +4,8 @@ require 'test_helper'
 # Usual controller method tests
 # Additionally tests for shortnames to be routed correctly between forums and dynamic redirects.
 class ShortnamesControllerTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown', max_shortname_count: 1) }
-  let(:comment) { create(:comment, forum: freetown) }
+  define_freetown(attributes: {max_shortname_count: 1})
+  let(:comment) { create(:comment, parent: freetown.edge) }
   let(:comment_shortname) { create(:shortname, owner: comment) }
   let(:subject) do
     create(:discussion_shortname,
@@ -22,7 +22,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   %i(published_project question motion argument).each do |resource|
-    let(resource) { create(resource, forum: freetown) }
+    let(resource) { create(resource, parent: freetown.edge) }
     let("#{resource}_shortname".to_sym) { create(:shortname, owner: send(resource)) }
 
     test "guest should get #{resource}" do

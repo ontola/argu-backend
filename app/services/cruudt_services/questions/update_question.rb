@@ -1,7 +1,7 @@
 class UpdateQuestion < UpdateService
   include Wisper::Publisher
 
-  def initialize(question, attributes = {}, options = {})
+  def initialize(question, attributes: {}, options: {})
     @question = question
     super
   end

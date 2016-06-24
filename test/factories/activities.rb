@@ -10,18 +10,18 @@ FactoryGirl.define do
     key :create
 
     trait :t_question do
-      trackable { create(:question, creator: owner) }
+      trackable { create(:question, creator: owner, parent: tenant.edge) }
     end
 
     trait :t_motion do
-      trackable { create(:motion, creator: owner) }
+      trackable { create(:motion, creator: owner, parent: tenant.edge) }
       recipient { passed_in?(:recipient) ? recipient : tenant }
     end
 
     trait :t_argument do
       trackable do
         passed_in?(:trackable) ? trackable : create(:argument,
-                                                    forum: tenant,
+                                                    parent: tenant.edge,
                                                     creator: owner)
       end
       recipient { passed_in?(:recipient) ? recipient : trackable.motion }
@@ -29,12 +29,12 @@ FactoryGirl.define do
 
     trait :t_comment do
       trackable { create(:comment, creator: owner) }
-      recipient { passed_in?(:recipient) ? recipient : create(:argument, forum: tenant) }
+      recipient { passed_in?(:recipient) ? recipient : create(:argument, parent: tenant.edge) }
     end
 
     trait :t_vote do
       trackable { create(:vote, voter: owner) }
-      recipient { passed_in?(:recipient) ? recipient : create(:motion, forum: tenant) }
+      recipient { passed_in?(:recipient) ? recipient : create(:motion, parent: tenant.edge) }
       parameters { passed_in?(:parameters) ? parameters : {for: trackable.for} }
     end
 

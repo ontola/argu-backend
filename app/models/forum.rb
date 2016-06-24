@@ -1,7 +1,8 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Photoable, ProfilePhotoable
+  include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Parentable, Photoable,
+          ProfilePhotoable
 
-  belongs_to :page
+  belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
   has_many :activities, as: :trackable
   has_many :banners, inverse_of: :forum
@@ -28,6 +29,7 @@ class Forum < ActiveRecord::Base
 
   acts_as_ordered_taggable_on :tags
   paginates_per 30
+  parentable :page
 
   validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
@@ -104,10 +106,6 @@ class Forum < ActiveRecord::Base
 
   def page=(value)
     super value.is_a?(Page) ? value : Page.find_via_shortname(value)
-  end
-
-  def parent_model
-    page
   end
 
   def profile_is_member?(profile)

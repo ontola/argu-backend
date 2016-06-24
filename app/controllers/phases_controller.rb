@@ -16,7 +16,6 @@ class PhasesController < AuthorizedController
 
   # Set virtual attribute finish_phase to true to update end_date to Time.current
   def update
-    update_service.subscribe(ActivityListener.new)
     update_service.on(:update_phase_successful) do |phase|
       respond_to do |format|
         format.html { redirect_to phase.project, notice: t('type_save_success', type: t('projects.phases.type')) }
@@ -41,7 +40,7 @@ class PhasesController < AuthorizedController
   def update_service
     @update_service ||= UpdatePhase.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attriubutes: permit_params,
+      options: service_options)
   end
 end

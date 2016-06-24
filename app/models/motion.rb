@@ -153,6 +153,10 @@ class Motion < ActiveRecord::Base
       .last
   end
 
+  def parent_changed?
+    question&.changed? || project&.changed?
+  end
+
   def previous(show_trashed = false)
     forum
       .motions

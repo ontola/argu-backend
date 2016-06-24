@@ -4,32 +4,31 @@ require 'test_helper'
 class GroupResponsesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum) }
+  define_freetown
   let(:motion) do
     create(:motion,
-           forum: freetown)
+           parent: freetown.edge)
   end
   let(:group) do
     create(:group,
            :discussion,
-           forum: freetown)
+           parent: freetown.edge)
   end
   let(:group_response) do
     create(:group_response,
            creator: group_member.profile,
            group: group,
-           motion: motion,
-           forum: freetown)
+           parent: motion.edge)
   end
   let(:visible_group) do
     create(:group,
            :visible,
-           forum: freetown)
+           parent: freetown.edge)
   end
   let(:hidden_group) do
     create(:group,
            :hidden,
-           forum: freetown)
+           parent: freetown.edge)
   end
 
   ####################################

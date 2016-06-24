@@ -3,11 +3,11 @@ require 'test_helper'
 class QuestionAnswersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
-  let!(:freetown) { create(:forum, page: page, name: 'freetown') }
-  let(:question) { create(:question, forum: freetown) }
-  let(:motion) { create(:motion, forum: freetown) }
+  define_freetown
+  let(:page) { argu }
+  let!(:owner) { argu.owner.profileable }
+  let(:question) { create(:question, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################
   # As Guest

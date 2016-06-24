@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActivityListener
 
   # @param [Hash] opts
@@ -42,6 +44,17 @@ class ActivityListener
     end
   end
 
+  def create_vote_successful(resource)
+    ActiveRecord::Base.transaction do
+      destroy_recent_similar_activities(resource, 'create')
+      create_activity(
+        resource,
+        resource.voteable,
+        :create,
+        parameters: {for: resource.for})
+    end
+  end
+
   private
 
   # @return [Hash] The data to be serialized in JSON
@@ -56,17 +69,29 @@ class ActivityListener
     }
   end
 
-  def create_activity(resource, recipient, action)
+  def create_activity(resource, recipient, action, parameters: {})
     a = CreateActivity.new(
       Activity.new,
-      trackable: resource,
-      key: "#{resource.model_name.singular}.#{action}",
-      owner: @creator,
-      forum: resource.forum,
-      recipient: recipient,
-      audit_data: audit_data(resource, recipient),
-      is_published: true)
+      attributes: {
+        trackable: resource,
+        key: "#{resource.model_name.singular}.#{action}",
+        owner: @creator,
+        forum: resource.forum,
+        recipient: recipient,
+        audit_data: audit_data(resource, recipient),
+        is_published: true,
+        parameters: parameters
+      })
     a.subscribe(NotificationListener.new)
     a.commit
+  end
+
+  # Deletes all other activities created within 6 hours of the new activity.
+  def destroy_recent_similar_activities(resource, action)
+    Activity.delete Activity.where('created_at >= :date', date: 6.hours.ago)
+                      .where(trackable_id: resource.id,
+                             owner_id: @creator.id,
+                             key: "#{resource.class.name.downcase}.#{action}")
+                      .pluck(:id)
   end
 end

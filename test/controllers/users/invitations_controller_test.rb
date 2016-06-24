@@ -4,7 +4,7 @@ class Users::InvitationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let(:user) { create(:user) }
-  let(:freetown) { create(:forum) }
+  define_freetown
 
   ####################################
   # As User

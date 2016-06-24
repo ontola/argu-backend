@@ -1,29 +1,34 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class ForumsControllerTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }
 
-  let(:project) { create(:project, forum: holland) }
-  let(:q1) { create(:question, forum: holland, project: project) }
-  let(:m0) { create(:motion, forum: holland, project: project, question: q1) }
-  let(:m1) { create(:motion, forum: holland, project: project) }
+  let(:project) { create(:project, parent: holland.edge) }
+  let(:q1) { create(:question, parent: project.edge) }
+  let(:m0) { create(:motion, parent: q1.edge) }
+  let(:m1) { create(:motion, parent: project.edge) }
 
-  let(:published_project) { create(:project, argu_publication: build(:publication), forum: holland) }
-  let(:q2) { create(:question, forum: holland, project: published_project) }
-  let(:m2) { create(:motion, forum: holland, project: published_project, question: q2) }
-  let(:m3) { create(:motion, forum: holland, project: published_project) }
+  let(:published_project) do
+    create(:project,
+           argu_publication: build(:publication),
+           parent: holland.edge)
+  end
+  let(:q2) { create(:question, parent: published_project.edge) }
+  let(:m2) { create(:motion, parent: q2.edge) }
+  let(:m3) { create(:motion, parent: published_project.edge) }
 
-  let(:q3) { create(:question, forum: holland) }
-  let(:m4) { create(:motion, forum: holland, question: q3) }
+  let(:q3) { create(:question, parent: holland.edge) }
+  let(:m4) { create(:motion, parent: q3.edge) }
 
-  let(:tq) { create(:motion, is_trashed: true, forum: holland) }
-  let(:tm) { create(:question, is_trashed: true, forum: holland) }
-  let(:tp) { create(:project, trashed_at: DateTime.current, forum: holland) }
+  let(:tq) { create(:motion, is_trashed: true, parent: holland.edge) }
+  let(:tm) { create(:question, is_trashed: true, parent: holland.edge) }
+  let(:tp) { create(:project, trashed_at: DateTime.current, parent: holland.edge) }
   def holland_nested_project_items
     [m0, m1, m2, m3, m4, q1, q2, q3, tq, tm, tp]
   end

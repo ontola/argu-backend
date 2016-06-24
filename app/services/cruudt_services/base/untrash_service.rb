@@ -2,7 +2,7 @@
 # @author Arthur <arthur@argu.co>
 class UntrashService < ApplicationService
   # @note Call super when overriding.
-  def initialize(resource, attributes = {}, options = {})
+  def initialize(resource, attributes: {}, options: {})
     super
   end
 

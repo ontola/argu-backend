@@ -1,17 +1,19 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class DiscussionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum) }
-  let!(:project) { create(:project, argu_publication: build(:publication), forum: freetown) }
-  let!(:unpublished_project) { create(:project, forum: freetown) }
+  define_freetown
+  let!(:project) { create(:project, argu_publication: build(:publication), parent: freetown.edge) }
+  let!(:unpublished_project) { create(:project, parent: freetown.edge) }
   let!(:helsinki) do
-    create(:hidden_populated_forum,
-           name: 'helsinki',
-           visible_with_a_link: true)
+    create_forum(
+      name: 'helsinki',
+      visibility: Forum.visibilities[:hidden],
+      visible_with_a_link: true)
   end
-  let!(:helsinki_project) { create(:project, argu_publication: build(:publication), forum: helsinki) }
+  let!(:helsinki_project) { create(:project, argu_publication: build(:publication), parent: helsinki.edge) }
   let(:helsinki_key) { create(:access_token, item: helsinki) }
 
   ####################################

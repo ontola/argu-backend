@@ -51,21 +51,6 @@ class ApplicationController < ActionController::Base
                        .reject { |a| announcements[a.identifier] == 'hidden' }
   end
 
-  # Combines {ApplicationController#create_activity} with
-  # {ApplicationController#destroy_recent_similar_activities}
-  def create_activity_with_cleanup(model, params)
-    destroy_recent_similar_activities model, params
-    create_activity model, params
-  end
-
-  # Creates an {Activity} for a model asynchronously
-  # @param [ActiveRecord::Base] model a model to create the {Activity} for
-  # @param [Hash] params options for {PublicActivity::Common#create_activity}
-  def create_activity(model, params)
-    model.create_activity params
-  end
-  deprecate :create_activity
-
   def current_scope
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
@@ -89,15 +74,6 @@ class ApplicationController < ActionController::Base
     else
       nil
     end
-  end
-
-  # Deletes all other activities created within 6 hours of the new activity.
-  def destroy_recent_similar_activities(model, params)
-    Activity.delete Activity.where('created_at >= :date', date: 6.hours.ago)
-                            .where(trackable_id: model.id,
-                                   owner_id: params[:owner].id,
-                                   key: "#{model.class.name.downcase}.create")
-                            .pluck(:id)
   end
 
   def forum_by_geocode

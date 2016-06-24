@@ -1,4 +1,5 @@
 class ProjectsController < AuthorizedController
+  include NestedResourceHelper
   prepend_before_action :redirect_pages, only: :show
 
   def new
@@ -9,8 +10,6 @@ class ProjectsController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project }
@@ -62,8 +61,6 @@ class ProjectsController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     update_service.on(:update_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project }
@@ -82,8 +79,6 @@ class ProjectsController < AuthorizedController
   # DELETE /projects/1?destroy=true
   # DELETE /projects/1.json?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     destroy_service.on(:destroy_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project.forum, notice: t('type_destroy_success', type: t('projects.type')) }
@@ -102,8 +97,6 @@ class ProjectsController < AuthorizedController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def trash
-    trash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                 publisher: current_user))
     trash_service.on(:trash_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project.forum, notice: t('type_trash_success', type: t('projects.type')) }
@@ -122,8 +115,6 @@ class ProjectsController < AuthorizedController
   # PUT /projects/1/untrash
   # PUT /projects/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     untrash_service.on(:untrash_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project, notice: t('type_untrash_success', type: t('projects.type')) }
@@ -141,15 +132,8 @@ class ProjectsController < AuthorizedController
 
   private
 
-  def create_service
-    @create_service ||= CreateProject.new(
-      Project.new,
-      resource_new_params.merge(permit_params),
-      service_options)
-  end
-
   def destroy_service
-    @destroy_service ||= DestroyProject.new(resource_by_id)
+    @destroy_service ||= DestroyProject.new(resource_by_id, options: service_options)
   end
 
   def new_resource_from_params
@@ -159,7 +143,9 @@ class ProjectsController < AuthorizedController
   end
 
   def permit_params
-    params.require(:project).permit(*policy(resource_by_id || new_resource_from_params || Project).permitted_attributes)
+    params
+      .require(:project)
+      .permit(*policy(resource_by_id || new_resource_from_params || Project).permitted_attributes)
   end
 
   def redirect_pages
@@ -171,17 +157,17 @@ class ProjectsController < AuthorizedController
   end
 
   def trash_service
-    @trash_service ||= TrashProject.new(resource_by_id)
+    @trash_service ||= TrashProject.new(resource_by_id, options: service_options)
   end
 
   def untrash_service
-    @untrash_service ||= UntrashProject.new(resource_by_id)
+    @untrash_service ||= UntrashProject.new(resource_by_id, options: service_options)
   end
 
   def update_service
     @update_service ||= UpdateProject.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attributes: permit_params,
+      options: service_options)
   end
 end

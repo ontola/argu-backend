@@ -1,18 +1,26 @@
+# frozen_string_literal: true
+
 # Superclass for all the services in the system
 # @author Fletcher91 <thom@argu.co>
 class ApplicationService
   include Pundit
 
   # @note Call super when overriding.
-  def initialize(resource, attributes = {}, options = {})
+  def initialize(orig_resource, attributes: {}, options: {})
     @attributes = attributes
     @actions = {}
     @options = options
-    if @attributes[:argu_publication_attributes].present? && !resource.is_published?
+    if @attributes[:argu_publication_attributes].present? &&
+        !(resource.is_a?(Edge) ? resource.owner : resource).is_published?
       prepare_argu_publication_attributes
     end
     assign_attributes
     set_nested_associations
+    unless resource.is_a?(Activity)
+      subscribe(ActivityListener
+                  .new(creator: options.fetch(:creator),
+                       publisher: options.fetch(:publisher)))
+    end
   end
 
   # The resource on which the service works, if any.
@@ -89,7 +97,6 @@ class ApplicationService
   # @see {set_nested_associations}
   # @param [ActiveRecord::Base] obj The model on which the attributes should be set
   def object_attributes=(obj)
-    raise 'Required interface not implemented'
   end
 
   def prepare_argu_publication_attributes

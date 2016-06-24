@@ -1,7 +1,7 @@
 class TrashBlogPost < TrashService
   include Wisper::Publisher
 
-  def initialize(blog_post, options = {})
+  def initialize(blog_post, attributes: {}, options: {})
     @blog_post = blog_post
     super
   end

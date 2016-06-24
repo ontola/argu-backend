@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'test_resources'
 
 # Shared helper method across TestUnit and RSpec
 module Argu
@@ -10,6 +11,10 @@ module Argu
       end
 
       module InstanceMethods
+        include TestResources::InstanceMethods
+        SERVICE_MODELS = %i(argument blog_post comment forum membership motion phase project
+                            question vote).freeze
+
         def assert_not_a_member
           assert_equal true, assigns(:_not_a_member_caught)
         end
@@ -30,12 +35,12 @@ module Argu
         def create(model_type, *args)
           attributes = HashWithIndifferentAccess.new
           attributes.merge!(args.pop) if args.last.is_a?(Hash)
-          if %i(project blog_post question motion argument comment).include?(model_type)
+          if SERVICE_MODELS.include?(model_type)
             klass = model_type.to_s.classify.constantize
 
-            options = {}
-            options[:publisher] = attributes.delete(:publisher)
-            options[:creator] = attributes.delete(:creator)
+            options = attributes.delete(:options) || {}
+            options[:publisher] ||= attributes.delete(:publisher)
+            options[:creator] ||= attributes.delete(:creator)
 
             attributes.merge!(attributes_for(model_type, attributes))
 
@@ -48,12 +53,12 @@ module Argu
             end
 
             resource = create_resource(
-              klass.new,
+              klass,
               attributes,
               options)
 
             args.each do |trait|
-              TraitListener.new(resource).send(trait)
+              TraitListener.new(resource).public_send(trait)
             end
 
             if resource.respond_to?(:publications) && resource.publications.present?
@@ -71,13 +76,20 @@ module Argu
 
         def create_manager(forum, user = nil)
           user ||= create(:user)
-          create(:managership, forum: forum, profile: user.profile)
+          create(:membership,
+                 forum: forum,
+                 parent: forum.edge,
+                 role: Membership.roles[:manager],
+                 profile: user.profile)
           user
         end
 
         def create_member(forum, user = nil)
           user ||= create(:user)
-          create(:membership, forum: forum, profile: user.profile)
+          create(:membership,
+                 parent: forum.edge,
+                 forum: forum,
+                 profile: user.profile)
           user
         end
 
@@ -114,14 +126,22 @@ module Argu
           [forum, user]
         end
 
-        def create_resource(resource, attributes = {}, options = {})
-          options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?
-          options[:creator] = options[:publisher].profile if options[:creator].nil?
-          service = "Create#{resource.class}".constantize.new(resource, attributes, options)
-          service.subscribe(ActivityListener.new(creator: options[:creator],
-                                                 publisher: options[:publisher]))
+        def create_resource(klass, attributes = {}, options = {})
+          if klass != Forum
+            options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?
+            options[:creator] = options[:publisher].profile if options[:creator].nil?
+          end
+
+          parent_resource = attributes.delete(:parent) || attributes.fetch(:forum)
+          parent_edge = parent_resource.is_a?(Edge) ? parent_resource : parent_resource.edge
+
+          service = "Create#{klass}"
+                      .constantize
+                      .new(parent_edge,
+                           attributes: attributes,
+                           options: options)
           service.commit
-          resource.reload
+          service.resource.reload
         end
 
         def destroy_resource(resource, user = nil, profile = nil)
@@ -172,6 +192,8 @@ module Argu
       end
 
       module ClassMethods
+        include TestResources::ClassMethods
+
         def define_common_objects(*let, **opts)
           let(:freetown) { create(:forum, name: 'freetown') } if mdig?(:freetown, let, opts)
           let(:user) { create(:user, opts.dig(:user)) } if mdig?(:user, let, opts)
