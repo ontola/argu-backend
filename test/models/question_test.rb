@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class QuestionTest < ActiveSupport::TestCase
-  subject { create(:question) }
+  let(:freetown) { create(:forum) }
+  subject { create(:question, forum: freetown) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

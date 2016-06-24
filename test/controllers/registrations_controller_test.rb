@@ -86,9 +86,9 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'user should delete destroy with content' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    create :motion, publisher: user, creator: user.profile
-    create :question, publisher: user, creator: user.profile
-    create :argument, motion: Motion.last, publisher: user, creator: user.profile
+    create :motion, publisher: user, creator: user.profile, forum: freetown
+    create :question, publisher: user, creator: user.profile, forum: freetown
+    create :argument, motion: Motion.last, publisher: user, creator: user.profile, forum: freetown
 
     sign_in user
 
@@ -105,9 +105,9 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'user should delete destroy with content published by page' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    create :motion, publisher: user, creator: page.profile
-    create :question, publisher: user, creator: page.profile
-    create :argument, motion: Motion.last, publisher: user, creator: page.profile
+    create :motion, publisher: user, creator: page.profile, forum: freetown
+    create :question, publisher: user, creator: page.profile, forum: freetown
+    create :argument, motion: Motion.last, publisher: user, creator: page.profile, forum: freetown
 
     sign_in user
 

@@ -27,6 +27,48 @@ module Argu
           @controller.instance_variable_set(:@_current_actor, a)
         end
 
+        def create(model_type, *args)
+          attributes = HashWithIndifferentAccess.new
+          attributes.merge!(args.pop) if args.last.is_a?(Hash)
+          if %i(project blog_post question motion argument comment).include?(model_type)
+            klass = model_type.to_s.classify.constantize
+
+            options = {}
+            options[:publisher] = attributes.delete(:publisher)
+            options[:creator] = attributes.delete(:creator)
+
+            attributes.merge!(attributes_for(model_type, attributes))
+
+            if klass.nested_attributes_options?
+              klass.nested_attributes_options.keys.each do |association|
+                if attributes.include? association
+                  attributes["#{association}_attributes"] = attributes.delete(association).attributes
+                end
+              end
+            end
+
+            resource = create_resource(
+              klass.new,
+              attributes,
+              options)
+
+            args.each do |trait|
+              TraitListener.new(resource).send(trait)
+            end
+
+            if resource.respond_to?(:publications) && resource.publications.present?
+              Sidekiq::Testing.inline! do
+                Publication.last.send(:reset)
+              end
+              resource.reload
+            end
+
+            resource
+          else
+            FactoryGirl.create(model_type, *args, attributes)
+          end
+        end
+
         def create_manager(forum, user = nil)
           user ||= create(:user)
           create(:managership, forum: forum, profile: user.profile)
@@ -70,6 +112,16 @@ module Argu
                          page: create(:page,
                                       owner: user.profile))
           [forum, user]
+        end
+
+        def create_resource(resource, attributes = {}, options = {})
+          options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?
+          options[:creator] = options[:publisher].profile if options[:creator].nil?
+          service = "Create#{resource.class}".constantize.new(resource, attributes, options)
+          service.subscribe(ActivityListener.new(creator: options[:creator],
+                                                 publisher: options[:publisher]))
+          service.commit
+          resource.reload
         end
 
         def destroy_resource(resource, user = nil, profile = nil)

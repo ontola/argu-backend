@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class PhaseTest < ActiveSupport::TestCase
-  let(:project) { create(:project) }
+  let(:freetown) { create(:forum) }
+  let(:project) { create(:project, forum: freetown) }
   subject{ create(:phase, id: 1, project: project, forum: project.forum) }
   let!(:next_phase) { create(:phase, id: 2, project: project, forum: project.forum) }
 

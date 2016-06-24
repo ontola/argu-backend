@@ -9,7 +9,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   let!(:moderator) { create_moderator(freetown) }
   let!(:subject) do
     p = create(:project,
-               :published,
+               argu_publication: build(:publication),
                forum: freetown)
     create(:stepup,
            record: p,
@@ -18,7 +18,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     p
   end
   let(:unpublished) do
-    p = create(:project, :unpublished, forum: freetown)
+    p = create(:project, forum: freetown)
     create(:stepup,
            record: p,
            forum: freetown,
@@ -27,11 +27,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
   let!(:trashed_subject) do
     create(:project,
-           :published,
+           argu_publication: build(:publication),
            trashed_at: Time.current,
            forum: freetown)
   end
-  let(:unpublished) { create(:project, :unpublished, forum: freetown) }
+  let(:unpublished) { create(:project, forum: freetown) }
 
   ####################################
   # As Guest

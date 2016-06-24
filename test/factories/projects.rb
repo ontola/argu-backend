@@ -7,11 +7,6 @@ FactoryGirl.define do
     sequence(:title) { |n| "title#{n}" }
     content 'content'
 
-    after :create do |project|
-      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(project)
-      project.publisher.follow(project.edge)
-    end
-
     factory :published_project do
       before :create do |project|
         pp = project.create_argu_publication(

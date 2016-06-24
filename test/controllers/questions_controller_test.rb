@@ -492,7 +492,6 @@ class QuestionsControllerTest < ActionController::TestCase
     [['Question.count', 1],
      ['Edge.count', 1],
      ['Activity.count', 1],
-     ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', notifications],
      ['Notification.count', notifications]]
   end
 end

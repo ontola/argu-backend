@@ -12,11 +12,6 @@ FactoryGirl.define do
     sequence(:title) { |n| "fg question title #{n}end" }
     sequence(:content) { |n| "fg question content #{n}end" }
 
-    after :create do |question|
-      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(question)
-      question.publisher.follow(question.edge)
-    end
-
     trait :with_motions do
       after(:create) do |question, evaluator|
         create_list :motion, 2,

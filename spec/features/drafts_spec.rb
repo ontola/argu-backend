@@ -4,10 +4,23 @@ RSpec.feature 'Show drafts', type: :feature do
   let!(:freetown) { create(:forum) }
   let(:user) { create(:user, has_drafts: true) }
   let(:user2) { create(:user, has_drafts: true) }
-  let!(:blog_post) { create(:blog_post, :unpublished, publisher: user) }
-  let!(:published_blog_post) { create(:blog_post, :published, publisher: user) }
-  let!(:project) { create(:project, :unpublished, publisher: user) }
-  let!(:published_project) { create(:project, :published, publisher: user) }
+  let!(:blog_post) do
+    create(:blog_post, blog_postable: project, happened_at: DateTime.current, forum: freetown, publisher: user)
+  end
+  let!(:published_blog_post) do
+    create(:blog_post,
+           blog_postable: project,
+           happened_at: DateTime.current,
+           forum: freetown,
+           argu_publication: build(:publication),
+           publisher: user)
+  end
+  let!(:project) do
+    create(:project, forum: freetown, publisher: user)
+  end
+  let!(:published_project) do
+    create(:project, forum: freetown, argu_publication: build(:publication), publisher: user)
+  end
 
   scenario 'User with drafts shows drafts' do
     login_as(user, scope: :user)

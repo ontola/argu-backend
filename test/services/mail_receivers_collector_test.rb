@@ -1,8 +1,18 @@
 require 'test_helper'
 
 class MailReceiversCollectorTest < ActiveSupport::TestCase
-  let!(:argument) { create(:argument) }
-  let!(:blog_post) { create(:blog_post) }
+  let(:freetown) { create(:forum) }
+  let(:publisher) { create(:user, :follows_reactions_never, :follows_news_never) }
+  let(:project) { create(:project, forum: freetown, publisher: publisher) }
+  let(:argument) do
+    create(:argument,
+           forum: freetown,
+           publisher: publisher,
+           motion: create(:motion, forum: freetown, publisher: publisher))
+  end
+  let(:blog_post) do
+    create(:blog_post, publisher: publisher, happened_at: DateTime.current, blog_postable: project, forum: freetown)
+  end
 
   test 'should collect direct followers for notifications' do
     # should be collected for direct mailing

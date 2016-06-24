@@ -6,22 +6,24 @@ class BlogPostsControllerTest < ActionController::TestCase
   let!(:owner) { create(:user) }
   let!(:page) { create(:page, owner: owner.profile) }
   let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
-  let(:project) { create(:project, :published, forum: freetown) }
+  let(:project) { create(:project, argu_publication: build(:publication), forum: freetown) }
   let!(:moderator) { create_member(freetown) }
   let!(:subject) do
     create(:blog_post,
-           :published,
+           argu_publication: build(:publication),
            blog_postable: project,
+           happened_at: DateTime.current,
            forum: freetown)
   end
   let!(:trashed_subject) do
     create(:blog_post,
-           :published,
+           argu_publication: build(:publication),
            blog_postable: project,
+           happened_at: DateTime.current,
            trashed_at: Time.current,
            forum: freetown)
   end
-  let(:unpublished) { create(:blog_post, :unpublished, blog_postable: project, forum: freetown) }
+  let(:unpublished) { create(:blog_post, blog_postable: project, forum: freetown) }
 
   ####################################
   # Guest, User, Member share features

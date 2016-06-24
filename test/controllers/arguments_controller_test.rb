@@ -24,7 +24,7 @@ class ArgumentsControllerTest < ActionController::TestCase
            motion: project_motion)
   end
 
-  let(:pub_project) { create(:project, :published, forum: freetown) }
+  let(:pub_project) { create(:project, argu_publication: build(:publication), forum: freetown) }
   let(:pub_project_motion) { create(:motion, forum: freetown, project: pub_project) }
   let(:pub_project_argument) do
     create(:argument,
@@ -324,7 +324,6 @@ class ArgumentsControllerTest < ActionController::TestCase
   def create_changes_array(auto_vote = true)
     c = [['Argument.count', 1],
          ['Activity.count', 1],
-         ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', 1],
          ['Notification.count', 2]]
     if auto_vote
       c.concat([['Edge.count', 2], ['Vote.count', 1]])

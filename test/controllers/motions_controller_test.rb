@@ -481,8 +481,6 @@ class MotionsControllerTest < ActionController::TestCase
          ['Edge.count', count],
          ['Activity.count', count],
          ['Notification.count', notifications]]
-    c << ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count',
-          notifications]
     c
   end
 

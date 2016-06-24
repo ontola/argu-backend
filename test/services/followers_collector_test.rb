@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class FollowersCollectorTest < ActiveSupport::TestCase
-  let(:project) { create(:project) }
+  let(:freetown) { create(:forum) }
+  let(:project) { create(:project, forum: freetown) }
   let!(:follow) { create(:follow, followable: project.edge) }
   let!(:news_follow) { create(:news_follow, followable: project.edge) }
 

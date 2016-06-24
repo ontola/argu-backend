@@ -4,14 +4,14 @@ class DiscussionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let!(:freetown) { create(:forum) }
-  let!(:project) { create(:project, :published, forum: freetown) }
+  let!(:project) { create(:project, argu_publication: build(:publication), forum: freetown) }
   let!(:unpublished_project) { create(:project, forum: freetown) }
   let!(:helsinki) do
     create(:hidden_populated_forum,
            name: 'helsinki',
            visible_with_a_link: true)
   end
-  let!(:helsinki_project) { create(:project, :published, forum: helsinki) }
+  let!(:helsinki_project) { create(:project, argu_publication: build(:publication), forum: helsinki) }
   let(:helsinki_key) { create(:access_token, item: helsinki) }
 
   ####################################

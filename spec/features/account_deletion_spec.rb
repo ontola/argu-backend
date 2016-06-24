@@ -6,40 +6,47 @@ RSpec.feature 'Account deletion', type: :feature do
   let(:motion) do
     create(:motion,
            creator: user.profile,
-           publisher: user)
+           publisher: user,
+           forum: freetown)
   end
   let(:question) do
     create(:question,
            creator: user.profile,
-           publisher: user)
+           publisher: user,
+           forum: freetown)
   end
   let(:argument) do
     create(:argument,
            creator: user.profile,
            motion: motion,
+           forum: freetown,
            publisher: user)
   end
   let(:group_response) do
     create(:group_response,
            creator: user.profile,
            motion: motion,
+           forum: freetown,
            publisher: user)
   end
   let(:project) do
     create(:project,
            creator: user.profile,
+           forum: freetown,
            publisher: user)
   end
   let(:blog_post) do
     create(:blog_post,
            creator: user.profile,
            blog_postable: project,
+           forum: freetown,
            publisher: user)
   end
   let(:comment) do
     create(:comment,
            commentable: argument,
            creator: user.profile,
+           forum: freetown,
            publisher: user)
   end
   let(:forum_page) do

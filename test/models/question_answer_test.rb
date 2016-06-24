@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class QuestionAnswerTest < ActiveSupport::TestCase
-  let(:question) { create(:question) }
-  let(:motion) { create(:motion) }
+  let(:freetown) { create(:forum) }
+  let(:question) { create(:question, forum: freetown) }
+  let(:motion) { create(:motion, forum: freetown) }
   subject do
     QuestionAnswer.new(question: question,
                        motion: motion)

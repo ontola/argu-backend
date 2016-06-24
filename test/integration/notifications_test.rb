@@ -44,6 +44,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'user should create and destroy argument with notifications' do
     # Both the motion publisher as the motion follower will receive a notification
     sign_in user
+    motion
 
     assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
       post forum_arguments_path(freetown),
@@ -60,6 +61,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     # Both the motion publisher as the motion follower will receive a notification
     sign_in user
     group_membership
+    motion
 
     assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do
       post motion_group_group_responses_path(motion, group),
@@ -77,6 +79,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'user should create and destroy comment with notifications' do
     # Both the argument publisher as the argument follower will receive a notification
     sign_in user
+    argument
 
     assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
       post argument_comments_path(argument),

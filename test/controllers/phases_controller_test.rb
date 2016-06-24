@@ -6,8 +6,8 @@ class PhasesControllerTest < ActionController::TestCase
   let!(:owner) { create(:user) }
   let!(:page) { create(:page, owner: owner.profile) }
   let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
-  let!(:project) { create(:project, :published, forum: freetown) }
-  let!(:unpublished_project) { create(:project, :unpublished, forum: freetown) }
+  let!(:project) { create(:project, argu_publication: build(:publication), forum: freetown) }
+  let!(:unpublished_project) { create(:project, forum: freetown) }
   let(:subject) { create(:phase, project: project, forum: freetown) }
   let(:unpublished_subject) { create(:phase, project: unpublished_project, forum: freetown) }
 

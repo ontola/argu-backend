@@ -13,13 +13,5 @@ FactoryGirl.define do
 
     sequence(:title) { |n| "fg blog post #{n}end" }
     content 'contents'
-
-    after :create do |blog_post|
-      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(blog_post)
-      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(blog_post,
-                                                                action: :happened,
-                                                                created_at: DateTime.current)
-      blog_post.publisher.follow(blog_post.edge)
-    end
   end
 end

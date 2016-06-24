@@ -8,12 +8,12 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }
 
-  let(:project) { create(:project, :unpublished, forum: holland) }
+  let(:project) { create(:project, forum: holland) }
   let(:q1) { create(:question, forum: holland, project: project) }
   let(:m0) { create(:motion, forum: holland, project: project, question: q1) }
   let(:m1) { create(:motion, forum: holland, project: project) }
 
-  let(:published_project) { create(:project, :published, forum: holland) }
+  let(:published_project) { create(:project, argu_publication: build(:publication), forum: holland) }
   let(:q2) { create(:question, forum: holland, project: published_project) }
   let(:m2) { create(:motion, forum: holland, project: published_project, question: q2) }
   let(:m3) { create(:motion, forum: holland, project: published_project) }
@@ -21,9 +21,9 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:q3) { create(:question, forum: holland) }
   let(:m4) { create(:motion, forum: holland, question: q3) }
 
-  let(:tq) { create(:motion, :trashed, forum: holland) }
-  let(:tm) { create(:question, :trashed, forum: holland) }
-  let(:tp) { create(:project, :trashed_at, forum: holland) }
+  let(:tq) { create(:motion, is_trashed: true, forum: holland) }
+  let(:tm) { create(:question, is_trashed: true, forum: holland) }
+  let(:tp) { create(:project, trashed_at: DateTime.current, forum: holland) }
   def holland_nested_project_items
     [m0, m1, m2, m3, m4, q1, q2, q3, tq, tm, tp]
   end

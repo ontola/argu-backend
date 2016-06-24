@@ -20,10 +20,5 @@ FactoryGirl.define do
     end
     sequence(:body) { |i| "fg comment body #{i}end" }
     is_trashed false
-
-    after(:create) do |comment|
-      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(comment)
-      comment.publisher.follow(comment.edge)
-    end
   end
 end

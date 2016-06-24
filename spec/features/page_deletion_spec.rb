@@ -6,40 +6,47 @@ RSpec.feature 'Page deletion', type: :feature do
   let(:motion) do
     create(:motion,
            creator: forum_page.profile,
+           forum: freetown,
            publisher: user)
   end
   let(:question) do
     create(:question,
            creator: forum_page.profile,
+           forum: freetown,
            publisher: user)
   end
   let(:argument) do
     create(:argument,
            creator: forum_page.profile,
            motion: motion,
+           forum: freetown,
            publisher: user)
   end
   let(:group_response) do
     create(:group_response,
            creator: forum_page.profile,
            motion: motion,
+           forum: freetown,
            publisher: user)
   end
   let(:project) do
     create(:project,
            creator: forum_page.profile,
+           forum: freetown,
            publisher: user)
   end
   let(:blog_post) do
     create(:blog_post,
            creator: forum_page.profile,
            blog_postable: project,
+           forum: freetown,
            publisher: user)
   end
   let(:comment) do
     create(:comment,
            commentable: argument,
            creator: forum_page.profile,
+           forum: freetown,
            publisher: user)
   end
   let!(:forum_page) { create(:page, owner: user.profile) }

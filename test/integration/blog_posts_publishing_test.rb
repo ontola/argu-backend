@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BlogPostPublishingTest < ActionDispatch::IntegrationTest
   let(:freetown) { create(:forum) }
-  let(:project) { create(:project, :with_follower, :published, forum: freetown) }
+  let(:project) { create(:project, :with_follower, argu_publication: build(:publication), forum: freetown) }
 
   ####################################
   # As Member

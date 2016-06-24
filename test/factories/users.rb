@@ -46,6 +46,11 @@ FactoryGirl.define do
       reactions_email User.reactions_emails[:weekly_reactions_email]
     end
 
+    trait :follows_reactions_never do
+      confirmed_at Time.current
+      reactions_email User.reactions_emails[:never_reactions_email]
+    end
+
     trait :follows_news_directly do
       confirmed_at Time.current
       news_email User.news_emails[:direct_news_email]
@@ -54,6 +59,11 @@ FactoryGirl.define do
     trait :follows_news_weekly do
       confirmed_at Time.current
       news_email User.news_emails[:weekly_news_email]
+    end
+
+    trait :follows_news_never do
+      confirmed_at Time.current
+      reactions_email User.news_emails[:never_news_email]
     end
 
     trait :forum_manager do

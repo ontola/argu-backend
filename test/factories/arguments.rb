@@ -13,14 +13,5 @@ FactoryGirl.define do
     pro true
     sequence(:title) { |i| "fg argument title #{i}end" }
     sequence(:content) { |i| "fg argument content #{i}end" }
-
-    before :create do |argument|
-      argument.motion.update forum: argument.forum
-    end
-
-    after :create do |argument|
-      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(argument)
-      argument.publisher.follow(argument.edge)
-    end
   end
 end
