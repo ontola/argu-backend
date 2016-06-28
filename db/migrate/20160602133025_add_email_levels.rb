@@ -12,30 +12,24 @@ class AddEmailLevels < ActiveRecord::Migration
 
     destroy_orphan_edges
 
-    Follow.find_each do |follow|
+    Vote.includes(:edge, :publisher).find_each { |vote| vote.publisher.follow(vote.edge, nil, :news) }
+
+    Follow.includes(:followable).find_each do |follow|
       follow
         .followable
         .ancestors
         .where(owner_type: %w(Motion Question Project))
         .each do |ancestor|
-          current_follow_type = follow
-                                  .followable
-                                  .owner
-                                  .publisher
-                                  .following_type(ancestor)
+          current_follow_type = follow.follower.following_type(ancestor)
           if Follow.follow_types[:news] > Follow.follow_types[current_follow_type]
-            follow
-              .followable
-              .owner
-              .publisher
-              .follow(ancestor, :news)
+            follow.follower.follow(ancestor, :news)
           end
       end
     end
   end
 
   def down
-    Follow.where.not(follow_type: 30).destroy_all
+    Follow.where.not(follow_type: Follow.follow_types[:reactions]).destroy_all
 
     remove_column :follows, :follow_type
     remove_column :notifications, :notification_type

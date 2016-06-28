@@ -99,11 +99,22 @@ class User < ActiveRecord::Base
 
   # Creates a new follow record for this instance to follow the passed object.
   # Does not allow duplicate records to be created.
-  def follow(followable, type = :reactions)
+  def follow(followable, type = :reactions, ancestor_type = nil)
     if self != followable
-      follow = follows.find_or_initialize_by(followable_id: followable.id,
-                                             followable_type: parent_class_name(followable))
-      follow.update(follow_type: type)
+      if type.present?
+        follow = follows.find_or_initialize_by(followable_id: followable.id,
+                                               followable_type: parent_class_name(followable))
+        follow.update(follow_type: type)
+      end
+      if ancestor_type.present?
+        followable.ancestors.where(owner_type: %w(Motion Question Project Forum)).find_each do |ancestor|
+          current_follow_type = following_type(ancestor)
+          if Follow.follow_types[ancestor_type] > Follow.follow_types[current_follow_type]
+            follow(ancestor, ancestor_type)
+          end
+        end
+      end
+      true
     end
   end
 
