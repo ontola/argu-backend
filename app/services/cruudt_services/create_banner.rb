@@ -2,7 +2,7 @@
 class CreateBanner < CreateService
   include Wisper::Publisher
 
-  def initialize(profile, attributes = {})
+  def initialize(profile, attributes: {}, options: {})
     @banner = Banner.new(attributes)
     super
   end

@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
     user = create(:user)
     create(:notification,
            user: user,
-           forum: create(:forum))
+           forum: create_forum)
     user
   end
 

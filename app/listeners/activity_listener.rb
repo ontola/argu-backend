@@ -46,7 +46,7 @@ class ActivityListener
 
   def create_vote_successful(resource)
     ActiveRecord::Base.transaction do
-      destroy_recent_similar_activities(resource, 'create')
+      destroy_recent_similar_activities(resource, resource.voteable, 'create')
       create_activity(
         resource,
         resource.voteable,
@@ -87,9 +87,9 @@ class ActivityListener
   end
 
   # Deletes all other activities created within 6 hours of the new activity.
-  def destroy_recent_similar_activities(resource, action)
+  def destroy_recent_similar_activities(resource, trackable, action)
     Activity.delete Activity.where('created_at >= :date', date: 6.hours.ago)
-                      .where(trackable_id: resource.id,
+                      .where(trackable_id: trackable.id,
                              owner_id: @creator.id,
                              key: "#{resource.class.name.downcase}.#{action}")
                       .pluck(:id)

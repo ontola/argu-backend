@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  define_freetown
   setup do
-    @freetown, @freetown_owner = create_forum_owner_pair
+    @freetown, @freetown_owner = freetown, freetown.edge.parent.owner.owner.profileable
     @group = create(:group, forum: @freetown)
   end
 
-  define_freetown
   let!(:group) { create(:group, forum: freetown) }
 
   ####################################

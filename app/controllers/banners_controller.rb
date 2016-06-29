@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BannersController < AuthorizedController
   def new
     render 'forums/settings',
@@ -78,12 +80,23 @@ class BannersController < AuthorizedController
 
   private
 
-  def permit_params
-    params.require(:banner).permit(*policy(resource_by_id || new_resource_from_params || Banner).permitted_attributes)
+  def create_service
+    @create_service ||= CreateBanner.new(
+      current_user.profile,
+      attributes: permit_params.merge(resource_new_params),
+      options: service_options)
   end
 
-  def create_service
-    @create_service ||= CreateBanner.new(current_user.profile,
-                                         permit_params.merge(resource_new_params))
+  def new_resource_from_params
+    controller_name
+      .classify
+      .constantize
+      .new resource_new_params
+  end
+
+  def permit_params
+    params
+      .require(:banner)
+      .permit(*policy(resource_by_id || new_resource_from_params || Banner).permitted_attributes)
   end
 end

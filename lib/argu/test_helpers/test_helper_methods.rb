@@ -12,8 +12,8 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i(argument blog_post comment forum membership motion phase project
-                            question vote).freeze
+        SERVICE_MODELS = %i(argument blog_post comment forum group_response membership motion phase
+                            project question vote).freeze
 
         def assert_not_a_member
           assert_equal true, assigns(:_not_a_member_caught)

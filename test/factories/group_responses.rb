@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :group_response do
     association :forum, strategy: :build
     association :group
-    motion{ passed_in?(:motion) ? motion : create(:motion, forum: forum) }
+    association :motion
     association :creator, factory: :profile
     association :publisher, factory: [:user, :follows_reactions_directly]
     side :pro

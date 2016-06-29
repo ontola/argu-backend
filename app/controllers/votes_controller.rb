@@ -42,29 +42,40 @@ class VotesController < AuthorizedController
     @model = get_parent_resource
     get_context
 
-    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, publisher: current_user)
-    @vote.forum ||= @model.forum
+    method = create_service.resource.persisted? ? :update? : :create?
+    authorize create_service.resource, method
 
-    if @vote.persisted?
-      authorize @vote, :update?
-    else
-      authorize @vote, :create?
-    end
-
-    respond_to do |format|
-      if @vote.for == for_param
+    if create_service.resource.persisted? && !create_service.resource.for_changed?
+      respond_to do |format|
         format.json { render status: 304 }
         format.js { head :not_modified }
-        format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
-      elsif @vote.update(for: for_param)
-        format.json { render location: @vote }
-        format.js
-        format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
-      else
-        format.json { render json: @vote.errors, status: 400 }
-        # format.js { head :bad_request }
-        format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.failed') }
+        format.html do
+          redirect_to polymorphic_url(vote.edge.parent.owner),
+                      notice: t('votes.alerts.not_modified')
+        end
       end
+    else
+      create_service.on(:create_vote_successful) do |vote|
+        respond_to do |format|
+          format.json { render location: vote }
+          format.js
+          format.html do
+            redirect_to polymorphic_url(vote.edge.parent.owner),
+                        notice: t('votes.alerts.success')
+          end
+        end
+      end
+      create_service.on(:create_vote_failed) do |vote|
+        respond_to do |format|
+          format.json { render json: vote.errors, status: 400 }
+          # format.js { head :bad_request }
+          format.html do
+            redirect_to polymorphic_url(vote.edge.parent.owner),
+                        notice: t('votes.alerts.failed')
+          end
+        end
+      end
+      create_service.commit
     end
   end
 
@@ -138,6 +149,10 @@ class VotesController < AuthorizedController
     @forum = (@vote || @model).forum
   end
 
+  def permit_params
+    params.permit(:id, :for)
+  end
+
   def query_payload(opts = {})
     query = opts.merge(vote: {for: for_param})
     query.to_query
@@ -147,5 +162,11 @@ class VotesController < AuthorizedController
     redirect_url = URI.parse(url_for([:new, get_parent_resource, :vote, only_path: true]))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
+  end
+
+  def resource_new_params
+    {
+      for: for_param
+    }
   end
 end

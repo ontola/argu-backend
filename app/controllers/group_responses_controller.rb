@@ -1,7 +1,14 @@
+# frozen_string_literal: true
+
 class GroupResponsesController < AuthorizedController
+  include NestedResourceHelper
+
   def show
     respond_to do |format|
-      format.html { redirect_to url_for([authenticated_resource.motion, anchor: authenticated_resource.identifier]) }
+      format.html do
+        redirect_to url_for([authenticated_resource.motion,
+                             anchor: authenticated_resource.identifier])
+      end
     end
   end
 
@@ -14,8 +21,6 @@ class GroupResponsesController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_group_response_successful) do |group_response|
       respond_to do |format|
         format.html { redirect_to motion_url(group_response.motion) }
@@ -43,8 +48,6 @@ class GroupResponsesController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     update_service.on(:update_group_response_successful) do |group_response|
       respond_to do |format|
         format.html { redirect_to group_response.motion }
@@ -61,8 +64,6 @@ class GroupResponsesController < AuthorizedController
   end
 
   def destroy
-    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                   publisher: current_user))
     destroy_service.on(:destroy_group_response_successful) do |group_response|
       respond_to do |format|
           format.html { redirect_to motion_path(group_response.motion) }
@@ -72,7 +73,9 @@ class GroupResponsesController < AuthorizedController
     destroy_service.on(:destroy_group_response_failed) do |group_response|
       respond_to do |format|
         format.html { redirect_to motion_path(group_response.motion), notice: t('errors.general') }
-        format.js { render json: {notifications: [{type: :error, message: 'Kon reponse niet verwijderen.'}]} }
+        format.js do
+          render json: {notifications: [{type: :error, message: 'Kon reponse niet verwijderen.'}]}
+        end
       end
     end
     destroy_service.commit
@@ -80,15 +83,8 @@ class GroupResponsesController < AuthorizedController
 
   private
 
-  def create_service
-    @create_service ||= CreateGroupResponse.new(
-      GroupResponse.new,
-      resource_new_params.merge(permit_params),
-      service_options)
-  end
-
   def destroy_service
-    @destroy_service ||= DestroyGroupResponse.new(resource_by_id)
+    @destroy_service ||= DestroyGroupResponse.new(resource_by_id, options: service_options)
   end
 
   def new_resource_from_params
@@ -128,7 +124,7 @@ class GroupResponsesController < AuthorizedController
   def update_service
     @update_service ||= UpdateGroupResponse.new(
       resource_by_id,
-      permit_params,
-      service_options)
+      attributes: permit_params,
+      options: service_options)
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class AuthorizedController < ApplicationController
   before_action :check_if_registered,

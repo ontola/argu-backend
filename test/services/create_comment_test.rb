@@ -11,7 +11,6 @@ class CreateCommentTest < ActiveSupport::TestCase
   end
   let(:comment_attributes) do
     attributes_for(:comment)
-      .merge(commentable: commentable)
   end
   let(:comment_options) do
     {
@@ -21,9 +20,10 @@ class CreateCommentTest < ActiveSupport::TestCase
   end
 
   test 'it creates a comment' do
-    c = CreateComment.new(Comment.new,
-                          comment_attributes,
-                          comment_options)
+    c = CreateComment.new(
+      commentable.edge,
+      attributes: comment_attributes,
+      options: comment_options)
     assert c.resource.valid?
     assert_equal user.profile, c.resource.creator
     assert_broadcast(:create_comment_successful) do

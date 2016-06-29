@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 # @TODO: add correct fixtures and implement tests
@@ -5,14 +6,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   define_freetown
-  let(:motion) do
-    create(:motion,
-           parent: freetown.edge)
-  end
+  let(:motion) { create(:motion, parent: freetown.edge) }
   let(:group) do
     create(:group,
            :discussion,
-           parent: freetown.edge)
+           forum: freetown)
   end
   let(:group_response) do
     create(:group_response,
@@ -23,12 +21,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
   let(:visible_group) do
     create(:group,
            :visible,
-           parent: freetown.edge)
+           forum: freetown)
   end
   let(:hidden_group) do
     create(:group,
            :hidden,
-           parent: freetown.edge)
+           forum: freetown)
   end
 
   ####################################
@@ -213,9 +211,8 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in group_member
 
     group_response = create(:group_response,
-                            motion: motion,
                             group: group,
-                            forum: freetown)
+                            parent: motion.edge)
     assert_no_difference('GroupResponse.count') do
       delete :destroy,
              id: group_response

@@ -1,15 +1,16 @@
 require 'test_helper'
 
 class NotificationsTest < ActionDispatch::IntegrationTest
-  let(:freetown) { create(:forum, :with_follower, name: 'freetown') }
-  let(:project) { create(:project, :with_follower, forum: freetown) }
-  let(:question) { create(:question, :with_follower, project: project, forum: freetown) }
-  let(:motion) { create(:motion, :with_follower, question: question, forum: freetown) }
-  let(:argument) { create(:argument, :with_follower, motion: motion, forum: freetown) }
-  let(:comment) { create(:comment, commentable: argument, forum: freetown) }
+  define_freetown
+  let(:project) { create(:project, :with_follower, parent: freetown.edge) }
+  let(:question) { create(:question, :with_follower, parent: project.edge) }
+  let(:motion) { create(:motion, :with_follower, parent: question.edge) }
+  let(:argument) { create(:argument, :with_follower, parent: motion.edge) }
+  let(:comment) { create(:comment, parent: argument.edge) }
   let(:group) { create(:group, :discussion, forum: freetown) }
   let(:group_membership) { create(:group_membership, group: group, member: user.profile) }
-  let!(:random_follow) { create(:follow, followable: create(:forum).edge) }
+  let!(:random_follow) { create(:follow, followable: create_forum.edge) }
+
   ####################################
   # As User
   ####################################

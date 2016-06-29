@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class ActivityStringTest < ActiveSupport::TestCase
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
   let(:updater) { create_member(freetown) }
-  let!(:project) { create(:project, forum: freetown) }
-  let!(:question) { create(:question, forum: freetown, project: project) }
+  let!(:project) { create(:project, parent: freetown.edge) }
+  let!(:question) { create(:question, parent: project.edge) }
 
   test 'string for activities of question' do
     create_activity = question.activities.first

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class VotesControllerTest < ActionController::TestCase
@@ -74,14 +75,17 @@ class VotesControllerTest < ActionController::TestCase
 
     assert_response 200
     assert assigns(:model)
-    assert assigns(:vote)
+    assert assigns(:create_service).resource.valid?
   end
 
   test 'should not create new vote when existing one is present' do
     create(:vote,
            parent: motion.edge,
            voter: member.profile,
-           publisher: member,
+           options: {
+            publisher: member,
+            owner: member.profile
+           },
            for: 'neutral')
     sign_in member
 
@@ -96,19 +100,46 @@ class VotesControllerTest < ActionController::TestCase
 
     assert_response 304
     assert assigns(:model)
-    assert assigns(:vote)
+    assert assigns(:create_service).resource.valid?
+  end
+
+  test 'should update vote when existing one is present' do
+    create(:vote,
+           parent: motion.edge,
+           voter: member.profile,
+           options: {
+             publisher: member,
+             owner: member.profile
+           },
+           for: 'neutral')
+    sign_in member
+
+    assert_no_difference('Vote.count') do
+      post :create,
+           motion_id: motion,
+           vote: {
+             for: 'pro'
+           },
+           format: :json
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
   end
 
   test 'should delete destroy own vote' do
-    vote = create(:vote,
-                  parent: motion.edge,
-                  voter: member.profile,
-                  for: 'neutral')
+    member_vote = create(:vote,
+                         parent: motion.edge,
+                         options: {
+                           creator: member.profile
+                         },
+                         for: 'neutral')
     sign_in member
 
     assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
       delete :destroy,
-             id: vote.id,
+             id: member_vote.id,
              format: :json
     end
 

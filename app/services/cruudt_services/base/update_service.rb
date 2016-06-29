@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Superclass for all the services that update records
 # @author Fletcher91 <thom@argu.co>
 class UpdateService < ApplicationService
