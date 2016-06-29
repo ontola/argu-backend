@@ -8,6 +8,7 @@ nl:
     type_axiomatic: "Axiomatisch"
     type_other: "Anders"
     type_discussion: "In discussie"
+    plural: "Argumenten"
     vote: "Stem"
     new_btn: "Argument toevoegen"
     references: "Referenties"

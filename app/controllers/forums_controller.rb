@@ -56,13 +56,12 @@ class ForumsController < ApplicationController
     authorize @forum, :statistics?
     current_context @forum
 
-    @tags = []
-    tag_ids = Tagging.where(forum_id: @forum.id).select(:tag_id).distinct.map(&:tag_id)
-    tag_ids.each do |tag_id|
-      taggings = Tagging.where(forum_id: @forum.id, tag_id: tag_id)
-      @tags << {name: Tag.find_by(id: taggings.first.tag_id).try(:name) || '[not found]', count: taggings.length}
-    end
-    @tags = @tags.sort { |x, y| y[:count] <=> x[:count] }
+    render :statistics,
+           locals: {
+             content_counts: content_count(@forum),
+             city_counts: city_count(@forum),
+             tag_counts: tag_count(@forum)
+           }
   end
 
   def update
@@ -143,6 +142,26 @@ class ForumsController < ApplicationController
 
   private
 
+  def city_count(forum)
+    cities = Hash.new(0)
+    User
+      .where(id: forum.members.where(profileable_type: 'User').pluck(:profileable_id))
+      .includes(home_placement: :place)
+      .map { |u| u.home_placement&.place&.address.try(:[],'city') }
+      .each { |v| cities.store(v, cities[v] + 1) }
+    cities.sort { |x,y| y[1] <=> x[1] }
+  end
+
+  def content_count(forum)
+    forum
+      .edge
+      .descendants
+      .where(owner_type: %w(Argument Vote Project Question Motion Comment))
+      .group(:owner_type)
+      .count
+      .sort { |x,y| y[1] <=> x[1] }
+  end
+
   def permit_params
     pm = params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
     merge_photo_params(pm, @resource.class)
@@ -164,5 +183,15 @@ class ForumsController < ApplicationController
 
   def tab
     policy(@forum || Forum).verify_tab(params[:tab])
+  end
+
+  def tag_count(forum)
+    tags = []
+    tag_ids = Tagging.where(forum_id: forum.id).select(:tag_id).distinct.map(&:tag_id)
+    tag_ids.each do |tag_id|
+      taggings = Tagging.where(forum_id: forum.id, tag_id: tag_id)
+      tags << {name: Tag.find_by(id: taggings.first.tag_id).try(:name) || '[not found]', count: taggings.length}
+    end
+    tags.sort { |x, y| y[:count] <=> x[:count] }
   end
 end

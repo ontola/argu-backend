@@ -62,6 +62,10 @@ en:
       memberships: "Members"
       questions: "Challenges"
       motions: "Ideas"
+      cities:
+        title: "Cities of users"
+        info: "Based on data provided optionally by users"
+        unknown: "Unknown"
       tags: "Most used tags"
       no_tags: "As of yet, no tags have been used."
     management:

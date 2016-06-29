@@ -16,6 +16,7 @@ nl:
       pro: "ik ben voor"
       neutral: "Geen van beiden"
       con: "ik ben tegen"
+    plural: "Stemmen"
     confirm:
       headline: "Bevestig stem"
       skip: "Niet nu, stemmen overslaan"

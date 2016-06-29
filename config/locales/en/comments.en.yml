@@ -2,6 +2,7 @@ en:
   comments:
     type: "comment"
     type_new: "new comment"
+    plural: "Comments"
     placeholder: "Place your comments here. Please keep your comments substantial and friendly :)"
     empty:
       name: "Place your comment"

@@ -214,6 +214,43 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  ####################################
+  # As Staff
+  ####################################
+  define_freetown('inhabited')
+  let(:staff) { create :user, :staff }
+  let(:binnenhof) { create(:place, address: {'city' => 'Den Haag', 'country_code' => 'nl', 'postcode' => '2513AA'}) }
+  let(:paleis) { create(:place, address: {'city' => 'Den Haag', 'country_code' => 'nl', 'postcode' => '2517KJ'}) }
+  let(:office) { create(:place, address: {'city' => 'Utrecht', 'country_code' => 'nl', 'postcode' => '3583GP'}) }
+  let(:nederland) { create(:place, address: {'country_code' => 'nl'}) }
+  let(:inhabitants) do
+    create(:home_placement, place: office, placeable: create_member(freetown, create(:user)))
+
+    create(:home_placement, place: office, placeable: create_member(inhabited, create(:user)))
+    create(:home_placement, place: binnenhof, placeable: create_member(inhabited, create(:user)))
+    create(:home_placement, place: paleis, placeable: create_member(inhabited, create(:user)))
+    create(:home_placement, place: nederland, placeable: create_member(inhabited, create(:user)))
+  end
+
+  test 'staff should show statistics' do
+    sign_in staff
+
+    inhabitants # Trigger
+    get statistics_forum_path(inhabited)
+    assert_response 200
+
+    counts = [['Den Haag', '2'], ['Utrecht', 1], ['Unknown', '1']]
+    assert_select '.city-table' do |element|
+      assert_select element, '.city-row' do |rows|
+        assert_equal 3, rows.count
+        element.each_with_index do |row, i|
+          assert_select row, '.city', text: counts[i][0]
+          assert_select row, '.city-count', text: counts[i][1]
+        end
+      end
+    end
+  end
+
   private
 
   def included_in_items?(item)

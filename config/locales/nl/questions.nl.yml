@@ -4,6 +4,7 @@ nl:
   questions:
     type: "Uitdaging"
     type_new: "Nieuwe uitdaging"
+    plural: "Uitdagingen"
     new_btn: "Uitdaging toevoegen"
     header: "uitdagingen"
     view_all_motions: "Bekijk alle %{amount} ideeën..."

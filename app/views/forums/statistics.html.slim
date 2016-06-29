@@ -3,20 +3,26 @@
 .col-1
   .box
     section
-      table.styled
-        tr
-          td= t('forums.statistics.memberships')
-          td= @forum.memberships_count
-        tr
-          td= t('forums.statistics.questions')
-          td= @forum.questions_count
-        tr
-          td= t('forums.statistics.motions')
-          td= @forum.motions_count
+      - if content_counts.present?
+        table.styled.content-table
+          - content_counts.each do |content|
+            tr.content-row
+              td.content= t("#{content[0].pluralize.downcase}.plural")
+              td.content-count= content[1]
+      h2= t('forums.statistics.cities.title')
+      p= t('forums.statistics.cities.info')
+      - if city_counts.present?
+        table.styled.city-table
+          - city_counts.each do |city|
+            tr.city-row
+              td.city= city[0] || t('forums.statistics.cities.unknown')
+              td.city-count= city[1]
       h2= t('forums.statistics.tags')
-      - if @tags.present?
-        ul
-          - @tags.each do |tag|
-            li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.url, id: tag[:name])
+      - if tag_counts.present?
+        table.styled.tag-table
+          - tag_counts.each do |tag|
+            tr.tag-row
+              td.tag= link_to tag[:name], forum_tag_url(@forum.url, id: tag[:name])
+              td.tag-count= tag[:count]
       - else
         p= t('forums.statistics.no_tags')

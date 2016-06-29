@@ -4,6 +4,7 @@ en:
   questions:
     type: "Challenge"
     type_new: "New challenge"
+    plural: "Challenges"
     new_btn: "Add challenge"
     header: "Challenges"
     view_all_motions: "View all %{amount} ideas..."

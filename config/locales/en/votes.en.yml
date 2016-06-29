@@ -16,6 +16,7 @@ en:
       pro: "I'm in favor"
       neutral: "Neutral"
       con: "I'm against"
+    plural: "Votes"
     confirm:
       headline: "Confirm vote"
       skip: "Not now, skip voting"

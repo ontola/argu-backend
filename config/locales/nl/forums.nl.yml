@@ -61,6 +61,10 @@ nl:
       memberships: "Leden"
       questions: "Uitdagingen"
       motions: "Ideeën"
+      cities:
+        title: "Woonplaatsen van gebruikers"
+        info: "Gebaseerd op optioneel aangeleverde gebruikersgegevens"
+        unknown: "Onbekend"
       tags: "Meest gebruikte tags"
       no_tags: "Er zijn nog geen tags gebruikt."
     management:

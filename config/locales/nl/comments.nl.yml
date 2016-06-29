@@ -2,6 +2,7 @@ nl:
   comments:
     type: "reactie"
     type_new: "nieuwe reactie"
+    plural: "Reacties"
     placeholder: "Plaats hier jouw reactie. Blijf inhoudelijk en vriendelijk :)"
     empty:
       name: "Plaats jouw reactie"

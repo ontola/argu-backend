@@ -8,6 +8,7 @@ en:
     type_axiomatic: "axiomatic"
     type_other: "other"
     type_discussion: "in discussion"
+    plural: "Arguments"
     vote: "vote"
     new_btn: "Add argument"
     references: "references"
