@@ -69,7 +69,12 @@ class RestrictivePolicy
                                               user.id,
                                               user.profile.groups.where(forum: c_model).pluck(:id))
         # Get the tuples of the entire parent chain
-        cc = record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
+        cc =
+          if record.is_a?(ActiveRecord::Base)
+            record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
+          else
+            []
+          end
         # Match them against the set of stepups within the forum
         moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
       end

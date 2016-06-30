@@ -26,7 +26,7 @@ class ProjectPolicy < RestrictivePolicy
     attributes = super
     attributes.concat %i(id title content start_date end_date achieved_end_date email cover_photo remove_cover_photo
                          cover_photo_attribution) if create?
-    phase = record.is_a?(Project) && Phase.new(project: record, forum: record.forum)
+    phase = record.is_a?(Project) && record.edge.children.new(owner: Phase.new)
     attributes.append(phases_attributes: Pundit.policy(context, phase).permitted_attributes(true)) if phase && create?
     stepup = record.is_a?(Project) && Stepup.new(record: record, forum: record.forum)
     if stepup && (record.try(:new_record?) || is_manager_up?)
