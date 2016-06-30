@@ -1,19 +1,18 @@
 require 'rails_helper'
 
 RSpec.feature 'Transfer Page', type: :feature do
-  let!(:nederland) { create(:populated_forum, name: 'nederland') }
-  let!(:holland) { create(:populated_forum, name: 'holland') }
-  let!(:holland_member) { create_member(holland) }
+  define_holland('nederland')
+  let!(:holland_member) { create_member(nederland) }
   let!(:user) { create(:user_with_votes, first_name: 'testuser') }
 
   scenario 'User transfers a page' do
-    login_as(holland.page.owner.profileable, scope: :user)
+    login_as(nederland.page.owner.profileable, scope: :user)
 
-    visit(settings_page_path(holland.page, tab: :managers))
+    visit(settings_page_path(nederland.page, tab: :managers))
 
     click_link('Move')
     within('form.page') do
-      fill_in 'page_repeat_name', with: holland.page.shortname.shortname
+      fill_in 'page_repeat_name', with: nederland.page.shortname.shortname
       selector =
         if Capybara.current_driver == :poltergeist
           '.Select-control .Select-placeholder'

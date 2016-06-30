@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.feature 'Signup', type: :feature do
   let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
-  let!(:default) { create(:forum, name: 'default') }
-  let!(:freetown) { create(:forum, name: 'freetown') }
-  let!(:motion) { create(:motion, forum: freetown) }
+  define_freetown('default', attributes: {name: 'default'})
+  define_freetown(attributes: {name: 'freetown'})
+  let!(:motion) { create(:motion, parent: freetown.edge) }
 
   scenario 'should register w/ oauth and preserve vote on non-default forum' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash

@@ -1,20 +1,19 @@
 class MembershipsController < AuthorizedController
+  include NestedResourceHelper
   skip_before_action :check_if_member, only: %i(create)
 
   def create
-    @membership = Membership.new resource_new_params
-    authorize @membership, :create?
-
-    created = params[:redirect] == 'false' ? 201 : nil
-    if @membership.save
-      if created
+    create_service.on(:create_membership_successful) do |membership|
+      if params[:redirect] == 'false'
         head 201
       else
-        redirect_to params[:r].presence || @membership.forum
+        redirect_to redirect_param.presence || membership.forum
       end
-    else
+    end
+    create_service.on(:create_membership_failed) do
       render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
+    create_service.commit
   end
 
   def update
@@ -29,44 +28,33 @@ class MembershipsController < AuthorizedController
   end
 
   def destroy
-    @forum = Forum.find_via_shortname(params[:forum_id])
-    authorize @forum, :list?
-    @membership = current_profile.memberships.find params[:id]
-    authorize @membership, :destroy?
-
-    if @membership.destroy
+    destroy_service.on(:destroy_membership_successful) do
       respond_to do |f|
         f.html { redirect_to preferred_forum }
         f.js { render }
       end
-    else
+    end
+    destroy_service.on(:destroy_membership_failed) do
       respond_to do |f|
         f.html { redirect_to preferred_forum }
         f.js { render json: {notifications: [{type: 'error', message: '_niet gelukt_'}]} }
       end
     end
+    destroy_service.commit
   end
 
   private
 
-  def authenticated_resource
-    if params[:action] == 'create'
-      authenticated_context or super
-    else
-      super
-    end
-  end
-
   def destroy_service
-    Struct.new('DestroyMembership', :resource).new
-  end
-
-  def create_service
-    Struct.new('CreateMembership', :resource).new
+    @destroy_service ||= DestroyMembership.new(resource_by_id, options: service_options)
   end
 
   def permit_params
-    params.permit :forum_id, :role, :r
+    params.permit :forum_id, :role
+  end
+
+  def redirect_param
+    params.permit(:r)[:r]
   end
 
   def redirect_url
@@ -76,7 +64,6 @@ class MembershipsController < AuthorizedController
   def resource_new_params
     {
       profile: current_profile,
-      forum: resource_tenant,
       role: (permit_params[:role] || Membership.roles[:member])
     }
   end

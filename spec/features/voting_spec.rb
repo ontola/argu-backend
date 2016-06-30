@@ -1,11 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Voting', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
-  let(:motion) do
-    create(:motion,
-           forum: freetown)
-  end
+  define_freetown
+  let(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################
   # As Guest

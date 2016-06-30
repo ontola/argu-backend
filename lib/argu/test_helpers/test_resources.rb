@@ -39,11 +39,31 @@ module TestResources
       end
     end
 
+    def define_helsinki(name = 'helsinki', attributes: {})
+      let(name) do
+        create_forum(
+          {
+            shortname_attributes: {shortname: name},
+            visibility: Forum.visibilities[:hidden],
+            visible_with_a_link: true
+          }.merge(attributes)
+        )
+      end
+    end
+
     def define_cairo(name = 'cairo')
       let(name) do
         create_forum(
           shortname_attributes: {shortname: name},
           visibility: Forum.visibilities[:closed])
+      end
+    end
+
+    def define_holland(name = 'holland')
+      let(name) do
+        create_forum(
+          :populated_forum,
+          shortname_attributes: {shortname: name})
       end
     end
   end

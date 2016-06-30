@@ -7,7 +7,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     create(:project,
            :with_follower,
            argu_publication: build(:publication),
-           parent: freetown)
+           parent: freetown.edge)
   end
 
   ####################################

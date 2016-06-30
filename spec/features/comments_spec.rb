@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
-  let!(:holland) { create(:populated_forum, name: 'holland') }
-  let!(:argument) { create(:argument, forum: holland) }
+  define_freetown('holland')
+  let!(:motion) { create(:motion, parent: holland.edge) }
+  let!(:argument) { create(:argument, parent: motion.edge) }
 
   ####################################
   # As guest

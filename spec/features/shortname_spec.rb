@@ -2,9 +2,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Shortname', type: :feature do
-  let!(:freetown) { create(:forum, name: 'freetown', max_shortname_count: 3) }
+  define_freetown(attributes: {name: 'freetown', max_shortname_count: 3})
   let(:manager) { create_manager(freetown) }
-  let(:motion) { create(:motion, forum: freetown) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
   let(:upcase_page) do
     create(:page,
            shortname: build(:shortname,
@@ -23,7 +23,7 @@ RSpec.feature 'Shortname', type: :feature do
   end
 
   scenario 'manager destroys a shortname' do
-    create(:discussion_shortname, forum: freetown)
+    create(:discussion_shortname, forum: freetown, owner: create(:motion, parent: freetown.edge))
     sign_in manager
     general_destroy
   end

@@ -1,15 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Access tokens', type: :feature do
-  let!(:helsinki) do
-    create(:hidden_populated_forum,
-           name: 'helsinki',
-           visible_with_a_link: true)
-  end
+  define_helsinki(attributes: {name: 'helsinki'})
   let!(:motion) do
     create(:motion,
            title: 'proposition',
-           forum: helsinki)
+           parent: helsinki)
   end
   let(:helsinki_key) { create(:access_token, item: helsinki) }
 

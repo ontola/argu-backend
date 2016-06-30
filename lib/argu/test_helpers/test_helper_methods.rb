@@ -195,7 +195,7 @@ module Argu
         include TestResources::ClassMethods
 
         def define_common_objects(*let, **opts)
-          let(:freetown) { create(:forum, name: 'freetown') } if mdig?(:freetown, let, opts)
+          define_freetown if mdig?(:freetown, let, opts)
           let(:user) { create(:user, opts.dig(:user)) } if mdig?(:user, let, opts)
           let(:member) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
           let(:manager) { create_manager(cascaded_forum(:manager, opts)) } if mdig?(:manager, let, opts)

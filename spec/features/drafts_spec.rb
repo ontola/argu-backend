@@ -1,25 +1,24 @@
 require 'rails_helper'
 
 RSpec.feature 'Show drafts', type: :feature do
-  let!(:freetown) { create(:forum) }
+  define_freetown
   let(:user) { create(:user, has_drafts: true) }
   let(:user2) { create(:user, has_drafts: true) }
+  let!(:project) do
+    create(:project, parent: freetown.edge, publisher: user)
+  end
+  let!(:published_project) do
+    create(:project, parent: freetown.edge, argu_publication: build(:publication), publisher: user)
+  end
   let!(:blog_post) do
-    create(:blog_post, blog_postable: project, happened_at: DateTime.current, forum: freetown, publisher: user)
+    create(:blog_post, parent: project.edge, happened_at: DateTime.current, publisher: user)
   end
   let!(:published_blog_post) do
     create(:blog_post,
-           blog_postable: project,
+           parent: project.edge,
            happened_at: DateTime.current,
-           forum: freetown,
            argu_publication: build(:publication),
            publisher: user)
-  end
-  let!(:project) do
-    create(:project, forum: freetown, publisher: user)
-  end
-  let!(:published_project) do
-    create(:project, forum: freetown, argu_publication: build(:publication), publisher: user)
   end
 
   scenario 'User with drafts shows drafts' do

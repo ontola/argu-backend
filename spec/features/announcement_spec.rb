@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Announcements', type: :feature do
-  let!(:holland) do
-    create(:populated_forum,
-           name: 'holland')
-  end
+  define_holland
   let!(:unpublished_announcement) do
     create(:announcement,
            :unpublished,

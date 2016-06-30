@@ -1,52 +1,49 @@
 require 'rails_helper'
 
 RSpec.feature 'Account deletion', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
   let(:user) { create(:user) }
   let(:motion) do
     create(:motion,
            creator: user.profile,
            publisher: user,
-           forum: freetown)
+           parent: freetown.edge)
   end
   let(:question) do
     create(:question,
            creator: user.profile,
            publisher: user,
-           forum: freetown)
+           parent: freetown.edge)
   end
   let(:argument) do
     create(:argument,
            creator: user.profile,
-           motion: motion,
-           forum: freetown,
+           parent: motion.edge,
            publisher: user)
   end
   let(:group_response) do
     create(:group_response,
+           group: create(:group),
            creator: user.profile,
-           motion: motion,
-           forum: freetown,
+           parent: motion.edge,
            publisher: user)
   end
   let(:project) do
     create(:project,
            creator: user.profile,
-           forum: freetown,
+           parent: freetown.edge,
            publisher: user)
   end
   let(:blog_post) do
     create(:blog_post,
            creator: user.profile,
-           blog_postable: project,
-           forum: freetown,
+           parent: project.edge,
            publisher: user)
   end
   let(:comment) do
     create(:comment,
-           commentable: argument,
+           parent: argument.edge,
            creator: user.profile,
-           forum: freetown,
            publisher: user)
   end
   let(:forum_page) do

@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Partial Voting', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
-  let(:question) { create(:question, forum: freetown) }
-  subject! do
-    create(:motion, forum: freetown, question: question)
-  end
+  define_freetown
+  let(:question) { create(:question, parent: freetown.edge) }
+  subject! { create(:motion, parent: question.edge) }
 
   ####################################
   # As Guest

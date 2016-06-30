@@ -50,8 +50,6 @@ class AuthorizedController < ApplicationController
   private
 
   def authorize_action
-    return nil if params[:controller].eql?('memberships')
-
     authorize authenticated_resource, "#{params[:action].chomp('!')}?"
   end
 

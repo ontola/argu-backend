@@ -4,17 +4,15 @@ RSpec.feature 'Pagination', type: :feature do
   define_common_objects(:freetown, :user)
 
   let(:overpopulated_motion) do
-    m = create(:motion, forum: freetown)
+    m = create(:motion, parent: freetown.edge)
     create_list(:argument,
                 11,
                 pro: true,
-                motion: m,
-                forum: freetown)
+                parent: m.edge)
     create_list(:argument,
                 11,
                 pro: false,
-                motion: m,
-                forum: freetown)
+                parent: m.edge)
     m
   end
 

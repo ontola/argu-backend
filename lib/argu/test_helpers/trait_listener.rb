@@ -9,6 +9,42 @@ module Argu
         @resource = resource
       end
 
+      def populated_forum
+        3.times do
+          service = CreateMotion
+                      .new(@resource.edge,
+                           attributes: attributes_for(:motion),
+                           options: service_options)
+          service.commit
+          CreateArgument
+            .new(service.resource.edge,
+                 attributes: attributes_for(:argument),
+                 options: service_options)
+            .commit
+        end
+        3.times do
+          CreateMotion
+            .new(@resource.edge,
+                 attributes: attributes_for(:motion, is_trashed: true),
+                 options: service_options)
+            .commit
+        end
+        service = CreateQuestion
+                    .new(@resource.edge,
+                         attributes: attributes_for(:question),
+                         options: service_options)
+        service.commit
+        CreateMotion
+          .new(service.resource.edge,
+               attributes: attributes_for(:motion),
+               options: service_options)
+          .commit
+        create(:access_token, item: @resource)
+        cap = Setting.get('user_cap').try(:to_i)
+        Setting.set('user_cap', -1) unless cap.present?
+        @resource.page.owner.profileable.follow @resource.edge
+      end
+
       # Adds 3 pro and 3 con arguments to the resource
       def with_arguments
         3.times do

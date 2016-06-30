@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Banners', type: :feature do
-  let!(:holland) do
-    create(:populated_forum,
-           name: 'holland')
-  end
+  define_holland
   let!(:unpublished_banner) do
     create(:banner,
            :unpublished,

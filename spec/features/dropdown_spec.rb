@@ -2,19 +2,19 @@ require 'rails_helper'
 
 RSpec.feature 'Dropdown', type: :feature do
   # Names need be different since header_helper#public_forum_items checks for those names
-  let!(:holland) { create(:populated_forum, name: 'nederland') }
-  let!(:other) { create(:populated_forum, name: 'houten') }
+  define_freetown('nederland', attributes: {name: 'nederland'})
+  define_freetown('houten', attributes: {name: 'houten'})
 
   scenario 'User switches forum with forum dropdown' do
-    visit forum_path(holland)
+    visit forum_path(nederland)
 
     within('.navbar-forum-selector') do
       click_on 'Forums'
-      click_link other.name
+      click_link houten.name
     end
 
-    expect(page).to have_content other.display_name
-    expect(page).to have_current_path forum_path(other)
+    expect(page).to have_content houten.display_name
+    expect(page).to have_current_path forum_path(houten)
   end
 
   # scenario 'Dropdown still works after navigating back and forth' do

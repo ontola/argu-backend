@@ -47,7 +47,7 @@ class VotesController < AuthorizedController
 
     if create_service.resource.persisted? && !create_service.resource.for_changed?
       respond_to do |format|
-        format.json { render status: 304 }
+        format.json { render status: 304, locals: {model: @model, vote: create_service.resource} }
         format.js { head :not_modified }
         format.html do
           redirect_to polymorphic_url(vote.edge.parent.owner),
@@ -57,7 +57,7 @@ class VotesController < AuthorizedController
     else
       create_service.on(:create_vote_successful) do |vote|
         respond_to do |format|
-          format.json { render location: vote }
+          format.json { render location: vote, locals: {model: @model, vote: vote} }
           format.js
           format.html do
             redirect_to polymorphic_url(vote.edge.parent.owner),
@@ -105,11 +105,6 @@ class VotesController < AuthorizedController
   end
 
   private
-
-  # @return [Model] parent The vote, or if it doesn't exists yet, the parent on which the Vote is created.
-  def authenticated_resource!
-    params[:id].present? ? Vote.find(params[:id]) : get_parent_resource
-  end
 
   def check_if_member
     resource = get_parent_resource

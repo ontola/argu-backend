@@ -44,11 +44,14 @@ argu = Page
            shortname_attributes: {shortname: 'argu'},
            last_accepted: Time.current)
 argu.build_profile(name: 'Argu', profileable: argu)
+argu.edge = Edge.new(owner: argu, user: argu.publisher)
 argu.save!
 
-Forum.create!(name: 'Nederland',
-              page: argu,
-              shortname_attributes: {shortname: 'nederland'})
+forum = Forum.new(name: 'Nederland',
+                  page: argu,
+                  shortname_attributes: {shortname: 'nederland'})
+forum.edge = Edge.new(owner: forum, user: User.find_via_shortname('staff_account'))
+forum.save!
 
 Setting.set('user_cap', -1)
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')

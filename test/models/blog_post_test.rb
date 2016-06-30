@@ -6,7 +6,7 @@ class BlogPostTest < ActiveSupport::TestCase
     create(:project,
            start_date: DateTime.yesterday,
            end_date: DateTime.tomorrow,
-           parent: freetown)
+           parent: freetown.edge)
   end
   subject do
     create(:blog_post,

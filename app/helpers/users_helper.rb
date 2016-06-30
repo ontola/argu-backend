@@ -55,7 +55,13 @@ module UsersHelper
       if user.profile.memberships.blank?
         begin
           forum = forum_from_r_action(user) || preferred_forum(user.profile)
-          user.profile.memberships.create(forum: forum) if forum.present? && policy(forum).join?
+          if forum.present? && policy(forum).join?
+            CreateMembership
+              .new(forum.edge,
+                   attributes: {profile_id: user.profile.id},
+                   options: {creator: user.profile, publisher: user})
+              .commit
+          end
         rescue ActiveRecord::RecordNotFound => e
           Bugsnag.notify(e)
         end

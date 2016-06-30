@@ -2,9 +2,10 @@ require 'rails_helper'
 include MailerHelper
 
 RSpec.feature 'Notification mailer' do
-  let!(:argument) { create(:argument) }
-
-  let!(:comment) { create(:comment, commentable: argument) }
+  define_freetown
+  let!(:motion) { create(:motion, parent: freetown.edge) }
+  let!(:argument) { create(:argument, parent: motion.edge) }
+  let!(:comment) { create(:comment, parent: argument.edge) }
 
   let!(:follow) do
     create(:follow,

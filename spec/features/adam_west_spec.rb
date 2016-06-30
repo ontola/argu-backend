@@ -2,11 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
   let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
-  let!(:default) { create(:forum, name: 'default') }
-  let!(:freetown) do
-    create(:forum,
-           name: 'freetown')
-  end
+  define_freetown('default', attributes: {name: 'default'})
+  define_freetown
   let!(:f_rule_c) do
     %w(index? show? create? new?).each do |action|
       create(:rule,
@@ -53,22 +50,19 @@ RSpec.feature 'Adam west', type: :feature do
   end
   let!(:question) do
     create(:question,
-           forum: freetown)
+           parent: freetown.edge)
   end
   let!(:motion) do
     create(:motion,
-           question: question,
-           forum: freetown)
+           parent: question.edge)
   end
   let!(:argument) do
     create(:argument,
-           motion: motion,
-           forum: freetown)
+           parent: motion.edge)
   end
   let(:comment) do
     create :comment,
-           commentable: argument,
-           forum: freetown
+           parent: argument.edge
   end
 
   ####################################
@@ -212,7 +206,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Reply')
 
     # Anti-test
-    arg = create(:argument)
+    arg = create(:argument, parent: create(:motion, parent: default))
 
     visit motion_path(arg.motion)
 
@@ -221,7 +215,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).to have_content('Start a new discussion')
 
     c = create(:comment,
-               commentable: arg)
+               parent: arg)
 
     visit motion_path(arg.motion)
     expect(page).to have_content(arg.title)

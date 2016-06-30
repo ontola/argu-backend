@@ -14,25 +14,25 @@ FactoryGirl.define do
     end
 
     # Holland (the default)
-    factory :populated_forum do
-      motion_count 6
-
-      after(:create) do |forum|
-        create_list :motion, 3, :with_arguments, forum: forum
-        create_list :motion, 3, forum: forum, is_trashed: true
-        create :question, :with_motions, forum: forum
-        create :access_token, item: forum
-        cap = Setting.get('user_cap').try(:to_i)
-        Setting.set('user_cap', -1) unless cap.present?
-        forum.page.owner.profileable.follow forum.edge
-      end
-
-      factory :populated_forum_vwal, traits: [:vwal]
-      factory :closed_populated_forum, traits: [:closed]
-      factory :closed_populated_forum_vwal, traits: [:closed, :vwal]
-      factory :hidden_populated_forum, traits: [:hidden]
-      factory :hidden_populated_forum_vwal, traits: [:hidden, :vwal]
-    end
+    # factory :populated_forum do
+    #   motion_count 6
+    #
+    #   after(:create) do |forum|
+    #     create_list :motion, 3, :with_arguments, forum: forum
+    #     create_list :motion, 3, forum: forum, is_trashed: true
+    #     create :question, :with_motions, forum: forum
+    #     create :access_token, item: forum
+    #     cap = Setting.get('user_cap').try(:to_i)
+    #     Setting.set('user_cap', -1) unless cap.present?
+    #     forum.page.owner.profileable.follow forum.edge
+    #   end
+    #
+    #   factory :populated_forum_vwal, traits: [:vwal]
+    #   factory :closed_populated_forum, traits: [:closed]
+    #   factory :closed_populated_forum_vwal, traits: [:closed, :vwal]
+    #   factory :hidden_populated_forum, traits: [:hidden]
+    #   factory :hidden_populated_forum_vwal, traits: [:hidden, :vwal]
+    # end
 
     # Venice
     trait :vwal do

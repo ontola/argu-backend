@@ -87,21 +87,34 @@ FactoryGirl.define do
 
     factory :user_with_memberships do
       after(:create) do |user|
-        user.profile.memberships.create(forum: create(:forum))
+        page = create(:page)
+        service = CreateForum.new(
+          page.edge,
+          attributes: {page: page},
+          options: {
+            creator: page.owner,
+            publisher: page.owner.profileable})
+        service.commit
+        forum = service.resource
+        user.profile.memberships.create(forum: forum)
       end
 
       factory :user_with_votes do
         after(:create) do |user|
           motion = Motion.find_by(is_trashed: false)
-          user.profile.votes.create(voteable: motion,
-                                    forum: motion.forum,
-                                    publisher: user,
-                                    for: :pro)
+          CreateVote.new(
+            motion.edge,
+            attributes: {for: :pro},
+            options: {
+              creator: user.profile,
+              publisher: user}).commit
           trashed = Motion.find_by(is_trashed: true)
-          user.profile.votes.create(voteable: trashed,
-                                    forum: trashed.forum,
-                                    publisher: user,
-                                    for: :pro)
+          CreateVote.new(
+            trashed.edge,
+            attributes: {for: :pro},
+            options: {
+              creator: user.profile,
+              publisher: user}).commit
         end
       end
     end
