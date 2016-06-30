@@ -1,11 +1,13 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+  define_freetown
   subject do
     user = create(:user)
     create(:notification,
            user: user,
-           forum: create_forum)
+           activity: create(:activity, forum: freetown, trackable: create(:motion, parent: freetown.edge)),
+           forum: freetown)
     user
   end
 

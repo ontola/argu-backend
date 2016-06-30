@@ -5,6 +5,7 @@ class CreateQuestion < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
     super
     assign_forum_from_edge_tree
+    resource.project_id = parent.owner_id if parent.owner_type == 'Project'
   end
 
   def resource_klass

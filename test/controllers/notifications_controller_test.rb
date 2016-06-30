@@ -3,7 +3,7 @@ require 'test_helper'
 class NotificationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_freetown
 
   ####################################
   # As Guest
@@ -33,10 +33,25 @@ class NotificationsControllerTest < ActionController::TestCase
   end
 
   test 'user with notifications should get index' do
-    sign_in user_with_notifications
+    sign_in user
+    followed_content(user)
 
     get :index, format: :json
 
     assert_response 200
+  end
+
+  private
+
+  def followed_content(user)
+    parent = freetown
+    create(:follow, followable: parent.edge, follower: user)
+    %i(question motion vote argument comment ).each do |type|
+      trackable = create(type, parent: parent)
+      if %i(question motion argument).include?(type)
+        parent = trackable
+        create(:follow, followable: parent.edge, follower: user)
+      end
+    end
   end
 end

@@ -131,6 +131,10 @@ class VotesController < AuthorizedController
     end
   end
 
+  def destroy_service
+    @destroy_service ||= DestroyVote.new(resource_by_id, options: service_options)
+  end
+
   def for_param
     if params[:for].is_a?(String) && params[:for].present?
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'

@@ -107,7 +107,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     @request.env['devise.mapping'] = Devise.mappings[:user]
     create :motion, publisher: user, creator: page.profile, parent: freetown.edge
     create :question, publisher: user, creator: page.profile, parent: freetown.edge
-    create :argument, publisher: user, creator: page.profile, parent: motion.edge
+    create :argument, publisher: user, creator: page.profile, parent: Motion.last.edge
 
     sign_in user
 

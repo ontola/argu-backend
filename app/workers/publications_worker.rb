@@ -13,6 +13,10 @@ class PublicationsWorker
     Argu::Redis.exists("cancelled-#{jid}")
   end
 
+  def self.cancelled?(jid)
+    Argu::Redis.exists("cancelled-#{jid}")
+  end
+
   def self.cancel!(jid)
     Argu::Redis.setex("cancelled-#{jid}", 86400, 1)
   end

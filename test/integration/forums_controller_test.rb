@@ -5,9 +5,9 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   define_freetown
-  let!(:holland) { create(:populated_forum, name: 'holland') }
-  let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
-  let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }
+  define_holland
+  define_cologne
+  define_helsinki
 
   let(:project) { create(:project, parent: holland.edge) }
   let(:q1) { create(:question, parent: project.edge) }
@@ -145,29 +145,26 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:forum_pair) { create_forum_owner_pair(type: :populated_forum) }
 
   test 'owner should show settings and all tabs' do
-    forum, owner = forum_pair
-    sign_in owner
+    sign_in create_owner(holland)
 
-    get settings_forum_path(forum)
-    assert_forum_settings_shown forum
+    get settings_forum_path(holland)
+    assert_forum_settings_shown holland
 
     [:general, :advanced, :groups, :privacy, :managers].each do |tab|
-      get settings_forum_path(forum), tab: tab
-      assert_forum_settings_shown forum, tab
+      get settings_forum_path(holland), tab: tab
+      assert_forum_settings_shown holland, tab
     end
   end
 
   test 'owner should update settings' do
-    forum, owner = forum_pair
-    sign_in owner
-
-    assert_difference('forum.reload.lock_version', 1) do
-      put forum_path(forum),
+    sign_in create_owner(holland)
+    assert_difference('holland.reload.lock_version', 1) do
+      put forum_path(holland),
           forum: {
             name: 'new name',
             bio: 'new bio',
             default_profile_photo_attributes: {
-              id: forum.default_profile_photo.id,
+              id: holland.default_profile_photo.id,
               image: fixture_file_upload(File.expand_path('test/files/profile_photo.png'), 'image/png'),
               used_as: 'profile_photo'
             },
@@ -178,7 +175,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to settings_forum_path(forum.url, tab: :general)
+    assert_redirected_to settings_forum_path(holland.url, tab: :general)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
     assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.image_identifier
@@ -187,11 +184,10 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'owner should not show statistics yet' do
-    forum, owner = forum_pair
-    sign_in owner
+    sign_in create_owner(holland)
 
-    get statistics_forum_path(forum)
-    assert_redirected_to forum_path(forum)
+    get statistics_forum_path(holland)
+    assert_redirected_to forum_path(holland)
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
     # assert_equal 2, assigns(:tags).length

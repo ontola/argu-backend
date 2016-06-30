@@ -326,7 +326,7 @@ class ArgumentsControllerTest < ActionController::TestCase
 
   def create_changes_array(auto_vote = true)
     c = [['Argument.count', 1],
-         ['Activity.count', 1],
+         ['Activity.count', auto_vote ? 2 : 1],
          ['Notification.count', 2]]
     if auto_vote
       c.concat([['Edge.count', 2], ['Vote.count', 1]])

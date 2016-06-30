@@ -71,7 +71,11 @@ class RestrictivePolicy
         # Get the tuples of the entire parent chain
         cc =
           if record.is_a?(ActiveRecord::Base)
-            record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
+            if record.persisted?
+              record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
+            elsif record.edge.parent.present?
+              record.edge.parent.self_and_ancestors.map(&:polymorphic_tuple).compact
+            end
           else
             []
           end

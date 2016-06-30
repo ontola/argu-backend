@@ -16,7 +16,10 @@ module Portal
     def create
       @cb = CreateAnnouncement
                 .new(current_user.profile,
-                     announcement_params)
+                     attributes: announcement_params,
+                     options: {
+                       creator: current_profile,
+                       publisher: current_user})
       authorize @cb.resource, :create?
       @cb.on(:create_announcement_successful) do
         respond_to do |format|

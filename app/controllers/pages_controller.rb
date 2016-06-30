@@ -58,7 +58,9 @@ class PagesController < ApplicationController
     authorize Page, :create?
 
     @page = Page.create(permit_params)
-    if @page.valid?
+    @page.edge = Edge.new(owner: @page, user: @page.publisher)
+
+    if @page.save
       redirect_to page_url(@page), status: 303
     else
       respond_to do |format|

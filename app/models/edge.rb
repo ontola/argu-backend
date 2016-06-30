@@ -1,7 +1,6 @@
 
 class Edge < ActiveRecord::Base
   belongs_to :owner,
-             autosave: true,
              inverse_of: :edge,
              polymorphic: true,
              required: true

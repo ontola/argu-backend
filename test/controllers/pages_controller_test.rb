@@ -10,45 +10,41 @@ class PagesControllerTest < ActionController::TestCase
 
   let(:motion) do
     create(:motion,
-           forum: freetown,
+           parent: freetown,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
   let(:argument) do
     create(:argument,
-           forum: freetown,
-           motion: motion,
+           parent: motion,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
 
   let(:comment) do
     create(:comment,
-           forum: freetown,
-           commentable: argument,
+           parent: argument,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
 
   let(:project) do
     create(:project,
-           forum: freetown,
+           parent: freetown.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
 
   let(:project_motion) do
     create(:motion,
-           forum: freetown,
-           project: project,
+           parent: project.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
 
   let(:project_argument) do
     create(:argument,
-           forum: freetown,
-           motion: project_motion,
+           parent: project_motion.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
@@ -105,8 +101,8 @@ class PagesControllerTest < ActionController::TestCase
            'Votes of closed fora are visible to non-members'
   end
 
-  let(:amsterdam) { create(:forum) }
-  let(:utrecht) { create(:forum) }
+  define_freetown('amsterdam')
+  define_freetown('utrecht')
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }
 
   test 'user should not show all votes' do
@@ -276,11 +272,11 @@ class PagesControllerTest < ActionController::TestCase
   private
 
   def initialize_user2_votes
-    motion1 = create(:motion, forum: utrecht)
-    motion3 = create(:motion, forum: amsterdam, creator: user2.profile)
-    argument1 = create(:argument, forum: utrecht, motion: motion1)
-    create(:vote, voteable: motion1, for: :neutral, forum: utrecht)
-    create(:vote, voteable: motion3, for: :pro, forum: amsterdam)
-    create(:vote, voteable: argument1, for: :neutral, forum: utrecht)
+    motion1 = create(:motion, parent: utrecht)
+    motion3 = create(:motion, parent: amsterdam, creator: user2.profile)
+    argument1 = create(:argument, parent: motion1)
+    create(:vote, parent: motion1, for: :neutral, forum: utrecht)
+    create(:vote, parent: motion3, for: :pro, forum: amsterdam)
+    create(:vote, parent: argument1, for: :neutral, forum: utrecht)
   end
 end

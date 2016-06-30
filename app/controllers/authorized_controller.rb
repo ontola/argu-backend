@@ -152,7 +152,7 @@ class AuthorizedController < ApplicationController
   end
 
   def service_klass
-    "Create#{params[:controller].classify}".safe_constantize
+    "Create#{controller_name.classify}".safe_constantize
   end
 
   def current_context
@@ -187,7 +187,7 @@ class AuthorizedController < ApplicationController
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    authenticated_context
+    get_parent_resource
       .edge
       .children
       .new(owner: controller_name

@@ -3,7 +3,7 @@ require 'test_helper'
 
 class ActivityTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:activity, parent: freetown.edge) }
+  subject { create(:activity, forum: freetown, trackable: create(:motion, parent: freetown.edge)) }
 
   def test_valid
     assert subject.valid?

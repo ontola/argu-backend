@@ -126,6 +126,7 @@ class Motion < ActiveRecord::Base
       old_forum = self.forum.lock!
       self.forum = forum.lock!
       self.question_id = nil if unlink_question
+      edge.parent = forum.edge
       save
       arguments.lock(true).update_all forum_id: forum.id
       votes.lock(true).update_all forum_id: forum.id

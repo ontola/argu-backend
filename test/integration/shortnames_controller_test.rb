@@ -5,11 +5,15 @@ require 'test_helper'
 # Additionally tests for shortnames to be routed correctly between forums and dynamic redirects.
 class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   define_freetown(attributes: {max_shortname_count: 1})
-  let(:comment) { create(:comment, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:argument) { create(:argument, parent: motion.edge) }
+  let(:comment) { create(:comment, parent: argument.edge) }
+  let(:publication) { build(:publication) }
   let(:comment_shortname) { create(:shortname, owner: comment) }
   let(:subject) do
     create(:discussion_shortname,
-           forum: freetown)
+           forum: freetown,
+           owner: motion)
   end
 
   ####################################
@@ -21,12 +25,19 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  %i(published_project question motion argument).each do |resource|
-    let(resource) { create(resource, parent: freetown.edge) }
-    let("#{resource}_shortname".to_sym) { create(:shortname, owner: send(resource)) }
+  test 'guest should get resources' do
+    parent = freetown
+    %i(project question motion argument).each do |klass|
+      resource = if klass == :project
+                   create(klass, parent: parent.edge, argu_publication: publication)
+                 else
+                   create(klass, parent: parent.edge)
+                 end
+      parent = resource
 
-    test "guest should get #{resource}" do
-      general_show(200, send(resource), send("#{resource}_shortname"))
+      shortname = create(:shortname, forum: freetown, owner: resource)
+
+      general_show(200, resource, shortname)
     end
   end
 
@@ -69,7 +80,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'manager post create should not overflow limit' do
-    create(:discussion_shortname, forum: freetown)
+    create(:discussion_shortname, forum: freetown, owner: motion)
     assert freetown.max_shortname_count, freetown.shortnames.count
     sign_in manager
     general_create 302, [['Shortname.count', 0]]
@@ -129,8 +140,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
 
   # @return [Hash] Options to pass to the request
   def shortname_attributes
-    attrs = attributes_for(:discussion_shortname,
-                           forum: freetown)
+    attrs = attributes_for(:discussion_shortname, forum: freetown, owner: motion)
     attrs.delete(:forum)
     owner = attrs.delete(:owner)
     attrs[:owner_id] = owner.id

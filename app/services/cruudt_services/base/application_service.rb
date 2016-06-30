@@ -109,6 +109,7 @@ class ApplicationService
       attributes[:publisher] ||= @options[:publisher]
       attributes[:creator] ||= @options[:creator]
     end
+    attributes[:id] = resource.argu_publication.id if resource.argu_publication.present?
     @attributes[:argu_publication_attributes] = attributes
   end
 

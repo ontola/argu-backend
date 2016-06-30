@@ -3,19 +3,20 @@ require 'test_helper'
 class MailerHelperTest < ActionView::TestCase
   include MailerHelper
 
-  let!(:holland) { create(:populated_forum, :with_follower) }
+  define_freetown
+  let!(:follower) { create(:follow, followable: freetown.edge) }
   let!(:creator) { create(:profile) }
   let!(:publisher) { create(:user, profile: creator) }
 
-  let(:question) { create(:question, :with_follower, creator: creator, forum: holland) }
-  let(:motion) { create(:motion, :with_follower, creator: creator, forum: holland) }
-  let(:motion_question) { create(:motion, creator: creator, forum: holland, question: question) }
-  let(:argument_pro) { create(:argument, creator: creator, forum: holland, pro: true, motion: motion) }
-  let(:argument_con) { create(:argument, creator: creator, forum: holland, pro: false, motion: motion) }
-  let(:comment) { create(:comment, creator: creator, commentable: argument_pro) }
+  let(:question) { create(:question, :with_follower, creator: creator, parent: freetown.edge) }
+  let(:motion) { create(:motion, :with_follower, creator: creator, parent: freetown.edge) }
+  let(:motion_question) { create(:motion, creator: creator, parent: question.edge) }
+  let(:argument_pro) { create(:argument, creator: creator, pro: true, parent: motion.edge) }
+  let(:argument_con) { create(:argument, creator: creator, pro: false, parent: motion.edge) }
+  let(:comment) { create(:comment, creator: creator, parent: argument_pro.edge) }
   let(:comment_comment) do
     comment_comment = create(:comment,
-                             commentable: argument_pro,
+                             parent: argument_pro.edge,
                              creator: creator)
     comment_comment.move_to_child_of comment
   end

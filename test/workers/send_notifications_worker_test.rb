@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class SendNotificationsWorkerTest < ActiveSupport::TestCase
-  let!(:argument) { create(:argument) }
+  define_freetown
+  let!(:motion) { create(:motion, parent: freetown.edge) }
+  let!(:argument) { create(:argument, parent: motion.edge) }
 
   let!(:follow) do
     create(:follow,

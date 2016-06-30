@@ -25,7 +25,7 @@ class Placement < ActiveRecord::Base
   end
 
   def postal_code=(val)
-    val.try(:upcase!).try(:delete!, ' ')
+    val = val.try(:upcase).try(:delete, ' ')
     attribute_will_change!('postal_code') unless val == postal_code
     @postal_code = val
   end

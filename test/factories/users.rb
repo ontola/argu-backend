@@ -72,19 +72,6 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_notifications do
-      after(:create) do |user|
-        f = create :forum
-        %i(question motion argument comment vote group_response).each do |type|
-          create :notification,
-                 user: user,
-                 activity: create(:activity,
-                                  "t_#{type}".to_sym,
-                                  forum: f)
-        end
-      end
-    end
-
     factory :user_with_memberships do
       after(:create) do |user|
         page = create(:page)

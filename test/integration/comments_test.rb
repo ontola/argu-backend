@@ -1,11 +1,12 @@
 require 'test_helper'
 
 class CommentsTest < ActionDispatch::IntegrationTest
-  let!(:venice) { create(:forum, :vwal) }
+  define_venice
   let(:access_token) { create(:access_token, item: venice) }
+  let(:motion) { create(:motion, parent: venice) }
   let(:argument) do
     create(:argument,
-           forum: venice,
+           parent: motion,
            creator: create(:user,
                            :follows_reactions_directly)
                         .profile)
@@ -13,7 +14,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:comment) do
     create(:comment,
            creator: member.profile,
-           commentable: argument)
+           parent: argument)
   end
 
   ####################################
@@ -92,7 +93,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'owner should not delete wipe own comment twice affecting counter caches' do
-    sign_in venice.page.owner.profileable
+    sign_in create_owner(venice)
 
     assert_equal 1, comment.commentable.comments_count
 

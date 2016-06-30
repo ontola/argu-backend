@@ -25,7 +25,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_not_authorized
 
     post project_blog_posts_path(project_id: project,
-                                 blog_post: attributes_for(:blog_post, forum: project.forum))
+                                 blog_post: attributes_for(:blog_post, parent: project.forum))
     assert_not_authorized
   end
 
@@ -44,11 +44,11 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    assert_difference('Publication.count', 1) do
+    assert_differences([['Publication.count', 1], ['Notification.count', 0]]) do
       post project_blog_posts_path(
         project_id: project,
         blog_post: attributes_for(:blog_post,
-                                  forum: project.forum,
+                                  parent: project.forum,
                                   argu_publication_attributes: {publish_type: :draft}))
       assert_response 302
     end
@@ -57,7 +57,6 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert moderator.reload.has_drafts?
     assert_response 200
     assert_equal false, BlogPost.last.is_published?
-    assert_equal 0, Notification.count
   end
 
   test 'should post create published blog_post' do
@@ -72,7 +71,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     post project_blog_posts_path(
       project_id: project,
       blog_post: attributes_for(:blog_post,
-                                forum: project.forum,
+                                parent: project.forum,
                                 happened_at: DateTime.current,
                                 argu_publication_attributes: {publish_type: :direct}))
     assert_response 302
@@ -116,17 +115,23 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(
-      project_id: project,
-      blog_post: attributes_for(:blog_post,
-                                forum: project.forum,
-                                argu_publication_attributes: {publish_type: :schedule,
-                                                              published_at: 1.day.from_now}))
+    assert_differences([['Publication.count', 1], ['Notification.count', 0]]) do
+      post project_blog_posts_path(
+        project_id: project,
+        blog_post: attributes_for(:blog_post,
+                                  parent: project.forum,
+                                  argu_publication_attributes: {publish_type: :schedule,
+                                                                published_at: 1.day.from_now}))
+    end
     assert_response 302
+    job_id = Publication.last.job_id
+    assert_not PublicationsWorker.cancelled?(job_id)
 
-    patch blog_post_path(
-      id: BlogPost.last.id,
-      blog_post: {argu_publication_attributes: {publish_type: :draft}})
+    assert_differences([['Publication.count', 0], ['Notification.count', 0]]) do
+      patch blog_post_path(
+        id: BlogPost.last.id,
+        blog_post: {argu_publication_attributes: {publish_type: :draft}})
+    end
     assert_response 302
 
     Sidekiq::Testing.inline! do
@@ -136,6 +141,6 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response 200
     assert_equal false, BlogPost.last.is_published?
-    assert_equal 0, Notification.count
+    assert PublicationsWorker.cancelled?(job_id)
   end
 end

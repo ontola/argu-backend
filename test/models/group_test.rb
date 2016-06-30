@@ -3,7 +3,8 @@ require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:group, forum: freetown.edge) }
+  subject { create(:group, forum: freetown) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -13,7 +14,8 @@ class GroupTest < ActiveSupport::TestCase
     create(:group_membership,
            group: subject)
     create(:group_response,
-           group: subject)
+           group: subject,
+           parent: motion.edge)
 
     assert_difference ['GroupMembership.count', 'GroupResponse.count'], -1 do
       subject.destroy

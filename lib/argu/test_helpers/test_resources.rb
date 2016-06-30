@@ -39,31 +39,61 @@ module TestResources
       end
     end
 
-    def define_helsinki(name = 'helsinki', attributes: {})
-      let(name) do
+    def define_cairo(name = 'cairo', attributes: {})
+      let!(name) do
         create_forum(
+          {
+            shortname_attributes: {shortname: name},
+            visibility: Forum.visibilities[:closed]
+          }.merge(attributes)
+        )
+      end
+    end
+
+    def define_cologne(name = 'cologne', attributes: {})
+      let!(name) do
+        create_forum(
+          :populated_forum,
+          {
+            shortname_attributes: {shortname: name},
+            visibility: Forum.visibilities[:closed]
+          }.merge(attributes)
+        )
+      end
+    end
+
+    def define_helsinki(name = 'helsinki', attributes: {})
+      let!(name) do
+        forum = create_forum(
           {
             shortname_attributes: {shortname: name},
             visibility: Forum.visibilities[:hidden],
             visible_with_a_link: true
           }.merge(attributes)
         )
+        create :access_token, item: forum
+        forum
       end
     end
 
-    def define_cairo(name = 'cairo')
-      let(name) do
-        create_forum(
-          shortname_attributes: {shortname: name},
-          visibility: Forum.visibilities[:closed])
-      end
-    end
-
-    def define_holland(name = 'holland')
-      let(name) do
+    def define_holland(name = 'holland', attributes: {})
+      let!(name) do
         create_forum(
           :populated_forum,
-          shortname_attributes: {shortname: name})
+          {
+            shortname_attributes: {shortname: name}
+          }.merge(attributes)
+        )
+      end
+    end
+
+    def define_venice(name = 'venice', attributes: {})
+      let!(name) do
+        create_forum(
+          {
+            visible_with_a_link: true
+          }.merge(attributes)
+        )
       end
     end
   end

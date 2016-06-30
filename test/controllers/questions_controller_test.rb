@@ -398,7 +398,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assigns(:question).motions.pluck(:forum_id).each do |id|
       assert_equal freetown.id, id
     end
-    assert assigns(:question).motions.blank?
+    assert assigns(:question).reload.motions.blank?
     assigns(:question).activities.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end

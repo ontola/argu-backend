@@ -14,11 +14,11 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
     create(:blog_post,
            publisher: publisher,
            happened_at: DateTime.current,
-           blog_postable: project,
-           parent: freetown.edge)
+           parent: project.edge)
   end
 
   test 'should collect direct followers for notifications' do
+    Follow.destroy_all
     # should be collected for direct mailing
     create_follow_and_notification_pair(blog_post, :follows_reactions_directly, :follows_news_directly)
     create_follow_and_notification_pair(argument, :follows_reactions_directly, :follows_news_directly)

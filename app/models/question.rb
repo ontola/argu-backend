@@ -54,6 +54,7 @@ class Question < ActiveRecord::Base
     Question.transaction do
       old_forum = self.forum.lock!
       self.forum = forum.lock!
+      edge.parent = forum.edge
       save
       votes.lock(true).update_all forum_id: forum.id
       activities.lock(true).update_all forum_id: forum.id
@@ -62,7 +63,10 @@ class Question < ActiveRecord::Base
           m.move_to forum, false
         end
       else
-        motions.update_all question_id: nil
+        motions.each do |motion|
+          motion.update(question: nil)
+          motion.edge.update(parent: motion.forum.edge)
+        end
       end
       old_forum.reload.decrement :questions_count
       old_forum.save

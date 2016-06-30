@@ -8,11 +8,7 @@ module Portal
       create(:announcement,
              :everyone)
     end
-    let!(:holland) do
-      create(:populated_forum,
-             name: 'holland')
-    end
-    let!(:holland_owner) { create(:user) }
+    define_freetown
 
     ####################################
     # Shared
@@ -20,7 +16,7 @@ module Portal
 
     def general_new(response = 302)
       get :new,
-          forum_id: holland
+          forum_id: freetown
 
       assert_response response
     end
@@ -102,13 +98,13 @@ module Portal
     # As Member
     ####################################
     test 'member should not post create' do
-      sign_in create_member(holland)
+      sign_in create_member(freetown)
 
       general_create
     end
 
     test 'member should not delete destroy' do
-      sign_in create_member(holland)
+      sign_in create_member(freetown)
 
       general_destroy
     end
@@ -116,13 +112,13 @@ module Portal
     # As Manager
     ####################################
     test 'manager should post create' do
-      sign_in create_manager(holland)
+      sign_in create_manager(freetown)
 
       general_create
     end
 
     test 'manager should not delete destroy' do
-      sign_in create_manager(holland)
+      sign_in create_manager(freetown)
 
       general_destroy
     end
@@ -130,13 +126,13 @@ module Portal
     # As Owner
     ####################################
     test 'owner should not post create' do
-      sign_in create_owner(holland, holland_owner)
+      sign_in create_owner(freetown)
 
       general_create
     end
 
     test 'owner should not delete destroy' do
-      sign_in create_owner(holland)
+      sign_in create_owner(freetown)
 
       general_destroy
     end

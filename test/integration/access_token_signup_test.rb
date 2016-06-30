@@ -2,10 +2,10 @@
 require 'test_helper'
 
 class AccessTokenSignupTest < ActionDispatch::IntegrationTest
-  let(:helsinki) { create(:hidden_populated_forum_vwal) }
+  define_helsinki
+  define_helsinki('athens', attributes: {visible_with_a_link: false})
   let(:helsinki_at) { helsinki.access_tokens.first }
-  let(:hidden_one) { create(:motion, forum: helsinki) }
-  let(:athens) { create(:hidden_populated_forum) }
+  let(:hidden_one) { create(:motion, parent: helsinki.edge) }
 
   test 'should redirect to root when accessing a forum without an access token' do
     get forum_path(helsinki)

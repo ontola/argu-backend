@@ -3,8 +3,11 @@ require 'test_helper'
 class ForumTest < ActiveSupport::TestCase
   include ModelTestBase
 
-  subject { create(:populated_forum) }
-  let(:venice) { create(:populated_forum_vwal) }
+  define_cairo
+  define_holland('subject')
+  define_venice
+  define_cairo('cairo2')
+
   let(:user) { create(:user) }
   let(:subject_member) { create_member(subject) }
 
@@ -51,9 +54,6 @@ class ForumTest < ActiveSupport::TestCase
   end
 
   test 'first_public should return a public forum' do
-    create(:forum, :closed)
-    create(:forum)
-    create(:forum, :closed)
     forum = Forum.first_public
     assert forum.open?
   end
@@ -63,8 +63,9 @@ class ForumTest < ActiveSupport::TestCase
     assert subject.profile_is_member?(subject_member.profile)
   end
 
+  define_holland('shortname_forum', attributes: {max_shortname_count: 0})
   test 'shortnames_depleted? should function correctly' do
-    f = create(:populated_forum, max_shortname_count: 0)
+    f = shortname_forum
     assert_equal true,
                  f.shortnames_depleted?,
                  'zero shortname allowance false negative'
@@ -74,7 +75,7 @@ class ForumTest < ActiveSupport::TestCase
                  f.shortnames_depleted?,
                  'in bound shortname allowance false positive'
 
-    m = create(:motion)
+    m = create(:motion, parent: subject.edge)
     create(:shortname,
            forum: m.forum,
            owner: m)

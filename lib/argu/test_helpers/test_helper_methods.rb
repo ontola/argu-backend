@@ -147,7 +147,10 @@ module Argu
         def destroy_resource(resource, user = nil, profile = nil)
           user ||= create(:user)
           profile ||= user.profile
-          service = "Destroy#{resource.class}".constantize.new(resource)
+          options = {}
+          options[:publisher] = user
+          options[:creator] = profile
+          service = "Destroy#{resource.class}".constantize.new(resource, attributes: {}, options: options)
           service.subscribe(ActivityListener.new(creator: profile,
                                                  publisher: user))
           service.commit
@@ -161,7 +164,10 @@ module Argu
         def trash_resource(resource, user = nil, profile = nil)
           user ||= create(:user)
           profile ||= user.profile
-          service = "Trash#{resource.class}".constantize.new(resource)
+          options = {}
+          options[:publisher] = user
+          options[:creator] = profile
+          service = "Trash#{resource.class}".constantize.new(resource, attributes: {}, options: options)
           service.subscribe(ActivityListener.new(creator: profile,
                                                  publisher: user))
           service.commit
@@ -171,7 +177,10 @@ module Argu
         def update_resource(resource, attributes = {}, user = nil, profile = nil)
           user ||= create(:user)
           profile ||= user.profile
-          service = "Update#{resource.class}".constantize.new(resource, attributes)
+          options = {}
+          options[:publisher] = user
+          options[:creator] = profile
+          service = "Update#{resource.class}".constantize.new(resource, attributes: attributes, options: options)
           service.subscribe(ActivityListener.new(creator: profile,
                                                  publisher: user))
           service.commit

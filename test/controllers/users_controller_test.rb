@@ -152,10 +152,10 @@ class UsersControllerTest < ActionController::TestCase
     motion3 = create(:motion, parent: amsterdam.edge, creator: user2.profile)
     motion4 = create(:motion, parent: freetown.edge, creator: user2.profile, is_trashed: true)
     argument1 = create(:argument, parent: motion1.edge)
-    create(:vote, voteable: motion1, for: :neutral, parent: motion1.edge, voter: user2.profile)
-    create(:vote, voteable: motion3, for: :pro, parent: motion3.edge, voter: user2.profile)
-    create(:vote, voteable: argument1, for: :neutral, parent: argument1.edge, voter: user2.profile)
-    create(:vote, voteable: motion4, for: :pro, parent: motion4.edge, voter: user2.profile)
+    create(:vote, for: :neutral, parent: motion1.edge, voter: user2.profile, publisher: user2)
+    create(:vote, for: :pro, parent: motion3.edge, voter: user2.profile, publisher: user2)
+    create(:vote, for: :neutral, parent: argument1.edge, voter: user2.profile, publisher: user2)
+    create(:vote, for: :pro, parent: motion4.edge, voter: user2.profile, publisher: user2)
     user2
   end
 end

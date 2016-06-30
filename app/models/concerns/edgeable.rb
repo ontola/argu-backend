@@ -7,8 +7,7 @@ module Edgeable
             as: :owner,
             inverse_of: :owner,
             dependent: :destroy,
-            required: true,
-            autosave: true
+            required: true
     before_update :update_edge_parent, if: :parent_changed?
 
     private
