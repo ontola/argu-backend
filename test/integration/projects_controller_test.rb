@@ -20,7 +20,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     p
   end
   let(:unpublished) do
-    p = create(:project, forum: freetown)
+    p = create(:project, parent: freetown.edge)
     create(:stepup,
            record: p,
            forum: freetown,
@@ -33,7 +33,6 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
            trashed_at: Time.current,
            parent: freetown.edge)
   end
-  let(:unpublished) { create(:project, parent: freetown.edge) }
 
   ####################################
   # As Guest

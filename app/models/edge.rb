@@ -37,6 +37,11 @@ class Edge < ActiveRecord::Base
   # Refers to the parent edge
   # attribute :parent_id, :integer
 
+  # Only returns a value when the model has been saved
+  def polymorphic_tuple
+    [owner_type, owner_id]
+  end
+
   def set_user_id
     self.user_id = owner.publisher.id
   end

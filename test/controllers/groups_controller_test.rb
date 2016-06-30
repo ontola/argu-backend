@@ -6,7 +6,8 @@ class GroupsControllerTest < ActionController::TestCase
 
   define_freetown
   setup do
-    @freetown, @freetown_owner = freetown, freetown.edge.parent.owner.owner.profileable
+    @freetown = freetown
+    @freetown_owner = freetown.edge.parent.owner.owner.profileable
     @group = create(:group, forum: @freetown)
   end
 
