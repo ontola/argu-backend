@@ -45,19 +45,6 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_a_member
   end
 
-  test 'user should not get convert' do
-    sign_in user
-    get :convert, motion_id: subject
-    assert_not_authorized
-    assert_redirected_to subject.forum
-  end
-
-  test 'user should not put convert' do
-    sign_in user
-    put :convert, motion_id: subject
-    assert_redirected_to subject.forum
-  end
-
   test 'user should not get move' do
     sign_in user
     get :move, motion_id: subject
@@ -399,44 +386,6 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_url(updated_resource)
   end
 
-  # Currently only staffers can convert items
-  test 'staff should get convert' do
-    sign_in staff
-
-    get :convert, motion_id: subject
-    assert_response 200
-  end
-
-  # Currently only staffers can convert items
-  test 'staff should put convert' do
-    sign_in staff
-
-    vote_count = motion_move.votes.count
-    assert vote_count > 0,
-           'no votes to test'
-
-    put :convert!,
-        motion_id: motion_move,
-        motion: {
-          f_convert: 'questions'
-        }
-    assert assigns(:result)
-    assert_redirected_to assigns(:result)[:new]
-
-    assert_equal Question, assigns(:result)[:new].class
-    assert assigns(:result)[:old].destroyed?
-
-    # Test direct relations
-    assert_equal 0, assigns(:result)[:old].arguments.count
-
-    assert_equal 0, assigns(:result)[:old].votes.count
-    assert_equal vote_count,
-                 assigns(:result)[:new].votes.count
-
-    assert_equal 0, assigns(:result)[:old].activities.count
-    assert_equal 1, assigns(:result)[:new].activities.count
-  end
-
   # Currently only staffers can move items
   test 'staff should get move' do
     sign_in staff
@@ -445,7 +394,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  # Currently only staffers can convert items
+  # Currently only staffers can move items
   test 'staff should put move!' do
     sign_in staff
 

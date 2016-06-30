@@ -35,10 +35,6 @@ Argu::Application.routes.draw do
               only: [:index, :new, :create],
               path: 'posts'
   end
-  concern :convertible do
-    get :convert, action: :convert
-    put :convert, action: :convert!
-  end
   concern :destroyable do
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
@@ -130,7 +126,7 @@ Argu::Application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :convertible, :flowable, :trashable, :loggable] do
+            concerns: [:blog_postable, :moveable, :flowable, :trashable, :loggable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
   end
@@ -140,7 +136,7 @@ Argu::Application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :convertible, :votable, :flowable, :trashable, :loggable] do
+            concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :loggable] do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end

@@ -172,22 +172,6 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'should not get convert' do
-    sign_in member
-
-    get :convert, question_id: subject
-    assert_not_authorized
-    assert_redirected_to subject.forum
-  end
-
-  test 'should not put convert' do
-    sign_in member
-
-    put :convert, question_id: subject
-    assert_not_authorized
-    assert_redirected_to subject.forum
-  end
-
   test 'should not get move' do
     sign_in member
 
@@ -384,40 +368,6 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   let(:staff) {create(:user, :staff) }
 
-  # Currently only staffers can convert items
-  test 'should get convert' do
-    sign_in staff
-
-    get :convert, question_id: subject
-    assert_response 200
-  end
-
-  # Currently only staffers can convert items
-  test 'should put convert' do
-    question = subject
-    create(:vote,
-           parent: question)
-
-    sign_in staff
-
-    put :convert!, question_id: subject, question: {f_convert: 'motions'}
-    assert assigns(:result)
-    assert_redirected_to assigns(:result)[:new]
-
-    assert_equal Motion, assigns(:result)[:new].class
-    assert assigns(:result)[:old].destroyed?
-
-    # Test direct relations
-    # assert_equal 0, assigns(:result)[:old].taggings.count
-    # assert_equal 1, assigns(:result)[:new].taggings.count
-
-    assert_equal 0, assigns(:result)[:old].votes.count
-    assert_equal 1, assigns(:result)[:new].votes.count
-
-    assert_equal 0, assigns(:result)[:old].activities.count
-    assert_equal 1, assigns(:result)[:new].activities.count
-  end
-
   # Currently only staffers can move items
   test 'should get move' do
     sign_in staff
@@ -428,7 +378,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
   let(:freetown_to) { create_forum }
 
-  # Currently only staffers can convert items
+  # Currently only staffers can move items
   test 'should put move! without motions' do
     sign_in staff
 

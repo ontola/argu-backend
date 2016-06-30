@@ -164,32 +164,6 @@ class MotionsController < AuthorizedController
     untrash_service.commit
   end
 
-  # GET /motions/1/convert
-  def convert
-    @motion = authenticated_resource!
-    authorize @motion, :move?
-
-    respond_to do |format|
-      format.html { render locals: {resource: @motion} }
-      format.js { render }
-    end
-  end
-
-  def convert!
-    @motion = authenticated_resource!.lock!
-    authorize @motion, :move?
-    authorize @motion.forum, :update?
-
-    @motion.with_lock do
-      @result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
-    end
-    if @result
-      redirect_to polymorphic_url(@result[:new])
-    else
-      redirect_to edit_motion_url @motion
-    end
-  end
-
   # GET /motions/1/move
   def move
     @motion = authenticated_resource!

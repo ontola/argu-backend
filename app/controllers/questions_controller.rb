@@ -124,32 +124,6 @@ class QuestionsController < AuthorizedController
     untrash_service.commit
   end
 
-  # GET /motions/1/convert
-  def convert
-    @question = Question.find params[:question_id]
-    authorize @question, :move?
-
-    respond_to do |format|
-      format.html { render locals: {resource: @question} }
-      format.js { render }
-    end
-  end
-
-  def convert!
-    @question = Question.find(params[:question_id])
-    authorize @question, :move?
-    @forum = Forum.find_by_id permit_params[:forum_id]
-    authorize @question.forum, :update?
-    @question.with_lock do
-      @result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
-    end
-    if @result
-      redirect_to polymorphic_url(@result[:new])
-    else
-      redirect_to edit_question_url @question
-    end
-  end
-
   # GET /motions/1/move
   def move
     @question = Question.find params[:question_id]
