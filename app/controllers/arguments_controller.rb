@@ -155,17 +155,6 @@ class ArgumentsController < AuthorizedController
     authorize @argument, :show?
   end
 
-  def create_service
-    @create_service ||= service_klass.new(
-      get_parent_resource.edge,
-      attributes: resource_new_params.merge(permit_params),
-      options: service_options)
-  end
-
-  def destroy_service
-    @destroy_service ||= DestroyArgument.new(resource_by_id, options: service_options)
-  end
-
   def get_parent_resource(opts = request.path_parameters, url_params = params)
     return super unless params[:action] == 'new' || params[:action] == 'create'
     Motion.find(params[:motion_id] || params[:argument][:motion_id])
@@ -183,20 +172,5 @@ class ArgumentsController < AuthorizedController
     super(opts.merge(auto_vote:
                        params.dig(:argument, :auto_vote) == 'true' &&
                          current_profile == current_user.profile))
-  end
-
-  def trash_service
-    @trash_service ||= TrashArgument.new(resource_by_id, options: service_options)
-  end
-
-  def untrash_service
-    @untrash_service ||= UntrashArgument.new(resource_by_id, options: service_options)
-  end
-
-  def update_service
-    @update_service ||= UpdateArgument.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

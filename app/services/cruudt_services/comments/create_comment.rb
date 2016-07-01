@@ -8,10 +8,6 @@ class CreateComment < PublishedCreateService
     walk_parents
   end
 
-  def resource_klass
-    Comment
-  end
-
   private
 
   def walk_parents

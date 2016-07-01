@@ -14,10 +14,6 @@ class CreateMotion < PublishedCreateService
     end
   end
 
-  def resource_klass
-    Motion
-  end
-
   private
 
   def object_attributes=(obj)

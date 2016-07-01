@@ -17,7 +17,7 @@ class GroupMembershipsController < ApplicationController
     authorize @forum, :add_group_member?
     profile = Shortname.find_resource(params[:profile_id]).profile
 
-    @membership = @group.group_memberships.new member: profile, profile: current_user.profile
+    @membership = @group.group_memberships.new member: profile, profile: current_user.profile, forum_id: @forum.id
     respond_to do |format|
       if @membership.save
         format.html { redirect_to settings_forum_path(@forum, tab: :groups) }

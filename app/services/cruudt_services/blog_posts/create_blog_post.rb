@@ -9,10 +9,6 @@ class CreateBlogPost < PublishedCreateService
     build_happening if attributes[:happened_at].present?
   end
 
-  def resource_klass
-    BlogPost
-  end
-
   private
 
   def build_happening

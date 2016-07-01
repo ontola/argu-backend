@@ -224,10 +224,6 @@ class MotionsController < AuthorizedController
     authorize @motion, :show?
   end
 
-  def destroy_service
-    @destroy_service ||= DestroyMotion.new(resource_by_id, options: service_options)
-  end
-
   def permit_params
     return {} unless params[:motion].present?
     params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
@@ -243,22 +239,5 @@ class MotionsController < AuthorizedController
     else
       super
     end
-  end
-
-  def trash_service
-    @trash_service ||= TrashMotion.new(resource_by_id,
-                                       options: service_options)
-  end
-
-  def untrash_service
-    @untrash_service ||= UntrashMotion.new(resource_by_id,
-                                           options: service_options)
-  end
-
-  def update_service
-    @update_service ||= UpdateMotion.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

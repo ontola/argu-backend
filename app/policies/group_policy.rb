@@ -36,6 +36,10 @@ class GroupPolicy < RestrictivePolicy
     rule is_manager?, super()
   end
 
+  def delete?
+    destroy?
+  end
+
   def destroy?
     rule is_owner?, super
   end

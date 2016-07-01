@@ -10,6 +10,10 @@ class CreateService < ApplicationService
 
   private
 
+  def resource_klass
+    self.class.to_s.gsub('Create', '').constantize
+  end
+
   def service_action
     :create
   end

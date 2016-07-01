@@ -84,7 +84,7 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
     @resource ||=
-      case params[:action]
+      case action_name
       when 'create'
         create_service.resource
       when 'destroy'
@@ -152,7 +152,7 @@ class AuthorizedController < ApplicationController
   end
 
   def service_klass
-    "Create#{controller_name.classify}".safe_constantize
+    "#{action_name.classify}#{controller_name.classify}".safe_constantize
   end
 
   def current_context
@@ -176,7 +176,9 @@ class AuthorizedController < ApplicationController
   #   destroy_service # => DestroyComment<commentable_id: 6, parent_id: 5>
   #   destroy_service.commit # => true (Comment destroyed)
   def destroy_service
-    raise 'Required interface method not implemented'
+    @destroy_service ||= service_klass.new(
+      resource_by_id,
+      options: service_options)
   end
 
   # @private
@@ -249,7 +251,9 @@ class AuthorizedController < ApplicationController
   #   trash_service # => TrashComment<commentable_id: 6, parent_id: 5>
   #   trash_service.commit # => true (Comment trashed)
   def trash_service
-    raise 'Required interface method not implemented'
+    @trash_service ||= service_klass.new(
+      resource_by_id,
+      options: service_options)
   end
 
   # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash
@@ -258,7 +262,9 @@ class AuthorizedController < ApplicationController
   #   untrash_service # => UntrashComment<commentable_id: 6, parent_id: 5>
   #   untrash_service.commit # => true (Comment untrashed)
   def untrash_service
-    raise 'Required interface method not implemented'
+    @untrash_service ||= service_klass.new(
+      resource_by_id,
+      options: service_options)
   end
 
   # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
@@ -267,6 +273,9 @@ class AuthorizedController < ApplicationController
   #   update_service # => UpdateComment<commentable_id: 6, parent_id: 5>
   #   update_service.commit # => true (Comment updated)
   def update_service
-    raise 'Required interface method not implemented'
+    @update_service ||= service_klass.new(
+      resource_by_id,
+      attributes: permit_params,
+      options: service_options)
   end
 end

@@ -1,4 +1,4 @@
-=semantic_form_for(@group, url: groups_path(forum_id: @forum)) do |f|
+=semantic_form_for(@group, url: forum_groups_path(@forum)) do |f|
   - @group.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('groups.type')) do

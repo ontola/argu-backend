@@ -8,10 +8,6 @@ class CreatePhase < PublishedCreateService
     walk_parents
   end
 
-  def resource_klass
-    Phase
-  end
-
   private
 
   def walk_parents

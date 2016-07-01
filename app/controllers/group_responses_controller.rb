@@ -83,10 +83,6 @@ class GroupResponsesController < AuthorizedController
 
   private
 
-  def destroy_service
-    @destroy_service ||= DestroyGroupResponse.new(resource_by_id, options: service_options)
-  end
-
   def new_resource_from_params
     group = policy_scope(resource_tenant.groups).discussion.find(params[:group_id])
     unless @_not_authorized_caught || group.discussion?
@@ -119,12 +115,5 @@ class GroupResponsesController < AuthorizedController
 
   def side_param
     params[:side].presence || params[:group_response][:side]
-  end
-
-  def update_service
-    @update_service ||= UpdateGroupResponse.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

@@ -8,10 +8,6 @@ class CreateQuestion < PublishedCreateService
     resource.project_id = parent.owner_id if parent.owner_type == 'Project'
   end
 
-  def resource_klass
-    Question
-  end
-
   private
 
   def object_attributes=(obj)

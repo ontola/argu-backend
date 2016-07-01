@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContentCreateService < CreateService
+class EdgeableCreateService < CreateService
   # @note Call super when overriding.
   # @param [Edge] parent The parent edge or its id
   def initialize(parent, attributes: {}, options: {})

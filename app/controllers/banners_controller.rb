@@ -80,13 +80,6 @@ class BannersController < AuthorizedController
 
   private
 
-  def create_service
-    @create_service ||= CreateBanner.new(
-      current_user.profile,
-      attributes: permit_params.merge(resource_new_params),
-      options: service_options)
-  end
-
   def new_resource_from_params
     controller_name
       .classify

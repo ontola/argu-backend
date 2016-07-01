@@ -36,11 +36,4 @@ class PhasesController < AuthorizedController
   def permit_params
     params.require(:phase).permit(*policy(resource_by_id || Phase).permitted_attributes)
   end
-
-  def update_service
-    @update_service ||= UpdatePhase.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
-  end
 end

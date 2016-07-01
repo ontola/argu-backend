@@ -8,10 +8,6 @@ class CreateProject < PublishedCreateService
     assign_forum_from_edge_tree
   end
 
-  def resource_klass
-    Project
-  end
-
   private
 
   def object_attributes=(obj)

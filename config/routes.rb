@@ -157,7 +157,7 @@ Argu::Application.routes.draw do
   resources :group_responses, only: [:show, :edit, :update, :destroy]
   resources :groups,
             path: 'g',
-            only: [:create, :update, :edit, :destroy],
+            only: [:update, :edit, :destroy],
             concerns: [:destroyable] do
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
   end
@@ -262,6 +262,7 @@ Argu::Application.routes.draw do
     get :statistics, on: :member
     get :selector, on: :collection
     post :memberships, on: :collection
+    resources :groups, only: [:create]
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
     resources :shortnames, only: [:new, :create]

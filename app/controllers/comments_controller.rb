@@ -200,10 +200,6 @@ class CommentsController < AuthorizedController
     commentable_type.capitalize.constantize
   end
 
-  def destroy_service
-    @destroy_service ||= DestroyComment.new(resource_by_id, options: service_options)
-  end
-
   def new_comment_params
     params[:comment].present? ? permit_params : {}
   end
@@ -242,20 +238,5 @@ class CommentsController < AuthorizedController
       when 'a' then Argument
       end
     resource.find(id).forum
-  end
-
-  def trash_service
-    @trash_service ||= TrashComment.new(resource_by_id, options: service_options)
-  end
-
-  def untrash_service
-    @untrash_service ||= UntrashComment.new(resource_by_id, options: service_options)
-  end
-
-  def update_service
-    @update_service ||= UpdateComment.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

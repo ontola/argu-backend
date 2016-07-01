@@ -9,10 +9,6 @@ class CreateGroupResponse < PublishedCreateService
     walk_parents
   end
 
-  def resource_klass
-    GroupResponse
-  end
-
   private
 
   def walk_parents

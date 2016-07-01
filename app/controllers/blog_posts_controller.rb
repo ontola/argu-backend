@@ -124,10 +124,6 @@ class BlogPostsController < AuthorizedController
 
   private
 
-  def destroy_service
-    @destroy_service ||= DestroyBlogPost.new(resource_by_id, options: service_options)
-  end
-
   def new_resource_from_params
     blog_post = super
     blog_post.build_happening(created_at: Time.current)
@@ -150,20 +146,5 @@ class BlogPostsController < AuthorizedController
 
   def resource_tenant
     get_parent_resource.forum
-  end
-
-  def trash_service
-    @trash_service ||= TrashBlogPost.new(resource_by_id, options: service_options)
-  end
-
-  def untrash_service
-    @untrash_service ||= UntrashBlogPost.new(resource_by_id, options: service_options)
-  end
-
-  def update_service
-    @update_service ||= UpdateBlogPost.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PublishedCreateService < ContentCreateService
+class PublishedCreateService < EdgeableCreateService
   # @note Call super when overriding.
   def initialize(parent, attributes: {}, options: {})
     attributes[:publisher] = options.fetch(:publisher)

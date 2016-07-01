@@ -1,4 +1,5 @@
-class GroupsController < ApplicationController
+class GroupsController < AuthorizedController
+  include NestedResourceHelper
   before_action :find_forum_and_group, only: [:edit, :update, :delete, :destroy]
 
   def new
@@ -13,23 +14,23 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.groups.new
-    @group.attributes= permit_params
-    authorize @group, :create?
-
-    respond_to do |format|
-      if @group.save
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
-      else
+    create_service.on(:create_group_successful) do |group|
+      respond_to do |format|
+        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+      end
+    end
+    create_service.on(:create_group_failed) do
+      respond_to do |format|
         format.html do
-          render 'forums/settings', locals: {
-                                      tab: 'groups/new',
-                                      active: 'groups'
-                                  }
+          render 'forums/settings',
+                 locals: {
+                   tab: 'groups/new',
+                   active: 'groups'
+                 }
         end
       end
     end
+    create_service.commit
   end
 
   def edit
@@ -42,15 +43,17 @@ class GroupsController < ApplicationController
   end
 
   def update
-    authorize @group, :update?
-
-    respond_to do |format|
-      if @group.update permit_params
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
-      else
+    update_service.on(:update_group_successful) do |group|
+      respond_to do |format|
+        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+      end
+    end
+    update_service.on(:update_group_failed) do
+      respond_to do |format|
         format.html { render 'edit' }
       end
     end
+    update_service.commit
   end
 
   def delete
@@ -68,16 +71,18 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    authorize @group, :destroy?
-
-    respond_to do |format|
-      if @group.destroy
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups), status: 303 }
-      else
-        flash[:error] = t('error')
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+    destroy_service.on(:destroy_group_successful) do |group|
+      respond_to do |format|
+        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
       end
     end
+    destroy_service.on(:destroy_group_failed) do
+      respond_to do |format|
+        flash[:error] = t('error')
+        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+      end
+    end
+    destroy_service.commit
   end
 
   private
@@ -87,7 +92,17 @@ class GroupsController < ApplicationController
     @forum = @group.forum
   end
 
+  def new_resource_from_params
+    Group.new(resource_new_params)
+  end
+
   def permit_params
     params.require(:group).permit(*policy(@group || Group).permitted_attributes)
+  end
+
+  def resource_new_params
+    {
+      forum: get_parent_resource
+    }
   end
 end

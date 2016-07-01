@@ -1,10 +1,6 @@
 # frozen_string_literal: true
-class CreateForum < ContentCreateService
+class CreateForum < EdgeableCreateService
   include Wisper::Publisher
-
-  def resource_klass
-    Forum
-  end
 
   private
 

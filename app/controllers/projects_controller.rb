@@ -132,10 +132,6 @@ class ProjectsController < AuthorizedController
 
   private
 
-  def destroy_service
-    @destroy_service ||= DestroyProject.new(resource_by_id, options: service_options)
-  end
-
   def new_resource_from_params
     resource = super
     resource.build_argu_publication(publish_type: 'direct', published_at: DateTime.current)
@@ -154,20 +150,5 @@ class ProjectsController < AuthorizedController
 
   def resource_new_params
     super.merge(start_date: DateTime.current)
-  end
-
-  def trash_service
-    @trash_service ||= TrashProject.new(resource_by_id, options: service_options)
-  end
-
-  def untrash_service
-    @untrash_service ||= UntrashProject.new(resource_by_id, options: service_options)
-  end
-
-  def update_service
-    @update_service ||= UpdateProject.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

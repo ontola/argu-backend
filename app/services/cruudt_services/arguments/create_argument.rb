@@ -8,10 +8,6 @@ class CreateArgument < PublishedCreateService
     walk_parents
   end
 
-  def resource_klass
-    Argument
-  end
-
   private
 
   def after_save

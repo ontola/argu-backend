@@ -170,37 +170,11 @@ class QuestionsController < AuthorizedController
     end
   end
 
-  def create_service
-    @create_service ||= CreateQuestion.new(
-      get_parent_resource.edge,
-      attributes: resource_new_params.merge(permit_params),
-      options: service_options)
-  end
-
-  def destroy_service
-    @destroy_service ||= DestroyQuestion.new(resource_by_id, options: service_options)
-  end
-
   def permit_params
     params.require(:question).permit(*policy(@question || Question).permitted_attributes)
   end
 
   def show_params
     params.permit(:page)
-  end
-
-  def trash_service
-    @trash_service ||= TrashQuestion.new(resource_by_id, options: service_options)
-  end
-
-  def untrash_service
-    @untrash_service ||= UntrashQuestion.new(resource_by_id, options: service_options)
-  end
-
-  def update_service
-    @update_service ||= UpdateQuestion.new(
-      resource_by_id,
-      attributes: permit_params,
-      options: service_options)
   end
 end

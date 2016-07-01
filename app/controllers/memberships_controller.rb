@@ -45,10 +45,6 @@ class MembershipsController < AuthorizedController
 
   private
 
-  def destroy_service
-    @destroy_service ||= DestroyMembership.new(resource_by_id, options: service_options)
-  end
-
   def permit_params
     params.permit :forum_id, :role
   end
