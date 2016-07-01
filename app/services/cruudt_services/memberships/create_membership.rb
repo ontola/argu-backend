@@ -4,7 +4,6 @@ class CreateMembership < EdgeableCreateService
 
   def initialize(parent, attributes: {}, options: {})
     super
-    assign_forum_from_edge_tree
   end
 
   private

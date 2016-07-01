@@ -5,7 +5,6 @@ class CreateMotion < PublishedCreateService
 
   def initialize(parent, attributes: {}, options: {})
     super
-    assign_forum_from_edge_tree
     if parent.owner_type == 'Question'
       resource.project_id = parent.parent.owner_id if parent.parent.owner_type == 'Project'
       resource.question_id = parent.owner_id
@@ -20,5 +19,9 @@ class CreateMotion < PublishedCreateService
     obj.forum ||= resource.forum
     obj.creator ||= resource.creator
     obj.publisher ||= resource.publisher if obj.respond_to?(:publisher)
+  end
+
+  def parent_columns
+    %i(question_id project_id forum_id)
   end
 end

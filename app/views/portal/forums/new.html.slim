@@ -1,9 +1,9 @@
-=set_title "_Create forum for #{@forum.page.profile.name}_"
+=set_title "_Create forum for #{forum.page.profile.name}_"
 .col-1
   .box
     section
-      h1= "_Create forum for #{@forum.page.profile.name}_"
-      = semantic_form_for [:portal, @forum] do |f|
+      h1= "_Create forum for #{forum.page.profile.name}_"
+      = semantic_form_for [:portal, forum] do |f|
         = f.inputs do
           = f.input :name
           = f.inputs :shortname, for: :shortname

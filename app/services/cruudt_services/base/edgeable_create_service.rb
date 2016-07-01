@@ -9,6 +9,7 @@ class EdgeableCreateService < CreateService
       user: options[:publisher],
       owner: resource_klass.new)
     super
+    walk_parents
   end
 
   def resource
@@ -17,9 +18,15 @@ class EdgeableCreateService < CreateService
 
   protected
 
-  def assign_forum_from_edge_tree
-    edge = @edge.parent
-    edge = edge.parent while edge && edge.owner_type != 'Forum'
-    resource.forum = edge.owner
+  def parent_columns
+    %i(forum_id)
+  end
+
+  def walk_parents
+    @edge.parent.self_and_ancestors.each do |ancestor|
+      if parent_columns.include? ancestor.owner_type.foreign_key.to_sym
+        resource[ancestor.owner_type.foreign_key] = ancestor.owner_id
+      end
+    end
   end
 end

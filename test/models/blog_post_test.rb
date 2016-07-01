@@ -10,7 +10,6 @@ class BlogPostTest < ActiveSupport::TestCase
   end
   subject do
     create(:blog_post,
-           blog_postable: project,
            happened_at: DateTime.current,
            parent: project.edge)
   end

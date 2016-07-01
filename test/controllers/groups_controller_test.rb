@@ -23,8 +23,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     get :new, id: group, forum_id: freetown
 
-    assert_redirected_to forum_path(freetown)
-    assert assigns(:forum)
+    assert_response 403
   end
 
   test 'user should not show edit' do
@@ -32,9 +31,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     get :edit, id: group, forum_id: freetown
 
-    assert_redirected_to forum_path(freetown)
-    assert assigns(:forum)
-    assert assigns(:group)
+    assert_response 403
   end
 
   test 'user should not delete destroy' do
@@ -44,7 +41,7 @@ class GroupsControllerTest < ActionController::TestCase
       delete :destroy, id: group
     end
 
-    assert_redirected_to forum_path(freetown)
+    assert_response 403
   end
 
   ####################################

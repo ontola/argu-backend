@@ -17,6 +17,7 @@ class BlogPost < ActiveRecord::Base
   # @see {BlogPostable}
   belongs_to :blog_postable,
              polymorphic: true,
+             required: true,
              inverse_of: :blog_posts
   belongs_to :project,
              class_name: 'Project',

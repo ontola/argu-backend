@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
   include ArguBase, Parentable, Trashable, PublicActivity::Common
 
   belongs_to :forum
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, required: true
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   has_many   :activities,

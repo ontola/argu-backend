@@ -73,7 +73,7 @@ class GroupsController < AuthorizedController
   def destroy
     destroy_service.on(:destroy_group_successful) do |group|
       respond_to do |format|
-        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+        format.html { redirect_to settings_forum_path(group.forum, tab: :groups), status: 303 }
       end
     end
     destroy_service.on(:destroy_group_failed) do

@@ -5,13 +5,11 @@ class CreateGroupResponse < PublishedCreateService
 
   def initialize(parent, attributes: {}, options: {})
     super
-    assign_forum_from_edge_tree
-    walk_parents
   end
 
   private
 
-  def walk_parents
-    resource.motion = resource.edge.parent.owner
+  def parent_columns
+    %i(motion_id forum_id)
   end
 end

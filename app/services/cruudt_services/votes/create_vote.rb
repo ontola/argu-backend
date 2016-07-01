@@ -15,7 +15,6 @@ class CreateVote < PublishedCreateService
       assign_attributes
     end
 
-    assign_forum_from_edge_tree
     resource.voteable = parent.owner
   end
 end

@@ -3,9 +3,8 @@ class CreateBlogPost < PublishedCreateService
   include Wisper::Publisher
 
   def initialize(parent, attributes: {}, options: {})
+    attributes[:blog_postable] = parent.owner
     super
-    assign_forum_from_edge_tree
-    walk_parents
     build_happening if attributes[:happened_at].present?
   end
 
@@ -28,9 +27,5 @@ class CreateBlogPost < PublishedCreateService
       obj.key ||= 'blog_post.happened'
       obj.recipient ||= resource.blog_postable
     end
-  end
-
-  def walk_parents
-    resource.blog_postable = resource.edge.parent.owner
   end
 end

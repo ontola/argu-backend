@@ -14,8 +14,7 @@ class CommentsControllerTest < ActionController::TestCase
   let(:comment) do
     create(:comment,
            creator: member.profile,
-           parent: argument.edge,
-           commentable: argument)
+           parent: argument.edge)
   end
 
   define_cairo
@@ -24,8 +23,7 @@ class CommentsControllerTest < ActionController::TestCase
   let(:cairo_comment) do
     create(:comment,
            creator: member.profile,
-           parent: closed_argument.edge,
-           commentable: closed_argument)
+           parent: closed_argument.edge)
   end
 
   define_cairo('second_cairo')
@@ -34,8 +32,7 @@ class CommentsControllerTest < ActionController::TestCase
   let(:second_cairo_comment) do
     create(:comment,
            creator: member.profile,
-           parent: second_closed_argument.edge,
-           commentable: second_closed_argument)
+           parent: second_closed_argument.edge)
   end
 
   ####################################

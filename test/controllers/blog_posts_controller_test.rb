@@ -49,7 +49,7 @@ class BlogPostsControllerTest < ActionController::TestCase
            project_id: project,
            blog_post: attributes_for(:blog_post,
                                      forum: subject.forum,
-                                     blog_postable: project,
+                                     parent: project.edge,
                                      happened_at: DateTime.now,
                                      argu_publication_attributes: {publish_type: :draft})
     end
@@ -65,7 +65,7 @@ class BlogPostsControllerTest < ActionController::TestCase
            project_id: project,
            blog_post: attributes_for(:blog_post,
                                      forum: subject.forum,
-                                     blog_postable: project,
+                                     parent: project.edge,
                                      happened_at: DateTime.now,
                                      argu_publication_attributes: {publish_type: :direct})
 
@@ -90,7 +90,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_difference('Activity.count', changed ? 1 : 0) do
       patch :update,
             id: subject,
-            blog_post: attributes_for(:blog_post, forum: subject.forum, blog_postable: project)
+            blog_post: attributes_for(:blog_post, forum: subject.forum, parent: project.edge)
     end
 
     assert_response response
