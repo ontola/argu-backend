@@ -8,10 +8,10 @@ class GroupsControllerTest < ActionController::TestCase
   setup do
     @freetown = freetown
     @freetown_owner = freetown.edge.parent.owner.owner.profileable
-    @group = create(:group, forum: @freetown)
+    @group = create(:group, parent: @freetown.edge)
   end
 
-  let!(:group) { create(:group, forum: freetown) }
+  let!(:group) { create(:group, parent: freetown.edge) }
 
   ####################################
   # As User

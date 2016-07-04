@@ -48,6 +48,10 @@ class Page < ActiveRecord::Base
     owner.profileable
   end
 
+  def root_object?
+    true
+  end
+
   def transfer_to!(repeat_url, new_profile)
     if url.present? && url == repeat_url && new_profile.present? && !new_profile.new_record?
       self.owner = new_profile

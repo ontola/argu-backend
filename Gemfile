@@ -12,8 +12,6 @@ gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
 
-gem 'active_record_query_trace'
-
 ################## DB ########################
 gem 'pg', '0.18.2'
 
@@ -167,6 +165,7 @@ group :development do
   gem 'yard'
   gem 'yard-activesupport-concern'
   gem 'web-console', '~> 3.1.1'
+  gem 'active_record_query_trace'
   # gem 'puma', platform: :ruby
 end
 

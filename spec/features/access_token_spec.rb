@@ -5,7 +5,7 @@ RSpec.feature 'Access tokens', type: :feature do
   let!(:motion) do
     create(:motion,
            title: 'proposition',
-           parent: helsinki)
+           parent: helsinki.edge)
   end
   let(:helsinki_key) { create(:access_token, item: helsinki) }
 

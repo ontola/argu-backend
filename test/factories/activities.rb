@@ -3,7 +3,7 @@ FactoryGirl.define do
     transient do
       tenant { passed_in?(:forum) ? forum : build(:forum) }
     end
-    trackable { passed_in?(:trackable) ? trackable : create(:argument, forum: tenant) }
+    trackable { passed_in?(:trackable) ? trackable : create(:argument, parent: tenant.edge) }
 
     association :owner, factory: :profile
     recipient { passed_in?(:recipient) ? recipient : tenant }

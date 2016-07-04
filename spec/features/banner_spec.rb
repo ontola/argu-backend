@@ -4,17 +4,16 @@ RSpec.feature 'Banners', type: :feature do
   define_holland
   let!(:unpublished_banner) do
     create(:banner,
-           :unpublished,
-           :everyone,
+           audience: Banner.audiences[:everyone],
            forum: holland,
            title: 'unpublished_banner')
   end
 
   let!(:ended_banner) do
     create(:banner,
-           :published,
-           :ended,
-           :everyone,
+           ends_at: 1.hour.ago,
+           audience: Banner.audiences[:everyone],
+           published_at: 1.hour.ago,
            forum: holland,
            title: 'ended_banner')
   end
@@ -22,8 +21,8 @@ RSpec.feature 'Banners', type: :feature do
   %i(guests users members everyone).each do |audience|
     let!("banner_#{audience}".to_sym) do
       create(:banner,
-             :published,
-             audience,
+             published_at: 1.hour.ago,
+             audience: Banner.audiences[audience],
              forum: holland,
              title: "Banner_#{audience}")
     end

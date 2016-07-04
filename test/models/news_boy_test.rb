@@ -2,14 +2,30 @@ require 'test_helper'
 
 class NewsBoyTest < ActiveSupport::TestCase
   define_freetown
-  let!(:published_with_future_ends_at) { create(:banner, :published, :not_yet_ended, forum: freetown) }
-  let!(:published_with_passed_ends_at) { create(:banner, :published, :ended, forum: freetown) }
-  let!(:published_without_ends_at) { create(:banner, :published, :without_ending, forum: freetown) }
-  let!(:scheduled_with_future_ends_at) { create(:banner, :scheduled, :not_yet_ended, forum: freetown) }
-  let!(:scheduled_without_ends_at) { create(:banner, :scheduled, :without_ending, forum: freetown) }
-  let!(:unpublished_with_future_ends_at) { create(:banner, :unpublished, :not_yet_ended, forum: freetown) }
-  let!(:unpublished_with_passed_ends_at) { create(:banner, :unpublished, :ended, forum: freetown) }
-  let!(:unpublished_without_ends_at) { create(:banner, :unpublished, :without_ending, forum: freetown) }
+  let!(:published_with_future_ends_at) do
+    create(:banner, published_at: 1.day.ago, ends_at: 15.minutes.from_now, forum: freetown)
+  end
+  let!(:published_with_passed_ends_at) do
+    create(:banner, published_at: 1.day.ago, ends_at: 15.minutes.ago, forum: freetown)
+  end
+  let!(:published_without_ends_at) do
+    create(:banner, published_at: 1.day.ago, forum: freetown)
+  end
+  let!(:scheduled_with_future_ends_at) do
+    create(:banner, published_at: 1.day.from_now, ends_at: 15.minutes.from_now, forum: freetown)
+  end
+  let!(:scheduled_without_ends_at) do
+    create(:banner, published_at: 1.day.from_now, forum: freetown)
+  end
+  let!(:unpublished_with_future_ends_at) do
+    create(:banner, ends_at: 15.minutes.from_now, forum: freetown)
+  end
+  let!(:unpublished_with_passed_ends_at) do
+    create(:banner, ends_at: 15.minutes.ago, forum: freetown)
+  end
+  let!(:unpublished_without_ends_at) do
+    create(:banner, forum: freetown)
+  end
 
   test 'find correct published counts' do
     assert_equal 2, Banner.published.count,

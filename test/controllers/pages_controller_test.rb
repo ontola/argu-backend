@@ -10,20 +10,20 @@ class PagesControllerTest < ActionController::TestCase
 
   let(:motion) do
     create(:motion,
-           parent: freetown,
+           parent: freetown.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
   let(:argument) do
     create(:argument,
-           parent: motion,
+           parent: motion.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
 
   let(:comment) do
     create(:comment,
-           parent: argument,
+           parent: argument.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
@@ -225,7 +225,7 @@ class PagesControllerTest < ActionController::TestCase
     sign_in page_non_public.owner.profileable
     freetown
 
-    assert_raises(ActiveRecord::DeleteRestrictionError) do
+    assert_raises(ActiveRecord::InvalidForeignKey) do
       delete :destroy,
              id: page_non_public.shortname.shortname,
              page: {
@@ -272,11 +272,11 @@ class PagesControllerTest < ActionController::TestCase
   private
 
   def initialize_user2_votes
-    motion1 = create(:motion, parent: utrecht)
-    motion3 = create(:motion, parent: amsterdam, creator: user2.profile)
-    argument1 = create(:argument, parent: motion1)
-    create(:vote, parent: motion1, for: :neutral, forum: utrecht)
-    create(:vote, parent: motion3, for: :pro, forum: amsterdam)
-    create(:vote, parent: argument1, for: :neutral, forum: utrecht)
+    motion1 = create(:motion, parent: utrecht.edge)
+    motion3 = create(:motion, parent: amsterdam.edge, creator: user2.profile)
+    argument1 = create(:argument, parent: motion1.edge)
+    create(:vote, parent: motion1.edge, for: :neutral)
+    create(:vote, parent: motion3.edge, for: :pro)
+    create(:vote, parent: argument1.edge, for: :neutral)
   end
 end

@@ -8,7 +8,7 @@ class QuestionsControllerTest < ActionController::TestCase
   setup do
     @freetown = freetown
     @freetown_owner = freetown.edge.parent.owner.owner.profileable
-    create(:membership, forum: @freetown, profile: @freetown_owner.profile)
+    create(:membership, parent: @freetown.edge, profile: @freetown_owner.profile)
   end
 
   subject do
@@ -100,7 +100,7 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
-  let(:member_question) { create(:question, forum: freetown, creator: member.profile) }
+  let(:member_question) { create(:question, parent: freetown.edge, creator: member.profile) }
 
   test 'member should get new' do
     sign_in member
@@ -193,7 +193,7 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Moderator
   ####################################
   let(:moderator) { create_moderator(freetown) }
-  let(:project) { create(:project, :with_follower, forum: freetown) }
+  let(:project) { create(:project, :with_follower, parent: freetown.edge) }
   let(:project_moderator) { create_moderator(project) }
 
   test 'moderator should post create' do
@@ -234,7 +234,7 @@ class QuestionsControllerTest < ActionController::TestCase
   let(:creator_question) do
     create(:question,
            creator: creator.profile,
-           forum: freetown)
+           parent: freetown.edge)
   end
 
   test 'creator should get edit' do
@@ -314,10 +314,10 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   let(:page_question) do
     create(:question,
-           forum: @freetown,
+           parent: @freetown.edge,
            creator: @freetown_owner.profile)
   end
-  let(:owner_forum_question) { create(:question, forum: @freetown) }
+  let(:owner_forum_question) { create(:question, parent: @freetown.edge) }
 
   test 'owner should put update on page owner own question' do
     sign_in @freetown_owner
@@ -381,9 +381,10 @@ class QuestionsControllerTest < ActionController::TestCase
   # Currently only staffers can move items
   test 'should put move! without motions' do
     sign_in staff
+    subject
 
-    assert_differences [['freetown.reload.questions_count', -1],
-                        ['freetown_to.reload.questions_count', 1]] do
+    assert_differences [['freetown.reload.questions.count', -1],
+                        ['freetown_to.reload.questions.count', 1]] do
       put :move!,
           question_id: subject,
           question: {
@@ -409,9 +410,10 @@ class QuestionsControllerTest < ActionController::TestCase
 
   test 'should put move! with motions' do
     sign_in staff
+    subject
 
-    assert_differences [['freetown.reload.questions_count', -1],
-                        ['freetown_to.reload.questions_count', 1]] do
+    assert_differences [['freetown.reload.questions.count', -1],
+                        ['freetown_to.reload.questions.count', 1]] do
       put :move!,
           question_id: subject,
           question: {

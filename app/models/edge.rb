@@ -18,6 +18,7 @@ class Edge < ActiveRecord::Base
            inverse_of: :followable,
            foreign_key: :followable_id,
            dependent: :destroy
+  validates :parent, presence: true, unless: :root_object?
 
   before_destroy :update_children
   before_save :set_user_id
@@ -25,7 +26,7 @@ class Edge < ActiveRecord::Base
   acts_as_followable
   has_ltree_hierarchy
 
-  delegate :display_name, to: :owner
+  delegate :display_name, :root_object?, to: :owner
 
   # For Rails 5 attributes
   # The user that has created the edge's owner.

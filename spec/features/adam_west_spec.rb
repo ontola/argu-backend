@@ -206,7 +206,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Reply')
 
     # Anti-test
-    arg = create(:argument, parent: create(:motion, parent: default))
+    arg = create(:argument, parent: create(:motion, parent: default.edge).edge)
 
     visit motion_path(arg.motion)
 
@@ -215,7 +215,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).to have_content('Start a new discussion')
 
     c = create(:comment,
-               parent: arg)
+               parent: arg.edge)
 
     visit motion_path(arg.motion)
     expect(page).to have_content(arg.title)

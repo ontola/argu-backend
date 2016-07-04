@@ -3,7 +3,7 @@ require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:group, forum: freetown) }
+  subject { create(:group, parent: freetown.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
 
   test 'valid' do

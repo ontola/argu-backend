@@ -9,8 +9,8 @@ class GroupResponsesControllerTest < ActionController::TestCase
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:group) do
     create(:group,
-           :discussion,
-           forum: freetown)
+           visibility: :discussion,
+           parent: freetown.edge)
   end
   let(:group_response) do
     create(:group_response,
@@ -20,13 +20,13 @@ class GroupResponsesControllerTest < ActionController::TestCase
   end
   let(:visible_group) do
     create(:group,
-           :visible,
-           forum: freetown)
+           visibility: :visible,
+           parent: freetown.edge)
   end
   let(:hidden_group) do
     create(:group,
-           :hidden,
-           forum: freetown)
+           visibility: :hidden,
+           parent: freetown.edge)
   end
 
   ####################################
@@ -72,7 +72,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
            motion_id: motion,
            group_id: group,
            group_response: attributes_for(:group_response,
-                                          forum: freetown)
+                                          parent: freetown.edge)
     end
 
     assert_not_a_member
@@ -122,7 +122,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
            motion_id: motion,
            group_id: group,
            group_response: attributes_for(:group_response,
-                                          forum: freetown)
+                                          parent: freetown.edge)
     end
 
     assert_not_authorized
@@ -176,7 +176,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
            motion_id: motion,
            group_id: group,
            group_response: attributes_for(:group_response,
-                                          forum: freetown)
+                                          parent: freetown.edge)
     end
 
     assert_redirected_to motion
@@ -243,7 +243,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
            motion_id: motion,
            group_id: visible_group,
            group_response: attributes_for(:group_response,
-                                          forum: freetown)
+                                          parent: freetown.edge)
     end
 
     assert_response 404
@@ -271,7 +271,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
            motion_id: motion,
            group_id: hidden_group,
            group_response: attributes_for(:group_response,
-                                          forum: freetown)
+                                          parent: freetown.edge)
     end
 
     assert_response 404

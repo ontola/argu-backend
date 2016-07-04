@@ -52,7 +52,6 @@ class Question < ActiveRecord::Base
 
   def move_to(forum, include_motions = false)
     Question.transaction do
-      old_forum = self.forum.lock!
       self.forum = forum.lock!
       edge.parent = forum.edge
       save
@@ -68,10 +67,6 @@ class Question < ActiveRecord::Base
           motion.edge.update(parent: motion.forum.edge)
         end
       end
-      old_forum.reload.decrement :questions_count
-      old_forum.save
-      forum.reload.increment :questions_count
-      forum.save
     end
     true
   end
@@ -83,10 +78,6 @@ class Question < ActiveRecord::Base
       .where('updated_at < :date', date: updated_at)
       .order('updated_at')
       .last
-  end
-
-  def parent_changed?
-    project && project.changed?
   end
 
   def previous(show_trashed = false)

@@ -61,7 +61,7 @@ class MotionsControllerTest < ActionController::TestCase
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
-  let(:member_motion) { create(:motion, forum: freetown, creator: member.profile) }
+  let(:member_motion) { create(:motion, parent: freetown.edge, creator: member.profile) }
 
   test 'member should get new' do
     general_new(member, 200)
@@ -74,7 +74,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'member should post create with question' do
     general_create(
       member,
-      attrs: attributes_for(:motion, forum: freetown).merge(question_id: question.id),
+      attrs: attributes_for(:motion, parent: question.edge),
       changes: create_changes_array(2))
     assert_equal question, assigns(:create_service).resource.reload.question
   end
@@ -86,7 +86,7 @@ class MotionsControllerTest < ActionController::TestCase
       attrs: {
         title: 'Motion',
         content: 'C',
-        question_id: question.id
+        parent: question.edge
       },
       changes: create_changes_array(0, 0))
     assert_not_nil assigns(:create_service).resource
@@ -147,7 +147,7 @@ class MotionsControllerTest < ActionController::TestCase
   let(:no_create_question) do
     user = create(:user, :follows_reactions_directly)
     create(:question,
-           forum: no_create_without_question,
+           parent: no_create_without_question.edge,
            creator: user.profile)
   end
   let(:no_create_member) { create_member(no_create_without_question) }
@@ -156,7 +156,7 @@ class MotionsControllerTest < ActionController::TestCase
     general_create(
       no_create_member,
       false,
-      forum: no_create_without_question.id,
+      attrs: {parent: no_create_without_question.edge},
       changes: [['Motion.count', 0], ['Activity.count', 0]])
 
     assert_not_authorized
@@ -166,8 +166,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'member should post create without create_without_question with question' do
     general_create(
       no_create_member,
-      forum: no_create_without_question.id,
-      attrs: attributes_for(:motion, forum: freetown).merge(question_id: no_create_question),
+      attrs: attributes_for(:motion, parent: no_create_question.edge),
       changes: create_changes_array)
 
     assert assigns(:create_service).resource.persisted?
@@ -188,7 +187,7 @@ class MotionsControllerTest < ActionController::TestCase
   let(:moderator) { create_moderator(project) }
 
   test 'moderator should get new within project' do
-    general_new(moderator, 200, project_id: project)
+    general_new(moderator, 200, parent: project.edge)
   end
 
   test 'moderator should post create within project' do
@@ -197,7 +196,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array(2) do
       post :create,
            project_id: project,
-           motion: attributes_for(:motion, forum: freetown)
+           motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource,
@@ -210,7 +209,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array(2) do
       post :create,
            question_id: project_question,
-           motion: attributes_for(:motion, forum: freetown)
+           motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:create_service).resource
     assert_equal project, assigns(:create_service).resource.reload.project
@@ -231,7 +230,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array do
       post :create,
            forum_id: freetown,
-           motion: attributes_for(:motion, forum: freetown)
+           motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource,
@@ -245,7 +244,7 @@ class MotionsControllerTest < ActionController::TestCase
   let(:creator_motion) do
     create(:motion,
            creator: creator.profile,
-           forum: freetown)
+           parent: freetown.edge)
   end
 
   test 'creator should get edit' do
@@ -397,9 +396,10 @@ class MotionsControllerTest < ActionController::TestCase
   # Currently only staffers can move items
   test 'staff should put move!' do
     sign_in staff
+    motion_move
 
-    assert_differences [['forum_from.reload.motions_count', -1],
-                        ['forum_to.reload.motions_count', 1]] do
+    assert_differences [['forum_from.reload.motions.count', -1],
+                        ['forum_to.reload.motions.count', 1]] do
       put :move!,
           motion_id: motion_move,
           motion: {forum_id: forum_to.id}
@@ -437,14 +437,13 @@ class MotionsControllerTest < ActionController::TestCase
 
   def general_create(role = nil,
                      should = true,
-                     forum: freetown,
-                     attrs: attributes_for(:motion, forum: freetown),
+                     attrs: attributes_for(:motion, parent: freetown.edge),
                      changes: create_changes_array)
     sign_in role if role
 
     assert_differences changes do
       post :create,
-           forum_id: forum,
+           attrs[:parent].owner_type.foreign_key => attrs[:parent].owner_id,
            motion: attrs
     end
     if should
@@ -453,9 +452,9 @@ class MotionsControllerTest < ActionController::TestCase
     end
   end
 
-  def general_new(role = nil, response = 302, params = {forum_id: freetown})
+  def general_new(role = nil, response = 302, params = {parent: freetown.edge})
     sign_in role if role
-    get :new, params
+    get :new, params[:parent].owner_type.foreign_key => params[:parent].owner_id
   end
 
   def general_show(role = nil, should = true)

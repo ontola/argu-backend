@@ -7,7 +7,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, :with_follower, parent: question.edge) }
   let(:argument) { create(:argument, :with_follower, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
-  let(:group) { create(:group, :discussion, forum: freetown) }
+  let(:group) { create(:group, visibility: :discussion, parent: freetown.edge) }
   let(:group_membership) { create(:group_membership, group: group, member: user.profile) }
   let!(:random_follow) { create(:follow, followable: create_forum.edge) }
 

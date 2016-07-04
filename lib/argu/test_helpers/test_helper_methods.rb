@@ -12,7 +12,7 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i(argument blog_post comment forum group_response membership motion phase
+        SERVICE_MODELS = %i(argument blog_post comment forum group_response membership motion phase banner group
                             project question vote).freeze
 
         def assert_not_a_member
@@ -132,8 +132,7 @@ module Argu
             options[:creator] = options[:publisher].profile if options[:creator].nil?
           end
 
-          parent_resource = attributes.delete(:parent) || attributes.fetch(:forum)
-          parent_edge = parent_resource.is_a?(Edge) ? parent_resource : parent_resource.edge
+          parent_edge = attributes.delete(:parent)
 
           service = "Create#{klass}"
                       .constantize

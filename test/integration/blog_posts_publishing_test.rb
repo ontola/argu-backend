@@ -97,7 +97,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
         project_id: project,
         blog_post: attributes_for(
           :blog_post,
-          forum: project.forum,
+          parent: project.forum.edge,
           argu_publication_attributes: {
             publish_type: :schedule,
             published_at: 1.day.from_now

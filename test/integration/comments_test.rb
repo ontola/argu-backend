@@ -3,10 +3,10 @@ require 'test_helper'
 class CommentsTest < ActionDispatch::IntegrationTest
   define_venice
   let(:access_token) { create(:access_token, item: venice) }
-  let(:motion) { create(:motion, parent: venice) }
+  let(:motion) { create(:motion, parent: venice.edge) }
   let(:argument) do
     create(:argument,
-           parent: motion,
+           parent: motion.edge,
            creator: create(:user,
                            :follows_reactions_directly)
                         .profile)
@@ -14,7 +14,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:comment) do
     create(:comment,
            creator: member.profile,
-           parent: argument)
+           parent: argument.edge)
   end
 
   ####################################

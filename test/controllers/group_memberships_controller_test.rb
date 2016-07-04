@@ -5,7 +5,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   define_freetown
-  let!(:group) { create(:group, forum: freetown) }
+  let!(:group) { create(:group, parent: freetown.edge) }
 
   ####################################
   # As User

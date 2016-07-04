@@ -172,7 +172,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   # As NetDem member
   # The following tests are specific to the use case of NetDem
   ####################################
-  let(:netdem) { create(:group, name: 'Netwerk Democratie', forum: freetown) }
+  let(:netdem) { create(:group, name: 'Netwerk Democratie', parent: freetown.edge) }
   let(:netdem_member) { create_member(freetown) }
   let(:netdem_membership) do
     create(:group_membership,
@@ -195,7 +195,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
            role: netdem.identifier,
            permit: true)
   end
-  let(:discussion) { create(:group, name: 'Politieke Partijen', forum: freetown) }
+  let(:discussion) { create(:group, name: 'Politieke Partijen', parent: freetown.edge) }
   let(:discussion_member) { create_member(freetown) }
   let(:discussion_membership) do
     create(:group_membership,

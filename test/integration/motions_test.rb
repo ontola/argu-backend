@@ -12,7 +12,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in user
     create(:membership,
            profile: user.profile,
-           forum: freetown)
+           parent: freetown.edge)
 
     assert_differences create_changes_array do
       post forum_motions_path(freetown),

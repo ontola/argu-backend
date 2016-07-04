@@ -78,7 +78,9 @@ module Argu
       # Adds a discussion group with 2 GroupResponses and a visible and a hidden group without reponses
       # to the forum of the resource
       def with_group_responses
-        group = FactoryGirl.create(:group, visibility: :discussion, forum: @resource.forum)
+        service = CreateGroup.new(@resource.forum.edge, attributes: {visibility: :discussion}, options: service_options)
+        service.commit
+        group = service.resource
         2.times do
           CreateGroupResponse
             .new(@resource.edge,

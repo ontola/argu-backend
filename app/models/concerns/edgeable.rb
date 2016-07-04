@@ -8,16 +8,9 @@ module Edgeable
             inverse_of: :owner,
             dependent: :destroy,
             required: true
-    before_update :update_edge_parent, if: :parent_changed?
 
-    private
-
-    def parent_changed?
+    def root_object?
       false
-    end
-
-    def update_edge_parent
-      edge.update(parent: parent_edge)
     end
   end
 end

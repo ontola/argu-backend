@@ -123,7 +123,6 @@ class Motion < ActiveRecord::Base
 
   def move_to(forum, unlink_question = true)
     Motion.transaction do
-      old_forum = self.forum.lock!
       self.forum = forum.lock!
       self.question_id = nil if unlink_question
       edge.parent = forum.edge
@@ -133,12 +132,6 @@ class Motion < ActiveRecord::Base
       activities.lock(true).update_all forum_id: forum.id
       taggings.lock(true).update_all forum_id: forum.id
       group_responses.lock(true).delete_all
-
-      old_forum.decrement :motions_count
-      old_forum.save
-
-      forum.increment :motions_count
-      forum.save
       true
     end
   end
@@ -151,10 +144,6 @@ class Motion < ActiveRecord::Base
              date: updated_at)
       .order('updated_at')
       .last
-  end
-
-  def parent_changed?
-    question&.changed? || project&.changed?
   end
 
   def previous(show_trashed = false)
