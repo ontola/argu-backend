@@ -103,7 +103,7 @@ gem 'koala', '~> 1.11.1'
 gem 'omniauth-twitter', '~> 1.2.0'
 # gem 'omniauth-openid'
 gem 'pundit', '~> 1.0.0'
-gem 'bugsnag', '~> 3.0.0'
+gem 'bugsnag', '~> 4.2.1'
 gem 'rolify', '~> 3.4.1'
 
 ################## Front-end ########################
