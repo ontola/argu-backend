@@ -17,13 +17,15 @@ br
 
 h3= t('forums.settings.managers.title')
 p= t('forums.settings.managers.about_managers')
-table.styled
-  -@forum.managers.each do |manager|
-    tr
-      =image_tag manager.default_profile_photo.url, class: 'profile-photo'
-      span
-        =manager.display_name
-        p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
-          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.id), data: {method: :delete, turbolinks: 'false', confirmation: t('destroy_confirmation')}
+table.styled.managers
+  tbody
+    -@forum.managers.each do |manager|
+      tr[class=manager.identifier]
+        td
+          =image_tag manager.default_profile_photo.url, class: 'profile-photo'
+          span
+            span.name= manager.display_name
+            p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
+              =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.id), data: {method: :delete, turbolinks: 'false', confirmation: t('destroy_confirmation')}
 
-  =link_to  t('forums.managers.add'), new_forum_manager_path(@forum), class: 'btn'
+p= link_to t('forums.managers.add'), new_forum_manager_path(@forum), class: 'btn'
