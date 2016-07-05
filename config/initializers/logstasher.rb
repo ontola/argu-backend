@@ -9,8 +9,8 @@ if LogStasher.enabled
     fields[:profile_id] = current_profile && current_profile.id
     fields[:ua] = request.env['HTTP_USER_AGENT']
     fields[:a_params] = request.try(:params).try(:slice, 'at', 'r', 'q')
-    if (cs = current_context.context_scope(current_profile)).present?
-      fields[:forum] = cs.model.url
-    end
+    # if (cs = current_context.context_scope(current_profile)).present?
+    #  fields[:forum] = cs.model.url
+    #end
   end
 end
