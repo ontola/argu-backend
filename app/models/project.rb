@@ -20,9 +20,11 @@ class Project < ActiveRecord::Base
   belongs_to :publisher, class_name: 'User'
 
   has_many :motions, inverse_of: :project, dependent: :nullify
+  has_many :top_motions, -> { where(question_id: nil).trashed(false).order(updated_at: :desc) }, class_name: 'Motion'
   has_many :phases, -> {order(:id)}, inverse_of: :project, dependent: :destroy
   has_many :stepups, as: :record, dependent: :destroy
   has_many :questions, inverse_of: :project, dependent: :nullify
+  has_many :top_questions, -> { trashed(false).order(updated_at: :desc) }, class_name: 'Question'
   has_many :activities, as: :trackable
 
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
@@ -49,6 +51,10 @@ class Project < ActiveRecord::Base
 
   def in_last_phase?
     phases.where('end_date IS NULL').count == 1
+  end
+
+  def top_discussions
+    (top_motions + top_questions).sort{|a, b| b.updated_at <=> a.updated_at}
   end
 
   def update_start_date_of_first_phase

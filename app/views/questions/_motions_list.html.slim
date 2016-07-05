@@ -1,5 +1,5 @@
 ul.box-list.box-list--icons
-  - question.top_motions.each do |motion|
+  - question.top_motions.limit(3).each do |motion|
     li= link_to motion_path(motion) do
       h3.motion-t
         span[class='fa fa-#{motion_icon}']

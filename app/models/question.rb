@@ -8,6 +8,7 @@ class Question < ActiveRecord::Base
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify, inverse_of: :question
+  has_many :top_motions, -> { trashed(false).order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   def self.counter_culture_opts
@@ -95,10 +96,6 @@ class Question < ActiveRecord::Base
 
   def tag_list
     super.join(',')
-  end
-
-  def top_motions
-    motions.trashed(false).order(updated_at: :desc).limit(3)
   end
 
   def update_vote_counters

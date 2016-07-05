@@ -6,5 +6,8 @@
     =contextual_link_to project_path(project) do
       h2.project-t[itemprop="headline"]= project.title
   =render partial: 'projects/info_bar', locals: {project: project, show_parent: true}
+  section
+    - if project.top_discussions.present?
+      =render partial: 'projects/discussion_list', locals: {project: project}
   -unless project.is_published?
     =render partial: 'application/publish', locals: {resource: project}

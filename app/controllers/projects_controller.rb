@@ -27,11 +27,12 @@ class ProjectsController < AuthorizedController
 
   def show
     questions = policy_scope(authenticated_resource!.questions
-                               .includes(:edge, :default_cover_photo)
+                               .includes(:edge, :default_cover_photo, :motions)
                                .published
                                .trashed(show_trashed?))
 
     motions = policy_scope(authenticated_resource!.motions
+                               .where(question_id: nil)
                                .includes(:edge, :default_cover_photo, :votes)
                                .published
                                .trashed(show_trashed?))

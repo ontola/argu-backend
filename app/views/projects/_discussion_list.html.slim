@@ -1,0 +1,12 @@
+ul.box-list.box-list--icons
+  - project.top_discussions[0..2].each do |discussion|
+    li= link_to url_for(discussion) do
+      h3[class="#{discussion.model_name.singular}-t"]
+        span[class='fa fa-#{public_send("#{discussion.model_name.singular}_icon")}']
+        span.icon-left= discussion.title
+  - if (project.motions_count + project.questions_count) > 3
+    li= contextual_link_to project_path(project)
+      h3
+        span.fa.fa-chevron-right
+        .list-item
+          span= t('discussions.show_all', amount: (project.motions_count + project.questions_count))

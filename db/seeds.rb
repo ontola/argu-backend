@@ -50,7 +50,9 @@ argu.save!
 forum = Forum.new(name: 'Nederland',
                   page: argu,
                   shortname_attributes: {shortname: 'nederland'})
-forum.edge = Edge.new(owner: forum, user: User.find_via_shortname('staff_account'))
+forum.edge = Edge.new(owner: forum,
+                      user: User.find_via_shortname('staff_account'),
+                      parent: argu.edge)
 forum.save!
 
 Setting.set('user_cap', -1)

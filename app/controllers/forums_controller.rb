@@ -28,14 +28,14 @@ class ForumsController < ApplicationController
     current_context @forum
 
     projects = policy_scope(@forum.projects
-                              .includes(:edge, :default_cover_photo)
+                              .includes(:edge, :default_cover_photo, :top_motions, :top_questions)
                               .published
                               .trashed(show_trashed?))
-    questions = policy_scope(@forum.questions
-                               .includes(:edge, :project, :default_cover_photo)
+    questions = policy_scope(@forum.questions.where(project_id: nil)
+                               .includes(:edge, :project, :default_cover_photo, :top_motions)
                                .published
                                .trashed(show_trashed?))
-    motions = policy_scope(@forum.motions
+    motions = policy_scope(@forum.motions.where(project_id: nil, question_id: nil)
                              .includes(:edge, :question, :project, :default_cover_photo, :votes)
                              .published
                              .trashed(show_trashed?))

@@ -294,14 +294,14 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
            'Published projects are not visible'
     assert included_in_items?(q3),
            'Questions are not visible'
-    assert included_in_items?(m4),
-           'Question motions are not visible'
-    assert included_in_items?(m3),
-           'Project motions are not visible'
-    assert included_in_items?(q2),
-           'Project questions are not visible'
-    assert included_in_items?(m3),
-           'Project Question motions are not visible'
+    assert_not included_in_items?(m4),
+               'Question motions are visible'
+    assert_not included_in_items?(m3),
+               'Project motions are visible'
+    assert_not included_in_items?(q2),
+               'Project questions are visible'
+    assert_not included_in_items?(m3),
+               'Project Question motions are visible'
   end
 
   def assert_unpublished_content_invisible

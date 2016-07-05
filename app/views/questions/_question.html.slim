@@ -5,4 +5,7 @@
   section
     =contextual_link_to question_path(question) do
       h2.question-t[itemprop="headline"]= question.title
-  = render partial: 'questions/info_bar', locals: {question: question, show_parent: true}
+  =render partial: 'questions/info_bar', locals: {question: question, show_parent: true}
+  section
+    - if question.top_motions.present?
+      =render partial: 'questions/motions_list', locals: {question: question}
