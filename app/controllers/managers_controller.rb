@@ -14,6 +14,11 @@ class ManagersController < ApplicationController
     authorize @forum, :update?
     user = User.find_via_shortname params[:profile_id]
     @membership = @forum.memberships.find_or_initialize_by(profile_id: user.profile.id)
+    if @membership.edge.blank?
+      @forum.edge.children.new(
+        owner: @membership,
+        user: current_user)
+    end
 
     Pundit.policy!(pundit_user, @forum).add_manager?(@membership)
 
