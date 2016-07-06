@@ -1,11 +1,12 @@
 # frozen_string_literal: true
-class ForumsController < ApplicationController
-  before_action :redirect_generic_shortnames, only: :show
+class ForumsController < AuthorizedController
+  prepend_before_action :redirect_generic_shortnames, only: :show
+  skip_before_action :authorize_action, only: %i(show index)
+  skip_before_action :check_if_registered, only: %i(discover)
+  skip_before_action :check_if_member, only: %i(discover index)
 
   def index
-    authorize Forum, :index?
-    @user = User.find_via_shortname params[:id]
-    authorize @user, :update?
+    authorize resource_by_id, :update?
     forums = Forum.arel_table
     @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id))
                             .or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
@@ -17,30 +18,29 @@ class ForumsController < ApplicationController
                 .public_forums
                 .includes(:default_cover_photo, :default_profile_photo, :shortname, :access_tokens)
                 .page show_params[:page]
-    authorize Forum, :selector?
-
     render
   end
 
   def show
-    @forum = Forum.find_via_shortname params[:id]
-    authorize @forum, :list?
-    current_context @forum
-
-    projects = policy_scope(@forum.projects
-                              .includes(:edge, :default_cover_photo, :top_motions, :top_questions)
-                              .published
-                              .trashed(show_trashed?))
-    questions = policy_scope(@forum.questions.where(project_id: nil)
-                               .includes(:edge, :project, :default_cover_photo, :top_motions)
+    if policy(resource_by_id).show?
+      projects = policy_scope(resource_by_id
+                                .projects
+                                .includes(:edge, :default_cover_photo)
+                                .published
+                                .trashed(show_trashed?))
+      questions = policy_scope(resource_by_id
+                                 .questions
+                                 .where(project_id: nil)
+                                 .includes(:edge, :project, :default_cover_photo)
+                                 .published
+                                 .trashed(show_trashed?))
+      motions = policy_scope(resource_by_id
+                               .motions
+                               .where(project_id: nil, question_id: nil)
+                               .includes(:edge, :question, :project, :default_cover_photo, :votes)
                                .published
                                .trashed(show_trashed?))
-    motions = policy_scope(@forum.motions.where(project_id: nil, question_id: nil)
-                             .includes(:edge, :question, :project, :default_cover_photo, :votes)
-                             .published
-                             .trashed(show_trashed?))
 
-    if policy(@forum).show?
       @items = Kaminari
                .paginate_array((projects + questions + motions)
                                    .sort_by(&:updated_at)
@@ -51,9 +51,7 @@ class ForumsController < ApplicationController
   end
 
   def settings
-    @forum = Forum.find_via_shortname params[:id]
-    authorize @forum, :update?
-    current_context @forum
+    current_context
 
     prepend_view_path 'app/views/forums'
 
@@ -64,40 +62,32 @@ class ForumsController < ApplicationController
   end
 
   def statistics
-    @forum = Forum.find_via_shortname params[:id]
-    authorize @forum, :statistics?
-    current_context @forum
+    current_context
 
     render :statistics,
            locals: {
-             content_counts: content_count(@forum),
-             city_counts: city_count(@forum),
-             tag_counts: tag_count(@forum)
+             content_counts: content_count(resource_by_id),
+             city_counts: city_count(resource_by_id),
+             tag_counts: tag_count(resource_by_id)
            }
   end
 
   def update
-    @forum = Forum.find_via_shortname params[:id]
-    authorize @forum, :update?
-
-    respond_to do |format|
-      if @forum.update permit_params
-        format.html { redirect_to settings_forum_path(@forum, tab: tab) }
-      else
-        format.html do
-          render 'settings',
-                 locals: {
-                   tab: tab,
-                   active: tab
-                 }
-        end
-      end
+    update_service.on(:update_forum_successful) do |forum|
+      redirect_to settings_forum_path(forum, tab: tab), notice: t('type_save_success', type: t('forums.type'))
     end
+    update_service.on(:update_forum_failed) do
+      render 'settings',
+             locals: {
+               tab: tab,
+               active: tab
+             }
+    end
+    update_service.commit
   end
 
   def selector
     @forums = Forum.top_public_forums
-    authorize Forum, :selector?
 
     @forums = @forums.map! { |f| f.is_checked = f.profile_is_member?(current_user.profile); f }
 
@@ -139,7 +129,7 @@ class ForumsController < ApplicationController
   protected
 
   def correct_stale_record_version
-    @forum.reload.attributes = permit_params.reject do |attrb, _value|
+    resource_by_id.reload.attributes = permit_params.reject do |attrb, _value|
       attrb.to_sym == :lock_version
     end
   end
@@ -153,6 +143,14 @@ class ForumsController < ApplicationController
   end
 
   private
+
+  def authorize_show
+    authorize resource_by_id, :list?
+  end
+
+  def authorize_action
+    authorize authenticated_resource! || Forum, "#{params[:action].chomp('!')}?"
+  end
 
   def city_count(forum)
     cities = Hash.new(0)
@@ -175,7 +173,7 @@ class ForumsController < ApplicationController
   end
 
   def permit_params
-    pm = params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
+    pm = params.require(:forum).permit(*policy(resource_by_id || Forum).permitted_attributes)
     merge_photo_params(pm, @resource.class)
     pm
   end
@@ -189,12 +187,21 @@ class ForumsController < ApplicationController
     redirect_to url_for(resource) unless resource.is_a?(Forum)
   end
 
+  def resource_by_id
+    return if params[:id].nil?
+    if action_name == 'index'
+      @user ||= User.find_via_shortname params[:id]
+    else
+      @forum ||= Forum.find_via_shortname params[:id]
+    end
+  end
+
   def show_params
     params.permit(:page)
   end
 
   def tab
-    policy(@forum || Forum).verify_tab(params[:tab])
+    policy(resource_by_id || Forum).verify_tab(params[:tab])
   end
 
   def tag_count(forum)

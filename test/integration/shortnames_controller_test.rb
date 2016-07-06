@@ -9,7 +9,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
   let(:publication) { build(:publication) }
-  let(:comment_shortname) { create(:shortname, owner: comment) }
+  let(:comment_shortname) { create(:shortname, owner: comment, forum: freetown) }
   let(:subject) do
     create(:discussion_shortname,
            forum: freetown,

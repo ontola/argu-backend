@@ -114,7 +114,7 @@ class AuthorizedController < ApplicationController
       if resource_by_id.is_a?(Forum)
         resource_by_id
       else
-        resource_by_id.forum
+        resource_by_id.try(:forum)
       end
     else
       resource_tenant
@@ -234,7 +234,7 @@ class AuthorizedController < ApplicationController
   end
 
   def resource_tenant
-    Forum.find_via_shortname params[:forum_id]
+    Forum.find_via_shortname params[:forum_id] if params[:forum_id].present?
   end
 
   def resource_id

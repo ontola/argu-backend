@@ -154,6 +154,10 @@ class ForumPolicy < RestrictivePolicy
     rule create?
   end
 
+  def settings?
+    update?
+  end
+
   def show?
     rule is_open?, has_access_token?, is_member?, is_manager?, super
   end
@@ -189,6 +193,10 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def selector?
+    true
+  end
+
+  def discover?
     true
   end
 

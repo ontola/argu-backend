@@ -61,14 +61,14 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in
 
     get settings_forum_path(freetown)
-    assert_redirected_to forum_path(freetown), 'Settings are publicly visible'
+    assert_response 403
   end
 
   test 'should not show statistics' do
     sign_in
 
     get statistics_forum_path(freetown)
-    assert_redirected_to forum_path(freetown), 'Statistics are publicly visible'
+    assert_response 403
   end
 
   test 'user should not leak closed children to non-members' do
@@ -88,23 +88,18 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     assert_response 404, 'Hidden forums are visible'
   end
 
-  test 'user should not put update on others question' do
+  test 'user should not put update settings' do
     sign_in
 
-    put forum_path(holland),
-        question: {
-          title: 'New title',
-          content: 'new contents'
-        }
-    assert_redirected_to forum_path(holland), 'Others can update questions'
-  end
+    assert_no_difference('holland.reload.lock_version') do
+      put forum_path(holland),
+          forum: {
+            name: 'New title',
+            bio: 'new contents'
+          }
+    end
 
-  test 'user should get selector' do
-    sign_in
-
-    get selector_forums_path
-    assert_response 200, 'Selector broke'
-    assert_not_nil assigns(:forums)
+    assert_not_a_member
   end
 
   ####################################
@@ -137,6 +132,20 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
     get forum_path(helsinki)
     assert_forum_shown(helsinki)
+  end
+
+  test 'member should not put update settings' do
+    sign_in holland_member
+
+    assert_no_difference('holland.reload.lock_version') do
+      put forum_path(holland),
+          forum: {
+            name: 'New title',
+            bio: 'new contents'
+          }
+    end
+
+    assert_not_authorized
   end
 
   ####################################
