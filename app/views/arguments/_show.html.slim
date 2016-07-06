@@ -3,12 +3,12 @@
 
 .box.box-with-btns.argument[id="#{model.identifier.present? ? model.identifier.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
-    =contextual_link_to argument_path(model)
+    =link_to argument_path(model)
       h4[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
     =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(voter: current_profile)}
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if comments_on
-      =contextual_link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini'
+      =link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini'
         span.icon-right= t('reply')
         span.fa.fa-comments
 - if top_comment.present? && comments_on

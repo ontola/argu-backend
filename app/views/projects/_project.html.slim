@@ -1,9 +1,9 @@
 .box.box-grid.project[id=project.identifier class="#{'trashed' if project.is_trashed?}" data-created-at=project.created_at  data-updated-at=project.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
   -if project.default_cover_photo&.url.present?
-    =contextual_link_to project_path(project) do
+    =link_to project_path(project) do
       =render partial: 'application/box_image', locals: {url: project.default_cover_photo.url(:box), type: 'project'}
   section
-    =contextual_link_to project_path(project) do
+    =link_to project_path(project) do
       h2.project-t[itemprop="headline"]= project.title
   =render partial: 'projects/info_bar', locals: {project: project, show_parent: true}
   section

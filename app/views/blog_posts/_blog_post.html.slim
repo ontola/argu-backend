@@ -1,7 +1,7 @@
 .box.box-grid.blog_post[id=blog_post.identifier class="#{'trashed' if blog_post.is_trashed?}" data-created-at=blog_post.created_at data-updated-at=blog_post.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
-  =contextual_link_to blog_post_path(blog_post)
+  =link_to blog_post_path(blog_post)
     =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
-    =contextual_link_to blog_post_path(blog_post) do
+    =link_to blog_post_path(blog_post) do
       section
         h3[itemprop="headline"]= blog_post.title
   -unless blog_post.is_published?

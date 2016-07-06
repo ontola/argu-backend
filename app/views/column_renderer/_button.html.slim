@@ -2,7 +2,7 @@
   header
     h3= local_assigns[:buttons_header]
 *button_box(local_assigns)
-  =contextual_link_to buttons_url({buttons_param: defined?(buttons_param) && buttons_param, buttons_url: buttons_url, pro: pro}), (buttons_options||=nil) do
+  =link_to buttons_url({buttons_param: defined?(buttons_param) && buttons_param, buttons_url: buttons_url, pro: pro}), (buttons_options||=nil) do
     h3
       span[class="fa #{ defined?(buttons_text) && buttons_icon || "fa-plus"}"]
       span.icon-left= ((defined?(buttons_text) && buttons_text) || I18n.t('add_type', type: I18n.t("#{collection_model.name.underscore.pluralize}.type"))).capitalize

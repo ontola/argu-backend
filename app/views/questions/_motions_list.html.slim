@@ -5,7 +5,7 @@ ul.box-list.box-list--icons
         span[class='fa fa-#{motion_icon}']
         span.icon-left= motion.title
   - if question.motions_count > 3
-    li= contextual_link_to question_path(question)
+    li= link_to question_path(question)
       h3.motion-t
         span.fa.fa-chevron-right
         span.icon-left= t('questions.view_all_motions', amount: question.motions_count)

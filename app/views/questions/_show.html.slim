@@ -1,9 +1,9 @@
 .box[class=status_classes_for(model) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
   - if model.default_cover_photo.present?
-    =contextual_link_to question_path(model) do
+    =link_to question_path(model) do
       =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'question'}
   section
-    =contextual_link_to question_path(model) do
+    =link_to question_path(model) do
       h3.question-t[itemprop="headline"]= model.title
   =render partial: 'questions/info_bar', locals: {question: model}
   section
@@ -11,6 +11,6 @@
       =markdown_to_html(model.content)
     - if model.motions.present?
       =render partial: 'questions/motions_list', locals: {question: model}
-    =contextual_link_to question_path(model), class: 'btn-subtle sticky--bottom-right' do
+    =link_to question_path(model), class: 'btn-subtle sticky--bottom-right' do
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right

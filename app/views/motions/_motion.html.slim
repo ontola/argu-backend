@@ -1,8 +1,8 @@
 .box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.total_vote_count itemscope="itemscope" itemtype="http://schema.org/Answer" id=motion.identifier]
   -if motion.default_cover_photo&.url.present?
-    =contextual_link_to motion_path(motion) do
+    =link_to motion_path(motion) do
       =render partial: 'application/box_image', locals: {url: motion.default_cover_photo.url(:box), type: 'motion'}
   section
-    =contextual_link_to motion_path(motion) do
+    =link_to motion_path(motion) do
       h2.motion-t[itemprop="headline"]= motion.title
   =render partial: 'motions/info_bar', locals: {motion: motion, show_vote_pie: true, show_parent: true}

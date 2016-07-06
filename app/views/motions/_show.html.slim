@@ -1,9 +1,9 @@
 .box.box--extra-margin.motion[class=status_classes_for(model)]
   - if model.default_cover_photo.present?
-    =contextual_link_to motion_path(model)
+    =link_to motion_path(model)
       =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'motion'}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
-    =contextual_link_to motion_path(model)
+    =link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
   = render partial: 'motions/info_bar', locals: {motion: model, show_vote_pie: true, show_profile: true, show_date: true}
   section
@@ -34,7 +34,7 @@
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
                     .icon-left= argument.comments_count
-  =contextual_link_to motion_path(model), class: 'btn-subtle sticky--bottom-right'
+  =link_to motion_path(model), class: 'btn-subtle sticky--bottom-right'
     span.icon-right= t('read_more')
     span.fa.fa-arrow-right
   =yield

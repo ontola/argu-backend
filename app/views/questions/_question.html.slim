@@ -1,9 +1,9 @@
 .box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class=status_classes_for(question) data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
   - if question.default_cover_photo&.url.present?
-    =contextual_link_to question_path(question) do
+    =link_to question_path(question) do
       =render partial: 'application/box_image', locals: {url: question.default_cover_photo.url(:box), type: 'question'}
   section
-    =contextual_link_to question_path(question) do
+    =link_to question_path(question) do
       h2.question-t[itemprop="headline"]= question.title
   =render partial: 'questions/info_bar', locals: {question: question, show_parent: true}
   section
