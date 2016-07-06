@@ -31,7 +31,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .cover-buttons-container
         ul.btns-horizontal
           - if policy(@forum).update?
-            li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
+            li.float-right= link_to settings_forum_path(@forum.url), class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
           - if current_user.present?

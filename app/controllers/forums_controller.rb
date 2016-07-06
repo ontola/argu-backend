@@ -201,7 +201,7 @@ class ForumsController < AuthorizedController
   end
 
   def tab
-    policy(resource_by_id || Forum).verify_tab(params[:tab])
+    policy(resource_by_id || Forum).verify_tab(params[:tab] || params[:forum].try(:[], :tab))
   end
 
   def tag_count(forum)
