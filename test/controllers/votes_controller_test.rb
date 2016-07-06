@@ -103,6 +103,30 @@ class VotesControllerTest < ActionController::TestCase
     assert assigns(:create_service).resource.valid?
   end
 
+  test 'should not create new vote when existing one is present with html' do
+    create(:vote,
+           parent: motion.edge,
+           voter: member.profile,
+           options: {
+             publisher: member,
+             owner: member.profile
+           },
+           for: 'neutral')
+    sign_in member
+
+    assert_no_difference('Vote.count') do
+      post :create,
+           motion_id: motion,
+           vote: {
+             for: 'neutral'
+           }
+    end
+
+    assert_redirected_to motion_path(motion)
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+  end
+
   test 'should update vote when existing one is present' do
     create(:vote,
            parent: motion.edge,

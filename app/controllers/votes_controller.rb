@@ -50,7 +50,7 @@ class VotesController < AuthorizedController
         format.json { render status: 304, locals: {model: @model, vote: create_service.resource} }
         format.js { head :not_modified }
         format.html do
-          redirect_to polymorphic_url(vote.edge.parent.owner),
+          redirect_to polymorphic_url(create_service.resource.edge.parent.owner),
                       notice: t('votes.alerts.not_modified')
         end
       end
