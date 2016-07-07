@@ -2,7 +2,7 @@ class WeeklyNotificationsSchedulerWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { minutely }
+  recurrence { weekly }
   EMAIL_FREQUENCY = User.reactions_emails[:weekly_reactions_email]
 
   def perform
