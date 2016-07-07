@@ -86,7 +86,7 @@ gem 'sidekiq-logging-json',
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', require: false
 gem 'uglifier', '>= 2.5.3'
-gem 'sprockets', '~>3.5.2'
+gem 'sprockets', '~>3.6.3'
 gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails'
 gem 'babel-transpiler'
