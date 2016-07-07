@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160621114640) do
+ActiveRecord::Schema.define(version: 20160707114454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -754,9 +754,9 @@ ActiveRecord::Schema.define(version: 20160621114640) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|
-    t.integer  "voteable_id"
-    t.string   "voteable_type", limit: 255
-    t.integer  "voter_id"
+    t.integer  "voteable_id",                           null: false
+    t.string   "voteable_type", limit: 255,             null: false
+    t.integer  "voter_id",                              null: false
     t.string   "voter_type",    limit: 255
     t.integer  "for",                       default: 3, null: false
     t.datetime "created_at"
@@ -765,8 +765,7 @@ ActiveRecord::Schema.define(version: 20160621114640) do
     t.integer  "publisher_id",                          null: false
   end
 
-  add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree
-  add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "no_duplicate_votes", unique: true, using: :btree
+  add_index "votes", ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
