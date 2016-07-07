@@ -30,7 +30,7 @@ module ProCon
     scope :pro, -> { where(pro: true) }
     scope :con, -> { where(pro: false) }
 
-    delegate :uses_alternative_names, :motions_title, :motions_title_singular, to: :motion
+    delegate :motions_title, :motions_title_singular, to: :motion
 
     # Simple method to verify that a model uses {ProCon}
     def is_pro_con?

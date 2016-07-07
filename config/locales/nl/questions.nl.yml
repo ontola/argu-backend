@@ -3,7 +3,7 @@
 nl:
   questions:
     type: "Uitdaging"
-    type_new: "Nieuwe uitdaging"
+    type_new: "Nieuwe %{type}"
     plural: "Uitdagingen"
     new_btn: "Uitdaging toevoegen"
     header: "uitdagingen"
@@ -15,7 +15,7 @@ nl:
     call_to_action:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
-      action: "Deel jouw uitdaging."
+      action: "Deel jouw %{type}."
     form:
       title_heading: "Geef jouw uitdaging een titel"
       title_body_html: "<ul class='bullets'>

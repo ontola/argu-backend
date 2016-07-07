@@ -346,10 +346,4 @@ class ApplicationController < ActionController::Base
   def after_sending_reset_password_instructions_path_for(resource_name)
     password_reset_confirm_path
   end
-
-  private
-
-  def naming_context
-    current_context.context_scope(current_profile).root_parent.model
-  end
 end

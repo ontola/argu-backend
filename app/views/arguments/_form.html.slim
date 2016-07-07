@@ -1,15 +1,15 @@
 - argument ||= argument || resource || @argument
 =semantic_form_for((argument.new_record? ? [argument.forum, argument] : [argument]), html: {autocomplete: 'off'}) do |f|
-  .box.form-toggle[data-intro= t('intro.argument.toggle')]
+  .box.form-toggle[data-intro= t('intro.argument.toggle', type: argument_type)]
     =f.input :pro, as: :toggle_radio, :collection => radio_values_for_pro_con(argument)
   .box.argument[id="#{argument.id.present? ? "argument_#{argument.id.to_s}" : ''}" class="side-#{argument.pro ? 'pro' : 'con'}"]
     section.smallpadded.form-filled
       =f.inputs
-        h3= t('arguments.form.title_heading')
-        =t('arguments.form.title_body_html')
+        h3= t('arguments.form.title_heading', type: argument_type.downcase)
+        =t('arguments.form.title_body_html', type: argument_type.downcase)
         =f.input :title, as: :text, input_html: {size: '2', maxlength: '75', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false
-        h3= t('arguments.form.content_heading')
-        =t('arguments.form.content_body_html')
+        h3= t('arguments.form.content_heading', type: argument_type.downcase).capitalize
+        =t('arguments.form.content_body_html', type: argument_type.downcase)
         =f.input :content, input_html: {class: 'form-input-content', rows: '6'}, label: false, hint: false
         - if policy(argument).trash? && !argument.new_record?
           =f.input :is_trashed, as: :reverse_boolean

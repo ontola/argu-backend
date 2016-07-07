@@ -61,7 +61,7 @@ nl:
       body: 'Een argument is een enkele reden <b class="pro-t">voor</b> of <b class="con-t">tegen</b> een idee.'
       comments: 'Iedereen kan reageren op argumenten en reageren op andere reacties. Zo kan er specifieke discussie ontstaan.'
       form: 'Lees onze tips als je overtuigend wilt zijn.'
-      toggle: 'Kies hier of je een voor- of tegenargument wilt plaatsen.'
+      toggle: 'Kies hier of je een voor- of tegen%{type} wilt plaatsen.'
     comments:
       show: 'Hieronder staan de reacties op dit item.'
       form: 'Als je wilt reageren, kan je dat hier doen.'

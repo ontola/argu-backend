@@ -202,11 +202,6 @@ class Motion < ActiveRecord::Base
            votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
-  def uses_alternative_names
-    question.try(:uses_alternative_names) ||
-      forum.uses_alternative_names
-  end
-
   def votes_pro_percentage
     vote_percentage votes_pro_count
   end

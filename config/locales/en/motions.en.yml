@@ -3,7 +3,7 @@
 en:
   motions:
     type: "Idea"
-    type_new: "New idea"
+    type_new: "New %{type}"
     title: "Idea"
     header: "Ideas"
     plural: "Ideas"
@@ -42,13 +42,13 @@ en:
     form:
       title_heading: "Summarize your %{type} in one sentence"
       title_body_html: "<ul class='bullets'>
-                    <li>Describe your idea <b>as short as possible</b>.</li>
+                    <li>Describe your %{type} <b>as short as possible</b>.</li>
                   </ul>"
       content_heading: "Describe your %{type} in detail"
       content_body_html: "<ul class='bullets'>
-                            <li>Make your idea <b>concrete</b>. Explain what needs to happen and how this should happen.</li>
+                            <li>Make your %{type} <b>concrete</b>. Explain what needs to happen and how this should happen.</li>
                             <li>Give <b>background information</b>. Explain the current situation.</li>
-                            <li><b>Don't add arguments</b> just yet; do that after you've submitted your idea.</li>
+                            <li><b>Don't add arguments</b> just yet; do that after you've submitted your %{type}.</li>
                           </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
@@ -70,7 +70,7 @@ en:
     call_to_action:
       title: "Do you have a good idea?"
       body: "Do you have a good idea and do you want to convince others?"
-      action: "Share your idea!"
+      action: "Share your %{type}!"
 
     #motion types
     type_social: "Societal"

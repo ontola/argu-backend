@@ -181,11 +181,6 @@ class AuthorizedController < ApplicationController
       options: service_options)
   end
 
-  # @private
-  def naming_context
-    authenticated_context
-  end
-
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params

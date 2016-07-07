@@ -61,7 +61,7 @@ en:
       body: 'An argument is a single reason <b class="pro-t">pro</b> or <b class="con-t">con</b> an idea.'
       comments: 'Everyone can reply to arguments or reply to other replies. This allows for very specific discussions.'
       form: 'Read our tips if you would like to be convincing.'
-      toggle: "Choose if you'd like to place a pro or con argument here."
+      toggle: "Choose if you'd like to place a pro or con %{type} here."
     comments:
       show: 'Below are replies to this item.'
       form: "If you'd like to reply, you can do so here."

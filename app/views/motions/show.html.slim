@@ -26,7 +26,9 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                                   collection_model: Argument,
                                   buttons_param: :pro,
                                   buttons_form_on_empty: false,
-                                  buttons_options: {data: remote_unless_user})
+                                  buttons_options: {data: remote_unless_user},
+                                  buttons_text: {pro: t('add_type', type: argument_type).capitalize, con: t('add_type', type: argument_type).capitalize},
+                                  header_text: {pro: t('arguments.header.pro', type: arguments_type(@motion)).capitalize, con: t('arguments.header.con', type: arguments_type(@motion)).capitalize})
 
 - if @group_responses && (@group_responses.keys | ((current_profile && current_profile.groups) || [])).present?
   .col-3

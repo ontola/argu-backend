@@ -20,7 +20,7 @@ module ColumnRendererHelper
       end
     end
 
-    render partial: partial, locals: {model: columns}.merge(options: options)
+    render partial: partial, locals: {model: columns}.merge(options: HashWithIndifferentAccess.new(options))
   end
 
   def button_box(params)

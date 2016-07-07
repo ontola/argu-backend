@@ -5,4 +5,10 @@ class DiscussionsController < ApplicationController
     @forum = get_parent_resource
     authorize get_parent_resource, :list?
   end
+
+  private
+
+  def resource_by_id
+    get_parent_resource
+  end
 end

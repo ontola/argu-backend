@@ -47,7 +47,7 @@ module AlternativeNamesHelper
   # Singular translation for {Motion}
   def motion_type(naming_object = nil)
     if alternative_motions?(naming_object)
-      (naming_object || naming_context).motions_title_singular
+      naming_context(naming_object).motions_title_singular
     else
       I18n.t('motions.type')
     end
@@ -56,7 +56,7 @@ module AlternativeNamesHelper
   # Plural translation for {Motion}
   def motions_type(naming_object = nil)
     if alternative_motions?(naming_object)
-      (naming_object || naming_context).motions_title
+      naming_context(naming_object).motions_title
     else
       I18n.t('motions.plural')
     end
@@ -65,15 +65,10 @@ module AlternativeNamesHelper
   # Does the {Forum} use alternative names for {Motion}?
   # :nodoc:
   def alternative_motions?(naming_object = nil)
-    if naming_object == nil
-      @alternative_motions ||= (naming_context.uses_alternative_names &&
-        naming_context.motions_title_singular.present? &&
-        naming_context.motions_title.present?)
-    else
-      naming_object.try(:uses_alternative_names) &&
-        naming_object.try(:motions_title_singular).present? &&
-        naming_object.try(:motions_title).present?
-    end
+    return false if naming_context(naming_object).nil?
+    (naming_context(naming_object).uses_alternative_names &&
+      naming_context(naming_object).motions_title_singular.present? &&
+      naming_context(naming_object).motions_title.present?)
   end
 
   #########################
@@ -88,7 +83,7 @@ module AlternativeNamesHelper
   # Singular translation for {Question}
   def question_type(naming_object = nil)
     if alternative_questions?(naming_object)
-      (naming_object || naming_context).questions_title_singular
+      naming_context(naming_object).questions_title_singular
     else
       I18n.t('questions.type')
     end
@@ -96,25 +91,20 @@ module AlternativeNamesHelper
 
   # Plural translation for {Question}
   def questions_type(naming_object = nil)
-    if (naming_object || naming_context).questions_title
-      alternative_questions?(naming_object)
+    if naming_context(naming_object).questions_title
+      naming_context(naming_object).questions_title
     else
-      I18n.t('questions.type')
+      I18n.t('questions.plural')
     end
   end
 
   # @private
   # Does the {Forum} use alternative names for {Question}?
   def alternative_questions?(naming_object = nil)
-    if naming_object == nil || !naming_object.is_a?(Forum)
-      @alternative_questions ||= naming_context.uses_alternative_names &&
-        naming_context.questions_title_singular.present? &&
-        naming_context.questions_title.present?
-    else
-      naming_object.try(:uses_alternative_names) &&
-        naming_object.try(:questions_title_singular).present? &&
-        naming_object.try(:questions_title).present?
-    end
+    return false if naming_context(naming_object).nil?
+    naming_context(naming_object).uses_alternative_names &&
+      naming_context(naming_object).questions_title_singular.present? &&
+      naming_context(naming_object).questions_title.present?
   end
 
   #########################
@@ -123,7 +113,7 @@ module AlternativeNamesHelper
 
   # Icon substring for arguments
   def argument_icon(naming_object = nil)
-    if (naming_object || naming_context).arguments_title_singular
+    if naming_context(naming_object).arguments_title_singular
       alternative_arguments?(naming_object)
     else
       'argument'
@@ -133,7 +123,7 @@ module AlternativeNamesHelper
   # Singular translation for {Argument}
   def argument_type(naming_object = nil)
     if alternative_arguments?(naming_object)
-      (naming_object || naming_context).arguments_title_singular
+      naming_context(naming_object).arguments_title_singular
     else
       I18n.t('arguments.type')
     end
@@ -141,25 +131,20 @@ module AlternativeNamesHelper
 
   # Plural translation for {Argument}
   def arguments_type(naming_object = nil)
-    if (naming_object || naming_context).arguments_title
-      alternative_arguments?(naming_object)
+    if naming_context(naming_object).arguments_title
+      naming_context(naming_object).arguments_title
     else
-      I18n.t('arguments.type')
+      I18n.t('arguments.plural')
     end
   end
 
   # Does the {Forum} use alternative names for {Argument}?
   # :nodoc:
   def alternative_arguments?(naming_object = nil)
-    if naming_object == nil || !naming_object.is_a?(Forum)
-      @alternative_arguments ||= naming_context.uses_alternative_names &&
-        naming_context.arguments_title_singular.present? &&
-        naming_context.arguments_title.present?
-    else
-      naming_object.try(:uses_alternative_names) &&
-        naming_object.try(:arguments_title_singular).present? &&
-        naming_object.try(:arguments_title).present?
-    end
+    return false if naming_context(naming_object).nil?
+    naming_context(naming_object).uses_alternative_names &&
+      naming_context(naming_object).arguments_title_singular.present? &&
+      naming_context(naming_object).arguments_title.present?
   end
 
   #########################
@@ -181,9 +166,11 @@ module AlternativeNamesHelper
   #########################
 
   # Used to declare the default naming context to check for {uses_alternative_names}
-  # @note This must be overridden in the implementing object.
-  def naming_context
-    raise 'Naming context not defined'
+  def naming_context(naming_object = nil)
+    (naming_object ||
+      (authenticated_resource if respond_to?(:authenticated_resource, true)) ||
+      (resource_by_id if respond_to?(:resource_by_id, true)))
+      &.naming_context
   end
 
   # @return formtastic placeholder translation for an object
