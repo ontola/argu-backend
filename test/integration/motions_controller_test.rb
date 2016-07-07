@@ -1,8 +1,6 @@
 require 'test_helper'
 
-class MotionsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
-
+class MotionsControllerTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:question) do
     create(:question,
@@ -34,7 +32,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'guest should not get edit when not logged in' do
-    get :edit, id: subject
+    get edit_motion_path(subject)
     assert_redirected_to new_user_session_path(r: edit_motion_path(subject))
   end
 
@@ -54,13 +52,13 @@ class MotionsControllerTest < ActionController::TestCase
 
   test 'user should not get move' do
     sign_in user
-    get :move, motion_id: subject
+    get motion_move_path(subject)
     assert_redirected_to subject.forum
   end
 
   test 'user should not put move' do
     sign_in user
-    put :move, motion_id: subject
+    put motion_move_path(subject)
     assert_redirected_to subject.forum
   end
 
@@ -74,8 +72,11 @@ class MotionsControllerTest < ActionController::TestCase
     general_new(member, 200)
   end
 
-  test 'member should post create' do
+  test 'member should show tutorial only on first post create' do
     general_create(member)
+    general_create(member, false)
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to motion_path(assigns(:create_service).resource)
   end
 
   test 'member should post create with question' do
@@ -113,35 +114,20 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'member should put update on own motion' do
-    sign_in member
-
-    put :update,
-        id: member_motion,
-        motion: {
-          title: 'New title',
-          content: 'new contents',
-          default_cover_photo_attributes: {
-            image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
-          }
-        }
-
-    assert_not_nil assigns(:update_service)
-    assert_equal 'New title', assigns(:update_service).resource.title
-    assert_equal 'new contents', assigns(:update_service).resource.content
-    assert_equal 'cover_photo.jpg', assigns(:update_service).resource.default_cover_photo.image_identifier
+    general_update(member_motion, member, attrs: {
+      title: 'New title',
+      content: 'new contents',
+      default_cover_photo_attributes: {
+        image: fixture_file_upload('test/files/cover_photo.jpg', 'image/jpg')
+      }
+    })
+    assert_equal 'cover_photo.jpg',
+                 assigns(:update_service).resource.default_cover_photo.image_identifier
     assert_equal 1, assigns(:update_service).resource.photos.count
-    assert_redirected_to motion_url(assigns(:update_service).resource)
   end
 
   test 'member should not put update on others motion' do
-    sign_in member
-
-    put :update,
-        id: subject,
-        motion: {
-          title: 'New title',
-          content: 'new contents'
-        }
+    general_update(subject, member, false)
 
     assert_redirected_to subject.forum
     assert_not_authorized
@@ -209,8 +195,7 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in moderator
 
     assert_differences create_changes_array(2) do
-      post :create,
-           project_id: project,
+      post project_motions_path(project),
            motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:create_service).resource
@@ -222,8 +207,7 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in moderator
 
     assert_differences create_changes_array(2) do
-      post :create,
-           question_id: project_question,
+      post question_motions_path(project_question),
            motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:create_service).resource
@@ -243,8 +227,7 @@ class MotionsControllerTest < ActionController::TestCase
     change_actor page
 
     assert_differences create_changes_array do
-      post :create,
-           forum_id: freetown,
+      post forum_motions_path(freetown),
            motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:create_service).resource
@@ -265,37 +248,18 @@ class MotionsControllerTest < ActionController::TestCase
   test 'creator should get edit' do
     sign_in creator
 
-    get :edit, id: creator_motion
+    get edit_motion_path(creator_motion)
 
     assert_response 200
     assert assigns(:motion)
   end
 
   test 'creator should put update' do
-    sign_in creator
-
-    put :update,
-        id: creator_motion,
-        motion: {
-          title: 'New title',
-          content: 'new contents'
-        }
-
-    assert_not_nil assigns(:update_service).resource
-    assert_equal 'New title', assigns(:update_service).resource.title
-    assert_equal 'new contents', assigns(:update_service).resource.content
-    assert_redirected_to motion_url(assigns(:update_service).resource)
+    general_update(creator_motion, creator)
   end
 
   test 'creator should render form for faulty put update' do
-    sign_in creator
-
-    put :update,
-        id: creator_motion,
-        motion: {
-          title: 't',
-          content: 'new contents'
-        }
+    general_update(creator_motion, creator, false, attrs: {title: 't', content: 'new contents'})
 
     assert_response 200
     assert assigns(:update_service).resource.changed?
@@ -312,8 +276,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_differences([['Motion.trashed(false).count', -1],
                         ['Motion.trashed_only.count', 1]]) do
-      delete :trash,
-             id: subject
+      delete motion_path(subject)
     end
 
     assert_redirected_to question
@@ -327,8 +290,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences([['Motion.trashed(false).count', 0],
                         ['Edge.count', -7],
                         ['Motion.trashed(true).count', -1]]) do
-      delete :destroy,
-             id: subject
+      delete motion_path(subject, destroy: 'true')
     end
 
     assert_redirected_to question
@@ -337,7 +299,7 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:owner) { freetown.page.owner.profileable }
+  let(:owner) { create_owner(freetown) }
 
   test 'owner should delete trash' do
     sign_in owner
@@ -345,8 +307,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_differences([['Motion.trashed(false).count', -1],
                         ['Motion.trashed_only.count', 1]]) do
-      delete :trash,
-             id: subject
+      delete motion_path(subject)
     end
 
     assert_redirected_to question
@@ -360,8 +321,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences([['Motion.trashed(false).count', 0],
                         ['Edge.count', -7],
                         ['Motion.trashed(true).count', -1]]) do
-      delete :destroy,
-             id: subject
+      delete motion_path(subject, destroy: 'true')
     end
 
     assert_redirected_to question
@@ -381,30 +341,28 @@ class MotionsControllerTest < ActionController::TestCase
            parent: forum_from.edge)
   end
 
-  test "staff should put update others' motion" do
+  test 'staff should get edit' do
     sign_in staff
 
-    put :update,
-        id: subject,
-        motion: {
-          title: 'New title',
-          content: 'new contents'
-        }
+    get edit_motion_path(creator_motion)
+
+    assert_response 200
+    assert assigns(:motion)
+  end
+
+  test "staff should put update others' motion" do
+    general_update(subject, staff)
 
     updated_resource = assigns(:update_service).resource
     assert_equal subject.publisher_id, updated_resource.publisher_id
     assert_equal subject.creator_id, updated_resource.creator_id
-    assert_equal 'New title', updated_resource.title
-    assert_not_equal 'New title', subject.title
-    assert_equal 'new contents', updated_resource.content
-    assert_redirected_to motion_url(updated_resource)
   end
 
   # Currently only staffers can move items
   test 'staff should get move' do
     sign_in staff
 
-    get :move, motion_id: subject
+    get motion_move_path(motion_id: subject)
     assert_response 200
   end
 
@@ -415,8 +373,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_differences [['forum_from.reload.motions.count', -1],
                         ['forum_to.reload.motions.count', 1]] do
-      put :move!,
-          motion_id: motion_move,
+      put motion_move_path(motion_move),
           motion: {forum_id: forum_to.id}
     end
     assert_redirected_to assigns(:motion)
@@ -455,10 +412,15 @@ class MotionsControllerTest < ActionController::TestCase
                      attrs: attributes_for(:motion, parent: freetown.edge),
                      changes: create_changes_array)
     sign_in role if role
+    path = case attrs[:parent].owner
+           when Question
+             question_motions_path(attrs[:parent].owner)
+           else
+             forum_motions_path(attrs[:parent].owner)
+           end
 
     assert_differences changes do
-      post :create,
-           attrs[:parent].owner_type.foreign_key => attrs[:parent].owner_id,
+      post path,
            motion: attrs
     end
     if should
@@ -467,14 +429,40 @@ class MotionsControllerTest < ActionController::TestCase
     end
   end
 
+  def general_update(motion,
+                     role = nil,
+                     should = true,
+                     attrs: {title: 'New title', content: 'new contents'},
+                     changes: create_changes_array)
+    sign_in role if role
+
+    put motion_path(motion), motion: attrs
+
+    if should
+      assert_not_nil assigns(:update_service).resource
+      assert_equal attrs[:title], assigns(:update_service).resource.title if attrs[:title].present?
+      if attrs[:content].present?
+        assert_equal attrs[:content], assigns(:update_service).resource.content
+      end
+      assert_redirected_to motion_path(assigns(:update_service).resource)
+    end
+  end
+
   def general_new(role = nil, response = 302, params = {parent: freetown.edge})
     sign_in role if role
-    get :new, params[:parent].owner_type.foreign_key => params[:parent].owner_id
+    case params[:parent].owner
+    when Question
+      get new_question_motion_path(params[:parent].owner)
+    when Project
+      get new_project_motion_path(params[:parent].owner)
+    else
+      get new_forum_motion_path(params[:parent].owner)
+    end
   end
 
   def general_show(role = nil, should = true)
     sign_in role if role
-    get :show, id: subject
+    get motion_path(subject)
 
     if should
       assert_response 200

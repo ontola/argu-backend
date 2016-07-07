@@ -30,6 +30,7 @@ module Argu
         def change_actor(actor)
           a = actor.respond_to?(:profile) ? actor.profile : actor
           @controller.instance_variable_set(:@_current_actor, a)
+          cookies['a_a'] = actor.profile.id
         end
 
         def create(model_type, *args)

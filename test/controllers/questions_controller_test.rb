@@ -368,6 +368,15 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   let(:staff) {create(:user, :staff) }
 
+  test 'staff should get edit' do
+    sign_in staff
+
+    get :edit, id: creator_question
+
+    assert_response 200
+    assert assigns(:resource)
+  end
+
   # Currently only staffers can move items
   test 'should get move' do
     sign_in staff
