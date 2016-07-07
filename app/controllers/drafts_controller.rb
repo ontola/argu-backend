@@ -2,7 +2,6 @@
 class DraftsController < ApplicationController
   def index
     @user = User.find_via_shortname params[:id]
-    current_context @user
 
     projects = policy_scope(@user.projects.unpublished.trashed(false))
     blog_posts = policy_scope(@user.blog_posts.unpublished.trashed(false))

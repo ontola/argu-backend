@@ -51,8 +51,6 @@ class ForumsController < AuthorizedController
   end
 
   def settings
-    current_context
-
     prepend_view_path 'app/views/forums'
 
     render locals: {
@@ -62,8 +60,6 @@ class ForumsController < AuthorizedController
   end
 
   def statistics
-    current_context
-
     render :statistics,
            locals: {
              content_counts: content_count(resource_by_id),

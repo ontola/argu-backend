@@ -3,7 +3,7 @@ require 'argu/not_authorized_error'
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, ApplicationHelper, PublicActivity::StoreController,
           AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper, NestedAttributesHelper
-  helper_method :current_profile, :current_context, :current_scope, :show_trashed?,
+  helper_method :current_profile, :show_trashed?,
                 :authenticated_context, :collect_announcements
 
   protect_from_forgery with: :exception
@@ -49,22 +49,6 @@ class ApplicationController < ActionController::Base
     end
     @announcements = policy_scope(Announcement)
                        .reject { |a| announcements[a.identifier] == 'hidden' }
-  end
-
-  def current_scope
-    @current_scope ||= (current_context.context_scope(current_profile) || current_context)
-  end
-
-  # @return [Context] The current context, if a param is given, it will serve as the start of the current context
-  def current_context(model=nil)
-    @current_context =
-      if @current_context.present? && (@current_context.try(:has_parent?) || @current_context.single_model.is_a?(Forum))
-        @current_context
-      else
-        Context.parse_from_uri(request.url, model) do |components|
-          components.reject! { |c| !policy(c).show? }
-        end
-      end
   end
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions

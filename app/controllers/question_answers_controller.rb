@@ -9,7 +9,6 @@ class QuestionAnswersController < ApplicationController
     @forum = @question.forum
     @question_answer = QuestionAnswer.new question: @question, motion: Motion.new
     authorize @question_answer, :new?
-    current_context @question_answer
   end
 
   # POST /question_answers

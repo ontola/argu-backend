@@ -155,12 +155,6 @@ class AuthorizedController < ApplicationController
     "#{action_name.classify}#{controller_name.classify}".safe_constantize
   end
 
-  def current_context
-    Context.parse_from_uri(nil, authenticated_resource!) do |components|
-      components.reject! { |c| !policy(c).show? }
-    end
-  end
-
   # For use with the services options parameter, with sensible defaults
   # @return [Hash] Defaults with the creator and publisher set to the current profile/user
   def service_options(options = {})

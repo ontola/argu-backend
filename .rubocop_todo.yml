@@ -425,7 +425,6 @@ Style/IfInsideElse:
     - 'app/helpers/comments_helper.rb'
     - 'app/helpers/menu_helper.rb'
     - 'app/policies/profile_policy.rb'
-    - 'lib/argu_extensions/context.rb'
     - 'test/controllers/blog_posts_controller_test.rb'
     - 'test/controllers/projects_controller_test.rb'
 
