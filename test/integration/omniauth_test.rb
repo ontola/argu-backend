@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class OmniauthTest < ActionDispatch::IntegrationTest
@@ -93,8 +94,9 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_omniauth_callback_path(:facebook)
 
     follow_redirect!
-    assert_redirected_to connect_user_path(user3,
-                                           token: identity_token(Identity.find_by(uid: 1119134323213)))
+    assert_redirected_to connect_user_path(
+      user3,
+      token: identity_token(Identity.find_by(uid: 1119134323213)))
 
     follow_redirect!
     assert_response 200
@@ -120,8 +122,9 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_omniauth_callback_path(:facebook)
 
     follow_redirect!
-    assert_redirected_to connect_user_path(user3,
-                                           token: identity_token(Identity.find_by(uid: 1119134323213)))
+    assert_redirected_to connect_user_path(
+      user3,
+      token: identity_token(Identity.find_by(uid: 1119134323213)))
 
     get connect_user_path(user2, token: identity_token(Identity.find_by(uid: 1119134323213)))
     assert_response 200
