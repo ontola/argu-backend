@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :facebook,
@@ -7,9 +8,14 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            secure_image_url: true,
            image_size: 'large',
            client_options: {
+             site: 'https://graph.facebook.com/v2.6',
+             authorize_url: 'https://www.facebook.com/v2.6/dialog/oauth',
              ssl: {
                ca_file: "#{Rails.root}/config/ca-bundle.crt"
              }
+           },
+           token_params: {
+             parse: :json
            }
 
   provider :twitter,

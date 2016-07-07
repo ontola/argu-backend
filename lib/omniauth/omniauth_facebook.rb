@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Omniauth
   class OmniauthFacebook
     def self.create_user_without_shortname(auth, identity, r = nil)
@@ -6,20 +8,24 @@ module Omniauth
       user = nil
       Identity.transaction do
         image_url = get_image_unless_silhouette(info['image'])
-
-        user =
-          User.new email: info['email'],
-                   first_name: info['first_name'],
-                   middle_name: raw['middle_name'],
-                   last_name: info['last_name'],
-                   gender: raw['gender'],
-                   finished_intro: true,
-                   r: r,
-                   profile_attributes: {
-                     default_profile_photo_attributes: {
-                       remote_image_url: image_url
-                     }
-                   }
+        name_arr = auth.info.name.split(' ')
+        first_name = name_arr[0]
+        middle_name = name_arr[1..-2].join(' ') if name_arr.length > 2
+        last_name = name_arr[-1] if name_arr.length > 1
+        user = User.new(
+          email: auth.info.email,
+          confirmed_at: Time.current,
+          first_name: first_name,
+          middle_name: middle_name,
+          last_name: last_name,
+          gender: raw['gender'],
+          finished_intro: true,
+          r: r,
+          profile_attributes: {
+            default_profile_photo_attributes: {
+              remote_image_url: image_url
+            }
+          })
         user.identities << identity
         user.shortname = nil
         identity.save!

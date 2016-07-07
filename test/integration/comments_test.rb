@@ -52,8 +52,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
              r: venice.url
            },
            at: access_token.access_token
+      assert_redirected_to edit_user_url('newuser')
     end
-    assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
     put profile_path('newuser'),
