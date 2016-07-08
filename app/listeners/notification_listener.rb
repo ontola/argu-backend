@@ -1,6 +1,8 @@
 class NotificationListener
   def create_activity_successful(activity)
     case activity.object
+    when 'vote'
+      nil
     when 'blog_post', 'project'
       create_notifications_for(activity) if activity.action == 'publish'
     else
