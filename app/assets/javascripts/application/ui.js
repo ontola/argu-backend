@@ -135,10 +135,10 @@ const ui = {
 
     handleEditableSettings: function () {
         var settings;
-        if ((settings = $('.portal-settings'))) {
+        if ((settings = $('.settings-table'))) {
             var editableOptions = {
                 onsubmit: function (settings) {
-                    settings.target = '/portal/settings/';
+                    settings.target = '/portal/setting/';
                 },
                 submitdata : function () {
                     return {key: this.getAttribute('id')};
