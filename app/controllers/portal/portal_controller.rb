@@ -19,7 +19,7 @@ class Portal::PortalController < Portal::PortalBaseController
 
     if Setting.set(params[:key], params[:value])
       respond_to do |format|
-        format.js { render text: escape_javascript(params[:value]) }
+        format.js { render }
       end
     else
       respond_to do |format|
