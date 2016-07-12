@@ -385,15 +385,7 @@
 }
 
 .btns-list--subtle > li {
-
-  text-transform: uppercase;
   text-decoration: none;
-  //span {font-size: .8em;}
-  a > span, > div > div > span {
-    font-size: .8em;
-  }
-
-
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
@@ -401,7 +393,7 @@
   cursor: pointer;
   display: block;
   color: $g3;
-  // height: 100%; //causes a bug on chrome on iOS, where the filter buttons fill the entire screen.
+
   @include transition(.2s);
   > a, .dropdown-trigger, > div > div {
     padding: .7em;
