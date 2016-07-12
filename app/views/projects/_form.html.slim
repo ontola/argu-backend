@@ -11,8 +11,8 @@
       =semantic_form_for(project.new_record? ? [authenticated_context, project] : project, html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
-            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type(project).downcase)
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(project, :content, motion_type(project).downcase)
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type.downcase)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(project, :content, motion_type.downcase)
             =f.input :start_date, as: :datetime_picker
             li.form-helper
               span= t('projects.start_date_info')

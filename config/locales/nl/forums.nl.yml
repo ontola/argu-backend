@@ -28,8 +28,6 @@ nl:
         managers: 'Beheerders'
         shortnames: 'Argu URLs'
         banners: "Banners"
-      terminology: "Terminologie"
-      terminology_helper: "Je kunt de namen van concepten zoals 'idee' of 'uitdaging' aanpassen. Wij raden dit echter af, aangezien deze functionaliteit nog niet volledig ontwikkeld is."
       advanced: "Geavanceerd"
       privacy: "Privacy"
       manager: "Beheerder"

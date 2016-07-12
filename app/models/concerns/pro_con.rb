@@ -30,8 +30,6 @@ module ProCon
     scope :pro, -> { where(pro: true) }
     scope :con, -> { where(pro: false) }
 
-    delegate :motions_title, :motions_title_singular, to: :motion
-
     # Simple method to verify that a model uses {ProCon}
     def is_pro_con?
       true

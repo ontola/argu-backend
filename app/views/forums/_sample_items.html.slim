@@ -7,7 +7,7 @@
       p
         b.motion-t
           span.fa.fa-lightbulb-o
-          span.icon-left= t('motions.call_to_action.action', type: motion_type.downcase)
+          span.icon-left= t('motions.call_to_action.action')
 - if policy(Question).new?
   .box.box-grid.question[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for(new_forum_question_path(@forum)), data: {remote: true}
     section.section-fill.question-bg
@@ -17,4 +17,4 @@
       p
         b.question-t
           span.fa.fa-question
-          span.icon-left= t('questions.call_to_action.action', type: question_type.downcase)
+          span.icon-left= t('questions.call_to_action.action')

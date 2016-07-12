@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  include Roadie::Rails::Automatic, AlternativeNamesHelper
+  include Roadie::Rails::Automatic, NamesHelper
 
   default from: 'noreply@argu.co',
           charset: 'UTF-8',

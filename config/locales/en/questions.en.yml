@@ -3,7 +3,7 @@
 en:
   questions:
     type: "Challenge"
-    type_new: "New %{type}"
+    type_new: "New challenge"
     plural: "Challenges"
     new_btn: "Add challenge"
     header: "Challenges"
@@ -15,7 +15,7 @@ en:
     call_to_action:
       title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"
-      action: "Share your %{type}!"
+      action: "Share your challenge"
     form:
       title_heading: "Give your challenge a fitting title"
       title_body_html: "<ul class='bullets'>

@@ -1,5 +1,5 @@
 module ActivityStringHelper
-  include AlternativeNamesHelper, ProfilesHelper
+  include NamesHelper, ProfilesHelper
 
   # Generates an activity string for an activity in the sense of: 'Foo responded to your Bar'
   # Params:

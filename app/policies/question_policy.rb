@@ -31,7 +31,6 @@ class QuestionPolicy < RestrictivePolicy
     attributes = super
     attributes.concat %i(id title content tag_list forum_id project_id cover_photo
                          remove_cover_photo cover_photo_attribution expires_at) if create?
-    attributes.concat %i(uses_alternative_names motions_title motions_title_singular) if is_manager_up?
     attributes.concat %i(include_motions f_convert) if staff?
     append_default_photo_params(attributes)
     attributes

@@ -7,7 +7,7 @@
         p
           span= t('questions.call_to_action.body') + ' '
           =link_to polymorphic_url([:new, get_parent_resource, :question])
-            b.question-t= t('questions.call_to_action.action', type: question_type.downcase)
+            b.question-t= t('questions.call_to_action.action')
     =link_to polymorphic_url([:new, get_parent_resource, :question])
       .box.question
         .box-image--container
@@ -35,14 +35,14 @@
       =link_to polymorphic_url([:new, get_parent_resource, :question])
         h3
           span[class="fa fa-#{question_icon}"]
-          span.icon-left= t('questions.type_new', type: question_type.downcase)
+          span.icon-left= t('questions.type_new')
   .col-2-1
     .box
       section
         p
           span= t('motions.call_to_action.body') + ' '
           =link_to polymorphic_url([:new, get_parent_resource, :motion])
-            b.motion-t= t('motions.call_to_action.action', type: motion_type.downcase)
+            b.motion-t= t('motions.call_to_action.action')
     =link_to polymorphic_url([:new, get_parent_resource, :motion])
       .box.motion
         .box-image--container
@@ -78,7 +78,7 @@
       =link_to polymorphic_url([:new, get_parent_resource, :motion])
         h3
           span[class="fa fa-#{motion_icon}"]
-          span.icon-left= t('motions.type_new', type: motion_type.downcase)
+          span.icon-left= t('motions.type_new')
 -if get_parent_resource.respond_to?(:projects) && policy(resource_tenant.edge.children.new(owner: Project.new).owner).new?
   .col-1.col-1--small
     header

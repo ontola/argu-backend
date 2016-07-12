@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712090713) do
+ActiveRecord::Schema.define(version: 20160712111835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,32 +225,25 @@ ActiveRecord::Schema.define(version: 20160712090713) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",                    default: 0,     null: false
-    t.integer  "motions_count",                      default: 0,     null: false
-    t.integer  "memberships_count",                  default: 0,     null: false
+    t.integer  "questions_count",                   default: 0,     null: false
+    t.integer  "motions_count",                     default: 0,     null: false
+    t.integer  "memberships_count",                 default: 0,     null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.string   "slug"
-    t.text     "bio",                                default: "",    null: false
-    t.text     "featured_tags",                      default: "",    null: false
-    t.integer  "visibility",                         default: 1
-    t.string   "cover_photo_attribution",            default: ""
-    t.boolean  "visible_with_a_link",                default: false
-    t.boolean  "signup_with_token?",                 default: false
-    t.text     "bio_long",                           default: ""
-    t.boolean  "uses_alternative_names",             default: false, null: false
-    t.string   "questions_title"
-    t.string   "questions_title_singular"
-    t.string   "motions_title"
-    t.string   "motions_title_singular"
-    t.string   "arguments_title"
-    t.string   "arguments_title_singular"
-    t.integer  "lock_version",                       default: 0
-    t.integer  "place_id",                 limit: 8
-    t.integer  "projects_count",                     default: 0,     null: false
-    t.integer  "max_shortname_count",                default: 0,     null: false
+    t.text     "bio",                               default: "",    null: false
+    t.text     "featured_tags",                     default: "",    null: false
+    t.integer  "visibility",                        default: 1
+    t.string   "cover_photo_attribution",           default: ""
+    t.boolean  "visible_with_a_link",               default: false
+    t.boolean  "signup_with_token?",                default: false
+    t.text     "bio_long",                          default: ""
+    t.integer  "lock_version",                      default: 0
+    t.integer  "place_id",                limit: 8
+    t.integer  "projects_count",                    default: 0,     null: false
+    t.integer  "max_shortname_count",               default: 0,     null: false
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
@@ -601,9 +594,6 @@ ActiveRecord::Schema.define(version: 20160712090713) do
     t.string   "cover_photo_attribution",             default: ""
     t.datetime "expires_at"
     t.integer  "publisher_id",                                        null: false
-    t.boolean  "uses_alternative_names",              default: false, null: false
-    t.string   "motions_title_singular"
-    t.string   "motions_title"
     t.integer  "place_id",                limit: 8
     t.integer  "project_id"
   end

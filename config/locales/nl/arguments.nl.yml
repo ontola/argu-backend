@@ -13,8 +13,8 @@ nl:
     new_btn: "Argument toevoegen"
     references: "Referenties"
     header:
-      pro: "%{type} voor"
-      con: "%{type} tegen"
+      pro: "Argument voor"
+      con: "Argument tegen"
     index:
       title: "Argumenten"
       parties: "Partijen"
@@ -28,16 +28,16 @@ nl:
       header_short: "%{side}: "
       create: "+ argument %{side}"
     tooltips:
-      info: "Een %{type} is een enkele reden voor of tegen een idee."
+      info: "Een argument is een enkele reden voor of tegen een idee."
     revisions:
       title_wiped: 'Gewiste reacties'
     form:
-      title_heading: "Kern van jouw %{type}"
+      title_heading: "Kern van jouw argument"
       title_body_html: "<ul class='bullets'>
-                     <li>Een %{type} is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</li>
+                     <li>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</li>
                      <li>Maak de titel zo <b>kort en duidelijk</b> mogelijk.</li>
                    </ul>"
-      content_heading: "Licht je %{type} toe"
+      content_heading: "Licht je argument toe"
       content_body_html: "<ul class='bullets'>
                       <li>De <b>eerste zinnen</b> worden het meest gelezen, dus zorg dat die overtuigen!</li>
                       <li>Plaats maar <b>één enkele reden</b>! Zo houden we de discussie overzichtelijk.</li>

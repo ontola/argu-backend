@@ -38,16 +38,16 @@
       section
         h3
           span.fa.fa-lightbulb-o
-          span.icon-left= t('motions.call_to_action.action', type: motion_type(question).downcase)
+          span.icon-left= t('motions.call_to_action.action', type: motion_type.downcase)
 - if @motions.present?
   =render_columns({'' => {collection: @motions}},
-                  header: motions_type(question),
+                  header: motions_type,
                   header_text: 'test',
                   collection_model: Motion,
                   partial: 'question_answers/show',
                   show_new_buttons: policy_with_tenant!(authenticated_context, question.motions.build).new?,
                   buttons_url: polymorphic_url([:new, question, :motion]),
-                  buttons_text: t('add_type', type: motion_type(question)),
+                  buttons_text: t('add_type', type: motion_type),
                   page_param: :page,
                   buttons_icon: 'fa-lightbulb-o',
                   buttons_header: @motions.present? && t('motions.one_up'),

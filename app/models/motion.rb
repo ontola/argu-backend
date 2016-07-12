@@ -127,14 +127,6 @@ class Motion < ActiveRecord::Base
     end
   end
 
-  def motions_title
-    question.try(:motions_title) || forum.motions_title
-  end
-
-  def motions_title_singular
-    question.try(:motions_title_singular) || forum.motions_title_singular
-  end
-
   def move_to(forum, unlink_question = true)
     Motion.transaction do
       self.forum = forum.lock!

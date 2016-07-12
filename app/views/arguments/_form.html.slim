@@ -5,11 +5,11 @@
   .box.argument[id="#{argument.id.present? ? "argument_#{argument.id.to_s}" : ''}" class="side-#{argument.pro ? 'pro' : 'con'}"]
     section.smallpadded.form-filled
       =f.inputs
-        h3= t('arguments.form.title_heading', type: argument_type.downcase)
-        =t('arguments.form.title_body_html', type: argument_type.downcase)
+        h3= t('arguments.form.title_heading')
+        =t('arguments.form.title_body_html')
         =f.input :title, as: :text, input_html: {size: '2', maxlength: '75', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false
-        h3= t('arguments.form.content_heading', type: argument_type.downcase).capitalize
-        =t('arguments.form.content_body_html', type: argument_type.downcase)
+        h3= t('arguments.form.content_heading')
+        =t('arguments.form.content_body_html')
         =f.input :content, input_html: {class: 'form-input-content', rows: '6'}, label: false, hint: false
         - if policy(argument).trash? && !argument.new_record?
           =f.input :is_trashed, as: :reverse_boolean

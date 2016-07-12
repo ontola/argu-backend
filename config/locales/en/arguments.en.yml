@@ -13,8 +13,8 @@ en:
     new_btn: "Add argument"
     references: "references"
     header:
-      pro: "pro %{type}"
-      con: "con %{type}"
+      pro: "pro argument"
+      con: "con argument"
     index:
       title: "arguments"
       parties: "parties"
@@ -30,16 +30,16 @@ en:
     revisions:
       title_wiped: 'Removed replies'
     tooltips:
-      info: "An %{type} is a single reason in favor or against an idea."
+      info: "An argument is a single reason in favor or against an idea."
     form:
-      title_heading: "Core of your %{type}"
+      title_heading: "Core of your argument"
       title_body_html: "<ul class='bullets'>
-                     <li>An %{type} is a <b>single reason</b> <b class='pro-t'>in favour</b> or <b class='con-t'>against</b> an <b class='motion-t'>idea</b>.</li>
+                     <li>An argument is a <b>single reason</b> <b class='pro-t'>in favour</b> or <b class='con-t'>against</b> an <b class='motion-t'>idea</b>.</li>
                      <li>Use a <b>short and concise</b> title.</li>
                    </ul>"
-      content_heading: "%{type} details"
+      content_heading: "Argument details"
       content_body_html: "<ul class='bullets'>
-                      <li>Give <b>background information</b> to support your %{type}.</li>
+                      <li>Give <b>background information</b> to support your argument.</li>
                       <li>Use <b>references</b> and add links.</li>
                       <li>The <b>first sentences</b> will be read most often, so make sure they are convincing!</li>
                       <li>Make sure you provide just <b>a single reason</b>! That way, we keep discussions uncluttered.</li>

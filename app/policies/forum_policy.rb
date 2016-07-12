@@ -80,11 +80,7 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    if update?
-      attributes.concat %i(name bio bio_long tags featured_tags uses_alternative_names
-                           questions_title questions_title_singular motions_title motions_title_singular
-                           arguments_title arguments_title_singular profile_id)
-    end
+    attributes.concat %i(name bio bio_long tags featured_tags profile_id) if update?
     attributes.concat %i(visibility visible_with_a_link page_id) if change_owner?
     attributes.append(memberships_attributes: %i(role id profile_id forum_id))
     append_default_photo_params(attributes)
@@ -160,10 +156,6 @@ class ForumPolicy < RestrictivePolicy
 
   def statistics?
     super
-  end
-
-  def terminology?
-    rule is_manager?, is_owner?, staff?
   end
 
   def update?

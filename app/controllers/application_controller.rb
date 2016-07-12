@@ -2,7 +2,7 @@ require 'argu/not_authorized_error'
 
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, ApplicationHelper, PublicActivity::StoreController,
-          AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper, NestedAttributesHelper
+          AccessTokenHelper, NamesHelper, UsersHelper, GroupResponsesHelper, NestedAttributesHelper
   helper_method :current_profile, :show_trashed?,
                 :authenticated_context, :collect_announcements
 

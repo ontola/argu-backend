@@ -535,7 +535,6 @@ Style/Next:
 Style/NilComparison:
   Exclude:
     - 'app/controllers/follows_controller.rb'
-    - 'app/helpers/alternative_names_helper.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
