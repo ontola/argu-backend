@@ -65,7 +65,8 @@ module AlternativeNamesHelper
   # Does the {Forum} use alternative names for {Motion}?
   # :nodoc:
   def alternative_motions?(naming_object = nil)
-    return false if naming_context(naming_object).nil?
+    return false if naming_context(naming_object).nil? ||
+        !naming_context(naming_object).respond_to?(:motions_title)
     (naming_context(naming_object).uses_alternative_names &&
       naming_context(naming_object).motions_title_singular.present? &&
       naming_context(naming_object).motions_title.present?)
@@ -91,7 +92,7 @@ module AlternativeNamesHelper
 
   # Plural translation for {Question}
   def questions_type(naming_object = nil)
-    if naming_context(naming_object).questions_title
+    if alternative_questions?(naming_object)
       naming_context(naming_object).questions_title
     else
       I18n.t('questions.plural')
@@ -101,7 +102,8 @@ module AlternativeNamesHelper
   # @private
   # Does the {Forum} use alternative names for {Question}?
   def alternative_questions?(naming_object = nil)
-    return false if naming_context(naming_object).nil?
+    return false if naming_context(naming_object).nil? ||
+        !naming_context(naming_object).respond_to?(:questions_title)
     naming_context(naming_object).uses_alternative_names &&
       naming_context(naming_object).questions_title_singular.present? &&
       naming_context(naming_object).questions_title.present?
@@ -113,11 +115,7 @@ module AlternativeNamesHelper
 
   # Icon substring for arguments
   def argument_icon(naming_object = nil)
-    if naming_context(naming_object).arguments_title_singular
-      alternative_arguments?(naming_object)
-    else
-      'argument'
-    end
+    'argument'
   end
 
   # Singular translation for {Argument}
@@ -131,7 +129,7 @@ module AlternativeNamesHelper
 
   # Plural translation for {Argument}
   def arguments_type(naming_object = nil)
-    if naming_context(naming_object).arguments_title
+    if alternative_arguments?(naming_object)
       naming_context(naming_object).arguments_title
     else
       I18n.t('arguments.plural')
@@ -141,7 +139,8 @@ module AlternativeNamesHelper
   # Does the {Forum} use alternative names for {Argument}?
   # :nodoc:
   def alternative_arguments?(naming_object = nil)
-    return false if naming_context(naming_object).nil?
+    return false if naming_context(naming_object).nil? ||
+        !naming_context(naming_object).respond_to?(:arguments_title)
     naming_context(naming_object).uses_alternative_names &&
       naming_context(naming_object).arguments_title_singular.present? &&
       naming_context(naming_object).arguments_title.present?
