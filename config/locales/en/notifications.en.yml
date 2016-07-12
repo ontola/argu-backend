@@ -8,7 +8,8 @@ en:
       tooltip: "Email notifications"
       beta: "Email notifications are still in beta, so not all the kinks and quirks are ironed out yet"
     receive:
-      never: 'No notifications'
+      never: 'Never'
       reactions: 'All new replies'
       news: 'All important news'
       decisions: 'Only official decisions'
+      title: 'Receive notifications for:'

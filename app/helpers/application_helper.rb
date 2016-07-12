@@ -88,8 +88,13 @@ module ApplicationHelper
            else
              'fa-bell-o'
            end
-    dropdown_options(t("notifications.receive.#{follow_type}"),
-                     [{items: items}], fa: icon, triggerClass: opts[:trigger_class])
+    dropdown_options(t('notifications.type'),
+                     [
+                       {
+                         title: t('notifications.receive.title'),
+                         items: items
+                       }
+                     ], fa: icon, triggerClass: opts[:trigger_class])
   end
 
   def r_to_url_options(r)
