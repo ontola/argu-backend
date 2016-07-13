@@ -159,7 +159,7 @@ class ApplicationController < ActionController::Base
 
   # Has the {User} enabled the `trashed` `param` and is he authorized?
   def show_trashed?
-    if params[:trashed].present? && policy(current_scope.model).update?
+    if params[:trashed].present? && policy(resource_by_id).update?
       params[:trashed] == 'true'
     else
       false
