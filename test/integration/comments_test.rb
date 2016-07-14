@@ -67,7 +67,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_redirected_to forum_url(venice.url)
     assert assigns(:resource)
     assert assigns(:profile)
-    assert_equal 1, assigns(:profile).memberships.count
+    assert_equal 1, assigns(:profile).grants.member.count
   end
 
   ####################################

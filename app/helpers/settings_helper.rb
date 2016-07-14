@@ -25,11 +25,11 @@ module SettingsHelper
   end
 
   def group_redirect_url(group)
-    case group.owner
-    when Forum
-      settings_forum_path(group.owner, tab: group.shortname == 'managers' ? :managers : :groups)
-    when Page
-      settings_page_path(group.owner, tab: group.shortname == 'managers' ? :managers : :groups)
+    tab = group.grants.first&.manager? ? :managers : :groups
+    if group.grants.first&.edge&.owner_type == 'Forum'
+      settings_forum_path(group.grants.first.edge.owner, tab: tab)
+    else
+      settings_page_path(group.page.url, tab: tab)
     end
   end
 

@@ -14,16 +14,10 @@ class Profile < ActiveRecord::Base
   has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :restrict_with_exception
   has_many :edges, through: :groups
+  has_many :granted_edges, through: :grants, source: :edge, class_name: 'Edge'
+  has_many :grants, through: :groups
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
-  has_many :memberships,
-           -> {joins(group: :edge).where(groups: {shortname: 'members'})},
-           foreign_key: :member_id,
-           class_name: 'GroupMembership'
-  has_many :managerships,
-           -> {joins(group: :edge).where(groups: {shortname: 'managers'})},
-           foreign_key: :member_id,
-           class_name: 'GroupMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id, dependent: :restrict_with_exception
   has_many :votes, inverse_of: :voter, foreign_key: :voter_id, dependent: :destroy
   # User content
@@ -79,22 +73,40 @@ class Profile < ActiveRecord::Base
 
   def forums
     Forum
-      .where(id: memberships.for_forums.pluck('edges.owner_id'))
-      .select(:id, :slug, :name, :profile_photo)
+      .joins(grants: {group: :group_memberships})
+      .where(group_memberships: {member_id: id}, grants: {role: Grant.roles[:member]})
   end
 
-  def profile_frozen?
-    has_role? 'frozen'
+  def forum_ids(role=:member)
+    @forum_ids ||= {}
+    @forum_ids[role] ||= granted_edges
+                           .where(owner_type: 'Forum', grants: {role: Grant.roles[role]})
+                           .pluck(:owner_id)
   end
 
-  def memberships_ids
-    memberships.for_forums.pluck('DISTINCT owner_id').join(',').presence
+  def joined_forum_ids(role=:member)
+    forum_ids(role).join(',').presence
   end
 
   def owner
     profileable
   end
   deprecate :owner
+
+  def page_ids(role=:member)
+    @page_ids ||= {}
+    @page_ids[role] ||= granted_edges
+                          .where(owner_type: 'Page', grants: {role: Grant.roles[role]})
+                          .pluck(:owner_id)
+  end
+
+  def joined_page_ids(role=:member)
+    page_ids(role).join(',').presence
+  end
+
+  def profile_frozen?
+    has_role? 'frozen'
+  end
 
   def url
     profileable.presence && profileable.url.presence
@@ -125,7 +137,9 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     last_forum = Argu::Redis.get("profile:#{id}:last_forum")
 
-    (Forum.find_by(id: last_forum) if last_forum.present?) || memberships.first.try(:forum) || Forum.first_public
+    (Forum.find_by(id: last_forum) if last_forum.present?) ||
+      granted_edges.find_by(owner_type: 'Forum')&.owner ||
+      Forum.first_public
   end
 
   def requires_name?
@@ -133,12 +147,7 @@ class Profile < ActiveRecord::Base
   end
 
   def member_of?(tenant)
-    tenant.present? &&
-      memberships
-        .where(groups: {
-          edge_id: tenant.edge.id
-        })
-        .present?
+    tenant.present? && granted_edges.include?(tenant.edge)
   end
 
   def owner_of(tenant)

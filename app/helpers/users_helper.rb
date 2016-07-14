@@ -52,12 +52,12 @@ module UsersHelper
   def setup_memberships(user)
     # changed? so we can safely write back to the DB
     if user.valid? && user.persisted? && !user.changed?
-      if user.profile.memberships.blank?
+      if user.profile.grants.member.blank?
         begin
           forum = forum_from_r_action(user) || preferred_forum(user.profile)
           if forum.present? && policy(forum).join?
             CreateGroupMembership
-              .new(forum.members_group,
+              .new(forum.members_group.edge,
                    attributes: {member: user.profile},
                    options: {creator: user.profile, publisher: user})
               .commit

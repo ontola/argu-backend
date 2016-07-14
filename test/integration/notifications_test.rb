@@ -7,8 +7,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, :with_follower, parent: question.edge) }
   let(:argument) { create(:argument, :with_follower, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
-  let(:group) { create(:group, visibility: :discussion, parent: freetown.edge) }
-  let(:group_membership) { create(:group_membership, parent: group, member: user.profile) }
+  let(:group) { create(:group, visibility: :discussion, parent: freetown.page.edge) }
+  let(:group_membership) { create(:group_membership, parent: group.edge, member: user.profile) }
   let!(:random_follow) { create(:follow, followable: create_forum.edge) }
 
   ####################################
@@ -61,7 +61,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'member should create and destroy group_response with notifications' do
     # Both the motion publisher as the motion follower will receive a notification
     sign_in member
-    create(:group_membership, parent: group, shortname: member.url)
+    create(:group_membership, parent: group.edge, shortname: member.url)
     motion
 
     assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do

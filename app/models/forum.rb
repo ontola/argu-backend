@@ -1,6 +1,6 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Photoable, ProfilePhotoable,
-          Parentable, Groupable
+  include ArguBase, Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
+          Groupable
 
   belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
@@ -98,10 +98,6 @@ class Forum < ActiveRecord::Base
 
   def page=(value)
     super value.is_a?(Page) ? value : Page.find_via_shortname(value)
-  end
-
-  def profile_is_member?(profile)
-    memberships.where(member: profile).present?
   end
 
   def publisher

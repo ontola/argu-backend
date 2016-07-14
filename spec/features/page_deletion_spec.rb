@@ -26,7 +26,7 @@ RSpec.feature 'Page deletion', type: :feature do
     create(:group_response,
            creator: forum_page.profile,
            parent: motion.edge,
-           group: create(:group, parent: freetown.edge),
+           group: create(:group, parent: freetown.page.edge),
            publisher: user)
   end
   let(:project) do

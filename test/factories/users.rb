@@ -72,13 +72,18 @@ FactoryGirl.define do
         page = create(:page)
         service = CreateForum.new(
           page.edge,
-          attributes: {page: page},
+          attributes: attributes_for(:forum)
+                        .merge(shortname_attributes: attributes_for(:shortname), page: page),
           options: {
             creator: page.owner,
             publisher: page.owner.profileable})
         service.commit
         forum = service.resource
-        user.profile.memberships.create(group: forum.members_group)
+        CreateGroupMembership
+          .new(forum.members_group.edge,
+               attributes: {member: user.profile},
+               options: {creator: user.profile, publisher: user})
+          .commit
       end
 
       factory :user_with_votes do

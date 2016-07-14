@@ -70,7 +70,11 @@ module ForumsHelper
     items = []
 
     if policy(@forum).is_member?
-      membership = current_profile.memberships.for_forums.find_by(groups: {edge_id: @forum.edge.id})
+      membership = current_profile
+                     .group_memberships
+                     .joins(grants: :edge)
+                     .where(edges: {owner_id: @forum.id})
+                     .first
       items << link_item(t('forums.leave'),
                          group_membership_path(membership),
                          fa: 'sign-out',

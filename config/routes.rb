@@ -167,6 +167,7 @@ Argu::Application.routes.draw do
             path: 'o',
             only: [:new, :create, :show, :update, :destroy],
             concerns: [:flowable, :destroyable] do
+    resources :groups, path: 'g', only: [:create, :new]
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
@@ -259,12 +260,10 @@ Argu::Application.routes.draw do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
-    resources :groups, only: [:create]
     resources :shortnames, only: [:new, :create]
     resources :projects, path: 'p', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
-    resources :groups, path: 'g', only: [:new, :edit]
     resources :banners, except: :index
   end
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}

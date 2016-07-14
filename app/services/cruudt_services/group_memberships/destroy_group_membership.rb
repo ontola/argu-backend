@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DestroyGroupMembership < DestroyService
   include Wisper::Publisher
 

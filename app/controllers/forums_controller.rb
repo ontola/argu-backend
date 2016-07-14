@@ -9,11 +9,7 @@ class ForumsController < AuthorizedController
     authorize resource_by_id, :update?
     forums = Forum.arel_table
     @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id))
-                            .or(forums[:id].in(@user
-                                                 .profile
-                                                 .managerships
-                                                 .for_forums
-                                                 .pluck('edges.owner_id'))))
+                            .or(forums[:id].in(@user.profile.forum_ids(:manager))))
     @_pundit_policy_scoped = true
   end
 
@@ -60,7 +56,8 @@ class ForumsController < AuthorizedController
 
     render locals: {
       tab: tab,
-      active: tab
+      active: tab,
+      resource: resource_by_id
     }
   end
 
@@ -120,7 +117,12 @@ class ForumsController < AuthorizedController
   def city_count(forum)
     cities = Hash.new(0)
     User
-      .where(id: forum.members.where(profileable_type: 'User').pluck(:profileable_id))
+      .where(id: forum
+                   .edge
+                   .group_memberships
+                   .joins(:member)
+                   .where(profiles: {profileable_type: 'User'})
+                   .pluck('profiles.profileable_id'))
       .includes(home_placement: :place)
       .map { |u| u.home_placement&.place&.address.try(:[],'city') }
       .each { |v| cities.store(v, cities[v] + 1) }

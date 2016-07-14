@@ -117,7 +117,7 @@ en:
       title: "A forum for your organisation?"
       body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
     tooltips:
-      members_count: "number of members"
+      members_count: "Followers of this forum"
     visit: "Visit forum"
     shortname_helper_html: "https://argu.co/<b>your_argu_url</b>"
   activerecord: #These currently aren't used for forms.

@@ -159,7 +159,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
 
-    [:general, :advanced, :groups, :privacy, :managers].each do |tab|
+    [:general, :advanced, :projects, :shortnames, :banners, :privacy, :managers].each do |tab|
       get settings_forum_path(holland), tab: tab
       assert_forum_settings_shown holland, tab
     end
@@ -209,8 +209,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'manager should show settings and some tabs' do
     sign_in holland_manager
-
-    [:general, :advanced, :groups].each do |tab|
+    [:general, :advanced, :projects, :shortnames, :banners].each do |tab|
       get settings_forum_path(holland),
           tab: tab
       assert_forum_settings_shown(holland, tab)
@@ -276,7 +275,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
                     forum.display_name
     assert_have_tag response.body,
                     '.settings-tabs .tab--current .icon-left',
-                    tab.to_s.capitalize
+                    I18n.t("forums.settings.menu.#{tab}")
   end
 
   def assert_forum_shown(forum)

@@ -3,7 +3,7 @@ require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:group, parent: freetown.edge) }
+  subject { create(:group, parent: freetown.page.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
 
   test 'valid' do
@@ -12,7 +12,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test 'associated memberships and responses should be destroyed' do
     create(:group_membership,
-           parent: subject)
+           parent: subject.edge)
     create(:group_response,
            group: subject,
            parent: motion.edge)

@@ -8,7 +8,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:group) do
-    create(:group, visibility: :discussion, parent: freetown.edge)
+    create(:group, visibility: :discussion, parent: freetown.page.edge)
   end
   let(:group_response) do
     create(:group_response,
@@ -17,10 +17,10 @@ class GroupResponsesControllerTest < ActionController::TestCase
            parent: motion.edge)
   end
   let(:visible_group) do
-    create(:group, visibility: :visible, parent: freetown.edge)
+    create(:group, visibility: :visible, parent: freetown.page.edge)
   end
   let(:hidden_group) do
-    create(:group, visibility: :hidden, parent: freetown.edge)
+    create(:group, visibility: :hidden, parent: freetown.page.edge)
   end
 
   ####################################
@@ -140,7 +140,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   # As Group Member
   ####################################
-  let(:group_member) { create_group_member(group) }
+  let(:group_member) { create_group_member(group, create_member(freetown)) }
 
   test 'group member should get new' do
     sign_in group_member
@@ -216,7 +216,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   end
 
   ## Visible groups ##
-  let(:visible_group_member) { create_group_member(visible_group) }
+  let(:visible_group_member) { create_group_member(visible_group, create_member(freetown)) }
 
   test 'group member should not get new on visible' do
     sign_in visible_group_member
@@ -244,7 +244,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   end
 
   ## hidden groups ##
-  let(:hidden_group_member) { create_group_member(hidden_group) }
+  let(:hidden_group_member) { create_group_member(hidden_group, create_member(freetown)) }
 
   test 'group member should not get new on hidden' do
     sign_in hidden_group_member

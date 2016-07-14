@@ -116,7 +116,7 @@ nl:
       title: "Een forum voor jouw organisatie?"
       body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
     tooltips:
-      members_count: "aantal leden"
+      members_count: "Volgers van dit forum"
     visit: "Bezoek forum"
     shortname_helper_html: "https://argu.co/<b>jouw_argu_url</b>"
   activerecord: #These currently aren't used for forms.

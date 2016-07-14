@@ -1,5 +1,5 @@
 class GroupPolicy < RestrictivePolicy
-  include ForumPolicy::ForumRoles
+  include PagePolicy::PageRoles
 
   class Scope < Scope
     attr_reader :context, :scope
@@ -28,11 +28,7 @@ class GroupPolicy < RestrictivePolicy
     attributes
   end
 
-  def create?(forum = nil)
-    if forum.present?
-      record.present? || raise(SecurityError)
-      record = Group.new(edge: forum.edge)
-    end
+  def create?
     rule is_manager?, super()
   end
 
@@ -61,7 +57,7 @@ class GroupPolicy < RestrictivePolicy
     rule is_manager?
   end
 
-  def forum_policy
-    Pundit.policy(context, record.try(:edge)&.owner || context.context_model)
+  def page_policy
+    Pundit.policy(context, record.try(:page) || context.context_model.page)
   end
 end

@@ -30,7 +30,7 @@ class ActorPolicy < RestrictivePolicy
     if owner.class == User
       owner == user
     else
-      owner.owner == user.profile || owner.managerships.where(profile: user.profile).present?
+      owner.owner == user.profile || user.profile.page_ids.include?(owner.id)
     end
   end
 end

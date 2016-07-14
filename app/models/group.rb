@@ -1,19 +1,20 @@
 class Group < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, Parentable
 
-  belongs_to :edge
+  has_many :grants, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :group_responses, dependent: :destroy
-
-  delegate :owner, to: :edge
+  belongs_to :page, required: true, inverse_of: :groups
+  belongs_to :forum
 
   validates :name, length: {maximum: 75}
-  validates :visibility, :edge, presence: true
+  validates :visibility, presence: true
 
-  before_create :set_shortname
+  delegate :publisher, to: :page
 
   enum visibility: {hidden: 0, visible: 1, discussion: 2}
+  parentable :page
 
   def as_json(options)
     super(options.merge(except: [:max_responses_per_member, :created_at, :updated_at]))
@@ -48,9 +49,5 @@ class Group < ActiveRecord::Base
 
   def responses_for(group_respondable, profile)
     group_respondable.group_responses.where(group: self, creator: profile)
-  end
-
-  def set_shortname
-    self.shortname = name.downcase.tr(' ', '_').gsub(/[^0-9a-z_]/i, '')
   end
 end

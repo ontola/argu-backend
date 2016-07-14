@@ -4,7 +4,7 @@ class PageMembership < ActiveRecord::Base
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }
 
   belongs_to :profile
-  belongs_to :page, inverse_of: :memberships
+  belongs_to :page
 
   validates :profile_id, :page_id, presence: true
 

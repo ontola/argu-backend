@@ -58,11 +58,6 @@ class ForumTest < ActiveSupport::TestCase
     assert forum.open?
   end
 
-  test 'profile_is_member should function correctly' do
-    assert_not subject.profile_is_member?(user.profile)
-    assert subject.profile_is_member?(subject_member.profile)
-  end
-
   define_holland('shortname_forum', attributes: {max_shortname_count: 0})
   test 'shortnames_depleted? should function correctly' do
     f = shortname_forum

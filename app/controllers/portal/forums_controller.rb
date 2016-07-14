@@ -30,7 +30,7 @@ class Portal::ForumsController < ApplicationController
   end
 
   def new_resource_from_params
-    Shortname.find_resource(params[:page])
+    @resource ||= Shortname.find_resource(params[:page])
       .edge
       .children
       .new(owner: Forum.new(page: params[:page]))

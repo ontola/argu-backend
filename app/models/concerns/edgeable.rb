@@ -8,6 +8,7 @@ module Edgeable
             inverse_of: :owner,
             dependent: :destroy,
             required: true
+    has_many :grants, through: :edge
 
     def root_object?
       false

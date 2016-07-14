@@ -113,7 +113,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to hidden_forum_path
     assert assigns(:resource)
     assert assigns(:profile)
-    assert_equal 1, assigns(:profile).memberships.count
+    assert_equal 1, assigns(:profile).reload.grants.member.count
   end
 
   test 'should register and become a member with an access token and preserve vote' do
@@ -158,7 +158,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 'new user', assigns(:profile).display_name
-    assert_equal 1, assigns(:profile).memberships.count
+    assert_equal 1, assigns(:profile).grants.member.count
 
     follow_redirect!
 

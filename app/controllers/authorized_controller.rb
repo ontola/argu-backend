@@ -113,8 +113,12 @@ class AuthorizedController < ApplicationController
     if resource_by_id.present?
       if resource_by_id.is_a?(Forum)
         resource_by_id
-      elsif [Group, GroupMembership].include? resource_by_id.class
-        resource_by_id.owner
+      elsif resource_by_id.is_a?(GroupMembership)
+        granted_edge = resource_by_id.group.grants.first&.edge
+        granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
+      elsif resource_by_id.is_a?(Group)
+        granted_edge = resource_by_id.grants.first&.edge
+        granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
       else
         resource_by_id.try(:forum)
       end

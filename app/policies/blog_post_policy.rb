@@ -7,7 +7,6 @@ class BlogPostPolicy < RestrictivePolicy
     def initialize(context, scope)
       @context = context
       @profile = user.profile if user
-      @memberships = @profile.memberships if @profile
       @scope = scope
     end
 

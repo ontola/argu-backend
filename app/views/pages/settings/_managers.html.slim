@@ -5,14 +5,14 @@ p= t('pages.settings.managers.about_owner')
   span= @page.owner.display_name
 
 - if policy(@page).transfer?
-  h3[style="clear: left;"]=t('pages.settings.managers.transfer.header')
+  h3[style="clear: left;"]= t('pages.settings.managers.transfer.header')
   =link_to t('formtastic.labels.f_move'), transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
 
 h3[style='clear: left;']= t('pages.settings.managers.title')
 p= t('pages.settings.managers.about_managers')
 table.styled
   tbody
-    -@page.managers_group.group_memberships.each do |membership|
+    - @page.managers_group.group_memberships.includes(member: [:default_profile_photo, profileable: :shortname]).each do |membership|
       tr
         =image_tag membership.member.default_profile_photo.url, class: 'profile-photo'
         span

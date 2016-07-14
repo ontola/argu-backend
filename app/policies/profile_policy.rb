@@ -47,7 +47,7 @@ class ProfilePolicy < RestrictivePolicy
   private
 
   def is_manager_somewhere?
-    user && user.profile.managerships.present?
+    user && user.profile.grants.manager.present?
   end
 
   def is_owner_somewhere?

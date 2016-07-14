@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     authorize @user,:update?
     @pages = Page
                .where(id: @user.profile.pages.pluck(:id)
-                            .concat(@user.profile.managerships.for_pages.pluck('edges.owner_id')))
+                            .concat(@user.profile.page_ids(:manager)))
                .distinct
     @_pundit_policy_scoped = true
 
@@ -79,7 +79,8 @@ class PagesController < ApplicationController
 
     render locals: {
       tab: tab,
-      active: tab
+      active: tab,
+      resource: @page
     }
   end
 
@@ -172,7 +173,7 @@ class PagesController < ApplicationController
       '"votes"."voter_id" = ' + @profile.id.to_s + ') AND '\
       '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') '\
       'AND ("forums"."visibility" = ' + Forum.visibilities[:open].to_s + ' OR '\
-      '"forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) '\
+      '"forums"."id" IN ('+ (current_profile && current_profile.joined_forum_ids || 0.to_s) +')) '\
       'ORDER BY created_at DESC'
   end
 end

@@ -3,7 +3,8 @@ module HeaderHelper
 
   def suggested_forums
     return nil if current_user.present?
-    fresh_forums = "id NOT IN (#{current_profile.memberships_ids || '0'}) AND visibility = #{Forum.visibilities[:open]}"
+    fresh_forums = "id NOT IN (#{current_profile.joined_forum_ids || '0'}) AND visibility ="\
+                   " #{Forum.visibilities[:open]}"
     @suggested_forums ||= Forum.where(fresh_forums)
   end
 
@@ -91,7 +92,7 @@ module HeaderHelper
   end
 
   def profile_membership_items
-    ids = current_profile.present? ? current_profile.memberships.for_forums.pluck('DISTINCT owner_id') : []
+    ids = current_profile.present? ? current_profile.forum_ids : []
     Shortname
       .shortname_owners_for_klass('Forum', ids)
       .includes(owner: :default_profile_photo)

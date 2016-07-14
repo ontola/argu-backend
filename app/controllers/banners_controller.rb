@@ -7,6 +7,7 @@ class BannersController < AuthorizedController
     render 'forums/settings',
            locals: {
              banner: authenticated_resource!,
+             resource: authenticated_context,
              tab: 'banners/new',
              active: 'banners'
            }

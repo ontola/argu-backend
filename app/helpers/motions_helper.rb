@@ -14,7 +14,7 @@ module MotionsHelper
   end
 
   def motion_combi_vote_props(actor, motion, vote)
-    groups = policy_scope(motion.forum.groups.discussion).collect do |group|
+    groups = policy_scope(motion.forum.page.groups.discussion).collect do |group|
       {
           id: group.id,
           name: group.name,

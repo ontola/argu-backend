@@ -84,10 +84,8 @@ module NestedResourceHelper
       case parent
       when Forum
         parent
-      when Group
-        parent.owner
       else
-        parent.forum
+        parent.try(:forum)
       end
     end
   end

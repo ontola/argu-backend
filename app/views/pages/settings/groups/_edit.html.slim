@@ -1,5 +1,5 @@
-=semantic_form_for(@group, url: group_url, method: :patch) do |f|
-  - @group.errors.full_messages.each do |message|
+=semantic_form_for(group, url: group_url, method: :patch) do |f|
+  - group.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('update_type', type: t('groups.type')) do
     =f.inputs :name, :name_singular, :icon

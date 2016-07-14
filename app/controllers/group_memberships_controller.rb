@@ -1,17 +1,17 @@
 class GroupMembershipsController < AuthorizedController
-  skip_before_action :check_if_member, only: %i(new create)
+  skip_before_action :check_if_member
   include NestedResourceHelper
 
   def new
-    @group = Group.includes(:edge).find(params[:group_id])
-    @forum = @group.owner
-    authorize @forum, :add_group_member?
-    @membership = @group.group_memberships.new
-
-    render 'forums/settings', locals: {
-                                tab: 'groups/add',
-                                active: tab
-                            }
+    authorize authenticated_resource.page, :add_group_member?
+    view = granted_resource.is_a?(Forum) ? 'forums/settings' : 'pages/settings'
+    render view, locals: {
+      tab: 'groups/add',
+      active: tab,
+      group_membership: authenticated_resource,
+      group: authenticated_resource.group,
+      resource: granted_resource || authenticated_resource.page
+    }
   end
 
   def create
@@ -28,7 +28,7 @@ class GroupMembershipsController < AuthorizedController
       end
     end
     create_service.on(:create_group_membership_failed) do
-      format.html do
+      respond_to do
         format.html { redirect_to redirect_url, notice: t('errors.general') }
       end
     end
@@ -54,13 +54,6 @@ class GroupMembershipsController < AuthorizedController
 
   private
 
-  def create_service
-    @create_service ||= CreateGroupMembership.new(
-      get_parent_resource,
-      attributes: resource_new_params.merge(permit_params),
-      options: service_options)
-  end
-
   def parent_resource_param(opts)
     :group_id
   end
@@ -82,11 +75,15 @@ class GroupMembershipsController < AuthorizedController
 
   def redirect_url
     return redirect_param if redirect_param.present?
+    return root_path if authenticated_resource!.grants.empty?
+    polymorphic_url(authenticated_resource!.grants.first.edge.owner)
+  end
 
-    forum_path(authenticated_resource!.owner)
+  def granted_resource
+    authenticated_resource.group.grants.first&.edge&.owner
   end
 
   def tab
-    @_tab ||= authenticated_resource!.group.shortname == 'managers' ? 'managers' : 'groups'
+    @_tab ||= authenticated_resource!.grants.manager.present? ? 'managers' : 'groups'
   end
 end

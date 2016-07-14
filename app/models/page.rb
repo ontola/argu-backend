@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  has_many :groups, dependent: :destroy, inverse_of: :page
   include ArguBase, Edgeable, Shortnameable, Flowable, Groupable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable

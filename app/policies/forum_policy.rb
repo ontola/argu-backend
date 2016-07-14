@@ -15,7 +15,7 @@ class ForumPolicy < RestrictivePolicy
       t = Forum.arel_table
 
       cond = t[:visibility].eq(Forum.visibilities[:open])
-      cond = cond.or(t[:id].in(user.profile.memberships_ids)) if user.present?
+      cond = cond.or(t[:id].in(user.profile.joined_forum_ids)) if user.present?
       scope.where(cond)
     end
   end
@@ -51,13 +51,13 @@ class ForumPolicy < RestrictivePolicy
     # Is the current user a member of the group?
     # @note This tells nothing about whether the user can make edits on the object
     def is_member?
-      member if actor && actor.memberships.where(groups: {edge_id: record.edge.id}).count > 0
+      member if actor && actor.grants.forum_member.where(edges: {owner_id: record.id}).count > 0
     end
 
     # Is the user a manager of the page or of the forum?
     # @note Trickles up
     def is_manager?
-      is_manager = user && user.profile.managerships.where(groups: {edge_id: record.edge.id}).count > 0
+      is_manager = user && user.profile.grants.forum_manager.where(edges: {owner_id: record.id}).count > 0
       [(manager if is_manager), is_owner?].compact.presence
     end
 
@@ -93,16 +93,12 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general advanced groups projects shortnames banners) if is_manager? || staff?
+    tabs.concat %i(general advanced projects shortnames banners) if is_manager? || staff?
     tabs.concat %i(privacy managers) if is_owner? || staff?
     tabs
   end
 
   ######Actions######
-  def add_group_member?
-    rule is_manager?, is_owner?, staff?
-  end
-
   def create?
     super
   end
@@ -121,7 +117,7 @@ class ForumPolicy < RestrictivePolicy
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && (user.profile.pages.length > 0 || user.profile.managerships.presence) || staff?
+    user && (user.profile.pages.length > 0 || user.profile.grants.manager.presence) || staff?
   end
 
   def invite?

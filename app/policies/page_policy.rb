@@ -12,12 +12,7 @@ class PagePolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      page_memberships = PageMembership.arel_table
-      scope.joins(:managerships).where(
-        page_memberships[:profile_id]
-          .eq(user.profile.id)
-          .and(page_memberships[:role].eq(PageMembership.roles[:manager]))
-      ).distinct
+      scope.where(id: user&.profile&.page_ids)
     end
   end
 
@@ -30,9 +25,11 @@ class PagePolicy < RestrictivePolicy
 
     # Is the user a manager of the page or of the forum?
     def is_manager?
-      (manager if user && user.profile.managerships.for_pages.where(edges: {owner_id: record.id}).present?) ||
-        is_owner? ||
-        staff?
+      if user && user.profile.grants.page_manager.where(edges: {owner_id: record.id}).present?
+        manager
+      else
+        (is_owner? || staff?)
+      end
     end
 
     def is_owner?
@@ -44,6 +41,11 @@ class PagePolicy < RestrictivePolicy
     end
   end
   include Roles
+
+  module PageRoles
+    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :page_policy
+    delegate :open, :member, :manager, :owner, to: :page_policy
+  end
 
   def permitted_attributes
     attributes = super
@@ -66,8 +68,8 @@ class PagePolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs << :general if is_manager? || staff?
-    tabs << :advanced << :managers if is_owner? || staff?
+    tabs.concat %i(general groups) if is_manager? || staff?
+    tabs.concat %i(advanced managers) if is_owner? || staff?
     tabs
   end
 

@@ -23,7 +23,7 @@ RSpec.feature 'Account deletion', type: :feature do
   end
   let(:group_response) do
     create(:group_response,
-           group: create(:group, parent: freetown.edge),
+           group: create(:group, parent: freetown.page.edge),
            creator: user.profile,
            parent: motion.edge,
            publisher: user)

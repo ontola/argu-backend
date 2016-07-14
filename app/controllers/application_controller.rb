@@ -80,10 +80,11 @@ class ApplicationController < ActionController::Base
       else
         mem_forum =
           profile
-            .memberships
-            .map do |f|
-              @_preferred_forum = f
-              f if policy(f).show?
+            .granted_edges
+            .where(owner_type: 'Forum')
+            .map do |e|
+              @_preferred_forum = e.owner
+              e.owner if policy(e.owner).show?
             end
             .compact
             .presence

@@ -83,8 +83,13 @@ class GroupResponsesController < AuthorizedController
 
   private
 
-  def new_resource_from_params
-    group = policy_scope(resource_tenant.groups).discussion.find(params[:group_id])
+  def authorize_action
+    check_if_discussion_group if %w(create new).include?(action_name)
+    super
+  end
+
+  def check_if_discussion_group
+    group = resource_tenant.page.groups.discussion.find(params[:group_id])
     unless @_not_authorized_caught || group.discussion?
       raise Argu::NotAuthorizedError.new(
         record: group,
@@ -92,7 +97,6 @@ class GroupResponsesController < AuthorizedController
         verdict: t('group_responses.errors.must_be_discussion',
                    group_name: group.name))
     end
-    GroupResponse.new resource_new_params
   end
 
   def resource_tenant
@@ -101,7 +105,7 @@ class GroupResponsesController < AuthorizedController
 
   def resource_new_params
     super.merge(
-      group: policy_scope(resource_tenant.groups).discussion.find(params[:group_id]),
+      group: resource_tenant.page.groups.find(params[:group_id]),
       creator: current_profile,
       side: side_param,
       motion: Motion.find(params[:motion_id]))

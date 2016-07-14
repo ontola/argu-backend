@@ -94,7 +94,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
-    memberships = assigns(:current_profile).memberships.for_forums.pluck('edges.owner_id')
+    memberships = assigns(:current_profile).granted_edges.where(owner_type: 'Forums').pluck(:owner_id)
     assert assigns(:collection)
              .values
              .all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },

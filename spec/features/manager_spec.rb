@@ -2,15 +2,16 @@ require 'rails_helper'
 
 RSpec.feature 'Manager', type: :feature do
   define_freetown('nederland')
-  let!(:user) { create(:user) }
+  let!(:user) { create_member(nederland) }
   let!(:member) { create_member(nederland) }
+  let!(:owner) { create_owner(nederland) }
 
   scenario 'Owner adds a manager' do
-    sign_in(nederland.edge.parent.owner.owner.profileable)
+    sign_in(owner)
 
     visit(settings_forum_path(nederland, tab: :managers))
 
-    click_link('Add Manager')
+    click_link("Add #{nederland.name} manager")
     within('form.group') do
       selector =
         if Capybara.current_driver == :poltergeist
@@ -32,11 +33,11 @@ RSpec.feature 'Manager', type: :feature do
   end
 
   scenario 'Owner adds a member manager' do
-    sign_in(nederland.edge.parent.owner.owner.profileable)
+    sign_in(owner)
 
     visit(settings_forum_path(nederland, tab: :managers))
 
-    click_link('Add Manager')
+    click_link("Add #{nederland.name} manager")
     within('form.group') do
       selector =
         if Capybara.current_driver == :poltergeist

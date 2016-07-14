@@ -1,5 +1,5 @@
 class GroupMembershipPolicy < RestrictivePolicy
-  include ForumPolicy::ForumRoles
+  include PagePolicy::PageRoles
 
   class Scope < Scope
     attr_reader :context, :scope
@@ -23,7 +23,11 @@ class GroupMembershipPolicy < RestrictivePolicy
       actor && (record.forum.groups & actor.groups).present?
     end
 
-    delegate :is_manager?, to: :forum_policy
+    def is_open?
+      open if record.group.grants.member.first.edge.owner.open?
+    end
+
+    delegate :is_manager?, to: :page_policy
   end
   include Roles
 
@@ -38,18 +42,16 @@ class GroupMembershipPolicy < RestrictivePolicy
   end
 
   def create?
-    if record.group.shortname == 'members'
-      rule is_open?, has_access_token?, is_member?, is_manager?, super
+    if record.group.grants.member.present?
+      rule is_open?, is_member?, is_manager?, super
     else
       rule is_manager?, is_owner?, super
     end
   end
 
   def destroy?
-    if record.group.shortname == 'members'
-      actor &&
-        (record.member == actor || (forum_policy.update? || staff?) &&
-          record.forum.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?)
+    if record.group.grants.member.present?
+      actor && (record.member == actor || (page_policy.update? || staff?))
     else
       rule Pundit.policy(context, record.group).remove_member?(record), super
     end
@@ -57,7 +59,7 @@ class GroupMembershipPolicy < RestrictivePolicy
 
   private
 
-  def forum_policy
-    Pundit.policy(context, record.edge.try(:forum) || context.context_model)
+  def page_policy
+    Pundit.policy(context, record&.group&.page || context.context_model)
   end
 end

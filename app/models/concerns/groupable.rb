@@ -2,13 +2,34 @@ module Groupable
   extend ActiveSupport::Concern
 
   included do
-    has_many :groups, through: :edge
-    has_one :managers_group, -> { where(shortname: 'managers') }, through: :edge, class_name: 'Group'
-    has_many :managerships, class_name: 'GroupMembership', through: :managers_group, source: :group_memberships
-    has_many :managers, through: :managerships, source: :member
-    has_one :members_group, -> { where(shortname: 'members') }, through: :edge, class_name: 'Group'
-    has_many :memberships, class_name: 'GroupMembership', through: :members_group, source: :group_memberships
-    has_many :members, through: :memberships, source: :member
-    accepts_nested_attributes_for :memberships
+    after_create :create_default_groups
+
+    def create_default_groups
+      group = Group.new(
+        name: is_a?(Forum) ? "#{name} members" : 'Members',
+        name_singular: is_a?(Forum) ? "#{name} member" : 'Member',
+        page: is_a?(Forum) ? page : self,
+        deletable: false)
+      group.grants << Grant.new(role: Grant.roles[:member], edge: edge)
+      group.edge = Edge.new(user: publisher, parent: edge)
+      group.save!
+
+      group = Group.new(
+        name: is_a?(Forum) ? "#{name} managers" : 'Managers',
+        name_singular: is_a?(Forum) ? "#{name} manager" : 'Manager',
+        page: is_a?(Forum) ? page : self,
+        deletable: false)
+      group.grants << Grant.new(role: Grant.roles[:manager], edge: edge)
+      group.edge = Edge.new(user: publisher, parent: edge)
+      group.save!
+    end
+
+    def managers_group
+      @managers_group ||= grants.manager.includes(group: :grants).first.group
+    end
+
+    def members_group
+      @members_group ||= grants.member.includes(group: :grants).first.group
+    end
   end
 end

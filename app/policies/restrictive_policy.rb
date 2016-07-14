@@ -58,7 +58,7 @@ class RestrictivePolicy
     end
 
     def is_member?
-      member if user && user.profile.member_of?(record.forum)
+      member if user && user.profile.member_of?(record)
     end
 
     def is_moderator?
@@ -70,8 +70,8 @@ class RestrictivePolicy
                                               user
                                                 .profile
                                                 .groups
-                                                .joins(:edge)
-                                                .where("edges.owner_type = 'Forum' AND edges.owner_id = ?", c_model.id)
+                                                .joins(:page)
+                                                .where(page: c_model.page_id)
                                                 .pluck(:id))
         # Get the tuples of the entire parent chain
         cc =

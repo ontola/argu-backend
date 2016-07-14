@@ -6,76 +6,77 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
   define_freetown
   define_cairo
-  let!(:group) { create(:group, parent: freetown.edge) }
+  let!(:group) { create(:group, parent: freetown.page.edge) }
 
   ####################################
   # As User
   ####################################
   let(:user) { create(:user) }
 
-  test 'should not show new members_group' do
+  test 'user should not show new members_group' do
     sign_in user
 
     get :new, group_id: group
 
-    assert_redirected_to forum_path(freetown)
+    assert_not_authorized
   end
 
-  test 'should not post create' do
+  test 'user should not post create' do
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
       post :create, group_id: group
     end
 
-    assert_redirected_to forum_path(freetown)
+    assert 404
   end
 
-  test 'should post create to open members_group' do
+  test 'user should post create to open members_group' do
     sign_in user
 
-    assert_difference('GroupMembership.count', 1) do
+    assert_differences([['GroupMembership.count', 1],
+                        ['freetown.edge.followers.count', 1]]) do
       post :create, group_id: freetown.members_group
     end
 
     assert_redirected_to forum_path(freetown)
   end
 
-  test 'should not post create to closed members_group' do
+  test 'user should not post create to closed members_group' do
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
       post :create, group_id: cairo.members_group
     end
 
-    assert_redirected_to root_path
+    assert 404
   end
 
-  test 'should not delete destroy other membership' do
+  test 'user should not delete destroy other membership' do
     sign_in user
 
     group_membership = create(:group_membership,
-                              parent: group)
+                              parent: group.edge)
 
     assert_no_difference 'GroupMembership.count' do
       delete :destroy, id: group_membership
     end
 
-    assert_response 403
+    assert_not_authorized
   end
 
-  test 'should not delete destroy own membership' do
+  test 'user should not delete destroy own membership' do
     sign_in user
 
     group_membership = create(:group_membership,
                               member: user.profile,
-                              parent: group)
+                              parent: group.edge)
 
     assert_no_difference 'GroupMembership.count' do
       delete :destroy, id: group_membership
     end
 
-    assert_response 403
+    assert_not_authorized
   end
 
   ####################################
@@ -91,7 +92,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, group_id: freetown.members_group
     end
 
-    assert_redirected_to forum_path(freetown)
+    assert 404
   end
 
   test 'member should not post create other to open members_group' do
@@ -102,14 +103,14 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, group_id: freetown.members_group, shortname: user.url
     end
 
-    assert_redirected_to forum_path(freetown)
+    assert 404
   end
 
   test 'member should delete destroy self from members_group' do
     sign_in member
 
     assert_difference('GroupMembership.count', -1) do
-      delete :destroy, id: member.profile.memberships.first
+      delete :destroy, id: member.profile.group_memberships.first
     end
 
     assert_response 302
@@ -120,7 +121,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     group_membership = create(:group_membership,
-                              parent: freetown.members_group)
+                              parent: freetown.members_group.edge)
 
     assert_no_difference 'GroupMembership.count' do
       delete :destroy, id: group_membership
@@ -158,7 +159,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in create_owner(freetown)
 
     group_membership = create(:group_membership,
-                              parent: group)
+                              parent: group.edge)
 
     assert_difference 'GroupMembership.count', -1 do
       delete :destroy, id: group_membership, r: settings_forum_path(freetown.url, tab: :groups)

@@ -1,0 +1,30 @@
+p= t('forums.settings.groups.description')
+ul.boxed-list
+  - resource.groups.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|
+    - if group.grants.empty?
+      li
+        h3
+          =group.display_name
+          span[class="fa fa-#{group_visibility_icon_for(group)}"]
+        table.styled
+          tbody
+            -group.group_memberships.each do |membership|
+              tr
+                td= membership.member.display_name
+                td= link_to group_membership_path(membership, r: group_redirect_url(group)), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
+                  span.fa.fa-close
+                  span.icon-left=  t('destroy')
+        =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
+          span.fa.fa-plus
+          span.icon-left= t('group_memberships.new', singular: group.name_singular)
+        =link_to edit_group_path(group), class: 'btn--light btn--smaller' do
+          span.fa.fa-pencil
+          span.icon-left= t('edit_type', type: t('groups.type'))
+        - if policy(group).destroy?
+          =link_to delete_group_path(group), remote: true, class: 'btn--light btn--smaller' do
+            span.fa.fa-close
+            span.icon-left= t('destroy_type', type: t('groups.type'))
+- if policy(Group.new(page: resource)).create?
+  =link_to new_page_group_path(resource), class: 'btn margin-bottom' do
+    span.fa.fa-plus
+    span.icon-left= t('groups.new')

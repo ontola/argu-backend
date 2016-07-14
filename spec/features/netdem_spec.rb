@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.feature 'Netdem', type: :feature do
   define_freetown
-  let!(:netdem) { create(:group, name: 'Netwerk Democratie', parent: freetown.edge) }
+  let!(:netdem) { create(:group, name: 'Netwerk Democratie', parent: freetown.page.edge) }
   let!(:netdem_member) { create_member(freetown) }
   let!(:netdem_membership) do
     create(:group_membership,
            member: netdem_member.profile,
-           parent: netdem)
+           parent: netdem.edge)
   end
   let!(:netdem_rule_new) do
     create(:rule,

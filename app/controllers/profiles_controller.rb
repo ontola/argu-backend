@@ -4,7 +4,7 @@ class ProfilesController < ApplicationController
     @resource = Shortname.find_resource 'nederland' # params[:thing]
     # authorize @resource, :list_members?
 
-    scope = policy_scope(@resource.members)
+    scope = policy_scope(@resource.members_group.members)
 
     if current_user.present?
       if params[:q].present?
@@ -64,7 +64,7 @@ class ProfilesController < ApplicationController
         updated = updated && @profile.profileable.update_attributes(user_profileable_params)
         if (!@resource.finished_intro?) && has_valid_token?(@resource)
           get_access_tokens(@resource).compact.each do |at|
-            @profile.memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
+            @profile.group_memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
           end
         end
         @resource.update_column :finished_intro, true

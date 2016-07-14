@@ -16,7 +16,7 @@ class ActivityPolicy < RestrictivePolicy
       profiles = Profile.arel_table
       scope
         .where(['forum_id IN (%s)',
-                context.context_model.try(:id) || user.try(:profile).try(:memberships_ids) || 'NULL'])
+                context.context_model.try(:id) || user.try(:profile).try(:joined_forum_ids) || 'NULL'])
         .joins(:owner)
         .where(activities[:key].not_eq('vote.create').or(
                  profiles[:are_votes_public].eq(true)))

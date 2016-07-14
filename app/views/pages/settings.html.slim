@@ -1,13 +1,13 @@
 =set_title t('pages.settings.title')
-=render partial: 'pages/manage_bar', locals: {resource: @page, active: :settings}
+=render partial: 'pages/manage_bar', locals: {resource: resource, active: :settings}
 .col-3
   header
     h1= t('pages.settings.title')
   .col-3-1
-    =render_settings_items_for(@page, active)
+    =render_settings_items_for(resource, active)
   .col-3-2
     .box
       section
         / Protects against Directory Traversal Attacks
         -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
-          =render partial: "pages/settings/#{tab}", locals: {resource: @page, tab: tab, active: active}
+          =render partial: "pages/settings/#{tab}", locals: local_assigns

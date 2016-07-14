@@ -19,7 +19,7 @@ h3= t('forums.settings.managers.title')
 p= t('forums.settings.managers.about_managers')
 table.styled.managers
   tbody
-    -@forum.managers_group.group_memberships.each do |membership|
+    -@forum.managers_group.group_memberships.includes(member: [:default_profile_photo, profileable: :shortname]).each do |membership|
       tr[class=membership.member.identifier]
         td
           =image_tag membership.member.default_profile_photo.url, class: 'profile-photo'

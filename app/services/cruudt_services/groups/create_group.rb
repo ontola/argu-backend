@@ -1,14 +1,15 @@
 
-class CreateGroup < CreateService
+class CreateGroup < EdgeableCreateService
   include Wisper::Publisher
 
   def initialize(parent, attributes: {}, options: {})
-    @group = resource_klass.new
-    attributes[:edge] = parent
+    raise 'The parent of a Group must be the Edge of a Page' unless parent.owner_type == 'Page'
     super
   end
 
-  def resource
-    @group
+  private
+
+  def parent_columns
+    %i(page_id)
   end
 end

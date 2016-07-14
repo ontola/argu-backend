@@ -76,7 +76,8 @@ class ShortnamesController < ApplicationController
     render 'forums/settings',
            locals: {
              tab: "shortnames/#{tab}",
-             active: 'shortnames'
+             active: 'shortnames',
+             resource: @shortname.forum
            }
   end
 

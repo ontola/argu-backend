@@ -1,15 +1,13 @@
 class GroupsController < AuthorizedController
   include NestedResourceHelper
-  before_action :find_forum_and_group, only: [:edit, :update, :delete, :destroy]
+  skip_before_action :check_if_member
 
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.edge.groups.new
-    authorize @group, :create?
-
-    render 'forums/settings', locals: {
+    render 'pages/settings', locals: {
                                 tab: 'groups/new',
-                                active: 'groups'
+                                active: 'groups',
+                                group: authenticated_resource!,
+                                resource: authenticated_resource!.page
                             }
   end
 
@@ -17,21 +15,18 @@ class GroupsController < AuthorizedController
     create_service.on(:create_group_successful) do |group|
       respond_to do |format|
         format.html do
-          if group.owner.is_a? Forum
-            redirect_to settings_forum_path(group.owner, tab: :groups)
-          else
-            redirect_to settings_page_path(group.owner, tab: :groups)
-          end
+          redirect_to settings_page_path(group.page, tab: :groups)
         end
       end
     end
-    create_service.on(:create_group_failed) do
+    create_service.on(:create_group_failed) do |group|
       respond_to do |format|
         format.html do
           render 'forums/settings',
                  locals: {
                    tab: 'groups/new',
-                   active: 'groups'
+                   active: 'groups',
+                   group: group
                  }
         end
       end
@@ -40,23 +35,20 @@ class GroupsController < AuthorizedController
   end
 
   def edit
-    authorize @group, :edit?
-
-    render 'forums/settings', locals: {
-                                tab: 'groups/edit',
-                                active: 'groups'
-                            }
+    render 'pages/settings',
+           locals: {
+             tab: 'groups/edit',
+             active: 'groups',
+             group: authenticated_resource!,
+             resource: authenticated_resource!.page
+           }
   end
 
   def update
     update_service.on(:update_group_successful) do |group|
       respond_to do |format|
         format.html do
-          if group.owner.is_a? Forum
-            redirect_to settings_forum_path(group.owner, tab: :groups)
-          else
-            redirect_to settings_page_path(group.owner, tab: :groups)
-          end
+          redirect_to settings_page_path(group.page, tab: :groups)
         end
       end
     end
@@ -69,12 +61,10 @@ class GroupsController < AuthorizedController
   end
 
   def delete
-    authorize @group, :destroy?
-
     locals = {
-        group: @group,
-        group_memberships_count: @group.group_memberships.count,
-        group_responses_count: @group.group_responses.count
+        group: authenticated_resource!,
+        group_memberships_count: authenticated_resource!.group_memberships.count,
+        group_responses_count: authenticated_resource!.group_responses.count
     }
     respond_to do |format|
       format.html { render locals: locals }
@@ -85,13 +75,18 @@ class GroupsController < AuthorizedController
   def destroy
     destroy_service.on(:destroy_group_successful) do |group|
       respond_to do |format|
-        format.html { redirect_to settings_forum_path(group.owner, tab: :groups), status: 303 }
+        format.html do
+          redirect_to(
+            settings_page_path(group.page, tab: :groups),
+            status: 303,
+            notice: t('type_destroy_success', type: t('groups.type')))
+        end
       end
     end
     destroy_service.on(:destroy_group_failed) do
       respond_to do |format|
         flash[:error] = t('error')
-        format.html { redirect_to settings_forum_path(group.owner, tab: :groups) }
+        format.html { redirect_to settings_page_path(group.page, tab: :groups) }
       end
     end
     destroy_service.commit
@@ -99,22 +94,19 @@ class GroupsController < AuthorizedController
 
   private
 
-  def find_forum_and_group
-    @group = Group.includes(:edge).find(params[:id])
-    @forum = @group.owner
-  end
-
   def new_resource_from_params
-    Group.new(resource_new_params)
+    @resource ||= Group.new(resource_new_params)
   end
 
   def permit_params
-    params.require(:group).permit(*policy(@group || Group).permitted_attributes)
+    params
+      .require(:group)
+      .permit(*policy(resource_by_id || new_resource_from_params || Group).permitted_attributes)
   end
 
   def resource_new_params
-    {
-      edge: get_parent_resource.edge
-    }
+    HashWithIndifferentAccess.new(
+      page: get_parent_resource
+    )
   end
 end

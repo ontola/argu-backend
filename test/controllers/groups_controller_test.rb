@@ -8,10 +8,10 @@ class GroupsControllerTest < ActionController::TestCase
   setup do
     @freetown = freetown
     @freetown_owner = freetown.edge.parent.owner.owner.profileable
-    @group = create(:group, parent: @freetown.edge)
+    @group = create(:group, parent: @freetown.page.edge)
   end
 
-  let!(:group) { create(:group, parent: freetown.edge) }
+  let!(:group) { create(:group, parent: freetown.page.edge) }
 
   ####################################
   # As User
@@ -21,17 +21,17 @@ class GroupsControllerTest < ActionController::TestCase
   test 'user should not show new' do
     sign_in user
 
-    get :new, id: group, forum_id: freetown
+    get :new, id: group, page_id: freetown.page
 
-    assert_response 403
+    assert_not_authorized
   end
 
   test 'user should not show edit' do
     sign_in user
 
-    get :edit, id: group, forum_id: freetown
+    get :edit, id: group, page_id: freetown.page
 
-    assert_response 403
+    assert_not_authorized
   end
 
   test 'user should not delete destroy' do
@@ -41,7 +41,7 @@ class GroupsControllerTest < ActionController::TestCase
       delete :destroy, id: group
     end
 
-    assert_response 403
+    assert_not_authorized
   end
 
   ####################################
@@ -52,7 +52,7 @@ class GroupsControllerTest < ActionController::TestCase
     sign_in @freetown_owner
 
     post :create,
-         forum_id: freetown,
+         page_id: freetown.page,
          group: {
              group_id: group.id,
              name: 'Test group visible',
@@ -67,11 +67,9 @@ class GroupsControllerTest < ActionController::TestCase
   test 'owner should show new' do
     sign_in @freetown_owner
 
-    get :new, id: @group, forum_id: @freetown
+    get :new, id: @group, page_id: @freetown.page
 
     assert_response 200
-    assert assigns(:forum)
-    assert assigns(:group)
   end
 
   test 'owner should show edit' do
@@ -80,8 +78,6 @@ class GroupsControllerTest < ActionController::TestCase
     get :edit, id: @group, forum_id: @freetown
 
     assert_response 200
-    assert assigns(:forum)
-    assert assigns(:group)
   end
 
   test 'owner should delete destroy' do
@@ -92,7 +88,5 @@ class GroupsControllerTest < ActionController::TestCase
     end
 
     assert_response 303
-    assert assigns(:forum)
-    assert assigns(:group)
   end
 end
