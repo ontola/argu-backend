@@ -26,7 +26,7 @@ class UserPolicy < RestrictivePolicy
     attributes.concat %i(reactions_email news_email reactions_mobile memberships_email memberships_mobile created_email
                          created_mobile has_analytics time_zone language postal_code country_code birthday) if update?
     attributes.concat %i(current_password password password_confirmation email) if password
-    attributes.append(profile_attributes: ProfilePolicy.new(context,record.profile).permitted_attributes)
+    attributes.append(profile_attributes: ProfilePolicy.new(context, record.profile).permitted_attributes)
     attributes
   end
 

@@ -77,7 +77,7 @@ module HeaderHelper
                      contentClassName: 'notifications notification-container')
   end
 
-  def public_forum_items(limit= 10)
+  def public_forum_items(limit = 10)
     items = []
     Forum
         .public_forums
@@ -125,7 +125,7 @@ module HeaderHelper
     }
   end
 
-  def actor_item(title, url, opts= {})
+  def actor_item(title, url, opts = {})
     item('actor', title, url, opts)
   end
 

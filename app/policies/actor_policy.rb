@@ -25,6 +25,7 @@ class ActorPolicy < RestrictivePolicy
   end
 
   private
+
   def is_manager?
     owner = record.profileable
     if owner.class == User

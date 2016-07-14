@@ -19,7 +19,7 @@ module ApplicationHelper
     ::BCrypt::Engine.hash_secret("#{current_user.id}#{current_user.created_at}", salt).from(30)
   end
 
-  def awesome_time_ago_in_words (date)
+  def awesome_time_ago_in_words(date)
     if date.present?
       if 1.day.ago < date
         distance_of_time_in_words(date, Time.current)
@@ -119,7 +119,7 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(model= '', **options)
+  def set_title(model = '', **options)
     title_string = seolized_title(model, **options)
     provide :title, title_string
   end

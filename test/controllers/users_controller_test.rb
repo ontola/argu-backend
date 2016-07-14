@@ -95,7 +95,7 @@ class UsersControllerTest < ActionController::TestCase
                    .length,
                  assigns(:collection)
                    .values
-                   .map {|i| i[:collection].length }.inject(&:+),
+                   .map { |i| i[:collection].length }.inject(&:+),
                  'Not all/too many votes are shown'
   end
 

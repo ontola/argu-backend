@@ -52,6 +52,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   private
+
   # TODO: Code the 307 away
   def is_post?(r)
     r.match(/\/v(\?|\/)|\/c(\?|\/)/)

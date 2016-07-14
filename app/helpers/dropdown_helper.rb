@@ -7,7 +7,7 @@ module DropdownHelper
     options.merge opts
   end
 
-  def item(type, title, url, opts= {})
+  def item(type, title, url, opts = {})
     item = {
         type: type,
         title: title,
@@ -16,13 +16,13 @@ module DropdownHelper
 
     if opts[:image].present?
       image = opts.delete(:image)
-      item[:image]= {url: image} if image.present?
+      item[:image] = {url: image} if image.present?
     end
-    item[:fa]= "fa-#{opts.delete :fa}" if opts[:fa].present?
+    item[:fa] = "fa-#{opts.delete :fa}" if opts[:fa].present?
     item.merge(opts)
   end
 
-  def link_item(title, url, opts= {})
+  def link_item(title, url, opts = {})
     item('link', title, url, opts)
   end
 end

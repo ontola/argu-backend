@@ -2,7 +2,7 @@ require 'argu/environment_container'
 require 'argu/manifest_container'
 module Argu
   class StatefulServerRenderer < React::ServerRendering::ExecJSRenderer
-    def initialize(options={})
+    def initialize(options = {})
       @replay_console = options.fetch(:replay_console, true)
       filenames = options.fetch(:files, ["production/react-server.js", "components.js"])
       js_code = CONSOLE_POLYFILL.dup

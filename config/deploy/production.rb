@@ -5,8 +5,8 @@
 # property set.  Don't declare `role :all`, it's a meta role.
 
 role :app, %w{deploy@app.1.zones.argu.co}
-#role :web, %w{deploy@example.com}
-#role :db,  %w{deploy@example.com}
+# role :web, %w{deploy@example.com}
+# role :db,  %w{deploy@example.com}
 
 set :unicorn_pid, '/home/unicorn/pids/unicorn.pid'
 set :unicorn_config_path, '/home/unicorn/unicorn.conf'

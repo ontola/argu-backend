@@ -33,7 +33,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  #GET /1/edit
+  # GET /1/edit
   def edit
     @resource = Shortname.find_resource(params[:id])
     @profile = @resource.profile
@@ -51,7 +51,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  #PUT /1
+  # PUT /1
   def update
     @resource = Shortname.find_resource(params[:id])
     @profile = @resource.profile

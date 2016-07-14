@@ -62,6 +62,7 @@ class NotificationsController < ApplicationController
   end
 
   private
+
   def fetch_more
     begin
       begin
@@ -80,7 +81,7 @@ class NotificationsController < ApplicationController
     end
   end
 
-  def get_notifications(since=nil)
+  def get_notifications(since = nil)
     policy_scope(Notification)
         .includes(activity: :trackable)
         .order(created_at: :desc)

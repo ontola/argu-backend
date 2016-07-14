@@ -22,7 +22,7 @@ module Argu
       end
     end
 
-    def authorize(record, query=nil)
+    def authorize(record, query = nil)
       query ||= params[:action].to_s + '?'
 
       @_pundit_policy_authorized = true

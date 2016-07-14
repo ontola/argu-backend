@@ -7,5 +7,5 @@ class PageMembership < ActiveRecord::Base
 
   validates :profile_id, :page_id, presence: true
 
-  enum role: {member: 0, manager: 2} #moderator: 1,
+  enum role: {member: 0, manager: 2} # moderator: 1,
 end

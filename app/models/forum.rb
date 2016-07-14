@@ -51,7 +51,7 @@ class Forum < ActiveRecord::Base
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}
-  enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
+  enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
   scope :top_public_forums,
         ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }

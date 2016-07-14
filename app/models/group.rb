@@ -24,7 +24,7 @@ class Group < ActiveRecord::Base
     members.include?(profile)
   end
 
-  def self.ordered_with_meta (coll = [], keys = [], profile, obj)
+  def self.ordered_with_meta(coll = [], keys = [], profile, obj)
     grouped = coll.group_by(&:group)
     (keys + grouped.keys)
       .map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}, profile, obj, g)} }

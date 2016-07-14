@@ -5,7 +5,7 @@ module ForumsHelper
     t("forums.application_form.#{value}")
   end
 
-  def forum_selector_items(guest= false)
+  def forum_selector_items(guest = false)
     sections = []
 
     sections << forum_membership_section if current_user.present?

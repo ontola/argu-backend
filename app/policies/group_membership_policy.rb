@@ -37,6 +37,7 @@ class GroupMembershipPolicy < RestrictivePolicy
   end
 
   private
+
   def forum_policy
     Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
   end

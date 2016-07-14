@@ -3,7 +3,7 @@ module BlogPostable
 
   included do
     has_many :blog_posts,
-             -> {where(trashed_at: nil)},
+             -> { where(trashed_at: nil) },
              as: :blog_postable,
              inverse_of: :blog_postable
     has_many :activities,

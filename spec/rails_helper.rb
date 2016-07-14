@@ -20,7 +20,7 @@ require 'argu/test_helpers/test_mocks'
 ActiveRecord::Migration.maintain_test_schema!
 
 Setting.set('user_cap', '-1')
-Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each {|f| require f }
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -128,7 +128,7 @@ RSpec.configure do |config|
     else
       ENV['CI'].present? ? :selenium : :selenium_firefox
     end
-  #Capybara.default_max_wait_time = 5
+  # Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 10
 
   Capybara::Webkit.configure do |config|

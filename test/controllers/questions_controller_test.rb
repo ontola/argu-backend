@@ -366,7 +366,7 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) {create(:user, :staff) }
+  let(:staff) { create(:user, :staff) }
 
   test 'staff should get edit' do
     sign_in staff

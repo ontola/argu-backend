@@ -17,7 +17,7 @@ set :log_level, :debug
 set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, %w{bin log tmp vendor/bundle public/system}
 
-SSHKit.config.command_map[:rake]  = 'bundle exec rake' #8
+SSHKit.config.command_map[:rake]  = 'bundle exec rake' # 8
 SSHKit.config.command_map[:rails] = 'bundle exec rails'
 
 set :keep_releases, 5

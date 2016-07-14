@@ -51,6 +51,7 @@ class ManagersController < ApplicationController
   end
 
   private
+
     def permit_params
       params.permit(*policy(@forum || Forum).permitted_attributes)
     end

@@ -80,7 +80,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, comment.commentable.comments_count
 
-    assert_differences([['comment.commentable.reload.comments_count', -1],['member.profile.comments.count', -1]]) do
+    assert_differences([['comment.commentable.reload.comments_count', -1], ['member.profile.comments.count', -1]]) do
       delete trash_argument_comment_path(comment.commentable, comment)
       delete destroy_argument_comment_path(comment.commentable, comment, destroy: 'true')
     end
@@ -97,7 +97,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, comment.commentable.comments_count
 
-    assert_differences([['comment.commentable.reload.comments_count', -1],['member.profile.comments.count', -1]]) do
+    assert_differences([['comment.commentable.reload.comments_count', -1], ['member.profile.comments.count', -1]]) do
       delete trash_argument_comment_path(comment.commentable, comment)
       delete destroy_argument_comment_path(comment.commentable, comment, destroy: 'true')
     end

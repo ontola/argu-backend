@@ -16,7 +16,7 @@ class DocumentPolicy < RestrictivePolicy
     end
   end
 
-  ######CRUD######
+  # #####CRUD######
   def show?
     true
   end

@@ -63,7 +63,7 @@ class ForumPolicy < RestrictivePolicy
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
     def is_owner?
-      #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
+      # record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
       owner if user && record.page.owner == user.profile
     end
 
@@ -98,7 +98,7 @@ class ForumPolicy < RestrictivePolicy
     tabs
   end
 
-  ######Actions######
+  # #####Actions######
   def add_group_member?
     rule is_manager?, is_owner?, staff?
   end

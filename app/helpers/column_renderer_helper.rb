@@ -15,8 +15,8 @@ module ColumnRendererHelper
     partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
     if partial == 'column_renderer/show'
-      columns.each do |k,v|
-        columns[k] = options.merge(v||{})
+      columns.each do |k, v|
+        columns[k] = options.merge(v || {})
       end
     end
 

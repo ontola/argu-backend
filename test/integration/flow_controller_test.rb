@@ -21,7 +21,7 @@ class FlowControllerTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'user should get motion/flow' do
-    #sign_in user
+    # sign_in user
 
     get motion_flow_path(subject),
         motion_id: subject,

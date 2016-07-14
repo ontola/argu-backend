@@ -151,7 +151,7 @@ class PagePolicy < RestrictivePolicy
     tab
   end
 
-  #######Attributes########
+  # ######Attributes########
 
   def max_allowed_pages
     if staff?

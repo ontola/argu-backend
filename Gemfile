@@ -1,6 +1,6 @@
 source 'https://rubygems.org/'
 ruby '2.3.1'
-ruby="2.3.1"
+ruby = "2.3.1"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
@@ -155,7 +155,7 @@ group :development do
   # gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
-  gem 'binding_of_caller', '>= 0.7.3.pre1' ###!
+  gem 'binding_of_caller', '>= 0.7.3.pre1' # ##!
   gem 'coffee-rails', '~> 4.1.0'
   gem 'quiet_assets'
   gem 'capistrano', '~> 3.3.3'

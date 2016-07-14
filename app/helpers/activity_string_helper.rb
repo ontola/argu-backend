@@ -5,7 +5,7 @@ module ActivityStringHelper
   # Params:
   # +activity+:: The Activity to generate the HRS for
   # +embedded_link+:: Set to true to embed an anchor link (defaults to false)
-  def activity_string_for(activity, embedded_link= false)
+  def activity_string_for(activity, embedded_link = false)
     Argu::ActivityString.new(activity, embedded_link).to_s
   end
 end

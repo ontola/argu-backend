@@ -17,7 +17,7 @@ module ExceptionToTheRule
   #                                    denied with an additional message as a second return value.
   def rule(*array)
     level = max_clearance(array)
-    apply_rules(caller_locations(1,1)[0].label, level)
+    apply_rules(caller_locations(1, 1)[0].label, level)
   end
 
   private

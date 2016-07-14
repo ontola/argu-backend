@@ -48,7 +48,7 @@ Rails.application.configure do
   # Expands the lines which load the assets
   config.assets.debug = false
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: :all #, :tld_length => 2
+  config.session_store :cookie_store, key: '_Argu_session', domain: :all # , :tld_length => 2
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

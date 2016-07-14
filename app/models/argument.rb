@@ -62,7 +62,7 @@ class Argument < ActiveRecord::Base
   def shallow_wipe
     proc do |c|
       if c.is_trashed?
-        c.body= '[DELETED]'
+        c.body = '[DELETED]'
         c.creator = nil
         c.is_processed = true
       end

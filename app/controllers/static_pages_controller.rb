@@ -6,14 +6,14 @@ class StaticPagesController < ApplicationController
     if signed_in? || within_user_cap?
       if current_user && policy(current_user).staff?
         @activities = policy_scope(Activity).loggings.order(created_at: :desc).limit(10)
-        render #stream: true
+        render # stream: true
       else
         redirect_to (preferred_forum.presence || info_url('about'))
       end
     else
       redirect_to (preferred_forum.presence || info_url('about'))
-      #@document = JSON.parse Setting.get('about') || '{}'
-      #render 'document', layout: 'layouts/closed'
+      # @document = JSON.parse Setting.get('about') || '{}'
+      # render 'document', layout: 'layouts/closed'
     end
   end
 

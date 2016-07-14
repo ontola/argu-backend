@@ -231,7 +231,7 @@ class CommentsController < AuthorizedController
   def resource_tenant
     return super if params[:forum_id].present?
 
-    resource, id = request.path.split('/')[1,2]
+    resource, id = request.path.split('/')[1, 2]
     # noinspection RubyCaseWithoutElseBlockInspection
     resource =
       case resource

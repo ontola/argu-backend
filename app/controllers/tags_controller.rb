@@ -42,6 +42,7 @@ class TagsController < ApplicationController
   end
 
   private
+
   def taggable_param
     request.path_parameters.keys.find { |k| /_id/ =~ k }
   end

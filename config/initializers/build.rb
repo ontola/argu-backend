@@ -1,1 +1,1 @@
-BUILD='0' unless defined?(::BUILD)
+BUILD = '0' unless defined?(::BUILD)

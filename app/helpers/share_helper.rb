@@ -13,12 +13,12 @@ module ShareHelper
   end
 
   # https://developer.linkedin.com/docs/share-on-linkedin
-  def self.linkedin_share_url(url, options= {})
+  def self.linkedin_share_url(url, options = {})
     "http://www.linkedin.com/shareArticle?mini=true&url=#{CGI.escape(url)}&title=#{CGI.escape(options[:title])}"
   end
 
   # https://developers.google.com/+/web/share/#share-link
-  def self.googleplus_share_url(url, options= {})
+  def self.googleplus_share_url(url, options = {})
     "https://plus.google.com/share?url=#{CGI.escape(url)}"
   end
 end

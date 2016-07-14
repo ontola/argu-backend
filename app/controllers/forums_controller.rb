@@ -153,9 +153,9 @@ class ForumsController < AuthorizedController
     User
       .where(id: forum.members.where(profileable_type: 'User').pluck(:profileable_id))
       .includes(home_placement: :place)
-      .map { |u| u.home_placement&.place&.address.try(:[],'city') }
+      .map { |u| u.home_placement&.place&.address.try(:[], 'city') }
       .each { |v| cities.store(v, cities[v] + 1) }
-    cities.sort { |x,y| y[1] <=> x[1] }
+    cities.sort { |x, y| y[1] <=> x[1] }
   end
 
   def content_count(forum)
@@ -165,7 +165,7 @@ class ForumsController < AuthorizedController
       .where(owner_type: %w(Argument Vote Project Question Motion Comment))
       .group(:owner_type)
       .count
-      .sort { |x,y| y[1] <=> x[1] }
+      .sort { |x, y| y[1] <=> x[1] }
   end
 
   def permit_params

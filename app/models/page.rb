@@ -17,7 +17,7 @@ class Page < ActiveRecord::Base
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner_id, :last_accepted, presence: true
 
-  enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
+  enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
   def build_profile(*options)
     super(*options) if profile.nil?

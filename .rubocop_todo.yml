@@ -343,25 +343,6 @@ Style/EmptyElse:
     - 'app/controllers/application_controller.rb'
     - 'lib/context.rb'
 
-# Offense count: 14
-# Cop supports --auto-correct.
-Style/EmptyLinesAroundAccessModifier:
-  Exclude:
-    - 'app/controllers/group_memberships_controller.rb'
-    - 'app/controllers/managers_controller.rb'
-    - 'app/controllers/notifications_controller.rb'
-    - 'app/controllers/pages/managers_controller.rb'
-    - 'app/controllers/portal/forums_controller.rb'
-    - 'app/controllers/portal/pages_controller.rb'
-    - 'app/controllers/profiles_controller.rb'
-    - 'app/controllers/tags_controller.rb'
-    - 'app/controllers/users/sessions_controller.rb'
-    - 'app/policies/actor_policy.rb'
-    - 'app/policies/group_membership_policy.rb'
-    - 'app/policies/membership_policy.rb'
-    - 'app/services/comments/destroy_comment.rb'
-    - 'lib/context.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -370,14 +351,6 @@ Style/EmptyLinesAroundBlockBody:
   Exclude:
     - 'spec/features/account_deletion_spec.rb'
     - 'test/controllers/group_responses_controller_test.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: empty_lines, no_empty_lines
-Style/EmptyLinesAroundClassBody:
-  Exclude:
-    - 'app/listeners/activity_listener.rb'
 
 # Offense count: 243
 Style/EndOfLine:
@@ -467,11 +440,6 @@ Style/IndentationWidth:
     - 'config/initializers/kaminari_config.rb'
     - 'config/initializers/rack-attack.rb'
     - 'config/routes.rb'
-
-# Offense count: 37
-# Cop supports --auto-correct.
-Style/LeadingCommentSpace:
-  Enabled: false
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -627,81 +595,6 @@ Style/SelfAssignment:
 Style/Semicolon:
   Exclude:
     - 'app/controllers/forums_controller.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceAfterColon:
-  Exclude:
-    - 'db/seeds.rb'
-
-# Offense count: 16
-# Cop supports --auto-correct.
-Style/SpaceAfterComma:
-  Exclude:
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/forums_controller.rb'
-    - 'app/controllers/motions_controller.rb'
-    - 'app/controllers/pages_controller.rb'
-    - 'app/helpers/column_renderer_helper.rb'
-    - 'app/helpers/seo_helper.rb'
-    - 'app/models/user.rb'
-    - 'app/policies/user_policy.rb'
-    - 'lib/exception_to_the_rule.rb'
-    - 'lib/gravatar.rb'
-    - 'test/controllers/blog_posts_controller_test.rb'
-    - 'test/controllers/projects_controller_test.rb'
-    - 'test/integration/comments_test.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/SpaceAfterMethodName:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/concerns/pro_con.rb'
-    - 'app/models/group.rb'
-    - 'app/models/group_response.rb'
-
-# Offense count: 25
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: space, no_space
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Style/SpaceAroundOperators:
-  Exclude:
-    - 'Gemfile'
-    - 'app/controllers/groups_controller.rb'
-    - 'app/controllers/pages_controller.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'app/helpers/column_renderer_helper.rb'
-    - 'app/helpers/dropdown_helper.rb'
-    - 'app/models/argument.rb'
-    - 'config/initializers/build.rb'
-    - 'config/initializers/version.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: space, no_space
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
-# Offense count: 8
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
-# Offense count: 8
-# Cop supports --auto-correct.
-Style/SpaceInsideBrackets:
-  Exclude:
-    - 'config/initializers/devise.rb'
 
 # Offense count: 28
 # Cop supports --auto-correct.

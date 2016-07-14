@@ -95,7 +95,7 @@ class Profile < ActiveRecord::Base
     profileable && profileable.finished_intro?
   end
 
-  #######Methods########
+  # ######Methods########
   def voted_on?(item)
     Vote.where(voter_id: id, voter_type: self.class.name,
                voteable_id: item.id, voteable_type: item.class.to_s).last

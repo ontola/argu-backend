@@ -17,7 +17,7 @@ class QuestionsController < AuthorizedController
                  .page(show_params[:page])
 
     respond_to do |format|
-      format.html { render locals: {question: authenticated_resource!}} # show.html.erb
+      format.html { render locals: {question: authenticated_resource!} } # show.html.erb
       format.widget { render authenticated_resource! }
       format.json # show.json.jbuilder
     end

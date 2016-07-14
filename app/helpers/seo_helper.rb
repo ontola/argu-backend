@@ -34,7 +34,7 @@ module SeoHelper
     META_ITEMS.map do |k, v|
       if v.is_a?(Hash)
         tag_name = v.delete(:tag_name).presence || :meta
-        v = v.map { |key,val| [key, val.is_a?(Symbol) ? options[val] : v[key]] }.to_h
+        v = v.map { |key, val| [key, val.is_a?(Symbol) ? options[val] : v[key]] }.to_h
         v[:property] = k if tag_name.to_sym == :meta
         v[:rel] = k if tag_name.to_sym == :link
         v[:id] = k

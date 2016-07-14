@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   def index
     authorize Page, :index?
     @user = User.find_via_shortname params[:id]
-    authorize @user,:update?
+    authorize @user, :update?
     @pages = Page
                .where(id: @user.profile.pages.pluck(:id)
                             .concat(@user.profile.page_managerships.pluck(:page_id)))
@@ -104,7 +104,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html { render 'delete', locals: {resource: @page} }
-      format.js { render layout: false}
+      format.js { render layout: false }
     end
   end
 
@@ -125,7 +125,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html { render }
-      format.js { render layout: false}
+      format.js { render layout: false }
     end
   end
 
@@ -172,7 +172,7 @@ class PagesController < ApplicationController
       '"votes"."voter_id" = ' + @profile.id.to_s + ') AND '\
       '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') '\
       'AND ("forums"."visibility" = ' + Forum.visibilities[:open].to_s + ' OR '\
-      '"forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) '\
+      '"forums"."id" IN (' + (current_profile && current_profile.memberships_ids || 0.to_s) + ')) '\
       'ORDER BY created_at DESC'
   end
 end

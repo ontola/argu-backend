@@ -18,7 +18,7 @@ class MembershipPolicy < RestrictivePolicy
     end
   end
 
-  ######CRUD######
+  # #####CRUD######
   def show?
     super
   end
@@ -51,6 +51,7 @@ class MembershipPolicy < RestrictivePolicy
   end
 
   private
+
   def forum_policy
     ForumPolicy.new(context, record.forum)
   end
