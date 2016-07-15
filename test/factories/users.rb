@@ -7,6 +7,7 @@ FactoryGirl.define do
     association :profile, strategy: :build
     association :shortname, strategy: :build
 
+    confirmed_at Time.current
     email
     encrypted_password { Devise::Encryptor.digest(User, 'password') }
     password 'password'
@@ -24,8 +25,8 @@ FactoryGirl.define do
       end
     end
 
-    trait :confirmed do
-      confirmed_at Time.current
+    trait :unconfirmed do
+      confirmed_at nil
     end
 
     trait :viewed_notifications_hour_ago do
@@ -37,32 +38,26 @@ FactoryGirl.define do
     end
 
     trait :follows_reactions_directly do
-      confirmed_at Time.current
       reactions_email User.reactions_emails[:direct_reactions_email]
     end
 
     trait :follows_reactions_weekly do
-      confirmed_at Time.current
       reactions_email User.reactions_emails[:weekly_reactions_email]
     end
 
     trait :follows_reactions_never do
-      confirmed_at Time.current
       reactions_email User.reactions_emails[:never_reactions_email]
     end
 
     trait :follows_news_directly do
-      confirmed_at Time.current
       news_email User.news_emails[:direct_news_email]
     end
 
     trait :follows_news_weekly do
-      confirmed_at Time.current
       news_email User.news_emails[:weekly_news_email]
     end
 
     trait :follows_news_never do
-      confirmed_at Time.current
       reactions_email User.news_emails[:never_news_email]
     end
 

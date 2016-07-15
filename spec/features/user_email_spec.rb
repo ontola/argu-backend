@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User email' do
-  let(:user) { create(:user, :confirmed) }
+  let(:user) { create(:user) }
 
   background do
     clear_emails
