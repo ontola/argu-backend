@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ProfilesHelper
   # Generates a link to the Profile's profileable
   # Either a Page or a User

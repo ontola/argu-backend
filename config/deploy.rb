@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 set :application, 'argu'
 set :repo_url, 'git@bitbucket.org:arguweb/argu.git'
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module GroupResponsesHelper
   def radio_values_for_sides(model)
     values = []

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupMembership < ActiveRecord::Base
   include ArguBase
 

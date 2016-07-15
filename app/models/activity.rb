@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Activity < PublicActivity::Activity
   has_many :notifications, dependent: :destroy
   # The creator of the activity

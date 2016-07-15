@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TagsInput < Formtastic::Inputs::StringInput
   def to_html
     input_wrapping do

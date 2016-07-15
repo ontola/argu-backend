@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module LanguageHelper
   def language_dropdown_items
     {

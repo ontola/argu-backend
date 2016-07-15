@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # app/controllers/oauth/applications_controller.rb
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_user!

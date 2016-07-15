@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class CreateArgument < PublishedCreateService
   include Wisper::Publisher
 

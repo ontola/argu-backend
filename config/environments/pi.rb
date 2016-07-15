@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Argu::Application.configure do
   config.host = ENV['HOSTNAME'] || '194.171.10.64'
   # Settings specified here will take precedence over those in config/application.rb

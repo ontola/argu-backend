@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BlogPost < ActiveRecord::Base
   include ArguBase, Trashable, PublicActivity::Common, Flowable, Placeable,
           ActivePublishable, Parentable

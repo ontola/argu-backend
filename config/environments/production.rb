@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Argu::Application.configure do
   config.host = 'https://argu.co'
   # Settings specified here will take precedence over those in config/application.rb

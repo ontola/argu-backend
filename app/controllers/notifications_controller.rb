@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NotificationsController < ApplicationController
   after_action :update_viewed_time
 

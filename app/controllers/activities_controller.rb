@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ActivitiesController < ApplicationController
   def index
     if params[:from_time].present?

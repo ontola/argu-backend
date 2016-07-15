@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
   def to_html
     input_wrapping do

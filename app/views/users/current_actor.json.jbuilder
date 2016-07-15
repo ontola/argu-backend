@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.current_actor do
   json.actor_type @profile.owner.class.name
   json.shortname @profile.url

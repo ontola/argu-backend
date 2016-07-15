@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use.
   # Currently supported options are :active_record, :mongoid2, :mongoid3,

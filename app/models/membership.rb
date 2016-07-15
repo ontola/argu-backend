@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Membership < ActiveRecord::Base
   include ArguBase, Parentable
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }

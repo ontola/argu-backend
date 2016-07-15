@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ArgumentsHelper
   def pro_arguments_preview_tooltip(motion)
     arguments_preview_tooltip(motion.top_arguments_pro_light, '+')

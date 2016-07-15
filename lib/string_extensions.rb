@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module StringExtensions
   refine String do
     def constantize_with_care(list_of_klasses = [])

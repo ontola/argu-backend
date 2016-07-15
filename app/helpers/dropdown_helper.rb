@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module DropdownHelper
   def dropdown_options(title, sections, opts = {})
     options = {

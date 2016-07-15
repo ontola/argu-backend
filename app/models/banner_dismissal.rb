@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BannerDismissal
   include ActiveModel::Dirty, ActiveModel::Model, ActiveModel::Validations
   include StubbornCookie

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module HasLinks
   extend ActiveSupport::Concern
   require 'html_truncator'

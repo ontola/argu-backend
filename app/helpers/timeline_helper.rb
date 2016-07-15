@@ -1,13 +1,14 @@
+# frozen_string_literal: true
 module TimelineHelper
   def generate_phase_link_class(project, phase)
-    class_string = 'timeline-phase-title tooltip--top'
+    class_string = String.new('timeline-phase-title tooltip--top')
     class_string << ' finished' if project.current_phase.present? && phase.id < project.current_phase.id
     class_string << ' current' if project.current_phase.present? && phase == project.current_phase
     class_string
   end
 
   def generate_timeline_point_class(happening, active)
-    class_string = 'tooltip--side-right timeline-point'
+    class_string = String.new('tooltip--side-right timeline-point')
     class_string << " timeline-point-#{happening.trackable.model_name.singular.dasherize}"
     class_string << ' unpublished' unless happening.trackable.is_published
     class_string << ' active' if active

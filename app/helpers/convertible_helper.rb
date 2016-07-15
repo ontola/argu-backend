@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Contains argu-specific implementation details of {Convertible}
 module ConvertibleHelper
   def convertible_param_to_model(convertible)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.user do
   json.shortname @profile.url
   json.name @profile.name

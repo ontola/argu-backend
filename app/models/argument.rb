@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Argument < ActiveRecord::Base
   include ProCon, Flowable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Omniauth
   class OmniauthFacebook
     def self.create_user_without_shortname(auth, identity, r = nil)

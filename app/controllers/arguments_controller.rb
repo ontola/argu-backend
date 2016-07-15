@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ArgumentsController < AuthorizedController
   include NestedResourceHelper
   # GET /arguments/1

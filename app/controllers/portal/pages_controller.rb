@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Portal::PagesController < ApplicationController
   def destroy
     @page = Page.find_via_shortname params[:id]

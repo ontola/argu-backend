@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module SettingsHelper
   def tab_icon_for(tab)
     case tab

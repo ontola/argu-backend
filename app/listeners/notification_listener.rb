@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NotificationListener
   def create_activity_successful(activity)
     case activity.object

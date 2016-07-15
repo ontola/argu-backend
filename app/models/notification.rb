@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Notification < ActiveRecord::Base
   include ActivityStringHelper
   belongs_to :user

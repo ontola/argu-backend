@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PageMembership < ActiveRecord::Base
   include ArguBase
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }

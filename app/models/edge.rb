@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class Edge < ActiveRecord::Base
   belongs_to :owner,
              inverse_of: :edge,

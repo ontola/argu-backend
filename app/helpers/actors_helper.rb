@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ActorsHelper
   # Finds a Profile based on the `a_a` cookie value.
   # @return [Profile] the profile which the current_user is using to do actions with.

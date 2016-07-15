@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Page < ActiveRecord::Base
   include ArguBase, Edgeable, Shortnameable, Flowable
 

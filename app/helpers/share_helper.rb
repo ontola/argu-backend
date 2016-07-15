@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ShareHelper
   SHARE_PLATFORMS = %i(facebook twitter linkedin googleplus)
 

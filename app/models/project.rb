@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Project < ActiveRecord::Base
   include ArguBase, Placeable, PublicActivity::Common, Flowable, Trashable,
           BlogPostable, ActivePublishable, Parentable, Photoable

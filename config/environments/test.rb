@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   config.host = ENV['HOSTNAME'] || '127.0.0.1'
   Rails.application.routes.default_url_options[:host] = ENV['HOSTNAME'] || '127.0.0.1'

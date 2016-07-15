@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module SeoHelper
   def connected_web(options)
     content_for :connected_web, options_hash_to_meta_tags(options)

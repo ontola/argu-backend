@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Superclass for all the services that update records
 # @author Arthur <arthur@argu.co>
 class DestroyService < ApplicationService

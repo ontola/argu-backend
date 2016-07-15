@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class FollowersCollector
   # Collects the followers of the resource with follow_type or higher
   # @param resource [ActiveRecord::Base] The resource to collect the followers from

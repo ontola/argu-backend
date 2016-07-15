@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 # Mixin giving policies the ability to be altered via {Rule} records
 # @see {Argu::RuledIt}

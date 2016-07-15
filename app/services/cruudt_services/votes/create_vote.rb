@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class CreateVote < PublishedCreateService
   include Wisper::Publisher
 

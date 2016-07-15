@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Shortname < ActiveRecord::Base
   belongs_to :owner,
              polymorphic: true,

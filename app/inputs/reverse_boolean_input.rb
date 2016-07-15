@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ReverseBooleanInput < Formtastic::Inputs::BooleanInput
   def to_html
     input_wrapping do

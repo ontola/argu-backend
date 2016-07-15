@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UntrashBlogPost < UntrashService
   include Wisper::Publisher
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ProjectsController < AuthorizedController
   include NestedResourceHelper
   prepend_before_action :redirect_pages, only: :show

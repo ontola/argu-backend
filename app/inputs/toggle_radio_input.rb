@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ToggleRadioInput < Formtastic::Inputs::RadioInput
   include ActionView::Helpers::TranslationHelper
 

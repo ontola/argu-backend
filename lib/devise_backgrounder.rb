@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Mailer proxy to send devise emails in the background
 # @see https://github.com/mperham/sidekiq/wiki/Devise
 class DeviseBackgrounder

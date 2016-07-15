@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TagsController < ApplicationController
   def index
     if params[:forum_id].present?

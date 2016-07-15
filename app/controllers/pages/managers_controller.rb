@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Pages::ManagersController < ApplicationController
   def new
     @page = Page.find_via_shortname params[:page_id]

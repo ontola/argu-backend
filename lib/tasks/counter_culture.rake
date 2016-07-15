@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :counter_culture do
   desc 'Reset the counter_culture columns'
   task reset: :environment do

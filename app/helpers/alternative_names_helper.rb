@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provides helpers for the translations and icons for when the {Forum} admin
 # has changed the name of {Argument}, {Motion} or {Question}.
 #

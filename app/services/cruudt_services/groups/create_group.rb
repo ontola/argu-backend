@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class CreateGroup < CreateService
   include Wisper::Publisher
 

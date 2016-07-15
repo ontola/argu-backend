@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Placeable
   extend ActiveSupport::Concern
 

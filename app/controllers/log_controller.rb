@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class LogController < AuthorizedController
   include NestedResourceHelper
   alias_method :resource_by_id, :get_parent_resource

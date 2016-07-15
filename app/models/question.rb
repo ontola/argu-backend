@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Question < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, ForumTaggable, HasLinks, Attribution,
           BlogPostable, PublicActivity::Common, Flowable, Placeable, Photoable

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupsController < AuthorizedController
   include NestedResourceHelper
   before_action :find_forum_and_group, only: [:edit, :update, :delete, :destroy]

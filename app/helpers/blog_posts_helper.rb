@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module BlogPostsHelper
   def blog_posts_title
     [

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Portal::ForumsController < ApplicationController
   def new
     @forum = Forum.new(page: params[:page])

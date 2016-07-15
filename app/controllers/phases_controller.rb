@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PhasesController < AuthorizedController
   def show
     respond_to do |format|

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.collection @collection[:collection] do |item|
   json.id item.id
   json.name item.display_name

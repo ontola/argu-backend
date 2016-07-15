@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 module Argu
   class NotAuthorizedError < Pundit::Error
     attr_reader :query, :record, :policy, :verdict, :action

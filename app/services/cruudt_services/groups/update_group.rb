@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Service for updating groups.
 class UpdateGroup < UpdateService
   include Wisper::Publisher

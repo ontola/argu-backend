@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ManagersController < ApplicationController
   def new
     @forum = Forum.find_via_shortname params[:forum_id]

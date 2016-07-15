@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module VotesHelper
   def toggle_vote_link(model, vote, &block)
     url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :vote], for: :pro)

@@ -363,13 +363,6 @@ Style/FileName:
     - 'config/initializers/rack-attack.rb'
     - 'config/initializers/rails-api.rb'
 
-# Offense count: 435
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: when_needed, always
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 # Offense count: 6
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Comment < ActiveRecord::Base
   include ArguBase, Parentable, Trashable, PublicActivity::Common
 

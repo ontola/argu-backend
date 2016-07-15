@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class IdentityPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope

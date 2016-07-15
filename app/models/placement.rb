@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Placement < ActiveRecord::Base
   include ArguBase
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'wisper/rspec/matchers'
 require 'capybara/email/rspec'
 

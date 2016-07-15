@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Forum < ActiveRecord::Base
   include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Parentable, Photoable,
           ProfilePhotoable

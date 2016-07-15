@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MembershipsController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_member, only: %i(create)

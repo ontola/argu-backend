@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class Identity < ActiveRecord::Base
   belongs_to :user
   after_destroy :clear_token_connection

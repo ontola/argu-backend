@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DestroyProject < DestroyService
   include Wisper::Publisher
 

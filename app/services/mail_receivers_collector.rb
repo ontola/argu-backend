@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MailReceiversCollector
   def initialize(email_frequency)
     @email_frequency = email_frequency

@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class CreateBlogPost < PublishedCreateService
   include Wisper::Publisher
 

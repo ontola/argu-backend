@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 module StubbornCookie
   ALLOWED_SET_KEYS = %w(hide_video banners)
   MODEL_NAME = 'user'

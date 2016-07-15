@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Interface for the `flow` ability.
 # Aka they have an activity stream coupled.
 module Flowable

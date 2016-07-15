@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupMembershipsController < ApplicationController
   def new
     @group = Group.includes(:forum).find(params[:group_id])

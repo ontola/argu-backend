@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 class UserMailer < ApplicationMailer
   def user_password_changed(user)
     @user = user

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Concern which gives Models the `convert` ability.
 #
 # Converts as many parameters and assocations as possible.

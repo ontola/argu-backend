@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 # Our own wrapper for redis, to make stuff like error handling and host initialisation easier.
 module Argu

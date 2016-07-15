@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupMembershipPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 

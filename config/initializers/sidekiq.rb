@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Sidekiq.logger.formatter = Sidekiq::Logging::Json::Logger.new if Rails.env.development?
 
 Sidekiq.configure_server do |config|

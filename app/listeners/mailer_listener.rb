@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MailerListener
   def create_argument_successful(argument)
     send_followers_mail argument, follower_emails_for(argument, argument.motion)

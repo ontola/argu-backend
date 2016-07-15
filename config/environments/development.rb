@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   config.host = ENV['HOSTNAME'].presence || 'localhost:3000'
   # Settings specified here will take precedence over those in config/application.rb#

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Photo < ActiveRecord::Base
   belongs_to :forum
   belongs_to :about, polymorphic: true, inverse_of: :photos

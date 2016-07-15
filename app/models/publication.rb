@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Publication < ActiveRecord::Base
   include Wisper::Publisher
   belongs_to :publishable, polymorphic: true

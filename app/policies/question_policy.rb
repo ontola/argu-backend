@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class QuestionPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 

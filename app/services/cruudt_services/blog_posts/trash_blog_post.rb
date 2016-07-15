@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TrashBlogPost < TrashService
   include Wisper::Publisher
 

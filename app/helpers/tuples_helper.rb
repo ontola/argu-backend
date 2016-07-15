@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module TuplesHelper
   def generate_tuple_in_string(cc)
     "(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"

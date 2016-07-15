@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ContextHelper
   # Renders a to_parent breadcrumb block
   def  to_parent(parent = nil)
