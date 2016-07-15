@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module ShareHelper
-  SHARE_PLATFORMS = %i(facebook twitter linkedin googleplus)
+  SHARE_PLATFORMS = %i(facebook twitter linkedin googleplus).freeze
 
   # https://developers.facebook.com/docs/sharing/reference/feed-dialog/v2.3
   def self.facebook_share_url(url, options = {})

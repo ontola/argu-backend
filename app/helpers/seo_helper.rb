@@ -65,5 +65,5 @@ module SeoHelper
       'twitter:title' => :name,
       'twitter:description' => :description,
       'twitter:image' => :image
-  }
+  }.freeze
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module StubbornCookie
-  ALLOWED_SET_KEYS = %w(hide_video banners)
+  ALLOWED_SET_KEYS = %w(hide_video banners).freeze
   MODEL_NAME = 'user'
   STORE_CLASS = Argu::Redis
   include HashMethods, KVMethods

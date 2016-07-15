@@ -454,24 +454,6 @@ Style/ModuleFunction:
 Style/MultilineMethodCallIndentation:
   Enabled: false
 
-# Offense count: 15
-# Cop supports --auto-correct.
-Style/MutableConstant:
-  Exclude:
-    - 'app/helpers/seo_helper.rb'
-    - 'app/helpers/share_helper.rb'
-    - 'app/models/concerns/pro_con.rb'
-    - 'app/models/motion.rb'
-    - 'app/models/user.rb'
-    - 'config/environment.rb'
-    - 'config/initializers/build.rb'
-    - 'config/initializers/version.rb'
-    - 'lib/argu/stateful_server_renderer.rb'
-    - 'lib/exception_to_the_rule.rb'
-    - 'lib/stubborn_cookie.rb'
-    - 'lib/tasks/factory_girl.rake'
-    - 'test/controllers/static_pages_controller_test.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/NegatedIf:

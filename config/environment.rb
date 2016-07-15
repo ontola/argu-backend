@@ -5,4 +5,4 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 Argu::Application.initialize!
 
-STAGES = [:production, :staging]
+STAGES = [:production, :staging].freeze

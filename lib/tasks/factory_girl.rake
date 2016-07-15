@@ -2,7 +2,7 @@
 # lib/tasks/factory_girl.rake
 namespace :factory_girl do
   # Models only used in context of other models
-  EXCLUDED_FACTORIES = %i(shortname identity vote memberships)
+  EXCLUDED_FACTORIES = %i(shortname identity vote memberships).freeze
 
   desc 'Verify that all FactoryGirl factories are valid'
   task lint: :environment do

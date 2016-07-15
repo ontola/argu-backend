@@ -55,7 +55,7 @@ class Motion < ActiveRecord::Base
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
 
-  VOTE_OPTIONS = [:pro, :neutral, :con]
+  VOTE_OPTIONS = [:pro, :neutral, :con].freeze
 
   # @return [ActiveRecord::Relation]
   def self.search(q)
