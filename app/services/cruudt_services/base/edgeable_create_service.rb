@@ -15,6 +15,11 @@ class EdgeableCreateService < CreateService
 
   protected
 
+  def after_save
+    notify
+    super
+  end
+
   # @param [Edge, Integer] parent The instance or id of the parent edge of the new child
   # @option options [User] publisher The publisher of the new child
   def initialize_edge(parent, options)
@@ -22,6 +27,11 @@ class EdgeableCreateService < CreateService
     @edge = parent_edge.children.new(
       user: options[:publisher],
       owner: resource_klass.new)
+  end
+
+  def notify
+    conn = ActiveRecord::Base.connection
+    conn.execute("NOTIFY edge_created, '#{@edge.id}'")
   end
 
   def parent_columns

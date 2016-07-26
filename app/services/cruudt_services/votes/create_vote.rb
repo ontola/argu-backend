@@ -10,6 +10,7 @@ class CreateVote < PublishedCreateService
   private
 
   def after_save
+    super
     resource.publisher.follow(@edge, nil, :news)
   end
 
