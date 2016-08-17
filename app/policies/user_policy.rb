@@ -34,8 +34,7 @@ class UserPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general profile notifications privacy advanced)
-    tabs
+    tabs.concat %i(general profile authentication notifications privacy advanced)
   end
 
   def index?

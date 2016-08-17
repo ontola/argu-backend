@@ -8,6 +8,7 @@ en:
       menu:
         general: "General"
         profile: "Profile"
+        authentication: "Authentication"
         notifications: "Notifications"
         privacy: "Privacy"
         advanced: "Advanced"

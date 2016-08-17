@@ -11,7 +11,7 @@ RSpec.feature 'User email' do
     sign_in user
     new_email = 'new_email@example.com'
 
-    visit settings_path
+    visit settings_path(tab: :authentication)
     expect(page).to have_content('Email confirmed')
     expect(page).not_to have_content('Pending email')
 
@@ -33,7 +33,7 @@ RSpec.feature 'User email' do
 
     current_email.click_link 'Confirm your e-mail'
     expect(page).to have_current_path(info_path(:about))
-    visit settings_path
+    visit settings_path(tab: :authentication)
     expect(page).to have_selector("input[value='#{new_email}']")
   end
 end

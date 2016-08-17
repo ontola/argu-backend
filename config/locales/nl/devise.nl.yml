@@ -58,7 +58,7 @@ nl:
       destroyed: 'Jouw account is verwijderd. Hopelijk tot snel!'
       password_confirmation:
         header: 'Je wachtwoord is gewijzigd.'
-        body: 'We laten je weten dat je wachtwoord voor je Argu account "%{shortname}" gewijzigd is.<br/> Mail naar info@argu.co als je dit niet gedaan hebt.'
+        body_html: 'We laten je weten dat je wachtwoord voor je Argu account "%{shortname}" gewijzigd is.<br/> Mail naar info@argu.co als je dit niet gedaan hebt.'
     unlocks:
       send_instructions: 'Je zal binnen enkele minuten een email ontvangen met instructies om jouw account te ontgrendelen.'
       unlocked: 'Jouw account is ontgrendeld. Log in om door te gaan.'

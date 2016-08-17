@@ -1,0 +1,38 @@
+=semantic_form_for @user, url: settings_path, method: :put do |f|
+  =f.inputs name: t('users.registrations.categories.authentication') do
+    =f.inputs :shortname, for: :shortname, disabled: true
+    li.form-helper
+      span="#{t('profiles.edit.shortname_not_allowed')} #{link_to t('users.settings.menu.profile'), settings_url_for(@user, :profile)}.".html_safe
+    /TODO Hide authentications that are already present.
+    - if login_providers_left(@user).present?
+      label= t('users_oauth_new')
+      .form-item
+        = render partial: 'authentications/login_providers', locals: {providers: login_providers_left(@user)}
+    - elsif !@user.password_required? && @user.identities.length == 1
+      p= t('users.authentications.cant_decouple_note_provider', provider: @user.identities.first.provider)
+    =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
+    li.form-helper
+      - if @user.confirmed_at.present?
+        span= t('users.registrations.confirmed')
+        - if @user.unconfirmed_email.present?
+          div= t('users.registrations.unconfirmed_email', email: @user.unconfirmed_email)
+      - else
+        span
+          =t('users.registrations.unconfirmed')
+          =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
+    -if @user.has_password?
+      =f.input :password, label: t('users_password_edit'), required: @user.new_record?
+      =f.input :password_confirmation, label: t('users_password_confirmation')
+      =f.inputs name: t('formtastic.labels.current_password')
+        =f.input :current_password, required: true
+    -else
+      / TODO: Only show this if user does not have a password.
+      p
+        =t('users.registrations.no_password')
+        =link_to " #{t('devise.passwords.new.submit')}.", password_path(@user), data: {method: :post, turbolinks: false}, id: 'send-instructions', rel: :nofollow
+      - if @user.identities.present?
+        label= t('users_oauth_coupled')
+        =render partial: 'authentications/login_providers_connected', locals: { identities: @user.identities, show_decouple: (@user.password_required? || @user.identities.length > 1) }
+  =f.input :tab, as: :hidden, input_html: {value: tab}
+  =f.actions do
+    =f.action :submit, as: :button, label: t('save')

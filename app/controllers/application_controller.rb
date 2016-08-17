@@ -300,7 +300,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def intro_urls
-    [profile_url(current_user), setup_profiles_url, memberships_forums_url]
+    [profile_url(current_user), setup_profiles_url]
   end
 
   # @private

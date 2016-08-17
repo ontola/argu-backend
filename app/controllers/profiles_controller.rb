@@ -74,12 +74,14 @@ class ProfilesController < ApplicationController
     updated = nil
     Profile.transaction do
       updated = @resource.update setup_permit_params
-      if has_valid_token?(@resource)
-        get_access_tokens(@resource).compact.each do |at|
-          @profile.group_memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
+      if updated
+        if has_valid_token?(@resource)
+          get_access_tokens(@resource).compact.each do |at|
+            @profile.group_memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
+          end
         end
+        @resource.update_column :finished_intro, true
       end
-      @resource.update_column :finished_intro, true
     end
 
     respond_to do |format|

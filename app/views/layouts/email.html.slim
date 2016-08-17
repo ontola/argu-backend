@@ -32,7 +32,7 @@ html
             tr
               td.mail-p.small
                 =t('mailer.user_mailer.too_many_notifications') + ' '
-                =link_to t('mailer.user_mailer.adjust_settings'), settings_url
+                =link_to t('mailer.user_mailer.adjust_settings'), settings_url(tab: :notifications)
             tr
               td.mail-hidden
                 =t('mailer.sent_at_date', date: Time.current.utc.strftime('%Y-%m-%d %H:%M:%S'))

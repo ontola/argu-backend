@@ -35,8 +35,8 @@ RSpec.feature 'User Password', type: :feature do
   scenario 'user no omni should change their password' do
     sign_in user
 
-    visit settings_path
-    expect(page).to have_current_path settings_path
+    visit settings_path(tab: :authentication)
+    expect(page).to have_current_path settings_path(tab: :authentication)
 
     expect(page).to have_content('Edit password')
     expect(page).to have_content('Confirm password')
@@ -53,7 +53,7 @@ RSpec.feature 'User Password', type: :feature do
     end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
-    expect(page).to have_current_path settings_path(tab: :general)
+    expect(page).to have_current_path settings_path(tab: :authentication)
 
     visit destroy_user_session_path
     expect(page).to have_content 'You have signed out successfully.'
@@ -72,8 +72,8 @@ RSpec.feature 'User Password', type: :feature do
   scenario 'user both omni should change their password' do
     sign_in user_omni_both
 
-    visit settings_path
-    expect(page).to have_current_path settings_path
+    visit settings_path(tab: :authentication)
+    expect(page).to have_current_path settings_path(tab: :authentication)
 
     expect(page).to have_content('Edit password')
     expect(page).to have_content('Confirm password')
@@ -91,14 +91,14 @@ RSpec.feature 'User Password', type: :feature do
       Sidekiq::Worker.jobs.size
     }.by(1)
 
-    expect(page).to have_current_path settings_path(tab: :general)
+    expect(page).to have_current_path settings_path(tab: :authentication)
     expect(page).to have_content('User settings')
   end
 
   scenario 'user omni both should not request a password reset email' do
     sign_in user_omni_both
 
-    visit settings_path
+    visit settings_path(tab: :authentication)
     expect(page).not_to have_content("You don't have a password yet, because you signed up "\
                                        "using a linked account. Do you want to set a password?")
   end
@@ -106,7 +106,7 @@ RSpec.feature 'User Password', type: :feature do
   scenario 'user only omni should not change their password' do
     login_as user_omni_only, scope: :user
 
-    visit settings_path
+    visit settings_path(tab: :authentication)
     expect(page).not_to have_content('Password')
     expect(page).not_to have_content('Confirm password')
     expect(page).not_to have_content('Current password')
@@ -124,7 +124,7 @@ RSpec.feature 'User Password', type: :feature do
     click_link 'Log in with Facebook'
 
     expect(page).to have_selector('.navbar-item.navbar-profile')
-    visit settings_path
+    visit settings_path(tab: :authentication)
     expect(page).to have_content('User settings')
     expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. "\
                                    "Do you want to set a password?")

@@ -1,29 +1,20 @@
 module SettingsHelper
-  def tab_icon_for(tab)
-    case tab
-    when :general, :advanced
-      'gear'
-    when :managers
-      'suitcase'
-    when :groups
-      'group'
-    when :projects
-      'rocket'
-    when :privacy
-      'shield'
-    when :shortnames
-      'external-link'
-    when :banners
-      'sticky-note'
-    when :setting
-      'sliders'
-    when :announcements
-      'bullhorn'
-    when :profile
-      'user'
-    when :notifications
-      'bell'
-    end
+  def tab_icons
+    {
+      general: 'gear',
+      advanced: 'gears',
+      managers: 'suitcase',
+      groups: 'group',
+      projects: 'rocket',
+      privacy: 'lock',
+      shortnames: 'external-link',
+      banners: 'sticky-note',
+      setting: 'sliders',
+      announcements: 'bullhorn',
+      profile: 'user',
+      notifications: 'bell',
+      authentication: 'shield'
+    }
   end
 
   def group_redirect_url(group)

@@ -1,4 +1,4 @@
 li[class=('tab--current' if local_assigns[:active] == tab.to_s)]
   =link_to settings_url_for(resource, tab)
-    span[class="fa fa-#{tab_icon_for(tab)}"]
+    span[class="fa fa-#{tab_icons[tab]}"]
     span.icon-left= t("#{resource.try(:class_name) || resource.downcase}.settings.menu.#{tab}")

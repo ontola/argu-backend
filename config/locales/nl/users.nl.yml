@@ -8,6 +8,7 @@ nl:
       menu:
         general: "Algemeen"
         profile: "Profiel"
+        authentication: "Authenticatie"
         notifications: "Meldingen"
         privacy: "Privacy"
         advanced: "Geavanceerd"

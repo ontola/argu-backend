@@ -1,19 +1,5 @@
 =semantic_form_for @user, url: settings_path, method: :put do |f|
-  =f.semantic_errors :email, :base, :current_password
   =f.inputs name: t('users.registrations.categories.general') do
-    =f.inputs :shortname, for: :shortname, disabled: true
-    li.form-helper
-      span="#{t('profiles.edit.shortname_not_allowed')} #{link_to t('users.settings.menu.profile'), settings_url_for(@user, :profile)}.".html_safe
-    =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
-    li.form-helper
-      - if @user.confirmed_at.present?
-        span= t('users.registrations.confirmed')
-        - if @user.unconfirmed_email.present?
-          div= t('users.registrations.unconfirmed_email', email: @user.unconfirmed_email)
-      - else
-        span
-          =t('users.registrations.unconfirmed')
-          =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
     =f.input :language, as: :react_select, collection: language_select_items, include_blank: false, clearable: false, searchable: false
     =f.input :time_zone
   =f.inputs name: t('profiles.edit.personal_information') do
@@ -21,29 +7,7 @@
     =f.semantic_fields_for :home_placement do |ha|
       =ha.input :postal_code
       =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE)
-    =f.input :birthday, as: :date_picker
-  =f.inputs name: t('users.registrations.categories.authentication') do
-    -if @user.has_password?
-      =f.input :password, label: t('users_password_edit'), required: @user.new_record?
-      =f.input :password_confirmation, label: t('users_password_confirmation')
-      =f.input :current_password
-    -else
-      / TODO: Only show this if user does not have a password.
-      p
-        =t('users.registrations.no_password')
-        =link_to " #{t('devise.passwords.new.submit')}.", password_path(@user), data: {method: :post, turbolinks: false}, id: 'send-instructions', rel: :nofollow
-      - if @user.identities.present?
-        label= t('users_oauth_coupled')
-        =render partial: 'authentications/login_providers_connected', locals: { identities: @user.identities, show_decouple: (@user.password_required? || @user.identities.length > 1) }
-
-    /TODO Hide authentications that are already present.
-    - if login_providers_left(@user).present?
-      label= t('users_oauth_new')
-      .form-item
-        =render partial: 'authentications/login_providers', locals: {providers: login_providers_left(@user)}
-    - elsif !@user.password_required? && @user.identities.length == 1
-      p= t('users.authentications.cant_decouple_note_provider', provider: @user.identities.first.provider)
-
+    =f.input :birthday, label: false, prompt: t('formtastic.labels.birthday'), labels: {year: t('formtastic.labels.birthday')}, start_year: 120.years.ago.year, end_year: 12.years.ago.year, order: [:year], input_html: {class: 'Select-control'}
   =f.input :tab, as: :hidden, input_html: {value: tab}
   =f.actions do
     =f.action :submit, as: :button, label: t('save')

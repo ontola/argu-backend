@@ -125,6 +125,18 @@ class UsersControllerTest < ActionController::TestCase
     assert_not assigns(:collection)[:pro][:collection].any? { |v| v.voteable.is_trashed? }
   end
 
+  test 'user should show settings and all tabs' do
+    sign_in user
+
+    get :settings
+    assert_user_settings_shown
+
+    %i(general profile authentication notifications privacy advanced).each do |tab|
+      get :settings, tab: tab
+      assert_user_settings_shown tab
+    end
+  end
+
   test 'user should put language' do
     user = create_member(utrecht, create_member(amsterdam))
     sign_in user
@@ -290,6 +302,15 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   private
+
+  # Asserts that the user settings are shown on a specific tab
+  # @param [Symbol] tab The tab to be shown (defaults to :general)
+  def assert_user_settings_shown(tab = :general)
+    assert_response 200
+    assert_have_tag response.body,
+                    '.settings-tabs .tab--current .icon-left',
+                    tab.to_s.capitalize
+  end
 
   def initialize_user2_votes
     motion1 = create(:motion, parent: utrecht.edge)
