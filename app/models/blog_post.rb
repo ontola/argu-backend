@@ -30,6 +30,8 @@ class BlogPost < ApplicationRecord
                   }
   parentable :blog_postable, :forum
 
+  validates :content, presence: true, length: {minimum: 2}
+  validates :title, presence: true, length: {minimum: 2, maximum: 110}
   validates :blog_postable, :creator, presence: true
 
   alias_attribute :description, :content

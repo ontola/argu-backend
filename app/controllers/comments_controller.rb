@@ -237,6 +237,6 @@ class CommentsController < AuthorizedController
       case resource
       when 'a' then Argument
       end
-    resource.find(id).forum
+    resource&.find(id)&.forum
   end
 end

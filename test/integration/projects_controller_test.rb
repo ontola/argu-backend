@@ -2,16 +2,12 @@
 require 'test_helper'
 
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
-  include ApplicationHelper
+  define_automated_tests_objects
 
-  define_freetown
-  let!(:owner) { argu.owner.profileable }
-  let!(:page) { argu }
-
-  let!(:moderator) { create_moderator(freetown) }
   let!(:subject) do
     p = create(:project,
                argu_publication: build(:publication),
+               publisher: creator,
                parent: freetown.edge)
     create(:stepup,
            record: p,
@@ -20,152 +16,199 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     p
   end
   let(:unpublished) do
-    p = create(:project, parent: freetown.edge)
+    p = create(:project, publisher: creator, parent: freetown.edge)
     create(:stepup,
            record: p,
            forum: freetown,
            moderator: moderator)
     p
   end
-  let!(:trashed_subject) do
-    create(:project,
-           argu_publication: build(:publication),
-           trashed_at: Time.current,
-           parent: freetown.edge)
-  end
 
-  ####################################
-  # As Guest
-  ####################################
-  test 'guest should not get new' do
-    general_new
-  end
-
-  test 'guest should get show published' do
-    general_show
-  end
-
-  test 'guest should not get show unpublished' do
-    general_show 302, unpublished
-    assert_not_authorized
-  end
-
-  test 'guest should not post create' do
-    general_create_draft
-  end
-
-  test 'guest should not get edit' do
-    general_edit
-  end
-
-  test 'guest should not patch update' do
-    general_update
-  end
-
-  test 'guest should not delete destroy trash' do
-    general_trash
-  end
-
-  test 'guest should not delete destroy' do
-    general_destroy
-  end
-
-  ####################################
-  # As User
-  ####################################
-  let(:user) { create(:user) }
-
-  test 'user should not get new' do
-    sign_in user
-    general_new 403
-    assert_not_a_member
-  end
-
-  test 'user should get show' do
-    sign_in user
-    general_show
-  end
-
-  test 'user should not get show unpublished' do
-    sign_in user
-    general_show 302, unpublished
-    assert_not_authorized
-  end
-
-  test 'user should not post create' do
-    sign_in user
-    general_create_draft 403
-    assert_not_a_member
-  end
-
-  test 'user should not get edit' do
-    sign_in user
-    general_edit 403
-    assert_not_a_member
-  end
-
-  test 'user should not patch update' do
-    sign_in user
-    general_update 403
-    assert_not_a_member
-  end
-
-  test 'user should not delete destroy trash' do
-    sign_in user
-    general_update 403
-    assert_not_a_member
-  end
-
-  test 'user should not delete destroy' do
-    sign_in user
-    general_destroy 403
-    assert_not_a_member
-  end
-
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(freetown) }
-
-  test 'member should not get new' do
-    sign_in member
-    general_new
-  end
-
-  test 'member should get show' do
-    sign_in member
-    general_show
-  end
-
-  test 'member should not get show unpublished' do
-    sign_in member
-    general_show 302, unpublished
-    assert_not_authorized
-  end
-
-  test 'member should not post create' do
-    sign_in member
-    general_create_draft
-  end
-
-  test 'member should not get edit' do
-    sign_in member
-    general_edit
-  end
-
-  test 'member should not patch update' do
-    sign_in member
-    general_update
-  end
-
-  test 'member should not delete destroy trash' do
-    sign_in member
-    general_trash
-  end
-
-  test 'member should not delete destroy' do
-    sign_in member
-    general_destroy
+  define_tests do
+    hash = {}
+    define_test(hash, :new, options: {parent: :freetown}, user_types: user_types[:new].merge(
+      member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+    ))
+    define_test(hash, :show)
+    define_test(
+      hash,
+      :show,
+      case_suffix: ' unpublished',
+      options: {record: :unpublished},
+      user_types: user_types[:show].merge(
+        guest: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+        user: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+        member: {rshould: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+      )
+    )
+    define_test(hash, :show, case_suffix: ' non-existent', options: {record: -1}, user_types: {
+      user: {should: false, response: 404}
+    })
+    define_test(
+      hash,
+      :create,
+      case_suffix: ' draft',
+      options: {
+        parent: :freetown,
+        analytics: stats_opt('projects', 'create_success'),
+        attributes: {
+          happened_at: DateTime.current,
+          argu_publication_attributes: {publish_type: :draft}
+        },
+        differences: [['Project.unpublished', 1],
+                      ['Activity.loggings', 1],
+                      ['Notification', 0]]
+      },
+      user_types: {
+        guest: {
+          should: false,
+          analytics: false,
+          response: 302,
+          asserts: ['assigns(:_not_a_user_caught)']},
+        user: {
+          should: false,
+          analytics: false,
+          response: 403,
+          asserts: ['assigns(:_not_a_member_caught)']},
+        member: {
+          should: false,
+          analytics: false,
+          response: 302,
+          asserts: ['assigns(:_not_authorized_caught)']},
+        moderator: {
+          should: true,
+          response: 302,
+          asserts: ['moderator.reload.has_drafts?', '!Project.last.is_published?']},
+        manager: {
+          should: true,
+          response: 302,
+          asserts: ['manager.reload.has_drafts?', '!Project.last.is_published?']},
+        owner: {
+          should: true,
+          response: 302,
+          asserts: ['owner.reload.has_drafts?', '!Project.last.is_published?']},
+        staff: {
+          should: true,
+          response: 302,
+          asserts: ['staff.reload.has_drafts?', '!Project.last.is_published?']}
+      }
+    )
+    define_test(
+      hash,
+      :create,
+      case_suffix: ' published',
+      options: {
+        parent: :freetown,
+        analytics: stats_opt('projects', 'create_success'),
+        attributes: {
+          happened_at: DateTime.current,
+          argu_publication_attributes: {publish_type: :direct}
+        },
+        differences: [['Project.published', 1],
+                      ['Activity.loggings', 2],
+                      ['Notification', 1]]
+      },
+      user_types: {
+        moderator: {
+          should: true,
+          response: 302,
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']},
+        manager: {
+          should: true,
+          response: 302,
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']},
+        owner: {
+          should: true,
+          response: 302,
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']},
+        staff: {
+          should: true,
+          response: 302,
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']}
+      }
+    )
+    define_test(
+      hash,
+      :create,
+      case_suffix: ' erroneous',
+      options: {
+        parent: :freetown,
+        analytics: stats_opt('projects', 'create_failed'),
+        attributes: {title: 'Project', content: 'C'}
+      },
+      user_types: {
+        manager: {
+          should: false,
+          response: 200,
+          asserts: ['assert_select "#project_title", "Project"',
+                    'assert_select "#project_content", "C"']}
+      }
+    )
+    define_test(
+      hash,
+      :create,
+      case_suffix: ' with cover_photo',
+      options: {
+        parent: :freetown,
+        analytics: stats_opt('projects', 'create_success'),
+        attributes: {
+          default_cover_photo_attributes: {
+            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          }
+        }
+      },
+      user_types: {
+        manager: {
+          should: true,
+          response: 302,
+          asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
+                    'assert_equal 1, resource.photos.count']}
+      }
+    )
+    define_test(hash, :edit, user_types: user_types[:edit]
+                                           .except(:creator)
+                                           .merge(moderator: {should: true, response: 200}))
+    define_test(hash, :update, user_types: user_types[:update]
+                                             .except(:creator)
+                                             .merge(moderator: {should: true, response: 302}))
+    define_test(
+      hash,
+      :update,
+      case_suffix: ' erroneous',
+      options: {attributes: {title: 'Project', content: 'C'}},
+      user_types: {
+        manager: {
+          should: false,
+          response: 200,
+          asserts: ['assert_select "#project_title", "Project"',
+                    'assert_select "#project_content", "C"']}
+      }
+    )
+    define_test(
+      hash,
+      :update,
+      case_suffix: ' with cover_photo',
+      options: {
+        attributes: {
+          default_cover_photo_attributes: {
+            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          }
+        }
+      },
+      user_types: {
+        manager: {
+          should: true,
+          response: 302,
+          asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
+                    'assert_equal 1, resource.photos.count']}
+      }
+    )
+    define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})
+    define_test(hash,
+                :trash,
+                options: {analytics: stats_opt('projects', 'trash_success')},
+                user_types: user_types[:trash]
+                              .merge(moderator: {should: true, response: 302}))
   end
 
   ####################################
@@ -210,338 +253,67 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     netdem_rules
     sign_in netdem_member
 
-    general_new(200)
+    general_new(results: {response: 200}, parent: :freetown)
   end
 
   test 'moderator should post create project draft' do
     netdem_rules
     sign_in netdem_member
+    moderator.shortname.update(shortname: 'moderator_name')
     # Test post create
     # Test that the proper stepup is generated
-    general_create_draft 302,
-                         [['Project.count', 1],
-                          ['Project.published.count', 0],
-                          ['Stepup.count', 1],
-                          ['Phase.count', 1]]
+    general_create(results: {response: 302, should: true},
+                   parent: :freetown,
+                   analytics: stats_opt('projects', 'create_success'),
+                   attributes: attributes_for(
+                     :project,
+                     argu_publication_attributes: {publish_type: :draft},
+                     stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
+                     phases_attributes: {'12321' => attributes_for(:phase)}
+                   ),
+                   differences: [['Project', 1],
+                                 ['Project.published', 0],
+                                 ['Stepup', 1],
+                                 ['Phase', 1]])
   end
 
   test 'moderator should post create project publish' do
     netdem_rules
     sign_in netdem_member
+    moderator.shortname.update(shortname: 'moderator_name')
     # Test post create
     # Test that the proper stepup is generated
-    general_create_publish 302,
-                           [['Project.count', 1],
-                            ['Project.published.count', 1],
-                            ['Stepup.count', 1],
-                            ['Phase.count', 1]]
+    general_create(results: {response: 302, should: true},
+                   parent: :freetown,
+                   analytics: stats_opt('projects', 'create_success'),
+                   attributes: attributes_for(
+                     :project,
+                     argu_publication_attributes: {publish_type: :direct},
+                     stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
+                     phases_attributes: {'12321' => attributes_for(:phase)}
+                   ),
+                   differences: [['Project', 1],
+                                 ['Project.published', 1],
+                                 ['Stepup', 1],
+                                 ['Phase', 1]])
   end
 
   test 'moderator should not cause leaking access' do
     netdem_rules
     sign_in discussion_member
 
-    general_new
-    general_create_draft
-  end
-
-  ####################################
-  # As Moderator
-  ####################################
-  test 'moderator should get show' do
-    sign_in moderator
-    general_show
-  end
-
-  test 'moderator should get show unpublished' do
-    sign_in moderator
-
-    general_show 200, unpublished
-  end
-
-  test 'moderator should get edit' do
-    sign_in moderator
-    general_edit 200
-  end
-
-  test 'moderator should patch update' do
-    sign_in moderator
-    general_update 302, true
-  end
-
-  test 'moderator should delete destroy trash' do
-    sign_in moderator
-    general_trash 302, 1
-  end
-
-  ####################################
-  # As Manager
-  ####################################
-  let(:manager) { create_manager freetown }
-  test 'manager should get new' do
-    sign_in manager
-    general_new 200
-  end
-
-  test 'manager should get show' do
-    sign_in manager
-    general_show 200
-  end
-
-  test 'manager should get show unpublished' do
-    sign_in manager
-    general_show 200, unpublished
-  end
-
-  test 'manager should post create draft' do
-    sign_in manager
-    general_create_draft 302,
-                         [['Project.count', 1],
-                          ['Project.published.count', 0],
-                          ['Stepup.count', 1],
-                          ['Phase.count', 1]]
-  end
-
-  test 'manager should post create publish' do
-    sign_in manager
-    general_create_publish 302,
-                           [['Project.count', 1],
-                            ['Project.published.count', 1],
-                            ['Stepup.count', 1],
-                            ['Phase.count', 1]]
-  end
-
-  test 'manager should get edit' do
-    sign_in manager
-    general_edit 200
-  end
-
-  test 'manager should patch update' do
-    sign_in manager
-    general_update 302, true
-  end
-
-  test 'manager should delete destroy trash' do
-    sign_in manager
-    general_trash 302, 1
-  end
-
-  test 'manager should delete destroy' do
-    sign_in manager
-    general_destroy 302, -1
-  end
-
-  ####################################
-  # As Owner
-  ####################################
-  test 'owner should get new' do
-    sign_in owner
-    general_new 200
-  end
-
-  test 'owner should get show' do
-    sign_in owner
-    general_show
-  end
-
-  test 'owner should get show unpublished' do
-    sign_in owner
-    general_show 200, unpublished
-  end
-
-  test 'owner should post create draft' do
-    sign_in owner
-    general_create_draft 302,
-                         [['Project.count', 1],
-                          ['Project.published.count', 0],
-                          ['Stepup.count', 1],
-                          ['Phase.count', 1]]
-  end
-
-  test 'owner should post create publish' do
-    sign_in owner
-    general_create_publish 302,
-                           [['Project.count', 1],
-                            ['Project.published.count', 1],
-                            ['Stepup.count', 1],
-                            ['Phase.count', 1]]
-  end
-
-  test 'owner should get edit' do
-    sign_in owner
-    general_edit 200
-  end
-
-  test 'owner should patch update' do
-    sign_in owner
-    general_update 302, true
-  end
-
-  test 'owner should delete destroy trash' do
-    sign_in owner
-    general_destroy 302, -1
-  end
-
-  test 'owner should delete destroy' do
-    sign_in owner
-    general_destroy 302, -1
-  end
-
-  ####################################
-  # As Staff
-  ####################################
-  let(:staff) { create :user, :staff }
-
-  test 'staff should get new' do
-    sign_in staff
-    general_new 200
-  end
-
-  test 'staff should get show' do
-    sign_in staff
-    general_show 200
-  end
-
-  test 'staff should get show unpublished' do
-    sign_in staff
-    general_show 200, unpublished
-  end
-
-  test 'staff should post create draft' do
-    sign_in staff
-    general_create_draft 302,
-                         [['Project.count', 1],
-                          ['Project.published.count', 0],
-                          ['Stepup.count', 1],
-                          ['Phase.count', 1]]
-  end
-
-  test 'staff should post create publish' do
-    sign_in staff
-    general_create_publish 302,
-                           [['Project.count', 1],
-                            ['Project.published.count', 1],
-                            ['Stepup.count', 1],
-                            ['Phase.count', 1]]
-  end
-
-  test 'staff should get edit' do
-    sign_in staff
-    general_edit 200
-  end
-
-  test 'staff should patch update' do
-    sign_in staff
-    general_update 302, true
-  end
-
-  test 'staff should delete destroy trash' do
-    sign_in staff
-    general_trash 302, 1
-  end
-
-  test 'staff should delete destroy' do
-    sign_in staff
-    general_destroy 302, -1
-  end
-
-  private
-
-  def general_new(response = 302)
-    get new_forum_project_path(freetown)
-
-    assert_response response
-  end
-
-  def general_show(response = 200, record = subject)
-    get project_path(record)
-
-    assert_response response
-  end
-
-  def general_create_draft(response = 302, differences = [['Project.count', 0],
-                                                          ['Stepup.count', 0],
-                                                          ['Phase.count', 0],
-                                                          ['Activity.count', 0]])
-    assert_differences(differences) do
-      post forum_projects_path(freetown),
-           params: {
-             project: attributes_for(:project,
-                                     argu_publication_attributes: {publish_type: :draft},
-                                     stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                     phases_attributes: {'12321' => attributes_for(:phase)})
-           }
-    end
-
-    assert_response response
-    assert_analytics_collected('projects', 'draft') if differences[0][0][1].to_i > 0
-  end
-
-  def general_create_publish(response = 302, differences = [['Project.count', 0],
-                                                            ['Stepup.count', 0],
-                                                            ['Phase.count', 0],
-                                                            ['Activity.count', 0]])
-    assert_differences(differences) do
-      post forum_projects_path(freetown),
-           params: {
-             project: attributes_for(:project,
-                                     argu_publication_attributes: {publish_type: :direct},
-                                     stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                     phases_attributes: {'12321' => attributes_for(:phase)})
-           }
-      Sidekiq::Testing.inline! do
-        Publication.last.send(:reset)
-      end
-    end
-
-    assert_response response
-    assert_analytics_collected('projects', 'publish') if differences[0][0][1].to_i > 0
-  end
-
-  def general_edit(response = 302)
-    get edit_project_path(subject)
-
-    assert_response response
-  end
-
-  def general_update(response = 302, changed = false)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-
-    assert_difference('Activity.count', changed ? 1 : 0) do
-      patch project_path(subject),
-            params: {project: attributes_for(:project)}
-    end
-
-    assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call subject
-                       .updated_at
-                       .iso8601(6),
-                     assigns(:update_service)
-                       .try(:resource)
-                       .try(:updated_at)
-                       .try(:iso8601, 6)
-    elsif changed
-      assert false, "can't be changed"
-    end
-  end
-
-  def general_trash(response = 302, difference = 0)
-    assert_differences([['Project.trashed_only.count', difference],
-                        ['Activity.count', difference.abs]]) do
-      delete project_path(subject)
-    end
-
-    assert_response response
-  end
-
-  def general_destroy(response = 302, difference = 0)
-    assert_differences([['Project.count', difference],
-                        ['Activity.count', difference.abs]]) do
-      delete project_path(subject,
-                          params: {destroy: true})
-    end
-
-    assert_response response
+    moderator.shortname.update(shortname: 'moderator_name')
+    general_new(results: {response: 302}, parent: :freetown)
+    general_create(results: {response: 302, should: false},
+                   parent: :freetown,
+                   attributes: attributes_for(
+                     :project,
+                     argu_publication_attributes: {publish_type: :draft},
+                     stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
+                     phases_attributes: {'12321' => attributes_for(:phase)}
+                   ),
+                   differences: [['Project', 0],
+                                 ['Stepup', 0],
+                                 ['Phase', 0]])
   end
 end

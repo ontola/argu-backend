@@ -15,7 +15,10 @@ module Argu
         SERVICE_MODELS = %i(argument blog_post comment forum group_response group_membership motion
                             phase banner group project question vote decision).freeze
 
-        def assert_analytics_collected(category, action = nil, label = nil)
+        def assert_analytics_collected(category = nil, action = nil, label = nil, **options)
+          category ||= options[:category]
+          action ||= options[:action]
+          label ||= options[:label]
           assert_requested :post, 'https://ssl.google-analytics.com/collect' do |req|
             el = CGI.parse(req.body)['el'].first if label
             ea = CGI.parse(req.body)['ea'].first if action
@@ -25,7 +28,10 @@ module Argu
         end
 
         def assert_analytics_not_collected
-          assert_not_requested :post, 'https://ssl.google-analytics.com/collect'
+          assert_not_requested(
+            stub_request(:post, 'https://ssl.google-analytics.com/collect')
+              .with(body: /(&ea=(?!sign_in)){1}/)
+          )
         end
 
         def assert_not_a_member
@@ -38,6 +44,10 @@ module Argu
 
         def assert_not_authorized
           assert_equal true, assigns(:_not_authorized_caught)
+        end
+
+        def cascaded_forum(key, opts)
+          key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
         end
 
         def change_actor(actor)
@@ -80,7 +90,11 @@ module Argu
             end
 
             if resource.respond_to?(:publications) && resource.publications.present?
-              Sidekiq::Testing.inline! do
+              if Publication.last.published_at.present? && Publication.last.published_at <= 10.seconds.from_now
+                Sidekiq::Testing.inline! do
+                  Publication.last.send(:reset)
+                end
+              else
                 Publication.last.send(:reset)
               end
               resource.reload
@@ -175,6 +189,10 @@ module Argu
           File.open("test/files/#{filename}")
         end
 
+        def stats_opt(category, action)
+          {category: category, action: action}
+        end
+
         def trash_resource(resource, user = nil, profile = nil)
           user ||= create(:user)
           profile ||= user.profile
@@ -205,13 +223,25 @@ module Argu
       module ClassMethods
         include TestResources::ClassMethods
 
+        def define_automated_tests_objects
+          define_common_objects(:freetown, :user, :member, :creator, :moderator,
+                                :manager, :owner, :staff, :page)
+        end
+
         def define_common_objects(*let, **opts)
           define_freetown if mdig?(:freetown, let, opts)
           let(:user) { create(:user, opts.dig(:user)) } if mdig?(:user, let, opts)
           let(:member) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
+          let(:creator) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
           let(:manager) { create_manager(cascaded_forum(:manager, opts)) } if mdig?(:manager, let, opts)
+          let(:moderator) { create_moderator(cascaded_forum(:moderator, opts)) } if mdig?(:moderator, let, opts)
           let(:owner) { create_owner(cascaded_forum(:owner, opts)) } if mdig?(:owner, let, opts)
           let(:staff) { create(:user, :staff) } if mdig?(:staff, let, opts)
+          let(:page) { argu } if mdig?(:page, let, opts)
+        end
+
+        def cascaded_forum(key, opts)
+          key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
         end
 
         # @param [Symbol] key The key to search for.
@@ -222,8 +252,8 @@ module Argu
           arr.include?(key) || opts.include?(key)
         end
 
-        def cascaded_forum(key, opts)
-          key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
+        def stats_opt(category, action)
+          {category: category, action: action}
         end
       end
     end

@@ -14,7 +14,39 @@ class AnalyticsListener
                  client_id: @client_id,
                  type: 'event',
                  category: model.to_s.pluralize,
-                 action: 'create'
+                 action: 'create_success'
+    end
+
+    define_method "create_#{model}_failed" do |_|
+      send_event uuid: @uuid,
+                 client_id: @client_id,
+                 type: 'event',
+                 category: model.to_s.pluralize,
+                 action: 'create_failed'
+    end
+
+    define_method "trash_#{model}_successful" do |_|
+      send_event uuid: @uuid,
+                 client_id: @client_id,
+                 type: 'event',
+                 category: model.to_s.pluralize,
+                 action: 'trash_success'
+    end
+
+    define_method "destroy_#{model}_successful" do |_|
+      send_event uuid: @uuid,
+                 client_id: @client_id,
+                 type: 'event',
+                 category: model.to_s.pluralize,
+                 action: 'destroy_success'
+    end
+
+    define_method "destroy_#{model}_failed" do |_|
+      send_event uuid: @uuid,
+                 client_id: @client_id,
+                 type: 'event',
+                 category: model.to_s.pluralize,
+                 action: 'destroy_failed'
     end
   end
 

@@ -30,7 +30,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def destroy?
-    rule is_creator?, is_owner?, super
+    rule is_creator?, is_manager?, is_owner?, super
   end
 
   def edit?

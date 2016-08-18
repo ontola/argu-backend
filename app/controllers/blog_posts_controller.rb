@@ -145,6 +145,6 @@ class BlogPostsController < AuthorizedController
   end
 
   def resource_tenant
-    get_parent_resource.forum
+    get_parent_resource.forum if current_resource_is_nested?
   end
 end

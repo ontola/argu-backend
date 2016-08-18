@@ -43,6 +43,8 @@ class Project < ApplicationRecord
   counter_culture :forum, counter_culture_opts
   parentable :forum
 
+  validates :content, presence: true, length: {minimum: 2, maximum: 5000}
+  validates :title, presence: true, length: {minimum: 2, maximum: 110}
   validates :forum, :creator, :start_date, presence: true
 
   def current_phase

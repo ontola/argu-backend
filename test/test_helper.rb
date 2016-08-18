@@ -67,6 +67,8 @@ class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
   include Argu::TestHelpers::TestHelperMethods
   include Argu::TestHelpers::TestMocks
+  include Argu::TestHelpers::AutomatedTests
+  include Argu::TestHelpers::TestDefinitions
   ActiveRecord::Migration.check_pending!
 
   # FactoryGirl.lint
