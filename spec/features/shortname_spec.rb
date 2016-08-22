@@ -55,8 +55,9 @@ RSpec.feature 'Shortname', type: :feature do
     s = freetown.shortnames.first
     expect do
       visit shortname_settings_path
-      click_link 'Delete'
-      page.accept_alert
+      page.accept_alert do
+        click_link 'Delete'
+      end
       expect(page).not_to have_content(s.shortname)
     end.to change { freetown.shortnames.count }.by(-1)
   end
