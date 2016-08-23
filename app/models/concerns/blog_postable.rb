@@ -7,7 +7,7 @@ module BlogPostable
              as: :blog_postable,
              inverse_of: :blog_postable
     has_many :activities,
-             -> { where("key ~ '*.!happened'") },
+             -> { where("key ~ '*.!happened'").order(:created_at) },
              as: :trackable
     has_many :happenings,
              -> { where("key ~ '*.happened'").order(created_at: :asc) },

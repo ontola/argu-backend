@@ -24,11 +24,11 @@ class BlogPost < ActiveRecord::Base
              foreign_key: :blog_postable_id
 
   has_many :activities,
-           -> { where("key ~ '*.!happened'") },
+           -> { where("key ~ '*.!happened'").order(:created_at) },
            as: :trackable
 
   has_one :happening,
-          -> { where("key ~ '*.happened'") },
+          -> { where("key ~ '*.happened'").order(:created_at) },
           class_name: 'Activity',
           inverse_of: :trackable,
           as: :trackable,

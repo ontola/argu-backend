@@ -12,7 +12,7 @@ class Profile < ActiveRecord::Base
 
   before_destroy :anonymize_dependencies
   has_many :access_tokens, dependent: :destroy
-  has_many :activities, as: :owner, dependent: :restrict_with_exception
+  has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception
   has_many :edges, through: :groups
   has_many :granted_edges, through: :grants, source: :edge, class_name: 'Edge'
   has_many :grants, through: :groups

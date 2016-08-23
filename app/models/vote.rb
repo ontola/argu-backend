@@ -6,7 +6,7 @@ class Vote < ActiveRecord::Base
   alias creator voter
   alias creator= voter=
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id'
-  has_many :activities, as: :trackable
+  has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
 
   parentable :voteable

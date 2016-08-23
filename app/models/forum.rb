@@ -4,7 +4,7 @@ class Forum < ActiveRecord::Base
 
   belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
-  has_many :activities, as: :trackable
+  has_many :activities, -> { order(:created_at) }, as: :trackable
   has_many :banners, inverse_of: :forum
   has_many :shortnames, inverse_of: :forum
   has_many :stepups, inverse_of: :forum
