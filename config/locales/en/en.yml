@@ -212,6 +212,7 @@ en:
       truncate: "..."
   type_save_success: "%{type} saved successfully"
   type_create_success: "%{type} created successfully"
+  type_convert_success: "Successfully converted to %{type}"
   type_destroy_success: "%{type} deleted successfully"
   type_trash_success: "%{type} trashed successfully"
   type_untrash_success: "%{type} successfully removed from trash"
@@ -219,9 +220,9 @@ en:
   move:
     current_forum: "Current forum:"
     button_label: "Move"
-  convert:
+  convert: "Convert"
+  conversions:
     current_class: "Current type:"
-    button_label: "Convert"
   join: "Join"
   view_on_argu: "View & reply on Argu"
   time_remaining: "%{time} remaining"

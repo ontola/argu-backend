@@ -141,6 +141,10 @@ class RestrictivePolicy
     staff?
   end
 
+  def convert?
+    false
+  end
+
   def destroy?
     staff?
   end

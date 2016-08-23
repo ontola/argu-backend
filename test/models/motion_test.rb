@@ -21,4 +21,21 @@ class MotionTest < ActiveSupport::TestCase
            'No trashed arguments exist, test is useless'
     assert_not((subject.top_arguments_con.map(&:id) & trashed_args).present?)
   end
+
+  test 'convert to question' do
+    result = subject.convert_to(Question)
+    assert result[:new].is_a?(Question)
+    assert result[:old].is_a?(Motion)
+    assert_not result[:old].persisted?
+  end
+
+  test 'raise when converting to non-convertible class' do
+    begin
+      subject.convert_to(Project)
+    rescue ArgumentError
+      assert true
+    else
+      assert_not true
+    end
+  end
 end

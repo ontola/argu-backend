@@ -44,6 +44,13 @@ class ActivityListener
     end
   end
 
+  def create_conversion_successful(resource)
+    create_activity(
+      resource.edge.owner,
+      resource.edge.parent.owner,
+      :convert)
+  end
+
   def create_vote_successful(resource)
     ActiveRecord::Base.transaction do
       destroy_recent_similar_activities(resource, resource.voteable, 'create')

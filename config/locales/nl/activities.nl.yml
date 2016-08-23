@@ -7,6 +7,7 @@ nl:
       con: "is tegen"
       neutral: "heeft nog geen mening over"
     default:
+      convert: "%{owner} heeft %{subject} omgezet in een %{type}"
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"
       publish: "%{owner} heeft een %{type} gepubliceerd in %{parent}"
       destroy: "%{owner} heeft %{subject} permanent verwijderd"

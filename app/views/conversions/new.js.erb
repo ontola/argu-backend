@@ -1,0 +1,4 @@
+$('.container').append("<%= escape_javascript render(template: 'conversions/new.html', layout: false) %>");
+window.setTimeout(function () {
+    $('body').addClass('modal-opened');
+}, 300);

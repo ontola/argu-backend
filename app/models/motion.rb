@@ -1,7 +1,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, ForumTaggable, Attribution, HasLinks,
+  include ArguBase, Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible,
           BlogPostable, PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :creator, class_name: 'Profile'
@@ -40,6 +40,7 @@ class Motion < ActiveRecord::Base
       }
     }
   end
+  convertible questions: %i(votes taggings activities)
   counter_culture :forum, counter_culture_opts
   counter_culture :project, counter_culture_opts
   counter_culture :question, counter_culture_opts

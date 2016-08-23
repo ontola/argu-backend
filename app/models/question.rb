@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, ForumTaggable, HasLinks, Attribution,
+  include ArguBase, Trashable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible,
           BlogPostable, PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :forum, inverse_of: :questions
@@ -19,6 +19,7 @@ class Question < ActiveRecord::Base
       }
     }
   end
+  convertible motions: %i(votes taggings activities)
   counter_culture :forum, counter_culture_opts
   counter_culture :project, counter_culture_opts
   parentable :project, :forum

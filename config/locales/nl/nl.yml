@@ -212,6 +212,7 @@ nl:
       truncate: "..."
   type_save_success: "%{type} succesvol opgeslagen"
   type_create_success: "%{type} succesvol aangemaakt"
+  type_convert_success: "Succesvol geconverteerd naar {type}"
   type_destroy_success: "%{type} succesvol verwijderd"
   type_trash_success: "%{type} succesvol verborgen"
   type_untrash_success: "%{type} succesvol teruggeplaatst"
@@ -219,9 +220,9 @@ nl:
   move:
     current_forum: "Huidig forum:"
     button_label: "Verplaats"
-  convert:
+  convert: "Converteer"
+  conversions:
     current_class: "Huidig type:"
-    button_label: "Converteer"
   join: "Word lid"
   view_on_argu: "bekijk & reageer op Argu"
   time_remaining: "Nog %{time}"

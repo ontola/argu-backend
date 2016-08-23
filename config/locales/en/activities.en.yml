@@ -7,6 +7,7 @@ en:
       con: "is against"
       neutral: "is neutral about"
     default:
+      convert: "%{owner} converted %{subject} into a %{type}"
       create: "%{owner} posted a %{type} in %{parent}"
       publish: "%{owner} published a %{type} in %{parent}"
       destroy: "%{owner} deleted %{subject}"

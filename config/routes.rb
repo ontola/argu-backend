@@ -132,6 +132,9 @@ Argu::Application.routes.draw do
   end
 
   resources :question_answers, path: 'qa', only: [:new, :create]
+  resources :edges, only: [] do
+    resources :conversions, path: 'conversion', only: [:new, :create]
+  end
 
   resources :motions,
             path: 'm',

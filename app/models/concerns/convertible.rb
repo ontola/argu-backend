@@ -12,34 +12,42 @@ module Convertible
   #
   # TODO: check if the receiving model has the same associated_model names before sending them over (else, delete)
   def convert_to(klass)
-    if self.class != klass
-      ActiveRecord::Base.transaction do
-        shared_attributes = klass.column_names.reject { |n| !attribute_names.include?(n) || n == 'id' }
-        new_model = klass.create Hash[shared_attributes.map { |i| [i, attributes[i]] }]
-        convertible_associations.each do |association|
-          klass_association = self.class.reflect_on_association(association)
-          # Just to be sure
-          if klass_association.macro == :has_many
-            remote_association_name = klass_association.options[:as]
-            send(association).each do |associated_model|
-              associated_model.send("#{remote_association_name}=", new_model)
-              associated_model.save!
-            end
-            send association, :clear
-          end
-        end
-        new_model.save
-        {old: destroy, new: new_model}
+    unless convertible_classes.include?(klass.class_name.to_sym)
+      raise ArgumentError.new("Conversion to #{klass.class_name} not allowed")
+    end
+
+    ActiveRecord::Base.transaction do
+      shared_attributes = klass.column_names.reject { |n| !attribute_names.include?(n) || n == 'id' }
+      new_model = klass.new Hash[shared_attributes.map { |i| [i, attributes[i]] }]
+      new_model.edge = edge
+      until new_model.parent_is.include?(new_model.edge.parent.owner_type.underscore.to_sym)
+        new_model.edge.parent = new_model.edge.parent.parent
       end
+      new_model.save!
+      convertible_classes[klass.class_name.to_sym].each do |association|
+        klass_association = self.class.reflect_on_association(association)
+        # Just to be sure
+        if klass_association.macro == :has_many
+          remote_association_name = klass_association.options[:as]
+          send(association).each do |associated_model|
+            associated_model.send("#{remote_association_name}=", new_model)
+            associated_model.save!
+          end
+          send association, :clear
+        end
+      end
+      # Reload to make sure the Edge is no longer marked as dependent
+      reload
+      {old: destroy, new: new_model}
     end
   end
 
   module ClassMethods
-    # Takes the association names which can be converted along with the object itself.
+    # @param [Hash<Symbol, Array>] relations The convertible classes with an array of convertible associations
     # @note destruction of non-convertible associations should be taken care of by dependent: :destroy
-    def convertible(*relation)
-      cattr_accessor :convertible_associations do
-        relation
+    def convertible(relations)
+      cattr_accessor :convertible_classes do
+        relations
       end
     end
   end

@@ -1,0 +1,15 @@
+.modal-container
+  .overlay
+  .modal.col-1
+    header
+      h1= t('motions.convert.header')
+    .box
+      section
+        .form
+          p= t('motions.convert.body')
+          =semantic_form_for @conversion, url: edge_conversions_path(@edge), method: :post do |f|
+            p= "#{t('conversions.current_class')} #{@edge.owner_type}"
+            =f.inputs do
+              =f.input :klass, as: :select, collection: convertible_class_names(@edge.owner), include_blank: false
+            =f.actions do
+              =f.action :submit, :as => :button, label: t('convert')
