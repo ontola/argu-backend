@@ -88,10 +88,10 @@ module Argu
           end
         end
 
-        def create_manager(forum, user = nil)
+        def create_manager(item, user = nil)
           user ||= create(:user)
           create(:group_membership,
-                 parent: forum.managers_group.edge,
+                 parent: item.managers_group.edge,
                  shortname: user.url)
           user
         end

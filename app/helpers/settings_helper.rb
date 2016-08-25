@@ -3,7 +3,7 @@ module SettingsHelper
     {
       general: 'gear',
       advanced: 'gears',
-      managers: 'suitcase',
+      grants: 'suitcase',
       groups: 'group',
       projects: 'rocket',
       privacy: 'lock',

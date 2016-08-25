@@ -3,7 +3,7 @@
     ul.tabs
       li[class=('tab--current' if local_assigns[:active] == :show)]= link_to url_for(resource), data: {intro: t('intro.pages.settings.home')}
         span.fa.fa-building
-        span.icon-left= t('pages.show')
+        span.icon-left= resource.display_name
       li[class=('tab--current' if local_assigns[:active] == :settings)]
         = link_to url_for([:settings, resource])
           span.fa.fa-gear

@@ -1,0 +1,32 @@
+
+h3= t('forums.settings.grants.owner')
+p= t('forums.settings.grants.about_owner')
+p= t('forums.settings.grants.about_owner_name', name: @forum.url)
+=image_tag @forum.page.profile.default_profile_photo.url, class: 'profile-photo'
+span= link_to @forum.page.profile.display_name, settings_page_url(@forum.page)
+.clear
+br
+
+h3= t('forums.settings.grants.administrator')
+p= t('forums.settings.grants.about_page_owner')
+p= t('forums.settings.grants.about_page_owner_name', name: @forum.page.url)
+=image_tag @forum.page.owner.default_profile_photo.url, class: 'profile-photo'
+span= @forum.page.owner.display_name
+.clear
+br
+
+h3= t('forums.settings.grants.title')
+p= t('forums.settings.grants.about_managers')
+table.styled.managers
+  thead
+    tr
+      td= t('groups.type')
+      td= t('portal.members')
+  tbody
+    -@forum.grants.forum_manager.includes(:group).each do |grant|
+      tr[class=grant.group.identifier]
+        td
+          span
+            span.name= link_to grant.group.display_name, edit_group_path(grant.group)
+        td
+          =grant.group.group_memberships.count

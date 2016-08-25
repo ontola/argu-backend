@@ -6,3 +6,4 @@ nl:
     type_new: "nieuw recht"
     plural: "rechten"
     empty: "Geen rechten"
+    new: "Verleen nieuwe rechten"

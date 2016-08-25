@@ -69,7 +69,7 @@ class PagePolicy < RestrictivePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i(profile groups) if is_manager? || staff?
-    tabs.concat %i(managers forums advanced) if is_owner? || staff?
+    tabs.concat %i(grants forums advanced) if is_owner? || staff?
     tabs
   end
 

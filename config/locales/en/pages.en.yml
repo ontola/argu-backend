@@ -8,12 +8,14 @@ en:
       menu:
         general: 'General'
         advanced: 'Advanced'
-        managers: 'Managers'
+        groups: 'Groups'
+        grants: 'Grants'
+        forums: 'Forums'
       managers:
         owner: "Owner"
         about_owner: "Users own an organization. Users can own multiple organizations, but organization can only have a single owner."
-        title: "Managers"
-        about_managers: "Organization managers are users with extra rights, but not many as an administrator. Managers can place challenges, motions, arguments and replies in name of the organization. They can also vote on their own name and delete previously placed items."
+        title: "Manager groups"
+        about_managers: "Some groups have management permissions. Members can manage groups and post content in name of the organization. They can also vote on their own name and delete previously placed items."
         transferred: "Organization transferred"
         users_only: "Only users can own organizations."
         transfer:

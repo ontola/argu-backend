@@ -45,6 +45,52 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   ####################################
+  # As Manager
+  ####################################
+  let(:manager) { create_manager(@freetown.page) }
+  test 'manager should post create visible group' do
+    sign_in manager
+
+    post :create,
+         params: {
+           page_id: freetown.page,
+           group: {
+               group_id: group.id,
+               name: 'Test group visible',
+               visibilitiy: 'visible'
+           }
+         }
+
+    assert true
+  end
+
+  test 'manager should show new' do
+    sign_in manager
+
+    get :new, params: {id: @group, page_id: @freetown.page}
+
+    assert_response 200
+  end
+
+  test 'manager should show edit' do
+    sign_in manager
+
+    get :edit, params: {id: @group, forum_id: @freetown}
+
+    assert_response 200
+  end
+
+  test 'manager should not delete destroy' do
+    sign_in manager
+
+    assert_no_difference 'Group.count' do
+      delete :destroy, params: {id: @group}
+    end
+
+    assert_response 302
+  end
+
+  ####################################
   # As Owner
   ####################################
 

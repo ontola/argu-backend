@@ -25,7 +25,7 @@ en:
         groups: 'Groups'
         projects: "Projects"
         privacy: 'Privacy'
-        managers: 'Managers'
+        grants: 'Grants'
         shortnames: 'Argu URLs'
         banners: 'Banners'
       advanced: "Advanced"
@@ -36,11 +36,11 @@ en:
       banners:
         title: "Banners"
         about_banners: "Banners are still in beta"
-      managers:
-        title: "Managers"
+      grants:
+        title: "Manager groups"
         administrator: "Administrator"
-        about_managers: "Forum managers are users with extra rights, but not as much as an administrator. Managers can change and remove objects in the forum.
-          They can also change non-advanced settings in the forum, access forum statistics and manage groups."
+        about_managers: "Some groups have management permissions. Members can change and remove objects in the forum.
+          They can also change non-advanced settings in the forum and access forum statistics."
         owner: "Owner"
         about_owner: "Only pages can be owners of a forum. Contact Argu with requests to change ownership."
         about_owner_name: "This Page is owner of the forum '%{name}':"

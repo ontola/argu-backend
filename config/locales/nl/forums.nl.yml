@@ -25,7 +25,7 @@ nl:
         groups: 'Groepen'
         privacy: 'Privacy'
         projects: 'Projects'
-        managers: 'Beheerders'
+        grants: 'Rechten'
         shortnames: 'Argu URLs'
         banners: "Banners"
       advanced: "Geavanceerd"
@@ -36,11 +36,11 @@ nl:
       banners:
         title: "Banners"
         about_banners: "Banners zijn nog in bètafase"
-      managers:
-        title: "Beheerders"
+      grants:
+        title: "Beheergroepen"
         administrator: "Administrator"
-        about_managers: "Forum beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen objecten in het forum aanpassen en verwijderen.
-          Ook kunnen ze de niet-geavanceerde instellingen van het forum wijzigen, de forumstatistieken inzien, en groepen beheren."
+        about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen objecten in het forum aanpassen en verwijderen.
+          Ook kunnen ze de niet-geavanceerde instellingen van het forum wijzigen en de forumstatistieken inzien."
         owner: "Eigenaar"
         about_owner: "Alleen een pagina kan eigenaar zijn van een forum. Neem contact op met Argu met verzoeken om het eigenaarschap te wijzigen."
         about_owner_name: "Deze Pagina is de eigenaar van het forum '%{name}':"

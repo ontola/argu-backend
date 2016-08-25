@@ -36,3 +36,6 @@ h3= t('group_memberships.plural')
           td= link_to group_membership_path(membership, r: edit_group_path(group)), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
             span.fa.fa-close
             span.icon-left= t('destroy')
+= link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
+  span.fa.fa-plus
+  span.icon-left= t('group_memberships.new', singular: group.name_singular)

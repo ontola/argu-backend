@@ -8,12 +8,14 @@ nl:
       menu:
         general: 'Algemeen'
         advanced: 'Geavanceerd'
-        managers: 'Beheerders'
+        groups: 'Groepen'
+        grants: 'Rechten'
+        forums: 'Forums'
       managers:
         owner: "Eigenaar"
         about_owner: "Gebruikers zijn eigenaar van een organisatie. Gebruikers kunnen meerdere organisaties bezitten, maar een organisatie kan maar één eigenaar hebben."
-        title: "Beheerders"
-        about_managers: "Organisatie beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen uitdagingen, ideeën, argumenten en reacties namens de organisatie plaatsen. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
+        title: "Beheergroepen"
+        about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen groepen beheren en content plaatsen namens de organisatie. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
         transferred: "Organisatie overgedragen"
         users_only: "Alleen gebruikers kunnen organisaties bezitten"
         transfer:

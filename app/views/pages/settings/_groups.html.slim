@@ -5,6 +5,7 @@ table.styled
     tr
       td= t('groups.type')
       td= t('portal.members')
+      td= t('grants.plural').capitalize
       td= t('activerecord.attributes.page.f_delete')
   - resource.groups.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|
     tr
@@ -15,6 +16,8 @@ table.styled
         =>group.group_memberships.count
         =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
           span.fa.fa-plus
+      td
+        =>group.grants.count
       td
         - if policy(group).destroy?
           =link_to delete_group_path(group), remote: true, class: 'btn--light btn--smaller' do

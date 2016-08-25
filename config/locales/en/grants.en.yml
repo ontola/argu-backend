@@ -6,3 +6,4 @@ en:
     type_new: "new grant"
     plural: "grants"
     empty: "No grants"
+    new: "Assign new grants"
