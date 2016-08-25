@@ -1,4 +1,6 @@
 en:
   group_memberships:
     type: "Membership"
+    plural: "Memberships"
     new: "Add %{singular}"
+    empty: "No members"

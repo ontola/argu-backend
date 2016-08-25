@@ -3,6 +3,7 @@
 nl:
   users:
     type: "Gebruiker"
+    plural: "Gebruikers"
     settings:
       title: "Gebruikersinstellingen"
       menu:

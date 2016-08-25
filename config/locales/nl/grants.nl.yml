@@ -1,0 +1,8 @@
+#Dutch grants translations
+
+nl:
+  grants:
+    type: "recht"
+    type_new: "nieuw recht"
+    plural: "rechten"
+    empty: "Geen rechten"

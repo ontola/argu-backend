@@ -1,0 +1,8 @@
+#English grants translations
+
+en:
+  grants:
+    type: "grant"
+    type_new: "new grant"
+    plural: "grants"
+    empty: "No grants"

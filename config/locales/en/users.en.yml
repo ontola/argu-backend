@@ -3,6 +3,7 @@
 en:
   users:
     type: "User"
+    plural: "Users"
     settings:
       title: "User settings"
       menu:
