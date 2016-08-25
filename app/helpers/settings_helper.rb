@@ -26,8 +26,10 @@ module SettingsHelper
     end
   end
 
-  def group_visibility_icon_for(group)
-    case group.visibility
+  def visibility_icon_for(item)
+    case item.visibility
+    when 'closed'
+      'close'
     when 'hidden'
       'lock'
     when 'open'

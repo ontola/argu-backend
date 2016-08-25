@@ -6,7 +6,7 @@ ul.boxed-list
       li
         h3
           =group.display_name
-          span[class="fa fa-#{group_visibility_icon_for(group)}"]
+          span[class="fa fa-#{visibility_icon_for(group)}"]
         table.styled
           tbody
             -group.group_memberships.each do |membership|
