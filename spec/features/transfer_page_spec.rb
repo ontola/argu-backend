@@ -8,7 +8,7 @@ RSpec.feature 'Transfer Page', type: :feature do
   scenario 'User transfers a page' do
     login_as(nederland.page.owner.profileable, scope: :user)
 
-    visit(settings_page_path(nederland.page, tab: :managers))
+    visit(settings_page_path(nederland.page, tab: :grants))
 
     click_link('Move')
     within('form.page') do

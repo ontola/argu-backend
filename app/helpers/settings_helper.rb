@@ -18,12 +18,7 @@ module SettingsHelper
   end
 
   def group_redirect_url(group)
-    tab = group.grants.first&.manager? ? :managers : :groups
-    if group.grants.first&.edge&.owner_type == 'Forum'
-      settings_forum_path(group.grants.first.edge.owner, tab: tab)
-    else
-      settings_page_path(group.page.url, tab: tab)
-    end
+    edit_group_path(group)
   end
 
   def visibility_icon_for(item)

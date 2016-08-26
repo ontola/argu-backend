@@ -9,7 +9,9 @@ RSpec.feature 'Manager', type: :feature do
   scenario 'Owner adds a manager' do
     sign_in(owner)
 
-    visit(settings_forum_path(nederland, tab: :managers))
+    visit(settings_forum_path(nederland, tab: :grants))
+
+    click_link("#{nederland.name} managers")
 
     click_link("Add #{nederland.name} manager")
     within('form.group') do
@@ -27,7 +29,7 @@ RSpec.feature 'Manager', type: :feature do
     end
 
     expect(
-      find(".managers .#{user.profile.identifier} .name",
+      find(".members .#{user.profile.identifier} .name",
            text: user.display_name)
     ).to be_present
   end
@@ -35,7 +37,9 @@ RSpec.feature 'Manager', type: :feature do
   scenario 'Owner adds a member manager' do
     sign_in(owner)
 
-    visit(settings_forum_path(nederland, tab: :managers))
+    visit(settings_forum_path(nederland, tab: :grants))
+
+    click_link("#{nederland.name} managers")
 
     click_link("Add #{nederland.name} manager")
     within('form.group') do
@@ -53,7 +57,7 @@ RSpec.feature 'Manager', type: :feature do
     end
 
     expect(
-      find(".managers .#{member.profile.identifier} .name",
+      find(".members .#{member.profile.identifier} .name",
            text: member.display_name)
     ).to be_present
   end

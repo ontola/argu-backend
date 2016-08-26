@@ -4,8 +4,7 @@ class GroupMembershipsController < AuthorizedController
 
   def new
     authorize authenticated_resource.page, :add_group_member?
-    view = granted_resource.is_a?(Forum) ? 'forums/settings' : 'pages/settings'
-    render view, locals: {
+    render 'pages/settings', locals: {
       tab: 'groups/add',
       active: tab,
       group_membership: authenticated_resource,

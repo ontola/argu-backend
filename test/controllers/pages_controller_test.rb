@@ -150,16 +150,21 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  test 'owner should get settings when page owner' do
+  test 'owner should get settings and all tabs' do
     sign_in page.owner.profileable
 
     get :settings, params: {id: page.url}
 
     assert_response 200
     assert_equal page, assigns(:page)
+
+    %i(profile groups grants forums advanced).each do |tab|
+      get :settings, params: {id: page.url, tab: tab}
+      assert_equal page, assigns(:page)
+    end
   end
 
-  test 'owner should update settings when page owner' do
+  test 'owner should update settings' do
     sign_in page.owner.profileable
 
     put :update,

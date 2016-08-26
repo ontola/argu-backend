@@ -91,8 +91,8 @@ module ForumsHelper
                          url_for([:statistics, resource]), fa: 'pie-chart')
     end
     if policy(resource).managers?
-      items << link_item(t('forums.settings.managers.title'),
-                         url_for([:settings, resource, tab: :managers]), fa: 'group')
+      items << link_item(t('forums.settings.grants.title'),
+                         url_for([:settings, resource, tab: :grants]), fa: 'group')
     end
 
     dropdown_options(t("#{resource.class_name}.resource_name.management"),
