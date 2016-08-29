@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class BannersControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   let(:owner) { freetown.edge.parent.owner.owner.profileable }

@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class VotesControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }

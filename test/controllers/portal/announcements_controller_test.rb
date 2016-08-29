@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Portal
   class AnnouncementsControllerTest < ActionController::TestCase
-    include Devise::TestHelpers
+    include Devise::Test::ControllerHelpers
 
     subject do
       create(:announcement,

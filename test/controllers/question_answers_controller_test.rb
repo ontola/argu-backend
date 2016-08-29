@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class QuestionAnswersControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   let(:page) { argu }

@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class DiscussionsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   let!(:project) { create(:project, argu_publication: build(:publication), parent: freetown.edge) }

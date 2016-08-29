@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Portal::PortalControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   let(:user) { create(:user) }
   let(:staff) { create(:user, :staff) }

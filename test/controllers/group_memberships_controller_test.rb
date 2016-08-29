@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class GroupMembershipsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   define_cairo

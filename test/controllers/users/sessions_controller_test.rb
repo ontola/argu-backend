@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Users::SessionsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   let(:user) { create(:user) }
   define_freetown

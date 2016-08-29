@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class ProfilesControllerTest < ActionController::TestCase
-  include Devise::TestHelpers, ProfilesHelper
+  include Devise::Test::ControllerHelpers, ProfilesHelper
 
   let(:user) { create(:user) }
   let(:user2) { create(:user) }

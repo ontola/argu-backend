@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }

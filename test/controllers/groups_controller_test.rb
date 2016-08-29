@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   setup do

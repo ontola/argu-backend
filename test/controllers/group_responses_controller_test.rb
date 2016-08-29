@@ -3,7 +3,7 @@ require 'test_helper'
 
 # @TODO: add correct fixtures and implement tests
 class GroupResponsesControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }

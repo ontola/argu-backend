@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion,
                       :dismiss_announcement]
 
