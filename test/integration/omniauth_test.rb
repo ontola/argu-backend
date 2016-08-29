@@ -38,8 +38,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     Identity.any_instance.stubs(:name).returns('First Last')
     Identity.any_instance.stubs(:image_url).returns('')
 
-    get user_omniauth_authorize_path(:facebook)
-    assert_redirected_to user_omniauth_callback_path(:facebook)
+    get user_facebook_omniauth_authorize_path
+    assert_redirected_to user_facebook_omniauth_callback_path
 
     assert_difference 'GroupMembership.count' do
       follow_redirect!
@@ -72,8 +72,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     Identity.any_instance.stubs(:name).returns('First Last')
     Identity.any_instance.stubs(:image_url).returns('')
 
-    get user_omniauth_authorize_path(:facebook)
-    assert_redirected_to user_omniauth_callback_path(:facebook)
+    get user_facebook_omniauth_authorize_path
+    assert_redirected_to user_facebook_omniauth_callback_path
     follow_redirect!
     assert_redirected_to root_path
     follow_redirect!
@@ -90,8 +90,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     Identity.any_instance.stubs(:name).returns('User3 Lastname3')
     Identity.any_instance.stubs(:image_url).returns('')
 
-    get user_omniauth_authorize_path(:facebook)
-    assert_redirected_to user_omniauth_callback_path(:facebook)
+    get user_facebook_omniauth_authorize_path
+    assert_redirected_to user_facebook_omniauth_callback_path
 
     follow_redirect!
     assert_redirected_to connect_user_path(
@@ -118,8 +118,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     Identity.any_instance.stubs(:name).returns('User3 Lastname3')
     Identity.any_instance.stubs(:image_url).returns('')
 
-    get user_omniauth_authorize_path(:facebook)
-    assert_redirected_to user_omniauth_callback_path(:facebook)
+    get user_facebook_omniauth_authorize_path
+    assert_redirected_to user_facebook_omniauth_callback_path
 
     follow_redirect!
     assert_redirected_to connect_user_path(

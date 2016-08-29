@@ -230,12 +230,11 @@ GEM
     daemons (1.2.3)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
-    devise (3.5.7)
+    devise (4.2.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
+      railties (>= 4.1.0, < 5.1)
       responders
-      thread_safe (~> 0.1)
       warden (~> 1.2.3)
     devise_invitable (1.6.0)
       actionmailer (>= 3.2.6)
@@ -492,7 +491,7 @@ GEM
     render_anywhere (0.0.12)
       rails (>= 3.0.7)
     request_store (1.2.1)
-    responders (2.2.0)
+    responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -712,7 +711,7 @@ DEPENDENCIES
   counter_culture (~> 0.1.34)
   country_select
   database_cleaner
-  devise (= 3.5.7)
+  devise (~> 4.2.0)
   devise_invitable (~> 1.6.0)
   doorkeeper (~> 4.2.0)
   dotenv-rails

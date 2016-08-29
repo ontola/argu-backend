@@ -2,7 +2,8 @@ require 'bcrypt'
 require 'bcrypt/engine'
 
 module ApplicationHelper
-  include ActivityStringHelper, NamesHelper, UsersHelper, StubbornCookie, MarkdownHelper
+  include ActivityStringHelper, NamesHelper, UsersHelper, StubbornCookie, MarkdownHelper,
+          Devise::OmniAuth::UrlHelpers
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV
                     LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR).freeze
 

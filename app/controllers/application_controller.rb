@@ -181,9 +181,9 @@ class ApplicationController < ActionController::Base
   # @private
   # For Devise
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:email, :r, :access_tokens, shortname_attributes: [:shortname]]
-    devise_parameter_sanitizer.for(:sign_in) << [:r]
-    devise_parameter_sanitizer.for(:accept_invitation).concat [shortname_attributes: [:shortname]]
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :r, :access_tokens, shortname_attributes: [:shortname]])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [shortname_attributes: [:shortname]])
   end
 
   # @private

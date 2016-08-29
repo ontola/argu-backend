@@ -94,7 +94,7 @@ gem 'redcarpet', '~> 3.3.4'
 # gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
 
 ################## User management ########################
-gem 'devise', '= 3.5.7'
+gem 'devise', '~> 4.2.0'
 gem 'devise_invitable', '~> 1.6.0'
 gem 'omniauth', '~> 1.3.1'
 gem 'omniauth-oauth2', '~> 1.2.0'
