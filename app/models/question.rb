@@ -1,5 +1,5 @@
-class Question < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible,
+class Question < ApplicationRecord
+  include Trashable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible,
           BlogPostable, PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :forum, inverse_of: :questions

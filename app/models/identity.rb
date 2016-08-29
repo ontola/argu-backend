@@ -1,5 +1,5 @@
 
-class Identity < ActiveRecord::Base
+class Identity < ApplicationRecord
   belongs_to :user
   after_destroy :clear_token_connection
   validates_presence_of :uid, :provider

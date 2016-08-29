@@ -1,5 +1,5 @@
 class Banner < NewsBoy
-  include ArguBase, Photoable, ProfilePhotoable
+  include Photoable, ProfilePhotoable
 
   belongs_to :forum
   belongs_to :publisher, class_name: 'User'

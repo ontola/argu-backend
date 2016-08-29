@@ -1,7 +1,7 @@
 include ActionView::Helpers::NumberHelper
 
-class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible,
+class Motion < ApplicationRecord
+  include Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible,
           BlogPostable, PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :creator, class_name: 'Profile'

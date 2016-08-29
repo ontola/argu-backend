@@ -1,6 +1,4 @@
-class Place < ActiveRecord::Base
-  include ArguBase
-
+class Place < ApplicationRecord
   has_many :placements
   has_many :placeables,
            through: :placements

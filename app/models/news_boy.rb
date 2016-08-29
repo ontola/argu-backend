@@ -1,5 +1,5 @@
 # TODO: Write class docs
-class NewsBoy < ActiveRecord::Base
+class NewsBoy < ApplicationRecord
   self.abstract_class = true
 
   def self.published

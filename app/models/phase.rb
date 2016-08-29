@@ -1,5 +1,5 @@
-class Phase < ActiveRecord::Base
-  include ArguBase, Placeable, Parentable
+class Phase < ApplicationRecord
+  include Placeable, Parentable
   attr_accessor :finish_phase
 
   belongs_to :forum

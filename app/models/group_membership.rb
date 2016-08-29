@@ -1,5 +1,5 @@
-class GroupMembership < ActiveRecord::Base
-  include ArguBase, Parentable
+class GroupMembership < ApplicationRecord
+  include Parentable
 
   belongs_to :group
   belongs_to :member,

@@ -1,4 +1,4 @@
-class ProfilesRole < ActiveRecord::Base
+class ProfilesRole < ApplicationRecord
   belongs_to :role
   belongs_to :profile
 

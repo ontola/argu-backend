@@ -1,4 +1,4 @@
-class Publication < ActiveRecord::Base
+class Publication < ApplicationRecord
   include Wisper::Publisher
   belongs_to :publishable, polymorphic: true
   belongs_to :creator, class_name: 'Profile', inverse_of: :projects

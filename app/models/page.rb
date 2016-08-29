@@ -1,6 +1,6 @@
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
-  include ArguBase, Edgeable, Shortnameable, Flowable, Groupable
+  include Edgeable, Shortnameable, Flowable, Groupable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile

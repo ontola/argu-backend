@@ -1,4 +1,4 @@
 # @private
-class FbUser < ActiveRecord::Base
+class FbUser < ApplicationRecord
   has_one :user
 end

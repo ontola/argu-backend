@@ -5,7 +5,7 @@ module ProCon
   VOTE_OPTIONS = [:pro].freeze
 
   included do
-    include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
+    include Trashable, Parentable, HasLinks, PublicActivity::Common
 
     belongs_to :motion, touch: true
     has_many :votes, as: :voteable, dependent: :destroy, inverse_of: :voteable

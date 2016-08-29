@@ -1,4 +1,4 @@
-class Argument < ActiveRecord::Base
+class Argument < ApplicationRecord
   include ProCon, Flowable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'

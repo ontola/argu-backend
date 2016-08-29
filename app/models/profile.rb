@@ -1,5 +1,5 @@
-class Profile < ActiveRecord::Base
-  include ArguBase, Photoable, ProfilePhotoable
+class Profile < ApplicationRecord
+  include Photoable, ProfilePhotoable
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient

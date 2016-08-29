@@ -1,5 +1,5 @@
-class Comment < ActiveRecord::Base
-  include ArguBase, Parentable, Trashable, PublicActivity::Common
+class Comment < ApplicationRecord
+  include Parentable, Trashable, PublicActivity::Common
 
   belongs_to :forum
   belongs_to :commentable, polymorphic: true, required: true

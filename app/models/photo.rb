@@ -1,4 +1,4 @@
-class Photo < ActiveRecord::Base
+class Photo < ApplicationRecord
   belongs_to :forum
   belongs_to :about, polymorphic: true, inverse_of: :photos
   belongs_to :creator, class_name: 'Profile'

@@ -1,4 +1,4 @@
-class Grant < ActiveRecord::Base
+class Grant < ApplicationRecord
   # The Edge this Grant is providing rules for
   belongs_to :edge
   belongs_to :group

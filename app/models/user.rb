@@ -1,5 +1,5 @@
-class User < ActiveRecord::Base
-  include ArguBase, Shortnameable, Flowable, Placeable
+class User < ApplicationRecord
+  include Shortnameable, Flowable, Placeable
 
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,

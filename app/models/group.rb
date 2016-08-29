@@ -1,5 +1,5 @@
-class Group < ActiveRecord::Base
-  include ArguBase, Parentable
+class Group < ApplicationRecord
+  include Parentable
 
   has_many :grants, dependent: :destroy
   has_many :group_memberships, dependent: :destroy

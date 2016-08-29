@@ -1,6 +1,6 @@
 
 # Something That Enables People Unmitigated Privilege
-class Stepup < ActiveRecord::Base
+class Stepup < ApplicationRecord
   attr_accessor :manager
 
   belongs_to :forum

@@ -1,7 +1,7 @@
 # Grants people access to resources when used.
 #
 # People can activate an `access_token` with argu.co?at=xxx
-class AccessToken < ActiveRecord::Base
+class AccessToken < ApplicationRecord
   belongs_to :item, polymorphic: true
   belongs_to :profile
 

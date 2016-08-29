@@ -1,5 +1,5 @@
-class BlogPost < ActiveRecord::Base
-  include ArguBase, Trashable, PublicActivity::Common, Flowable, Placeable,
+class BlogPost < ApplicationRecord
+  include Trashable, PublicActivity::Common, Flowable, Placeable,
           ActivePublishable, Parentable
 
   # For Rails 5 attributes

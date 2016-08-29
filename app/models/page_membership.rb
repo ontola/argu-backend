@@ -1,6 +1,5 @@
 # @todo remove after migration
-class PageMembership < ActiveRecord::Base
-  include ArguBase
+class PageMembership < ApplicationRecord
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }
 
   belongs_to :profile

@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   include ActivityStringHelper
   belongs_to :user
   belongs_to :activity

@@ -1,6 +1,4 @@
-class Placement < ActiveRecord::Base
-  include ArguBase
-
+class Placement < ApplicationRecord
   belongs_to :forum
   belongs_to :place
   belongs_to :placeable, polymorphic: true

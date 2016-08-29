@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class GroupResponse < ActiveRecord::Base
-  include ArguBase, Parentable, PublicActivity::Model
+class GroupResponse < ApplicationRecord
+  include Parentable, PublicActivity::Model
 
   belongs_to :group
   belongs_to :forum

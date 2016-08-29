@@ -1,4 +1,4 @@
-class Shortname < ActiveRecord::Base
+class Shortname < ApplicationRecord
   belongs_to :owner,
              polymorphic: true,
              required: true

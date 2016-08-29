@@ -1,5 +1,5 @@
-class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
+class Forum < ApplicationRecord
+  include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
           Groupable
 
   belongs_to :page, inverse_of: :forums

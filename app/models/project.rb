@@ -1,5 +1,5 @@
-class Project < ActiveRecord::Base
-  include ArguBase, Placeable, PublicActivity::Common, Flowable, Trashable,
+class Project < ApplicationRecord
+  include Placeable, PublicActivity::Common, Flowable, Trashable,
           BlogPostable, ActivePublishable, Parentable, Photoable
 
   # For Rails 5 attributes
