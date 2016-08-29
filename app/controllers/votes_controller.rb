@@ -58,7 +58,7 @@ class VotesController < AuthorizedController
       create_service.on(:create_vote_successful) do |vote|
         respond_to do |format|
           format.json { render location: vote, locals: {model: @model, vote: vote} }
-          format.js
+          format.js { render locals: {model: @model, vote: vote} }
           format.html do
             redirect_to polymorphic_url(vote.edge.parent.owner),
                         notice: t('votes.alerts.success')
