@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import OnClickOutside from 'react-onclickoutside';
+
 import { Notifications, NotificationTrigger } from './Notifications';
 import { image, safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
@@ -166,6 +167,18 @@ export const ShareDropdown = React.createClass({
                 });
     },
 
+    whatsappButton () {
+        const { whatsapp } = this.props.shareUrls;
+        if (whatsapp === undefined) {
+            return undefined;
+        }
+        return (<LinkItem data-action="share/whatsapp/share"
+                          fa="fa-whatsapp"
+                          title={'Whatsapp'}
+                          type="link"
+                          url={whatsapp} />)
+    },
+
     render () {
         const { openState, renderLeft, counts } = this.state;
         const { title, url, shareUrls } = this.props;
@@ -211,12 +224,7 @@ export const ShareDropdown = React.createClass({
                     title={'Google+'}
                     url={shareUrls.googlePlus}
                     fa="fa-google-plus" />
-            <LinkItem
-                    data-action="share/whatsapp/share"
-                    fa="fa-whatsapp"
-                    title={'Whatsapp'}
-                    type="link"
-                    url={shareUrls.whatsapp} />
+            {this.whatsappButton()}
             <LinkItem
                     fa="fa-envelope"
                     title={'E-Mail'}

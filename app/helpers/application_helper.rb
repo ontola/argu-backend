@@ -132,18 +132,19 @@ module ApplicationHelper
   # Generates social media links for any resource for HyperDropdown
   def share_items(resource)
     url = polymorphic_url(resource, only_path: false)
+    share_urls = {
+      facebook: ShareHelper.facebook_share_url(url),
+      linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
+      twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
+      googlePlus: ShareHelper.googleplus_share_url(url),
+      email: ShareHelper.email_share_url(url, title: resource.display_name)
+    }
+    share_urls[:whatsapp] = ShareHelper.whatsapp_share_url(url) if browser.mobile?
 
     {
       title: t('share'),
       url: url,
-      shareUrls: {
-          facebook: ShareHelper.facebook_share_url(url),
-          linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
-          twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
-          googlePlus: ShareHelper.googleplus_share_url(url),
-          whatsapp: ShareHelper.whatsapp_share_url(url),
-          email: ShareHelper.email_share_url(url, title: resource.display_name)
-      }
+      shareUrls: share_urls
     }
   end
 
