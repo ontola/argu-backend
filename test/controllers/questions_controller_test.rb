@@ -15,13 +15,13 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should 404 on nonexistent id' do
-    get :show, id: 'none'
+    get :show, params: {id: 'none'}
 
     assert_response 404
   end
 
   test 'guest should get show' do
-    get :show, id: subject
+    get :show, params: {id: subject}
     assert_response 200
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
@@ -29,8 +29,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   test 'guest should not get new' do
-    get :new,
-        forum_id: freetown
+    get :new, params: {forum_id: freetown}
 
     assert_not_a_user
     assert_response 302
@@ -39,8 +38,10 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'guest should not post create' do
     assert_no_difference 'Question.count' do
       post :create,
-           forum_id: freetown,
-           question: attributes_for(:question)
+           params: {
+             forum_id: freetown,
+             question: attributes_for(:question)
+           }
     end
 
     assert_not_a_user
@@ -54,7 +55,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'user should get show' do
     sign_in user
 
-    get :show, id: subject
+    get :show, params: {id: subject}
     assert_response 200
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
@@ -64,7 +65,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'user should 404 on nonexistent id' do
     sign_in user
 
-    get :show, id: 'none'
+    get :show, params: {id: 'none'}
 
     assert_response 404
   end
@@ -72,8 +73,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'user should not get new' do
     sign_in user
 
-    get :new,
-        forum_id: freetown
+    get :new, params: {forum_id: freetown}
 
     assert_not_a_member
   end
@@ -83,8 +83,10 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_no_difference 'Question.count' do
       post :create,
-           forum_id: freetown,
-           question: attributes_for(:question)
+           params: {
+             forum_id: freetown,
+             question: attributes_for(:question)
+           }
     end
 
     assert_not_a_member
@@ -99,7 +101,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'member should get new' do
     sign_in member
 
-    get :new, forum_id: freetown
+    get :new, params: {forum_id: freetown}
     assert_response 200
     assert_not_nil assigns(:resource)
   end
@@ -107,7 +109,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'member should 404 on nonexistent id' do
     sign_in member
 
-    get :show, id: 'none'
+    get :show, params: {id: 'none'}
 
     assert_response 404
   end
@@ -117,12 +119,14 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: freetown,
-           question: {
-             title: 'Question',
-             content: 'Contents',
-             default_cover_photo_attributes: {
-               image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+           params: {
+             forum_id: freetown,
+             question: {
+               title: 'Question',
+               content: 'Contents',
+               default_cover_photo_attributes: {
+                 image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+               }
              }
            }
     end
@@ -136,12 +140,14 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in member
 
     put :update,
-        id: member_question,
-        question: {
-          title: 'New title',
-          content: 'new contents',
-          default_cover_photo_attributes: {
-            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+        params: {
+          id: member_question,
+          question: {
+            title: 'New title',
+            content: 'new contents',
+            default_cover_photo_attributes: {
+              image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+            }
           }
         }
 
@@ -157,10 +163,12 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in create_member(freetown)
 
     put :update,
-        id: member_question,
-        question: {
-          title: 'New title',
-          content: 'new contents'
+        params: {
+          id: member_question,
+          question: {
+            title: 'New title',
+            content: 'new contents'
+          }
         }
 
     assert_not_authorized
@@ -169,7 +177,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should not get move' do
     sign_in member
 
-    get :move, question_id: subject
+    get :move, params: {question_id: subject}
 
     assert_not_authorized
     assert_redirected_to subject.forum
@@ -178,7 +186,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should not put move' do
     sign_in member
 
-    put :move, question_id: subject
+    put :move, params: {question_id: subject}
     assert_not_authorized
     assert_redirected_to subject.forum
   end
@@ -195,10 +203,12 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: freetown,
-           question: {
-             title: 'Question',
-             content: 'Contents'
+           params: {
+             forum_id: freetown,
+             question: {
+               title: 'Question',
+               content: 'Contents'
+             }
            }
     end
     assert_not_nil assigns(:create_service).resource
@@ -210,10 +220,12 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array(2) do
       post :create,
-           project_id: project.id,
-           question: {
-             title: 'Question',
-             content: 'Contents'
+           params: {
+             project_id: project.id,
+             question: {
+               title: 'Question',
+               content: 'Contents'
+             }
            }
     end
     assert_not_nil assigns(:create_service).resource
@@ -234,7 +246,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'creator should get edit' do
     sign_in creator
 
-    get :edit, id: creator_question
+    get :edit, params: {id: creator_question}
 
     assert_response 200
     assert assigns(:resource)
@@ -244,10 +256,12 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in creator
 
     put :update,
-        id: creator_question,
-        question: {
-            title: 'new title',
-            content: 'new contents'
+        params: {
+          id: creator_question,
+          question: {
+              title: 'new title',
+              content: 'new contents'
+          }
         }
 
     assert_redirected_to question_path(creator_question)
@@ -259,10 +273,12 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in creator
 
     put :update,
-        id: creator_question,
-        question: {
-            title: 't',
-            content: 'new contents'
+        params: {
+          id: creator_question,
+          question: {
+              title: 't',
+              content: 'new contents'
+          }
         }
 
     assert_response 200
@@ -280,8 +296,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_differences([['Question.trashed(false).count', -1],
                         ['Question.trashed_only.count', 1]]) do
-      delete :trash,
-             id: subject
+      delete :trash, params: {id: subject}
     end
 
     assert_redirected_to freetown
@@ -295,8 +310,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_differences([['Question.trashed(false).count', 0],
                         ['Edge.count', -1],
                         ['Question.trashed(true).count', -1]]) do
-      delete :destroy,
-             id: subject
+      delete :destroy, params: {id: subject}
     end
 
     assert_equal Motion.last.parent_model, freetown
@@ -319,10 +333,12 @@ class QuestionsControllerTest < ActionController::TestCase
     @controller.instance_variable_set :@current_profile, freetown.page.profile
 
     put :update,
-        id: page_question,
-        question: {
-          title: 'New title',
-          content: 'new contents'
+        params: {
+          id: page_question,
+          question: {
+            title: 'New title',
+            content: 'new contents'
+          }
         }
 
     assert_redirected_to question_url(page_question)
@@ -337,8 +353,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_differences([['Question.trashed(false).count', -1],
                         ['Question.trashed_only.count', 1]]) do
-      delete :trash,
-             id: owner_forum_question
+      delete :trash, params: {id: owner_forum_question}
     end
 
     assert_redirected_to freetown
@@ -351,8 +366,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_differences([['Question.trashed(false).count', 0],
                         ['Edge.count', -1],
                         ['Question.trashed(true).count', -1]]) do
-      delete :destroy,
-             id: owner_forum_question
+      delete :destroy, params: {id: owner_forum_question}
     end
 
     assert_redirected_to freetown
@@ -366,7 +380,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'staff should get edit' do
     sign_in staff
 
-    get :edit, id: creator_question
+    get :edit, params: {id: creator_question}
 
     assert_response 200
     assert assigns(:resource)
@@ -376,7 +390,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should get move' do
     sign_in staff
 
-    get :move, question_id: subject
+    get :move, params: {question_id: subject}
     assert_response 200
   end
 
@@ -390,9 +404,11 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_differences [['freetown.reload.questions.count', -1],
                         ['freetown_to.reload.questions.count', 1]] do
       put :move!,
-          question_id: subject,
-          question: {
-            forum_id: freetown_to.id
+          params: {
+            question_id: subject,
+            question: {
+              forum_id: freetown_to.id
+            }
           }
     end
     assert_redirected_to assigns(:question)
@@ -419,10 +435,12 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_differences [['freetown.reload.questions.count', -1],
                         ['freetown_to.reload.questions.count', 1]] do
       put :move!,
-          question_id: subject,
-          question: {
-            include_motions: '1',
-            forum_id: freetown_to.id
+          params: {
+            question_id: subject,
+            question: {
+              include_motions: '1',
+              forum_id: freetown_to.id
+            }
           }
     end
     assert_redirected_to assigns(:question)

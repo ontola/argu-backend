@@ -196,7 +196,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_differences create_changes_array(2) do
       post project_motions_path(project),
-           motion: attributes_for(:motion)
+           params: {motion: attributes_for(:motion)}
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource,
@@ -208,7 +208,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_differences create_changes_array(2) do
       post question_motions_path(project_question),
-           motion: attributes_for(:motion)
+           params: {motion: attributes_for(:motion)}
     end
     assert_not_nil assigns(:create_service).resource
     assert_equal project, assigns(:create_service).resource.reload.project
@@ -228,7 +228,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_differences create_changes_array do
       post forum_motions_path(freetown),
-           motion: attributes_for(:motion)
+           params: {motion: attributes_for(:motion)}
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource,
@@ -374,7 +374,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     assert_differences [['forum_from.reload.motions.count', -1],
                         ['forum_to.reload.motions.count', 1]] do
       put motion_move_path(motion_move),
-          motion: {forum_id: forum_to.id}
+          params: {motion: {forum_id: forum_to.id}}
     end
     assert_redirected_to assigns(:motion)
 
@@ -421,7 +421,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_differences changes do
       post path,
-           motion: attrs
+           params: {motion: attrs}
     end
     if should
       assert_not_nil assigns(:create_service).resource
@@ -436,7 +436,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
                      changes: create_changes_array)
     sign_in role if role
 
-    put motion_path(motion), motion: attrs
+    put motion_path(motion), params: {motion: attrs}
 
     if should
       assert_not_nil assigns(:update_service).resource

@@ -22,7 +22,7 @@ class RegistrationsControllerTest < ActionController::TestCase
                         ['GroupMembership.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post :create,
-           user: attributes_for(:user)
+           params: {user: attributes_for(:user)}
       assert_redirected_to setup_users_path
     end
     assert_equal locale, User.last.language.to_sym
@@ -39,7 +39,7 @@ class RegistrationsControllerTest < ActionController::TestCase
                         ['GroupMembership.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post :create,
-           user: attributes_for(:user)
+           params: {user: attributes_for(:user)}
       assert_redirected_to setup_users_path
     end
     assert_equal locale, User.last.language.to_sym
@@ -54,10 +54,12 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_differences([['User.count', 0],
                         ['ActionMailer::Base.deliveries.count', 0]]) do
       post :create,
-           user: {
-               email: user_params[:email],
-               password: user_params[:password],
-               password_confirmation: 'random gibberish'
+           params: {
+             user: {
+                 email: user_params[:email],
+                 password: user_params[:password],
+                 password_confirmation: 'random gibberish'
+             }
            }
     end
 
@@ -73,9 +75,11 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_difference('User.count', -1) do
       delete :destroy,
-             user: {
-                 repeat_name: user.shortname.shortname,
-                 current_password: 'password'
+             params: {
+               user: {
+                   repeat_name: user.shortname.shortname,
+                   current_password: 'password'
+               }
              }
     end
 
@@ -91,9 +95,11 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0]]) do
       delete :destroy,
-             user: {
-                 repeat_name: user.shortname.shortname,
-                 current_password: 'password'
+             params: {
+               user: {
+                   repeat_name: user.shortname.shortname,
+                   current_password: 'password'
+               }
              }
     end
 
@@ -110,9 +116,11 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_differences([['User.count', -1]]) do
       delete :destroy,
-             user: {
-               repeat_name: user.shortname.shortname,
-               current_password: 'password'
+             params: {
+               user: {
+                 repeat_name: user.shortname.shortname,
+                 current_password: 'password'
+               }
              }
     end
 
@@ -129,9 +137,11 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_differences([['User.count', -1]]) do
       delete :destroy,
-             user: {
-               repeat_name: user.shortname.shortname,
-               current_password: 'password'
+             params: {
+               user: {
+                 repeat_name: user.shortname.shortname,
+                 current_password: 'password'
+               }
              }
     end
 
@@ -149,9 +159,11 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_raises(ActiveRecord::DeleteRestrictionError) do
       delete :destroy,
-             user: {
-                 repeat_name: owner.url,
-                 current_password: owner.password
+             params: {
+               user: {
+                   repeat_name: owner.url,
+                   current_password: owner.password
+               }
              }
     end
   end

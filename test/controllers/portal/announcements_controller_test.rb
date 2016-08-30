@@ -16,7 +16,7 @@ module Portal
 
     def general_new(response = 302)
       get :new,
-          forum_id: freetown
+          params: {forum_id: freetown}
 
       assert_response response
     end
@@ -24,7 +24,7 @@ module Portal
     def general_create(response = 302, differences = [['Announcement.count', 0]])
       assert_differences(differences) do
         post :create,
-             announcement: attributes_for(:announcement)
+             params: {announcement: attributes_for(:announcement)}
       end
 
       assert_response response
@@ -32,7 +32,7 @@ module Portal
 
     def general_edit(response = 302)
       get :edit,
-          id: subject
+          params: {id: subject}
 
       assert_response response
     end
@@ -41,8 +41,10 @@ module Portal
       ch_method = method(changed ? :assert_not_equal : :assert_equal)
 
       patch :update,
-            id: subject,
-            project: attributes_for(:project)
+            params: {
+              id: subject,
+              project: attributes_for(:project)
+            }
 
       assert_response response
       if assigns(:up).try(:resource).present?
@@ -62,7 +64,7 @@ module Portal
       subject # Trigger
       assert_differences(differences) do
         delete :destroy,
-               id: subject
+               params: {id: subject}
       end
 
       assert_response response

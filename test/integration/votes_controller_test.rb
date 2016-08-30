@@ -30,7 +30,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
 
     vote # Trigger
     assert_no_difference('Vote.count') do
-      delete vote_path(vote.id), format: :json
+      delete vote_path(vote.id), params: {format: :json}
     end
 
     assert_response 403
@@ -40,8 +40,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     sign_in user
 
     post motion_votes_path(motion),
-         for: :pro,
-         format: :json
+         params: {
+           for: :pro,
+           format: :json
+         }
 
     assert_response 403
   end
@@ -65,8 +67,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
       post motion_votes_path(motion),
-           for: :pro,
-           format: :json
+           params: {
+             for: :pro,
+             format: :json
+           }
     end
 
     assert_response 200
@@ -87,10 +91,12 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('Vote.count') do
       post motion_votes_path(motion),
-           vote: {
-             for: 'neutral'
-           },
-           format: :json
+           params: {
+             vote: {
+               for: 'neutral'
+             },
+             format: :json
+           }
     end
 
     assert_response 304
@@ -111,8 +117,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('Vote.count') do
       post motion_votes_path(motion),
-           vote: {
-             for: 'neutral'
+           params: {
+             vote: {
+               for: 'neutral'
+             }
            }
     end
 
@@ -134,10 +142,12 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('Vote.count') do
       post motion_votes_path(motion),
-           vote: {
-             for: 'pro'
-           },
-           format: :json
+           params: {
+             vote: {
+               for: 'pro'
+             },
+             format: :json
+           }
     end
 
     assert_response 200
@@ -155,7 +165,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     sign_in member
 
     assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
-      delete vote_path(member_vote), format: :json
+      delete vote_path(member_vote), params: {format: :json}
     end
 
     assert_response 204

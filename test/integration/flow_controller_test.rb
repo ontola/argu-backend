@@ -10,7 +10,7 @@ class FlowControllerTest < ActionDispatch::IntegrationTest
 
   test 'guest should get motion/flow' do
     get motion_flow_path(subject),
-        format: :json
+        params: {format: :json}
 
     assert_response 200
   end
@@ -24,8 +24,10 @@ class FlowControllerTest < ActionDispatch::IntegrationTest
     #sign_in user
 
     get motion_flow_path(subject),
-        motion_id: subject,
-        format: :json
+        params: {
+          motion_id: subject,
+          format: :json
+        }
 
     assert_response 200
   end

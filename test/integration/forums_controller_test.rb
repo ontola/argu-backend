@@ -93,9 +93,11 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('holland.reload.lock_version') do
       put forum_path(holland),
-          forum: {
-            name: 'New title',
-            bio: 'new contents'
+          params: {
+            forum: {
+              name: 'New title',
+              bio: 'new contents'
+            }
           }
     end
 
@@ -139,9 +141,11 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference('holland.reload.lock_version') do
       put forum_path(holland),
-          forum: {
-            name: 'New title',
-            bio: 'new contents'
+          params: {
+            forum: {
+              name: 'New title',
+              bio: 'new contents'
+            }
           }
     end
 
@@ -160,7 +164,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     assert_forum_settings_shown holland
 
     [:general, :advanced, :projects, :shortnames, :banners, :privacy, :managers].each do |tab|
-      get settings_forum_path(holland), tab: tab
+      get settings_forum_path(holland), params: {tab: tab}
       assert_forum_settings_shown holland, tab
     end
   end
@@ -169,17 +173,19 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in create_owner(holland)
     assert_difference('holland.reload.lock_version', 1) do
       put forum_path(holland),
-          forum: {
-            name: 'new name',
-            bio: 'new bio',
-            default_profile_photo_attributes: {
-              id: holland.default_profile_photo.id,
-              image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
-              used_as: 'profile_photo'
-            },
-            default_cover_photo_attributes: {
-              image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
-              used_as: 'cover_photo'
+          params: {
+            forum: {
+              name: 'new name',
+              bio: 'new bio',
+              default_profile_photo_attributes: {
+                id: holland.default_profile_photo.id,
+                image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
+                used_as: 'profile_photo'
+              },
+              default_cover_photo_attributes: {
+                image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
+                used_as: 'cover_photo'
+              }
             }
           }
     end
@@ -211,13 +217,13 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in holland_manager
     [:general, :advanced, :projects, :shortnames, :banners].each do |tab|
       get settings_forum_path(holland),
-          tab: tab
+          params: {tab: tab}
       assert_forum_settings_shown(holland, tab)
     end
 
     [:privacy, :managers].each do |tab|
       get settings_forum_path(holland),
-          tab: tab
+          params: {tab: tab}
       assert_redirected_to forum_path(holland)
     end
   end

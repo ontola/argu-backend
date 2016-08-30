@@ -28,15 +28,13 @@ class BlogPostsControllerTest < ActionController::TestCase
   ####################################
 
   def general_new(response = 302)
-    get :new,
-        project_id: project
+    get :new, params: {project_id: project}
 
     assert_response response
   end
 
   def general_show(response = 200, record = subject)
-    get :show,
-        id: record
+    get :show, params: {id: record}
 
     assert_response response
   end
@@ -46,11 +44,13 @@ class BlogPostsControllerTest < ActionController::TestCase
                                                           ['Activity.loggings.count', 0]])
     assert_differences(differences) do
       post :create,
-           project_id: project,
-           blog_post: attributes_for(:blog_post,
-                                     parent: project.edge,
-                                     happened_at: DateTime.now,
-                                     argu_publication_attributes: {publish_type: :draft})
+           params: {
+             project_id: project,
+             blog_post: attributes_for(:blog_post,
+                                       parent: project.edge,
+                                       happened_at: DateTime.now,
+                                       argu_publication_attributes: {publish_type: :draft})
+           }
     end
 
     assert_response response
@@ -61,11 +61,13 @@ class BlogPostsControllerTest < ActionController::TestCase
                                                             ['Activity.loggings.count', 0]])
     assert_differences(differences) do
       post :create,
-           project_id: project,
-           blog_post: attributes_for(:blog_post,
-                                     parent: project.edge,
-                                     happened_at: DateTime.now,
-                                     argu_publication_attributes: {publish_type: :direct})
+           params: {
+             project_id: project,
+             blog_post: attributes_for(:blog_post,
+                                       parent: project.edge,
+                                       happened_at: DateTime.now,
+                                       argu_publication_attributes: {publish_type: :direct})
+           }
 
       Sidekiq::Testing.inline! do
         Publication.last.send(:reset)
@@ -76,8 +78,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_edit(response = 302)
-    get :edit,
-        id: subject
+    get :edit, params: {id: subject}
 
     assert_response response
   end
@@ -87,8 +88,10 @@ class BlogPostsControllerTest < ActionController::TestCase
 
     assert_difference('Activity.count', changed ? 1 : 0) do
       patch :update,
-            id: subject,
-            blog_post: attributes_for(:blog_post, parent: project.edge)
+            params: {
+              id: subject,
+              blog_post: attributes_for(:blog_post, parent: project.edge)
+            }
     end
 
     assert_response response
@@ -109,8 +112,7 @@ class BlogPostsControllerTest < ActionController::TestCase
 
   def general_trash(response = 302, difference = 0)
     assert_differences([['BlogPost.trashed_only.count', difference], ['Activity.loggings.count', difference.abs]]) do
-      delete :trash,
-             id: subject
+      delete :trash, params: {id: subject}
     end
 
     assert_response response
@@ -121,8 +123,7 @@ class BlogPostsControllerTest < ActionController::TestCase
       [['BlogPost.count', difference],
        ['Edge.count', difference],
        ['Activity.loggings.count', difference.abs]]) do
-      delete :destroy,
-             id: trashed_subject
+      delete :destroy, params: {id: trashed_subject}
     end
 
     assert_response response

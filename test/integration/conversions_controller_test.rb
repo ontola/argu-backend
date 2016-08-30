@@ -62,8 +62,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
   test 'user should not post convert motion' do
     sign_in user
     post edge_conversions_path(motion.edge),
-         conversion: {
-           klass: 'questions'
+         params: {
+           conversion: {
+             klass: 'questions'
+           }
          }
     assert_redirected_to root_path
   end
@@ -78,8 +80,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
   test 'user should not post convert question' do
     sign_in user
     post edge_conversions_path(question.edge),
-         conversion: {
-           klass: 'motions'
+         params: {
+           conversion: {
+             klass: 'motions'
+           }
          }
     assert_redirected_to root_path
   end
@@ -101,8 +105,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     post edge_conversions_path(project.edge),
-         conversion: {
-           klass: 'questions'
+         params: {
+           conversion: {
+             klass: 'questions'
+           }
          }
     assert_response 302
     assert_not_authorized
@@ -120,8 +126,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     post edge_conversions_path(argument.edge),
-         conversion: {
-           klass: 'questions'
+         params: {
+           conversion: {
+             klass: 'questions'
+           }
          }
     assert_response 302
     assert_not_authorized
@@ -145,8 +153,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
                         ['Vote.count', 0], ['Edge.count', -6], ['Activity.count', 1]]) do
       post edge_conversions_path(motion.edge),
-           conversion: {
-             klass: 'questions'
+           params: {
+             conversion: {
+              klass: 'questions'
+             }
            }
     end
 
@@ -175,8 +185,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
                         ['Vote.count', 0], ['Edge.count', -6], ['Activity.count', 1]]) do
       post edge_conversions_path(question_motion.edge),
-           conversion: {
-             klass: 'questions'
+           params: {
+             conversion: {
+               klass: 'questions'
+             }
            }
     end
 
@@ -195,8 +207,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
                         ['Vote.count', 0], ['Edge.count', -6], ['Activity.count', 1]]) do
       post edge_conversions_path(project_motion.edge),
-           conversion: {
-             klass: 'questions'
+           params: {
+             conversion: {
+               klass: 'questions'
+             }
            }
     end
 
@@ -227,8 +241,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],
                         ['Edge.count', 0], ['Activity.count', 1]]) do
       post edge_conversions_path(question.edge),
-           conversion: {
-             klass: 'motions'
+           params: {
+             conversion: {
+               klass: 'motions'
+             }
            }
     end
 
@@ -256,8 +272,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],
                         ['Edge.count', 0], ['Activity.count', 1]]) do
       post edge_conversions_path(project_question.edge),
-           conversion: {
-             klass: 'motions'
+           params: {
+             conversion: {
+               klass: 'motions'
+             }
            }
     end
 

@@ -52,14 +52,16 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                         ['helsinki_at.reload.sign_ups', 1],
                         ['helsinki_at.reload.usages', 0]] do
       post user_registration_path,
-           user: {
-             shortname_attributes: {shortname: 'newuser'},
-             email: 'newuser@example.com',
-             password: 'useruser',
-             password_confirmation: 'useruser',
-             r: helsinki.url
-           },
-           at: helsinki_at.access_token
+           params: {
+             user: {
+               shortname_attributes: {shortname: 'newuser'},
+               email: 'newuser@example.com',
+               password: 'useruser',
+               password_confirmation: 'useruser',
+               r: helsinki.url
+             },
+             at: helsinki_at.access_token
+           }
     end
   end
 
@@ -90,25 +92,29 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_differences [['User.count', 1],
                         ['Sidekiq::Worker.jobs.size', 1]] do
       post user_registration_path,
-           user: {
+           params: {
+             user: {
                shortname_attributes: {shortname: 'newuser'},
                email: 'newuser@example.com',
                password: 'useruser',
                password_confirmation: 'useruser',
                r: helsinki.url
-           },
-           at: helsinki_at.access_token
+             },
+             at: helsinki_at.access_token
+           }
     end
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
     put setup_profiles_path,
-        user: {
-          first_name: 'new',
-          last_name: 'user',
-          profile_attributes: {
-            id: Profile.last.id,
-            about: 'Something ab'
+        params: {
+          user: {
+            first_name: 'new',
+            last_name: 'user',
+            profile_attributes: {
+              id: Profile.last.id,
+              about: 'Something ab'
+            }
           }
         }
     assert_redirected_to hidden_forum_path
@@ -135,25 +141,29 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
     assert_difference 'User.count', 1 do
       post user_registration_path,
-           user: {
+           params: {
+             user: {
                shortname_attributes: {shortname: 'newuser'},
                email: 'newuser@example.com',
                password: 'useruser',
                password_confirmation: 'useruser',
                r: redirect_url
-           },
-           at: helsinki_at.access_token
+             },
+             at: helsinki_at.access_token
+           }
     end
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
     put setup_profiles_path,
-        user: {
-          first_name: 'new',
-          last_name: 'user',
-          profile_attributes: {
-            id: Profile.last.id,
-            about: 'Something ab'
+        params: {
+          user: {
+            first_name: 'new',
+            last_name: 'user',
+            profile_attributes: {
+              id: Profile.last.id,
+              about: 'Something ab'
+            }
           }
         }
     assert_redirected_to redirect_url

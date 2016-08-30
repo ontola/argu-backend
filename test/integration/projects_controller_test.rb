@@ -465,10 +465,12 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                                                           ['Activity.count', 0]])
     assert_differences(differences) do
       post forum_projects_path(freetown),
-           project: attributes_for(:project,
-                                   argu_publication_attributes: {publish_type: :draft},
-                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                   phases_attributes: {'12321' => attributes_for(:phase)})
+           params: {
+             project: attributes_for(:project,
+                                     argu_publication_attributes: {publish_type: :draft},
+                                     stepups_attributes: {'12321' => {moderator: moderator.url}},
+                                     phases_attributes: {'12321' => attributes_for(:phase)})
+           }
     end
 
     assert_response response
@@ -480,10 +482,12 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                                                             ['Activity.count', 0]])
     assert_differences(differences) do
       post forum_projects_path(freetown),
-           project: attributes_for(:project,
-                                   argu_publication_attributes: {publish_type: :direct},
-                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                   phases_attributes: {'12321' => attributes_for(:phase)})
+           params: {
+             project: attributes_for(:project,
+                                     argu_publication_attributes: {publish_type: :direct},
+                                     stepups_attributes: {'12321' => {moderator: moderator.url}},
+                                     phases_attributes: {'12321' => attributes_for(:phase)})
+           }
       Sidekiq::Testing.inline! do
         Publication.last.send(:reset)
       end
@@ -503,7 +507,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
     assert_difference('Activity.count', changed ? 1 : 0) do
       patch project_path(subject),
-            project: attributes_for(:project)
+            params: {project: attributes_for(:project)}
     end
 
     assert_response response
@@ -533,7 +537,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Project.count', difference],
                         ['Activity.count', difference.abs]]) do
       delete project_path(subject,
-                          destroy: true)
+                          params: {destroy: true})
     end
 
     assert_response response

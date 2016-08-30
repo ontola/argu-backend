@@ -13,7 +13,7 @@ class Users::InvitationsControllerTest < ActionController::TestCase
     @request.env['devise.mapping'] = Devise.mappings[:user]
     sign_in user
 
-    get :new, forum: freetown
+    get :new, params: {forum: freetown}
     assert_response :success
   end
 end

@@ -51,9 +51,11 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert assigns(:user)
 
     put setup_users_path,
-        user: {
-          shortname_attributes: {
-            shortname: 'test_user'
+        params: {
+          user: {
+            shortname_attributes: {
+              shortname: 'test_user'
+            }
           }
         }
 
@@ -102,8 +104,10 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     post connect_user_path(user3, token: identity_token(Identity.find_by(uid: 1119134323213))),
-         user: {
-             password: 'useruser'
+         params: {
+           user: {
+               password: 'useruser'
+           }
          }
     assert_redirected_to root_path
   end
@@ -131,8 +135,10 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     post connect_user_path(user2,
                            token: identity_token(Identity.find_by(uid: 1119134323213))),
-         user: {
-           password: 'useruser'
+         params: {
+           user: {
+             password: 'useruser'
+           }
          }
     assert_response 200
     assert_not_equal user2, assigns(:identity).user

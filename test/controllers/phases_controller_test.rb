@@ -229,21 +229,21 @@ class PhasesControllerTest < ActionController::TestCase
 
   def general_show(response = 200, record = subject)
     get :show,
-        id: record
+        params: {id: record}
 
     assert_response response
   end
 
   def general_show_unpublished(response = 302, record = unpublished_subject)
     get :show,
-        id: record
+        params: {id: record}
 
     assert_response response
   end
 
   def general_edit(response = 302)
     get :edit,
-        id: subject
+        params: {id: subject}
 
     assert_response response
   end
@@ -252,8 +252,10 @@ class PhasesControllerTest < ActionController::TestCase
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
 
     patch :update,
-          id: subject,
-          phase: attributes_for(:phase)
+          params: {
+            id: subject,
+            phase: attributes_for(:phase)
+          }
 
     assert_response response
     if assigns(:update_service).try(:resource).present?
@@ -275,8 +277,10 @@ class PhasesControllerTest < ActionController::TestCase
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
 
     patch :update,
-          id: subject,
-          phase: attributes_for(:phase).merge(finish_phase: 'true')
+          params: {
+            id: subject,
+            phase: attributes_for(:phase).merge(finish_phase: 'true')
+          }
 
     assert_response response
     if assigns(:update_service).try(:resource).present?

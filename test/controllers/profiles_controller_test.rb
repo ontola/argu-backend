@@ -13,7 +13,7 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'user should get edit profile with own profile' do
     sign_in user
 
-    get :edit, id: user.url
+    get :edit, params: {id: user.url}
 
     assert_redirected_to settings_path(tab: :profile)
     assert_equal user, assigns(:resource), ''
@@ -22,7 +22,7 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'user should not get edit profile with other profile' do
     sign_in user
 
-    get :edit, id: user2.url
+    get :edit, params: {id: user2.url}
 
     assert_response 302
     assert_equal user2, assigns(:resource)

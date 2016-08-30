@@ -91,9 +91,11 @@ class ActionDispatch::IntegrationTest
 
   def sign_in(user = create(:user))
     post user_session_path,
-         user: {
-           email: user.email,
-           password: user.password
+         params: {
+           user: {
+             email: user.email,
+             password: user.password
+           }
          }
     assert_response 302
   end

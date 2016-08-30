@@ -14,8 +14,10 @@ class BannersControllerTest < ActionController::TestCase
     banner_attributes = attributes_for(:banner)
     assert_no_difference('Banner.count') do
       post :create,
-           forum_id: freetown,
-           banner: banner_attributes
+           params: {
+             forum_id: freetown,
+             banner: banner_attributes
+           }
       assert_redirected_to new_user_session_path(r: forum_banners_path(freetown))
     end
   end
@@ -28,8 +30,10 @@ class BannersControllerTest < ActionController::TestCase
 
     assert_no_difference('Banner.count') do
       post :create,
-           forum_id: freetown,
-           banner: attributes_for(:banner)
+           params: {
+             forum_id: freetown,
+             banner: attributes_for(:banner)
+           }
       assert_response 403
     end
   end
@@ -42,8 +46,10 @@ class BannersControllerTest < ActionController::TestCase
 
     assert_no_difference('Banner.count') do
       post :create,
-           forum_id: freetown,
-           banner: attributes_for(:banner)
+           params: {
+             forum_id: freetown,
+             banner: attributes_for(:banner)
+           }
       assert_redirected_to freetown
     end
   end
@@ -56,8 +62,10 @@ class BannersControllerTest < ActionController::TestCase
 
     assert_difference('Banner.count') do
       post :create,
-           forum_id: freetown,
-           banner: attributes_for(:banner)
+           params: {
+             forum_id: freetown,
+             banner: attributes_for(:banner)
+           }
       assert_redirected_to settings_forum_path(freetown, tab: :banners)
     end
   end
@@ -70,8 +78,10 @@ class BannersControllerTest < ActionController::TestCase
 
     assert_difference('Banner.count') do
       post :create,
-           forum_id: freetown,
-           banner: attributes_for(:banner)
+           params: {
+             forum_id: freetown,
+             banner: attributes_for(:banner)
+           }
       assert_redirected_to settings_forum_path(freetown, tab: :banners)
     end
   end

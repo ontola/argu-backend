@@ -14,8 +14,10 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   test 'guest should not get new' do
     get :new,
-        question_answer: {
-          question_id: question
+        params: {
+          question_answer: {
+            question_id: question
+          }
         }
     assert_redirected_to forum_path(freetown)
   end
@@ -24,9 +26,11 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in user
 
     post :create,
-         question_answer: {
-           question_id: question,
-           motion_id: motion.id
+         params: {
+           question_answer: {
+             question_id: question,
+             motion_id: motion.id
+           }
          }
 
     assert_redirected_to forum_path(freetown)
@@ -43,8 +47,10 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in user
 
     get :new,
-        question_answer: {
-          question_id: question
+        params: {
+          question_answer: {
+            question_id: question
+          }
         }
     assert_redirected_to forum_path(freetown)
   end
@@ -53,9 +59,11 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in user
 
     post :create,
-         question_answer: {
-           question_id: question,
-           motion_id: motion.id
+         params: {
+           question_answer: {
+             question_id: question,
+             motion_id: motion.id
+           }
          }
 
     assert_redirected_to forum_path(freetown)
@@ -72,8 +80,10 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in manager
 
     get :new,
-        question_answer: {
-          question_id: question
+        params: {
+          question_answer: {
+            question_id: question
+          }
         }
     assert_response 200
   end
@@ -82,9 +92,11 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in manager
 
     post :create,
-         question_answer: {
-           question_id: question,
-           motion_id: motion.id
+         params: {
+           question_answer: {
+             question_id: question,
+             motion_id: motion.id
+           }
          }
 
     assert_redirected_to question_path(question)
@@ -100,8 +112,10 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in owner
 
     get :new,
-        question_answer: {
-          question_id: question
+        params: {
+          question_answer: {
+            question_id: question
+          }
         }
     assert_response 200
   end
@@ -110,9 +124,11 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in owner
 
     post :create,
-         question_answer: {
-           question_id: question,
-           motion_id: motion.id
+         params: {
+           question_answer: {
+             question_id: question,
+             motion_id: motion.id
+           }
          }
 
     assert_redirected_to question_path(question)
@@ -129,8 +145,10 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in staff
 
     get :new,
-        question_answer: {
-          question_id: question
+        params: {
+          question_answer: {
+            question_id: question
+          }
         }
     assert_response 200
   end
@@ -139,9 +157,11 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     sign_in staff
 
     post :create,
-         question_answer: {
-           question_id: question,
-           motion_id: motion.id
+         params: {
+           question_answer: {
+             question_id: question,
+             motion_id: motion.id
+           }
          }
 
     assert_redirected_to question_path(question)

@@ -57,20 +57,20 @@ class PagesControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should get show when public' do
-    get :show, id: page
+    get :show, params: {id: page}
 
     assert_response 200
   end
 
   test 'guest should not get show when not public' do
-    get :show, id: page_non_public
+    get :show, params: {id: page_non_public}
 
     assert_redirected_to root_path
     assert_nil assigns(:collection)
   end
 
   test 'guest should get show with platform access' do
-    get :show, id: page, at: access_token.access_token
+    get :show, params: {id: page, at: access_token.access_token}
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -88,7 +88,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'user should get show' do
     sign_in user
 
-    get :show, id: page
+    get :show, params: {id: page}
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -109,7 +109,7 @@ class PagesControllerTest < ActionController::TestCase
     initialize_user2_votes
     sign_in user2
 
-    get :show, id: utrecht.page
+    get :show, params: {id: utrecht.page}
     assert_response 200
     assert assigns(:collection)
 
@@ -122,7 +122,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'user should not get settings when not page owner' do
     sign_in user
 
-    get :settings, id: page.url
+    get :settings, params: {id: page.url}
 
     assert_response 302
     assert_equal page, assigns(:page)
@@ -132,11 +132,13 @@ class PagesControllerTest < ActionController::TestCase
     sign_in user
 
     put :update,
-        id: page.url,
-        page: {
-          profile_attributes: {
-            id: page.profile.id,
-            about: 'new_about'
+        params: {
+          id: page.url,
+          page: {
+            profile_attributes: {
+              id: page.profile.id,
+              about: 'new_about'
+            }
           }
         }
 
@@ -151,7 +153,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'owner should get settings when page owner' do
     sign_in page.owner.profileable
 
-    get :settings, id: page.url
+    get :settings, params: {id: page.url}
 
     assert_response 200
     assert_equal page, assigns(:page)
@@ -161,18 +163,20 @@ class PagesControllerTest < ActionController::TestCase
     sign_in page.owner.profileable
 
     put :update,
-        id: page.url,
-        page: {
-          profile_attributes: {
-            id: page.profile.id,
-            name: 'name',
-            about: 'new_about',
-            default_profile_photo_attributes: {
-              id: page.profile.default_profile_photo.id,
-              image: fixture_file_upload('profile_photo.png', 'image/png')
-            },
-            default_cover_photo_attributes: {
-                image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+        params: {
+          id: page.url,
+          page: {
+            profile_attributes: {
+              id: page.profile.id,
+              name: 'name',
+              about: 'new_about',
+              default_profile_photo_attributes: {
+                id: page.profile.default_profile_photo.id,
+                image: fixture_file_upload('profile_photo.png', 'image/png')
+              },
+              default_cover_photo_attributes: {
+                  image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+              }
             }
           }
         }
@@ -189,16 +193,19 @@ class PagesControllerTest < ActionController::TestCase
   test 'owner should be able to create only one page' do
     sign_in page.owner.profileable
 
-    post :create, page: {
-      profile_attributes: {
-        name: 'Utrecht Two',
-        about: 'Utrecht Two bio'
-      },
-      shortname_attributes: {
-        shortname: 'UtrechtNumberTwo'
-      },
-      last_accepted: '1'
-    }
+    post :create,
+         params: {
+           page: {
+             profile_attributes: {
+               name: 'Utrecht Two',
+               about: 'Utrecht Two bio'
+             },
+             shortname_attributes: {
+               shortname: 'UtrechtNumberTwo'
+             },
+             last_accepted: '1'
+           }
+         }
 
     assert_redirected_to root_path
     assert_not assigns(:page)
@@ -214,9 +221,11 @@ class PagesControllerTest < ActionController::TestCase
                         ['Motion.anonymous.count', 2],
                         ['Project.anonymous.count', 1]]) do
       delete :destroy,
-             id: page.shortname.shortname,
-             page: {
-                 repeat_name: page.shortname.shortname
+             params: {
+               id: page.shortname.shortname,
+               page: {
+                   repeat_name: page.shortname.shortname
+               }
              }
     end
   end
@@ -227,9 +236,11 @@ class PagesControllerTest < ActionController::TestCase
 
     assert_raises(ActiveRecord::InvalidForeignKey) do
       delete :destroy,
-             id: page_non_public.shortname.shortname,
-             page: {
-                 repeat_name: page_non_public.shortname.shortname
+             params: {
+               id: page_non_public.shortname.shortname,
+               page: {
+                   repeat_name: page_non_public.shortname.shortname
+               }
              }
     end
   end
@@ -243,21 +254,23 @@ class PagesControllerTest < ActionController::TestCase
     sign_in staff
 
     post :create,
-         page: {
-           profile_attributes: {
-             name: 'Utrecht Two',
-             about: 'Utrecht Two bio',
-             default_profile_photo_attributes: {
-               image: fixture_file_upload('profile_photo.png', 'image/png')
+         params: {
+           page: {
+             profile_attributes: {
+               name: 'Utrecht Two',
+               about: 'Utrecht Two bio',
+               default_profile_photo_attributes: {
+                 image: fixture_file_upload('profile_photo.png', 'image/png')
+               },
+               default_cover_photo_attributes: {
+                 image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+               }
              },
-             default_cover_photo_attributes: {
-               image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
-             }
-           },
-           shortname_attributes: {
-             shortname: 'UtrechtNumberTwo'
-           },
-           last_accepted: '1'
+             shortname_attributes: {
+               shortname: 'UtrechtNumberTwo'
+             },
+             last_accepted: '1'
+           }
          }
 
     assigns(:page).profile.reload

@@ -12,7 +12,7 @@ class SecurityTest < ActionDispatch::IntegrationTest
     )
 
     spammers.each do |spammer|
-      get forum_path(freetown), {}, 'HTTP_REFERER' => spammer
+      get forum_path(freetown), headers: {'HTTP_REFERER' => spammer}
 
       assert_response 403
     end
@@ -48,7 +48,7 @@ class SecurityTest < ActionDispatch::IntegrationTest
     ]
 
     spammers.each do |spammer|
-      get forum_path(freetown), {}, 'HTTP_REFERER' => spammer
+      get forum_path(freetown), headers: {'HTTP_REFERER' => spammer}
 
       assert_response 200
     end
@@ -82,15 +82,15 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
     mal_code.each do |malicious|
       Rack::Attack.cache.store.clear
-      get forum_path(freetown, inject: malicious), {}, {}
+      get forum_path(freetown, inject: malicious)
       assert_response 403
-      get forum_path(freetown, inject: malicious), {}, {}
+      get forum_path(freetown, inject: malicious)
       assert_response 403
-      get forum_path(freetown), {}, {}
+      get forum_path(freetown)
       assert_response 200
-      get forum_path(freetown, inject: malicious), {}, {}
+      get forum_path(freetown, inject: malicious)
       assert_response 403
-      get forum_path(freetown), {}, {}
+      get forum_path(freetown)
       assert_response 403
     end
 

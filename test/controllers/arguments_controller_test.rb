@@ -40,7 +40,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should get show' do
-    get :show, id: argument
+    get :show, params: {id: argument}
 
     assert_response 200
     assert assigns(:comments)
@@ -50,19 +50,19 @@ class ArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'guest should not get show nested unpublished' do
-    get :show, id: project_argument
+    get :show, params: {id: project_argument}
 
     assert_redirected_to forum_url(freetown)
   end
 
   test 'guest should get show nested published' do
-    get :show, id: pub_project_argument
+    get :show, params: {id: pub_project_argument}
 
     assert_response 200
   end
 
   test 'guest should not get new' do
-    get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
+    get :new, params: {forum_id: freetown, motion_id: motion.id, pro: 'pro'}
 
     assert_response 302
     assert_not_a_user
@@ -76,7 +76,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'user should get show' do
     sign_in user
 
-    get :show, id: argument
+    get :show, params: {id: argument}
 
     assert_response 200
     assert assigns(:comments)
@@ -88,7 +88,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'user should not get show nested unpublished' do
     sign_in user
 
-    get :show, id: project_argument
+    get :show, params: {id: project_argument}
 
     assert_redirected_to forum_url(freetown)
   end
@@ -96,7 +96,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'user should get show nested published' do
     sign_in user
 
-    get :show, id: pub_project_argument
+    get :show, params: {id: pub_project_argument}
 
     assert_response 200
   end
@@ -104,7 +104,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'user should not get new' do
     sign_in user
 
-    get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
+    get :new, params: {forum_id: freetown, motion_id: motion.id, pro: 'pro'}
 
     assert_not_a_member
   end
@@ -122,7 +122,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'member should not get show nested unpublished' do
     sign_in member
 
-    get :show, id: project_argument
+    get :show, params: {id: project_argument}
 
     assert_redirected_to forum_url(freetown)
   end
@@ -130,7 +130,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'member should get show nested published' do
     sign_in member
 
-    get :show, id: pub_project_argument
+    get :show, params: {id: pub_project_argument}
 
     assert_response 200
   end
@@ -138,7 +138,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'member should get new pro' do
     sign_in member
 
-    get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
+    get :new, params: {forum_id: freetown, motion_id: motion.id, pro: 'pro'}
 
     assert_response 200
     assert assigns(:resource)
@@ -149,7 +149,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'member should get new' do
     sign_in member
 
-    get :new, forum_id: freetown, motion_id: motion.id, pro: 'con'
+    get :new, params: {forum_id: freetown, motion_id: motion.id, pro: 'con'}
 
     assert_response 200
     assert assigns(:resource)
@@ -160,7 +160,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'member should get edit' do
     sign_in member
 
-    get :edit, id: member_argument
+    get :edit, params: {id: member_argument}
 
     assert_response 200
   end
@@ -170,13 +170,15 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: freetown,
-           argument: {
-             motion_id: motion.id,
-             pro: 'pro',
-             title: 'Test argument pro',
-             content: 'Test argument pro-tents',
-             auto_vote: 'true'
+           params: {
+             forum_id: freetown,
+             argument: {
+               motion_id: motion.id,
+               pro: 'pro',
+               title: 'Test argument pro',
+               content: 'Test argument pro-tents',
+               auto_vote: 'true'
+             }
            }
     end
 
@@ -194,13 +196,15 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: freetown,
-           argument: {
-             motion_id: motion.id,
-             pro: 'con',
-             title: 'Test argument con',
-             content: 'Test argument con-tents',
-             auto_vote: 'true'
+           params: {
+             forum_id: freetown,
+             argument: {
+               motion_id: motion.id,
+               pro: 'con',
+               title: 'Test argument con',
+               content: 'Test argument con-tents',
+               auto_vote: 'true'
+             }
            }
     end
 
@@ -218,13 +222,15 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array(false) do
       post :create,
-           forum_id: freetown,
-           argument: {
-             motion_id: motion.id,
-             pro: 'pro',
-             title: 'Test argument pro',
-             content: 'Test argument pro-tents',
-             auto_vote: 'false'
+           params: {
+             forum_id: freetown,
+             argument: {
+               motion_id: motion.id,
+               pro: 'pro',
+               title: 'Test argument pro',
+               content: 'Test argument pro-tents',
+               auto_vote: 'false'
+             }
            }
     end
   end
@@ -233,10 +239,12 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in member
 
     put :update,
-        id: member_argument,
-        argument: {
-          title: 'New title',
-          content: 'new contents'
+        params: {
+          id: member_argument,
+          argument: {
+            title: 'New title',
+            content: 'new contents'
+          }
         }
 
     assert_not_nil assigns(:resource)
@@ -249,10 +257,12 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in member
 
     put :update,
-        id: argument,
-        argument: {
-          title: 'New title',
-          content: 'new contents'
+        params: {
+          id: argument,
+          argument: {
+            title: 'New title',
+            content: 'new contents'
+          }
         }
 
     assert_not_authorized
@@ -270,7 +280,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_differences([['Argument.trashed(false).count', -1],
                         ['Argument.trashed_only.count', 1]]) do
       delete :trash,
-             id: argument
+             params: {id: argument}
     end
 
     assert_redirected_to argument.motion
@@ -284,7 +294,7 @@ class ArgumentsControllerTest < ActionController::TestCase
                         ['Edge.count', -1],
                         ['Argument.trashed_only.count', -1]]) do
       delete :destroy,
-             id: argument
+             params: {id: argument}
     end
 
     assert_redirected_to argument.motion
@@ -302,7 +312,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_differences([['Argument.trashed(false).count', -1],
                         ['Argument.trashed_only.count', 1]]) do
       delete :trash,
-             id: argument
+             params: {id: argument}
     end
 
     assert_redirected_to argument.motion
@@ -316,7 +326,7 @@ class ArgumentsControllerTest < ActionController::TestCase
                         ['Edge.count', -1],
                         ['Argument.trashed_only.count', -1]]) do
       delete :destroy,
-             id: argument
+             params: {id: argument}
     end
 
     assert_redirected_to argument.motion

@@ -15,9 +15,11 @@ class FollowsControllerTest < ActionController::TestCase
   test 'guest should not post create' do
     motion_referer
     post :create,
-         gid: motion.edge.id,
-         follow_type: :reactions,
-         format: :json
+         params: {
+           gid: motion.edge.id,
+           follow_type: :reactions,
+           format: :json
+         }
 
     assert_redirected_to motion_path(motion)
   end
@@ -25,9 +27,11 @@ class FollowsControllerTest < ActionController::TestCase
   test 'guest should not delete destroy' do
     motion_referer
     post :create,
-         gid: motion.edge.id,
-         follow_type: :reactions,
-         format: :json
+         params: {
+           gid: motion.edge.id,
+           follow_type: :reactions,
+           format: :json
+         }
 
     assert_redirected_to motion_path(motion)
   end
@@ -42,9 +46,11 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in user
 
     post :create,
-         gid: motion.edge.id,
-         follow_type: :reactions,
-         format: :json
+         params: {
+           gid: motion.edge.id,
+           follow_type: :reactions,
+           format: :json
+         }
 
     assert_response 201
   end
@@ -54,9 +60,11 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in user
 
     delete :destroy,
-           gid: motion.edge.id,
-           follow_type: :reactions,
-           format: :json
+           params: {
+             gid: motion.edge.id,
+             follow_type: :reactions,
+             format: :json
+           }
 
     assert_response 204
   end
@@ -71,9 +79,11 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in member
 
     post :create,
-         gid: motion.edge.id,
-         follow_type: :reactions,
-         format: :json
+         params: {
+           gid: motion.edge.id,
+           follow_type: :reactions,
+           format: :json
+         }
 
     assert_response 201
   end
@@ -83,9 +93,11 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in member
 
     delete :destroy,
-           gid: motion.edge.id,
-           follow_type: :reactions,
-           format: :json
+           params: {
+             gid: motion.edge.id,
+             follow_type: :reactions,
+             format: :json
+           }
 
     assert_response 204
   end

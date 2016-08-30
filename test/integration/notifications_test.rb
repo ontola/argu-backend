@@ -21,7 +21,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Motion.count', 1], ['Notification.count', 1]]) do
       post forum_motions_path(freetown),
-           motion: attributes_for(:motion)
+           params: {motion: attributes_for(:motion)}
     end
 
     assert_differences([['Motion.trashed_only.count', 1], ['Notification.count', -1]]) do
@@ -34,7 +34,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Question.count', 1], ['Notification.count', 1]]) do
       post forum_questions_path(freetown),
-           question: attributes_for(:question)
+           params: {question: attributes_for(:question)}
     end
 
     assert_differences([['Question.trashed_only.count', 1], ['Notification.count', -1]]) do
@@ -49,8 +49,10 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
       post forum_arguments_path(freetown),
-           argument: attributes_for(:argument)
-                       .merge(motion_id: motion.id)
+           params: {
+             argument: attributes_for(:argument)
+                         .merge(motion_id: motion.id)
+           }
     end
 
     assert_differences([['Argument.trashed_only.count', 1], ['Notification.count', -2]]) do
@@ -66,9 +68,11 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do
       post motion_group_group_responses_path(motion, group),
-           group_response: {
-             side: :pro,
-             forum_id: freetown.id
+           params: {
+             group_response: {
+               side: :pro,
+               forum_id: freetown.id
+             }
            }
     end
 
@@ -84,7 +88,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
       post argument_comments_path(argument),
-           comment: attributes_for(:comment)
+           params: {comment: attributes_for(:comment)}
     end
 
     assert_differences([['Comment.trashed_only.count', 1], ['Notification.count', -2]]) do
@@ -102,8 +106,10 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Project.count', 1]]) do
       post forum_projects_path(freetown),
-           project: attributes_for(:project,
-                                   argu_publication_attributes: {publish_type: :direct})
+           params: {
+             project: attributes_for(:project,
+                                     argu_publication_attributes: {publish_type: :direct})
+           }
     end
 
     assert_differences([['Notification.count', 1]]) do
@@ -122,9 +128,11 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['BlogPost.count', 1]]) do
       post project_blog_posts_path(project),
-           blog_post: attributes_for(:blog_post,
-                                     argu_publication_attributes: {publish_type: :direct},
-                                     happened_at: DateTime.current)
+           params: {
+             blog_post: attributes_for(:blog_post,
+                                       argu_publication_attributes: {publish_type: :direct},
+                                       happened_at: DateTime.current)
+           }
     end
 
     # Notification for creator and follower of Project

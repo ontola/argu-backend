@@ -16,7 +16,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'user should not show new members_group' do
     sign_in user
 
-    get :new, group_id: group
+    get :new, params: {group_id: group}
 
     assert_not_authorized
   end
@@ -25,7 +25,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, group_id: group
+      post :create, params: {group_id: group}
     end
 
     assert 404
@@ -36,7 +36,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_differences([['GroupMembership.count', 1],
                         ['freetown.edge.followers.count', 1]]) do
-      post :create, group_id: freetown.members_group
+      post :create, params: {group_id: freetown.members_group}
     end
 
     assert_redirected_to forum_path(freetown)
@@ -46,7 +46,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, group_id: cairo.members_group
+      post :create, params: {group_id: cairo.members_group}
     end
 
     assert 404
@@ -59,7 +59,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
                               parent: group.edge)
 
     assert_no_difference 'GroupMembership.count' do
-      delete :destroy, id: group_membership
+      delete :destroy, params: {id: group_membership}
     end
 
     assert_not_authorized
@@ -73,7 +73,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
                               parent: group.edge)
 
     assert_no_difference 'GroupMembership.count' do
-      delete :destroy, id: group_membership
+      delete :destroy, params: {id: group_membership}
     end
 
     assert_not_authorized
@@ -89,7 +89,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, group_id: freetown.members_group
+      post :create, params: {group_id: freetown.members_group}
     end
 
     assert 404
@@ -100,7 +100,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, group_id: freetown.members_group, shortname: user.url
+      post :create, params: {group_id: freetown.members_group, shortname: user.url}
     end
 
     assert 404
@@ -110,7 +110,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_difference('GroupMembership.count', -1) do
-      delete :destroy, id: member.profile.group_memberships.first
+      delete :destroy, params: {id: member.profile.group_memberships.first}
     end
 
     assert_response 302
@@ -124,7 +124,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
                               parent: freetown.members_group.edge)
 
     assert_no_difference 'GroupMembership.count' do
-      delete :destroy, id: group_membership
+      delete :destroy, params: {id: group_membership}
     end
 
     assert_redirected_to forum_path(freetown)
@@ -137,7 +137,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'owner should show new' do
     sign_in create_owner(freetown)
 
-    get :new, group_id: group
+    get :new, params: {group_id: group}
 
     assert_response 200
   end
@@ -147,9 +147,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_difference 'GroupMembership.count', 1 do
       post :create,
-           group_id: group,
-           shortname: user.url,
-           r: settings_forum_path(freetown.url, tab: :groups)
+           params: {
+             group_id: group,
+             shortname: user.url,
+             r: settings_forum_path(freetown.url, tab: :groups)
+           }
     end
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
@@ -162,7 +164,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
                               parent: group.edge)
 
     assert_difference 'GroupMembership.count', -1 do
-      delete :destroy, id: group_membership, r: settings_forum_path(freetown.url, tab: :groups)
+      delete :destroy,
+             params: {
+               id: group_membership,
+               r: settings_forum_path(freetown.url, tab: :groups)
+             }
     end
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)

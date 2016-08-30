@@ -45,11 +45,12 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     assert_differences([['Publication.count', 1], ['Notification.count', 0]]) do
-      post project_blog_posts_path(
-        project_id: project,
-        blog_post: attributes_for(:blog_post,
-                                  parent: project.forum,
-                                  argu_publication_attributes: {publish_type: :draft}))
+      post project_blog_posts_path(project),
+           params: {
+             blog_post: attributes_for(:blog_post,
+                                       parent: project.forum,
+                                       argu_publication_attributes: {publish_type: :draft})
+           }
       assert_response 302
     end
 
@@ -68,12 +69,13 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(
-      project_id: project,
-      blog_post: attributes_for(:blog_post,
-                                parent: project.forum,
-                                happened_at: DateTime.current,
-                                argu_publication_attributes: {publish_type: :direct}))
+    post project_blog_posts_path(project),
+         params: {
+           blog_post: attributes_for(:blog_post,
+                                     parent: project.forum,
+                                     happened_at: DateTime.current,
+                                     argu_publication_attributes: {publish_type: :direct})
+         }
     assert_response 302
 
     # Notification for creator and follower of project
@@ -93,15 +95,15 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     sign_in moderator
 
     assert_difference('Publication.count', 1) do
-      post project_blog_posts_path(
-        project_id: project,
-        blog_post: attributes_for(
-          :blog_post,
-          parent: project.forum.edge,
-          argu_publication_attributes: {
-            publish_type: :schedule,
-            published_at: 1.day.from_now
-          }))
+      post project_blog_posts_path(project),
+           params: {
+             blog_post: attributes_for(
+               :blog_post,
+               parent: project.forum.edge,
+               argu_publication_attributes: {
+                 publish_type: :schedule,
+                 published_at: 1.day.from_now})
+           }
       assert_response 302
     end
   end
@@ -116,21 +118,23 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     assert_differences([['Publication.count', 1], ['Notification.count', 0]]) do
-      post project_blog_posts_path(
-        project_id: project,
-        blog_post: attributes_for(:blog_post,
-                                  parent: project.forum,
-                                  argu_publication_attributes: {publish_type: :schedule,
-                                                                published_at: 1.day.from_now}))
+      post project_blog_posts_path(project),
+           params: {
+             blog_post: attributes_for(:blog_post,
+                                       parent: project.forum,
+                                       argu_publication_attributes: {publish_type: :schedule,
+                                                                     published_at: 1.day.from_now})
+           }
     end
     assert_response 302
     job_id = Publication.last.job_id
     assert_not PublicationsWorker.cancelled?(job_id)
 
     assert_differences([['Publication.count', 0], ['Notification.count', 0]]) do
-      patch blog_post_path(
-        id: BlogPost.last.id,
-        blog_post: {argu_publication_attributes: {publish_type: :draft}})
+      patch blog_post_path(BlogPost.last),
+            params: {
+              blog_post: {argu_publication_attributes: {publish_type: :draft}}
+            }
     end
     assert_response 302
 

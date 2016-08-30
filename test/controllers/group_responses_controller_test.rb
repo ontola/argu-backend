@@ -28,7 +28,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   test 'should not get edit when not logged in' do
     get :edit,
-        id: group_response
+        params: {id: group_response}
 
     assert_not_a_user
   end
@@ -42,9 +42,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in user
 
     get :new,
-        motion_id: motion,
-        group_id: group,
-        side: :pro
+        params: {
+          motion_id: motion,
+          group_id: group,
+          side: :pro
+        }
 
     assert_not_a_member
   end
@@ -53,7 +55,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in user
 
     get :edit,
-        id: group_response
+        params: {id: group_response}
 
     assert_not_a_member
   end
@@ -63,10 +65,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('GroupResponse.count') do
       post :create,
-           motion_id: motion,
-           group_id: group,
-           group_response: attributes_for(:group_response,
-                                          parent: freetown.edge)
+           params: {
+             motion_id: motion,
+             group_id: group,
+             group_response: attributes_for(:group_response,
+                                            parent: freetown.edge)
+           }
     end
 
     assert_not_a_member
@@ -77,7 +81,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('group_response.updated_at') do
       put :update,
-          id: group_response
+          params: {id: group_response}
     end
 
     assert_not_a_member
@@ -92,9 +96,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in member
 
     get :new,
-        motion_id: motion,
-        group_id: group,
-        side: :pro
+        params: {
+          motion_id: motion,
+          group_id: group,
+          side: :pro
+        }
 
     assert_not_authorized
   end
@@ -103,7 +109,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in member
 
     get :edit,
-        id: group_response
+        params: {id: group_response}
 
     assert_not_authorized
   end
@@ -113,10 +119,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('GroupResponse.count') do
       post :create,
-           motion_id: motion,
-           group_id: group,
-           group_response: attributes_for(:group_response,
-                                          parent: freetown.edge)
+           params: {
+             motion_id: motion,
+             group_id: group,
+             group_response: attributes_for(:group_response,
+                                            parent: freetown.edge)
+           }
     end
 
     assert_not_authorized
@@ -127,11 +135,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('group_response.updated_at') do
       put :update,
-          id: group_response,
-          group_response: {
-              text: 'new text'
+          params: {
+            id: group_response,
+            group_response: {
+                text: 'new text'
+            }
           }
-
     end
 
     assert_not_authorized
@@ -146,9 +155,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in group_member
 
     get :new,
-        motion_id: motion,
-        group_id: group,
-        side: :pro
+        params: {
+          motion_id: motion,
+          group_id: group,
+          side: :pro
+        }
 
     assert_response 200
   end
@@ -157,7 +168,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in group_member
 
     get :edit,
-        id: group_response
+        params: {id: group_response}
 
     assert_response 200
   end
@@ -167,10 +178,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_difference('GroupResponse.count', 1) do
       post :create,
-           motion_id: motion,
-           group_id: group,
-           group_response: attributes_for(:group_response,
-                                          parent: freetown.edge)
+           params: {
+             motion_id: motion,
+             group_id: group,
+             group_response: attributes_for(:group_response,
+                                            parent: freetown.edge)
+           }
     end
 
     assert_redirected_to motion
@@ -180,9 +193,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in group_member
 
     put :update,
-        id: group_response,
-        group_response: {
-          text: 'new text'
+        params: {
+          id: group_response,
+          group_response: {
+            text: 'new text'
+          }
         }
 
     assert_redirected_to motion
@@ -195,7 +210,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     group_response # trigger
     assert_difference('GroupResponse.count', -1) do
       delete :destroy,
-             id: group_response
+             params: {id: group_response}
     end
 
     assert_redirected_to motion
@@ -209,7 +224,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
                             parent: motion.edge)
     assert_no_difference('GroupResponse.count') do
       delete :destroy,
-             id: group_response
+             params: {id: group_response}
     end
 
     assert_not_authorized
@@ -222,9 +237,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in visible_group_member
 
     get :new,
-        motion_id: motion,
-        group_id: visible_group,
-        side: :pro
+        params: {
+          motion_id: motion,
+          group_id: visible_group,
+          side: :pro
+        }
 
     assert_response 404
   end
@@ -234,10 +251,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('GroupResponse.count') do
       post :create,
-           motion_id: motion,
-           group_id: visible_group,
-           group_response: attributes_for(:group_response,
-                                          parent: freetown.edge)
+           params: {
+             motion_id: motion,
+             group_id: visible_group,
+             group_response: attributes_for(:group_response,
+                                            parent: freetown.edge)
+           }
     end
 
     assert_response 404
@@ -250,9 +269,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
     sign_in hidden_group_member
 
     get :new,
-        motion_id: motion,
-        group_id: hidden_group,
-        side: :pro
+        params: {
+          motion_id: motion,
+          group_id: hidden_group,
+          side: :pro
+        }
 
     assert_response 404
   end
@@ -262,10 +283,12 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('GroupResponse.count') do
       post :create,
-           motion_id: motion,
-           group_id: hidden_group,
-           group_response: attributes_for(:group_response,
-                                          parent: freetown.edge)
+           params: {
+             motion_id: motion,
+             group_id: hidden_group,
+             group_response: attributes_for(:group_response,
+                                            parent: freetown.edge)
+           }
     end
 
     assert_response 404
@@ -282,7 +305,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     group_response # trigger
     assert_difference('GroupResponse.count', -1) do
       delete :destroy,
-             id: group_response
+             params: {id: group_response}
     end
 
     assert_redirected_to motion
@@ -299,7 +322,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     group_response # trigger
     assert_difference('GroupResponse.count', -1) do
       delete :destroy,
-             id: group_response
+             params: {id: group_response}
     end
 
     assert_redirected_to motion
@@ -316,7 +339,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
     group_response # trigger
     assert_difference('GroupResponse.count', -1) do
       delete :destroy,
-             id: group_response
+             params: {id: group_response}
     end
 
     assert_redirected_to motion

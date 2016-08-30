@@ -44,25 +44,29 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_differences [['User.count', 1],
                         ['Sidekiq::Worker.jobs.size', 1]] do
       post user_registration_path,
-           user: {
-             shortname_attributes: {shortname: 'newuser'},
-             email: 'newuser@example.com',
-             password: 'useruser',
-             password_confirmation: 'useruser',
-             r: venice.url
-           },
-           at: access_token.access_token
+           params: {
+             user: {
+               shortname_attributes: {shortname: 'newuser'},
+               email: 'newuser@example.com',
+               password: 'useruser',
+               password_confirmation: 'useruser',
+               r: venice.url
+             },
+             at: access_token.access_token
+           }
       assert_redirected_to edit_user_url('newuser')
     end
     follow_redirect!
 
     put setup_profiles_path,
-        user: {
-          first_name: 'new',
-          last_name: 'user',
-          profile_attributes: {
-            id: Profile.last.id,
-            about: 'Something ab'
+        params: {
+          user: {
+            first_name: 'new',
+            last_name: 'user',
+            profile_attributes: {
+              id: Profile.last.id,
+              about: 'Something ab'
+            }
           }
         }
     assert_redirected_to forum_url(venice.url)

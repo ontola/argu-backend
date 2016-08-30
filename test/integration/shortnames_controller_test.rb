@@ -112,7 +112,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   def general_create(response = 302, differences = [['Shortname.count', 1]])
     attrs = shortname_attributes
     assert_differences(differences) do
-      post forum_shortnames_path(freetown, attrs)
+      post forum_shortnames_path(freetown), params: attrs
       assert_response response
     end
   end

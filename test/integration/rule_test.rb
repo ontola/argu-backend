@@ -11,10 +11,12 @@ class RuleTest < ActionDispatch::IntegrationTest
     remember_me = options[:remember_me] || '1'
 
     post user_session_path,
-         user: {
-           email:       user.email,
-           password:    password,
-           remember_me: remember_me
+         params: {
+           user: {
+             email:       user.email,
+             password:    password,
+             remember_me: remember_me
+           }
          }
     assert_redirected_to root_path
   end
