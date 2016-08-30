@@ -6,7 +6,7 @@ module Argu
         stub_request(:get, "https://graph.facebook.com/v2.6/#{uid}/picture?redirect=false")
           .to_return(
             status: 200,
-            body: File.new(File.expand_path('./test/files/fb_image_silhouette.jpg'))
+            body: File.new(File.expand_path('./test/fixtures/fb_image_silhouette.jpg'))
           )
       end
 

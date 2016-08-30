@@ -3,7 +3,7 @@
   =f.inputs name: input_name do
     =f.semantic_errors :base
     =f.inputs :shortname, required: true
-    =f.input :owner_type, as: :select, collection: shortname_owner_types, include_blank: false, required: true
+    =f.input :owner_type, as: :select, collection: shortname_owner_types, include_blank: false, required: false
     =f.input :owner_id, as: :number, required: true
   =f.actions do
     =f.action :submit, as: :button

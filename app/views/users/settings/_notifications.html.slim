@@ -1,8 +1,8 @@
 = semantic_form_for @user, url: settings_path, method: :put do |f|
   =f.inputs name: t('users.registrations.categories.notifications'), class: 'danger-zone' do
     p= t('notifications.email.beta')
-    =f.input :reactions_email, as: :react_select, collection: options_for_reactions_email, include_blank: false
-    =f.input :news_email, as: :react_select, collection: options_for_news_email, include_blank: false
+    =f.input :reactions_email, as: :react_select, collection: options_for_reactions_email, required: false, include_blank: false
+    =f.input :news_email, as: :react_select, collection: options_for_news_email, required: false, include_blank: false
   =f.input :tab, as: :hidden, input_html: {value: tab}
   =f.actions do
     =f.action :submit, as: :button, label: t('save')

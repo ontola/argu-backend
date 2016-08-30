@@ -32,6 +32,11 @@ module ApplicationHelper
     end
   end
 
+  def image_tag(source, options={})
+    source = 'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=' if source.nil?
+    super
+  end
+
   def policy_with_tenant!(tenant, record)
     uc = UserContext.new(
       current_user,

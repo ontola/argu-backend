@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class VotesControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
+class VotesControllerTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let!(:vote) { create(:vote, parent: motion.edge) }
@@ -13,7 +11,7 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
 
   test 'guest shoud not get new' do
-    get :new, motion_id: motion
+    get new_motion_vote_path(motion)
 
     assert_redirected_to new_user_session_path(
       r: new_motion_vote_path(
@@ -32,7 +30,7 @@ class VotesControllerTest < ActionController::TestCase
 
     vote # Trigger
     assert_no_difference('Vote.count') do
-      delete :destroy, id: vote.id, format: :json
+      delete vote_path(vote.id), format: :json
     end
 
     assert_response 403
@@ -41,8 +39,7 @@ class VotesControllerTest < ActionController::TestCase
   test 'should 403 when not a member' do
     sign_in user
 
-    post :create,
-         motion_id: motion,
+    post motion_votes_path(motion),
          for: :pro,
          format: :json
 
@@ -57,7 +54,7 @@ class VotesControllerTest < ActionController::TestCase
   test 'member shoud get new' do
     sign_in member
 
-    get :new, motion_id: motion
+    get new_motion_vote_path(motion)
 
     assert_response 200
     assert assigns(:model)
@@ -67,8 +64,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in member
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
-      post :create,
-           motion_id: motion,
+      post motion_votes_path(motion),
            for: :pro,
            format: :json
     end
@@ -90,8 +86,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in member
 
     assert_no_difference('Vote.count') do
-      post :create,
-           motion_id: motion,
+      post motion_votes_path(motion),
            vote: {
              for: 'neutral'
            },
@@ -115,8 +110,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in member
 
     assert_no_difference('Vote.count') do
-      post :create,
-           motion_id: motion,
+      post motion_votes_path(motion),
            vote: {
              for: 'neutral'
            }
@@ -139,8 +133,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in member
 
     assert_no_difference('Vote.count') do
-      post :create,
-           motion_id: motion,
+      post motion_votes_path(motion),
            vote: {
              for: 'pro'
            },
@@ -162,9 +155,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in member
 
     assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
-      delete :destroy,
-             id: member_vote.id,
-             format: :json
+      delete vote_path(member_vote), format: :json
     end
 
     assert_response 204

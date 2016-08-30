@@ -23,7 +23,7 @@
         - if @profile.forums.present?
           label Forums:
           ul.icon-list.margin-bottom
-            - @profile.forums.where(visibility: true).each do |forum|
+            - @profile.forums.where('forums.visibility != ?', Forum.visibilities[:hidden]).each do |forum|
               li
                 =link_to forum_path(forum) do
                   span= forum.name

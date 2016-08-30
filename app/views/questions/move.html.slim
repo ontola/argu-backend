@@ -10,7 +10,7 @@
           = semantic_form_for resource, url: question_move_path(resource), method: :put do |f|
             p= t('move.current_forum') + resource.forum.url
             = f.inputs do
-              = f.input :forum, as: :select, collection: Forum.all.pluck(:name, :id), selected: resource.forum.id, include_blank: false
+              = f.input :forum, as: :select, collection: Forum.all.pluck(:name, :id), selected: resource.forum.id, required: false, include_blank: false
               = f.input :include_motions, as: :boolean
             = f.actions do
               = f.action :submit, as: :button, label: t('move.button_label')

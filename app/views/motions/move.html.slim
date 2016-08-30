@@ -10,6 +10,6 @@
           =semantic_form_for resource, url: motion_move_path(resource), method: :put do |f|
             p= t('move.current_forum') + resource.forum.url
             =f.inputs do
-              =f.input :forum, include_blank: false
+              =f.input :forum, required: false, include_blank: false
             =f.actions do
               =f.action :submit, as: :button, label: t('move.button_label')

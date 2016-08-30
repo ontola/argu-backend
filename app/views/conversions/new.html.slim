@@ -10,6 +10,6 @@
           =semantic_form_for @conversion, url: edge_conversions_path(@edge), method: :post do |f|
             p= "#{t('conversions.current_class')} #{@edge.owner_type}"
             =f.inputs do
-              =f.input :klass, as: :select, collection: convertible_class_names(@edge.owner), include_blank: false
+              =f.input :klass, as: :select, collection: convertible_class_names(@edge.owner), required: false, include_blank: false
             =f.actions do
               =f.action :submit, :as => :button, label: t('convert')

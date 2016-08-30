@@ -29,7 +29,7 @@
 # y:
 # z:
 
-Argu::Application.routes.draw do
+Rails.application.routes.draw do
   concern :blog_postable do
     resources :blog_posts,
               only: [:index, :new, :create],
@@ -59,8 +59,8 @@ Argu::Application.routes.draw do
   end
   concern :trashable do
       put :untrash, action: :untrash, on: :member
-      match action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
-      match action: :trash, on: :member, as: :trash, via: :delete
+      match '/', action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
+      match '/', action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
     resources :votes, only: [:new, :create], path: 'v'

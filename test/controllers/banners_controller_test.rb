@@ -16,8 +16,7 @@ class BannersControllerTest < ActionController::TestCase
       post :create,
            forum_id: freetown,
            banner: banner_attributes
-      assert_redirected_to new_user_session_path(r: forum_banners_path(freetown,
-                                                                       banner: banner_attributes))
+      assert_redirected_to new_user_session_path(r: forum_banners_path(freetown))
     end
   end
 

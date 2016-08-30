@@ -108,9 +108,9 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil assigns(:create_service).resource
     assert_response 200
 
-    assert_select '[name=motion[title]]', 'Motion'
-    assert_select '[name=motion[content]]', 'C'
-    assert_select '[name=motion[question_id]]', question.id.to_s
+    assert_select '#motion_title', 'Motion'
+    assert_select '#motion_content', 'C'
+    assert_select '#motion_question_id[value=?]', question.id.to_s
   end
 
   test 'member should put update on own motion' do
@@ -118,7 +118,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       title: 'New title',
       content: 'new contents',
       default_cover_photo_attributes: {
-        image: fixture_file_upload('test/files/cover_photo.jpg', 'image/jpg')
+        image: fixture_file_upload('test/fixtures/cover_photo.jpg', 'image/jpg')
       }
     })
     assert_equal 'cover_photo.jpg',

@@ -82,7 +82,6 @@ class VotesController < AuthorizedController
   def destroy
     vote = Vote.find params[:id]
     authorize vote, :destroy?
-
     respond_to do |format|
       if vote.destroy
         vote.voteable.reload
@@ -136,10 +135,11 @@ class VotesController < AuthorizedController
   def for_param
     if params[:for].is_a?(String) && params[:for].present?
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
-      params[:for]
-    elsif params[:vote].is_a?(Hash)
-      params[:vote][:for]
+      param = params[:for]
+    elsif params[:vote].is_a?(ActionController::Parameters)
+      param = params[:vote][:for]
     end
+    param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
   def get_context
@@ -147,7 +147,7 @@ class VotesController < AuthorizedController
   end
 
   def permit_params
-    params.permit(:id, :for)
+    params.permit(:id)
   end
 
   def query_payload(opts = {})

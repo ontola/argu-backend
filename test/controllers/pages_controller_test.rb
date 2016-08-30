@@ -169,10 +169,10 @@ class PagesControllerTest < ActionController::TestCase
             about: 'new_about',
             default_profile_photo_attributes: {
               id: page.profile.default_profile_photo.id,
-              image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+              image: fixture_file_upload('profile_photo.png', 'image/png')
             },
             default_cover_photo_attributes: {
-                image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+                image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
             }
           }
         }
@@ -248,10 +248,10 @@ class PagesControllerTest < ActionController::TestCase
              name: 'Utrecht Two',
              about: 'Utrecht Two bio',
              default_profile_photo_attributes: {
-               image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+               image: fixture_file_upload('profile_photo.png', 'image/png')
              },
              default_cover_photo_attributes: {
-               image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+               image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
              }
            },
            shortname_attributes: {

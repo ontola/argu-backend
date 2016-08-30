@@ -23,11 +23,11 @@
                 =t('users.registrations.unconfirmed')
                 =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
           =f.input :time_zone
-          =f.input :language, as: :react_select, collection: language_select_items, include_blank: false, clearable: false, searchable: false
+          =f.input :language, as: :react_select, collection: language_select_items, required: false, include_blank: false, clearable: false, searchable: false
         =f.inputs name: t('users.registrations.categories.notifications'), class: 'danger-zone' do
           p= t('notifications.email.beta')
-          =f.input :reactions_email, as: :react_select, collection: options_for_reactions_email, include_blank: false
-          =f.input :news_email, as: :react_select, collection: options_for_news_email, include_blank: false
+          =f.input :reactions_email, as: :react_select, collection: options_for_reactions_email, required: false, include_blank: false
+          =f.input :news_email, as: :react_select, collection: options_for_news_email, required: false, include_blank: false
         =f.inputs name: t('users.registrations.categories.privacy') do
           =f.input :has_analytics, as: :reverse_boolean
           li.form-helper

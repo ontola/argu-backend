@@ -174,11 +174,11 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
             bio: 'new bio',
             default_profile_photo_attributes: {
               id: holland.default_profile_photo.id,
-              image: fixture_file_upload(File.expand_path('test/files/profile_photo.png'), 'image/png'),
+              image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
               used_as: 'profile_photo'
             },
             default_cover_photo_attributes: {
-              image: fixture_file_upload(File.expand_path('test/files/cover_photo.jpg'), 'image/jpg'),
+              image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
               used_as: 'cover_photo'
             }
           }

@@ -13,22 +13,38 @@ class RegistrationsControllerTest < ActionController::TestCase
   # As Guest
   ####################################
 
-  test 'should post create' do
-    I18n.available_locales.each do |locale|
-      cookies[:locale] = locale.to_s
-      @request.env['devise.mapping'] = Devise.mappings[:user]
+  test 'should post create nl' do
+    locale = :nl
+    cookies[:locale] = locale.to_s
+    @request.env['devise.mapping'] = Devise.mappings[:user]
 
-      assert_differences([['User.count', 1],
-                          ['GroupMembership.count', 1],
-                          ['Sidekiq::Worker.jobs.count', 1]]) do
-        post :create,
-             user: attributes_for(:user)
-        assert_redirected_to setup_users_path
-      end
-      assert_equal locale, User.last.language.to_sym
-      sign_out :user
-      User.last.destroy
+    assert_differences([['User.count', 1],
+                        ['GroupMembership.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post :create,
+           user: attributes_for(:user)
+      assert_redirected_to setup_users_path
     end
+    assert_equal locale, User.last.language.to_sym
+    sign_out :user
+    User.last.destroy
+  end
+
+  test 'should post create en' do
+    locale = :en
+    cookies[:locale] = locale.to_s
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+
+    assert_differences([['User.count', 1],
+                        ['GroupMembership.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post :create,
+           user: attributes_for(:user)
+      assert_redirected_to setup_users_path
+    end
+    assert_equal locale, User.last.language.to_sym
+    sign_out :user
+    User.last.destroy
   end
 
   test "should not post create when passwords don't match" do

@@ -1,10 +1,5 @@
 Rails.application.configure do
-  config.host = ENV['HOSTNAME'].presence || 'localhost:3000'
-  # Settings specified here will take precedence over those in config/application.rb#
-
-  config.react.variant = :development
-
-  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -12,45 +7,49 @@ Rails.application.configure do
   config.cache_classes = false
   # ActiveRecordQueryTrace.enabled = true
 
+  # Do not eager load code on boot.
   config.eager_load = false
 
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # Show full error reports.
+  config.consider_all_requests_local = true
 
-  config.web_console.automount = true
-  config.web_console.whitelisted_ips = ['192.168.0.0/16', '10.0.1.0/16']
+  # Enable/disable caching. By default caching is disabled.
+  if Rails.root.join('tmp/caching-dev.txt').exist?
+    config.action_controller.perform_caching = true
 
-  # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+    config.cache_store = :memory_store
+    config.public_file_server.headers = {
+      'Cache-Control' => 'public, max-age=172800'
+    }
+  else
+    config.action_controller.perform_caching = false
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = {host: ENV['HOSTNAME'].presence || 'localhost:3000'}
+    config.cache_store = :null_store
+  end
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: ENV['MAIL_ADDRESS'].presence || '127.0.0.1',
-    port: ENV['MAIL_PORT'].presence || 1025
-  }
+  # Don't care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = false
 
-  # Print deprecation notices to the Rails logger
+  config.action_mailer.perform_caching = false
+
+  # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
-  # Only use best-standards-support built into browsers
-  config.action_dispatch.best_standards_support = :builtin
+  # Raise an error on page load if there are pending migrations.
+  config.active_record.migration_error = :page_load
 
-  config.active_record.raise_in_transactional_callbacks = true
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  config.assets.debug = true
 
-  # Do not compress assets
-  config.assets.compress = false
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
 
-  # Expands the lines which load the assets
-  config.assets.debug = false
+  # Raises error for missing translations
+  # config.action_view.raise_on_missing_translations = true
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: :all #, :tld_length => 2
-
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation can not be found)
-  config.i18n.fallbacks = true
+  # Use an evented file watcher to asynchronously detect changes in source code,
+  # routes, locales, etc. This feature depends on the listen gem.
+  # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 end

@@ -122,7 +122,7 @@ class QuestionsControllerTest < ActionController::TestCase
              title: 'Question',
              content: 'Contents',
              default_cover_photo_attributes: {
-               image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+               image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
              }
            }
     end
@@ -141,7 +141,7 @@ class QuestionsControllerTest < ActionController::TestCase
           title: 'New title',
           content: 'new contents',
           default_cover_photo_attributes: {
-            image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
           }
         }
 

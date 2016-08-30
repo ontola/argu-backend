@@ -1,6 +1,6 @@
 =semantic_form_for @user, url: settings_path, method: :put do |f|
   =f.inputs name: t('users.registrations.categories.general') do
-    =f.input :language, as: :react_select, collection: language_select_items, include_blank: false, clearable: false, searchable: false
+    =f.input :language, as: :react_select, collection: language_select_items, required: false, include_blank: false, clearable: false, searchable: false
     =f.input :time_zone
   =f.inputs name: t('profiles.edit.personal_information') do
     p= t('profiles.edit.personal_information_notice')

@@ -1,19 +1,12 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require_relative './initializers/version'
 require_relative './initializers/build'
 require 'rails/all'
-require 'devise'
-ROADIE_I_KNOW_ABOUT_VERSION_3 = true
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  # Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-  Bundler.require(:default, Rails.env)
-  require 'sidekiq/middleware/i18n'
-end
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
 module Argu
   class Application < Rails::Application
@@ -73,15 +66,6 @@ module Argu
     config.react.server_renderer = StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.precompile += %w(application.js polyfill.js react-server.js components.js
-                                   mail.css testing.css turbolinks/dist/turbolinks.js)
-
-    config.assets.initialize_on_precompile = true
-    config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
-    config.assets.paths << Rails.root.join('node_modules')
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = ::VERSION
 
     ############################
     # I18n & locales
