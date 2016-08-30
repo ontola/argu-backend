@@ -1,6 +1,4 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
-  skip_filter :require_no_authentication, only: :create, if: :correct_mail
-
   def create
     super
   end

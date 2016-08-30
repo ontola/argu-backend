@@ -7,7 +7,7 @@ class FollowsController < ApplicationController
 
     if current_user.follow @thing.edge, permit_params[:follow_type] || :reactions
       respond_to do |format|
-        format.html { redirect_to :back, notification: t('followed') }
+        format.html { redirect_back(fallback_location: root_path, notification: t('followed')) }
         format.js { head 201 }
         format.json { head 201 }
       end
@@ -24,7 +24,7 @@ class FollowsController < ApplicationController
     resp = current_user.stop_following @thing.edge
     if resp == nil || resp
       respond_to do |format|
-        format.html { redirect_to :back, notification: t('unfollowed') }
+        format.html { redirect_back(fallback_location: root_path, notification: t('unfollowed')) }
         format.json { head 204 }
       end
     else
@@ -39,7 +39,7 @@ class FollowsController < ApplicationController
   def check_user
     return if current_user.present?
     flash[:error] = t('devise.failure.unauthenticated')
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def set_thing

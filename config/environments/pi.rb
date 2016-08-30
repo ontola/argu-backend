@@ -88,7 +88,5 @@ Argu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.active_record.raise_in_transactional_callbacks = true
-
   config.i18n.available_locales = [:nl, :en]
 end

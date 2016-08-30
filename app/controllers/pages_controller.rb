@@ -156,7 +156,10 @@ class PagesController < ApplicationController
 
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
-    @_permit_params = params.require(:page).permit(*policy(@page || Page).permitted_attributes)
+    @_permit_params = params
+                        .require(:page)
+                        .permit(*policy(@page || Page).permitted_attributes)
+                        .to_h
                         .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)
     @_permit_params[:last_accepted] = DateTime.current if permit_params[:last_accepted] == '1'

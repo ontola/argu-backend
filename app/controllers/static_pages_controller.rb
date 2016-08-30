@@ -33,7 +33,7 @@ class StaticPagesController < ApplicationController
         render 'announcements/dismissals/create',
                locals: {announcement: announcement}
       end
-      format.html { redirect_to :back }
+      format.html { redirect_back(fallback_location: root_path) }
     end
   end
 

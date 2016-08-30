@@ -140,7 +140,7 @@ class ForumsController < AuthorizedController
   end
 
   def permit_params
-    pm = params.require(:forum).permit(*policy(resource_by_id || Forum).permitted_attributes)
+    pm = params.require(:forum).permit(*policy(resource_by_id || Forum).permitted_attributes).to_h
     merge_photo_params(pm, @resource.class)
     pm
   end

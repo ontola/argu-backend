@@ -200,7 +200,7 @@ class ApplicationController < ActionController::Base
 
   def handle_record_not_unique(exception)
     flash[:warning] = t(:twice_warning)
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def handle_not_authorized_error(exception)

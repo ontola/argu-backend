@@ -107,7 +107,7 @@ class ProfilesController < ApplicationController
   private
 
   def permit_params
-    pm = params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes)
+    pm = params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes).to_h
     merge_photo_params(pm, @resource.class)
     pm
   end
@@ -117,7 +117,7 @@ class ProfilesController < ApplicationController
   end
 
   def setup_permit_params
-    pp = params.require(:user).permit(*policy(@resource || User).permitted_attributes(true))
+    pp = params.require(:user).permit(*policy(@resource || User).permitted_attributes(true)).to_h
     merge_photo_params(pp, @resource.class)
     merge_placement_params(pp, User)
     pp

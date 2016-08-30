@@ -12,7 +12,7 @@ class ActorsController < ApplicationController
 
     respond_to do |format|
       if status == 200
-        format.html { redirect_to :back }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { render 'users/current_actor' }
       else
         format.html { render 404 }

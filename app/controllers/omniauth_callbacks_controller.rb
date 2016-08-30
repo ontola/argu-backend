@@ -54,8 +54,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def setup_provider(provider)
     connector = connector_for(provider)
-    @user = User.find_for_oauth(env["omniauth.auth"])
-    email = connector.email_for(env["omniauth.auth"])
+    @user = User.find_for_oauth(request.env['omniauth.auth'])
+    email = connector.email_for(request.env['omniauth.auth'])
 
     if @user.present?
       process_user(email)
@@ -65,7 +65,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       create_new_user(provider, connector)
     elsif current_user.blank?
       # No connection, no current_user and no email..
-      session["devise.#{provider}_data"] = env["omniauth.auth"]
+      session["devise.#{provider}_data"] = request.env['omniauth.auth']
       redirect_to new_user_registration_url(r: r_param(env))
     end
   end
@@ -76,11 +76,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def connect_user(provider, user_with_email)
     if current_user.blank? || current_user == user_with_email
       # TODO: Store in Redis when not found to prevent stale records
-      identity = Identity.find_or_initialize_by uid: env["omniauth.auth"]["uid"], provider: provider
-      set_identity_fields_for provider, identity, env["omniauth.auth"]
+      identity = Identity.find_or_initialize_by uid: request.env['omniauth.auth']['uid'], provider: provider
+      set_identity_fields_for provider, identity, request.env['omniauth.auth']
       raise NotImplementedError unless identity.save
       token = identity_token(identity)
-      redirect_to connect_user_path(user_with_email, token: token, r: r_param(env))
+      redirect_to connect_user_path(user_with_email, token: token, r: r_param(request.env))
     else
       flash[:error] = t("users.authentications.email_mismatch") if is_navigational_format?
       redirect_to root_path
@@ -97,9 +97,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # We have a new user! so show the 'need some details' form
   def create_new_user(provider, connector)
-    identity = Identity.find_or_initialize_by uid: env["omniauth.auth"]["uid"], provider: provider
-    set_identity_fields_for provider, identity, env["omniauth.auth"]
-    user = connector.create_user_without_shortname(env["omniauth.auth"], identity, r_param(env))
+    identity = Identity.find_or_initialize_by uid: request.env['omniauth.auth']['uid'], provider: provider
+    set_identity_fields_for provider, identity, request.env['omniauth.auth']
+    user = connector.create_user_without_shortname(request.env['omniauth.auth'], identity, r_param(request.env))
     setup_memberships(user)
     set_flash_message(:notice, :success, kind: provider.to_s.capitalize) if is_navigational_format?
     sign_in_and_redirect_with_r user
@@ -107,13 +107,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def process_user(email)
     if current_user.blank?
-      @user.update r: r_param(env) if r_param(env).present?
+      @user.update r: r_param(request.env) if r_param(request.env).present?
       sign_in_and_redirect_with_r @user, event: :authentication
     elsif current_user.email != email
-      flash[:error] = t("users.authentications.email_mismatch") if is_navigational_format?
+      flash[:error] = t('users.authentications.email_mismatch') if is_navigational_format?
       redirect_to root_path
     elsif @user == current_user
-      flash[:error] = t("devise.failure.already_authenticated") if is_navigational_format?
+      flash[:error] = t('devise.failure.already_authenticated') if is_navigational_format?
       redirect_to root_path
     end
   end

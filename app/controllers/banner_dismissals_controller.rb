@@ -3,7 +3,8 @@ class BannerDismissalsController < AuthorizedController
 
   def create
     dismissal = BannerDismissal.new banner_dismissal_params
-                                        .merge!(user: current_user)
+                                      .to_h
+                                      .merge!(user: current_user)
     authorize dismissal, :create?
     respond_to do |format|
       if dismissal.save

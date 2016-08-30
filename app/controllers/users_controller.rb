@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       flash[:error]= 'User not found'
       request.env['HTTP_REFERER'] ||= root_path
       respond_to do |format|
-        format.html { redirect_to :back }
+        format.html { redirect_back(fallback_location: root_path) }
         format.json { render json: 'Error: user not found' }
       end
     end
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     successfully_updated =
       if email_changed || permit_params[:password].present? || @user.invitation_token.present?
         if @user.update_with_password(permit_params)
-          sign_in(@user, bypass: true)
+          bypass_sign_in(@user)
           UserMailer.delay.user_password_changed(@user) if @user.valid_password?(permit_params[:password])
         end
       else
@@ -168,12 +168,12 @@ class UsersController < ApplicationController
 
       respond_to do |format|
         flash[:error] = t('errors.general') unless success.present?
-        format.html { redirect_to :back }
+        format.html { redirect_back(fallback_location: root_path) }
       end
     else
       Bugsnag.notify(RuntimeError.new("Invalid locale #{params[:locale]} (#{locale})"))
       flash[:error] = t('errors.general')
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -192,14 +192,14 @@ class UsersController < ApplicationController
   end
 
   def permit_params
-    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes(true))
+    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes(true)).to_h
     merge_photo_params(pp, @user.class)
     merge_placement_params(pp, User)
     pp
   end
 
   def passwordless_permit_params
-    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes)
+    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes).to_h
     merge_photo_params(pp, @user.class)
     merge_placement_params(pp, User)
     pp

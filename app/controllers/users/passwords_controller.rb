@@ -1,5 +1,5 @@
 class Users::PasswordsController < Devise::PasswordsController
-  skip_filter :require_no_authentication, only: :create, if: :no_password_required?
+  skip_before_action :require_no_authentication, only: :create, if: :no_password_required?
 
   def create
     if no_password_required?
