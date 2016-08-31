@@ -82,7 +82,6 @@ gem 'sidetiq', '~> 0.7.0'
 gem 'sidekiq-logging-json',
     git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',
     ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
-gem 'sinatra', '>= 2.0.0.beta2'
 gem 'render_anywhere', require: false
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.6.3'
@@ -138,7 +137,6 @@ end
 
 group :development, :test do
   gem 'rubocop', '~> 0.39.0'
-  gem 'mailcatcher', '~> 0.6.2'
   gem 'spring', '~> 1.7.2'
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
