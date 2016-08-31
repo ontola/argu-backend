@@ -4,6 +4,7 @@ require 'test_helper'
 class ProfilesControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers, ProfilesHelper
 
+  let!(:freetown) { create(:forum, name: 'freetown') }
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
 

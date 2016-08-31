@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class MotionsController < AuthorizedController
-  include NestedResourceHelper
+  include NestedResourceHelper, MotionsHelper, StateGenerators::ModelConverters
   skip_before_action :authorize_action, :check_if_member, only: :index
 
   def index
@@ -38,7 +38,14 @@ class MotionsController < AuthorizedController
       @motion
     )
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
-    @vote ||= Vote.new
+    @vote ||= Vote.new(voteable: @motion)
+
+    add_to_state(
+      authenticated_resource.class_name,
+      currentId: authenticated_resource.id,
+      records: [motion_item(authenticated_resource)])
+    add_to_state 'votes',
+                 records: [vote_item(@vote)]
 
     respond_to do |format|
       format.html # show.html.erb

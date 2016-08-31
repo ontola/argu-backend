@@ -19,7 +19,7 @@ RSpec.feature 'Signup', type: :feature do
     click_link motion.title
     expect(page).to have_content(motion.content)
 
-    click_link 'Neutral'
+    click_on_vote 'Neutral'
     expect(page).to have_content 'Sign up'
 
     click_link 'Log in with Facebook'

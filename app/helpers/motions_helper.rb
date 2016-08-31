@@ -31,19 +31,14 @@ module MotionsHelper
 
   def motion_vote_props(actor, motion, vote, opts = {})
     localized_react_component({
-      objectType: 'motion',
-      objectId: motion.id,
+      voteableType: 'motion',
+      voteableId: motion.id,
       currentVote: vote.try(:for) || 'abstain',
       vote_url: motion_show_vote_path(motion),
       total_votes: motion.total_vote_count,
       buttonsType: opts.fetch(:buttons_type, 'big'),
       actor: actor_props(actor),
-      distribution: motion_vote_counts(motion),
-      percent: {
-        pro: motion.votes_pro_percentage,
-        neutral: motion.votes_neutral_percentage,
-        con: motion.votes_con_percentage
-      }
+      distribution: motion_vote_counts(motion)
     }.merge(opts))
   end
 

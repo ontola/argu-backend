@@ -3,7 +3,6 @@
                name: seolized_title(@motion),
                description: seolized_description(@motion),
                image: @motion.default_cover_photo&.url || image_url('logo-social.png')
-
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
     .cover-image.bg-img[style="background-image: url('#{@motion.default_cover_photo&.url(:cover)}'); "]
@@ -12,7 +11,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: @motion }
-      .motion-votes= react_component_store 'BigVoteContainer', props: motion_combi_vote_props(current_profile, @motion, @vote), **prerender_options
+      .motion-votes= react_component_store 'BigVoteApp'
 - if @motion.blog_posts.present?
   .col-1
     =render partial: 'happenings/timeline',

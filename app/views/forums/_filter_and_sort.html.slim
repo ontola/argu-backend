@@ -1,0 +1,33 @@
+/.center
+    ul.btns-list--subtle
+      li= react_component_store 'Expander', props: {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}
+#filter-and-sort.filter-and-sort
+
+  /- if @forum.featured_tags.present?
+    #tags
+      ul.tags[itemprop="keywords"]
+        a[class="tag" data-filter="filterByTag" data-filter-value="" data-forum-path="#{forum_path(@forum)}"]
+          .span.fa.fa-eraser
+        - @forum.featured_tags.each do |tag|
+          li
+            a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-turbolinks="false"]= tag
+  #sorts
+    .btns-list--subtle.btns-subtle
+      li
+        ul= react_component_store 'HyperDropdown', props: sort_items
+  #display
+    .btns-list--subtle.btns-subtle
+      li
+        ul= react_component_store 'HyperDropdown', props: display_settings_items
+  - if active_for_user?(:type_filter, current_user)
+    #type
+      .btns-list--subtle.btns-subtle
+        li
+          ul= react_component_store 'HyperDropdown', props: filter_items
+      /ul.tags.tags-type
+        li
+          a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
+        li
+          a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
+        li
+          a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')

@@ -1,6 +1,6 @@
 module Argu
   class NotAUserError < StandardError
-    attr_accessor :forum, :redirect
+    attr_accessor :forum, :redirect, :body
 
     # @param [Hash] options
     # @option options [Forum] forum The forum for the request
@@ -9,6 +9,7 @@ module Argu
     def initialize(options = {})
       @forum = options[:forum]
       @redirect = options[:r]
+      @body = options[:body]
 
       message = I18n.t('devise.failure.unauthenticated')
       super(message)

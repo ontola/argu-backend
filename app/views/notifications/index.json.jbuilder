@@ -1,5 +1,6 @@
 json.notifications do
-  json.unread @unread
+  json.unreadCount @unread
+  json.page params[:page] || 1
   json.lastNotification @notifications.first && @notifications.first.created_at
   json.from_time @from_time
   json.notifications @notifications do |notification|

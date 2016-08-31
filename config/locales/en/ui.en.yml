@@ -1,0 +1,5 @@
+en:
+  ui:
+    load_more: "Load more"
+    no_more_type: "No more %{type}"
+    loading: "Loading.."

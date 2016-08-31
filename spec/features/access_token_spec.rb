@@ -20,7 +20,7 @@ RSpec.feature 'Access tokens', type: :feature do
 
     expect(page).to have_content('content')
 
-    click_link 'Neutral'
+    click_on_vote 'Neutral'
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'

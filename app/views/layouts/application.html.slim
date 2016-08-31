@@ -1,3 +1,4 @@
+-initialize_shared_store
 doctype html
 html[class="no-js"]
   head[itemscope itemtype="http://schema.org/WebSite"]
@@ -10,8 +11,17 @@ html[class="no-js"]
     =render 'layouts/meta'
     meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
 
-    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
-    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
+    =env_javascript_include_tag(hot: %w(http://localhost:3500/vendor-bundle.js))
+
+    / These do use turbolinks
+    =env_javascript_include_tag(static: 'application_static',
+
+                                hot: 'application_non_webpack',
+                                'data-turbolinks-track' => 'reload')
+
+    / These do not use turbolinks, so no data-turbolinks-track
+      This is to load the hot assets.
+    =env_javascript_include_tag(hot: %w(http://localhost:3500/app-bundle.js))
 
     =stylesheet_link_tag 'application', :media => 'all'
     - if request.original_url.include? developers_path
@@ -28,7 +38,9 @@ html[class="no-js"]
     - if current_user && current_user.profile.has_role?(:staff)
       =render partial: 'staff_sign'
     #fb-root
-    =render partial: 'navbar', permanent: 'navbar'
+    =react_component_store 'NavbarApp'
+    - if collect_announcements.present?
+      =render partial: 'announcements/announcement', collection: collect_announcements
     .wrapper
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User Password', type: :feature do
+  let!(:freetown) { create(:forum, name: 'freetown') }
   let(:user) { create(:user) }
   let(:user_omni_both) do
     user = create(:user)
@@ -65,7 +66,7 @@ RSpec.feature 'User Password', type: :feature do
       fill_in 'user_password', with: new_password
       click_button 'Log in'
     end
-    expect(page).to have_current_path info_path(:about)
+    expect(page).to have_current_path forum_path(:freetown)
     expect(page).to have_content 'Welcome back!'
   end
 

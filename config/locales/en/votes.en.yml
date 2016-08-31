@@ -13,7 +13,7 @@ en:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
     type:
-      pro: "I'm in favor"
+      pro: "I'm in favour"
       neutral: "Neutral"
       con: "I'm against"
     plural: "Votes"

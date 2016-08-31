@@ -1,0 +1,155 @@
+/* global Bugsnag, fetch*/
+import Alert from './Alert';
+import React from 'react';
+import Select from 'react-select';
+import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+
+const FETCH_TIMEOUT_AMOUNT = 500;
+
+const propTypes = {
+  addLabelText: React.PropTypes.string,
+  className: React.PropTypes.string,
+  mouseDown: React.PropTypes.func,
+  mouseEnter: React.PropTypes.func,
+  mouseLeave: React.PropTypes.func,
+  option: React.PropTypes.object.isRequired,
+  renderFunc: React.PropTypes.func,
+};
+
+export const ProfileOption = React.createClass({
+  handleMouseDown(e) {
+    this.props.mouseDown(this.props.option, e);
+  },
+
+  handleMouseEnter(e) {
+    this.props.mouseEnter(this.props.option, e);
+  },
+
+  handleMouseLeave(e) {
+    this.props.mouseLeave(this.props.option, e);
+  },
+
+  render() {
+    const { className, option: { obj } } = this.props;
+
+    return (
+      <div
+        className={className}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        onMouseDown={this.handleMouseDown}
+      >
+        <img className="Select-item-result-icon" height="25em" src={obj.image} />
+        {obj.label} ({obj.value})
+      </div>
+    );
+  },
+});
+
+ProfileOption.propTypes = propTypes;
+
+const SingleValue = props => {
+  const obj = props.value;
+
+  const item = !obj
+        ? props.placeholder
+        : (
+    <div>
+      <img className="Select-item-result-icon" height="25em" src={obj.image} />
+      {obj.label} ({obj.value})
+    </div>
+  );
+
+  return (
+    <div className="Select-placeholder">
+      {item}
+    </div>
+  );
+};
+
+SingleValue.propTypes = {
+  placeholder: React.PropTypes.string,
+  value: React.PropTypes.object,
+};
+
+export { SingleValue };
+
+export const NewMembership = React.createClass({
+  propTypes: {
+    display_name: React.PropTypes.string,
+    image: React.PropTypes.string,
+    thing: React.PropTypes.string,
+    things: React.PropTypes.string,
+  },
+
+  getInitialState() {
+    this.currentFetchTimer = 0;
+    return {
+      displayName: this.props.display_name,
+      image: this.props.image,
+    };
+  },
+
+  componentWillUnmount() {
+    window.clearTimeout(this.currentFetchTimeout);
+  },
+
+  loadOptions(input, callback) {
+    input = input.toLowerCase();
+    if (!input.length) {
+      return callback(null, {
+        options: [],
+        complete: false,
+      });
+    }
+
+    window.clearTimeout(this.currentFetchTimeout);
+    this.currentFetchTimeout = window.setTimeout(() => {
+      fetch('/profiles.json', safeCredentials({
+        method: 'POST',
+        body: JSON.stringify({
+          q: input,
+          thing: this.props.thing,
+          things: this.props.things,
+        }),
+      }))
+        .then(statusSuccess)
+        .then(json)
+        .then(data => {
+          callback(null, {
+            options: data.profiles.map(profile => ({
+              id: profile.id.toString(),
+              value: profile.shortname,
+              label: profile.name,
+              image: profile.profile_photo.avatar.url,
+            })),
+            complete: false,
+          });
+        })
+        .catch(e => {
+          Alert('Server error occured, please try again later', 'alert', true);
+          Bugsnag.notifyException(e);
+          callback();
+        });
+    }, FETCH_TIMEOUT_AMOUNT);
+  },
+
+  filterOptions(results, filter, currentValues) {
+    return results || currentValues;
+  },
+
+  render() {
+    return (
+      <Select
+        name="shortname"
+        placeholder="Select user"
+        matchProp="any"
+        ignoreCase
+        filterOptions={this.filterOptions}
+        optionComponent={ProfileOption}
+        singleValueComponent={SingleValue}
+        asyncOptions={this.loadOptions}
+      />
+    );
+  },
+});

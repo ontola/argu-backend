@@ -1,4 +1,4 @@
-FROM fletcher91/ruby-vips-qt-unicorn:latest
+FROM fletcher91/ruby-vips-qt-unicorn:2.3.1
 ARG C66=true
 
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
@@ -46,8 +46,8 @@ ENV AWS_ID ''
 ENV AWS_KEY ''
 ENV FRESHDESK_SECRET ''
 
-RUN npm install
-RUN npm run build:production
+RUN cd client && npm install; exit 0
+RUN cd client && RAILS_ENV=production NODE_ENV=development C66=$C66 DEVISE_SECRET=dummy npm run build:production
 
 RUN bundle exec rake RAILS_ENV=production C66=$C66 DEVISE_SECRET=dummy assets:precompile
 

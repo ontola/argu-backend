@@ -1,0 +1,5 @@
+nl:
+  ui:
+    load_more: "Laad meer"
+    no_more_type: "Geen oudere %{type}"
+    loading: "Bezig.."

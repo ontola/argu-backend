@@ -1,0 +1,55 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "extends": "airbnb",
+  "root": true,
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "__DEV__": true,
+    "__SERVER__": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "templateStrings": true
+    }
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "0.15.0"
+    }
+  },
+  "rules": {
+    "valid-jsdoc": "error",
+
+    // Code style
+    "space-unary-ops": ["error", { "words": true, "nonwords": false }],
+    "no-magic-numbers": ["error", {
+      "ignore": [
+        -1, 0, 1,
+        200, 201, 202, 203, 204,
+        300, 301, 302, 303, 304,
+        400, 401, 402, 403, 404, 429,
+        500, 501, 502, 503, 504]
+    }],
+    "no-shadow": "error",
+    "no-invalid-this": "error",
+    "no-unmodified-loop-condition": "error",
+    "no-undef-init": "error",
+    "no-inline-comments": "error",
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptions": ["Record", "Alert"]
+      }
+    ]
+  }
+}

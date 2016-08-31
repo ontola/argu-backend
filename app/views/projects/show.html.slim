@@ -19,7 +19,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
         ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
           -if current_user.present?
             li
-              ul = react_component_store 'HyperDropdown', props: follow_dropdown_items(project)
+              ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(project)
           =crud_menu_item(project)
           - if project.forum.visibility
             li.share-menu
@@ -31,7 +31,10 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     -unless project.is_published?
       =render partial: 'application/publish', locals: {resource: project}
     -unless project.phases.blank? && project.latest_blog_post(policy(project).update?).blank?
-      =render partial: 'happenings/timeline', locals: {resource: project, show_unpublished: policy(project).update?, current_happening: project.latest_blog_post(policy(project).update?)}
+      =render partial: 'happenings/timeline',
+              locals: { resource: project,
+                        show_unpublished: policy(project).update?,
+                        current_happening: project.latest_blog_post(policy(project).update?)}
   header
     h2=t('discussions.plural')
   - if @items.present?

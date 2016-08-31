@@ -7,9 +7,8 @@ module MenuHelper
     if current_user.present? && policy(resource).update?
       content_tag :li do
         content_tag :ul do
-          react_component 'HyperDropdown',
-                          crud_menu_options(resource, additional_items),
-                          prerender: true
+          react_component_store 'HyperDropdown',
+                                props: crud_menu_options(resource, additional_items)
         end
       end
     end

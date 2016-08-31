@@ -73,6 +73,18 @@ module UsersHelper
     end
   end
 
+  def user_state
+    if current_user.blank? && get_access_tokens.blank?
+      'guest'
+    elsif current_user.blank? && get_access_tokens.present?
+      'spectator'
+    elsif current_user.present?
+      'user'
+    else
+      'undefined'
+    end
+  end
+
   # Set user_cap to -1 to disable the cap
   def within_user_cap?
     if instance_variable_defined?(:@_cap)

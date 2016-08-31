@@ -8,7 +8,9 @@
         .form
           p= t('pages.settings.managers.transfer.confirm.body_html')
 
-        =semantic_form_for @page, url: transfer_page_path(@page), method: :put, html: {class: 'confirm'} do |f|
+        =react_component_store 'PageTransferFormApp',
+            props: {organisation: @page.url, authenticityToken: form_authenticity_token}
+        /=semantic_form_for @page, url: transfer_page_path(@page), method: :put, html: {class: 'confirm'} do |f|
           p= t('pages.settings.managers.transfer.confirm.repeat')
           =f.inputs do
             =f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @page.url}

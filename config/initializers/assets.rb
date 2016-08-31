@@ -7,12 +7,15 @@ Rails.application.config.assets.version = ::VERSION
 # Rails.application.config.assets.paths << Emoji.images_path
 
 Rails.application.config.assets.initialize_on_precompile = true
+Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'webpack')
 Rails.application.config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
-Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w(
-  polyfill.js react-server.js components.js
-  mail.css testing.css turbolinks/dist/turbolinks.js
+  polyfill.js server-bundle.js components.js
+  mail.css testing.css
 )
+
+type = ENV['REACT_ON_RAILS_ENV'] == 'HOT' ? 'non_webpack' : 'static'
+Rails.application.config.assets.precompile += %W(application_#{type}.js application_#{type}.css)

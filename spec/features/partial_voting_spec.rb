@@ -8,7 +8,6 @@ RSpec.feature 'Partial Voting', type: :feature do
   ####################################
   # As Guest
   ####################################
-
   scenario 'Guest should vote on a motion' do
     nominatim_netherlands
 
@@ -16,13 +15,16 @@ RSpec.feature 'Partial Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('a', text: 'Disagree').click
+    click_on_vote "I'm against"
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'
-    expect(page).to have_current_path new_user_registration_path(r: new_motion_vote_path(subject,
-                                                                                         confirm: true,
-                                                                                         vote: {for: :con}))
+    expect(page)
+      .to(have_current_path(
+            new_user_registration_path(
+              r: new_motion_vote_path(subject,
+                                      confirm: true,
+                                      vote: {for: :con}))))
 
     user_attr = attributes_for(:user)
     within('#new_user') do
@@ -43,7 +45,7 @@ RSpec.feature 'Partial Voting', type: :feature do
       click_button 'Next'
     end
 
-    click_button 'Disagree'
+    click_button "I'm against"
 
     expect(page).to have_current_path(motion_path(subject))
     expect(page).to have_css('.btn-con[data-voted-on=true]')
@@ -61,7 +63,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'Disagree').click
+    click_on_vote "I'm against"
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit question_path(question)
@@ -80,7 +82,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'Disagree').click
+    click_on_vote "I'm against"
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit question_path(question)

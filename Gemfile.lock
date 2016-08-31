@@ -6,20 +6,6 @@ GIT
     multimap (1.1.4)
 
 GIT
-  remote: https://github.com/reactjs/react-rails
-  revision: 58842d4d06cf4a7f993a112edbd3ef82272a659a
-  ref: 58842d4d06cf4a7f993a112edbd3ef82272a659a
-  branch: master
-  specs:
-    react-rails (1.6.0)
-      babel-transpiler (>= 0.7.0)
-      coffee-script-source (~> 1.8)
-      connection_pool
-      execjs
-      rails (>= 3.2)
-      tilt
-
-GIT
   remote: https://github.com/st0012/Sidekiq-Logging-JSON.git
   revision: 08098971d5baa75f05bb3b9d53d2d0e811d0ebc1
   ref: 08098971d5baa75f05bb3b9d53d2d0e811d0ebc1
@@ -253,6 +239,8 @@ GEM
       fast_stack
     font-awesome-rails (4.6.3.1)
       railties (>= 3.2, < 5.1)
+    foreman (0.82.0)
+      thor (~> 0.19.1)
     formtastic (3.1.4)
       actionpack (>= 3.2.13)
     geokit (1.10.0)
@@ -307,7 +295,7 @@ GEM
       addressable
       faraday
       multi_json
-    libv8 (3.16.14.13)
+    libv8 (5.0.71.48.3)
     license_finder (2.0.4)
       bundler
       httparty
@@ -326,6 +314,14 @@ GEM
       pg
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    mailcatcher (0.6.2)
+      activesupport (>= 4.0.0, < 5)
+      eventmachine (= 1.0.8)
+      mail (~> 2.3)
+      sinatra (~> 1.2)
+      skinny (~> 0.2.3)
+      sqlite3 (~> 1.3)
+      thin (~> 1.5.0)
     mailgun_rails (0.7.0)
       actionmailer (>= 3.2.13)
       json (>= 1.7.7)
@@ -339,6 +335,8 @@ GEM
     mime-types (2.99.2)
     mimemagic (0.3.1)
     mini_portile2 (2.1.0)
+    mini_racer (0.1.3)
+      libv8 (~> 5.0)
     minitest (5.9.0)
     minitest-bang (1.0.4)
       minitest (>= 4.7.5)
@@ -459,9 +457,15 @@ GEM
     rake (11.2.2)
     rake-compiler (0.9.5)
       rake
+    react_on_rails (6.0.4)
+      addressable
+      connection_pool
+      execjs (~> 2.5)
+      foreman
+      rails (>= 3.2)
+      rainbow (~> 2.1)
     redcarpet (3.3.4)
     redis (3.2.2)
-    ref (2.0.0)
     render_anywhere (0.0.12)
       rails (>= 3.0.7)
     request_store (1.2.1)
@@ -586,9 +590,10 @@ GEM
       json
       net-http-persistent
       selenium-webdriver
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
+    thin (1.5.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -640,7 +645,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.10.0.rc3)
+  active_model_serializers (~> 0.10.2)
   active_record_query_trace
   acts-as-taggable-on (~> 4.0.0)
   acts_as_commentable_with_threading (~> 2.0.0)
@@ -697,6 +702,7 @@ DEPENDENCIES
   license_finder
   logstasher
   ltree_hierarchy
+  mailcatcher (~> 0.6.2)
   mailgun_rails (= 0.7.0)
   meta_request (~> 0.4.0)
   minitest-bang
@@ -723,7 +729,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-i18n (~> 5.0.0)
   rails3-jquery-autocomplete (~> 1.0.14)
-  react-rails!
+  react_on_rails (~> 6.0.4)
   redcarpet (~> 3.3.4)
   redis (~> 3.2.0)
   render_anywhere
@@ -754,7 +760,6 @@ DEPENDENCIES
   squirm_rails
   stackprof
   testingbot
-  therubyracer (~> 0.12.2)
   tzinfo-data
   uglifier (>= 2.5.3)
   unicorn (= 5.0.1)

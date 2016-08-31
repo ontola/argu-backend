@@ -124,6 +124,8 @@ class PagesController < ApplicationController
     @page = Page.find_via_shortname params[:id]
     authorize @page, :transfer?
 
+    add_to_state :form, k: 'v'
+
     respond_to do |format|
       format.html { render }
       format.js { render layout: false}

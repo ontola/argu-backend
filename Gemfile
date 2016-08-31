@@ -6,7 +6,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>5.0.0.1'
-gem 'active_model_serializers', '~> 0.10.0.rc3'
+gem 'active_model_serializers', '~> 0.10.2'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
@@ -74,7 +74,6 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips'
-# gem 'rmagick', '2.14.0'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
 gem 'carrierwave-aws', '~> 1.0.1'
@@ -91,7 +90,8 @@ gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails', '~> 4.6.3'
 gem 'babel-transpiler'
 gem 'redcarpet', '~> 3.3.4'
-# gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
+
+gem 'mini_racer'
 
 ################## User management ########################
 gem 'devise', '~> 4.2.0'
@@ -107,11 +107,7 @@ gem 'bugsnag', '~> 4.2.1'
 gem 'rolify', '~> 3.4.1'
 
 ################## Front-end ########################
-# gem 'react-rails', '~> 1.6.0'
-gem 'react-rails',
-    git: 'https://github.com/reactjs/react-rails',
-    branch: 'master',
-    ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
+gem 'react_on_rails', '~> 6.0.4'
 
 group :test do
   gem 'minitest-rails', '~> 3.0.0'
@@ -142,6 +138,7 @@ end
 
 group :development, :test do
   gem 'rubocop', '~> 0.39.0'
+  gem 'mailcatcher', '~> 0.6.2'
   gem 'spring', '~> 1.7.2'
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
@@ -165,8 +162,6 @@ group :development do
 end
 
 group :production, :staging do
-  gem 'libv8', '~> 3.16.14.13'
-  gem 'therubyracer', '~> 0.12.2'
   gem 'unicorn', '5.0.1'
   gem 'rack-test', '~> 0.6.2'
 end

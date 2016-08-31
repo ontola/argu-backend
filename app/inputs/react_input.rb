@@ -1,24 +1,35 @@
 class ReactInput < Formtastic::Inputs::SelectInput
+  attr_reader :request, :controller
+
+  def initialize(*opts)
+    context = opts.find { |i| defined?(i.controller) }
+    @request = context.try(:request) || opts[0]
+    @controller = context.try(:controller) || opts[1]
+    super(*opts)
+  end
+
   class InputReactComponent
-    include React::Rails::ViewHelper
+    include ReactOnRailsHelper
     include ActionView::Helpers
     include ActionView::Context
 
-    def initialize
-      new_helper = React::Rails::ViewHelper.helper_implementation_class.new
-      new_helper.setup(self)
-      @__react_component_helper = new_helper
+    attr_reader :request, :controller
+
+    def initialize(*opts)
+      context = opts.find { |i| defined?(i.controller) }
+      @request = context.try(:request) || opts[0]
+      @controller = context.try(:controller) || opts[1]
     end
 
     def render_react_component(component, props = {}, opts = {})
-      react_component(component, props, opts)
+      react_component(component, props: props, **opts)
     end
   end
 
   def to_html
     input_wrapping do
       label_html <<
-        render_react_component(@options[:component], react_render_options, prerender: true)
+        render_react_component(@options[:component], react_render_options)
     end
   end
 
@@ -42,6 +53,8 @@ class ReactInput < Formtastic::Inputs::SelectInput
   end
 
   def render_react_component(component, props = {}, opts = {})
-    InputReactComponent.new.render_react_component(component, props, opts)
+    InputReactComponent
+      .new(request, controller)
+      .render_react_component(component, props, opts)
   end
 end

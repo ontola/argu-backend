@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  include StateGenerators::ModelConverters
   geocode_ip_address
 
   def home
@@ -6,6 +7,14 @@ class StaticPagesController < ApplicationController
     if signed_in? || within_user_cap?
       if current_user && policy(current_user).staff?
         @activities = policy_scope(Activity).loggings.order(created_at: :desc).limit(10)
+        add_to_state 'motions',
+                     records: @activities
+                                .select { |a| activity_motion_filter(a) }
+                                .map { |a| motion_mapper(a) }
+        add_to_state 'votes',
+                     records: @activities
+                                .select { |a| a.trackable.is_a?(Vote) }
+                                .map { |a| vote_item(a.trackable) }
         render #stream: true
       else
         redirect_to (preferred_forum.presence || info_url('about'))
@@ -61,7 +70,15 @@ class StaticPagesController < ApplicationController
 
   private
 
+  def activity_motion_filter(a)
+    a.trackable.is_a?(Motion) || a.trackable.is_a?(Vote) && a.trackable.voteable.is_a?(Motion)
+  end
+
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public
+  end
+
+  def motion_mapper(a)
+    motion_item(a.trackable.is_a?(Motion) ? a.trackable : a.trackable.voteable)
   end
 end

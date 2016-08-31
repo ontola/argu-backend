@@ -1,5 +1,5 @@
 class QuestionsController < AuthorizedController
-  include NestedResourceHelper
+  include NestedResourceHelper, MotionsHelper, StateGenerators::ModelConverters
 
   def show
     scope = authenticated_resource!
@@ -11,10 +11,17 @@ class QuestionsController < AuthorizedController
 
     if current_user.present?
       @user_votes = Vote.where(voteable: scope, voter: current_profile).eager_load!
+      vvotes = @user_votes.map { |vote| vote_item(vote) }
+      add_to_state 'votes',
+                   records: vvotes
     end
 
     @motions = policy_scope(scope)
                  .page(show_params[:page])
+
+    mmotions = @motions.map { |motion| motion_item(motion) }
+    add_to_state 'motions',
+                 records: mmotions
 
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource!}} # show.html.erb

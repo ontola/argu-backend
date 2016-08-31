@@ -5,22 +5,6 @@ module ForumsHelper
     t("forums.application_form.#{value}")
   end
 
-  def forum_selector_items(guest= false)
-    sections = []
-
-    sections << forum_membership_section if current_user.present?
-    sections << forum_discover_section
-
-    {
-        title: t('forums.plural'),
-        fa: 'fa-group',
-        sections: sections,
-        defaultAction: discover_forums_path,
-        dropdownClass: 'navbar-forum-selector',
-        triggerClass: 'navbar-item navbar-forums'
-    }
-  end
-
   def forum_membership_section
     {
         title: t('forums.my'),

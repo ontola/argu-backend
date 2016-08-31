@@ -10,7 +10,8 @@
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
       - if current_user.present?
         li
-          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@argument, follow_types: [:reactions, :never])
+          ul= react_component_store 'HyperDropdown',
+              props: follow_dropdown_items(@argument, follow_types: [:reactions, :never])
       =crud_menu_item(@argument)
       - if @argument.forum.visibility
         li

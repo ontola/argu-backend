@@ -1,4 +1,4 @@
-.box.box-grid.blog_post[id=blog_post.identifier class="#{'trashed' if blog_post.is_trashed?}" data-created-at=blog_post.created_at data-updated-at=blog_post.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
+.box.box-grid.blog_post[id=blog_post.identifier class=status_classes_for(blog_post) data-created-at=blog_post.created_at data-updated-at=blog_post.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
   =link_to blog_post_path(blog_post)
     =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
     =link_to blog_post_path(blog_post) do

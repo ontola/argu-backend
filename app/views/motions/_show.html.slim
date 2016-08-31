@@ -9,7 +9,7 @@
   section
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
     - unless local_assigns[:hide_vote_buttons] || current_profile && current_profile.profileable.is_a?(Page)
-      .motion-votes= react_component_store 'SmallVoteContainer', props: motion_vote_props(current_profile, model, user_vote_for(model), buttonsType: 'subtle'), **prerender_options
+      .motion-votes= react_component_store 'SmallVoteApp', props: { voteableType: 'motions', voteableId: model.id }
   - if model.top_arguments_pro.present? || model.top_arguments_con.present?
     section.section--no-top-padding
       ul.box-list.box-list--arguments.box-list--icons

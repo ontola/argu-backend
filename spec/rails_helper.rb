@@ -138,6 +138,8 @@ RSpec.configure do |config|
     config.allow_url '//www.youtube.com/embed/*'
     config.allow_url 'http://example.com/embed/*'
     config.allow_url '//www.gravatar.com/*'
+    config.allow_url '//cdn.polyfill.io/v2/*'
+    config.timeout = 10
   end
 
   config.before(:each) do

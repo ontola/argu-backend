@@ -1,3 +1,4 @@
+-initialize_shared_store
 doctype html
 html[class="no-js"]
   head[itemscope itemtype="http://schema.org/WebSite"]
@@ -8,8 +9,16 @@ html[class="no-js"]
 
     =render 'layouts/meta'
 
-    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
-    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
+    =env_javascript_include_tag(hot: %w(http://localhost:3500/vendor-bundle.js ))
+
+    / These do use turbolinks
+    =env_javascript_include_tag(static: 'application_static',
+        hot: 'application_non_webpack',
+        'data-turbolinks-track' => 'reload')
+
+    / These do not use turbolinks, so no data-turbolinks-track
+          This is to load the hot assets.
+    =env_javascript_include_tag(hot: %w(http://localhost:3500/app-bundle.js))
 
     / unless current_user.blank?
     =stylesheet_link_tag 'application', :media => 'all'
@@ -21,7 +30,7 @@ html[class="no-js"]
       =stylesheet_link_tag 'testing'
   body
     =render partial: 'alerts'
-    =render 'closed/navbar'
+    =react_component_store 'NavbarApp'
     .wrapper
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')

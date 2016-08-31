@@ -249,7 +249,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'member should post a new motion' do
-    login_as(member, scope: :user)
+    sign_in member
 
     create_motion_for_question
   end

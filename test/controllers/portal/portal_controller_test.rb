@@ -3,6 +3,7 @@ require 'test_helper'
 class Portal::PortalControllerTest < ActionController::TestCase
   include Devise::Test::ControllerHelpers
 
+  let!(:freetown) { create(:forum, name: 'freetown') }
   let(:user) { create(:user) }
   let(:staff) { create(:user, :staff) }
 

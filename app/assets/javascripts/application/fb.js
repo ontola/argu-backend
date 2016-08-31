@@ -1,14 +1,16 @@
-window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '269911176456825', // App ID
-    channelUrl : 'http://www.argu.nl/channel.html', // Channel File
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
-  });
+if (typeof window !== 'undefined') {
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '269911176456825', // App ID
+        channelUrl : 'http://www.argu.nl/channel.html', // Channel File
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+      });
 
-  // Additional initialization code here
-};
+      // Additional initialization code here
+    };
+}
 
 // Load the SDK Asynchronously
 (function(d){

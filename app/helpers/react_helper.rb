@@ -1,7 +1,15 @@
 module ReactHelper
+  include ForumsHelper, ::StateGenerators::NavbarAppHelper, ::StateGenerators::SessionStateHelper,
+          ReactOnRailsHelper
+
+  def react_component_store(name, **opts)
+    initialize_shared_store
+    react_component(name, **opts)
+  end
+
   def add_to_state(key, value)
     if initial_js_state[key].is_a?(Hash)
-      initial_js_state[key].merge(value)
+      initial_js_state[key].merge!(value)
     else
       initial_js_state[key] = value
     end
@@ -41,27 +49,22 @@ module ReactHelper
     initial_js_state[key] = value
   end
 
-  def react_component_store(name, **opts)
-    props = opts.delete(:props)
-    options = opts.presence || {prerender: true}
-    react_component(name, props, options)
-  end
-
-  def render_params_from_props(props)
-    return props, prerender_options
-  end
-
-  def prerender_options
-    {
-      prerender: {
-        initial_state: initial_js_state
-      }
-    }
-  end
-
   private
+
+  def initialize_shared_store
+    return if @_argu_store_initialized == self
+    @_argu_store_initialized = self
+    add_to_state 'session', session_state
+    add_to_state 'navbarApp', navbar_state
+    add_to_state 'notifications', notifications_state
+    hydrate_store
+  end
 
   def initial_js_state
     @initial_js_state ||= HashWithIndifferentAccess.new
+  end
+
+  def hydrate_store
+    redux_store('arguStore', props: initial_js_state, defer: true)
   end
 end

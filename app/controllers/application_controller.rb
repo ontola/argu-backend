@@ -3,8 +3,9 @@ require 'argu/not_authorized_error'
 require 'argu/not_a_user_error'
 
 class ApplicationController < ActionController::Base
-  include Argu::RuledIt, ActorsHelper, ApplicationHelper, PublicActivity::StoreController,
-          AccessTokenHelper, NamesHelper, UsersHelper, GroupResponsesHelper, NestedAttributesHelper
+  include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper,
+          PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
+          GroupResponsesHelper, NestedAttributesHelper, HeaderHelper, ReactHelper
   helper_method :current_profile, :show_trashed?,
                 :authenticated_context, :collect_announcements
 
@@ -251,13 +252,15 @@ class ApplicationController < ActionController::Base
                }
       end
       format.json do
+        f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
+        error_hash = {
+          type: :error,
+          error_id: 'NOT_A_USER',
+          message: exception.body,
+          original_request: f.filter(params)
+        }.merge(exception.body)
         render status: 401,
-               json: {
-                 notifications: [{
-                   type: :error,
-                   message: exception.message
-                 }]
-               }
+               json: error_hash.merge(notifications: [error_hash])
       end
       format.html { redirect_to new_user_session_path(r: exception.r), alert: exception.message }
     end
