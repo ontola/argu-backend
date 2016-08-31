@@ -1,5 +1,6 @@
 require 'bcrypt'
 require 'bcrypt/engine'
+require 'stubborn_cookie'
 
 module ApplicationHelper
   include ActivityStringHelper, NamesHelper, UsersHelper, StubbornCookie, MarkdownHelper,

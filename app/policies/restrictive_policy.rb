@@ -1,3 +1,5 @@
+require 'exception_to_the_rule'
+
 class RestrictivePolicy
   include AccessTokenHelper, TuplesHelper
   prepend ExceptionToTheRule

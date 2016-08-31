@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'argu/not_a_member_error'
+require 'argu/not_a_user_error'
 
 class AuthorizedController < ApplicationController
   before_action :check_if_registered,

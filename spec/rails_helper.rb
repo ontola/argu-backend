@@ -13,7 +13,8 @@ require 'capybara/poltergeist'
 require 'testingbot'
 require 'testingbot/capybara'
 require 'webmock/rspec'
-require 'argu/test_helpers/test_mocks'
+require 'argu/test_helpers'
+require 'argu/test_helpers/rspec_helpers'
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.

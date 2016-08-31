@@ -1,3 +1,5 @@
+require 'argu/render/html'
+
 module MarkdownHelper
   def markdown_to_html(markdown)
     Redcarpet::Markdown.new(

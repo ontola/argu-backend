@@ -14,8 +14,7 @@ require 'sidekiq/testing'
 require 'minitest/pride'
 require 'minitest/reporters'
 require 'webmock/minitest'
-require 'argu/test_helpers/test_mocks'
-require 'argu/test_helpers/trait_listener'
+require 'argu/test_helpers'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 

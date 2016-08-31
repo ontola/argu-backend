@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'gravatar'
 
 class PhotoUploader < CarrierWave::Uploader::Base
   include ::CarrierWave::Backgrounder::Delay

@@ -1,3 +1,5 @@
+require 'argu/activity_string'
+
 module ActivityStringHelper
   include NamesHelper, ProfilesHelper
 

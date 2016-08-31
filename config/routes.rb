@@ -1,3 +1,4 @@
+require 'argu/destroy_constraint'
 ####
 # Routes
 # a: arguments

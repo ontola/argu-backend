@@ -1,4 +1,4 @@
-require 'redis'
+require 'argu/redis'
 
 $redis   = Argu::Redis.redis_instance
 $rollout = Rollout.new($redis)

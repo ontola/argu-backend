@@ -1,3 +1,6 @@
+require 'stubborn_cookie/hash_methods'
+require 'stubborn_cookie/kv_methods'
+require 'stubborn_cookie/list_methods'
 
 module StubbornCookie
   ALLOWED_SET_KEYS = %w(hide_video banners)
