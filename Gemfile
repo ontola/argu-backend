@@ -157,10 +157,6 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1' ###!
   gem 'coffee-rails', '~> 4.2.1'
-  gem 'capistrano', '~> 3.3.3'
-  gem 'capistrano-rails', '~> 1.1.3'
-  gem 'capistrano-bundler', '~> 1.1.3'
-  gem 'capistrano-rvm', '~> 0.1.2'
   gem 'yard'
   gem 'yard-activesupport-concern'
   gem 'web-console', '~> 3.1.1'
