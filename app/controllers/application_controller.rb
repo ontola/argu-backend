@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_profile, :show_trashed?,
                 :authenticated_context, :collect_announcements
 
-  protect_from_forgery with: :exception
+  protect_from_forgery prepend: true, with: :exception
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -185,7 +185,7 @@ class ApplicationController < ActionController::Base
   # For Devise
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :r, :access_tokens, shortname_attributes: [:shortname]])
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email, :password, :r])
     devise_parameter_sanitizer.permit(:accept_invitation, keys: [shortname_attributes: [:shortname]])
   end
 

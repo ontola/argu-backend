@@ -100,7 +100,7 @@ module StateGenerators
                         dual_profile_url(profile),
                         fa: 'user'),
               link_item(t('profiles.edit.title'), dual_profile_edit_url(profile), fa: 'pencil'),
-              link_item(t('users.settings'), settings_url, fa: 'gear'),
+              link_item(t('users.settings.title'), settings_url, fa: 'gear'),
               drafts_index,
               page_index,
               forum_management,
