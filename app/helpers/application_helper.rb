@@ -146,7 +146,7 @@ module ApplicationHelper
       googlePlus: ShareHelper.googleplus_share_url(url),
       email: ShareHelper.email_share_url(url, title: resource.display_name)
     }
-    share_urls[:whatsapp] = ShareHelper.whatsapp_share_url(url) if browser.mobile?
+    share_urls[:whatsapp] = ShareHelper.whatsapp_share_url(url) if browser.device.mobile?
 
     {
       title: t('share'),

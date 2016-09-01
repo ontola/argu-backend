@@ -1,5 +1,5 @@
 javascript:
   document.documentElement.className = document.documentElement.className.replace("no-js","js");
 script[src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default|gated|always,Intl|gated,Promise|always|gated,fetch|always|gated,Element.prototype.closest"]
--if !browser.modern? || (browser.ie? && browser.version.to_i != 0 && browser.version.to_i < 11) || browser.ios?
+-if !browser.modern? || (browser.ie? && browser.version.to_i != 0 && browser.version.to_i < 11) || browser.platform.ios?
   =javascript_include_tag 'polyfill'

@@ -3,11 +3,12 @@
 #
 Browser.modern_rules.clear
 Browser.modern_rules << lambda do |b|
-  (b.mobile? || b.tablet?) && (b.chrome? && b.version.to_i >= 51 || b.safari? && b.version.to_i >= 9.1)
+  (b.device.mobile? || b.device.tablet?) &&
+    (b.chrome? && b.version.to_i >= 51 || b.safari? && b.version.to_i >= 9.1)
 end
 # Browser.modern_rules << -> b { !b.ie? } # IE11 doesn't support Promise/A+
 Browser.modern_rules << lambda do |b|
-  !(b.mobile? && b.tablet?) && \
+  !(b.device.mobile? && b.device.tablet?) && \
     b.chrome?  && b.version.to_i >= 51 || \
     b.firefox? && b.version.to_i >= 47 || \
     b.opera?   && b.version.to_i >= 38 || \
