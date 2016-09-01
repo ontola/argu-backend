@@ -112,10 +112,6 @@ class ProfilesController < ApplicationController
     pm
   end
 
-  def photo_params_nesting_path
-    []
-  end
-
   def setup_permit_params
     pp = params.require(:user).permit(*policy(@resource || User).permitted_attributes(true))
     merge_photo_params(pp, @resource.class)

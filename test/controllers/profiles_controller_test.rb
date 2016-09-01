@@ -10,6 +10,33 @@ class ProfilesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
+  test 'user should put setup' do
+    sign_in user
+
+    put :setup!,
+        params: {
+          id: user.url,
+          user: attributes_for(:user).merge(
+            profile_attributes: {
+              id: user.profile.id,
+              default_profile_photo_attributes: {
+                id: user.profile.default_profile_photo.id,
+                image: fixture_file_upload('profile_photo.png', 'image/png'),
+                used_as: 'profile_photo'
+              },
+              default_cover_photo_attributes: {
+                image: fixture_file_upload('cover_photo.jpg', 'image/jpg'),
+                used_as: 'cover_photo'
+              }
+            }
+          )
+        }
+    user.profile.reload
+    assert_equal 'profile_photo.png', user.profile.default_profile_photo.image_identifier
+    assert_equal 'cover_photo.jpg', user.profile.default_cover_photo.image_identifier
+    assert_redirected_to user_path(user)
+  end
+
   test 'user should get edit profile with own profile' do
     sign_in user
 
