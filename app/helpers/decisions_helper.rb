@@ -2,35 +2,35 @@
 
 # Helper methods for decisions
 module DecisionsHelper
-  # @param [Decision] decision
+  # @param [Decision, nil] decision The decision to get the actor for. Nil for the current actor.
   # @param [Boolean] create_link Set to true to link the name to the user's Profile
   # @return [String]
-  def assigned_name(decision, create_link)
-    if decision.user_id.present?
+  def assigned_name(user, group, create_link)
+    if user.present?
       user =
         if create_link
-          link_to(decision.user.profile.display_name, user_path(decision.user))
+          link_to(user.profile.display_name, user_path(user))
         else
-          decision.user.profile.display_name
+          user.profile.display_name
         end
-      "#{user} (#{decision.group.name_singular})"
+      "#{user} (#{group.name_singular})"
     else
-      decision.group.display_name
+      group.display_name
     end
   end
 
   # @param [ActiveRecord::Base] resource An ActiveRecord with has_many :decisions
   # @return [Hash]
   def decision_items(resource)
-    if policy(resource.last_decision).is_actor?
+    if resource.assigned_to_user?(current_user)
       items = Decision.actioned_keys.map do |state|
         link_item(t("decisions.action.#{state}"),
-                  edit_decision_path(resource.last_decision, state: state),
+                  new_motion_decision_path(resource.edge, state: state),
                   fa: decision_icon(Decision.new(state: state)))
       end
     else
       items = [link_item(t('decisions.action.forwarded'),
-                         edit_decision_path(resource.last_decision, state: 'forwarded'),
+                         new_motion_decision_path(resource.edge, state: 'forwarded'),
                          fa: decision_icon(Decision.new(state: 'forwarded')))]
     end
 
@@ -38,14 +38,26 @@ module DecisionsHelper
       title: t('decisions.take_decision'),
       fa: 'fa-gavel',
       sections: [items: items],
-      defaultAction: motion_decisions_path(resource)
+      defaultAction: motion_decisions_path(resource.edge)
     }
+  end
+
+  def decision_path(decision)
+    motion_decision_path(decision.decisionable, decision.step)
+  end
+
+  def decision_log_url(decision)
+    motion_decision_log_path(decision.decisionable, decision.step)
+  end
+
+  def edit_decision_url(decision)
+    edit_motion_decision_url(decision.decisionable, decision.step)
   end
 
   # @return [String]
   def decision_state(decision)
-    if decision.forwarded? && decision.forwarded_to.persisted?
-      t('decisions.forwarded_to', to: assigned_name(decision.forwarded_to, false))
+    if decision.forwarded? && decision.persisted?
+      t('decisions.forwarded_to', to: assigned_name(decision.forwarded_user, decision.forwarded_group, false))
     elsif decision.state_changed?
       t("decisions.action.#{decision.state}")
     else

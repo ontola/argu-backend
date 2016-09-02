@@ -114,24 +114,27 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Motion
     assert_differences([['Decision.count', 1], ['Notification.count', 2]]) do
-      put decision_path(motion.last_decision),
-          decision: attributes_for(:decision,
-                                   state: 'forwarded',
-                                   content: 'Content',
-                                   forwarded_to_attributes: {
-                                     user_id: manager.id,
-                                     group_id: freetown.managers_group.id},
-                                   happening_attributes: {happened_at: Time.current})
+      post motion_decisions_path(motion.edge),
+           params: {
+             decision: attributes_for(:decision,
+                                      state: 'forwarded',
+                                      forwarded_user_id: manager.id,
+                                      forwarded_group_id: freetown.managers_group.id,
+                                      content: 'Content',
+                                      happening_attributes: {happened_at: Time.current})
+           }
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
     # Notification for creator, follower and news_follower of Motion
-    assert_differences([['Decision.count', 0], ['Notification.count', 3]]) do
-      put decision_path(motion.reload.last_decision),
-          decision: attributes_for(:decision,
-                                   state: 'approved',
-                                   content: 'Content',
-                                   happening_attributes: {happened_at: Time.current})
+    assert_differences([['Decision.count', 1], ['Notification.count', 3]]) do
+      post motion_decisions_path(motion.edge),
+           params: {
+             decision: attributes_for(:decision,
+                                      state: 'approved',
+                                      content: 'Content',
+                                      happening_attributes: {happened_at: Time.current})
+           }
     end
     assert_equal Notification.last.notification_type, 'decision'
   end

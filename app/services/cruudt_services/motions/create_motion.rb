@@ -5,12 +5,6 @@ class CreateMotion < PublishedCreateService
 
   def initialize(parent, attributes: {}, options: {})
     super
-    resource.decisions << Decision
-                            .pending
-                            .new(
-                              group: resource.forum.managers_group,
-                              forum: resource.forum)
-    resource.decisions.last.build_edge(user: resource.publisher, parent: parent)
   end
 
   private

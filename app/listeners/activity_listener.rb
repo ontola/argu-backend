@@ -43,8 +43,8 @@ class ActivityListener
     end
 
     define_method "#{method}_decision_successful" do |resource|
-      action = resource.previous_changes[:state].present? ? resource.state : method
-      create_activity(resource, resource.decisionable, action)
+      action = method == 'create' ? resource.state : method
+      create_activity(resource, resource.decisionable.owner, action)
     end
   end
 

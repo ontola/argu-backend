@@ -5,8 +5,8 @@ class EdgeableCreateService < CreateService
   # @param [Edge] parent The parent edge or its id
   def initialize(parent, attributes: {}, options: {})
     @edge = initialize_edge(parent, options)
-    super
     walk_parents
+    super
   end
 
   def resource

@@ -21,16 +21,14 @@ class DecisionPolicy < RestrictivePolicy
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
   def decision_is_assigned?
-    if user.present? && user.profile.groups.include?(record.group)
-      group_grant if record.user.nil? || user == record.user
-    end
+    group_grant if record.decisionable.owner.assigned_to_user?(user)
   end
 
   def permitted_attributes
     attributes = super
     attributes << %i(content)
     attributes << [happening_attributes: [:id, :happened_at]]
-    attributes << [:state, forwarded_to_attributes: [:user_id, :group_id]] if record.pending?
+    attributes << [:state, :forwarded_user_id, :forwarded_group_id] if record.new_record?
     attributes
   end
 
@@ -46,17 +44,25 @@ class DecisionPolicy < RestrictivePolicy
     rule parent_policy.show?
   end
 
-  def update?
-    if record.forwarded? || record.pending?
-      rule decision_is_assigned?, is_moderator?, is_manager?, is_owner?, super
+  def new?
+    create?
+  end
+
+  def create?
+    if record.forwarded?
+      rule decision_is_assigned?, is_manager?, is_owner?, super
     else
       rule decision_is_assigned?
     end
   end
 
+  def update?
+    rule decision_is_assigned?, is_creator?, is_manager?, is_owner?, super
+  end
+
   private
 
   def parent_policy
-    Pundit.policy(context, record.decisionable)
+    Pundit.policy(context, record.decisionable.owner)
   end
 end

@@ -7,10 +7,11 @@ en:
       con: "is against"
       neutral: "is neutral about"
     decisions:
-      approve: "%{owner} passed %{parent}"
-      forward: "%{owner} forwarded the decision on %{parent}"
-      forward_to_you: "%{owner} forwarded the decision on %{parent} to you"
-      reject: "%{owner} rejected %{parent}"
+      approved: "%{owner} passed %{parent}"
+      forwarded:
+        to_any: "%{owner} forwarded the decision on %{parent}"
+        to_you: "%{owner} forwarded the decision on %{parent} to you"
+      rejected: "%{owner} rejected %{parent}"
       update: "%{owner} updated a decision on %{parent}"
     default:
       convert: "%{owner} converted %{subject} into a %{type}"

@@ -1,8 +1,6 @@
 require 'test_helper'
 
-class DecisionsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
-
+class DecisionsControllerTest < ActionDispatch::IntegrationTest
   define_freetown
   let!(:owner) { create(:user) }
   let!(:page) { create(:page, owner: owner.profile) }
@@ -18,24 +16,27 @@ class DecisionsControllerTest < ActionController::TestCase
   end
   let!(:motion) do
     create(:motion,
-           traits_with_args: {
-             assigned: {
-               assigned_to_group: actor_membership.group,
-               assigned_to_user: actor
-             }
-           },
            parent: freetown.edge)
   end
-  let!(:approved_motion) do
-    create(:motion,
-           :approved,
-           traits_with_args: {
-             assigned: {
-               assigned_to_group: actor_membership.group,
-               assigned_to_user: actor
-             }
+  let!(:forward) do
+    create(:decision,
+           parent: motion.edge,
+           happening_attributes: {
+             happened_at: DateTime.current
            },
-           parent: freetown.edge)
+           publisher: creator,
+           forwarded_user: actor,
+           forwarded_group: actor_membership.group,
+           state: Decision.states[:forwarded])
+  end
+  let(:approval) do
+    create(:decision,
+           parent: motion.edge,
+           happening_attributes: {
+             happened_at: DateTime.current
+           },
+           publisher: creator,
+           state: Decision.states[:approved])
   end
 
   ####################################
@@ -65,6 +66,11 @@ class DecisionsControllerTest < ActionController::TestCase
     general_decide 403
   end
 
+  test 'user should not patch update approved' do
+    sign_in user
+    general_update_approved 403, false
+  end
+
   ####################################
   # As Member
   ####################################
@@ -78,6 +84,21 @@ class DecisionsControllerTest < ActionController::TestCase
   test 'member should not patch approve' do
     sign_in member
     general_decide
+  end
+
+  test 'member should not patch update approved' do
+    sign_in member
+    general_update_approved 302, false
+  end
+
+  ####################################
+  # As Creator
+  ####################################
+  let(:creator) { create_member(freetown) }
+
+  test 'creator should patch update approved' do
+    sign_in creator
+    general_update_approved 302, true
   end
 
   ####################################
@@ -109,9 +130,9 @@ class DecisionsControllerTest < ActionController::TestCase
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
-  test 'actor should patch update approved' do
+  test 'actor should not patch update approved' do
     sign_in actor
-    general_update_approved 302, true
+    general_update_approved 302, false
   end
 
   ####################################
@@ -122,7 +143,15 @@ class DecisionsControllerTest < ActionController::TestCase
     create(:group_membership,
            parent: create(:group, parent: motion.forum.page.edge).edge,
            member: member.profile)
-    motion.last_decision.update_columns(group_id: Group.last.id, user_id: nil)
+    create(:decision,
+           parent: motion.edge,
+           happening_attributes: {
+             happened_at: DateTime.current
+           },
+           publisher: creator,
+           forwarded_user: nil,
+           forwarded_group: Group.last,
+           state: Decision.states[:forwarded])
     general_decide 302, true
   end
 
@@ -151,6 +180,11 @@ class DecisionsControllerTest < ActionController::TestCase
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
+  test 'manager should patch update approved' do
+    sign_in manager
+    general_update_approved 302, true
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -176,6 +210,11 @@ class DecisionsControllerTest < ActionController::TestCase
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
+  test 'staff should patch update approved' do
+    sign_in staff
+    general_update_approved 302, true
+  end
+
   private
 
   ####################################
@@ -183,94 +222,67 @@ class DecisionsControllerTest < ActionController::TestCase
   ####################################
 
   def general_show(response = 200, record = motion)
-    get :show,
-        id: record.last_decision
+    approval
+    get motion_decisions_path(record.edge)
 
-    assert_redirected_to motion_decisions_url(record)
+    assert_response response
   end
 
   def general_decide(response = 302, changed = false, state = 'approved')
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-    decision = motion.last_decision
-
     assert_differences([['Activity.count', changed ? 2 : 0]]) do
-      patch :update,
-            id: decision,
-            decision: attributes_for(:decision,
-                                     state: state,
-                                     content: 'Content',
-                                     happening_attributes: {happened_at: Time.current})
+      post  motion_decisions_path(motion.edge),
+            params: {
+              decision: attributes_for(:decision,
+                                       state: state,
+                                       content: 'Content',
+                                       happening_attributes: {happened_at: Time.current})
+            }
     end
     if changed
       motion.reload
       assert_equal state, motion.state
-      assert_equal state, decision.activities.last.action
+      assert_equal state, Decision.last.activities.last.action
     else
       assert_equal motion.state, 'pending'
     end
     assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call decision
-                       .updated_at
-                       .utc
-                       .iso8601(6),
-                     assigns(:update_service)
-                       .try(:resource)
-                       .try(:updated_at)
-                       .try(:utc)
-                       .try(:iso8601, 6)
-    elsif changed
-      assert false, 'Model changed when it should not have'
-    end
   end
 
   def general_forward(response = 302, changed = false, group_id = nil, user_id = nil)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-    decision = motion.last_decision
-
     assert_differences([['Activity.count', changed ? 2 : 0],
                         ['Decision.count', changed ? 1 : 0]]) do
-      patch :update,
-            id: decision,
-            decision: attributes_for(:decision,
-                                     decisionable: motion,
-                                     state: 'forwarded',
-                                     content: 'Content',
-                                     happening_attributes: {happened_at: Time.current},
-                                     forwarded_to_attributes: {
-                                       user_id: user_id,
-                                       group_id: group_id})
+      post motion_decisions_path(motion.edge),
+           params: {
+             decision: attributes_for(:decision,
+                                      decisionable: motion,
+                                      state: 'forwarded',
+                                      content: 'Content',
+                                      happening_attributes: {happened_at: Time.current},
+                                      forwarded_user_id: user_id,
+                                      forwarded_group_id: group_id)
+           }
     end
     assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call decision
-                       .updated_at
-                       .utc
-                       .iso8601(6),
-                     assigns(:update_service)
-                       .try(:resource)
-                       .try(:updated_at)
-                       .try(:utc)
-                       .try(:iso8601, 6)
-    elsif changed
-      assert false, 'Model changed when it should not have'
-    end
   end
 
   def general_update_approved(response = 302, changed = false)
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
-    decision = approved_motion.last_decision
-    assert_differences([['Activity.count', changed ? 1 : 0]]) do
-      patch :update,
-            id: decision,
+    approval
+    decision = motion.reload.last_decision
+    assert_differences([['Decision.count', 0], ['Activity.count', changed ? 1 : 0]]) do
+      put motion_decision_path(motion.edge, decision.step),
+          params: {
             decision: attributes_for(:decision,
                                      decisionable: motion,
                                      content: 'Changed content',
-                                     happening_attributes: {happened_at: Time.current})
+                                     happening_attributes: {
+                                       id: decision.happening.id,
+                                       happened_at: Time.current
+                                     })
+          }
     end
-    approved_motion.reload
-    assert_equal 'approved', approved_motion.state
-    assert_equal 'update', decision.activities.last.action
+    motion.reload
+    assert_equal 'approved', motion.state
     assert_response response
     if assigns(:update_service).try(:resource).present?
       ch_method.call decision
@@ -284,6 +296,10 @@ class DecisionsControllerTest < ActionController::TestCase
                        .try(:iso8601, 6)
     elsif changed
       assert false, 'Model changed when it should not have'
+    end
+    if changed
+      assert_equal 'Changed content', decision.reload.content
+      assert_equal 'update', decision.activities.last.action
     end
   end
 end

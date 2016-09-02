@@ -1,8 +1,8 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
-  include Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible,
-          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable, Loggable
+  include Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
+          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable, Decisionable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions
@@ -26,13 +26,9 @@ class Motion < ApplicationRecord
       .limit(5)
   end), class_name: 'Argument'
   has_many :arguments_plain, class_name: 'Argument'
-  has_many :decisions, as: :decisionable, dependent: :destroy
-  has_one :last_decision, -> {order(created_at: :desc)}, as: :decisionable, class_name: 'Decision'
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
-
-  delegate :state, to: :last_decision
 
   before_save :cap_title
 

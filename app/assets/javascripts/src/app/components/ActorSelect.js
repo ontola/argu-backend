@@ -102,11 +102,11 @@ export const ActorSelect = React.createClass({
     },
 
     handleChange (val) {
-        document.getElementById('decision_forwarded_to_attributes_group_id').value = val.split('.')[0];
+        document.getElementById('decision_forwarded_group_id').value = val.split('.')[0];
         if (val.split('.')[1] === undefined) {
-            document.getElementById('decision_forwarded_to_attributes_user_id').value = '';
+            document.getElementById('decision_forwarded_user_id').value = '';
         } else {
-            document.getElementById('decision_forwarded_to_attributes_user_id').value = val.split('.')[1];
+            document.getElementById('decision_forwarded_user_id').value = val.split('.')[1];
         }
     },
 

@@ -157,22 +157,6 @@ module Argu
         end
       end
 
-      # Sets the decision to approved
-      def approved
-        @resource.last_decision.happening { create(:activity, forum: @resource.forum) }
-        create(:activity,
-               forum: @resource.forum,
-               trackable: @resource.last_decision,
-               key: 'approve.happened')
-        @resource.last_decision.update_columns(state: Decision.states[:approved])
-      end
-
-      # Assigns the decision
-      def assigned(args)
-        @resource.last_decision.update_columns(group_id: args[:assigned_to_group].id,
-                                               user_id: args[:assigned_to_user].id)
-      end
-
       private
 
       def service_options

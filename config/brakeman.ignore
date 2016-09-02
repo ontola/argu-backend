@@ -20,25 +20,6 @@
       "note": "This results from a source copy of the Pundit methods, in practice letting the user call these should be safe since the public methods have no side effects."
     },
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "e2d7281c58192d93f7431e617c7786701049a59b77bd7d6aa5193c7f5594f7ee",
-      "message": "Possible SQL injection",
-      "file": "app/models/decision.rb",
-      "line": 11,
-      "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "where(\"key ~ '*.#{Decision.actioned_keys.join(\"|\")}'\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Decision",
-        "method": null
-      },
-      "user_input": "Decision.actioned_keys.join(\"|\")",
-      "confidence": "High",
-      "note": "The actioned_keys come straight from the states enum"
-    },
-    {
       "warning_type": "Session Setting",
       "warning_code": 29,
       "fingerprint": "f0ee1cc1980474c82a013645508f002dcc801e00db5592f7dd8cd6bdb93c73fe",

@@ -8,7 +8,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
     .cover-image.bg-img[style="background-image: url('#{decisionable.default_cover_photo&.url(:cover)}'); "]
   .col-1
-    div[data-intro= t('intro.motion.back')]= to_parent
+    div[data-intro= t('intro.motion.back')]= to_parent(decisionable)
     =render partial: 'contextualize/context_horizontal', locals: {item: decisionable, type: 'motion'}
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'motions/body', locals: { motion: decisionable }
@@ -16,25 +16,30 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     - if decisionable.state == 'pending'
       .box
         section
-          - if decisionable.last_decision.user_id.present?
-            p= "#{t('decisions.assigned.to_user')} #{assigned_name(decisionable.last_decision, true)}".html_safe
+          - if decisionable.assigned_user.present?
+            p= "#{t('decisions.assigned.to_user')} #{assigned_name(decisionable.assigned_user, decisionable.assigned_group, true)}".html_safe
           - else
-            p= "#{t('decisions.assigned.to_group')} '#{assigned_name(decisionable.last_decision, true)}'"
-          - if policy(decisionable.last_decision).update?
+            p= "#{t('decisions.assigned.to_group')} '#{assigned_name(decisionable.assigned_user, decisionable.assigned_group, true)}'"
+          - if policy(decisionable.new_decision).create?
             p
-              - if policy(decisionable.last_decision).is_actor?
+              - if decisionable.assigned_to_user?(current_user)
                 - Decision.actioned_keys.each do |state|
                   =link_to(t("decisions.action.#{state}"),
-                          edit_decision_path(decisionable.last_decision, state: state),
+                          new_motion_decision_path(decisionable.edge, state: state),
                           class: 'btn btn--smaller btn--neutral')
                   span &nbsp;
               - else
                 =link_to(t("decisions.forward"),
-                        edit_decision_path(decisionable.last_decision, state: 'forwarded'),
+                        new_motion_decision_path(decisionable.edge, state: 'forwarded'),
                         class: 'btn btn--smaller btn--neutral')
-    - decisionable.decisions.order(created_at: :desc).each do |d|
+    - if local_assigns[:new_decision]
       .box
-        - if d == decision
-          =render partial: 'decisions/form', locals: { decisionable: decisionable, decision: decision }
+        =semantic_form_for(new_decision, url: motion_decisions_path(decisionable.edge), class: 'decision_form') do |f|
+          =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: new_decision}
+    - decisionable.decisions.reverse.each do |d|
+      .box
+        - if d == local_assigns[:edit_decision]
+          =semantic_form_for(local_assigns[:edit_decision], url: motion_decision_path(decisionable.edge, local_assigns[:edit_decision].step), class: 'decision_form') do |f|
+            =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
         - elsif !d.pending?
           =render partial: d

@@ -1,11 +1,9 @@
-
+# frozen_string_literal: true
 class UpdateDecision < UpdateService
   include Wisper::Publisher
 
   def initialize(decision, attributes: {}, options: {})
     @decision = decision
-    resource.publisher = options[:publisher]
-    resource.creator = options[:creator]
     super
   end
 
@@ -21,15 +19,8 @@ class UpdateDecision < UpdateService
       obj.forum ||= resource.forum
       obj.owner ||= resource.creator
       obj.key ||= "#{resource.state}.happened"
-      obj.recipient ||= resource.decisionable
+      obj.recipient ||= resource.decisionable.owner
       obj.is_published ||= true
-    when Decision
-      obj.state ||= 0
-      obj.decisionable ||= resource.decisionable
-      obj.forum ||= resource.forum
-      obj.edge ||= obj.build_edge(
-        user: resource.decisionable.publisher,
-        parent: resource.decisionable.edge)
     end
   end
 end

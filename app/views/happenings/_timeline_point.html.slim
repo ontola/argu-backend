@@ -1,4 +1,4 @@
-=link_to polymorphic_url(happening.trackable), data: {remote: true}, class: generate_timeline_point_class(happening, active) do
+=link_to (happening.trackable.is_a?(Decision) ? motion_decision_path(happening.trackable.edge.parent, happening.trackable.step) : happening.trackable), data: {remote: true}, class: generate_timeline_point_class(happening, active) do
   span[class="fa fa-#{icon_for(happening.trackable)}"]
-  =link_to polymorphic_url(happening.trackable), data: {remote: true}, class: 'timeline-post-title' do
+  =link_to (happening.trackable.is_a?(Decision) ? motion_decision_path(happening.trackable.edge.parent, happening.trackable.step) : happening.trackable), data: {remote: true}, class: 'timeline-post-title' do
     span= happening.trackable.title

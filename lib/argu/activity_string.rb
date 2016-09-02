@@ -4,7 +4,7 @@ module Argu
     include ActionDispatch::Routing
     include Rails.application.routes.url_helpers
 
-    # Params:
+    # Generates an activity string for an activity in the sense of: 'Foo responded to your Bar'
     # @param [string] activity The Activity to generate the activity_string for
     # @param [User] user The User to generate the activity_string for
     # @param [bool] embedded_link Set to true to embed an anchor link (defaults to false)
@@ -15,12 +15,12 @@ module Argu
     end
 
     def to_s
-      default = I18n.t("activities.default.#{action}",
+      default = I18n.t(translation_key('activities.default'),
                        owner: owner_string,
                        type: type_string,
                        subject: subject_string,
                        parent: parent_string)
-      I18n.t("activities.#{@activity.trackable_type.tableize}.#{action}",
+      I18n.t(translation_key("activities.#{@activity.trackable_type.tableize}"),
              owner: owner_string,
              type: type_string,
              subject: subject_string,
@@ -31,14 +31,6 @@ module Argu
     end
 
     private
-
-    def action
-      if @activity.trackable_type == 'Decision' && @activity.trackable.forwarded_to&.user == @user
-        :forwarded_to_you
-      else
-        @activity.action
-      end
-    end
 
     # @return [String, nil] Singlar name of activity.trackable.group, as text
     def group_singular_string
@@ -75,7 +67,29 @@ module Argu
         else
           @activity.audit_data['trackable_name']
         end
-      @embedded_link && @activity.trackable.present? ? "[#{string}](#{url_for(@activity.trackable)})" : string.to_s
+      if @embedded_link && @activity.trackable.present?
+        url =
+          if @activity.object == 'decision'
+            if @activity.trackable.present? && @activity.recipient.present?
+              motion_decision_path(@activity.recipient.edge, id: @activity.trackable.step)
+            end
+          else
+            url_for(@activity.trackable)
+          end
+        "[#{string}](#{url})"
+      else
+        string.to_s
+      end
+    end
+
+    def sub_action_key
+      if @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
+        @activity.trackable.forwarded_user == @user ? :to_you : :to_any
+      end
+    end
+
+    def translation_key(base_key)
+      [base_key, @activity.action, sub_action_key].compact.join('.')
     end
 
     # @return [String] Type name of activity.trackable as bold text

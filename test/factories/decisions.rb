@@ -1,5 +1,12 @@
 FactoryGirl.define do
   factory :decision do
-    association :group
+    publisher { passed_in?(:publisher) ? publisher : create(:user) }
+    creator do
+      if passed_in?(:creator)
+        creator
+      else
+        publisher.present? ? publisher.profile : create(:profile)
+      end
+    end
   end
 end

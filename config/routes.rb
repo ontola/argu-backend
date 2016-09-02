@@ -40,8 +40,11 @@ Rails.application.routes.draw do
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
   concern :decisionable do
-    resources :decisions, only: :index
+    resources :decisions, path: 'decision', except: [:destroy] do
+      get :log, action: :log
+    end
   end
+
   concern :discussable do
     resources :discussions, only: [:new]
     resources :questions, path: 'q', only: [:index, :new, :create]
@@ -158,8 +161,6 @@ Rails.application.routes.draw do
               only: [:new, :index, :show, :create, :update, :edit]
     patch 'comments' => 'comments#create'
   end
-
-  resources :decisions, only: [:show, :update, :edit], concerns: [:loggable]
 
   resources :group_responses, only: [:show, :edit, :update, :destroy]
   resources :groups,

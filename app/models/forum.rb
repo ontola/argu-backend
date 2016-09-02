@@ -71,6 +71,14 @@ class Forum < ApplicationRecord
     page.owner
   end
 
+  def default_decision_group
+    managers_group
+  end
+
+  def default_decision_user
+    nil
+  end
+
   def display_name
     name
   end

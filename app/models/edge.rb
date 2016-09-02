@@ -19,6 +19,7 @@ class Edge < ActiveRecord::Base
            class_name: 'Edge',
            inverse_of: :parent,
            foreign_key: :parent_id
+  has_many :decisions, foreign_key: :decisionable_id, source: :decisionable, inverse_of: :decisionable
   has_many :follows,
            class_name: 'Follow',
            inverse_of: :followable,

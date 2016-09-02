@@ -1,26 +1,27 @@
-=semantic_form_for(decision, class: 'decision_form') do |f|
-  section
-    h3
-      span[class="fa fa-#{decision_icon(decision)}"]
-      span.icon-left= decision_state(decision)
-  section.smallpadded
-    =f.input :state, as: :hidden
-    - if decision.forwarded? && decision.state_was == 'pending'
-      =f.label t('decisions.forward_to')
-      =react_component 'ActorSelect', thing: "o/#{authenticated_context.page.url}", groups: group_select_options(authenticated_context)
-      - if decision.errors.present?
-        p.inline-errors.full-width=decision.errors.full_messages[0]
-      = f.semantic_fields_for :forwarded_to do |ff|
-        =ff.input :group_id, as: :hidden
-        =ff.input :user_id, as: :hidden
-    =f.semantic_fields_for :happening do |hf|
-      - if decision.approved? || decision.rejected?
-        =hf.input :happened_at, as: :datetime_picker, label: t('decisions.happened_at')
-      - else
-        =hf.input :happened_at, as: :hidden
-    =f.label t('decisions.explanation')
-    =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
-  .section.section--footer
-    =render partial: 'profiles/profile_current' if current_profile.present?
-    ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-      =f.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication')}}, label: t('publish')
+section
+  h3
+    span[class="fa fa-#{decision_icon(decision)}"]
+    span.icon-left= decision_state(decision)
+section.smallpadded
+  =f.input :state, as: :hidden
+  - if decision.forwarded? && decision.state_was == 'pending'
+    =f.label t('decisions.forward_to')
+    =react_component 'ActorSelect', thing: "o/#{decision.decisionable.owner.forum.page.url}", groups: group_select_options(decision.decisionable.owner.forum)
+    - if decision.errors.present?
+      p.inline-errors.full-width=decision.errors.full_messages[0]
+    =f.input :forwarded_group_id, as: :hidden
+    =f.input :forwarded_user_id, as: :hidden
+  =f.semantic_fields_for :happening do |hf|
+    - if decision.approved? || decision.rejected?
+      =hf.input :happened_at, as: :datetime_picker, label: t('decisions.happened_at')
+    - else
+      =hf.input :happened_at, as: :hidden
+  =f.label t('decisions.explanation')
+  =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
+.section.section--footer
+  =render partial: 'profiles/profile_current' if current_profile.present?
+  ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
+    - if decision.new_record?
+      =f.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication') }}, label: t('publish')
+    - else
+      =f.action :submit, as: :button, label: t('update')

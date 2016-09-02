@@ -13,7 +13,7 @@ module Argu
       module InstanceMethods
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i(argument blog_post comment forum group_response group_membership motion
-                            phase banner group project question vote).freeze
+                            phase banner group project question vote decision).freeze
 
         def assert_analytics_collected(category, action = nil, label = nil)
           assert_requested :post, 'https://ssl.google-analytics.com/collect' do |req|

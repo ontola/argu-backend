@@ -169,18 +169,18 @@ ActiveRecord::Schema.define(version: 20160919093414) do
   add_index "comments", ["creator_id"], name: "index_comments_on_creator_id", using: :btree
 
   create_table "decisions", force: :cascade do |t|
-    t.integer  "forum_id",                       null: false
-    t.integer  "group_id",                       null: false
-    t.integer  "user_id"
-    t.integer  "publisher_id"
-    t.integer  "creator_id"
-    t.text     "content",           default: "", null: false
-    t.integer  "state",                          null: false
-    t.integer  "decisionable_id",                null: false
-    t.string   "decisionable_type",              null: false
-    t.integer  "forwarded_to_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "forum_id",                           null: false
+    t.integer  "decisionable_id",                    null: false
+    t.integer  "forwarded_group_id"
+    t.integer  "forwarded_user_id"
+    t.integer  "publisher_id",                       null: false
+    t.integer  "creator_id",                         null: false
+    t.integer  "step",               default: 0,     null: false
+    t.text     "content",            default: "",    null: false
+    t.integer  "state",              default: 0,     null: false
+    t.boolean  "is_published",       default: false, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   create_table "documents", force: :cascade do |t|
@@ -792,11 +792,11 @@ ActiveRecord::Schema.define(version: 20160919093414) do
   add_foreign_key "comments", "forums"
   add_foreign_key "comments", "profiles", column: "creator_id"
   add_foreign_key "comments", "users", column: "publisher_id"
-  add_foreign_key "decisions", "decisions", column: "forwarded_to_id"
+  add_foreign_key "decisions", "edges", column: "decisionable_id"
   add_foreign_key "decisions", "forums"
-  add_foreign_key "decisions", "groups"
+  add_foreign_key "decisions", "groups", column: "forwarded_group_id"
   add_foreign_key "decisions", "profiles", column: "creator_id"
-  add_foreign_key "decisions", "users"
+  add_foreign_key "decisions", "users", column: "forwarded_user_id"
   add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
