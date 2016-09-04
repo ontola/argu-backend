@@ -73,7 +73,9 @@ gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'carrierwave-vips', path: '~/Developer/pro/ruby/carrierwave-vips'
+gem 'carrierwave-vips',
+    git: 'https://github.com/fletcher91/carrierwave-vips.git',
+    ref: '3b4305e063a30fbc009a9c92259010fa98af8a1e'
 gem 'ruby-vips', '~> 1.0.3'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'

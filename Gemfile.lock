@@ -6,6 +6,16 @@ GIT
     multimap (1.1.4)
 
 GIT
+  remote: https://github.com/fletcher91/carrierwave-vips.git
+  revision: 3b4305e063a30fbc009a9c92259010fa98af8a1e
+  ref: 3b4305e063a30fbc009a9c92259010fa98af8a1e
+  specs:
+    carrierwave-vips (1.0.6)
+      carrierwave
+      rmagick
+      ruby-vips (>= 1.0.0)
+
+GIT
   remote: https://github.com/st0012/Sidekiq-Logging-JSON.git
   revision: 08098971d5baa75f05bb3b9d53d2d0e811d0ebc1
   ref: 08098971d5baa75f05bb3b9d53d2d0e811d0ebc1
@@ -19,14 +29,6 @@ GIT
   ref: a04dfa0574d6f6d3306658470ce146ef1fe2de32
   specs:
     acts_as_follower (0.2.1)
-
-PATH
-  remote: ~/Developer/pro/ruby/carrierwave-vips
-  specs:
-    carrierwave-vips (1.0.6)
-      carrierwave
-      rmagick
-      ruby-vips (>= 1.0.0)
 
 GEM
   remote: https://rubygems.org/
