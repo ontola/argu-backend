@@ -18,12 +18,16 @@ export default class DataStore {
 
   formatEntity({ id, type, attributes, relationships }) {
     const entity = {};
-    // const normalizedAttributes = {};
 
     Object.assign(entity, { id });
-
     // Normalize all keys
-    Object.keys(attributes).forEach(key => this.toCamel(key));
+    Object.keys(attributes).forEach(key => {
+      const camel = this.toCamel(key);
+      if (key !== camel) {
+        attributes[camel] = attributes[key];
+        delete attributes[key];
+      }
+    });
     Object.assign(entity, attributes);
 
     // Check if relationships exist, if so add there ids in an array to the corresponding key

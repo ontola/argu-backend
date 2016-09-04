@@ -87,6 +87,7 @@ module ReactHelper
     unless defined?(@initial_js_state)
       @initial_js_state = []
       @initial_js_state << CurrentActor.new(
+        user_state: user_state,
         discover: discover - (memberships || []),
         memberships: memberships || []
       )
