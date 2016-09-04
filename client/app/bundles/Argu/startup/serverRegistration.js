@@ -16,6 +16,8 @@ import VoteStats from '../components/VoteStats';
 import { NewMembership } from '../components/NewMembership';
 import { MotionSelect } from '../components/_search';
 
+import MotionsApp from '../apps/MotionsApp';
+
 ReactOnRails.registerStore({
   arguStore: configureStore,
 });
@@ -24,6 +26,7 @@ ReactOnRails.register({
   BigVoteApp,
   CurrentProfile,
   HyperDropdown,
+  MotionsApp,
   MotionSelect,
   NavbarApp,
   NewMembership,

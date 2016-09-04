@@ -1,5 +1,6 @@
 // Common client-side webpack configuration used by webpack.hot.config and webpack.rails.config.
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
@@ -35,14 +36,26 @@ module.exports = {
       masonry: 'masonry-layout',
       'matches-selector/matches-selector': 'matches-selector/index',
       'eventEmitter/EventEmitter': 'wolfy87-eventemitter/EventEmitter',
+
+      actions: path.resolve('app/bundles/Argu/actions'),
+      components: path.resolve('app/bundles/Argu/components'),
+      containers: path.resolve('app/bundles/Argu/containers'),
+      helpers: path.resolve('app/bundles/Argu/helpers'),
+      models: path.resolve('app/bundles/Argu/records'),
+      react: path.resolve('./node_modules/react'),
+      state: path.resolve('app/bundles/Argu/state'),
     },
   },
   plugins: [
+    new ExtractTextPlugin('bundle.css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(nodeEnv),
       },
       TRACE_TURBOLINKS: devBuild,
+      'process.env.ELASTICSEARCH_URL': JSON.stringify(process.env.ELASTICSEARCH_URL),
+      __DEVELOPMENT__: process.env.NODE_ENV === 'development',
+      __PRODUCTION__: process.env.NODE_ENV === 'production',
     }),
     // https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk
     new webpack.optimize.CommonsChunkPlugin({

@@ -55,13 +55,7 @@ config.module.loaders.push(
   },
   {
     test: /\.scss$/,
-    loaders: [
-      'style',
-      'css?modules&importLoaders=3&localIdentName=[name]__[local]__[hash:base64:5]',
-      'postcss',
-      'sass',
-      'sass-resources',
-    ],
+    loader: 'style!css-loader!postcss-loader!sass-loader',
   }
 );
 

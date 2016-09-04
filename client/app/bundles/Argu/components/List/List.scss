@@ -1,0 +1,13 @@
+@import '../shared/config';
+
+.List {
+  &--horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    @include large {
+      justify-content: space-between;
+    }
+  }
+}

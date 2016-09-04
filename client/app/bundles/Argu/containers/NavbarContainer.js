@@ -30,7 +30,10 @@ class NavbarContainer extends Component {
 NavbarContainer.propTypes = propTypes;
 
 function mapStateToProps(state) {
-  return state.session;
+  const ca = state.getIn(['current-actors', 'items', 'currentactor']);
+  return {
+    userState: ca.get('userState')
+  };
 }
 
 export default connect(mapStateToProps)(NavbarContainer);

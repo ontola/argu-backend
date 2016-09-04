@@ -32,14 +32,14 @@ module StateGenerators
       sections << forum_membership_section if user.present?
       sections << forum_discover_section
 
-      {
-        title: t('forums.plural'),
-        fa: 'fa-group',
-        sections: sections,
-        defaultAction: discover_forums_path,
-        dropdownClass: 'navbar-forum-selector',
-        triggerClass: 'navbar-item navbar-forums'
-      }
+      # {
+      #   title: t('forums.plural'),
+      #   fa: 'fa-group',
+      #   sections: sections,
+      #   defaultAction: discover_forums_path,
+      #   dropdownClass: 'navbar-forum-selector',
+      #   triggerClass: 'navbar-item navbar-forums'
+      # }
     end
 
     def guest_navbar

@@ -1,0 +1,12 @@
+@import '../shared/config';
+
+.Box {
+  background-color: color('white');
+  border-radius: $border-radius-base;
+  box-shadow: $box-shadow;
+  margin: units('large');
+}
+
+.Box__content {
+  padding: units('small', 'large');
+}

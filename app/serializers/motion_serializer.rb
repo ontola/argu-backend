@@ -1,4 +1,5 @@
 class MotionSerializer < BaseSerializer
   include Loggable::Serlializer
-  attributes :display_name
+  attribute :display_name, key: :title
+  attribute :content, key: :text
 end

@@ -1,0 +1,24 @@
+@import '../shared/config';
+
+.Detail {
+  align-items: center;
+  display: inline-flex;
+  height: unit('large');
+  margin-bottom: unit('xx-small');
+  margin-right: unit('x-small');
+}
+
+.Detail__text {
+  color: color('grey', 'mid-light');
+  font-size: font-size('small');
+}
+
+.Detail__icon {
+  align-items: center;
+  border-radius: 100%;
+  display: flex;
+  height: unit('large');
+  justify-content: center;
+  margin-right: unit('xx-small');
+  width: unit('large');
+}

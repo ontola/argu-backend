@@ -1,0 +1,66 @@
+/// Grabs a color from the $colors map and returns the 'base' tone, unless tone is explicitly declared.
+/// @param {String} $color Value used to match a nested map in $colors
+/// @param {String} $tone [base] Specifies the tone of the color
+/// @example
+///   color('blue')
+///   color('grey', 'x-light')
+@function color($color, $tone: 'base') {
+  @if map-has-key($colors, $color) {
+    @if map-has-key(map-get($colors, $color), $tone) {
+      @return map-get(map-get($colors, $color), $tone);
+    }
+    @warn 'Unknown `#{$tone}` in `#{$color}`';
+    @return null;
+  }
+  @warn 'Unknown `#{$color}` in $colors.';
+  @return null;
+}
+
+/// Abstraction layer for font sizing
+/// @param {String} $size [medium] Font-size
+/// @example
+///   font-size('xx-large')
+@function font-size($size: 'medium') {
+  @if map-has-key($font-sizes, $size) {
+    @return map-get($font-sizes, $size);
+  }
+
+  @warn 'Unknown `#{$size}` in $font-sizes.';
+  @return null;
+}
+
+/// Abstraction layer for unit-scales to be used for margins, paddings, line-height
+/// @param {String} $size [medium] Unit-size
+/// @example
+///   units('x-large')
+@function units($vertical: 'none', $horizontal: 'none') {
+  @if not map-has-key($units, $vertical) {
+    @warn 'Unknown `#{$vertical}` in $units.';
+  }
+  @if not map-has-key($units, $horizontal) {
+    @warn 'Unknown `#{$horizontal}` in $units.';
+  }
+  @return map-get($units, $vertical) map-get($units, $horizontal);
+}
+
+@function unit($size: 'none') {
+  @if not map-has-key($units, $size) {
+    @warn 'Unknown `#{$size}` in $units.';
+  }
+
+  @return map-get($units, $size);
+}
+
+/// Abstraction layer for z-indices
+/// @param {String} $key The name of the element to find the z-index for
+/// @returns {Int} Z-index for key
+/// @example
+///   z(progressbar)
+@function z($key) {
+  @if map-has-key($z-layers, $key) {
+    @return map-get($z-layers, $key);
+  }
+
+  @warn 'Unknown `#{$key}` in $z-layers.';
+  @return null;
+}

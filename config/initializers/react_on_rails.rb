@@ -30,7 +30,7 @@ ReactOnRails.configure do |config|
   config.server_renderer_timeout = 50 # seconds
   # The following options can be overriden by passing to the helper method:
   # Default is false
-  config.prerender = true
+  config.prerender = false
   # Default is true for development, off otherwise
   config.trace = Rails.env.development?
   ################################################################################

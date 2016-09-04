@@ -1,0 +1,31 @@
+// BREAKPOINTS
+$responsive-small-breakpoint: 900px;
+
+@mixin large {
+  @media (min-width: #{$responsive-small-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin small-only {
+  @media (max-width: #{$responsive-small-breakpoint}) {
+    @content;
+  }
+}
+
+// ARROWS
+@mixin sk-arrow-down($size, $color: #666) {
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-top: $size solid $color;
+  height: 0;
+  width: 0;
+}
+
+@mixin sk-arrow-right($size, $color: #666) {
+  border-bottom: $size solid transparent;
+  border-left: $size solid $color;
+  border-top: $size solid transparent;
+  height: 0;
+  width: 0;
+}

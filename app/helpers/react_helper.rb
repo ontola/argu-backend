@@ -1,18 +1,26 @@
 module ReactHelper
   include ForumsHelper, ::StateGenerators::NavbarAppHelper, ::StateGenerators::SessionStateHelper,
           ReactOnRailsHelper
+  
+  def add_to_state(model)
+    if model.is_a?(Array)
+      initial_js_state.concat(model)
+    elsif model.is_a?(Enumerable)
+      initial_js_state.concat(model.to_a)
+    else
+      initial_js_state << model
+    end
+  end
 
   def react_component_store(name, **opts)
     initialize_shared_store
     react_component(name, **opts)
   end
-
-  def add_to_state(key, value)
-    if initial_js_state[key].is_a?(Hash)
-      initial_js_state[key].merge!(value)
-    else
-      initial_js_state[key] = value
-    end
+  
+  def state_as_jsonapi
+    serializer = ActiveModel::Serializer::CollectionSerializer.new(initial_js_state)
+    adapter = ActiveModelSerializers::Adapter::JsonApi.new(serializer)
+    adapter.as_json
   end
 
   def localized_react_component(opts)
@@ -35,16 +43,6 @@ module ReactHelper
     }.merge! opts
   end
 
-  def merge_state(hash)
-    @initial_js_state = initial_js_state.merge(hash)
-  end
-
-  def merge_state_for_props(state, props)
-    {
-      initial_js_state: merge_state(state)
-    }.merge(props)
-  end
-
   def override_state(key, value)
     initial_js_state[key] = value
   end
@@ -54,17 +52,52 @@ module ReactHelper
   def initialize_shared_store
     return if @_argu_store_initialized == self
     @_argu_store_initialized = self
-    add_to_state 'session', session_state
-    add_to_state 'navbarApp', navbar_state
-    add_to_state 'notifications', notifications_state
+    # add_to_state 'session', session_state
+    # add_to_state 'navbarApp', navbar_state
+    # add_to_state 'notifications', notifications_state
     hydrate_store
+  end
+  
+  def discover(limit = 5)
+    return @ds if defined?(@ds)
+    
+    discover = Forum
+      .public_forums
+      .includes(:default_profile_photo, :shortname)
+      .where(shortnames: {shortname: %w(nederland utrecht houten hollandskroon feedback)})
+      .limit(limit)
+    add_to_state(discover)
+    @ds = discover.ids
+  end
+  
+  def memberships
+    return @ms if defined?(@ms)
+    if current_profile && current_profile.forum_ids
+      memberships =
+        Forum
+          .includes(:default_profile_photo, :shortname)
+          .where(id: current_profile.present? ? current_profile.forum_ids : [])
+          .limit(100)
+      add_to_state(memberships)
+      @ms = memberships.ids
+    end
   end
 
   def initial_js_state
-    @initial_js_state ||= HashWithIndifferentAccess.new
+    unless defined?(@initial_js_state)
+      @initial_js_state = []
+      @initial_js_state << CurrentActor.new(
+        discover: discover - (memberships || []),
+        memberships: memberships || []
+      )
+    end
+    @initial_js_state
   end
 
   def hydrate_store
-    redux_store('arguStore', props: initial_js_state, defer: true)
+    redux_store(
+      'arguStore',
+      props: state_as_jsonapi,
+      defer: true)
   end
 end

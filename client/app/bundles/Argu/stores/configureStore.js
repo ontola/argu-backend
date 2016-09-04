@@ -1,6 +1,8 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { apiMiddleware } from 'redux-api-middleware';
 
+import DataStore from '../middleware/utils/DataStore';
+import * as models from '../records';
 import {
   notAMemberFilter,
   notAUserFilter,
@@ -15,6 +17,17 @@ function reduxDevTools() {
 }
 
 export default function configureStore(initialState) {
+  const datastore = new DataStore(Object.values(models));
+  const state = {};
+  initialState.data.forEach(entity => {
+    const ent = datastore.formatEntity(entity);
+    if(typeof(state[ent.apiDesc.get("type")]) === "undefined") {
+      state[ent.apiDesc.get("type")] = []
+    }
+    state[ent.apiDesc.get("type")].push(ent)
+  });
+  initialState = state;
+  console.log('initialState', initialState);
   const store = createStore(
         rootReducer,
         initialState,

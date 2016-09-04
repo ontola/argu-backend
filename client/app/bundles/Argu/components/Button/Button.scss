@@ -1,0 +1,84 @@
+@import '../shared/config';
+
+.Button {
+  border: 0;
+  display: inline-block;
+  font-family: $font-family;
+  font-size: font-size('medium');
+  margin: 0;
+  padding: units('x-small', 'large');
+  transition: .1s box-shadow, .1s background-color;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  // Not sure about this one, since it may hurt accessibility.
+  // The annoying blue box only appears if the button has no action / href. - Joep
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 0 999px color('transparent', 'mid-dark');
+  }
+
+  &:active {
+    box-shadow: inset 0 0 0 999px color('transparent', 'dark');
+    transition: 0s box-shadow;
+  }
+}
+
+.Button--has-icon {
+  .Button__icon {
+    margin-right: 4px;
+  }
+}
+
+.Button--default {
+  background-color: color('pink');
+  border-radius: $border-radius-base;
+  color: color('white');
+}
+
+.Button--subtle {
+  background-color: color('grey', 'light');
+  border-radius: $border-radius-base;
+  color: color('grey', 'dark');
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 0 999px color('grey', 'light');
+  }
+
+  &:active {
+    box-shadow: inset 0 0 0 999px color('grey', 'x-light');
+  }
+}
+
+.Button--small {
+  font-size: font-size('small');
+  padding: units('xx-small', 'x-small');
+}
+
+.Button--box {
+  background-color: color('white');
+  border-right: 1px solid color('grey', 'x-light');
+  color: color('grey');
+  flex-grow: 1;
+
+  &:last-child {
+    border-right: 0;
+  }
+
+  &.Button--active {
+    background-color: color('grey', 'x-light');
+  }
+}
+
+@each $variant, $color in $button-variants-colors {
+  .Button--variant-#{$variant} {
+    color: color($color);
+  }
+}

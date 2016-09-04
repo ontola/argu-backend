@@ -43,15 +43,31 @@ function reviver(key, value) {
 }
 
 function generateInitialState(state = undefined) {
-  const finalState = state || typeof window !== 'undefined' ? window.__INITIAL_STATE__ : undefined;
-  const immutableInitialState = {};
-  Object
-        .keys(finalState || {})
-        .forEach(value => {
-          immutableInitialState[value] = Immutable.fromJS(finalState[value], reviver);
-        });
-  return immutableInitialState;
+  const initialState = state || typeof window !== 'undefined' ? window.__INITIAL_STATE__ : undefined;
+  const finalState = {};
+  const datastore = new DataStore(Object.values(models));
+
+  initialState.data.forEach(entity => {
+    const ent = datastore.formatEntity(entity);
+    if(typeof(finalState[ent.apiDesc.get("type")]) === "undefined") {
+      finalState[ent.apiDesc.get("type")] = []
+    }
+    finalState[ent.apiDesc.get("type")].push(ent)
+  });
+  return finalState;
 }
+
+// function generateInitialState(state = undefined) {
+//   debugger;
+//   const finalState = state || typeof window !== 'undefined' ? window.__INITIAL_STATE__ : undefined;
+//   const immutableInitialState = {};
+//   Object
+//         .keys(finalState || {})
+//         .forEach(value => {
+//           immutableInitialState[value] = Immutable.fromJS(finalState[value], reviver);
+//         });
+//   return immutableInitialState;
+// }
 
 const store = configureStore(generateInitialState());
 export default store;

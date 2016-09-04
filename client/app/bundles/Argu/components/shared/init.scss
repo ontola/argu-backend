@@ -1,0 +1,35 @@
+@import './reset';
+@import './config';
+
+body {
+  background-color: color('blue', 'x-light');
+  color: color('grey');
+  font-family: $font-family;
+  font-size: 14px;
+  line-height: $font-line-height;
+  margin: 0;
+
+  // Should match height of the Navbar
+  padding-top: 3em;
+
+  @include small-only {
+    font-size: 16px;
+  }
+}
+
+p {
+  margin: units('xx-small', 'none');
+}
+
+a {
+  text-decoration: none;
+}
+
+em {
+  background-color: color('pink', 'light');
+}
+
+::selection {
+  background-color: color('pink', 'light');
+  color: color('grey', 'dark');
+}

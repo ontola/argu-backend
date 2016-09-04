@@ -2,24 +2,23 @@
 import React, { Component, PropTypes } from 'react';
 import NavbarWrapper from './NavbarWrapper';
 import HyperDropdown from './HyperDropdown';
+import ForumSelectorContainer from '../containers/ForumSelectorContainer';
 
 const propTypes = {
-  forumSelector: PropTypes.object,
   infoDropdown: PropTypes.object,
 };
 
 class GuestNavbar extends Component {
   childrenLeft() {
-    const { forumSelector } = this.props;
     return [
-      <HyperDropdown {...forumSelector} />,
+      <ForumSelectorContainer />
     ];
   }
 
   childrenRight() {
     const { infoDropdown } = this.props;
+      //<HyperDropdown {...infoDropdown} />,
     return [
-      <HyperDropdown {...infoDropdown} />,
       <a href="/users/sign_in" id="sign_in" className="navbar-item center">
         <span className="fa fa-sign-in" />
         <span className="icon-left dont-hide">{I18n.t('sign_in')}</span>

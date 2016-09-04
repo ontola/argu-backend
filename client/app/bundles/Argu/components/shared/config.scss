@@ -1,0 +1,125 @@
+@import 'mixins';
+@import 'functions';
+
+$color-base-grey: rgb(128, 128, 128);
+$color-base-brown: rgb(134, 61, 61);
+$color-base-green: rgb(84, 127, 75);
+$color-base-blue: rgb(71, 86, 104);
+
+// The following linting errors are due to an old version of sass-lint in the linter-sass-lint plugin of atom.
+// Waiting for an update of this package.. https://github.com/AtomLinter/linter-sass-lint/pull/136
+// The linting errors below do NOT show up when using npm run lint:style, because sass-lint 1.9.0 is included in the package
+$colors: (
+  'black': (
+    'base': rgb(0, 0, 0),
+  ),
+  'blue': (
+    'dark': darken($color-base-blue, 20%),
+    'base': $color-base-blue,
+    'mid-light': lighten($color-base-blue, 5%),
+    'light': lighten($color-base-blue, 30%),
+    'x-light': rgb(238, 240, 242),
+  ),
+  'brown': (
+    'dark': rgb(104, 71, 71),
+    'base': $color-base-brown,
+    'light': lighten($color-base-brown, 50%),
+    'x-light': rgba($color-base-brown, .05),
+  ),
+  'green': (
+    'base': $color-base-green,
+    'light': lighten($color-base-green, 60%),
+    'x-light': rgba($color-base-green, .1),
+  ),
+  'grey': (
+    'x-dark': darken($color-base-grey, 80%),
+    'dark': darken($color-base-grey, 50%),
+    'mid-dark': darken($color-base-grey, 20%),
+    'base': $color-base-grey,
+    'mid-light': lighten($color-base-grey, 10%),
+    'light': lighten($color-base-grey, 30%),
+    'x-light': lighten($color-base-grey, 40%),
+  ),
+  'pink': (
+    'base': rgb(208, 2, 91),
+    'light': rgb(255, 192, 203),
+  ),
+  'transparent': (
+    'x-dark': rgba(0, 0, 0, .15),
+    'dark': rgba(0, 0, 0, .06),
+    'mid-dark': rgba(0, 0, 0, .03),
+    'base': rgba(255, 255, 255, .6),
+    'mid-light': rgba(255, 255, 255, .3),
+    'light': rgba(255, 255, 255, .15),
+    'x-light': rgba(255, 255, 255, .05),
+  ),
+  'white': (
+    'base': rgb(255, 255, 255),
+  ),
+);
+
+$drawer-overlay-background: rgba(71, 86, 104, .3);
+$button-variants-colors: (
+  'pro': 'green',
+  'neutral': 'grey',
+  'con': 'brown',
+);
+
+// FONTS
+$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-line-height: 1.5;
+$font-sizes: (
+  'xxx-large': 2.6em,
+  'xx-large': 1.8em,
+  'x-large': 1.2em,
+  'large': 1.125em,
+  'medium': 1em,
+  'small': .85em,
+  'x-small': .75em,
+);
+
+// UNITS
+$base-unit: 1rem;
+
+$units: (
+  'none': 0,
+  'x-large': $base-unit * 2,
+  'large': $base-unit * 1.3,
+  'medium': $base-unit,
+  'small': $base-unit * .75,
+  'x-small': $base-unit * .5,
+  'xx-small': $base-unit * .3,
+);
+
+$sizes-margin: (
+  'small': 0,
+  'medium': $base-unit * 1.3,
+  'large': $base-unit * 2,
+);
+
+// CONTAINER WIDTHS
+$container-width: (
+  'small': 400px,
+  'medium': 660px,
+  'large': 980px
+);
+
+// Z-INDICES
+$zindex-1: 100;
+$zindex-2: 200;
+$zindex-3: 300;
+$zindex-4: 400;
+$zindex-5: 500;
+$zindex-6: 600;
+
+$z-layers: (
+  'cover': $zindex-4,
+  'hoverbox': $zindex-1,
+  'notification': $zindex-1,
+  'progressbar': $zindex-1,
+  'tooltip': $zindex-6,
+);
+
+// OTHERS
+$border-radius-base: 3px;
+$box-shadow: 0 1px 5px rgba(0, 0, 0, .1);

@@ -38,6 +38,8 @@ module Argu
       Devise::SessionsController.layout 'closed'
     end
 
+    ActiveModelSerializers.config.adapter = :json_api
+
     ############################
     # Middlewares
     ############################

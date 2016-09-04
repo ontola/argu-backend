@@ -42,7 +42,10 @@
           span.fa.fa-lightbulb-o
           span.icon-left= t('motions.call_to_action.action', type: motion_type.downcase)
 - if @motions.present?
-  =render_columns({'' => {collection: @motions}},
+  =state_as_jsonapi
+  =react_component_store 'MotionsApp',
+      props: {motions: @motions.ids}
+  /=render_columns({'' => {collection: @motions}},
                   header: motions_type,
                   header_text: 'test',
                   collection_model: Motion,

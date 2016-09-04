@@ -15,6 +15,7 @@
 /.idea
 *-bundle.js
 *-bundle.js.map
+*bundle.css
 /client/vendor/i18n
 node_modules
 /vendor/assets/bower_components

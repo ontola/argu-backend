@@ -15,5 +15,6 @@
     "build:i18n": "bundle exec rake i18n:js:export",
     "hot-assets": "(cd client && npm run hot-assets)",
     "start": "(cd client && npm run start --silent)"
-  }
+  },
+  "devDependencies": {}
 }
