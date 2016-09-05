@@ -21,7 +21,7 @@ class GroupMembership < ActiveRecord::Base
   parentable :group
 
   def publisher
-    profile.profileable
+    edge.user
   end
 
   private
@@ -31,7 +31,7 @@ class GroupMembership < ActiveRecord::Base
     if grant.present? && member.grants.member.where(edge: grant.edge).empty?
       Edge.create!(
         parent: group.edge,
-        user: profile.profileable,
+        user: publisher,
         owner: member.group_memberships.new(
           group: grant.edge.owner.members_group,
           member: member,

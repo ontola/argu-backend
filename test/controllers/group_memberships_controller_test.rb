@@ -167,4 +167,23 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
   end
+
+  ####################################
+  # As Page
+  ####################################
+  test 'page should post create other' do
+    sign_in create_owner(freetown)
+    change_actor freetown.page
+
+    assert_difference 'GroupMembership.count', 1 do
+      post :create,
+           params: {
+             group_id: group,
+             shortname: user.url,
+             r: settings_forum_path(freetown.url, tab: :groups)
+           }
+    end
+
+    assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+  end
 end
