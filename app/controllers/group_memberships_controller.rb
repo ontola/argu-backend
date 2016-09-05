@@ -28,7 +28,7 @@ class GroupMembershipsController < AuthorizedController
       end
     end
     create_service.on(:create_group_membership_failed) do
-      respond_to do
+      respond_to do |format|
         format.html { redirect_to redirect_url, notice: t('errors.general') }
       end
     end
