@@ -40,12 +40,8 @@ class MotionsController < AuthorizedController
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new(voteable: @motion)
 
-    add_to_state(
-      authenticated_resource.class_name,
-      currentId: authenticated_resource.id,
-      records: [motion_item(authenticated_resource)])
-    add_to_state 'votes',
-                 records: [vote_item(@vote)]
+    add_to_state(authenticated_resource)
+    add_to_state @vote
 
     respond_to do |format|
       format.html # show.html.erb
