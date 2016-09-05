@@ -579,6 +579,7 @@ GEM
       activerecord (>= 3.0.0)
       railties
       squirm (>= 0.0.6)
+    staccato (0.4.7)
     stackprof (0.2.7)
     temple (0.7.6)
     terminal-table (1.5.2)
@@ -752,6 +753,7 @@ DEPENDENCIES
   sprockets (~> 3.6.3)
   sprockets-es6
   squirm_rails
+  staccato (~> 0.4.7)
   stackprof
   testingbot
   therubyracer (~> 0.12.2)

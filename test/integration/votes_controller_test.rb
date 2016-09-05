@@ -76,6 +76,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
+    assert_analytics_collected('votes', 'create', 'pro')
   end
 
   test 'should not create new vote when existing one is present' do
@@ -153,6 +154,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
+    assert_analytics_collected('votes', 'update', 'pro')
   end
 
   test 'should delete destroy own vote' do
@@ -169,5 +171,6 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 204
+    assert_analytics_collected('votes', 'destroy', 'neutral')
   end
 end

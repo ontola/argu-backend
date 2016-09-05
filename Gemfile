@@ -64,6 +64,7 @@ gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list', '~> 0.7.2'
 # Pagination
 gem 'kaminari', '~>0.17.0'
+gem 'staccato', '~> 0.4.7'
 
 ################## Asset-y ########################
 gem 'slim', '~> 3.0.6'

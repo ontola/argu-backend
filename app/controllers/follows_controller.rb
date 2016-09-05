@@ -6,6 +6,9 @@ class FollowsController < ApplicationController
     authorize @thing, :follow?
 
     if current_user.follow @thing.edge, permit_params[:follow_type] || :reactions
+      send_event category: 'follows',
+                 action: permit_params[:follow_type],
+                 label: @thing.model_name.collection
       respond_to do |format|
         format.html { redirect_back(fallback_location: root_path, notification: t('followed')) }
         format.js { head 201 }
@@ -22,6 +25,9 @@ class FollowsController < ApplicationController
     authorize @thing, :follow?
 
     resp = current_user.stop_following @thing.edge
+    send_event category: 'follows',
+               action: permit_params[:follow_type],
+               label: @thing.model_name.collection
     if resp == nil || resp
       respond_to do |format|
         format.html { redirect_back(fallback_location: root_path, notification: t('unfollowed')) }

@@ -43,6 +43,8 @@ class NotificationsController < ApplicationController
 
       @notifications = get_notifications
       render 'notifications/index'
+      send_event category: 'notifications',
+                 action: 'read_all'
     else
       head 400
     end
@@ -52,10 +54,15 @@ class NotificationsController < ApplicationController
     notification = Notification.includes(activity: :trackable).find(params[:id])
     authorize notification, :update?
 
-    if notification.read_at.present? || notification.update(read_at: Time.current)
+    read_before = notification.read_at.present?
+
+    if read_before || notification.update(read_at: Time.current)
       @notifications = get_notifications
       @unread = get_unread
       render 'index'
+      send_event category: 'notifications',
+                 action: 'read',
+                 label: read_before ? 'old' : 'new'
     else
       head 400
     end
@@ -115,6 +122,12 @@ class NotificationsController < ApplicationController
         render
       else
         head 204
+      end
+      if last_notification && since < 20.years.ago
+        send_event category: 'notifications',
+                   action: 'open_menu',
+                   label: 'count',
+                   value: @unread
       end
     rescue ArgumentError
       head 400

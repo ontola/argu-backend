@@ -104,6 +104,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     setup_memberships(user)
     set_flash_message(:notice, :success, kind: provider.to_s.capitalize) if is_navigational_format?
     sign_in_and_redirect_with_r user
+    send_event category: 'registrations',
+               action: 'create',
+               label: provider.to_s
   end
 
   def process_user(email)

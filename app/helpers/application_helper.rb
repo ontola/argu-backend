@@ -16,11 +16,6 @@ module ApplicationHelper
     nil
   end
 
-  def analytics_token
-    salt = current_user.salt
-    ::BCrypt::Engine.hash_secret("#{current_user.id}#{current_user.created_at}", salt).from(30)
-  end
-
   def awesome_time_ago_in_words (date)
     if date.present?
       if 1.day.ago < date

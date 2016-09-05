@@ -54,6 +54,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     end
 
     assert_response response
+    assert_analytics_collected('blog_posts', 'draft') if differences[0][0][1].to_i > 0
   end
 
   def general_create_publish(response = 302, differences = [['BlogPost.count', 0],
@@ -75,6 +76,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     end
 
     assert_response response
+    assert_analytics_collected('blog_posts', 'create') if differences[0][0][1].to_i > 0
   end
 
   def general_edit(response = 302)

@@ -474,6 +474,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response response
+    assert_analytics_collected('projects', 'draft') if differences[0][0][1].to_i > 0
   end
 
   def general_create_publish(response = 302, differences = [['Project.count', 0],
@@ -494,6 +495,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response response
+    assert_analytics_collected('projects', 'publish') if differences[0][0][1].to_i > 0
   end
 
   def general_edit(response = 302)

@@ -21,6 +21,11 @@ class ApplicationService
                   .new(creator: options.fetch(:creator),
                        publisher: options.fetch(:publisher)))
     end
+    if options[:uuid].present?
+      subscribe(AnalyticsListener.new(
+                  uuid: options[:uuid],
+                  client_id: options[:client_id]))
+    end
   end
 
   # The resource on which the service works, if any.

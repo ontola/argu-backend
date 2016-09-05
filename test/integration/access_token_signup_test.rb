@@ -63,6 +63,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
              at: helsinki_at.access_token
            }
     end
+    assert_analytics_collected('registrations', 'create', 'email')
   end
 
   # Note: The :at params are duplicated everywhere because integration tests apparently don't support session variables
@@ -104,6 +105,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
            }
     end
     assert_redirected_to edit_user_url('newuser')
+    assert_analytics_collected('registrations', 'create', 'email')
     follow_redirect!
 
     put setup_profiles_path,
@@ -153,6 +155,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
            }
     end
     assert_redirected_to edit_user_url('newuser')
+    assert_analytics_collected('registrations', 'create', 'email')
     follow_redirect!
 
     put setup_profiles_path,

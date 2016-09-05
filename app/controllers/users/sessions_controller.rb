@@ -30,6 +30,8 @@ class Users::SessionsController < Devise::SessionsController
     else
       super
     end
+    send_event category: 'sessions',
+               action: 'sign_in'
   end
 
   def verify
@@ -44,6 +46,8 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
+    send_event category: 'sessions',
+               action: 'sign_out'
     super do
       if @current_user.nil? && cookies[:a_a].present?
         cookies[:a_a] = {value: '-1', expires: 1.year.ago}

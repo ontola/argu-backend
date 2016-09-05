@@ -425,6 +425,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     end
     if should
       assert_not_nil assigns(:create_service).resource
+      assert_analytics_collected('motions', 'create')
       assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
     end
   end

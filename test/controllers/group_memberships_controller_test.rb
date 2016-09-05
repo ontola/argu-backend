@@ -40,6 +40,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to forum_path(freetown)
+    assert_analytics_collected('memberships', 'create')
   end
 
   test 'user should not post create to closed members_group' do
@@ -115,6 +116,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_response 302
     assert_redirected_to forum_path(freetown)
+    assert_analytics_collected('memberships', 'destroy')
   end
 
   test 'member should not delete destroy other from members_group' do
@@ -155,6 +157,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+    assert_analytics_collected('memberships', 'create')
   end
 
   test 'owner should delete destroy' do
@@ -172,6 +175,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+    assert_analytics_collected('memberships', 'destroy')
   end
 
   ####################################
@@ -191,5 +195,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+    assert_analytics_collected('memberships', 'create')
   end
 end

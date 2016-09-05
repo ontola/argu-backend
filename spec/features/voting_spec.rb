@@ -54,7 +54,7 @@ RSpec.feature 'Voting', type: :feature do
   let(:user) { create(:user) }
 
   scenario 'User should vote on a motion' do
-    login_as(user)
+    sign_in(user)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
@@ -75,7 +75,7 @@ RSpec.feature 'Voting', type: :feature do
   let(:member) { create_member(freetown) }
 
   scenario 'Member should vote on a motion' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)

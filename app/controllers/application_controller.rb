@@ -3,8 +3,9 @@ require 'argu/not_authorized_error'
 require 'argu/not_a_user_error'
 
 class ApplicationController < ActionController::Base
-  include Argu::RuledIt, ActorsHelper, ApplicationHelper, PublicActivity::StoreController,
-          AccessTokenHelper, NamesHelper, UsersHelper, GroupResponsesHelper, NestedAttributesHelper
+  include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper,
+          PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
+          GroupResponsesHelper, NestedAttributesHelper
   helper_method :current_profile, :show_trashed?,
                 :authenticated_context, :collect_announcements
 

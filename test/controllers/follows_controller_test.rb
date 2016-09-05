@@ -22,6 +22,7 @@ class FollowsControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to motion_path(motion)
+    assert_analytics_not_collected
   end
 
   test 'guest should not delete destroy' do
@@ -34,6 +35,7 @@ class FollowsControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to motion_path(motion)
+    assert_analytics_not_collected
   end
 
   ####################################
@@ -53,6 +55,7 @@ class FollowsControllerTest < ActionController::TestCase
          }
 
     assert_response 201
+    assert_analytics_collected('follows', 'reactions', 'motions')
   end
 
   test 'user should delete destroy' do
@@ -67,6 +70,7 @@ class FollowsControllerTest < ActionController::TestCase
            }
 
     assert_response 204
+    assert_analytics_collected('follows', 'reactions', 'motions')
   end
 
   ####################################
@@ -81,11 +85,12 @@ class FollowsControllerTest < ActionController::TestCase
     post :create,
          params: {
            gid: motion.edge.id,
-           follow_type: :reactions,
+           follow_type: :news,
            format: :json
          }
 
     assert_response 201
+    assert_analytics_collected('follows', 'news', 'motions')
   end
 
   test 'member should delete destroy' do
@@ -100,6 +105,7 @@ class FollowsControllerTest < ActionController::TestCase
            }
 
     assert_response 204
+    assert_analytics_collected('follows', 'reactions', 'motions')
   end
 
   private

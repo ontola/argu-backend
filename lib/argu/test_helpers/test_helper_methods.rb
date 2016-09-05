@@ -15,6 +15,19 @@ module Argu
         SERVICE_MODELS = %i(argument blog_post comment forum group_response group_membership motion
                             phase banner group project question vote).freeze
 
+        def assert_analytics_collected(category, action = nil, label = nil)
+          assert_requested :post, 'https://ssl.google-analytics.com/collect' do |req|
+            el = CGI.parse(req.body)['el'].first if label
+            ea = CGI.parse(req.body)['ea'].first if action
+            ec = CGI.parse(req.body)['ec'].first.to_s
+            category == ec && (action ? action == ea : true) && (label ? label.to_s == el : true)
+          end
+        end
+
+        def assert_analytics_not_collected
+          assert_not_requested :post, 'https://ssl.google-analytics.com/collect'
+        end
+
         def assert_not_a_member
           assert_equal true, assigns(:_not_a_member_caught)
         end

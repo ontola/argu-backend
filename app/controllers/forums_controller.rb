@@ -151,7 +151,12 @@ class ForumsController < AuthorizedController
 
   def redirect_generic_shortnames
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
-    redirect_to url_for(resource) unless resource.is_a?(Forum)
+    unless resource.is_a?(Forum)
+      send_event category: 'short_url',
+                 action: 'follow',
+                 label: params[:id]
+      redirect_to url_for(resource)
+    end
   end
 
   def resource_by_id

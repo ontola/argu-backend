@@ -24,6 +24,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       post :create,
            params: {user: attributes_for(:user)}
       assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
     sign_out :user
@@ -41,13 +42,14 @@ class RegistrationsControllerTest < ActionController::TestCase
       post :create,
            params: {user: attributes_for(:user)}
       assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
     sign_out :user
     User.last.destroy
   end
 
-  test "should not post create when passwords don't match" do
+  test "guest should not post create when passwords don't match" do
     user_params = attributes_for(:user)
     @request.env['devise.mapping'] = Devise.mappings[:user]
 
@@ -64,6 +66,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
 
     assert_response 200
+    assert_analytics_collected('registrations', 'create', 'failed')
   end
 
   ####################################
@@ -84,6 +87,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
+    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user should delete destroy with placement' do
@@ -104,6 +108,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
+    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user should delete destroy with content' do
@@ -125,6 +130,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
+    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user should delete destroy with content published by page' do
@@ -146,6 +152,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
+    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   ####################################
@@ -166,5 +173,6 @@ class RegistrationsControllerTest < ActionController::TestCase
                }
              }
     end
+    assert_analytics_not_collected
   end
 end

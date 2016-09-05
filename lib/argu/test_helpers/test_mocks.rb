@@ -1,6 +1,11 @@
 module Argu
   module TestHelpers
     module TestMocks
+      def analytics_collect
+        stub_request(:post, 'https://ssl.google-analytics.com/collect')
+          .to_return(status: 200)
+      end
+
       def facebook_picture(opts = {})
         uid = opts[:uid] || '102555400181774'
         stub_request(:get, "https://graph.facebook.com/v2.6/#{uid}/picture?redirect=false")

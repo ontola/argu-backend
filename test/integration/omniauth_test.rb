@@ -44,6 +44,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_difference 'GroupMembership.count' do
       follow_redirect!
       assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'facebook')
     end
 
     follow_redirect!

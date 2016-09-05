@@ -85,6 +85,9 @@ class VotesController < AuthorizedController
     respond_to do |format|
       if vote.destroy
         vote.voteable.reload
+        send_event category: 'votes',
+                   action: 'destroy',
+                   label: vote.for
         format.js do
           render locals: {
             vote: vote

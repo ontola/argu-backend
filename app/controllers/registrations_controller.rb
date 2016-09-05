@@ -10,12 +10,15 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    unless has_valid_token? || within_user_cap?
-      redirect_to :root
-    else
-      super
-      session[:omniauth] = nil unless @user.new_record?
+    super do |resource|
+      unless resource.persisted?
+        send_event user: resource,
+                   category: 'registrations',
+                   action: 'create',
+                   label: 'failed'
+      end
     end
+    session[:omniauth] = nil unless @user.new_record?
   end
 
   def cancel
@@ -39,6 +42,9 @@ class RegistrationsController < Devise::RegistrationsController
       valid_password = @user.has_password? ? @user.valid_password?(params[:user][:current_password]) : true
       if valid_password && @user.destroy
         Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+        send_event category: 'registrations',
+                   action: 'destroy',
+                   label: @user.id
         format.html { redirect_to root_path, notice: t('type_destroy_success', type: 'Account') }
         format.json { head :no_content }
       else
@@ -62,6 +68,10 @@ class RegistrationsController < Devise::RegistrationsController
     super
     resource.send_confirmation_instructions
     setup_memberships(resource)
+    send_event user: resource,
+               category: 'registrations',
+               action: 'create',
+               label: 'email'
   end
 
   private

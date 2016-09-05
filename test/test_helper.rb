@@ -72,6 +72,11 @@ class ActiveSupport::TestCase
   # FactoryGirl.lint
   Setting.set('user_cap', '-1')
   # Add more helper methods to be used by all tests here...
+
+  def initialize(*args)
+    super
+    analytics_collect
+  end
 end
 
 class ActionDispatch::IntegrationTest

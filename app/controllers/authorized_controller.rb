@@ -168,7 +168,9 @@ class AuthorizedController < ApplicationController
   def service_options(options = {})
     {
       creator: current_profile,
-      publisher: current_user
+      publisher: current_user,
+      uuid: a_uuid,
+      client_id: request.session.id
     }.merge(options)
   end
 

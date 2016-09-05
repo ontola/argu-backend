@@ -115,6 +115,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   test 'member should post create' do
+    analytics_collect
     sign_in member
 
     assert_differences create_changes_array do
@@ -134,6 +135,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_equal 'cover_photo.jpg', assigns(:create_service).resource.default_cover_photo.image_identifier
     assert_equal 1, assigns(:create_service).resource.photos.count
     assert_redirected_to question_url(assigns(:create_service).resource)
+    assert_analytics_collected('questions', 'create')
   end
 
   test 'member should put update on own question' do
@@ -199,6 +201,7 @@ class QuestionsControllerTest < ActionController::TestCase
   let(:project_moderator) { create_moderator(project) }
 
   test 'moderator should post create' do
+    analytics_collect
     sign_in moderator
 
     assert_differences create_changes_array do
@@ -213,9 +216,11 @@ class QuestionsControllerTest < ActionController::TestCase
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to question_url(assigns(:create_service).resource)
+    assert_analytics_collected('questions', 'create')
   end
 
   test 'moderator should post create with project' do
+    analytics_collect
     sign_in project_moderator
 
     assert_differences create_changes_array(2) do
@@ -231,6 +236,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:create_service).resource
     assert_equal project, assigns(:resource).project
     assert_redirected_to question_url(assigns(:create_service).resource)
+    assert_analytics_collected('questions', 'create')
   end
 
   ####################################

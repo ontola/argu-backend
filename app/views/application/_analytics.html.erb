@@ -8,7 +8,7 @@
         ga('create', 'UA-57491906-1', 'auto');
         ga('require', 'displayfeatures');
         <% if current_user.present? %>
-        ga('set', '&uid', '<%= analytics_token %>');
+        ga('set', '&uid', '<%= a_uuid %>');
         <% end %>
         ga('require', 'linkid', 'linkid.js');
         ga('send', 'pageview');

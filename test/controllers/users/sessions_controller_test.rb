@@ -17,6 +17,7 @@ class Users::SessionsControllerTest < ActionController::TestCase
            }
          }
     assert_redirected_to root_path
+    assert_analytics_collected('sessions', 'sign_in')
   end
 
   test 'should login with r' do
@@ -31,5 +32,6 @@ class Users::SessionsControllerTest < ActionController::TestCase
            }
          }
     assert_redirected_to 'http://test.host/freetown?'
+    assert_analytics_collected('sessions', 'sign_in')
   end
 end

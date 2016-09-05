@@ -189,6 +189,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert argument.content == 'Test argument pro-tents', "content isn't assigned"
     assert argument.pro === true, "isn't assigned pro attribute"
     assert_redirected_to argument.motion
+    assert_analytics_collected('arguments', 'create')
   end
 
   test 'member should post create con' do
@@ -215,6 +216,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert argument.content == 'Test argument con-tents', "content isn't assigned"
     assert argument.pro === false, "isn't assigned pro attribute"
     assert_redirected_to argument.motion
+    assert_analytics_collected('arguments', 'create')
   end
 
   test 'member should post create pro without auto_vote' do
@@ -233,6 +235,7 @@ class ArgumentsControllerTest < ActionController::TestCase
              }
            }
     end
+    assert_analytics_collected('arguments', 'create')
   end
 
   test 'member should put update on own argument' do
