@@ -24,6 +24,9 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
+           argu_publication_attributes: {
+             publish_type: 'direct'
+           },
            publisher: creator,
            forwarded_user: actor,
            forwarded_group: actor_membership.group,
@@ -34,6 +37,9 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            parent: motion.edge,
            happening_attributes: {
              happened_at: DateTime.current
+           },
+           argu_publication_attributes: {
+             publish_type: 'direct'
            },
            publisher: creator,
            state: Decision.states[:approved])
@@ -47,7 +53,11 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
     general_show
   end
 
-  test 'guest should not patch approve' do
+  test 'guest should not get show draft' do
+    general_show
+  end
+
+  test 'guest should not post approve' do
     general_decide
   end
 
@@ -61,7 +71,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
     general_show
   end
 
-  test 'user should not patch approve' do
+  test 'user should not post approve' do
     sign_in user
     general_decide 403
   end
@@ -81,7 +91,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
     general_show
   end
 
-  test 'member should not patch approve' do
+  test 'member should not post approve' do
     sign_in member
     general_decide
   end
@@ -105,27 +115,45 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
   # As Actor
   ####################################
   let(:actor) { create_member(freetown) }
-  test 'actor should patch approve' do
+  test 'actor should post approve' do
     sign_in actor
     general_decide 302, true
   end
 
-  test 'actor should patch reject' do
+  test 'actor should post reject' do
     sign_in actor
     general_decide 302, true, 'rejected'
   end
 
-  test 'actor should not patch forward to nil' do
+  test 'actor should not post approve when draft is present' do
+    create(:decision,
+           parent: motion.edge,
+           happening_attributes: {
+             happened_at: DateTime.current
+           },
+           argu_publication_attributes: {
+             publish_type: :draft
+           },
+           publisher: creator,
+           forwarded_user: actor,
+           forwarded_group: actor_membership.group,
+           state: Decision.states[:forwarded])
+    sign_in actor
+
+    general_decide 302, false
+  end
+
+  test 'actor should not post forward to nil' do
     sign_in actor
     general_forward 200, false
   end
 
-  test 'actor should not patch forward to user/group without membership' do
+  test 'actor should not post forward to user/group without membership' do
     sign_in actor
     general_forward 200, false, create(:group, parent: freetown.page.edge).id, create(:user).id
   end
 
-  test 'actor should patch forward' do
+  test 'actor should post forward' do
     sign_in actor
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
@@ -138,7 +166,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As GroupMember
   ####################################
-  test 'group_member should patch approve' do
+  test 'group_member should post approve' do
     sign_in member
     create(:group_membership,
            parent: create(:group, parent: motion.forum.page.edge).edge,
@@ -147,6 +175,9 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            parent: motion.edge,
            happening_attributes: {
              happened_at: DateTime.current
+           },
+           argu_publication_attributes: {
+             publish_type: 'direct'
            },
            publisher: creator,
            forwarded_user: nil,
@@ -165,17 +196,17 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
     general_show
   end
 
-  test 'manager should not patch approve' do
+  test 'manager should not post approve' do
     sign_in manager
     general_decide 302, false
   end
 
-  test 'manager should not patch reject' do
+  test 'manager should not post reject' do
     sign_in manager
     general_decide 302, false, 'rejected'
   end
 
-  test 'manager should patch forward' do
+  test 'manager should post forward' do
     sign_in manager
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
@@ -195,17 +226,17 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
     general_show
   end
 
-  test 'staff should not patch update approve' do
+  test 'staff should not post update approve' do
     sign_in staff
     general_decide 302, false
   end
 
-  test 'staff should not patch update rejected' do
+  test 'staff should not post update rejected' do
     sign_in staff
     general_decide 302, false, 'rejected'
   end
 
-  test 'staff should patch forward' do
+  test 'staff should post forward' do
     sign_in staff
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
@@ -235,8 +266,12 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
               decision: attributes_for(:decision,
                                        state: state,
                                        content: 'Content',
-                                       happening_attributes: {happened_at: Time.current})
+                                       happening_attributes: {happened_at: Time.current},
+                                       argu_publication_attributes: {publish_type: :direct})
             }
+    end
+    Sidekiq::Testing.inline! do
+      Publication.last.send(:reset)
     end
     if changed
       motion.reload
@@ -258,9 +293,13 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
                                       state: 'forwarded',
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
+                                      argu_publication_attributes: {publish_type: :direct},
                                       forwarded_user_id: user_id,
                                       forwarded_group_id: group_id)
            }
+    end
+    Sidekiq::Testing.inline! do
+      Publication.last.send(:reset)
     end
     assert_response response
   end

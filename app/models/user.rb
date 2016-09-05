@@ -8,7 +8,6 @@ class User < ApplicationRecord
           foreign_key: 'placeable_id',
           inverse_of: :placeable
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
-  has_many :assigned_decisions, foreign_key: :forwarded_user_id, inverse_of: :user, class_name: 'Decision'
   has_many :edges
   has_many :identities, dependent: :destroy
   has_many :notifications

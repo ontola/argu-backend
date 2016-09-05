@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 class Decision < ApplicationRecord
-  include Loggable, Happenable, HasLinks, Parentable
+  include Loggable, Happenable, HasLinks, Parentable, ActivePublishable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :decisionable, class_name: 'Edge'
   belongs_to :forum
   belongs_to :forwarded_group, class_name: 'Group'
-  belongs_to :forwarded_user, class_name: 'User', inverse_of: :assigned_decisions
+  belongs_to :forwarded_user, class_name: 'User'
   belongs_to :publisher, inverse_of: :decisions, class_name: 'User'
   has_one :decision_activity,
           -> {where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
@@ -28,14 +28,6 @@ class Decision < ApplicationRecord
 
   def display_name
     I18n.t("decisions.#{decisionable.owner.model_name.i18n_key}.#{state}")
-  end
-
-  def forwarded_from
-    Decision.joins(:edge).order(created_at: :asc).where(step: step - 1, edges: {parent_id: edge.parent.id}).last
-  end
-
-  def forwarded_to
-    Decision.joins(:edge).order(created_at: :asc).find_by(step: step + 1, edges: {parent_id: edge.parent.id})
   end
 
   private

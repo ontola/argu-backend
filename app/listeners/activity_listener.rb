@@ -43,7 +43,7 @@ class ActivityListener
     end
 
     define_method "#{method}_decision_successful" do |resource|
-      action = method == 'create' ? resource.state : method
+      action = method == 'publish' ? resource.state : method
       create_activity(resource, resource.decisionable.owner, action)
     end
   end

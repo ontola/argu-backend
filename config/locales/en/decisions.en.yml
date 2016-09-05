@@ -6,6 +6,7 @@ en:
     rejected: "Rejected"
     forwarded: "Forwarded"
     forwarded_to: "Forwarded to %{to}"
+    edit_draft: "Edit draft"
     action:
       approved: "Pass"
       rejected: "Reject"

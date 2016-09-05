@@ -25,6 +25,8 @@ class DecisionsController < AuthorizedController
   end
 
   def edit
+    authenticated_resource!.argu_publication.draft! unless authenticated_resource!.is_published?
+
     respond_to do |format|
       format.html do
         render action: 'index',
@@ -37,19 +39,15 @@ class DecisionsController < AuthorizedController
   end
 
   def new
-    decision = policy_scope(authenticated_resource!)
-    decision.state = params[:state] if params[:state].present?
-    decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
-
     respond_to do |format|
       format.html do
         render action: 'index',
                locals: {
                  decisionable: get_parent_resource,
-                 new_decision: decision
+                 new_decision: authenticated_resource!
                }
       end
-      format.json { render json: decision }
+      format.json { render json: authenticated_resource! }
     end
   end
 
@@ -57,8 +55,12 @@ class DecisionsController < AuthorizedController
     create_service.on(:create_decision_successful) do |decision|
       respond_to do |format|
         format.html do
-          redirect_to decision.decisionable.owner,
-                      notice: t("decisions.#{decision.decisionable.owner.model_name.singular}.#{decision.state}")
+          notice = if decision.argu_publication.published_at.present?
+                     t("decisions.#{decision.decisionable.owner.model_name.singular}.#{decision.state}")
+                   else
+                     t('type_save_success', type: t('decisions.type').capitalize)
+                   end
+          redirect_to decision.decisionable.owner, notice: notice
         end
         format.json { render json: decision, status: 201, location: decision }
       end
@@ -97,19 +99,12 @@ class DecisionsController < AuthorizedController
     update_service.commit
   end
 
-  def log
-    respond_to do |format|
-      format.html { render 'log', locals: {resource: resource_by_id} }
-      format.json { render json: resource_by_id.activities }
-    end
-  end
-
   private
 
   def authenticated_resource!
     case action_name
     when 'index'
-      resource_by_id
+      get_parent_resource.last_or_new_decision
     else
       super
     end
@@ -120,10 +115,16 @@ class DecisionsController < AuthorizedController
   end
 
   def new_resource_from_params
-    Edge.find(params[:motion_id])
-      .children
-      .new(owner: Decision.new(resource_new_params.merge(decisionable: get_parent_resource.edge)))
-      .owner
+    decision = get_parent_resource.decisions.unpublished.where(publisher: current_user).first
+    if decision.nil?
+      decision = Edge.find(params[:motion_id])
+                   .children
+                   .new(owner: Decision.new(resource_new_params.merge(decisionable: get_parent_resource.edge)))
+                   .owner
+      decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
+      decision.build_argu_publication(publish_type: :direct)
+    end
+    decision
   end
 
   def permit_params
@@ -137,9 +138,9 @@ class DecisionsController < AuthorizedController
   end
 
   def resource_new_params
-    {
+    HashWithIndifferentAccess.new(
       forum: get_parent_resource.forum,
       state: params[:state]
-    }
+    )
   end
 end

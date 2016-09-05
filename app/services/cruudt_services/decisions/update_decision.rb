@@ -14,13 +14,5 @@ class UpdateDecision < UpdateService
   private
 
   def object_attributes=(obj)
-    case obj
-    when Activity
-      obj.forum ||= resource.forum
-      obj.owner ||= resource.creator
-      obj.key ||= "#{resource.state}.happened"
-      obj.recipient ||= resource.decisionable.owner
-      obj.is_published ||= true
-    end
   end
 end

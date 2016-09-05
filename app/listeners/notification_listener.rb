@@ -6,7 +6,7 @@ class NotificationListener
     when 'blog_post', 'project'
       create_notifications_for(activity) if activity.action == 'publish'
     when 'decision'
-      create_notifications_for(activity) unless activity.action == 'update'
+      create_notifications_for(activity) unless %w(update create).include?(activity.action)
     else
       create_notifications_for(activity) if activity.action == 'create'
     end
@@ -19,11 +19,13 @@ class NotificationListener
                    .new(activity.recipient, follow_type(activity))
                    .call
                    .reject { |u| u.profile == activity.owner }
-    forwarded_to_user = activity.trackable.try(:forwarded_to).try(:user)
-    if forwarded_to_user.present? &&
-        !recipients.include?(forwarded_to_user) &&
-        !forwarded_to_user == activity.owner.profileable
-      recipients << forwarded_to_user
+    if activity.trackable_type == 'Decision'
+      forwarded_to_user = activity.trackable.forwarded_user
+      if forwarded_to_user.present? &&
+          !recipients.include?(forwarded_to_user) &&
+          !(forwarded_to_user == activity.owner.profileable)
+        recipients << forwarded_to_user
+      end
     end
     Notification.create!(prepare_recipients(activity, recipients))
   end

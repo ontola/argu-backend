@@ -1,4 +1,4 @@
--unless resource.is_trashed?
+-unless resource.try(:is_trashed?)
   .box
     section.section-draft
       p

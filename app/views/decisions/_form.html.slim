@@ -18,10 +18,13 @@ section.smallpadded
       =hf.input :happened_at, as: :hidden
   =f.label t('decisions.explanation')
   =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
+  - if !decision.is_published?
+    =f.semantic_fields_for :argu_publication do |pf|
+      =pf.input(:publish_type, as: :radio, collection: {direct: 0, draft: 1}.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
 .section.section--footer
   =render partial: 'profiles/profile_current' if current_profile.present?
   ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
     - if decision.new_record?
-      =f.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication') }}, label: t('publish')
+      =f.action :submit, as: :button, label: t('save')
     - else
       =f.action :submit, as: :button, label: t('update')

@@ -46,4 +46,4 @@ section.section--details
     - elsif local_assigns[:show_decision_dropdown]
       - if policy(motion.last_or_new_decision).update?
         div class="details-part details-part--filled details-part--right details-part--decision details-part--decision-#{motion.state}"
-          =react_component 'HyperDropdown', decision_items(motion), {prerender: true}
+          =react_component('HyperDropdown', decision_items(motion), {prerender: true}) if decision_items(motion)[:sections].first[:items].present?

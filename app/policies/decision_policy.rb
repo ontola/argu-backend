@@ -26,9 +26,10 @@ class DecisionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << %i(content)
-    attributes << [happening_attributes: [:id, :happened_at]]
-    attributes << [:state, :forwarded_user_id, :forwarded_group_id] if record.new_record?
+    attributes.concat %i(content)
+    attributes.concat %i(state forwarded_user_id forwarded_group_id) if record.new_record?
+    attributes.append(happening_attributes: %i(id happened_at))
+    attributes.append(argu_publication_attributes: %i(id publish_type))
     attributes
   end
 
@@ -48,7 +49,10 @@ class DecisionPolicy < RestrictivePolicy
     create?
   end
 
+  # Creating a Decision when a draft is present is not allowed
+  # Managers and the Owner are allowed to forward a Decision when not assigned to him
   def create?
+    return false if record.decisionable.decisions.unpublished.present?
     if record.forwarded?
       rule decision_is_assigned?, is_manager?, is_owner?, super
     else

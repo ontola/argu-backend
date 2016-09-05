@@ -10,8 +10,10 @@ nl:
       approved: "%{owner} heeft %{parent} aangenomen"
       forwarded:
         to_any: "%{owner} heeft het besluit over %{parent} doorgestuurd"
+        to_group: "%{owner} heeft het besluit over %{parent} doorgestuurd naar een van jouw groepen"
         to_you: "%{owner} heeft het besluit over %{parent} doorgestuurd naar jou"
       rejected: "%{owner} heeft %{parent} verworpen"
+      create: "%{owner} heeft een concept besluit geplaatst in %{parent}"
       update: "%{owner} heeft een besluit over %{parent} geüpdatet"
     default:
       convert: "%{owner} heeft %{subject} omgezet in een %{type}"

@@ -12,13 +12,15 @@ class ActivityStringTest < ActiveSupport::TestCase
     create(:decision,
            parent: motion.edge,
            state: 'approved',
-           happening_attributes: {happened_at: DateTime.current})
+           happening_attributes: {happened_at: DateTime.current},
+           argu_publication_attributes: {publish_type: 'direct'})
   end
   let!(:rejected_decision) do
     create(:decision,
            parent: motion.edge,
            state: 'rejected',
-           happening_attributes: {happened_at: DateTime.current})
+           happening_attributes: {happened_at: DateTime.current},
+           argu_publication_attributes: {publish_type: 'direct'})
   end
   let(:group) { create(:group, parent: freetown.page.edge) }
   let!(:forwarded_decision) do
@@ -26,6 +28,7 @@ class ActivityStringTest < ActiveSupport::TestCase
            parent: motion.edge,
            state: 'forwarded',
            happening_attributes: {happened_at: DateTime.current},
+           argu_publication_attributes: {publish_type: 'direct'},
            forwarded_user_id: create(:group_membership, parent: group.edge).member.profileable,
            forwarded_group_id: group.id)
   end
@@ -99,28 +102,28 @@ class ActivityStringTest < ActiveSupport::TestCase
   end
 
   test 'string for approved decision' do
-    approved_activity = approved_decision.activities.first
+    approved_activity = approved_decision.activities.second
     assert_equal "[#{approved_decision.publisher.display_name}](/u/#{approved_decision.publisher.url}) "\
                   "passed [#{motion.display_name}](/m/#{motion.id})",
                  Argu::ActivityString.new(approved_activity, receiver, true).to_s
   end
 
   test 'string for rejected decision' do
-    rejected_activity = rejected_decision.activities.first
+    rejected_activity = rejected_decision.activities.second
     assert_equal "[#{rejected_decision.publisher.display_name}](/u/#{rejected_decision.publisher.url}) "\
                   "rejected [#{motion.display_name}](/m/#{motion.id})",
                  Argu::ActivityString.new(rejected_activity, receiver, true).to_s
   end
 
   test 'string for forwarded decision' do
-    forwarded_activity = forwarded_decision.activities.first
+    forwarded_activity = forwarded_decision.activities.second
     assert_equal "[#{forwarded_decision.publisher.display_name}](/u/#{forwarded_decision.publisher.url}) "\
                   "forwarded the decision on [#{motion.display_name}](/m/#{motion.id})",
                  Argu::ActivityString.new(forwarded_activity, receiver, true).to_s
   end
 
   test 'string for forwarded decision to you' do
-    forwarded_activity = forwarded_decision.activities.first
+    forwarded_activity = forwarded_decision.activities.second
     assert_equal "[#{forwarded_decision.publisher.display_name}](/u/#{forwarded_decision.publisher.url}) "\
                   "forwarded the decision on [#{motion.display_name}](/m/#{motion.id}) to you",
                  Argu::ActivityString.new(forwarded_activity, motion.assigned_user, true).to_s

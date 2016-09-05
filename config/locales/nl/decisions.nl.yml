@@ -6,6 +6,7 @@ nl:
     rejected: "Verworpen"
     forwarded: "Doorgestuurd"
     forwarded_to: "Doorgestuurd naar %{to}"
+    edit_draft: "Pas concept aan"
     action:
       approved: "Aannemen"
       rejected: "Verwerpen"

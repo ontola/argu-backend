@@ -56,7 +56,7 @@ class RestrictivePolicy
     end
 
     def is_creator?
-      creator if record.creator == actor
+      creator if record.creator.present? && record.creator == actor
     end
 
     def is_member?

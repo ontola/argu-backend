@@ -19,9 +19,8 @@ RSpec.feature 'Decisions', type: :feature do
     expect(page).to have_content('Pass')
     within('form.decision') do
       fill_in 'decision_content', with: 'Reason to take decision'
-      click_button 'Publish'
+      click_button 'Save'
     end
-    page.accept_alert 'Notifications will be send after publishing this. Continue?'
     expect(page).to have_content('Motion is passed')
     expect(page).to have_content('Reason to take decision')
   end
@@ -35,9 +34,8 @@ RSpec.feature 'Decisions', type: :feature do
     expect(page).to have_content('Reject')
     within('form.decision') do
       fill_in 'decision_content', with: 'Reason to take decision'
-      click_button 'Publish'
+      click_button 'Save'
     end
-    page.accept_alert 'Notifications will be send after publishing this. Continue?'
     expect(page).to have_content('Motion is rejected')
     expect(page).to have_content('Reason to take decision')
   end

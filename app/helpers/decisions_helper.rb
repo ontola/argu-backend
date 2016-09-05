@@ -2,7 +2,8 @@
 
 # Helper methods for decisions
 module DecisionsHelper
-  # @param [Decision, nil] decision The decision to get the actor for. Nil for the current actor.
+  # @param [User, nil] user The User the Decision is assigned to. Nil if the Decision is assigned to a group
+  # @param [Group] group The Group the Decision is assigned to.
   # @param [Boolean] create_link Set to true to link the name to the user's Profile
   # @return [String]
   def assigned_name(user, group, create_link)
@@ -19,20 +20,29 @@ module DecisionsHelper
     end
   end
 
-  # @param [ActiveRecord::Base] resource An ActiveRecord with has_many :decisions
+  # @param [ActiveRecord::Base] resource An ActiveRecord with `has_many :decisions`
   # @return [Hash]
   def decision_items(resource)
-    if resource.assigned_to_user?(current_user)
-      items = Decision.actioned_keys.map do |state|
-        link_item(t("decisions.action.#{state}"),
-                  new_motion_decision_path(resource.edge, state: state),
-                  fa: decision_icon(Decision.new(state: state)))
+    items =
+      if resource.decisions.unpublished.present?
+        [
+          link_item(t('decisions.edit_draft'),
+                    edit_decision_path(resource.decisions.last),
+                    fa: 'pencil')
+        ]
+      elsif resource.assigned_to_user?(current_user)
+        Decision.actioned_keys.map do |state|
+          link_item(t("decisions.action.#{state}"),
+                    new_decision_path(resource.edge, state: state),
+                    fa: decision_icon(Decision.new(state: state)))
+        end
+      else
+        [
+          link_item(t('decisions.action.forwarded'),
+                    new_decision_path(resource.edge, state: 'forwarded'),
+                    fa: decision_icon(Decision.new(state: 'forwarded')))
+        ]
       end
-    else
-      items = [link_item(t('decisions.action.forwarded'),
-                         new_motion_decision_path(resource.edge, state: 'forwarded'),
-                         fa: decision_icon(Decision.new(state: 'forwarded')))]
-    end
 
     {
       title: t('decisions.take_decision'),
@@ -43,16 +53,20 @@ module DecisionsHelper
   end
 
   def decision_path(decision)
-    motion_decision_path(decision.decisionable, decision.step)
+    "#{motion_url(decision.decisionable)}/decision/#{decision.step}"
   end
+  alias decision_url decision_path
 
-  def decision_log_url(decision)
-    motion_decision_log_path(decision.decisionable, decision.step)
+  def edit_decision_path(decision)
+    "#{motion_url(decision.decisionable)}/decision/#{decision.step}/edit"
   end
+  alias edit_decision_url edit_decision_path
 
-  def edit_decision_url(decision)
-    edit_motion_decision_url(decision.decisionable, decision.step)
+  def new_decision_path(edge, opts = {})
+    path = "#{motion_url(edge)}/decision/new"
+    opts.present? ? [path, opts.to_param].join('?') : path
   end
+  alias new_decision_url new_decision_path
 
   # @return [String]
   def decision_state(decision)

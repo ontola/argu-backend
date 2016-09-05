@@ -15,7 +15,7 @@ module ActivityHelper
   def render_body_on_feed?(activity)
     case activity.object
     when 'decision'
-      activity.action != 'update'
+      %w(update create).exclude?(activity.action)
     when 'vote'
       return false
     when 'project', 'blog_post'

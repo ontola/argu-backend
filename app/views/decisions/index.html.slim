@@ -20,17 +20,17 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
             p= "#{t('decisions.assigned.to_user')} #{assigned_name(decisionable.assigned_user, decisionable.assigned_group, true)}".html_safe
           - else
             p= "#{t('decisions.assigned.to_group')} '#{assigned_name(decisionable.assigned_user, decisionable.assigned_group, true)}'"
-          - if policy(decisionable.new_decision).create?
+          - if policy(decisionable.new_decision(:forwarded)).create?
             p
               - if decisionable.assigned_to_user?(current_user)
                 - Decision.actioned_keys.each do |state|
                   =link_to(t("decisions.action.#{state}"),
-                          new_motion_decision_path(decisionable.edge, state: state),
+                          new_decision_path(decisionable.edge, state: state),
                           class: 'btn btn--smaller btn--neutral')
                   span &nbsp;
               - else
                 =link_to(t("decisions.forward"),
-                        new_motion_decision_path(decisionable.edge, state: 'forwarded'),
+                        new_decision_path(decisionable.edge, state: 'forwarded'),
                         class: 'btn btn--smaller btn--neutral')
     - if local_assigns[:new_decision]
       .box
@@ -39,7 +39,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     - decisionable.decisions.reverse.each do |d|
       .box
         - if d == local_assigns[:edit_decision]
-          =semantic_form_for(local_assigns[:edit_decision], url: motion_decision_path(decisionable.edge, local_assigns[:edit_decision].step), class: 'decision_form') do |f|
+          =semantic_form_for(local_assigns[:edit_decision], url: decision_path(local_assigns[:edit_decision]), class: 'decision_form') do |f|
             =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
         - elsif !d.pending?
           =render partial: d

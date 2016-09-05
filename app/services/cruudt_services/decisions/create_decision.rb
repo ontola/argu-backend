@@ -21,7 +21,7 @@ class CreateDecision < PublishedCreateService
       obj.owner ||= resource.creator
       obj.key ||= "#{resource.state}.happened"
       obj.recipient ||= resource.decisionable.owner
-      obj.is_published ||= true
+      obj.is_published ||= false
     when Decision
       obj.forum ||= resource.forum
       obj.edge ||= obj.build_edge(

@@ -2,6 +2,7 @@ require 'test_helper'
 
 class NotificationsTest < ActionDispatch::IntegrationTest
   define_freetown
+  let(:user) { create(:user) }
   let(:project) { create(:project, :with_follower, :with_news_follower, parent: freetown.edge) }
   let(:question) { create(:question, :with_follower, :with_news_follower, parent: project.edge) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question.edge) }
@@ -108,12 +109,11 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:manager) { create_manager(freetown) }
 
-  test 'manager should forward and approve decision with notifications' do
+  test 'manager should forward to self and approve with notifications' do
     sign_in manager
     motion
 
-    # Notification for creator and follower of Motion
-    assert_differences([['Decision.count', 1], ['Notification.count', 2]]) do
+    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
       post motion_decisions_path(motion.edge),
            params: {
              decision: attributes_for(:decision,
@@ -121,22 +121,61 @@ class NotificationsTest < ActionDispatch::IntegrationTest
                                       forwarded_user_id: manager.id,
                                       forwarded_group_id: freetown.managers_group.id,
                                       content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
+                                      happening_attributes: {happened_at: Time.current},
+                                      argu_publication_attributes: {publish_type: :direct})
            }
+    end
+    # Notification for creator and follower of Motion
+    assert_differences([['Notification.count', 2]]) do
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:reset)
+      end
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    # Notification for creator, follower and news_follower of Motion
-    assert_differences([['Decision.count', 1], ['Notification.count', 3]]) do
+    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
       post motion_decisions_path(motion.edge),
            params: {
              decision: attributes_for(:decision,
                                       state: 'approved',
                                       content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
+                                      happening_attributes: {happened_at: Time.current},
+                                      argu_publication_attributes: {publish_type: :direct})
            }
     end
+    # Notification for creator, follower and news_follower of Motion
+    assert_differences([['Notification.count', 3]]) do
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:reset)
+      end
+    end
     assert_equal Notification.last.notification_type, 'decision'
+  end
+
+  test 'manager should forward to other with notification' do
+    sign_in manager
+    motion
+    group_membership
+
+    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
+      post motion_decisions_path(motion.edge),
+           params: {
+             decision: attributes_for(:decision,
+                                      state: 'forwarded',
+                                      forwarded_user_id: user.id,
+                                      forwarded_group_id: group.id,
+                                      content: 'Content',
+                                      happening_attributes: {happened_at: Time.current},
+                                      argu_publication_attributes: {publish_type: :direct})
+           }
+    end
+    # Notification for creator and follower of Motion and forwarded_to_user
+    assert_differences([['Notification.count', 3]]) do
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:reset)
+      end
+    end
+    assert_equal Notification.last.notification_type, 'reaction'
   end
 
   ####################################
