@@ -1,6 +1,8 @@
 import { CALL_API } from 'redux-api-middleware';
 import { authenticityHeader, jsonHeader } from '../lib/helpers';
 
+export const CREATE_VOTE = 'CREATE_VOTE';
+
 export const VOTE_CREATE_REQUEST = 'VOTE_CREATE_REQUEST';
 export const VOTE_CREATE_SUCCESS = 'VOTE_CREATE_SUCCESS';
 export const VOTE_CREATE_FAILURE = 'VOTE_CREATE_FAILURE';

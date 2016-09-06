@@ -4,9 +4,9 @@ import VoteButtonContainer from '../containers/VoteButtonContainer';
 const propTypes = {
   actor: PropTypes.object,
   buttonsType: PropTypes.string,
-  side: PropTypes.string,
+  currentVote: PropTypes.string,
   distribution: PropTypes.object,
-  voteableId: PropTypes.number,
+  voteableId: PropTypes.string,
   voteableType: PropTypes.string,
   percent: PropTypes.object,
   vote_url: PropTypes.string,
@@ -24,14 +24,14 @@ class VoteButtons extends Component {
   }
 
   render() {
-    const { actor, distribution, voteableType, voteableId, side } = this.props;
+    const { actor, distribution, voteableType, voteableId, currentVote } = this.props;
     const voteButtons = ['pro', 'neutral', 'con']
       .map((buttonSide, i) => (
         <VoteButtonContainer
           actor={actor}
           clickHandler={this.props[`${buttonSide}Handler`]}
           count={distribution[buttonSide]}
-          current={side === buttonSide}
+          current={currentVote === buttonSide}
           key={i}
           voteableType={voteableType}
           voteableId={voteableId}
@@ -42,9 +42,9 @@ class VoteButtons extends Component {
     return (
       <ul
         className={this.buttonsClassName()}
-        data-voted={(side &&
-                     side.length > 0 &&
-                     side !== 'abstain') || null}
+        data-voted={(currentVote &&
+                     currentVote.length > 0 &&
+                     currentVote !== 'abstain') || null}
       >
         {voteButtons}
       </ul>

@@ -40,6 +40,8 @@ export default class DataStore {
           } else if (relation.constructor === Array) {
             entity[key] = relation.map(ent => ent.id);
           } else {
+            entity[`${key}Type`] = relation.type;
+            entity[`${key}Id`] = relation.id;
             entity[key] = relation.id;
           }
         }

@@ -6,8 +6,7 @@ const propTypes = {
   actor: PropTypes.object,
   side: PropTypes.string,
   distribution: PropTypes.object,
-  groups: PropTypes.array,
-  voteableId: PropTypes.number,
+  voteableId: PropTypes.string,
   voteableType: PropTypes.string,
   percent: PropTypes.object,
   vote_url: PropTypes.string,
@@ -27,7 +26,6 @@ class BigVote extends Component {
     super(props);
     this.state = {
       actor: this.props.actor || null,
-      groups: this.props.groups,
     };
   }
 

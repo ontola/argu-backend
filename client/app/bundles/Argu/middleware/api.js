@@ -7,10 +7,10 @@ import { ARGU_API_URL_EXT } from '../config';
 
 let dataStore;
 
-const callApi = (endpoint) => {
+const callApi = (endpoint, payload) => {
   const fullUrl = ARGU_API_URL_EXT + endpoint;
 
-  return fetch(fullUrl)
+  return fetch(fullUrl, payload.fetchOptions)
     .then(response =>
       response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
@@ -33,7 +33,6 @@ const parseResult = (jsonData, emitRecord, next) => {
   if (jsonData.included) {
     jsonData.included.forEach(entity => actions.push(emitRecord(dataStore.formatEntity(entity))));
   }
-
   next(batchActions(actions));
 };
 
@@ -68,7 +67,7 @@ const middleware = () => next => action => {
     },
   });
 
-  return callApi(constructEndpoint)
+  return callApi(constructEndpoint, action.payload)
     .then(jsonData => parseResult(jsonData, emitRecord, next))
     .catch(error => next({
       type: action.type,

@@ -13,6 +13,8 @@ const attributes = {
   userState: 'guest',
   memberships: new Set(),
   discover: new Set(),
+  actorType: '',
+  actorId: null,
 };
 
 export default apiModelGenerator(attributes, apiDesc);

@@ -1,12 +1,10 @@
 import { connect } from 'react-redux';
+
+import { getMotion } from 'state/motions/selectors';
 import VoteResults from '../components/VoteResults';
 
 function mapStateToProps(state, { voteableId, voteableType }) {
-  const motion = state
-    [voteableType]
-    .records
-    .find(m => m.id === voteableId);
-  return motion.distribution;
+  return getMotion(state, { motionId: voteableId }).distribution;
 }
 
 export default connect(

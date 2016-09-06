@@ -1,22 +1,21 @@
 import { connect } from 'react-redux';
+
+import { getMyVoteByVoteable } from 'state/votes/selectors';
+import { getMotion } from 'state/motions/selectors';
 import VoteButtons from '../components/VoteButtons';
 
-function mapStateToProps(state, { voteableId, voteableType }) {
-  const motion = state
-    .motions
-    .records
-    .find(m => m.id === state.motions.currentId);
-  const vote = state
-    .votes
-    .records
-    .find(v =>
-      v.voteableType === voteableType &&
-      v.voteableId === voteableId
-    );
+function mapStateToProps(state, { voteId, voteableId, voteableType }) {
+  const vote = getMyVoteByVoteable(state, voteableId, voteableType);
+  const motion = getMotion(state, { motionId: voteableId });
   return Object.assign(
     {},
-    vote,
-    { distribution: motion.distribution || {} }
+    {
+      actor: vote.voter,
+      currentVote: vote.side,
+      voteableId: vote.voteableId,
+      voteableType: vote.voteableType,
+    },
+    { distribution: motion.distribution },
   );
 }
 

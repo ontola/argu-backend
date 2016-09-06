@@ -12,7 +12,7 @@ const propTypes = {
     'pro',
   ]),
   turbolinks: PropTypes.bool,
-  voteableId: PropTypes.number,
+  voteableId: PropTypes.string,
   voteableType: PropTypes.string,
 };
 

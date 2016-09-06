@@ -12,14 +12,15 @@ const apiDesc = new APIDesc({
 });
 
 const attributes = {
-  id: null,
-  loading: false,
-  title: '',
-  text: '',
+  arguments: [],
   createdAt: null,
   creator: null,
   classification: 'Motie',
-  arguments: [],
+  distribution: {},
+  id: null,
+  loading: false,
+  text: '',
+  title: '',
   voteEvent: [],
 };
 
