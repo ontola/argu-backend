@@ -47,9 +47,6 @@ Rails.application.routes.draw do
   concern :flowable do
     get :flow, controller: :flow, action: :show
   end
-  concern :loggable do
-    get :log, controller: :log, action: :log
-  end
   concern :moveable do
     get :move, action: :move
     put :move, action: :move!
@@ -127,7 +124,7 @@ Rails.application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :flowable, :trashable, :loggable] do
+            concerns: [:blog_postable, :moveable, :flowable, :trashable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
   end
@@ -136,11 +133,12 @@ Rails.application.routes.draw do
   resources :edges, only: [] do
     resources :conversions, path: 'conversion', only: [:new, :create]
   end
+  get 'log/:edge_id', to: 'log#show', as: :log
 
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :loggable] do
+            concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable] do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end
@@ -150,7 +148,7 @@ Rails.application.routes.draw do
   resources :arguments,
             path: 'a',
             except: [:index, :new, :create, :destroy],
-            concerns: [:votable, :flowable, :trashable, :loggable] do
+            concerns: [:votable, :flowable, :trashable] do
     resources :comments,
               path: 'c',
               concerns: [:trashable],
@@ -181,12 +179,12 @@ Rails.application.routes.draw do
   resources :blog_posts,
             path: 'posts',
             only: [:show, :edit, :update],
-            concerns: [:trashable, :loggable]
+            concerns: [:trashable]
 
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update],
-            concerns: [:blog_postable, :flowable, :discussable, :trashable, :loggable]
+            concerns: [:blog_postable, :flowable, :discussable, :trashable]
 
   resources :phases,
             only: [:show, :edit, :update] do

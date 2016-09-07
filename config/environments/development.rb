@@ -1,4 +1,6 @@
 Rails.application.configure do
+  config.host = ENV['HOSTNAME'] || 'localhost:3000'
+  Rails.application.routes.default_url_options[:host] = config.host
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on

@@ -1,5 +1,6 @@
 Rails.application.configure do
   config.host = 'https://argu.co'
+  Rails.application.routes.default_url_options[:host] = config.host
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.logstasher.enabled = true

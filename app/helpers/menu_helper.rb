@@ -24,7 +24,7 @@ module MenuHelper
     link_items = [].concat(additional_items).compact
     resource_policy = policy(resource)
     link_items << link_item(t('edit'), polymorphic_url([:edit, resource]), fa: 'edit') if resource_policy.update?
-    link_items << link_item(t('log'), polymorphic_url([resource, :log]), fa: 'history') if resource_policy.log?
+    link_items << link_item(t('log'), log_url(resource.edge), fa: 'history') if resource_policy.log?
     if resource.is_trashed?
       if resource_policy.trash?
         link_items << link_item(t('untrash'),
