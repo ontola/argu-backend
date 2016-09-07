@@ -38,7 +38,7 @@ class MotionsController < AuthorizedController
       @motion
     )
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
-    @vote ||= Vote.new
+    @vote ||= Vote.new(voteable: @motion, voter: current_profile)
 
     respond_to do |format|
       format.html # show.html.erb

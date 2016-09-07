@@ -48,6 +48,7 @@ class VotesController < AuthorizedController
     if create_service.resource.persisted? && !create_service.resource.for_changed?
       respond_to do |format|
         format.json { render status: 304, locals: {model: @model, vote: create_service.resource} }
+        format.json_api { head 304 }
         format.js { head :not_modified }
         format.html do
           redirect_to polymorphic_url(create_service.resource.edge.parent.owner),
@@ -58,6 +59,7 @@ class VotesController < AuthorizedController
       create_service.on(:create_vote_successful) do |vote|
         respond_to do |format|
           format.json { render location: vote, locals: {model: @model, vote: vote} }
+          format.json_api { render json: vote }
           format.js { render locals: {model: @model, vote: vote} }
           format.html do
             redirect_to polymorphic_url(vote.edge.parent.owner),
@@ -68,6 +70,7 @@ class VotesController < AuthorizedController
       create_service.on(:create_vote_failed) do |vote|
         respond_to do |format|
           format.json { render json: vote.errors, status: 400 }
+          format.json_api { render json: vote.errors, status: 400 }
           # format.js { head :bad_request }
           format.html do
             redirect_to polymorphic_url(vote.edge.parent.owner),
@@ -80,7 +83,7 @@ class VotesController < AuthorizedController
   end
 
   def destroy
-    vote = Vote.find params[:id]
+    vote = Vote.find deserialized_params[:id]
     authorize vote, :destroy?
     respond_to do |format|
       if vote.destroy
@@ -115,12 +118,15 @@ class VotesController < AuthorizedController
         forum: resource.forum,
         r: redirect_url
       }
-      if request.format == 'json'
+      if %w(json json_api).include?(request.format)
         options[:body] = {
-          error: 'NO_MEMBERSHIP',
-          membership_url: group_membership_index_url(
-            get_parent_resource.forum.members_group,
-            redirect: false)
+          links: {
+            create_membership: {
+              href: group_membership_index_url(
+                get_parent_resource.forum.members_group,
+                redirect: false)
+            }
+          }
         }
       end
       raise Argu::NotAMemberError.new(options)
@@ -136,11 +142,11 @@ class VotesController < AuthorizedController
   end
 
   def for_param
-    if params[:for].is_a?(String) && params[:for].present?
+    if deserialized_params[:for].is_a?(String) && deserialized_params[:for].present?
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
-      param = params[:for]
-    elsif params[:vote].is_a?(ActionController::Parameters)
-      param = params[:vote][:for]
+      param = deserialized_params[:for]
+    elsif deserialized_params[:vote].is_a?(ActionController::Parameters)
+      param = deserialized_params[:vote][:for]
     end
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
@@ -150,7 +156,7 @@ class VotesController < AuthorizedController
   end
 
   def permit_params
-    params.permit(:id)
+    deserialized_params.permit(:id)
   end
 
   def query_payload(opts = {})

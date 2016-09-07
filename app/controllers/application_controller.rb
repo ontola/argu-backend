@@ -73,6 +73,28 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # @param [Integer] status HTML response code
+  # @param [Array<Hash, String>] errors A list of errors
+  # @return [Hash] JSONApi error hash to use in a render method
+  def json_api_error(status, *errors)
+    errors = errors.map do |error|
+      if error.is_a?(Hash)
+        {type: Rack::Utils::HTTP_STATUS_CODES[status]}.merge(error)
+      else
+        {
+          type: Rack::Utils::HTTP_STATUS_CODES[status],
+          message: error.is_a?(Hash) ? error[:message] : error
+        }
+      end
+    end
+    {
+      json: {
+        errors: errors
+      },
+      status: status
+    }
+  end
+
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
   def preferred_forum(profile = nil)
     profile ||= current_profile

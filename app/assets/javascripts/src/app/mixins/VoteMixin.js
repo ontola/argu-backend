@@ -16,7 +16,7 @@ const VoteMixin = {
     },
 
     createMembership (response) {
-        return fetch(response.membership_url, safeCredentials({
+        return fetch(response.links.create_membership.href, safeCredentials({
             method: 'POST'
         })).then(statusSuccess);
     },

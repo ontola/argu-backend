@@ -46,6 +46,13 @@ class AuthorizedController < ApplicationController
         render status: 403,
                json: error_hash.merge(notifications: [error_hash])
       end
+      format.json_api do
+        error_hash = {
+          message: 'Not a member',
+          code: 'NOT_A_MEMBER'
+        }.merge(exception.body)
+        render json_api_error(403, error_hash)
+      end
     end
   end
 
@@ -157,6 +164,16 @@ class AuthorizedController < ApplicationController
       get_parent_resource.edge,
       attributes: resource_new_params.merge(permit_params.to_h),
       options: service_options)
+  end
+
+  def deserialized_params
+    if request.format.json_api?
+      ActionController::Parameters.new(
+        ActiveModelSerializers::Deserialization.jsonapi_parse!(params, keys: {side: :for}, polymorphic: [:parent])
+      )
+    else
+      params
+    end
   end
 
   def service_klass
