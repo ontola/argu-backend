@@ -46,6 +46,17 @@ class AuthorizedController < ApplicationController
         render status: 403,
                json: error_hash.merge(notifications: [error_hash])
       end
+      format.json_api do
+        f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
+        error_hash = {
+          type: :error,
+          error_id: 'NOT_A_MEMBER',
+          message: exception.body,
+          original_request: f.filter(params)
+        }.merge(exception.body)
+        render status: 403,
+               json: error_hash.merge(notifications: [error_hash])
+      end
     end
   end
 

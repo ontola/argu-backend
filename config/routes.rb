@@ -119,8 +119,8 @@ Rails.application.routes.draw do
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
 
-  post 'v/:for' => 'votes#create', as: :vote
-  resources :votes, only: [:destroy], path: :v
+  post 'v' => 'votes#create', as: :votes
+  resources :votes, only: [:destroy], path: :v, as: :vote
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],

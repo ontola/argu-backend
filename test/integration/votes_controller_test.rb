@@ -48,6 +48,31 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
+  test 'should 403 when not a member json_api' do
+    sign_in user
+
+    post votes_path,
+         params: {
+           format: :json_api,
+           data: {
+             type: 'votes',
+             attributes: {
+               for: :pro
+             },
+             relationships: {
+               parent: {
+                 data: {
+                   type: 'motions',
+                   id: motion.id
+                 }
+               }
+             }
+           }
+         }
+
+    assert_response 403
+  end
+
   ####################################
   # As Member
   ####################################
@@ -78,6 +103,36 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.valid?
   end
 
+  test 'should post create json_api' do
+    sign_in member
+
+    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro
+               },
+               relationships: {
+                 parent: {
+                   data: {
+                     type: 'motions',
+                     id: motion.id
+                   }
+                 }
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
+  end
+
   test 'should not create new vote when existing one is present' do
     create(:vote,
            parent: motion.edge,
@@ -102,6 +157,44 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_response 304
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
+  end
+
+  test 'should not create new vote when existing one is present json_api' do
+    create(:vote,
+           parent: motion.edge,
+           voter: member.profile,
+           options: {
+            publisher: member,
+            owner: member.profile
+           },
+           for: 'neutral')
+    sign_in member
+
+    assert_no_difference('Vote.count') do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :neutral
+               },
+               relationships: {
+                 parent: {
+                   data: {
+                     type: 'motions',
+                     id: motion.id
+                   }
+                 }
+               }
+             }
+           }
+    end
+
+    assert_response 304
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.neutral?
   end
 
   test 'should not create new vote when existing one is present with html' do
@@ -153,6 +246,44 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
+  end
+
+  test 'should update vote when existing one is present json_api' do
+    create(:vote,
+           parent: motion.edge,
+           voter: member.profile,
+           options: {
+             publisher: member,
+             owner: member.profile
+           },
+           for: 'neutral')
+    sign_in member
+
+    assert_no_difference('Vote.count') do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro
+               },
+               relationships: {
+                 parent: {
+                   data: {
+                     type: 'motions',
+                     id: motion.id
+                   }
+                 }
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
   end
 
   test 'should delete destroy own vote' do

@@ -38,7 +38,7 @@ class MotionsController < AuthorizedController
       @motion
     )
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
-    @vote ||= Vote.new(voteable: @motion)
+    @vote ||= Vote.new(voteable: @motion, voter: current_profile)
 
     add_to_state(authenticated_resource)
     add_to_state @vote

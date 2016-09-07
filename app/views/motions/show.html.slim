@@ -11,7 +11,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: @motion }
-      .motion-votes= react_component_store 'BigVoteApp', props: {voteId: @vote.id}
+      .motion-votes= react_component_store 'BigVoteApp', props: {motionId: @motion.id, voteId: @vote.id}
 - if @motion.blog_posts.present?
   .col-1
     =render partial: 'happenings/timeline',
