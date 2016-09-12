@@ -1,7 +1,12 @@
-section.section-info.blog-post-bg
-  .details
-    .details-part.details-part--type.neutral-bg[data-title=t('blog_posts.tooltips.info')]
-      span[class="fa fa-#{blog_post_icon}"]
-      span.icon-left= t('blog_posts.type')
-    .details-part
-      span[datetime=time_in_iso8601(blog_post.happened_at)]= blog_post_dateline(blog_post)
+section.section--details
+  .detailsBar
+    .detail[data-title=t('blog_posts.tooltips.info')]
+      .detail__icon.detail__icon--type
+        span[class="fa fa-#{blog_post_icon}"]
+      .detail__text
+        span= t('blog_posts.type')
+    .detail
+      .detail__icon
+        .fa.fa-clock-o
+      .detail__text
+        span[datetime=time_in_iso8601(blog_post.happened_at)]= blog_post_dateline(blog_post)

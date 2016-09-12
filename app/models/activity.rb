@@ -37,6 +37,10 @@ class Activity < PublicActivity::Activity
     collection.update_all(owner_id: 0)
   end
 
+  def identifier
+    "#{self.class.name.tableize}_#{id}"
+  end
+
   def object
     trackable_type.underscore
   end

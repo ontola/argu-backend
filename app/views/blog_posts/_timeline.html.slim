@@ -1,5 +1,4 @@
 .box[class=status_classes_for(resource)]
-  =render partial: 'blog_posts/info_bar', locals: {blog_post: resource}
   section
     h3[itemprop="headline"]= resource.title
     .markdown[itemprop="text"]= markdown_to_html(resource.content)

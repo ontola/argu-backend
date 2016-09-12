@@ -1,10 +1,11 @@
 section.section--details
   .detailsBar
-    .detail[data-title=t('motions.tooltips.info')]
-      .detail__icon.detail__icon--type.motion-bg
-        span[class="fa fa-#{motion_icon}"]
-      .detail__text
-        span= motion_type
+    - if local_assigns[:show_type]
+      .detail[data-title=t('motions.tooltips.info')]
+        .detail__icon.detail__icon--type.motion-bg
+          span[class="fa fa-#{motion_icon}"]
+        .detail__text
+            span= motion_type
     - if local_assigns[:show_parent]
       - unless params[:controller] == 'projects'
         - if motion.question_id
@@ -40,10 +41,13 @@ section.section--details
           .fa.fa-clock-o
         .detail__text
           time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
-    - if motion.state != 'pending'
-      div class="details-part details-part--right details-part--decision details-part--decision-#{motion.state}"
-        =link_to t("decisions.#{motion.state}"), motion_decisions_url(motion.edge)
-    - elsif local_assigns[:show_decision_dropdown]
-      - if policy(motion.last_or_new_decision).update?
-        div class="details-part details-part--filled details-part--right details-part--decision details-part--decision-#{motion.state}"
+    - if local_assigns[:show_decision]
+      - if (motion.state == 'pending') && policy(motion.last_or_new_decision).update?
+        div class="detail detail--decision detail--interactive detail--decision--#{motion.state}"
           =react_component('HyperDropdown', decision_items(motion), {prerender: true}) if decision_items(motion)[:sections].first[:items].present?
+      - elsif motion.state != 'pending'
+        div class="detail detail--decision--#{motion.state}"
+          .detail__icon
+            div class="fa fa-#{decision_icon(motion)}"
+          .detail__text
+            =t("decisions.#{motion.state}")

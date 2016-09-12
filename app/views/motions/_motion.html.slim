@@ -5,4 +5,4 @@
   section
     =link_to motion_path(motion) do
       h2.motion-t[itemprop="headline"]= motion.title
-  =render partial: 'motions/info_bar', locals: {motion: motion, show_vote_pie: true, show_parent: true}
+  =render partial: 'motions/info_bar', locals: {motion: motion, show_type: true, show_vote_pie: true, show_parent: true, show_decision: true}

@@ -9,7 +9,7 @@
   margin-bottom: .3em;
 }
 
-.detail__text {
+.detail__text, .detail--interactive .icon-left {
   font-size: .8em;
   color: $g3;
 }
@@ -30,6 +30,7 @@
   color: white;
   font-size: .8em;
   margin-right: .5em;
+  background-color: $g3;
 }
 
 .detail__icon--alert {
@@ -40,4 +41,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+}
+
+.detail--decision--approved, .header--decision--approved {
+  .fa {
+    color: $gre;
+  }
+}
+
+.detail--decision--rejected, .header--decision--rejected {
+  .fa {
+    color: $red;
+  }
 }

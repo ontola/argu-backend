@@ -20,6 +20,6 @@ nl:
       rejected: "Motie is verworpen"
       forwarded: "Besluit is doorgestuurd"
     assigned:
-      to_user: "Het besluit licht momenteel bij"
-      to_group: "Het besluit licht momenteel bij de groep"
+      to_user: "Het besluit ligt momenteel bij"
+      to_group: "Het besluit ligt momenteel bij de groep"
     find_user_info: "Typ om een gebruiker te zoeken"

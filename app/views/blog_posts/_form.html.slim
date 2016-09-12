@@ -3,7 +3,6 @@
   .col-3-2
     =to_parent
     .box
-      =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
       =semantic_form_for(blog_post.new_record? ? [get_parent_resource, blog_post] : blog_post, html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs

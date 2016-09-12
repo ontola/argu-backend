@@ -1,9 +1,9 @@
 .col-1
   =to_parent
   .box.blog_post[id=blog_post.identifier class="#{'trashed' if blog_post.is_trashed?}" data-created-at=blog_post.created_at data-updated-at=blog_post.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
-    =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
     section
       h3[itemprop="headline"]= blog_post.title
+      =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
       .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
     section.section--footer
       =render partial: blog_post.creator, locals: {resource: blog_post}

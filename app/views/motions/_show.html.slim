@@ -5,7 +5,7 @@
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
-  = render partial: 'motions/info_bar', locals: {motion: model, show_vote_pie: true, show_profile: true, show_date: true}
+  =render partial: 'motions/info_bar', locals: {show_type: false, motion: model, show_decision: true, show_vote_pie: true, show_profile: true}
   section
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
   section

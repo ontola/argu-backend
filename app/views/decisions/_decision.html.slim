@@ -1,6 +1,6 @@
 .box[class=status_classes_for(decision)]
   section
-    h3
+    h3[class="header--decision--#{decision.state}"]
       span[class="fa fa-#{decision_icon(decision)}"]
       span.icon-left=decision_state(decision)
     .markdown[itemprop="text"]=markdown_to_html(decision.content)

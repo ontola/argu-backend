@@ -24,7 +24,9 @@ module MenuHelper
     link_items = [].concat(additional_items).compact
     resource_policy = policy(resource)
     if policy(BlogPost).create? && (resource.is_a?(Motion) || resource.is_a?(Question))
-      link_items << link_item(t('blog_posts.type_new'), polymorphic_url([:new, resource, :blog_post]), fa: 'quote-left')
+      link_items << link_item(t('blog_posts.type_new'),
+                              polymorphic_url([:new, resource, :blog_post]),
+                              fa: blog_post_icon)
     end
     link_items << link_item(t('edit'), polymorphic_url([:edit, resource]), fa: 'edit') if resource_policy.update?
     link_items << link_item(t('log'), log_url(resource.edge), fa: 'history') if resource_policy.log?

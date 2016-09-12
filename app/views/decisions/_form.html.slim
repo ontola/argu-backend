@@ -2,7 +2,6 @@ section
   h3
     span[class="fa fa-#{decision_icon(decision)}"]
     span.icon-left= decision_state(decision)
-section.smallpadded
   =f.input :state, as: :hidden
   - if decision.forwarded? && decision.state_was == 'pending'
     =f.label t('decisions.forward_to')
@@ -11,13 +10,13 @@ section.smallpadded
       p.inline-errors.full-width=decision.errors.full_messages[0]
     =f.input :forwarded_group_id, as: :hidden
     =f.input :forwarded_user_id, as: :hidden
+  =f.label t('decisions.explanation')
+  =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
   =f.semantic_fields_for :happening do |hf|
     - if decision.approved? || decision.rejected?
       =hf.input :happened_at, as: :datetime_picker, label: t('decisions.happened_at')
     - else
       =hf.input :happened_at, as: :hidden
-  =f.label t('decisions.explanation')
-  =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
   - if !decision.is_published?
     =f.semantic_fields_for :argu_publication do |pf|
       =pf.input(:publish_type, as: :radio, collection: {direct: 0, draft: 1}.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
