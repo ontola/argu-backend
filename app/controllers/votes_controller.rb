@@ -172,7 +172,6 @@ class VotesController < AuthorizedController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: resource_tenant,
       publisher: current_user,
       for: for_param)
   end

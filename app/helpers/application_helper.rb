@@ -10,6 +10,8 @@ module ApplicationHelper
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
+    return true if Rails.env.test?
+
     $rollout.active?(feature, user)
   rescue Redis::CannotConnectError => e
     Bugsnag.notify(e)

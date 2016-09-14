@@ -25,7 +25,7 @@ class DecisionsController < AuthorizedController
   end
 
   def edit
-    authenticated_resource!.argu_publication.draft! unless authenticated_resource!.is_published?
+    authenticated_resource!.argu_publication.draft! unless authenticated_resource!.argu_publication.present?
 
     respond_to do |format|
       format.html do

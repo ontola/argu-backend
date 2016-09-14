@@ -13,9 +13,11 @@ class Publication < ApplicationRecord
 
   # @TODO: wrap in transaction
   def commit
-    publishable.update(is_published: true)
-    publishable.happening.update(is_published: true) if publishable.respond_to?(:happening)
-    publish("publish_#{publishable.model_name.singular}_successful", publishable)
+    unless publishable.is_published?
+      publishable.update(is_published: true)
+      publishable.happening.update(is_published: true) if publishable.respond_to?(:happening)
+      publish("publish_#{publishable.model_name.singular}_successful", publishable)
+    end
   end
 
   private
@@ -29,7 +31,7 @@ class Publication < ApplicationRecord
   def reset
     return if publishable.is_published?
 
-    cancel if job_id.present? && published_at_changed?
+    cancel if job_id.present?
     schedule if published_at.present?
   end
 

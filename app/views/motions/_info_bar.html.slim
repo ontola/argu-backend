@@ -42,7 +42,7 @@ section.section--details
         .detail__text
           time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
     - if local_assigns[:show_decision]
-      - if (motion.state == 'pending') && policy(motion.last_or_new_decision).update?
+      - if (motion.state == 'pending') && policy(motion.last_or_new_decision).update? && active_for_user?(:decisions, current_user)
         div class="detail detail--decision detail--interactive detail--decision--#{motion.state}"
           =react_component('HyperDropdown', decision_items(motion), {prerender: true}) if decision_items(motion)[:sections].first[:items].present?
       - elsif motion.state != 'pending'
