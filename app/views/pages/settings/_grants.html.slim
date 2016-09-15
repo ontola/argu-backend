@@ -20,6 +20,6 @@ table.styled.managers
       tr[class=grant.group.identifier]
         td
           span
-            span.name= link_to grant.group.display_name, edit_group_path(grant.group)
+            span.name= link_to grant.group.display_name, settings_group_path(grant.group)
         td
           =grant.group.group_memberships.count

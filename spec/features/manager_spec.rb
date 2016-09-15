@@ -13,6 +13,8 @@ RSpec.feature 'Manager', type: :feature do
 
     click_link("#{nederland.name} managers")
 
+    click_link('Members')
+
     click_link("Add #{nederland.name} manager")
     within('form.group') do
       selector =
@@ -40,6 +42,8 @@ RSpec.feature 'Manager', type: :feature do
     visit(settings_forum_path(nederland, tab: :grants))
 
     click_link("#{nederland.name} managers")
+
+    click_link('Members')
 
     click_link("Add #{nederland.name} manager")
     within('form.group') do

@@ -1,0 +1,14 @@
+=set_title t('groups.settings.title')
+.tabs-to-top
+  =render partial: 'groups/manage_bar', locals: {resource: resource, active: :settings}
+.col-3
+  header
+    h1= resource.display_name
+  .settings-tabs.col-3-1
+    =render_settings_items_for(resource, active)
+  .col-3-2
+    .box
+      section
+        / Protects against Directory Traversal Attacks
+        - if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
+          =render partial: "groups/settings/#{tab}", locals: local_assigns

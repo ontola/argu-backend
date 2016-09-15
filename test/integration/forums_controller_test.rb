@@ -281,7 +281,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
                     forum.page.display_name
     assert_have_tag response.body,
                     '.tabs-container li:nth-child(2) span.icon-left',
-                    forum.display_name
+                    I18n.t('pages.settings.title')
     assert_have_tag response.body,
                     '.settings-tabs .tab--current .icon-left',
                     I18n.t("forums.settings.menu.#{tab}")

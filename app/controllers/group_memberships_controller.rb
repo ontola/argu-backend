@@ -4,12 +4,10 @@ class GroupMembershipsController < AuthorizedController
 
   def new
     authorize authenticated_resource.page, :add_group_member?
-    render 'pages/settings', locals: {
-      tab: 'groups/add',
-      active: tab,
-      group_membership: authenticated_resource,
-      group: authenticated_resource.group,
-      resource: granted_resource || authenticated_resource.page
+    render 'groups/settings', locals: {
+      tab: 'invite',
+      active: 'invite',
+      resource: authenticated_resource.group
     }
   end
 
@@ -80,9 +78,5 @@ class GroupMembershipsController < AuthorizedController
 
   def granted_resource
     authenticated_resource.group.grants.first&.edge&.owner
-  end
-
-  def tab
-    @_tab ||= authenticated_resource!.grants.manager.present? ? 'managers' : 'groups'
   end
 end

@@ -2,7 +2,7 @@
 =render partial: 'pages/manage_bar', locals: {resource: resource, active: :settings}
 .col-3
   header
-    h1= t('pages.settings.title')
+    h1= resource.display_name
   .col-3-1
     =render_settings_items_for(resource, active)
   .col-3-2

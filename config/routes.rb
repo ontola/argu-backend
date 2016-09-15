@@ -159,8 +159,9 @@ Rails.application.routes.draw do
   resources :group_responses, only: [:show, :edit, :update, :destroy]
   resources :groups,
             path: 'g',
-            only: [:update, :edit, :destroy],
+            only: [:update, :destroy],
             concerns: [:destroyable] do
+    get :settings, on: :member
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
   end
   resources :group_memberships, only: :destroy

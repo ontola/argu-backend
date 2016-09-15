@@ -8,3 +8,10 @@ nl:
     new: "Groep toevoegen"
     destroy:
       body: "%{group_memberships_count} groepsleden met de daarbij behorende %{group_resonses_count} reacties zullen worden verwijderd."
+    settings:
+      title: "Groepsinstellingen"
+      menu:
+        general: "Algemeen"
+        members: 'Leden'
+        invite: 'Uitnodigen'
+        grants: 'Rechten'

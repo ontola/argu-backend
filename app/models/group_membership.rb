@@ -18,6 +18,7 @@ class GroupMembership < ApplicationRecord
 
   validates :group_id, :member_id, presence: true
 
+  paginates_per 30
   parentable :group
 
   def publisher

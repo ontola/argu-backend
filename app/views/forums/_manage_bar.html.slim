@@ -3,9 +3,9 @@
     li= link_to url_for(resource.page), data: {intro: t('intro.pages.settings.home')}
             span.fa.fa-building
             span.icon-left= resource.page.display_name
-    li= link_to url_for(resource), data: {intro: t("intro.#{resource.class_name}.settings.home")}
-      span.fa.fa-group
-      span.icon-left= resource.display_name
+    li= link_to url_for([:settings, resource.page, tab: :forums])
+      span.fa.fa-gear
+      span.icon-left= t('pages.settings.title')
     li[class=('tab--current' if local_assigns[:active] == :settings)]
       =link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.general")}
         span.fa.fa-gear

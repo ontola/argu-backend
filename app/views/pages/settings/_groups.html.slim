@@ -11,7 +11,7 @@ table.styled
     tr
       td
         span[class="fa fa-#{visibility_icon_for(group)}"]
-        =link_to group.display_name, edit_group_path(group)
+        =link_to group.display_name, settings_group_path(group)
       td
         =>group.group_memberships.count
         =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do

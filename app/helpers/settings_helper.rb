@@ -13,12 +13,14 @@ module SettingsHelper
       announcements: 'bullhorn',
       profile: 'user',
       notifications: 'bell',
-      authentication: 'shield'
+      authentication: 'shield',
+      members: 'users',
+      invite: 'user-plus'
     }
   end
 
   def group_redirect_url(group)
-    edit_group_path(group)
+    settings_group_path(group, tab: :members)
   end
 
   def visibility_icon_for(item)

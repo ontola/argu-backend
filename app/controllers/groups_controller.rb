@@ -44,6 +44,22 @@ class GroupsController < AuthorizedController
            }
   end
 
+  def settings
+    prepend_view_path 'app/views/forums'
+
+    if tab == 'members'
+      @members = resource
+                   .group_memberships
+                   .includes(member: {profileable: :shortname})
+                   .page(params[:page])
+    end
+    render locals: {
+      tab: tab,
+      active: tab,
+      resource: resource_by_id
+    }
+  end
+
   def update
     update_service.on(:update_group_successful) do |group|
       respond_to do |format|
@@ -108,5 +124,9 @@ class GroupsController < AuthorizedController
     HashWithIndifferentAccess.new(
       page: get_parent_resource
     )
+  end
+
+  def tab
+    policy(resource_by_id || Group).verify_tab(params[:tab] || params[:forum].try(:[], :tab))
   end
 end

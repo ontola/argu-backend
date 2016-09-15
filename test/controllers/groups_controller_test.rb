@@ -26,10 +26,10 @@ class GroupsControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'user should not show edit' do
+  test 'user should not show settings' do
     sign_in user
 
-    get :edit, params: {id: group, page_id: freetown.page}
+    get :settings, params: {id: group, page_id: freetown.page}
 
     assert_not_authorized
   end
@@ -72,10 +72,15 @@ class GroupsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  test 'manager should show edit' do
+  test 'manager should show settings and some tabs' do
     sign_in manager
 
-    get :edit, params: {id: @group, forum_id: @freetown}
+    get :settings, params: {id: @group, forum_id: @freetown}
+
+    %i(general members invite).each do |tab|
+      get :settings, params: {id: @group, forum_id: @freetown, tab: tab}
+      assert_group_settings_shown @group, tab
+    end
 
     assert_response 200
   end
@@ -120,10 +125,15 @@ class GroupsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  test 'owner should show edit' do
+  test 'owner should show settings and all tabs' do
     sign_in @freetown_owner
 
-    get :edit, params: {id: @group, forum_id: @freetown}
+    get :settings, params: {id: @group, forum_id: @freetown}
+
+    %i(general members invite grants).each do |tab|
+      get :settings, params: {id: @group, forum_id: @freetown, tab: tab}
+      assert_group_settings_shown @group, tab
+    end
 
     assert_response 200
   end
@@ -136,5 +146,23 @@ class GroupsControllerTest < ActionController::TestCase
     end
 
     assert_response 303
+  end
+
+  private
+
+  # Asserts that the group is shown on a specific tab
+  # @param [Group] group The group to be shown
+  # @param [Symbol] tab The tab to be shown (defaults to :general)
+  def assert_group_settings_shown(group, tab = :general)
+    assert_response 200
+    assert_have_tag response.body,
+                    '.tabs-container li:first-child span.icon-left',
+                    group.page.display_name
+    assert_have_tag response.body,
+                    '.tabs-container li:nth-child(2) span.icon-left',
+                    I18n.t('pages.settings.title')
+    assert_have_tag response.body,
+                    '.settings-tabs .tab--current .icon-left',
+                    I18n.t("groups.settings.menu.#{tab}")
   end
 end
