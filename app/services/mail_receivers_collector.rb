@@ -6,7 +6,7 @@ class MailReceiversCollector
   def call
     t_notifications = Notification.arel_table
     t_users = User.arel_table
-    User.where.not(confirmed_at: nil)
+    User
       .joins(:notifications)
       .where(t_notifications[:read_at].eq(nil))
       .where(t_users[:notifications_viewed_at].eq(nil)
