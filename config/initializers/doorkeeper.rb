@@ -7,10 +7,7 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    # fail "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
-    # Put your resource owner authentication logic here.
-    # Example implementation:
-    User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+    User.find_by_id(doorkeeper_token.resource_owner_id) if doorkeeper_token&.acceptable?('user')
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized
@@ -35,7 +32,7 @@ Doorkeeper.configure do
 
   # Use a custom class for generating the access token.
   # https://github.com/doorkeeper-gem/doorkeeper#custom-access-token-generator
-  # access_token_generator "::Doorkeeper::JWT"
+  access_token_generator '::Doorkeeper::JWT'
 
   # Reuse access token for the same resource owner within an application (disabled by default)
   # Rationale: https://github.com/doorkeeper-gem/doorkeeper/issues/383
@@ -53,20 +50,21 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  # default_scopes  :public
+  default_scopes  :guest
   # optional_scopes :write, :update
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
   # falls back to the `:client_id` and `:client_secret` params from the `params` object.
   # Check out the wiki for more information on customization
-  # client_credentials :from_basic, :from_params
+  client_credentials :from_basic, :from_params
 
   # Change the way access token is authenticated from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
   # falls back to the `:access_token` or `:bearer_token` params from the `params` object.
   # Check out the wiki for more information on customization
-  # access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param
+  access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param,
+                       ->(req) { req.cookie_jar.encrypted['client_token'] }
 
   # Change the native redirect uri for client apps
   # When clients register with the following redirect uri, they won't be redirected to any server and
@@ -98,7 +96,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w(authorization_code client_credentials)
+  grant_flows %w(authorization_code client_credentials)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
@@ -109,4 +107,50 @@ Doorkeeper.configure do
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
+end
+
+Doorkeeper::JWT.configure do
+  # Set the payload for the JWT token. This should contain unique information
+  # about the user.
+  # Defaults to a randomly generated token in a hash
+  # { token: "RANDOM-TOKEN" }
+  token_payload do |opts|
+    if opts[:scopes].include?('guest')
+      {
+        user: {
+          type: 'guest'
+        }
+      }
+    else
+      user = User.find(opts[:resource_owner_id])
+
+      {
+        user: {
+          type: 'user',
+          id: user.id,
+          email: user.email
+        }
+      }
+    end
+  end
+
+  # Use the application secret specified in the Access Grant token
+  # Defaults to false
+  # If you specify `use_application_secret true`, both secret_key and secret_key_path will be ignored
+  use_application_secret true
+
+  # Set the encryption secret. This would be shared with any other applications
+  # that should be able to read the payload of the token.
+  # Defaults to "secret"
+  secret_key Rails.application.secrets.jwt_encryption_token
+
+  # If you want to use RS* encoding specify the path to the RSA key
+  # to use for signing.
+  # If you specify a secret_key_path it will be used instead of secret_key
+  secret_key_path "path/to/file.pem"
+
+  # Specify encryption type. Supports any algorithim in
+  # https://github.com/progrium/ruby-jwt
+  # defaults to nil
+  encryption_method :hs512
 end

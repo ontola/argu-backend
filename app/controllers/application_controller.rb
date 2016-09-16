@@ -4,16 +4,18 @@ require 'argu/not_authorized_error'
 require 'argu/not_a_user_error'
 
 class ApplicationController < ActionController::Base
-  include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper,
+  include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
           PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
           NestedAttributesHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
-  protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
+  prepend_before_action :write_client_access_token
+  before_action :set_layout
+  before_action :doorkeeper_authorize!
+  protect_from_forgery with: :exception
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_layout
   before_action :set_locale
   after_action :verify_authorized, except: :index, unless: :devise_controller?
   after_action :verify_policy_scoped, only: :index
@@ -171,7 +173,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_time_zone(&block)
-    time_zone = current_user.try(:time_zone) || 'Amsterdam'
+    time_zone = current_user&.time_zone || 'Amsterdam'
     Time.use_zone(time_zone, &block)
   end
 

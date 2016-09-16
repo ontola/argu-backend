@@ -60,6 +60,13 @@ forum.edge = Edge.new(owner: forum,
                       parent: argu.edge)
 forum.save!
 
+Doorkeeper::Application.create!(
+  id: 0,
+  name: 'Argu',
+  owner: u1.profile,
+  redirect_uri: 'https://argu.co/'
+)
+
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')
 
 Setting.set('about',

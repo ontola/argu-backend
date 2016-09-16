@@ -389,7 +389,6 @@ ActiveRecord::Schema.define(version: 20161024142139) do
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|
-    t.integer  "resource_owner_id"
     t.integer  "application_id"
     t.string   "token",             null: false
     t.string   "refresh_token"
@@ -397,8 +396,8 @@ ActiveRecord::Schema.define(version: 20161024142139) do
     t.datetime "revoked_at"
     t.datetime "created_at",        null: false
     t.string   "scopes"
+    t.string   "resource_owner_id"
     t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
-    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
     t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
   end
 
