@@ -120,12 +120,7 @@ class ProfilesController < ApplicationController
   end
 
   def user_or_redirect(redirect = nil)
-    if current_user.blank?
-      flash[:error] = t('devise.failure.unauthenticated')
-      raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'),
-                                       redirect: redirect)
-    else
-      current_user
-    end
+    raise Argu::NotAUserError.new(r: redirect) if current_user.blank?
+    current_user
   end
 end
