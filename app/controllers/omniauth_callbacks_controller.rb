@@ -125,4 +125,14 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def set_identity_fields_for(provider, identity, env)
     set_facebook_fields(identity, env) if provider == :facebook
   end
+
+  def sign_in(resource)
+    t = Doorkeeper::AccessToken.find_or_create_for(
+      Doorkeeper::Application.find(0),
+      resource.id,
+      'user',
+      2.weeks,
+      false)
+    cookies.encrypted['client_token'] = t.token
+  end
 end

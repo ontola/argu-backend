@@ -9,11 +9,11 @@ class ApplicationController < ActionController::Base
           NestedAttributesHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
+  protect_from_forgery with: :exception, prepend: true
   prepend_before_action :check_for_access_token
   prepend_before_action :write_client_access_token
   before_action :set_layout
   before_action :doorkeeper_authorize!
-  protect_from_forgery with: :exception
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
       freshdesk_redirect_url
     else
-      super
+      super(resource || current_resource_owner)
     end
   end
 

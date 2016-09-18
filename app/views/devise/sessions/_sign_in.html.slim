@@ -1,19 +1,26 @@
 .box.box-small
   section
-    =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name, host_url: params[:host_url].presence) ) do |f|
+    =semantic_form_for(resource,
+                       as: resource_name,
+                       url: oauth_token_path(host_url: params[:host_url].presence)) do |f|
       =devise_error_messages!
       .form-small
         h2= t('sign_in')
         .inspectlet-sensitive=f.inputs do
-          /.info.info-signup= t('sign_in_existing')
-          =f.input :email, placeholder: false, input_html: {autofocus: :autofocus, required: true}
-          =f.input :password, placeholder: false, hint: false, input_html: {required: true}
+          =f.input :email,
+                   placeholder: false,
+                   input_html: {name: 'username', autofocus: :autofocus, required: true}
+          =f.input :password,
+                   placeholder: false,
+                   hint: false,
+                   input_html: {name: 'password', required: true}
+          =hidden_field_tag :grant_type, 'password'
+          =hidden_field_tag :scope, 'user'
           =f.input :r, as: :hidden
           - if devise_mapping.rememberable?
             .remember.margin-bottom= f.input :remember_me, as: :boolean
         =f.actions do
           =f.action :submit, as: :button, label: t('sign_in'), button_html: { id: 'log_in' }
-        /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
         ul.btns-devise
           li= link_to t('forgot_password'), new_password_path(resource_name)
           li= link_to t('no_confirmation_instructions'), new_confirmation_path(resource_name)

@@ -643,7 +643,6 @@ ActiveRecord::Schema.define(version: 20161024142139) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "forum_id"
-    t.index "lower((shortname)::text)", name: "index_shortnames_on_shortname", unique: true, using: :btree
     t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
   end
 

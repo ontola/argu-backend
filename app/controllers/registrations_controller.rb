@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class RegistrationsController < Devise::RegistrationsController
+  skip_before_action :authenticate_scope!, only: :destroy
   include NestedResourceHelper
 
   def create
@@ -53,6 +54,16 @@ class RegistrationsController < Devise::RegistrationsController
     else
       setup_users_path
     end
+  end
+
+  def sign_in(scope, resource)
+    t = Doorkeeper::AccessToken.find_or_create_for(
+      Doorkeeper::Application.find(0),
+      resource.id,
+      scope.to_s,
+      2.weeks,
+      false)
+    cookies.encrypted['client_token'] = t.token
   end
 
   def sign_up(resource_name, resource)

@@ -17,7 +17,7 @@ module OauthHelper
       Doorkeeper::Application.find(0),
       session.id,
       'guest',
-      1.minute,
+      1.hour,
       false)
   end
 
@@ -29,9 +29,10 @@ module OauthHelper
     raw_doorkeeper_token.blank? ||
       (raw_doorkeeper_token &&
         raw_doorkeeper_token.scopes.include?('guest') &&
-        raw_doorkeeper_token.expired?)
+        raw_doorkeeper_token.expired?
+      )
   end
-  
+
   def raw_doorkeeper_token
     @_raw_doorkeeper_token ||= Doorkeeper::OAuth::Token.authenticate(
       request,

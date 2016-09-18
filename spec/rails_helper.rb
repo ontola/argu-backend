@@ -145,22 +145,36 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    create(:user,
-           id: 0,
-           shortname: build(:shortname, shortname: 'community'),
-           email: 'community@argu.co',
-           password: 'password',
-           first_name: nil,
-           last_name: nil,
-           finished_intro: true,
-           profile: build(:profile, id: 0))
-    create(:page,
-           id: 0,
-           last_accepted: DateTime.current,
-           profile: Profile.new(name: 'public page profile'),
-           owner: User.find(0).profile,
-           shortname: Shortname.new(shortname: 'public_page'))
-    create(:group, id: -1, parent: Page.find(0).edge)
+    if User.find_by(id: 0).blank?
+      create(:user,
+             id: 0,
+             shortname: build(:shortname, shortname: 'community'),
+             email: 'community@argu.co',
+             password: 'password',
+             first_name: nil,
+             last_name: nil,
+             finished_intro: true,
+             profile: build(:profile, id: 0))
+    end
+    if Page.find_by(id: 0).blank?
+      create(:page,
+             id: 0,
+             last_accepted: DateTime.current,
+             profile: Profile.new(name: 'public page profile'),
+             owner: User.find(0).profile,
+             shortname: Shortname.new(shortname: 'public_page'))
+    end
+    if Group.find_by(id: 0).blank?
+      create(:group, id: Group::PUBLIC_GROUP_ID, parent: Page.find(0).edge)
+    end
+    if Doorkeeper::Application.find_by(id: 0).blank?
+      Doorkeeper::Application.create!(
+        id: 0,
+        name: 'Argu',
+        owner: Profile.find(0),
+        redirect_uri: 'http://example.com/'
+      )
+    end
   end
 
   OmniAuth.config.test_mode = true

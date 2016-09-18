@@ -85,7 +85,8 @@ Rails.application.routes.draw do
   end
 
   use_doorkeeper do
-    controllers applications: 'oauth/applications'
+    controllers applications: 'oauth/applications',
+                tokens: 'oauth/tokens'
   end
 
   resources :notifications, only: [:index, :show, :update], path: 'n' do

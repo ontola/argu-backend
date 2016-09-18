@@ -148,6 +148,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
   gem 'brakeman', '~> 3.2.1'
+  gem 'oauth2', '~> 1.2.0'
 end
 
 group :development do

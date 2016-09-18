@@ -10,13 +10,13 @@ Doorkeeper.configure do
     User.find_by_id(doorkeeper_token.resource_owner_id) if doorkeeper_token&.acceptable?('user')
   end
 
-  # If you want to restrict access to the web interface for adding oauth authorized
-  # applications, you need to declare the block below.
-  # admin_authenticator do
-  #   # Put your admin authentication logic here.
-  #   # Example implementation:
-  #   Admin.find_by_id(session[:admin_id]) || redirect_to(new_admin_session_url)
-  # end
+  resource_owner_from_credentials do
+    request.params[:user] = {email: request.params[:username], password: request.params[:password]}
+    request.env['devise.allow_params_authentication'] = true
+    user = request.env['warden'].authenticate!(scope: :user)
+    request.env['warden'].logout
+    user
+  end
 
   # Authorization Code expiration time (default 10 minutes).
   # authorization_code_expires_in 10.minutes
@@ -50,8 +50,8 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  default_scopes  :guest
-  # optional_scopes :write, :update
+  # default_scopes  :guest
+  optional_scopes :guest, :user
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
@@ -78,7 +78,7 @@ Doorkeeper.configure do
   # by default in non-development environments). OAuth2 delegates security in
   # communication to the HTTPS protocol so it is wise to keep this enabled.
   #
-  # force_ssl_in_redirect_uri !Rails.env.development?
+  force_ssl_in_redirect_uri !(Rails.env.development? || Rails.env.test?)
 
   # Specify what grant flows are enabled in array of Strings. The valid
   # strings and the flows they enable are:
@@ -96,13 +96,13 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  grant_flows %w(authorization_code client_credentials)
+  grant_flows %w(authorization_code client_credentials password)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
+  # skip_authorization do |_, client|
+  #   client.id == 0
   # end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
@@ -117,6 +117,7 @@ Doorkeeper::JWT.configure do
   token_payload do |opts|
     if opts[:scopes].include?('guest')
       {
+        iat: Time.current.iso8601(5),
         user: {
           type: 'guest'
         }
@@ -125,6 +126,7 @@ Doorkeeper::JWT.configure do
       user = User.find(opts[:resource_owner_id])
 
       {
+        iat: Time.current.iso8601(5),
         user: {
           type: 'user',
           id: user.id,

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Rails.application.configure do
-  config.host = ENV['HOSTNAME'] || 'localhost:3000'
+  config.host = ENV['HOSTNAME'] || 'localhost'
   Rails.application.routes.default_url_options[:host] = config.host
   # Settings specified here will take precedence over those in config/application.rb.
 
