@@ -1,3 +1,4 @@
+require_relative '../../lib/publishable'
 
 class Identity < ApplicationRecord
   belongs_to :user
