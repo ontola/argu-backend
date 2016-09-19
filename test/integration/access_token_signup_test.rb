@@ -7,25 +7,31 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
   let(:helsinki_at) { helsinki.access_tokens.first }
   let(:hidden_one) { create(:motion, parent: helsinki.edge) }
 
-  test 'should redirect to root when accessing a forum without an access token' do
+  ####################################
+  # As Guest
+  ####################################
+  test 'guest should redirect to root when accessing a forum without an access token' do
     get forum_path(helsinki)
     assert_not assigns(:items), 'render not interrupted with an NotLoggedInException'
     assert_response 404, 'Existence of hidden forums is leaked'
   end
 
-  test 'should not view forum when access tokens are disabled' do
+  ####################################
+  # As Spectator
+  ####################################
+  test 'spectator should not view forum when access tokens are disabled' do
     at = athens.access_tokens.first
     assert at.present?
     get forum_path(athens, at: at.access_token)
     assert_response 404
   end
 
-  test 'should view forum with an access token' do
+  test 'spectator should view forum' do
     get forum_path(helsinki, at: helsinki_at.access_token)
     assert_response :success
   end
 
-  test 'should update counters accordingly' do
+  test 'spectator should update counters accordingly' do
     assert_differences [['helsinki_at.reload.sign_ups', 0],
                         ['helsinki_at.reload.usages', 1]] do
       get forum_path(helsinki, at: helsinki_at.access_token)
@@ -67,7 +73,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
   end
 
   # Note: The :at params are duplicated everywhere because integration tests apparently don't support session variables
-  test 'should register and become a member with an access token' do
+  test 'spectator should register and become a member' do
     nominatim_netherlands
 
     hidden_forum_path = forum_path(helsinki.url)
@@ -125,7 +131,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_equal 1, assigns(:profile).reload.grants.member.count
   end
 
-  test 'should register and become a member with an access token and preserve vote' do
+  test 'spectator should register and become a member and preserve vote' do
     nominatim_netherlands
 
     get forum_path(helsinki.url,
@@ -186,5 +192,40 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_response :success
+  end
+
+  ####################################
+  # As User
+  ####################################
+  let(:user) { create(:user) }
+
+  test 'user should join forum with access token' do
+    sign_in user
+
+    get forum_path(helsinki)
+    assert_response 404, 'Existence of hidden forums is leaked'
+
+    assert_differences [['helsinki_at.reload.sign_ups', 0],
+                        ['helsinki_at.reload.usages', 1]] do
+      get forum_path(helsinki, at: helsinki_at.access_token)
+    end
+    assert_response :success
+
+    assert_differences [['helsinki_at.reload.sign_ups', 0],
+                        ['helsinki_at.reload.usages', 0]],
+                       'Usages or sign_ups counter changed on secondary get w/ token' do
+      get forum_path(helsinki, at: helsinki_at.access_token)
+      assert_response :success
+    end
+
+    assert_differences [['helsinki_at.reload.sign_ups', 0],
+                        ['helsinki_at.reload.usages', 0],
+                        ['GroupMembership.count', 1]] do
+      post group_membership_index_path(helsinki.members_group, r: forum_path(helsinki), at: helsinki_at.access_token)
+    end
+    assert_redirected_to forum_path(helsinki)
+
+    follow_redirect!
+    assert_response 200
   end
 end

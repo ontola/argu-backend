@@ -43,7 +43,7 @@ class GroupMembershipPolicy < RestrictivePolicy
 
   def create?
     if record.group.grants.member.present?
-      rule is_open?, is_member?, is_manager?, super
+      rule is_open?, has_access_token?, is_member?, is_manager?, super
     else
       rule is_manager?, is_owner?, super
     end
@@ -58,6 +58,12 @@ class GroupMembershipPolicy < RestrictivePolicy
   end
 
   private
+
+  def has_access_token?
+    forum = record&.group&.grants&.forum_member&.first&.edge&.owner
+    access_token if forum && Set.new(forum.m_access_tokens).intersect?(Set.new(session[:a_tokens])) &&
+        forum.visible_with_a_link?
+  end
 
   def page_policy
     Pundit.policy(context, record&.group&.page || context.context_model)
