@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712111835) do
+ActiveRecord::Schema.define(version: 20160919093414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,7 +71,7 @@ ActiveRecord::Schema.define(version: 20160712111835) do
   add_index "announcements", ["published_at"], name: "index_announcements_on_published_at", using: :btree
 
   create_table "arguments", force: :cascade do |t|
-    t.text     "content",                                         null: false
+    t.text     "content"
     t.integer  "motion_id",                                       null: false
     t.boolean  "pro",                             default: true
     t.datetime "created_at",                                      null: false

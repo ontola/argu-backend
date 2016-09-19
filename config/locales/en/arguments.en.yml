@@ -37,7 +37,7 @@ en:
                      <li>An argument is a <b>single reason</b> <b class='pro-t'>in favour</b> or <b class='con-t'>against</b> an <b class='motion-t'>idea</b>.</li>
                      <li>Use a <b>short and concise</b> title.</li>
                    </ul>"
-      content_heading: "Argument details"
+      content_heading: "Argument details (optional)"
       content_body_html: "<ul class='bullets'>
                       <li>Give <b>background information</b> to support your argument.</li>
                       <li>Use <b>references</b> and add links.</li>
