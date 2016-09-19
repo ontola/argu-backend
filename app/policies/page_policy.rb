@@ -17,7 +17,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   module Roles
-    delegate :open, :manager, :owner, to: :forum_policy
+    delegate :open, :access_token, :manager, :owner, to: :forum_policy
 
     def is_open?
       open if @record.open?
@@ -44,7 +44,7 @@ class PagePolicy < RestrictivePolicy
 
   module PageRoles
     delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :page_policy
-    delegate :open, :member, :manager, :owner, to: :page_policy
+    delegate :open, :access_token, :member, :manager, :owner, to: :page_policy
   end
 
   def permitted_attributes
