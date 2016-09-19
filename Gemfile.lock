@@ -29,10 +29,11 @@ GIT
 
 GIT
   remote: https://github.com/tcocca/acts_as_follower.git
-  revision: a04dfa0574d6f6d3306658470ce146ef1fe2de32
-  ref: a04dfa0574d6f6d3306658470ce146ef1fe2de32
+  revision: ff4a7d1f8206be13b9b68526a5062611f36509aa
+  ref: ff4a7d1f8206be13b9b68526a5062611f36509aa
   specs:
     acts_as_follower (0.2.1)
+      activerecord (>= 4.0)
 
 GEM
   remote: https://rubygems.org/
