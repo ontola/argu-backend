@@ -6,7 +6,6 @@ module SettingsHelper
       advanced: 'gears',
       grants: 'suitcase',
       groups: 'group',
-      projects: 'rocket',
       privacy: 'lock',
       shortnames: 'external-link',
       banners: 'sticky-note',

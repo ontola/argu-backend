@@ -90,7 +90,7 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general advanced projects shortnames banners) if is_manager? || staff?
+    tabs.concat %i(general advanced shortnames banners) if is_manager? || staff?
     tabs.concat %i(privacy grants) if is_owner? || staff?
     tabs
   end
