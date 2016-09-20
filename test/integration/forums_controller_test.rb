@@ -233,6 +233,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   ####################################
   define_freetown('inhabited')
   let(:staff) { create :user, :staff }
+  let(:transfer_to) { create :page }
   let(:binnenhof) { create(:place, address: {'city' => 'Den Haag', 'country_code' => 'nl', 'postcode' => '2513AA'}) }
   let(:paleis) { create(:place, address: {'city' => 'Den Haag', 'country_code' => 'nl', 'postcode' => '2517KJ'}) }
   let(:office) { create(:place, address: {'city' => 'Utrecht', 'country_code' => 'nl', 'postcode' => '3583GP'}) }
@@ -262,6 +263,21 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
           assert_select row, '.city-count', text: counts[i][1]
         end
       end
+    end
+  end
+
+  test 'staff should transfer' do
+    sign_in staff
+    put forum_path(holland),
+        params: {
+          forum: {
+            page_id: transfer_to.id
+          }
+        }
+    holland.reload
+    assert_equal holland.edge.parent, transfer_to.edge
+    holland.edge.groups.each do |group|
+      assert_equal group.edge.parent, holland.edge
     end
   end
 

@@ -38,6 +38,8 @@ class Forum < ApplicationRecord
   auto_strip_attributes :featured_tags, squish: true, nullify: false
   auto_strip_attributes :bio, nullify: false
 
+  before_update :transfer_page, if: :page_id_changed?
+
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
@@ -131,5 +133,12 @@ class Forum < ApplicationRecord
   # @return [Boolean] True if the forum has reached its maximum shortname count.
   def shortnames_depleted?
     shortnames.count >= max_shortname_count
+  end
+
+  def transfer_page
+    Forum.transaction do
+      edge.groups.each { |group| group.update(page: page) }
+      edge.update(parent: page.edge)
+    end
   end
 end
