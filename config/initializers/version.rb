@@ -1,1 +1,1 @@
-VERSION='0.43.1' unless defined?(::VERSION)
+VERSION=`git describe --tags`.strip unless defined?(::VERSION)
