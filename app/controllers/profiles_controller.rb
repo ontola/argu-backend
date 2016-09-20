@@ -53,7 +53,7 @@ class ProfilesController < ApplicationController
     authorize @profile, :edit?
 
     if @resource.finished_intro?
-      redirect_to settings_url_for(@resource, tab: :profile)
+      redirect_to settings_url_for(@resource, :profile)
     else
       respond_to do |format|
         format.html do

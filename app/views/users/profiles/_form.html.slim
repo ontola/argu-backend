@@ -1,7 +1,8 @@
 .inspectlet-sensitive= semantic_form_for resource, url: resource.finished_intro? ? settings_path : setup_profiles_path, method: :put  do |f|
   =f.inputs name: t('profiles.edit.general') do
     p= t('profiles.heads_up')
-    =f.inputs :first_name, :middle_name, :last_name
+    =f.input :first_name, input_html: {autofocus: true}
+    =f.inputs :middle_name, :last_name
     =f.semantic_fields_for :profile do |pf|
       =pf.input :about, input_html: {rows: 5}, label: t('profiles.about_me')
       =render partial: 'photos/form',
