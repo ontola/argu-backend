@@ -109,8 +109,13 @@ module Argu
 
         def create_manager(item, user = nil)
           user ||= create(:user)
+          unless item.is_a?(Page)
+            create(:group_membership,
+                   parent: item.edge.get_parent(:forum).owner.members_group.edge,
+                   shortname: user.url)
+          end
           create(:group_membership,
-                 parent: item.managers_group.edge,
+                 parent: item.edge.granted_groups('manager').first.edge,
                  shortname: user.url)
           user
         end
@@ -121,14 +126,6 @@ module Argu
                  parent: forum.members_group.edge,
                  shortname: user.url)
           user
-        end
-
-        def create_group_member(group, user_or_page = nil)
-          user_or_page ||= create_member(group.page)
-          create(:group_membership,
-                 parent: group.edge,
-                 shortname: user_or_page.url)
-          user_or_page
         end
 
         def create_moderator(record, user = nil)

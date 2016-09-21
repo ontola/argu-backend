@@ -3,11 +3,10 @@ class PagesController < ApplicationController
   def index
     @user = User.find_via_shortname params[:id]
     authorize @user, :update?
-    @pages = Page
-             .where(id: @user.profile.pages.pluck(:id)
-                            .concat(@user.profile.page_ids(:manager)))
-             .distinct
-    @_pundit_policy_scoped = true
+    @pages = policy_scope(Page)
+               .where(id: @user.profile.granted_record_ids('Page')
+                            .concat(@user.profile.pages.pluck(:id)))
+               .distinct
 
     render locals: {
       current: current_user.profile.pages.length,

@@ -98,7 +98,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
              decision: attributes_for(:decision,
                                       state: 'forwarded',
                                       forwarded_user_id: manager.id,
-                                      forwarded_group_id: freetown.managers_group.id,
+                                      forwarded_group_id: freetown.edge.granted_groups('manager').first.id,
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
                                       argu_publication_attributes: {publish_type: :direct})

@@ -14,8 +14,6 @@ class GroupMembership < ApplicationRecord
           source: :profileable,
           source_type: :User
   has_many :grants, through: :group
-  before_create :create_membership_before_managership
-  before_destroy :remove_managerships_on_forum_leave
 
   validates :group_id, :member_id, presence: true
 
@@ -24,31 +22,5 @@ class GroupMembership < ApplicationRecord
 
   def publisher
     edge.user
-  end
-
-  private
-
-  def create_membership_before_managership
-    grant = group.grants.manager.first
-    return if grant.nil? || member.grants.member.where(edge: grant.edge).present?
-    Edge.create!(
-      parent: group.edge,
-      user: publisher,
-      owner: member.group_memberships.new(
-        group: grant.edge.owner.members_group,
-        member: member,
-        profile: profile
-      )
-    )
-  end
-
-  def remove_managerships_on_forum_leave
-    grant = group.grants.member.first
-    return if grant.nil?
-    member
-      .group_memberships
-      .joins(:grants)
-      .where(grants: {edge: grant.edge, role: Grant.roles[:manager]})
-      .destroy_all
   end
 end

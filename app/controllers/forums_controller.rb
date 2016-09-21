@@ -7,9 +7,11 @@ class ForumsController < AuthorizedController
   skip_after_action :verify_authorized, only: %i(discover)
 
   def index
-    forums = Forum.arel_table
-    @forums = Forum.where(forums[:page_id].in(current_user.profile.pages.pluck(:id))
-                            .or(forums[:id].in(current_user.profile.forum_ids(:manager))))
+    @forums = Forum
+                .joins(:edge)
+                .where('forums.page_id IN(?) OR edges.path ~ ?',
+                       current_user.profile.pages.pluck(:id),
+                       mangager_edges_sql)
     @_pundit_policy_scoped = true
   end
 
@@ -136,6 +138,14 @@ class ForumsController < AuthorizedController
       .group(:owner_type)
       .count
       .sort { |x, y| y[1] <=> x[1] }
+  end
+
+  def mangager_edges_sql
+    "*.#{current_user
+           .profile
+           .granted_edge_ids(nil, :manager)
+           .join('|')
+           .presence || 'NULL'}.*"
   end
 
   def permit_params

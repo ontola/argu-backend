@@ -27,7 +27,6 @@ class GroupMembershipsController < AuthorizedController
   end
 
   def new
-    authorize authenticated_resource.page, :add_group_member?
     render 'groups/settings', locals: {
       tab: 'invite',
       active: 'invite',

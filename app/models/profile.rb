@@ -15,7 +15,7 @@ class Profile < ApplicationRecord
   has_many :access_tokens, dependent: :destroy
   has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception
   has_many :edges, through: :groups
-  has_many :granted_edges, through: :grants, source: :edge, class_name: 'Edge'
+  has_many :granted_edges_scope, through: :grants, source: :edge, class_name: 'Edge'
   has_many :grants, through: :groups
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
@@ -72,20 +72,35 @@ class Profile < ApplicationRecord
   end
 
   def forums
-    Forum
-      .joins(grants: {group: :group_memberships})
-      .where(group_memberships: {member_id: id}, grants: {role: Grant.roles[:member]})
+    granted_records('Forum')
   end
 
   def forum_ids(role = :member)
     @forum_ids ||= {}
-    @forum_ids[role] ||= granted_edges
-                         .where(owner_type: 'Forum', grants: {role: Grant.roles[role]})
-                         .pluck(:owner_id)
+    @forum_ids[role] ||= granted_record_ids('Forum', role)
   end
 
   def joined_forum_ids(role = :member)
     forum_ids(role).join(',').presence
+  end
+
+  def granted_edges(owner_type = nil, role = nil)
+    scope = granted_edges_scope
+    scope = scope.where(owner_type: owner_type) if owner_type.present?
+    scope = scope.where(grants: {role: Grant.roles[role]}) if role.present?
+    scope
+  end
+
+  def granted_edge_ids(owner_type = nil, role = nil)
+    granted_edges(owner_type, role).pluck(:id)
+  end
+
+  def granted_records(owner_type, role = nil)
+    owner_type.constantize.where(id: granted_record_ids(owner_type, role))
+  end
+
+  def granted_record_ids(owner_type, role = nil)
+    granted_edges(owner_type, role).pluck(:owner_id)
   end
 
   def owner
@@ -93,15 +108,9 @@ class Profile < ApplicationRecord
   end
   deprecate :owner
 
-  def page_ids(role = :member)
+  def page_ids(role = :manager)
     @page_ids ||= {}
-    @page_ids[role] ||= granted_edges
-                        .where(owner_type: 'Page', grants: {role: Grant.roles[role]})
-                        .pluck(:owner_id)
-  end
-
-  def joined_page_ids(role = :member)
-    page_ids(role).join(',').presence
+    @page_ids[role] ||= granted_record_ids('Page', role)
   end
 
   def profile_frozen?
@@ -136,7 +145,7 @@ class Profile < ApplicationRecord
     last_forum = Argu::Redis.get("profile:#{id}:last_forum")
 
     (Forum.find_by(id: last_forum) if last_forum.present?) ||
-      granted_edges.find_by(owner_type: 'Forum')&.owner ||
+      granted_records('Forum').first ||
       Forum.first_public
   end
 

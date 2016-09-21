@@ -12,7 +12,14 @@ class PagePolicy < EdgeTreePolicy
     delegate :user, to: :context
 
     def resolve
-      scope.where(id: user&.profile&.page_ids)
+      t = Page.arel_table
+
+      cond = t[:visibility].eq(Page.visibilities[:open])
+      if user.present?
+        cond = cond.or(t[:id].in(user.profile.granted_record_ids('Page')
+                                   .concat(user.profile.pages.pluck(:id))))
+      end
+      scope.where(cond)
     end
   end
 
@@ -95,12 +102,6 @@ class PagePolicy < EdgeTreePolicy
 
   def list_members?
     rule is_owner?, staff?
-  end
-
-  # Whether the user can add group_member(s)
-  # Only the owner can do this.
-  def add_group_member?
-    rule is_owner?
   end
 
   def pages_left?

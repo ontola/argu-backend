@@ -101,8 +101,7 @@ class ApplicationController < ActionController::Base
       else
         mem_forum =
           profile
-          .granted_edges
-          .where(owner_type: 'Forum')
+          .granted_records('Forum')
           .map do |e|
             @_preferred_forum = e.owner
             e.owner if policy(e.owner).show?

@@ -43,6 +43,11 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     assert_select '.box.box-grid', 4
   end
 
+  test 'guest should not get index' do
+    get forums_user_path(holland_manager)
+    assert_response 302
+  end
+
   test 'guest should get show' do
     # Trigger creation of items
     holland_nested_project_items
@@ -60,6 +65,16 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
+  end
+
+  test 'user should get index' do
+    sign_in
+    get forums_user_path(holland_manager)
+    assert_response 200
+
+    refute_have_tag response.body,
+                    '.box-grid h3',
+                    holland.display_name
   end
 
   test 'user should get show' do
@@ -131,6 +146,16 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     assert_select '.box.box-grid', 4
   end
 
+  test 'member should get index' do
+    sign_in holland_member
+    get forums_user_path(holland_manager)
+    assert_response 200
+
+    refute_have_tag response.body,
+                    '.box-grid h3',
+                    holland.display_name
+  end
+
   test 'member should get show' do
     # Trigger creation of items
     holland_nested_project_items
@@ -182,6 +207,16 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
+  end
+
+  test 'owner should get index' do
+    sign_in create_owner(holland)
+    get forums_user_path(holland_manager)
+    assert_response 200
+
+    assert_have_tag response.body,
+                    '.box-grid h3',
+                    holland.display_name
   end
 
   test 'owner should show settings and all tabs' do
@@ -319,6 +354,9 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'staff should transfer' do
     sign_in staff
+    create(:grant,
+           group: create(:group, parent: holland.page.edge),
+           edge: holland.edge, role: Grant.roles[:member])
     assert_equal holland.edge.grants.size, 3
     put forum_path(holland),
         params: {
