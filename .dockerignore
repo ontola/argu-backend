@@ -1,5 +1,4 @@
 tmp/*
-.git
 log/*
 .env
 
