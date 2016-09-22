@@ -11,12 +11,12 @@ RSpec.feature 'Decisions', type: :feature do
   let(:manager) { create_manager(freetown) }
 
   scenario 'manager should approve' do
-    login_as(manager, scope: :user)
+    sign_in(manager)
 
     visit motion_path(motion)
     click_link 'Take decision'
     click_link 'Pass'
-    expect(page).to have_content('Pass')
+    expect(page).to have_content('Explain this decision')
     within('form.decision') do
       fill_in 'decision_content', with: 'Reason to take decision'
       click_button 'Save'
@@ -26,12 +26,12 @@ RSpec.feature 'Decisions', type: :feature do
   end
 
   scenario 'manager should reject' do
-    login_as(manager, scope: :user)
+    sign_in(manager)
 
     visit motion_path(motion)
     click_link 'Take decision'
     click_link 'Reject'
-    expect(page).to have_content('Reject')
+    expect(page).to have_content('Explain this decision')
     within('form.decision') do
       fill_in 'decision_content', with: 'Reason to take decision'
       click_button 'Save'
