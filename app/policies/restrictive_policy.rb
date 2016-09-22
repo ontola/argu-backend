@@ -235,16 +235,6 @@ class RestrictivePolicy
     Pundit.policy_scope!(context, record.class)
   end
 
-  protected
-
-  def platform_open?
-    context.opts[:platform_open]
-  end
-
-  def within_user_cap?
-    context.opts[:within_user_cap]
-  end
-
   private
 
   def append_default_photo_params(attributes)

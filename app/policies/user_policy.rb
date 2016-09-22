@@ -46,7 +46,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def create?
-    platform_open? || within_user_cap? || has_access_to_record? || super
+    true
   end
 
   def settings?

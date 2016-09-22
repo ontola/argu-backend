@@ -40,9 +40,7 @@ module ApplicationHelper
       current_user,
       current_profile,
       session,
-      tenant,
-      platform_open: platform_open?,
-      within_user_cap: within_user_cap?)
+      tenant)
     Pundit.policy!(uc, record)
   end
 

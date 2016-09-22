@@ -39,16 +39,6 @@ module UsersHelper
     User.created_emails.keys.map { |n| [I18n.t("users.created_email.#{n}"), n] }
   end
 
-  # Set user_cap to 0 to close the platform
-  def platform_open?
-    if instance_variable_defined?(:@_open)
-      @_open
-    else
-      cap = Setting.get('user_cap').try(:to_i)
-      instance_variable_set(:@_open, (cap.present? and cap > 0 || cap == -1))
-    end
-  end
-
   # Assigns certain memberships based on
   #   either an 'r' action
   #   or preferred_forum
@@ -70,17 +60,6 @@ module UsersHelper
           Bugsnag.notify(e)
         end
       end
-    end
-  end
-
-  # Set user_cap to -1 to disable the cap
-  def within_user_cap?
-    if instance_variable_defined?(:@_cap)
-      @_cap
-    else
-      cap = Setting.get('user_cap').try(:to_i)
-      cap_val = cap.present? and cap == -1 || (cap > 0 && Shortname.where(owner_type: 'User').count < cap)
-      instance_variable_set(:@_cap, cap_val)
     end
   end
 end

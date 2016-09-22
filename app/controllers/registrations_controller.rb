@@ -1,14 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   include NestedResourceHelper
 
-  def new
-    if within_user_cap?
-      super
-    else
-      redirect_to :root
-    end
-  end
-
   def create
     super do |resource|
       unless resource.persisted?

@@ -55,7 +55,6 @@ forum.edge = Edge.new(owner: forum,
                       parent: argu.edge)
 forum.save!
 
-Setting.set('user_cap', -1)
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')
 
 Setting.set('about',

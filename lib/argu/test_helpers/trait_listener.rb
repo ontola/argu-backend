@@ -40,8 +40,6 @@ module Argu
                options: service_options)
           .commit
         create(:access_token, item: @resource)
-        cap = Setting.get('user_cap').try(:to_i)
-        Setting.set('user_cap', -1) unless cap.present?
         @resource.page.owner.profileable.follow @resource.edge
       end
 

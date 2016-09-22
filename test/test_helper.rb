@@ -70,7 +70,6 @@ class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
   # FactoryGirl.lint
-  Setting.set('user_cap', '-1')
   # Add more helper methods to be used by all tests here...
 
   def initialize(*args)

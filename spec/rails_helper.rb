@@ -20,7 +20,6 @@ require 'argu/test_helpers/rspec_helpers'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Setting.set('user_cap', '-1')
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each {|f| require f }
 
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -145,7 +144,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Setting.set('user_cap', '-1')
     create(:user,
            id: 0,
            shortname: build(:shortname, shortname: 'community'),

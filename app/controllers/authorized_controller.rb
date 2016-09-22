@@ -221,9 +221,7 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       session,
-      authenticated_context,
-      platform_open: platform_open?,
-      within_user_cap: within_user_cap?)
+      authenticated_context)
   end
 
   def redirect_url

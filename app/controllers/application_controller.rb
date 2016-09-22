@@ -129,9 +129,7 @@ class ApplicationController < ActionController::Base
       current_user,
       current_profile,
       session,
-      @forum || @_preferred_forum,
-      platform_open: platform_open?,
-      within_user_cap: within_user_cap?)
+      @forum || @_preferred_forum)
   end
 
   def rescue_stale
