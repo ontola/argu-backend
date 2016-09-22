@@ -88,8 +88,8 @@ export const MotionSelect = React.createClass({
                             return {
                                 id: motion.id.toString(),
                                 value: motion.id.toString(),
-                                name: motion.attributes.display_name,
-                                label: motion.attributes.display_name
+                                name: motion.attributes.displayName,
+                                label: motion.attributes.displayName
                             };
                         }),
                         complete: false
