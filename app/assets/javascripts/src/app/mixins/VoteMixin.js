@@ -65,9 +65,6 @@ const VoteMixin = {
                 if (e.status === 403) {
                     return e.json()
                         .then(this.handleNotAMember)
-                        .then(() => {
-                            this.vote(side);
-                        });
                 } else {
                     const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
                     new Alert(message, 'alert', true);
