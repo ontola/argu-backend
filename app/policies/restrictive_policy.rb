@@ -120,11 +120,6 @@ class RestrictivePolicy
     new_record?
   end
 
-  # Whether the user has access to Argu in general
-  def has_access_to_platform?
-    user || has_valid_token?
-  end
-
   # Whether the User is logged in, or has an AccessToken for `record`
   # Note: Not to be confused with policy(record).show? which validates
   #       access for a specific item

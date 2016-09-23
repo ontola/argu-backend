@@ -49,10 +49,6 @@ class CommentPolicy < EdgeTreePolicy
     rule is_creator?
   end
 
-  def has_access_to_platform?
-    user || has_access_token_access_to(record.parent_model(:forum), user)
-  end
-
   private
 
   def assert_siblings!
