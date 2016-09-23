@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
-  include Edgeable, Shortnameable, Flowable, Groupable
+  include Edgeable, Shortnameable, Flowable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
@@ -14,6 +14,8 @@ class Page < ApplicationRecord
 
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner_id, :last_accepted, presence: true
+
+  after_create :create_default_group
 
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
@@ -55,5 +57,19 @@ class Page < ApplicationRecord
 
     self.owner = new_profile
     save!
+  end
+
+  private
+
+  def create_default_group
+    group = Group.new(
+      name: 'Managers',
+      name_singular: 'Manager',
+      page: self,
+      deletable: false
+    )
+    group.grants << Grant.new(role: Grant.roles[:manager], edge: edge)
+    group.edge = Edge.new(user: publisher, parent: edge)
+    group.save!
   end
 end

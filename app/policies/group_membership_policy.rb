@@ -20,10 +20,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
     end
   end
 
-  def is_open?
-    open if granted_resource.open?
-  end
-
   def permitted_attributes
     attributes = [:lock_version]
     attributes.append(:shortname) if rule(is_manager?, is_owner?, staff?)

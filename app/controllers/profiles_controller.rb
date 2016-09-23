@@ -7,14 +7,12 @@ class ProfilesController < ApplicationController
     @resource = Shortname.find_resource 'nederland' # params[:thing]
     # authorize @resource, :list_members?
 
-    policy_scope(@resource.members_group.members)
-
     return if current_user.nil? || params[:q].nil?
     # This is a working mess.
     q = params[:q].tr(' ', '|')
-    @profiles = Profile
-                .where(profileable_type: 'User',
-                       profileable_id: User.where(finished_intro: true)
+    @profiles = policy_scope(Profile)
+                  .where(profileable_type: 'User',
+                         profileable_id: User.where(finished_intro: true)
                                            .joins(:shortname)
                                            .where('lower(shortname) SIMILAR TO lower(?) OR ' \
                                                     'lower(first_name) SIMILAR TO lower(?) OR ' \
@@ -23,7 +21,7 @@ class ProfilesController < ApplicationController
                                                   "%#{q}%",
                                                   "%#{q}%")
                                            .pluck(:owner_id))
-                .includes(:default_profile_photo, profileable: :shortname)
+                  .includes(:default_profile_photo, profileable: :shortname)
 
     return unless params[:things] && params[:things].split(',').include?('pages')
     @profiles += Profile
@@ -74,7 +72,12 @@ class ProfilesController < ApplicationController
       if updated
         if has_valid_token?(@resource)
           get_access_tokens(@resource).compact.each do |at|
-            @profile.group_memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
+            next unless at.item.class == Forum && !at.item.open?
+            group = at.item.grants.member.first&.group
+            if group.present?
+              membership = @profile.group_memberships.find_or_initialize_by(group: group)
+              Edge.create(owner: membership, parent: group.edge, user: @profile.profileable)
+            end
           end
         end
         @resource.update_column :finished_intro, true

@@ -21,7 +21,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     @request.env['devise.mapping'] = Devise.mappings[:user]
 
     assert_differences([['User.count', 1],
-                        ['GroupMembership.count', 1],
+                        ['Favorite.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post :create,
            params: {user: attributes_for(:user)}
@@ -39,7 +39,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     @request.env['devise.mapping'] = Devise.mappings[:user]
 
     assert_differences([['User.count', 1],
-                        ['GroupMembership.count', 1],
+                        ['Favorite.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post :create,
            params: {user: attributes_for(:user)}

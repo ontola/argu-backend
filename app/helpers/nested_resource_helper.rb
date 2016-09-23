@@ -8,6 +8,23 @@ module NestedResourceHelper
     parent_resource_key(opts).present?
   end
 
+  # Finds the parent edge based on the URL's :foo_id param
+  # @note This method knows {Shortnameable}
+  # @param opts [Hash, nil] The path parameters, {ActionDispatch::Http::Parameters#path_parameters}
+  #   is used when not given.
+  # @return [Edge] An Edge if found
+  # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails
+  #   docs}
+  # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
+  def get_parent_edge(opts = request.path_parameters, url_params = params)
+    @parent_resource ||=
+      if parent_resource_class(opts).try(:shortnameable?)
+        parent_resource_class(opts).find_via_shortname!(parent_id_from_params(url_params)).edge
+      else
+        Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(url_params))
+      end
+  end
+
   # Finds the parent resource based on the URL's :foo_id param
   # If the controller is an {AuthorizedController}, it'll check for a persited {authenticated_resource!!}
   # @note This method knows {Shortnameable}

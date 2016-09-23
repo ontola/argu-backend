@@ -210,6 +210,14 @@ ActiveRecord::Schema.define(version: 20161019124155) do
     t.index ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "edge_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "edge_id"], name: "index_favorites_on_user_id_and_edge_id", unique: true, using: :btree
+  end
+
   create_table "follows", force: :cascade do |t|
     t.integer  "followable_id",                    null: false
     t.string   "followable_type", default: "Edge", null: false
@@ -753,6 +761,8 @@ ActiveRecord::Schema.define(version: 20161019124155) do
   add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
+  add_foreign_key "favorites", "edges"
+  add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "forums", "pages"

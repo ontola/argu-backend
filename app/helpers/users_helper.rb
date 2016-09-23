@@ -39,22 +39,17 @@ module UsersHelper
     User.created_emails.keys.map { |n| [I18n.t("users.created_email.#{n}"), n] }
   end
 
-  # Assigns certain memberships based on
+  # Assigns certain favorites based on
   #   either an 'r' action
   #   or preferred_forum
-  #   if the user hasn't got any memberships yet
-  def setup_memberships(user)
+  #   if the user hasn't got any favorites yet
+  def setup_favorites(user)
+    # changed? so we can safely write back to the DB
     return unless user.valid? && user.persisted?
-    return unless user.profile.grants.member.blank?
+    return if user.favorites.present?
     begin
       forum = forum_from_r_action(user) || preferred_forum(user.profile)
-      if forum.present? && policy(forum).join?
-        CreateGroupMembership
-          .new(forum.members_group.edge,
-               attributes: {member: user.profile},
-               options: {creator: user.profile, publisher: user})
-          .commit
-      end
+      Favorite.create!(user: user, edge: forum.edge) if forum.present?
     rescue ActiveRecord::RecordNotFound => e
       Bugsnag.notify(e)
     end

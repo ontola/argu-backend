@@ -10,6 +10,7 @@ class User < ApplicationRecord
           inverse_of: :placeable
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
   has_many :edges
+  has_many :favorites, dependent: :destroy
   has_many :identities, dependent: :destroy
   has_many :notifications
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
@@ -119,6 +120,14 @@ class User < ApplicationRecord
     follow_for(followable).present? ? follow_for(followable).follow_type : 'never'
   end
 
+  def favorite_forums
+    Forum.joins(edge: :favorites).where('favorites.user_id = ?', id)
+  end
+
+  def favorite_forum_ids
+    @favorite_forum_ids ||= favorite_forums.pluck(:id)
+  end
+
   def greeting
     first_name.presence || url.presence || email.split('@').first
   end
@@ -129,6 +138,10 @@ class User < ApplicationRecord
 
   def page_management?
     profile.pages.present?
+  end
+
+  def has_favorite?(edge)
+    favorites.where(edge: edge).any?
   end
 
   def is_omni_only

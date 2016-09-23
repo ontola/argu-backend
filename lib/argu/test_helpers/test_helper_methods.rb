@@ -110,11 +110,6 @@ module Argu
 
         def create_manager(item, user = nil)
           user ||= create(:user)
-          unless item.is_a?(Page)
-            create(:group_membership,
-                   parent: item.edge.get_parent(:forum).owner.members_group.edge,
-                   shortname: user.url)
-          end
           create(:group_membership,
                  parent: item.edge.granted_groups('manager').first.edge,
                  shortname: user.url)

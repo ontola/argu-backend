@@ -5,9 +5,9 @@
         =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
-      - if current_user.present? && !current_profile.member_of?(forum) && policy(forum).join?
+      - if current_user.present? && !current_user.has_favorite?(forum.edge) && policy(forum).join?
         .sticky--top-left
-          =link_to group_membership_index_path(forum.members_group), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
+          =link_to forum_favorites_path(forum), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
             span.fa.fa-plus
             span.icon-left= t('forums.join.title')
       - if policy(forum).update?

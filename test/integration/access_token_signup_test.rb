@@ -47,7 +47,9 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
     assert_differences [['helsinki_at.reload.sign_ups', 0],
                         ['helsinki_at.reload.usages', 0]] do
-      post group_membership_index_path(helsinki.members_group, r: forum_path(helsinki), at: helsinki_at.access_token)
+      post group_membership_index_path(helsinki.grants.member.first.group,
+                                       r: forum_path(helsinki),
+                                       at: helsinki_at.access_token)
     end
     assert_redirected_to new_user_session_path(r: forum_path(helsinki))
 
@@ -81,7 +83,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     get forum_path(helsinki.url, at: helsinki_at.access_token)
     assert_response :success
 
-    post group_membership_index_path(helsinki.members_group,
+    post group_membership_index_path(helsinki.grants.member.first.group,
                                      r: hidden_forum_path,
                                      at: helsinki_at.access_token)
     assert_redirected_to new_user_session_path(r: hidden_forum_path)
@@ -221,7 +223,9 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_differences [['helsinki_at.reload.sign_ups', 0],
                         ['helsinki_at.reload.usages', 0],
                         ['GroupMembership.count', 1]] do
-      post group_membership_index_path(helsinki.members_group, r: forum_path(helsinki), at: helsinki_at.access_token)
+      post group_membership_index_path(helsinki.grants.member.first.group,
+                                       r: forum_path(helsinki),
+                                       at: helsinki_at.access_token)
     end
     assert_redirected_to forum_path(helsinki)
 

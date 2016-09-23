@@ -149,9 +149,9 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :trash, options: {analytics: stats_opt('comments', 'trash_success')})
   end
 
-  ####################################
-  # As user
-  ####################################
+  # ####################################
+  # # As spectator
+  # ####################################
   define_venice
   let(:access_token) { create(:access_token, item: venice) }
   let(:venice_motion) { create(:motion, parent: venice.edge) }
@@ -174,7 +174,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     get forum_path(venice.url, params: {at: access_token.access_token})
     assert_response :success
 
-    post group_membership_index_path(venice.members_group.id,
+    post group_membership_index_path(venice.grants.member.first.group.id,
                                      r: forum_path(venice.url),
                                      at: access_token.access_token)
     assert_redirected_to new_user_session_path(r: forum_path(venice.url))
@@ -213,7 +213,6 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to forum_url(venice.url)
     assert assigns(:resource)
     assert assigns(:profile)
-    assert_equal 1, assigns(:profile).grants.member.count
   end
 
   ####################################

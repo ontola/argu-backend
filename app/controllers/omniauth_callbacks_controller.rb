@@ -101,7 +101,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     identity = Identity.find_or_initialize_by uid: request.env['omniauth.auth']['uid'], provider: provider
     set_identity_fields_for provider, identity, request.env['omniauth.auth']
     user = connector.create_user_without_shortname(request.env['omniauth.auth'], identity, r_param(request.env))
-    setup_memberships(user)
+    setup_favorites(user)
     set_flash_message(:notice, :success, kind: provider.to_s.capitalize) if is_navigational_format?
     sign_in_and_redirect_with_r user
     send_event category: 'registrations',

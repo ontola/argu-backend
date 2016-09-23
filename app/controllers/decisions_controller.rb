@@ -111,7 +111,7 @@ class DecisionsController < AuthorizedController
   end
 
   def get_parent_resource(_opts = {}, _url_params = {})
-    Edge.find(params[:motion_id]).owner
+    get_parent_edge.owner
   end
 
   def new_resource_from_params
@@ -119,7 +119,7 @@ class DecisionsController < AuthorizedController
     if decision.nil?
       decision = Edge.find(params[:motion_id])
                      .children
-                     .new(owner: Decision.new(resource_new_params.merge(decisionable: get_parent_resource.edge)))
+                     .new(owner: Decision.new(resource_new_params.merge(decisionable: get_parent_edge)))
                      .owner
       decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
       decision.build_argu_publication(publish_type: :direct)

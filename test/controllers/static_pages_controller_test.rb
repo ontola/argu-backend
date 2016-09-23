@@ -43,24 +43,12 @@ class StaticPagesControllerTest < ActionController::TestCase
   test 'staff should get activity feed' do
     trigger_activity_creation
     sign_in staff
-    create_member(freetown, staff)
+    create(:favorite, edge: freetown.edge, user: staff)
 
     get :home
 
     assert_response 200
     assert_equal activities, activities & assigns(:activities)
-  end
-
-  let(:staff_nomember) { create(:user, :staff) }
-
-  test 'staff should get activity feed without memberships' do
-    trigger_activity_creation
-    sign_in staff_nomember
-
-    get :home
-
-    assert_response 200
-    assert assigns(:activities).blank?
   end
 
   private

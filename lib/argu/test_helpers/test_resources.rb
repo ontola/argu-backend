@@ -46,24 +46,34 @@ module Argu
 
       def define_cairo(name = 'cairo', attributes: {})
         let!(name) do
-          create_forum(
+          forum = create_forum(
             {
               shortname_attributes: {shortname: name},
               visibility: Forum.visibilities[:closed]
             }.merge(attributes)
           )
+          create(:grant,
+                 edge: forum.edge,
+                 group: create(:group, parent: forum.page.edge),
+                 role: Grant.roles[:member])
+          forum
         end
       end
 
       def define_cologne(name = 'cologne', attributes: {})
         let!(name) do
-          create_forum(
+          forum = create_forum(
             :populated_forum,
             {
               shortname_attributes: {shortname: name},
               visibility: Forum.visibilities[:closed]
             }.merge(attributes)
           )
+          create(:grant,
+                 edge: forum.edge,
+                 group: create(:group, parent: forum.page.edge),
+                 role: Grant.roles[:member])
+          forum
         end
       end
 
@@ -76,6 +86,10 @@ module Argu
               visible_with_a_link: true
             }.merge(attributes)
           )
+          create(:grant,
+                 edge: forum.edge,
+                 group: create(:group, parent: forum.page.edge),
+                 role: Grant.roles[:member])
           create :access_token, item: forum
           forum
         end
@@ -95,11 +109,16 @@ module Argu
 
       def define_venice(name = 'venice', attributes: {})
         let!(name) do
-          create_forum(
+          forum = create_forum(
             {
               visible_with_a_link: true
             }.merge(attributes)
           )
+          create(:grant,
+                 edge: forum.edge,
+                 group: create(:group, parent: forum.page.edge),
+                 role: Grant.roles[:member])
+          forum
         end
       end
     end

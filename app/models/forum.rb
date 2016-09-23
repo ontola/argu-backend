@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class Forum < ApplicationRecord
-  include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
-          Groupable, Loggable
+  include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable, Loggable
 
   belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy

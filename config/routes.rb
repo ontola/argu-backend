@@ -45,11 +45,14 @@ Rails.application.routes.draw do
       get :log, action: :log
     end
   end
-
   concern :discussable do
     resources :discussions, only: [:new]
     resources :questions, path: 'q', only: [:index, :new, :create]
     resources :motions, path: 'm', only: [:index, :new, :create]
+  end
+  concern :favorable do
+    resources :favorites, only: [:create]
+    delete 'favorites', to: 'favorites#destroy'
   end
   concern :flowable do
     get :flow, controller: :flow, action: :show
@@ -265,7 +268,7 @@ Rails.application.routes.draw do
   resources :forums,
             only: [:show, :update],
             path: '',
-            concerns: [:flowable, :discussable] do
+            concerns: [:flowable, :discussable, :favorable] do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member

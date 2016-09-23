@@ -58,7 +58,7 @@ class RegistrationsController < Devise::RegistrationsController
   def sign_up(resource_name, resource)
     super
     resource.send_confirmation_instructions
-    setup_memberships(resource)
+    setup_favorites(resource)
     send_event user: resource,
                category: 'registrations',
                action: 'create',

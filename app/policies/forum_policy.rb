@@ -20,10 +20,6 @@ class ForumPolicy < EdgeTreePolicy
     end
   end
 
-  def is_open?
-    open if @record.open?
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i(name bio bio_long tags featured_tags profile_id) if update?
@@ -59,7 +55,7 @@ class ForumPolicy < EdgeTreePolicy
   end
 
   def join?
-    rule is_open?, has_access_token?, is_manager?, staff?
+    rule has_access_token?, is_manager?, staff?
   end
 
   def list?
@@ -67,7 +63,7 @@ class ForumPolicy < EdgeTreePolicy
       if @record.hidden?
         show?.presence || raise(ActiveRecord::RecordNotFound)
       else
-        [(1 if @record.closed?), show?, is_open?, is_manager?, is_owner?]
+        [(1 if @record.closed?), show?, is_manager?, is_owner?]
       end
     rule level
   end
@@ -85,7 +81,7 @@ class ForumPolicy < EdgeTreePolicy
   end
 
   def show?
-    rule is_open?, has_access_token?, is_member?, is_manager?, super
+    rule has_access_token?, is_member?, is_manager?, super
   end
 
   def statistics?

@@ -6,7 +6,6 @@ class StaticPagesController < ApplicationController
     authorize :static_page
     if current_user && policy(current_user).staff?
       @activities = policy_scope(Activity)
-                      .where('activities.forum_id IN (?)', current_user&.profile&.forum_ids)
                       .loggings
                       .order(created_at: :desc)
                       .limit(10)

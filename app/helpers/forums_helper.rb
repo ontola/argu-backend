@@ -25,7 +25,7 @@ module ForumsHelper
   def forum_membership_section
     {
       title: t('forums.my'),
-      items: profile_membership_items
+      items: profile_favorite_items
     }
   end
 
@@ -41,7 +41,7 @@ module ForumsHelper
 
     pub_forum_items = public_forum_items(5)
 
-    items.concat(pub_forum_items - profile_membership_items) if items.length < pub_forum_items.length + 1
+    items.concat(pub_forum_items - profile_favorite_items) if items.length < pub_forum_items.length + 1
     items << link_item(t('forums.show_open'), discover_forums_path, fa: 'compass')
   end
 
@@ -50,7 +50,7 @@ module ForumsHelper
 
     sections << forum_membership_section if current_user.present?
     sections << forum_discover_section
-    sections << forum_current_section if current_user.present? && current_profile.member_of?(@forum)
+    sections << forum_current_section if current_user.present? && current_user.has_favorite?(@forum.edge)
 
     {
       title: resource.name,
@@ -68,16 +68,10 @@ module ForumsHelper
   end
 
   def forum_membership_controls_items
+    return unless current_user.has_favorite?(@forum.edge)
     items = []
-
-    return unless current_profile.member_of?(@forum)
-    membership = current_profile
-                 .group_memberships
-                 .joins(grants: :edge)
-                 .where(edges: {owner_id: @forum.id})
-                 .first
     items << link_item(t('forums.leave'),
-                       group_membership_path(membership),
+                       forum_favorites_path(@forum),
                        fa: 'sign-out',
                        data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
   end

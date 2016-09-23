@@ -10,6 +10,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def resolve
+      return scope if staff?
       scope
         .joins(:forum)
         .where("#{class_name.tableize}.forum_id IN (?) OR forums.visibility = ?",
@@ -54,10 +55,6 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def owner
       8
-    end
-
-    def is_open?
-      open if context_forum&.open?
     end
 
     def has_access_token?
@@ -160,7 +157,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def follow?
-    rule is_open?, is_member?, is_moderator?, is_owner?, staff?
+    rule is_member?, is_moderator?, is_owner?, staff?
   end
 
   # Checks whether indexing children of a has_many relation is allowed
