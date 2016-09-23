@@ -226,7 +226,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
 
-    %i(general advanced shortnames banners privacy groups).each do |tab|
+    %i(general advanced shortnames banners groups).each do |tab|
       get settings_forum_path(holland), params: {tab: tab}
       assert_forum_settings_shown holland, tab
     end
@@ -290,7 +290,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
       assert_forum_settings_shown(holland, tab)
     end
 
-    [:privacy, :managers].each do |tab|
+    [:managers].each do |tab|
       get settings_forum_path(holland),
           params: {tab: tab}
       assert_response 403

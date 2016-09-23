@@ -93,6 +93,10 @@ module ForumsHelper
                      [{items: items}], fa: 'fa-gear')
   end
 
+  def options_for_forum_visibility
+    Forum.visibilities.keys.map { |n| [n, n] }
+  end
+
   def public_form_member_label(value)
     t("forums.public_form.#{value}")
   end
