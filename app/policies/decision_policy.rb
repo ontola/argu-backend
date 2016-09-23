@@ -52,7 +52,7 @@ class DecisionPolicy < RestrictivePolicy
   # Creating a Decision when a draft is present is not allowed
   # Managers and the Owner are allowed to forward a Decision when not assigned to him
   def create?
-    return false if record.decisionable.decisions.unpublished.present?
+    return nil if record.decisionable.decisions.unpublished.present?
     if record.forwarded?
       rule decision_is_assigned?, is_manager?, is_owner?, super
     else
