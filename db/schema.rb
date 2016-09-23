@@ -25,10 +25,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "sign_ups",     default: 0
+    t.index ["access_token"], name: "index_access_tokens_on_access_token", using: :btree
+    t.index ["item_id", "item_type"], name: "index_access_tokens_on_item_id_and_item_type", using: :btree
   end
-
-  add_index "access_tokens", ["access_token"], name: "index_access_tokens_on_access_token", using: :btree
-  add_index "access_tokens", ["item_id", "item_type"], name: "index_access_tokens_on_item_id_and_item_type", using: :btree
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -44,15 +43,14 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at"
     t.json     "audit_data"
     t.boolean  "is_published",   default: false,     null: false
+    t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
+    t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable", using: :btree
+    t.index ["forum_id"], name: "index_activities_on_forum_id", using: :btree
+    t.index ["key"], name: "index_activities_on_key", using: :gist
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   end
-
-  add_index "activities", ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
-  add_index "activities", ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable", using: :btree
-  add_index "activities", ["forum_id"], name: "index_activities_on_forum_id", using: :btree
-  add_index "activities", ["key"], name: "index_activities_on_key", using: :gist
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "announcements", force: :cascade do |t|
     t.integer  "publisher_id"
@@ -66,9 +64,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at",                  null: false
     t.datetime "trashed_at"
     t.datetime "ends_at"
+    t.index ["published_at"], name: "index_announcements_on_published_at", using: :btree
   end
-
-  add_index "announcements", ["published_at"], name: "index_announcements_on_published_at", using: :btree
 
   create_table "arguments", force: :cascade do |t|
     t.text     "content"
@@ -85,13 +82,12 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.integer  "votes_con_count",                 default: 0,     null: false
     t.integer  "forum_id"
     t.integer  "publisher_id",                                    null: false
+    t.index ["id"], name: "index_arguments_on_id", using: :btree
+    t.index ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro", using: :btree
+    t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id", using: :btree
+    t.index ["motion_id", "is_trashed"], name: "index_arguments_on_motion_id_and_is_trashed", using: :btree
+    t.index ["motion_id"], name: "statement_id", using: :btree
   end
-
-  add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
-  add_index "arguments", ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro", using: :btree
-  add_index "arguments", ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id", using: :btree
-  add_index "arguments", ["motion_id", "is_trashed"], name: "index_arguments_on_motion_id_and_is_trashed", using: :btree
-  add_index "arguments", ["motion_id"], name: "statement_id", using: :btree
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",                null: false
@@ -99,10 +95,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "uid",        limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.index ["user_id", "uid"], name: "user_id_and_uid", unique: true, using: :btree
+    t.index ["user_id"], name: "user_id", using: :btree
   end
-
-  add_index "authentications", ["user_id", "uid"], name: "user_id_and_uid", unique: true, using: :btree
-  add_index "authentications", ["user_id"], name: "user_id", using: :btree
 
   create_table "banners", force: :cascade do |t|
     t.string   "type"
@@ -122,10 +117,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at",                      null: false
     t.datetime "trashed_at"
     t.datetime "ends_at"
+    t.index ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at", using: :btree
+    t.index ["forum_id"], name: "index_banners_on_forum_id", using: :btree
   end
-
-  add_index "banners", ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at", using: :btree
-  add_index "banners", ["forum_id"], name: "index_banners_on_forum_id", using: :btree
 
   create_table "blog_posts", force: :cascade do |t|
     t.integer  "forum_id",                           null: false
@@ -141,11 +135,10 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.boolean  "is_published",       default: false, null: false
+    t.index ["forum_id", "is_published"], name: "index_blog_posts_on_forum_id_and_is_published", using: :btree
+    t.index ["forum_id", "trashed_at"], name: "index_blog_posts_on_forum_id_and_trashed_at", using: :btree
+    t.index ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id", using: :btree
   end
-
-  add_index "blog_posts", ["forum_id", "is_published"], name: "index_blog_posts_on_forum_id_and_is_published", using: :btree
-  add_index "blog_posts", ["forum_id", "trashed_at"], name: "index_blog_posts_on_forum_id_and_trashed_at", using: :btree
-  add_index "blog_posts", ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.integer  "commentable_id",               default: 0
@@ -162,11 +155,10 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.boolean  "is_trashed",                   default: false
     t.integer  "publisher_id",                                 null: false
     t.integer  "forum_id"
+    t.index ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
+    t.index ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
+    t.index ["creator_id"], name: "index_comments_on_creator_id", using: :btree
   end
-
-  add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
-  add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["creator_id"], name: "index_comments_on_creator_id", using: :btree
 
   create_table "decisions", force: :cascade do |t|
     t.integer  "forum_id",                           null: false
@@ -189,9 +181,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.text     "contents"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["name"], name: "index_documents_on_name", using: :btree
   end
-
-  add_index "documents", ["name"], name: "index_documents_on_name", using: :btree
 
   create_table "edges", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -201,9 +192,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.ltree    "path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
   end
-
-  add_index "edges", ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
 
   create_table "edits", force: :cascade do |t|
     t.integer  "by_id"
@@ -215,10 +205,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "ip_address"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id", using: :btree
+    t.index ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
   end
-
-  add_index "edits", ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id", using: :btree
-  add_index "edits", ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
 
   create_table "follows", force: :cascade do |t|
     t.integer  "followable_id",                    null: false
@@ -230,38 +219,36 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at"
     t.boolean  "send_email",      default: false
     t.integer  "follow_type",     default: 30,     null: false
+    t.index ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+    t.index ["follower_id", "follower_type"], name: "fk_follows", using: :btree
+    t.index ["follower_type", "follower_id", "followable_type", "followable_id"], name: "index_follower_followable", unique: true, using: :btree
   end
-
-  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
-  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
-  add_index "follows", ["follower_type", "follower_id", "followable_type", "followable_id"], name: "index_follower_followable", unique: true, using: :btree
 
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",                   default: 0,     null: false
-    t.integer  "motions_count",                     default: 0,     null: false
-    t.integer  "memberships_count",                 default: 0,     null: false
+    t.integer  "questions_count",         default: 0,     null: false
+    t.integer  "motions_count",           default: 0,     null: false
+    t.integer  "memberships_count",       default: 0,     null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "slug"
-    t.text     "bio",                               default: "",    null: false
-    t.text     "featured_tags",                     default: "",    null: false
-    t.integer  "visibility",                        default: 1
-    t.string   "cover_photo_attribution",           default: ""
-    t.boolean  "visible_with_a_link",               default: false
-    t.boolean  "signup_with_token?",                default: false
-    t.text     "bio_long",                          default: ""
-    t.integer  "lock_version",                      default: 0
-    t.integer  "place_id",                limit: 8
-    t.integer  "projects_count",                    default: 0,     null: false
-    t.integer  "max_shortname_count",               default: 0,     null: false
+    t.text     "bio",                     default: "",    null: false
+    t.text     "featured_tags",           default: "",    null: false
+    t.integer  "visibility",              default: 1
+    t.string   "cover_photo_attribution", default: ""
+    t.boolean  "visible_with_a_link",     default: false
+    t.boolean  "signup_with_token?",      default: false
+    t.text     "bio_long",                default: ""
+    t.integer  "lock_version",            default: 0
+    t.bigint   "place_id"
+    t.integer  "projects_count",          default: 0,     null: false
+    t.integer  "max_shortname_count",     default: 0,     null: false
+    t.index ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
+    t.index ["visibility"], name: "index_forums_on_visibility", using: :btree
   end
-
-  add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
-  add_index "forums", ["visibility"], name: "index_forums_on_visibility", using: :btree
 
   create_table "grants", force: :cascade do |t|
     t.integer  "group_id",               null: false
@@ -281,9 +268,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.text     "description"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.index ["group_id", "member_id"], name: "index_group_memberships_on_group_id_and_member_id", unique: true, using: :btree
   end
-
-  add_index "group_memberships", ["group_id", "member_id"], name: "index_group_memberships_on_group_id_and_member_id", unique: true, using: :btree
 
   create_table "group_responses", force: :cascade do |t|
     t.integer  "forum_id"
@@ -295,10 +281,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "side",         default: 0
+    t.index ["group_id", "forum_id"], name: "index_group_responses_on_group_id_and_forum_id", using: :btree
+    t.index ["group_id", "motion_id"], name: "index_group_responses_on_group_id_and_motion_id", using: :btree
   end
-
-  add_index "group_responses", ["group_id", "forum_id"], name: "index_group_responses_on_group_id_and_forum_id", using: :btree
-  add_index "group_responses", ["group_id", "motion_id"], name: "index_group_responses_on_group_id_and_motion_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.integer  "forum_id"
@@ -312,10 +297,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.boolean  "deletable",                default: true
     t.text     "description"
     t.integer  "page_id",                                 null: false
+    t.index ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
+    t.index ["forum_id"], name: "index_groups_on_forum_id", using: :btree
   end
-
-  add_index "groups", ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
-  add_index "groups", ["forum_id"], name: "index_groups_on_forum_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -325,21 +309,19 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "access_secret"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["uid", "provider"], name: "index_identities_on_uid_and_provider", using: :btree
+    t.index ["uid"], name: "index_identities_on_uid", using: :btree
+    t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
   end
-
-  add_index "identities", ["uid", "provider"], name: "index_identities_on_uid_and_provider", using: :btree
-  add_index "identities", ["uid"], name: "index_identities_on_uid", using: :btree
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "forum_id",               null: false
     t.integer "role",       default: 0, null: false
+    t.index ["forum_id", "role"], name: "index_memberships_on_forum_id_and_role", using: :btree
+    t.index ["forum_id"], name: "index_memberships_on_forum_id", using: :btree
+    t.index ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
   end
-
-  add_index "memberships", ["forum_id", "role"], name: "index_memberships_on_forum_id_and_role", using: :btree
-  add_index "memberships", ["forum_id"], name: "index_memberships_on_forum_id", using: :btree
-  add_index "memberships", ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
 
   create_table "motions", force: :cascade do |t|
     t.string   "title",                   limit: 255,                 null: false
@@ -362,14 +344,13 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "cover_photo_attribution",             default: ""
     t.integer  "publisher_id",                                        null: false
     t.integer  "question_id"
-    t.integer  "place_id",                limit: 8
+    t.bigint   "place_id"
     t.integer  "project_id"
+    t.index ["forum_id"], name: "index_motions_on_forum_id", using: :btree
+    t.index ["id"], name: "index_motions_on_id", using: :btree
+    t.index ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
+    t.index ["tag_id"], name: "index_motions_on_tag_id", using: :btree
   end
-
-  add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree
-  add_index "motions", ["id"], name: "index_motions_on_id", using: :btree
-  add_index "motions", ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
-  add_index "motions", ["tag_id"], name: "index_motions_on_tag_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "user_id"
@@ -380,11 +361,10 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "title"
     t.string   "url"
     t.integer  "notification_type", null: false
+    t.index ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
+    t.index ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at", using: :btree
+    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
-
-  add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
-  add_index "notifications", ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at", using: :btree
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -395,9 +375,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "created_at",        null: false
     t.datetime "revoked_at"
     t.string   "scopes"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
   end
-
-  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
 
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "resource_owner_id"
@@ -408,11 +387,10 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "revoked_at"
     t.datetime "created_at",        null: false
     t.string   "scopes"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
   end
-
-  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
-  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
-  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: :cascade do |t|
     t.string   "name",                      null: false
@@ -424,19 +402,17 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "owner_type"
+    t.index ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
-
-  add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
-  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "page_memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "page_id",                null: false
     t.integer "role",       default: 0, null: false
+    t.index ["page_id"], name: "index_page_memberships_on_page_id", using: :btree
+    t.index ["profile_id"], name: "index_page_memberships_on_profile_id", using: :btree
   end
-
-  add_index "page_memberships", ["page_id"], name: "index_page_memberships_on_page_id", using: :btree
-  add_index "page_memberships", ["profile_id"], name: "index_page_memberships_on_profile_id", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at",                null: false
@@ -445,10 +421,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.integer  "visibility",    default: 1
     t.integer  "owner_id"
     t.datetime "last_accepted"
+    t.index ["owner_id"], name: "index_pages_on_owner_id", using: :btree
+    t.index ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
   end
-
-  add_index "pages", ["owner_id"], name: "index_pages_on_owner_id", using: :btree
-  add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
 
   create_table "phases", force: :cascade do |t|
     t.integer  "forum_id",     null: false
@@ -462,9 +437,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "end_date"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["forum_id", "project_id"], name: "index_phases_on_forum_id_and_project_id", using: :btree
   end
-
-  add_index "phases", ["forum_id", "project_id"], name: "index_phases_on_forum_id_and_project_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.integer  "forum_id"
@@ -479,10 +453,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "date_created"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.index ["about_id", "about_type"], name: "index_photos_on_about_id_and_about_type", using: :btree
+    t.index ["forum_id"], name: "index_photos_on_forum_id", using: :btree
   end
-
-  add_index "photos", ["about_id", "about_type"], name: "index_photos_on_about_id_and_about_type", using: :btree
-  add_index "photos", ["forum_id"], name: "index_photos_on_forum_id", using: :btree
 
   create_table "placements", force: :cascade do |t|
     t.integer "forum_id"
@@ -493,18 +466,17 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.text    "about"
     t.integer "creator_id",     null: false
     t.integer "publisher_id",   null: false
+    t.index ["forum_id"], name: "index_placements_on_forum_id", using: :btree
+    t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "(((title)::text = 'home'::text) AND ((placeable_type)::text = 'User'::text))", using: :btree
   end
-
-  add_index "placements", ["forum_id"], name: "index_placements_on_forum_id", using: :btree
-  add_index "placements", ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "(((title)::text = 'home'::text) AND ((placeable_type)::text = 'User'::text))", using: :btree
 
   create_table "places", id: :bigserial, force: :cascade do |t|
     t.string  "licence"
     t.string  "osm_type"
-    t.integer "osm_id",         limit: 8
-    t.text    "boundingbox",                                        default: [], array: true
-    t.decimal "lat",                      precision: 64, scale: 12
-    t.decimal "lon",                      precision: 64, scale: 12
+    t.bigint  "osm_id"
+    t.text    "boundingbox",                              default: [], array: true
+    t.decimal "lat",            precision: 64, scale: 12
+    t.decimal "lon",            precision: 64, scale: 12
     t.string  "display_name"
     t.string  "osm_class"
     t.string  "osm_importance"
@@ -528,19 +500,17 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.boolean  "are_votes_public",             default: true
     t.string   "profileable_type"
     t.integer  "profileable_id"
+    t.index ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true, using: :btree
+    t.index ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree
   end
-
-  add_index "profiles", ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true, using: :btree
-  add_index "profiles", ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree
 
   create_table "profiles_roles", force: :cascade do |t|
     t.integer  "profile_id"
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
   end
-
-  add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.integer  "forum_id",                                null: false
@@ -564,11 +534,10 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "cover_photo_attribution", default: ""
     t.boolean  "is_published",            default: false, null: false
     t.integer  "blog_posts_count",        default: 0,     null: false
+    t.index ["forum_id", "is_published"], name: "index_projects_on_forum_id_and_is_published", using: :btree
+    t.index ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
+    t.index ["forum_id"], name: "index_projects_on_forum_id", using: :btree
   end
-
-  add_index "projects", ["forum_id", "is_published"], name: "index_projects_on_forum_id_and_is_published", using: :btree
-  add_index "projects", ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
-  add_index "projects", ["forum_id"], name: "index_projects_on_forum_id", using: :btree
 
   create_table "publications", force: :cascade do |t|
     t.string   "job_id"
@@ -589,9 +558,8 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at"
     t.integer  "creator_id"
     t.boolean  "migrated",        default: false, null: false
+    t.index ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
   end
-
-  add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "title",                   limit: 255, default: ""
@@ -608,12 +576,11 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "cover_photo_attribution",             default: ""
     t.datetime "expires_at"
     t.integer  "publisher_id",                                        null: false
-    t.integer  "place_id",                limit: 8
+    t.bigint   "place_id"
     t.integer  "project_id"
+    t.index ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree
+    t.index ["forum_id"], name: "index_questions_on_forum_id", using: :btree
   end
-
-  add_index "questions", ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree
-  add_index "questions", ["forum_id"], name: "index_questions_on_forum_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -621,10 +588,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "resource_type", limit: 255
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+    t.index ["name"], name: "index_roles_on_name", using: :btree
   end
-
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "rules", force: :cascade do |t|
     t.string   "model_type"
@@ -638,27 +604,24 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.integer  "context_id",               null: false
     t.integer  "trickles",     default: 0, null: false
     t.string   "message"
+    t.index ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type", using: :btree
+    t.index ["model_id", "model_type"], name: "index_rules_on_model_id_and_model_type", using: :btree
   end
-
-  add_index "rules", ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type", using: :btree
-  add_index "rules", ["model_id", "model_type"], name: "index_rules_on_model_id_and_model_type", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255, null: false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+    t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
   end
-
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string "key"
     t.text   "value"
+    t.index ["key"], name: "index_settings_on_key", unique: true, using: :btree
   end
-
-  add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
   create_table "shortnames", force: :cascade do |t|
     t.string   "shortname",  null: false
@@ -667,9 +630,9 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "forum_id"
+    t.index "lower((shortname)::text)", name: "index_shortnames_on_shortname", unique: true, using: :btree
+    t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
   end
-
-  add_index "shortnames", ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
 
   create_table "stepups", force: :cascade do |t|
     t.integer "forum_id",    null: false
@@ -691,17 +654,15 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.string   "context",       limit: 128
     t.datetime "created_at"
     t.integer  "forum_id"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
   end
-
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string  "name",           limit: 255
     t.integer "taggings_count",             default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                   limit: 255, default: ""
@@ -757,14 +718,13 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.integer  "news_email",                          default: 3,     null: false
     t.integer  "reactions_email",                     default: 3,     null: false
     t.boolean  "has_drafts",                          default: false, null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+    t.index ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
-  add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
-  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "voteable_id",                           null: false
@@ -776,11 +736,10 @@ ActiveRecord::Schema.define(version: 20160919093414) do
     t.datetime "updated_at"
     t.integer  "forum_id"
     t.integer  "publisher_id",                          null: false
+    t.index ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree
+    t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
+    t.index ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
   end
-
-  add_index "votes", ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree
-  add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
-  add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
   add_foreign_key "access_tokens", "profiles"
   add_foreign_key "arguments", "profiles", column: "creator_id"
