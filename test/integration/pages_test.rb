@@ -5,7 +5,6 @@ class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
   let(:freetown) { create_forum(name: 'freetown', page: page_non_public) }
-  let(:access_token) { create(:access_token, item: freetown) }
 
   let(:motion) do
     create(:motion,

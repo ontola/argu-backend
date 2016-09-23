@@ -24,9 +24,9 @@ module Test
         type: 'tokens',
         attributes: {
           usages: 0,
-          'created-at': DateTime.current,
-          'expires-at': nil,
-          'retracted-at': nil
+          createdAt: DateTime.current,
+          expiresAt: nil,
+          retractedAt: nil
         },
         links: {
           url: "#{Rails.configuration.token_url}/#{id}"

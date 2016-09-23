@@ -44,7 +44,7 @@ class ProjectPolicy < EdgeTreePolicy
 
   def list?
     if record.is_published? && !record.is_trashed?
-      rule has_access_token?, is_member?, is_manager?, is_owner?, super
+      rule is_member?, is_manager?, is_owner?, super
     else
       rule is_moderator?, is_manager?, is_owner?, super
     end
@@ -52,7 +52,7 @@ class ProjectPolicy < EdgeTreePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule has_access_token?, is_member?, is_moderator?, is_manager?, is_owner?, super
+    rule is_member?, is_moderator?, is_manager?, is_owner?, super
   end
 
   def trash?

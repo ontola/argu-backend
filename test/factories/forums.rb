@@ -12,11 +12,6 @@ FactoryGirl.define do
       forum.shortname.shortname = forum.name
     end
 
-    # Venice
-    trait :vwal do
-      visible_with_a_link true
-    end
-
     # Cologne
     trait :closed do
       visibility Forum.visibilities[:closed]

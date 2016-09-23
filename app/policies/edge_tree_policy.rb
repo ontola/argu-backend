@@ -5,10 +5,6 @@ class EdgeTreePolicy < RestrictivePolicy
       self.class.name.split('Policy')[0]
     end
 
-    def forum_ids_by_access_tokens
-      get_access_tokens(user).select { |at| at.item_type == 'Forum' }.map(&:item_id)
-    end
-
     def resolve
       return scope.published.untrashed if staff?
       scope
@@ -17,22 +13,14 @@ class EdgeTreePolicy < RestrictivePolicy
         .joins("LEFT JOIN forums ON #{class_name.tableize}.forum_id = forums.id")
         .where("#{class_name.tableize}.forum_id IS NULL OR #{class_name.tableize}.forum_id IN (?) "\
                'OR forums.visibility = ?',
-               forum_ids_by_access_tokens.concat(user.profile.forum_ids),
+               user.profile.forum_ids,
                Forum.visibilities[:open])
-    end
-
-    def session
-      {a_tokens: context.a_tokens}
     end
   end
 
   module Roles
     def open
       1
-    end
-
-    def access_token
-      2
     end
 
     def member
@@ -56,16 +44,9 @@ class EdgeTreePolicy < RestrictivePolicy
       8
     end
 
-    def has_access_token?
-      access_token if has_access_token_access_to(record, user)
-    end
-
     def is_member?
       return if persisted_edge.nil?
-      if (user.profile.group_ids & persisted_edge.granted_group_ids('member')).any? ||
-          has_access_token_access_to(persisted_edge.owner, user)
-        member
-      end
+      member if (user.profile.group_ids & persisted_edge.granted_group_ids('member')).any?
     end
 
     def is_creator?
@@ -212,10 +193,6 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def vote?
     staff?
-  end
-
-  def session
-    {a_tokens: context.a_tokens}
   end
 
   private

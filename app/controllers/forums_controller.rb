@@ -19,7 +19,7 @@ class ForumsController < AuthorizedController
   def discover
     @forums = policy_scope(Forum)
               .public_forums
-              .includes(:default_cover_photo, :default_profile_photo, :shortname, :access_tokens)
+              .includes(:default_cover_photo, :default_profile_photo, :shortname)
               .page show_params[:page]
     render
   end

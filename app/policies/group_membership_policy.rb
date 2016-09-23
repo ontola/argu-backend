@@ -28,11 +28,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def create?
-    if record.parent_model.grants.member.present?
-      rule valid_token?, has_access_token?, is_member?, is_manager?, super
-    else
-      rule valid_token?, is_manager?, is_owner?, super
-    end
+    rule valid_token?, is_member?, is_manager?, super
   end
 
   def destroy?
@@ -47,10 +43,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def granted_resource
     record.parent_model.grants.member.first.edge.owner
-  end
-
-  def has_access_token?
-    access_token if has_access_token_access_to(granted_resource, user)
   end
 
   def page_policy

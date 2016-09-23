@@ -45,7 +45,6 @@ class User < ApplicationRecord
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  after_create :update_acesss_token_counts
   before_destroy :expropriate_dependencies
   before_save :adjust_birthday, if: :birthday_changed?
   before_save { |user| user.email = email.downcase unless email.blank? }
@@ -240,12 +239,6 @@ class User < ApplicationRecord
 
   def sync_notification_count
     Argu::Redis.set("user:#{id}:notification.count", notifications.count)
-  end
-
-  def update_acesss_token_counts
-    return unless access_tokens.present?
-    access_tokens = AccessToken.where(access_token: eval(self.access_tokens)).pluck :id
-    AccessToken.increment_counter :sign_ups, access_tokens
   end
 
   def user_to_recipient_option

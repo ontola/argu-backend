@@ -23,7 +23,7 @@ class ForumPolicy < EdgeTreePolicy
   def permitted_attributes
     attributes = super
     attributes.concat %i(name bio bio_long tags featured_tags profile_id) if update?
-    attributes.concat %i(visibility visible_with_a_link page_id) if change_owner?
+    attributes.concat %i(visibility page_id) if change_owner?
     attributes.append(memberships_attributes: %i(role id profile_id forum_id))
     attributes.append(:max_shortname_count) if max_shortname_count?
     append_default_photo_params(attributes)
@@ -51,7 +51,7 @@ class ForumPolicy < EdgeTreePolicy
   end
 
   def join?
-    rule has_access_token?, is_manager?, staff?
+    rule is_manager?, staff?
   end
 
   def list?
@@ -82,7 +82,7 @@ class ForumPolicy < EdgeTreePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule has_access_token?, is_member?, is_manager?, super
+    rule is_member?, is_manager?, super
   end
 
   def statistics?

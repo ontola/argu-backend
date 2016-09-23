@@ -76,7 +76,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def build_resource(*args)
-    super args.first.merge(access_tokens: get_safe_raw_access_tokens)
+    super
     resource.shortname = nil if resource.shortname.shortname.blank?
     resource.build_profile
     resource.language = I18n.locale

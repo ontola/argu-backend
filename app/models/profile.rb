@@ -11,7 +11,6 @@ class Profile < ApplicationRecord
   rolify after_remove: :role_removed, before_add: :role_added
 
   before_destroy :anonymize_dependencies
-  has_many :access_tokens, dependent: :destroy
   has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception
   has_many :edges, through: :groups
   has_many :granted_edges_scope, through: :grants, source: :edge, class_name: 'Edge'

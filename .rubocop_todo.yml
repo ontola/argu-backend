@@ -16,7 +16,6 @@ Lint/AssignmentInCondition:
 # Offense count: 6
 Lint/Eval:
   Exclude:
-    - 'app/helpers/access_token_helper.rb'
     - 'app/models/user.rb'
     - 'lib/argu/test_helpers/automated_tests.rb'
     - 'test/test_helper.rb'

@@ -5,7 +5,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:cairo_member) { create_member(cairo) }
-  let(:venice_member) { create_member(venice) }
+  let(:member) { create_member(freetown) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) do
     create(:argument,
@@ -197,110 +197,44 @@ class CommentsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As spectator
+  # As creator
   ####################################
-  define_venice
-  let(:access_token) { create(:access_token, item: venice) }
-  let(:venice_motion) { create(:motion, parent: venice.edge) }
-  let(:venice_argument) do
-    create(:argument,
-           parent: venice_motion.edge,
-           creator: create(:user,
-                           :follows_reactions_directly)
-                      .profile)
-  end
-  let(:venice_comment) do
-    create(:comment,
-           creator: venice_member.profile,
-           parent: venice_argument.edge)
-  end
+  test 'creator should not delete wipe own comment twice affecting counter caches' do
+    sign_in creator
 
-  test 'spectator should post create a comment' do
-    nominatim_netherlands
+    assert_equal 1, subject.parent_model.children_count(:comments)
 
-    get forum_path(venice.url, params: {at: access_token.access_token})
-    assert_response :success
-
-    post group_membership_index_path(venice.grants.member.first.group.id,
-                                     r: forum_path(venice.url),
-                                     at: access_token.access_token)
-    assert_redirected_to new_user_session_path(r: forum_path(venice.url))
-    assert_not_a_user
-
-    follow_redirect!
-
-    assert_differences [['User.count', 1],
-                        ['Sidekiq::Worker.jobs.size', 1]] do
-      post user_registration_path,
-           params: {
-             user: {
-               shortname_attributes: {shortname: 'newuser'},
-               email: 'newuser@example.com',
-               password: 'useruser',
-               password_confirmation: 'useruser',
-               r: venice.url
-             },
-             at: access_token.access_token
-           }
-      assert_redirected_to edit_user_url('newuser')
-    end
-    follow_redirect!
-
-    put setup_profiles_path,
-        params: {
-          user: {
-            first_name: 'new',
-            last_name: 'user',
-            profile_attributes: {
-              id: Profile.last.id,
-              about: 'Something ab'
-            }
-          }
-        }
-    assert_redirected_to forum_url(venice.url)
-    assert assigns(:resource)
-    assert assigns(:profile)
-  end
-
-  ####################################
-  # As member
-  ####################################
-  test 'member should not delete wipe own comment twice affecting counter caches' do
-    sign_in venice_member
-
-    assert_equal 1, venice_comment.parent_model.children_count(:comments)
-
-    assert_differences([['venice_comment.parent_model.reload.children_count(:comments)', -1],
-                        ['venice_member.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(venice_comment.parent_model, venice_comment)
+    assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
+                        ['creator.profile.comments.count', -1]]) do
+      delete trash_argument_comment_path(subject.parent_model, subject)
       delete destroy_argument_comment_path(
-        venice_comment.parent_model,
-        venice_comment,
+        subject.parent_model,
+        subject,
         destroy: 'true'
       )
     end
 
-    assert_redirected_to argument_path(venice_argument, anchor: venice_comment.id)
+    assert_redirected_to argument_path(argument, anchor: subject.id)
   end
 
   ####################################
   # As owner
   ####################################
-  test 'owner should not delete wipe own comment twice affecting counter caches' do
-    sign_in create_owner(venice)
+  test 'owner should not delete wipe others comment twice affecting counter caches' do
+    sign_in owner
 
-    assert_equal 1, venice_comment.parent_model.children_count(:comments)
+    assert_equal 1, subject.parent_model.children_count(:comments)
 
-    assert_differences([['venice_comment.parent_model.reload.children_count(:comments)', -1],
-                        ['venice_member.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(venice_comment.parent_model, venice_comment)
+    assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
+                        ['creator.profile.comments.count', -1]]) do
+      delete trash_argument_comment_path(subject.parent_model, subject)
       delete destroy_argument_comment_path(
-        venice_comment.parent_model,
-        venice_comment,
+        subject.parent_model,
+        subject,
         destroy: 'true'
       )
     end
 
-    assert_redirected_to argument_url(venice_argument, anchor: venice_comment.id)
+    assert_redirected_to argument_url(argument, anchor: subject.id)
   end
 end

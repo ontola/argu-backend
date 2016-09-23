@@ -2,13 +2,12 @@
 require 'exception_to_the_rule'
 
 class RestrictivePolicy
-  include AccessTokenHelper, TuplesHelper
+  include TuplesHelper
   prepend ExceptionToTheRule
 
   attr_reader :context, :record
 
   class Scope
-    include AccessTokenHelper
     attr_reader :context, :user, :scope
 
     def initialize(context, scope)
@@ -118,13 +117,6 @@ class RestrictivePolicy
   # Can the current user change the item shortname?
   def shortname?
     new_record?
-  end
-
-  # Whether the User is logged in, or has an AccessToken for `record`
-  # Note: Not to be confused with policy(record).show? which validates
-  #       access for a specific item
-  def has_access_to_record?
-    user || has_access_token_access_to(record, user)
   end
 
   def scope

@@ -60,23 +60,8 @@ class ProfilesController < ApplicationController
     @profile = @resource.profile
     authorize @profile, :update?
 
-    updated = nil
-    Profile.transaction do
-      updated = @resource.update setup_permit_params
-      if updated
-        if has_valid_token?(@resource)
-          get_access_tokens(@resource).each do |at|
-            next unless at.item.class == Forum && !at.item.open?
-            group = at.item.grants.member.first&.group
-            if group.present?
-              membership = @profile.group_memberships.find_or_initialize_by(group: group)
-              Edge.create(owner: membership, parent: group.edge, user: @profile.profileable)
-            end
-          end
-        end
-        @resource.update_column :finished_intro, true
-      end
-    end
+    updated = @resource.update(setup_permit_params)
+    @resource.update_column(:finished_intro, true) if updated
 
     respond_to do |format|
       if updated && @resource.try(:r).present?

@@ -187,14 +187,14 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
                         ['closed_question_argument.reload.children_count(:votes_pro)', 0]]) do
-      post motion_votes_path(closed_question_argument),
+      post argument_votes_path(closed_question_argument),
            params: {
              for: :pro,
              format: :json
            }
     end
 
-    assert_response 404
+    assert_not_authorized
   end
 
   test 'user should post create json_api' do

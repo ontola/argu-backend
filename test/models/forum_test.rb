@@ -6,7 +6,6 @@ class ForumTest < ActiveSupport::TestCase
 
   define_cairo
   define_holland('subject')
-  define_venice
   define_cairo('cairo2')
 
   let(:user) { create(:user) }
@@ -24,24 +23,6 @@ class ForumTest < ActiveSupport::TestCase
     assert_equal cairo.grants.where(group_id: -1).count, 0
     cairo.open!
     assert_equal cairo.grants.where(group_id: -1).count, 1
-  end
-
-  test 'should not leak access_token if disabled' do
-    assert_equal false, subject.visible_with_a_link?
-    assert_equal nil, subject.access_token, 'access tokens are returned if turned off'
-    assert_not_equal nil, subject.access_token!, 'test is useless since forum has no access_token'
-  end
-
-  test 'should return access_token if enabled' do
-    assert venice.visible_with_a_link?
-    assert_not_equal nil, venice.access_token
-    assert_not_equal nil, venice.access_token!
-  end
-
-  test 'access token functions return correct type' do
-    assert venice.access_token.is_a?(String)
-    assert venice.access_token!.is_a?(String)
-    assert venice.full_access_token.is_a?(AccessToken)
   end
 
   test 'display_name should work' do

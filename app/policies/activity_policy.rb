@@ -19,7 +19,7 @@ class ActivityPolicy < RestrictivePolicy
         .published_for_user(user)
         .joins(:forum)
         .where("#{class_name.tableize}.forum_id IN (?) OR forums.visibility = ?",
-               forum_ids_by_access_tokens.concat(user.profile.forum_ids),
+               user.profile.forum_ids,
                Forum.visibilities[:open])
         .joins(:owner)
         .where(activities[:key].not_eq('vote.create').or(

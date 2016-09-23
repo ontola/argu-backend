@@ -5,14 +5,13 @@ require 'argu/not_a_user_error'
 
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
-          PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
-          NestedAttributesHelper, JsonApiHelper, RedirectHelper
+          PublicActivity::StoreController, NamesHelper, UsersHelper, NestedAttributesHelper,
+          JsonApiHelper, RedirectHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
   INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
 
   protect_from_forgery with: :exception, prepend: true
-  prepend_before_action :check_for_access_token
   skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?
   prepend_before_action :write_client_access_token
   before_action :set_layout
@@ -155,8 +154,7 @@ class ApplicationController < ActionController::Base
     UserContext.new(
       current_user,
       current_profile,
-      doorkeeper_scopes,
-      session[:a_tokens]
+      doorkeeper_scopes
     )
   end
 
@@ -228,7 +226,7 @@ class ApplicationController < ActionController::Base
   # @private
   # For Devise
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :r, :access_tokens, shortname_attributes: [:shortname]])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :r, shortname_attributes: [:shortname]])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
   end
 

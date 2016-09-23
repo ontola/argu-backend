@@ -52,7 +52,6 @@ module Argu
                          options: service_options)
         service.commit
         reset_publication(service.resource.publications.last)
-        create(:access_token, item: @resource)
         @resource.page.owner.profileable.follow @resource.edge
       end
 

@@ -89,15 +89,13 @@ module Argu
           forum = create_forum(
             {
               shortname_attributes: {shortname: name},
-              visibility: Forum.visibilities[:hidden],
-              visible_with_a_link: true
+              visibility: Forum.visibilities[:hidden]
             }.merge(attributes)
           )
           create(:grant,
                  edge: forum.edge,
                  group: create(:group, parent: forum.page.edge),
                  role: Grant.roles[:member])
-          create :access_token, item: forum
           forum
         end
       end
@@ -111,21 +109,6 @@ module Argu
               visibility: Forum.visibilities[:open]
             }.merge(attributes)
           )
-        end
-      end
-
-      def define_venice(name = 'venice', attributes: {})
-        let!(name) do
-          forum = create_forum(
-            {
-              visible_with_a_link: true
-            }.merge(attributes)
-          )
-          create(:grant,
-                 edge: forum.edge,
-                 group: create(:group, parent: forum.page.edge),
-                 role: Grant.roles[:member])
-          forum
         end
       end
 

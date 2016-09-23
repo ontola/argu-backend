@@ -12,12 +12,10 @@ class DiscussionsControllerTest < ActionController::TestCase
   let(:helsinki) do
     create_forum(
       name: 'helsinki',
-      visibility: Forum.visibilities[:hidden],
-      visible_with_a_link: true
+      visibility: Forum.visibilities[:hidden]
     )
   end
   let(:helsinki_project) { create(:project, parent: helsinki.edge) }
-  let(:helsinki_key) { create(:access_token, item: helsinki) }
 
   ####################################
   # As Guest
@@ -44,33 +42,6 @@ class DiscussionsControllerTest < ActionController::TestCase
     get :new, params: {project_id: helsinki_project}
 
     assert_response 403
-  end
-
-  ####################################
-  # As Spectator
-  ####################################
-  test 'spectator should get new' do
-    get :new, params: {forum_id: helsinki, at: helsinki_key.access_token}
-
-    assert_response 200
-  end
-
-  test 'spectator should get new on project' do
-    get :new, params: {project_id: project, at: helsinki_key.access_token}
-
-    assert_response 200
-  end
-
-  test 'spectator should not get new on unpublished project' do
-    get :new, params: {project_id: unpublished_project, at: helsinki_key.access_token}
-
-    assert_response 403
-  end
-
-  test 'spectator should get new on closed forum project' do
-    get :new, params: {project_id: helsinki_project, at: helsinki_key.access_token}
-
-    assert_response 200
   end
 
   ####################################

@@ -4,7 +4,6 @@ class Forum < ApplicationRecord
           Loggable, Motionable, Questionable, Ldable
 
   belongs_to :page, inverse_of: :forums
-  has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
   has_many :banners, inverse_of: :forum
   has_many :shortnames, inverse_of: :forum
   has_many :stepups, inverse_of: :forum
@@ -37,7 +36,6 @@ class Forum < ApplicationRecord
     errors.add(:shortnames, 'bad') if shortnames.count > max_shortname_count
   end
 
-  after_validation :check_access_token, if: :visible_with_a_link_changed?
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :featured_tags, squish: true, nullify: false
   auto_strip_attributes :bio, nullify: false
@@ -59,27 +57,6 @@ class Forum < ApplicationRecord
   contextualize_as_type 'argu:Forum'
   contextualize_with_id { |f| Rails.application.routes.url_helpers.canonical_forum_url(f.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
-
-  def access_token
-    access_token! if visible_with_a_link
-  end
-
-  def access_token!
-    access_tokens.first.try(:access_token)
-  end
-
-  def m_access_tokens
-    m_access_tokens! if visible_with_a_link
-  end
-
-  def m_access_tokens!
-    access_tokens.map(&:access_token)
-  end
-
-  def check_access_token
-    return unless visible_with_a_link && access_token!.blank?
-    access_tokens.build(item: self, profile: page.profile)
-  end
 
   def creator
     page.owner
@@ -109,10 +86,6 @@ class Forum < ApplicationRecord
     else
       super(*ids)
     end
-  end
-
-  def full_access_token
-    AccessToken.find_by(item: self)
   end
 
   def page=(value)
