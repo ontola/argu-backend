@@ -116,10 +116,6 @@ class ForumPolicy < RestrictivePolicy
     user && (user.profile.pages.length > 0 || user.profile.grants.manager.presence) || staff?
   end
 
-  def invite?
-    rule (user && (is_open? || is_manager?)), staff?
-  end
-
   def join?
     rule is_open?, has_access_token?, is_manager?, staff?
   end

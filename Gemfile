@@ -96,7 +96,6 @@ gem 'redcarpet', '~> 3.3.4'
 
 ################## User management ########################
 gem 'devise', '~> 4.2.0'
-gem 'devise_invitable', '~> 1.6.0'
 gem 'omniauth', '~> 1.3.1'
 gem 'omniauth-oauth2', '~> 1.2.0'
 gem 'omniauth-facebook', '~> 3.0.0'

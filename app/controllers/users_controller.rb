@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
     email_changed = permit_params[:email].present? && @user.email != permit_params[:email]
     successfully_updated =
-      if email_changed || permit_params[:password].present? || @user.invitation_token.present?
+      if email_changed || permit_params[:password].present?
         if @user.update_with_password(permit_params)
           bypass_sign_in(@user)
           UserMailer.delay.user_password_changed(@user) if @user.valid_password?(permit_params[:password])

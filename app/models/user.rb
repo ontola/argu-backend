@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :token_authenticatable,
-  devise :invitable, :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable,
          :omniauthable, omniauth_providers: [:facebook].freeze
@@ -66,20 +66,6 @@ class User < ApplicationRecord
 
   def active_since?(datetime, redis = nil)
     active_at(redis).to_i >= datetime.to_i
-  end
-
-  # @private
-  # Note: Fix for devise_invitable w/ shortnameable
-  # Override deletes the shortname if
-  # shortname is blank, user is a new record and the attributes include access_token
-  #
-  # The combination of the three is assumed to correctly identify an {User} record
-  # created by devise_invitable
-  def assign_attributes(new_attributes)
-    if new_record? && new_attributes.include?(:access_tokens)
-      self.shortname = nil if shortname.try(:shortname).blank?
-    end
-    super(new_attributes)
   end
 
   def apply_omniauth(omniauth)

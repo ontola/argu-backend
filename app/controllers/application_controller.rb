@@ -206,7 +206,6 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :r, :access_tokens, shortname_attributes: [:shortname]])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
-    devise_parameter_sanitizer.permit(:accept_invitation, keys: [shortname_attributes: [:shortname]])
   end
 
   # @private

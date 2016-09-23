@@ -91,7 +91,6 @@ Rails.application.routes.draw do
              controllers: {
                registrations: 'registrations',
                sessions: 'users/sessions',
-               invitations: 'users/invitations',
                passwords: 'users/passwords',
                omniauth_callbacks: 'omniauth_callbacks',
                confirmations: 'users/confirmations'
