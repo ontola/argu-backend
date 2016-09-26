@@ -13,15 +13,7 @@ RSpec.feature 'Transfer Page', type: :feature do
     click_link('Move')
     within('form.page') do
       fill_in 'page_repeat_name', with: nederland.page.shortname.shortname
-      selector =
-        if Capybara.current_driver == :poltergeist
-          '.Select-control .Select-placeholder'
-        else
-          '.Select-control .Select-input input'
-        end
-      input_field = find(selector).native
-      input_field.send_keys user.first_name
-      find('.Select-option').click
+      fill_in_select with: user.first_name
 
       click_button 'I understand the consequences, transfer ownership of this organization.'
     end

@@ -17,16 +17,7 @@ RSpec.feature 'Manager', type: :feature do
 
     click_link("Add #{nederland.name} manager")
     within('form.group') do
-      selector =
-        if Capybara.current_driver == :poltergeist
-          '.Select-control .Select-placeholder'
-        else
-          '.Select-control .Select-input input'
-        end
-      input_field = find(selector).native
-      input_field.send_keys user.first_name
-      find('.Select-option').click
-
+      fill_in_select with: user.first_name
       click_button 'Save'
     end
 
@@ -47,16 +38,7 @@ RSpec.feature 'Manager', type: :feature do
 
     click_link("Add #{nederland.name} manager")
     within('form.group') do
-      selector =
-        if Capybara.current_driver == :poltergeist
-          '.Select-control .Select-placeholder'
-        else
-          '.Select-control .Select-input input'
-        end
-      input_field = find(selector).native
-      input_field.send_keys member.first_name
-      find('.Select-option').click
-
+      fill_in_select with: member.first_name
       click_button 'Save'
     end
 

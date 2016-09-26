@@ -52,13 +52,12 @@ RSpec.feature 'Signup', type: :feature do
     expect(page).to have_current_path setup_users_path
     click_button 'Next'
 
-    within('#user_home_placement_attributes_country_code_input') do
-      input_field = find('.Select-control .Select-input input').native
-      input_field.send_keys 'Netherlands'
-      find('.Select-option', text: /Netherlands$/).click
-    end
+    fill_in_select '#user_home_placement_attributes_country_code_input',
+                   with: 'Netherlands',
+                   selector: /Netherlands$/
     click_button 'Next'
 
     expect(page).to have_current_path(user_path(User.last))
+    expect(User.last.country).to eq('NL')
   end
 end
