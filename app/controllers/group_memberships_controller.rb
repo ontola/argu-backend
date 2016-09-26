@@ -1,4 +1,5 @@
 class GroupMembershipsController < AuthorizedController
+  skip_before_action :authorize_action, only: :index
   skip_before_action :check_if_member
   include NestedResourceHelper
 
@@ -72,14 +73,6 @@ class GroupMembershipsController < AuthorizedController
   end
 
   private
-
-  def authenticated_resource!
-    return super if action_name != 'index'
-    Edge.new(
-      parent: get_parent_resource.members_group.edge,
-      owner: GroupMembership.new(group: Group.new(page: get_parent_resource))
-    ).owner
-  end
 
   def parent_resource_param(opts)
     action_name == 'index' ? super : :group_id

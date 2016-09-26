@@ -15,6 +15,10 @@ class GroupMembershipPolicy < RestrictivePolicy
 
     def resolve
       scope
+        .joins(:group)
+        .where('groups.visibility != ? OR group_memberships.group_id IN (?)',
+               Group.visibilities[:hidden],
+               @profile.group_ids)
     end
   end
 
@@ -35,10 +39,6 @@ class GroupMembershipPolicy < RestrictivePolicy
     attributes = [:lock_version]
     attributes.append(:shortname) if rule(is_manager?, is_owner?, staff?)
     attributes
-  end
-
-  def index?
-    rule is_member?, is_manager?, is_owner?, super
   end
 
   def new?
