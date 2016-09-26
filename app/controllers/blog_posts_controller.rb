@@ -35,11 +35,11 @@ class BlogPostsController < AuthorizedController
   end
 
   def edit
-    if authenticated_resource!.argu_publication.try(:published_at).present?
-      authenticated_resource!.argu_publication.schedule!
+    if authenticated_resource!.edge.argu_publication.try(:published_at).present?
+      authenticated_resource!.edge.argu_publication.schedule!
     else
-      authenticated_resource!.argu_publication.draft!
-      authenticated_resource!.argu_publication.published_at = DateTime.current
+      authenticated_resource!.edge.argu_publication.draft!
+      authenticated_resource!.edge.argu_publication.published_at = DateTime.current
     end
 
     respond_to do |format|
@@ -129,8 +129,8 @@ class BlogPostsController < AuthorizedController
   def new_resource_from_params
     blog_post = super
     blog_post.build_happening(created_at: Time.current)
-    blog_post.build_argu_publication(publish_type: :direct,
-                                     published_at: DateTime.current)
+    blog_post.edge.build_argu_publication(publish_type: :direct,
+                                          published_at: DateTime.current)
     blog_post
   end
 

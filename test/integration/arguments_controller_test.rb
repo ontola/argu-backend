@@ -37,7 +37,7 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
 
   let(:pub_project) do
     create(:project,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: freetown.edge)
   end
   let(:pub_project_motion) { create(:motion, parent: pub_project.edge) }

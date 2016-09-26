@@ -30,7 +30,7 @@ class ProjectPolicy < EdgeTreePolicy
     end
     append_default_photo_params(attributes)
     publication_attributes = %i(id published_at publish_type)
-    attributes.append(argu_publication_attributes: publication_attributes)
+    attributes.append(edge_attributes: {argu_publication_attributes: publication_attributes})
     attributes
   end
 

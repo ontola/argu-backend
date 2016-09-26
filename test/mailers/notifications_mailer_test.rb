@@ -31,7 +31,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
            parent: motion.edge,
            state: 'approved',
            happening_attributes: {happened_at: DateTime.current},
-           argu_publication_attributes: {publish_type: 'direct'})
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
   end
   let(:project) do
     create(:project,
@@ -39,14 +39,14 @@ class NotificationsMailerTest < ActionMailer::TestCase
            start_date: DateTime.yesterday,
            end_date: DateTime.tomorrow,
            parent: freetown.edge,
-           argu_publication_attributes: {publish_type: 'direct'})
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
   end
   let(:blog_post) do
     create(:blog_post,
            creator: creator,
            happening_attributes: {happened_at: DateTime.current},
            parent: motion.edge,
-           argu_publication_attributes: {publish_type: 'direct'})
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
   end
 
   test 'should send email for new question' do

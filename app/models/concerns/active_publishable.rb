@@ -4,20 +4,15 @@ module ActivePublishable
 
   included do
     scope :published, -> { where("#{model_name.collection}.is_published = true") }
-    scope :unpublished, -> { where('is_published = false') }
+    scope :unpublished, -> { where("#{model_name.collection}.is_published = false") }
 
     has_many :publications,
-             as: :publishable,
-             inverse_of: :publishable,
-             dependent: :destroy
+             through: :edge
 
     has_one :argu_publication,
             -> { where(channel: 'argu') },
             class_name: 'Publication',
-            inverse_of: :publishable,
-            as: :publishable
-
-    accepts_nested_attributes_for :argu_publication
+            through: :edge
   end
 
   def is_draft?

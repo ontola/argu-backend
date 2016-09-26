@@ -26,7 +26,7 @@ class DecisionPolicy < EdgeTreePolicy
     attributes.concat %i(content)
     attributes.concat %i(state forwarded_user_id forwarded_group_id) if record.new_record?
     attributes.append(happening_attributes: %i(id happened_at))
-    attributes.append(argu_publication_attributes: %i(id publish_type))
+    attributes.append(edge_attributes: {argu_publication_attributes: %i(id publish_type)})
     attributes
   end
 

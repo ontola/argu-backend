@@ -6,7 +6,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   let!(:subject) do
     p = create(:project,
-               argu_publication: build(:publication),
+               edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
                publisher: creator,
                parent: freetown.edge)
     create(:stepup,
@@ -48,7 +48,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('projects', 'create_success'),
       attributes: {
         happened_at: DateTime.current,
-        argu_publication_attributes: {publish_type: :draft}
+        edge_attributes: {argu_publication_attributes: {publish_type: :draft}}
       },
       differences: [['Project.unpublished', 1],
                     ['Activity.loggings', 1],
@@ -70,7 +70,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('projects', 'create_success'),
       attributes: {
         happened_at: DateTime.current,
-        argu_publication_attributes: {publish_type: :direct}
+        edge_attributes: {argu_publication_attributes: {publish_type: :direct}}
       },
       differences: [['Project.published', 1],
                     ['Activity.loggings', 2],
@@ -177,7 +177,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                    analytics: stats_opt('projects', 'create_success'),
                    attributes: attributes_for(
                      :project,
-                     argu_publication_attributes: {publish_type: :draft},
+                     edge_attributes: {argu_publication_attributes: {publish_type: :draft}},
                      stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
                      phases_attributes: {'12321' => attributes_for(:phase)}
                    ),
@@ -198,7 +198,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                    analytics: stats_opt('projects', 'create_success'),
                    attributes: attributes_for(
                      :project,
-                     argu_publication_attributes: {publish_type: :direct},
+                     edge_attributes: {argu_publication_attributes: {publish_type: :direct}},
                      stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
                      phases_attributes: {'12321' => attributes_for(:phase)}
                    ),
@@ -218,7 +218,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                    parent: :freetown,
                    attributes: attributes_for(
                      :project,
-                     argu_publication_attributes: {publish_type: :draft},
+                     edge_attributes: {argu_publication_attributes: {publish_type: :draft}},
                      stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
                      phases_attributes: {'12321' => attributes_for(:phase)}
                    ),

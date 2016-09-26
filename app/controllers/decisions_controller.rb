@@ -25,7 +25,7 @@ class DecisionsController < AuthorizedController
   end
 
   def edit
-    authenticated_resource!.argu_publication.draft! unless authenticated_resource!.argu_publication.present?
+    authenticated_resource!.edge.argu_publication.draft! unless authenticated_resource!.edge.argu_publication.present?
 
     respond_to do |format|
       format.html do
@@ -55,7 +55,7 @@ class DecisionsController < AuthorizedController
     create_service.on(:create_decision_successful) do |decision|
       respond_to do |format|
         format.html do
-          notice = if decision.argu_publication.published_at.present?
+          notice = if decision.edge.argu_publication.published_at.present?
                      t("decisions.#{decision.decisionable.owner.model_name.singular}.#{decision.state}")
                    else
                      t('type_save_success', type: t('decisions.type').capitalize)
@@ -122,7 +122,7 @@ class DecisionsController < AuthorizedController
                      .new(owner: Decision.new(resource_new_params.merge(decisionable: get_parent_edge)))
                      .owner
       decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
-      decision.build_argu_publication(publish_type: :direct)
+      decision.edge.build_argu_publication(publish_type: :direct)
     end
     decision
   end

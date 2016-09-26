@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Publication < ApplicationRecord
   include Wisper::Publisher
-  belongs_to :publishable, polymorphic: true
+  belongs_to :publishable, class_name: 'Edge'
   belongs_to :creator, class_name: 'Profile', inverse_of: :projects
   belongs_to :publisher, class_name: 'User'
 
@@ -14,10 +14,10 @@ class Publication < ApplicationRecord
 
   # @TODO: wrap in transaction
   def commit
-    return if publishable.is_published?
-    publishable.update(is_published: true)
-    publishable.happening.update(is_published: true) if publishable.respond_to?(:happening)
-    publish("publish_#{publishable.model_name.singular}_successful", publishable)
+    return if publishable.owner.is_published?
+    publishable.owner.update(is_published: true)
+    publishable.owner.happening.update(is_published: true) if publishable.owner.respond_to?(:happening)
+    publish("publish_#{publishable.owner.model_name.singular}_successful", publishable.owner)
   end
 
   private
@@ -29,7 +29,7 @@ class Publication < ApplicationRecord
 
   # Cancel a previously scheduled job and schedule a new job if needed
   def reset
-    return if publishable.is_published?
+    return if publishable.owner.is_published?
 
     cancel if job_id.present?
     schedule if published_at.present?

@@ -25,8 +25,10 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
-           argu_publication_attributes: {
-             publish_type: 'direct'
+           edge_attributes: {
+             argu_publication_attributes: {
+               publish_type: 'direct'
+             }
            },
            publisher: creator,
            forwarded_user: actor,
@@ -39,8 +41,10 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
-           argu_publication_attributes: {
-             publish_type: 'direct'
+           edge_attributes: {
+             argu_publication_attributes: {
+               publish_type: 'direct'
+             }
            },
            publisher: creator,
            state: Decision.states[:approved])
@@ -134,8 +138,10 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
-           argu_publication_attributes: {
-             publish_type: :draft
+           edge_attributes: {
+             argu_publication_attributes: {
+               publish_type: :draft
+             }
            },
            publisher: creator,
            forwarded_user: actor,
@@ -179,8 +185,10 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
-           argu_publication_attributes: {
-             publish_type: 'direct'
+           edge_attributes: {
+             argu_publication_attributes: {
+               publish_type: 'direct'
+             }
            },
            publisher: creator,
            forwarded_user: nil,
@@ -270,7 +278,9 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
                                        state: state,
                                        content: 'Content',
                                        happening_attributes: {happened_at: Time.current},
-                                       argu_publication_attributes: {publish_type: :direct})
+                                       edge_attributes: {
+                                         argu_publication_attributes: {publish_type: :direct}
+                                       })
             }
     end
     Sidekiq::Testing.inline! do
@@ -296,7 +306,9 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
                                       state: 'forwarded',
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
-                                      argu_publication_attributes: {publish_type: :direct},
+                                      edge_attributes: {
+                                        argu_publication_attributes: {publish_type: :direct}
+                                      },
                                       forwarded_user_id: user_id,
                                       forwarded_group_id: group_id)
            }

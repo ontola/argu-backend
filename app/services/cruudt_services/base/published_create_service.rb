@@ -12,7 +12,7 @@ class PublishedCreateService < EdgeableCreateService
 
   def after_save
     super
-    if resource.respond_to?(:is_published?) && resource.argu_publication&.published_at.nil?
+    if resource.respond_to?(:is_published?) && resource.edge.argu_publication&.published_at.nil?
       resource.publisher.update(has_drafts: true)
     end
     resource.publisher.follow(resource.edge, :reactions, :news)

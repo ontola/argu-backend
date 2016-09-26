@@ -57,7 +57,7 @@ class RestrictivePolicy
   # @param parent_key [String, Symbol] Parent key of the wanted subset
   # @return [Array] Allowed attributes, nested under a parent key
   def permitted_nested_attributes(parent_key)
-    (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key].flatten
+    (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key]
   end
 
   def assert!(assertion, query = nil)

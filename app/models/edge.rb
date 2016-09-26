@@ -30,6 +30,15 @@ class Edge < ActiveRecord::Base
   has_many :grants, dependent: :destroy
   has_many :groups, through: :grants
   has_many :group_memberships, through: :groups
+  has_many :publications,
+           foreign_key: :publishable_id,
+           dependent: :destroy
+  has_one :argu_publication,
+          -> { where(channel: 'argu') },
+          class_name: 'Publication',
+          foreign_key: :publishable_id
+
+  accepts_nested_attributes_for :argu_publication
 
   validates :parent, presence: true, unless: :root_object?
 

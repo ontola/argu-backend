@@ -16,7 +16,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
   let(:published_project) do
     create(:project,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: holland.edge)
   end
   let(:q2) { create(:question, parent: published_project.edge) }

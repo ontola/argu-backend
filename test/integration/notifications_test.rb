@@ -125,7 +125,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
                                       forwarded_group_id: freetown.edge.granted_groups('manager').first.id,
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
-                                      argu_publication_attributes: {publish_type: :direct})
+                                      edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
            }
     end
     # Notification for creator and follower of Motion
@@ -143,7 +143,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
                                       state: 'approved',
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
-                                      argu_publication_attributes: {publish_type: :direct})
+                                      edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
            }
     end
     # Notification for creator, follower and news_follower of Motion
@@ -169,7 +169,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
                                       forwarded_group_id: group.id,
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
-                                      argu_publication_attributes: {publish_type: :direct})
+                                      edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
            }
     end
     # Notification for creator and follower of Motion and forwarded_to_user
@@ -193,7 +193,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
       post forum_projects_path(freetown),
            params: {
              project: attributes_for(:project,
-                                     argu_publication_attributes: {publish_type: :direct})
+                                     edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
            }
     end
 
@@ -217,7 +217,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
       post project_blog_posts_path(project),
            params: {
              blog_post: attributes_for(:blog_post,
-                                       argu_publication_attributes: {publish_type: :direct},
+                                       edge_attributes: {argu_publication_attributes: {publish_type: :direct}},
                                        happening_attributes: {happened_at: Time.current})
            }
     end

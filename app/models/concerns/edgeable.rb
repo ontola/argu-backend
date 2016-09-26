@@ -13,6 +13,8 @@ module Edgeable
     accepts_nested_attributes_for :edge
     delegate :persisted_edge, :last_activity_at, to: :edge
 
+    accepts_nested_attributes_for :edge
+
     def root_object?
       false
     end

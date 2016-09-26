@@ -13,14 +13,14 @@ class ActivityStringTest < ActiveSupport::TestCase
            parent: motion.edge,
            state: 'approved',
            happening_attributes: {happened_at: DateTime.current},
-           argu_publication_attributes: {publish_type: 'direct'})
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
   end
   let!(:rejected_decision) do
     create(:decision,
            parent: motion.edge,
            state: 'rejected',
            happening_attributes: {happened_at: DateTime.current},
-           argu_publication_attributes: {publish_type: 'direct'})
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
   end
   let(:group) { create(:group, parent: freetown.page.edge) }
   let!(:forwarded_decision) do
@@ -28,7 +28,7 @@ class ActivityStringTest < ActiveSupport::TestCase
            parent: motion.edge,
            state: 'forwarded',
            happening_attributes: {happened_at: DateTime.current},
-           argu_publication_attributes: {publish_type: 'direct'},
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            forwarded_user_id: create(:group_membership, parent: group.edge).member.profileable,
            forwarded_group_id: group.id)
   end

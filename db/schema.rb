@@ -555,9 +555,9 @@ ActiveRecord::Schema.define(version: 20161123110251) do
     t.string   "job_id"
     t.datetime "published_at"
     t.integer  "publishable_id"
-    t.string   "publishable_type"
+    t.string   "publishable_type", default: "Edge"
     t.string   "channel"
-    t.integer  "creator_id",       null: false
+    t.integer  "creator_id",                        null: false
     t.integer  "publisher_id"
   end
 

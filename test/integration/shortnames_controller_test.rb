@@ -29,7 +29,9 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
     parent = freetown
     %i(project question motion argument).each do |klass|
       resource = if klass == :project
-                   create(klass, parent: parent.edge, argu_publication: publication)
+                   create(klass,
+                          parent: parent.edge,
+                          edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
                  else
                    create(klass, parent: parent.edge)
                  end

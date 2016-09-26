@@ -7,26 +7,26 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
   let!(:project) do
     create(:project,
            :with_follower,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: freetown.edge)
   end
   let(:subject) do
     create(:blog_post,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            publisher: creator,
            parent: project.edge)
   end
   let(:trashed_subject) do
     create(:blog_post,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            trashed_at: Time.current,
            parent: project.edge)
   end
   let(:scheduled) do
     create(:blog_post,
-           argu_publication: build(:publication, published_at: 1.day.from_now),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'schedule', published_at: 1.day.from_now}},
            happening_attributes: {happened_at: DateTime.current},
            parent: project.edge)
   end
@@ -59,7 +59,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('blog_posts', 'create_success'),
       attributes: {
         happening_attributes: {happened_at: DateTime.current},
-        argu_publication_attributes: {publish_type: :draft}
+        edge_attributes: {argu_publication_attributes: {publish_type: :draft}}
       },
       differences: [['BlogPost.unpublished', 1],
                     ['Activity.loggings', 1],
@@ -81,7 +81,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('blog_posts', 'create_success'),
       attributes: {
         happening_attributes: {happened_at: DateTime.current},
-        argu_publication_attributes: {publish_type: :direct}
+        edge_attributes: {argu_publication_attributes: {publish_type: :direct}}
       },
       differences: [['BlogPost.published', 1],
                     ['Activity.loggings', 2],
@@ -110,7 +110,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
     end
     options = {
       record: :scheduled,
-      attributes: {argu_publication_attributes: {publish_type: :draft}}
+      attributes: {edge_attributes: {argu_publication_attributes: {publish_type: :draft}}}
     }
     define_test(hash, :update, suffix: ' cancel schedule', options: options) do
       {manager: exp_res(should: true, asserts: [assert_job_canceled])}

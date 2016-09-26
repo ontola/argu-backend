@@ -9,7 +9,10 @@ RSpec.feature 'Show drafts', type: :feature do
     create(:project, parent: freetown.edge, publisher: user)
   end
   let!(:published_project) do
-    create(:project, parent: freetown.edge, argu_publication: build(:publication), publisher: user)
+    create(:project,
+           parent: freetown.edge,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
+           publisher: user)
   end
   let!(:blog_post) do
     create(:blog_post, parent: project.edge, happened_at: DateTime.current, publisher: user)
@@ -18,7 +21,7 @@ RSpec.feature 'Show drafts', type: :feature do
     create(:blog_post,
            parent: project.edge,
            happened_at: DateTime.current,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            publisher: user)
   end
 
