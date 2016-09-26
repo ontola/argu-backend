@@ -3,3 +3,5 @@
     =react_component_store 'NewMembership', props: {things: 'users,pages'}
   =f.actions do
     =f.action :submit, as: :button
+- if active_for_user?(:bearer_token_management, current_user)
+  =react_component_store 'BearerTokens', props: {groupId: resource.id, createTokenUrl: '/tokens/bearer/'}

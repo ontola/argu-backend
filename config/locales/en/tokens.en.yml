@@ -1,0 +1,13 @@
+en:
+  tokens:
+    generate: "Generate token"
+    loading: "Loading..."
+    retract:
+      button: "retract"
+      confirm: "Are you sure you want to retract this token?"
+    labels:
+      link: "Link"
+      usages: "Usages"
+    bearer:
+      title: "Public tokens"
+      description: "Everyone with a public token can join this group. These tokens can be used infinitely."

@@ -310,6 +310,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # Mocks for calls to argu services during spec calls
+  # @todo remove when front-end is detached
+  if Rails.env.test?
+    get 'tokens/bearer/g/:group_id', to: 'test/bearer_tokens#index'
+    post 'tokens/bearer', to: 'test/bearer_tokens#create'
+  end
+
   constraints(-> (req) { req.format == :json_api }) do
     get '*path', to: 'application#route_not_found'
   end
