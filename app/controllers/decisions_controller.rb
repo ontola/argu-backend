@@ -2,7 +2,6 @@
 class DecisionsController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
-  skip_before_action :check_if_member, only: :index
 
   def index
     respond_to do |format|

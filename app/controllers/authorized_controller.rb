@@ -1,59 +1,11 @@
 # frozen_string_literal: true
-require 'argu/not_a_member_error'
 require 'argu/not_a_user_error'
 
 class AuthorizedController < ApplicationController
   before_action :check_if_registered,
                 except: %i(show move move! convert convert!)
-  before_action :check_if_member,
-                except: %i(show move move! convert convert!)
   before_action :authorize_action
   helper_method :authenticated_resource, :authenticated_context, :collect_banners
-
-  rescue_from Argu::NotAMemberError, with: :handle_not_a_member_error
-
-  protected
-
-  def handle_not_a_member_error(exception)
-    @_not_a_member_caught = true
-    authorize exception.forum, :join?
-    respond_to do |format|
-      format.html do
-        render template: 'forums/join',
-               status: 403,
-               locals: {
-                 forum: exception.forum,
-                 r: exception.r
-               }
-      end
-      format.js do
-        render partial: 'forums/join',
-               layout: false,
-               locals: {
-                 forum: exception.forum,
-                 r: exception.r
-               }
-      end
-      format.json do
-        f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
-        error_hash = {
-          type: :error,
-          error_id: 'NOT_A_MEMBER',
-          message: exception.body,
-          original_request: f.filter(params)
-        }.merge(exception.body)
-        render status: 403,
-               json: error_hash.merge(notifications: [error_hash])
-      end
-      format.json_api do
-        error_hash = {
-          message: 'Not a member',
-          code: 'NOT_A_MEMBER'
-        }.merge(exception.body)
-        render json_api_error(403, error_hash)
-      end
-    end
-  end
 
   private
 
@@ -124,17 +76,6 @@ class AuthorizedController < ApplicationController
       granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
     else
       resource_by_id.try(:forum) || resource_tenant
-    end
-  end
-
-  def check_if_member
-    if current_profile.present? &&
-        !(current_profile.member_of?(authenticated_context) ||
-          current_profile.owner_of(authenticated_context) ||
-          current_profile == authenticated_context.try(:page).try(:profile) ||
-          current_user.profile.has_role?(:staff))
-      raise Argu::NotAMemberError.new(forum: authenticated_context,
-                                      r: redirect_url)
     end
   end
 

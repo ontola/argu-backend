@@ -236,6 +236,13 @@ class ApplicationController < ActionController::Base
         render status: 403,
                json: error_hash.merge(notifications: [error_hash])
       end
+      format.json_api do
+        error_hash = {
+          message: 'Not authorized',
+          code: 'NOT_AUTHORIZED'
+        }
+        render json_api_error(403, error_hash)
+      end
       format.html do
         redirect_location =
           if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?

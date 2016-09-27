@@ -147,9 +147,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should post a new motion' do
     login_as(user, scope: :user)
 
-    create_motion_for_question do
-      click_on 'Add to my forums'
-    end
+    create_motion_for_question
   end
 
   ####################################

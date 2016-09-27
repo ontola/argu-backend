@@ -2,7 +2,6 @@
 
 class VotesController < AuthorizedController
   include NestedResourceHelper
-  skip_before_action :check_if_member, only: :destroy
 
   # GET /model/:model_id/vote
   def show
@@ -13,12 +12,7 @@ class VotesController < AuthorizedController
     @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
 
     respond_to do |format|
-      if current_profile.member_of? @model.forum
-        format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
-      else
-        format.html { render template: 'forums/join', locals: {forum: @model.forum, r: request.fullpath} }
-        format.js { render partial: 'forums/join', layout: false, locals: {forum: @model.forum, r: request.fullpath} }
-      end
+      format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
       format.json { render 'create', location: @vote }
     end
   end
@@ -114,28 +108,6 @@ class VotesController < AuthorizedController
   end
 
   private
-
-  def check_if_member
-    resource = get_parent_resource
-    return unless current_profile.present? && !current_profile.member_of?(resource.forum)
-    options = {
-      forum: resource.forum,
-      r: redirect_url
-    }
-    if %w(json json_api).include?(request.format)
-      options[:body] = {
-        links: {
-          create_membership: {
-            href: group_membership_index_url(
-              get_parent_resource.forum.members_group,
-              redirect: false
-            )
-          }
-        }
-      }
-    end
-    raise Argu::NotAMemberError.new(options)
-  end
 
   def check_if_registered
     return if current_profile.present?

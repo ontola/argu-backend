@@ -1,4 +1,0 @@
-$('.container').append("<%= escape_javascript render(template: 'forums/join.html', layout: false, locals: {forum: forum, r: r||=nil}) %>");
-window.setTimeout(function () {
-    $('body').addClass('modal-opened');
-}, 300);

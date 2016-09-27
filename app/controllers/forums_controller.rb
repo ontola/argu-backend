@@ -3,7 +3,6 @@ class ForumsController < AuthorizedController
   prepend_before_action :redirect_generic_shortnames, only: :show
   skip_before_action :authorize_action, only: %i(discover index)
   skip_before_action :check_if_registered, only: %i(discover)
-  skip_before_action :check_if_member, only: %i(discover index)
   skip_after_action :verify_authorized, only: %i(discover)
 
   def index

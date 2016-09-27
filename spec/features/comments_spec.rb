@@ -62,8 +62,6 @@ RSpec.feature 'Comments', type: :feature do
       fill_in 'comment[body]', with: comment_args[:body]
       click_button 'Reply'
     end
-    expect(page).to have_content 'and participate in the discussion!'
-    find('.modal').click_link('join-forum')
 
     click_button 'Reply'
 

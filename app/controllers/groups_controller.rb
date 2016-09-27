@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class GroupsController < AuthorizedController
   include NestedResourceHelper
-  skip_before_action :check_if_member
 
   def new
     render 'pages/settings', locals: {
