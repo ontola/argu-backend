@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class UserSerializer < BaseSerializer
-  attributes :display_name, :about
+  attributes :display_name, :about, :url
   attribute :language, if: :service_scope?
   attribute :email, if: :service_scope?
 
