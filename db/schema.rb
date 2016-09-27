@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160923092538) do
+ActiveRecord::Schema.define(version: 20160927131140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 20160923092538) do
     t.string   "slug"
     t.text     "bio",                     default: "",    null: false
     t.text     "featured_tags",           default: "",    null: false
-    t.integer  "visibility",              default: 1
+    t.integer  "visibility",              default: 3
     t.string   "cover_photo_attribution", default: ""
     t.boolean  "visible_with_a_link",     default: false
     t.boolean  "signup_with_token?",      default: false
