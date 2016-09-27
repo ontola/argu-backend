@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 module Gravatar
-  extend self
+  module_function
 
   def gravatar_url(email, gravatar_options = {})
     # Default highest rating.

@@ -27,7 +27,7 @@ module OauthHelper
   end
 
   def doorkeeper_scopes
-    doorkeeper_token.scopes
+    doorkeeper_token&.scopes
   end
 
   def doorkeeper_oauth_header?

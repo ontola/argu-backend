@@ -2,6 +2,7 @@
 require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
 require 'argu/forums_constraint'
+require 'argu/whitelist_constraint'
 ####
 # Routes
 # a: arguments
@@ -301,6 +302,12 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
+
+  constraints(Argu::WhitelistConstraint) do
+    namespace :spi do
+    end
+  end
+
   constraints(-> (req) { req.format == :json_api }) do
     get '*path', to: 'application#route_not_found'
   end

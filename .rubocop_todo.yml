@@ -159,14 +159,6 @@ Style/GlobalVars:
     - 'app/helpers/application_helper.rb'
     - 'config/initializers/rollout.rb'
 
-# Offense count: 2
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: module_function, extend_self
-Style/ModuleFunction:
-  Exclude:
-    - 'lib/argu/destroy_constraint.rb'
-    - 'lib/gravatar.rb'
-
 # Offense count: 109
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
