@@ -171,7 +171,7 @@ Rails.application.routes.draw do
 
   resources :groups,
             path: 'g',
-            only: [:update, :destroy],
+            only: [:show, :update, :destroy],
             concerns: [:destroyable] do
     get :settings, on: :member
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership

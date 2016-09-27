@@ -19,6 +19,10 @@ class GroupPolicy < EdgeTreePolicy
     end
   end
 
+  def is_member?
+    member if user.profile.group_memberships.pluck(:group_id).include? record.id
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(name name_singular icon visibility) if create?
@@ -31,6 +35,10 @@ class GroupPolicy < EdgeTreePolicy
     tabs.concat %i(members invite general) if is_manager? || staff?
     tabs.concat %i(grants) if is_owner? || staff?
     tabs
+  end
+
+  def show?
+    rule is_member?, is_manager?, is_owner?, staff?
   end
 
   def create?

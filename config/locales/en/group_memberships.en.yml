@@ -4,3 +4,4 @@ en:
     plural: "Memberships"
     new: "Add %{singular}"
     empty: "No members"
+    welcome: "You are successfully added to the group '%{group}'"

@@ -4,3 +4,4 @@ nl:
     plural: "Lidmaatschappen"
     new: "%{singular} toevoegen"
     empty: "Geen groepsleden"
+    welcome: "Je bent toegevoegd aan de groep '%{group}'"

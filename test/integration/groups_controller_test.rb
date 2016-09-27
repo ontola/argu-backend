@@ -15,7 +15,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should not show new' do
+  test 'user should not get new' do
     sign_in user
 
     get new_page_group_path(freetown.page)
@@ -23,7 +23,15 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
-  test 'user should not show settings' do
+  test 'user should not get show' do
+    sign_in user
+
+    get group_path(group)
+
+    assert_not_authorized
+  end
+
+  test 'user should not get settings' do
     sign_in user
 
     get settings_group_path(group)
@@ -39,6 +47,37 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_not_authorized
+  end
+
+  ####################################
+  # As Member
+  ####################################
+  let(:member) { create(:group_membership, parent: group.edge).member.profileable }
+
+  test 'member should get show' do
+    sign_in member
+
+    get group_path(group)
+
+    assert_redirected_to page_path(group.page)
+    follow_redirect!
+    refute_have_tag response.body,
+                    '.alert-wrapper .alert',
+                    '<div class="alert-close"><span class="fa fa-close"></span></div>'\
+                    "You are successfully added to the group '#{group.display_name}'"
+  end
+
+  test 'member should get show with welcome message' do
+    sign_in member
+
+    get group_path(group, welcome: 'true')
+
+    assert_redirected_to page_path(group.page)
+    follow_redirect!
+    assert_have_tag response.body,
+                    '.alert-wrapper .alert',
+                    '<div class="alert-close"><span class="fa fa-close"></span></div>'\
+                    "You are successfully added to the group '#{group.display_name}'"
   end
 
   ####################################
@@ -62,7 +101,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_page_path(freetown.page, tab: :groups)
   end
 
-  test 'manager should show new' do
+  test 'manager should get new' do
     sign_in manager
 
     get new_page_group_path(@freetown.page)
@@ -70,7 +109,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'manager should show settings and some tabs' do
+  test 'manager should get settings and some tabs' do
     sign_in manager
 
     get settings_group_path(@group)
@@ -113,7 +152,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_page_path(freetown.page, tab: :groups)
   end
 
-  test 'owner should show new' do
+  test 'owner should get new' do
     sign_in owner
 
     get new_page_group_path(@freetown.page)
@@ -121,7 +160,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'owner should show settings and all tabs' do
+  test 'owner should get settings and all tabs' do
     sign_in owner
 
     get settings_group_path(@group)
