@@ -24,8 +24,8 @@ RSpec.feature 'Decisions', type: :feature do
         fill_in 'decision_content', with: 'Reason to take decision'
         click_button 'Save'
       end
+      expect(page).to have_content('Motion is passed')
     end.to change { Decision.count }.by(1)
-    expect(page).to have_content('Motion is passed')
     expect(page).to have_content('Reason to take decision')
   end
 
@@ -44,8 +44,8 @@ RSpec.feature 'Decisions', type: :feature do
         fill_in_select with: forwarded_to.display_name
         click_button 'Save'
       end
+      expect(page).to have_content('Motion is forwarded')
     end.to change { Decision.count }.by(1)
-    expect(page).to have_content('Motion is forwarded')
     expect(page).to have_content('Reason to forward decision')
   end
 
@@ -62,8 +62,8 @@ RSpec.feature 'Decisions', type: :feature do
         fill_in 'decision_content', with: 'Reason to take decision'
         click_button 'Save'
       end
+      expect(page).to have_content('Motion is rejected')
     end.to change { Decision.count }.by(1)
-    expect(page).to have_content('Motion is rejected')
     expect(page).to have_content('Reason to take decision')
   end
 end

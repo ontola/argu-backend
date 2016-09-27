@@ -1,4 +1,16 @@
 # frozen_string_literal: true
+module Doorkeeper
+  module OAuth
+    class Token
+      module Methods
+        def cookie_token_extractor(req)
+          req.cookie_jar.encrypted['client_token']
+        end
+      end
+    end
+  end
+end
+
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use.
   # Currently supported options are :active_record, :mongoid2, :mongoid3,
@@ -63,8 +75,9 @@ Doorkeeper.configure do
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
   # falls back to the `:access_token` or `:bearer_token` params from the `params` object.
   # Check out the wiki for more information on customization
+
   access_token_methods :from_bearer_authorization, :from_access_token_param, :from_bearer_param,
-                       ->(req) { req.cookie_jar.encrypted['client_token'] }
+                       :cookie_token_extractor
 
   # Change the native redirect uri for client apps
   # When clients register with the following redirect uri, they won't be redirected to any server and

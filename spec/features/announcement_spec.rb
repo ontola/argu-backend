@@ -77,7 +77,7 @@ RSpec.feature 'Announcements', type: :feature do
   # As User
   ####################################
   scenario 'User sees correct announcements' do
-    login_as(FactoryGirl.create(:user), scope: :user)
+    sign_in(FactoryGirl.create(:user))
     question = holland.questions.first
     visit question_path question
     expect(page).to have_content(question.title),
@@ -93,7 +93,7 @@ RSpec.feature 'Announcements', type: :feature do
 
   scenario 'announcement dismissal is persisted across logins' do
     user = FactoryGirl.create(:user)
-    login_as(user, scope: :user)
+    sign_in_manually(user)
     question = holland.questions.first
     visit question_path(question)
 
@@ -103,7 +103,7 @@ RSpec.feature 'Announcements', type: :feature do
       page.find('.box-close-button').click
     end
     expect(page).to_not have_content(announcement_users.content)
-    logout(:user)
+    clear_cookies
 
     visit question_path(question)
     expect(page).to_not have_content(announcement_users.content)
@@ -114,7 +114,7 @@ RSpec.feature 'Announcements', type: :feature do
     expect(page).to have_content(announcement_guests.content)
     expect(page).to have_content(announcement_everyone.content)
 
-    login_as(user, scope: :user)
+    sign_in_manually(user)
     visit question_path(question)
     expect(page).to_not have_content('Log in')
     expect(page).to_not have_content(announcement_users.content)

@@ -7,7 +7,7 @@ RSpec.feature 'Transfer Page', type: :feature do
   let!(:user) { create(:user_with_votes, first_name: 'testuser') }
 
   scenario 'User transfers a page' do
-    login_as(nederland.page.owner.profileable, scope: :user)
+    sign_in(nederland.page.owner.profileable)
 
     visit(settings_page_path(nederland.page, tab: :grants))
 

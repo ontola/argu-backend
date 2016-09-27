@@ -2,6 +2,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User Password', type: :feature do
+  define_freetown
   let(:user) { create(:user) }
   let(:user_omni_both) do
     user = create(:user)
@@ -21,20 +22,11 @@ RSpec.feature 'User Password', type: :feature do
     user
   end
 
-  def sign_in(user = create(:user))
-    visit new_user_session_path
-    within('#new_user') do
-      fill_in 'user_email', with: user.email
-      fill_in 'user_password', with: user.password
-      click_button 'Log in'
-    end
-  end
-
   ####################################
   # As User
   ####################################
   scenario 'user no omni should change their password' do
-    sign_in user
+    sign_in_manually user
 
     visit settings_path(tab: :authentication)
     expect(page).to have_current_path settings_path(tab: :authentication)
@@ -61,13 +53,14 @@ RSpec.feature 'User Password', type: :feature do
 
     visit new_user_session_path
 
-    within('#new_user') do
-      fill_in 'user_email', with: user.email
-      fill_in 'user_password', with: new_password
-      click_button 'Log in'
-    end
-    expect(page).to have_current_path info_path(:about)
-    expect(page).to have_content 'Welcome back!'
+    expect do
+      within('#new_user') do
+        fill_in 'user_email', with: user.email
+        fill_in 'user_password', with: new_password
+        click_button 'Log in'
+      end
+      expect(page).to have_current_path forum_path(freetown)
+    end.to change { Doorkeeper::AccessToken.count }.by(1)
   end
 
   scenario 'user both omni should change their password' do
@@ -105,7 +98,7 @@ RSpec.feature 'User Password', type: :feature do
   end
 
   scenario 'user only omni should not change their password' do
-    login_as user_omni_only, scope: :user
+    sign_in user_omni_only
 
     visit settings_path(tab: :authentication)
     expect(page).not_to have_content('Password')

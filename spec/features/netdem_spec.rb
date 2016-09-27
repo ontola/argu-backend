@@ -23,14 +23,14 @@ RSpec.feature 'Netdem', type: :feature do
     visit(forum_path('freetown'))
 
     click_link('sign_in')
-    within('#new_user') do
-      fill_in 'user_email', with: netdem_member.email
-      fill_in 'user_password', with: 'password'
-      click_button 'log_in'
-    end
-
-    expect(page).to have_content 'Welcome back!'
-    expect(page).to have_current_path forum_path('freetown')
+    expect do
+      within('#new_user') do
+        fill_in 'user_email', with: netdem_member.email
+        fill_in 'user_password', with: 'password'
+        click_button 'log_in'
+      end
+      expect(page).to have_current_path forum_path('freetown')
+    end.to change { Doorkeeper::AccessToken.count }.by(1)
 
     click_link('New discussion')
 

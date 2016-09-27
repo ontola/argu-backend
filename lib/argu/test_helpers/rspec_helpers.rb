@@ -32,7 +32,30 @@ module Argu
       end
 
       def sign_in(user)
-        login_as(user, scope: :user)
+        t = Doorkeeper::AccessToken.find_or_create_for(
+          Doorkeeper::Application.find(0),
+          user.id,
+          'user',
+          10.minutes,
+          false)
+        if defined?(cookies) && defined?(cookies.encrypted)
+          cookies.encrypted['client_token'] = t.token
+        else
+          allow_any_instance_of(Doorkeeper::OAuth::Token::Methods)
+            .to receive(:cookie_token_extractor).and_return(t.token)
+        end
+      end
+
+      def sign_in_manually(user = create(:user))
+        visit new_user_session_path
+        expect do
+          within('#new_user') do
+            fill_in 'user_email', with: user.email
+            fill_in 'user_password', with: user.password
+            click_button 'Log in'
+          end
+          expect(page).to have_content 'New discussion'
+        end.to change { Doorkeeper::AccessToken.last.id }.by(1)
       end
     end
   end

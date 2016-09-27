@@ -45,7 +45,7 @@ RSpec.feature 'Comments', type: :feature do
   let(:user) { create(:user) }
 
   scenario 'User places nested comments' do
-    login_as(user, scope: :user)
+    sign_in(user)
     visit argument_path(argument)
 
     fill_in_and_submit_comment
@@ -72,7 +72,7 @@ RSpec.feature 'Comments', type: :feature do
   let(:member) { create_member(holland) }
 
   scenario 'Member places a comment' do
-    login_as(member, scope: :user)
+    sign_in(member)
     visit argument_path(argument)
 
     fill_in_and_submit_comment

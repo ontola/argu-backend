@@ -49,8 +49,9 @@ class Users::SessionsController < Devise::SessionsController
     send_event category: 'sessions',
                action: 'sign_out'
     super do
-      if @current_user.nil? && cookies[:a_a].present?
-        cookies[:a_a] = {value: '-1', expires: 1.year.ago}
+      if @current_user.nil?
+        cookies.delete(:client_token)
+        cookies[:a_a] = {value: '-1', expires: 1.year.ago} if cookies[:a_a].present?
       end
     end
   end

@@ -72,7 +72,7 @@ RSpec.feature 'Account deletion', type: :feature do
   scenario 'owner should not delete destroy' do
     forum_page
 
-    login_as(user, scope: :user)
+    sign_in(user)
     visit settings_path(tab: :advanced)
     click_link 'Delete Argu account'
 

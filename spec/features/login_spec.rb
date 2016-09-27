@@ -16,10 +16,8 @@ RSpec.feature 'Login', type: :feature do
         fill_in 'user_password', with: 'password'
         click_button 'log_in'
       end
+      expect(page).to have_current_path forum_path('holland')
     end.to change { Doorkeeper::AccessToken.count }.by(1)
-
-    expect(page).to have_content 'Notifications'
-    expect(page).to have_current_path forum_path('holland')
   end
 
   scenario 'User logs in from a profile' do
@@ -32,9 +30,7 @@ RSpec.feature 'Login', type: :feature do
         fill_in 'user_password', with: 'password'
         click_button 'log_in'
       end
+      expect(page).to have_current_path user_path(user)
     end.to change { Doorkeeper::AccessToken.count }.by(1)
-
-    expect(page).to have_content user.display_name
-    expect(page).to have_current_path user_path(user)
   end
 end

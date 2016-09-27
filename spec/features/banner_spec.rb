@@ -97,7 +97,7 @@ RSpec.feature 'Banners', type: :feature do
   # As User
   ####################################
   scenario 'User sees correct banners' do
-    login_as(FactoryGirl.create(:user), scope: :user)
+    sign_in(FactoryGirl.create(:user))
     question = holland.questions.first
     visit question_path question
     expect(page).to have_content(question.title),
@@ -119,7 +119,7 @@ RSpec.feature 'Banners', type: :feature do
 
   scenario 'banner dismissal is persisted across logins' do
     user = FactoryGirl.create(:user)
-    login_as(user, scope: :user)
+    sign_in_manually(user)
     question = holland.questions.first
     visit question_path(question)
 
@@ -140,7 +140,7 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to have_content(banner_guests.title)
     expect(page).to have_content(banner_everyone.title)
 
-    login_as(user, scope: :user)
+    sign_in_manually(user)
     visit question_path(question)
     expect(page).to_not have_content('Log in')
     expect(page).to_not have_content(banner_users.title)
@@ -152,7 +152,7 @@ RSpec.feature 'Banners', type: :feature do
   ####################################
   scenario 'Member sees everyone banners' do
     user = create_member(holland)
-    login_as(user, scope: :user)
+    sign_in(user)
     question = holland.questions.first
     visit question_path question
     expect(page).to have_content(question.title),
@@ -177,7 +177,7 @@ RSpec.feature 'Banners', type: :feature do
   ####################################
 
   scenario 'Manager creates a banner' do
-    login_as(holland.page.owner.profileable, scope: :user)
+    sign_in(holland.page.owner.profileable)
 
     new_banner = attributes_for(:banner, :everyone)
 
@@ -198,7 +198,7 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   scenario 'Manager views banner settings' do
-    login_as(holland.page.owner.profileable, scope: :user)
+    sign_in(holland.page.owner.profileable)
 
     visit settings_forum_path(holland, tab: :banners)
     within('#banners-published') do

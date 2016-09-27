@@ -23,7 +23,7 @@ RSpec.feature 'Show drafts', type: :feature do
   end
 
   scenario 'User with drafts shows drafts' do
-    login_as(user, scope: :user)
+    sign_in(user)
 
     visit(drafts_user_path(user))
 
@@ -32,7 +32,7 @@ RSpec.feature 'Show drafts', type: :feature do
   end
 
   scenario 'User without drafts shows no drafts' do
-    login_as(user2, scope: :user)
+    sign_in(user2)
 
     visit(drafts_user_path(user2))
 
