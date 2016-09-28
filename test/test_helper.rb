@@ -48,9 +48,18 @@ module TestHelper
     page.shortname = Shortname.new(shortname: 'public_page')
   end
 
-  Group.find_or_create_by(id: -1) do |group|
+  Group.find_or_create_by(id: Group::PUBLIC_GROUP_ID) do |group|
     group.edge = Edge.new(user: User.find(0), parent: Page.find(0).edge)
     group.page = Page.find(0)
+  end
+
+  if Doorkeeper::Application.find_by(id: 0).blank?
+    Doorkeeper::Application.create!(
+      id: 0,
+      name: 'Argu',
+      owner: Profile.find(0),
+      redirect_uri: 'http://example.com/'
+    )
   end
 
   # Runs assert_difference with a number of conditions and varying difference
@@ -110,18 +119,65 @@ module ActionDispatch
       end
     end
 
+    def get(path, *args, **opts)
+      super(
+        path,
+        *args,
+        merge_req_opts(opts)
+        )
+    end
+
+    def post(path, *args, **opts)
+      super(
+        path,
+        *args,
+        merge_req_opts(opts)
+        )
+    end
+
+    def delete(path, *args, **opts)
+      super(
+        path,
+        *args,
+        merge_req_opts(opts)
+        )
+    end
+
+    def patch(path, *args, **opts)
+      super(
+        path,
+        *args,
+        merge_req_opts(opts)
+        )
+    end
+
+    def put(path, *args, **opts)
+      super(
+        path,
+        *args,
+        merge_req_opts(opts)
+        )
+    end
+
     def sign_in(user = create(:user))
-      post user_session_path,
-           params: {
-             user: {
-               email: user.email,
-               password: user.password
-             }
-           }
-      assert_response 302
+      t = Doorkeeper::AccessToken.find_or_create_for(
+        Doorkeeper::Application.find(0),
+        user.id,
+        'user',
+        10.minutes,
+        false)
+      @_argu_headers = (@_argu_headers || {}).merge(
+        'Authorization': "Bearer #{t.token}"
+      )
     end
     alias log_in_user sign_in
     deprecate :log_in_user
+
+    private
+
+    def merge_req_opts(**opts)
+      opts.merge(headers: (@_argu_headers || {}).merge(opts[:headers] || {}))
+    end
   end
 end
 

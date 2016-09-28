@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class NotificationsControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
   define_freetown
 
   ####################################

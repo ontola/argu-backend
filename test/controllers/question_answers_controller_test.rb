@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class QuestionAnswersControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
   define_freetown
   let(:page) { argu }
   let!(:owner) { argu.owner.profileable }

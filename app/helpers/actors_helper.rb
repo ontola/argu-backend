@@ -4,8 +4,8 @@ module ActorsHelper
   # @return [Profile] the profile which the current_user is using to do actions with.
   def get_current_actor
     @_current_actor ||=
-      if cookies[:a_a]
-        p = Profile.find(cookies[:a_a])
+      if actor_token
+        p = Profile.find(actor_token)
         raise 'not authorized' unless ActorPolicy.new(UserContext.new(current_user, nil, session[:a_tokens]), p).show?
         p
       else
@@ -15,5 +15,11 @@ module ActorsHelper
 
   def reset_current_actor
     cookies.delete :a_a
+  end
+
+  private
+
+  def actor_token
+    cookies[:a_a] || request.headers['X-Argu-Actor']
   end
 end

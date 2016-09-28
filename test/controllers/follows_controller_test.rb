@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class FollowsControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
   define_freetown
   let(:motion) do
     create :motion,

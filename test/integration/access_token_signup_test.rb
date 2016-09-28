@@ -195,41 +195,4 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
   end
-
-  ####################################
-  # As User
-  ####################################
-  let(:user) { create(:user) }
-
-  test 'user should join forum with access token' do
-    sign_in user
-
-    get forum_path(helsinki)
-    assert_response 404, 'Existence of hidden forums is leaked'
-
-    assert_differences [['helsinki_at.reload.sign_ups', 0],
-                        ['helsinki_at.reload.usages', 1]] do
-      get forum_path(helsinki, at: helsinki_at.access_token)
-    end
-    assert_response :success
-
-    assert_differences [['helsinki_at.reload.sign_ups', 0],
-                        ['helsinki_at.reload.usages', 0]],
-                       'Usages or sign_ups counter changed on secondary get w/ token' do
-      get forum_path(helsinki, at: helsinki_at.access_token)
-      assert_response :success
-    end
-
-    assert_differences [['helsinki_at.reload.sign_ups', 0],
-                        ['helsinki_at.reload.usages', 0],
-                        ['GroupMembership.count', 1]] do
-      post group_membership_index_path(helsinki.grants.member.first.group,
-                                       r: forum_path(helsinki),
-                                       at: helsinki_at.access_token)
-    end
-    assert_redirected_to forum_path(helsinki)
-
-    follow_redirect!
-    assert_response 200
-  end
 end

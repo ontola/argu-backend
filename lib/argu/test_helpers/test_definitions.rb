@@ -9,7 +9,8 @@ module Argu
 
       # General methods
       def general_new(results: {}, parent: nil)
-        get new_path(send(parent))
+        get new_path(send(parent)),
+            headers: @_argu_headers
 
         assert_response results[:response]
       end
@@ -25,6 +26,7 @@ module Argu
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           post create_path(parent),
+               headers: @_argu_headers,
                params: {model_sym => attributes}
 
           if Publication.any?
@@ -41,7 +43,8 @@ module Argu
       def general_show(results: {}, record: subject)
         record = send(record) if record.is_a?(Symbol)
 
-        get record_path(record)
+        get record_path(record),
+            headers: @_argu_headers
 
         assert_response results[:response]
       end
@@ -49,7 +52,8 @@ module Argu
       def general_edit(results: {}, record: subject)
         record = send(record) if record.is_a?(Symbol)
 
-        get edit_path(record)
+        get edit_path(record),
+            headers: @_argu_headers
 
         assert_response results[:response]
       end
@@ -62,6 +66,7 @@ module Argu
 
         assert_difference('Activity.loggings.count', results[:should] ? 1 : 0) do
           patch update_path(record),
+                headers: @_argu_headers,
                 params: {model_sym => attributes}
         end
 
@@ -85,7 +90,8 @@ module Argu
         difference = results[:should] ? 1 : 0
         assert_differences([["#{model_class}.trashed_only.count", difference],
                             ['Activity.count', difference.abs]]) do
-          delete update_path(record)
+          delete update_path(record),
+                 headers: @_argu_headers
         end
 
         assert_response results[:response]
@@ -98,7 +104,8 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
-          delete destroy_path(record)
+          delete destroy_path(record),
+                 headers: @_argu_headers
         end
 
         assert_response results[:response]
@@ -108,7 +115,8 @@ module Argu
       def general_move(results: {}, record: subject)
         record = send(record) if record.is_a?(Symbol)
 
-        get move_path(record)
+        get move_path(record),
+            headers: @_argu_headers
 
         assert_response results[:response]
       end
@@ -120,6 +128,7 @@ module Argu
                             ["forum_to.reload.#{model_name.underscore}s.count",
                              results[:should] ? 1 : 0]] do
           put move_path(record),
+              headers: @_argu_headers,
               params: {model_sym => attributes.merge(forum_id: forum_to.id)}
         end
 

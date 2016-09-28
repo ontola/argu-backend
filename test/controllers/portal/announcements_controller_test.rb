@@ -3,8 +3,6 @@ require 'test_helper'
 
 module Portal
   class AnnouncementsControllerTest < ActionController::TestCase
-    include Devise::Test::ControllerHelpers
-
     subject do
       create(:announcement,
              :everyone)

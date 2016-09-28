@@ -2,15 +2,15 @@
 class Oauth::TokensController < Doorkeeper::TokensController
   include ActionController::Cookies, ActionController::Redirecting
   include Rails.application.routes.url_helpers
-  ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*#{Regexp.quote(Rails.configuration.host)}$/
+  ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host)}|argu.co)$/
 
   def create
     return super unless argu_request?
-    r = r_with_authenticity_token(params[:user][:r] || '')
+    r = r_with_authenticity_token(params.dig(:user, :r) || '')
     response = authorize_response
-    cookies.encrypted[:client_token] = response.token.token
+    cookies.encrypted['client_token'] = response.token.token
     User.find(response.token.resource_owner_id).update r: ''
-    redirect_to r
+    redirect_to r.presence || root_path
   end
 
   private
@@ -25,10 +25,11 @@ class Oauth::TokensController < Doorkeeper::TokensController
   end
 
   def r_with_authenticity_token(r)
+    return '' unless r.present?
     uri = URI.parse(r)
     query = URI.decode_www_form(uri.query || '')
     query << ['authenticity_token', form_authenticity_token] if is_post?(r)
-    uri.query = URI.encode_www_form(query)
+    uri.query = URI.encode_www_form(query) if query.present?
     uri.to_s
   end
 end

@@ -52,4 +52,42 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
   end
+
+  ####################################
+  # As User
+  ####################################
+  let(:user) { create(:user) }
+
+  scenario 'user should join forum with access token' do
+    sign_in user
+
+    visit forum_path(helsinki)
+    expect(page).to have_content 'Item not found (404 Not Found)'
+
+    expect do
+      visit forum_path(helsinki, at: helsinki_key.access_token)
+      expect(page).to have_content helsinki.display_name
+    end.to(
+      change { helsinki_key.reload.sign_ups }.by(0)
+        .and(change { helsinki_key.reload.usages }.by(1))
+    )
+
+    expect do
+      visit forum_path(helsinki, at: helsinki_key.access_token)
+      expect(page).to have_content helsinki.display_name
+    end.to(
+      # Usages or sign_ups counter changed on secondary get w/ token
+      change { helsinki_key.reload.sign_ups }.by(0)
+        .and(change { helsinki_key.reload.usages }.by(0))
+    )
+
+    expect do
+      click_on 'Add to my forums'
+      expect(page).to have_content helsinki.display_name
+    end.to(
+      change { helsinki_key.reload.sign_ups }.by(0)
+        .and(change { helsinki_key.reload.usages }.by(0))
+        .and(change { Favorite.count }.by(1))
+    )
+  end
 end

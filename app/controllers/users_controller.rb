@@ -105,7 +105,7 @@ class UsersController < ApplicationController
       if @identity.save
         flash[:success] = 'Account connected'
         sign_in user
-        redirect_with_r
+        redirect_with_r(user)
       else
         render 'users/connect',
                locals: {
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
 
       if current_user.save
         flash[:success] = t('devise.registrations.signed_up') if current_user.finished_intro?
-        redirect_with_r
+        redirect_with_r(current_user)
       else
         render 'setup_shortname'
       end
@@ -205,10 +205,10 @@ class UsersController < ApplicationController
     pp
   end
 
-  def redirect_with_r
-    if current_user.r.present? && current_user.finished_intro?
-      r = URI.decode(current_user.r)
-      current_user.update r: ''
+  def redirect_with_r(user)
+    if user&.r&.present? && user.finished_intro?
+      r = URI.decode(user.r)
+      user.update r: ''
     end
     redirect_to r.presence || root_path
   end

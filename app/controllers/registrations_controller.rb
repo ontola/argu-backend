@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
-  include NestedResourceHelper
+  include NestedResourceHelper, OauthHelper
 
   def create
     super do |resource|
@@ -57,13 +57,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def sign_in(scope, resource)
-    t = Doorkeeper::AccessToken.find_or_create_for(
-      Doorkeeper::Application.find(0),
-      resource.id,
-      scope.to_s,
-      2.weeks,
-      false)
-    cookies.encrypted['client_token'] = t.token
+    super(resource, scope)
   end
 
   def sign_up(resource_name, resource)

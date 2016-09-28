@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class GroupMembershipsControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
   define_freetown
   define_cairo
   let!(:group) { create(:group, parent: freetown.page.edge) }

@@ -54,4 +54,7 @@ Rails.application.configure do
   I18n.locale = :en
 
   OmniAuth.config.test_mode = true
+
+  # Set the analytics ID to kick off the proper calls
+  ENV['GG_ANALYTICS_ID'] = 'true'
 end

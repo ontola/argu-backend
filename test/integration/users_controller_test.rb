@@ -130,7 +130,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'user should put language' do
     user = create_member(utrecht, create_member(amsterdam))
     sign_in user
-    request.env['HTTP_REFERER'] = root_url
     assert_equal 'en', user.language
     put language_users_path(:nl)
     assert_equal 'nl', user.reload.language
@@ -140,7 +139,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'user should not put non-existing language' do
     user = create_member(utrecht, create_member(amsterdam))
     sign_in user
-    request.env['HTTP_REFERER'] = root_url
     assert_equal 'en', user.language
     put language_users_path(:fake_language)
     assert_equal 'en', user.reload.language

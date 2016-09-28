@@ -49,8 +49,7 @@ module Argu
 
         def change_actor(actor)
           a = actor.respond_to?(:profile) ? actor.profile : actor
-          @controller.instance_variable_set(:@_current_actor, a)
-          cookies['a_a'] = actor.profile.id
+          @_argu_headers = (@_argu_headers || {}).merge('X-Argu-Actor': a.id)
         end
 
         def create(model_type, *args)
@@ -183,6 +182,16 @@ module Argu
 
         def stats_opt(category, action)
           {category: category, action: action}
+        end
+
+        def sign_in(user = create(:user))
+          t = Doorkeeper::AccessToken.find_or_create_for(
+            Doorkeeper::Application.find(0),
+            user.id,
+            'user',
+            10.minutes,
+            false)
+          @request.headers['Authorization'] = "Bearer #{t.token}"
         end
 
         def trash_resource(resource, user = nil, profile = nil)

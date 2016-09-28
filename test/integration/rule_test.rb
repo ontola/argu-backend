@@ -6,21 +6,6 @@ class RuleTest < ActionDispatch::IntegrationTest
   let!(:freetown_owner) { create_owner(freetown) }
   let(:freetown_manager) { create_manager(freetown) }
 
-  def log_in_as(user, options = {})
-    password    = options[:password]    || 'password'
-    remember_me = options[:remember_me] || '1'
-
-    post user_session_path,
-         params: {
-           user: {
-             email:       user.email,
-             password:    password,
-             remember_me: remember_me
-           }
-         }
-    assert_redirected_to root_path
-  end
-
   def log_out
     get destroy_user_session_path
   end
@@ -96,7 +81,7 @@ class RuleTest < ActionDispatch::IntegrationTest
   end
 
   test 'shows appropriate message level to owners' do
-    log_in_as(freetown_manager, scope: :user)
+    sign_in(freetown_manager)
     no_show_users
     no_show_managers
 
@@ -115,7 +100,7 @@ class RuleTest < ActionDispatch::IntegrationTest
       [freetown_manager, 'ask your boss to buy'],
       [freetown_owner, 'buy this feature']
     ].each do |user, message|
-      log_in_as(user, scope: :user)
+      sign_in(user)
       get argument_path(member_argument)
       assert_not_authorized
       assert_equal message, flash[:alert]

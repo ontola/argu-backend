@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class InfoControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
   let(:team) do
     create(:setting,
            key: 'team',

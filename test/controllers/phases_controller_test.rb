@@ -2,8 +2,6 @@
 require 'test_helper'
 
 class PhasesControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
   define_freetown
   let!(:page) { argu }
   let!(:owner) { argu.owner.profileable }

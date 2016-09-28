@@ -5,6 +5,16 @@ module OauthHelper
     @_current_user ||= current_resource_owner
   end
 
+  def sign_in(resource, *args)
+    t = Doorkeeper::AccessToken.find_or_create_for(
+      Doorkeeper::Application.find(0),
+      resource.id,
+      'user',
+      2.weeks,
+      false)
+    cookies.encrypted['client_token'] = t.token
+  end
+
   def write_client_access_token
     refresh_guest_token if needs_new_guest_token
   end
@@ -15,7 +25,7 @@ module OauthHelper
     session[:load] = true unless session.loaded?
     Doorkeeper::AccessToken.find_or_create_for(
       Doorkeeper::Application.find(0),
-      session.id,
+      session.id.to_s,
       'guest',
       1.hour,
       false)
@@ -26,11 +36,7 @@ module OauthHelper
       # Ensure that the host ends with 'argu.co' to unmatch e.g. argu.co.malicious.net
       return false if request.env['HTTP_HOST'] =~ /argu\.co$/
     end
-    raw_doorkeeper_token.blank? ||
-      (raw_doorkeeper_token &&
-        raw_doorkeeper_token.scopes.include?('guest') &&
-        raw_doorkeeper_token.expired?
-      )
+    raw_doorkeeper_token.blank? || (raw_doorkeeper_token && raw_doorkeeper_token.expired?)
   end
 
   def raw_doorkeeper_token
