@@ -117,7 +117,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :edit) do
       {
         guest: exp_res(asserts: [assert_not_a_user]),
-        user: exp_res(response: 403, asserts: [assert_not_a_member]),
+        user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
         creator: exp_res(should: true, response: 200),
         moderator: exp_res(asserts: [assert_not_authorized]),
@@ -129,7 +129,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :update) do
       {
         guest: exp_res(asserts: [assert_not_a_user]),
-        user: exp_res(response: 403, asserts: [assert_not_a_member]),
+        user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
         creator: exp_res(should: true),
         moderator: exp_res(asserts: [assert_not_authorized]),

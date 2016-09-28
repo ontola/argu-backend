@@ -66,6 +66,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
              klass: 'questions'
            }
          }
+    assert_not_authorized
     assert_redirected_to root_path
   end
 
@@ -84,6 +85,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
              klass: 'motions'
            }
          }
+    assert_not_authorized
     assert_redirected_to root_path
   end
 

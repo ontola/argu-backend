@@ -38,7 +38,10 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
   define_tests do
     hash = {}
     define_test(hash, :new, options: {parent: :project}) do
-      user_types[:new].merge(member: exp_res(asserts: [assert_not_authorized]))
+      user_types[:new].merge(
+        user: exp_res(asserts: [assert_not_authorized]),
+        member: exp_res(asserts: [assert_not_authorized])
+      )
     end
     define_test(hash, :show)
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
@@ -65,7 +68,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' draft', options: options) do
       {
         guest: exp_res(asserts: [assert_not_a_user], analytics: false),
-        user: exp_res(response: 403, asserts: [assert_not_a_member], analytics: false),
+        user: exp_res(analytics: false, asserts: [assert_not_authorized]),
         member: exp_res(analytics: false, asserts: [assert_not_authorized]),
         moderator: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
         manager: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),

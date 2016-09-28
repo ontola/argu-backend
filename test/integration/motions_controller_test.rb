@@ -65,7 +65,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :new, suffix: ' for closed question', options: {parent: :closed_question}) do
       {
         guest: exp_res(asserts: [assert_not_a_user], analytics: false),
-        user: exp_res(response: 403, asserts: [assert_not_a_member], analytics: false),
+        user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
         moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
@@ -103,7 +103,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' for closed question', options: options) do
       {
         guest: exp_res(asserts: [assert_not_a_user], analytics: false),
-        user: exp_res(response: 403, asserts: [assert_not_a_member], analytics: false),
+        user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
         moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
@@ -141,7 +141,9 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
       {creator: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
-    define_test(hash, :show, asserts: [assert_no_trashed_arguments])
+    define_test(hash, :show, asserts: [assert_no_trashed_arguments]) do
+      user_types[:show].except!(:non_member)
+    end
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
       {user: exp_res(response: 404)}
     end

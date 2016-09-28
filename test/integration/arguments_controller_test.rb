@@ -82,7 +82,9 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
         attributes: {auto_vote: true}
       }
     )
-    define_test(hash, :show, asserts: [assert_only_allowed_comments])
+    define_test(hash, :show, asserts: [assert_only_allowed_comments]) do
+      user_types[:show].except!(:non_member)
+    end
     define_test(hash, :show, suffix: ' nested', options: {record: :pub_project_argument})
     define_test(hash, :show, suffix: ' unpublished nested', options: {record: :project_argument}) do
       user_types[:show].merge(

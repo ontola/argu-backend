@@ -68,48 +68,26 @@ FactoryGirl.define do
       end
     end
 
-    factory :user_with_memberships do
+    factory :user_with_votes do
       after(:create) do |user|
-        page = create(:page)
-        service = CreateForum.new(
-          page.edge,
-          attributes: attributes_for(:forum)
-                        .merge(shortname_attributes: attributes_for(:shortname), page: page),
+        motion = Motion.find_by(is_trashed: false)
+        CreateVote.new(
+          motion.edge,
+          attributes: {for: :pro},
           options: {
-            creator: page.owner,
-            publisher: page.owner.profileable
+            creator: user.profile,
+            publisher: user
           }
-        )
-        service.commit
-        forum = service.resource
-        CreateGroupMembership
-          .new(forum.members_group.edge,
-               attributes: {member: user.profile},
-               options: {creator: user.profile, publisher: user})
-          .commit
-      end
-
-      factory :user_with_votes do
-        after(:create) do |user|
-          motion = Motion.find_by(is_trashed: false)
-          CreateVote.new(
-            motion.edge,
-            attributes: {for: :pro},
-            options: {
-              creator: user.profile,
-              publisher: user
-            }
-          ).commit
-          trashed = Motion.find_by(is_trashed: true)
-          CreateVote.new(
-            trashed.edge,
-            attributes: {for: :pro},
-            options: {
-              creator: user.profile,
-              publisher: user
-            }
-          ).commit
-        end
+        ).commit
+        trashed = Motion.find_by(is_trashed: true)
+        CreateVote.new(
+          trashed.edge,
+          attributes: {for: :pro},
+          options: {
+            creator: user.profile,
+            publisher: user
+          }
+        ).commit
       end
     end
   end

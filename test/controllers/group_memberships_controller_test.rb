@@ -13,7 +13,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should not show new members_group' do
+  test 'user should not show new' do
     sign_in user
 
     get :new, params: {group_id: group}
@@ -26,28 +26,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_no_difference 'GroupMembership.count' do
       post :create, params: {group_id: group}
-    end
-
-    assert 404
-  end
-
-  test 'user should post create to open members_group' do
-    sign_in user
-
-    assert_differences([['GroupMembership.count', 1],
-                        ['freetown.edge.followers.count', 1]]) do
-      post :create, params: {group_id: freetown.members_group}
-    end
-
-    assert_redirected_to forum_path(freetown)
-    assert_analytics_collected('memberships', 'create')
-  end
-
-  test 'user should not post create to closed members_group' do
-    sign_in user
-
-    assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: cairo.members_group}
     end
 
     assert 404
@@ -78,58 +56,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_not_authorized
-  end
-
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(freetown) }
-
-  test 'member should not post create' do
-    request.env['HTTP_REFERER'] = forum_path(freetown)
-    sign_in member
-
-    assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: freetown.members_group}
-    end
-
-    assert 404
-  end
-
-  test 'member should not post create other to open members_group' do
-    request.env['HTTP_REFERER'] = forum_path(freetown)
-    sign_in member
-
-    assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: freetown.members_group, shortname: user.url}
-    end
-
-    assert 404
-  end
-
-  test 'member should delete destroy self from members_group' do
-    sign_in member
-
-    assert_difference('GroupMembership.count', -1) do
-      delete :destroy, params: {id: member.profile.group_memberships.first}
-    end
-
-    assert_response 302
-    assert_redirected_to forum_path(freetown)
-    assert_analytics_collected('memberships', 'destroy')
-  end
-
-  test 'member should not delete destroy other from members_group' do
-    sign_in member
-
-    group_membership = create(:group_membership,
-                              parent: freetown.members_group.edge)
-
-    assert_no_difference 'GroupMembership.count' do
-      delete :destroy, params: {id: group_membership}
-    end
-
-    assert_redirected_to forum_path(freetown)
   end
 
   ####################################

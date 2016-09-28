@@ -4,7 +4,6 @@ require 'rails_helper'
 RSpec.feature 'Manager', type: :feature do
   define_freetown('nederland')
   let!(:user) { create_member(nederland) }
-  let!(:member) { create_member(nederland) }
   let!(:owner) { create_owner(nederland) }
 
   scenario 'Owner adds a manager' do

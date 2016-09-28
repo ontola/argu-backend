@@ -152,7 +152,7 @@ module Argu
             assert_equal forum_id, id
           end
         else
-          assert_redirected_to record.forum
+          assert_response 302
         end
       end
 

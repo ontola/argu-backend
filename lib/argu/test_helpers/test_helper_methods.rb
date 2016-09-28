@@ -35,10 +35,6 @@ module Argu
           )
         end
 
-        def assert_not_a_member
-          assert_equal true, assigns(:_not_a_member_caught)
-        end
-
         def assert_not_a_user
           assert_equal true, assigns(:_not_a_user_caught)
         end
@@ -118,16 +114,18 @@ module Argu
 
         def create_member(forum, user = nil)
           user ||= create(:user)
+          group = create(:group, parent: forum.page.edge)
           create(:group_membership,
-                 parent: forum.members_group.edge,
+                 parent: group.edge,
                  shortname: user.url)
+          create(:grant, edge: forum.edge, group: group, role: Grant.roles['member'])
           user
         end
 
         def create_moderator(record, user = nil)
           user ||= create(:user)
           forum = record.is_a?(Forum) ? record : record.forum
-          create(:stepup, forum: forum, record: record, moderator: create_member(forum, user))
+          create(:stepup, forum: forum, record: record, moderator: user)
           user
         end
 
@@ -219,7 +217,7 @@ module Argu
         include Argu::TestHelpers::AutomatedTests::Asserts
 
         def define_automated_tests_objects
-          define_common_objects(:freetown, :user, :member, :creator, :moderator,
+          define_common_objects(:freetown, :user, :member, :non_member, :creator, :moderator,
                                 :manager, :owner, :staff, :page)
         end
 
@@ -227,6 +225,7 @@ module Argu
           define_freetown if mdig?(:freetown, let, opts)
           let(:user) { create(:user, opts.dig(:user)) } if mdig?(:user, let, opts)
           let(:member) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
+          let(:non_member) { user } if mdig?(:non_member, let, opts)
           let(:creator) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
           let(:manager) { create_manager(cascaded_forum(:manager, opts)) } if mdig?(:manager, let, opts)
           let(:moderator) { create_moderator(cascaded_forum(:moderator, opts)) } if mdig?(:moderator, let, opts)

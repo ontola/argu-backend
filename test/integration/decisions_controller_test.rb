@@ -74,12 +74,14 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'user should not post approve' do
     sign_in user
-    general_decide 403
+    general_decide 302
+    assert_not_authorized
   end
 
   test 'user should not patch update approved' do
     sign_in user
-    general_update_approved 403, false
+    general_update_approved 302, false
+    assert_not_authorized
   end
 
   ####################################

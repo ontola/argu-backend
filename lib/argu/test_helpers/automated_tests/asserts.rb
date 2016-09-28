@@ -24,10 +24,6 @@ module Argu
           'resource.is_published?'
         end
 
-        def assert_not_a_member
-          'assigns(:_not_a_member_caught)'
-        end
-
         def assert_not_a_user
           'assigns(:_not_a_user_caught)'
         end

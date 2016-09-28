@@ -89,14 +89,16 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in
 
     get settings_forum_path(freetown)
-    assert_response 403
+    assert_response 302
+    assert_not_authorized
   end
 
   test 'should not show statistics' do
     sign_in
 
     get statistics_forum_path(freetown)
-    assert_response 403
+    assert_response 302
+    assert_not_authorized
   end
 
   test 'user should not leak closed children to non-members' do
@@ -129,7 +131,8 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_not_a_member
+    assert_response 302
+    assert_not_authorized
   end
 
   ####################################
@@ -357,7 +360,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     create(:grant,
            group: create(:group, parent: holland.page.edge),
            edge: holland.edge, role: Grant.roles[:member])
-    assert_equal holland.edge.grants.size, 3
+    assert_equal holland.edge.grants.size, 2
     put forum_path(holland),
         params: {
           forum: {

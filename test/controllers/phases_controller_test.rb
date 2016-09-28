@@ -49,12 +49,14 @@ class PhasesControllerTest < ActionController::TestCase
 
   test 'user should not get edit' do
     sign_in user
-    general_edit 403
+    general_edit 302
+    assert_not_authorized
   end
 
   test 'user should not patch update' do
     sign_in user
-    general_update 403
+    general_update 302
+    assert_not_authorized
   end
 
   ####################################

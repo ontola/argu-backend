@@ -22,6 +22,8 @@ module Argu
                 should_string = results[:should] ? 'should' : 'should not'
 
                 test "#{user_type} #{should_string} #{method} #{action}#{suffix}" do
+                  Grant.where(group_id: -1).destroy_all if %i(member non_member).include?(user_type)
+
                   sign_in send(user_type) unless user_type == :guest || user_type.nil?
 
                   send("general_#{action}", {results: results}.merge(test_case[:options] || {}))
