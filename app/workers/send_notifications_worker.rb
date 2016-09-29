@@ -6,11 +6,6 @@ class SendNotificationsWorker
   def perform(user_id, delivery_type)
     user = User.find(user_id)
 
-    unless user.confirmed_at.present?
-      logger.warn "Not sending notifications to unconfirmed email #{user.email}"
-      return
-    end
-
     unless delivery_type.present? && User.reactions_emails[user.reactions_email] == delivery_type
       logger.warn "Not sending notifications to mismatched delivery type #{delivery_type} for user #{user.id}"
       return
