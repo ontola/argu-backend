@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Users::SessionsController < Devise::SessionsController
   skip_before_action :check_finished_intro, only: :destroy
+  skip_before_action :verify_authenticity_token, only: :destroy
 
   def new
     self.resource = resource_class.new({r: r_from_url_or_header}.merge(sign_in_params))
@@ -50,13 +51,17 @@ class Users::SessionsController < Devise::SessionsController
                action: 'sign_out'
     super do
       if @current_user.nil?
-        cookies.delete(:client_token)
+        doorkeeper_token.update(expires_in: 0.seconds)
         cookies[:a_a] = {value: '-1', expires: 1.year.ago} if cookies[:a_a].present?
       end
     end
   end
 
   private
+
+  def all_signed_out?
+    !doorkeeper_token.acceptable?(:user)
+  end
 
   # TODO: Code the 307 away
   def is_post?(r)

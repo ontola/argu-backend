@@ -21,6 +21,10 @@ module OauthHelper
 
   private
 
+  def doorkeeper_token
+    @_raw_doorkeeper_token || super
+  end
+
   def generate_guest_token
     session[:load] = true unless session.loaded?
     Doorkeeper::AccessToken.find_or_create_for(
@@ -48,8 +52,8 @@ module OauthHelper
 
   def refresh_guest_token
     raw_doorkeeper_token.destroy! if raw_doorkeeper_token&.expired?
-    t = generate_guest_token
-    cookies.encrypted['client_token'] = t.token
+    @_raw_doorkeeper_token = generate_guest_token
+    cookies.encrypted['client_token'] = raw_doorkeeper_token.token
     true
   end
 end

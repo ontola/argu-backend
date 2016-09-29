@@ -63,7 +63,7 @@ export const HyperDropdown = React.createClass({
         let trigger;
         if (this.props.trigger) {
             if (this.props.trigger.type === 'current_user') {
-                trigger = <CurrentUserTrigger 
+                trigger = <CurrentUserTrigger
                             defaultAction={this.props.defaultAction} 
                             handleClick={this.handleClick} 
                             handleTap={this.handleTap} 
@@ -485,7 +485,7 @@ export const ActorItem = React.createClass({
     handleClick (e) {
         e.preventDefault();
     },
-    
+
     switchActor () {
         this.props.done();
         fetch(this.props.url, safeCredentials({
@@ -502,7 +502,7 @@ export const ActorItem = React.createClass({
                throw e;
            });
     },
-    
+
     handleTap () {
         this.switchActor();
     },
@@ -550,7 +550,7 @@ export const CurrentUserTrigger = React.createClass({
 
     getDefaultProps () {
         return {
-            triggerTag: 'div'
+            triggerTag: 'a'
         };
     },
 

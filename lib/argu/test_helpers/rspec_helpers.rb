@@ -46,8 +46,12 @@ module Argu
         end
       end
 
-      def sign_in_manually(user = create(:user))
-        visit new_user_session_path
+      def sign_in_manually(user = create(:user), navigate = true)
+        if navigate
+          visit new_user_session_path
+        else
+          click_on 'Log in'
+        end
         expect do
           within('#new_user') do
             fill_in 'user_email', with: user.email

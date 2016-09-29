@@ -33,6 +33,7 @@ module HeaderHelper
         },
         triggerClass: 'navbar-item navbar-profile'
       },
+      dropdownClass: 'navbar-profile-selector',
       sections: [
         {
           items: [
