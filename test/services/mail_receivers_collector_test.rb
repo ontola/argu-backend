@@ -37,7 +37,7 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
     assert_equal [], direct_user_ids & weekly_user_ids
   end
 
-  test 'should not collect followers that has been mailed already' do
+  test 'should not collect followers that have been mailed already' do
     create_follow_and_notification_pair(
       blog_post,
       :follows_reactions_weekly,
@@ -64,7 +64,7 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
     create(:notification,
            activity: trackable.activities.first,
            user: user,
-           created_at: 10.minutes.ago)
+           created_at: 30.minutes.ago)
 
     create(:notification,
            activity: trackable.activities.first,
