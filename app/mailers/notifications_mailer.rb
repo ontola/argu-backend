@@ -2,6 +2,7 @@
 class NotificationsMailer < ApplicationMailer
   include MailerHelper
   add_template_helper(ApplicationHelper)
+  add_template_helper(DecisionsHelper)
 
   def notifications_email(user, notifications)
     @user = user
