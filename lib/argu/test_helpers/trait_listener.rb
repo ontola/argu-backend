@@ -82,36 +82,6 @@ module Argu
           followable: @resource.edge)
       end
 
-      # Adds a discussion group with 2 GroupResponses and a visible and a hidden group without reponses
-      # to the forum of the resource
-      def with_group_responses
-        service = CreateGroup.new(
-          @resource.forum.page.edge,
-          attributes: {visibility: :discussion},
-          options: service_options)
-        service.commit
-        group = service.resource
-        2.times do
-          CreateGroupResponse
-            .new(@resource.edge,
-                 attributes: {group: group},
-                 options: service_options)
-            .commit
-        end
-        CreateGroup
-          .new(
-            @resource.forum.page.edge,
-            attributes: {visibility: :hidden},
-            options: service_options)
-          .commit
-        CreateGroup
-          .new(
-            @resource.forum.page.edge,
-            attributes: {visibility: :visible},
-            options: service_options)
-          .commit
-      end
-
       # Adds 2 published and 2 trashed motions to the resource
       def with_motions
         2.times do

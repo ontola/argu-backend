@@ -221,27 +221,6 @@ li.form-helper {
     background-color: $gre;
     color: white;
   }
-  label[for="group_response_side_con"]{
-    color: $red;
-  }
-  label[for="group_response_side_con"].checked{
-    background-color: $red;
-    color: white;
-  }
-  label[for="group_response_side_neutral"]{
-    color: $g3;
-  }
-  label[for="group_response_side_neutral"].checked{
-    background-color: $g3;
-    color: white;
-  }
-  label[for="group_response_side_pro"]{
-    color: $gre;
-  }
-  label[for="group_response_side_pro"].checked{
-    background-color: $gre;
-    color: white;
-  }
 }
 
 .form-small {

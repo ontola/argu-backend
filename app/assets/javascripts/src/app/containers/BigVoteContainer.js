@@ -4,7 +4,6 @@ import React from 'react';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
 import { VoteButtons, VoteResults } from '../components/Vote';
-import BigGroupResponse from '../components/_big_group_responses';
 import VoteMixin from '../mixins/VoteMixin';
 import { IntlMixin } from 'react-intl';
 
@@ -16,7 +15,6 @@ import { IntlMixin } from 'react-intl';
  * @exports BigVoteContainer
  * @see {@linkcode Vote.VoteButtons}
  * @see {@linkcode Vote.VoteResults}
- * @see {@linkcode BigGroupResponse}
  */
 export const BigVoteContainer = React.createClass({
     propTypes: {
@@ -69,13 +67,11 @@ export const BigVoteContainer = React.createClass({
     },
 
     render () {
-        let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
+        let voteButtonsComponent, voteResultsComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
             voteResultsComponent = <VoteResults {...this.state} showResults={this.state.currentVote !== 'abstain'}/>;
-            groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.objectType} objectId={this.props.objectId} />;
         } else if (this.state.actor.actor_type === 'Page') {
-            groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.objectType} objectId={this.props.objectId} />;
             voteResultsComponent = <VoteResults {...this.state} {...this.props} showResults={true}/>;
         }
 
@@ -83,7 +79,6 @@ export const BigVoteContainer = React.createClass({
                 <div className="center motion-shr">
                     {voteButtonsComponent}
                     {voteResultsComponent}
-                    {groupResponsesComponent}
                 </div>
         );
     }

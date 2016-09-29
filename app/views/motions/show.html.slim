@@ -12,7 +12,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: @motion }
-      .motion-votes= react_component_store 'BigVoteContainer', props: motion_combi_vote_props(current_profile, @motion, @vote), **prerender_options
+      .motion-votes= react_component_store 'BigVoteContainer', props: motion_vote_props(current_profile, @motion, @vote), **prerender_options
 - if @motion.happenings.present?
   .col-1
     =render partial: 'happenings/timeline',
@@ -29,17 +29,4 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                                   buttons_options: {data: remote_unless_user},
                                   buttons_text: {pro: t('add_type', type: argument_type).capitalize, con: t('add_type', type: argument_type).capitalize},
                                   header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize})
-
-- if @group_responses && (@group_responses.keys | ((current_profile && current_profile.groups) || [])).present?
-  .col-3
-    .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
-  -@group_responses && @group_responses.each do |k,v|
-    - if v[:collection].values.map { |c| c[:collection].length }.reduce(&:+) > 0 || k.include?(current_profile)
-      =render_columns(v[:collection],
-                      collection_model: GroupResponse,
-                      buttons_url: new_motion_group_group_response_path(@motion, k),
-                      show_new_buttons: v[:responses_left] > 0,
-                      buttons_param: :side,
-                      header: k.name,
-                      header_text: header_values(k))
 =render partial: 'discussions/new', locals: {forum: authenticated_context}

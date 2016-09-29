@@ -19,7 +19,6 @@ Lint/AssignmentInCondition:
 Lint/BlockAlignment:
   Exclude:
     - 'app/controllers/activities_controller.rb'
-    - 'app/controllers/group_responses_controller.rb'
     - 'app/views/motions/show.json.jbuilder'
 
 # Offense count: 5
@@ -227,7 +226,6 @@ Style/AccessorMethodName:
     - 'app/services/base/create_service.rb'
     - 'app/services/blog_posts/update_blog_post.rb'
     - 'app/services/comments/update_comment.rb'
-    - 'app/services/group_responses/update_group_response.rb'
     - 'app/services/motions/create_motion.rb'
     - 'app/services/motions/update_motion.rb'
     - 'app/services/projects/create_project.rb'
@@ -370,7 +368,6 @@ Style/EmptyLinesAroundAccessModifier:
 Style/EmptyLinesAroundBlockBody:
   Exclude:
     - 'spec/features/account_deletion_spec.rb'
-    - 'test/controllers/group_responses_controller_test.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -461,7 +458,6 @@ Style/IndentationWidth:
     - 'app/controllers/activities_controller.rb'
     - 'app/controllers/omniauth_callbacks_controller.rb'
     - 'app/helpers/context_helper.rb'
-    - 'app/helpers/group_responses_helper.rb'
     - 'app/policies/question_answer_policy.rb'
     - 'app/policies/question_policy.rb'
     - 'app/views/motions/show.json.jbuilder'
@@ -659,7 +655,6 @@ Style/SpaceAfterMethodName:
     - 'app/helpers/application_helper.rb'
     - 'app/models/concerns/pro_con.rb'
     - 'app/models/group.rb'
-    - 'app/models/group_response.rb'
 
 # Offense count: 25
 # Cop supports --auto-correct.

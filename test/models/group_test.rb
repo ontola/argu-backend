@@ -10,14 +10,11 @@ class GroupTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'associated memberships and responses should be destroyed' do
+  test 'associated memberships should be destroyed' do
     create(:group_membership,
            parent: subject.edge)
-    create(:group_response,
-           group: subject,
-           parent: motion.edge)
 
-    assert_difference ['GroupMembership.count', 'GroupResponse.count'], -1 do
+    assert_difference ['GroupMembership.count'], -1 do
       subject.destroy
     end
   end

@@ -66,28 +66,6 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'member should create and destroy group_response with notifications' do
-    sign_in member
-    create(:group_membership, parent: group.edge, shortname: member.url)
-    motion
-
-    # Notification for creator and follower of Motion
-    assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do
-      post motion_group_group_responses_path(motion, group),
-           params: {
-             group_response: {
-               side: :pro,
-               forum_id: freetown.id
-             }
-           }
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['GroupResponse.count', -1], ['Notification.count', -2]]) do
-      delete group_response_path(GroupResponse.last)
-    end
-  end
-
   test 'member should create and destroy comment with notifications' do
     sign_in member
     argument

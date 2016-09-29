@@ -17,7 +17,6 @@ class User < ApplicationRecord
   has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :group_responses, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'

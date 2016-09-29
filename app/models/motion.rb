@@ -26,7 +26,6 @@ class Motion < ApplicationRecord
       .limit(5)
   end), class_name: 'Argument'
   has_many :arguments_plain, class_name: 'Argument'
-  has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
 
@@ -138,7 +137,6 @@ class Motion < ApplicationRecord
       votes.lock(true).update_all forum_id: forum.id
       activities.lock(true).update_all forum_id: forum.id
       taggings.lock(true).update_all forum_id: forum.id
-      group_responses.lock(true).delete_all
       true
     end
   end
@@ -165,10 +163,6 @@ class Motion < ApplicationRecord
 
   def raw_score
     votes_pro_count - votes_con_count
-  end
-
-  def responses_from(profile, group)
-    group_responses.where(creator_id: profile.id, group: group).count
   end
 
   def score

@@ -12,7 +12,7 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i(argument blog_post comment forum group_response group_membership motion
+        SERVICE_MODELS = %i(argument blog_post comment forum group_membership motion
                             phase banner group project question vote decision).freeze
 
         def assert_analytics_collected(category = nil, action = nil, label = nil, **options)

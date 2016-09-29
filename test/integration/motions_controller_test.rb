@@ -22,7 +22,6 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
   let(:subject) do
     create(:motion,
            :with_arguments,
-           :with_group_responses,
            publisher: creator,
            parent: question.edge)
   end
@@ -189,8 +188,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       'assigns(:motion)',
       'assigns(:vote)',
       'subject.arguments.where(is_trashed: true).count > 0',
-      '!(assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) })',
-      'assigns(:group_responses).keys.all?(&:discussion?)'
+      '!(assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) })'
     ])
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
       user: {should: false, response: 404}

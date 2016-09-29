@@ -38,10 +38,6 @@ FactoryGirl.define do
       parameters { passed_in?(:parameters) ? parameters : {for: trackable.for} }
     end
 
-    trait :t_group_response do
-      trackable { create(:group_response, creator: owner) }
-    end
-
     factory :happening do
       key :happened
     end

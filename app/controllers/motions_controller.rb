@@ -29,14 +29,6 @@ class MotionsController < AuthorizedController
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]
     )
-    discussion_groups = authenticated_context.page.groups.discussion
-    discussion_responses = @motion.group_responses.where(group_id: discussion_groups)
-    @group_responses = Group.ordered_with_meta(
-      discussion_responses,
-      discussion_groups,
-      current_profile,
-      @motion
-    )
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new(voteable: @motion, voter: current_profile)
 

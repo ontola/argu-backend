@@ -21,13 +21,6 @@ RSpec.feature 'Account deletion', type: :feature do
            parent: motion.edge,
            publisher: user)
   end
-  let(:group_response) do
-    create(:group_response,
-           group: create(:group, parent: freetown.page.edge),
-           creator: user.profile,
-           parent: motion.edge,
-           publisher: user)
-  end
   let(:project) do
     create(:project,
            creator: user.profile,
@@ -52,7 +45,7 @@ RSpec.feature 'Account deletion', type: :feature do
   end
 
   scenario 'user should delete destroy' do
-    [argument, motion, question, group_response, project, blog_post, comment].each do |resource|
+    [argument, motion, question, project, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
 
@@ -72,7 +65,6 @@ RSpec.feature 'Account deletion', type: :feature do
     [Comment, Argument, Motion, Question, Project, BlogPost].each do |klass|
       expect(klass.anonymous.count).to eq(1)
     end
-    expect(GroupResponse.count).to eq(0)
     visit motion_path(motion)
     expect(page).to have_content 'community'
   end

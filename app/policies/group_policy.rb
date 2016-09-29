@@ -23,7 +23,7 @@ class GroupPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(name name_singular icon visibility max_responses_per_member) if create?
+    attributes.concat %i(name name_singular icon visibility) if create?
     attributes.append :id if staff?
     attributes
   end

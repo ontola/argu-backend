@@ -13,22 +13,6 @@ module MotionsHelper
     }
   end
 
-  def motion_combi_vote_props(actor, motion, vote)
-    groups = policy_scope(motion.forum.page.groups.discussion).collect do |group|
-      {
-          id: group.id,
-          name: group.name,
-          name_singular: group.name_singular,
-          icon: group.icon,
-          responses_left: group.responses_left(motion, actor),
-          actor_group_responses: group.responses_for(motion, actor)
-      }
-    end
-    localized_react_component({
-        groups: groups
-    }.merge(motion_vote_props(actor, motion, vote)))
-  end
-
   def motion_vote_props(actor, motion, vote, opts = {})
     localized_react_component({
       objectType: 'motion',

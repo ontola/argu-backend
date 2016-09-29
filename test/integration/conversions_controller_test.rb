@@ -26,21 +26,18 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     create(:motion,
            :with_arguments,
            :with_votes,
-           :with_group_responses,
            parent: freetown.edge)
   end
   let(:question_motion) do
     create(:motion,
            :with_arguments,
            :with_votes,
-           :with_group_responses,
            parent: question.edge)
   end
   let(:project_motion) do
     create(:motion,
            :with_arguments,
            :with_votes,
-           :with_group_responses,
            parent: project.edge)
   end
   let(:argument) do

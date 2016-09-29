@@ -144,9 +144,6 @@ Rails.application.routes.draw do
             path: 'm',
             except: [:index, :new, :create, :destroy],
             concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :decisionable] do
-    resources :groups, only: [] do
-      resources :group_responses, only: [:new, :create]
-    end
     resources :tags, path: 't', only: [:index]
   end
 
@@ -161,7 +158,6 @@ Rails.application.routes.draw do
     patch 'comments' => 'comments#create'
   end
 
-  resources :group_responses, only: [:show, :edit, :update, :destroy]
   resources :groups,
             path: 'g',
             only: [:update, :destroy],

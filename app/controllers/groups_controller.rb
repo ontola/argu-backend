@@ -79,8 +79,7 @@ class GroupsController < AuthorizedController
   def delete
     locals = {
         group: authenticated_resource!,
-        group_memberships_count: authenticated_resource!.group_memberships.count,
-        group_responses_count: authenticated_resource!.group_responses.count
+        group_memberships_count: authenticated_resource!.group_memberships.count
     }
     respond_to do |format|
       format.html { render locals: locals }

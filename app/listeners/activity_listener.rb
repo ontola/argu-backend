@@ -24,10 +24,6 @@ class ActivityListener
       create_activity(resource, resource.subscribable, method)
     end
 
-    define_method "#{method}_group_response_successful" do |resource|
-      create_activity(resource, resource.motion, method)
-    end
-
     define_method "#{method}_motion_successful" do |resource|
       recipient = resource.question || resource.project || resource.forum
       create_activity(resource, recipient, method)

@@ -24,7 +24,6 @@ class Profile < ApplicationRecord
   has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :comments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
-  has_many :group_responses, inverse_of: :creator, foreign_key: 'creator_id', dependent: :destroy
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
