@@ -21,7 +21,7 @@ AlertIntegration.init =  function () {
     $(document)
         .on('turbolinks:visit', this.fadeAll)
         .on('click', '.alert-close', e => {
-          AlertIntegration.fadeNow(e);
+          AlertIntegration.fadeNow($(e.target).closest('.alert'));
         })
         .ajaxComplete(this.handleJSONBody);
 };
@@ -43,7 +43,6 @@ AlertIntegration.fade = function (duration, _alert) {
 };
 
 AlertIntegration.fadeNow = function(a) {
-    a = $(a.target).closest('.alert');
     a.addClass('alert-hidden');
     window.setTimeout(function(a) {
         a.remove();
