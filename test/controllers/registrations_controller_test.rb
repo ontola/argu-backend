@@ -8,6 +8,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   let(:user) { create(:user) }
   let(:place) { create(:place) }
   let(:page) { create(:page) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################
   # As Guest
@@ -90,14 +91,17 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
-  test 'user should delete destroy with placement' do
+  test 'user should delete destroy with placement and uploaded_photo' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
     placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
+    photo = motion.build_default_cover_photo(creator: user.profile, publisher: user)
+    photo.save
 
     sign_in user
 
-    assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0]]) do
+    assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0],
+                        ['Photo.count', -1], ['Photo.where(publisher_id: 0, creator_id: 0).count', 1]]) do
       delete :destroy,
              params: {
                user: {

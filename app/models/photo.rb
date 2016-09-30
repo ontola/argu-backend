@@ -21,6 +21,6 @@ class Photo < ApplicationRecord
 
   # Hands over ownership of a collection to nil
   def self.expropriate(collection)
-    collection.update_all(publisher_id: nil)
+    collection.update_all(publisher_id: 0)
   end
 end
