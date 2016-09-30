@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'argu/invalid_credentials_error'
+
 module Doorkeeper
   module OAuth
     class Token
@@ -25,7 +27,8 @@ Doorkeeper.configure do
   resource_owner_from_credentials do
     request.params[:user] = {email: request.params[:username], password: request.params[:password]}
     request.env['devise.allow_params_authentication'] = true
-    user = request.env['warden'].authenticate!(scope: :user)
+    user = request.env['warden'].authenticate(scope: :user)
+    raise(Argu::InvalidCredentialsError.new) unless user.present?
     request.env['warden'].logout
     user
   end

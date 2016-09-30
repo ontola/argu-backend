@@ -4,6 +4,7 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token, only: :destroy
 
   def new
+    request.flash[:notice] = I18n.t('devise.failure.invalid') if params[:show_error]
     self.resource = resource_class.new({r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
     respond_to do |format|
