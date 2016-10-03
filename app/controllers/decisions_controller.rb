@@ -127,12 +127,6 @@ class DecisionsController < AuthorizedController
     decision
   end
 
-  def permit_params
-    params
-      .require(:decision)
-      .permit(*policy(resource_by_id || new_resource_from_params || Decision).permitted_attributes)
-  end
-
   def resource_by_id
     get_parent_resource.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
   end

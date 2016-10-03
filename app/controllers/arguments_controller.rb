@@ -160,10 +160,6 @@ class ArgumentsController < AuthorizedController
     Motion.find(params[:motion_id] || params[:argument][:motion_id])
   end
 
-  def permit_params
-    params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
-  end
-
   def resource_new_params
     super.merge(motion_id: params[:motion_id])
   end

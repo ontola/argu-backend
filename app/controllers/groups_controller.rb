@@ -114,12 +114,6 @@ class GroupsController < AuthorizedController
     @resource ||= Group.new(resource_new_params)
   end
 
-  def permit_params
-    params
-      .require(:group)
-      .permit(*policy(resource_by_id || new_resource_from_params || Group).permitted_attributes)
-  end
-
   def resource_new_params
     HashWithIndifferentAccess.new(
       page: get_parent_resource

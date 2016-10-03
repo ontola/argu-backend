@@ -141,12 +141,6 @@ class ProjectsController < AuthorizedController
     resource
   end
 
-  def permit_params
-    params
-      .require(:project)
-      .permit(*policy(resource_by_id || new_resource_from_params || Project).permitted_attributes)
-  end
-
   def redirect_pages
     redirect_to page_path(params[:id]) if params[:id].to_i == 0
   end

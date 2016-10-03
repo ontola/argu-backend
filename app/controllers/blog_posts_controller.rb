@@ -132,12 +132,6 @@ class BlogPostsController < AuthorizedController
     blog_post
   end
 
-  def permit_params
-    params
-      .require(:blog_post)
-      .permit(*policy(@blog_post || resource_by_id || new_resource_from_params || BlogPost).permitted_attributes)
-  end
-
   def resource_new_params
     h = super.merge(blog_postable: get_parent_resource)
     h.delete(parent_resource_param)

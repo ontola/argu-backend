@@ -215,6 +215,13 @@ class AuthorizedController < ApplicationController
       .owner
   end
 
+  def permit_params
+    params
+      .require(controller_name.singularize.to_sym)
+      .permit(*policy(resource_by_id || new_resource_from_params || controller_name.singularize.classify.constantize)
+                 .permitted_attributes)
+  end
+
   # @private
   def pundit_user
     UserContext.new(

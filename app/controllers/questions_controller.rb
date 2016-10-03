@@ -172,10 +172,6 @@ class QuestionsController < AuthorizedController
     end
   end
 
-  def permit_params
-    params.require(:question).permit(*policy(@question || Question).permitted_attributes)
-  end
-
   def show_params
     params.permit(:page)
   end
