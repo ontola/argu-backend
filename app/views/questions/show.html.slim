@@ -30,15 +30,16 @@
   .col-1
     =render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?, current_happening: question.latest_happening(policy(question).update?)}
 .col-1
-  .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
-  header
-    h2= t('motions.call_to_action.title')
-  =link_to polymorphic_url([:new, question, :motion])
-    .box.box-link
-      section
-        h3
-          span.fa.fa-lightbulb-o
-          span.icon-left= t('motions.call_to_action.action', type: motion_type.downcase)
+  - if policy_with_tenant!(authenticated_context, question.motions.build).new?
+    .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
+    header
+      h2= t('motions.call_to_action.title')
+    =link_to polymorphic_url([:new, question, :motion])
+      .box.box-link
+        section
+          h3
+            span.fa.fa-lightbulb-o
+            span.icon-left= t('motions.call_to_action.action', type: motion_type.downcase)
 - if @motions.present?
   =render_columns({'' => {collection: @motions}},
                   header: motions_type,
