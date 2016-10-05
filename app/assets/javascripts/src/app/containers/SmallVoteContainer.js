@@ -19,6 +19,7 @@ export const SmallVoteContainer = React.createClass({
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
+        r: React.PropTypes.string,
         vote_url: React.PropTypes.string
     },
 

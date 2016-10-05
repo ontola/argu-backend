@@ -50,8 +50,12 @@ class VotesController < AuthorizedController
         format.json_api { head 304 }
         format.js { head :not_modified }
         format.html do
-          redirect_to polymorphic_url(create_service.resource.edge.parent.owner),
-                      notice: t('votes.alerts.not_modified')
+          if params[:vote].try(:[], :r).present?
+            redirect_to redirect_param
+          else
+            redirect_to polymorphic_url(create_service.resource.edge.parent.owner),
+                        notice: t('votes.alerts.not_modified')
+          end
         end
       end
     else
@@ -61,8 +65,12 @@ class VotesController < AuthorizedController
           format.json_api { render json: vote }
           format.js { render locals: {model: @model, vote: vote} }
           format.html do
-            redirect_to polymorphic_url(vote.edge.parent.owner),
-                        notice: t('votes.alerts.success')
+            if params[:vote].try(:[], :r).present?
+              redirect_to redirect_param
+            else
+              redirect_to polymorphic_url(vote.edge.parent.owner),
+                          notice: t('votes.alerts.success')
+            end
           end
         end
       end
@@ -162,9 +170,17 @@ class VotesController < AuthorizedController
     query.to_query
   end
 
+  def redirect_param
+    params.require(:vote).permit(:r)[:r]
+  end
+
   def redirect_url
     redirect_url = URI.parse(url_for([:new, get_parent_resource, :vote, only_path: true]))
-    redirect_url.query = query_payload(confirm: true)
+    redirect_url.query = if params[:r].present?
+                           query_payload(confirm: true, r: params[:r])
+                         else
+                           query_payload(confirm: true)
+                         end
     redirect_url
   end
 

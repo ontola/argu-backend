@@ -23,6 +23,7 @@ export const VoteButton = React.createClass({
         count: React.PropTypes.number,
         current: React.PropTypes.bool,
         objectId: React.PropTypes.number,
+        r: React.PropTypes.string,
         side: React.PropTypes.string
     },
 
@@ -48,22 +49,30 @@ export const VoteButton = React.createClass({
     },
 
     render () {
-        const { clickHandler, count, current, side } = this.props;
+        const { clickHandler, count, current, r, side } = this.props;
+        const rParam = r ? `?r=${r}` : '';
 
         let voteCountElem;
         if (count !== 0) {
             voteCountElem = <span className="vote-count">{count}</span>;
         }
 
+
         return (
-            <li><a href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}`)} data-method={this.ifNoActor('post')}
-                   onClick={clickHandler} rel="nofollow" className={`btn-${side}`} data-voted-on={current}>
-                <span className={`fa fa-${this.iconForSide()}`} />
+            <li>
+                <a
+                className={`btn-${side}`}
+                data-method={this.ifNoActor('post')}
+                data-voted-on={current}
+                href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}${rParam}`)}
+                onClick={clickHandler} rel="nofollow">
+                    <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
                         <FormattedMessage message={this.getIntlMessage(side)} />
                     </span>
                     {voteCountElem}
-            </a></li>
+                </a>
+            </li>
         );
     }
 });
@@ -77,6 +86,7 @@ export const VoteButtons = React.createClass({
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
+        r: React.PropTypes.string,
         vote_url: React.PropTypes.string
     },
 
@@ -110,6 +120,7 @@ export const VoteButtons = React.createClass({
                                    current={this.props.currentVote === side}
                                    key={i}
                                    objectId={this.props.objectId}
+                                   r={this.props.r}
                                    side={side} />;
             });
 
