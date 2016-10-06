@@ -23,14 +23,16 @@ en:
           confirm:
             header: "Are you absolutely sure?"
             body_html: "Transferring this organization means that the ownership of all its contents (including forums!) will be transferred to a different user."
-            repeat: "Enter the Argu URL of this organization to confirm the transfer. This is the username of your organization, which is visible in the address bar."
+            howto: "Please enter 'remove' below to confirm the deletion."
+            string: "remove"
             understand: "I understand the consequences, transfer ownership of this organization."
       advanced:
         delete:
           confirm:
             header: "Are you absolutely sure?"
             body_html: "<b>NOT READING THIS MESSAGE MIGHT LEAD TO UNWANTED LOSS OF CONTENT</b><br>Deleting this page will delete <b>all content</b> of this page! This action can <b>NOT</b> be undone!"
-            repeat: "Enter the Argu URL of this organization to confirm the deletion. This is the username of your organization, which is visible in the address bar."
+            howto: "Please enter 'remove' below to confirm the deletion."
+            string: "remove"
             understand: "I understand the consequences, delete this page."
           forum_owner: "This page owns one or multiple forums. Transfer these forum to another page or contact Argu before proceeding."
     management:

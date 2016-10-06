@@ -46,7 +46,7 @@ class PagePolicy < EdgeTreePolicy
       attributes.append(shortname_attributes: %i(shortname))
     end
     attributes.append :visibility if is_owner?
-    attributes.concat %i(page_id repeat_name) if change_owner?
+    attributes.concat %i(page_id confirmation_string) if change_owner?
     attributes.append(profile_attributes: ProfilePolicy
                                             .new(context,
                                                  record.try(:profile) || Profile)

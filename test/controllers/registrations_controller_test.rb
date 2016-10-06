@@ -82,8 +82,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                 repeat_name: user.shortname.shortname,
-                 current_password: 'password'
+                 confirmation_string: 'remove'
                }
              }
     end
@@ -106,8 +105,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                 repeat_name: user.shortname.shortname,
-                 current_password: 'password'
+                 confirmation_string: 'remove'
                }
              }
     end
@@ -128,8 +126,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                 repeat_name: user.shortname.shortname,
-                 current_password: 'password'
+                 confirmation_string: 'remove'
                }
              }
     end
@@ -150,8 +147,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                 repeat_name: user.shortname.shortname,
-                 current_password: 'password'
+                 confirmation_string: 'remove'
                }
              }
     end
@@ -173,8 +169,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                 repeat_name: owner.url,
-                 current_password: owner.password
+                 confirmation_string: 'remove'
                }
              }
     end

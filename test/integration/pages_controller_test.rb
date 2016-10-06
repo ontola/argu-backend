@@ -292,7 +292,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
       delete page_path(page),
              params: {
                page: {
-                 repeat_name: page.shortname.shortname
+                 confirmation_string: 'remove'
                }
              }
     end
@@ -306,7 +306,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
       delete page_path(page_non_public),
              params: {
                page: {
-                 repeat_name: page_non_public.shortname.shortname
+                 confirmation_string: 'remove'
                }
              }
     end

@@ -43,7 +43,7 @@ nl:
       remove_cover_photo: "Omslagfoto verwijderen"
       remove_image: "Afbeelding verwijderen"
       remove_profile_photo: "Profielfoto verwijderen"
-      repeat_name: "Herhaal Argu URL"
+      confirmation_string: "Bevestiging"
       shortname: "Argu URL"
       tag_list: "Thema's"
       title: "Titel"

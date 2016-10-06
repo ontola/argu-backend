@@ -55,8 +55,7 @@ RSpec.feature 'Account deletion', type: :feature do
     click_link 'Delete Argu account'
     expect do
       within("#edit_user_#{user.id}") do
-        fill_in 'user_repeat_name', with: user.shortname.shortname
-        fill_in 'user_current_password', with: user.password
+        fill_in 'user_confirmation_string', with: 'remove'
         click_button 'I understand the consequences, delete my account'
       end
     end.to change { User.count }.by(-1)

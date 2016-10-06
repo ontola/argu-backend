@@ -99,11 +99,14 @@ class PagesController < ApplicationController
   def destroy
     @page = Page.find_via_shortname params[:id]
     authorize @page, :destroy?
-
-    if @page.destroy
+    unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
+      @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
+    end
+    if @page.errors.empty? && @page.destroy
       redirect_to root_path, notice: t('type_destroy_success', type: t('pages.type'))
     else
-      format.html { redirect_to motion, notice: t('errors.general') }
+      flash[:error] = t('errors.general')
+      redirect_to(delete_page_path)
     end
   end
 
@@ -121,9 +124,11 @@ class PagesController < ApplicationController
     @page = Page.find_via_shortname params[:id]
     authorize @page, :transfer?
     @new_profile = User.find_via_shortname!(params[:shortname]).profile
-
+    unless params[:page][:confirmation_string] == t('pages.settings.managers.transfer.confirm.string')
+      @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
+    end
     respond_to do |format|
-      if @page.transfer_to!(params[:page][:repeat_name], @new_profile)
+      if @page.errors.empty? && @page.transfer_to!(@new_profile)
         reset_current_actor
         flash[:success] = t('pages.settings.managers.transferred')
         if policy(@page).update?

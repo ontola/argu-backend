@@ -27,13 +27,11 @@ class RegistrationsController < Devise::RegistrationsController
   def destroy
     @user = User.find current_user.id
     authorize @user, :destroy?
-    unless @user.valid_password?(params[:user][:current_password])
-      @user.errors.add(:current_password, t('errors.messages.should_match'))
+    unless params[:user][:confirmation_string] == t('users_cancel_string')
+      @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
     end
-    @user.errors.add(:repeat_name, t('errors.messages.should_match')) unless params[:user][:repeat_name] == @user.url
     respond_to do |format|
-      valid_password = @user.has_password? ? @user.valid_password?(params[:user][:current_password]) : true
-      if valid_password && @user.destroy
+      if @user.errors.empty? && @user.destroy
         Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
         send_event category: 'registrations',
                    action: 'destroy',

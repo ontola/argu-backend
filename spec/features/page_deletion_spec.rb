@@ -55,7 +55,7 @@ RSpec.feature 'Page deletion', type: :feature do
     click_link 'f_delete'
     expect do
       within(".confirm.page#edit_page_#{forum_page.id}") do
-        fill_in 'page_repeat_name', with: forum_page.shortname.shortname
+        fill_in 'page_confirmation_string', with: 'remove'
         click_button 'I understand the consequences, delete this page'
       end
     end.to change { Page.count }.by(-1)

@@ -43,7 +43,7 @@ en:
       remove_cover_photo: "Remove cover photo"
       remove_image: "Remove image"
       remove_profile_photo: "Remove profile photo"
-      repeat_name: "Repeat Argu URL"
+      confirmation_string: "Confirmation"
       shortname: "Argu URL"
       tag_list: "Themes"
       title: "Title"

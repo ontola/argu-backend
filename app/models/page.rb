@@ -8,7 +8,7 @@ class Page < ApplicationRecord
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
 
-  attr_accessor :repeat_name, :tab, :active
+  attr_accessor :confirmation_string, :tab, :active
 
   delegate :description, to: :profile
 
@@ -50,8 +50,9 @@ class Page < ApplicationRecord
     true
   end
 
-  def transfer_to!(repeat_url, new_profile)
-    return unless url.present? && url == repeat_url && new_profile.present? && !new_profile.new_record?
+  def transfer_to!(new_profile)
+    return unless new_profile.present? && !new_profile.new_record?
+
     self.owner = new_profile
     save!
   end

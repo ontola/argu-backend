@@ -41,7 +41,7 @@ class User < ApplicationRecord
   before_save :adjust_birthday, if: :birthday_changed?
   before_save { |user| user.email = email.downcase unless email.blank? }
 
-  attr_accessor :current_password, :repeat_name, :tab
+  attr_accessor :current_password, :confirmation_string, :tab
 
   delegate :description, :member_of?, to: :profile
 
