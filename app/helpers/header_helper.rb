@@ -2,10 +2,7 @@ module HeaderHelper
   include DropdownHelper
 
   def suggested_forums
-    return nil if current_user.present?
-    fresh_forums = "id NOT IN (#{current_profile.joined_forum_ids || '0'}) AND visibility ="\
-                   " #{Forum.visibilities[:open]}"
-    @suggested_forums ||= Forum.where(fresh_forums)
+    @suggested_forums ||= Setting.get('suggested_forums')&.split(',')&.map(&:strip) || []
   end
 
   def profile_dropdown_items
@@ -83,7 +80,7 @@ module HeaderHelper
     Forum
         .public_forums
         .includes(:default_profile_photo, :shortname)
-        .select { |f| ['nederland', 'utrecht', 'houten', 'heerenveen', 'feedback'].include?(f.shortname.shortname) }
+        .select { |f| suggested_forums.include?(f.shortname.shortname) }
         .first(limit)
         .each do |forum|
           items << link_item(forum.display_name, forum_path(forum), image: forum.default_profile_photo.url(:icon))
