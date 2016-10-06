@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include NestedResourceHelper
+
   def show
     @user = User.preload(:profile).find_via_shortname params[:id]
     @profile = @user.profile
@@ -89,6 +91,9 @@ class UsersController < ApplicationController
 
   def connect!
     user = User.find_via_shortname! params[:id].presence || params[:user][:id]
+    user.r = params[:user][:r]
+    setup_memberships(user)
+
     payload = decode_token params[:token]
     @identity = Identity.find payload['identity']
 
@@ -98,7 +103,8 @@ class UsersController < ApplicationController
       @identity.user = user
       if @identity.save
         flash[:success] = 'Account connected'
-        sign_in_and_redirect user
+        sign_in user
+        redirect_with_r
       else
         render 'users/connect',
                locals: {
@@ -134,14 +140,8 @@ class UsersController < ApplicationController
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
       if current_user.save
-        if current_user.finished_intro?
-          flash[:success] = t('devise.registrations.signed_up')
-          if current_user.r.present?
-            r = URI.decode(current_user.r)
-            current_user.update r: ''
-          end
-        end
-        redirect_to r.presence || root_path
+        flash[:success] = t('devise.registrations.signed_up') if current_user.finished_intro?
+        redirect_with_r
       else
         render 'setup_shortname'
       end
@@ -203,6 +203,14 @@ class UsersController < ApplicationController
     merge_photo_params(pp, @user.class)
     merge_placement_params(pp, User)
     pp
+  end
+
+  def redirect_with_r
+    if current_user.r.present? && current_user.finished_intro?
+      r = URI.decode(current_user.r)
+      current_user.update r: ''
+    end
+    redirect_to r.presence || root_path
   end
 
   def voted_select_query

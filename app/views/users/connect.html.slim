@@ -6,6 +6,7 @@ header
       p= t('users.connect.text_html', from_type: identity.provider, from_name: html_escape(identity.name), to_name: html_escape(user.display_name))
       =semantic_form_for(user, url: connect_user_path(user, token: token), method: :post) do |f|
         =f.inputs
+          =f.hidden_field :r, value: params[:r]
           =f.input :password, placeholder: t('users_password_argu'), hint: false, label: t('users_password_argu'), input_html: {required: true, errors: ['test']}
         ul.btns-devise
           li=link_to t('forgot_password'), new_user_password_path

@@ -1,3 +1,4 @@
+require 'publishable'
 
 class Identity < ApplicationRecord
   belongs_to :user

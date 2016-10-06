@@ -44,6 +44,19 @@ module Argu
         )
       end
 
+      def facebook_me(token)
+        stub_request(
+          :get,
+          "https://graph.facebook.com/me?access_token=#{token}")
+          .to_return(
+            status: 200,
+            body: {
+              id: '102555400181774',
+              email: 'bpvjlwt_zuckersen_1467905538@tfbnw.net'
+            }.to_json
+          )
+      end
+
       def nominatim_netherlands
         stub_request(:get,
                      'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl'\

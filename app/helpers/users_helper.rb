@@ -44,8 +44,7 @@ module UsersHelper
   #   or preferred_forum
   #   if the user hasn't got any memberships yet
   def setup_memberships(user)
-    # changed? so we can safely write back to the DB
-    if user.valid? && user.persisted? && !user.changed?
+    if user.valid? && user.persisted?
       if user.profile.grants.member.blank?
         begin
           forum = forum_from_r_action(user) || preferred_forum(user.profile)
