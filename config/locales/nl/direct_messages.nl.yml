@@ -1,0 +1,17 @@
+nl:
+  direct_messages:
+    type: "Bericht"
+    plural: "Berichten"
+    notice:
+      success: "De e-mail wordt verstuurd"
+    header: "Verstuur bericht"
+    description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten Argu verder voeren."
+  formtastic:
+    labels:
+      direct_message:
+        email: "Afzender"
+        subject: "Onderwerp"
+        body: "Bericht"
+    actions:
+      direct_message:
+        create: "Verstuur"

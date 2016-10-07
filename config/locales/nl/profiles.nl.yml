@@ -9,6 +9,7 @@ nl:
     actor:
       create: "Plaatsen als"
       update: "Wijzigen als"
+      send: "Versturen als"
     show:
       title: "Profiel"
       btn:

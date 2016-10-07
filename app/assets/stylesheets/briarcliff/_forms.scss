@@ -328,7 +328,8 @@ p.inline-hints {
 }
 
 .formtastic--full-width {
-  label {
+  label, input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"],
+  input[type="date"], input[type="time"], input[type="datetime-local"], input[type="number"] {
     width: 100%;
   }
 }

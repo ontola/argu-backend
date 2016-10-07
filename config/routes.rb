@@ -50,6 +50,9 @@ Rails.application.routes.draw do
               only: %i[new index show create]
     patch 'comments' => 'comments#create'
   end
+  concern :contactable do
+    resources :direct_messages, path: :dm, only: [:new]
+  end
   concern :destroyable do
     delete '', action: :destroy, on: :member
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
@@ -171,7 +174,7 @@ Rails.application.routes.draw do
 
   resources :questions,
             path: 'q', except: %i[index new create],
-            concerns: %i[commentable blog_postable moveable feedable trashable invitable menuable] do
+            concerns: %i[commentable blog_postable moveable feedable trashable invitable menuable contactable] do
     resources :media_objects, only: :index
     resources :motions, path: 'm', only: %i[index new create]
     resources :motions, path: 'motions', only: %i[index create], as: :canonical_motions
@@ -188,7 +191,7 @@ Rails.application.routes.draw do
   resources :motions,
             path: 'm',
             except: %i[index new create destroy],
-            concerns: %i[commentable blog_postable moveable votable
+            concerns: %i[commentable blog_postable moveable votable contactable
                          feedable trashable decisionable invitable menuable] do
     resources :arguments, only: %i[new create index]
     resources :media_objects, only: :index
@@ -198,7 +201,9 @@ Rails.application.routes.draw do
   resources :arguments,
             path: 'a',
             except: %i[index new create],
-            concerns: %i[votable feedable trashable commentable menuable]
+            concerns: %i[votable feedable trashable commentable menuable contactable]
+
+  resources :direct_messages, path: :dm, only: [:create]
 
   resources :groups,
             path: 'g',

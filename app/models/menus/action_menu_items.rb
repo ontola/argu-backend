@@ -13,6 +13,15 @@ module Menus
       )
     end
 
+    def contact_link
+      menu_item(
+        :contact,
+        image: 'fa-send-o',
+        link_opts: {data: {remote: 'true'}},
+        href: polymorphic_url([:new, resource, :direct_message])
+      )
+    end
+
     def activity_link
       menu_item(
         :activity,

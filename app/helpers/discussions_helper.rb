@@ -17,6 +17,16 @@ module DiscussionsHelper
     %i[questions motions projects].any? { |model| policy(record).create_child?(model) }
   end
 
+  def direct_message_props(dm)
+    {
+      currentActor: current_user.iri,
+      currentEmail: current_user.confirmed? ? current_user.email : nil,
+      emails: current_user.email_addresses.pluck(:email).map { |email| {value: email, label: email} },
+      managedProfiles: managed_profiles_list,
+      resource_iri: dm.resource.iri
+    }
+  end
+
   def discussion_invite_groups(resource)
     resource
       .edge

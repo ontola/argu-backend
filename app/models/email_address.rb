@@ -6,6 +6,8 @@ class EmailAddress < ApplicationRecord
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   belongs_to :user, inverse_of: :email_addresses
+  scope :confirmed, -> { where('confirmed_at IS NOT NULL') }
+
   before_save :remove_other_primaries
   before_save { |user| user.email = email.downcase if email.present? }
   before_update :send_confirmation_instructions, if: :email_changed?

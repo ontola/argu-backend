@@ -8,7 +8,7 @@ RSpec.feature 'Invite', type: :feature do
   let(:user) { create(:user) }
   let(:administrator) { create_administrator(freetown) }
 
-  scenario 'Super admin invites user for existing group' do
+  scenario 'Administrator invites user for existing group' do
     sign_in administrator
     visit(forum_path(freetown))
     page.find('.cover-buttons-container .share-menu a').click
@@ -26,7 +26,7 @@ RSpec.feature 'Invite', type: :feature do
     expect(page).to have_content('The invitations are being sent')
   end
 
-  scenario 'Super admin invites user for new group' do
+  scenario 'Administrator invites user for new group' do
     sign_in administrator
     visit(forum_path(freetown))
     page.find('.cover-buttons-container .share-menu a').click

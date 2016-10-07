@@ -21,7 +21,8 @@ class MotionMenuList < MenuList
         new_update_link,
         edit_link,
         statistics_link,
-        trash_and_destroy_links
+        trash_and_destroy_links,
+        contact_link
       ]
     )
   end

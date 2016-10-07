@@ -9,6 +9,7 @@ en:
     actor:
       create: "Post as"
       update: "Update as"
+      send: "Send as"
     show:
       title: "Profile"
       btn:

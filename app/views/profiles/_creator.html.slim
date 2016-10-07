@@ -1,2 +1,2 @@
 - unless current_user.guest?
-  =react_component_store 'CurrentProfile', props: {action: :create, currentActor: current_user.iri, managedProfiles: resource.new_record? ? managed_profiles_list : [managed_profiles_list_item(current_user.profile)]}
+  =react_component_store 'CurrentProfile', props: {action: local_assigns[:action] || :create, currentActor: current_user.iri, managedProfiles: resource.new_record? ? managed_profiles_list : [managed_profiles_list_item(current_user.profile)]}
