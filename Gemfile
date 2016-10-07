@@ -24,7 +24,7 @@ gem 'i18n-js', '>= 3.0.0.rc12'
 gem 'tzinfo-data'
 gem 'rack-cors', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
-gem 'redis', '~> 3.2.0'
+gem 'redis', '~> 3.3.1'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap',
@@ -79,12 +79,11 @@ gem 'carrierwave-vips'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
 gem 'carrierwave-aws', '~> 1.0.1'
-gem 'sidekiq', '~> 4.1.0'
-gem 'sidetiq', '~> 0.7.0'
+gem 'sidekiq', '~> 4.2.2'
+gem 'sidetiq', '~> 0.7.2'
 gem 'sidekiq-logging-json',
     git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',
     ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
-gem 'sinatra', '>= 2.0.0.beta2'
 gem 'render_anywhere', require: false
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.6.3'
