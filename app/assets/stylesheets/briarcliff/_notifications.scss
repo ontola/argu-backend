@@ -41,6 +41,7 @@
 
 .notification-avatar {
   display: block;
+  height: 48px;
   width: 3em;
   @include border-radius(999px);
 }
