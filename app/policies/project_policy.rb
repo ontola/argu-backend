@@ -26,7 +26,8 @@ class ProjectPolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     attributes.concat %i(id title content start_date end_date achieved_end_date email cover_photo remove_cover_photo
-                         cover_photo_attribution) if create?
+                         cover_photo_attribution unpublish) if create?
+    attributes.concat %i(pinned) if is_manager? || staff?
     phase = record.is_a?(Project) && record.edge.children.new(owner: Phase.new).owner
     attributes.append(phases_attributes: Pundit.policy(context, phase).permitted_attributes(true)) if phase && create?
     stepup = record.is_a?(Project) && Stepup.new(record: record, forum: record.forum)
@@ -34,7 +35,6 @@ class ProjectPolicy < RestrictivePolicy
       attributes.append(stepups_attributes: Pundit.policy(context, stepup).permitted_attributes(true))
     end
     append_default_photo_params(attributes)
-    attributes << %i(id title content start_date end_date achieved_end_date email unpublish) if update?
     publication_attributes = %i(id published_at publish_type)
     attributes.append(argu_publication_attributes: publication_attributes)
     attributes

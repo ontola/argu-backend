@@ -1,0 +1,6 @@
+nl:
+  edges:
+    pinned_at: "Pinned at %{datetime}"
+    form:
+      helper:
+        pinned: "This item will be shown at the top of the page"

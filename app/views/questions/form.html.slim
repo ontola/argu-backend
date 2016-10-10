@@ -24,6 +24,10 @@
                            type: :cover_photo,
                            relation: :default_cover_photo,
                            preview_style: 'max-height: 256px;'}
+          - if policy(question).permitted_attributes.include?(:pinned)
+            =f.input :pinned, as: :reverse_boolean
+            li.form-helper
+              span= t('edges.form.helper.pinned')
           /TODO Add Checkbox for using expires_at.
           /TODO Hide expires_at input unless checkbox is checked.
           /TODO Use current datetime as default input.

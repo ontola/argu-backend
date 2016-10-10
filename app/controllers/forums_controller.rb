@@ -45,7 +45,7 @@ class ForumsController < AuthorizedController
 
     @items = Kaminari
              .paginate_array((projects + questions + motions)
-                                 .sort_by(&:updated_at)
+                                 .sort_by { |i| [i.pinned ? 1 : 0, i.updated_at] }
                                  .reverse)
              .page(show_params[:page])
              .per(30)

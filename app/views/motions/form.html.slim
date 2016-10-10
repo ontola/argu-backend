@@ -23,6 +23,10 @@
                           type: :cover_photo,
                           relation: :default_cover_photo,
                           preview_style: 'max-height: 256px;'}
+          - if policy(motion).permitted_attributes.include?(:pinned)
+            =f.input :pinned, as: :reverse_boolean
+            li.form-helper
+              span= t('edges.form.helper.pinned')
           -if !motion.new_record? && policy(motion).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
               - if policy(motion).trash?

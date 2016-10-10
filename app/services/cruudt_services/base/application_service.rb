@@ -85,6 +85,7 @@ class ApplicationService
   def set_nested_associations
     return unless resource.nested_attributes_options?
     resource.nested_attributes_options.keys.each do |association|
+      next if association == :edge
       association_instance = resource.public_send(association)
       if association_instance.respond_to?(:length)
         association_instance.each do |record|

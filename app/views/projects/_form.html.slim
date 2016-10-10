@@ -21,6 +21,10 @@
                           type: :cover_photo,
                           relation: :default_cover_photo,
                           preview_style: 'max-height: 256px;'}
+          - if policy(project).permitted_attributes.include?(:pinned)
+            =f.input :pinned, as: :reverse_boolean
+            li.form-helper
+              span= t('edges.form.helper.pinned')
           =f.inputs
             hr
             p= t('projects.stepups.info')

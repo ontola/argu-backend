@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927131140) do
+ActiveRecord::Schema.define(version: 20161010082734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20160927131140) do
     t.ltree    "path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "pinned_at"
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
   end
 

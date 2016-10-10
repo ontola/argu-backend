@@ -35,6 +35,7 @@ nl:
       language: "Taal"
       password_confirmation: "Wachtwoord bevestigen"
       password: "Wachtwoord"
+      pinned: "Vastzetten"
       postal_code: "Postcode"
       current_password: "Huidig wachtwoord"
       profile_photo: "Profielfoto"

@@ -51,3 +51,7 @@ section.section--details
             div class="fa fa-#{decision_icon(motion)}"
           .detail__text
             =t("decisions.#{motion.state}")
+    - if motion.pinned?
+      .detail[data-title=t('edges.pinned_at', datetime: motion.edge.pinned_at.to_formatted_s(:short))]
+        .detail__icon
+          span.fa.fa-map-pin

@@ -1,0 +1,6 @@
+nl:
+  edges:
+    pinned_at: "Vastgezet op %{datetime}"
+    form:
+      helper:
+        pinned: "Dit item zal bovenaan de pagina worden getoond."
