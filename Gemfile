@@ -12,6 +12,7 @@ gem 'active_model_serializers', '~> 0.10.2'
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
+gem 'uri_template'
 
 ################## DB ########################
 gem 'pg', '0.18.2'

@@ -4,10 +4,12 @@
  */
 
 import React from 'react';
+import urltemplate from 'url-template';
 import { IntlMixin, FormattedMessage } from 'react-intl';
 import VoteMixin from '../mixins/VoteMixin';
 
 const HUNDRED_PERCENT = 100;
+const voteURL = urltemplate.parse('/m{/id}/v{/side}{?r}');
 
 /**
  * Component for the POST-ing of a vote.
@@ -49,14 +51,13 @@ export const VoteButton = React.createClass({
     },
 
     render () {
-        const { clickHandler, count, current, r, side } = this.props;
-        const rParam = r ? `?r=${r}` : '';
+        const { clickHandler, count, current, objectId: id, r, side } = this.props;
+        const url = voteURL.expand({ id, side, r });
 
         let voteCountElem;
         if (count !== 0) {
             voteCountElem = <span className="vote-count">{count}</span>;
         }
-
 
         return (
             <li>
@@ -64,7 +65,7 @@ export const VoteButton = React.createClass({
                 className={`btn-${side}`}
                 data-method={this.ifNoActor('post')}
                 data-voted-on={current}
-                href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}${rParam}`)}
+                href={url}
                 onClick={clickHandler} rel="nofollow">
                     <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">

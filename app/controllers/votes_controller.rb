@@ -165,23 +165,13 @@ class VotesController < AuthorizedController
     deserialized_params.permit(:id)
   end
 
-  def query_payload(opts = {})
-    query = opts.merge(vote: {for: for_param})
-    query.to_query
-  end
-
   def redirect_param
     params.require(:vote).permit(:r)[:r]
   end
 
   def redirect_url
-    redirect_url = URI.parse(url_for([:new, get_parent_resource, :vote, only_path: true]))
-    redirect_url.query = if params[:r].present?
-                           query_payload(confirm: true, r: params[:r])
-                         else
-                           query_payload(confirm: true)
-                         end
-    redirect_url
+    tpl = URITemplate.new("#{url_for([:new, get_parent_resource, :vote, only_path: true])}{?confirm,r,vote%5Bfor%5D}")
+    tpl.expand(confirm: true, r: params[:r], 'vote%5Bfor%5D' => for_param)
   end
 
   def resource_new_params

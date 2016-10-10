@@ -607,6 +607,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uri_template (0.7.0)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (3.1.1)
@@ -754,6 +755,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 2.5.3)
   unicorn (= 5.0.1)
+  uri_template
   web-console (~> 3.1.1)
   webmock
   whodunnit (= 0.0.5)

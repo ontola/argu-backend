@@ -10,15 +10,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
-  test 'guest shoud not get new' do
+  test 'guest should not get new' do
     get new_motion_vote_path(motion)
 
-    assert_redirected_to new_user_session_path(
-      r: new_motion_vote_path(
-        vote: {for: nil},
-        confirm: true
-      )
-    )
+    assert_redirected_to new_user_session_path(r: new_motion_vote_path(confirm: true))
     assert_not assigns(:model)
   end
 
