@@ -36,12 +36,11 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def verify
-    if params[:host_url] == 'argu.freshdesk.com'
-      if current_user.present?
-        redirect_to freshdesk_redirect_url
-      else
-        redirect_to user_session_path(host_url: params[:host_url])
-      end
+    return if params[:host_url] != 'argu.freshdesk.com'
+    if current_user.present?
+      redirect_to freshdesk_redirect_url
+    else
+      redirect_to user_session_path(host_url: params[:host_url])
     end
   end
 

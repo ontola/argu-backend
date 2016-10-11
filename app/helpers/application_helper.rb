@@ -20,14 +20,13 @@ module ApplicationHelper
   end
 
   def awesome_time_ago_in_words(date)
-    if date.present?
-      if 1.day.ago < date
-        distance_of_time_in_words(date, Time.current)
-      elsif 1.year.ago < date
-        date.strftime("%B #{date.day.ordinalize} %H:%M")
-      else
-        date.strftime('%Y-%m-%d %H:%M')
-      end
+    return unless date.present?
+    if 1.day.ago < date
+      distance_of_time_in_words(date, Time.current)
+    elsif 1.year.ago < date
+      date.strftime("%B #{date.day.ordinalize} %H:%M")
+    else
+      date.strftime('%Y-%m-%d %H:%M')
     end
   end
 
@@ -153,8 +152,6 @@ module ApplicationHelper
   end
 
   def sort_items
-    link_items = []
-
     link_items = [
       link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
       link_item(t('filtersort.created_at'), nil, fa: 'clock-o', data: {'sort-value' => 'created_at'}),
@@ -167,8 +164,6 @@ module ApplicationHelper
   end
 
   def filter_items
-    link_items = []
-
     link_items = [
       link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
       link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter-value' => 'question'}),

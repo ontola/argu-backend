@@ -21,9 +21,7 @@ FactoryGirl.define do
 
     trait :t_argument do
       trackable do
-        passed_in?(:trackable) ? trackable : create(:argument,
-                                                    parent: tenant.edge,
-                                                    creator: owner)
+        passed_in?(:trackable) ? trackable : create(:argument, parent: tenant.edge, creator: owner)
       end
       recipient { passed_in?(:recipient) ? recipient : trackable.motion }
     end

@@ -5,13 +5,12 @@ module MenuHelper
   # @param resource [Model] The model the actions should be done upon
   # @param additional_items [Array] Additionals `dropdown items` to be merged at the top of the menu.
   def crud_menu_item(resource, additional_items = [])
-    if current_user.present? && policy(resource).update?
-      content_tag :li do
-        content_tag :ul do
-          react_component 'HyperDropdown',
-                          crud_menu_options(resource, additional_items),
-                          prerender: true
-        end
+    return if current_user.nil? || !policy(resource).update?
+    content_tag :li do
+      content_tag :ul do
+        react_component 'HyperDropdown',
+                        crud_menu_options(resource, additional_items),
+                        prerender: true
       end
     end
   end
@@ -45,13 +44,11 @@ module MenuHelper
                                   data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'},
                                   fa: 'close')
         end
-      else
-        if resource_policy.trash?
-          link_items << link_item(t('trash'),
-                                  polymorphic_url(resource),
-                                  data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
-                                  fa: 'trash')
-        end
+      elsif resource_policy.trash?
+        link_items << link_item(t('trash'),
+                                polymorphic_url(resource),
+                                data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
+                                fa: 'trash')
       end
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-ellipsis-v')

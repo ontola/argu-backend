@@ -19,13 +19,11 @@ class CreateGroupMembership < EdgeableCreateService
 
   def after_save
     super
-    if resource.group.grants.first&.edge&.owner_type == 'Forum'
-      forum_edge = resource.group.grants.first.edge
-      current_follow_type = resource.publisher.following_type(forum_edge)
-      if Follow.follow_types[:news] > Follow.follow_types[current_follow_type]
-        resource.publisher.follow(forum_edge, :news)
-      end
-    end
+    return unless resource.group.grants.first&.edge&.owner_type == 'Forum'
+    forum_edge = resource.group.grants.first.edge
+    current_follow_type = resource.publisher.following_type(forum_edge)
+    return unless Follow.follow_types[:news] > Follow.follow_types[current_follow_type]
+    resource.publisher.follow(forum_edge, :news)
   end
 
   def object_attributes=(obj)

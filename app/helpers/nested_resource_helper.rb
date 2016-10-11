@@ -82,14 +82,13 @@ module NestedResourceHelper
   # @see {get_parent_resource}
   # @return [Forum, nil] The tenant of the found resource by its parent
   def resource_tenant(opts = request.path_parameters, url_params = params)
-    if current_resource_is_nested?(opts)
-      parent = get_parent_resource(opts, url_params)
-      case parent
-      when Forum
-        parent
-      else
-        parent.try(:forum)
-      end
+    return unless current_resource_is_nested?(opts)
+    parent = get_parent_resource(opts, url_params)
+    case parent
+    when Forum
+      parent
+    else
+      parent.try(:forum)
     end
   end
 

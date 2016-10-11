@@ -101,7 +101,7 @@ class Forum < ApplicationRecord
   end
 
   def full_access_token
-    AccessToken.where(item: self).first
+    AccessToken.find_by(item: self)
   end
 
   def page=(value)

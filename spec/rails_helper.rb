@@ -136,12 +136,12 @@ RSpec.configure do |config|
   # Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 10
 
-  Capybara::Webkit.configure do |config|
-    config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
-    config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
-    config.allow_url '//www.youtube.com/embed/*'
-    config.allow_url 'http://example.com/embed/*'
-    config.allow_url '//www.gravatar.com/*'
+  Capybara::Webkit.configure do |capybara_config|
+    capybara_config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
+    capybara_config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+    capybara_config.allow_url '//www.youtube.com/embed/*'
+    capybara_config.allow_url 'http://example.com/embed/*'
+    capybara_config.allow_url '//www.gravatar.com/*'
   end
 
   config.before(:each) do
@@ -159,20 +159,24 @@ RSpec.configure do |config|
   OmniAuth.config.test_mode = true
 end
 
-class FactoryGirl::Evaluator
-  def passed_in?(name)
-    # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
-    # Also check that we didn't pass in nil.
-    __override_names__.include?(name) && send(name)
+module FactoryGirl
+  class Evaluator
+    def passed_in?(name)
+      # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
+      # Also check that we didn't pass in nil.
+      __override_names__.include?(name) && send(name)
+    end
   end
 end
 
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
+module ActiveRecord
+  class Base
+    mattr_accessor :shared_connection
+    @@shared_connection = nil
 
-  def self.connection
-    @@shared_connection || ConnectionPool::Wrapper.new(size: 1) { retrieve_connection }
+    def self.connection
+      @@shared_connection || ConnectionPool::Wrapper.new(size: 1) { retrieve_connection }
+    end
   end
 end
 

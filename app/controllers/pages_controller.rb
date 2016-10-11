@@ -39,14 +39,12 @@ class PagesController < ApplicationController
       page = Page.new
       page.build_shortname
       page.build_profile
-    else
-      if pa_po.max_pages_reached?
-        errors[:max_allowed_pages] = {
-          max: pa_po.max_allowed_pages,
-          current: current_user.profile.pages.length,
-          pages_url: pages_user_url(current_user)
-        }
-      end
+    elsif pa_po.max_pages_reached?
+      errors[:max_allowed_pages] = {
+        max: pa_po.max_allowed_pages,
+        current: current_user.profile.pages.length,
+        pages_url: pages_user_url(current_user)
+      }
     end
 
     render locals: {

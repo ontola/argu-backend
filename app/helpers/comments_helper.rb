@@ -23,13 +23,11 @@ module CommentsHelper
                                 data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'},
                                 fa: 'close')
       end
-    else
-      if policy(comment).trash?
-        link_items << link_item(t('trash'),
-                                polymorphic_url([resource, comment]),
-                                data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
-                                fa: 'trash')
-      end
+    elsif policy(comment).trash?
+      link_items << link_item(t('trash'),
+                              polymorphic_url([resource, comment]),
+                              data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
+                              fa: 'trash')
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-ellipsis-v')
   end

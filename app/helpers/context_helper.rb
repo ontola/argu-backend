@@ -10,11 +10,10 @@ module ContextHelper
           authenticated_resource.edge.parent.owner
         end
     end
-    if policy(parent).show?
-      render partial: 'contextualize/to_parent',
-             locals: {
-               parent: parent
-             }
-    end
+    return unless policy(parent).show?
+    render partial: 'contextualize/to_parent',
+           locals: {
+             parent: parent
+           }
   end
 end

@@ -71,12 +71,11 @@ class AuthorizedController < ApplicationController
 
     banners = stubborn_hgetall('banners') || {}
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
-    if authenticated_context.present?
-      @banners = policy_scope(authenticated_context
-                                .banners
-                                .published)
-                 .reject { |b| banners[b.identifier] == 'hidden' }
-    end
+    return unless authenticated_context.present?
+    @banners = policy_scope(authenticated_context
+                              .banners
+                              .published)
+               .reject { |b| banners[b.identifier] == 'hidden' }
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found
@@ -119,20 +118,17 @@ class AuthorizedController < ApplicationController
   # @note This should be based only on static information and be side-effect free to make memoization possible.
   # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
   def authenticated_context
-    if resource_by_id.present?
-      if resource_by_id.is_a?(Forum)
-        resource_by_id
-      elsif resource_by_id.is_a?(GroupMembership)
-        granted_edge = resource_by_id.group.grants.first&.edge
-        granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
-      elsif resource_by_id.is_a?(Group)
-        granted_edge = resource_by_id.grants.first&.edge
-        granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
-      else
-        resource_by_id.try(:forum)
-      end
+    case resource_by_id
+    when Forum
+      resource_by_id
+    when GroupMembership
+      granted_edge = resource_by_id.group.grants.first&.edge
+      granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
+    when Group
+      granted_edge = resource_by_id.grants.first&.edge
+      granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
     else
-      resource_tenant
+      resource_by_id.try(:forum) || resource_tenant
     end
   end
 
@@ -148,10 +144,9 @@ class AuthorizedController < ApplicationController
   end
 
   def check_if_registered
-    if current_profile.blank?
-      raise Argu::NotAUserError.new(forum: authenticated_context,
-                                    r: redirect_url)
-    end
+    return if current_profile.present?
+    raise Argu::NotAUserError.new(forum: authenticated_context,
+                                  r: redirect_url)
   end
 
   # Prepares a memoized {CreateService} for the relevant model for use in controller#create

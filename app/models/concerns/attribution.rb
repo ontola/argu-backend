@@ -6,8 +6,8 @@ module Attribution
 
   # noinspection RubySuperCallWithoutSuperclassInspection
   def attribution
-    _attr = picture.url.include?('default_banner') ? Setting.get(:default_banner_attribution) : super
-    _attr.blank? ? '' : "Photo: #{_attr}"
+    attr = picture.url.include?('default_banner') ? Setting.get(:default_banner_attribution) : super
+    attr.blank? ? '' : "Photo: #{attr}"
   end
 
   module ClassMethods

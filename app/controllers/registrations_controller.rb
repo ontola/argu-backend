@@ -74,9 +74,8 @@ class RegistrationsController < Devise::RegistrationsController
     resource.shortname = nil if resource.shortname.shortname.blank?
     resource.build_profile
     resource.language = I18n.locale
-    if session[:omniauth]
-      @user.apply_omniauth(session[:omniauth])
-      @user.valid?
-    end
+    return unless session[:omniauth]
+    @user.apply_omniauth(session[:omniauth])
+    @user.valid?
   end
 end

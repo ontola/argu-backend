@@ -22,12 +22,11 @@ class CreateBlogPost < PublishedCreateService
   end
 
   def object_attributes=(obj)
-    if obj.is_a? Activity
-      obj.created_at || DateTime.current
-      obj.forum ||= resource.forum
-      obj.owner ||= resource.creator
-      obj.key ||= 'blog_post.happened'
-      obj.recipient ||= resource.blog_postable
-    end
+    return unless obj.is_a? Activity
+    obj.created_at || DateTime.current
+    obj.forum ||= resource.forum
+    obj.owner ||= resource.creator
+    obj.key ||= 'blog_post.happened'
+    obj.recipient ||= resource.blog_postable
   end
 end

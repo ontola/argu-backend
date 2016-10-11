@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
       @activities = policy_scope(Activity).loggings.order(created_at: :desc).limit(10)
       render # stream: true
     else
-      redirect_to (preferred_forum.presence || info_url('about'))
+      redirect_to(preferred_forum.presence || info_url('about'))
     end
   end
 
@@ -38,8 +38,9 @@ class StaticPagesController < ApplicationController
 
   def modern
     authorize :static_page, :about?
-    render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, "\
-      "mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"
+    render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, "\
+                 "safari: #{browser.safari?}, mobile: #{browser.mobile?}, "\
+                 "tablet: #{browser.tablet?}, ua: #{browser.ua}"
   end
 
   # Used for persistent redis-backed cookies

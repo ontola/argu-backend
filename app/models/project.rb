@@ -61,12 +61,11 @@ class Project < ApplicationRecord
   end
 
   def update_start_date_of_first_phase
-    if phases.present? && (start_date_changed? || phases.first.changed?)
-      if phases.first.persisted?
-        phases.first.update!(start_date: start_date)
-      else
-        phases.first.start_date = start_date
-      end
+    return unless phases.present? && (start_date_changed? || phases.first.changed?)
+    if phases.first.persisted?
+      phases.first.update!(start_date: start_date)
+    else
+      phases.first.start_date = start_date
     end
   end
 end

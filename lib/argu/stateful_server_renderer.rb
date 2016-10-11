@@ -54,14 +54,14 @@ module Argu
         else
           'renderToString'
         end
-      _prerender_options = {
+      prerender_opts = {
         render_function: react_render_method
       }
-      _prerender_options.merge!(prerender_options) if prerender_options.is_a?(Hash)
+      prerender_opts.merge!(prerender_options) if prerender_options.is_a?(Hash)
 
       props = props.to_json unless props.is_a?(String)
 
-      super(component_name, props, _prerender_options)
+      super(component_name, props, prerender_opts)
     end
 
     class << self

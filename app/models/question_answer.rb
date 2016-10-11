@@ -22,19 +22,18 @@ class QuestionAnswer
   end
 
   def save
-    if same_forum
-      Question.transaction do
-        UpdateMotion
-          .new(@motion,
-               attributes: {
-                 parent: @question.edge,
-                 question_id: @question.id
-               },
-               options: @options)
-          .on(:update_motion_successful) { return true }
-          .on(:update_motion_failed) { return false }
-          .commit
-      end
+    return unless same_forum
+    Question.transaction do
+      UpdateMotion
+        .new(@motion,
+             attributes: {
+               parent: @question.edge,
+               question_id: @question.id
+             },
+             options: @options)
+        .on(:update_motion_successful) { return true }
+        .on(:update_motion_failed) { return false }
+        .commit
     end
   end
 

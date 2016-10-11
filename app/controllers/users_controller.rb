@@ -182,10 +182,9 @@ class UsersController < ApplicationController
 
   def get_user_or_redirect(redirect = nil)
     @user = current_user
-    if current_user.blank?
-      flash[:error] = t('devise.failure.unauthenticated')
-      raise Argu::NotAUserError.new(r: redirect)
-    end
+    return if current_user.present?
+    flash[:error] = t('devise.failure.unauthenticated')
+    raise Argu::NotAUserError.new(r: redirect)
   end
 
   def permit_locale_params

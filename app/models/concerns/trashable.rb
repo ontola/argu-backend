@@ -68,7 +68,7 @@ module Trashable
     # @return [ActiveRecord::Relation]
     def trashed(trashed = nil)
       scope_type = column_names.include?('trashed_at') ? {trashed_at: nil} : {is_trashed: false}
-      scope = trashed === true ? nil : scope_type
+      scope = trashed ? nil : scope_type
       where(scope)
     end
 

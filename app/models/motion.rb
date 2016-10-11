@@ -81,9 +81,8 @@ class Motion < ApplicationRecord
   end
 
   def assert_tenant
-    if question.present? && question.forum_id != forum_id
-      errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
-    end
+    return unless question.present? && question.forum_id != forum_id
+    errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
   end
 
   def as_json(options = {})
@@ -119,11 +118,10 @@ class Motion < ApplicationRecord
   end
 
   def invert_arguments=(invert)
-    if invert != '0'
-      Motion.transaction do
-        arguments.each do |a|
-          a.update_attributes pro: !a.pro
-        end
+    return if invert == '0'
+    Motion.transaction do
+      arguments.each do |a|
+        a.update_attributes pro: !a.pro
       end
     end
   end

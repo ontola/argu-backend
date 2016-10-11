@@ -88,22 +88,21 @@ class User < ApplicationRecord
   # Creates a new follow record for this instance to follow the passed object.
   # Does not allow duplicate records to be created.
   def follow(followable, type = :reactions, ancestor_type = nil)
-    if self != followable
-      if type.present?
-        follow = follows.find_or_initialize_by(followable_id: followable.id,
-                                               followable_type: parent_class_name(followable))
-        follow.update(follow_type: type)
-      end
-      if ancestor_type.present?
-        followable.ancestors.where(owner_type: %w(Motion Question Project Forum)).find_each do |ancestor|
-          current_follow_type = following_type(ancestor)
-          if Follow.follow_types[ancestor_type] > Follow.follow_types[current_follow_type]
-            follow(ancestor, ancestor_type)
-          end
+    return if self == followable
+    if type.present?
+      follow = follows.find_or_initialize_by(followable_id: followable.id,
+                                             followable_type: parent_class_name(followable))
+      follow.update(follow_type: type)
+    end
+    if ancestor_type.present?
+      followable.ancestors.where(owner_type: %w(Motion Question Project Forum)).find_each do |ancestor|
+        current_follow_type = following_type(ancestor)
+        if Follow.follow_types[ancestor_type] > Follow.follow_types[current_follow_type]
+          follow(ancestor, ancestor_type)
         end
       end
-      true
     end
+    true
   end
 
   # The Follow for the followable by this User
@@ -177,10 +176,9 @@ class User < ApplicationRecord
   end
 
   def update_acesss_token_counts
-    if access_tokens.present?
-      access_tokens = AccessToken.where(access_token: eval(self.access_tokens)).pluck :id
-      AccessToken.increment_counter :sign_ups, access_tokens
-    end
+    return unless access_tokens.present?
+    access_tokens = AccessToken.where(access_token: eval(self.access_tokens)).pluck :id
+    AccessToken.increment_counter :sign_ups, access_tokens
   end
 
   def user_to_recipient_option
@@ -211,12 +209,6 @@ class User < ApplicationRecord
     self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
   end
 
-  def self.koala(auth)
-    access_token = auth['token']
-    facebook = Koala::Facebook::API.new(access_token)
-    facebook.get_object('me')
-  end
-
   class << self
     def serialize_from_session(key, salt)
       record = to_adapter.get(key[0].to_param)
@@ -227,6 +219,14 @@ class User < ApplicationRecord
       # Get the identity and user if they exist
       identity = Identity.find_for_oauth(auth)
       identity&.user
+    end
+
+    private
+
+    def koala(auth)
+      access_token = auth['token']
+      facebook = Koala::Facebook::API.new(access_token)
+      facebook.get_object('me')
     end
   end
 end

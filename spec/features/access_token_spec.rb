@@ -10,7 +10,6 @@ RSpec.feature 'Access tokens', type: :feature do
   end
   let(:helsinki_key) { create(:access_token, item: helsinki) }
 
-  @javascript
   scenario 'should register and become a member with an access token and preserve vote' do
     nominatim_netherlands
 

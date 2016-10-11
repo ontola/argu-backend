@@ -30,27 +30,25 @@ class GroupMembership < ApplicationRecord
 
   def create_membership_before_managership
     grant = group.grants.manager.first
-    if grant.present? && member.grants.member.where(edge: grant.edge).empty?
-      Edge.create!(
-        parent: group.edge,
-        user: publisher,
-        owner: member.group_memberships.new(
-          group: grant.edge.owner.members_group,
-          member: member,
-          profile: profile
-        )
+    return if grant.nil? || member.grants.member.where(edge: grant.edge).present?
+    Edge.create!(
+      parent: group.edge,
+      user: publisher,
+      owner: member.group_memberships.new(
+        group: grant.edge.owner.members_group,
+        member: member,
+        profile: profile
       )
-    end
+    )
   end
 
   def remove_managerships_on_forum_leave
     grant = group.grants.member.first
-    if grant.present?
-      member
-        .group_memberships
-        .joins(:grants)
-        .where(grants: {edge: grant.edge, role: Grant.roles[:manager]})
-        .destroy_all
-    end
+    return if grant.nil?
+    member
+      .group_memberships
+      .joins(:grants)
+      .where(grants: {edge: grant.edge, role: Grant.roles[:manager]})
+      .destroy_all
   end
 end

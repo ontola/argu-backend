@@ -202,7 +202,6 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
                 })
     define_test(hash, :trash,
                 options: {analytics: stats_opt('blog_posts', 'trash_success')},
-                user_types: user_types[:trash]
-                              .merge(moderator: {should: true, response: 302}))
+                user_types: user_types[:trash].merge(moderator: {should: true, response: 302}))
   end
 end

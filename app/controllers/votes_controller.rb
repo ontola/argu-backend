@@ -15,12 +15,11 @@ class VotesController < AuthorizedController
     respond_to do |format|
       if current_profile.member_of? @model.forum
         format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
-        format.json { render 'create', location: @vote }
       else
         format.html { render template: 'forums/join', locals: {forum: @model.forum, r: request.fullpath} }
         format.js { render partial: 'forums/join', layout: false, locals: {forum: @model.forum, r: request.fullpath} }
-        format.json { render 'create', location: @vote }
       end
+      format.json { render 'create', location: @vote }
     end
   end
 
@@ -113,33 +112,31 @@ class VotesController < AuthorizedController
 
   def check_if_member
     resource = get_parent_resource
-    if current_profile.present? && !current_profile.member_of?(resource.forum)
-      options = {
-        forum: resource.forum,
-        r: redirect_url
-      }
-      if %w(json json_api).include?(request.format)
-        options[:body] = {
-          links: {
-            create_membership: {
-              href: group_membership_index_url(
-                get_parent_resource.forum.members_group,
-                redirect: false
-              )
-            }
+    return unless current_profile.present? && !current_profile.member_of?(resource.forum)
+    options = {
+      forum: resource.forum,
+      r: redirect_url
+    }
+    if %w(json json_api).include?(request.format)
+      options[:body] = {
+        links: {
+          create_membership: {
+            href: group_membership_index_url(
+              get_parent_resource.forum.members_group,
+              redirect: false
+            )
           }
         }
-      end
-      raise Argu::NotAMemberError.new(options)
+      }
     end
+    raise Argu::NotAMemberError.new(options)
   end
 
   def check_if_registered
-    if current_profile.blank?
-      resource = get_parent_resource
-      authorize resource, :show?
-      raise Argu::NotAUserError.new(forum: resource.forum, r: redirect_url)
-    end
+    return if current_profile.present?
+    resource = get_parent_resource
+    authorize resource, :show?
+    raise Argu::NotAUserError.new(forum: resource.forum, r: redirect_url)
   end
 
   def for_param

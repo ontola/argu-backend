@@ -42,7 +42,7 @@ module Shortnameable
 
     # Finds an object via its shortname, returns nil when not found
     def find_via_shortname_nil(url)
-      joins(:shortname).where('lower(shortname) = lower(?)', url).first
+      joins(:shortname).find_by('lower(shortname) = lower(?)', url)
     end
 
     # Finds an object via its shortname or id, throws an exception when not found

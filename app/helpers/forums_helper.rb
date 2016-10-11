@@ -39,9 +39,9 @@ module ForumsHelper
   def forum_discover_items
     items = []
 
-    _public_forum_items = public_forum_items(5)
+    pub_forum_items = public_forum_items(5)
 
-    items.concat (_public_forum_items - profile_membership_items) if items.length < _public_forum_items.length + 1
+    items.concat(pub_forum_items - profile_membership_items) if items.length < pub_forum_items.length + 1
     items << link_item(t('forums.show_open'), discover_forums_path, fa: 'compass')
   end
 
@@ -70,17 +70,16 @@ module ForumsHelper
   def forum_membership_controls_items
     items = []
 
-    if policy(@forum).is_member?
-      membership = current_profile
-                   .group_memberships
-                   .joins(grants: :edge)
-                   .where(edges: {owner_id: @forum.id})
-                   .first
-      items << link_item(t('forums.leave'),
-                         group_membership_path(membership),
-                         fa: 'sign-out',
-                         data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
-    end
+    return unless policy(@forum).is_member?
+    membership = current_profile
+                 .group_memberships
+                 .joins(grants: :edge)
+                 .where(edges: {owner_id: @forum.id})
+                 .first
+    items << link_item(t('forums.leave'),
+                       group_membership_path(membership),
+                       fa: 'sign-out',
+                       data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
   end
 
   def manage_button_dropdown_items(resource)

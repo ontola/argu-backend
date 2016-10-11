@@ -66,30 +66,29 @@ class RestrictivePolicy
 
     def is_moderator?
       c_model = record.try(:forum) || context.context_model
-      if user.present? && c_model.present?
-        # Stepups within the forum based if they apply to the user or one of its group memberships
-        forum_stepups = c_model.stepups.where('user_id=? OR group_id IN (?)',
-                                              user.id,
-                                              user
-                                                .profile
-                                                .groups
-                                                .joins(:page)
-                                                .where(page: c_model.page_id)
-                                                .pluck(:id))
-        # Get the tuples of the entire parent chain
-        cc =
-          if record.is_a?(ActiveRecord::Base)
-            if record.persisted?
-              record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
-            elsif record.edge.parent.present?
-              record.edge.parent.self_and_ancestors.map(&:polymorphic_tuple).compact
-            end
-          else
-            []
+      return unless user.present? && c_model.present?
+      # Stepups within the forum based if they apply to the user or one of its group memberships
+      forum_stepups = c_model.stepups.where('user_id=? OR group_id IN (?)',
+                                            user.id,
+                                            user
+                                              .profile
+                                              .groups
+                                              .joins(:page)
+                                              .where(page: c_model.page_id)
+                                              .pluck(:id))
+      # Get the tuples of the entire parent chain
+      cc =
+        if record.is_a?(ActiveRecord::Base)
+          if record.persisted?
+            record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
+          elsif record.edge.parent.present?
+            record.edge.parent.self_and_ancestors.map(&:polymorphic_tuple).compact
           end
-        # Match them against the set of stepups within the forum
-        moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
-      end
+        else
+          []
+        end
+      # Match them against the set of stepups within the forum
+      moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
     end
 
     def is_manager?

@@ -7,33 +7,29 @@ class ProfilesController < ApplicationController
     @resource = Shortname.find_resource 'nederland' # params[:thing]
     # authorize @resource, :list_members?
 
-    scope = policy_scope(@resource.members_group.members)
+    policy_scope(@resource.members_group.members)
 
-    if current_user.present?
-      if params[:q].present?
-        # This is a working mess.
-        q = params[:q].tr(' ', '|')
-        @profiles = Profile
-                    .where(profileable_type: 'User',
-                           profileable_id: User.where(finished_intro: true)
-                                               .joins(:shortname)
-                                               .where('lower(shortname) SIMILAR TO lower(?) OR ' \
-                                                        'lower(first_name) SIMILAR TO lower(?) OR ' \
-                                                        'lower(last_name) SIMILAR TO lower(?)',
-                                                      "%#{q}%",
-                                                      "%#{q}%",
-                                                      "%#{q}%")
-                                               .pluck(:owner_id))
-                    .includes(:default_profile_photo, profileable: :shortname)
+    return if current_user.nil? || params[:q].nil?
+    # This is a working mess.
+    q = params[:q].tr(' ', '|')
+    @profiles = Profile
+                .where(profileable_type: 'User',
+                       profileable_id: User.where(finished_intro: true)
+                                           .joins(:shortname)
+                                           .where('lower(shortname) SIMILAR TO lower(?) OR ' \
+                                                    'lower(first_name) SIMILAR TO lower(?) OR ' \
+                                                    'lower(last_name) SIMILAR TO lower(?)',
+                                                  "%#{q}%",
+                                                  "%#{q}%",
+                                                  "%#{q}%")
+                                           .pluck(:owner_id))
+                .includes(:default_profile_photo, profileable: :shortname)
 
-        if params[:things] && params[:things].split(',').include?('pages')
-          @profiles += Profile
-                       .where(is_public: true)
-                       .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
-          # .page params[:profile] # Pages
-        end
-      end
-    end
+    return unless params[:things] && params[:things].split(',').include?('pages')
+    @profiles += Profile
+                 .where(is_public: true)
+                 .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
+    # .page params[:profile] # Pages
   end
 
   # GET /p/shortname/edit

@@ -33,9 +33,8 @@ class PhotoUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    if model.profile_photo? && model.about.respond_to?(:email) && model.about.email.present?
-      Gravatar.gravatar_url(model.about.email, size: '128x128', default: 'identicon')
-    end
+    return unless model.profile_photo? && model.about.respond_to?(:email) && model.about.email.present?
+    Gravatar.gravatar_url(model.about.email, size: '128x128', default: 'identicon')
   end
 
   # Create different versions of your uploaded files:

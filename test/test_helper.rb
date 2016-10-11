@@ -62,57 +62,63 @@ module TestHelper
   end
 end
 
-class ActiveSupport::TestCase
-  include TestHelper
-  include FactoryGirl::Syntax::Methods
-  include Argu::TestHelpers::TestHelperMethods
-  include Argu::TestHelpers::TestMocks
-  include Argu::TestHelpers::AutomatedTests
-  include Argu::TestHelpers::TestDefinitions
-  ActiveRecord::Migration.check_pending!
+module ActiveSupport
+  class TestCase
+    include TestHelper
+    include FactoryGirl::Syntax::Methods
+    include Argu::TestHelpers::TestHelperMethods
+    include Argu::TestHelpers::TestMocks
+    include Argu::TestHelpers::AutomatedTests
+    include Argu::TestHelpers::TestDefinitions
+    ActiveRecord::Migration.check_pending!
 
-  # FactoryGirl.lint
-  # Add more helper methods to be used by all tests here...
+    # FactoryGirl.lint
+    # Add more helper methods to be used by all tests here...
 
-  def initialize(*args)
-    super
-    analytics_collect
-  end
-end
-
-class ActionDispatch::IntegrationTest
-  # Make the Capybara DSL available in all integration tests
-  include Capybara::DSL
-  include Argu::TestHelpers::TestHelperMethods
-  include Argu::TestHelpers::TestMocks
-
-  def setup_allowed_pages
-    Capybara::Webkit.configure do |config|
-      config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
-      config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
-      config.allow_url 'https://www.youtube.com/embed/mxQZNodm8OI'
+    def initialize(*args)
+      super
+      analytics_collect
     end
   end
-
-  def sign_in(user = create(:user))
-    post user_session_path,
-         params: {
-           user: {
-             email: user.email,
-             password: user.password
-           }
-         }
-    assert_response 302
-  end
-  alias log_in_user sign_in
-  deprecate :log_in_user
 end
 
-class FactoryGirl::Evaluator
-  def passed_in?(name)
-    # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
-    # Also check that we didn't pass in nil.
-    __override_names__.include?(name) && send(name)
+module ActionDispatch
+  class IntegrationTest
+    # Make the Capybara DSL available in all integration tests
+    include Capybara::DSL
+    include Argu::TestHelpers::TestHelperMethods
+    include Argu::TestHelpers::TestMocks
+
+    def setup_allowed_pages
+      Capybara::Webkit.configure do |config|
+        config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
+        config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+        config.allow_url 'https://www.youtube.com/embed/mxQZNodm8OI'
+      end
+    end
+
+    def sign_in(user = create(:user))
+      post user_session_path,
+           params: {
+             user: {
+               email: user.email,
+               password: user.password
+             }
+           }
+      assert_response 302
+    end
+    alias log_in_user sign_in
+    deprecate :log_in_user
+  end
+end
+
+module FactoryGirl
+  class Evaluator
+    def passed_in?(name)
+      # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
+      # Also check that we didn't pass in nil.
+      __override_names__.include?(name) && send(name)
+    end
   end
 end
 
@@ -122,10 +128,16 @@ module SidekiqMinitestSupport
   end
 end
 
-class MiniTest::Spec
-  include SidekiqMinitestSupport
+module MiniTest
+  class Spec
+    include SidekiqMinitestSupport
+  end
 end
 
-class MiniTest::Unit::TestCase
-  include SidekiqMinitestSupport
+module MiniTest
+  class Unit
+    class TestCase
+      include SidekiqMinitestSupport
+    end
+  end
 end

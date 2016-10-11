@@ -76,10 +76,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
-    _memberships = assigns(:current_profile).granted_edges.where(owner_type: 'Forums').pluck(:owner_id)
+    memberships = assigns(:current_profile).granted_edges.where(owner_type: 'Forums').pluck(:owner_id)
     assert assigns(:collection)
       .values
-      .all? { |arr| arr[:collection].all? { |v| _memberships.include?(v.forum_id) || v.forum.open? } },
+      .all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
            'Votes of closed fora are visible to non-members'
   end
 

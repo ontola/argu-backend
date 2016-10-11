@@ -33,10 +33,9 @@ module ColumnRendererHelper
   end
 
   def header(options)
-    unless defined?(options[:header]) && options[:header] == false
-      content_tag :header do
-        content_tag :h2, options[:header]
-      end
+    return if defined?(options[:header]) && options[:header] == false
+    content_tag :header do
+      content_tag :h2, options[:header]
     end
   end
 
@@ -69,8 +68,7 @@ module ColumnRendererHelper
 
   # Used to render a collection if it contains items
   def render_collection_if_present(model, key, &block)
-    if model[key][:collection] || model[key.to_s][:collection]
-      (model[key][:collection] || model[key.to_s][:collection]).each(&block)
-    end
+    return unless model[key][:collection] || model[key.to_s][:collection]
+    (model[key][:collection] || model[key.to_s][:collection]).each(&block)
   end
 end

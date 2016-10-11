@@ -5,7 +5,7 @@ class Argument < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
 
   counter_culture :motion,
-                  column_name: proc { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
+                  column_name: proc { |a| a.is_trashed ? nil : "argument_#{a.key}_count" },
                   column_names: {
                     ['pro = ? AND arguments.is_trashed = ?', true, false] => 'argument_pro_count',
                     ['pro = ? AND arguments.is_trashed = ?', false, false] => 'argument_con_count'
@@ -17,9 +17,8 @@ class Argument < ApplicationRecord
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
   def assert_tenant
-    if forum != motion.forum
-      errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
-    end
+    return if forum == motion.forum
+    errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
   end
 
   # http://schema.org/description

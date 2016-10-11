@@ -21,14 +21,13 @@ class MailerListener
 
   def send_followers_mail(resource, recipients)
     # TODO: single out the creator and send a different mail
-    if recipients.present?
-      UserMailer
-        .public_send("user_created_#{resource.type}",
-                     question,
-                     recipients,
-                     parent: parent_for_resource(resource))
-        .deliver_now
-    end
+    return unless recipients.present?
+    UserMailer
+      .public_send("user_created_#{resource.type}",
+                   question,
+                   recipients,
+                   parent: parent_for_resource(resource))
+      .deliver_now
   end
 
   def follower_emails_for(resource, in_response_to)

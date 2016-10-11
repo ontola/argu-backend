@@ -34,8 +34,6 @@ class Place < ApplicationRecord
     Place.fetch url_for_osm_query(opts)
   end
 
-  private
-
   # Fetches Nominatim data from OSM and saves it as a {Place}
   # @return [Place, nil] {Place} or nil if it couldn't be found in OSM
   def self.fetch(url)

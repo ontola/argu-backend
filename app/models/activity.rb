@@ -49,11 +49,9 @@ class Activity < PublicActivity::Activity
   private
 
   def validate_happening_within_project_scope
-    if trackable.try(:project).present? && action == 'happened'
-      if trackable.project.start_date > created_at ||
-          (trackable.project.end_date.present? && trackable.project.end_date < created_at)
-        errors.add(:happened_at, 'must be published during a phase of the project')
-      end
-    end
+    return if trackable.try(:project).nil? || action != 'happened'
+    return unless trackable.project.start_date > created_at ||
+        (trackable.project.end_date.present? && trackable.project.end_date < created_at)
+    errors.add(:happened_at, 'must be published during a phase of the project')
   end
 end

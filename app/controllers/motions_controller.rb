@@ -6,11 +6,7 @@ class MotionsController < AuthorizedController
   def index
     if params[:q].present? && params[:thing].present?
       @motions = policy_scope(Motion).search(params[:q])
-      if @motions.present?
-        render json: @motions
-      else
-        render json: {data: []}
-      end
+      render json: @motions.present? ? @motions : {data: []}
     else
       skip_verify_policy_scoped(true)
       errors = []

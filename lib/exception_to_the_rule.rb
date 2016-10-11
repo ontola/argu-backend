@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 # Mixin giving policies the ability to be altered via {Rule} records
 # @see {Argu::RuledIt}
 # @author Fletcher91 <thom@argu.co>
@@ -36,9 +36,9 @@ module ExceptionToTheRule
     level_rules, group_rules = rules.partition { |rule| ROLE_NAMES.include?(rule.role) }
     @last_enacted, @last_verdict =
       filter_trickle(level_rules, level)
-      .concat(filter_groups(group_rules, context))
-      .compact
-      .first
+        .concat(filter_groups(group_rules, context))
+        .compact
+        .first
     @last_enacted
   end
 
@@ -60,12 +60,12 @@ module ExceptionToTheRule
   def filter_groups(rules, context)
     if rules && user && (mem_groups = user.profile.groups.where(page: context.context_model.page))
       group_ids = rules
-                  .map { |r| r.role.split('_') }
-                  .select { |arr| arr[0].eql?('groups') }
-                  .map(&:last)
+                    .map { |r| r.role.split('_') }
+                    .select { |arr| arr[0].eql?('groups') }
+                    .map(&:last)
       group_identifiers = mem_groups
-                          .where(id: group_ids)
-                          .map(&:identifier)
+                            .where(id: group_ids)
+                            .map(&:identifier)
       if group_identifiers.present?
         trickled_rules = rules.find_all { |r| group_identifiers.include?(r.role) }
         if trickled_rules.present?
@@ -85,13 +85,14 @@ module ExceptionToTheRule
   # @return [ActiveRecord::CollectionProxy] All {Rule}s that match the current action for the
   #   current {Context#model} and {RestrictivePolicy#record}
   def find_rules_for_action(action)
-    _rules = Rule.arel_table
-    rule_query = _rules[:model_type].eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
-                                    .and(_rules[:model_id].eq(@record.try(:id))
-                          .or(_rules[:model_id].eq(nil))
-                   .and(_rules[:action].eq(action.to_s))
-                   .and(_rules[:context_type].eq(context.context_model.class.to_s))
-                   .and(_rules[:context_id].eq(context.context_model.id.to_s)))
+    t_rules = Rule.arel_table
+    rule_query = t_rules[:model_type]
+                   .eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
+                   .and(t_rules[:model_id].eq(@record.try(:id))
+                          .or(t_rules[:model_id].eq(nil))
+                          .and(t_rules[:action].eq(action.to_s))
+                          .and(t_rules[:context_type].eq(context.context_model.class.to_s))
+                          .and(t_rules[:context_id].eq(context.context_model.id.to_s)))
     Rule.where(rule_query)
   end
 

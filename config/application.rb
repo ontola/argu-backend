@@ -48,9 +48,9 @@ module Argu
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource /\d+.widget/,
+        resource(/\d+.widget/,
                  headers: ['Origin', 'Accept', 'Content-Type'],
-                 methods: [:get]
+                 methods: [:get])
       end
     end
     config.middleware.use Rack::Attack

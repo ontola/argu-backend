@@ -62,12 +62,11 @@ class ApplicationController < ActionController::Base
 
   def forum_by_geocode
     geo = session[:geo_location]
-    if geo.present?
-      forum = Forum.find_via_shortname_nil(geo.city.downcase) if geo.city.present?
-      forum ||= Forum.find_via_shortname_nil(geo.country.downcase) if geo.country.present?
-      forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(geo.country_code)
-      forum
-    end
+    return if geo.nil?
+    forum = Forum.find_via_shortname_nil(geo.city.downcase) if geo.city.present?
+    forum ||= Forum.find_via_shortname_nil(geo.country.downcase) if geo.country.present?
+    forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(geo.country_code)
+    forum
   end
 
   # @param [Integer] status HTML response code
@@ -209,12 +208,11 @@ class ApplicationController < ActionController::Base
   # @private
   # Before_action which redirects the {User} if he didn't finish the intro.
   def check_finished_intro
-    if current_user
-      if current_user.url.blank?
-        redirect_to setup_users_path if request.original_url != setup_users_url
-      elsif !current_user.finished_intro? && !request.original_url.in?(intro_urls)
-        redirect_to setup_profiles_url
-      end
+    return unless current_user
+    if current_user.url.blank?
+      redirect_to setup_users_path if request.original_url != setup_users_url
+    elsif !current_user.finished_intro? && !request.original_url.in?(intro_urls)
+      redirect_to setup_profiles_url
     end
   end
 
@@ -330,8 +328,6 @@ class ApplicationController < ActionController::Base
       self.class.layout 'application'
     elsif current_user.present? && current_user.url.blank?
       self.class.layout 'closed'
-    elsif has_valid_token?
-      self.class.layout 'guest'
     else
       self.class.layout 'guest'
     end

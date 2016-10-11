@@ -23,33 +23,32 @@ class ForumsController < AuthorizedController
   end
 
   def show
-    if policy(resource_by_id).show?
-      projects = policy_scope(resource_by_id
-                                .projects
-                                .includes(:edge, :default_cover_photo)
-                                .published
-                                .trashed(show_trashed?))
-      questions = policy_scope(resource_by_id
-                                 .questions
-                                 .where(project_id: nil)
-                                 .includes(:edge, :project, :default_cover_photo)
-                                 .published
-                                 .trashed(show_trashed?))
-      motions = policy_scope(resource_by_id
-                               .motions
-                               .where(project_id: nil, question_id: nil)
-                               .includes(:edge, :question, :project, :default_cover_photo, :votes,
-                                         :last_decision)
+    return unless policy(resource_by_id).show?
+    projects = policy_scope(resource_by_id
+                              .projects
+                              .includes(:edge, :default_cover_photo)
+                              .published
+                              .trashed(show_trashed?))
+    questions = policy_scope(resource_by_id
+                               .questions
+                               .where(project_id: nil)
+                               .includes(:edge, :project, :default_cover_photo)
                                .published
                                .trashed(show_trashed?))
+    motions = policy_scope(resource_by_id
+                             .motions
+                             .where(project_id: nil, question_id: nil)
+                             .includes(:edge, :question, :project, :default_cover_photo, :votes,
+                                       :last_decision)
+                             .published
+                             .trashed(show_trashed?))
 
-      @items = Kaminari
-               .paginate_array((projects + questions + motions)
-                                   .sort_by(&:updated_at)
-                                   .reverse)
-               .page(show_params[:page])
-               .per(30)
-    end
+    @items = Kaminari
+             .paginate_array((projects + questions + motions)
+                                 .sort_by(&:updated_at)
+                                 .reverse)
+             .page(show_params[:page])
+             .per(30)
   end
 
   def settings
@@ -152,12 +151,11 @@ class ForumsController < AuthorizedController
 
   def redirect_generic_shortnames
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
-    unless resource.is_a?(Forum)
-      send_event category: 'short_url',
-                 action: 'follow',
-                 label: params[:id]
-      redirect_to url_for(resource)
-    end
+    return if resource.is_a?(Forum)
+    send_event category: 'short_url',
+               action: 'follow',
+               label: params[:id]
+    redirect_to url_for(resource)
   end
 
   def resource_by_id

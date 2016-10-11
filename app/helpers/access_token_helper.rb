@@ -9,10 +9,9 @@ module AccessTokenHelper
   # @private
   def grant_viewing_rights_for(item)
     current_access_tokens = session[:a_tokens] || []
-    unless current_access_tokens.include? item.access_token
-      session[:a_tokens] = Set.new(current_access_tokens).add item.access_token
-      increment_token_usages(item)
-    end
+    return if current_access_tokens.include? item.access_token
+    session[:a_tokens] = Set.new(current_access_tokens).add item.access_token
+    increment_token_usages(item)
   end
 
   # Only works after {AccessTokenHelper#check_for_access_token} or grant_viewing_rights_for has been called,
@@ -24,11 +23,10 @@ module AccessTokenHelper
   # Checks whether the user has an applicable `access_token` in their session
   # `AccessToken`s trickle down access to their scope
   def has_access_token_access_to(record = nil)
-    if record
-      access_tokens = get_access_tokens
-      access_tokens.any? do |a_t|
-        record == a_t.item || (record.try(:is_fertile?) && record.is_child_of?(a_t.item))
-      end
+    return if record.nil?
+    access_tokens = get_access_tokens
+    access_tokens.any? do |a_t|
+      record == a_t.item || (record.try(:is_fertile?) && record.is_child_of?(a_t.item))
     end
   end
 

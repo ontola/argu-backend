@@ -84,15 +84,14 @@ module Argu
     end
 
     def sub_action_key
-      if @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
-        if @activity.trackable.forwarded_user == @user
-          :to_you
-        elsif @activity.trackable.forwarded_user.nil? &&
-            @user.profile.group_ids.include?(@activity.trackable.forwarded_group)
-          :to_group
-        else
-          :to_any
-        end
+      return unless @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
+      if @activity.trackable.forwarded_user == @user
+        :to_you
+      elsif @activity.trackable.forwarded_user.nil? &&
+          @user.profile.group_ids.include?(@activity.trackable.forwarded_group)
+        :to_group
+      else
+        :to_any
       end
     end
 

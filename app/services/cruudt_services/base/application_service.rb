@@ -21,12 +21,11 @@ class ApplicationService
                   .new(creator: options.fetch(:creator),
                        publisher: options.fetch(:publisher)))
     end
-    if options[:uuid].present?
-      subscribe(AnalyticsListener.new(
-                  uuid: options[:uuid],
-                  client_id: options[:client_id]
-      ))
-    end
+    return unless options[:uuid].present?
+    subscribe(AnalyticsListener.new(
+                uuid: options[:uuid],
+                client_id: options[:client_id]
+    ))
   end
 
   # The resource on which the service works, if any.
@@ -84,16 +83,15 @@ class ApplicationService
   # @author Fletcher91 <thom@argu.co>
   # @note Requires `object_attributes=` to be overridden in the child class.
   def set_nested_associations
-    if resource.nested_attributes_options?
-      resource.nested_attributes_options.keys.each do |association|
-        association_instance = resource.public_send(association)
-        if association_instance.respond_to?(:length)
-          association_instance.each do |record|
-            self.object_attributes = record
-          end
-        elsif association_instance.respond_to?(:save)
-          self.object_attributes = association_instance
+    return unless resource.nested_attributes_options?
+    resource.nested_attributes_options.keys.each do |association|
+      association_instance = resource.public_send(association)
+      if association_instance.respond_to?(:length)
+        association_instance.each do |record|
+          self.object_attributes = record
         end
+      elsif association_instance.respond_to?(:save)
+        self.object_attributes = association_instance
       end
     end
   end

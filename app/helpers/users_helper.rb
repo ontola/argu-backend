@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 module UsersHelper
   def forum_from_r_action(user)
-    if user.r.present?
-      url_options, controller = r_to_url_options(user.r)
-      if current_resource_is_nested?(url_options)
-        resource_tenant(url_options, url_options)
-      else
-        controller_inst = controller.new
-        controller_inst.forum_for(url_options) if controller.present? && controller_inst.respond_to?(:forum_for)
-      end
+    return if user.r.nil?
+    url_options, controller = r_to_url_options(user.r)
+    if current_resource_is_nested?(url_options)
+      resource_tenant(url_options, url_options)
+    else
+      controller_inst = controller.new
+      controller_inst.forum_for(url_options) if controller.present? && controller_inst.respond_to?(:forum_for)
     end
   end
 
@@ -45,21 +44,19 @@ module UsersHelper
   #   or preferred_forum
   #   if the user hasn't got any memberships yet
   def setup_memberships(user)
-    if user.valid? && user.persisted?
-      if user.profile.grants.member.blank?
-        begin
-          forum = forum_from_r_action(user) || preferred_forum(user.profile)
-          if forum.present? && policy(forum).join?
-            CreateGroupMembership
-              .new(forum.members_group.edge,
-                   attributes: {member: user.profile},
-                   options: {creator: user.profile, publisher: user})
-              .commit
-          end
-        rescue ActiveRecord::RecordNotFound => e
-          Bugsnag.notify(e)
-        end
+    return unless user.valid? && user.persisted?
+    return unless user.profile.grants.member.blank?
+    begin
+      forum = forum_from_r_action(user) || preferred_forum(user.profile)
+      if forum.present? && policy(forum).join?
+        CreateGroupMembership
+          .new(forum.members_group.edge,
+               attributes: {member: user.profile},
+               options: {creator: user.profile, publisher: user})
+          .commit
       end
+    rescue ActiveRecord::RecordNotFound => e
+      Bugsnag.notify(e)
     end
   end
 end

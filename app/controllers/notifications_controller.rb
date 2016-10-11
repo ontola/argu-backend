@@ -111,9 +111,9 @@ class NotificationsController < ApplicationController
     new_available = true
     if since.present?
       new_available = policy_scope(Notification)
-                      .order(created_at: :desc)
-                      .where('created_at > ?', since)
-                      .count.positive?
+                        .order(created_at: :desc)
+                        .where('created_at > ?', since)
+                        .count.positive?
     end
     @notifications = get_notifications(since) if new_available
     if @notifications.present?

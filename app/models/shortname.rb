@@ -46,8 +46,7 @@ class Shortname < ApplicationRecord
 
   def forum_id_matches_owner
     return if owner.is_a? Forum
-    if forum.present? && owner.present? && forum != owner.forum
-      errors.add(:owner, I18n.t('activerecord.errors.different_owner_forum'))
-    end
+    return unless forum.present? && owner.present? && forum != owner.forum
+    errors.add(:owner, I18n.t('activerecord.errors.different_owner_forum'))
   end
 end

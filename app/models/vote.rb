@@ -26,7 +26,7 @@ class Vote < ApplicationRecord
   end
 
   def for?(item)
-    self.for.to_s === item.to_s
+    self.for.to_s == item.to_s
   end
 
   def is_pro_con?
