@@ -55,9 +55,9 @@ class GroupsControllerTest < ActionController::TestCase
          params: {
            page_id: freetown.page,
            group: {
-               group_id: group.id,
-               name: 'Test group visible',
-               visibilitiy: 'visible'
+             group_id: group.id,
+             name: 'Test group visible',
+             visibilitiy: 'visible'
            }
          }
 
@@ -106,9 +106,9 @@ class GroupsControllerTest < ActionController::TestCase
          params: {
            page_id: freetown.page,
            group: {
-               group_id: group.id,
-               name: 'Test group visible',
-               visibilitiy: 'visible'
+             group_id: group.id,
+             name: 'Test group visible',
+             visibilitiy: 'visible'
            }
          }
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class MotionsControllerTest < ActionDispatch::IntegrationTest
@@ -8,7 +9,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
            :with_follower,
            parent: freetown.edge,
            options: {
-            creator: create(:profile_direct_email)
+             creator: create(:profile_direct_email)
            })
   end
   let(:closed_question) do
@@ -94,17 +95,17 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       }
     )
     define_test(hash, :create, case_suffix: ' for forum', options: {
-      parent: :freetown,
-      analytics: stats_opt('motions', 'create_success')
-    })
+                  parent: :freetown,
+                  analytics: stats_opt('motions', 'create_success')
+                })
     define_test(hash, :create, case_suffix: ' for question', options: {
-      parent: :question,
-      analytics: stats_opt('motions', 'create_success')
-    })
+                  parent: :question,
+                  analytics: stats_opt('motions', 'create_success')
+                })
     define_test(hash, :create, case_suffix: ' for project', options: {
-      parent: :project,
-      analytics: stats_opt('motions', 'create_success')
-    })
+                  parent: :project,
+                  analytics: stats_opt('motions', 'create_success')
+                })
     define_test(
       hash,
       :create,
@@ -138,13 +139,15 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         parent: :require_question_question,
         analytics: stats_opt('motions', 'create_success')
       },
-      user_types: {require_question_member: {should: true, response: 302}})
+      user_types: {require_question_member: {should: true, response: 302}}
+    )
     define_test(
       hash,
       :create,
       case_suffix: ' without required question',
       options: {parent: :require_question_forum},
-      user_types: {require_question_member: {should: false, response: 302}})
+      user_types: {require_question_member: {should: false, response: 302}}
+    )
     define_test(
       hash,
       :create,
@@ -159,7 +162,8 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           response: 200,
           asserts: ['assert_select "#motion_title", "Motion"',
-                    'assert_select "#motion_content", "C"']}
+                    'assert_select "#motion_content", "C"']
+        }
       }
     )
     define_test(
@@ -181,18 +185,20 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
           response: 302,
           asserts: [
             'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-            'assert_equal 1, resource.photos.count']}
+            'assert_equal 1, resource.photos.count'
+          ]
+        }
       }
     )
     define_test(hash, :show, asserts: [
-      'assigns(:motion)',
-      'assigns(:vote)',
-      'subject.arguments.where(is_trashed: true).count > 0',
-      '!(assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) })'
-    ])
+                  'assigns(:motion)',
+                  'assigns(:vote)',
+                  'subject.arguments.where(is_trashed: true).count > 0',
+                  '!(assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) })'
+                ])
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-      user: {should: false, response: 404}
-    })
+                  user: {should: false, response: 404}
+                })
     define_test(hash, :edit)
     define_test(hash, :update)
     define_test(
@@ -204,7 +210,8 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         creator: {
           should: false, response: 200, asserts: [
             'assert_select "#motion_title", "Motion"',
-            'assert_select "#motion_content", "C"']
+            'assert_select "#motion_content", "C"'
+          ]
         }
       }
     )
@@ -225,12 +232,14 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
           response: 302,
           asserts: [
             'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-            'assert_equal 1, resource.photos.count']}
+            'assert_equal 1, resource.photos.count'
+          ]
+        }
       }
     )
     define_test(hash, :trash, options: {
-      analytics: stats_opt('motions', 'trash_success')
-    })
+                  analytics: stats_opt('motions', 'trash_success')
+                })
     define_test(hash,
                 :destroy,
                 options: {analytics: stats_opt('motions', 'destroy_success')})
@@ -247,7 +256,8 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       results: {
         should: :true,
         response: 302
-      })
+      }
+    )
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
     WebMock.reset!
@@ -259,7 +269,8 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       results: {
         should: :true,
         response: 302
-      })
+      }
+    )
     assert_not_nil assigns(:create_service).resource
 
     assert_redirected_to motion_path(assigns(:create_service).resource)

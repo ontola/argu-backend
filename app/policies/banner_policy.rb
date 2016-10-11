@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BannerPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 
@@ -16,7 +17,7 @@ class BannerPolicy < RestrictivePolicy
     def resolve
       audience = [Banner.audiences[:everyone]]
       audience <<
-        if user && user.member_of?(context.forum)
+        if user&.member_of?(context.forum)
           Banner.audiences[:members]
         elsif user.present?
           Banner.audiences[:users]

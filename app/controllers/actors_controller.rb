@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ActorsController < ApplicationController
   def update
     @profile = Profile.find params[:na]

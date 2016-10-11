@@ -7,11 +7,11 @@ class DraftsController < ApplicationController
     blog_posts = policy_scope(@user.blog_posts.unpublished.trashed(false))
     if policy(@user).show?
       @items = Kaminari
-                 .paginate_array((projects + blog_posts)
+               .paginate_array((projects + blog_posts)
                                    .sort_by(&:updated_at)
                                    .reverse)
-                 .page(show_params[:page])
-                 .per(30)
+               .page(show_params[:page])
+               .per(30)
     end
   end
 

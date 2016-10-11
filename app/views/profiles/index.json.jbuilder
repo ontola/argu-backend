@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.profiles @profiles do |profile|
   json.id profile.id
   json.url dual_profile_url(profile)

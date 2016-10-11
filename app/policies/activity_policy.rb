@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ActivityPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -19,7 +20,8 @@ class ActivityPolicy < RestrictivePolicy
                 context.context_model.try(:id) || user.try(:profile).try(:joined_forum_ids) || 'NULL'])
         .joins(:owner)
         .where(activities[:key].not_eq('vote.create').or(
-                 profiles[:are_votes_public].eq(true)))
+                 profiles[:are_votes_public].eq(true)
+        ))
     end
   end
 

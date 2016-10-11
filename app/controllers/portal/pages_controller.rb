@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Portal::PagesController < ApplicationController
   def destroy
     @page = Page.find_via_shortname params[:id]
@@ -15,6 +16,7 @@ class Portal::PagesController < ApplicationController
   end
 
   private
+
   def permit_params
     params.require(:page).permit :name, :shortname, profile_attributes: [:name, :about]
   end

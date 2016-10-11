@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 json.id @motion.id
 json.title @motion.title
 json.content @motion.content

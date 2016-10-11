@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 class CreateBlogPost < PublishedCreateService
   include Wisper::Publisher
 
@@ -16,7 +17,8 @@ class CreateBlogPost < PublishedCreateService
       created_at: @attributes[:happened_at],
       owner: resource.creator,
       key: 'blog_post.happened',
-      recipient: resource.blog_postable)
+      recipient: resource.blog_postable
+    )
   end
 
   def object_attributes=(obj)

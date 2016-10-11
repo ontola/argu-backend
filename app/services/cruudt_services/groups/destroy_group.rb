@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Service for destroying groups.
 class DestroyGroup < DestroyService
   include Wisper::Publisher

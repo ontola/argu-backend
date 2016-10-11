@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'argu/not_authorized_error'
 
 module Argu
@@ -15,14 +16,15 @@ module Argu
             query: query,
             record: record,
             policy: policy,
-            verdict: verdict)
+            verdict: verdict
+          )
         end
 
         true
       end
     end
 
-    def authorize(record, query=nil)
+    def authorize(record, query = nil)
       query ||= params[:action].to_s + '?'
 
       @_pundit_policy_authorized = true
@@ -33,7 +35,8 @@ module Argu
           query: query,
           record: record,
           policy: policy,
-          verdict: policy.last_verdict)
+          verdict: policy.last_verdict
+        )
       end
 
       true

@@ -42,8 +42,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       )
     )
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: -1}, user_types: {
-      user: {should: false, response: 404}
-    })
+                  user: {should: false, response: 404}
+                })
     define_test(
       hash,
       :create,
@@ -64,33 +64,40 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           analytics: false,
           response: 302,
-          asserts: ['assigns(:_not_a_user_caught)']},
+          asserts: ['assigns(:_not_a_user_caught)']
+        },
         user: {
           should: false,
           analytics: false,
           response: 403,
-          asserts: ['assigns(:_not_a_member_caught)']},
+          asserts: ['assigns(:_not_a_member_caught)']
+        },
         member: {
           should: false,
           analytics: false,
           response: 302,
-          asserts: ['assigns(:_not_authorized_caught)']},
+          asserts: ['assigns(:_not_authorized_caught)']
+        },
         moderator: {
           should: true,
           response: 302,
-          asserts: ['moderator.reload.has_drafts?', '!Project.last.is_published?']},
+          asserts: ['moderator.reload.has_drafts?', '!Project.last.is_published?']
+        },
         manager: {
           should: true,
           response: 302,
-          asserts: ['manager.reload.has_drafts?', '!Project.last.is_published?']},
+          asserts: ['manager.reload.has_drafts?', '!Project.last.is_published?']
+        },
         owner: {
           should: true,
           response: 302,
-          asserts: ['owner.reload.has_drafts?', '!Project.last.is_published?']},
+          asserts: ['owner.reload.has_drafts?', '!Project.last.is_published?']
+        },
         staff: {
           should: true,
           response: 302,
-          asserts: ['staff.reload.has_drafts?', '!Project.last.is_published?']}
+          asserts: ['staff.reload.has_drafts?', '!Project.last.is_published?']
+        }
       }
     )
     define_test(
@@ -112,19 +119,23 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         moderator: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']},
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
+        },
         manager: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']},
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
+        },
         owner: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']},
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
+        },
         staff: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']}
+          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
+        }
       }
     )
     define_test(
@@ -141,7 +152,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           response: 200,
           asserts: ['assert_select "#project_title", "Project"',
-                    'assert_select "#project_content", "C"']}
+                    'assert_select "#project_content", "C"']
+        }
       }
     )
     define_test(
@@ -162,7 +174,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
           should: true,
           response: 302,
           asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-                    'assert_equal 1, resource.photos.count']}
+                    'assert_equal 1, resource.photos.count']
+        }
       }
     )
     define_test(hash, :edit, user_types: user_types[:edit]
@@ -181,7 +194,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           response: 200,
           asserts: ['assert_select "#project_title", "Project"',
-                    'assert_select "#project_content", "C"']}
+                    'assert_select "#project_content", "C"']
+        }
       }
     )
     define_test(
@@ -200,7 +214,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
           should: true,
           response: 302,
           asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-                    'assert_equal 1, resource.photos.count']}
+                    'assert_equal 1, resource.photos.count']
+        }
       }
     )
     define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})

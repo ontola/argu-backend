@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class QuestionAnswersController < ApplicationController
   helper_method :collect_banners
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupPolicy < RestrictivePolicy
   include PagePolicy::PageRoles
 
@@ -60,7 +61,7 @@ class GroupPolicy < RestrictivePolicy
     rule is_manager?, super
   end
 
-  def remove_member?(member)
+  def remove_member?(_member)
     rule is_manager?
   end
 

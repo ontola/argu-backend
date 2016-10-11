@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class FlowControllerTest < ActionDispatch::IntegrationTest
@@ -21,7 +22,7 @@ class FlowControllerTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'user should get motion/flow' do
-    #sign_in user
+    # sign_in user
 
     get motion_flow_path(subject),
         params: {

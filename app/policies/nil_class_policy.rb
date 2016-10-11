@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 class NilClassPolicy < RestrictivePolicy
   attr_reader :user, :record
 
-  def initialize(user, record)
-    raise Pundit::NotAuthorizedError, 'An error occurred'
+  def initialize(_user, _record)
+    raise Pundit::NotAuthorizedError.new('An error occurred')
   end
 
   def permitted_attributes

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Argument < ApplicationRecord
   include Loggable, ProCon, Flowable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
@@ -26,7 +27,7 @@ class Argument < ApplicationRecord
     content
   end
 
-  def top_comment(show_trashed = nil)
+  def top_comment(_show_trashed = nil)
     comment_threads.where(parent_id: nil, is_trashed: false).order('created_at ASC').first
   end
 
@@ -51,7 +52,7 @@ class Argument < ApplicationRecord
     adjacent(true, show_trashed)
   end
 
-  def adjacent(direction, show_trashed = nil)
+  def adjacent(direction, _show_trashed = nil)
     ids = motion.arguments_plain.order(votes_pro_count: :desc).ids
     index = ids.index(self[:id])
     return nil if ids.length < 2
@@ -62,7 +63,7 @@ class Argument < ApplicationRecord
   def shallow_wipe
     proc do |c|
       if c.is_trashed?
-        c.body= '[DELETED]'
+        c.body = '[DELETED]'
         c.creator = nil
         c.is_processed = true
       end

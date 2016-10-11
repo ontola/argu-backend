@@ -1,23 +1,24 @@
+# frozen_string_literal: true
 class QuestionsController < AuthorizedController
   include NestedResourceHelper
 
   def show
     scope = authenticated_resource!
-                .motions
-                .includes(:default_cover_photo, :edge, :votes, :top_arguments_con, :top_arguments_pro, :forum,
-                          creator: {default_profile_photo: [], profileable: [:shortname]})
-                .trashed(show_trashed?)
-                .order(votes_pro_count: :desc)
+            .motions
+            .includes(:default_cover_photo, :edge, :votes, :top_arguments_con, :top_arguments_pro, :forum,
+                      creator: {default_profile_photo: [], profileable: [:shortname]})
+            .trashed(show_trashed?)
+            .order(votes_pro_count: :desc)
 
     if current_user.present?
       @user_votes = Vote.where(voteable: scope, voter: current_profile).eager_load!
     end
 
     @motions = policy_scope(scope)
-                 .page(show_params[:page])
+               .page(show_params[:page])
 
     respond_to do |format|
-      format.html { render locals: {question: authenticated_resource!}} # show.html.erb
+      format.html { render locals: {question: authenticated_resource!} } # show.html.erb
       format.widget { render authenticated_resource! }
       format.json # show.json.jbuilder
     end

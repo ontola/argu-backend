@@ -22,7 +22,7 @@ class CreateService < ApplicationService
     :save!
   end
 
-  def object_attributes=(obj)
+  def object_attributes=(_obj)
     raise 'Required interface not implemented'
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MenuHelper
   # Generates a dropdown (cr)Update Delete menu for use in the profile bar.
   # @author Fletcher91 <thom@argu.co>

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Portal::ForumsController < ApplicationController
   def new
     authorize new_resource_from_params, :new?
@@ -26,15 +27,16 @@ class Portal::ForumsController < ApplicationController
       options: {
         creator: current_profile,
         publisher: current_user
-      })
+      }
+    )
   end
 
   def new_resource_from_params
     @resource ||= Shortname.find_resource(params[:page])
-      .edge
-      .children
-      .new(owner: Forum.new(page: params[:page]))
-      .owner
+                           .edge
+                           .children
+                           .new(owner: Forum.new(page: params[:page]))
+                           .owner
   end
 
   def permit_params

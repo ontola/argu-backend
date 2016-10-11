@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BannerDismissal
   include ActiveModel::Dirty, ActiveModel::Model, ActiveModel::Validations
   include StubbornCookie
@@ -36,7 +37,7 @@ class BannerDismissal
   end
 
   def stubborn_identifier
-    user && user.id
+    user&.id
   end
 
   def stubborn_params

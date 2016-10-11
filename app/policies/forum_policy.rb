@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ForumPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -51,19 +52,19 @@ class ForumPolicy < RestrictivePolicy
     # Is the current user a member of the group?
     # @note This tells nothing about whether the user can make edits on the object
     def is_member?
-      member if actor && actor.grants.forum_member.where(edges: {owner_id: record.id}).count > 0
+      member if actor && actor.grants.forum_member.where(edges: {owner_id: record.id}).count.positive?
     end
 
     # Is the user a manager of the page or of the forum?
     # @note Trickles up
     def is_manager?
-      is_manager = user && user.profile.grants.forum_manager.where(edges: {owner_id: record.id}).count > 0
+      is_manager = user && user.profile.grants.forum_manager.where(edges: {owner_id: record.id}).count.positive?
       [(manager if is_manager), is_owner?].compact.presence
     end
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
     def is_owner?
-      #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
+      # record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
       owner if user && record.page.owner == user.profile
     end
 
@@ -94,7 +95,7 @@ class ForumPolicy < RestrictivePolicy
     tabs
   end
 
-  ######Actions######
+  # #####Actions######
   def create?
     super
   end
@@ -113,7 +114,7 @@ class ForumPolicy < RestrictivePolicy
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && (user.profile.pages.length > 0 || user.profile.grants.manager.presence) || staff?
+    user && (user.profile.pages.length.positive? || user.profile.grants.manager.presence) || staff?
   end
 
   def join?

@@ -1,12 +1,13 @@
+# frozen_string_literal: true
 class PagesController < ApplicationController
   def index
     authorize Page, :index?
     @user = User.find_via_shortname params[:id]
-    authorize @user,:update?
+    authorize @user, :update?
     @pages = Page
-               .where(id: @user.profile.pages.pluck(:id)
+             .where(id: @user.profile.pages.pluck(:id)
                             .concat(@user.profile.page_ids(:manager)))
-               .distinct
+             .distinct
     @_pundit_policy_scoped = true
 
     render locals: {
@@ -41,9 +42,9 @@ class PagesController < ApplicationController
     else
       if pa_po.max_pages_reached?
         errors[:max_allowed_pages] = {
-            max: pa_po.max_allowed_pages,
-            current: current_user.profile.pages.length,
-            pages_url: pages_user_url(current_user)
+          max: pa_po.max_allowed_pages,
+          current: current_user.profile.pages.length,
+          pages_url: pages_user_url(current_user)
         }
       end
     end
@@ -105,7 +106,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html { render 'delete', locals: {resource: @page} }
-      format.js { render layout: false}
+      format.js { render layout: false }
     end
   end
 
@@ -126,7 +127,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html { render }
-      format.js { render layout: false}
+      format.js { render layout: false }
     end
   end
 
@@ -157,10 +158,10 @@ class PagesController < ApplicationController
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = params
-                        .require(:page)
-                        .permit(*policy(@page || Page).permitted_attributes)
-                        .to_h
-                        .merge(owner: current_user.profile)
+                      .require(:page)
+                      .permit(*policy(@page || Page).permitted_attributes)
+                      .to_h
+                      .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)
     @_permit_params[:last_accepted] = DateTime.current if permit_params[:last_accepted] == '1'
     @_permit_params
@@ -176,7 +177,7 @@ class PagesController < ApplicationController
       '"votes"."voter_id" = ' + @profile.id.to_s + ') AND '\
       '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') '\
       'AND ("forums"."visibility" = ' + Forum.visibilities[:open].to_s + ' OR '\
-      '"forums"."id" IN ('+ (current_profile && current_profile.joined_forum_ids || 0.to_s) +')) '\
+      '"forums"."id" IN (' + (current_profile&.joined_forum_ids || 0.to_s) + ')) '\
       'ORDER BY created_at DESC'
   end
 end

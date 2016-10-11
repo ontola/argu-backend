@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Argu
   class ActivityString
     include ActionView::Helpers, ProfilesHelper
@@ -40,8 +41,8 @@ module Argu
 
     # @return [String] Display name of activity.owner, as link or bold text
     def owner_string
-      string = @activity.owner_id > 0 ? @activity.owner.display_name : @activity.audit_data['user_name']
-      @embedded_link && @activity.owner_id > 0 ? "[#{string}](#{dual_profile_url(@activity.owner)})" : string.to_s
+      string = @activity.owner_id.positive? ? @activity.owner.display_name : @activity.audit_data['user_name']
+      @embedded_link && @activity.owner_id.positive? ? "[#{string}](#{dual_profile_url(@activity.owner)})" : string.to_s
     end
 
     # @return [String, nil] Display name of activity.trackable.get_parent, as link or bold text

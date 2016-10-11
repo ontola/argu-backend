@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Activity < PublicActivity::Activity
   has_many :notifications, dependent: :destroy
   # The creator of the activity
@@ -12,7 +13,7 @@ class Activity < PublicActivity::Activity
 
   alias_attribute :happened_at, :created_at
 
-  validates_presence_of :forum, :key, :trackable, :owner, :recipient
+  validates :forum, :key, :trackable, :owner, :recipient, presence: true
   validate :validate_happening_within_project_scope
 
   # Represents the physical event of the trackable.

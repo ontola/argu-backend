@@ -30,7 +30,7 @@ RSpec.feature 'Shortname', type: :feature do
 
   private
 
-  def general_create(response = 200)
+  def general_create(_response = 200)
     motion
     visit shortname_settings_path
     expect(page).to have_content('0 out of 3')
@@ -51,7 +51,7 @@ RSpec.feature 'Shortname', type: :feature do
     expect(page).to have_current_path shortname_settings_path
   end
 
-  def general_destroy(response = 200)
+  def general_destroy(_response = 200)
     s = freetown.shortnames.first
     expect do
       visit shortname_settings_path

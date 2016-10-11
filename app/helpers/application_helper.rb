@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'bcrypt'
 require 'bcrypt/engine'
 require 'stubborn_cookie'
@@ -18,7 +19,7 @@ module ApplicationHelper
     nil
   end
 
-  def awesome_time_ago_in_words (date)
+  def awesome_time_ago_in_words(date)
     if date.present?
       if 1.day.ago < date
         distance_of_time_in_words(date, Time.current)
@@ -30,7 +31,7 @@ module ApplicationHelper
     end
   end
 
-  def image_tag(source, options={})
+  def image_tag(source, options = {})
     source = 'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=' if source.nil?
     super
   end
@@ -40,7 +41,8 @@ module ApplicationHelper
       current_user,
       current_profile,
       session,
-      tenant)
+      tenant
+    )
     Pundit.policy!(uc, record)
   end
 
@@ -54,7 +56,7 @@ module ApplicationHelper
     JWT.encode payload, Rails.application.secrets.jwt_encryption_token, 'HS256'
   end
 
-  def decode_token(token, verify = false)
+  def decode_token(token, _verify = false)
     JWT.decode(token, Rails.application.secrets.jwt_encryption_token, algorithm: 'HS256')[0]
   end
 
@@ -101,7 +103,7 @@ module ApplicationHelper
 
   def r_to_url_options(r)
     url_options = Rails.application.routes.recognize_path(Addressable::URI.parse(URI.decode(r)).path)
-    return url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize
+    [url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize]
   end
 
   def remote_if_non_modern
@@ -110,7 +112,7 @@ module ApplicationHelper
 
   # Used in forms for the 'r' system
   def remote_if_user(override = nil)
-    if override != nil
+    if !override.nil?
       override ? {remote: override} : {}
     else
       current_profile.present? ? {remote: true} : {}
@@ -126,7 +128,7 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(model= '', **options)
+  def set_title(model = '', **options)
     title_string = seolized_title(model, **options)
     provide :title, title_string
   end

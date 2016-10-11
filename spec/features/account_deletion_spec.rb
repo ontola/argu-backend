@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Account deletion', type: :feature do
@@ -79,5 +80,4 @@ RSpec.feature 'Account deletion', type: :feature do
     expect(page).to have_content 'You are the owner of one or multiple pages. '\
                                  'If you want to delete your account, please transfer or delete these pages first'
   end
-
 end

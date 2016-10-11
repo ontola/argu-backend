@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PortalPolicy < Struct.new(:user, :portal)
   attr_reader :context, :record, :last_verdict, :last_enacted
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
@@ -96,8 +97,8 @@ class PagesControllerTest < ActionController::TestCase
 
     memberships = assigns(:current_profile).granted_edges.where(owner_type: 'Forums').pluck(:owner_id)
     assert assigns(:collection)
-             .values
-             .all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
+      .values
+      .all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
            'Votes of closed fora are visible to non-members'
   end
 
@@ -180,7 +181,7 @@ class PagesControllerTest < ActionController::TestCase
                 image: fixture_file_upload('profile_photo.png', 'image/png')
               },
               default_cover_photo_attributes: {
-                  image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+                image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
               }
             }
           }
@@ -229,7 +230,7 @@ class PagesControllerTest < ActionController::TestCase
              params: {
                id: page.shortname.shortname,
                page: {
-                   repeat_name: page.shortname.shortname
+                 repeat_name: page.shortname.shortname
                }
              }
     end
@@ -244,7 +245,7 @@ class PagesControllerTest < ActionController::TestCase
              params: {
                id: page_non_public.shortname.shortname,
                page: {
-                   repeat_name: page_non_public.shortname.shortname
+                 repeat_name: page_non_public.shortname.shortname
                }
              }
     end

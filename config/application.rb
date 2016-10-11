@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'boot'
 
 require_relative './initializers/version'
@@ -47,7 +48,7 @@ module Argu
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
-        resource %r{\d+.widget},
+        resource /\d+.widget/,
                  headers: ['Origin', 'Accept', 'Content-Type'],
                  methods: [:get]
       end
@@ -72,7 +73,7 @@ module Argu
     config.time_zone = 'UTC'
     I18n.available_locales = [:nl, :en]
     config.i18n.available_locales = [:nl, :en]
-    config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
+    config.i18n.load_path += Dir["#{Rails.root}/config/locales/**/*.{rb,yml}"]
     config.i18n.enforce_available_locales = true
     I18n.enforce_available_locales = true
     config.i18n.default_locale = :nl

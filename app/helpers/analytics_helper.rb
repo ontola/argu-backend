@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module AnalyticsHelper
   def staccato_options(opts = {})
     {

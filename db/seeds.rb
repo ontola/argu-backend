@@ -1,13 +1,15 @@
+# frozen_string_literal: true
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 u1 = User
-  .new(
-    id: 0,
-    shortname: Shortname.new(shortname: 'community'),
-    email: 'community@argu.co',
-    password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
-    finished_intro: true)
+     .new(
+       id: 0,
+       shortname: Shortname.new(shortname: 'community'),
+       email: 'community@argu.co',
+       password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
+       finished_intro: true
+     )
 u1.build_profile(id: 0, profileable: u1)
 u1.save!
 u1.update(encrypted_password: '')
@@ -17,11 +19,12 @@ User
     email: 'staff@argu.co',
     shortname_attributes: {shortname: 'staff_account'},
     password: 'arguargu',
-    password_confirmation:'arguargu',
+    password_confirmation: 'arguargu',
     first_name: 'Douglas',
     last_name: 'Engelbart',
     finished_intro: true,
-    profile: Profile.new)
+    profile: Profile.new
+  )
   .profile
   .add_role :staff
 
@@ -30,19 +33,21 @@ User
     email: 'user@argu.co',
     shortname_attributes: {shortname: 'user_account'},
     password: 'arguargu',
-    password_confirmation:'arguargu',
+    password_confirmation: 'arguargu',
     first_name: 'Maarten',
     last_name: 'Scharendrecht',
     finished_intro: true,
-    profile: Profile.new)
+    profile: Profile.new
+  )
   .profile
   .add_role :user
 
 argu = Page
-         .new(
-           owner: User.find_via_shortname('staff_account').profile,
-           shortname_attributes: {shortname: 'argu'},
-           last_accepted: Time.current)
+       .new(
+         owner: User.find_via_shortname('staff_account').profile,
+         shortname_attributes: {shortname: 'argu'},
+         last_accepted: Time.current
+       )
 argu.build_profile(name: 'Argu', profileable: argu)
 argu.edge = Edge.new(owner: argu, user: argu.publisher)
 argu.save!

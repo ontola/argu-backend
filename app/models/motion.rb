@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
@@ -54,11 +55,11 @@ class Motion < ApplicationRecord
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
 
-  VOTE_OPTIONS = [:pro, :neutral, :con]
+  VOTE_OPTIONS = [:pro, :neutral, :con].freeze
 
   # @return [ActiveRecord::Relation]
   def self.search(q)
-    where('lower(motions.title) SIMILAR TO lower(?) OR ' +
+    where('lower(motions.title) SIMILAR TO lower(?) OR ' \
             'lower(motions.content) LIKE lower(?)',
           "%#{q}%",
           "%#{q}%")
@@ -75,8 +76,8 @@ class Motion < ApplicationRecord
     join << " AND votes.voteable_id = motions.id AND votes.voter_type = 'Profile'"
     join << " AND votes.voter_id = #{profile.id}"
     joins(join)
-        .references(:votes)
-        .select('motions.*,votes.*')
+      .references(:votes)
+      .select('motions.*,votes.*')
   end
 
   def assert_tenant
@@ -202,8 +203,8 @@ class Motion < ApplicationRecord
   end
 
   def vote_percentage(vote_count)
-    if vote_count == 0
-      if total_vote_count == 0
+    if vote_count.zero?
+      if total_vote_count.zero?
         33
       else
         0

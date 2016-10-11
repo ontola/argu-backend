@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class FollowsController < ApplicationController
   before_action :check_user
   before_action :set_thing
@@ -28,7 +29,7 @@ class FollowsController < ApplicationController
     send_event category: 'follows',
                action: permit_params[:follow_type],
                label: @thing.model_name.collection
-    if resp == nil || resp
+    if resp.nil? || resp
       respond_to do |format|
         format.html { redirect_back(fallback_location: root_path, notification: t('unfollowed')) }
         format.json { head 204 }

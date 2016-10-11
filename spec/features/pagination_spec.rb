@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Pagination', type: :feature do
@@ -16,8 +17,8 @@ RSpec.feature 'Pagination', type: :feature do
     m
   end
 
-  css_pro_pagination = '.argument-columns .col-2-1:nth-child(2) .pagination'.freeze
-  css_con_pagination = '.argument-columns .col-2-1:nth-child(3) .pagination'.freeze
+  css_pro_pagination = '.argument-columns .col-2-1:nth-child(2) .pagination'
+  css_con_pagination = '.argument-columns .col-2-1:nth-child(3) .pagination'
 
   scenario 'Guest clicks on argument next' do
     m = overpopulated_motion

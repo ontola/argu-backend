@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Users::SessionsController < Devise::SessionsController
   skip_before_action :check_finished_intro, only: :destroy
 
@@ -56,6 +57,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   private
+
   # TODO: Code the 307 away
   def is_post?(r)
     r.match(/\/v(\?|\/)|\/c(\?|\/)/)

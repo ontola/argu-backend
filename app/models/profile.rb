@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Profile < ApplicationRecord
   include Photoable, ProfilePhotoable
 
@@ -76,14 +77,14 @@ class Profile < ApplicationRecord
       .where(group_memberships: {member_id: id}, grants: {role: Grant.roles[:member]})
   end
 
-  def forum_ids(role=:member)
+  def forum_ids(role = :member)
     @forum_ids ||= {}
     @forum_ids[role] ||= granted_edges
-                           .where(owner_type: 'Forum', grants: {role: Grant.roles[role]})
-                           .pluck(:owner_id)
+                         .where(owner_type: 'Forum', grants: {role: Grant.roles[role]})
+                         .pluck(:owner_id)
   end
 
-  def joined_forum_ids(role=:member)
+  def joined_forum_ids(role = :member)
     forum_ids(role).join(',').presence
   end
 
@@ -92,14 +93,14 @@ class Profile < ApplicationRecord
   end
   deprecate :owner
 
-  def page_ids(role=:member)
+  def page_ids(role = :member)
     @page_ids ||= {}
     @page_ids[role] ||= granted_edges
-                          .where(owner_type: 'Page', grants: {role: Grant.roles[role]})
-                          .pluck(:owner_id)
+                        .where(owner_type: 'Page', grants: {role: Grant.roles[role]})
+                        .pluck(:owner_id)
   end
 
-  def joined_page_ids(role=:member)
+  def joined_page_ids(role = :member)
     page_ids(role).join(',').presence
   end
 
@@ -111,12 +112,10 @@ class Profile < ApplicationRecord
     profileable.presence && profileable.url.presence
   end
 
-  # TODO Crashes if false
-  def finished_intro?
-    profileable && profileable.finished_intro?
-  end
+  # TODO: Crashes if false
+  delegate :finished_intro?, to: :profileable
 
-  #######Methods########
+  # ######Methods########
   def voted_on?(item)
     Vote.where(voter_id: id, voter_type: self.class.name,
                voteable_id: item.id, voteable_type: item.class.to_s).last

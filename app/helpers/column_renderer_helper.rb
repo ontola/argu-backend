@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ##
 # Renders a collection of models in one or more columns
 module ColumnRendererHelper
@@ -16,8 +17,8 @@ module ColumnRendererHelper
     partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
     if partial == 'column_renderer/show'
-      columns.each do |k,v|
-        columns[k] = options.merge(v||{})
+      columns.each do |k, v|
+        columns[k] = options.merge(v || {})
       end
     end
 
@@ -26,13 +27,13 @@ module ColumnRendererHelper
 
   def button_box(params)
     {
-        tag: 'div',
-        class: 'btn--huge btn--huge--container'
+      tag: 'div',
+      class: 'btn--huge btn--huge--container'
     }.merge(params.except(:collection))
   end
 
   def header(options)
-    if !(defined?(options[:header]) && options[:header] == false)
+    unless defined?(options[:header]) && options[:header] == false
       content_tag :header do
         content_tag :h2, options[:header]
       end

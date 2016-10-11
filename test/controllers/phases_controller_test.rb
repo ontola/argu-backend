@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class PhasesControllerTest < ActionController::TestCase
@@ -260,14 +261,14 @@ class PhasesControllerTest < ActionController::TestCase
     assert_response response
     if assigns(:update_service).try(:resource).present?
       ch_method.call subject
-                       .updated_at
-                       .utc
-                       .iso8601(6),
+        .updated_at
+        .utc
+        .iso8601(6),
                      assigns(:update_service)
-                       .try(:resource)
-                       .try(:updated_at)
-                       .try(:utc)
-                       .try(:iso8601, 6)
+        .try(:resource)
+        .try(:updated_at)
+        .try(:utc)
+        .try(:iso8601, 6)
     elsif changed
       assert false, 'Model changed when it should not have'
     end
@@ -285,10 +286,10 @@ class PhasesControllerTest < ActionController::TestCase
     assert_response response
     if assigns(:update_service).try(:resource).present?
       ch_method.call subject
-                       .end_date,
+        .end_date,
                      assigns(:update_service)
-                       .try(:resource)
-                       .try(:end_date)
+        .try(:resource)
+        .try(:end_date)
     elsif changed
       assert false, 'Model changed when it should not have'
     end

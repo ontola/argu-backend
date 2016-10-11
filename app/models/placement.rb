@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Placement < ApplicationRecord
   belongs_to :forum
   belongs_to :place

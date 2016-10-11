@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ShortnamesController < ApplicationController
   include NestedResourceHelper
   before_action :initialize_resource, :filter_lesser_roles

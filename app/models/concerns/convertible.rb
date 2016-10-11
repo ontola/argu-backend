@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Concern which gives Models the `convert` ability.
 #
 # Converts as many parameters and assocations as possible.
@@ -27,14 +28,13 @@ module Convertible
       convertible_classes[klass.class_name.to_sym].each do |association|
         klass_association = self.class.reflect_on_association(association)
         # Just to be sure
-        if klass_association.macro == :has_many
-          remote_association_name = klass_association.options[:as]
-          send(association).each do |associated_model|
-            associated_model.send("#{remote_association_name}=", new_model)
-            associated_model.save!
-          end
-          send(association).clear
+        next unless klass_association.macro == :has_many
+        remote_association_name = klass_association.options[:as]
+        send(association).each do |associated_model|
+          associated_model.send("#{remote_association_name}=", new_model)
+          associated_model.save!
         end
+        send(association).clear
       end
       # Reload to make sure the Edge is no longer marked as dependent
       reload

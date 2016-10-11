@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
@@ -77,8 +78,8 @@ class UsersControllerTest < ActionController::TestCase
 
     _memberships = assigns(:current_profile).granted_edges.where(owner_type: 'Forums').pluck(:owner_id)
     assert assigns(:collection)
-             .values
-             .all? { |arr| arr[:collection].all? { |v| _memberships.include?(v.forum_id) || v.forum.open? } },
+      .values
+      .all? { |arr| arr[:collection].all? { |v| _memberships.include?(v.forum_id) || v.forum.open? } },
            'Votes of closed fora are visible to non-members'
   end
 
@@ -91,13 +92,13 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_not assigns(:collection)[:con][:collection].any?, 'all votes are shown'
     assert_equal user2
-                   .profile
-                   .votes_questions_motions
-                   .reject(&:is_trashed?)
-                   .length,
+      .profile
+      .votes_questions_motions
+      .reject(&:is_trashed?)
+      .length,
                  assigns(:collection)
                    .values
-                   .map {|i| i[:collection].length }.inject(&:+),
+                   .map { |i| i[:collection].length }.inject(&:+),
                  'Not all/too many votes are shown'
   end
 
@@ -123,7 +124,7 @@ class UsersControllerTest < ActionController::TestCase
     get :show, params: {id: initialize_user2_votes}
 
     assert_response 200
-    assert assigns(:collection)[:pro][:collection].length > 0
+    assert assigns(:collection)[:pro][:collection].length.positive?
     assert_not assigns(:collection)[:pro][:collection].any? { |v| v.voteable.is_trashed? }
   end
 

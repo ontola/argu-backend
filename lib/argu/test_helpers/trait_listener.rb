@@ -12,9 +12,9 @@ module Argu
       def populated_forum
         3.times do
           service = CreateMotion
-                      .new(@resource.edge,
-                           attributes: attributes_for(:motion),
-                           options: service_options)
+                    .new(@resource.edge,
+                         attributes: attributes_for(:motion),
+                         options: service_options)
           service.commit
           CreateArgument
             .new(service.resource.edge,
@@ -30,9 +30,9 @@ module Argu
             .commit
         end
         service = CreateQuestion
-                    .new(@resource.edge,
-                         attributes: attributes_for(:question),
-                         options: service_options)
+                  .new(@resource.edge,
+                       attributes: attributes_for(:question),
+                       options: service_options)
         service.commit
         CreateMotion
           .new(service.resource.edge,
@@ -70,7 +70,8 @@ module Argu
         FactoryGirl.create(
           :follow,
           follower: FactoryGirl.create(:user, :follows_reactions_directly),
-          followable: @resource.edge)
+          followable: @resource.edge
+        )
       end
 
       # Adds a news_follower to the edge of the resource
@@ -79,7 +80,8 @@ module Argu
         FactoryGirl.create(
           :news_follow,
           follower: FactoryGirl.create(:user, :follows_news_directly),
-          followable: @resource.edge)
+          followable: @resource.edge
+        )
       end
 
       # Adds 2 published and 2 trashed motions to the resource
@@ -89,14 +91,16 @@ module Argu
             .new(
               @resource.edge,
               attributes: attributes_for(:motion),
-              options: service_options)
+              options: service_options
+            )
             .commit
           CreateMotion
             .new(
               @resource.edge,
               attributes: attributes_for(:motion)
                 .merge(is_trashed: true),
-              options: service_options)
+              options: service_options
+            )
             .commit
         end
       end
@@ -108,19 +112,22 @@ module Argu
             .new(
               @resource.edge,
               attributes: vote_attrs(:pro),
-              options: service_options)
+              options: service_options
+            )
             .commit
           CreateVote
             .new(
               @resource.edge,
               attributes: vote_attrs(:neutral),
-              options: service_options)
+              options: service_options
+            )
             .commit
           CreateVote
             .new(
               @resource.edge,
               attributes: vote_attrs(:con),
-              options: service_options)
+              options: service_options
+            )
             .commit
         end
       end

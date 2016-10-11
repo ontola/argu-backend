@@ -10,7 +10,8 @@ class NotificationListenerTest < ActiveSupport::TestCase
     create(
       :activity,
       trackable: create(:vote, parent: motion.edge),
-      forum: motion.forum)
+      forum: motion.forum
+    )
   end
 
   test 'should create notification on activity' do

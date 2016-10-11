@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module NestedAttributesHelper
   # @param [class] type The type of the photo#about
   # @param [Forum] forum The forum the photo should be tenantanized in
@@ -9,10 +10,10 @@ module NestedAttributesHelper
 
   def merge_photo_params(permit_params, klass)
     profile = permit_params.dig(*photo_params_nested_path(:default_profile_photo_attributes))
-    profile.merge!(photo_params(klass)) if profile
+    profile&.merge!(photo_params(klass))
 
     cover = permit_params.dig(*photo_params_nested_path(:default_cover_photo_attributes))
-    cover.merge!(photo_params(klass)) if cover
+    cover&.merge!(photo_params(klass))
 
     permit_params
   end
@@ -35,7 +36,7 @@ module NestedAttributesHelper
 
   def merge_placement_params(permit_params, klass)
     home_placement = permit_params[:home_placement_attributes]
-    home_placement.merge!(placement_params(klass)) if home_placement
+    home_placement&.merge!(placement_params(klass))
 
     permit_params
   end

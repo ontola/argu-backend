@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # @todo remove after migration
 class Membership < ApplicationRecord
   include Parentable

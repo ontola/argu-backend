@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 class BannerDismissalsController < AuthorizedController
   skip_before_action :check_if_registered
 
   def create
     dismissal = BannerDismissal.new banner_dismissal_params
-                                      .to_h
-                                      .merge!(user: current_user)
+                .to_h
+                .merge!(user: current_user)
     authorize dismissal, :create?
     respond_to do |format|
       if dismissal.save
@@ -40,7 +41,7 @@ class BannerDismissalsController < AuthorizedController
       case authenticated_resource!.banner.audience.to_sym
       when :guests then !current_user
       when :users then current_user && !current_user.member_of?(authenticated_context)
-      when :members then current_user && current_user.member_of?(authenticated_context)
+      when :members then current_user&.member_of?(authenticated_context)
       when :everyone then true
       end
     else

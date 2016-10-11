@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PublicationsWorker
   include Sidekiq::Worker
 
@@ -18,6 +19,6 @@ class PublicationsWorker
   end
 
   def self.cancel!(jid)
-    Argu::Redis.setex("cancelled-#{jid}", 86400, 1)
+    Argu::Redis.setex("cancelled-#{jid}", 86_400, 1)
   end
 end

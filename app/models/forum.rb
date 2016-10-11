@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Forum < ApplicationRecord
   include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
           Groupable, Loggable
@@ -42,7 +43,7 @@ class Forum < ApplicationRecord
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}
-  enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
+  enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
   scope :top_public_forums,
         ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
@@ -92,7 +93,7 @@ class Forum < ApplicationRecord
 
   def self.find(*ids)
     shortname = ids.length == 1 && ids.first.instance_of?(String) && ids.first
-    if shortname && shortname.to_i == 0
+    if shortname && shortname.to_i.zero?
       find_via_shortname(shortname)
     else
       super(*ids)

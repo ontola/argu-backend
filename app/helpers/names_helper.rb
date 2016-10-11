@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provides helpers for the translations and icons.
 module NamesHelper
   extend ActiveSupport::Concern
@@ -151,7 +152,7 @@ module NamesHelper
   end
 
   # @private
-  def type_for(item, plural = false)
+  def type_for(item, _plural = false)
     if item.class == Motion
       motion_type
     elsif item.class == Question

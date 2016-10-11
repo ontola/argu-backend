@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 # Something That Enables People Unmitigated Privilege
 class Stepup < ApplicationRecord
   attr_accessor :manager

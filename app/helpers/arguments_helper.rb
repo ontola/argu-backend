@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ArgumentsHelper
   def pro_arguments_preview_tooltip(motion)
     arguments_preview_tooltip(motion.top_arguments_pro_light, '+')
@@ -22,9 +23,9 @@ module ArgumentsHelper
     [:pro, :con].each do |side|
       is_checked = side == (model.pro ? :pro : :con)
       values << [
-          t("#{model.class_name}.form.side.#{side}"),
-          side,
-          {checked: is_checked, class: ('checked' if is_checked).to_s}
+        t("#{model.class_name}.form.side.#{side}"),
+        side,
+        {checked: is_checked, class: ('checked' if is_checked).to_s}
       ]
     end
     values

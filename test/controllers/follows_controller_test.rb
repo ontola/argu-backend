@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class FollowsControllerTest < ActionController::TestCase
@@ -111,6 +112,6 @@ class FollowsControllerTest < ActionController::TestCase
   private
 
   def motion_referer
-    request.env["HTTP_REFERER"] = motion_path(motion)
+    request.env['HTTP_REFERER'] = motion_path(motion)
   end
 end

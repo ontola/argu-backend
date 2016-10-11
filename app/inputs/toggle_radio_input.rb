@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ToggleRadioInput < Formtastic::Inputs::RadioInput
   include ActionView::Helpers::TranslationHelper
 
@@ -9,6 +10,7 @@ class ToggleRadioInput < Formtastic::Inputs::RadioInput
                            input_html_options.merge(choice_html_options(choice)).merge(required: false)) <<
         choice_label(choice),
       label_html_options.merge(for: choice_input_dom_id(choice),
-                               class: choice_html_options(choice)[:class]))
+                               class: choice_html_options(choice)[:class])
+    )
   end
 end

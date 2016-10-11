@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupMembershipsController < AuthorizedController
   skip_before_action :authorize_action, only: :index
   skip_before_action :check_if_member
@@ -19,7 +20,8 @@ class GroupMembershipsController < AuthorizedController
                  'lower(users.first_name) SIMILAR TO lower(?) OR ' \
                  'lower(users.last_name) SIMILAR TO lower(?)',
                  "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%")
-          .references(:groups, :users))
+          .references(:groups, :users)
+      )
 
       render json: @results, include: %i(group user)
     end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User < ApplicationRecord
   include Shortnameable, Flowable, Placeable
 
@@ -217,7 +218,7 @@ class User < ApplicationRecord
   end
 
   class << self
-    def serialize_from_session(key,salt)
+    def serialize_from_session(key, salt)
       record = to_adapter.get(key[0].to_param)
       record if record && record.authenticatable_salt == salt
     end
@@ -225,7 +226,7 @@ class User < ApplicationRecord
     def find_for_oauth(auth)
       # Get the identity and user if they exist
       identity = Identity.find_for_oauth(auth)
-      identity && identity.user
+      identity&.user
     end
   end
 end

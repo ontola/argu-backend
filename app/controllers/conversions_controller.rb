@@ -43,7 +43,8 @@ class ConversionsController < ApplicationController
     @create_service ||= CreateConversion.new(
       Conversion.new(edge: @edge),
       attributes: permit_params,
-      options: service_options)
+      options: service_options
+    )
   end
 
   def collect_banners

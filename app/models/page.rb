@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
   include Edgeable, Shortnameable, Flowable, Groupable
@@ -14,7 +15,7 @@ class Page < ApplicationRecord
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner_id, :last_accepted, presence: true
 
-  enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
+  enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
   def build_profile(*options)
     super(*options) if profile.nil?

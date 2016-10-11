@@ -3,7 +3,7 @@
 module Argu
   module TestHelpers
     module AutomatedTests
-      def self.configure(&block)
+      def self.configure
         yield @config ||= AutomatedTests::Configuration.new
       end
 

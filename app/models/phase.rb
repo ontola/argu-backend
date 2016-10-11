@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Phase < ApplicationRecord
   include Placeable, Parentable
   attr_accessor :finish_phase

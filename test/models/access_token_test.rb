@@ -8,9 +8,9 @@ class AccessTokenTest < ActiveSupport::TestCase
   # association explicitly set defeating the purpose of the test
   let(:venice) do
     create_forum(attributes: {
-      visible_with_a_link: true,
-      visibility: Forum.visibilities[:hidden]
-    })
+                   visible_with_a_link: true,
+                   visibility: Forum.visibilities[:hidden]
+                 })
   end
 
   test 'valid' do

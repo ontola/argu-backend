@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   config.host = ENV['HOSTNAME'] || 'localhost:3000'
   Rails.application.routes.default_url_options[:host] = config.host

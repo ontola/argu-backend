@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 module Publishable
   module Wrappers
     class Facebook < Wrapper
-      def initialize(access_token, *args)
+      def initialize(access_token, *_args)
         super()
         @_access_token = access_token
         @_client ||= Koala::Facebook::API.new(@_access_token, Rails.application.secrets.facebook_secret)

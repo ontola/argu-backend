@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ForumsHelper
   include DropdownHelper
 
@@ -5,33 +6,33 @@ module ForumsHelper
     t("forums.application_form.#{value}")
   end
 
-  def forum_selector_items(guest= false)
+  def forum_selector_items(_guest = false)
     sections = []
 
     sections << forum_membership_section if current_user.present?
     sections << forum_discover_section
 
     {
-        title: t('forums.plural'),
-        fa: 'fa-group',
-        sections: sections,
-        defaultAction: discover_forums_path,
-        dropdownClass: 'navbar-forum-selector',
-        triggerClass: 'navbar-item navbar-forums'
+      title: t('forums.plural'),
+      fa: 'fa-group',
+      sections: sections,
+      defaultAction: discover_forums_path,
+      dropdownClass: 'navbar-forum-selector',
+      triggerClass: 'navbar-item navbar-forums'
     }
   end
 
   def forum_membership_section
     {
-        title: t('forums.my'),
-        items: profile_membership_items
+      title: t('forums.my'),
+      items: profile_membership_items
     }
   end
 
   def forum_discover_section
     {
-        title: t('forums.discover'),
-        items: forum_discover_items
+      title: t('forums.discover'),
+      items: forum_discover_items
     }
   end
 
@@ -52,17 +53,17 @@ module ForumsHelper
     sections << forum_current_section if current_user.present? && policy(@forum).is_member?
 
     {
-        title: resource.name,
-        fa_after: 'fa-angle-down',
-        sections: sections,
-        triggerTag: 'h1'
+      title: resource.name,
+      fa_after: 'fa-angle-down',
+      sections: sections,
+      triggerTag: 'h1'
     }
   end
 
   def forum_current_section
     {
-        title: t('forums.current'),
-        items: forum_membership_controls_items
+      title: t('forums.current'),
+      items: forum_membership_controls_items
     }
   end
 
@@ -71,10 +72,10 @@ module ForumsHelper
 
     if policy(@forum).is_member?
       membership = current_profile
-                     .group_memberships
-                     .joins(grants: :edge)
-                     .where(edges: {owner_id: @forum.id})
-                     .first
+                   .group_memberships
+                   .joins(grants: :edge)
+                   .where(edges: {owner_id: @forum.id})
+                   .first
       items << link_item(t('forums.leave'),
                          group_membership_path(membership),
                          fa: 'sign-out',

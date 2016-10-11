@@ -3,7 +3,7 @@
 module Argu
   module TestHelpers
     module TestDefinitions
-      def default_create_attributes(opts= {})
+      def default_create_attributes(_opts = {})
         attributes_for(model_sym)
       end
 
@@ -68,12 +68,12 @@ module Argu
         assert_response results[:response]
         if assigns(:update_service).try(:resource).present?
           ch_method.call record
-                           .updated_at
-                           .iso8601(6),
+            .updated_at
+            .iso8601(6),
                          assigns(:update_service)
-                           .try(:resource)
-                           .try(:updated_at)
-                           .try(:iso8601, 6)
+            .try(:resource)
+            .try(:updated_at)
+            .try(:iso8601, 6)
         elsif results[:should]
           assert false, "can't be changed"
         end
@@ -132,7 +132,7 @@ module Argu
           forum_id = forum_to.id
           case model_class
           when Motion
-            assert assigns(:motion).arguments.count > 0
+            assert assigns(:motion).arguments.count.positive?
             assigns(:motion).arguments.pluck(:forum_id).each do |id|
               assert_equal forum_id, id
             end
@@ -144,7 +144,7 @@ module Argu
             end
             assert assigns(:question).reload.motions.blank?
           end
-          assert assigns(model_sym).activities.count > 0
+          assert assigns(model_sym).activities.count.positive?
           assigns(model_sym).activities.pluck(:forum_id).each do |id|
             assert_equal forum_id, id
           end

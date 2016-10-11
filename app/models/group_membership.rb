@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GroupMembership < ApplicationRecord
   include Parentable
 
@@ -36,7 +37,9 @@ class GroupMembership < ApplicationRecord
         owner: member.group_memberships.new(
           group: grant.edge.owner.members_group,
           member: member,
-          profile: profile))
+          profile: profile
+        )
+      )
     end
   end
 

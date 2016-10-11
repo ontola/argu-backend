@@ -13,7 +13,7 @@ class UpdateService < ApplicationService
 
   private
 
-  def object_attributes=(obj)
+  def object_attributes=(_obj)
     raise 'Required interface not implemented'
   end
 

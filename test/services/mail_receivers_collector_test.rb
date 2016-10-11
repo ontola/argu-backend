@@ -42,12 +42,14 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
       blog_post,
       :follows_reactions_weekly,
       :follows_news_weekly,
-      :viewed_notifications_now)
+      :viewed_notifications_now
+    )
     create_follow_and_notification_pair(
       argument,
       :follows_reactions_weekly,
       :follows_news_weekly,
-      :viewed_notifications_now)
+      :viewed_notifications_now
+    )
 
     user_ids = MailReceiversCollector.new(User.reactions_emails[:weekly_reactions_email]).call
     assert_equal 0, user_ids.count

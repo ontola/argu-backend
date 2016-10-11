@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Shortnameable
   extend ActiveSupport::Concern
 
@@ -36,7 +37,7 @@ module Shortnameable
     # Finds an object via its shortname, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
     def find_via_shortname(url)
-      find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
+      find_via_shortname_nil(url) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Finds an object via its shortname, returns nil when not found
@@ -50,7 +51,7 @@ module Shortnameable
       if url.to_i.to_s == url.to_s
         find url.to_i
       else
-        find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
+        find_via_shortname_nil(url) || raise(ActiveRecord::RecordNotFound)
       end
     end
 

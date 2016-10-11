@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class QuestionAnswerPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 
@@ -29,7 +30,7 @@ class QuestionAnswerPolicy < RestrictivePolicy
   end
 
   def edit?
-     rule update?
+    rule update?
   end
 
   def destroy?

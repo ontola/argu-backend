@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'User Password', type: :feature do
@@ -100,7 +101,7 @@ RSpec.feature 'User Password', type: :feature do
 
     visit settings_path(tab: :authentication)
     expect(page).not_to have_content("You don't have a password yet, because you signed up "\
-                                       "using a linked account. Do you want to set a password?")
+                                       'using a linked account. Do you want to set a password?')
   end
 
   scenario 'user only omni should not change their password' do
@@ -127,7 +128,7 @@ RSpec.feature 'User Password', type: :feature do
     visit settings_path(tab: :authentication)
     expect(page).to have_content('User settings')
     expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. "\
-                                   "Do you want to set a password?")
+                                   'Do you want to set a password?')
 
     expect do
       click_link 'send-instructions'

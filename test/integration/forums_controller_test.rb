@@ -77,7 +77,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get forum_path(cologne)
     assert_response 200
 
-    assert cologne.motions.count > 0
+    assert cologne.motions.count.positive?
     assert_nil assigns(:items), 'Closed forums are leaking content'
   end
 
@@ -125,7 +125,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get forum_path(cologne)
     assert_forum_shown(cologne)
 
-    assert cologne.motions.count > 0
+    assert cologne.motions.count.positive?
     assert assigns(:items), 'Closed forum content is not present'
   end
 
@@ -254,7 +254,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get statistics_forum_path(inhabited)
     assert_response 200
 
-    counts = [['Den Haag', '2'], ['Utrecht', 1], ['Unknown', '1']]
+    counts = [['Den Haag', '2'], ['Utrecht', 1], %w(Unknown 1)]
     assert_select '.city-table' do |element|
       assert_select element, '.city-row' do |rows|
         assert_equal 3, rows.count

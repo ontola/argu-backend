@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CommentsController < AuthorizedController
   include NestedResourceHelper
 
@@ -7,10 +8,10 @@ class CommentsController < AuthorizedController
     authorize @comment, :create?
 
     render locals: {
-               parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
-               resource: @commentable,
-               comment: @comment
-           }
+      parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
+      resource: @commentable,
+      comment: @comment
+    }
   end
 
   def show
@@ -27,17 +28,17 @@ class CommentsController < AuthorizedController
     respond_to do |format|
       format.html do
         render locals: {
-                   resource: @commentable,
-                   comment: @comment
-               }
+          resource: @commentable,
+          comment: @comment
+        }
       end
       format.js do
         render locals: {
-                   resource: @commentable,
-                   comment: @comment,
-                   parent_id: nil,
-                   visible: true
-               }
+          resource: @commentable,
+          comment: @comment,
+          parent_id: nil,
+          visible: true
+        }
       end
     end
   end
@@ -231,7 +232,7 @@ class CommentsController < AuthorizedController
   def resource_tenant
     return super if params[:forum_id].present?
 
-    resource, id = request.path.split('/')[1,2]
+    resource, id = request.path.split('/')[1, 2]
     # noinspection RubyCaseWithoutElseBlockInspection
     resource =
       case resource

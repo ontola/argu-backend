@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NotificationPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -22,7 +23,7 @@ class NotificationPolicy < RestrictivePolicy
 
   def initialize(context, record)
     super(context, record)
-    raise Argu::NotAUserError.new(record: record), 'must be logged in' unless user
+    raise .new('must be logged in') unless user
   end
 
   def permitted_attributes

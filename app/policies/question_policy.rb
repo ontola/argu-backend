@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class QuestionPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 
@@ -49,11 +50,14 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def edit?
-     rule update?
+    rule update?
   end
 
   def destroy?
-    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at or record.motions.count == 0) ||
+    user &&
+      (record.creator_id == user.profile.id &&
+        15.minutes.ago < record.created_at ||
+        record.motions.count.zero?) ||
       is_manager? ||
       is_owner? ||
       super

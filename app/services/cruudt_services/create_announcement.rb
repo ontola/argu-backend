@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 class CreateAnnouncement < CreateService
   include Wisper::Publisher
 

@@ -1,9 +1,10 @@
 
+# frozen_string_literal: true
 # Mixin giving policies the ability to be altered via {Rule} records
 # @see {Argu::RuledIt}
 # @author Fletcher91 <thom@argu.co>
 module ExceptionToTheRule
-  TRICKLE_LOGIC = {'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>=}
+  TRICKLE_LOGIC = {'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>=}.freeze
   ROLE_NAMES = %w(open access_token member manager creator moderator owner staff).freeze
 
   attr_reader :last_enacted, :last_verdict
@@ -17,7 +18,7 @@ module ExceptionToTheRule
   #                                    denied with an additional message as a second return value.
   def rule(*array)
     level = max_clearance(array)
-    apply_rules(caller_locations(1,1)[0].label, level)
+    apply_rules(caller_locations(1, 1)[0].label, level)
   end
 
   private
@@ -35,9 +36,9 @@ module ExceptionToTheRule
     level_rules, group_rules = rules.partition { |rule| ROLE_NAMES.include?(rule.role) }
     @last_enacted, @last_verdict =
       filter_trickle(level_rules, level)
-        .concat(filter_groups(group_rules, context))
-        .compact
-        .first
+      .concat(filter_groups(group_rules, context))
+      .compact
+      .first
     @last_enacted
   end
 
@@ -59,12 +60,12 @@ module ExceptionToTheRule
   def filter_groups(rules, context)
     if rules && user && (mem_groups = user.profile.groups.where(page: context.context_model.page))
       group_ids = rules
-                    .map { |r| r.role.split('_') }
-                    .select { |arr| arr[0].eql?('groups') }
-                    .map(&:last)
+                  .map { |r| r.role.split('_') }
+                  .select { |arr| arr[0].eql?('groups') }
+                  .map(&:last)
       group_identifiers = mem_groups
-                            .where(id: group_ids)
-                            .map(&:identifier)
+                          .where(id: group_ids)
+                          .map(&:identifier)
       if group_identifiers.present?
         trickled_rules = rules.find_all { |r| group_identifiers.include?(r.role) }
         if trickled_rules.present?
@@ -86,12 +87,11 @@ module ExceptionToTheRule
   def find_rules_for_action(action)
     _rules = Rule.arel_table
     rule_query = _rules[:model_type].eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
-                   .and(_rules[:model_id].eq(@record.try(:id))
+                                    .and(_rules[:model_id].eq(@record.try(:id))
                           .or(_rules[:model_id].eq(nil))
                    .and(_rules[:action].eq(action.to_s))
                    .and(_rules[:context_type].eq(context.context_model.class.to_s))
-                   .and(_rules[:context_id].eq(context.context_model.id.to_s))
-                 )
+                   .and(_rules[:context_id].eq(context.context_model.id.to_s)))
     Rule.where(rule_query)
   end
 

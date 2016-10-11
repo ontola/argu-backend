@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'argu/redis'
 
 $redis   = Argu::Redis.redis_instance

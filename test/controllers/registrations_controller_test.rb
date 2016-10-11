@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class RegistrationsControllerTest < ActionController::TestCase
@@ -59,9 +60,9 @@ class RegistrationsControllerTest < ActionController::TestCase
       post :create,
            params: {
              user: {
-                 email: user_params[:email],
-                 password: user_params[:password],
-                 password_confirmation: 'random gibberish'
+               email: user_params[:email],
+               password: user_params[:password],
+               password_confirmation: 'random gibberish'
              }
            }
     end
@@ -81,8 +82,8 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                   repeat_name: user.shortname.shortname,
-                   current_password: 'password'
+                 repeat_name: user.shortname.shortname,
+                 current_password: 'password'
                }
              }
     end
@@ -105,8 +106,8 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                   repeat_name: user.shortname.shortname,
-                   current_password: 'password'
+                 repeat_name: user.shortname.shortname,
+                 current_password: 'password'
                }
              }
     end
@@ -172,8 +173,8 @@ class RegistrationsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                user: {
-                   repeat_name: owner.url,
-                   current_password: owner.password
+                 repeat_name: owner.url,
+                 current_password: owner.password
                }
              }
     end

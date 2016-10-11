@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 module Portal
@@ -49,12 +50,12 @@ module Portal
       assert_response response
       if assigns(:up).try(:resource).present?
         ch_method.call subject
-                         .updated_at
-                         .iso8601(6),
+          .updated_at
+          .iso8601(6),
                        assigns(:up)
-                         .try(:resource)
-                         .try(:updated_at)
-                         .try(:iso8601, 6)
+          .try(:resource)
+          .try(:updated_at)
+          .try(:iso8601, 6)
       elsif changed
         assert false, "can't be changed"
       end

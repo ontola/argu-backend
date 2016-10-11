@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PagePolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -149,7 +150,7 @@ class PagePolicy < RestrictivePolicy
     tab
   end
 
-  #######Attributes########
+  # ######Attributes########
 
   def max_allowed_pages
     if staff?

@@ -38,8 +38,8 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
     ))
     define_test(hash, :show)
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-      user: {should: false, response: 404}
-    })
+                  user: {should: false, response: 404}
+                })
     define_test(
       hash,
       :show,
@@ -71,33 +71,40 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           response: 302,
           asserts: ['assigns(:_not_a_user_caught)'],
-          analytics: false},
+          analytics: false
+        },
         user: {
           should: false,
           response: 403,
           asserts: ['assigns(:_not_a_member_caught)'],
-          analytics: false},
+          analytics: false
+        },
         member: {
           should: false,
           response: 302,
           asserts: ['assigns(:_not_authorized_caught)'],
-          analytics: false},
+          analytics: false
+        },
         moderator: {
           should: true,
           response: 302,
-          asserts: ['moderator.reload.has_drafts?', '!BlogPost.last.is_published?']},
+          asserts: ['moderator.reload.has_drafts?', '!BlogPost.last.is_published?']
+        },
         manager: {
           should: true,
           response: 302,
-          asserts: ['manager.reload.has_drafts?', '!BlogPost.last.is_published?']},
+          asserts: ['manager.reload.has_drafts?', '!BlogPost.last.is_published?']
+        },
         owner: {
           should: true,
           response: 302,
-          asserts: ['owner.reload.has_drafts?', '!BlogPost.last.is_published?']},
+          asserts: ['owner.reload.has_drafts?', '!BlogPost.last.is_published?']
+        },
         staff: {
           should: true,
           response: 302,
-          asserts: ['staff.reload.has_drafts?', '!BlogPost.last.is_published?']}
+          asserts: ['staff.reload.has_drafts?', '!BlogPost.last.is_published?']
+        }
       }
     )
     define_test(
@@ -119,19 +126,23 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
         moderator: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']},
+          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']
+        },
         manager: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']},
+          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']
+        },
         owner: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']},
+          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']
+        },
         staff: {
           should: true,
           response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']}
+          asserts: ['!moderator.reload.has_drafts?', 'BlogPost.last.is_published?']
+        }
       }
     )
     define_test(
@@ -148,7 +159,8 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           response: 200,
           asserts: ['assert_select "#blog_post_title", "BlogPost"',
-                    'assert_select "#blog_post_content", "C"']}
+                    'assert_select "#blog_post_content", "C"']
+        }
       }
     )
     define_test(hash, :edit, user_types: user_types[:edit].except(:creator))
@@ -163,7 +175,8 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
           should: false,
           response: 200,
           asserts: ['assert_select "#blog_post_title", "BlogPost"',
-                    'assert_select "#blog_post_content", "C"']}
+                    'assert_select "#blog_post_content", "C"']
+        }
       }
     )
     define_test(
@@ -182,10 +195,11 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
           response: 302,
           asserts: ['PublicationsWorker.cancelled?(Publication.last.job_id)']
         }
-      })
+      }
+    )
     define_test(hash, :destroy, options: {
-      analytics: stats_opt('blog_posts', 'destroy_success')
-    })
+                  analytics: stats_opt('blog_posts', 'destroy_success')
+                })
     define_test(hash, :trash,
                 options: {analytics: stats_opt('blog_posts', 'trash_success')},
                 user_types: user_types[:trash]

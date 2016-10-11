@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
@@ -297,7 +298,7 @@ RSpec.feature 'Adam west', type: :feature do
 
   private
 
-  def create_motion_for_question(&block)
+  def create_motion_for_question
     visit question_path(question)
     click_on 'Share your idea'
 

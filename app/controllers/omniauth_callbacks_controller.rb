@@ -18,11 +18,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def after_sign_in_path_for(resource)
     if resource.email_verified?
-        if resource.shortname.present?
-          super resource
-        else
-          setup_users_path
-        end
+      if resource.shortname.present?
+        super resource
+      else
+        setup_users_path
+      end
     else
       finish_signup_path(resource)
     end
@@ -83,7 +83,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       token = identity_token(identity)
       redirect_to connect_user_path(user_with_email, token: token, r: r_param(request.env))
     else
-      flash[:error] = t("users.authentications.email_mismatch") if is_navigational_format?
+      flash[:error] = t('users.authentications.email_mismatch') if is_navigational_format?
       redirect_to root_path
     end
   end

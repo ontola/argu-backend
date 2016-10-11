@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ActorPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -25,6 +26,7 @@ class ActorPolicy < RestrictivePolicy
   end
 
   private
+
   def is_manager?
     owner = record.profileable
     if owner.class == User

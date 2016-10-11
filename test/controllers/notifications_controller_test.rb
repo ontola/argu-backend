@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class NotificationsControllerTest < ActionController::TestCase
@@ -46,7 +47,7 @@ class NotificationsControllerTest < ActionController::TestCase
   def followed_content(user)
     parent = freetown
     create(:follow, followable: parent.edge, follower: user)
-    %i(question motion vote argument comment ).each do |type|
+    %i(question motion vote argument comment).each do |type|
       trackable = create(type, parent: parent.edge)
       if %i(question motion argument).include?(type)
         parent = trackable

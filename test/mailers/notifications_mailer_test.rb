@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class NotificationsMailerTest < ActionMailer::TestCase
@@ -50,9 +51,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new question' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                question.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              question.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -65,9 +67,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new motion' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                motion.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              motion.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -80,9 +83,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new question_motion' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                question_motion.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              question_motion.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -95,9 +99,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new argument_pro' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                argument_pro.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              argument_pro.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -111,9 +116,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new argument_con' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                argument_con.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              argument_con.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -127,9 +133,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new comment' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                comment.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              comment.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -143,9 +150,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new comment_comment' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                comment_comment.activities.first.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              comment_comment.activities.first.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -159,9 +167,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new decision' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                decision.activities.second.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              decision.activities.second.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -174,9 +183,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new blog_post' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                blog_post.activities.second.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              blog_post.activities.second.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end
@@ -189,9 +199,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
   test 'should send email for new project' do
     email = NotificationsMailer
-              .notifications_email(
-                follower,
-                project.activities.second.notifications.where(user: follower))
+            .notifications_email(
+              follower,
+              project.activities.second.notifications.where(user: follower)
+            )
     assert_emails 1 do
       email.deliver_now
     end

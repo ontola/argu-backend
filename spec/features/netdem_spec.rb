@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Netdem', type: :feature do
@@ -54,9 +55,9 @@ RSpec.feature 'Netdem', type: :feature do
         .set(netdem.name)
       click_link 'Add phase'
       all("input[name*='project[phases_attributes]']")
-          .find("input[name*='[name]']")
-          .first
-          .set('First phase')
+        .find("input[name*='[name]']")
+        .first
+        .set('First phase')
       click_button 'Save'
     end
     expect(page).to have_content project_attributes[:title]
@@ -67,9 +68,9 @@ RSpec.feature 'Netdem', type: :feature do
     within("#edit_project_#{Project.last.id}") do
       click_link 'Add phase'
       all("input[name*='project[phases_attributes]']")
-          .find("input[name*='[name]']")
-          .first
-          .set('Second phase')
+        .find("input[name*='[name]']")
+        .first
+        .set('Second phase')
       click_button 'Save'
     end
     expect(page).to have_selector('.timeline-phase-title.current', text: 'First phase')

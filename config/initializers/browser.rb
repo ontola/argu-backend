@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # Additional rules to determine which browsers need a polyfill
 #

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
   def to_html
     input_wrapping do
@@ -11,7 +12,8 @@ class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
                     input_name,
                     choice.id,
                     choice.is_checked,
-                    extra_html_options(choice).merge(id: choice_input_dom_id(choice), required: false))
+                    extra_html_options(choice).merge(id: choice_input_dom_id(choice), required: false)
+                  )
                   template.concat template.render partial: (options[:partial].presence || 'forums/forum'),
                                                   object: choice,
                                                   locals: {forum: choice}

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class NotificationsTest < ActionDispatch::IntegrationTest
@@ -56,7 +57,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
       post forum_arguments_path(freetown),
            params: {
              argument: attributes_for(:argument)
-                         .merge(motion_id: motion.id)
+               .merge(motion_id: motion.id)
            }
     end
     assert_equal Notification.last.notification_type, 'reaction'

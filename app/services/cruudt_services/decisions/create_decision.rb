@@ -26,7 +26,8 @@ class CreateDecision < PublishedCreateService
       obj.forum ||= resource.forum
       obj.edge ||= obj.build_edge(
         user: resource.decisionable.publisher,
-        parent: resource.decisionable.edge)
+        parent: resource.decisionable.edge
+      )
     end
   end
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'exception_to_the_rule'
 
 class RestrictivePolicy

@@ -26,7 +26,8 @@ class EdgeableCreateService < CreateService
     parent_edge = parent.is_a?(Edge) ? parent : Edge.find(parent)
     @edge = parent_edge.children.new(
       user: options[:publisher],
-      owner: resource_klass.new)
+      owner: resource_klass.new
+    )
   end
 
   def notify

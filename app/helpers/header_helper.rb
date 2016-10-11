@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module HeaderHelper
   include DropdownHelper
 
@@ -75,16 +76,16 @@ module HeaderHelper
                      contentClassName: 'notifications notification-container')
   end
 
-  def public_forum_items(limit= 10)
+  def public_forum_items(limit = 10)
     items = []
     Forum
-        .public_forums
-        .includes(:default_profile_photo, :shortname)
-        .select { |f| suggested_forums.include?(f.shortname.shortname) }
-        .first(limit)
-        .each do |forum|
-          items << link_item(forum.display_name, forum_path(forum), image: forum.default_profile_photo.url(:icon))
-        end
+      .public_forums
+      .includes(:default_profile_photo, :shortname)
+      .select { |f| suggested_forums.include?(f.shortname.shortname) }
+      .first(limit)
+      .each do |forum|
+      items << link_item(forum.display_name, forum_path(forum), image: forum.default_profile_photo.url(:icon))
+    end
     items
   end
 
@@ -102,28 +103,28 @@ module HeaderHelper
 
   def info_dropdown_items
     {
-        title: t('about.info'),
-        fa: 'fa-info',
-        defaultAction: info_path(:about),
-        sections: [
-          {
-            items: [
-              link_item(t('about.vision'), info_path(:about)),
-              link_item(t('about.how_argu_works'), how_argu_works_path),
-              link_item(t('about.team'), info_path(:team)),
-              link_item(t('about.governments'), info_path(:governments)),
-              link_item(t('about.lobby_organizations'), info_path(:lobby_organizations)),
-              link_item(t('press_media'), 'https://argu.pr.co'),
-              link_item(t('help_support'), 'https://argu.freshdesk.com/support/home'),
-              link_item(t('about.contact'), info_path(:contact))
-            ]
-          }
-        ],
-        triggerClass: 'navbar-item'
+      title: t('about.info'),
+      fa: 'fa-info',
+      defaultAction: info_path(:about),
+      sections: [
+        {
+          items: [
+            link_item(t('about.vision'), info_path(:about)),
+            link_item(t('about.how_argu_works'), how_argu_works_path),
+            link_item(t('about.team'), info_path(:team)),
+            link_item(t('about.governments'), info_path(:governments)),
+            link_item(t('about.lobby_organizations'), info_path(:lobby_organizations)),
+            link_item(t('press_media'), 'https://argu.pr.co'),
+            link_item(t('help_support'), 'https://argu.freshdesk.com/support/home'),
+            link_item(t('about.contact'), info_path(:contact))
+          ]
+        }
+      ],
+      triggerClass: 'navbar-item'
     }
   end
 
-  def actor_item(title, url, opts= {})
+  def actor_item(title, url, opts = {})
     item('actor', title, url, opts)
   end
 

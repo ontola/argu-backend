@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Get asset content by reading the compiled file from disk using a Sprockets::Manifest.
 #
 # This is good for Rails production when assets are compiled to public/assets

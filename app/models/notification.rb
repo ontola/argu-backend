@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Notification < ApplicationRecord
   include ActivityHelper
   belongs_to :user
@@ -24,7 +25,7 @@ class Notification < ApplicationRecord
       super
     end
   end
-  alias_method :display_name, :title
+  alias display_name title
 
   def url_object
     if activity.present?

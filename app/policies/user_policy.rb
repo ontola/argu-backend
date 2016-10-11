@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UserPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -28,7 +29,7 @@ class UserPolicy < RestrictivePolicy
     attributes.concat %i(reactions_email news_email decisions_email memberships_email created_email
                          has_analytics has_analytics time_zone language birthday) if update?
     attributes.concat %i(current_password password password_confirmation email) if password
-    attributes.append(profile_attributes: ProfilePolicy.new(context,record.profile).permitted_attributes)
+    attributes.append(profile_attributes: ProfilePolicy.new(context, record.profile).permitted_attributes)
     attributes
   end
 

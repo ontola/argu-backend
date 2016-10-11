@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UntrashArgument < UntrashService
   include Wisper::Publisher
 

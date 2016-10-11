@@ -1,13 +1,16 @@
+# frozen_string_literal: true
 class QuestionAnswer
   extend ActiveModel::Naming
   include ActiveModel::Validations
 
-  validates_presence_of :question, :motion
+  validates :question, :motion, presence: true
 
   attr_accessor :question, :motion, :options
 
   def initialize(question: nil, motion: nil, options: {})
-    @question, @motion, @options = question, motion, options
+    @question = question
+    @motion = motion
+    @options = options
   end
 
   def persisted?

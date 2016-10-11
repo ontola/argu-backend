@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   sequence :email do |n|
     "user#{n}@example.com"
@@ -76,7 +77,9 @@ FactoryGirl.define do
                         .merge(shortname_attributes: attributes_for(:shortname), page: page),
           options: {
             creator: page.owner,
-            publisher: page.owner.profileable})
+            publisher: page.owner.profileable
+          }
+        )
         service.commit
         forum = service.resource
         CreateGroupMembership
@@ -94,14 +97,18 @@ FactoryGirl.define do
             attributes: {for: :pro},
             options: {
               creator: user.profile,
-              publisher: user}).commit
+              publisher: user
+            }
+          ).commit
           trashed = Motion.find_by(is_trashed: true)
           CreateVote.new(
             trashed.edge,
             attributes: {for: :pro},
             options: {
               creator: user.profile,
-              publisher: user}).commit
+              publisher: user
+            }
+          ).commit
         end
       end
     end

@@ -75,7 +75,7 @@ class AuthorizedController < ApplicationController
       @banners = policy_scope(authenticated_context
                                 .banners
                                 .published)
-                   .reject { |b| banners[b.identifier] == 'hidden' }
+                 .reject { |b| banners[b.identifier] == 'hidden' }
     end
   end
 
@@ -83,7 +83,7 @@ class AuthorizedController < ApplicationController
   # @see {authenticated_resource!}
   # @raise [ActiveRecord::RecordNotFound]
   def authenticated_resource
-    authenticated_resource! or raise ActiveRecord::RecordNotFound
+    authenticated_resource! || raise(ActiveRecord::RecordNotFound)
   end
 
   # Searches for the resource of the current controllers' type by `id`
@@ -163,7 +163,8 @@ class AuthorizedController < ApplicationController
     @create_service ||= service_klass.new(
       get_parent_resource.edge,
       attributes: resource_new_params.merge(permit_params.to_h),
-      options: service_options)
+      options: service_options
+    )
   end
 
   def deserialized_params
@@ -199,7 +200,8 @@ class AuthorizedController < ApplicationController
   def destroy_service
     @destroy_service ||= service_klass.new(
       resource_by_id,
-      options: service_options)
+      options: service_options
+    )
   end
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
@@ -228,7 +230,8 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       session,
-      authenticated_context)
+      authenticated_context
+    )
   end
 
   def redirect_url
@@ -239,9 +242,9 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base, nil] The resource by its id
   def resource_by_id
     @_resource_by_id ||= controller_name
-                           .classify
-                           .constantize
-                           .find_by id: resource_id
+                         .classify
+                         .constantize
+                         .find_by id: resource_id
   end
 
   # Used in {authenticated_resource!} to build a new object. Overwrite this
@@ -274,7 +277,8 @@ class AuthorizedController < ApplicationController
   def trash_service
     @trash_service ||= service_klass.new(
       resource_by_id,
-      options: service_options)
+      options: service_options
+    )
   end
 
   # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash
@@ -285,7 +289,8 @@ class AuthorizedController < ApplicationController
   def untrash_service
     @untrash_service ||= service_klass.new(
       resource_by_id,
-      options: service_options)
+      options: service_options
+    )
   end
 
   # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
@@ -297,6 +302,7 @@ class AuthorizedController < ApplicationController
     @update_service ||= service_klass.new(
       resource_by_id,
       attributes: permit_params,
-      options: service_options)
+      options: service_options
+    )
   end
 end

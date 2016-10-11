@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DirectNotificationsSchedulerWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable

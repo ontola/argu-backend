@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NotificationsController < ApplicationController
   after_action :update_viewed_time
 
@@ -69,37 +70,36 @@ class NotificationsController < ApplicationController
   end
 
   private
+
   def fetch_more
     begin
-      begin
-        from_time = DateTime.parse(params[:from_time]).utc.to_s
-      rescue ArgumentError
-        from_time = nil
-      end
-      @from_time = from_time
-      @notifications = policy_scope(Notification)
-                         .order(created_at: :desc)
-                         .since(from_time)
-                         .page params[:page]
-      @unread = get_unread
+      from_time = DateTime.parse(params[:from_time]).utc.to_s
     rescue ArgumentError
-      head 400
+      from_time = nil
     end
+    @from_time = from_time
+    @notifications = policy_scope(Notification)
+                     .order(created_at: :desc)
+                     .since(from_time)
+                     .page params[:page]
+    @unread = get_unread
+  rescue ArgumentError
+    head 400
   end
 
-  def get_notifications(since=nil)
+  def get_notifications(since = nil)
     policy_scope(Notification)
-        .includes(activity: :trackable)
-        .order(created_at: :desc)
-        .where(since ? ['created_at > ?', since] : nil)
-        .page params[:page]
+      .includes(activity: :trackable)
+      .order(created_at: :desc)
+      .where(since ? ['created_at > ?', since] : nil)
+      .page params[:page]
   end
 
   def get_unread
     policy_scope(Notification)
-        .where('read_at is NULL')
-        .order(created_at: :desc)
-        .count
+      .where('read_at is NULL')
+      .order(created_at: :desc)
+      .count
   end
 
   def permit_params
@@ -107,31 +107,29 @@ class NotificationsController < ApplicationController
   end
 
   def refresh
-    begin
-      since = DateTime.parse(last_notification).utc.to_s(:db) if last_notification
-      new_available = true
-      if since.present?
-        new_available = policy_scope(Notification)
-                            .order(created_at: :desc)
-                            .where('created_at > ?', since)
-                            .count > 0
-      end
-      @notifications = get_notifications(since) if new_available
-      if @notifications.present?
-        @unread = get_unread
-        render
-      else
-        head 204
-      end
-      if last_notification && since < 20.years.ago
-        send_event category: 'notifications',
-                   action: 'open_menu',
-                   label: 'count',
-                   value: @unread
-      end
-    rescue ArgumentError
-      head 400
+    since = DateTime.parse(last_notification).utc.to_s(:db) if last_notification
+    new_available = true
+    if since.present?
+      new_available = policy_scope(Notification)
+                      .order(created_at: :desc)
+                      .where('created_at > ?', since)
+                      .count.positive?
     end
+    @notifications = get_notifications(since) if new_available
+    if @notifications.present?
+      @unread = get_unread
+      render
+    else
+      head 204
+    end
+    if last_notification && since < 20.years.ago
+      send_event category: 'notifications',
+                 action: 'open_menu',
+                 label: 'count',
+                 value: @unread
+    end
+  rescue ArgumentError
+    head 400
   end
 
   def update_viewed_time

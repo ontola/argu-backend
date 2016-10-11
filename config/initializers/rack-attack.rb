@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 require 'argu/hacker_error'
 
 unless Rails.env.test?
-  ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
+  ActiveSupport::Notifications.subscribe('rack.attack') do |name, _start, _finish, _request_id, req|
     if (%w(spam fail2ban) & req.env['rack.attack.matched'].split(' ')).present?
       Bugsnag.notify(Argu::HackerError.new(name), request_data: req)
     end
@@ -10,30 +11,30 @@ end
 
 class Rack::Attack
   SPAMMERS = [
-      /co\.lumb\.co/,
-      /darodar/,
-      /-seo\.com/,
-      /erot\.co/,
-      /howtostopreferralspam\.eu/,
-      /videos-for-your-business\.com/,
-      /sexyali\.com/,
-      /chinese-amezon\.com/,
-      /hulfingtonpost\.com/,
-      /qualitymarketzone\.com/,
-      /buttons\.com/,
-      /free-floating-buttons/,
-      /social-traffic\.com/,
-      /event-tracking\.com/,
-      /buttons-for/,
-      /googlemare/,
-      /quit-smoking/,
-      /\.ga/
+    /co\.lumb\.co/,
+    /darodar/,
+    /-seo\.com/,
+    /erot\.co/,
+    /howtostopreferralspam\.eu/,
+    /videos-for-your-business\.com/,
+    /sexyali\.com/,
+    /chinese-amezon\.com/,
+    /hulfingtonpost\.com/,
+    /qualitymarketzone\.com/,
+    /buttons\.com/,
+    /free-floating-buttons/,
+    /social-traffic\.com/,
+    /event-tracking\.com/,
+    /buttons-for/,
+    /googlemare/,
+    /quit-smoking/,
+    /\.ga/
   ].freeze
 
   HACKERS = [
-      %r{/etc/passwd},
-      %r{\.\./},
-      %r{\(\)\s*\{\s*\(.*\)\s*=>}
+    %r{/etc/passwd},
+    %r{\.\./},
+    /\(\)\s*\{\s*\(.*\)\s*=>/
   ].freeze
 
   unless Rails.env.test?
@@ -46,7 +47,7 @@ class Rack::Attack
           req.post? &&
           is_throttled_path(req)) ||
           %w(/users/auth).any? { |n| req.path.include?(n) }
-          req.ip
+        req.ip
       end
     end
   end

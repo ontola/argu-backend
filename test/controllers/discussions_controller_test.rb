@@ -11,7 +11,8 @@ class DiscussionsControllerTest < ActionController::TestCase
     create_forum(
       name: 'helsinki',
       visibility: Forum.visibilities[:hidden],
-      visible_with_a_link: true)
+      visible_with_a_link: true
+    )
   end
   let!(:helsinki_project) { create(:project, argu_publication: build(:publication), parent: helsinki.edge) }
   let(:helsinki_key) { create(:access_token, item: helsinki) }

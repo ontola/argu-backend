@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class NotificationListener
   def create_activity_successful(activity)
     case activity.object
@@ -16,9 +17,9 @@ class NotificationListener
 
   def create_notifications_for(activity)
     recipients = FollowersCollector
-                   .new(activity.recipient, follow_type(activity))
-                   .call
-                   .reject { |u| u.profile == activity.owner }
+                 .new(activity.recipient, follow_type(activity))
+                 .call
+                 .reject { |u| u.profile == activity.owner }
     if activity.trackable_type == 'Decision'
       forwarded_to_user = activity.trackable.forwarded_user
       if forwarded_to_user.present? &&

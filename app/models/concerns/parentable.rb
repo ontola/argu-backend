@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Concern that gives models the `Parentable` functionality in cooperation with {Context}
 #
 # A model using Parentable needs to call {Parentable::ClassMethods#parentable} to define which associations

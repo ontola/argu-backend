@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SendNotificationsWorker
   include Sidekiq::Worker
 
@@ -15,13 +16,13 @@ class SendNotificationsWorker
       begin
         notifications = collect_notifications(user)
 
-        if notifications.length == 0
+        if notifications.length.zero?
           logger.warn 'No notifications to send'
         else
           logger.info "Preparing to possibly send #{notifications.length} notifications"
         end
         last_viewed = user.reload.notifications_viewed_at
-        if notifications.length > 0 &&
+        if notifications.length.positive? &&
             (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
           logger.info "Sending #{notifications.length} notification(s) to #{user.email}"
           NotificationsMailer.notifications_email(user, notifications).deliver

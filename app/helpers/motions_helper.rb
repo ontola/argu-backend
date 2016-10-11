@@ -40,6 +40,6 @@ module MotionsHelper
   end
 
   def user_vote_for(motion)
-    @user_votes && @user_votes.find { |v| v.voteable == motion }
+    @user_votes&.find { |v| v.voteable == motion }
   end
 end

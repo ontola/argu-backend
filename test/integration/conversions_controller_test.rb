@@ -13,14 +13,16 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
            :with_follower,
            parent: freetown.edge,
            options: {
-             creator: create(:profile_direct_email)})
+             creator: create(:profile_direct_email)
+           })
   end
   let(:project_question) do
     create(:question,
            :with_follower,
            parent: project.edge,
            options: {
-             creator: create(:profile_direct_email)})
+             creator: create(:profile_direct_email)
+           })
   end
   let(:motion) do
     create(:motion,
@@ -144,7 +146,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     edge = motion.edge
     vote_count = motion.votes.count
-    assert vote_count > 0,
+    assert vote_count.positive?,
            'no votes to test'
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
@@ -152,7 +154,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
       post edge_conversions_path(motion.edge),
            params: {
              conversion: {
-              klass: 'questions'
+               klass: 'questions'
              }
            }
     end
@@ -232,7 +234,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     create(:vote, parent: question.edge)
     vote_count = question.votes.count
-    assert vote_count > 0,
+    assert vote_count.positive?,
            'no votes to test'
 
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],

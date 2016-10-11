@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Groupable
   extend ActiveSupport::Concern
 
@@ -9,7 +10,8 @@ module Groupable
         name: is_a?(Forum) ? "#{name} members" : 'Members',
         name_singular: is_a?(Forum) ? "#{name} member" : 'Member',
         page: is_a?(Forum) ? page : self,
-        deletable: false)
+        deletable: false
+      )
       group.grants << Grant.new(role: Grant.roles[:member], edge: edge)
       group.edge = Edge.new(user: publisher, parent: edge)
       group.save!
@@ -18,7 +20,8 @@ module Groupable
         name: is_a?(Forum) ? "#{name} managers" : 'Managers',
         name_singular: is_a?(Forum) ? "#{name} manager" : 'Manager',
         page: is_a?(Forum) ? page : self,
-        deletable: false)
+        deletable: false
+      )
       group.grants << Grant.new(role: Grant.roles[:manager], edge: edge)
       group.edge = Edge.new(user: publisher, parent: edge)
       group.save!

@@ -1,4 +1,5 @@
-#@private
+# frozen_string_literal: true
+# @private
 class AdministrationPolicy < Struct.new(:context, :administration)
   class Scope
     attr_reader :context, :scope

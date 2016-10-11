@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module SeoHelper
   def connected_web(options)
     content_for :connected_web, options_hash_to_meta_tags(options)
@@ -13,18 +14,18 @@ module SeoHelper
              model.display_name
            end
     [
-        name,
-        (' | ' if name.present? && appendage.present?),
-        appendage
+      name,
+      (' | ' if name.present? && appendage.present?),
+      appendage
     ].compact.join
   end
 
   def seolized_description(model)
     appendage = t("seo.#{model.class.name.downcase}.description", title: model.display_name.downcase)
     [
-        markdown_to_plaintext(model.description),
-        (' | ' if model.description.present? && appendage.present?),
-        appendage
+      markdown_to_plaintext(model.description),
+      (' | ' if model.description.present? && appendage.present?),
+      appendage
     ].compact.join
   end
 
@@ -34,7 +35,7 @@ module SeoHelper
     META_ITEMS.map do |k, v|
       if v.is_a?(Hash)
         tag_name = v.delete(:tag_name).presence || :meta
-        v = v.map { |key,val| [key, val.is_a?(Symbol) ? options[val] : v[key]] }.to_h
+        v = v.map { |key, val| [key, val.is_a?(Symbol) ? options[val] : v[key]] }.to_h
         v[:property] = k if tag_name.to_sym == :meta
         v[:rel] = k if tag_name.to_sym == :link
         v[:id] = k
@@ -46,23 +47,23 @@ module SeoHelper
   end
 
   META_ITEMS = {
-      # HTML
-      'description' => {name: 'description', content: :description},
-      'url' => :url,
-      'canonical' => {tag_name: 'link', href: :url, itemprop: 'url'},
+    # HTML
+    'description' => {name: 'description', content: :description},
+    'url' => :url,
+    'canonical' => {tag_name: 'link', href: :url, itemprop: 'url'},
 
-      # Facebook
-      'og:title' => :name,
-      'og:type' => {content: 'website'},
-      'og:url' => :url,
-      'og:description' => :description,
-      'og:image' => :image,
+    # Facebook
+    'og:title' => :name,
+    'og:type' => {content: 'website'},
+    'og:url' => :url,
+    'og:description' => :description,
+    'og:image' => :image,
 
-      # Twitter
-      'twitter:card' => {content: 'summary'},
-      'twitter:site' => {content: '@argu_co'},
-      'twitter:title' => :name,
-      'twitter:description' => :description,
-      'twitter:image' => :image
-  }
+    # Twitter
+    'twitter:card' => {content: 'summary'},
+    'twitter:site' => {content: '@argu_co'},
+    'twitter:title' => :name,
+    'twitter:description' => :description,
+    'twitter:image' => :image
+  }.freeze
 end

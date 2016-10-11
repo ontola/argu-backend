@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 require 'argu/environment_container'
 require 'argu/manifest_container'
 module Argu
   class StatefulServerRenderer < React::ServerRendering::ExecJSRenderer
-    def initialize(options={})
+    def initialize(options = {})
       @replay_console = options.fetch(:replay_console, true)
-      filenames = options.fetch(:files, ["production/react-server.js", "components.js"])
+      filenames = options.fetch(:files, ['production/react-server.js', 'components.js'])
       js_code = CONSOLE_POLYFILL.dup
 
       # filenames.each do |filename|
@@ -18,7 +19,7 @@ module Argu
       super(options.merge(code: js_code))
     end
 
-    def after_render(component_name, props, prerender_options)
+    def after_render(_component_name, _props, _prerender_options)
       @replay_console ? CONSOLE_REPLAY : ''
     end
 
@@ -78,7 +79,7 @@ module Argu
         end
     end
 
-    def before_render(component_name, props, prerender_options)
+    def before_render(_component_name, _props, prerender_options)
       initial_js_state = prerender_options.fetch(:initial_state, {}).to_json
       "window.__INITIAL_STATE__ = #{initial_js_state};"
     end

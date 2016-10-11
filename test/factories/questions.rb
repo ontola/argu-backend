@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :question do
     association :forum, strategy: :create
@@ -13,7 +14,7 @@ FactoryGirl.define do
     sequence(:content) { |n| "fg question content #{n}end" }
 
     trait :with_motions do
-      after(:create) do |question, evaluator|
+      after(:create) do |question, _evaluator|
         create_list :motion, 2,
                     question: question,
                     forum: question.forum

@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 class GroupsController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_member
 
   def new
     render 'pages/settings', locals: {
-                                tab: 'groups/new',
-                                active: 'groups',
-                                group: authenticated_resource!,
-                                resource: authenticated_resource!.page
-                            }
+      tab: 'groups/new',
+      active: 'groups',
+      group: authenticated_resource!,
+      resource: authenticated_resource!.page
+    }
   end
 
   def create
@@ -49,9 +50,9 @@ class GroupsController < AuthorizedController
 
     if tab == 'members'
       @members = resource
-                   .group_memberships
-                   .includes(member: {profileable: :shortname})
-                   .page(params[:page])
+                 .group_memberships
+                 .includes(member: {profileable: :shortname})
+                 .page(params[:page])
     end
     render locals: {
       tab: tab,
@@ -78,8 +79,8 @@ class GroupsController < AuthorizedController
 
   def delete
     locals = {
-        group: authenticated_resource!,
-        group_memberships_count: authenticated_resource!.group_memberships.count
+      group: authenticated_resource!,
+      group_memberships_count: authenticated_resource!.group_memberships.count
     }
     respond_to do |format|
       format.html { render locals: locals }
@@ -94,7 +95,8 @@ class GroupsController < AuthorizedController
           redirect_to(
             settings_page_path(group.page, tab: :groups),
             status: 303,
-            notice: t('type_destroy_success', type: t('groups.type')))
+            notice: t('type_destroy_success', type: t('groups.type'))
+          )
         end
       end
     end

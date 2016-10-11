@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :comment, traits: [:set_publisher] do
     association :commentable, factory: :argument

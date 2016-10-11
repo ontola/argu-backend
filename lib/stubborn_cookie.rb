@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'stubborn_cookie/hash_methods'
 require 'stubborn_cookie/kv_methods'
 require 'stubborn_cookie/list_methods'
 
 module StubbornCookie
-  ALLOWED_SET_KEYS = %w(hide_video banners)
+  ALLOWED_SET_KEYS = %w(hide_video banners).freeze
   MODEL_NAME = 'user'
   STORE_CLASS = Argu::Redis
   include HashMethods, KVMethods
@@ -19,7 +20,7 @@ module StubbornCookie
   end
 
   def permeate_key(key, value = nil)
-    if value.present? #&& cookies.permanent[key].blank?
+    if value.present? # && cookies.permanent[key].blank?
       if cookies.permanent[key].present?
         if value.is_a?(Hash)
           json = JSON.parse(cookies.permanent[key])
@@ -34,13 +35,13 @@ module StubbornCookie
   def permit_set_params
     p = params.require(MODEL_NAME).permit(:key, :value)
     {
-        key: ALLOWED_SET_KEYS.select { |v| v.eql?(p[:key]) }.first,
-        value: p[:value]
+      key: ALLOWED_SET_KEYS.select { |v| v.eql?(p[:key]) }.first,
+      value: p[:value]
     }
   end
 
   def stubborn_identifier
-    current_user && current_user.id
+    current_user&.id
   end
 
   def stubborn_key(key)

@@ -16,7 +16,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path(
       r: new_motion_vote_path(
         vote: {for: nil},
-        confirm: true))
+        confirm: true
+      )
+    )
     assert_not assigns(:model)
   end
 
@@ -139,8 +141,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            parent: motion.edge,
            voter: member.profile,
            options: {
-            publisher: member,
-            owner: member.profile
+             publisher: member,
+             owner: member.profile
            },
            for: 'neutral')
     sign_in member
@@ -165,8 +167,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            parent: motion.edge,
            voter: member.profile,
            options: {
-            publisher: member,
-            owner: member.profile
+             publisher: member,
+             owner: member.profile
            },
            for: 'neutral')
     sign_in member

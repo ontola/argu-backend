@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Argu::Application.configure do
   config.host = ENV['HOSTNAME'] || 'argu.co'
   Rails.application.routes.default_url_options[:host] = config.host
@@ -62,7 +63,7 @@ Argu::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, pica_pica.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.js closed.js polyfill.js )
+  config.assets.precompile += %w(application.js closed.js polyfill.js)
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -71,8 +72,8 @@ Argu::Application.configure do
 
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
-      api_key: Rails.application.secrets.mailgun_api_token,
-      domain: Rails.application.secrets.mailgun_domain
+    api_key: Rails.application.secrets.mailgun_api_token,
+    domain: Rails.application.secrets.mailgun_domain
   }
 
   # Enable threaded mode

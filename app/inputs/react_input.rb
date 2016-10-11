@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ReactInput < Formtastic::Inputs::SelectInput
   class InputReactComponent
     include React::Rails::ViewHelper
@@ -26,7 +27,8 @@ class ReactInput < Formtastic::Inputs::SelectInput
     input_options.merge(
       name: react_name,
       options: react_options,
-      value: react_value)
+      value: react_value
+    )
   end
 
   def react_name

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Follow < ApplicationRecord
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes

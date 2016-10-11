@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # @private
 class ProconCreateProcon < ActiveRecord::Migration
   def change

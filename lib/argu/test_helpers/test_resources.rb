@@ -17,7 +17,8 @@ module Argu
         create(
           :forum,
           *args,
-          attributes)
+          attributes
+        )
       end
     end
 

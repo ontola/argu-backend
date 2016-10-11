@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Argu
   module TestHelpers
     module TestMocks
@@ -31,7 +32,7 @@ module Argu
               'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
               'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\
               'Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD',
-            expires_at: 1473099257,
+            expires_at: 1_473_099_257,
             expires: true
           },
           extra: {
@@ -47,7 +48,8 @@ module Argu
       def facebook_me(token)
         stub_request(
           :get,
-          "https://graph.facebook.com/me?access_token=#{token}")
+          "https://graph.facebook.com/me?access_token=#{token}"
+        )
           .to_return(
             status: 200,
             body: {

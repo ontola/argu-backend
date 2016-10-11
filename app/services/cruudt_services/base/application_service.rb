@@ -6,7 +6,7 @@ class ApplicationService
   include Pundit
 
   # @note Call super when overriding.
-  def initialize(orig_resource, attributes: {}, options: {})
+  def initialize(_orig_resource, attributes: {}, options: {})
     @attributes = attributes
     @actions = {}
     @options = options
@@ -24,7 +24,8 @@ class ApplicationService
     if options[:uuid].present?
       subscribe(AnalyticsListener.new(
                   uuid: options[:uuid],
-                  client_id: options[:client_id]))
+                  client_id: options[:client_id]
+      ))
     end
   end
 

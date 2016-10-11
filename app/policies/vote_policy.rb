@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class VotePolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 

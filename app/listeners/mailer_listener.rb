@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MailerListener
   def create_argument_successful(argument)
     send_followers_mail argument, follower_emails_for(argument, argument.motion)
@@ -22,28 +23,28 @@ class MailerListener
     # TODO: single out the creator and send a different mail
     if recipients.present?
       UserMailer
-          .public_send("user_created_#{resource.type.to_s}",
-                       question,
-                       recipients,
-                       parent: parent_for_resource(resource))
-          .deliver_now
+        .public_send("user_created_#{resource.type}",
+                     question,
+                     recipients,
+                     parent: parent_for_resource(resource))
+        .deliver_now
     end
   end
 
   def follower_emails_for(resource, in_response_to)
     in_response_to
-        .subscribers
-        .where.not(id: resource.creator.id)
-        .where.not(confirmed_at: nil)
-        .where(reactions_email: User.reactions_emails[:direct_reactions_email])
-        .pluck(:email)
+      .subscribers
+      .where.not(id: resource.creator.id)
+      .where.not(confirmed_at: nil)
+      .where(reactions_email: User.reactions_emails[:direct_reactions_email])
+      .pluck(:email)
   end
 
   def parent_for_resource(resource)
-    if resource.activities.length > 0
+    if resource.activities.length.positive?
       notify_bugnsag(resource) if resource.activities.length != 1
       resource.activities.first.recipient
-    elsif resource.activities.length == 0
+    elsif resource.activities.length.zero?
       notify_bugnsag(resource)
       resource.try :forum
     end

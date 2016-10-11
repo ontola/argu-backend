@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DocumentPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
@@ -16,7 +17,7 @@ class DocumentPolicy < RestrictivePolicy
     end
   end
 
-  ######CRUD######
+  # #####CRUD######
   def show?
     true
   end

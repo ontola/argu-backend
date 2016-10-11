@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Place < ApplicationRecord
   has_many :placements
   has_many :placeables,
@@ -23,11 +24,11 @@ class Place < ApplicationRecord
     opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
     opts[:postcode] = opts[:postcode].upcase.delete(' ') if opts[:postcode].present?
     opts.each do |key, value|
-      if value.present?
-        scope = scope.where("address->>? = ?", key, value)
-      else
-        scope = scope.where("(address->?) is null", key)
-      end
+      scope = if value.present?
+                scope.where('address->>? = ?', key, value)
+              else
+                scope.where('(address->?) is null', key)
+              end
     end
     return scope.first if scope.present?
     Place.fetch url_for_osm_query(opts)
@@ -56,7 +57,8 @@ class Place < ApplicationRecord
       icon: result['icon'],
       address: result['address'],
       extratags: result['extratags'],
-      namedetails: result['namedetails'])
+      namedetails: result['namedetails']
+    )
   rescue OpenURI::HTTPError => error
     raise StandardError.new(error_message(error))
   end

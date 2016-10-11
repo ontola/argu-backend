@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 class CreateArgument < PublishedCreateService
   include Wisper::Publisher
 
@@ -17,7 +18,8 @@ class CreateArgument < PublishedCreateService
           options: {
             creator: resource.creator,
             publisher: resource.creator.profileable
-          })
+          }
+        )
         .commit
     end
   end

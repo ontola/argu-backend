@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :shortname do
     sequence(:shortname) { |n| "fg_shortname#{n}end" }

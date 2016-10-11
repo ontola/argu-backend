@@ -124,7 +124,8 @@ class VotesController < AuthorizedController
             create_membership: {
               href: group_membership_index_url(
                 get_parent_resource.forum.members_group,
-                redirect: false)
+                redirect: false
+              )
             }
           }
         }
@@ -173,6 +174,7 @@ class VotesController < AuthorizedController
   def resource_new_params
     HashWithIndifferentAccess.new(
       publisher: current_user,
-      for: for_param)
+      for: for_param
+    )
   end
 end

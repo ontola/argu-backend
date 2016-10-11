@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Comment < ApplicationRecord
   include Loggable, Parentable, Trashable, PublicActivity::Common
 
@@ -35,7 +36,7 @@ class Comment < ApplicationRecord
   end
 
   def abandoned?
-    is_trashed? && children.length == 0
+    is_trashed? && children.length.zero?
   end
 
   # Helper class method that allows you to build a comment

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'argu/activity_string'
 
 module ActivityHelper
@@ -7,7 +8,7 @@ module ActivityHelper
   # @param [string] activity The Activity to generate the activity_string for
   # @param [User] user The User to generate the activity_string for
   # @param [bool] embedded_link Set to true to embed an anchor link (defaults to false)
-  def activity_string_for(activity, user, embedded_link= false)
+  def activity_string_for(activity, user, embedded_link = false)
     Argu::ActivityString.new(activity, user, embedded_link).to_s
   end
 

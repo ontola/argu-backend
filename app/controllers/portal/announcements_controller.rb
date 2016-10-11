@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Portal
   class AnnouncementsController < PortalBaseController
     before_action :set_settings_view_path
@@ -7,19 +8,20 @@ module Portal
 
       render settings_location,
              locals: {
-                 announcement: authenticated_resource!,
-                 tab: 'announcements/new',
-                 active: 'announcements'
+               announcement: authenticated_resource!,
+               tab: 'announcements/new',
+               active: 'announcements'
              }
     end
 
     def create
       @cb = CreateAnnouncement
-                .new(current_user.profile,
-                     attributes: announcement_params,
-                     options: {
-                       creator: current_profile,
-                       publisher: current_user})
+            .new(current_user.profile,
+                 attributes: announcement_params,
+                 options: {
+                   creator: current_profile,
+                   publisher: current_user
+                 })
       authorize @cb.resource, :create?
       @cb.on(:create_announcement_successful) do
         respond_to do |format|
@@ -51,9 +53,9 @@ module Portal
 
       render settings_location,
              locals: {
-                 announcement: announcement,
-                 tab: 'announcements/edit',
-                 active: 'announcements'
+               announcement: announcement,
+               tab: 'announcements/edit',
+               active: 'announcements'
              }
     end
 
@@ -68,9 +70,9 @@ module Portal
           format.html do
             render settings_location,
                    locals: {
-                       announcement: announcement,
-                       tab: 'announcements/edit',
-                       active: 'announcements'
+                     announcement: announcement,
+                     tab: 'announcements/edit',
+                     active: 'announcements'
                    }
           end
         end
@@ -103,9 +105,9 @@ module Portal
     def authenticated_resource!
       if params[:action] == 'new' || params[:action] == 'create'
         controller_name
-            .classify
-            .constantize
-            .new
+          .classify
+          .constantize
+          .new
       else
         Announcement.find(params[:id])
       end
@@ -113,8 +115,8 @@ module Portal
 
     def announcement_params
       params
-          .require(:announcement)
-          .permit(*policy(authenticated_resource! || Announcement).permitted_attributes)
+        .require(:announcement)
+        .permit(*policy(authenticated_resource! || Announcement).permitted_attributes)
     end
 
     def announcements_settings_path

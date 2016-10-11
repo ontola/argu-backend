@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
 
 # Includes default deployment tasks
 require 'capistrano/deploy'
-#require 'capistrano3/unicorn'
+# require 'capistrano3/unicorn'
 
 # Includes tasks from other gems included in your Gemfile
 #

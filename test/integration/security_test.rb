@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class SecurityTest < ActionDispatch::IntegrationTest
@@ -5,10 +6,10 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
   test 'should block referer spam' do
     spammers = %w(
-        http://co.lumb.co/
-        http://forum.topic56809347.darodar.com/
-        http://site4.floating-share-buttons.com
-        http://100dollars-seo.com
+      http://co.lumb.co/
+      http://forum.topic56809347.darodar.com/
+      http://site4.floating-share-buttons.com
+      http://100dollars-seo.com
     )
 
     spammers.each do |spammer|
@@ -22,10 +23,10 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
   test 'should block parameter spam' do
     spammers = %w(
-        co.lumb.co
-        forum.topic56809347.darodar.com
-        site4.floating-share-buttons.com
-        100dollars-seo.com
+      co.lumb.co
+      forum.topic56809347.darodar.com
+      site4.floating-share-buttons.com
+      100dollars-seo.com
     )
 
     spammers.each do |spammer|
@@ -40,11 +41,11 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
   test 'should not block non-spam referer' do
     spammers = [
-        'http://facebook.com/',
-        'http://argu.co/',
-        'http://news.google.com',
-        'http://nu.nl/',
-        nil
+      'http://facebook.com/',
+      'http://argu.co/',
+      'http://news.google.com',
+      'http://nu.nl/',
+      nil
     ]
 
     spammers.each do |spammer|

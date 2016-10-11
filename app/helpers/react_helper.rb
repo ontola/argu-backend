@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ReactHelper
   def add_to_state(key, value)
     if initial_js_state[key].is_a?(Hash)
@@ -9,21 +10,21 @@ module ReactHelper
 
   def localized_react_component(opts)
     {
-        locales: [I18n.locale],
-        messages: {
-            pro: t('motions.votes.pro'),
-            neutral: t('motions.votes.neutral'),
-            con: t('motions.votes.con'),
-            errors: {
-                general: t('errors.general'),
-                status: {
-                    '404': t('status.404'),
-                    '401': t('status.401'),
-                    '429': t('status.429'),
-                    '500': t('status.500')
-                }
-            }
+      locales: [I18n.locale],
+      messages: {
+        pro: t('motions.votes.pro'),
+        neutral: t('motions.votes.neutral'),
+        con: t('motions.votes.con'),
+        errors: {
+          general: t('errors.general'),
+          status: {
+            '404': t('status.404'),
+            '401': t('status.401'),
+            '429': t('status.429'),
+            '500': t('status.500')
+          }
         }
+      }
     }.merge! opts
   end
 
@@ -48,7 +49,7 @@ module ReactHelper
   end
 
   def render_params_from_props(props)
-    return props, prerender_options
+    [props, prerender_options]
   end
 
   def prerender_options

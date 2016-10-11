@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Interface for the `flow` ability.
 # Aka they have an activity stream coupled.
 module Flowable
@@ -10,9 +11,11 @@ module Flowable
     activities = Activity.arel_table
     Activity.where(
       activities[:trackable_id].eq(id).and(
-        activities[:trackable_type].eq(model_name.to_s))
+        activities[:trackable_type].eq(model_name.to_s)
+      )
         .or(activities[:recipient_id]
               .eq(self)
-              .and(activities[:recipient_type].eq(model_name.to_s))))
+              .and(activities[:recipient_type].eq(model_name.to_s)))
+    )
   end
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # See {AccessToken}
 module AccessTokenHelper
   # Calls {AccessTokenHelper#get_access_token} and grants access when a token is found.

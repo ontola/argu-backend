@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module TimelineHelper
   def generate_phase_link_class(project, phase)
     class_string = 'timeline-phase-title tooltip--top'

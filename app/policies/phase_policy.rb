@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PhasePolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 

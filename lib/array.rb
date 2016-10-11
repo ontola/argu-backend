@@ -1,6 +1,7 @@
 
+# frozen_string_literal: true
 class Array
-  def extract(&block)
+  def extract
     items = []
     each_index do |i|
       r = yield self[i]

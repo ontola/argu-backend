@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class VoteTest < ActiveSupport::TestCase
@@ -18,13 +19,15 @@ class VoteTest < ActiveSupport::TestCase
           voteable: motion,
           voter: user.profile,
           forum: motion.forum,
-          publisher: user)
+          publisher: user
+        )
         Vote.create(
           edge: motion.edge.children.new(user: user),
           voteable: motion,
           voter: user.profile,
           forum: motion.forum,
-          publisher: user)
+          publisher: user
+        )
         assert motion.edge.save, motion.edge.errors.full_messages
       end
     end

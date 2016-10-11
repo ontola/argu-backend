@@ -25,7 +25,8 @@ module Omniauth
             default_profile_photo_attributes: {
               remote_image_url: image_url
             }
-          })
+          }
+        )
         user.identities << identity
         user.shortname = nil
         identity.save!

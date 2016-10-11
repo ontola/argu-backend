@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Group < ApplicationRecord
   include Parentable
 
@@ -24,7 +25,5 @@ class Group < ApplicationRecord
     name
   end
 
-  def include?(profile)
-    members.include?(profile)
-  end
+  delegate :include?, to: :members
 end

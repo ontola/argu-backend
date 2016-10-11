@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Users::IdentitiesController < ApplicationController
   def destroy
     @identity = Identity.find params[:id]

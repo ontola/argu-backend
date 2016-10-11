@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PreviewImageInput < Formtastic::Inputs::TextInput
   include ActionView::Helpers::AssetTagHelper
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
@@ -59,13 +60,18 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         analytics: stats_opt('comments', 'create_success'),
         attributes: {body: 'Just å UTF-8 comment.'}
       },
-      user_types: user_types[:create].merge(guest: {
-        should: false, response: 302, analytics: false,
-        asserts: [
-          'assigns(:_not_a_user_caught)',
-          "assert_redirected_to new_user_session_path(r: new_argument_comment_path(argument_id: "\
-          "argument.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
-        ]})
+      user_types: user_types[:create].merge(
+        guest: {
+          should: false,
+          response: 302,
+          analytics: false,
+          asserts: [
+            'assigns(:_not_a_user_caught)',
+            'assert_redirected_to new_user_session_path(r: new_argument_comment_path(argument_id: '\
+            "argument.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
+          ]
+        }
+      )
     )
     # @todo body is lost on errorneous post
     define_test(
@@ -128,28 +134,28 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       }
     )
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-      user: {should: false, response: 404}
-    })
+                  user: {should: false, response: 404}
+                })
     define_test(hash, :edit, user_types: {
-      guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)']},
-      user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)']},
-      member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      creator: {should: true, response: 200},
-      moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
-    })
+                  guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)']},
+                  user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)']},
+                  member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  creator: {should: true, response: 200},
+                  moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+                })
     define_test(hash, :update, user_types: {
-      guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)']},
-      user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)']},
-      member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      creator: {should: true, response: 302},
-      moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-      staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
-    })
+                  guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)']},
+                  user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)']},
+                  member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  creator: {should: true, response: 302},
+                  moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+                })
     define_test(
       hash,
       :update,
@@ -159,13 +165,14 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         creator: {
           should: false,
           response: 200,
-          asserts: ['assert_select "#comment_body", "C"']}
+          asserts: ['assert_select "#comment_body", "C"']
+        }
       }
     )
     define_test(hash, :destroy, options: {
-      differences: [['Comment.where(body: "")', 1], ['Activity.loggings', 1]],
-      analytics: stats_opt('comments', 'destroy_success')
-    })
+                  differences: [['Comment.where(body: "")', 1], ['Activity.loggings', 1]],
+                  analytics: stats_opt('comments', 'destroy_success')
+                })
     define_test(hash, :trash, options: {analytics: stats_opt('comments', 'trash_success')})
   end
 
@@ -250,7 +257,8 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       delete destroy_argument_comment_path(
         venice_comment.commentable,
         venice_comment,
-        destroy: 'true')
+        destroy: 'true'
+      )
     end
 
     assert_redirected_to argument_path(venice_argument, anchor: venice_comment.id)
@@ -270,7 +278,8 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       delete destroy_argument_comment_path(
         venice_comment.commentable,
         venice_comment,
-        destroy: 'true')
+        destroy: 'true'
+      )
     end
 
     assert_redirected_to argument_url(venice_argument, anchor: venice_comment.id)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ProjectsController < AuthorizedController
   include NestedResourceHelper
   prepend_before_action :redirect_pages, only: :show
@@ -39,8 +40,8 @@ class ProjectsController < AuthorizedController
 
     if policy(authenticated_resource!).show?
       @items = (questions + motions)
-                 .sort_by(&:updated_at)
-                 .reverse
+               .sort_by(&:updated_at)
+               .reverse
     end
 
     respond_to do |format|
@@ -142,7 +143,7 @@ class ProjectsController < AuthorizedController
   end
 
   def redirect_pages
-    redirect_to page_path(params[:id]) if params[:id].to_i == 0
+    redirect_to page_path(params[:id]) if params[:id].to_i.zero?
   end
 
   def resource_new_params

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module HasLinks
   extend ActiveSupport::Concern
   require 'html_truncator'
@@ -5,14 +6,14 @@ module HasLinks
   included do
   end
 
-  #TODO escape content=(text)
+  # TODO: escape content=(text)
   def supped_content
     ERB::Util.html_escape(content) \
-      .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
-      .gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\1">\2</a>')
+             .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
+             .gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\1">\2</a>')
   end
 
-  def truncate_preview(length, opts= {})
+  def truncate_preview(length, opts = {})
     HTML_Truncator.truncate(supped_content, length, opts)
   end
 

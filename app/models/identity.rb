@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 require 'publishable'
 
 class Identity < ApplicationRecord
   belongs_to :user
   after_destroy :clear_token_connection
-  validates_presence_of :uid, :provider
-  validates_uniqueness_of :uid, scope: :provider
+  validates :uid, :provider, presence: true
+  validates :uid, uniqueness: {scope: :provider}
 
   def self.find_for_oauth(auth)
     find_or_initialize_by(uid: auth.uid, provider: auth.provider)
@@ -42,19 +43,11 @@ class Identity < ApplicationRecord
     Publishable::Publishers.const_get(provider.classify).publish(self, publishable)
   end
 
-  def email
-    client && client.email
-  end
+  delegate :email, to: :client
 
-  def name
-    client && client.name
-  end
+  delegate :name, to: :client
 
-  def username
-    client && client.username
-  end
+  delegate :username, to: :client
 
-  def image_url
-    client && client.image_url
-  end
+  delegate :image_url, to: :client
 end

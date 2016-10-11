@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BannerDismissalPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 
@@ -30,7 +31,7 @@ class BannerDismissalPolicy < RestrictivePolicy
     case record.banner.audience.to_sym
     when :guests then !user
     when :users then user && !user.member_of?(context.forum)
-    when :members then user && user.member_of?(context.forum)
+    when :members then user&.member_of?(context.forum)
     when :everyone then true
     end
   end

@@ -80,7 +80,8 @@ module Argu
             resource = create_resource(
               klass,
               attributes,
-              options)
+              options
+            )
 
             args.each do |trait|
               TraitListener.new(resource).public_send(trait)
@@ -164,10 +165,10 @@ module Argu
           parent_edge = attributes.delete(:parent)
 
           service = "Create#{klass}"
-                      .constantize
-                      .new(parent_edge,
-                           attributes: attributes,
-                           options: options)
+                    .constantize
+                    .new(parent_edge,
+                         attributes: attributes,
+                         options: options)
           service.commit
           service.resource.reload
         end

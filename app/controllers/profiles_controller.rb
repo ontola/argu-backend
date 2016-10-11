@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ProfilesController < ApplicationController
   include SettingsHelper
 
@@ -11,31 +12,31 @@ class ProfilesController < ApplicationController
     if current_user.present?
       if params[:q].present?
         # This is a working mess.
-        q = params[:q].gsub(' ', '|')
+        q = params[:q].tr(' ', '|')
         @profiles = Profile
-                      .where(profileable_type: 'User',
-                             profileable_id: User.where(finished_intro: true)
+                    .where(profileable_type: 'User',
+                           profileable_id: User.where(finished_intro: true)
                                                .joins(:shortname)
-                                               .where('lower(shortname) SIMILAR TO lower(?) OR ' +
-                                                        'lower(first_name) SIMILAR TO lower(?) OR ' +
+                                               .where('lower(shortname) SIMILAR TO lower(?) OR ' \
+                                                        'lower(first_name) SIMILAR TO lower(?) OR ' \
                                                         'lower(last_name) SIMILAR TO lower(?)',
                                                       "%#{q}%",
                                                       "%#{q}%",
                                                       "%#{q}%")
                                                .pluck(:owner_id))
-                      .includes(:default_profile_photo, profileable: :shortname)
+                    .includes(:default_profile_photo, profileable: :shortname)
 
         if params[:things] && params[:things].split(',').include?('pages')
           @profiles += Profile
-                         .where(is_public: true)
-                         .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
+                       .where(is_public: true)
+                       .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
           # .page params[:profile] # Pages
         end
       end
     end
   end
 
-  #GET /p/shortname/edit
+  # GET /p/shortname/edit
   def edit
     @resource = Shortname.find_resource(params[:id])
     authorize @resource, :settings?
@@ -46,7 +47,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  #GET /profiles/setup
+  # GET /profiles/setup
   def setup
     @resource = user_or_redirect
     @profile = @resource.profile
@@ -65,7 +66,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  #PUT /profiles/setup
+  # PUT /profiles/setup
   def setup!
     @resource = user_or_redirect
     @profile = @resource.profile

@@ -9,7 +9,7 @@ class Decision < ApplicationRecord
   belongs_to :forwarded_user, class_name: 'User'
   belongs_to :publisher, inverse_of: :decisions, class_name: 'User'
   has_one :decision_activity,
-          -> {where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
+          -> { where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
           class_name: 'Activity',
           as: :trackable
   has_one :motion, through: :decisionable, source: :owner, source_type: 'Motion'

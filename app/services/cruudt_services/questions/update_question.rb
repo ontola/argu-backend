@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UpdateQuestion < UpdateService
   include Wisper::Publisher
 

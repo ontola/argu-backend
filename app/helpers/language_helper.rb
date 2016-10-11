@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module LanguageHelper
   def language_dropdown_items
     {
@@ -13,7 +14,8 @@ module LanguageHelper
               I18n.t(:language, locale: language_code),
               language_users_path(language_code),
               image: path_to_image("flags/#{language_code}.svg"),
-              data: {method: :put})
+              data: {method: :put}
+            )
           end
         }
       ],

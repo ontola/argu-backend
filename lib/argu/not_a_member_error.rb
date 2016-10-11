@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Argu
   class NotAMemberError < StandardError
     attr_accessor :forum, :redirect, :body

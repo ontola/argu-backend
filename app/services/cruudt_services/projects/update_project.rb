@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Service for updating projects.
 # @author Fletcher91 <thom@argu.co>
 class UpdateProject < UpdateService
@@ -20,7 +21,8 @@ class UpdateProject < UpdateService
       unless obj.edge
         obj.build_edge(
           parent: resource.edge,
-          user: @options.fetch(:publisher))
+          user: @options.fetch(:publisher)
+        )
       end
       obj.edge.parent ||= resource.edge
     end

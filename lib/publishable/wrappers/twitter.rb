@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Publishable
   module Wrappers
     class Twitter < Wrapper
@@ -20,12 +21,10 @@ module Publishable
         verify && verify.profile_image_uri.to_s
       end
 
-      def name
-        verify && verify.name
-      end
+      delegate :name, to: :verify
 
       def username
-        verify && verify.screen_name
+        verify&.screen_name
       end
 
       def verify

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'argu/ruled_it'
 require 'argu/not_authorized_error'
 require 'argu/not_a_user_error'
@@ -51,16 +52,12 @@ class ApplicationController < ActionController::Base
       announcements = JSON.parse(announcements)
     end
     @announcements = policy_scope(Announcement)
-                       .reject { |a| announcements[a.identifier] == 'hidden' }
+                     .reject { |a| announcements[a.identifier] == 'hidden' }
   end
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
   def current_profile
-    if current_user.present?
-      @current_profile ||= get_current_actor
-    else
-      nil
-    end
+    @current_profile ||= get_current_actor if current_user.present?
   end
 
   def forum_by_geocode
@@ -105,14 +102,14 @@ class ApplicationController < ActionController::Base
       else
         mem_forum =
           profile
-            .granted_edges
-            .where(owner_type: 'Forum')
-            .map do |e|
-              @_preferred_forum = e.owner
-              e.owner if policy(e.owner).show?
-            end
-            .compact
-            .presence
+          .granted_edges
+          .where(owner_type: 'Forum')
+          .map do |e|
+            @_preferred_forum = e.owner
+            e.owner if policy(e.owner).show?
+          end
+          .compact
+          .presence
         mem_forum || Forum.first_public
       end
     else
@@ -129,7 +126,8 @@ class ApplicationController < ActionController::Base
       current_user,
       current_profile,
       session,
-      @forum || @_preferred_forum)
+      @forum || @_preferred_forum
+    )
   end
 
   def rescue_stale
@@ -155,9 +153,9 @@ class ApplicationController < ActionController::Base
   def set_notification_header
     if current_user.present?
       response.headers[:lastNotification] = policy_scope(Notification)
-                                              .order(created_at: :desc)
-                                              .limit(1)
-                                              .pluck(:created_at)[0] || '-1'
+                                            .order(created_at: :desc)
+                                            .limit(1)
+                                            .pluck(:created_at)[0] || '-1'
     else
       response.headers[:lastNotification] = '-1'
     end
@@ -220,7 +218,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_record_not_unique(exception)
+  def handle_record_not_unique(_exception)
     flash[:warning] = t(:twice_warning)
     redirect_back(fallback_location: root_path)
   end
@@ -295,7 +293,7 @@ class ApplicationController < ActionController::Base
                  title: t('status.s_404.header'),
                  message: t('status.s_404.body'),
                  quote: @quote
-                }
+               }
       end
     end
   end
@@ -346,7 +344,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   # For Devise
-  def after_sending_reset_password_instructions_path_for(resource_name)
+  def after_sending_reset_password_instructions_path_for(_resource_name)
     password_reset_confirm_path
   end
 end

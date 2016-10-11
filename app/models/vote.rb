@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Vote < ApplicationRecord
   include Parentable, Loggable, PublicActivity::Model
 
@@ -18,7 +19,7 @@ class Vote < ApplicationRecord
 
   validates :voteable, :voter, :forum, :for, presence: true
 
-  ##########methods###########
+  # #########methods###########
   # Needed for ActivityListener#audit_data
   def display_name
     "#{self.for} vote for #{voteable.display_name}"
@@ -42,13 +43,14 @@ class Vote < ApplicationRecord
     voteable.update_vote_counters
   end
 
-  ##########Class methods###########
+  # #########Class methods###########
   def self.ordered(votes)
     grouped = votes.to_a.group_by(&:for)
     HashWithIndifferentAccess.new(
       pro: {collection: grouped['pro'] || []},
       neutral: {collection: grouped['neutral'] || []},
-      con: {collection: grouped['con'] || []})
+      con: {collection: grouped['con'] || []}
+    )
   end
 
   def voter_type

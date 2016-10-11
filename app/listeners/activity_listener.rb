@@ -48,7 +48,8 @@ class ActivityListener
     create_activity(
       resource.edge.owner,
       resource.edge.parent.owner,
-      :convert)
+      :convert
+    )
   end
 
   def create_vote_successful(resource)
@@ -58,7 +59,8 @@ class ActivityListener
         resource,
         resource.voteable,
         :create,
-        parameters: {for: resource.for})
+        parameters: {for: resource.for}
+      )
     end
   end
 
@@ -69,9 +71,9 @@ class ActivityListener
     {
       user_id: @publisher.id,
       user_name: @publisher.display_name,
-      recipient_id: "#{recipient.class.to_s}.#{recipient.id}",
+      recipient_id: "#{recipient.class}.#{recipient.id}",
       recipient_name: recipient.display_name,
-      trackable_id: "#{resource.class.to_s}.#{resource.id}",
+      trackable_id: "#{resource.class}.#{resource.id}",
       trackable_name: resource.display_name
     }
   end
@@ -88,7 +90,8 @@ class ActivityListener
         audit_data: audit_data(resource, recipient),
         is_published: true,
         parameters: parameters
-      })
+      }
+    )
     a.subscribe(NotificationListener.new)
     a.commit
   end
@@ -96,10 +99,10 @@ class ActivityListener
   # Deletes all other activities created within 6 hours of the new activity.
   def destroy_recent_similar_activities(resource, trackable, action)
     ids = Activity.where('created_at >= :date', date: 6.hours.ago)
-            .where(trackable_id: trackable.id,
-                   owner_id: @creator.id,
-                   key: "#{resource.class.name.downcase}.#{action}")
-            .pluck(:id)
+                  .where(trackable_id: trackable.id,
+                         owner_id: @creator.id,
+                         key: "#{resource.class.name.downcase}.#{action}")
+                  .pluck(:id)
     Notification.where(activity_id: ids).destroy_all
     Activity.destroy ids
   end
