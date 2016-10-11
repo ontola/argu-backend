@@ -34,7 +34,6 @@ class AnnouncementPolicy < RestrictivePolicy
     attributes = super
     attributes.concat %i(title forum cited_profile content cited_name
                          audience cited_function published_at ends_at) if create?
-    append_default_photo_params(attributes)
     attributes.append :id if staff?
     attributes
   end
