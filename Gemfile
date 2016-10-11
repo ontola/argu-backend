@@ -140,7 +140,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rubocop', '~> 0.39.0'
+  gem 'rubocop', '~> 0.43.0'
   gem 'spring', '~> 1.7.2'
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
