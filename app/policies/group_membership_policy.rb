@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class GroupMembershipPolicy < RestrictivePolicy
+class GroupMembershipPolicy < EdgeTreePolicy
   include PagePolicy::PageRoles
 
   class Scope < Scope

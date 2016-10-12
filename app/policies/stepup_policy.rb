@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class StepupPolicy < RestrictivePolicy
+class StepupPolicy < EdgeTreePolicy
   include ForumPolicy::ForumRoles
 
   class Scope < RestrictivePolicy::Scope

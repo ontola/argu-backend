@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ShortnamePolicy < RestrictivePolicy
+class ShortnamePolicy < EdgeTreePolicy
   include ForumPolicy::ForumRoles
 
   def permitted_attributes

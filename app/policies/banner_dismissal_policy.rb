@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class BannerDismissalPolicy < RestrictivePolicy
+class BannerDismissalPolicy < EdgeTreePolicy
   include ForumPolicy::ForumRoles
 
   class Scope < Scope

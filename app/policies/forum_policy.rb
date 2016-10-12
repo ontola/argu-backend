@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ForumPolicy < RestrictivePolicy
+class ForumPolicy < EdgeTreePolicy
   class Scope < Scope
     attr_reader :context, :scope
 

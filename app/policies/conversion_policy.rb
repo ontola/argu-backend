@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ConversionPolicy < RestrictivePolicy
+class ConversionPolicy < EdgeTreePolicy
   include ForumPolicy::ForumRoles
 
   class Scope < RestrictivePolicy::Scope
