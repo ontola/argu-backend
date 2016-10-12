@@ -21,16 +21,16 @@ class MotionsController < AuthorizedController
   # GET /motions/1.json
   def show
     @arguments = Argument.ordered(
-      policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes)),
+      policy_scope(authenticated_resource.arguments.trashed(show_trashed?).includes(:votes)),
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]
     )
-    @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
-    @vote ||= Vote.new(voteable: @motion, voter: current_profile)
+    @vote = Vote.where(voteable: authenticated_resource, voter: current_profile).last unless current_user.blank?
+    @vote ||= Vote.new(voteable: authenticated_resource, voter: current_profile)
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.widget { render @motion }
+      format.html { render locals: {motion: authenticated_resource} }
+      format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
     end
   end
@@ -38,17 +38,17 @@ class MotionsController < AuthorizedController
   # GET /motions/new
   # GET /motions/new.json
   def new
-    authorize authenticated_resource!, authenticated_resource!.question.presence ? :new? : :new_without_question?
+    authorize authenticated_resource, authenticated_resource.question.presence ? :new? : :new_without_question?
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {motion: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
+      format.html { render 'form', locals: {motion: authenticated_resource} }
+      format.json { render json: authenticated_resource }
     end
   end
 
   # GET /motions/1/edit
   def edit
-    @motion = authenticated_resource!
+    @motion = authenticated_resource
     authorize @motion
     respond_to do |format|
       format.html { render 'form', locals: {motion: @motion} }
@@ -159,28 +159,26 @@ class MotionsController < AuthorizedController
 
   # GET /motions/1/move
   def move
-    @motion = authenticated_resource!
-    authorize @motion, :move?
+    authorize authenticated_resource, :move?
 
     respond_to do |format|
-      format.html { render locals: {resource: @motion} }
+      format.html { render locals: {resource: authenticated_resource} }
       format.js { render }
     end
   end
 
   def move!
-    @motion = authenticated_resource!
-    authorize @motion, :move?
+    authorize authenticated_resource, :move?
     @forum = Forum.find permit_params[:forum_id]
     authorize @forum, :update?
     moved = false
-    @motion.with_lock do
-      moved = @motion.move_to @forum
+    authenticated_resource.with_lock do
+      moved = authenticated_resource.move_to @forum
     end
     if moved
-      redirect_to motion_url(@motion)
+      redirect_to motion_url(authenticated_resource)
     else
-      redirect_to edit_motion_url @motion
+      redirect_to edit_motion_url authenticated_resource
     end
   end
 
@@ -195,14 +193,6 @@ class MotionsController < AuthorizedController
 
   private
 
-  def authenticated_resource!
-    if (%w(convert convert! move move!) & [params[:action]]).present?
-      Motion.find(params[:motion_id])
-    else
-      super
-    end
-  end
-
   def authorize_action
     if params[:action] == 'create'
       action = create_service.resource.question.presence ? :create? : :create_without_question?
@@ -210,18 +200,6 @@ class MotionsController < AuthorizedController
     else
       super
     end
-  end
-
-  def authorize_show
-    @motion = Motion.includes(:arguments).find(params[:id])
-    authorize @motion, :show?
-  end
-
-  def permit_params
-    return {} unless params[:motion].present?
-    params
-      .require(:motion)
-      .permit(*policy(@motion || resource_by_id || new_resource_from_params || Motion).permitted_attributes)
   end
 
   def show_params

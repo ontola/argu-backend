@@ -35,6 +35,6 @@ class PhasesController < AuthorizedController
   private
 
   def permit_params
-    params.require(:phase).permit(*policy(resource_by_id || Phase).permitted_attributes)
+    params.require(:phase).permit(*policy(resource_by_id).permitted_attributes)
   end
 end

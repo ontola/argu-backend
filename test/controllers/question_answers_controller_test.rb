@@ -35,8 +35,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to forum_path(freetown)
-    assert assigns(:question_answer)
-    assert_equal nil, assigns(:motion).question_id
+    assert_equal nil, assigns(:resource).motion.question_id
   end
 
   ####################################
@@ -68,8 +67,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to forum_path(freetown)
-    assert assigns(:question_answer)
-    assert_equal nil, assigns(:motion).question_id
+    assert_equal nil, assigns(:resource).motion.question_id
   end
 
   ####################################
@@ -101,8 +99,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to question_path(question)
-    assert_equal question.id, assigns(:motion).question_id
-    assert assigns(:question_answer)
+    assert_equal question.id, assigns(:resource).motion.question_id
   end
 
   ####################################
@@ -133,8 +130,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to question_path(question)
-    assert_equal question.id, assigns(:motion).question_id
-    assert assigns(:question_answer)
+    assert_equal question.id, assigns(:resource).motion.question_id
   end
 
   ####################################
@@ -166,7 +162,6 @@ class QuestionAnswersControllerTest < ActionController::TestCase
          }
 
     assert_redirected_to question_path(question)
-    assert_equal question.id, assigns(:motion).question_id
-    assert assigns(:question_answer)
+    assert_equal question.id, assigns(:resource).motion.question_id
   end
 end

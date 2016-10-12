@@ -4,33 +4,38 @@ class QuestionAnswersController < ApplicationController
 
   # GET /question_answers/new
   def new
-    @question = Question.find(permit_params[:question_id])
-    authorize @question, :show?
-    @motions = @question.forum.motions
-    @forum = @question.forum
-    @question_answer = QuestionAnswer.new question: @question, motion: Motion.new
-    authorize @question_answer, :new?
+    @forum = new_resource_from_params.question.forum
+    @motions = new_resource_from_params.question.forum.motions
+    authorize new_resource_from_params.question, :show?
+    authorize new_resource_from_params, :new?
+
+    render locals: {
+      question_answer: new_resource_from_params,
+      question: new_resource_from_params.question,
+      forum: @forum
+    }
   end
 
   # POST /question_answers
   # POST /question_answers.json
   def create
-    @question = Question.find(permit_params[:question_id])
-    @motion = Motion.find(permit_params[:motion_id])
-    @forum = @question.forum
-
-    @question_answer = QuestionAnswer.new(question: @question,
-                                          motion: @motion,
-                                          options: service_options)
-    authorize @question_answer, :create?
+    @forum = new_resource_from_params.question.forum
+    authorize new_resource_from_params, :create?
 
     respond_to do |format|
-      if @question_answer.save
-        format.html { redirect_to @question, notice: 'Motion was successfully coupled.' }
-        format.json { render :show, status: :created, location: @question_answer }
+      if new_resource_from_params.save
+        format.html { redirect_to new_resource_from_params.question, notice: 'Motion was successfully coupled.' }
+        format.json { render :show, status: :created, location: new_resource_from_params }
       else
-        format.html { render :new }
-        format.json { render json: @question_answer.errors, status: :unprocessable_entity }
+        format.html do
+          render :new,
+                 locals: {
+                   question_answer: new_resource_from_params,
+                   question: new_resource_from_params.question,
+                   forum: @forum
+                 }
+        end
+        format.json { render json: new_resource_from_params.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,7 +46,17 @@ class QuestionAnswersController < ApplicationController
   end
 
   def permit_params
-    params.require(:question_answer).permit(*policy(@question_answer || QuestionAnswer).permitted_attributes)
+    params
+      .require(:question_answer)
+      .permit(*policy(QuestionAnswer).permitted_attributes)
+  end
+
+  def new_resource_from_params
+    @resource ||= QuestionAnswer.new(
+      question: Question.find(permit_params[:question_id]),
+      motion: Motion.find_by(id: permit_params[:motion_id]),
+      options: service_options
+    )
   end
 
   def service_options(options = {})

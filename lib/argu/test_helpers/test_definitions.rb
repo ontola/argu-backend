@@ -127,28 +127,28 @@ module Argu
         if results[:should]
           assert_redirected_to record
 
-          assert assigns(model_sym)
-          assert_equal forum_to, assigns(model_sym).forum
+          assert assigns(:resource)
+          assert_equal forum_to, assigns(:resource).forum
           forum_id = forum_to.id
           case model_class
           when Motion
-            assert assigns(:motion).arguments.count.positive?
-            assigns(:motion).arguments.pluck(:forum_id).each do |id|
+            assert assigns(:resource).arguments.count.positive?
+            assigns(:resource).arguments.pluck(:forum_id).each do |id|
               assert_equal forum_id, id
             end
-            assert assigns(:motion).question.blank?
+            assert assigns(:resource).question.blank?
           when Question
             assert record.forum != forum_to.id
-            assigns(:question).motions.pluck(:forum_id).each do |id|
+            assigns(:resource).motions.pluck(:forum_id).each do |id|
               assert_equal record.forum.id, id
             end
-            assert assigns(:question).reload.motions.blank?
+            assert assigns(:resource).reload.motions.blank?
           end
-          assert assigns(model_sym).activities.count.positive?
-          assigns(model_sym).activities.pluck(:forum_id).each do |id|
+          assert assigns(:resource).activities.count.positive?
+          assigns(:resource).activities.pluck(:forum_id).each do |id|
             assert_equal forum_id, id
           end
-          assigns(model_sym).taggings.pluck(:forum_id).each do |id|
+          assigns(:resource).taggings.pluck(:forum_id).each do |id|
             assert_equal forum_id, id
           end
         else

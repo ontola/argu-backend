@@ -3,39 +3,33 @@ class CommentsController < AuthorizedController
   include NestedResourceHelper
 
   def new
-    @commentable = commentable_class.find params[commentable_param]
-    @comment = @commentable.comment_threads.new(new_comment_params.merge(resource_new_params))
-    authorize @comment, :create?
-
     render locals: {
       parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
-      resource: @commentable,
-      comment: @comment
+      resource: authenticated_resource.commentable,
+      comment: authenticated_resource
     }
   end
 
   def show
     respond_to do |format|
-      format.html { redirect_to url_for([@comment.commentable, anchor: @comment.identifier]) }
+      format.html do
+        redirect_to url_for([authenticated_resource.commentable, anchor: authenticated_resource.identifier])
+      end
     end
   end
 
   def edit
-    @commentable = commentable_class.find params[commentable_param]
-    @comment = @commentable.comment_threads.find params[:id]
-    authorize @comment, :edit?
-
     respond_to do |format|
       format.html do
         render locals: {
-          resource: @commentable,
-          comment: @comment
+          resource: authenticated_resource.commentable,
+          comment: authenticated_resource
         }
       end
       format.js do
         render locals: {
-          resource: @commentable,
-          comment: @comment,
+          resource: authenticated_resource.commentable,
+          comment: authenticated_resource,
           parent_id: nil,
           visible: true
         }
@@ -172,42 +166,26 @@ class CommentsController < AuthorizedController
 
   private
 
-  def authorize_show
-    @comment = Comment.find params[:id]
-    authorize @comment, :show?
-  end
-
   def comment_body
-    if Rails.env.development?
-      raise StandardError('should always be a hash') if params[:comment].is_a?(String)
+    if params[:comment].is_a?(String)
+      Bugsnag.notify('comment_body should always be a hash')
+      raise StandardError('should always be a hash')
     end
-    params[:comment].is_a?(String) ? params[:comment] : params[:comment][:body]
+    params[:comment].try(:[], :body)
   end
 
-  def permit_params
-    params.require(:comment).permit(*policy(@comment || Comment).permitted_attributes)
-  end
-
-  def commentable_param
-    request.path_parameters.keys.find { |k| /_id/ =~ k }
-  end
-
-  def commentable_type
-    commentable_param[0..-4]
-  end
-
-  # Note: Safe to constantize since `path_parameters` uses the routes for naming.
-  def commentable_class
-    commentable_type.capitalize.constantize
-  end
-
-  def new_comment_params
-    params[:comment].present? ? permit_params : {}
+  def new_resource_from_params
+    @resource ||= get_parent_resource
+                    .edge
+                    .children
+                    .new(owner: get_parent_resource.comment_threads.new(resource_new_params))
+                    .owner
   end
 
   def resource_new_params
     h = super.merge(
-      commentable: get_parent_resource
+      commentable: get_parent_resource,
+      body: comment_body
     )
     h.delete(parent_resource_param)
     h

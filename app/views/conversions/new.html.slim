@@ -7,9 +7,9 @@
       section
         .form
           p= t('motions.convert.body')
-          =semantic_form_for @conversion, url: edge_conversions_path(@edge), method: :post do |f|
-            p= "#{t('conversions.current_class')} #{@edge.owner_type}"
+          =semantic_form_for conversion, url: edge_conversions_path(conversion.edge), method: :post do |f|
+            p= "#{t('conversions.current_class')} #{conversion.edge.owner_type}"
             =f.inputs do
-              =f.input :klass, as: :select, collection: convertible_class_names(@edge.owner), required: false, include_blank: false
+              =f.input :klass, as: :select, collection: convertible_class_names(conversion.edge.owner), required: false, include_blank: false
             =f.actions do
               =f.action :submit, :as => :button, label: t('convert')

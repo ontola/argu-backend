@@ -96,10 +96,4 @@ class BannersController < AuthorizedController
       .constantize
       .new resource_new_params
   end
-
-  def permit_params
-    params
-      .require(:banner)
-      .permit(*policy(resource_by_id || new_resource_from_params || Banner).permitted_attributes)
-  end
 end

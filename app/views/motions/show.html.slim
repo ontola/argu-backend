@@ -1,28 +1,28 @@
-=set_title @motion
-=connected_web url: motion_url(@motion),
-               name: seolized_title(@motion),
-               description: seolized_description(@motion),
-               image: @motion.default_cover_photo&.url || image_url('logo-social.png')
+=set_title motion
+=connected_web url: motion_url(motion),
+               name: seolized_title(motion),
+               description: seolized_description(motion),
+               image: motion.default_cover_photo&.url || image_url('logo-social.png')
 
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
-    .cover-image.bg-img[style="background-image: url('#{@motion.default_cover_photo&.url(:cover)}'); "]
+    .cover-image.bg-img[style="background-image: url('#{motion.default_cover_photo&.url(:cover)}'); "]
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent
-    =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
+    =render partial: 'contextualize/context_horizontal', locals: {item: motion, type: 'motion'}
     .col--motion
-      .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: @motion }
-      .motion-votes= react_component_store 'BigVoteContainer', props: motion_vote_props(current_profile, @motion, @vote), **prerender_options
-- if @motion.happenings.present?
+      .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: motion }
+      .motion-votes= react_component_store 'BigVoteContainer', props: motion_vote_props(current_profile, motion, @vote), **prerender_options
+- if motion.happenings.present?
   .col-1
     =render partial: 'happenings/timeline',
-            locals: { resource: @motion,
-                      show_unpublished: policy(@motion).update?,
-                      current_happening: @motion.latest_happening(policy(@motion).update?)}
+            locals: { resource: motion,
+                      show_unpublished: policy(motion).update?,
+                      current_happening: motion.latest_happening(policy(motion).update?)}
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
 .argument-columns= render_columns(@arguments,
-                                  buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion),
+                                  buttons_url: new_forum_argument_path(motion.forum, motion_id: motion),
                                   collection_model: Argument,
                                   buttons_param: :pro,
                                   buttons_form_on_empty: false,

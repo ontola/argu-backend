@@ -96,8 +96,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     get new_edge_conversion_path(project.edge)
-    assert_response 302
-    assert_not_authorized
+    assert_response 422
   end
 
   test 'staff should not post convert project' do
@@ -109,16 +108,14 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
              klass: 'questions'
            }
          }
-    assert_response 302
-    assert_not_authorized
+    assert_response 422
   end
 
   test 'staff should not get convert argument' do
     sign_in staff
 
     get new_edge_conversion_path(argument.edge)
-    assert_response 302
-    assert_not_authorized
+    assert_response 422
   end
 
   test 'staff should not post convert argument' do
@@ -130,8 +127,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
              klass: 'questions'
            }
          }
-    assert_response 302
-    assert_not_authorized
+    assert_response 422
   end
 
   test 'staff should get convert motion' do

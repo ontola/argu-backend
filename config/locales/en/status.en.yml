@@ -21,3 +21,8 @@ en:
       body: "The item that you are uploading is too large. Go back and try a smaller file."
       reference_link_url: "https://en.wikipedia.org/wiki/HTTP_413"
       reference_link_body: "Click here to learn more about HTTP & status 413 :)"
+    s_422:
+      header: "Unprocessable Entity"
+      body: "The item that you are trying to create cannot be processed."
+      reference_link_url: "https://en.wikipedia.org/wiki/HTTP_422"
+      reference_link_body: "Click here to learn more about HTTP & status 422 :)"

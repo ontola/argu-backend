@@ -8,6 +8,10 @@ module Convertible
   included do
   end
 
+  def is_convertible?
+    true
+  end
+
   # Converts an item to another item, the convertible method was used,
   # those relations will be assigned the newly created model
   #
@@ -50,5 +54,25 @@ module Convertible
         relations
       end
     end
+
+    def is_convertible?
+      true
+    end
   end
+
+  module ActiveRecordExtension
+    def self.included(base)
+      base.class_eval do
+        def self.is_convertible?
+          false
+        end
+      end
+    end
+
+    # Useful to test whether a model uses {Trashable}
+    def is_convertible?
+      false
+    end
+  end
+  ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end

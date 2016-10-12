@@ -215,8 +215,7 @@ class AuthorizedController < ApplicationController
   def permit_params
     params
       .require(controller_name.singularize.to_sym)
-      .permit(*policy(resource_by_id || new_resource_from_params || controller_name.singularize.classify.constantize)
-                 .permitted_attributes)
+      .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
   end
 
   # @private

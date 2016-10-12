@@ -191,7 +191,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       }
     )
     define_test(hash, :show, asserts: [
-                  'assigns(:motion)',
+                  'assigns(:resource)',
                   'assigns(:vote)',
                   'subject.arguments.where(is_trashed: true).count > 0',
                   '!(assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) })'

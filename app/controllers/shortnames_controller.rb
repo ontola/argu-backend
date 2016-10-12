@@ -1,68 +1,56 @@
 # frozen_string_literal: true
 class ShortnamesController < ApplicationController
   include NestedResourceHelper
-  before_action :initialize_resource, :filter_lesser_roles
 
   def new
-    @shortname = @forum.shortnames.new(owner_type: 'Question')
-    authorize @shortname, :create?
+    authorize new_resource_from_params, :create?
 
     render_settings
   end
 
   def create
-    @shortname = @forum.shortnames.new(permit_params)
+    authorize new_resource_from_params, :create?
 
-    authorize @shortname, :create?
-
-    redirect_or_render(@shortname.save)
+    redirect_or_render(new_resource_from_params.update(permit_params))
   rescue ActiveRecord::RecordNotUnique
     handle_record_not_unique
   end
 
   def edit
-    authorize @shortname, :edit?
+    authorize resource_by_id, :edit?
 
     render_settings(:edit)
   end
 
   def update
-    authorize @shortname, :update?
+    authorize resource_by_id, :update?
 
-    redirect_or_render(@shortname.update(permit_params), :edit)
+    redirect_or_render(resource_by_id.update(permit_params), :edit)
   rescue ActiveRecord::RecordNotUnique
     handle_record_not_unique(:edit)
   end
 
   def destroy
-    authorize @shortname, :destroy?
+    authorize resource_by_id, :destroy?
 
-    flash[:error] = @shortname.errors.full_messages unless @shortname.destroy
+    flash[:error] = resource_by_id.errors.full_messages unless resource_by_id.destroy
     forum_settings_redirect
   end
 
   private
-
-  def filter_lesser_roles
-    raise Argu::NotAuthorizedError.new(query: "#{params[:action]}?") unless policy(@forum).is_manager_up?
-  end
 
   def forum_settings_redirect
     redirect_to settings_forum_path(@forum, tab: 'shortnames')
   end
 
   def handle_record_not_unique(tab = :new)
-    @shortname.errors.add :owner, t('activerecord.errors.record_not_unique')
+    resource_by_id.errors.add :owner, t('activerecord.errors.record_not_unique')
     render_settings(tab)
   end
 
-  def initialize_resource
-    if %w(new create).include?(params[:action])
-      @forum = get_parent_resource
-    else
-      @shortname = Shortname.find(params[:id])
-      @forum = @shortname.forum
-    end
+  def new_resource_from_params
+    @forum ||= get_parent_resource
+    @resource ||= Shortname.new(forum: @forum)
   end
 
   def redirect_or_render(result, tab = :new)
@@ -78,12 +66,21 @@ class ShortnamesController < ApplicationController
            locals: {
              tab: "shortnames/#{tab}",
              active: 'shortnames',
-             resource: @shortname.forum
+             shortname: @resource,
+             resource: @resource.forum
            }
   end
 
+  def resource_by_id
+    @resource ||= Shortname.find(params[:id])
+    @forum ||= @resource.forum
+    @resource
+  end
+
   def permit_params
-    p = params.require(:shortname).permit(*policy(@shortname || Shortname).permitted_attributes)
+    p = params
+          .require(:shortname)
+          .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
     p['owner_type'] = nil unless %w(Project Question Motion Argument Comment).include?(p['owner_type'])
     p
   end

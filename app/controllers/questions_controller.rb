@@ -3,7 +3,7 @@ class QuestionsController < AuthorizedController
   include NestedResourceHelper
 
   def show
-    scope = authenticated_resource!
+    scope = authenticated_resource
             .motions
             .includes(:default_cover_photo, :edge, :votes, :top_arguments_con, :top_arguments_pro, :forum,
                       creator: {default_profile_photo: [], profileable: [:shortname]})
@@ -18,8 +18,8 @@ class QuestionsController < AuthorizedController
                .page(show_params[:page])
 
     respond_to do |format|
-      format.html { render locals: {question: authenticated_resource!} } # show.html.erb
-      format.widget { render authenticated_resource! }
+      format.html { render locals: {question: authenticated_resource} } # show.html.erb
+      format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
     end
   end
@@ -27,15 +27,15 @@ class QuestionsController < AuthorizedController
   def new
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {question: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
+      format.html { render 'form', locals: {question: authenticated_resource} }
+      format.json { render json: authenticated_resource }
     end
   end
 
   # GET /questions/1/edit
   def edit
     respond_to do |format|
-      format.html { render 'form', locals: {question: authenticated_resource!} }
+      format.html { render 'form', locals: {question: authenticated_resource} }
     end
   end
 
@@ -129,28 +129,23 @@ class QuestionsController < AuthorizedController
 
   # GET /motions/1/move
   def move
-    @question = Question.find params[:question_id]
-    authorize @question, :move?
-
     respond_to do |format|
-      format.html { render locals: {resource: @question} }
+      format.html { render locals: {resource: authenticated_resource} }
       format.js { render }
     end
   end
 
   def move!
-    @question = Question.find(params[:question_id])
-    authorize @question, :move?
     @forum = Forum.find permit_params[:forum_id]
     authorize @forum, :update?
     moved = nil
-    @question.with_lock do
-      moved = @question.move_to @forum, permit_params[:include_motions] == '1'
+    authenticated_resource.with_lock do
+      moved = authenticated_resource.move_to @forum, permit_params[:include_motions] == '1'
     end
     if moved
-      redirect_to question_url(@question)
+      redirect_to question_url(authenticated_resource)
     else
-      redirect_to edit_question_url @question
+      redirect_to edit_question_url authenticated_resource
     end
   end
 
@@ -165,9 +160,9 @@ class QuestionsController < AuthorizedController
 
   private
 
-  def authenticated_resource!
+  def authenticated_resource
     if (%w(convert convert! move move!) & [params[:action]]).present?
-      Question.find(params[:question_id])
+      @resource ||= Question.find(params[:question_id])
     else
       super
     end

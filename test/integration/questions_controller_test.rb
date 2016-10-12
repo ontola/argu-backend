@@ -113,7 +113,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       options: {attributes: {forum_id: :forum_move_to}},
       user_types: user_types[:move!].merge(staff: {should: true, response: 302, asserts: [
                                              'Motion.pluck(:forum_id).uniq == [freetown.id]',
-                                             'assert_equal 0, assigns(:question).motions.count'
+                                             'assert_equal 0, assigns(:resource).motions.count'
                                            ]})
     )
     define_test(
@@ -122,8 +122,8 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' with motions',
       options: {attributes: {forum_id: :forum_move_to, include_motions: '1'}},
       user_types: {staff: {should: true, response: 302, asserts: [
-        'assigns(:question).motions.pluck(:forum_id).uniq == [assigns(:question).forum_id]',
-        'assert_equal 5, assigns(:question).motions.count'
+        'assigns(:resource).motions.pluck(:forum_id).uniq == [assigns(:resource).forum_id]',
+        'assert_equal 5, assigns(:resource).motions.count'
       ]}}
     )
   end

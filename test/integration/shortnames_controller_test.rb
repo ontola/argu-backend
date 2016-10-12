@@ -125,7 +125,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
       .updated_at
       .utc
       .iso8601(6),
-                   assigns(:shortname)
+                   assigns(:resource)
       .updated_at
       .utc
       .iso8601(6)
