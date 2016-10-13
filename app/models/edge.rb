@@ -49,10 +49,41 @@ class Edge < ActiveRecord::Base
   # Refers to the parent edge
   # attribute :parent_id, :integer
 
+  def ancestor_ids
+    path.split('.').map(&:to_i)
+  end
+
+  def is_child_of?(edge)
+    ancestor_ids.include?(edge.id)
+  end
+
+  def get_parent(type)
+    if type == :page
+      root
+    elsif type == :forum
+      Edge.find(ancestor_ids[1])
+    else
+      ancestors.find_by(owner_type: type.to_s.classify)
+    end
+  end
+
+  def granted_groups(role)
+    Group
+      .joins(grants: :edge)
+      .where(edges: {id: ancestor_ids})
+      .where('grants.role >= ?', Grant.roles[role])
+  end
+
+  def granted_group_ids(role)
+    granted_groups(role).pluck(:id)
+  end
+
   # Only returns a value when the model has been saved
   def polymorphic_tuple
     [owner_type, owner_id]
   end
+
+  private
 
   def set_user_id
     self.user_id = owner.publisher.present? ? owner.publisher.id : 0

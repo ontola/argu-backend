@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class QuestionPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -21,10 +19,6 @@ class QuestionPolicy < EdgeTreePolicy
         ids = user ? user.profile.memberships.select(:forum_id) : []
         scope.where(forum_id: ids).published
       end
-    end
-
-    def is_member?
-      user.profile.member_of? record.forum
     end
   end
 

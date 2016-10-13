@@ -18,35 +18,23 @@ class PagePolicy < EdgeTreePolicy
   end
 
   module Roles
-    delegate :open, :access_token, :manager, :owner, to: :forum_policy
-
-    def is_open?
-      open if @record.open?
+    def is_creator?
+      super if persisted_edge
     end
 
-    # Is the user a manager of the page or of the forum?
+    def is_moderator?
+      super if persisted_edge
+    end
+
     def is_manager?
-      if user && user.profile.grants.page_manager.where(edges: {owner_id: record.id}).present?
-        manager
-      else
-        (is_owner? || staff?)
-      end
+      super if persisted_edge
     end
 
     def is_owner?
-      (owner if user && user.profile.id == record.try(:owner_id)) || staff?
-    end
-
-    def has_pages?
-      owner if user.page_management?
+      super if persisted_edge
     end
   end
   include Roles
-
-  module PageRoles
-    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :page_policy
-    delegate :open, :access_token, :member, :manager, :owner, to: :page_policy
-  end
 
   def permitted_attributes
     attributes = super
@@ -65,6 +53,10 @@ class PagePolicy < EdgeTreePolicy
                                                  record.try(:profile) || Profile)
                                             .permitted_attributes)
     attributes.flatten
+  end
+
+  def is_open?
+    open if @record.open?
   end
 
   def permitted_tabs
@@ -144,11 +136,5 @@ class PagePolicy < EdgeTreePolicy
     tab ||= 'profile'
     assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
-  end
-
-  private
-
-  def forum_policy
-    ForumPolicy.new(context, record.edge.children.new(owner: Forum.new(page: record)).owner)
   end
 end

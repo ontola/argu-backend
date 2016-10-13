@@ -21,62 +21,8 @@ class ForumPolicy < EdgeTreePolicy
     end
   end
 
-  module Roles
-    def open
-      1
-    end
-
-    def access_token
-      2
-    end
-
-    def member
-      3
-    end
-
-    def manager
-      7
-    end
-
-    # This method exists to make sure that users who are in on an access
-    # token can't access other parts during the closed beta
-    def is_open?
-      open if @record.open?
-    end
-
-    def has_access_token?
-      access_token if Set.new(record.m_access_tokens).intersect?(Set.new(session[:a_tokens])) &&
-          record.visible_with_a_link?
-    end
-
-    # Is the current user a member of the group?
-    # @note This tells nothing about whether the user can make edits on the object
-    def is_member?
-      member if actor && actor.grants.forum_member.where(edges: {owner_id: record.id}).count.positive?
-    end
-
-    # Is the user a manager of the page or of the forum?
-    # @note Trickles up
-    def is_manager?
-      is_manager = user && user.profile.grants.forum_manager.where(edges: {owner_id: record.id}).count.positive?
-      [(manager if is_manager), is_owner?].compact.presence
-    end
-
-    # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
-    def is_owner?
-      # record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
-      owner if user && record.page.owner == user.profile
-    end
-
-    def is_manager_up?
-      is_manager? || is_owner? || staff?
-    end
-  end
-  include Roles
-
-  module ForumRoles
-    delegate :is_member?, :is_open?, :has_access_token?, :is_manager?, :is_owner?, :is_manager_up?, to: :forum_policy
-    delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
+  def is_open?
+    open if @record.open?
   end
 
   def permitted_attributes

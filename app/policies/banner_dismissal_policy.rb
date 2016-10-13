@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class BannerDismissalPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -34,19 +32,9 @@ class BannerDismissalPolicy < EdgeTreePolicy
   def create?
     case record.banner.audience.to_sym
     when :guests then !user
-    when :users then user && !user.member_of?(context.forum)
-    when :members then user&.member_of?(context.forum)
+    when :users then user && !user.member_of?(context_forum)
+    when :members then user&.member_of?(context_forum)
     when :everyone then true
-    end
-  end
-
-  private
-
-  def forum_policy
-    if record.is_a?(Class) || record.banner.try(:forum).blank?
-      Pundit.policy(context, :restrictive)
-    else
-      super
     end
   end
 end

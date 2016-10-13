@@ -1,6 +1,6 @@
 / Because Javascript
 .comments-container
-  - if policy(resource).create_child?(:comment_threads, forum: resource.forum)
+  - if policy(resource).create_child?(:comment_threads)
     header
       h2= t('arguments.comments.reply')
     .box[data-intro= t('intro.comments.form')]

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class PhotoPolicy < RestrictivePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -25,11 +23,5 @@ class PhotoPolicy < RestrictivePolicy
                          image_crop_h image_crop_w image_crop_x image_crop_y image_original_h image_original_w _destroy
                          used_as)
     attributes
-  end
-
-  private
-
-  def forum_policy
-    Pundit.policy(context, context.forum)
   end
 end

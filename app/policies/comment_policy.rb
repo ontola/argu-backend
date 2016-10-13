@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class CommentPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -77,6 +75,6 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def forum_policy
-    Pundit.policy(context, record.forum)
+    Pundit.policy(context, context_forum)
   end
 end

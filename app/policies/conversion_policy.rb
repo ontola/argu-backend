@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class ConversionPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -31,11 +29,5 @@ class ConversionPolicy < EdgeTreePolicy
 
   def new?
     rule is_manager?, is_owner?, super
-  end
-
-  private
-
-  def forum_policy
-    Pundit.policy(context, record.edge.owner.forum)
   end
 end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class BannerPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -59,15 +57,5 @@ class BannerPolicy < EdgeTreePolicy
 
   def update?
     rule is_manager?, is_owner?, super
-  end
-
-  private
-
-  def forum_policy
-    if record.is_a?(Class) || record.forum.blank?
-      Pundit.policy(context, :restrictive)
-    else
-      super
-    end
   end
 end

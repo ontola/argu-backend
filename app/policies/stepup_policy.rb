@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class StepupPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -42,11 +40,5 @@ class StepupPolicy < EdgeTreePolicy
 
   def update?
     rule is_manager?, is_owner?, super
-  end
-
-  private
-
-  def forum_policy
-    Pundit.policy(context, context.forum)
   end
 end

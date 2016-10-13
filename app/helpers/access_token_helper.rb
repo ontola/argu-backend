@@ -26,7 +26,8 @@ module AccessTokenHelper
     return if record.nil?
     access_tokens = get_access_tokens
     access_tokens.any? do |a_t|
-      record == a_t.item || (record.try(:is_fertile?) && record.is_child_of?(a_t.item))
+      a_t.item.visible_with_a_link? &&
+        (record == a_t.item || (record.try(:is_fertile?) && record.edge.is_child_of?(a_t.item.edge)))
     end
   end
 

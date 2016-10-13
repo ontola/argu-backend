@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class PhasePolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -44,11 +42,5 @@ class PhasePolicy < EdgeTreePolicy
 
   def update?
     rule is_moderator?, is_manager?, is_owner?, super
-  end
-
-  private
-
-  def forum_policy
-    Pundit.policy(context, context.forum)
   end
 end

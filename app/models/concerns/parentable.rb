@@ -15,23 +15,6 @@ module Parentable
     end
   end
 
-  # Check if this model is a child of `record`
-  def is_child_of?(record)
-    parent = parent_model
-    if parent
-      if parent.model == record
-        true
-      elsif parent.has_parent?
-        parent.model.is_child_of?(record) if parent.model.try(:is_fertile?)
-      else
-        # This is false since it can't be parent of itself
-        false
-      end
-    else
-      false
-    end
-  end
-
   def parent_edge
     edge.parent
   end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class GroupMembershipPolicy < EdgeTreePolicy
-  include PagePolicy::PageRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -23,18 +21,9 @@ class GroupMembershipPolicy < EdgeTreePolicy
     end
   end
 
-  module Roles
-    def profile_in_group?
-      actor && (record.forum.groups & actor.groups).present?
-    end
-
-    def is_open?
-      open if record.group.grants.member.first.edge.owner.open?
-    end
-
-    delegate :is_manager?, to: :page_policy
+  def is_open?
+    open if granted_resource.open?
   end
-  include Roles
 
   def permitted_attributes
     attributes = [:lock_version]
@@ -64,13 +53,15 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   private
 
+  def granted_resource
+    record.group.grants.member.first.edge.owner
+  end
+
   def has_access_token?
-    forum = record&.group&.grants&.forum_member&.first&.edge&.owner
-    access_token if forum && Set.new(forum.m_access_tokens).intersect?(Set.new(session[:a_tokens])) &&
-        forum.visible_with_a_link?
+    access_token if has_access_token_access_to(granted_resource)
   end
 
   def page_policy
-    Pundit.policy(context, record&.group&.page || context.context_model)
+    Pundit.policy(context, persisted_edge.get_parent(:page).owner)
   end
 end

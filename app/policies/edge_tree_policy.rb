@@ -34,16 +34,24 @@ class EdgeTreePolicy < RestrictivePolicy
       8
     end
 
+    def is_open?
+      open if context_forum&.open?
+    end
+
+    def has_access_token?
+      access_token if has_access_token_access_to(record)
+    end
+
+    def is_member?
+      member if ((user&.profile&.group_ids || []) & persisted_edge.granted_group_ids('member')).any?
+    end
+
     def is_creator?
       creator if record.creator.present? && record.creator == actor
     end
 
-    def is_member?
-      member if user && user.profile.member_of?(record)
-    end
-
     def is_moderator?
-      c_model = record.try(:forum) || context.context_model
+      c_model = context_forum
       return unless user.present? && c_model.present?
       # Stepups within the forum based if they apply to the user or one of its group memberships
       forum_stepups = c_model.stepups.where('user_id=? OR group_id IN (?)',
@@ -55,30 +63,22 @@ class EdgeTreePolicy < RestrictivePolicy
                                               .where(page: c_model.page_id)
                                               .pluck(:id))
       # Get the tuples of the entire parent chain
-      cc =
-        if record.is_a?(ActiveRecord::Base)
-          if record.persisted?
-            record.edge.self_and_ancestors.map(&:polymorphic_tuple).compact
-          elsif record.edge.parent.present?
-            record.edge.parent.self_and_ancestors.map(&:polymorphic_tuple).compact
-          end
-        else
-          []
-        end
+      cc = persisted_edge.self_and_ancestors.map(&:polymorphic_tuple).compact
       # Match them against the set of stepups within the forum
       moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
     end
 
     def is_manager?
-      nil
+      return manager if ((user&.profile&.group_ids || []) & persisted_edge.granted_group_ids('manager')).any?
+      is_owner?
     end
 
     def is_owner?
-      nil
+      owner if user && persisted_edge.get_parent(:page).owner.owner == user.profile
     end
 
-    def forum_policy
-      Pundit.policy(context, record.try(:forum) || context.context_model)
+    def is_manager_up?
+      is_manager? || is_owner? || staff?
     end
   end
   include Roles
@@ -87,6 +87,17 @@ class EdgeTreePolicy < RestrictivePolicy
   def initialize(context, record)
     super
     raise('No edge avaliable in policy') unless edge
+  end
+
+  def context_forum
+    @context_forum ||= persisted_edge.get_parent(:forum)&.owner
+  end
+
+  def persisted_edge
+    return @persisted_edge if @persisted_edge.present?
+    persisted = edge
+    persisted = persisted.parent until persisted.parent.nil? || persisted.persisted?
+    @persisted_edge = persisted if persisted.persisted?
   end
 
   def permitted_attributes

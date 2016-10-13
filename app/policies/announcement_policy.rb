@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class AnnouncementPolicy < RestrictivePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 

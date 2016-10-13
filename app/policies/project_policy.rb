@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class ProjectPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -28,7 +26,7 @@ class ProjectPolicy < EdgeTreePolicy
     attributes.concat %i(id title content start_date end_date achieved_end_date email cover_photo remove_cover_photo
                          cover_photo_attribution unpublish) if create?
     attributes.concat %i(pinned) if is_manager? || staff?
-    phase = record.is_a?(Project) && record.edge.children.new(owner: Phase.new).owner
+    phase = record.is_a?(Project) && Edge.new(owner: Phase.new, parent: record.edge).owner
     attributes.append(phases_attributes: Pundit.policy(context, phase).permitted_attributes(true)) if phase && create?
     stepup = record.is_a?(Project) && Stepup.new(record: record, forum: record.forum)
     if stepup && (record.try(:new_record?) || is_manager_up?)
@@ -85,11 +83,5 @@ class ProjectPolicy < EdgeTreePolicy
 
   def update?
     rule is_moderator?, is_manager?, is_owner?, super
-  end
-
-  private
-
-  def forum_policy
-    Pundit.policy(context, record.try(:forum) || context.context_model)
   end
 end

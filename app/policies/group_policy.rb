@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class GroupPolicy < EdgeTreePolicy
-  include PagePolicy::PageRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -63,10 +61,6 @@ class GroupPolicy < EdgeTreePolicy
 
   def remove_member?(_member)
     rule is_manager?
-  end
-
-  def page_policy
-    Pundit.policy(context, record.edge.parent.owner)
   end
 
   # Make sure that a tab param is actually accounted for

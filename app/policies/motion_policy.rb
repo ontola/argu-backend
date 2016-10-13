@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class MotionPolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   class Scope < Scope
     attr_reader :context, :scope
 

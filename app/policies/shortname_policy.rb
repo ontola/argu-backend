@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class ShortnamePolicy < EdgeTreePolicy
-  include ForumPolicy::ForumRoles
-
   def edge
     record.forum.edge
   end
