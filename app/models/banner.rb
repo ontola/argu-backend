@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Banner < NewsBoy
-  include Photoable, ProfilePhotoable
+  include Photoable, ProfilePhotoable, Loggable
 
   belongs_to :forum
   belongs_to :publisher, class_name: 'User'

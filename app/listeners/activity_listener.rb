@@ -16,6 +16,10 @@ class ActivityListener
       create_activity(resource, resource.motion, method)
     end
 
+    define_method "#{method}_banner_successful" do |resource|
+      create_activity(resource, resource.forum, method)
+    end
+
     define_method "#{method}_blog_post_successful" do |resource|
       create_activity(resource, resource.blog_postable, method)
     end

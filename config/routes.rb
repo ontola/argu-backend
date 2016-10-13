@@ -273,7 +273,7 @@ Rails.application.routes.draw do
     resources :projects, path: 'p', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
-    resources :banners, except: :index
+    resources :banners, except: [:index, :show]
   end
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: 'forums#show'

@@ -14,8 +14,6 @@ class BannersController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new(creator: current_profile,
-                                                  publisher: current_user))
     create_service.on(:create_banner_successful) do |banner|
       respond_to do |format|
         format.html do
@@ -43,42 +41,51 @@ class BannersController < AuthorizedController
     render 'forums/settings',
            locals: {
              banner: authenticated_resource,
+             resource: authenticated_resource.forum,
              tab: 'banners/edit',
              active: 'banners'
            }
   end
 
   def update
-    respond_to do |format|
-      if authenticated_resource.update permit_params
-        format.html { redirect_to settings_forum_path(resource_tenant, tab: 'banners') }
-      else
+    update_service.on(:update_banner_successful) do |banner|
+      respond_to do |format|
+        format.html { redirect_to settings_forum_path(banner.forum, tab: 'banners') }
+      end
+    end
+    update_service.on(:update_banner_failed) do |banner|
+      respond_to do |format|
         format.html do
           render 'forums/settings',
                  locals: {
-                   banner: authenticated_resource,
+                   banner: banner,
                    tab: 'banners/edit',
                    active: 'banners'
                  }
         end
       end
     end
+    update_service.commit
   end
 
   def destroy
-    respond_to do |format|
-      if authenticated_resource.destroy
+    destroy_service.on(:destroy_banner_successful) do |banner|
+      respond_to do |format|
         format.html do
           flash[:success] = t('type_destroyed', type: t('banners.type'))
-          redirect_to settings_forum_path(resource_tenant, tab: :banners)
-        end
-      else
-        format.html do
-          flash[:error] = t('type_destroyed_failed', type: t('banners.type'))
-          redirect_to settings_forum_path(resource_tenant, tab: :banners)
+          redirect_to settings_forum_path(banner.forum, tab: :banners)
         end
       end
     end
+    destroy_service.on(:destroy_banner_failed) do |banner|
+      respond_to do |format|
+        format.html do
+          flash[:error] = t('type_destroyed_failed', type: t('banners.type'))
+          redirect_to settings_forum_path(banner.forum, tab: :banners)
+        end
+      end
+    end
+    destroy_service.commit
   end
 
   private

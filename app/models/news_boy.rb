@@ -2,6 +2,7 @@
 # TODO: Write class docs
 class NewsBoy < ApplicationRecord
   self.abstract_class = true
+  alias_attribute :display_name, :title
 
   def self.published
     where('published_at <= ? AND (ends_at IS NULL OR ends_at > ?)',
