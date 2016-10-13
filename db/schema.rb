@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010082734) do
+ActiveRecord::Schema.define(version: 20161013083228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -601,10 +601,12 @@ ActiveRecord::Schema.define(version: 20161010082734) do
     t.boolean  "permit"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.string   "context_type",             null: false
-    t.integer  "context_id",               null: false
+    t.string   "context_type"
+    t.integer  "context_id"
     t.integer  "trickles",     default: 0, null: false
     t.string   "message"
+    t.integer  "branch_id",                null: false
+    t.index ["branch_id"], name: "index_rules_on_branch_id", using: :btree
     t.index ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type", using: :btree
     t.index ["model_id", "model_type"], name: "index_rules_on_model_id_and_model_type", using: :btree
   end
@@ -791,6 +793,7 @@ ActiveRecord::Schema.define(version: 20161010082734) do
   add_foreign_key "questions", "profiles", column: "creator_id"
   add_foreign_key "questions", "projects"
   add_foreign_key "questions", "users", column: "publisher_id"
+  add_foreign_key "rules", "edges", column: "branch_id"
   add_foreign_key "shortnames", "forums"
   add_foreign_key "stepups", "forums"
   add_foreign_key "stepups", "groups"

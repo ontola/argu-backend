@@ -24,7 +24,7 @@ module ExceptionToTheRule
   private
 
   def apply_rules(action, level)
-    if context.context_model.present? && (rules = find_rules_for_action(action)).present?
+    if persisted_edge.present? && (rules = find_rules_for_action(action)).present?
       filter_rules(rules, level)
     else
       level
@@ -36,7 +36,7 @@ module ExceptionToTheRule
     level_rules, group_rules = rules.partition { |rule| ROLE_NAMES.include?(rule.role) }
     @last_enacted, @last_verdict =
       filter_trickle(level_rules, level)
-        .concat(filter_groups(group_rules, context))
+        .concat(filter_groups(group_rules))
         .select(&:present?)
         .first
     @last_enacted
@@ -57,8 +57,8 @@ module ExceptionToTheRule
   end
 
   # @return [Array] Array of the relevant rules
-  def filter_groups(rules, context)
-    if rules && user && (mem_groups = user.profile.groups.where(page: context.context_model.page))
+  def filter_groups(rules)
+    if rules && user && (mem_groups = user.profile.groups.where(page: persisted_edge.root.owner))
       group_ids = rules
                     .map { |r| r.role.split('_') }
                     .select { |arr| arr[0].eql?('groups') }
@@ -81,9 +81,8 @@ module ExceptionToTheRule
     end
   end
 
-  # Waarschijnlijk een context_type nil toevoegen aan het eerste query gedeelte.
   # @return [ActiveRecord::CollectionProxy] All {Rule}s that match the current action for the
-  #   current {Context#model} and {RestrictivePolicy#record}
+  #   current {RestrictivePolicy#record} anywhere in the current edge tree
   def find_rules_for_action(action)
     t_rules = Rule.arel_table
     rule_query = t_rules[:model_type]
@@ -91,8 +90,7 @@ module ExceptionToTheRule
                    .and(t_rules[:model_id].eq(@record.try(:id))
                           .or(t_rules[:model_id].eq(nil))
                           .and(t_rules[:action].eq(action.to_s))
-                          .and(t_rules[:context_type].eq(context.context_model.class.to_s))
-                          .and(t_rules[:context_id].eq(context.context_model.id.to_s)))
+                          .and(t_rules[:branch_id].in(persisted_edge.ancestor_ids)))
     Rule.where(rule_query)
   end
 

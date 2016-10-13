@@ -8,45 +8,41 @@ RSpec.feature 'Adam west', type: :feature do
   let!(:f_rule_c) do
     %w(index? show? create? new?).each do |action|
       create(:rule,
+             branch: freetown.edge,
              model_type: 'Comment',
              model_id: nil,
              action: action,
              role: 'manager',
-             permit: false,
-             context_type: 'Forum',
-             context_id: freetown.id)
+             permit: false)
     end
   end
   let!(:f_rule_q_c) do
     create(:rule,
+           branch: freetown.edge,
            model_type: 'Question',
            model_id: nil,
            action: :create?,
            role: 'member',
-           permit: false,
-           context_type: 'Forum',
-           context_id: freetown.id)
+           permit: false)
   end
   let!(:f_rule_q_n) do
     create(:rule,
+           branch: freetown.edge,
            model_type: 'Question',
            model_id: nil,
            action: :new?,
            role: 'member',
-           permit: false,
-           context_type: 'Forum',
-           context_id: freetown.id)
+           permit: false)
   end
   let!(:f_rule_m_ncwwoq) do
     %i(new_without_question? create_without_question?).each do |action|
       create(:rule,
+             branch: freetown.edge,
              model_type: 'Motion',
              model_id: nil,
              action: action,
              role: 'member',
-             permit: false,
-             context_type: 'Forum',
-             context_id: freetown.id)
+             permit: false)
     end
   end
   let!(:question) do

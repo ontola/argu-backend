@@ -32,12 +32,11 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
   let(:require_question_forum) do
     forum = create_forum
     create(:rule,
+           branch: forum.edge,
            model_type: 'Motion',
            action: 'create_without_question?',
            role: 'member',
            permit: false,
-           context_type: 'Forum',
-           context_id: forum.id,
            trickles: Rule.trickles[:trickles_down])
     forum
   end

@@ -6,8 +6,7 @@ FactoryGirl.define do
     action nil
     role nil
     permit false
-    context_type nil
-    context_id nil
     trickles Rule.trickles[:trickles_down]
+    branch nil
   end
 end

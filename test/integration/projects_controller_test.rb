@@ -239,7 +239,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
   let(:netdem_rule_new) do
     create(:rule,
-           context: freetown,
+           branch: freetown.edge,
            model_type: 'Project',
            action: 'new?',
            role: netdem.identifier,
@@ -247,7 +247,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
   let(:netdem_rule_create) do
     create(:rule,
-           context: freetown,
+           branch: freetown.edge,
            model_type: 'Project',
            action: 'create?',
            role: netdem.identifier,
