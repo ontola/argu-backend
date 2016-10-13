@@ -123,6 +123,14 @@ class User < ApplicationRecord
     first_name.presence || url.presence || email.split('@').first
   end
 
+  def forum_management?
+    page_management? || profile.grants.manager.presence
+  end
+
+  def page_management?
+    profile.pages.present?
+  end
+
   def is_omni_only
     authentications.any? && password.blank?
   end

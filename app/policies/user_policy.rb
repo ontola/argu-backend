@@ -50,6 +50,20 @@ class UserPolicy < RestrictivePolicy
     true
   end
 
+  def max_allowed_pages
+    if staff?
+      Float::INFINITY
+    elsif user
+      1
+    else
+      0
+    end
+  end
+
+  def max_pages_reached?
+    member if user && user.profile.pages.length >= max_allowed_pages
+  end
+
   def settings?
     record.id == user.id
   end

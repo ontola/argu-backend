@@ -38,7 +38,7 @@ class PagePolicy < EdgeTreePolicy
     end
 
     def has_pages?
-      (owner if user && user.profile.pages.present?) || staff?
+      owner if user.page_management?
     end
   end
   include Roles
@@ -121,7 +121,7 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def pages_left?
-    member if user && user.profile.pages.length < max_allowed_pages
+    member if user && user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
   end
 
   def statistics?
@@ -138,28 +138,12 @@ class PagePolicy < EdgeTreePolicy
     rule is_owner?, staff?
   end
 
-  def max_pages_reached?
-    member if user && user.profile.pages.length >= max_allowed_pages
-  end
-
   # Make sure that a tab param is actually accounted for
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
     tab ||= 'profile'
     assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
-  end
-
-  # ######Attributes########
-
-  def max_allowed_pages
-    if staff?
-      Float::INFINITY
-    elsif user
-      1
-    else
-      0
-    end
   end
 
   private

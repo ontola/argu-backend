@@ -12,7 +12,7 @@ class PagesController < ApplicationController
 
     render locals: {
       current: current_user.profile.pages.length,
-      max: policy(Page).max_allowed_pages
+      max: policy(current_user).max_allowed_pages
     }
   end
 
@@ -34,14 +34,15 @@ class PagesController < ApplicationController
     authorize Page, :new?
 
     pa_po = policy(Page)
+    us_po = policy(current_user)
     errors = {}
     if pa_po.create?
       page = Page.new
       page.build_shortname
       page.build_profile
-    elsif pa_po.max_pages_reached?
+    elsif us_po.max_pages_reached?
       errors[:max_allowed_pages] = {
-        max: pa_po.max_allowed_pages,
+        max: us_po.max_allowed_pages,
         current: current_user.profile.pages.length,
         pages_url: pages_user_url(current_user)
       }

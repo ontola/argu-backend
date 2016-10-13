@@ -114,7 +114,7 @@ class ForumPolicy < EdgeTreePolicy
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && (user.profile.pages.length.positive? || user.profile.grants.manager.presence) || staff?
+    user&.forum_management? || staff?
   end
 
   def join?

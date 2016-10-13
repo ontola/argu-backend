@@ -9,7 +9,7 @@ module HeaderHelper
   def profile_dropdown_items
     @profile = current_profile
     page_index =
-      if policy(Page).index?
+      if current_user.page_management?
         link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building')
       else
         link_item(t('pages.create'), new_page_path, fa: 'building')
@@ -18,7 +18,7 @@ module HeaderHelper
       link_item(t('users.drafts.title'),
                 drafts_user_url(current_user),
                 fa: 'pencil-square-o')
-    forum_management = policy(Forum).index? &&
+    forum_management = current_user.forum_management? &&
       link_item(t('forums.management.title'),
                 forums_user_url(current_user),
                 fa: 'group')
