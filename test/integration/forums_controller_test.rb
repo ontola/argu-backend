@@ -37,6 +37,12 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
+  test 'guest should get discover' do
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
+  end
+
   test 'guest should get show' do
     # Trigger creation of items
     holland_nested_project_items
@@ -48,6 +54,13 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As User
   ####################################
+
+  test 'user should get discover' do
+    sign_in
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
+  end
 
   test 'user should get show' do
     # Trigger creation of items
@@ -111,6 +124,13 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:cologne_member) { create_member(cologne) }
   let(:helsinki_member) { create_member(helsinki) }
 
+  test 'member should get discover' do
+    sign_in holland_member
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
+  end
+
   test 'member should get show' do
     # Trigger creation of items
     holland_nested_project_items
@@ -156,6 +176,13 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   # As Owner
   ####################################
   let(:forum_pair) { create_forum_owner_pair(type: :populated_forum) }
+
+  test 'owner should get discover' do
+    sign_in create_owner(holland)
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
+  end
 
   test 'owner should show settings and all tabs' do
     sign_in create_owner(holland)
@@ -213,6 +240,13 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   ####################################
   let(:holland_manager) { create_manager(holland) }
 
+  test 'manager should get discover' do
+    sign_in holland_manager
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
+  end
+
   test 'manager should show settings and some tabs' do
     sign_in holland_manager
     %i(general advanced shortnames banners).each do |tab|
@@ -226,6 +260,16 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
           params: {tab: tab}
       assert_redirected_to forum_path(holland)
     end
+  end
+
+  test 'manager should get index' do
+    sign_in holland_manager
+    get forums_user_path(holland_manager)
+    assert_response 200
+
+    assert_have_tag response.body,
+                    '.box-grid h3',
+                    holland.display_name
   end
 
   ####################################
@@ -245,6 +289,13 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     create(:home_placement, place: binnenhof, placeable: create_member(inhabited, create(:user)))
     create(:home_placement, place: paleis, placeable: create_member(inhabited, create(:user)))
     create(:home_placement, place: nederland, placeable: create_member(inhabited, create(:user)))
+  end
+
+  test 'staff should get discover' do
+    sign_in staff
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
   end
 
   test 'staff should show statistics' do
