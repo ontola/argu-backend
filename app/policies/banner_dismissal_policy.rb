@@ -19,6 +19,10 @@ class BannerDismissalPolicy < EdgeTreePolicy
     end
   end
 
+  def edge
+    record.banner.forum.edge
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(title forum cited_profile content

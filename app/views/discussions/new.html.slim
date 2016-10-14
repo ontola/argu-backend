@@ -79,7 +79,7 @@
         h3
           span[class="fa fa-#{motion_icon}"]
           span.icon-left= t('motions.type_new')
--if get_parent_resource.respond_to?(:projects) && policy(resource_tenant.edge.children.new(owner: Project.new).owner).new?
+-if get_parent_resource.respond_to?(:projects) && policy(resource_tenant).create_child?(:projects)
   .col-1.col-1--small
     header
       h2=t('discussions.new.or_start_a_project')

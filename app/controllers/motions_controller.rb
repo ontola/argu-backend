@@ -193,15 +193,6 @@ class MotionsController < AuthorizedController
 
   private
 
-  def authorize_action
-    if params[:action] == 'create'
-      action = create_service.resource.question.presence ? :create? : :create_without_question?
-      authorize create_service.resource, action
-    else
-      super
-    end
-  end
-
   def show_params
     params.permit(:page, :page_arg_pro, :page_arg_con)
   end

@@ -20,7 +20,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
             p= "#{t('decisions.assigned.to_user')} #{assigned_name(decisionable.assigned_user, decisionable.assigned_group, true)}".html_safe
           - else
             p= "#{t('decisions.assigned.to_group')} '#{assigned_name(decisionable.assigned_user, decisionable.assigned_group, true)}'"
-          - if policy(decisionable.new_decision(:forwarded)).create?
+          - if policy(decisionable).create_child?(:decisions, state: :forwarded)
             p
               - if decisionable.assigned_to_user?(current_user)
                 - Decision.actioned_keys.each do |state|

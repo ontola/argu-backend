@@ -2,6 +2,10 @@
 class ShortnamePolicy < EdgeTreePolicy
   include ForumPolicy::ForumRoles
 
+  def edge
+    record.forum.edge
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(shortname owner_id owner_type) if is_manager_up?

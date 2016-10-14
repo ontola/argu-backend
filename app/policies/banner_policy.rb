@@ -28,6 +28,10 @@ class BannerPolicy < EdgeTreePolicy
     end
   end
 
+  def edge
+    record.forum.edge
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(title forum cited_profile content cited_name audience

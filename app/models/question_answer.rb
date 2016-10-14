@@ -13,6 +13,10 @@ class QuestionAnswer
     @options = options
   end
 
+  def is_fertile?
+    false
+  end
+
   def persisted?
     false
   end

@@ -23,7 +23,7 @@ module MenuHelper
   def crud_menu_options(resource, additional_items = [])
     link_items = [].concat(additional_items).compact
     resource_policy = policy(resource)
-    if policy(BlogPost).create? && (resource.is_a?(Motion) || resource.is_a?(Question))
+    if policy(resource).create_child?(:blog_posts) && (resource.is_a?(Motion) || resource.is_a?(Question))
       link_items << link_item(t('blog_posts.type_new'),
                               polymorphic_url([:new, resource, :blog_post]),
                               fa: blog_post_icon)

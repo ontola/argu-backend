@@ -17,7 +17,7 @@ table.styled
         =forum.memberships_count
       td
         =forum.edge.groups.count
-- if policy(Forum.new(page: resource)).create?
+- if policy(resource).create_child?(:forums)
   =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom' do
       span.fa.fa-plus
       span.icon-left= t('forums.type_new')

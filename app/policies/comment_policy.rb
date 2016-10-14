@@ -77,6 +77,6 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def forum_policy
-    Pundit.policy(context, context.forum)
+    Pundit.policy(context, record.forum)
   end
 end

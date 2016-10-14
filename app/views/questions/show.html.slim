@@ -30,7 +30,7 @@
   .col-1
     =render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?, current_happening: question.latest_happening(policy(question).update?)}
 .col-1
-  - if policy_with_tenant!(authenticated_context, question.motions.build).new?
+  - if policy(question).create_child?(:motions)
     .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
     header
       h2= t('motions.call_to_action.title')
@@ -46,7 +46,7 @@
                   header_text: 'test',
                   collection_model: Motion,
                   partial: 'question_answers/show',
-                  show_new_buttons: policy_with_tenant!(authenticated_context, question.motions.build).new?,
+                  show_new_buttons: policy(question).create_child?(:motions).present?,
                   buttons_url: polymorphic_url([:new, question, :motion]),
                   buttons_text: t('add_type', type: motion_type),
                   page_param: :page,

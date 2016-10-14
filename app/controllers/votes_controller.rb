@@ -26,9 +26,6 @@ class VotesController < AuthorizedController
   def new
     @model = get_parent_resource
     authorize @model, :show?
-    authorize Vote.new(voteable: @model,
-                       voter: current_profile,
-                       forum: @model.forum)
 
     render locals: {
       resource: @model,

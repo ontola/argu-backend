@@ -37,7 +37,7 @@ module ExceptionToTheRule
     @last_enacted, @last_verdict =
       filter_trickle(level_rules, level)
         .concat(filter_groups(group_rules, context))
-        .compact
+        .select(&:present?)
         .first
     @last_enacted
   end

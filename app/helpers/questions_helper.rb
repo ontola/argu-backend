@@ -4,7 +4,7 @@ module QuestionsHelper
 
   def question_items(question)
     link_items = []
-    if policy(QuestionAnswer).new?
+    if policy(question).create_child?(:question_answers, question: question)
       link_items << link_item(t('question_answers.couple_motion'),
                               new_question_answer_url(question_answer: {question_id: question}),
                               fa: 'link')

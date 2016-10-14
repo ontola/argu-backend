@@ -111,10 +111,6 @@ class GroupsController < AuthorizedController
 
   private
 
-  def new_resource_from_params
-    @resource ||= Group.new(resource_new_params)
-  end
-
   def resource_new_params
     HashWithIndifferentAccess.new(
       page: get_parent_resource

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 class ForumsController < AuthorizedController
   prepend_before_action :redirect_generic_shortnames, only: :show
-  skip_before_action :authorize_action, only: %i(show index)
+  skip_before_action :authorize_action, only: %i(show discover index)
   skip_before_action :check_if_registered, only: %i(discover)
   skip_before_action :check_if_member, only: %i(discover index)
+  skip_after_action :verify_authorized, only: %i(discover)
 
   def index
-    authorize resource_by_id, :update?
     forums = Forum.arel_table
-    @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id))
-                            .or(forums[:id].in(@user.profile.forum_ids(:manager))))
+    @forums = Forum.where(forums[:page_id].in(current_user.profile.pages.pluck(:id))
+                            .or(forums[:id].in(current_user.profile.forum_ids(:manager))))
     @_pundit_policy_scoped = true
   end
 
@@ -18,7 +18,6 @@ class ForumsController < AuthorizedController
               .public_forums
               .includes(:default_cover_photo, :default_profile_photo, :shortname, :access_tokens)
               .page show_params[:page]
-    authorize Forum, :discover?
     render
   end
 
@@ -159,12 +158,8 @@ class ForumsController < AuthorizedController
   end
 
   def resource_by_id
-    return if params[:id].nil?
-    if action_name == 'index'
-      @user ||= User.find_via_shortname params[:id]
-    else
-      @forum ||= Forum.find_via_shortname params[:id]
-    end
+    return if action_name == 'index' || action_name == 'discover'
+    @forum ||= Forum.find_via_shortname params[:id]
   end
 
   def show_params

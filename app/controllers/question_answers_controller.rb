@@ -45,16 +45,10 @@ class QuestionAnswersController < ApplicationController
   def collect_banners
   end
 
-  def permit_params
-    params
-      .require(:question_answer)
-      .permit(*policy(QuestionAnswer).permitted_attributes)
-  end
-
   def new_resource_from_params
     @resource ||= QuestionAnswer.new(
-      question: Question.find(permit_params[:question_id]),
-      motion: Motion.find_by(id: permit_params[:motion_id]),
+      question: Question.find(params.require(:question_answer)[:question_id]),
+      motion: Motion.find_by(id: params.require(:question_answer)[:motion_id]),
       options: service_options
     )
   end

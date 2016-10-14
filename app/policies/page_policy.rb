@@ -149,6 +149,6 @@ class PagePolicy < EdgeTreePolicy
   private
 
   def forum_policy
-    ForumPolicy.new(context, Forum)
+    ForumPolicy.new(context, record.edge.children.new(owner: Forum.new(page: record)).owner)
   end
 end

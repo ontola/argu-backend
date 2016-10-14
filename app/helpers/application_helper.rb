@@ -35,16 +35,6 @@ module ApplicationHelper
     super
   end
 
-  def policy_with_tenant!(tenant, record)
-    uc = UserContext.new(
-      current_user,
-      current_profile,
-      session,
-      tenant
-    )
-    Pundit.policy!(uc, record)
-  end
-
   def user_identity_token(user)
     sign_payload(user: user.id,
                  exp: 2.days.from_now.to_i,

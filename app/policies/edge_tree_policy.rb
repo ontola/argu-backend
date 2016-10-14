@@ -82,6 +82,12 @@ class EdgeTreePolicy < RestrictivePolicy
     end
   end
   include Roles
+  delegate :edge, to: :record
+
+  def initialize(context, record)
+    super
+    raise('No edge avaliable in policy') unless edge
+  end
 
   def permitted_attributes
     attributes = super
@@ -93,12 +99,54 @@ class EdgeTreePolicy < RestrictivePolicy
     rule is_owner?, staff?
   end
 
+  def children_classes
+    record.class.reflect_on_all_associations(:has_many).map(&:name)
+  end
+
   def convert?
     false
   end
 
+  # Checks whether creating a child of a has_many relation is allowed
+  # Initialises a child with the given attributes and checks its policy for new?
+  # @param klass [Symbol] has_many association of the record
+  # @param attrs [Hash] attributes used for initialising the child
+  # @return [Integer, false] The user's clearance level
+  def create_child?(klass, attrs = {})
+    @create_child ||= {}
+    @create_child[klass] ||=
+      if children_classes.include?(klass)
+        child = record.send(klass).new(attrs)
+        child = record.edge.children.new(owner: child).owner if child.is_fertile?
+        verdict = Pundit.policy(context, child).new? || false
+        record.send(klass).try(:delete, child)
+        verdict
+      else
+        false
+      end
+  end
+
   def follow?
     rule is_open?, is_member?, is_moderator?, is_owner?, staff?
+  end
+
+  # Checks whether indexing children of a has_many relation is allowed
+  # Initialises a child with the given attributes and checks its policy for show?
+  # @param klass [Symbol] has_many association of the record
+  # @param attrs [Hash] attributes used for initialising the child
+  # @return [Integer, false] The user's clearance level
+  def index_children?(klass, attrs = {})
+    @index_children ||= {}
+    @index_children[klass] ||=
+      if children_classes.include?(klass)
+        child = record.send(klass).new(attrs)
+        child = record.edge.children.new(owner: child).owner if child.is_fertile?
+        verdict = Pundit.policy(context, child).show? || false
+        record.send(klass).try(:delete, child)
+        verdict
+      else
+        false
+      end
   end
 
   def log?

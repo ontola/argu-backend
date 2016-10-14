@@ -24,7 +24,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
           - if project.forum.visibility
             li.share-menu
               ul= react_component_store 'ShareDropdown', props: share_items(project)
-          - if policy(BlogPost).create?
+          - if policy(project).create_child?(:blog_posts)
             li= link_to polymorphic_url([:new, resource, :blog_post]) do
               span.fa.fa-quote-left
               span.icon-left= t('blog_posts.type_new')
@@ -49,6 +49,6 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     .box.box-grid-sizer
     .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
     =render @items
-  - if policy(Project).edit?
+  - if policy(project).edit?
     h2 _debug moderators_
     =render partial: 'stepups/stepup', collection: project.stepups

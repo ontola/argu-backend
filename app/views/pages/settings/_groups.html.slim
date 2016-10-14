@@ -22,7 +22,7 @@ table.styled
         - if policy(group).destroy?
           =link_to delete_group_path(group), remote: true, class: 'btn--light btn--smaller' do
             span.fa.fa-close
-- if policy(Group.new(page: resource)).create?
+- if policy(resource).create_child?(:groups)
   =link_to new_page_group_path(resource), class: 'btn margin-bottom' do
     span.fa.fa-plus
     span.icon-left= t('groups.new')

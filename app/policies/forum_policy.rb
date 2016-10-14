@@ -167,10 +167,6 @@ class ForumPolicy < EdgeTreePolicy
     rule is_member?, staff?
   end
 
-  def discover?
-    true
-  end
-
   # Make sure that a tab param is actually accounted for
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)

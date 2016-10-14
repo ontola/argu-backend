@@ -96,6 +96,10 @@ class Question < ApplicationRecord
       .first
   end
 
+  def question_answers
+    QuestionAnswer
+  end
+
   def tag_list
     super.join(',')
   end

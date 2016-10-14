@@ -19,6 +19,10 @@ class StepupPolicy < EdgeTreePolicy
     end
   end
 
+  def edge
+    record.record.edge
+  end
+
   def permitted_attributes(force = false)
     attributes = super()
     attributes.concat %i(id group user moderator title description _destroy) if force || create?

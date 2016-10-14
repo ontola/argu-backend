@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class PagesController < ApplicationController
   def index
-    authorize Page, :index?
     @user = User.find_via_shortname params[:id]
     authorize @user, :update?
     @pages = Page
@@ -31,13 +30,11 @@ class PagesController < ApplicationController
   end
 
   def new
-    authorize Page, :new?
-
-    pa_po = policy(Page)
+    pa_po = policy(Edge.new(owner: Page.new).owner)
     us_po = policy(current_user)
     errors = {}
     if pa_po.create?
-      page = Page.new
+      page = pa_po.record
       page.build_shortname
       page.build_profile
     elsif us_po.max_pages_reached?
@@ -55,7 +52,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    authorize Page, :create?
+    authorize(Edge.new(owner: Page.new).owner, :create?)
 
     @page = Page.create(permit_params)
     @page.edge = Edge.new(owner: @page, user: @page.publisher)
@@ -158,7 +155,7 @@ class PagesController < ApplicationController
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = params
                       .require(:page)
-                      .permit(*policy(@page || Page).permitted_attributes)
+                      .permit(*policy(@page || Edge.new(owner: Page.new).owner).permitted_attributes)
                       .to_h
                       .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)

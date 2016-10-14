@@ -66,7 +66,7 @@ class GroupPolicy < EdgeTreePolicy
   end
 
   def page_policy
-    Pundit.policy(context, record.try(:page) || context.context_model.page)
+    Pundit.policy(context, record.edge.parent.owner)
   end
 
   # Make sure that a tab param is actually accounted for

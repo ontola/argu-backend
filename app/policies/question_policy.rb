@@ -28,6 +28,10 @@ class QuestionPolicy < EdgeTreePolicy
     end
   end
 
+  def children_classes
+    super.append(:question_answers)
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(id title content tag_list forum_id project_id cover_photo
