@@ -124,7 +124,7 @@ class ApplicationController < ActionController::Base
     UserContext.new(
       current_user,
       current_profile,
-      session,
+      session[:a_tokens],
       @forum || @_preferred_forum
     )
   end

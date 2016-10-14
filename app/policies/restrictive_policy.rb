@@ -9,7 +9,7 @@ class RestrictivePolicy
 
   class Scope
     include AccessTokenHelper
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :user, :scope
 
     def initialize(context, scope)
       @context = context
@@ -19,7 +19,6 @@ class RestrictivePolicy
 
     delegate :user, to: :context
     delegate :actor, to: :context
-    delegate :session, to: :context
 
     def resolve
       scope if staff?
@@ -48,7 +47,6 @@ class RestrictivePolicy
 
   delegate :user, to: :context
   delegate :actor, to: :context
-  delegate :session, to: :context
 
   def permitted_attributes
     attributes = [:lock_version]

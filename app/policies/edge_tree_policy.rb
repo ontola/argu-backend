@@ -16,6 +16,10 @@ class EdgeTreePolicy < RestrictivePolicy
                forum_ids_by_access_tokens.concat(user&.profile&.forum_ids || []),
                Forum.visibilities[:open])
     end
+
+    def session
+      {a_tokens: context.a_tokens}
+    end
   end
 
   module Roles
@@ -197,5 +201,9 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def vote?
     staff?
+  end
+
+  def session
+    {a_tokens: context.a_tokens}
   end
 end
