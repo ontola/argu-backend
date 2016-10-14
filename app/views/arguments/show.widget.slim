@@ -1,16 +1,16 @@
-.box[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
-  section.section-info[class="#{@argument.pro ? 'pro' : 'con'}-bg"]
-    span= (@argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))
+.box[id="#{argument.id.present? ? 'argument_' + argument.id.to_s : ''}" class="side-#{argument.pro ? 'pro' : 'con'}"]
+  section.section-info[class="#{argument.pro ? 'pro' : 'con'}-bg"]
+    span= (argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))
     /TODO: Add link to motion
   section
-    h1[class=(@argument.pro ? 'pro-t' : 'con-t')]= @argument.title
-    =content_tag :p, raw(@argument.supped_content)
-    =print_references @argument
-  =render partial: @argument.creator, formats: [:html], locals: {resource: @argument}
+    h1[class=(argument.pro ? 'pro-t' : 'con-t')]= argument.title
+    =content_tag :p, raw(argument.supped_content)
+    =print_references argument
+  =render partial: argument.creator, formats: [:html], locals: {resource: argument}
   ul.btns-list--subtle.btns-horizontal.sticky--bottom-right
-    li= link_to(argument_path(@argument)) do
+    li= link_to(argument_path(argument)) do
       span.fa.fa-external-link
       span.icon-left= t('view_on_argu')
-    /li= link_to(argument_path(@argument)) do
+    /li= link_to(argument_path(argument)) do
       span.fa.fa-code
       span.icon-left= t("embed")

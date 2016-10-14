@@ -9,7 +9,7 @@
     header
       h2#comments= t('arguments.comments.title') if @comments.present?
     .comments
-      span.hidden[itemprop="commentCount"]= @argument.comments_count
+      span.hidden[itemprop="commentCount"]= resource.comments_count
       - @comments.reject { |c| c.abandoned? }.each do |c|
         =render partial: 'comments/comment', locals: { resource: resource, c: c }
       =paginate @comments, params: { anchor: 'comments' }

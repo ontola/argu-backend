@@ -1,13 +1,13 @@
-=set_title @argument, motiontitle: @argument.motion.title, side: (@argument.pro? ? I18n.t('pro') : I18n.t('con'))
-=connected_web url: argument_url(@argument),
-               name: @argument.title + seolized_title(@argument, motiontitle: @argument.motion.title, side: (@argument.pro? ? I18n.t('pro').downcase : I18n.t('con').downcase)),
-               description: seolized_description(@argument),
+=set_title argument, motiontitle: argument.motion.title, side: (argument.pro? ? I18n.t('pro') : I18n.t('con'))
+=connected_web url: argument_url(argument),
+               name: argument.title + seolized_title(argument, motiontitle: argument.motion.title, side: (argument.pro? ? I18n.t('pro').downcase : I18n.t('con').downcase)),
+               description: seolized_description(argument),
                image: image_url('logo-social.png')
 .col-1[itemscope itemtype="http://schema.org/CreativeWork/Argument"]
   div[data-intro= t('intro.argument.back')]
     =to_parent
-  =render partial: 'contextualize/context_horizontal', locals: {item: @argument, type: 'argument'}
+  =render partial: 'contextualize/context_horizontal', locals: {item: argument, type: 'argument'}
   .intro-filler[data-intro= t('intro.argument.body')]
-  =render 'body'
-  -if policy(@argument).index_children?(:comment_threads, forum: @argument.forum)
-    =render template: 'comments/show', locals: { resource: @argument, comment: comment }
+  =render partial: 'body', locals: {argument: argument}
+  -if policy(argument).index_children?(:comment_threads, forum: argument.forum)
+    =render template: 'comments/show', locals: { resource: argument, comment: comment }

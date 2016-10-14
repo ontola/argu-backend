@@ -4,18 +4,22 @@ class ArgumentsController < AuthorizedController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @comments = @argument.filtered_threads(show_trashed?, params[:page])
-    @length = @argument.root_comments.length
-    @vote = Vote.find_by(voteable: @argument, voter: current_profile)
+    @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
+    @length = authenticated_resource.root_comments.length
+    @vote = Vote.find_by(voteable: authenticated_resource, voter: current_profile)
 
     respond_to do |format|
       format.html do
         render locals: {
+          argument: authenticated_resource,
           comment: Comment.new
         }
       end
-      format.widget { render @argument }
-      format.json { render json: @argument }
+      format.widget do
+        render authenticated_resource,
+               locals: {argument: authenticated_resource}
+      end
+      format.json { render json: authenticated_resource }
     end
   end
 
@@ -28,7 +32,7 @@ class ArgumentsController < AuthorizedController
       if params[:motion_id].present?
         format.js { render js: "window.location = #{request.url.to_json}" }
         format.html { render :form, locals: {argument: authenticated_resource!} }
-        format.json { render json: @argument }
+        format.json { render json: authenticated_resource! }
       else
         format.html { render text: 'Bad request', status: 400 }
         format.json { head 400 }
@@ -150,11 +154,6 @@ class ArgumentsController < AuthorizedController
   end
 
   private
-
-  def authorize_show
-    @argument = Argument.includes(:comment_threads).find params[:id]
-    authorize @argument, :show?
-  end
 
   def get_parent_resource(opts = request.path_parameters, url_params = params)
     return super unless params[:action] == 'new' || params[:action] == 'create'

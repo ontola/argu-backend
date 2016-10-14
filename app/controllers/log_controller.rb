@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class LogController < AuthorizedController
   include NestedResourceHelper
-  skip_before_action :authorize_action
 
   def show
     respond_to do |format|
@@ -12,7 +11,7 @@ class LogController < AuthorizedController
 
   private
 
-  def authorize_show
+  def authorize_action
     authorize authenticated_resource, :log?
   end
 

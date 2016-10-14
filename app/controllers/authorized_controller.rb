@@ -7,7 +7,6 @@ class AuthorizedController < ApplicationController
                 except: %i(show move move! convert convert!)
   before_action :check_if_member,
                 except: %i(show move move! convert convert!)
-  before_action :authorize_show, only: :show
   before_action :authorize_action
   helper_method :authenticated_resource, :authenticated_context, :collect_banners
 
@@ -60,10 +59,6 @@ class AuthorizedController < ApplicationController
 
   def authorize_action
     authorize authenticated_resource, "#{params[:action].chomp('!')}?"
-  end
-
-  def authorize_show
-    authorize authenticated_resource, :show?
   end
 
   def collect_banners

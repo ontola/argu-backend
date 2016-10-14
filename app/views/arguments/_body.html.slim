@@ -1,17 +1,17 @@
-.box[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
-  =render partial: 'arguments/info_bar', locals: {argument: @argument}
+.box[id="#{argument.id.present? ? 'argument_' + argument.id.to_s : ''}" class="side-#{argument.pro ? 'pro' : 'con'}"]
+  =render partial: 'arguments/info_bar', locals: {argument: argument}
   section
-    h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
-    =render partial: 'arguments/shr', locals: {model: @argument, vote: @vote}
+    h1[class=(argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= argument.title
+    =render partial: 'arguments/shr', locals: {model: argument, vote: @vote}
     .markdown[itemprop="text"]
-      =markdown_to_html(@argument.content)
+      =markdown_to_html(argument.content)
   section.section--footer
-    =render partial: @argument.creator, locals: {resource: @argument} if @argument.creator.present?
+    =render partial: argument.creator, locals: {resource: argument} if argument.creator.present?
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
       - if current_user.present?
         li
-          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@argument, follow_types: [:reactions, :never])
-      =crud_menu_item(@argument)
-      - if @argument.forum.visibility
+          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(argument, follow_types: [:reactions, :never])
+      =crud_menu_item(argument)
+      - if argument.forum.visibility
         li
-          ul= react_component_store 'ShareDropdown', props: share_items(@argument)
+          ul= react_component_store 'ShareDropdown', props: share_items(argument)

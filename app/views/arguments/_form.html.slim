@@ -1,4 +1,4 @@
-- argument ||= argument || resource || @argument
+- argument ||= argument || resource
 =semantic_form_for((argument.new_record? ? [argument.forum, argument] : [argument]), html: {autocomplete: 'off'}) do |f|
   .box.form-toggle[data-intro= t('intro.argument.toggle', type: argument_type)]
     =f.input :pro, as: :toggle_radio, :collection => radio_values_for_pro_con(argument)
