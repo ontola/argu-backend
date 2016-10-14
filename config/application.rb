@@ -53,7 +53,7 @@ module Argu
                  methods: [:get])
       end
     end
-    config.middleware.use Rack::Attack
+    # config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
 
     ############################
