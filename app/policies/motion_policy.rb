@@ -49,22 +49,12 @@ class MotionPolicy < EdgeTreePolicy
       super
   end
 
-  def edit?
-    rule update?
-  end
-
   def index?
     rule is_member?
   end
 
-  def new?
-    return new_without_question? unless record.question.present?
-    return false if record.question.present? && record.question.expired?
-    rule is_open?, is_member?, is_manager?, staff?
-  end
-
   def new_without_question?
-    rule is_open?, is_member?, is_manager?, staff?
+    create_without_question?
   end
 
   def show?

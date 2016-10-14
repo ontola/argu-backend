@@ -25,8 +25,4 @@ class ConversionPolicy < EdgeTreePolicy
   def create?
     rule is_manager?, is_owner?, super
   end
-
-  def new?
-    rule is_manager?, is_owner?, super
-  end
 end

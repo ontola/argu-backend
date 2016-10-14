@@ -69,10 +69,6 @@ class PagePolicy < EdgeTreePolicy
     rule is_open?, is_manager?, super
   end
 
-  def new?
-    create? # user.present? || super
-  end
-
   def create?
     rule pages_left?, super
   end
@@ -83,10 +79,6 @@ class PagePolicy < EdgeTreePolicy
 
   def destroy?
     rule is_manager?, super
-  end
-
-  def edit?
-    update?
   end
 
   def index?

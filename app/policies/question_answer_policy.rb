@@ -30,19 +30,11 @@ class QuestionAnswerPolicy < EdgeTreePolicy
     rule is_manager?, is_owner?, super
   end
 
-  def edit?
-    rule update?
-  end
-
   def destroy?
     user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
       is_manager? ||
       is_owner? ||
       super
-  end
-
-  def new?
-    rule is_manager?, is_owner?, super
   end
 
   def update?

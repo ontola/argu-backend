@@ -44,20 +44,12 @@ class ProjectPolicy < EdgeTreePolicy
       super
   end
 
-  def edit?
-    rule update?
-  end
-
   def list?
     if record.is_published? && !record.is_trashed?
       rule has_access_token?, is_member?, is_manager?, is_owner?, super
     else
       rule is_moderator?, is_manager?, is_owner?, super
     end
-  end
-
-  def new?
-    rule is_moderator?, is_manager?, is_owner?, super
   end
 
   def show?

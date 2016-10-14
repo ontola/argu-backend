@@ -45,10 +45,6 @@ class ForumPolicy < EdgeTreePolicy
     super
   end
 
-  def edit?
-    update?
-  end
-
   def follow?
     rule is_member?, is_manager?, staff?
   end
@@ -82,10 +78,6 @@ class ForumPolicy < EdgeTreePolicy
 
   def managers?
     rule is_owner?, staff?
-  end
-
-  def new?
-    rule create?
   end
 
   def settings?

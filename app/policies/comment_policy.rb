@@ -31,16 +31,8 @@ class CommentPolicy < EdgeTreePolicy
     rule is_creator?, is_manager?, is_owner?, super
   end
 
-  def edit?
-    update?
-  end
-
   def index?
     rule has_access_token?, is_member?, is_manager?, is_owner?
-  end
-
-  def new?
-    rule create?
   end
 
   def report?

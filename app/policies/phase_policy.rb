@@ -27,10 +27,6 @@ class PhasePolicy < EdgeTreePolicy
     rule is_moderator?, is_manager?, is_owner?, super
   end
 
-  def edit?
-    rule update?
-  end
-
   def show?
     if record.project.is_published? && !record.project.is_trashed?
       rule has_access_token?, is_member?, is_moderator?, is_manager?, is_owner?, super

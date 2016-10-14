@@ -73,7 +73,7 @@ class RestrictivePolicy
   end
 
   def edit?
-    staff?
+    update?
   end
 
   def index?
@@ -85,7 +85,7 @@ class RestrictivePolicy
   end
 
   def new?
-    staff?
+    create?
   end
 
   def new_record?

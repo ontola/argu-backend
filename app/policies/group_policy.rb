@@ -50,10 +50,6 @@ class GroupPolicy < EdgeTreePolicy
     update?
   end
 
-  def new?
-    create?
-  end
-
   def update?
     rule is_manager?, super
   end

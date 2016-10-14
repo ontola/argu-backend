@@ -10,14 +10,6 @@ RSpec.feature 'Netdem', type: :feature do
            member: netdem_member.profile,
            parent: netdem.edge)
   end
-  let!(:netdem_rule_new) do
-    create(:rule,
-           branch: freetown.edge,
-           model_type: 'Project',
-           action: 'new?',
-           role: netdem.identifier,
-           permit: true)
-  end
   let!(:netdem_rule_create) do
     create(:rule,
            branch: freetown.edge,

@@ -21,16 +21,8 @@ class DocumentPolicy < RestrictivePolicy
     true
   end
 
-  def new?
-    create?
-  end
-
   def create?
     staff?
-  end
-
-  def edit?
-    update?
   end
 
   def update?

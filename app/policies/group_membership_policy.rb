@@ -30,10 +30,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
     attributes
   end
 
-  def new?
-    create?
-  end
-
   def create?
     if record.group.grants.member.present?
       rule has_access_token?, is_member?, is_manager?, super

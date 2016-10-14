@@ -6,7 +6,7 @@ RSpec.feature 'Adam west', type: :feature do
   define_freetown('default', attributes: {name: 'default'})
   define_freetown
   let!(:f_rule_c) do
-    %w(index? show? create? new?).each do |action|
+    %w(index? show? create?).each do |action|
       create(:rule,
              branch: freetown.edge,
              model_type: 'Comment',
@@ -25,25 +25,14 @@ RSpec.feature 'Adam west', type: :feature do
            role: 'member',
            permit: false)
   end
-  let!(:f_rule_q_n) do
+  let!(:f_rule_m_ncwwoq) do
     create(:rule,
            branch: freetown.edge,
-           model_type: 'Question',
+           model_type: 'Motion',
            model_id: nil,
-           action: :new?,
+           action: :create_without_question?,
            role: 'member',
            permit: false)
-  end
-  let!(:f_rule_m_ncwwoq) do
-    %i(new_without_question? create_without_question?).each do |action|
-      create(:rule,
-             branch: freetown.edge,
-             model_type: 'Motion',
-             model_id: nil,
-             action: action,
-             role: 'member',
-             permit: false)
-    end
   end
   let!(:question) do
     create(:question,

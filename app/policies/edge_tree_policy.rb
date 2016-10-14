@@ -151,7 +151,7 @@ class EdgeTreePolicy < RestrictivePolicy
       if children_classes.include?(klass)
         child = record.send(klass).new(attrs)
         child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        verdict = Pundit.policy(context, child).new? || false
+        verdict = Pundit.policy(context, child).create? || false
         record.send(klass).try(:delete, child)
         verdict
       else

@@ -15,10 +15,6 @@ class ShortnamePolicy < EdgeTreePolicy
     return r, m if r && !record.forum.shortnames_depleted?
   end
 
-  def edit?
-    rule is_manager?, is_owner?, super
-  end
-
   def update?
     rule is_manager?, is_owner?, super
   end

@@ -41,14 +41,6 @@ class AnnouncementPolicy < RestrictivePolicy
     staff?
   end
 
-  def edit?
-    update?
-  end
-
-  def new?
-    create?
-  end
-
   def update?
     staff?
   end

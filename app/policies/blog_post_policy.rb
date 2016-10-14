@@ -34,14 +34,6 @@ class BlogPostPolicy < EdgeTreePolicy
     rule is_manager?, is_owner?, super
   end
 
-  def edit?
-    rule update?
-  end
-
-  def new?
-    rule is_moderator?, is_manager?, is_owner?, super
-  end
-
   def show?
     if record.is_published? && !record.is_trashed?
       rule parent_policy.show?

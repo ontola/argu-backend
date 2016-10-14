@@ -18,20 +18,12 @@ class ArgumentPolicy < EdgeTreePolicy
     attributes
   end
 
-  def new?
-    rule is_member?, is_manager?, is_owner?, super
-  end
-
   def create?
     rule is_member?, is_manager?, is_owner?, super
   end
 
   def update?
     rule (is_member? && is_creator?), is_manager?, is_owner?, super
-  end
-
-  def edit?
-    update?
   end
 
   def trash?

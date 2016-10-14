@@ -46,14 +46,6 @@ class BannerPolicy < EdgeTreePolicy
     rule is_manager?, is_owner?, super
   end
 
-  def edit?
-    update?
-  end
-
-  def new?
-    create?
-  end
-
   def update?
     rule is_manager?, is_owner?, super
   end

@@ -37,10 +37,6 @@ class VotePolicy < EdgeTreePolicy
     rule is_creator?, super
   end
 
-  def new?
-    rule create?, super
-  end
-
   def destroy?
     rule is_creator?, super
   end

@@ -27,10 +27,6 @@ class ProfilePolicy < RestrictivePolicy
     is_manager_somewhere? || is_owner_somewhere? || staff?
   end
 
-  def new?
-    Pundit.policy(context, record.profileable_type.constantize).create?
-  end
-
   def show?
     Pundit.policy(context, record.profileable).show?
   end
@@ -38,10 +34,6 @@ class ProfilePolicy < RestrictivePolicy
 
   def update?
     Pundit.policy(context, record.profileable).update? || super
-  end
-
-  def edit?
-    update?
   end
 
   private

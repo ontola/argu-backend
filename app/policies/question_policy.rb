@@ -42,10 +42,6 @@ class QuestionPolicy < EdgeTreePolicy
     rule is_member?, is_manager?, super
   end
 
-  def edit?
-    rule update?
-  end
-
   def destroy?
     user &&
       (record.creator_id == user.profile.id &&
@@ -58,10 +54,6 @@ class QuestionPolicy < EdgeTreePolicy
 
   def index?
     rule is_member?, super
-  end
-
-  def new?
-    rule is_member?, is_member?, is_manager?, super
   end
 
   def set_expire_as?

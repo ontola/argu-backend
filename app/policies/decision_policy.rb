@@ -30,20 +30,12 @@ class DecisionPolicy < EdgeTreePolicy
     attributes
   end
 
-  def edit?
-    update?
-  end
-
   def index?
     show?
   end
 
   def show?
     rule parent_policy.show?
-  end
-
-  def new?
-    create?
   end
 
   # Creating a Decision when a draft is present is not allowed

@@ -237,14 +237,6 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
            member: netdem_member.profile,
            parent: netdem.edge)
   end
-  let(:netdem_rule_new) do
-    create(:rule,
-           branch: freetown.edge,
-           model_type: 'Project',
-           action: 'new?',
-           role: netdem.identifier,
-           permit: true)
-  end
   let(:netdem_rule_create) do
     create(:rule,
            branch: freetown.edge,
@@ -261,7 +253,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
            parent: discussion_group.edge)
   end
   def netdem_rules
-    [netdem_membership, discussion_membership, netdem_rule_new, netdem_rule_create]
+    [netdem_membership, discussion_membership, netdem_rule_create]
   end
 
   test 'moderator should get new project' do
