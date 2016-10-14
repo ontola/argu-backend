@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class PagesControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
+class PagesControllerTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
   let(:freetown) { create_forum(name: 'freetown', page: page_non_public) }
@@ -54,31 +52,30 @@ class PagesControllerTest < ActionController::TestCase
     [freetown, motion, argument, comment, project, project_motion, project_argument]
   end
 
+  test 'should redirect p to o' do
+    get "/p/#{page.url}"
+
+    assert_redirected_to page_url(page)
+    assert_redirected_to "/o/#{page.url}"
+  end
+
   ####################################
   # As Guest
   ####################################
   test 'guest should get show when public' do
-    get :show, params: {id: page}
+    get page_path(page)
 
     assert_response 200
-  end
-
-  test 'guest should not get show when not public' do
-    get :show, params: {id: page_non_public}
-
-    assert_redirected_to root_path
-    assert_nil assigns(:collection)
-  end
-
-  test 'guest should get show with platform access' do
-    get :show, params: {id: page, at: access_token.access_token}
-
-    assert_response 200
-    assert_not_nil assigns(:profile)
-    assert_not_nil assigns(:collection)
 
     assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } },
            'Votes of closed fora are visible to non-members'
+  end
+
+  test 'guest should not get show when not public' do
+    get page_path(page_non_public)
+
+    assert_redirected_to root_path
+    assert_nil assigns(:collection)
   end
 
   ####################################
@@ -89,7 +86,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'user should get show' do
     sign_in user
 
-    get :show, params: {id: page}
+    get page_path(page)
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -110,7 +107,7 @@ class PagesControllerTest < ActionController::TestCase
     initialize_user2_votes
     sign_in user2
 
-    get :show, params: {id: utrecht.page}
+    get page_path(utrecht.page)
     assert_response 200
     assert assigns(:collection)
 
@@ -123,7 +120,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'user should not get settings when not page owner' do
     sign_in user
 
-    get :settings, params: {id: page.url}
+    get settings_page_path(page)
 
     assert_response 302
     assert_equal page, assigns(:page)
@@ -132,9 +129,8 @@ class PagesControllerTest < ActionController::TestCase
   test 'user should not update settings when not page owner' do
     sign_in user
 
-    put :update,
+    put page_path(page),
         params: {
-          id: page.url,
           page: {
             profile_attributes: {
               id: page.profile.id,
@@ -154,13 +150,13 @@ class PagesControllerTest < ActionController::TestCase
   test 'owner should get settings and all tabs' do
     sign_in page.owner.profileable
 
-    get :settings, params: {id: page.url}
-
+    get settings_page_path(page)
     assert_response 200
     assert_equal page, assigns(:page)
 
     %i(profile groups grants forums advanced).each do |tab|
-      get :settings, params: {id: page.url, tab: tab}
+      get settings_page_path(page, tab: tab)
+      assert_response 200
       assert_equal page, assigns(:page)
     end
   end
@@ -168,7 +164,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'owner should update settings' do
     sign_in page.owner.profileable
 
-    put :update,
+    put page_path(page),
         params: {
           id: page.url,
           page: {
@@ -178,10 +174,10 @@ class PagesControllerTest < ActionController::TestCase
               about: 'new_about',
               default_profile_photo_attributes: {
                 id: page.profile.default_profile_photo.id,
-                image: fixture_file_upload('profile_photo.png', 'image/png')
+                image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
               },
               default_cover_photo_attributes: {
-                image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+                image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
               }
             }
           }
@@ -199,7 +195,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'owner should be able to create only one page' do
     sign_in page.owner.profileable
 
-    post :create,
+    post pages_path,
          params: {
            page: {
              profile_attributes: {
@@ -226,9 +222,8 @@ class PagesControllerTest < ActionController::TestCase
                         ['Comment.anonymous.count', 1],
                         ['Motion.anonymous.count', 2],
                         ['Project.anonymous.count', 1]]) do
-      delete :destroy,
+      delete page_path(page),
              params: {
-               id: page.shortname.shortname,
                page: {
                  repeat_name: page.shortname.shortname
                }
@@ -241,9 +236,8 @@ class PagesControllerTest < ActionController::TestCase
     freetown
 
     assert_raises(ActiveRecord::InvalidForeignKey) do
-      delete :destroy,
+      delete page_path(page_non_public),
              params: {
-               id: page_non_public.shortname.shortname,
                page: {
                  repeat_name: page_non_public.shortname.shortname
                }
@@ -259,17 +253,17 @@ class PagesControllerTest < ActionController::TestCase
   test 'staff should be able to create a page' do
     sign_in staff
 
-    post :create,
+    post pages_path,
          params: {
            page: {
              profile_attributes: {
                name: 'Utrecht Two',
                about: 'Utrecht Two bio',
                default_profile_photo_attributes: {
-                 image: fixture_file_upload('profile_photo.png', 'image/png')
+                 image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
                },
                default_cover_photo_attributes: {
-                 image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+                 image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
                }
              },
              shortname_attributes: {

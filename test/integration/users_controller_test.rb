@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class UsersControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
-
+class UsersControllerTest < ActionDispatch::IntegrationTest
   define_freetown
 
   ####################################
@@ -14,13 +12,16 @@ class UsersControllerTest < ActionController::TestCase
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
 
   test 'guest should get show when public' do
-    get :show, params: {id: user}
+    get user_path(user)
 
     assert_response 200
+
+    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } },
+           'Votes of closed fora are visible to non-members'
   end
 
   test 'guest should not get show when not public' do
-    get :show, params: {id: user_non_public}
+    get user_path(user_non_public)
 
     assert_redirected_to root_path
     assert_nil assigns(:collection)
@@ -28,25 +29,11 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'guest should get show with platform access' do
     initialize_user2_votes
-    get :show,
-        params: {
-          id: user2,
-          at: create(:access_token)
-        }
+    get user_path(user2)
 
     assert_response 200
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
-
-    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } },
-           'Votes of closed fora are visible to non-members'
-  end
-
-  test 'guest should put language' do
-    request.env['HTTP_REFERER'] = root_url
-    assert_nil cookies['locale']
-    put :language, params: {locale: :en}
-    assert_equal 'en', cookies['locale']
   end
 
   ####################################
@@ -57,7 +44,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'user should get show non public' do
     sign_in user
 
-    get :show, params: {id: user_non_public}
+    get user_path(user_non_public)
 
     assert_response 200
   end
@@ -70,7 +57,7 @@ class UsersControllerTest < ActionController::TestCase
     initialize_user2_votes
     sign_in user
 
-    get :show, params: {id: user2}
+    get user_path(user2)
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -86,7 +73,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'user should not show all votes' do
     sign_in initialize_user2_votes
 
-    get :show, params: {id: user2}
+    get user_path(user2)
     assert_response 200
     assert assigns(:collection)
 
@@ -105,7 +92,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'user should not show votes when not votes are hidden' do
     sign_in user
 
-    get :show, params: {id: user_hidden_votes}
+    get user_path(user_hidden_votes)
     assert_response 200
     assert_not assigns(:collection)
   end
@@ -113,7 +100,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'user should show votes when viewing own profile' do
     sign_in user_hidden_votes
 
-    get :show, params: {id: user_hidden_votes}
+    get user_path(user_hidden_votes)
     assert_response 200
     assert assigns(:collection)
   end
@@ -121,7 +108,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'user should not show votes of trashed objects' do
     sign_in user2
 
-    get :show, params: {id: initialize_user2_votes}
+    get user_path(initialize_user2_votes)
 
     assert_response 200
     assert assigns(:collection)[:pro][:collection].length.positive?
@@ -131,11 +118,11 @@ class UsersControllerTest < ActionController::TestCase
   test 'user should show settings and all tabs' do
     sign_in user
 
-    get :settings
+    get settings_path
     assert_user_settings_shown
 
     %i(general profile authentication notifications privacy advanced).each do |tab|
-      get :settings, params: {tab: tab}
+      get settings_path(tab: tab)
       assert_user_settings_shown tab
     end
   end
@@ -145,7 +132,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in user
     request.env['HTTP_REFERER'] = root_url
     assert_equal 'en', user.language
-    put :language, params: {locale: :nl}
+    put language_users_path(:nl)
     assert_equal 'nl', user.reload.language
     assert_nil flash[:error]
   end
@@ -155,7 +142,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in user
     request.env['HTTP_REFERER'] = root_url
     assert_equal 'en', user.language
-    put :language, params: {locale: :fake_language}
+    put language_users_path(:fake_language)
     assert_equal 'en', user.reload.language
     assert flash[:error].present?
   end
@@ -164,19 +151,18 @@ class UsersControllerTest < ActionController::TestCase
     nominatim_postal_code_valid
     sign_in user
 
-    put :update,
+    put user_path(user),
         params: {
-          id: user.url,
           user: {
             first_name: 'name',
             profile_attributes: {
               id: user.profile.id,
               default_profile_photo_attributes: {
                 id: user.profile.default_profile_photo.id,
-                image: fixture_file_upload('profile_photo.png', 'image/png')
+                image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
               },
               default_cover_photo_attributes: {
-                image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+                image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
               }
             }
           }
@@ -196,9 +182,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_differences [['Place.count', 1],
                         ['Placement.count', 1]] do
-      put :update,
+      put user_path(user),
           params: {
-            id: user.url,
             user: {
               first_name: 'name',
               home_placement_attributes: {
@@ -217,9 +202,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_differences [['Place.count', 1],
                         ['Placement.count', 1]] do
-      put :update,
+      put user_path(user),
           params: {
-            id: user.url,
             user: {
               first_name: 'name',
               home_placement_attributes: {
@@ -237,9 +221,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_differences [['Place.count', 0],
                         ['Placement.count', 0]] do
-      put :update,
+      put user_path(user),
           params: {
-            id: user.url,
             user: {
               first_name: 'name',
               home_placement_attributes: {
@@ -258,9 +241,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_differences [['Place.count', 0],
                         ['Placement.count', 0]] do
-      put :update,
+      put user_path(user),
           params: {
-            id: user.url,
             user: {
               first_name: 'name',
               home_placement_attributes: {
@@ -279,9 +261,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_differences [['Place.count', 0],
                         ['Placement.count', 1]] do
-      put :update,
+      put user_path(user),
           params: {
-            id: user.url,
             user: {
               first_name: 'name',
               home_placement_attributes: {
@@ -302,9 +283,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_differences [['Place.count', 0],
                         ['Placement.count', -1]] do
-      put :update,
+      put user_path(user),
           params: {
-            id: user.url,
             user: {
               first_name: 'name',
               home_placement_attributes: {

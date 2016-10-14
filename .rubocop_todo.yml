@@ -50,16 +50,16 @@ Metrics/ClassLength:
     - 'test/controllers/arguments_controller_test.rb'
     - 'test/controllers/blog_posts_controller_test.rb'
     - 'test/controllers/motions_controller_test.rb'
-    - 'test/controllers/pages_controller_test.rb'
     - 'test/controllers/phases_controller_test.rb'
     - 'test/controllers/questions_controller_test.rb'
-    - 'test/controllers/users_controller_test.rb'
     - 'test/integration/comments_controller_test.rb'
     - 'test/integration/conversions_controller_test.rb'
     - 'test/integration/decisions_controller_test.rb'
     - 'test/integration/forums_controller_test.rb'
     - 'test/integration/motions_controller_test.rb'
+    - 'test/integration/pages_controller_test.rb'
     - 'test/integration/projects_controller_test.rb'
+    - 'test/integration/users_controller_test.rb'
     - 'test/integration/votes_controller_test.rb'
 
 # Offense count: 30
