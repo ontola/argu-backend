@@ -24,7 +24,7 @@ class CommentPolicy < EdgeTreePolicy
 
   def create?
     assert_siblings! if record.try(:parent_id).present?
-    rule is_open?, is_member?, super
+    rule is_member?, super
   end
 
   def destroy?
@@ -36,11 +36,11 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def index?
-    rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?
+    rule has_access_token?, is_member?, is_manager?, is_owner?
   end
 
   def new?
-    rule is_open?, create?
+    rule create?
   end
 
   def report?

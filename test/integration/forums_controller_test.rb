@@ -319,6 +319,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'staff should transfer' do
     sign_in staff
+    assert_equal holland.edge.grants.size, 3
     put forum_path(holland),
         params: {
           forum: {
@@ -327,9 +328,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
         }
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
-    holland.edge.groups.each do |group|
-      assert_equal group.edge.parent, holland.edge
-    end
+    assert_equal holland.edge.grants.size, 1
   end
 
   private

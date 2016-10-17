@@ -14,7 +14,7 @@ nl:
       managers:
         owner: "Eigenaar"
         about_owner: "Gebruikers zijn eigenaar van een organisatie. Gebruikers kunnen meerdere organisaties bezitten, maar een organisatie kan maar één eigenaar hebben."
-        title: "Beheergroepen"
+        title: "Groepen"
         about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen groepen beheren en content plaatsen namens de organisatie. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
         transferred: "Organisatie overgedragen"
         users_only: "Alleen gebruikers kunnen organisaties bezitten"

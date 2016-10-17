@@ -21,12 +21,13 @@ table.styled.managers
   thead
     tr
       td= t('groups.type')
+      td= t('grants.type').capitalize
       td= t('portal.members')
   tbody
-    -@forum.grants.forum_manager.includes(:group).each do |grant|
-      tr[class=grant.group.identifier]
+    -@forum.edge.granted_groups('member').each do |group|
+      tr[class=group.identifier]
         td
           span
-            span.name= link_to grant.group.display_name, settings_group_path(grant.group)
-        td
-          =grant.group.group_memberships.count
+            span.name= group.id == -1 ? group.display_name : link_to(group.display_name, settings_group_path(group))
+        td= group.grants.where(edge: @forum.edge.path.split('.')).first.role
+        td= group.id == -1 ? User.count : group.group_memberships.count

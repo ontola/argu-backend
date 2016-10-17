@@ -50,7 +50,7 @@ class ForumPolicy < EdgeTreePolicy
   end
 
   def follow?
-    rule is_open?, is_member?, is_manager?, staff?
+    rule is_member?, is_manager?, staff?
   end
 
   def groups?

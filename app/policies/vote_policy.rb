@@ -38,7 +38,7 @@ class VotePolicy < EdgeTreePolicy
   end
 
   def new?
-    rule is_open?, create?, super
+    rule create?, super
   end
 
   def destroy?

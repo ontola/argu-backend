@@ -153,7 +153,14 @@ RSpec.configure do |config|
            first_name: nil,
            last_name: nil,
            finished_intro: true,
-           profile: create(:profile, id: 0))
+           profile: build(:profile, id: 0))
+    create(:page,
+           id: 0,
+           last_accepted: DateTime.current,
+           profile: Profile.new(name: 'public page profile'),
+           owner: User.find(0).profile,
+           shortname: Shortname.new(shortname: 'public_page'))
+    create(:group, id: -1, parent: Page.find(0).edge)
   end
 
   OmniAuth.config.test_mode = true

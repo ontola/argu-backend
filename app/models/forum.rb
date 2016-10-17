@@ -40,6 +40,7 @@ class Forum < ApplicationRecord
   auto_strip_attributes :bio, nullify: false
 
   before_update :transfer_page, if: :page_id_changed?
+  before_update :reset_public_grant, if: :visibility_changed?
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}
@@ -129,6 +130,14 @@ class Forum < ApplicationRecord
     super(value.downcase.strip)
   end
 
+  def reset_public_grant
+    if open?
+      edge.grants.create(group_id: -1, role: Grant.roles['member']) unless grants.find_by(group_id: -1)
+    else
+      grants.where(group_id: -1).destroy_all
+    end
+  end
+
   # Is the forum out of its shortname limit
   # @see {max_shortname_count}
   # @return [Boolean] True if the forum has reached its maximum shortname count.
@@ -138,7 +147,8 @@ class Forum < ApplicationRecord
 
   def transfer_page
     Forum.transaction do
-      edge.groups.each { |group| group.update(page: page) }
+      edge.grants.destroy_all
+      reset_public_grant
       edge.update(parent: page.edge)
     end
   end

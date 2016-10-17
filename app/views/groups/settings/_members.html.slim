@@ -6,7 +6,7 @@ h3= t('group_memberships.plural')
     tbody
       - @members.each do |membership|
         tr[class=membership.member.identifier]
-          td.name= membership.member.display_name
+          td.name= link_to membership.member.display_name, url_for(membership.member.profileable)
           td= link_to group_membership_path(membership, r: settings_group_path(resource)), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
             span.fa.fa-close
             span.icon-left= t('destroy')

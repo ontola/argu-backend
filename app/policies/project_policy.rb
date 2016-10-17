@@ -50,7 +50,7 @@ class ProjectPolicy < EdgeTreePolicy
 
   def list?
     if record.is_published? && !record.is_trashed?
-      rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
+      rule has_access_token?, is_member?, is_manager?, is_owner?, super
     else
       rule is_moderator?, is_manager?, is_owner?, super
     end
@@ -62,7 +62,7 @@ class ProjectPolicy < EdgeTreePolicy
 
   def show?
     if record.is_published? && !record.is_trashed?
-      rule is_open?, has_access_token?, is_member?, is_moderator?, is_manager?, is_owner?, super
+      rule has_access_token?, is_member?, is_moderator?, is_manager?, is_owner?, super
     else
       rule is_moderator?, is_manager?, is_owner?, super
     end

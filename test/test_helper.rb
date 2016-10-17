@@ -40,6 +40,19 @@ module TestHelper
     user.profile = Profile.new(id: 0)
   end
 
+  Page.find_or_create_by(id: 0) do |page|
+    page.edge = Edge.new(user: User.find(0))
+    page.last_accepted = DateTime.current
+    page.profile = Profile.new(name: 'public page profile')
+    page.owner = User.find(0).profile
+    page.shortname = Shortname.new(shortname: 'public_page')
+  end
+
+  Group.find_or_create_by(id: -1) do |group|
+    group.edge = Edge.new(user: User.find(0), parent: Page.find(0).edge)
+    group.page = Page.find(0)
+  end
+
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
   #

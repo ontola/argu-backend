@@ -19,7 +19,7 @@ class ArgumentPolicy < EdgeTreePolicy
   end
 
   def new?
-    rule is_open?, is_member?, is_manager?, is_owner?, super
+    rule is_member?, is_manager?, is_owner?, super
   end
 
   def create?
@@ -51,7 +51,7 @@ class ArgumentPolicy < EdgeTreePolicy
     if record.motion.project.present?
       rule Pundit.policy(context, record.motion.project).show?, super
     else
-      rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
+      rule has_access_token?, is_member?, is_manager?, is_owner?, super
     end
   end
 end

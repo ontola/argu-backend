@@ -14,11 +14,13 @@ module Argu
             publisher: page.owner.profileable
           }
         }.merge(attributes)
-        create(
+        forum = create(
           :forum,
           *args,
           attributes
         )
+        forum.reset_public_grant
+        forum
       end
     end
 
@@ -35,7 +37,8 @@ module Argu
             {
               shortname_attributes: {shortname: name},
               page: argu,
-              parent: argu.edge
+              parent: argu.edge,
+              visibility: Forum.visibilities[:open]
             }.merge(attributes)
           )
         end
@@ -83,7 +86,8 @@ module Argu
           create_forum(
             :populated_forum,
             {
-              shortname_attributes: {shortname: name}
+              shortname_attributes: {shortname: name},
+              visibility: Forum.visibilities[:open]
             }.merge(attributes)
           )
         end

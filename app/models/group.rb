@@ -12,6 +12,8 @@ class Group < ApplicationRecord
   validates :name, length: {maximum: 75}
   validates :visibility, presence: true
 
+  scope :custom, -> { where('groups.id > 0') }
+
   delegate :publisher, to: :page
 
   enum visibility: {hidden: 0, visible: 1, discussion: 2}
@@ -22,7 +24,7 @@ class Group < ApplicationRecord
   end
 
   def display_name
-    name
+    id == -1 ? I18n.t('groups.public') : name
   end
 
   delegate :include?, to: :members

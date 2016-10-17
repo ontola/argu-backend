@@ -37,7 +37,7 @@ en:
         title: "Banners"
         about_banners: "Banners are still in beta"
       grants:
-        title: "Manager groups"
+        title: "Groups"
         administrator: "Administrator"
         about_managers: "Some groups have management permissions. Members can change and remove objects in the forum.
           They can also change non-advanced settings in the forum and access forum statistics."

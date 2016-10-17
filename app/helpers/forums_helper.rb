@@ -50,7 +50,7 @@ module ForumsHelper
 
     sections << forum_membership_section if current_user.present?
     sections << forum_discover_section
-    sections << forum_current_section if current_user.present? && policy(@forum).is_member?
+    sections << forum_current_section if current_user.present? && current_profile.member_of?(@forum)
 
     {
       title: resource.name,
@@ -70,7 +70,7 @@ module ForumsHelper
   def forum_membership_controls_items
     items = []
 
-    return unless policy(@forum).is_member?
+    return unless current_profile.member_of?(@forum)
     membership = current_profile
                  .group_memberships
                  .joins(grants: :edge)

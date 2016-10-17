@@ -5,6 +5,7 @@ en:
     type: "Group"
     plural: "Groups"
     new: "Add group"
+    public: "Public"
     destroy:
       body: "%{group_memberships_count} members will be destroyed."
     settings:

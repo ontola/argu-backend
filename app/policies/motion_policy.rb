@@ -27,12 +27,8 @@ class MotionPolicy < EdgeTreePolicy
     attributes
   end
 
-  def convert
-    rule move?
-  end
-
   def convert?
-    rule move?
+    rule is_manager?, is_owner?, staff?
   end
 
   def create?
@@ -46,7 +42,7 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    user && (record.creator_id == user.profile.id &&
+    user && (is_creator? &&
              (record.arguments.length < 2 || 15.minutes.ago < record.created_at)) ||
       is_manager? ||
       is_owner? ||
@@ -58,7 +54,7 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def index?
-    rule is_member?, super
+    rule is_member?
   end
 
   def new?
@@ -72,19 +68,19 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def show?
-    rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
+    rule has_access_token?, is_member?, is_manager?, is_owner?, super
   end
 
   def trash?
-    user && record.creator_id == user.profile.id || is_manager? || is_owner? || super
+    rule is_creator?, is_manager?, is_owner?, super
   end
 
   def untrash?
-    user && record.creator_id == user.profile.id || is_manager? || is_owner? || super
+    rule is_creator?, is_manager?, is_owner?, super
   end
 
   def update?
-    rule (is_member? && is_creator?), is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_owner?, super
   end
 
   def vote?

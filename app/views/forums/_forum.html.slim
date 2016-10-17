@@ -5,7 +5,7 @@
         =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
-      - if !policy(forum).is_member? && policy(forum).join? && current_user.present?
+      - if current_user.present? && !current_profile.member_of?(forum) && policy(forum).join?
         .sticky--top-left
           =link_to group_membership_index_path(forum.members_group), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
             span.fa.fa-plus

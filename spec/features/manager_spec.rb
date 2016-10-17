@@ -14,6 +14,8 @@ RSpec.feature 'Manager', type: :feature do
 
     click_link("#{nederland.name} managers")
 
+    expect(page).to have_content 'Update Group'
+
     click_link('Members')
 
     click_link("Add #{nederland.name} manager")
@@ -34,6 +36,8 @@ RSpec.feature 'Manager', type: :feature do
     visit(settings_forum_path(nederland, tab: :grants))
 
     click_link("#{nederland.name} managers")
+
+    expect(page).to have_content 'Update Group'
 
     click_link('Members')
 

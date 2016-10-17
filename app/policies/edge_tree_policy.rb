@@ -65,7 +65,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_member?
-      member if ((user&.profile&.group_ids || []) & persisted_edge.granted_group_ids('member')).any?
+      member if ((user&.profile&.group_ids || []).append(-1) & persisted_edge.granted_group_ids('member')).any?
     end
 
     def is_creator?
@@ -91,7 +91,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_manager?
-      return manager if ((user&.profile&.group_ids || []) & persisted_edge.granted_group_ids('manager')).any?
+      return manager if ((user&.profile&.group_ids || []).append(-1) & persisted_edge.granted_group_ids('manager')).any?
       is_owner?
     end
 

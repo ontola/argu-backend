@@ -37,7 +37,7 @@ nl:
         title: "Banners"
         about_banners: "Banners zijn nog in bètafase"
       grants:
-        title: "Beheergroepen"
+        title: "Groepen"
         administrator: "Administrator"
         about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen objecten in het forum aanpassen en verwijderen.
           Ook kunnen ze de niet-geavanceerde instellingen van het forum wijzigen en de forumstatistieken inzien."

@@ -61,7 +61,7 @@ class QuestionPolicy < EdgeTreePolicy
   end
 
   def new?
-    rule is_open?, is_member?, is_member?, is_manager?, super
+    rule is_member?, is_member?, is_manager?, super
   end
 
   def set_expire_as?
@@ -69,7 +69,7 @@ class QuestionPolicy < EdgeTreePolicy
   end
 
   def show?
-    rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
+    rule has_access_token?, is_member?, is_manager?, is_owner?, super
   end
 
   def trash?

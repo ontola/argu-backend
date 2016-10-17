@@ -7,7 +7,7 @@ table.styled
       td= t('portal.members')
       td= t('grants.plural').capitalize
       td= t('activerecord.attributes.page.f_delete')
-  - resource.groups.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|
+  - resource.groups.custom.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|
     tr
       td
         span[class="fa fa-#{visibility_icon_for(group)}"]
