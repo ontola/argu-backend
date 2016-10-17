@@ -218,8 +218,7 @@ class AuthorizedController < ApplicationController
     UserContext.new(
       current_user,
       current_profile,
-      session[:a_tokens],
-      authenticated_context
+      session[:a_tokens]
     )
   end
 
