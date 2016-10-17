@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class DecisionPolicy < EdgeTreePolicy
-  class Scope < Scope
+  class Scope < EdgeTreePolicy::Scope
     attr_reader :context, :scope
 
     def initialize(context, scope)
@@ -13,7 +13,7 @@ class DecisionPolicy < EdgeTreePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      super.published
     end
   end
 

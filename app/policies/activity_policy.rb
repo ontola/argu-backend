@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ActivityPolicy < RestrictivePolicy
-  class Scope < Scope
+  class Scope < EdgeTreePolicy::Scope
     attr_reader :context, :scope
 
     def initialize(context, scope)
@@ -15,9 +15,7 @@ class ActivityPolicy < RestrictivePolicy
     def resolve
       activities = Activity.arel_table
       profiles = Profile.arel_table
-      scope
-        .where(['forum_id IN (%s)',
-                context.context_model.try(:id) || user.try(:profile).try(:joined_forum_ids) || 'NULL'])
+      super
         .joins(:owner)
         .where(activities[:key].not_eq('vote.create').or(
                  profiles[:are_votes_public].eq(true)

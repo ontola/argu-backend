@@ -15,7 +15,7 @@ class BannerPolicy < EdgeTreePolicy
     def resolve
       audience = [Banner.audiences[:everyone]]
       audience <<
-        if user&.member_of?(context.forum)
+        if user&.member_of?(scope.build.forum)
           Banner.audiences[:members]
         elsif user.present?
           Banner.audiences[:users]

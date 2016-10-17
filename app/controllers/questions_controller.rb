@@ -5,7 +5,7 @@ class QuestionsController < AuthorizedController
   def show
     scope = authenticated_resource
             .motions
-            .includes(:default_cover_photo, :edge, :votes, :top_arguments_con, :top_arguments_pro, :forum,
+            .includes(:default_cover_photo, :edge, :votes, :top_arguments_con, :top_arguments_pro,
                       creator: {default_profile_photo: [], profileable: [:shortname]})
             .trashed(show_trashed?)
             .order(votes_pro_count: :desc)

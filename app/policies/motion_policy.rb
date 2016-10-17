@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class MotionPolicy < EdgeTreePolicy
-  class Scope < Scope
+  class Scope < EdgeTreePolicy::Scope
     attr_reader :context, :scope
 
     def initialize(context, scope)
@@ -12,22 +12,8 @@ class MotionPolicy < EdgeTreePolicy
     delegate :user, to: :context
     delegate :session, to: :context
 
-    def resolve
-      if context.forum.present?
-        scope.where(forum_id: context.forum.id).published
-      else
-        ids = user ? user.profile.memberships.select(:forum_id) : []
-        scope.where(forum_id: ids).published
-      end
-    end
-
-    # Includes all the records within the tenant or the users' memberships
-    def broad
-      if context.forum.present?
-        scope.where(forum_id: context.forum.id)
-      elsif user.present? && user.profile.memberships.present?
-        scope.where(forum_id: user.profile.memberships.select(:forum_id))
-      end
+    def scope
+      super.published
     end
   end
 

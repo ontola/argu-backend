@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ProjectPolicy < EdgeTreePolicy
-  class Scope < RestrictivePolicy::Scope
+  class Scope < EdgeTreePolicy::Scope
     attr_reader :context, :scope
 
     def initialize(context, scope)
@@ -13,11 +13,7 @@ class ProjectPolicy < EdgeTreePolicy
     delegate :session, to: :context
 
     def resolve
-      if context.forum.present?
-        scope.where(forum_id: context.forum.id).published_or_published_by(user&.id)
-      else
-        scope.published_or_published_by(user&.id)
-      end
+      super.published_or_published_by(user&.id)
     end
   end
 

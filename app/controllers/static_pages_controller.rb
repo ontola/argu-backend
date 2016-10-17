@@ -5,7 +5,11 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_page
     if current_user && policy(current_user).staff?
-      @activities = policy_scope(Activity).loggings.order(created_at: :desc).limit(10)
+      @activities = policy_scope(Activity)
+                      .where('activities.forum_id IN (?)', current_user&.profile&.forum_ids)
+                      .loggings
+                      .order(created_at: :desc)
+                      .limit(10)
       render # stream: true
     else
       redirect_to(preferred_forum.presence || info_url('about'))

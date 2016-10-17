@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 class EdgeTreePolicy < RestrictivePolicy
+  class Scope < RestrictivePolicy::Scope
+    def class_name
+      self.class.name.split('Policy')[0]
+    end
+
+    def forum_ids_by_access_tokens
+      get_access_tokens.select { |at| at.item_type == 'Forum' }.map(&:item_id)
+    end
+
+    def resolve
+      scope
+        .joins(:forum)
+        .where("#{class_name.tableize}.forum_id IN (?) OR forums.visibility = ?",
+               forum_ids_by_access_tokens.concat(user&.profile&.forum_ids || []),
+               Forum.visibilities[:open])
+    end
+  end
+
   module Roles
     def open
       1

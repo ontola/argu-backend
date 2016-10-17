@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class ArgumentPolicy < EdgeTreePolicy
-  class Scope < Scope
+  class Scope < EdgeTreePolicy::Scope
     attr_reader :context, :scope
 
     def initialize(context, scope)
@@ -11,10 +11,6 @@ class ArgumentPolicy < EdgeTreePolicy
 
     delegate :user, to: :context
     delegate :session, to: :context
-
-    def resolve
-      scope
-    end
   end
 
   def permitted_attributes
