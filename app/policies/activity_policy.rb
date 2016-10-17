@@ -10,7 +10,6 @@ class ActivityPolicy < RestrictivePolicy
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
 
     def resolve
       activities = Activity.arel_table

@@ -10,7 +10,6 @@ class ArgumentPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
   end
 
   def permitted_attributes

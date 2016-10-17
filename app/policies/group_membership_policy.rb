@@ -10,7 +10,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
 
     def resolve
       scope

@@ -17,7 +17,6 @@ class AdministrationPolicy < Struct.new(:context, :administration)
 
   delegate :user, to: :context
   delegate :actor, to: :context
-  delegate :session, to: :context
 
   def show?
     user.profile.has_role? :staff

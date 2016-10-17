@@ -8,7 +8,6 @@ class PortalPolicy < Struct.new(:user, :portal)
   end
 
   delegate :user, to: :context
-  delegate :session, to: :context
 
   include RestrictivePolicy::Roles
 
@@ -35,7 +34,7 @@ class PortalPolicy < Struct.new(:user, :portal)
   end
 
   class Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :user, :scope
 
     def initialize(context, scope)
       @context = context
@@ -44,7 +43,6 @@ class PortalPolicy < Struct.new(:user, :portal)
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
 
     def resolve
       scope

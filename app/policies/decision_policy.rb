@@ -10,7 +10,6 @@ class DecisionPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
 
     def resolve
       super.published

@@ -10,7 +10,6 @@ class GroupPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
 
     def resolve
       # Don't show closed, unless the user has a membership

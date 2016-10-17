@@ -10,7 +10,6 @@ class ForumPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-    delegate :session, to: :context
 
     def resolve
       t = Forum.arel_table

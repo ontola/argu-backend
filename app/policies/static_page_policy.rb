@@ -8,7 +8,6 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
   end
 
   delegate :user, to: :context
-  delegate :session, to: :context
 
   def home?
     true
