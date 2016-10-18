@@ -1,4 +1,4 @@
-nl:
+en:
   placements:
     blank_country: "We cannot find your postal code without a country"
     postal_with_county_not_found: "Postal code in combination with the selected country was not found"
