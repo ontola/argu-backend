@@ -120,23 +120,4 @@ RSpec.feature 'Announcements', type: :feature do
     expect(page).to_not have_content(announcement_users.content)
     expect(page).to have_content(announcement_everyone.content)
   end
-
-  ####################################
-  # As Member
-  ####################################
-  scenario 'Member sees everyone announcements' do
-    user = create_member(holland)
-    login_as(user, scope: :user)
-    question = holland.questions.first
-    visit question_path question
-    expect(page).to have_content(question.title),
-                    'page not loaded correctly to run expectations'
-
-    expect(page).to have_content(announcement_everyone.content),
-                    "Member doesn't see everyone announcements"
-    expect(page).not_to have_content(announcement_guests.content),
-                        'Member sees guests announcements'
-    expect(page).not_to have_content(announcement_users.content),
-                        'Member sees users announcements'
-  end
 end

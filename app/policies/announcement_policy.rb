@@ -17,9 +17,7 @@ class AnnouncementPolicy < RestrictivePolicy
     def resolve
       audience = [Announcement.audiences[:everyone]]
       audience <<
-        if user&.member_of?(context.forum)
-          Announcement.audiences[:members]
-        elsif user.present?
+        if user.present?
           Announcement.audiences[:users]
         else
           Announcement.audiences[:guests]
