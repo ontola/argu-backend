@@ -19,7 +19,7 @@ gem 'pg', '0.18.2'
 
 gem 'jbuilder', '~> 2.6.0'
 gem 'bcrypt-ruby', '>= 3.1.5'
-gem 'rfc-822', '~> 0.4.0'
+gem 'rfc-822', '~> 0.4.1'
 gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'i18n-js', '>= 3.0.0.rc12'
