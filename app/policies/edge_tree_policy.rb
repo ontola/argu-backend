@@ -102,6 +102,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
   include Roles
   delegate :edge, to: :record
+  delegate :persisted_edge, to: :edge
 
   def initialize(context, record)
     super
@@ -110,13 +111,6 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def context_forum
     @context_forum ||= persisted_edge.get_parent(:forum)&.owner
-  end
-
-  def persisted_edge
-    return @persisted_edge if @persisted_edge.present?
-    persisted = edge
-    persisted = persisted.parent until persisted.parent.nil? || persisted.persisted?
-    @persisted_edge = persisted if persisted.persisted?
   end
 
   def permitted_attributes

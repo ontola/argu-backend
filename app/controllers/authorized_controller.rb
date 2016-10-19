@@ -5,7 +5,7 @@ class AuthorizedController < ApplicationController
   before_action :check_if_registered,
                 except: %i(show move move! convert convert!)
   before_action :authorize_action
-  helper_method :authenticated_resource, :authenticated_context, :collect_banners
+  helper_method :authenticated_resource, :collect_banners
 
   private
 
@@ -18,11 +18,9 @@ class AuthorizedController < ApplicationController
 
     banners = stubborn_hgetall('banners') || {}
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
-    return unless authenticated_context.present?
-    @banners = policy_scope(authenticated_context
-                              .banners
-                              .published)
-               .reject { |b| banners[b.identifier] == 'hidden' }
+    forum = authenticated_resource.persisted_edge.get_parent(:forum).owner
+    @banners = policy_scope(forum.banners.published)
+                 .reject { |b| banners[b.identifier] == 'hidden' }
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found
@@ -57,32 +55,9 @@ class AuthorizedController < ApplicationController
       end
   end
 
-  # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
-  # otherwise the result from {resource_tenant} is used.
-  # @author Fletcher91 <thom@argu.co>
-  # @note This function isn't called context_tenant since we might use different
-  #   scopes in the future (e.g. access to a project)
-  # @note This should be based only on static information and be side-effect free to make memoization possible.
-  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
-  def authenticated_context
-    case resource_by_id
-    when Forum
-      resource_by_id
-    when GroupMembership
-      granted_edge = resource_by_id.group.grants.first&.edge
-      granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
-    when Group
-      granted_edge = resource_by_id.grants.first&.edge
-      granted_edge.owner if granted_edge.present? && granted_edge.owner_type == 'Forum'
-    else
-      resource_by_id.try(:forum) || resource_tenant
-    end
-  end
-
   def check_if_registered
     return if current_profile.present?
-    raise Argu::NotAUserError.new(forum: authenticated_context,
-                                  r: redirect_url)
+    raise Argu::NotAUserError.new(r: redirect_url)
   end
 
   # Prepares a memoized {CreateService} for the relevant model for use in controller#create

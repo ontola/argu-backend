@@ -39,7 +39,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@forum, follow_types: [:reactions, :never], trigger_class: 'btn--transparant')
   - if policy(@forum).show?
     .btns-center-container
-      -if can_start_discussion?
+      -if can_start_discussion?(@forum)
         =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
           span.fa.fa-plus
           span.icon-left= t('discussions.new.title')

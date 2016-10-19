@@ -267,9 +267,10 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in create_owner(holland)
 
     get statistics_forum_path(holland)
-    assert_redirected_to forum_path(holland)
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
+    follow_redirect!
+    assert_redirected_to forum_path(holland)
     # assert_equal 2, assigns(:tags).length
   end
 
@@ -296,6 +297,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     [:privacy, :managers].each do |tab|
       get settings_forum_path(holland),
           params: {tab: tab}
+      follow_redirect!
       assert_redirected_to forum_path(holland)
     end
   end

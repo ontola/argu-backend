@@ -79,6 +79,13 @@ class Edge < ActiveRecord::Base
     granted_groups(role).pluck(:id)
   end
 
+  def persisted_edge
+    return @persisted_edge if @persisted_edge.present?
+    persisted = self
+    persisted = persisted.parent until persisted.parent.nil? || persisted.persisted?
+    @persisted_edge = persisted if persisted.persisted?
+  end
+
   # Only returns a value when the model has been saved
   def polymorphic_tuple
     [owner_type, owner_id]

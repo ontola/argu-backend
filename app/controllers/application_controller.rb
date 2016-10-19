@@ -7,8 +7,7 @@ class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper,
           PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
           NestedAttributesHelper
-  helper_method :current_profile, :show_trashed?,
-                :authenticated_context, :collect_announcements
+  helper_method :current_profile, :show_trashed?, :collect_announcements
 
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -191,11 +190,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # Shim for the time being
-  def authenticated_context
-    @forum
-  end
-
   # @private
   # For Devise
   def configure_permitted_parameters
@@ -245,9 +239,7 @@ class ApplicationController < ActionController::Base
       end
       format.html do
         redirect_location =
-          if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?
-            url_for(authenticated_context)
-          elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
+          if request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
             request.env['HTTP_REFERER']
           else
             root_path

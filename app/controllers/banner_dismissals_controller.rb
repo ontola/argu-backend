@@ -3,14 +3,11 @@ class BannerDismissalsController < AuthorizedController
   skip_before_action :check_if_registered
 
   def create
-    dismissal = BannerDismissal.new banner_dismissal_params
-                .to_h
-                .merge!(user: current_user)
-    authorize dismissal, :create?
+    authenticated_resource.user = current_user
     respond_to do |format|
-      if dismissal.save
+      if authenticated_resource.save
         # Cookie permeation cannot be done from a model
-        stubborn_hmset(*dismissal.stubborn_params)
+        stubborn_hmset(*authenticated_resource.stubborn_params)
         format.json { head 204 }
       else
         format.json { head 500 }
@@ -24,13 +21,9 @@ class BannerDismissalsController < AuthorizedController
     params.require(:banner_dismissal).permit :banner_id
   end
 
-  def authenticated_context
-    authenticated_resource!.banner.forum
-  end
-
   def authenticated_resource!
     if params[:action] == 'new' || params[:action] == 'create'
-      BannerDismissal.new banner_dismissal_params
+      @resource ||= BannerDismissal.new banner_dismissal_params
     else
       super
     end

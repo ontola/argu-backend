@@ -20,7 +20,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
             question_id: question
           }
         }
-    assert_redirected_to forum_path(freetown)
+    assert_redirected_to root_path
   end
 
   test 'guest should not post create' do
@@ -33,9 +33,8 @@ class QuestionAnswersControllerTest < ActionController::TestCase
              motion_id: motion.id
            }
          }
-
-    assert_redirected_to forum_path(freetown)
     assert_equal nil, assigns(:resource).motion.question_id
+    assert_redirected_to root_path
   end
 
   ####################################
@@ -52,7 +51,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
             question_id: question
           }
         }
-    assert_redirected_to forum_path(freetown)
+    assert_redirected_to root_path
   end
 
   test 'user should not post create' do
@@ -65,9 +64,9 @@ class QuestionAnswersControllerTest < ActionController::TestCase
              motion_id: motion.id
            }
          }
-
-    assert_redirected_to forum_path(freetown)
     assert_equal nil, assigns(:resource).motion.question_id
+
+    assert_redirected_to root_path
   end
 
   ####################################
