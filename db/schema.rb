@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013083228) do
+ActiveRecord::Schema.define(version: 20161019124155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -459,14 +459,16 @@ ActiveRecord::Schema.define(version: 20161013083228) do
   end
 
   create_table "placements", force: :cascade do |t|
-    t.integer "forum_id"
-    t.integer "place_id",       null: false
-    t.integer "placeable_id",   null: false
-    t.string  "placeable_type", null: false
-    t.string  "title"
-    t.text    "about"
-    t.integer "creator_id",     null: false
-    t.integer "publisher_id",   null: false
+    t.integer  "forum_id"
+    t.integer  "place_id",       null: false
+    t.integer  "placeable_id",   null: false
+    t.string   "placeable_type", null: false
+    t.string   "title"
+    t.text     "about"
+    t.integer  "creator_id",     null: false
+    t.integer  "publisher_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["forum_id"], name: "index_placements_on_forum_id", using: :btree
     t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "(((title)::text = 'home'::text) AND ((placeable_type)::text = 'User'::text))", using: :btree
   end
