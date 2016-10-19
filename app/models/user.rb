@@ -4,9 +4,9 @@ class User < ApplicationRecord
 
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,
-          -> { where title: 'home', placeable_type: 'User' },
+          -> { where title: 'home' },
           class_name: 'Placement',
-          foreign_key: 'placeable_id',
+          as: :placeable,
           inverse_of: :placeable
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
   has_many :edges
