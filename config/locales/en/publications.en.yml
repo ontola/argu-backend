@@ -6,6 +6,7 @@ en:
       direct: 'Publish directly'
       draft: 'Save as draft'
       schedule: 'Schedule publication:'
+    publish_in_one_minute: "Will be published within a minute."
     is_scheduled: "Publication is scheduled for %{date}."
     is_draft: "Draft version, not yet published."
     confirm_publication: 'Notifications will be send after publishing this. Continue?'

@@ -6,6 +6,7 @@ nl:
       direct: 'Publiceer direct'
       draft: 'Bewaar als concept'
       schedule: 'Plan publicatie op:'
+    publish_in_one_minute: "Wordt binnen een minuut gepubliceerd."
     is_scheduled: "Publicatie staat gepland op %{date}."
     is_draft: "Concept versie, nog niet gepubliceerd."
     confirm_publication: 'Meldingen zullen worden verstuurd door dit te publiceren. Verder gaan?'

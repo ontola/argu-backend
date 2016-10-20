@@ -2,20 +2,28 @@
   .box
     section.section-draft
       p
-        - if resource.argu_publication.try(:published_at).present?
-          =>t('publications.is_scheduled', date: date_for_publication(resource))
-        - else
-          =>t('publications.is_draft')
-        =link_to t('edit'), polymorphic_url([:edit, resource])
-        - if resource.argu_publication.try(:published_at).present?
+        - if resource.argu_publication.try(:published_at).present? && resource.argu_publication.published_at < 1.minutes.from_now
+          =>t('publications.publish_in_one_minute', date: date_for_publication(resource))
           .inline-button-form
             =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
               =f.semantic_fields_for :argu_publication do |pf|
                 =pf.input :publish_type, as: :hidden, input_html: {value: :draft}
                 =pf.action :submit, as: :button, button_html: {class: 'btn--warning'}, label: t('cancel')
-        - if resource.argu_publication.try(:published_at).nil? || resource.argu_publication.published_at > 1.minute.from_now
-          .inline-button-form
-            =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
-              =f.semantic_fields_for :argu_publication do |pf|
-                =pf.input :publish_type, as: :hidden, input_html: {value: :direct}
-                =pf.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication')}}, label: t('publish')
+        -else
+            - if resource.argu_publication.try(:published_at).present?
+              =>t('publications.is_scheduled', date: date_for_publication(resource))
+            - else
+              =>t('publications.is_draft')
+            =link_to t('edit'), polymorphic_url([:edit, resource])
+            - if resource.argu_publication.try(:published_at).present?
+              .inline-button-form
+                =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
+                  =f.semantic_fields_for :argu_publication do |pf|
+                    =pf.input :publish_type, as: :hidden, input_html: {value: :draft}
+                    =pf.action :submit, as: :button, button_html: {class: 'btn--warning'}, label: t('cancel')
+            - if resource.argu_publication.try(:published_at).nil? || resource.argu_publication.published_at > 1.minute.from_now
+              .inline-button-form
+                =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
+                  =f.semantic_fields_for :argu_publication do |pf|
+                    =pf.input :publish_type, as: :hidden, input_html: {value: :direct}
+                    =pf.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication')}}, label: t('publish')
