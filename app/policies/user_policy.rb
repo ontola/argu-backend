@@ -60,7 +60,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def max_pages_reached?
-    member if user && user.profile.pages.length >= max_allowed_pages
+    user && user.profile.pages.length >= max_allowed_pages
   end
 
   def settings?

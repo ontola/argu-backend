@@ -62,6 +62,31 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################
+  test 'guest should not get new' do
+    get new_page_path
+
+    assert_not_authorized
+  end
+
+  test 'guest should not post create' do
+    assert_no_difference('Page.count') do
+      post pages_path,
+           params: {
+             page: {
+               profile_attributes: {
+                 name: 'Utrecht Two',
+                 about: 'Utrecht Two bio'
+               },
+               shortname_attributes: {
+                 shortname: 'UtrechtNumberTwo'
+               },
+               last_accepted: '1'
+             }
+           }
+    end
+    assert_not_authorized
+  end
+
   test 'guest should get show when public' do
     get page_path(page)
 
@@ -82,6 +107,37 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   # As User
   ####################################
   let(:user) { create(:user) }
+
+  test 'user should get new' do
+    sign_in user
+
+    get new_page_path
+
+    assert_response 200
+
+    refute_have_tag response.body, 'section.page-limit-reached'
+  end
+
+  test 'user should post create' do
+    sign_in user
+
+    assert_difference('Page.count') do
+      post pages_path,
+           params: {
+             page: {
+               profile_attributes: {
+                 name: 'Utrecht Two',
+                 about: 'Utrecht Two bio'
+               },
+               shortname_attributes: {
+                 shortname: 'UtrechtNumberTwo'
+               },
+               last_accepted: '1'
+             }
+           }
+    end
+    assert_redirected_to page_path(Page.last)
+  end
 
   test 'user should get show' do
     sign_in user
@@ -192,24 +248,35 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'new_about', assigns(:page).profile.about
   end
 
-  test 'owner should be able to create only one page' do
+  test 'owner should get new' do
     sign_in page.owner.profileable
 
-    post pages_path,
-         params: {
-           page: {
-             profile_attributes: {
-               name: 'Utrecht Two',
-               about: 'Utrecht Two bio'
-             },
-             shortname_attributes: {
-               shortname: 'UtrechtNumberTwo'
-             },
-             last_accepted: '1'
-           }
-         }
+    get new_page_path
 
-    assert_redirected_to root_path
+    assert_response 200
+
+    assert_have_tag response.body, 'section.page-limit-reached'
+  end
+
+  test 'owner should not post create' do
+    sign_in page.owner.profileable
+
+    assert_no_difference('Page.count') do
+      post pages_path,
+           params: {
+             page: {
+               profile_attributes: {
+                 name: 'Utrecht Two',
+                 about: 'Utrecht Two bio'
+               },
+               shortname_attributes: {
+                 shortname: 'UtrechtNumberTwo'
+               },
+               last_accepted: '1'
+             }
+           }
+    end
+    assert_have_tag response.body, 'section.page-limit-reached'
     assert_not assigns(:page)
   end
 

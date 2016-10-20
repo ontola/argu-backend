@@ -30,24 +30,14 @@ class PagesController < ApplicationController
   end
 
   def new
-    pa_po = policy(Edge.new(owner: Page.new).owner)
-    us_po = policy(current_user)
-    errors = {}
-    if pa_po.create?
-      page = pa_po.record
-      page.build_shortname
-      page.build_profile
-    elsif us_po.max_pages_reached?
-      errors[:max_allowed_pages] = {
-        max: us_po.max_allowed_pages,
-        current: current_user.profile.pages.length,
-        pages_url: pages_user_url(current_user)
-      }
-    end
+    authorize new_resource_from_params, :create?
+
+    new_resource_from_params.build_shortname
+    new_resource_from_params.build_profile
 
     render locals: {
-      page: page,
-      errors: errors
+      page: new_resource_from_params,
+      errors: {}
     }
   end
 
@@ -150,6 +140,28 @@ class PagesController < ApplicationController
   end
 
   private
+
+  def handle_not_authorized_error(exception)
+    us_po = current_user && policy(current_user)
+    if us_po&.max_pages_reached?
+      errors = {}
+      errors[:max_allowed_pages] = {
+        max: us_po.max_allowed_pages,
+        current: current_user.profile.pages.length,
+        pages_url: pages_user_url(current_user)
+      }
+      render 'new', locals: {
+        page: new_resource_from_params,
+        errors: errors
+      }
+    else
+      super
+    end
+  end
+
+  def new_resource_from_params
+    @resource ||= Edge.new(owner: Page.new).owner
+  end
 
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?

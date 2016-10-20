@@ -1,7 +1,17 @@
 .col-3
   header
     h1= t('pages.create')
-  - if page.present?
+  - if errors[:max_allowed_pages].present?
+    .col-3-2
+      .box
+        section.page-limit-reached
+          p= t('pages.limit_reached_amount', amount: errors[:max_allowed_pages][:max])
+          - if errors[:max_allowed_pages][:pages_url]
+            p= t('pages.page_management_html', href: link_to(t('pages.management.title'), errors[:max_allowed_pages][:pages_url]))
+    .col-3-1
+      .box
+        section= raw t('pages.helper.side')
+  - elsif page.present?
     .col-3-2
       .box
         section
@@ -28,16 +38,6 @@
             =f.input :last_accepted, as: :boolean
             =f.actions do
               =f.action :submit, :as => :button
-    .col-3-1
-      .box
-        section= raw t('pages.helper.side')
-  - elsif errors[:max_allowed_pages].present?
-    .col-3-2
-      .box
-        section
-          p= t('pages.limit_reached_amount', amount: errors[:max_allowed_pages][:max])
-          - if errors[:max_allowed_pages][:pages_url]
-            p= t('pages.page_management_html', href: link_to(t('pages.management.title'), errors[:max_allowed_pages][:pages_url]))
     .col-3-1
       .box
         section= raw t('pages.helper.side')
