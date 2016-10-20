@@ -84,6 +84,13 @@ class Edge < ActiveRecord::Base
     [owner_type, owner_id]
   end
 
+  # Calculated the number of unique followers for at least {level}
+  # @param [Symbol] level The lowest type of follower to include
+  # @return [Integer] The number of followers
+  def potential_audience(level = :reactions)
+    follows.where('follow_type >= ?', Follow.follow_types[level]).uniq.count
+  end
+
   private
 
   def set_user_id

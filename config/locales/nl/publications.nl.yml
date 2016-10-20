@@ -9,3 +9,4 @@ nl:
     is_scheduled: "Publicatie staat gepland op %{date}."
     is_draft: "Concept versie, nog niet gepubliceerd."
     confirm_publication: 'Meldingen zullen worden verstuurd door dit te publiceren. Verder gaan?'
+    followers_helper: "Alle %{followers_count} volgers zullen een melding ontvangen van deze update."

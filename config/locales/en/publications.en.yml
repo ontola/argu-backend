@@ -9,3 +9,4 @@ en:
     is_scheduled: "Publication is scheduled for %{date}."
     is_draft: "Draft version, not yet published."
     confirm_publication: 'Notifications will be send after publishing this. Continue?'
+    followers_helper: "All %{followers_count} followers will be notified of this update."
