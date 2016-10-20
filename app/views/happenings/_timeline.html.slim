@@ -12,11 +12,11 @@
               span= phase.display_name
             .timeline-points
               -phase.happenings(show_unpublished).each do |happening|
-                =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening}
+                =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(resource)}
     -else
       .timeline-points
         -resource.happenings.published(show_unpublished).each do |happening|
-          =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening}
+          =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(resource)}
 #current-blog-post
-  - if current_happening.present?
-    =render partial: "#{current_happening.trackable.class_name}/timeline", locals: {resource: current_happening.trackable}
+  - if current_happening(resource).present?
+    =render partial: "#{current_happening(resource).trackable.class_name}/timeline", locals: {resource: current_happening(resource).trackable}

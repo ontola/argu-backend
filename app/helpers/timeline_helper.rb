@@ -1,5 +1,13 @@
 # frozen_string_literal: false
 module TimelineHelper
+  def current_happening(resource)
+    if params[:happening_id].present?
+      Activity.find(params[:happening_id])
+    else
+      resource.latest_happening(policy(resource).create_child?(:blog_posts))
+    end
+  end
+
   def generate_phase_link_class(project, phase)
     class_string = 'timeline-phase-title tooltip--top'
     class_string << ' finished' if project.current_phase.present? && phase.id < project.current_phase.id

@@ -31,7 +31,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     -unless project.is_published?
       =render partial: 'application/publish', locals: {resource: project}
     -unless project.phases.blank? && project.latest_happening(policy(project).update?).blank?
-      =render partial: 'happenings/timeline', locals: {resource: project, show_unpublished: policy(project).update?, current_happening: project.latest_happening(policy(project).update?)}
+      =render partial: 'happenings/timeline', locals: {resource: project, show_unpublished: policy(project).update?}
   header
     h2=t('discussions.plural')
   - if @items.present?

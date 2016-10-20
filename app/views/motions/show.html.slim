@@ -17,8 +17,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .col-1
     =render partial: 'happenings/timeline',
             locals: { resource: motion,
-                      show_unpublished: policy(motion).update?,
-                      current_happening: motion.latest_happening(policy(motion).update?)}
+                      show_unpublished: policy(motion).update?}
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
 .argument-columns= render_columns(@arguments,

@@ -120,4 +120,16 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
       user_types[:trash].merge(moderator: exp_res(should: true))
     end
   end
+
+  def general_show(results: {}, record: subject)
+    record = send(record) if record.is_a?(Symbol)
+
+    get record_path(record)
+
+    if results[:response] == 200
+      assert_redirected_to url_for([record.blog_postable, happening_id: record.happening.id])
+    else
+      assert_response results[:response]
+    end
+  end
 end

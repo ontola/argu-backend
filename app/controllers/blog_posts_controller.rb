@@ -12,7 +12,7 @@ class BlogPostsController < AuthorizedController
   def create
     create_service.on(:create_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to blog_post }
+        format.html { redirect_to url_for([blog_post.blog_postable, happening_id: blog_post.happening.id]) }
         format.json { render json: blog_post, status: 201, location: blog_post }
       end
     end
@@ -27,7 +27,7 @@ class BlogPostsController < AuthorizedController
 
   def show
     respond_to do |format|
-      format.html { render locals: {blog_post: @resource} }
+      format.html { redirect_to url_for([@resource.blog_postable, happening_id: @resource.happening.id]) }
       format.json { render json: @resource }
       format.js   { render locals: {blog_post: @resource} }
     end
@@ -50,7 +50,7 @@ class BlogPostsController < AuthorizedController
   def update
     update_service.on(:update_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to blog_post }
+        format.html { redirect_to url_for([blog_post.blog_postable, happening_id: blog_post.happening.id]) }
         format.json { render json: blog_post, status: 200, location: blog_post }
       end
     end
