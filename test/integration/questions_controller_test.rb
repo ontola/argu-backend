@@ -41,86 +41,61 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
                   analytics: stats_opt('questions', 'create_success'),
                   parent: :project
                 })
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' erroneous',
-      options: {
-        parent: :freetown,
-        analytics: stats_opt('questions', 'create_failed'),
-        attributes: {title: 'Question', content: 'C'}
-      },
-      user_types: {
-        member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
-      }
-    )
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' with cover_photo',
-      options: {
-        parent: :freetown,
-        analytics: stats_opt('questions', 'create_success'),
-        attributes: {
-          default_cover_photo_attributes: {
-            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
-          }
+    options = {
+      parent: :freetown,
+      analytics: stats_opt('questions', 'create_failed'),
+      attributes: {title: 'Question', content: 'C'}
+    }
+    define_test(hash, :create, case_suffix: ' erroneous', options: options) do
+      {member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+    end
+    options = {
+      parent: :freetown,
+      analytics: stats_opt('questions', 'create_success'),
+      attributes: {
+        default_cover_photo_attributes: {
+          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
-      },
-      user_types: {
-        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
-    )
+    }
+    define_test(hash, :create, case_suffix: ' with cover_photo', options: options) do
+      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+    end
     define_test(hash, :show, asserts: [assert_no_trashed_motions])
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-                  user: {should: false, response: 404}
-                })
+    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+      {user: {should: false, response: 404}}
+    end
     define_test(hash, :edit)
     define_test(hash, :update)
-    define_test(
-      hash,
-      :update,
-      case_suffix: ' erroneous',
-      options: {attributes: {title: 'Question', content: 'C'}},
-      user_types: {
-        creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
-      }
-    )
-    define_test(
-      hash,
-      :update,
-      case_suffix: ' with cover_photo',
-      options: {
-        attributes: {
-          default_cover_photo_attributes: {
-            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
-          }
+    define_test(hash, :update, case_suffix: ' erroneous', options: {attributes: {title: 'Question', content: 'C'}}) do
+      {creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+    end
+    options = {
+      attributes: {
+        default_cover_photo_attributes: {
+          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
-      },
-      user_types: {
-        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
-    )
+    }
+    define_test(hash, :update, case_suffix: ' with cover_photo', options: options) do
+      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+    end
     define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('questions', 'trash_success')})
     define_test(hash, :move)
-    define_test(
-      hash, :move!,
-      options: {attributes: {forum_id: :forum_move_to}},
-      user_types: user_types[:move!].merge(
-        staff: {should: true, response: 302, asserts: [
-          assert_motions_forum_changed, assert_has_no_motions
-        ]}
+    define_test(hash, :move!, options: {attributes: {forum_id: :forum_move_to}}) do
+      user_types[:move!].merge(
+        staff: {should: true, response: 302, asserts: [assert_motions_forum_changed, assert_has_no_motions]}
       )
-    )
-    define_test(
-      hash,
-      :move!,
-      case_suffix: ' with motions',
-      options: {attributes: {forum_id: :forum_move_to, include_motions: '1'}},
-      user_types: {staff: {should: true, response: 302, asserts: [
-        assert_not_motions_forum_changed, assert_has_five_motions
-      ]}}
-    )
+    end
+    options = {
+      attributes: {
+        forum_id: :forum_move_to,
+        include_motions: '1'
+      }
+    }
+    define_test(hash, :move!, case_suffix: ' with motions', options: options) do
+      {staff: {should: true, response: 302, asserts: [assert_not_motions_forum_changed, assert_has_five_motions]}}
+    end
   end
 end

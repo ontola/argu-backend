@@ -62,12 +62,8 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :new, case_suffix: ' for forum', options: {parent: :freetown})
     define_test(hash, :new, case_suffix: ' for question', options: {parent: :question})
     define_test(hash, :new, case_suffix: ' for project', options: {parent: :project})
-    define_test(
-      hash,
-      :new,
-      case_suffix: ' for closed question',
-      options: {parent: :closed_question},
-      user_types: {
+    define_test(hash, :new, case_suffix: ' for closed question', options: {parent: :closed_question}) do
+      {
         guest: {should: false, response: 302, asserts: [assert_not_a_user], analytics: false},
         user: {should: false, response: 403, asserts: [assert_not_a_member], analytics: false},
         member: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
@@ -76,135 +72,94 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         owner: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
         staff: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false}
       }
-    )
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' as page',
-      options: {
-        analytics: stats_opt('motions', 'create_success'),
-        actor: :page,
-        parent: :freetown
-      },
-      user_types: {
-        owner: {should: true, response: 302, asserts: [assert_as_page]}
+    end
+    options = {
+      analytics: stats_opt('motions', 'create_success'),
+      actor: :page,
+      parent: :freetown
+    }
+    define_test(hash, :create, case_suffix: ' as page', options: options) do
+      {owner: {should: true, response: 302, asserts: [assert_as_page]}}
+    end
+    options = {
+      parent: :freetown,
+      analytics: stats_opt('motions', 'create_success')
+    }
+    define_test(hash, :create, case_suffix: ' for forum', options: options)
+    options = {
+      parent: :question,
+      analytics: stats_opt('motions', 'create_success')
+    }
+    define_test(hash, :create, case_suffix: ' for question', options: options)
+    options = {
+      parent: :project,
+      analytics: stats_opt('motions', 'create_success')
+    }
+    define_test(hash, :create, case_suffix: ' for project', options: options)
+    options = {
+      analytics: stats_opt('motions', 'create_success'),
+      parent: :closed_question
+    }
+    define_test(hash, :create, case_suffix: ' for closed question', options: options) do
+      {
+        guest: {should: false, response: 302, asserts: [assert_not_a_user], analytics: false},
+        user: {should: false, response: 403, asserts: [assert_not_a_member], analytics: false},
+        member: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        moderator: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        manager: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        owner: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        staff: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false}
       }
-    )
-    define_test(hash, :create, case_suffix: ' for forum', options: {
-                  parent: :freetown,
-                  analytics: stats_opt('motions', 'create_success')
-                })
-    define_test(hash, :create, case_suffix: ' for question', options: {
-                  parent: :question,
-                  analytics: stats_opt('motions', 'create_success')
-                })
-    define_test(hash, :create, case_suffix: ' for project', options: {
-                  parent: :project,
-                  analytics: stats_opt('motions', 'create_success')
-                })
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' for closed question',
-      options: {
-        analytics: stats_opt('motions', 'create_success'),
-        parent: :closed_question
-      },
-      user_types: {
-        guest: {should: false, response: 302, asserts: [assert_not_a_user],
-                analytics: false},
-        user: {should: false, response: 403, asserts: [assert_not_a_member],
-               analytics: false},
-        member: {should: false, response: 302, asserts: [assert_not_authorized],
-                 analytics: false},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized],
-                    analytics: false},
-        manager: {should: false, response: 302, asserts: [assert_not_authorized],
-                  analytics: false},
-        owner: {should: false, response: 302, asserts: [assert_not_authorized],
-                analytics: false},
-        staff: {should: false, response: 302, asserts: [assert_not_authorized],
-                analytics: false}
-      }
-    )
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' with required question',
-      options: {
-        parent: :require_question_question,
-        analytics: stats_opt('motions', 'create_success')
-      },
-      user_types: {require_question_member: {should: true, response: 302}}
-    )
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' without required question',
-      options: {parent: :require_question_forum},
-      user_types: {require_question_member: {should: false, response: 302}}
-    )
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' erroneous',
-      options: {
-        parent: :project,
-        attributes: {title: 'Motion', content: 'C'},
-        analytics: stats_opt('motions', 'create_failed')
-      },
-      user_types: {
-        member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
-      }
-    )
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' with cover_photo',
-      options: {
-        parent: :project,
-        analytics: stats_opt('motions', 'create_success'),
-        attributes: {
-          default_cover_photo_attributes: {
-            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
-          }
+    end
+    options = {
+      parent: :require_question_question,
+      analytics: stats_opt('motions', 'create_success')
+    }
+    define_test(hash, :create, case_suffix: ' with required question', options: options) do
+      {require_question_member: {should: true, response: 302}}
+    end
+    define_test(hash, :create, case_suffix: ' without required question', options: {parent: :require_question_forum}) do
+      {require_question_member: {should: false, response: 302}}
+    end
+    options = {
+      parent: :project,
+      attributes: {title: 'Motion', content: 'C'},
+      analytics: stats_opt('motions', 'create_failed')
+    }
+    define_test(hash, :create, case_suffix: ' erroneous', options: options) do
+      {member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+    end
+    options = {
+      parent: :project,
+      analytics: stats_opt('motions', 'create_success'),
+      attributes: {
+        default_cover_photo_attributes: {
+          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
-      },
-      user_types: {
-        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
-    )
+    }
+    define_test(hash, :create, case_suffix: ' with cover_photo', options: options) do
+      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+    end
     define_test(hash, :show, asserts: [assert_no_trashed_arguments])
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-                  user: {should: false, response: 404}
-                })
+    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+      {user: {should: false, response: 404}}
+    end
     define_test(hash, :edit)
     define_test(hash, :update)
-    define_test(
-      hash,
-      :update,
-      case_suffix: ' erroneous',
-      options: {attributes: {title: 'Motion', content: 'C'}},
-      user_types:
-        {
-          creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
+    define_test(hash, :update, case_suffix: ' erroneous', options: {attributes: {title: 'Motion', content: 'C'}}) do
+      {creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+    end
+    options = {
+      attributes: {
+        default_cover_photo_attributes: {
+          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
-    )
-    define_test(
-      hash,
-      :update,
-      case_suffix: ' with cover_photo',
-      options: {
-        attributes: {
-          default_cover_photo_attributes: {
-            image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
-          }
-        }
-      },
-      user_types: {
-        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
-    )
+    }
+    define_test(hash, :update, case_suffix: ' with cover_photo', options: options) do
+      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+    end
     define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
     define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
     define_test(hash, :move)

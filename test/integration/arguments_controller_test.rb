@@ -84,19 +84,16 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
     )
     define_test(hash, :show, asserts: [assert_only_allowed_comments])
     define_test(hash, :show, case_suffix: ' nested', options: {record: :pub_project_argument})
-    define_test(
-      hash, :show,
-      case_suffix: ' unpublished nested',
-      options: {record: :project_argument},
-      user_types: user_types[:show].merge(
+    define_test(hash, :show, case_suffix: ' unpublished nested', options: {record: :project_argument}) do
+      user_types[:show].merge(
         guest: {should: false, response: 302, asserts: [assert_not_authorized]},
         user: {should: false, response: 302, asserts: [assert_not_authorized]},
         member: {should: false, response: 302, asserts: [assert_not_authorized]}
       )
-    )
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-                  user: {should: false, response: 404}
-                })
+    end
+    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+      {user: {should: false, response: 404}}
+    end
     define_test(hash, :edit)
     define_test(hash, :update)
     define_test(hash, :destroy, options: {analytics: stats_opt('arguments', 'destroy_success')})

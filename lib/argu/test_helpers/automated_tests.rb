@@ -44,7 +44,7 @@ module Argu
         end
 
         def define_test(hash, action, options = {})
-          options[:user_types] ||= user_types[action]
+          options[:user_types] ||= block_given? ? yield : user_types[action]
           hash[action] = {test_cases: []} unless hash.key?(action)
           hash[action][:test_cases].append(options)
           hash

@@ -66,37 +66,27 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   define_tests do
     hash = {}
     define_test(hash, :new, options: {parent: :argument})
-    define_test(
-      hash,
-      :create,
-      options: {
-        parent: :argument,
-        analytics: stats_opt('comments', 'create_success'),
-        attributes: {body: 'Just å UTF-8 comment.'}
-      },
-      user_types: user_types[:create].merge(
+    options = {
+      parent: :argument,
+      analytics: stats_opt('comments', 'create_success'),
+      attributes: {body: 'Just å UTF-8 comment.'}
+    }
+    define_test(hash, :create, options: options) do
+      user_types[:create].merge(
         guest: {should: false, response: 302, analytics: false, asserts: [assert_not_a_user, assert_redirect_new_user]}
       )
-    )
+    end
     # @todo body is lost on errorneous post
-    define_test(
-      hash,
-      :create,
-      case_suffix: ' erroneous',
-      options: {
-        parent: :argument,
-        analytics: stats_opt('comments', 'create_failed'),
-        attributes: {body: 'C'}
-      },
-      user_types: {
-        manager: {should: false, response: 302}
-      }
-    )
-    define_test(
-      hash,
-      :show,
-      asserts: [assert_redirect_record],
-      user_types: {
+    options = {
+      parent: :argument,
+      analytics: stats_opt('comments', 'create_failed'),
+      attributes: {body: 'C'}
+    }
+    define_test(hash, :create, case_suffix: ' erroneous', options: options) do
+      {manager: {should: false, response: 302}}
+    end
+    define_test(hash, :show, asserts: [assert_redirect_record]) do
+      {
         guest: {should: true, response: 302},
         user: {should: true, response: 302},
         member: {should: true, response: 302},
@@ -105,13 +95,9 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         owner: {should: true, response: 302},
         staff: {should: true, response: 302}
       }
-    )
-    define_test(
-      hash,
-      :show,
-      case_suffix: ' cairo',
-      options: {record: :cairo_subject},
-      user_types: {
+    end
+    define_test(hash, :show, case_suffix: ' cairo', options: {record: :cairo_subject}) do
+      {
         guest: {should: false, response: 302, asserts: [assert_redirect_root]},
         user: {should: false, response: 302, asserts: [assert_redirect_root]},
         member: {should: false, response: 302, asserts: [assert_redirect_root]},
@@ -121,56 +107,45 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         cairo_member: {should: true, response: 302, asserts: [assert_redirect_record]},
         staff: {should: true, response: 302, asserts: [assert_redirect_record]}
       }
-    )
-    define_test(
-      hash,
-      :show,
-      case_suffix: ' cairo',
-      options: {record: :second_cairo_subject},
-      user_types: {
-        cairo_member: {should: false, response: 302, asserts: [assert_redirect_root]}
+    end
+    define_test(hash, :show, case_suffix: ' cairo', options: {record: :second_cairo_subject}) do
+      {cairo_member: {should: false, response: 302, asserts: [assert_redirect_root]}}
+    end
+    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+      {user: {should: false, response: 404}}
+    end
+    define_test(hash, :edit) do
+      {
+        guest: {should: false, response: 302, asserts: [assert_not_a_user]},
+        user: {should: false, response: 403, asserts: [assert_not_a_member]},
+        member: {should: false, response: 302, asserts: [assert_not_authorized]},
+        creator: {should: true, response: 200},
+        moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
+        manager: {should: false, response: 302, asserts: [assert_not_authorized]},
+        owner: {should: false, response: 302, asserts: [assert_not_authorized]},
+        staff: {should: false, response: 302, asserts: [assert_not_authorized]}
       }
-    )
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
-                  user: {should: false, response: 404}
-                })
-    define_test(hash, :edit, user_types: {
-                  guest: {should: false, response: 302, asserts: [assert_not_a_user]},
-                  user: {should: false, response: 403, asserts: [assert_not_a_member]},
-                  member: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  creator: {should: true, response: 200},
-                  moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  manager: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  owner: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  staff: {should: false, response: 302, asserts: [assert_not_authorized]}
-                })
-    define_test(hash, :update, user_types: {
-                  guest: {should: false, response: 302, asserts: [assert_not_a_user]},
-                  user: {should: false, response: 403, asserts: [assert_not_a_member]},
-                  member: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  creator: {should: true, response: 302},
-                  moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  manager: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  owner: {should: false, response: 302, asserts: [assert_not_authorized]},
-                  staff: {should: false, response: 302, asserts: [assert_not_authorized]}
-                })
-    define_test(
-      hash,
-      :update,
-      case_suffix: ' erroneous',
-      options: {attributes: {body: 'C'}},
-      user_types: {
-        creator: {
-          should: false,
-          response: 200,
-          asserts: [assert_has_content]
-        }
+    end
+    define_test(hash, :update) do
+      {
+        guest: {should: false, response: 302, asserts: [assert_not_a_user]},
+        user: {should: false, response: 403, asserts: [assert_not_a_member]},
+        member: {should: false, response: 302, asserts: [assert_not_authorized]},
+        creator: {should: true, response: 302},
+        moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
+        manager: {should: false, response: 302, asserts: [assert_not_authorized]},
+        owner: {should: false, response: 302, asserts: [assert_not_authorized]},
+        staff: {should: false, response: 302, asserts: [assert_not_authorized]}
       }
-    )
-    define_test(hash, :destroy, options: {
-                  differences: [['Comment.where(body: "")', 1], ['Activity.loggings', 1]],
-                  analytics: stats_opt('comments', 'destroy_success')
-                })
+    end
+    define_test(hash, :update, case_suffix: ' erroneous', options: {attributes: {body: 'C'}}) do
+      {creator: {should: false, response: 200, asserts: [assert_has_content]}}
+    end
+    options = {
+      differences: [['Comment.where(body: "")', 1], ['Activity.loggings', 1]],
+      analytics: stats_opt('comments', 'destroy_success')
+    }
+    define_test(hash, :destroy, options: options)
     define_test(hash, :trash, options: {analytics: stats_opt('comments', 'trash_success')})
   end
 
