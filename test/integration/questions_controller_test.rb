@@ -36,8 +36,8 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
   define_tests do
     hash = {}
-    define_test(hash, :new, case_suffix: ' for forum', options: {parent: :freetown})
-    define_test(hash, :create, case_suffix: ' for project', options: {
+    define_test(hash, :new, suffix: ' for forum', options: {parent: :freetown})
+    define_test(hash, :create, suffix: ' for project', options: {
                   analytics: stats_opt('questions', 'create_success'),
                   parent: :project
                 })
@@ -46,7 +46,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('questions', 'create_failed'),
       attributes: {title: 'Question', content: 'C'}
     }
-    define_test(hash, :create, case_suffix: ' erroneous', options: options) do
+    define_test(hash, :create, suffix: ' erroneous', options: options) do
       {member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
     end
     options = {
@@ -58,16 +58,16 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     }
-    define_test(hash, :create, case_suffix: ' with cover_photo', options: options) do
+    define_test(hash, :create, suffix: ' with cover_photo', options: options) do
       {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
     end
     define_test(hash, :show, asserts: [assert_no_trashed_motions])
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+    define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
       {user: {should: false, response: 404}}
     end
     define_test(hash, :edit)
     define_test(hash, :update)
-    define_test(hash, :update, case_suffix: ' erroneous', options: {attributes: {title: 'Question', content: 'C'}}) do
+    define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Question', content: 'C'}}) do
       {creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
     end
     options = {
@@ -77,7 +77,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     }
-    define_test(hash, :update, case_suffix: ' with cover_photo', options: options) do
+    define_test(hash, :update, suffix: ' with cover_photo', options: options) do
       {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')})
@@ -94,7 +94,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
         include_motions: '1'
       }
     }
-    define_test(hash, :move!, case_suffix: ' with motions', options: options) do
+    define_test(hash, :move!, suffix: ' with motions', options: options) do
       {staff: {should: true, response: 302, asserts: [assert_not_motions_forum_changed, assert_has_five_motions]}}
     end
   end

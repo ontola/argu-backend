@@ -74,7 +74,7 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
                 })
     define_test(
       hash, :create,
-      case_suffix: ' with auto_vote',
+      suffix: ' with auto_vote',
       options: {
         analytics: stats_opt('arguments', 'create_success'),
         parent: :motion,
@@ -83,15 +83,15 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
       }
     )
     define_test(hash, :show, asserts: [assert_only_allowed_comments])
-    define_test(hash, :show, case_suffix: ' nested', options: {record: :pub_project_argument})
-    define_test(hash, :show, case_suffix: ' unpublished nested', options: {record: :project_argument}) do
+    define_test(hash, :show, suffix: ' nested', options: {record: :pub_project_argument})
+    define_test(hash, :show, suffix: ' unpublished nested', options: {record: :project_argument}) do
       user_types[:show].merge(
         guest: {should: false, response: 302, asserts: [assert_not_authorized]},
         user: {should: false, response: 302, asserts: [assert_not_authorized]},
         member: {should: false, response: 302, asserts: [assert_not_authorized]}
       )
     end
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+    define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
       {user: {should: false, response: 404}}
     end
     define_test(hash, :edit)

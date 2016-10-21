@@ -16,12 +16,12 @@ module Argu
           tests.each do |action, action_values|
             method = action_methods[action]
             action_values[:test_cases].each do |test_case|
-              case_suffix = test_case[:case_suffix]
+              suffix = test_case[:suffix]
 
               test_case[:user_types].each do |user_type, results|
                 should_string = results[:should] ? 'should' : 'should not'
 
-                test "#{user_type} #{should_string} #{method} #{action}#{case_suffix}" do
+                test "#{user_type} #{should_string} #{method} #{action}#{suffix}" do
                   sign_in send(user_type) unless user_type == :guest || user_type.nil?
 
                   send("general_#{action}", {results: results}.merge(test_case[:options] || {}))

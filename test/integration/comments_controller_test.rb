@@ -82,7 +82,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('comments', 'create_failed'),
       attributes: {body: 'C'}
     }
-    define_test(hash, :create, case_suffix: ' erroneous', options: options) do
+    define_test(hash, :create, suffix: ' erroneous', options: options) do
       {manager: {should: false, response: 302}}
     end
     define_test(hash, :show, asserts: [assert_redirect_record]) do
@@ -96,7 +96,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         staff: {should: true, response: 302}
       }
     end
-    define_test(hash, :show, case_suffix: ' cairo', options: {record: :cairo_subject}) do
+    define_test(hash, :show, suffix: ' cairo', options: {record: :cairo_subject}) do
       {
         guest: {should: false, response: 302, asserts: [assert_redirect_root]},
         user: {should: false, response: 302, asserts: [assert_redirect_root]},
@@ -108,10 +108,10 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         staff: {should: true, response: 302, asserts: [assert_redirect_record]}
       }
     end
-    define_test(hash, :show, case_suffix: ' cairo', options: {record: :second_cairo_subject}) do
+    define_test(hash, :show, suffix: ' cairo', options: {record: :second_cairo_subject}) do
       {cairo_member: {should: false, response: 302, asserts: [assert_redirect_root]}}
     end
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}) do
+    define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
       {user: {should: false, response: 404}}
     end
     define_test(hash, :edit) do
@@ -138,7 +138,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         staff: {should: false, response: 302, asserts: [assert_not_authorized]}
       }
     end
-    define_test(hash, :update, case_suffix: ' erroneous', options: {attributes: {body: 'C'}}) do
+    define_test(hash, :update, suffix: ' erroneous', options: {attributes: {body: 'C'}}) do
       {creator: {should: false, response: 200, asserts: [assert_has_content]}}
     end
     options = {

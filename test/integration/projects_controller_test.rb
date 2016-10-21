@@ -30,14 +30,14 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       user_types[:new].merge(member: {should: false, response: 302, asserts: [assert_not_authorized]})
     end
     define_test(hash, :show)
-    define_test(hash, :show, case_suffix: ' unpublished', options: {record: :unpublished}) do
+    define_test(hash, :show, suffix: ' unpublished', options: {record: :unpublished}) do
       user_types[:show].merge(
         guest: {should: false, response: 302, asserts: [assert_not_authorized]},
         user: {should: false, response: 302, asserts: [assert_not_authorized]},
         member: {rshould: false, response: 302, asserts: [assert_not_authorized]}
       )
     end
-    define_test(hash, :show, case_suffix: ' non-existent', options: {record: -1}) do
+    define_test(hash, :show, suffix: ' non-existent', options: {record: -1}) do
       {user: {should: false, response: 404}}
     end
     options = {
@@ -51,7 +51,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                     ['Activity.loggings', 1],
                     ['Notification', 0]]
     }
-    define_test(hash, :create, case_suffix: ' draft', options: options) do
+    define_test(hash, :create, suffix: ' draft', options: options) do
       {
         guest: {should: false, analytics: false, response: 302, asserts: [assert_not_a_user]},
         user: {should: false, analytics: false, response: 403, asserts: [assert_not_a_member]},
@@ -73,7 +73,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                     ['Activity.loggings', 2],
                     ['Notification', 1]]
     }
-    define_test(hash, :create, case_suffix: ' published', options: options) do
+    define_test(hash, :create, suffix: ' published', options: options) do
       {
         moderator: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
         manager: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
@@ -86,7 +86,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('projects', 'create_failed'),
       attributes: {title: 'Project', content: 'C'}
     }
-    define_test(hash, :create, case_suffix: ' erroneous', options: options) do
+    define_test(hash, :create, suffix: ' erroneous', options: options) do
       {manager: {should: false, response: 200, asserts: [assert_has_content, assert_has_title]}}
     end
     options = {
@@ -98,7 +98,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     }
-    define_test(hash, :create, case_suffix: ' with cover_photo', options: options) do
+    define_test(hash, :create, suffix: ' with cover_photo', options: options) do
       {manager: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
     end
     define_test(hash, :edit) do
@@ -107,7 +107,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :update) do
       user_types[:update].except(:creator).merge(moderator: {should: true, response: 302})
     end
-    define_test(hash, :update, case_suffix: ' erroneous', options: {attributes: {title: 'Project', content: 'C'}}) do
+    define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Project', content: 'C'}}) do
       {manager: {should: false, response: 200, asserts: [assert_has_content, assert_has_title]}}
     end
     options = {
@@ -117,7 +117,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         }
       }
     }
-    define_test(hash, :update, case_suffix: ' with cover_photo', options: options) do
+    define_test(hash, :update, suffix: ' with cover_photo', options: options) do
       {manager: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})
