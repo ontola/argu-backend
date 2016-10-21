@@ -15,6 +15,7 @@ class ActivityPolicy < RestrictivePolicy
       activities = Activity.arel_table
       profiles = Profile.arel_table
       super
+        .published_for_user(user)
         .joins(:owner)
         .where(activities[:key].not_eq('vote.create').or(
                  profiles[:are_votes_public].eq(true)

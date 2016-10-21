@@ -46,6 +46,12 @@ class Activity < PublicActivity::Activity
     trackable_type.underscore
   end
 
+  def self.published_for_user(user)
+    where('activities.is_published = true OR activities.owner_id = ? OR activities.forum_id IN (?)',
+          user&.profile&.id,
+          user&.profile&.forum_ids(:manager) || [])
+  end
+
   private
 
   def validate_happening_within_project_scope

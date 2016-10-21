@@ -2,9 +2,9 @@
 module TimelineHelper
   def current_happening(resource)
     if params[:happening_id].present?
-      Activity.find(params[:happening_id])
+      policy_scope(Activity).find(params[:happening_id])
     else
-      resource.latest_happening(policy(resource).create_child?(:blog_posts))
+      resource.latest_happening(current_user)
     end
   end
 

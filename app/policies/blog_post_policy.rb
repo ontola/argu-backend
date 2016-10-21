@@ -12,7 +12,7 @@ class BlogPostPolicy < EdgeTreePolicy
     delegate :user, to: :context
 
     def resolve
-      super.published_or_published_by(user&.id)
+      super.published_for_user(user)
     end
   end
 

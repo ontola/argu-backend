@@ -33,8 +33,11 @@ module ActivePublishable
   end
 
   module ClassMethods
-    def published_or_published_by(user_id)
-      where('is_published = true OR publisher_id = ?', user_id)
+    def published_for_user(user)
+      where("#{class_name.tableize}.is_published = true OR #{class_name.tableize}.publisher_id = ? "\
+            "OR #{class_name.tableize}.forum_id IN (?)",
+            user&.id,
+            user&.profile&.forum_ids(:manager) || [])
     end
   end
 end
