@@ -49,6 +49,20 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     url_for([record.commentable, record, destroy: true])
   end
 
+  def self.assert_redirect_new_user
+    'assert_redirected_to new_user_session_path(r: new_argument_comment_path(argument_id: '\
+    "argument.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
+  end
+
+  def self.assert_redirect_record
+    'assert_redirected_to argument_path(send(test_case[:options]&.try(:[], :record) || :subject).commentable, '\
+    'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
+  end
+
+  def self.assert_has_content
+    'assert_select "#comment_body", "C"'
+  end
+
   define_tests do
     hash = {}
     define_test(hash, :new, options: {parent: :argument})
@@ -61,16 +75,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         attributes: {body: 'Just å UTF-8 comment.'}
       },
       user_types: user_types[:create].merge(
-        guest: {
-          should: false,
-          response: 302,
-          analytics: false,
-          asserts: [
-            'assigns(:_not_a_user_caught)',
-            'assert_redirected_to new_user_session_path(r: new_argument_comment_path(argument_id: '\
-            "argument.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
-          ]
-        }
+        guest: {should: false, response: 302, analytics: false, asserts: [assert_not_a_user, assert_redirect_new_user]}
       )
     )
     # @todo body is lost on errorneous post
@@ -84,16 +89,13 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         attributes: {body: 'C'}
       },
       user_types: {
-        manager: {
-          should: false,
-          response: 302
-        }
+        manager: {should: false, response: 302}
       }
     )
     define_test(
       hash,
       :show,
-      asserts: ['assert_redirected_to argument_path(argument, anchor: subject.identifier)'],
+      asserts: [assert_redirect_record],
       user_types: {
         guest: {should: true, response: 302},
         user: {should: true, response: 302},
@@ -110,18 +112,14 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' cairo',
       options: {record: :cairo_subject},
       user_types: {
-        guest: {should: false, response: 302, asserts: ['assert_redirected_to root_path']},
-        user: {should: false, response: 302, asserts: ['assert_redirected_to root_path']},
-        member: {should: false, response: 302, asserts: ['assert_redirected_to root_path']},
-        moderator: {should: false, response: 302, asserts: ['assert_redirected_to root_path']},
-        manager: {should: false, response: 302, asserts: ['assert_redirected_to root_path']},
-        owner: {should: false, response: 302, asserts: ['assert_redirected_to root_path']},
-        cairo_member: {should: true, response: 302, asserts: [
-          'assert_redirected_to argument_path(cairo_argument, anchor: cairo_subject.identifier)'
-        ]},
-        staff: {should: true, response: 302, asserts: [
-          'assert_redirected_to argument_path(cairo_argument, anchor: cairo_subject.identifier)'
-        ]}
+        guest: {should: false, response: 302, asserts: [assert_redirect_root]},
+        user: {should: false, response: 302, asserts: [assert_redirect_root]},
+        member: {should: false, response: 302, asserts: [assert_redirect_root]},
+        moderator: {should: false, response: 302, asserts: [assert_redirect_root]},
+        manager: {should: false, response: 302, asserts: [assert_redirect_root]},
+        owner: {should: false, response: 302, asserts: [assert_redirect_root]},
+        cairo_member: {should: true, response: 302, asserts: [assert_redirect_record]},
+        staff: {should: true, response: 302, asserts: [assert_redirect_record]}
       }
     )
     define_test(
@@ -130,31 +128,31 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' cairo',
       options: {record: :second_cairo_subject},
       user_types: {
-        cairo_member: {should: false, response: 302, asserts: ['assert_redirected_to root_path']}
+        cairo_member: {should: false, response: 302, asserts: [assert_redirect_root]}
       }
     )
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
                   user: {should: false, response: 404}
                 })
     define_test(hash, :edit, user_types: {
-                  guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)']},
-                  user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)']},
-                  member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  guest: {should: false, response: 302, asserts: [assert_not_a_user]},
+                  user: {should: false, response: 403, asserts: [assert_not_a_member]},
+                  member: {should: false, response: 302, asserts: [assert_not_authorized]},
                   creator: {should: true, response: 200},
-                  moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-                  manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-                  owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-                  staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+                  moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
+                  manager: {should: false, response: 302, asserts: [assert_not_authorized]},
+                  owner: {should: false, response: 302, asserts: [assert_not_authorized]},
+                  staff: {should: false, response: 302, asserts: [assert_not_authorized]}
                 })
     define_test(hash, :update, user_types: {
-                  guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)']},
-                  user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)']},
-                  member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
+                  guest: {should: false, response: 302, asserts: [assert_not_a_user]},
+                  user: {should: false, response: 403, asserts: [assert_not_a_member]},
+                  member: {should: false, response: 302, asserts: [assert_not_authorized]},
                   creator: {should: true, response: 302},
-                  moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-                  manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-                  owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-                  staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+                  moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
+                  manager: {should: false, response: 302, asserts: [assert_not_authorized]},
+                  owner: {should: false, response: 302, asserts: [assert_not_authorized]},
+                  staff: {should: false, response: 302, asserts: [assert_not_authorized]}
                 })
     define_test(
       hash,
@@ -165,7 +163,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         creator: {
           should: false,
           response: 200,
-          asserts: ['assert_select "#comment_body", "C"']
+          asserts: [assert_has_content]
         }
       }
     )
@@ -176,9 +174,9 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :trash, options: {analytics: stats_opt('comments', 'trash_success')})
   end
 
-  # ####################################
-  # # As user
-  # ####################################
+  ####################################
+  # As user
+  ####################################
   define_venice
   let(:access_token) { create(:access_token, item: venice) }
   let(:venice_motion) { create(:motion, parent: venice.edge) }

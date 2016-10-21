@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 require 'argu/test_helpers/automated_tests/configuration'
+require 'argu/test_helpers/automated_tests/asserts'
+include Argu::TestHelpers::AutomatedTests::Asserts
 
 module Argu
   module TestHelpers
@@ -26,7 +28,7 @@ module Argu
 
                   ((test_case[:asserts] || []) + (results[:asserts] || []))&.each do |assertion|
                     if %i(update create destroy trash untrash).include?(action)
-                      assertion = assertion.gsub('resource', "assigns(:#{action}_service).resource")
+                      assertion = assertion.gsub('resource', "assigns(:#{action}_service).resource.reload")
                     end
                     assert eval(assertion), assertion
                   end

@@ -14,6 +14,26 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   let!(:trashed_motion) { create(:motion, is_trashed: true, parent: subject.edge) }
   let(:forum_move_to) { create_forum }
 
+  def self.assert_no_trashed_motions
+    'assigns(:motions).none? { |motion| motion.is_trashed?}'
+  end
+
+  def self.assert_motions_forum_changed
+    'Motion.pluck(:forum_id).uniq == [freetown.id]'
+  end
+
+  def self.assert_not_motions_forum_changed
+    'assigns(:resource).motions.pluck(:forum_id).uniq == [assigns(:resource).forum_id]'
+  end
+
+  def self.assert_has_no_motions
+    'assert_equal 0, assigns(:resource).motions.count'
+  end
+
+  def self.assert_has_five_motions
+    'assert_equal 5, assigns(:resource).motions.count'
+  end
+
   define_tests do
     hash = {}
     define_test(hash, :new, case_suffix: ' for forum', options: {parent: :freetown})
@@ -31,12 +51,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
         attributes: {title: 'Question', content: 'C'}
       },
       user_types: {
-        member: {
-          should: false,
-          response: 200,
-          asserts: ['assert_select "#question_title", "Question"',
-                    'assert_select "#question_content", "C"']
-        }
+        member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
       }
     )
     define_test(
@@ -53,19 +68,10 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
         }
       },
       user_types: {
-        creator: {
-          should: true,
-          response: 302,
-          asserts: [
-            'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-            'assert_equal 1, resource.photos.count'
-          ]
-        }
+        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
     )
-    define_test(hash, :show, asserts: [
-                  'assigns(:motions).none? { |motion| motion.is_trashed?}'
-                ])
+    define_test(hash, :show, asserts: [assert_no_trashed_motions])
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
                   user: {should: false, response: 404}
                 })
@@ -77,12 +83,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' erroneous',
       options: {attributes: {title: 'Question', content: 'C'}},
       user_types: {
-        creator: {
-          should: false,
-          response: 200,
-          asserts: ['assert_select "#question_title", "Question"',
-                    'assert_select "#question_content", "C"']
-        }
+        creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
       }
     )
     define_test(
@@ -97,12 +98,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
         }
       },
       user_types: {
-        creator: {
-          should: true,
-          response: 302,
-          asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-                    'assert_equal 1, resource.photos.count']
-        }
+        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
     )
     define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')})
@@ -111,10 +107,11 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     define_test(
       hash, :move!,
       options: {attributes: {forum_id: :forum_move_to}},
-      user_types: user_types[:move!].merge(staff: {should: true, response: 302, asserts: [
-                                             'Motion.pluck(:forum_id).uniq == [freetown.id]',
-                                             'assert_equal 0, assigns(:resource).motions.count'
-                                           ]})
+      user_types: user_types[:move!].merge(
+        staff: {should: true, response: 302, asserts: [
+          assert_motions_forum_changed, assert_has_no_motions
+        ]}
+      )
     )
     define_test(
       hash,
@@ -122,8 +119,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' with motions',
       options: {attributes: {forum_id: :forum_move_to, include_motions: '1'}},
       user_types: {staff: {should: true, response: 302, asserts: [
-        'assigns(:resource).motions.pluck(:forum_id).uniq == [assigns(:resource).forum_id]',
-        'assert_equal 5, assigns(:resource).motions.count'
+        assert_not_motions_forum_changed, assert_has_five_motions
       ]}}
     )
   end

@@ -27,7 +27,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   define_tests do
     hash = {}
     define_test(hash, :new, options: {parent: :freetown}, user_types: user_types[:new].merge(
-      member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+      member: {should: false, response: 302, asserts: [assert_not_authorized]}
     ))
     define_test(hash, :show)
     define_test(
@@ -36,9 +36,9 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' unpublished',
       options: {record: :unpublished},
       user_types: user_types[:show].merge(
-        guest: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-        user: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']},
-        member: {rshould: false, response: 302, asserts: ['assigns(:_not_authorized_caught)']}
+        guest: {should: false, response: 302, asserts: [assert_not_authorized]},
+        user: {should: false, response: 302, asserts: [assert_not_authorized]},
+        member: {rshould: false, response: 302, asserts: [assert_not_authorized]}
       )
     )
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: -1}, user_types: {
@@ -60,44 +60,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                       ['Notification', 0]]
       },
       user_types: {
-        guest: {
-          should: false,
-          analytics: false,
-          response: 302,
-          asserts: ['assigns(:_not_a_user_caught)']
-        },
-        user: {
-          should: false,
-          analytics: false,
-          response: 403,
-          asserts: ['assigns(:_not_a_member_caught)']
-        },
-        member: {
-          should: false,
-          analytics: false,
-          response: 302,
-          asserts: ['assigns(:_not_authorized_caught)']
-        },
-        moderator: {
-          should: true,
-          response: 302,
-          asserts: ['moderator.reload.has_drafts?', '!Project.last.is_published?']
-        },
-        manager: {
-          should: true,
-          response: 302,
-          asserts: ['manager.reload.has_drafts?', '!Project.last.is_published?']
-        },
-        owner: {
-          should: true,
-          response: 302,
-          asserts: ['owner.reload.has_drafts?', '!Project.last.is_published?']
-        },
-        staff: {
-          should: true,
-          response: 302,
-          asserts: ['staff.reload.has_drafts?', '!Project.last.is_published?']
-        }
+        guest: {should: false, analytics: false, response: 302, asserts: [assert_not_a_user]},
+        user: {should: false, analytics: false, response: 403, asserts: [assert_not_a_member]},
+        member: {should: false, analytics: false, response: 302, asserts: [assert_not_authorized]},
+        moderator: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]},
+        manager: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]},
+        owner: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]},
+        staff: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]}
       }
     )
     define_test(
@@ -116,26 +85,10 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                       ['Notification', 1]]
       },
       user_types: {
-        moderator: {
-          should: true,
-          response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
-        },
-        manager: {
-          should: true,
-          response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
-        },
-        owner: {
-          should: true,
-          response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
-        },
-        staff: {
-          should: true,
-          response: 302,
-          asserts: ['!moderator.reload.has_drafts?', 'Project.last.is_published?']
-        }
+        moderator: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
+        manager: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
+        owner: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
+        staff: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]}
       }
     )
     define_test(
@@ -148,12 +101,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         attributes: {title: 'Project', content: 'C'}
       },
       user_types: {
-        manager: {
-          should: false,
-          response: 200,
-          asserts: ['assert_select "#project_title", "Project"',
-                    'assert_select "#project_content", "C"']
-        }
+        manager: {should: false, response: 200, asserts: [assert_has_content, assert_has_title]}
       }
     )
     define_test(
@@ -170,12 +118,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         }
       },
       user_types: {
-        manager: {
-          should: true,
-          response: 302,
-          asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-                    'assert_equal 1, resource.photos.count']
-        }
+        manager: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
     )
     define_test(hash, :edit, user_types: user_types[:edit]
@@ -190,12 +133,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' erroneous',
       options: {attributes: {title: 'Project', content: 'C'}},
       user_types: {
-        manager: {
-          should: false,
-          response: 200,
-          asserts: ['assert_select "#project_title", "Project"',
-                    'assert_select "#project_content", "C"']
-        }
+        manager: {should: false, response: 200, asserts: [assert_has_content, assert_has_title]}
       }
     )
     define_test(
@@ -210,20 +148,12 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
         }
       },
       user_types: {
-        manager: {
-          should: true,
-          response: 302,
-          asserts: ['assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-                    'assert_equal 1, resource.photos.count']
-        }
+        manager: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
     )
     define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})
-    define_test(hash,
-                :trash,
-                options: {analytics: stats_opt('projects', 'trash_success')},
-                user_types: user_types[:trash]
-                              .merge(moderator: {should: true, response: 302}))
+    define_test(hash, :trash, options: {analytics: stats_opt('projects', 'trash_success')}, user_types:
+      user_types[:trash].merge(moderator: {should: true, response: 302}))
   end
 
   ####################################

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'argu/test_helpers/test_resources'
+require 'argu/test_helpers/automated_tests/asserts'
 
 # Shared helper method across TestUnit and RSpec
 module Argu
@@ -220,6 +221,7 @@ module Argu
 
       module ClassMethods
         include TestResources::ClassMethods
+        include Argu::TestHelpers::AutomatedTests::Asserts
 
         def define_automated_tests_objects
           define_common_objects(:freetown, :user, :member, :creator, :moderator,

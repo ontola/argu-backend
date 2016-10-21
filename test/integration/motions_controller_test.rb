@@ -49,6 +49,14 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
 
   let(:require_question_member) { create_member(require_question_forum) }
 
+  def self.assert_as_page
+    "Motion.last.creator.profileable_type == 'Page'"
+  end
+
+  def self.assert_no_trashed_arguments
+    'assigns(:arguments).none? { |arr| arr[1][:collection].any?(&:is_trashed?) }'
+  end
+
   define_tests do
     hash = {}
     define_test(hash, :new, case_suffix: ' for forum', options: {parent: :freetown})
@@ -60,20 +68,13 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       case_suffix: ' for closed question',
       options: {parent: :closed_question},
       user_types: {
-        guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)'],
-                analytics: false},
-        user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)'],
-               analytics: false},
-        member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
-                 analytics: false},
-        moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
-                    analytics: false},
-        manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
-                  analytics: false},
-        owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
-                analytics: false},
-        staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
-                analytics: false}
+        guest: {should: false, response: 302, asserts: [assert_not_a_user], analytics: false},
+        user: {should: false, response: 403, asserts: [assert_not_a_member], analytics: false},
+        member: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        moderator: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        manager: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        owner: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
+        staff: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false}
       }
     )
     define_test(
@@ -86,11 +87,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         parent: :freetown
       },
       user_types: {
-        owner: {
-          should: true,
-          response: 302,
-          asserts: ["Motion.last.creator.profileable_type == 'Page'"]
-        }
+        owner: {should: true, response: 302, asserts: [assert_as_page]}
       }
     )
     define_test(hash, :create, case_suffix: ' for forum', options: {
@@ -114,19 +111,19 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         parent: :closed_question
       },
       user_types: {
-        guest: {should: false, response: 302, asserts: ['assigns(:_not_a_user_caught)'],
+        guest: {should: false, response: 302, asserts: [assert_not_a_user],
                 analytics: false},
-        user: {should: false, response: 403, asserts: ['assigns(:_not_a_member_caught)'],
+        user: {should: false, response: 403, asserts: [assert_not_a_member],
                analytics: false},
-        member: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
+        member: {should: false, response: 302, asserts: [assert_not_authorized],
                  analytics: false},
-        moderator: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
+        moderator: {should: false, response: 302, asserts: [assert_not_authorized],
                     analytics: false},
-        manager: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
+        manager: {should: false, response: 302, asserts: [assert_not_authorized],
                   analytics: false},
-        owner: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
+        owner: {should: false, response: 302, asserts: [assert_not_authorized],
                 analytics: false},
-        staff: {should: false, response: 302, asserts: ['assigns(:_not_authorized_caught)'],
+        staff: {should: false, response: 302, asserts: [assert_not_authorized],
                 analytics: false}
       }
     )
@@ -157,12 +154,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         analytics: stats_opt('motions', 'create_failed')
       },
       user_types: {
-        member: {
-          should: false,
-          response: 200,
-          asserts: ['assert_select "#motion_title", "Motion"',
-                    'assert_select "#motion_content", "C"']
-        }
+        member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
       }
     )
     define_test(
@@ -179,22 +171,10 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         }
       },
       user_types: {
-        creator: {
-          should: true,
-          response: 302,
-          asserts: [
-            'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-            'assert_equal 1, resource.photos.count'
-          ]
-        }
+        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
     )
-    define_test(hash, :show, asserts: [
-                  'assigns(:resource)',
-                  'assigns(:vote)',
-                  'subject.arguments.where(is_trashed: true).count > 0',
-                  '!(assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) })'
-                ])
+    define_test(hash, :show, asserts: [assert_no_trashed_arguments])
     define_test(hash, :show, case_suffix: ' non-existent', options: {record: 'none'}, user_types: {
                   user: {should: false, response: 404}
                 })
@@ -205,14 +185,10 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       :update,
       case_suffix: ' erroneous',
       options: {attributes: {title: 'Motion', content: 'C'}},
-      user_types: {
-        creator: {
-          should: false, response: 200, asserts: [
-            'assert_select "#motion_title", "Motion"',
-            'assert_select "#motion_content", "C"'
-          ]
+      user_types:
+        {
+          creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}
         }
-      }
     )
     define_test(
       hash,
@@ -226,22 +202,11 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         }
       },
       user_types: {
-        creator: {
-          should: true,
-          response: 302,
-          asserts: [
-            'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier',
-            'assert_equal 1, resource.photos.count'
-          ]
-        }
+        creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}
       }
     )
-    define_test(hash, :trash, options: {
-                  analytics: stats_opt('motions', 'trash_success')
-                })
-    define_test(hash,
-                :destroy,
-                options: {analytics: stats_opt('motions', 'destroy_success')})
+    define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
+    define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
     define_test(hash, :move)
     define_test(hash, :move!, options: {attributes: {forum_id: :forum_move_to}})
   end
