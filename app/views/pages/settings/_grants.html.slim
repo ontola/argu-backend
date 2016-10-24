@@ -16,6 +16,7 @@ table.styled.managers
       td= t('groups.type')
       td= t('grants.type').capitalize
       td= t('portal.members')
+      td
   tbody
     -@page.edge.granted_groups('member').each do |group|
       tr[class=group.identifier]
@@ -24,6 +25,10 @@ table.styled.managers
             span.name= group.id == 0 ? group.display_name : link_to(group.display_name, settings_group_path(group))
         td= Grant.roles.key(group.role)
         td= group.id == -1 ? User.count : group.group_memberships.count
+        td
+          - if policy(Grant.find(group.grant_id)).destroy?
+            =link_to grant_path(Grant.find(group.grant_id)), method: :delete, class: 'btn--light btn--smaller' do
+              span.fa.fa-close
 - if policy(Grant.new(edge: resource.edge)).create?
   =link_to new_edge_grant_path(resource.edge), class: 'btn margin-bottom' do
     span.fa.fa-plus

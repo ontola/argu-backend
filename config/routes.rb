@@ -143,6 +143,7 @@ Rails.application.routes.draw do
     resources :conversions, path: 'conversion', only: [:new, :create]
     resources :grants, path: 'grants', only: [:new, :create]
   end
+  resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log
 
   resources :motions,

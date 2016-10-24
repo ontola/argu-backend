@@ -19,4 +19,9 @@ class GrantPolicy < EdgeTreePolicy
   def create?
     rule is_manager?, super
   end
+
+  def destroy?
+    return nil if record.group_id == -1
+    rule is_manager?, super
+  end
 end

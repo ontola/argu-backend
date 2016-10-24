@@ -36,6 +36,23 @@ class GrantsController < AuthorizedController
     create_service.commit
   end
 
+  def destroy
+    destroy_service.on(:destroy_grant_successful) do
+      respond_to do |format|
+        format.html do
+          redirect_to redirect_path
+        end
+      end
+    end
+    destroy_service.on(:destroy_grant_failed) do
+      respond_to do |format|
+        flash[:error] = t('error')
+        format.html { redirect_to redirect_path }
+      end
+    end
+    destroy_service.commit
+  end
+
   private
 
   def create_service

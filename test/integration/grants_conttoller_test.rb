@@ -4,7 +4,7 @@ require 'test_helper'
 class GrantsControllerTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
-  let(:subject) { create(:grant, parent: freetown.edge) }
+  let(:subject) { create(:grant, parent: freetown.edge, group: group) }
   let(:group) { create(:group, parent: freetown.page.edge) }
 
   def default_create_attributes(parent: nil)
@@ -35,5 +35,6 @@ class GrantsControllerTest < ActionDispatch::IntegrationTest
         moderator: exp_res
       )
     end
+    define_test(hash, :destroy, options: {differences: [['Grant', -1]]})
   end
 end

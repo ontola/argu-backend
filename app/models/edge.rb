@@ -74,7 +74,7 @@ class Edge < ActiveRecord::Base
       .where(edges: {id: ancestor_ids})
       .where('grants.role >= ?', Grant.roles[role])
       .order('groups.name ASC')
-      .select('groups.*, grants.role as role, grants.edge_id as granted_edge_id')
+      .select('groups.*, grants.role as role, grants.id as grant_id, grants.edge_id as granted_edge_id')
   end
 
   def granted_group_ids(role)

@@ -23,6 +23,7 @@ table.styled.managers
       td= t('groups.type')
       td= t('grants.type').capitalize
       td= t('portal.members')
+      td
   tbody
     -@forum.edge.granted_groups('member').each do |group|
       tr[class=group.identifier]
@@ -34,6 +35,10 @@ table.styled.managers
           - unless @forum.edge.id == group.granted_edge_id
             =" (#{t('grants.inherited')})"
         td= group.id == -1 ? User.count : group.group_memberships.count
+        td
+          - if policy(Grant.find(group.grant_id)).destroy?
+            =link_to grant_path(Grant.find(group.grant_id)), method: :delete, class: 'btn--light btn--smaller' do
+              span.fa.fa-close
 - if policy(Grant.new(edge: resource.edge)).create?
   =link_to new_edge_grant_path(resource.edge), class: 'btn margin-bottom' do
     span.fa.fa-plus
