@@ -14,12 +14,17 @@ table.styled.managers
   thead
     tr
       td= t('groups.type')
+      td= t('grants.type').capitalize
       td= t('portal.members')
   tbody
-    -@page.grants.page_manager.includes(:group).each do |grant|
-      tr[class=grant.group.identifier]
+    -@page.edge.granted_groups('member').each do |group|
+      tr[class=group.identifier]
         td
           span
-            span.name= link_to grant.group.display_name, settings_group_path(grant.group)
-        td
-          =grant.group.group_memberships.count
+            span.name= group.id == 0 ? group.display_name : link_to(group.display_name, settings_group_path(group))
+        td= Grant.roles.key(group.role)
+        td= group.id == -1 ? User.count : group.group_memberships.count
+- if policy(Grant.new(edge: resource.edge)).create?
+  =link_to new_edge_grant_path(resource.edge), class: 'btn margin-bottom' do
+    span.fa.fa-plus
+    span.icon-left= t('grants.new')

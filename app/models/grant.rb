@@ -9,5 +9,11 @@ class Grant < ApplicationRecord
   scope :page_manager, -> { manager.joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
 
+  validates :group, :role, :edge, presence: true
+
   enum role: {member: 1, manager: 2}
+
+  def page
+    edge.root.owner
+  end
 end

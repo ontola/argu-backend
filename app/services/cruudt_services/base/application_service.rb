@@ -16,7 +16,7 @@ class ApplicationService
     end
     assign_attributes
     set_nested_associations
-    unless resource.is_a?(Activity)
+    unless resource.is_a?(Activity) || resource.is_a?(Grant)
       subscribe(ActivityListener
                   .new(creator: options.fetch(:creator),
                        publisher: options.fetch(:publisher)))

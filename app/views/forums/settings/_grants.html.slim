@@ -29,5 +29,12 @@ table.styled.managers
         td
           span
             span.name= group.id == -1 ? group.display_name : link_to(group.display_name, settings_group_path(group))
-        td= group.grants.where(edge: @forum.edge.path.split('.')).first.role
+        td
+          =Grant.roles.key(group.role)
+          - unless @forum.edge.id == group.granted_edge_id
+            =" (#{t('grants.inherited')})"
         td= group.id == -1 ? User.count : group.group_memberships.count
+- if policy(Grant.new(edge: resource.edge)).create?
+  =link_to new_edge_grant_path(resource.edge), class: 'btn margin-bottom' do
+    span.fa.fa-plus
+    span.icon-left= t('grants.new')

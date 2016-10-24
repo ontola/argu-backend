@@ -7,3 +7,4 @@ nl:
     plural: "rechten"
     empty: "Geen rechten"
     new: "Verleen nieuwe rechten"
+    inherited: "geërfd"

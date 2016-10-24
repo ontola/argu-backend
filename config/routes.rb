@@ -141,6 +141,7 @@ Rails.application.routes.draw do
   resources :question_answers, path: 'qa', only: [:new, :create]
   resources :edges, only: [] do
     resources :conversions, path: 'conversion', only: [:new, :create]
+    resources :grants, path: 'grants', only: [:new, :create]
   end
   get 'log/:edge_id', to: 'log#show', as: :log
 
