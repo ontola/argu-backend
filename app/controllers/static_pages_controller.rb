@@ -7,6 +7,7 @@ class StaticPagesController < ApplicationController
     if current_user && policy(current_user).staff?
       @activities = policy_scope(Activity)
                       .loggings
+                      .where('trackable_type != ?', 'Banner')
                       .order(created_at: :desc)
                       .limit(10)
       render # stream: true
