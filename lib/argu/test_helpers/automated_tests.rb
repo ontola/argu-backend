@@ -34,6 +34,8 @@ module Argu
                     end
                     assert eval(assertion), assertion
                   end
+                  
+                  get root_path if user_type == :staff && method != :get
                 end
               end
             end
