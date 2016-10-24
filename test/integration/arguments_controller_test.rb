@@ -86,13 +86,13 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :show, suffix: ' nested', options: {record: :pub_project_argument})
     define_test(hash, :show, suffix: ' unpublished nested', options: {record: :project_argument}) do
       user_types[:show].merge(
-        guest: {should: false, response: 302, asserts: [assert_not_authorized]},
-        user: {should: false, response: 302, asserts: [assert_not_authorized]},
-        member: {should: false, response: 302, asserts: [assert_not_authorized]}
+        guest: exp_res(asserts: [assert_not_authorized]),
+        user: exp_res(asserts: [assert_not_authorized]),
+        member: exp_res(asserts: [assert_not_authorized])
       )
     end
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
-      {user: {should: false, response: 404}}
+      {user: exp_res(response: 404)}
     end
     define_test(hash, :edit)
     define_test(hash, :update)

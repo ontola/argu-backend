@@ -47,7 +47,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       attributes: {title: 'Question', content: 'C'}
     }
     define_test(hash, :create, suffix: ' erroneous', options: options) do
-      {member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+      {member: exp_res(response: 200, asserts: [assert_has_title, assert_has_content])}
     end
     options = {
       parent: :freetown,
@@ -59,16 +59,16 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
-      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+      {creator: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :show, asserts: [assert_no_trashed_motions])
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
-      {user: {should: false, response: 404}}
+      {user: exp_res(response: 404)}
     end
     define_test(hash, :edit)
     define_test(hash, :update)
     define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Question', content: 'C'}}) do
-      {creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+      {creator: exp_res(response: 200, asserts: [assert_has_title, assert_has_content])}
     end
     options = {
       attributes: {
@@ -78,14 +78,14 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :update, suffix: ' with cover_photo', options: options) do
-      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+      {creator: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('questions', 'trash_success')})
     define_test(hash, :move)
     define_test(hash, :move!, options: {attributes: {forum_id: :forum_move_to}}) do
       user_types[:move!].merge(
-        staff: {should: true, response: 302, asserts: [assert_motions_forum_changed, assert_has_no_motions]}
+        staff: exp_res(should: true, asserts: [assert_motions_forum_changed, assert_has_no_motions])
       )
     end
     options = {
@@ -95,7 +95,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :move!, suffix: ' with motions', options: options) do
-      {staff: {should: true, response: 302, asserts: [assert_not_motions_forum_changed, assert_has_five_motions]}}
+      {staff: exp_res(should: true, asserts: [assert_not_motions_forum_changed, assert_has_five_motions])}
     end
   end
 end

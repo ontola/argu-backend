@@ -28,14 +28,14 @@ class BannersControllerTest < ActionDispatch::IntegrationTest
     hash = {}
     define_test(hash, :new, options: {parent: :freetown}) do
       user_types[:new].merge(
-        member: {should: false, response: 302, asserts: [assert_not_authorized]},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized]}
+        member: exp_res(asserts: [assert_not_authorized]),
+        moderator: exp_res(asserts: [assert_not_authorized])
       )
     end
     define_test(hash, :create, options: {parent: :freetown}) do
       user_types[:create].merge(
-        member: {should: false, response: 302, asserts: [assert_not_authorized]},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized]}
+        member: exp_res(asserts: [assert_not_authorized]),
+        moderator: exp_res(asserts: [assert_not_authorized])
       )
     end
     define_test(hash, :edit, user_types: user_types[:edit].except(:creator))

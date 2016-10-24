@@ -27,18 +27,18 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   define_tests do
     hash = {}
     define_test(hash, :new, options: {parent: :freetown}) do
-      user_types[:new].merge(member: {should: false, response: 302, asserts: [assert_not_authorized]})
+      user_types[:new].merge(member: exp_res(asserts: [assert_not_authorized]))
     end
     define_test(hash, :show)
     define_test(hash, :show, suffix: ' unpublished', options: {record: :unpublished}) do
       user_types[:show].merge(
-        guest: {should: false, response: 302, asserts: [assert_not_authorized]},
-        user: {should: false, response: 302, asserts: [assert_not_authorized]},
-        member: {rshould: false, response: 302, asserts: [assert_not_authorized]}
+        guest: exp_res(asserts: [assert_not_authorized]),
+        user: exp_res(asserts: [assert_not_authorized]),
+        member: exp_res(asserts: [assert_not_authorized])
       )
     end
     define_test(hash, :show, suffix: ' non-existent', options: {record: -1}) do
-      {user: {should: false, response: 404}}
+      {user: exp_res(response: 404)}
     end
     options = {
       parent: :freetown,
@@ -53,13 +53,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' draft', options: options) do
       {
-        guest: {should: false, analytics: false, response: 302, asserts: [assert_not_a_user]},
-        user: {should: false, analytics: false, response: 403, asserts: [assert_not_a_member]},
-        member: {should: false, analytics: false, response: 302, asserts: [assert_not_authorized]},
-        moderator: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]},
-        manager: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]},
-        owner: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]},
-        staff: {should: true, response: 302, asserts: [assert_has_drafts, assert_not_published]}
+        guest: exp_res(asserts: [assert_not_a_user], analytics: false),
+        user: exp_res(response: 403, asserts: [assert_not_a_member], analytics: false),
+        member: exp_res(asserts: [assert_not_authorized], analytics: false),
+        moderator: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
+        manager: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
+        owner: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
+        staff: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published])
       }
     end
     options = {
@@ -75,10 +75,10 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {
-        moderator: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
-        manager: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
-        owner: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]},
-        staff: {should: true, response: 302, asserts: [assert_no_drafts, assert_is_published]}
+        moderator: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published]),
+        manager: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published]),
+        owner: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published]),
+        staff: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published])
       }
     end
     options = {
@@ -87,7 +87,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       attributes: {title: 'Project', content: 'C'}
     }
     define_test(hash, :create, suffix: ' erroneous', options: options) do
-      {manager: {should: false, response: 200, asserts: [assert_has_content, assert_has_title]}}
+      {manager: exp_res(response: 200, asserts: [assert_has_content, assert_has_title])}
     end
     options = {
       parent: :freetown,
@@ -99,16 +99,16 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
-      {manager: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+      {manager: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :edit) do
-      user_types[:edit].except(:creator).merge(moderator: {should: true, response: 200})
+      user_types[:edit].except(:creator).merge(moderator: exp_res(should: true, response: 200))
     end
     define_test(hash, :update) do
-      user_types[:update].except(:creator).merge(moderator: {should: true, response: 302})
+      user_types[:update].except(:creator).merge(moderator: exp_res(should: true))
     end
     define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Project', content: 'C'}}) do
-      {manager: {should: false, response: 200, asserts: [assert_has_content, assert_has_title]}}
+      {manager: exp_res(response: 200, asserts: [assert_has_content, assert_has_title])}
     end
     options = {
       attributes: {
@@ -118,11 +118,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :update, suffix: ' with cover_photo', options: options) do
-      {manager: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+      {manager: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('projects', 'trash_success')}) do
-      user_types[:trash].merge(moderator: {should: true, response: 302})
+      user_types[:trash].merge(moderator: exp_res(should: true))
     end
   end
 

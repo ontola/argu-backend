@@ -73,7 +73,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, options: options) do
       user_types[:create].merge(
-        guest: {should: false, response: 302, analytics: false, asserts: [assert_not_a_user, assert_redirect_new_user]}
+        guest: exp_res(asserts: [assert_not_a_user, assert_redirect_new_user], analytics: false)
       )
     end
     # @todo body is lost on errorneous post
@@ -83,63 +83,63 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       attributes: {body: 'C'}
     }
     define_test(hash, :create, suffix: ' erroneous', options: options) do
-      {manager: {should: false, response: 302}}
+      {manager: exp_res(asserts: [])}
     end
     define_test(hash, :show, asserts: [assert_redirect_record]) do
       {
-        guest: {should: true, response: 302},
-        user: {should: true, response: 302},
-        member: {should: true, response: 302},
-        moderator: {should: true, response: 302},
-        manager: {should: true, response: 302},
-        owner: {should: true, response: 302},
-        staff: {should: true, response: 302}
+        guest: exp_res(should: true),
+        user: exp_res(should: true),
+        member: exp_res(should: true),
+        moderator: exp_res(should: true),
+        manager: exp_res(should: true),
+        owner: exp_res(should: true),
+        staff: exp_res(should: true)
       }
     end
     define_test(hash, :show, suffix: ' cairo', options: {record: :cairo_subject}) do
       {
-        guest: {should: false, response: 302, asserts: [assert_redirect_root]},
-        user: {should: false, response: 302, asserts: [assert_redirect_root]},
-        member: {should: false, response: 302, asserts: [assert_redirect_root]},
-        moderator: {should: false, response: 302, asserts: [assert_redirect_root]},
-        manager: {should: false, response: 302, asserts: [assert_redirect_root]},
-        owner: {should: false, response: 302, asserts: [assert_redirect_root]},
-        cairo_member: {should: true, response: 302, asserts: [assert_redirect_record]},
-        staff: {should: true, response: 302, asserts: [assert_redirect_record]}
+        guest: exp_res(asserts: [assert_redirect_root]),
+        user: exp_res(asserts: [assert_redirect_root]),
+        member: exp_res(asserts: [assert_redirect_root]),
+        moderator: exp_res(asserts: [assert_redirect_root]),
+        manager: exp_res(asserts: [assert_redirect_root]),
+        owner: exp_res(asserts: [assert_redirect_root]),
+        cairo_member: exp_res(should: true, asserts: [assert_redirect_record]),
+        staff: exp_res(should: true, asserts: [assert_redirect_record])
       }
     end
     define_test(hash, :show, suffix: ' cairo', options: {record: :second_cairo_subject}) do
-      {cairo_member: {should: false, response: 302, asserts: [assert_redirect_root]}}
+      {cairo_member: exp_res(asserts: [assert_redirect_root])}
     end
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
-      {user: {should: false, response: 404}}
+      {user: exp_res(response: 404)}
     end
     define_test(hash, :edit) do
       {
-        guest: {should: false, response: 302, asserts: [assert_not_a_user]},
-        user: {should: false, response: 403, asserts: [assert_not_a_member]},
-        member: {should: false, response: 302, asserts: [assert_not_authorized]},
-        creator: {should: true, response: 200},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
-        manager: {should: false, response: 302, asserts: [assert_not_authorized]},
-        owner: {should: false, response: 302, asserts: [assert_not_authorized]},
-        staff: {should: false, response: 302, asserts: [assert_not_authorized]}
+        guest: exp_res(asserts: [assert_not_a_user]),
+        user: exp_res(response: 403, asserts: [assert_not_a_member]),
+        member: exp_res(asserts: [assert_not_authorized]),
+        creator: exp_res(should: true, response: 200),
+        moderator: exp_res(asserts: [assert_not_authorized]),
+        manager: exp_res(asserts: [assert_not_authorized]),
+        owner: exp_res(asserts: [assert_not_authorized]),
+        staff: exp_res(asserts: [assert_not_authorized])
       }
     end
     define_test(hash, :update) do
       {
-        guest: {should: false, response: 302, asserts: [assert_not_a_user]},
-        user: {should: false, response: 403, asserts: [assert_not_a_member]},
-        member: {should: false, response: 302, asserts: [assert_not_authorized]},
-        creator: {should: true, response: 302},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized]},
-        manager: {should: false, response: 302, asserts: [assert_not_authorized]},
-        owner: {should: false, response: 302, asserts: [assert_not_authorized]},
-        staff: {should: false, response: 302, asserts: [assert_not_authorized]}
+        guest: exp_res(asserts: [assert_not_a_user]),
+        user: exp_res(response: 403, asserts: [assert_not_a_member]),
+        member: exp_res(asserts: [assert_not_authorized]),
+        creator: exp_res(should: true),
+        moderator: exp_res(asserts: [assert_not_authorized]),
+        manager: exp_res(asserts: [assert_not_authorized]),
+        owner: exp_res(asserts: [assert_not_authorized]),
+        staff: exp_res(asserts: [assert_not_authorized])
       }
     end
     define_test(hash, :update, suffix: ' erroneous', options: {attributes: {body: 'C'}}) do
-      {creator: {should: false, response: 200, asserts: [assert_has_content]}}
+      {creator: exp_res(response: 200, asserts: [assert_has_content])}
     end
     options = {
       differences: [['Comment.where(body: "")', 1], ['Activity.loggings', 1]],

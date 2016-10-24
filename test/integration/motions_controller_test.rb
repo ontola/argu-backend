@@ -64,13 +64,13 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :new, suffix: ' for project', options: {parent: :project})
     define_test(hash, :new, suffix: ' for closed question', options: {parent: :closed_question}) do
       {
-        guest: {should: false, response: 302, asserts: [assert_not_a_user], analytics: false},
-        user: {should: false, response: 403, asserts: [assert_not_a_member], analytics: false},
-        member: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        manager: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        owner: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        staff: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false}
+        guest: exp_res(asserts: [assert_not_a_user], analytics: false),
+        user: exp_res(response: 403, asserts: [assert_not_a_member], analytics: false),
+        member: exp_res(asserts: [assert_not_authorized], analytics: false),
+        moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
+        manager: exp_res(asserts: [assert_not_authorized], analytics: false),
+        owner: exp_res(asserts: [assert_not_authorized], analytics: false),
+        staff: exp_res(asserts: [assert_not_authorized], analytics: false)
       }
     end
     options = {
@@ -79,7 +79,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       parent: :freetown
     }
     define_test(hash, :create, suffix: ' as page', options: options) do
-      {owner: {should: true, response: 302, asserts: [assert_as_page]}}
+      {owner: exp_res(should: true, asserts: [assert_as_page])}
     end
     options = {
       parent: :freetown,
@@ -102,13 +102,13 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' for closed question', options: options) do
       {
-        guest: {should: false, response: 302, asserts: [assert_not_a_user], analytics: false},
-        user: {should: false, response: 403, asserts: [assert_not_a_member], analytics: false},
-        member: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        moderator: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        manager: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        owner: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false},
-        staff: {should: false, response: 302, asserts: [assert_not_authorized], analytics: false}
+        guest: exp_res(asserts: [assert_not_a_user], analytics: false),
+        user: exp_res(response: 403, asserts: [assert_not_a_member], analytics: false),
+        member: exp_res(asserts: [assert_not_authorized], analytics: false),
+        moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
+        manager: exp_res(asserts: [assert_not_authorized], analytics: false),
+        owner: exp_res(asserts: [assert_not_authorized], analytics: false),
+        staff: exp_res(asserts: [assert_not_authorized], analytics: false)
       }
     end
     options = {
@@ -116,10 +116,10 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_success')
     }
     define_test(hash, :create, suffix: ' with required question', options: options) do
-      {require_question_member: {should: true, response: 302}}
+      {require_question_member: exp_res(should: true)}
     end
     define_test(hash, :create, suffix: ' without required question', options: {parent: :require_question_forum}) do
-      {require_question_member: {should: false, response: 302}}
+      {require_question_member: exp_res(asserts: [])}
     end
     options = {
       parent: :project,
@@ -127,7 +127,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_failed')
     }
     define_test(hash, :create, suffix: ' erroneous', options: options) do
-      {member: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+      {member: exp_res(response: 200, asserts: [assert_has_title, assert_has_content])}
     end
     options = {
       parent: :project,
@@ -139,16 +139,16 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
-      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+      {creator: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :show, asserts: [assert_no_trashed_arguments])
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
-      {user: {should: false, response: 404}}
+      {user: exp_res(response: 404)}
     end
     define_test(hash, :edit)
     define_test(hash, :update)
     define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Motion', content: 'C'}}) do
-      {creator: {should: false, response: 200, asserts: [assert_has_title, assert_has_content]}}
+      {creator: exp_res(response: 200, asserts: [assert_has_title, assert_has_content])}
     end
     options = {
       attributes: {
@@ -158,7 +158,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :update, suffix: ' with cover_photo', options: options) do
-      {creator: {should: true, response: 302, asserts: [assert_photo_identifier, assert_has_photo]}}
+      {creator: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
     define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
