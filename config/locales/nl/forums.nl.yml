@@ -46,9 +46,6 @@ nl:
         about_owner_name: "Deze Pagina is de eigenaar van het forum '%{name}':"
         about_page_owner: "De administrator van een forum kan beheerders aanwijzen en alle instellingen veranderen. "
         about_page_owner_name: "Deze gebruiker is de eigenaar van de pagina '%{name}':"
-      groups:
-        title: "Groepen"
-        description: "Groepen worden weergegeven onder een voorstel, net als argumenten. Een groep bestaat uit verschillende organisaties die een eigen plek krijgen om hun mening te geven over ideeën. Een voorbeeld van een groep die vaak op Argu voorkomt is 'politieke partijen'."
       bio: "Doel van forum"
       bio_long: "Meer informatie"
       hints:

@@ -46,9 +46,6 @@ en:
         about_owner_name: "This Page is owner of the forum '%{name}':"
         about_page_owner: "The administrator of a forum can appoint managers and change all settings."
         about_page_owner_name: "This user is owner of the page '%{name}':"
-      groups:
-        title: "Groups"
-        description: "Groups are shown under a motion, just like arguments. A group consists of different organisations that get their own place to share their opinion about ideas. An example of a common group on Argu is 'political parties'."
       bio: "Goal of forum"
       bio_long: "More information"
       hints:
