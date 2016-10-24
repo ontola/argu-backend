@@ -26,6 +26,8 @@ en:
             howto: "Please enter 'transfer' below to confirm the deletion."
             string: "transfer"
             understand: "I understand the consequences, transfer ownership of this organization."
+      forums:
+        get_one: "Do you want to add a forum for your organisation? Please <a href='mailto:info@argu.co'>contact us</a> for the possibilities."
       advanced:
         delete:
           confirm:

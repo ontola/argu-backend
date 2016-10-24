@@ -26,6 +26,8 @@ nl:
             howto: "Voer hieronder 'overdragen' in om te bevestigen."
             string: "overdragen"
             understand: "Ik begrijp de consequenties, draag eigenaarschap van deze organisatie over."
+      forums:
+        get_one: "Een forum toevoegen aan jouw organisatie? <a href='mailto:info@argu.co'>Neem contact met ons op</a> voor de mogelijkheden."
       advanced:
         delete:
           confirm:

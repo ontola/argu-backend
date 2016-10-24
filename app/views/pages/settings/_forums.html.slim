@@ -1,23 +1,26 @@
 h3= t('forums.plural')
-table.styled
-  thead
-    tr
-      td= t('portal.name')
-      td= t('portal.shortname')
-      td= t('portal.members')
-      td= t('groups.plural')
-  - resource.forums.order(memberships_count: :desc).each do |forum|
-    tr
-      td
-        span[class="fa fa-#{visibility_icon_for(forum)}"]
-        =link_to forum.display_name, settings_forum_path(forum)
-      td
-        =forum.url
-      td
-        =forum.memberships_count
-      td
-        =forum.edge.groups.count
+- if resource.forums.present?
+  table.styled
+    thead
+      tr
+        td= t('portal.name')
+        td= t('portal.shortname')
+        td= t('portal.members')
+        td= t('groups.plural')
+    - resource.forums.order(memberships_count: :desc).each do |forum|
+      tr
+        td
+          span[class="fa fa-#{visibility_icon_for(forum)}"]
+          =link_to forum.display_name, settings_forum_path(forum)
+        td
+          =forum.url
+        td
+          =forum.memberships_count
+        td
+          =forum.edge.groups.count
 - if policy(resource).create_child?(:forums)
   =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom' do
       span.fa.fa-plus
       span.icon-left= t('forums.type_new')
+- else
+  p= t('pages.settings.forums.get_one').html_safe
