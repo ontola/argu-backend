@@ -3,10 +3,6 @@ class ProfilesController < ApplicationController
   include SettingsHelper
 
   def index
-    authorize Profile, :index?
-    @resource = Shortname.find_resource 'nederland' # params[:thing]
-    # authorize @resource, :list_members?
-
     return if current_user.nil? || params[:q].nil?
     # This is a working mess.
     q = params[:q].tr(' ', '|')
@@ -24,10 +20,8 @@ class ProfilesController < ApplicationController
                   .includes(:default_profile_photo, profileable: :shortname)
 
     return unless params[:things] && params[:things].split(',').include?('pages')
-    @profiles += Profile
-                 .where(is_public: true)
-                 .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
-    # .page params[:profile] # Pages
+    @profiles += policy_scope(Profile)
+                   .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
   end
 
   # GET /p/shortname/edit

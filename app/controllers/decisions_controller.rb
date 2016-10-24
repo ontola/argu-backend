@@ -4,6 +4,7 @@ class DecisionsController < AuthorizedController
   skip_before_action :check_if_registered, only: :index
 
   def index
+    authorize get_parent_resource, :show?
     respond_to do |format|
       format.html do
         render locals: {decisionable: get_parent_resource}

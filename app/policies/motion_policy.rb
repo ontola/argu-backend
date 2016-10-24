@@ -49,10 +49,6 @@ class MotionPolicy < EdgeTreePolicy
       super
   end
 
-  def index?
-    rule is_member?
-  end
-
   def new_without_question?
     create_without_question?
   end

@@ -31,10 +31,6 @@ class NotificationPolicy < RestrictivePolicy
     attributes
   end
 
-  def index?
-    user.present?
-  end
-
   def read?
     user.present?
   end

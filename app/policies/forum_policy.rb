@@ -49,11 +49,6 @@ class ForumPolicy < EdgeTreePolicy
     rule is_manager?, staff?
   end
 
-  # Forum#index is for management, not to be confused with forum#discover
-  def index?
-    user&.forum_management? || staff?
-  end
-
   def join?
     rule has_access_token?, is_manager?, staff?
   end

@@ -37,10 +37,6 @@ class UserPolicy < RestrictivePolicy
     tabs.concat %i(general profile authentication notifications privacy advanced)
   end
 
-  def index?
-    staff?
-  end
-
   def show?
     (record.profile.is_public? || user.present?) && record.finished_intro? || super
   end

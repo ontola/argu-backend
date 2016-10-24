@@ -30,10 +30,6 @@ class DecisionPolicy < EdgeTreePolicy
     attributes
   end
 
-  def index?
-    show?
-  end
-
   def show?
     rule parent_policy.show?
   end

@@ -88,10 +88,6 @@ class PagePolicy < EdgeTreePolicy
     rule is_manager?, super
   end
 
-  def index?
-    rule has_pages?, staff?
-  end
-
   def update?
     rule is_manager?, is_owner?, super
   end

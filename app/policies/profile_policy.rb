@@ -12,7 +12,7 @@ class ProfilePolicy < RestrictivePolicy
     delegate :user, to: :context
 
     def resolve
-      scope.where(is_public: true)
+      scope
     end
   end
 
@@ -21,10 +21,6 @@ class ProfilePolicy < RestrictivePolicy
     attributes.concat %i(id name about are_votes_public is_public)
     append_default_photo_params(attributes)
     attributes
-  end
-
-  def index?
-    is_manager_somewhere? || is_owner_somewhere? || staff?
   end
 
   def show?

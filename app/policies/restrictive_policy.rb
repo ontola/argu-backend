@@ -76,10 +76,6 @@ class RestrictivePolicy
     update?
   end
 
-  def index?
-    staff?
-  end
-
   def logged_in?
     user.present?
   end

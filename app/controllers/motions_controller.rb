@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 class MotionsController < AuthorizedController
   include NestedResourceHelper
-  skip_before_action :authorize_action, only: :index
 
   def index
     if params[:q].present? && params[:thing].present?

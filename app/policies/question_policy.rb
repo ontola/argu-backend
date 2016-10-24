@@ -52,10 +52,6 @@ class QuestionPolicy < EdgeTreePolicy
       super
   end
 
-  def index?
-    rule is_member?, super
-  end
-
   def set_expire_as?
     rule staff?
   end
