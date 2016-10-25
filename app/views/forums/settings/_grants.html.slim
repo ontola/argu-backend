@@ -29,12 +29,12 @@ table.styled.managers
       tr[class=group.identifier]
         td
           span
-            span.name= group.id == -1 ? group.display_name : link_to(group.display_name, settings_group_path(group))
+            span.name= group.id == Group::PUBLIC_GROUP_ID ? group.display_name : link_to(group.display_name, settings_group_path(group))
         td
           =Grant.roles.key(group.role)
           - unless @forum.edge.id == group.granted_edge_id
             =" (#{t('grants.inherited')})"
-        td= group.id == -1 ? User.count : group.group_memberships.count
+        td= group.id == Group::PUBLIC_GROUP_ID ? User.count : group.group_memberships.count
         td
           - if policy(Grant.find(group.grant_id)).destroy?
             =link_to grant_path(Grant.find(group.grant_id)), method: :delete, class: 'btn--light btn--smaller' do
