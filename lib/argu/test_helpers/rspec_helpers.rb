@@ -37,7 +37,8 @@ module Argu
           user.id,
           'user',
           10.minutes,
-          false)
+          false
+        )
         if defined?(cookies) && defined?(cookies.encrypted)
           cookies.encrypted['client_token'] = t.token
         else

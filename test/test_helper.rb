@@ -165,7 +165,8 @@ module ActionDispatch
         user.id,
         'user',
         10.minutes,
-        false)
+        false
+      )
       @_argu_headers = (@_argu_headers || {}).merge(
         'Authorization': "Bearer #{t.token}"
       )

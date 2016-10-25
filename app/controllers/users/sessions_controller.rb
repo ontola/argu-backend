@@ -78,11 +78,10 @@ class Users::SessionsController < Devise::SessionsController
   def require_no_authentication
     assert_is_devise_resource!
     return unless is_navigational_format?
+    return unless current_resource_owner.present? && doorkeeper_token.acceptable?('user')
 
-    if current_resource_owner.present? && doorkeeper_token.acceptable?('user')
-      flash[:alert] = I18n.t("devise.failure.already_authenticated")
-      redirect_to after_sign_in_path_for(resource)
-    end
+    flash[:alert] = I18n.t('devise.failure.already_authenticated')
+    redirect_to after_sign_in_path_for(resource)
   end
 
   def r_from_url_or_header

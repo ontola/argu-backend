@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class OauthTest < ActionDispatch::IntegrationTest
@@ -25,7 +26,8 @@ class OauthTest < ActionDispatch::IntegrationTest
       user.id,
       'user',
       1.minute,
-      false)
+      false
+    )
     t.update(created_at: 2.minutes.ago)
     get forum_path('freetown'),
         headers: {

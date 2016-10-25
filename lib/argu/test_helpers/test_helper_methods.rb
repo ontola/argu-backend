@@ -190,7 +190,8 @@ module Argu
             user.id,
             'user',
             10.minutes,
-            false)
+            false
+          )
           @request.headers['Authorization'] = "Bearer #{t.token}"
         end
 
