@@ -305,6 +305,7 @@ Rails.application.routes.draw do
 
   constraints(Argu::WhitelistConstraint) do
     namespace :spi do
+      get 'authorize', to: 'authorize#show'
       get 'current_user', to: 'users#current'
     end
   end
