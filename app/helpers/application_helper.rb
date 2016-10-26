@@ -85,6 +85,8 @@ module ApplicationHelper
   def r_to_url_options(r)
     url_options = Rails.application.routes.recognize_path(Addressable::URI.parse(URI.decode(r)).path)
     [url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize]
+  rescue ActionController::RoutingError
+    [nil, nil]
   end
 
   def remote_if_non_modern

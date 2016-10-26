@@ -80,10 +80,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if updated && @resource.try(:r).present?
-        r = URI.decode(@resource.r)
-        @resource.update r: ''
-        r_opts = r_to_url_options(r)[0].merge(Addressable::URI.parse(r).query_values || {})
-        format.html { redirect_to r_opts }
+        format.html { redirect_to redirect_url }
       elsif updated
         format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { head :no_content }
@@ -104,6 +101,13 @@ class ProfilesController < ApplicationController
     pm = params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes).to_h
     merge_photo_params(pm, @resource.class)
     pm
+  end
+
+  def redirect_url
+    r = URI.decode(@resource.r)
+    @resource.update r: ''
+    r_opts = r_to_url_options(r)[0]
+    r_opts.present? ? r_opts.merge(Addressable::URI.parse(r).query_values || {}) : r
   end
 
   def setup_permit_params

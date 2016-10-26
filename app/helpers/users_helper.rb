@@ -3,6 +3,7 @@ module UsersHelper
   def forum_from_r_action(user)
     return if user.r.nil?
     url_options, controller = r_to_url_options(user.r)
+    return unless url_options.present? && controller.present?
     if current_resource_is_nested?(url_options)
       resource_tenant(url_options)
     else
