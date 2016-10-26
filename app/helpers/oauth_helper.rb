@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module OauthHelper
-  include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers
+  include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers, Doorkeeper::OAuth::Token::Methods
 
   def current_user
     @_current_user ||= current_resource_owner
@@ -19,6 +19,14 @@ module OauthHelper
 
   def write_client_access_token
     refresh_guest_token if needs_new_guest_token
+  end
+
+  def doorkeeper_guest_token?
+    doorkeeper_token.scopes.include? 'guest'
+  end
+
+  def doorkeeper_oauth_header?
+    from_bearer_authorization(request)
   end
 
   private

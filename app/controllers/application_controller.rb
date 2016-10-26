@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception, prepend: true
   prepend_before_action :check_for_access_token
+  skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?
   prepend_before_action :write_client_access_token
   before_action :set_layout
   before_action :doorkeeper_authorize!
@@ -36,6 +37,10 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
   rescue_from Redis::ConnectionError, with: :handle_redis_connection_error
+
+  def verify_authenticity_token?
+    doorkeeper_token.nil? || doorkeeper_guest_token? || !doorkeeper_oauth_header?
+  end
 
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
