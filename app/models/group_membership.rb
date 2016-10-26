@@ -20,6 +20,8 @@ class GroupMembership < ApplicationRecord
   paginates_per 30
   parentable :group
 
+  attr_accessor :token
+
   def publisher
     edge.user
   end

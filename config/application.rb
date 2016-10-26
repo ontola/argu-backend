@@ -11,6 +11,8 @@ Bundler.require(*Rails.groups)
 
 module Argu
   class Application < Rails::Application
+    config.bearer_token_url = ENV['BEARER_TOKEN_SERVICE_URL']
+
     config.autoload_paths += %W(#{config.root}/app/models/banners)
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]

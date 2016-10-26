@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 class GroupMembershipPolicy < EdgeTreePolicy
+  include JWTHelper
+  VERIFY_TEMPLATE = URITemplate.new("#{Rails.configuration.bearer_token_url}/verify{?jwt}")
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -21,16 +24,16 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def permitted_attributes
-    attributes = [:lock_version]
+    attributes = [:lock_version, :token]
     attributes.append(:shortname) if rule(is_manager?, is_owner?, staff?)
     attributes
   end
 
   def create?
     if record.parent_model.grants.member.present?
-      rule has_access_token?, is_member?, is_manager?, super
+      rule valid_token?, has_access_token?, is_member?, is_manager?, super
     else
-      rule is_manager?, is_owner?, super
+      rule valid_token?, is_manager?, is_owner?, super
     end
   end
 
@@ -54,5 +57,15 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def page_policy
     Pundit.policy(context, persisted_edge.get_parent(:page).owner)
+  end
+
+  def token
+    2
+  end
+
+  def valid_token?
+    return unless record.token.present?
+    response = HTTParty.get(VERIFY_TEMPLATE.expand(jwt: sign_payload(secret: record.token, group_id: record.group_id)))
+    token if response.code == 200
   end
 end

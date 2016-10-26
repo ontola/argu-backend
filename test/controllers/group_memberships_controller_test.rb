@@ -27,7 +27,29 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, params: {group_id: group}
     end
 
-    assert 404
+    assert_not_authorized
+  end
+
+  test 'user should not post create with invalid token' do
+    validate_invalid_bearer_token
+    sign_in user
+
+    assert_no_difference 'GroupMembership.count' do
+      post :create, params: {group_id: group, token: '1234567890'}
+    end
+
+    assert_not_authorized
+  end
+
+  test 'user should post create with valid token' do
+    validate_valid_bearer_token
+    sign_in user
+
+    assert_difference 'GroupMembership.count', 1 do
+      post :create, params: {group_id: group, token: '1234567890'}
+    end
+
+    assert_redirected_to root_path
   end
 
   test 'user should not delete destroy other membership' do

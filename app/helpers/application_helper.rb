@@ -5,7 +5,7 @@ require 'stubborn_cookie'
 
 module ApplicationHelper
   include ActivityHelper, NamesHelper, UsersHelper, StubbornCookie,
-          Devise::OmniAuth::UrlHelpers, TruncateHelper
+          Devise::OmniAuth::UrlHelpers, TruncateHelper, JWTHelper
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV
                     LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR).freeze
 
@@ -39,14 +39,6 @@ module ApplicationHelper
     sign_payload(user: user.id,
                  exp: 2.days.from_now.to_i,
                  iss: 'argu.co')
-  end
-
-  def sign_payload(payload)
-    JWT.encode payload, Rails.application.secrets.jwt_encryption_token, 'HS256'
-  end
-
-  def decode_token(token, _verify = false)
-    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, algorithm: 'HS256')[0]
   end
 
   # Merges a URI with a params Hash
