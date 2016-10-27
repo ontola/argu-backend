@@ -18,6 +18,7 @@ module OauthHelper
   end
 
   def write_client_access_token
+    sign_in_from_cookie if raw_doorkeeper_token.blank?
     refresh_guest_token if needs_new_guest_token
   end
 
@@ -66,5 +67,11 @@ module OauthHelper
     @_raw_doorkeeper_token = generate_guest_token
     cookies.encrypted['client_token'] = raw_doorkeeper_token.token
     true
+  end
+
+  # @todo remove when enough people had the chance to migrate to oauth2
+  def sign_in_from_cookie
+    return unless (user = request.env['warden']&.authenticate)
+    sign_in(user)
   end
 end
