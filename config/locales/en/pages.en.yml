@@ -23,8 +23,8 @@ en:
           confirm:
             header: "Are you absolutely sure?"
             body_html: "Transferring this organization means that the ownership of all its contents (including forums!) will be transferred to a different user."
-            howto: "Please enter 'remove' below to confirm the deletion."
-            string: "remove"
+            howto: "Please enter 'transfer' below to confirm the deletion."
+            string: "transfer"
             understand: "I understand the consequences, transfer ownership of this organization."
       advanced:
         delete:

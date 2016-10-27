@@ -13,7 +13,7 @@ RSpec.feature 'Transfer Page', type: :feature do
 
     click_link('Move')
     within('form.page') do
-      fill_in 'page_confirmation_string', with: 'remove'
+      fill_in 'page_confirmation_string', with: 'transfer'
       fill_in_select with: user.first_name
 
       click_button 'I understand the consequences, transfer ownership of this organization.'

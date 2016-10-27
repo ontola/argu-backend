@@ -23,8 +23,8 @@ nl:
           confirm:
             header: "Weet je het daadwerkelijk zeker?"
             body_html: "Het overdragen van de organisatie zal eigenaarschap van <b>alle content</b> van de organisatie en bijbehorende <b>forums</b> overdragen!"
-            howto: "Voer hieronder 'verwijder' in om te bevestigen."
-            string: "verwijder"
+            howto: "Voer hieronder 'overdragen' in om te bevestigen."
+            string: "overdragen"
             understand: "Ik begrijp de consequenties, draag eigenaarschap van deze organisatie over."
       advanced:
         delete:
