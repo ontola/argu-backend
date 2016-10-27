@@ -58,10 +58,10 @@ RSpec.feature 'Account deletion', type: :feature do
         fill_in 'user_confirmation_string', with: 'remove'
         click_button 'I understand the consequences, delete my account'
       end
+      expect(page).to have_content 'Account deleted successfully'
     end.to change { User.count }.by(-1)
     argument.reload
 
-    expect(page).to have_content 'Account deleted successfully'
     [Comment, Argument, Motion, Question, Project, BlogPost].each do |klass|
       expect(klass.anonymous.count).to eq(1)
     end

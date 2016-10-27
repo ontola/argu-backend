@@ -51,10 +51,10 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_current_password', with: user.password
         click_button 'Save'
       end
+      expect(page).to have_current_path settings_path(tab: :authentication)
     end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
-    expect(page).to have_current_path settings_path(tab: :authentication)
 
     visit destroy_user_session_path
     expect(page).to have_content 'You have signed out successfully.'
@@ -88,11 +88,11 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_current_password', with: user_omni_both.password
         click_button 'Save'
       end
+      expect(page).to have_current_path settings_path(tab: :authentication)
     end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
 
-    expect(page).to have_current_path settings_path(tab: :authentication)
     expect(page).to have_content('User settings')
   end
 

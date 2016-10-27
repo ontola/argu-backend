@@ -47,8 +47,8 @@ RSpec.feature 'Shortname', type: :feature do
         fill_in 'shortname_owner_id', with: motion.id
         click_on 'Save'
       end
+      expect(page).to have_current_path shortname_settings_path
     end.to change { Shortname.count }.by(1)
-    expect(page).to have_current_path shortname_settings_path
   end
 
   def general_destroy(_response = 200)
