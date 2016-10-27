@@ -58,9 +58,9 @@ RSpec.feature 'Page deletion', type: :feature do
         fill_in 'page_confirmation_string', with: 'remove'
         click_button 'I understand the consequences, delete this page'
       end
+      expect(page).to have_content 'Organization deleted successfully'
     end.to change { Page.count }.by(-1)
 
-    expect(page).to have_content 'Organization deleted successfully'
     [Comment, Argument, Motion, Question, Project, BlogPost].each do |klass|
       expect(klass.anonymous.count).to eq(1)
     end
