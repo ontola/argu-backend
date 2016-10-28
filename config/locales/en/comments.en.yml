@@ -9,6 +9,12 @@ en:
     edited_at: "edited at %{time}"
     notices:
       updated: "The comment has been updated"
+    reply: "Reply"
+    more: "Show more"
+    edit: "Edit comment"
+    confirm:
+      headline: "Confirm your comment"
+      skip: "Not now, just show the %{skip_type}"
   pundit:
     comment_policy:
       create?: "You are not allowed to submit a comment with this account."

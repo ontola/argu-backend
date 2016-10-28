@@ -199,7 +199,7 @@ class CommentsController < AuthorizedController
 
   def redirect_url
     if params[:action] == 'create'
-      redirect_url = URI.parse(new_argument_comment_path(argument_id: params[:argument_id]))
+      redirect_url = URI.parse(url_for([:new, get_parent_resource, :comment, only_path: true]))
       redirect_url.query = query_payload(confirm: true)
       redirect_url
     else
@@ -215,6 +215,7 @@ class CommentsController < AuthorizedController
     resource =
       case resource
       when 'a' then Argument
+      when 'posts' then BlogPost
       end
     resource&.find(id)&.forum
   end

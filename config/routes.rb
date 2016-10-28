@@ -37,6 +37,13 @@ Rails.application.routes.draw do
               only: [:index, :new, :create],
               path: 'posts'
   end
+  concern :commentable do
+    resources :comments,
+              path: 'c',
+              concerns: [:trashable],
+              only: [:new, :index, :show, :create, :update, :edit]
+    patch 'comments' => 'comments#create'
+  end
   concern :destroyable do
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
@@ -156,13 +163,7 @@ Rails.application.routes.draw do
   resources :arguments,
             path: 'a',
             except: [:index, :new, :create, :destroy],
-            concerns: [:votable, :flowable, :trashable] do
-    resources :comments,
-              path: 'c',
-              concerns: [:trashable],
-              only: [:new, :index, :show, :create, :update, :edit]
-    patch 'comments' => 'comments#create'
-  end
+            concerns: [:votable, :flowable, :trashable, :commentable]
 
   resources :groups,
             path: 'g',
@@ -190,7 +191,7 @@ Rails.application.routes.draw do
   resources :blog_posts,
             path: 'posts',
             only: [:show, :edit, :update],
-            concerns: [:trashable]
+            concerns: [:trashable, :commentable]
 
   resources :projects,
             path: 'p',

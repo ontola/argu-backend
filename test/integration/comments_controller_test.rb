@@ -18,6 +18,17 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: argument.edge)
   end
+  let(:blog_post) do
+    create(:blog_post,
+           :with_follower,
+           parent: motion.edge,
+           creator: create(:profile_direct_email))
+  end
+  let(:blog_post_subject) do
+    create(:comment,
+           publisher: creator,
+           parent: blog_post.edge)
+  end
 
   define_cairo
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
@@ -49,13 +60,23 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     url_for([record.commentable, record, destroy: true])
   end
 
-  def self.assert_redirect_new_user
+  def self.assert_redirect_new_user_argument
     'assert_redirected_to new_user_session_path(r: new_argument_comment_path(argument_id: '\
     "argument.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
   end
 
-  def self.assert_redirect_record
+  def self.assert_redirect_new_user_blog_post
+    'assert_redirected_to new_user_session_path(r: new_blog_post_comment_path(blog_post_id: '\
+    "blog_post.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
+  end
+
+  def self.assert_redirect_argument
     'assert_redirected_to argument_path(send(test_case[:options]&.try(:[], :record) || :subject).commentable, '\
+    'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
+  end
+
+  def self.assert_redirect_blog_post
+    'assert_redirected_to blog_post_path(send(test_case[:options]&.try(:[], :record) || :subject).commentable, '\
     'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
   end
 
@@ -65,15 +86,26 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
 
   define_tests do
     hash = {}
-    define_test(hash, :new, options: {parent: :argument})
+    define_test(hash, :new, suffix: ' for argument', options: {parent: :argument})
+    define_test(hash, :new, suffix: ' for blog_post', options: {parent: :blog_post})
     options = {
       parent: :argument,
       analytics: stats_opt('comments', 'create_success'),
       attributes: {body: 'Just å UTF-8 comment.'}
     }
-    define_test(hash, :create, options: options) do
+    define_test(hash, :create, suffix: ' for argument', options: options) do
       user_types[:create].merge(
-        guest: exp_res(asserts: [assert_not_a_user, assert_redirect_new_user], analytics: false)
+        guest: exp_res(asserts: [assert_not_a_user, assert_redirect_new_user_argument], analytics: false)
+      )
+    end
+    options = {
+      parent: :blog_post,
+      analytics: stats_opt('comments', 'create_success'),
+      attributes: {body: 'Just å UTF-8 comment.'}
+    }
+    define_test(hash, :create, suffix: ' for blog_post', options: options) do
+      user_types[:create].merge(
+        guest: exp_res(asserts: [assert_not_a_user, assert_redirect_new_user_blog_post], analytics: false)
       )
     end
     # @todo body is lost on errorneous post
@@ -85,7 +117,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' erroneous', options: options) do
       {manager: exp_res(asserts: [])}
     end
-    define_test(hash, :show, asserts: [assert_redirect_record]) do
+    define_test(hash, :show, asserts: [assert_redirect_argument]) do
       {
         guest: exp_res(should: true),
         user: exp_res(should: true),
@@ -96,6 +128,17 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         staff: exp_res(should: true)
       }
     end
+    define_test(hash, :show, suffix: ' for blog_post', options: {record: :blog_post_subject}) do
+      {
+        guest: exp_res(should: true, asserts: [assert_redirect_blog_post]),
+        user: exp_res(should: true, asserts: [assert_redirect_blog_post]),
+        member: exp_res(should: true, asserts: [assert_redirect_blog_post]),
+        moderator: exp_res(should: true, asserts: [assert_redirect_blog_post]),
+        manager: exp_res(should: true, asserts: [assert_redirect_blog_post]),
+        owner: exp_res(should: true, asserts: [assert_redirect_blog_post]),
+        staff: exp_res(should: true, asserts: [assert_redirect_blog_post])
+      }
+    end
     define_test(hash, :show, suffix: ' cairo', options: {record: :cairo_subject}) do
       {
         guest: exp_res(asserts: [assert_redirect_root]),
@@ -104,8 +147,8 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         moderator: exp_res(asserts: [assert_redirect_root]),
         manager: exp_res(asserts: [assert_redirect_root]),
         owner: exp_res(asserts: [assert_redirect_root]),
-        cairo_member: exp_res(should: true, asserts: [assert_redirect_record]),
-        staff: exp_res(should: true, asserts: [assert_redirect_record])
+        cairo_member: exp_res(should: true, asserts: [assert_redirect_argument]),
+        staff: exp_res(should: true, asserts: [assert_redirect_argument])
       }
     end
     define_test(hash, :show, suffix: ' cairo', options: {record: :second_cairo_subject}) do
@@ -149,9 +192,9 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :trash, options: {analytics: stats_opt('comments', 'trash_success')})
   end
 
-  # ####################################
-  # # As spectator
-  # ####################################
+  ####################################
+  # As spectator
+  ####################################
   define_venice
   let(:access_token) { create(:access_token, item: venice) }
   let(:venice_motion) { create(:motion, parent: venice.edge) }

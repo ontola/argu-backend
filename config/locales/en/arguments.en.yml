@@ -60,18 +60,6 @@ en:
               <li>Use reliable sources to make your point more credible.</li>
               <li>Be friendly and content oriented.</li>
             <ul>"
-    comments:
-      title: "Comments"
-      favorite: "Favorite"
-      reply: "Reply"
-      delete: "Delete"
-      more: "Show more"
-      edit: "Edit comment"
-      placed_by: "%{user} - %{date}"
-      none: "No replies"
-      confirm:
-        headline: "Confirm your comment"
-        skip: "Not now, just show the argument"
     notices:
       restored: "The argument has been restored."
       created: "The argument has been placed."

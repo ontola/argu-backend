@@ -1,5 +1,3 @@
-- top_comment = model.top_comment
-
 .box.box-with-btns.argument[id="#{model.identifier.present? ? model.identifier.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
     =link_to argument_path(model)
@@ -11,12 +9,12 @@
       =link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini'
         span.icon-right= t('reply')
         span.fa.fa-comments
-- if top_comment.present? && policy(model).index_children?(:comment_threads)
+- if model.top_comment.present? && policy(model).index_children?(:comment_threads)
   =link_to argument_path(model) + '#comments'
-    .top-comment-container[class=status_classes_for(top_comment)]
+    .top-comment-container[class=status_classes_for(model.top_comment)]
       .top-comment
         p.wrap-normal
-          =top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
+          =model.top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(model.top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
         .comments-counter
           span.icon-right= model.comments_count.to_s
           span.fa.fa-comments

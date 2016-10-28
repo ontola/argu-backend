@@ -9,6 +9,12 @@ nl:
     edited_at: "gewijzigd op %{time}"
     notices:
       updated: "De reactie is gewijzigd."
+    reply: "Reageer"
+    more: "Toon meer"
+    edit: "Wijzig reactie"
+    confirm:
+      headline: "Bevestig jouw reactie"
+      skip: "Niet nu, laat het %{skip_type} zien"
   pundit:
     comment_policy:
       create?: "Je mag hier met dit account geen reactie plaatsen."

@@ -50,6 +50,11 @@ module NamesHelper
     'bullhorn'
   end
 
+  # Singular translation for {BlogPost}
+  def blog_post_type
+    I18n.t('blog_posts.type')
+  end
+
   #########################
   #       Decision        #
   #########################
@@ -159,6 +164,8 @@ module NamesHelper
       question_type
     elsif item.class == Argument
       argument_type
+    elsif item.class == BlogPost
+      blog_post_type
     elsif item.class == Comment
       I18n.t('comments.type')
     elsif item.class == Forum

@@ -62,19 +62,6 @@ nl:
               <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
               <li>Wees vriendelijk en inhoudelijk.</li>
             <ul>"
-    comments:
-      title: "Reacties"
-      favorite: "Favoriet"
-      reply: "Reageer"
-      delete: "Verwijder"
-      more: "Toon meer"
-      edit: "Wijzig reactie"
-      placed_by: "%{user} - %{date}"
-      none: "Geen reacties"
-      comments:
-        confirm:
-          headline: "Bevestig jouw reactie"
-          skip: "Niet nu, laat het argument zien"
     notices:
       restored: "Het argument is teruggeplaatst."
       created: "Het argument is geplaatst."

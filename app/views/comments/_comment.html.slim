@@ -21,4 +21,4 @@
   - if c.has_children?
     - c.children.reject { |c| c.abandoned? }.each do |ch|
       =render partial: 'comments/comment', locals: { resource: resource, c: ch }
-    =link_to t('arguments.comments.more'), '/' if c.children.length > 40
+    =link_to t('comments.more'), '/' if c.children.length > 40

@@ -1,7 +1,19 @@
 .box[class=status_classes_for(resource)]
   section
-    h3[itemprop="headline"]= resource.title
-    .markdown[itemprop="text"]= markdown_to_html(resource.content)
+    =link_to resource
+      h3[itemprop="headline" class="blog-post-t"]= resource.title
+    .markdown[itemprop="text"]
+      =markdown_to_html(resource.content)
+      - if resource.top_comment.present? && policy(resource).index_children?(:comment_threads)
+        =link_to blog_post_path(resource) + '#comments'
+          .comments-counter
+            span.icon-right= resource.comments_count.to_s
+            span.fa.fa-comments
+      - elsif policy(resource).create_child?(:comment_threads)
+        =link_to blog_post_path(resource) + '#comments'
+          .comments-counter
+            span.icon-right= t('reply')
+            span.fa.fa-comments
   section.section--footer
     =render partial: resource.creator, locals: {resource: resource}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
@@ -10,4 +22,4 @@
         li.share-menu
           ul= react_component_store 'ShareDropdown', props: share_items(resource)
 - unless resource.is_published?
-  = render partial: 'application/publish', locals: {resource: resource}
+  =render partial: 'application/publish', locals: {resource: resource}

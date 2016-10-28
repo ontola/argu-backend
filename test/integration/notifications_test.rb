@@ -12,6 +12,14 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:group) { create(:group, visibility: :discussion, parent: freetown.page.edge) }
   let(:group_membership) { create(:group_membership, parent: group.edge, member: user.profile) }
   let!(:random_follow) { create(:follow, followable: create_forum.edge) }
+  let(:blog_post) do
+    create(:blog_post,
+           :with_follower,
+           :with_news_follower,
+           argu_publication: build(:publication),
+           happening_attributes: {happened_at: DateTime.current},
+           parent: motion.edge)
+  end
 
   ####################################
   # As Member
@@ -80,6 +88,22 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Comment.trashed_only.count', 1], ['Notification.count', -2]]) do
       delete destroy_argument_comment_path(argument, Comment.last)
+    end
+  end
+
+  test 'member should create and destroy comment for blog_post with notifications' do
+    sign_in member
+    blog_post
+
+    # Notification for creator and follower of BlogPost
+    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
+      post blog_post_comments_path(blog_post),
+           params: {comment: attributes_for(:comment)}
+    end
+    assert_equal Notification.last.notification_type, 'reaction'
+
+    assert_differences([['Comment.trashed_only.count', 1], ['Notification.count', -2]]) do
+      delete destroy_blog_post_comment_path(blog_post, Comment.last)
     end
   end
 

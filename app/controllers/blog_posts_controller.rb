@@ -26,10 +26,11 @@ class BlogPostsController < AuthorizedController
   end
 
   def show
+    @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
     respond_to do |format|
-      format.html { redirect_to url_for([@resource.blog_postable, happening_id: @resource.happening.id]) }
-      format.json { render json: @resource }
-      format.js   { render locals: {blog_post: @resource} }
+      format.html { render locals: {blog_post: authenticated_resource, comment: Comment.new} }
+      format.json { render json: authenticated_resource }
+      format.js   { render locals: {blog_post: authenticated_resource} }
     end
   end
 

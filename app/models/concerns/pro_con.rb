@@ -5,7 +5,7 @@ module ProCon
   VOTE_OPTIONS = [:pro].freeze
 
   included do
-    include Trashable, Parentable, HasLinks, PublicActivity::Common
+    include Trashable, Parentable, HasLinks, PublicActivity::Common, Commentable
 
     belongs_to :motion, touch: true
     has_many :votes, as: :voteable, dependent: :destroy, inverse_of: :voteable
@@ -21,7 +21,6 @@ module ProCon
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 
-    acts_as_commentable
     parentable :motion, :forum
 
     scope :pro, -> { where(pro: true) }
