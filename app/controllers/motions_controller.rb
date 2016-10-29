@@ -31,6 +31,7 @@ class MotionsController < AuthorizedController
       format.html { render locals: {motion: authenticated_resource} }
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
+      format.json_api { render json: authenticated_resource, include: :arguments }
     end
   end
 

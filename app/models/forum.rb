@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class Forum < ApplicationRecord
-  include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable, Loggable
+  include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
+          Loggable, Ldable
 
   belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
@@ -51,6 +52,10 @@ class Forum < ApplicationRecord
   scope :public_forums, lambda {
     where(visibility: Forum.visibilities[:open]).joins(:edge).order('edges.follows_count DESC')
   }
+
+  contextualize_as_type 'http://schema.org/Thing'
+  contextualize_with_id { |f| Rails.application.routes.url_helpers.forum_url(f) }
+  contextualize :display_name, as: 'schema:name'
 
   def access_token
     access_token! if visible_with_a_link

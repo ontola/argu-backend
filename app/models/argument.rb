@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Argument < ApplicationRecord
-  include Loggable, ProCon, Flowable
+  include Loggable, ProCon, Flowable, Ldable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 
@@ -15,6 +15,11 @@ class Argument < ApplicationRecord
       .order("edges.children_counts -> 'votes_pro' DESC")
       .references(:comment_threads)
   }
+
+  contextualize_as_type 'http://schema.org/CreativeWork'
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m) }
+  contextualize :display_name, as: 'http://schema.org/name'
+  contextualize :content, as: 'http://schema.org/text'
 
   def assert_tenant
     return if forum == motion.forum

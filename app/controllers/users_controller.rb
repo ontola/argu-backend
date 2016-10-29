@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { render 'profiles/show' }
+      format.json_api { render json: @user, include: :profile_photo }
     end
   end
 

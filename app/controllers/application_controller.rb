@@ -37,6 +37,13 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
   rescue_from Redis::ConnectionError, with: :handle_redis_connection_error
+  rescue_from ActionController::RoutingError, with: :route_not_found
+  def route_not_found
+    @_pundit_policy_authorized = true
+    respond_to do |format|
+      format.json_api { render status: 404, json: {error: 'not found'} }
+    end
+  end
 
   def verify_authenticity_token?
     doorkeeper_token.nil? || doorkeeper_guest_token? || !doorkeeper_oauth_header?

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class QuestionsController < AuthorizedController
-  include NestedResourceHelper
+  include NestedResourceHelper, MenuHelper
 
   def show
     scope = authenticated_resource
@@ -17,10 +17,13 @@ class QuestionsController < AuthorizedController
     @motions = policy_scope(scope)
                .page(show_params[:page])
 
+    init_resource_actions(authenticated_resource)
+
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource} } # show.html.erb
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
+      format.json_api { render json: authenticated_resource }
     end
   end
 

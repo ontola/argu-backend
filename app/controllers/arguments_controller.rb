@@ -1,6 +1,22 @@
 # frozen_string_literal: true
 class ArgumentsController < AuthorizedController
   include NestedResourceHelper
+
+  def index
+    parent_resource = Motion.includes(:arguments).find(params[:motion_id])
+    collection = Collection.new(
+      id: url_for([parent_resource, :arguments]),
+      parent: get_parent_resource,
+      association: :arguments,
+      collection_entries: policy_scope(parent_resource.arguments)
+    )
+    respond_to do |format|
+      format.json_api do
+        render json: collection, include: {collection_entries: collection.collection_entries}
+      end
+    end
+  end
+
   # GET /arguments/1
   # GET /arguments/1.json
   def show
@@ -20,6 +36,7 @@ class ArgumentsController < AuthorizedController
                locals: {argument: authenticated_resource}
       end
       format.json { render json: authenticated_resource }
+      format.json_api { render json: authenticated_resource }
     end
   end
 
@@ -155,8 +172,13 @@ class ArgumentsController < AuthorizedController
 
   private
 
+  def authenticated_resource!
+    return super unless params[:action] == 'index'
+    get_parent_resource
+  end
+
   def get_parent_resource(opts = request.path_parameters, url_params = params)
-    return super unless params[:action] == 'new' || params[:action] == 'create'
+    return super unless %w(new create index).include?(params[:action])
     Motion.find(params[:motion_id] || params[:argument][:motion_id])
   end
 

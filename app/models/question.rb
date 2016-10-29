@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 class Question < ApplicationRecord
   include Trashable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible, Loggable,
-          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable
+          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
+          Ldable
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -22,6 +23,12 @@ class Question < ApplicationRecord
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
   # TODO: validate expires_at
+
+  contextualize_as_type 'http://schema.org/Challenge'
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.question_url(m) }
+  contextualize :display_name, as: 'http://schema.org/name'
+  contextualize :content, as: 'http://schema.org/text'
+  contextualize :potential_action, as: 'http://schema.org/potentialAction'
 
   attr_accessor :include_motions
 

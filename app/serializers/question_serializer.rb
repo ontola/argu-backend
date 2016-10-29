@@ -1,4 +1,4 @@
 # frozen_string_literal: true
-class QuestionSerializer < BaseSerializer
-  attributes :display_name
+class QuestionSerializer < BaseEdgeSerializer
+  attributes :display_name, :content, :potential_action
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class User < ApplicationRecord
-  include Shortnameable, Flowable, Placeable
+  include Shortnameable, Flowable, Placeable, Ldable
 
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,
@@ -49,6 +49,11 @@ class User < ApplicationRecord
   enum reactions_email: {never_reactions_email: 0, weekly_reactions_email: 1, direct_reactions_email: 3}
   enum news_email: {never_news_email: 0, weekly_news_email: 1, direct_news_email: 3}
   enum decisions_email: {never_decisions_email: 0, weekly_decisions_email: 1, direct_decisions_email: 3}
+
+  contextualize_as_type 'schema:Person'
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.user_url(m) }
+  contextualize :display_name, as: 'schema:name'
+  contextualize :about, as: 'schema:description'
 
   validates :email,
             allow_blank: false,

@@ -6,6 +6,7 @@ class LogController < AuthorizedController
     respond_to do |format|
       format.html { render 'log', locals: {resource: authenticated_resource!} }
       format.json { render json: authenticated_resource!.activities }
+      format.json_api { render json: authenticated_resource!.activities }
     end
   end
 

@@ -11,6 +11,8 @@ class Activity < PublicActivity::Activity
   belongs_to :owner, class_name: 'Profile'
   belongs_to :forum
 
+  attr_accessor :potential_action
+
   alias_attribute :happened_at, :created_at
 
   validates :forum, :key, :trackable, :owner, :recipient, presence: true

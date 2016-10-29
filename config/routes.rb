@@ -160,6 +160,7 @@ Rails.application.routes.draw do
             except: [:index, :new, :create, :destroy],
             concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :decisionable] do
     resources :tags, path: 't', only: [:index]
+    resources :arguments, only: :index
   end
 
   resources :arguments,
@@ -288,4 +289,7 @@ Rails.application.routes.draw do
 
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
+  constraints(-> (req) { req.format == :json_api }) do
+    get '*path', to: 'application#route_not_found'
+  end
 end

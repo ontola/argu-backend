@@ -25,24 +25,15 @@ class ForumsController < AuthorizedController
 
   def show
     return unless policy(resource_by_id).show?
-    projects = policy_scope(resource_by_id
-                              .projects
-                              .includes(:edge, :default_cover_photo))
-    questions = policy_scope(resource_by_id
-                               .questions
-                               .where(project_id: nil)
-                               .includes(:edge, :project, :default_cover_photo))
-    motions = policy_scope(resource_by_id
-                             .motions
-                             .where(project_id: nil, question_id: nil)
-                             .includes(:edge, :question, :project, :default_cover_photo, :votes))
 
-    @items = Kaminari
-             .paginate_array((projects + questions + motions)
-                                 .sort_by { |i| [i.pinned ? 1 : 0, i.last_activity_at] }
-                                 .reverse)
-             .page(show_params[:page])
-             .per(30)
+    @items = collect_items
+
+    respond_to do |format|
+      format.html
+      format.json
+      format.js
+      format.json_api { render json: authenticated_resource }
+    end
   end
 
   def settings
@@ -117,6 +108,27 @@ class ForumsController < AuthorizedController
       .map { |u| u.home_placement&.place&.address.try(:[], 'city') }
       .each { |v| cities.store(v, cities[v] + 1) }
     cities.sort { |x, y| y[1] <=> x[1] }
+  end
+
+  def collect_items
+    projects = policy_scope(resource_by_id
+                              .projects
+                              .includes(:edge, :default_cover_photo))
+    questions = policy_scope(resource_by_id
+                               .questions
+                               .where(project_id: nil)
+                               .includes(:edge, :project, :default_cover_photo))
+    motions = policy_scope(resource_by_id
+                             .motions
+                             .where(project_id: nil, question_id: nil)
+                             .includes(:edge, :question, :project, :default_cover_photo, :votes))
+
+    Kaminari
+      .paginate_array((projects + questions + motions)
+                        .sort_by { |i| [i.pinned ? 1 : 0, i.last_activity_at] }
+                        .reverse)
+      .page(show_params[:page])
+      .per(30)
   end
 
   def content_count(forum)

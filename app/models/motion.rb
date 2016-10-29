@@ -3,7 +3,8 @@ include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
   include Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
-          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable, Decisionable
+          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
+          Decisionable, Ldable, Voteable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions
@@ -33,6 +34,11 @@ class Motion < ApplicationRecord
   has_many :votes, as: :voteable, dependent: :destroy
 
   before_save :cap_title
+
+  contextualize_as_type 'schema:CreativeWork'
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.motion_url(m) }
+  contextualize :display_name, as: 'schema:name'
+  contextualize :content, as: 'schema:text'
 
   convertible questions: %i(votes taggings activities)
   counter_cache true
@@ -73,7 +79,7 @@ class Motion < ApplicationRecord
   end
 
   def as_json(options = {})
-    super(options.merge(
+    super((options || {}).merge(
       methods: %i(display_name),
       only: %i(id content forum_id created_at cover_photo
                updated_at pro_count con_count

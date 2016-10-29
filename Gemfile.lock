@@ -401,6 +401,9 @@ GEM
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
+    pragmatic_context (0.2.1)
+      activemodel
+      activesupport
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -713,6 +716,7 @@ DEPENDENCIES
   omniauth-twitter (~> 1.2.0)
   pg (= 0.18.2)
   poltergeist
+  pragmatic_context
   pry
   public_activity (~> 1.5)
   pundit (~> 1.0.0)

@@ -1,8 +1,23 @@
 # frozen_string_literal: true
 class UserSerializer < BaseSerializer
-  attributes :display_name, :profile_photo
+  attributes :display_name, :about
+  has_one :profile_photo do
+    obj = object.profile.default_profile_photo
+    link(:related) do
+      {
+        href: nil,
+        meta: {
+          '@type': 'http://schema.org/image',
+          attributes: {
+            '@id': obj.class.try(:context_id_factory)&.call(obj)
+          }
+        }
+      }
+    end
+    obj
+  end
 
-  def profile_photo
-    object.profile.default_profile_photo
+  def about
+    object.profile.about
   end
 end
