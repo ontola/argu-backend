@@ -1,8 +1,6 @@
 
 # frozen_string_literal: true
 class CreateArgument < PublishedCreateService
-  include Wisper::Publisher
-
   private
 
   def after_save

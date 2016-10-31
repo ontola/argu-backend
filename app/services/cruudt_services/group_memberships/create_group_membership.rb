@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class CreateGroupMembership < EdgeableCreateService
-  include Wisper::Publisher
-
   def initialize(group, attributes: {}, options: {})
     attributes = HashWithIndifferentAccess.new(attributes)
     attributes[:member] = if attributes['shortname'].present?

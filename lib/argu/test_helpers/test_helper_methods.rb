@@ -154,11 +154,8 @@ module Argu
 
           parent_edge = attributes.delete(:parent)
 
-          service = "Create#{klass}"
-                    .constantize
-                    .new(parent_edge,
-                         attributes: attributes,
-                         options: options)
+          service_class = "Create#{klass}".safe_constantize || CreateService
+          service = service_class.new(parent_edge, attributes: attributes, options: options)
           service.commit
           service.resource.reload
         end
@@ -169,7 +166,8 @@ module Argu
           options = {}
           options[:publisher] = user
           options[:creator] = profile
-          service = "Destroy#{resource.class}".constantize.new(resource, attributes: {}, options: options)
+          service_class = "Destroy#{resource.class}".safe_constantize || DestroyService
+          service = service_class.new(resource, attributes: {}, options: options)
           service.subscribe(ActivityListener.new(creator: profile,
                                                  publisher: user))
           service.commit
@@ -201,7 +199,8 @@ module Argu
           options = {}
           options[:publisher] = user
           options[:creator] = profile
-          service = "Trash#{resource.class}".constantize.new(resource, attributes: {}, options: options)
+          service_class = "Trash#{resource.class}".safe_constantize || TrashService
+          service = service_class.new(resource, attributes: {}, options: options)
           service.subscribe(ActivityListener.new(creator: profile,
                                                  publisher: user))
           service.commit
@@ -214,7 +213,8 @@ module Argu
           options = {}
           options[:publisher] = user
           options[:creator] = profile
-          service = "Update#{resource.class}".constantize.new(resource, attributes: attributes, options: options)
+          service_class = "Update#{resource.class}".safe_constantize || UpdateService
+          service = service_class.new(resource, attributes: attributes, options: options)
           service.subscribe(ActivityListener.new(creator: profile,
                                                  publisher: user))
           service.commit

@@ -1,12 +1,6 @@
 
 # frozen_string_literal: true
 class CreateQuestion < PublishedCreateService
-  include Wisper::Publisher
-
-  def initialize(parent, attributes: {}, options: {})
-    super
-  end
-
   private
 
   def after_save

@@ -4,6 +4,7 @@
 # @author Fletcher91 <thom@argu.co>
 class ApplicationService
   include Pundit
+  include Wisper::Publisher
 
   # @note Call super when overriding.
   def initialize(_orig_resource, attributes: {}, options: {})
@@ -27,12 +28,7 @@ class ApplicationService
                 client_id: options[:client_id]
     ))
   end
-
-  # The resource on which the service works, if any.
-  # @note Currently all the services use this method, the requirement might be dropped in a future version.
-  def resource
-    raise 'Required interface not implemented'
-  end
+  attr_reader :resource
 
   # Executes the action, so generally message broadcasts begin here.
   # @see {after_save}

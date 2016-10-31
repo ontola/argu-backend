@@ -1,14 +1,8 @@
 
 # frozen_string_literal: true
 class CreateActivity < CreateService
-  include Wisper::Publisher
-
-  def initialize(activity, attributes: {}, options: {})
-    @activity = activity
+  def initialize(resource, attributes: {}, options: {})
+    @resource = resource
     super
-  end
-
-  def resource
-    @activity
   end
 end

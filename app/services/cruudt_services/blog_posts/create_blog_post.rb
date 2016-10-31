@@ -1,8 +1,6 @@
 
 # frozen_string_literal: true
 class CreateBlogPost < PublishedCreateService
-  include Wisper::Publisher
-
   def initialize(parent, attributes: {}, options: {})
     attributes[:blog_postable] = parent.owner
     super

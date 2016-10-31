@@ -1,8 +1,6 @@
 
 # frozen_string_literal: true
 class CreateGroup < EdgeableCreateService
-  include Wisper::Publisher
-
   def initialize(parent, attributes: {}, options: {})
     raise 'The parent of a Group must be the Edge of a Page' unless parent.owner_type == 'Page'
     super

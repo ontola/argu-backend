@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class CreateDecision < PublishedCreateService
-  include Wisper::Publisher
-
   def initialize(parent, attributes: {}, options: {})
     attributes[:decisionable] = parent
     attributes[:step] = parent.decisions.count

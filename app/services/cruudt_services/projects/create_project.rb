@@ -2,12 +2,6 @@
 # Service for the creation of projects
 # @author Fletcher91 <thom@argu.co>
 class CreateProject < PublishedCreateService
-  include Wisper::Publisher
-
-  def initialize(parent, attributes: {}, options: {})
-    super
-  end
-
   private
 
   def object_attributes=(obj)

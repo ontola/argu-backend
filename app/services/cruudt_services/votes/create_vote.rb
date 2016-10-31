@@ -1,8 +1,6 @@
 
 # frozen_string_literal: true
 class CreateVote < PublishedCreateService
-  include Wisper::Publisher
-
   def initialize(parent, attributes: {}, options: {})
     super
     resource.voteable = parent.owner
