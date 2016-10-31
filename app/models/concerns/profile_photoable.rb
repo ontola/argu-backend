@@ -45,6 +45,6 @@ module ProfilePhotoable
   end
 
   def remove_marked_profile_photo
-    default_profile_photo.save if default_profile_photo.remove_image
+    default_profile_photo.save if default_profile_photo&.remove_image
   end
 end
