@@ -84,7 +84,8 @@ class AuthorizedController < ApplicationController
   end
 
   def service_klass
-    "#{action_name.classify}#{controller_name.classify}".safe_constantize
+    "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
+      "#{action_name.classify}Service".constantize
   end
 
   # For use with the services options parameter, with sensible defaults
