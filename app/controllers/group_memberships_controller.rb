@@ -33,8 +33,9 @@ class GroupMembershipsController < AuthorizedController
   end
 
   def create
-    create_service.on(:create_group_membership_successful) do
+    create_service.on(:create_group_membership_successful) do |group_membership|
       if params[:redirect] == 'false'
+        warn '[DEPRECATED] Using redirect = false in GroupMembership#create is deprecated.'
         head 201
       else
         respond_to do |format|
@@ -42,12 +43,14 @@ class GroupMembershipsController < AuthorizedController
             redirect_to redirect_url,
                         notice: t('type_create_success', type: t('group_memberships.type'))
           end
+          format.json { render json: group_membership, status: 201, location: group_membership }
         end
       end
     end
-    create_service.on(:create_group_membership_failed) do
+    create_service.on(:create_group_membership_failed) do |group_membership|
       respond_to do |format|
         format.html { redirect_to redirect_url, notice: t('errors.general') }
+        format.json { render json: group_membership.errors, status: 422 }
       end
     end
     create_service.commit

@@ -234,9 +234,29 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def handle_record_not_unique(_exception)
-    flash[:warning] = t(:twice_warning)
-    redirect_back(fallback_location: root_path)
+  def handle_record_not_unique(exception)
+    respond_to do |format|
+      format.json do
+        error_hash = {
+          type: :error,
+          error_id: 'NOT_UNIQUE',
+          message: exception.message
+        }
+        render status: 304,
+               json: error_hash.merge(notifications: [error_hash])
+      end
+      format.json_api do
+        error_hash = {
+          message: exception.message,
+          code: 'NOT_UNIQUE'
+        }
+        render json_api_error(304, error_hash)
+      end
+      format.html do
+        flash[:warning] = t(:twice_warning)
+        redirect_back(fallback_location: root_path)
+      end
+    end
   end
 
   def handle_not_authorized_error(exception)

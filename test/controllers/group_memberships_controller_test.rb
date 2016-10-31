@@ -5,6 +5,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   define_freetown
   define_cairo
   let!(:group) { create(:group, parent: freetown.page.edge) }
+  let!(:member) { create(:group_membership, parent: group.edge).member.profileable }
 
   ####################################
   # As User
@@ -68,6 +69,39 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
+  test 'owner should not post create member' do
+    sign_in create_owner(freetown)
+
+    assert_difference 'GroupMembership.count', 0 do
+      post :create,
+           params: {
+             group_id: group,
+             shortname: member.url,
+             r: settings_forum_path(freetown.url, tab: :groups)
+           }
+    end
+
+    assert_redirected_to root_path
+    assert_analytics_not_collected
+  end
+
+  test 'owner should not post create member json' do
+    sign_in create_owner(freetown)
+
+    assert_difference 'GroupMembership.count', 0 do
+      post :create,
+           format: :json,
+           params: {
+             group_id: group,
+             shortname: member.url,
+             r: settings_forum_path(freetown.url, tab: :groups)
+           }
+    end
+
+    assert_response 304
+    assert_analytics_not_collected
+  end
+
   test 'owner should post create other' do
     sign_in create_owner(freetown)
 
@@ -81,6 +115,23 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+    assert_analytics_collected('memberships', 'create')
+  end
+
+  test 'owner should post create other json' do
+    sign_in create_owner(freetown)
+
+    assert_difference 'GroupMembership.count', 1 do
+      post :create,
+           format: :json,
+           params: {
+             group_id: group,
+             shortname: user.url,
+             r: settings_forum_path(freetown.url, tab: :groups)
+           }
+    end
+
+    assert_response 201
     assert_analytics_collected('memberships', 'create')
   end
 
