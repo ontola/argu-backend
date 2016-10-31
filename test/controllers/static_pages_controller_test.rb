@@ -10,7 +10,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   define_freetown
   let(:question) { create(:question, parent: freetown.edge) }
   let(:motion) { create(:motion, parent: question.edge) }
-  let(:blog_post) { create(:blog_post, parent: motion.edge) }
+  let(:blog_post) { create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: DateTime.current}) }
   let(:vote) { create(:vote, parent: motion.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
@@ -54,7 +54,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   private
 
   def activities
-    Activity.all.to_a
+    Activity.loggings.to_a
   end
 
   def trigger_activity_creation

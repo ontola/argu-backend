@@ -22,6 +22,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            parent: motion.edge,
+           happening_attributes: {happened_at: DateTime.current},
            creator: create(:profile_direct_email))
   end
   let(:blog_post_subject) do

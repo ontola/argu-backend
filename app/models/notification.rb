@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class Notification < ApplicationRecord
-  include ActivityHelper
+  include ActionView::Helpers, ActivityHelper, BlogPostsHelper
+  include Rails.application.routes.url_helpers
+
   belongs_to :user
   belongs_to :activity
   before_create :set_notification_type
@@ -29,7 +31,7 @@ class Notification < ApplicationRecord
 
   def url_object
     if activity.present?
-      activity.trackable
+      activity.trackable_type == 'BlogPost' ? url_for_blog_post(activity.trackable) : activity.trackable
     else
       url
     end

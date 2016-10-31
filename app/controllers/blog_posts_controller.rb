@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BlogPostsController < AuthorizedController
-  include NestedResourceHelper
+  include NestedResourceHelper, BlogPostsHelper
 
   def new
     respond_to do |format|
@@ -12,7 +12,7 @@ class BlogPostsController < AuthorizedController
   def create
     create_service.on(:create_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to url_for([blog_post.blog_postable, happening_id: blog_post.happening.id]) }
+        format.html { redirect_to url_for(url_for_blog_post(blog_post)) }
         format.json { render json: blog_post, status: 201, location: blog_post }
       end
     end
@@ -51,7 +51,7 @@ class BlogPostsController < AuthorizedController
   def update
     update_service.on(:update_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to url_for([blog_post.blog_postable, happening_id: blog_post.happening.id]) }
+        format.html { redirect_to url_for(url_for_blog_post(blog_post)) }
         format.json { render json: blog_post, status: 200, location: blog_post }
       end
     end

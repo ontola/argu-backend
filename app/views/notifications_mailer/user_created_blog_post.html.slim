@@ -8,7 +8,7 @@ tr
     table
       tr
         td.mail-h3
-          =link_to item.display_name, url_for(item)
+          =link_to item.display_name, url_for_blog_post(item)
       tr
-        td.mail-p= safe_truncated_text(item.content, url_for(item))
+        td.mail-p= safe_truncated_text(item.content, url_for_blog_post(item))
   td.mail-p

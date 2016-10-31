@@ -15,15 +15,15 @@ module BlogPostsHelper
     end
   end
 
-  def time_in_iso8601(time)
-    time.try(:iso8601)
-  end
-
   def date_for_publication(resource)
     if resource.argu_publication.published_at < Time.current + 12.hours
       time_ago_in_words(resource.argu_publication.published_at)
     else
       l(resource.argu_publication.published_at, format: :dateline)
     end
+  end
+
+  def url_for_blog_post(blog_post)
+    url_for([blog_post.blog_postable, happening_id: blog_post.happening.id])
   end
 end
