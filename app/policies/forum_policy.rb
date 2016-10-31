@@ -25,6 +25,7 @@ class ForumPolicy < EdgeTreePolicy
     attributes.concat %i(name bio bio_long tags featured_tags profile_id) if update?
     attributes.concat %i(visibility visible_with_a_link page_id) if change_owner?
     attributes.append(memberships_attributes: %i(role id profile_id forum_id))
+    attributes.append(:max_shortname_count) if max_shortname_count?
     append_default_photo_params(attributes)
     attributes
   end
@@ -69,6 +70,10 @@ class ForumPolicy < EdgeTreePolicy
 
   def managers?
     rule is_owner?, staff?
+  end
+
+  def max_shortname_count?
+    rule staff?
   end
 
   def settings?
