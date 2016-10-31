@@ -3,13 +3,17 @@
 # Superclass for all the services that update records
 # @author Fletcher91 <thom@argu.co>
 class UpdateService < ApplicationService
+  include Wisper::Publisher
+
   # @note Call super when overriding.
   # @param [Hash] attributes The attributes to update the model with
   # @option attributes [Edge, Integer] :parent Virtual attribute for updating the models' parent
   def initialize(resource, attributes: {}, options: {})
+    @resource = resource
     update_parent(attributes.delete(:parent))
     super
   end
+  attr_reader :resource
 
   private
 
