@@ -4,9 +4,9 @@ nl:
   groups:
     type: "Groep"
     plural: "Groepen"
-    empty: "Op Argu kunnen ook %{type} reageren op ideeën. Op dit idee is nog niet gereageerd door %{type}. Laat het ze weten als je een reactie zou willen zien!"
     new: "Groep toevoegen"
     public: "Publiek"
+    description: "Je kan rollen verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
     destroy:
       body: "%{group_memberships_count} groepsleden zullen worden verwijderd."
     settings:

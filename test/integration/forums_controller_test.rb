@@ -228,7 +228,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
 
-    %i(general advanced shortnames banners privacy grants).each do |tab|
+    %i(general advanced shortnames banners privacy groups).each do |tab|
       get settings_forum_path(holland), params: {tab: tab}
       assert_forum_settings_shown holland, tab
     end

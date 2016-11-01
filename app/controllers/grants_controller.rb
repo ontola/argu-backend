@@ -63,21 +63,26 @@ class GrantsController < AuthorizedController
     )
   end
 
+  def parent_resource_param(_url_params)
+    :edge_id
+  end
+
   def new_resource_from_params
     @resource ||= Grant.new(resource_new_params)
   end
 
   def redirect_path
     if authenticated_resource.edge.owner_type == 'Forum'
-      settings_forum_path(authenticated_resource.edge.owner, tab: :grants)
+      settings_forum_path(authenticated_resource.edge.owner, tab: :groups)
     else
-      settings_page_path(authenticated_resource.edge.owner, tab: :grants)
+      settings_page_path(authenticated_resource.edge.owner, tab: :groups)
     end
   end
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      edge: get_parent_resource
+      edge: get_parent_resource,
+      group_id: params[:group_id]
     )
   end
 

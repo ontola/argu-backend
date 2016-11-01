@@ -30,4 +30,10 @@ class Group < ApplicationRecord
   end
 
   delegate :include?, to: :members
+
+  def inherited_grants(edge)
+    grants
+      .joins(:edge)
+      .where(edges: {id: edge.ancestor_ids})
+  end
 end

@@ -7,4 +7,16 @@ nl:
     plural: "rechten"
     empty: "Geen rechten"
     new: "Verleen nieuwe rechten"
-    inherited: "geërfd"
+    inherited: "Deze rol is geërfd van bovenliggend %{type}"
+  roles:
+    type: "rol"
+    plural: "rollen"
+    description: "Rollen geven rechten aan bepaalde groepen. De rol geldt ook voor onderliggen items."
+    empty: "geen"
+    types:
+      manager: "Managers kunnen nieuwe content plaatsen en alle content aanpassen en verwijderen."
+      member: "Members kunnen nieuwe content plaatsen en hun eigen content bewerken en verwijderen."
+    list:
+      role_html: "<span data-title='%{description}'>%{role}</span>"
+      inherited_html: "<a href='%{url}' data-title='%{inherited}'><span class='fa fa-info'></span></a>"
+      remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Weet je zeker dat je deze rol wilt intrekken?'><span class='fa fa-close'></span></a>"

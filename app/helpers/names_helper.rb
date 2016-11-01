@@ -172,6 +172,8 @@ module NamesHelper
       I18n.t('forums.type')
     elsif item.class == Project
       project_type
+    elsif item.class == Page
+      I18n.t('pages.type')
     end
   end
 end

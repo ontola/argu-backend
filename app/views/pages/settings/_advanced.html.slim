@@ -2,12 +2,20 @@
   - @page.errors.full_messages.each do |message|
     =message
   =f.inputs do
-    - if policy(@page).is_owner? || policy(@page).shortname?
-      =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-        - if policy(@page).shortname?
-          =f.inputs :shortname, for: :shortname
+    =f.inputs name: t('pages.settings.managers.owner') do
+      p= t('pages.settings.managers.about_owner')
+      .margin-bottom
+        =image_tag @page.owner.default_profile_photo.url, class: 'profile-photo'
+        span= @page.owner.display_name
+      - if policy(@page).permitted_attributes.include?(:visibility)
         =f.input :visibility, as: :select, collection: Forum.visibilities.keys, required: false, include_blank: false
-        =f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn--warning'}
+    =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+      - if policy(@page).transfer?
+        =link_to t('formtastic.labels.f_move'), transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
+      - if policy(@page).shortname?
+        =f.inputs :shortname, for: :shortname
+      - if policy(@page).transfer?
+      =f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, :as => :button

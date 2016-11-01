@@ -86,7 +86,7 @@ module ForumsHelper
     end
     if policy(resource).managers?
       items << link_item(t('forums.settings.grants.title'),
-                         url_for([:settings, resource, tab: :grants]), fa: 'group')
+                         url_for([:settings, resource, tab: :groups]), fa: 'group')
     end
 
     dropdown_options(t("#{resource.class_name}.resource_name.management"),

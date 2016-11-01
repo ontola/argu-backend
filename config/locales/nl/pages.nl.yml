@@ -28,9 +28,6 @@ nl:
             understand: "Ik begrijp de consequenties, draag eigenaarschap van deze organisatie over."
       forums:
         get_one: "Een forum toevoegen aan jouw organisatie? <a href='mailto:info@argu.co'>Neem contact met ons op</a> voor de mogelijkheden."
-      groups:
-        title: "Groepen"
-        description: "Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
       advanced:
         delete:
           confirm:

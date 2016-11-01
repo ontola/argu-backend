@@ -6,6 +6,7 @@ en:
     plural: "Groups"
     new: "Add group"
     public: "Public"
+    description: "You can grant certain roles to groups. Members of these groups will for example be allowed to edit content on your forums."
     destroy:
       body: "%{group_memberships_count} members will be destroyed."
     settings:
@@ -15,4 +16,3 @@ en:
         members: 'Members'
         invite: 'Invite'
         grants: 'Grants'
-

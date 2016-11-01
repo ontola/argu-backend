@@ -9,13 +9,11 @@ RSpec.feature 'Manager', type: :feature do
   scenario 'Owner adds a manager' do
     sign_in(owner)
 
-    visit(settings_forum_path(nederland, tab: :grants))
+    visit(settings_forum_path(nederland, tab: :groups))
 
     click_link('Managers')
 
-    expect(page).to have_content 'Update Group'
-
-    click_link('Members')
+    expect(page).to have_content 'Members'
 
     click_link('Add Manager')
     within('form.group') do

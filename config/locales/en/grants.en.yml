@@ -7,3 +7,16 @@ en:
     plural: "grants"
     empty: "No grants"
     new: "Assign new grants"
+    inherited: "This role is inherited from the %{type}"
+  roles:
+    type: "role"
+    plural: "roles"
+    description: "Roles grants certain rights to a group. A role will also apply to the underlying content."
+    empty: "none"
+    types:
+      manager: "Managers can post new content and can edit and remove all existing content."
+      member: "Members can post new content and can edit and remove their own content."
+    list:
+      role_html: "<span data-title='%{description}'>%{role}</span>"
+      inherited_html: "<a href='%{url}' data-title='%{inherited}'><span class='fa fa-info'></span></a>"
+      remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Are you sure to revoke this role?'><span class='fa fa-close'></span></a>"

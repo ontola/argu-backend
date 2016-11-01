@@ -28,7 +28,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general members invite) if is_manager? || staff?
+    tabs.concat %i(members invite general) if is_manager? || staff?
     tabs.concat %i(grants) if is_owner? || staff?
     tabs
   end
@@ -61,7 +61,7 @@ class GroupPolicy < EdgeTreePolicy
   # Make sure that a tab param is actually accounted for
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
-    tab ||= 'general'
+    tab ||= 'members'
     assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
   end

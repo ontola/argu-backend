@@ -210,7 +210,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert_equal page, assigns(:page)
 
-    %i(profile groups grants forums advanced).each do |tab|
+    %i(profile groups forums advanced).each do |tab|
       get settings_page_path(page, tab: tab)
       assert_response 200
       assert_equal page, assigns(:page)
