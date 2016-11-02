@@ -6,6 +6,9 @@ class ForumsController < AuthorizedController
   skip_before_action :authorize_action, only: %i(discover)
   skip_before_action :check_if_registered, only: %i(discover)
   skip_after_action :verify_authorized, only: %i(discover)
+  before_action :redirect_bearer_token
+
+  BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
   def index
     @forums = Forum
@@ -169,6 +172,14 @@ class ForumsController < AuthorizedController
 
   def photo_params_nesting_path
     []
+  end
+
+  # @todo remove when old links are no longer used
+  def redirect_bearer_token
+    access_token = AccessToken.find_by(access_token: params[:at])
+    return unless access_token.present?
+    access_token.increment!(:usages)
+    redirect_to BEARER_TOKEN_TEMPLATE.expand(access_token: access_token.access_token)
   end
 
   def redirect_generic_shortnames
