@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Rails.application.configure do
-  config.host = 'https://argu.co'
+  config.host = ENV['HOSTNAME']
   Rails.application.routes.default_url_options[:host] = config.host
   # Settings specified here will take precedence over those in config/application.rb.
 
