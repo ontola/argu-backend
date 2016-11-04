@@ -114,7 +114,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     assert_equal user.id, token.dig('user', 'id')
     assert_equal 'user', token.dig('user', 'type')
 
-    assert_equal 7200, res['expires_in']
+    assert_equal 1_209_600, res['expires_in']
     assert_equal 'user', res['scope']
     assert_equal 'bearer', res['token_type']
   end

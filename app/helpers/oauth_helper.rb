@@ -11,7 +11,7 @@ module OauthHelper
       Doorkeeper::Application.find(0),
       resource.id,
       'user',
-      2.weeks,
+      Doorkeeper.configuration.access_token_expires_in,
       false
     )
     cookies.encrypted['client_token'] = t.token
