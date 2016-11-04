@@ -63,7 +63,8 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_member?
       if ((user&.profile&.group_ids || []).append(Group::PUBLIC_GROUP_ID) &
-        persisted_edge.granted_group_ids('member')).any?
+        persisted_edge.granted_group_ids('member')).any? ||
+          has_access_token_access_to(persisted_edge.owner)
         member
       end
     end
