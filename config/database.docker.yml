@@ -10,6 +10,8 @@ development: &default
 test:
   <<: *default
   database: argu_test
-production:
+production: &production
   <<: *default
   database: <%= ENV['POSTGRESQL_DATABASE'] %>
+staging:
+  <<: *production
