@@ -20,7 +20,11 @@ module MenuHelper
     resource.potential_action ||= []
     if resource_policy.update?
       resource.potential_action << {
-        '@type': 'http://schema.org/updateAction',
+        '@type': 'http://schema.org/UpdateAction',
+        '@context': {
+          target: 'schema:target',
+          schema: 'http://schema.org/'
+        },
         target: url_for([resource, action: :edit])
       }
     end

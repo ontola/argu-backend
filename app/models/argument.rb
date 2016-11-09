@@ -20,6 +20,7 @@ class Argument < ApplicationRecord
   contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m) }
   contextualize :display_name, as: 'http://schema.org/name'
   contextualize :content, as: 'http://schema.org/text'
+  contextualize :pro, as: 'http://schema.org/option'
 
   def assert_tenant
     return if forum == motion.forum

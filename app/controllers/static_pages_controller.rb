@@ -1,6 +1,32 @@
 # frozen_string_literal: true
 class StaticPagesController < ApplicationController
   # geocode_ip_address
+  VOCABULARIES = {
+    hydra: 'http://www.w3.org/ns/hydra/core#',
+    rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+    schema: 'http://schema.org/',
+    xsd: 'http://www.w3.org/2001/XMLSchema#'
+  }.freeze
+
+  C_MODELS = HashWithIndifferentAccess.new(
+    question: Question,
+    motion: Motion,
+    argument: Argument,
+    comment: Comment,
+    user: User
+  ).freeze
+
+  def context
+    skip_authorization
+    model_context = C_MODELS[params['model']]
+                      .contextualizer
+                      .definitions_for_terms
+                      .deep_transform_keys { |k| k.camelcase(:lower) }
+    render json: {
+      '@context': VOCABULARIES.merge(model_context)
+    }
+  end
 
   def home
     authorize :static_page

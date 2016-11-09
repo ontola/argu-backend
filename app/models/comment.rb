@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Comment < ApplicationRecord
-  include Loggable, Parentable, Trashable, PublicActivity::Common
+  include Loggable, Parentable, Trashable, PublicActivity::Common, Ldable
 
   belongs_to :forum
   belongs_to :commentable, polymorphic: true, required: true
@@ -18,6 +18,10 @@ class Comment < ApplicationRecord
   auto_strip_attributes :body
 
   attr_accessor :is_processed
+
+  contextualize_as_type 'schema:Comment'
+  contextualize_with_id { |c| Rails.application.routes.url_helpers.comment_url(c) }
+  contextualize :body, as: 'schema:text'
 
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.

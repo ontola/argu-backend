@@ -1,18 +1,20 @@
 # frozen_string_literal: true
 class ArgumentsController < AuthorizedController
   include NestedResourceHelper
+  skip_before_action :check_if_registered, only: :index
 
   def index
-    parent_resource = Motion.includes(:arguments).find(params[:motion_id])
     collection = Collection.new(
-      id: url_for([parent_resource, :arguments]),
-      parent: get_parent_resource,
       association: :arguments,
-      collection_entries: policy_scope(parent_resource.arguments)
+      group_by: 'http://schema.org/option',
+      id: url_for([get_parent_resource, :arguments]),
+      member: policy_scope(get_parent_resource.arguments),
+      parent: get_parent_resource,
+      title: 'Arguments'
     )
     respond_to do |format|
       format.json_api do
-        render json: collection, include: {collection_entries: collection.collection_entries}
+        render json: collection, include: {member: collection.member}
       end
     end
   end
@@ -179,7 +181,7 @@ class ArgumentsController < AuthorizedController
 
   def get_parent_resource(opts = request.path_parameters, url_params = params)
     return super unless %w(new create index).include?(params[:action])
-    Motion.find(params[:motion_id] || params[:argument][:motion_id])
+    @parent_resource ||= Motion.find(params[:motion_id] || params[:argument][:motion_id])
   end
 
   def resource_new_params

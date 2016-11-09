@@ -25,6 +25,7 @@ gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 5.0.0'
 gem 'i18n-js', '>= 3.0.0.rc12'
 gem 'tzinfo-data'
+
 gem 'rack-cors', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
 gem 'redis', '~> 3.3.1'

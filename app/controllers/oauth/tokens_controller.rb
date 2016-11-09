@@ -22,7 +22,7 @@ module Oauth
 
     def argu_request?
       match = request.env['HTTP_HOST'] =~ ARGU_HOST_MATCH
-      !match.nil? && match >= 0
+      (!match.nil? && match >= 0) || request.env['HTTP_HOST'] == 'backend'
     end
 
     def is_post?(r)

@@ -1,6 +1,22 @@
 # frozen_string_literal: true
 class CommentsController < AuthorizedController
   include NestedResourceHelper
+  skip_before_action :check_if_registered, only: :index
+
+  def index
+    collection = Collection.new(
+      association: :motions,
+      id: url_for([get_parent_resource, :comments]),
+      member: policy_scope(get_parent_resource.filtered_threads(show_trashed?, params[:page])),
+      parent: get_parent_resource,
+      title: 'Comments'
+    )
+    respond_to do |format|
+      format.json_api do
+        render json: collection, include: {member: collection.member}
+      end
+    end
+  end
 
   def new
     render locals: {
@@ -15,6 +31,7 @@ class CommentsController < AuthorizedController
       format.html do
         redirect_to url_for([authenticated_resource.commentable, anchor: authenticated_resource.identifier])
       end
+      format.json_api { render json: authenticated_resource }
     end
   end
 

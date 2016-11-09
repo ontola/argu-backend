@@ -1,8 +1,25 @@
 # frozen_string_literal: true
 class MotionsController < AuthorizedController
   include NestedResourceHelper
+  skip_before_action :check_if_registered, only: :index
 
   def index
+    parent_resource = Question.includes(:motions).find(params[:question_id])
+    collection = Collection.new(
+      association: :motions,
+      id: url_for([parent_resource, :motions]),
+      member: policy_scope(parent_resource.motions),
+      parent: parent_resource,
+      title: 'Motions'
+    )
+    respond_to do |format|
+      format.json_api do
+        render json: collection, include: {member: collection.member}
+      end
+    end
+  end
+
+  def search
     if params[:q].present? && params[:thing].present?
       @motions = policy_scope(Motion).search(params[:q])
       render json: @motions.present? ? @motions : {data: []}

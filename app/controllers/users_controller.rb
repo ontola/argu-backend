@@ -18,10 +18,17 @@ class UsersController < ApplicationController
   end
 
   def current_actor
-    @profile = current_profile
-    authorize @profile.profileable, :show?
+    if current_profile.present?
+      authorize current_profile.profileable, :show?
+    else
+      skip_authorization
+    end
 
-    render
+    actor = CurrentActor.new(
+      user: current_user,
+      actor: current_profile
+    )
+    render json: actor
   end
 
   def settings

@@ -145,6 +145,7 @@ Rails.application.routes.draw do
             concerns: [:blog_postable, :moveable, :flowable, :trashable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
+    get :search, to: 'motions#search', on: :member
   end
 
   resources :question_answers, path: 'qa', only: [:new, :create]
@@ -284,6 +285,8 @@ Rails.application.routes.draw do
   end
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: 'forums#show'
+
+  get '/ns/core/:model', to: 'static_pages#context'
 
   get '/d/modern', to: 'static_pages#modern'
 
