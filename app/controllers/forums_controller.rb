@@ -157,11 +157,9 @@ class ForumsController < AuthorizedController
   end
 
   def mangager_edges_sql
-    "*.#{current_user
-           .profile
-           .granted_edge_ids(nil, :manager)
-           .join('|')
-           .presence || 'NULL'}.*"
+    ids = current_user.profile.granted_edge_ids(nil, :manager) +
+      current_user.profile.granted_edge_ids(nil, :super_admin)
+    "*.#{ids.compact.uniq.join('|').presence || 'NULL'}.*"
   end
 
   def permit_params

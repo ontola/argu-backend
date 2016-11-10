@@ -11,7 +11,7 @@ class Grant < ApplicationRecord
 
   validates :group, :role, :edge, presence: true
 
-  enum role: {member: 1, manager: 2}
+  enum role: {member: 1, manager: 2, super_admin: 10}
 
   def page
     edge.root.owner

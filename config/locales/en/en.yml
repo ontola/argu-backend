@@ -192,8 +192,7 @@ en:
   users_cancel_button: "I understand the consequences, delete my account"
   users_cancel_string: "remove"
   users_cancel_confirm: "Yes, delete my account."
-  users_cancel_page_owner: "You are the owner of one or multiple pages. If you want to delete your account, please transfer or delete these pages first."
-
+  users_cancel_super_admin: "You are the super admin in one or more places. If you want to delete your account, please first transfer or remove these rights first."
 #vote
   vote_same_twice_warning: "You've already voted on this item."
   twice_warning: "A value in this object has already been entered, please try to edit the existing object."

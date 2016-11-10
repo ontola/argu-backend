@@ -242,7 +242,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'owner should not delete destroy' do
     sign_in owner
 
-    assert_raises(ActiveRecord::DeleteRestrictionError) do
+    assert_differences([['User.count', 0]]) do
       delete user_registration_path,
              params: {
                user: {
@@ -250,6 +250,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                }
              }
     end
+    assert_not_authorized
     assert_analytics_not_collected
   end
 end

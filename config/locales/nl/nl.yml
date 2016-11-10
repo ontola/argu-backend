@@ -193,8 +193,7 @@ nl:
   users_cancel_button: "Ik begrijp de consequenties, verwijder mijn account"
   users_cancel_confirm: "Ja, verwijder mijn account."
   users_cancel_string: "verwijder"
-  users_cancel_page_owner: "Je bent eigenaar van een of meer pagina's. Om je account te verwijderen zal je eerst deze pagina's moeten overzetten of verwijderen."
-
+  users_cancel_super_admin: "Je bent super admin op een of meerdere plekken. Om je account te verwijderen zal je eerst die rechten moeten overdragen of verwijderen."
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
   twice_warning: "Een waarde in het object is al bezet, probeer het bestaande object te bewerken."

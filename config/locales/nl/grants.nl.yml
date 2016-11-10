@@ -21,6 +21,7 @@ nl:
     types:
       manager: "Managers kunnen nieuwe content plaatsen en alle content aanpassen en verwijderen."
       member: "Members kunnen nieuwe content plaatsen en hun eigen content bewerken en verwijderen."
+      super_admin: "Admins kunnen alles aanpassen."
     list:
       role_html: "<span data-title='%{description}'>%{role}</span>"
       inherited_html: "<a href='%{url}' data-title='%{inherited}'><span class='fa fa-info'></span></a>"

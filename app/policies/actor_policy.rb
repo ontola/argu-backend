@@ -31,7 +31,8 @@ class ActorPolicy < RestrictivePolicy
     if owner.class == User
       owner == user
     else
-      owner.owner == user.profile || user.profile.page_ids.include?(owner.id)
+      owner.owner == user.profile ||
+        (user.profile.page_ids(:manager) + user.profile.page_ids(:super_admin)).include?(owner.id)
     end
   end
 end

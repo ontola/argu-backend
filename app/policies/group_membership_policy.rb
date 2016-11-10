@@ -35,6 +35,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
     if record.group.grants.member.present?
       actor && (record.member == actor || (page_policy.update? || staff?))
     else
+      return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
       rule Pundit.policy(context, record.group).remove_member?(record), super
     end
   end

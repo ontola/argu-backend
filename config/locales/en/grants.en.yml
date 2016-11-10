@@ -21,6 +21,7 @@ en:
     types:
       manager: "Managers can post new content and can edit and remove all existing content."
       member: "Members can post new content and can edit and remove their own content."
+      super_admin: "Admins can edit everything."
     list:
       role_html: "<span data-title='%{description}'>%{role}</span>"
       inherited_html: "<a href='%{url}' data-title='%{inherited}'><span class='fa fa-info'></span></a>"

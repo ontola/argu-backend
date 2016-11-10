@@ -98,7 +98,7 @@ class RuleTest < ActionDispatch::IntegrationTest
     [
       [member, 'user not allowed'],
       [freetown_manager, 'ask your boss to buy'],
-      [freetown_owner, 'buy this feature']
+      [freetown_super_admin, 'buy this feature']
     ].each do |user, message|
       sign_in(user)
       get argument_path(member_argument)

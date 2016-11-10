@@ -41,10 +41,6 @@ RSpec.feature 'Account deletion', type: :feature do
            creator: user.profile,
            publisher: user)
   end
-  let(:forum_page) do
-    create(:page,
-           owner: user.profile)
-  end
 
   scenario 'user should delete destroy' do
     [argument, motion, question, project, blog_post, comment].each do |resource|
@@ -70,14 +66,12 @@ RSpec.feature 'Account deletion', type: :feature do
     expect(page).to have_content 'community'
   end
 
-  scenario 'owner should not delete destroy' do
-    forum_page
-
-    sign_in(user)
+  scenario 'super_admin should not delete destroy' do
+    sign_in(create_super_admin(freetown))
     visit settings_path(tab: :advanced)
     click_link 'Delete Argu account'
 
-    expect(page).to have_content 'You are the owner of one or multiple pages. '\
-                                 'If you want to delete your account, please transfer or delete these pages first'
+    expect(page).to have_content 'You are the super admin in one or more places. '\
+                                 'If you want to delete your account, please first transfer or remove these rights'
   end
 end

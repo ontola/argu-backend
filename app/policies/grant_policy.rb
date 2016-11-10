@@ -21,7 +21,7 @@ class GrantPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    return nil if record.group_id == Group::PUBLIC_ID
-    rule is_manager?, super
+    return if record.group_id == Group::PUBLIC_ID || record.super_admin?
+    rule is_manager?, is_super_admin?, super
   end
 end

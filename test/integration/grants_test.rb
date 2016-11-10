@@ -5,6 +5,7 @@ class GrantsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:subject) { create(:grant, edge: freetown.edge, group: group) }
+  let(:super_admin_grant) { create(:grant, edge: freetown.edge, group: group, role: :super_admin) }
   let(:group) { create(:group, parent: freetown.page.edge) }
 
   def default_create_attributes(parent: nil)
@@ -36,5 +37,8 @@ class GrantsTest < ActionDispatch::IntegrationTest
       )
     end
     define_test(hash, :destroy, options: {differences: [['Grant', -1]]})
+    define_test(hash, :destroy, options: {record: :super_admin_grant}) do
+      {staff: exp_res}
+    end
   end
 end

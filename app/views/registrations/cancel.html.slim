@@ -3,12 +3,12 @@
     h1= t('users_cancel_title')
   .box
     section
-      -if @user.profile.pages.count > 0
-        p.danger= t('users_cancel_page_owner')
+      - if @user.profile.grants.super_admin.count.positive?
+        p.danger= t('users_cancel_super_admin')
         ul
-          -@user.profile.pages.each do |page|
-            li=link_to page.display_name, settings_page_path(page)
-      -else
+          - @user.profile.grants.super_admin.each do |grant|
+            li=link_to grant.edge.owner.display_name, grant.edge.owner
+      - else
         =semantic_form_for @user, url: user_registration_path, method: :delete, html: {class: 'confirm'} do |f|
           p= t('users_cancel_info')
           p= t('users_cancel_howto')
