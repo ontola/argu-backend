@@ -35,14 +35,4 @@ class ProfilePolicy < RestrictivePolicy
   def index_votes?
     record.are_votes_public? || Pundit.policy(context, record.profileable).update?
   end
-
-  private
-
-  def is_manager_somewhere?
-    user.profile.grants.manager.present?
-  end
-
-  def is_owner_somewhere?
-    user.profile.pages.present?
-  end
 end
