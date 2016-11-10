@@ -128,7 +128,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
         member: exp_res(response: 302, should: true),
         moderator: exp_res(response: 302, should: true),
         manager: exp_res(response: 302, should: true),
-        owner: exp_res(response: 302, should: true),
+        super_admin: exp_res(response: 302, should: true),
         staff: exp_res(response: 302, should: true)
       }
     end
@@ -139,7 +139,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
         member: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
         moderator: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
         manager: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        owner: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        super_admin: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
         staff: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post])
       }
     end
@@ -150,7 +150,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
         member: exp_res(response: 403),
         moderator: exp_res(response: 403),
         manager: exp_res(response: 403),
-        owner: exp_res(response: 403),
+        super_admin: exp_res(response: 403),
         cairo_member: exp_res(response: 302, should: true, asserts: [assert_redirect_argument]),
         staff: exp_res(response: 302, should: true, asserts: [assert_redirect_argument])
       }
@@ -169,7 +169,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
         creator: exp_res(should: true, response: 200),
         moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized]),
-        owner: exp_res(asserts: [assert_not_authorized]),
+        super_admin: exp_res(asserts: [assert_not_authorized]),
         staff: exp_res(asserts: [assert_not_authorized])
       }
     end
@@ -181,7 +181,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
         creator: exp_res(response: 302, should: true),
         moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized]),
-        owner: exp_res(asserts: [assert_not_authorized]),
+        super_admin: exp_res(asserts: [assert_not_authorized]),
         staff: exp_res(asserts: [assert_not_authorized])
       }
     end
@@ -218,10 +218,10 @@ class CommentsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As owner
+  # As super_admin
   ####################################
-  test 'owner should not delete wipe others comment twice affecting counter caches' do
-    sign_in owner
+  test 'super_admin should not delete wipe other comment twice affecting counter caches' do
+    sign_in create_super_admin(freetown)
 
     assert_equal 1, subject.parent_model.children_count(:comments)
 

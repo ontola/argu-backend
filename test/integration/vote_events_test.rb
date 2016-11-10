@@ -34,12 +34,12 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Owner
+  # As super_admin
   ####################################
-  let(:owner) { create_owner(freetown) }
+  let(:super_admin) { create_super_admin(freetown) }
 
-  test 'owner should get show' do
-    sign_in owner
+  test 'super_admin should get show' do
+    sign_in super_admin
     get vote_event_path(motion.default_vote_event, params: {format: :json_api})
     assert_response 200
   end

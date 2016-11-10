@@ -4,7 +4,7 @@ require 'test_helper'
 class PhasesControllerTest < ActionController::TestCase
   define_freetown
   let!(:page) { argu }
-  let!(:owner) { argu.owner.profileable }
+  let!(:super_admin) { create_super_admin(freetown) }
   let!(:project) { create(:project, parent: freetown.edge) }
   let!(:unpublished_project) do
     create(:project,
@@ -87,31 +87,31 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
 
-  test 'owner should get show published' do
-    sign_in owner
+  test 'super_admin should get show published' do
+    sign_in super_admin
     general_show
   end
 
-  test 'owner should get show unpublished' do
-    sign_in owner
+  test 'super_admin should get show unpublished' do
+    sign_in super_admin
     general_show_unpublished 200
   end
 
-  test 'owner should get edit' do
-    sign_in owner
+  test 'super_admin should get edit' do
+    sign_in super_admin
     general_edit 200
   end
 
-  test 'owner should patch update' do
-    sign_in owner
+  test 'super_admin should patch update' do
+    sign_in super_admin
     general_update 302, true
   end
 
-  test 'owner should patch update finish' do
-    sign_in owner
+  test 'super_admin should patch update finish' do
+    sign_in super_admin
     general_finish 302, true
   end
 

@@ -30,10 +30,10 @@ class SourcesTest < ActionDispatch::IntegrationTest
   ####################################
   # As Owner
   ####################################
-  let(:owner) { create_owner(page) }
+  let(:super_admin) { create_super_admin(page) }
 
-  test 'owner should show settings and all tabs' do
-    sign_in page.owner.profileable
+  test 'super_admin should show settings and all tabs' do
+    sign_in super_admin
 
     get settings_page_source_path(page, source)
     assert_source_settings_shown source
@@ -44,8 +44,8 @@ class SourcesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'owner should update settings' do
-    sign_in page.owner.profileable
+  test 'super_admin should update settings' do
+    sign_in super_admin
 
     put page_source_path(source.page, source),
         params: {

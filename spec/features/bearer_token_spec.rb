@@ -4,10 +4,10 @@ require 'rails_helper'
 RSpec.feature 'Bearer token', type: :feature do
   define_freetown
   let!(:group) { create(:group, parent: freetown.page.edge) }
-  let!(:owner) { create_owner(freetown) }
+  let!(:super_admin) { create_super_admin(freetown) }
 
   scenario 'Owner adds and retracts bearer token' do
-    sign_in(owner)
+    sign_in(super_admin)
 
     visit(settings_group_path(group, tab: :invite))
 

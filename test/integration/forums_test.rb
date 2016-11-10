@@ -199,19 +199,19 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
-  let(:forum_pair) { create_forum_owner_pair(type: :populated_forum) }
+  let(:forum_pair) { create_forum_super_admin_pair(type: :populated_forum) }
 
-  test 'owner should get discover' do
-    sign_in create_owner(holland)
+  test 'super_admin should get discover' do
+    sign_in create_super_admin(holland)
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
   end
 
-  test 'owner should get index' do
-    sign_in create_owner(holland)
+  test 'super_admin should get index' do
+    sign_in create_super_admin(holland)
     get forums_user_path(holland_manager)
     assert_response 200
 
@@ -220,8 +220,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     holland.display_name
   end
 
-  test 'owner should show settings and all tabs' do
-    sign_in create_owner(holland)
+  test 'super_admin should show settings and all tabs' do
+    sign_in create_super_admin(holland)
 
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
@@ -232,8 +232,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'owner should update settings' do
-    sign_in create_owner(holland)
+  test 'super_admin should update settings' do
+    sign_in create_super_admin(holland)
     assert_difference('holland.reload.lock_version', 1) do
       put forum_path(holland),
           params: {
@@ -261,8 +261,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal 2, assigns(:forum).media_objects.count
   end
 
-  test 'owner should not show statistics yet' do
-    sign_in create_owner(holland)
+  test 'super_admin should not show statistics yet' do
+    sign_in create_super_admin(holland)
 
     get statistics_forum_path(holland)
     assert assigns(:forum)

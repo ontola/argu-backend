@@ -186,12 +186,12 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
-  let(:owner) { create_owner(freetown) }
+  let(:super_admin) { create_super_admin(freetown) }
 
-  test 'owner should create and destroy project with notifications' do
-    sign_in owner
+  test 'super_admin should create and destroy project with notifications' do
+    sign_in super_admin
 
     assert_differences([['Project.count', 1]]) do
       post forum_projects_path(freetown), params: {project: attributes_for(:project)}
@@ -208,8 +208,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'owner should create and destroy blog_post with notifications' do
-    sign_in owner
+  test 'super_admin should create and destroy blog_post with notifications' do
+    sign_in super_admin
 
     assert_differences([['BlogPost.count', 1]]) do
       post project_blog_posts_path(project),

@@ -104,14 +104,10 @@ module Argu
           user
         end
 
-        # Makes the given `User` a manager of the `Page` of the record
-        # Creates one if not given
-        # @note overwrites the current owner in the `Page`
-        def create_owner(record, user = nil)
+        def create_super_admin(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
-          page.owner = user.profile
-          assert_equal true, page.save, "Couldn't create owner"
+          create(:group_membership, parent: page.edge.groups.first.edge, member: user.profile)
           user
         end
 
@@ -235,7 +231,7 @@ module Argu
           let(:creator) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
           let(:manager) { create_manager(cascaded_forum(:manager, opts)) } if mdig?(:manager, let, opts)
           let(:moderator) { create_moderator(cascaded_forum(:moderator, opts)) } if mdig?(:moderator, let, opts)
-          let(:owner) { create_owner(cascaded_forum(:owner, opts)) } if mdig?(:owner, let, opts)
+          let(:super_admin) { create_super_admin(cascaded_forum(:owner, opts)) } if mdig?(:owner, let, opts)
           let(:staff) { create(:user, :staff) } if mdig?(:staff, let, opts)
           let(:page) { argu } if mdig?(:page, let, opts)
         end

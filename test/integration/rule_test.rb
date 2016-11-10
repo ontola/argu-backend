@@ -3,7 +3,7 @@ require 'test_helper'
 
 class RuleTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:freetown_owner) { create_owner(freetown) }
+  let!(:freetown_super_admin) { create_super_admin(freetown) }
   let(:freetown_manager) { create_manager(freetown) }
 
   def log_out
@@ -44,11 +44,11 @@ class RuleTest < ActionDispatch::IntegrationTest
            message: 'ask your boss to buy')
   end
 
-  let(:no_show_owners) do
+  let(:no_show_super_admins) do
     create(:rule,
            branch: freetown.edge,
            action: 'show?',
-           role: 'owner',
+           role: 'super_admin',
            model_type: 'Argument',
            trickles: Rule.trickles[:doesnt_trickle],
            message: 'buy this feature')
@@ -73,14 +73,14 @@ class RuleTest < ActionDispatch::IntegrationTest
 
   test 'shows appropriate message level to users' do
     no_show_users
-    no_show_owners
+    no_show_super_admins
 
     get argument_path(member_argument)
     assert_not_authorized
     assert_equal flash[:alert], 'user not allowed'
   end
 
-  test 'shows appropriate message level to owners' do
+  test 'shows appropriate message level to super_admins' do
     sign_in(freetown_manager)
     no_show_users
     no_show_managers
@@ -92,7 +92,7 @@ class RuleTest < ActionDispatch::IntegrationTest
 
   test 'shows the highest level message when multiple are active' do
     no_show_users
-    no_show_owners
+    no_show_super_admins
     no_show_managers
 
     [

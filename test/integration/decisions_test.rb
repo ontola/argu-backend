@@ -3,8 +3,7 @@ require 'test_helper'
 
 class DecisionsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
+  let!(:super_admin) { create_super_admin(freetown) }
   let!(:moderator) { create_member(freetown) }
   let(:group_membership) do
     create(:group_membership,

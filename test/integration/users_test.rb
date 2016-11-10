@@ -6,7 +6,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
-  let(:owner) { create_owner(freetown) }
+  let(:super_admin) { create_super_admin(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
@@ -125,14 +125,14 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   test 'user with actor should get show current actor' do
-    sign_in owner
+    sign_in super_admin
     change_actor freetown.page
 
     get c_a_path, params: {format: :json_api}
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "https://#{Rails.application.config.host_name}/u/#{owner.id}"
+                 "https://#{Rails.application.config.host_name}/u/#{super_admin.id}"
     assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
                  "https://#{Rails.application.config.host_name}/o/#{freetown.page.id}"
   end

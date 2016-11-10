@@ -4,10 +4,10 @@ require 'rails_helper'
 RSpec.feature 'Manager', type: :feature do
   define_freetown('nederland')
   let!(:user) { create_member(nederland) }
-  let!(:owner) { create_owner(nederland) }
+  let!(:super_admin) { create_super_admin(nederland) }
 
-  scenario 'Owner adds a manager' do
-    sign_in(owner)
+  scenario 'Admin adds a manager' do
+    sign_in(super_admin)
 
     visit(settings_forum_path(nederland, tab: :groups))
 

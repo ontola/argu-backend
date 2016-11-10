@@ -69,7 +69,7 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
         member: exp_res(analytics: false, asserts: [assert_not_authorized]),
         moderator: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
         manager: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
-        owner: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
+        super_admin: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
         staff: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published])
       }
     end
@@ -82,7 +82,7 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
       {
         moderator: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
         manager: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
-        owner: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
+        super_admin: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
         staff: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published])
       }
     end

@@ -124,16 +124,16 @@ module Portal
       general_destroy 403
     end
     ####################################
-    # As Owner
+    # As Admin
     ####################################
-    test 'owner should not post create' do
-      sign_in create_owner(freetown)
+    test 'super_admin should not post create' do
+      sign_in create_super_admin(freetown)
 
       general_create 403
     end
 
-    test 'owner should not delete destroy' do
-      sign_in create_owner(freetown)
+    test 'super_admin should not delete destroy' do
+      sign_in create_super_admin(freetown)
 
       general_destroy 403
     end

@@ -3,8 +3,7 @@ require 'test_helper'
 
 class QuestionAnswersControllerTest < ActionController::TestCase
   define_freetown
-  let(:page) { argu }
-  let!(:owner) { argu.owner.profileable }
+  let(:super_admin) { create_super_admin(freetown) }
   let(:question) { create(:question, parent: freetown.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
 
@@ -100,11 +99,11 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
 
-  test 'owner should get new' do
-    sign_in owner
+  test 'super_admin should get new' do
+    sign_in super_admin
 
     get :new,
         params: {
@@ -115,8 +114,8 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  test 'owner should post create' do
-    sign_in owner
+  test 'super_admin should post create' do
+    sign_in super_admin
 
     post :create,
          params: {

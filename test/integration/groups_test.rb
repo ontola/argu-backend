@@ -132,12 +132,12 @@ class GroupsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
-  let(:owner) { create_owner(freetown) }
+  let(:super_admin) { create_super_admin(freetown) }
 
-  test 'owner should post create visible group' do
-    sign_in owner
+  test 'super_admin should post create visible group' do
+    sign_in super_admin
 
     assert_difference('Group.count', 1) do
       post page_groups_path(freetown.page),
@@ -152,16 +152,16 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_page_path(freetown.page, tab: :groups)
   end
 
-  test 'owner should get new' do
-    sign_in owner
+  test 'super_admin should get new' do
+    sign_in super_admin
 
     get new_page_group_path(@freetown.page)
 
     assert_response 200
   end
 
-  test 'owner should get settings and all tabs' do
-    sign_in owner
+  test 'super_admin should show settings and all tabs' do
+    sign_in super_admin
 
     get settings_group_path(@group)
     assert_response 200
@@ -172,8 +172,8 @@ class GroupsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'owner should delete destroy' do
-    sign_in owner
+  test 'super_admin should delete destroy' do
+    sign_in super_admin
 
     assert_difference 'Group.count', -1 do
       delete group_path(@group)

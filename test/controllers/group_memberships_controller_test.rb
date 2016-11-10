@@ -80,19 +80,19 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
 
-  test 'owner should show new' do
-    sign_in create_owner(freetown)
+  test 'super_admin should show new' do
+    sign_in create_super_admin(freetown)
 
     get :new, params: {group_id: group}
 
     assert_response 200
   end
 
-  test 'owner should not post create member' do
-    sign_in create_owner(freetown)
+  test 'super_admin should not post create member' do
+    sign_in create_super_admin(freetown)
 
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -107,8 +107,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_not_collected
   end
 
-  test 'owner should not post create member json' do
-    sign_in create_owner(freetown)
+  test 'super_admin should not post create member json' do
+    sign_in create_super_admin(freetown)
 
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -124,8 +124,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_not_collected
   end
 
-  test 'owner should post create other' do
-    sign_in create_owner(freetown)
+  test 'super_admin should post create other' do
+    sign_in create_super_admin(freetown)
 
     assert_difference 'GroupMembership.count', 1 do
       post :create,
@@ -140,8 +140,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'create')
   end
 
-  test 'owner should post create other json' do
-    sign_in create_owner(freetown)
+  test 'super_admin should post create other json' do
+    sign_in create_super_admin(freetown)
 
     assert_difference 'GroupMembership.count', 1 do
       post :create,
@@ -157,8 +157,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'create')
   end
 
-  test 'owner should delete destroy' do
-    sign_in create_owner(freetown)
+  test 'super_admin should delete destroy' do
+    sign_in create_super_admin(freetown)
 
     group_membership = create(:group_membership,
                               parent: group.edge)
@@ -179,7 +179,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   # As Page
   ####################################
   test 'page should post create other' do
-    sign_in create_owner(freetown)
+    sign_in create_super_admin(freetown)
     change_actor freetown.page
 
     assert_difference 'GroupMembership.count', 1 do

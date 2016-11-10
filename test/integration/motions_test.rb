@@ -73,7 +73,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
         moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
-        owner: exp_res(asserts: [assert_not_authorized], analytics: false),
+        super_admin: exp_res(asserts: [assert_not_authorized], analytics: false),
         staff: exp_res(should: true, response: 200, analytics: true)
       }
     end
@@ -83,7 +83,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       parent: :freetown
     }
     define_test(hash, :create, suffix: ' as page', options: options) do
-      {owner: exp_res(response: 302, should: true, asserts: [assert_as_page])}
+      {super_admin: exp_res(response: 302, should: true, asserts: [assert_as_page])}
     end
     options = {
       parent: :freetown,
@@ -120,7 +120,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
         moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
-        owner: exp_res(asserts: [assert_not_authorized], analytics: false),
+        super_admin: exp_res(asserts: [assert_not_authorized], analytics: false),
         staff: exp_res(response: 302, should: true, analytics: true)
       }
     end

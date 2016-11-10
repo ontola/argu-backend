@@ -221,9 +221,9 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Owner
+  # As Admin
   ####################################
-  test 'owner should get settings and all tabs' do
+  test 'super_admin should get settings and all tabs' do
     sign_in page.owner.profileable
 
     get settings_page_path(page)
@@ -237,7 +237,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'owner should update settings' do
+  test 'super_admin should update settings' do
     sign_in page.owner.profileable
 
     put page_path(page),
@@ -268,7 +268,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 'new_about', assigns(:page).profile.about
   end
 
-  test 'owner should get new' do
+  test 'super_admin should get new' do
     sign_in page.owner.profileable
 
     get new_page_path
@@ -278,7 +278,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body, 'section.page-limit-reached'
   end
 
-  test 'owner should not post create' do
+  test 'super_admin should not post create' do
     sign_in page.owner.profileable
 
     assert_no_difference('Page.count') do
@@ -299,7 +299,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body, 'section.page-limit-reached'
   end
 
-  test 'owner should delete destroy when page not owns a forum' do
+  test 'super_admin should delete destroy when page not owns a forum' do
     init_content
     sign_in page.owner.profileable
 
@@ -317,7 +317,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'owner should not delete destroy when page owns a forum' do
+  test 'super_admin should not delete destroy when page owns a forum' do
     sign_in page_non_public.owner.profileable
     freetown
 
