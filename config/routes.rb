@@ -72,10 +72,6 @@ Rails.application.routes.draw do
     get :move, action: :move
     put :move, action: :move!
   end
-  concern :transferable do
-    get :transfer, action: :transfer
-    put :transfer, action: :transfer!
-  end
   concern :trashable do
     put :untrash, action: :untrash, on: :member
     match '/', action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
@@ -212,8 +208,6 @@ Rails.application.routes.draw do
     resources :sources, only: [:update], path: 's' do
       get :settings, on: :member
     end
-    get :transfer, on: :member
-    put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
     get :edit, to: 'profiles#edit', on: :member
   end

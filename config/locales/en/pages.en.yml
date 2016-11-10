@@ -18,16 +18,6 @@ en:
         about_owner: "Users own an organization. Users can own multiple organizations, but organization can only have a single owner."
         title: "Groups"
         about_managers: "Some groups have management permissions. Members can manage groups and post content in name of the organization. They can also vote on their own name and delete previously placed items."
-        transferred: "Organization transferred"
-        users_only: "Only users can own organizations."
-        transfer:
-          header: "Transfer"
-          confirm:
-            header: "Are you absolutely sure?"
-            body_html: "Transferring this organization means that the ownership of all its contents (including forums!) will be transferred to a different user."
-            howto: "Please enter 'transfer' below to confirm the deletion."
-            string: "transfer"
-            understand: "I understand the consequences, transfer ownership of this organization."
       forums:
         get_one: "Do you want to add a forum for your organisation? Please <a href='mailto:info@argu.co'>contact us</a> for the possibilities."
       advanced:

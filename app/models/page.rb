@@ -64,13 +64,6 @@ class Page < ApplicationRecord
     true
   end
 
-  def transfer_to!(new_profile)
-    return unless new_profile.present? && !new_profile.new_record?
-
-    self.owner = new_profile
-    save!
-  end
-
   private
 
   def create_default_groups

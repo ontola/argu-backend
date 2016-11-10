@@ -122,40 +122,6 @@ class PagesController < ApplicationController
     end
   end
 
-  def transfer
-    @page = Page.find_via_shortname params[:id]
-    authorize @page, :transfer?
-
-    respond_to do |format|
-      format.html { render }
-      format.js { render layout: false }
-    end
-  end
-
-  def transfer!
-    @page = Page.find_via_shortname params[:id]
-    authorize @page, :transfer?
-    @new_profile = User.find_via_shortname!(params[:shortname]).profile
-    unless params[:page][:confirmation_string] == t('pages.settings.managers.transfer.confirm.string')
-      @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
-    end
-    respond_to do |format|
-      if @page.errors.empty? && @page.transfer_to!(@new_profile)
-        reset_current_actor
-        flash[:success] = t('pages.settings.managers.transferred')
-        if policy(@page).update?
-          format.html { redirect_to settings_page_path(@page) }
-        elsif @page.forums.present?
-          format.html { redirect_to forum_path(@page.forums.first) }
-        else
-          format.html { redirect_to(root_path) }
-        end
-      else
-        format.html { render 'transfer', locals: {no_close: true} }
-      end
-    end
-  end
-
   private
 
   def check_if_registered

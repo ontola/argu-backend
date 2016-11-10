@@ -18,16 +18,6 @@ nl:
         about_owner: "Gebruikers zijn eigenaar van een organisatie. Gebruikers kunnen meerdere organisaties bezitten, maar een organisatie kan maar één eigenaar hebben."
         title: "Groepen"
         about_managers: "Groepen kunnen beheerrechten hebben. De leden uit deze groepen kunnen groepen beheren en content plaatsen namens de organisatie. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
-        transferred: "Organisatie overgedragen"
-        users_only: "Alleen gebruikers kunnen organisaties bezitten"
-        transfer:
-          header: "Overdracht"
-          confirm:
-            header: "Weet je het daadwerkelijk zeker?"
-            body_html: "Het overdragen van de organisatie zal eigenaarschap van <b>alle content</b> van de organisatie en bijbehorende <b>forums</b> overdragen!"
-            howto: "Voer hieronder 'overdragen' in om te bevestigen."
-            string: "overdragen"
-            understand: "Ik begrijp de consequenties, draag eigenaarschap van deze organisatie over."
       forums:
         get_one: "Een forum toevoegen aan jouw organisatie? <a href='mailto:info@argu.co'>Neem contact met ons op</a> voor de mogelijkheden."
       advanced:

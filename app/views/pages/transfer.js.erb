@@ -1,7 +1,0 @@
-var node = $('.container').append("<%= escape_javascript render(template: 'pages/transfer.html', layout: false, locals: {resource: @page}) %>")[0].querySelectorAll('[data-react-class]')[0];
-
-window.setTimeout(function () {
-    $('body').addClass('modal-opened');
-}, 200);
-
-Turbolinks.dispatch('turbolinks:load');

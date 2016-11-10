@@ -112,12 +112,6 @@ class PagePolicy < EdgeTreePolicy
     false
   end
 
-  # TODO: Don't forget to remove the note that only argu can currently
-  # transfer page ownership in forums/settings?tab=managers
-  def transfer?
-    rule is_admin?, staff?
-  end
-
   # Make sure that a tab param is actually accounted for
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
