@@ -27,4 +27,4 @@
           span.fa.fa-gear
           span.icon-left = t('forums.settings.title')
         /li= link_to t('forums.settings.title'), settings_forum_path(forum), class: 'btn' if fo_po.edit?
-        /li= link_to t('forums.settings.advanced'), settings_forum_path(forum, tab: :advanced), class: 'btn' if fo_po.is_owner?
+        /li= link_to t('forums.settings.advanced'), settings_forum_path(forum, tab: :advanced), class: 'btn' if fo_po.is_super_admin?

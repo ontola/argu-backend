@@ -26,28 +26,28 @@ class MotionPolicy < EdgeTreePolicy
 
   def permitted_publish_types
     publish_types = Publication.publish_types
-    is_manager? || is_owner? || staff? ? publish_types : publish_types.except('schedule')
+    is_manager? || is_super_admin? || staff? ? publish_types : publish_types.except('schedule')
   end
 
   def convert?
-    rule is_manager?, is_owner?, staff?
+    rule is_manager?, is_super_admin?, staff?
   end
 
   def create?
     assert_publish_type
     return create_without_question? unless record.parent_model.is_a?(Question)
     return create_expired? if has_expired_ancestors?
-    rule is_member?, is_manager?, is_owner?, super
+    rule is_member?, is_manager?, is_super_admin?, super
   end
 
   def create_without_question?
-    rule is_member?, is_manager?, is_owner?, staff?
+    rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
   def destroy?
     (is_creator? && (record.arguments.length < 2 || 15.minutes.ago < record.created_at)) ||
       is_manager? ||
-      is_owner? ||
+      is_super_admin? ||
       super
   end
 
@@ -57,19 +57,19 @@ class MotionPolicy < EdgeTreePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_manager?, is_owner?, super
+    rule is_member?, is_manager?, is_super_admin?, super
   end
 
   def trash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def untrash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def update?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def vote?

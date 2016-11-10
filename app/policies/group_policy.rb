@@ -33,12 +33,12 @@ class GroupPolicy < EdgeTreePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i(members invite general) if is_manager? || staff?
-    tabs.concat %i(grants advanced) if is_owner? || staff?
+    tabs.concat %i(grants advanced) if is_super_admin? || staff?
     tabs
   end
 
   def show?
-    rule is_member?, is_manager?, is_owner?, staff?
+    rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
   def create?
@@ -51,7 +51,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def destroy?
     return false unless record.deletable
-    rule is_owner?, super
+    rule is_super_admin?, super
   end
 
   def settings?

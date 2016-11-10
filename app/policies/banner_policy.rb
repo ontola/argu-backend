@@ -39,14 +39,14 @@ class BannerPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule is_manager?, is_owner?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def destroy?
-    rule is_manager?, is_owner?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def update?
-    rule is_manager?, is_owner?, super
+    rule is_manager?, is_super_admin?, super
   end
 end

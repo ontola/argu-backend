@@ -34,7 +34,7 @@ class PagePolicy < EdgeTreePolicy
       super if persisted_edge
     end
 
-    def is_owner?
+    def is_super_admin?
       super if persisted_edge
     end
   end
@@ -50,7 +50,7 @@ class PagePolicy < EdgeTreePolicy
       attributes.append :visibility
       attributes.append(shortname_attributes: %i(shortname))
     end
-    attributes.append :visibility if is_owner?
+    attributes.append :visibility if is_super_admin?
     attributes.concat %i(page_id confirmation_string) if change_owner?
     attributes.append(profile_attributes: ProfilePolicy
                                             .new(context,
@@ -67,7 +67,7 @@ class PagePolicy < EdgeTreePolicy
     tabs = []
     tabs.concat %i(profile groups) if is_manager? || staff?
     tabs.concat %i(sources) if staff?
-    tabs.concat %i(forums advanced) if is_owner? || staff?
+    tabs.concat %i(forums advanced) if is_super_admin? || staff?
     tabs
   end
 
@@ -92,7 +92,7 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def update?
-    rule is_manager?, is_owner?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def list?
@@ -100,7 +100,7 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def list_members?
-    rule is_owner?, staff?
+    rule is_super_admin?, staff?
   end
 
   def pages_left?
@@ -115,11 +115,11 @@ class PagePolicy < EdgeTreePolicy
   # TODO: Don't forget to remove the note that only argu can currently
   # transfer page ownership in forums/settings?tab=managers
   def transfer?
-    rule is_owner?, staff?
+    rule is_admin?, staff?
   end
 
   def managers?
-    rule is_owner?, staff?
+    rule is_admin?, staff?
   end
 
   # Make sure that a tab param is actually accounted for

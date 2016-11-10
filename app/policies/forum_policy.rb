@@ -33,7 +33,7 @@ class ForumPolicy < EdgeTreePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i(general advanced shortnames banners) if is_manager? || staff?
-    tabs.concat %i(groups) if is_owner? || staff?
+    tabs.concat %i(groups) if is_super_admin? || staff?
     tabs
   end
 
@@ -59,17 +59,17 @@ class ForumPolicy < EdgeTreePolicy
       if @record.hidden?
         show?.presence || raise(ActiveRecord::RecordNotFound)
       else
-        [(1 if @record.closed?), show?, is_manager?, is_owner?]
+        [(1 if @record.closed?), show?, is_manager?, is_super_admin?]
       end
     rule level
   end
 
   def list_members?
-    rule is_owner?, staff?
+    rule is_super_admin?, staff?
   end
 
   def managers?
-    rule is_owner?, staff?
+    rule is_super_admin?, staff?
   end
 
   def max_shortname_count?

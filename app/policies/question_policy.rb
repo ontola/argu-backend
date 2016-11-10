@@ -25,7 +25,7 @@ class QuestionPolicy < EdgeTreePolicy
 
   def permitted_publish_types
     publish_types = Publication.publish_types
-    is_manager? || is_owner? || staff? ? publish_types : publish_types.except('schedule')
+    is_manager? || is_super_admin? || staff? ? publish_types : publish_types.except('schedule')
   end
 
   def convert
@@ -47,13 +47,13 @@ class QuestionPolicy < EdgeTreePolicy
       15.minutes.ago < record.created_at ||
       record.motions.count.zero?) ||
       is_manager? ||
-      is_owner? ||
+      is_super_admin? ||
       super
   end
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_manager?, is_owner?, super
+    rule is_member?, is_manager?, is_super_admin?, super
   end
 
   def trash?

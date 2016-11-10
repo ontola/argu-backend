@@ -11,15 +11,15 @@ class ShortnamePolicy < EdgeTreePolicy
   end
 
   def create?
-    r, m = rule is_manager?, is_owner?, super
+    r, m = rule is_manager?, is_super_admin?, super
     return r, m if r && !record.forum.shortnames_depleted?
   end
 
   def update?
-    rule is_manager?, is_owner?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def destroy?
-    rule is_manager?, is_owner?, super
+    rule is_manager?, is_super_admin?, super
   end
 end

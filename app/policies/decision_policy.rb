@@ -36,13 +36,13 @@ class DecisionPolicy < EdgeTreePolicy
     assert_publish_type
     return nil if record.edge.parent.decisions.unpublished.present?
     if record.forwarded?
-      rule decision_is_assigned?, is_manager?, is_owner?, super
+      rule decision_is_assigned?, is_manager?, is_super_admin?, super
     else
       rule decision_is_assigned?
     end
   end
 
   def update?
-    rule decision_is_assigned?, is_creator?, is_manager?, is_owner?, super
+    rule decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super
   end
 end

@@ -20,28 +20,28 @@ class ArgumentPolicy < EdgeTreePolicy
 
   def create?
     return create_expired? if has_expired_ancestors?
-    rule is_member?, is_manager?, is_owner?, super
+    rule is_member?, is_manager?, is_super_admin?, super
   end
 
   def update?
-    rule (is_member? && is_creator?), is_manager?, is_owner?, super
+    rule (is_member? && is_creator?), is_manager?, is_super_admin?, super
   end
 
   def trash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def untrash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def destroy?
     creator = 1.hour.ago <= record.created_at ? is_creator? : nil
-    rule creator, is_manager?, is_owner?, super
+    rule creator, is_manager?, is_super_admin?, super
   end
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_manager?, is_owner?, super
+    rule is_member?, is_manager?, is_super_admin?, super
   end
 end

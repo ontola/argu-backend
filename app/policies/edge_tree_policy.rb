@@ -44,6 +44,10 @@ class EdgeTreePolicy < RestrictivePolicy
       8
     end
 
+    def super_admin
+      10
+    end
+
     def is_member?
       return if persisted_edge.nil?
       member if (user.profile.group_ids & persisted_edge.granted_group_ids('member')).any?
@@ -74,16 +78,16 @@ class EdgeTreePolicy < RestrictivePolicy
     def is_manager?
       return if persisted_edge.nil?
       return manager if (user.profile.group_ids & persisted_edge.granted_group_ids('manager')).any?
-      is_owner?
+      is_super_admin?
     end
 
-    def is_owner?
+    def is_super_admin?
       return if persisted_edge.nil?
-      owner if persisted_edge.get_parent(:page).owner.owner == user.profile
+      return super_admin if (user.profile.group_ids & persisted_edge.granted_group_ids('super_admin')).any?
     end
 
     def is_manager_up?
-      is_manager? || is_owner? || staff?
+      is_manager? || is_super_admin? || staff?
     end
   end
   include Roles
@@ -119,7 +123,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def change_owner?
-    rule is_owner?, staff?
+    rule is_super_admin?, staff?
   end
 
   def convert?
@@ -145,7 +149,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def follow?
-    rule is_member?, is_moderator?, is_owner?, staff?
+    rule is_member?, is_moderator?, is_super_admin?, staff?
   end
 
   # Checks whether indexing children of a has_many relation is allowed
@@ -167,7 +171,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def log?
-    rule is_moderator?, is_owner?, staff?
+    rule is_moderator?, is_super_admin?, staff?
   end
 
   # Move items between forums or converting items
@@ -176,7 +180,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def show_unpublished?
-    rule is_creator?, is_moderator?, is_manager?, is_owner?, staff?
+    rule is_creator?, is_moderator?, is_manager?, is_super_admin?, staff?
   end
 
   def create_expired?

@@ -53,7 +53,7 @@ class VotePolicy < EdgeTreePolicy
     if record.parent_model.is_a?(VoteEvent)
       rule is_group_member?
     else
-      rule is_member?, is_manager?, is_owner?, super
+      rule is_member?, is_manager?, is_super_admin?, super
     end
   end
 

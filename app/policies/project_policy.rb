@@ -32,38 +32,38 @@ class ProjectPolicy < EdgeTreePolicy
     assert_publish_type
     return unless active_for_user?(:projects, user)
     return create_expired? if has_expired_ancestors?
-    rule is_moderator?, is_manager?, is_owner?, super
+    rule is_moderator?, is_manager?, is_super_admin?, super
   end
 
   def destroy?
     (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
       is_manager? ||
-      is_owner? ||
+      is_super_admin? ||
       super
   end
 
   def list?
     if record.is_published? && !record.is_trashed?
-      rule is_member?, is_manager?, is_owner?, super
+      rule is_member?, is_manager?, is_super_admin?, super
     else
-      rule is_moderator?, is_manager?, is_owner?, super
+      rule is_moderator?, is_manager?, is_super_admin?, super
     end
   end
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_moderator?, is_manager?, is_owner?, super
+    rule is_member?, is_moderator?, is_manager?, is_super_admin?, super
   end
 
   def trash?
-    rule is_moderator?, is_creator?, is_manager?, is_owner?, super
+    rule is_moderator?, is_creator?, is_manager?, is_super_admin?, super
   end
 
   def untrash?
-    rule is_moderator?, is_creator?, is_manager?, is_owner?, super
+    rule is_moderator?, is_creator?, is_manager?, is_super_admin?, super
   end
 
   def update?
-    rule is_moderator?, is_manager?, is_owner?, super
+    rule is_moderator?, is_manager?, is_super_admin?, super
   end
 end

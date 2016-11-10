@@ -25,7 +25,7 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def report?
@@ -38,11 +38,11 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def trash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def untrash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def update?
