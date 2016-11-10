@@ -76,23 +76,6 @@ module ForumsHelper
                        data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
   end
 
-  def manage_button_dropdown_items(resource)
-    items = []
-    items << link_item(t('forums.settings.title'),
-                       url_for([:settings, resource]), fa: 'gear')
-    if policy(resource).statistics?
-      items << link_item(t('forums.statistics.title'),
-                         url_for([:statistics, resource]), fa: 'pie-chart')
-    end
-    if policy(resource).managers?
-      items << link_item(t('forums.settings.grants.title'),
-                         url_for([:settings, resource, tab: :groups]), fa: 'group')
-    end
-
-    dropdown_options(t("#{resource.class_name}.resource_name.management"),
-                     [{items: items}], fa: 'fa-gear')
-  end
-
   def options_for_forum_visibility
     Forum.visibilities.keys.map { |n| [n, n] }
   end
