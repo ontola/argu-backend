@@ -22,6 +22,7 @@ module Trashable
     self.class.transaction do
       decrement_counter_cache if respond_to?(:decrement_counter_cache) && !is_trashed?
       publications.destroy_all if respond_to?(:is_published?) && !is_published?
+      happening.update(is_published: false) if respond_to?(:happening)
       if respond_to?(:trashed_at)
         update(trashed_at: DateTime.current)
       else
@@ -34,6 +35,7 @@ module Trashable
   def untrash
     self.class.transaction do
       increment_counter_cache if respond_to?(:increment_counter_cache) && is_trashed?
+      happening.update(is_published: true) if respond_to?(:happening) && is_published?
       if respond_to?(:trashed_at)
         update(trashed_at: nil)
       else
