@@ -34,10 +34,14 @@ module ActivePublishable
 
   module ClassMethods
     def published_for_user(user)
-      where("#{class_name.tableize}.is_published = true OR #{class_name.tableize}.publisher_id = ? "\
-            "OR #{class_name.tableize}.forum_id IN (?)",
-            user&.id,
-            user&.profile&.forum_ids(:manager) || [])
+      if user.present?
+        owner_ids = user.managed_pages.joins(:profile).pluck(:'profiles.id').append(user.profile.id)
+        forum_ids = user.profile.forum_ids(:manager)
+      end
+      where("(#{class_name.tableize}.is_published = true OR #{class_name.tableize}.creator_id IN (?) "\
+            "OR #{class_name.tableize}.forum_id IN (?))",
+            owner_ids || [],
+            forum_ids || [])
     end
   end
 end

@@ -47,9 +47,13 @@ class Activity < PublicActivity::Activity
   end
 
   def self.published_for_user(user)
-    where('activities.is_published = true OR activities.owner_id = ? OR activities.forum_id IN (?)',
-          user&.profile&.id,
-          user&.profile&.forum_ids(:manager) || [])
+    if user.present?
+      owner_ids = user.managed_pages.joins(:profile).pluck(:'profiles.id').append(user.profile.id)
+      forum_ids = user.profile.forum_ids(:manager)
+    end
+    where('activities.is_published = true OR activities.owner_id IN (?) OR activities.forum_id IN (?)',
+          owner_ids || [],
+          forum_ids || [])
   end
 
   private
