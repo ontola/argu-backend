@@ -15,6 +15,7 @@ class ProjectPolicy < EdgeTreePolicy
       super.published_for_user(user)
     end
   end
+  include ApplicationHelper
 
   def permitted_attributes
     attributes = super
@@ -34,6 +35,7 @@ class ProjectPolicy < EdgeTreePolicy
   end
 
   def create?
+    return unless active_for_user?(:projects, user)
     rule is_moderator?, is_manager?, is_owner?, super
   end
 
