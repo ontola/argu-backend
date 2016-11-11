@@ -21,7 +21,7 @@ module ActivePublishable
   end
 
   def is_draft?
-    publications.empty?
+    publications.where('published_at IS NOT NULL').empty?
   end
 
   def is_published?
