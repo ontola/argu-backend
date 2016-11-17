@@ -23,6 +23,7 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def create?
+    return if record.edge.parent.owner_type == 'Argument' && record.edge.parent.owner.motion.closed?
     assert_siblings! if record.try(:parent_id).present?
     rule is_member?, super
   end
