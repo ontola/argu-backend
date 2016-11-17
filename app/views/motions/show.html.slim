@@ -27,5 +27,6 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                                   buttons_form_on_empty: false,
                                   buttons_options: {data: remote_unless_user},
                                   buttons_text: {pro: t('add_type', type: argument_type).capitalize, con: t('add_type', type: argument_type).capitalize},
-                                  header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize})
+                                  header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize},
+                                  show_new_buttons: policy(motion).create_child?(:arguments).present?)
 =render partial: 'discussions/new', locals: {forum: motion.forum}

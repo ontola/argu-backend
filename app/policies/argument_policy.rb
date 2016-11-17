@@ -19,6 +19,7 @@ class ArgumentPolicy < EdgeTreePolicy
   end
 
   def create?
+    return if record.edge.parent.owner.closed?
     rule is_member?, is_manager?, is_owner?, super
   end
 

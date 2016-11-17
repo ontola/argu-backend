@@ -21,8 +21,9 @@
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
                     .icon-left= argument.comments_count
-        li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'pro') do
-          span= t('arguments.new.pro')
+        - unless model.closed?
+          li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'pro') do
+            span= t('arguments.new.pro')
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con.first(5).each do |argument|
           li= link_to argument_path(argument.id)
@@ -34,8 +35,9 @@
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
                     .icon-left= argument.comments_count
-        li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'con') do
-          span= t('arguments.new.con')
+        - unless model.closed?
+          li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'con') do
+            span= t('arguments.new.con')
     - else
       ul.box-list.box-list--arguments
         li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'pro') do
