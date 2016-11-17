@@ -29,6 +29,8 @@ class Activity < PublicActivity::Activity
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
   scope :published, ->(show_unpublished = false) { show_unpublished ? all : where(is_published: true) }
 
+  before_create :touch_edges
+
   def action
     key.split('.').last
   end
@@ -54,6 +56,13 @@ class Activity < PublicActivity::Activity
     where('activities.is_published = true OR activities.owner_id IN (?) OR activities.forum_id IN (?)',
           owner_ids || [],
           forum_ids || [])
+  end
+
+  def touch_edges
+    return if %w(destroy trash untrash).include?(action)
+    trackable.edge.touch(:last_activity_at) if trackable.respond_to?(:edge) && trackable.edge.persisted?
+    return unless recipient.respond_to?(:edge) && recipient.edge.persisted? && !%w(Vote).include?(trackable_type)
+    recipient.edge.touch(:last_activity_at)
   end
 
   private

@@ -11,7 +11,7 @@ module Edgeable
             required: true
     has_many :grants, through: :edge
     accepts_nested_attributes_for :edge
-    delegate :persisted_edge, to: :edge
+    delegate :persisted_edge, :last_activity_at, to: :edge
 
     def root_object?
       false
