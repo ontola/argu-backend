@@ -323,12 +323,12 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:office) { create(:place, address: {'city' => 'Utrecht', 'country_code' => 'nl', 'postcode' => '3583GP'}) }
   let(:nederland) { create(:place, address: {'country_code' => 'nl'}) }
   let(:inhabitants) do
-    create(:home_placement, place: office, placeable: create_member(freetown, create(:user)))
+    create(:home_placement, place: office, placeable: create_follower(freetown, create(:user)))
 
-    create(:home_placement, place: office, placeable: create_member(inhabited, create(:user)))
-    create(:home_placement, place: binnenhof, placeable: create_member(inhabited, create(:user)))
-    create(:home_placement, place: paleis, placeable: create_member(inhabited, create(:user)))
-    create(:home_placement, place: nederland, placeable: create_member(inhabited, create(:user)))
+    create(:home_placement, place: office, placeable: create_follower(inhabited, create(:user)))
+    create(:home_placement, place: binnenhof, placeable: create_follower(inhabited, create(:user)))
+    create(:home_placement, place: paleis, placeable: create_follower(inhabited, create(:user)))
+    create(:home_placement, place: nederland, placeable: create_follower(inhabited, create(:user)))
   end
 
   test 'staff should get discover' do

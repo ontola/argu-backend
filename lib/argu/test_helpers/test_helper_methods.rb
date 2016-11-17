@@ -146,6 +146,12 @@ module Argu
           [forum, user]
         end
 
+        def create_follower(item, user = nil)
+          user ||= create(:user)
+          create(:follow, followable: item.edge, follower: user)
+          user
+        end
+
         def create_resource(klass, attributes = {}, options = {})
           if klass != Forum
             options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?

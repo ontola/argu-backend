@@ -117,12 +117,8 @@ class ForumsController < AuthorizedController
   def city_count(forum)
     cities = Hash.new(0)
     User
-      .where(id: forum
-                   .edge
-                   .group_memberships
-                   .joins(:member)
-                   .where(profiles: {profileable_type: 'User'})
-                   .pluck('profiles.profileable_id'))
+      .joins(:follows)
+      .where(follows: {followable: forum.edge})
       .includes(home_placement: :place)
       .map { |u| u.home_placement&.place&.address.try(:[], 'city') }
       .each { |v| cities.store(v, cities[v] + 1) }
