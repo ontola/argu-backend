@@ -14,6 +14,7 @@ export const SmallVoteContainer = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
+        closed: React.PropTypes.bool,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         objectId: React.PropTypes.number,

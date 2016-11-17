@@ -19,6 +19,7 @@ import { IntlMixin } from 'react-intl';
 export const BigVoteContainer = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
+        closed: React.PropTypes.bool,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         groups: React.PropTypes.array,
@@ -70,7 +71,7 @@ export const BigVoteContainer = React.createClass({
         let voteButtonsComponent, voteResultsComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
-            voteResultsComponent = <VoteResults {...this.state} showResults={this.state.currentVote !== 'abstain'}/>;
+            voteResultsComponent = <VoteResults {...this.state} showResults={this.props.closed || this.state.currentVote !== 'abstain'}/>;
         } else if (this.state.actor.actor_type === 'Page') {
             voteResultsComponent = <VoteResults {...this.state} {...this.props} showResults={true}/>;
         }

@@ -30,6 +30,7 @@ class VotePolicy < EdgeTreePolicy
   include Roles
 
   def create?
+    return if record.edge.parent.owner.closed?
     rule is_member?, is_manager?, is_owner?, super
   end
 

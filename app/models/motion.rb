@@ -100,6 +100,10 @@ class Motion < ApplicationRecord
     title
   end
 
+  def closed?
+    question&.expired? || false
+  end
+
   def creator
     super || Profile.first_or_create(name: 'Onbekend')
   end

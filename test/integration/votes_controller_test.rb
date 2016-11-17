@@ -4,6 +4,8 @@ require 'test_helper'
 class VotesControllerTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
+  let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown.edge) }
+  let(:closed_question_motion) { create(:motion, parent: closed_question.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let!(:vote) { create(:vote, parent: motion.edge) }
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
@@ -60,6 +62,21 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
+  end
+
+  test 'user should not post create for motion of closed question' do
+    sign_in user
+    closed_question_motion
+
+    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
+      post motion_votes_path(closed_question_motion),
+           params: {
+             for: :pro,
+             format: :json
+           }
+    end
+
+    assert_not_authorized
   end
 
   test 'user should post create json_api' do

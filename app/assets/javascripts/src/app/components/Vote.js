@@ -82,6 +82,7 @@ export const VoteButtons = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
+        closed: React.PropTypes.bool,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         objectId: React.PropTypes.number,
@@ -113,6 +114,9 @@ export const VoteButtons = React.createClass({
     },
 
     render () {
+        if (this.props.closed) {
+            return <div></div>;
+        }
         const voteButtons = ['pro', 'neutral' , 'con']
             .map((side, i) => {
                 return <VoteButton actor={this.props.actor}
