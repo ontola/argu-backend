@@ -8,6 +8,9 @@ tr
   td.mail-box
     table
       tr
+        td.mail-h3.decision-t
+          =link_to item.display_name, url_for(item)
+      tr
         td.mail-p.mail-grey-link
           =link_to HTML_Truncator.truncate(markdown_to_plaintext(item.content), 250, {length_in_chars: true, ellipsis: (' ...')}), url_for(item)
   td.mail-p
