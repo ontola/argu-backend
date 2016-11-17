@@ -36,7 +36,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               span.icon-left= t('forums.settings.title')
           - if current_user.present?
             li.float-right
-              ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@forum, follow_types: [:reactions, :never], trigger_class: 'btn--transparant')
+              ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@forum, trigger_class: 'btn--transparant')
   - if policy(@forum).show?
     .btns-center-container
       -if can_start_discussion?(@forum)
