@@ -22,6 +22,11 @@ class QuestionPolicy < EdgeTreePolicy
     attributes
   end
 
+  def permitted_publish_types
+    publish_types = Publication.publish_types
+    is_manager? || is_owner? || staff? ? publish_types : publish_types.except('schedule')
+  end
+
   def convert
     rule move?
   end
@@ -31,6 +36,7 @@ class QuestionPolicy < EdgeTreePolicy
   end
 
   def create?
+    assert_publish_type
     rule is_member?, is_manager?, super
   end
 

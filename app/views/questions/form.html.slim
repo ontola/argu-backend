@@ -42,6 +42,7 @@
               - if policy(question).move?
                 =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
+          =render partial: 'publications/form', locals: {f: f, resource: question}
         section.section--footer
           - if question.new_record?
             =render partial: 'profiles/profile_current'

@@ -54,10 +54,15 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     sign_in member
 
     # Notification for follower of Forum
-    assert_differences([['Question.count', 1], ['Notification.count', 1]]) do
+    assert_differences([['Question.count', 1], ['Notification.count', 0]]) do
       post forum_questions_path(freetown),
            params: {question: attributes_for(:question)}
     end
+
+    assert_differences([['Question.published.count', 1], ['Notification.count', 1]]) do
+      reset_publication(Publication.last)
+    end
+
     assert_equal Notification.last.notification_type, 'reaction'
 
     assert_differences([['Question.trashed.count', 1], ['Notification.count', -1]]) do

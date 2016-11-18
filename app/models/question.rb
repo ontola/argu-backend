@@ -2,7 +2,7 @@
 class Question < ApplicationRecord
   include Trashable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible, Loggable,
           BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
-          Ldable
+          Ldable, ActivePublishable
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'

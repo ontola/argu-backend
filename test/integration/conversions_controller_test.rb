@@ -258,8 +258,8 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, Activity.where(trackable: question).count
     assert_equal question_blog_post.reload.blog_postable_type, 'Motion'
 
-    # Activity for Create and Convert
-    assert_equal 2, edge.owner.activities.count
+    # Activity for Create, Publish and Convert
+    assert_equal 3, edge.owner.activities.count
   end
 
   test 'staff should post convert project question' do
