@@ -11,10 +11,7 @@ class ApplicationService
     @attributes = attributes
     @actions = {}
     @options = options
-    if @attributes[:edge_attributes].try(:[], :argu_publication_attributes).present? &&
-        !(resource.is_a?(Edge) ? resource : resource.edge).is_published?
-      prepare_argu_publication_attributes
-    end
+    prepare_argu_publication_attributes if resource.is_publishable? && !resource.is_published?
     assign_attributes
     set_nested_associations
     unless resource.is_a?(Activity) || resource.is_a?(Grant)
@@ -101,7 +98,10 @@ class ApplicationService
   end
 
   def prepare_argu_publication_attributes
-    attributes = @attributes[:edge_attributes][:argu_publication_attributes]
+    @attributes[:edge_attributes] ||= {}
+    attributes = @attributes[:edge_attributes][:argu_publication_attributes] || {}
+    attributes[:publish_type] ||= resource.argu_publication&.published_at.present? ? 'schedule' : 'direct'
+
     attributes[:published_at] = 10.seconds.from_now if attributes[:publish_type] == 'direct'
     attributes[:published_at] = nil if attributes[:publish_type] == 'draft'
     if resource.new_record? ||

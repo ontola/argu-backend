@@ -7,19 +7,16 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
   let!(:project) do
     create(:project,
            :with_follower,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: freetown.edge)
   end
   let(:subject) do
     create(:blog_post,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            publisher: creator,
            parent: project.edge)
   end
   let(:trashed_subject) do
     create(:blog_post,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            trashed_at: Time.current,
            parent: project.edge)
@@ -79,10 +76,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
     options = {
       parent: :project,
       analytics: stats_opt('blog_posts', 'create_success'),
-      attributes: {
-        happening_attributes: {happened_at: DateTime.current},
-        edge_attributes: {argu_publication_attributes: {publish_type: :direct}}
-      }
+      attributes: {happening_attributes: {happened_at: DateTime.current}}
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {

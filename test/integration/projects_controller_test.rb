@@ -5,10 +5,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let!(:subject) do
-    p = create(:project,
-               edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
-               publisher: creator,
-               parent: freetown.edge)
+    p = create(:project, publisher: creator, parent: freetown.edge)
     create(:stepup,
            record: p,
            forum: freetown,
@@ -16,7 +13,10 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     p
   end
   let(:unpublished) do
-    p = create(:project, publisher: creator, parent: freetown.edge)
+    p = create(:project,
+               publisher: creator,
+               parent: freetown.edge,
+               edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
     create(:stepup,
            record: p,
            forum: freetown,
@@ -68,10 +68,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     options = {
       parent: :freetown,
       analytics: stats_opt('projects', 'create_success'),
-      attributes: {
-        happened_at: DateTime.current,
-        edge_attributes: {argu_publication_attributes: {publish_type: :direct}}
-      }
+      attributes: {happened_at: DateTime.current}
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {
@@ -195,7 +192,6 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                    analytics: stats_opt('projects', 'create_success'),
                    attributes: attributes_for(
                      :project,
-                     edge_attributes: {argu_publication_attributes: {publish_type: :direct}},
                      stepups_attributes: {'12321' => {moderator: 'moderator_name'}},
                      phases_attributes: {'12321' => attributes_for(:phase)}
                    ),

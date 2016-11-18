@@ -14,6 +14,10 @@ class Conversion
     @klass = klass
   end
 
+  def is_publishable?
+    false
+  end
+
   def nested_attributes_options?
     false
   end

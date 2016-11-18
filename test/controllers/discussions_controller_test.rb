@@ -3,12 +3,12 @@ require 'test_helper'
 
 class DiscussionsControllerTest < ActionController::TestCase
   define_freetown
-  let(:project) do
+  let(:project) { create(:project, parent: freetown.edge) }
+  let(:unpublished_project) do
     create(:project,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
-           parent: freetown.edge)
+           parent: freetown.edge,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
   end
-  let(:unpublished_project) { create(:project, parent: freetown.edge) }
   let(:helsinki) do
     create_forum(
       name: 'helsinki',
@@ -16,11 +16,7 @@ class DiscussionsControllerTest < ActionController::TestCase
       visible_with_a_link: true
     )
   end
-  let(:helsinki_project) do
-    create(:project,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
-           parent: helsinki.edge)
-  end
+  let(:helsinki_project) { create(:project, parent: helsinki.edge) }
   let(:helsinki_key) { create(:access_token, item: helsinki) }
 
   ####################################

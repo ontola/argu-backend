@@ -8,8 +8,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     create(:project,
            :with_follower,
            :with_news_follower,
-           parent: freetown.edge,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
+           parent: freetown.edge)
   end
   let(:question) { create(:question, :with_follower, :with_news_follower, parent: project.edge) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question.edge) }
@@ -22,7 +21,6 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            :with_news_follower,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            parent: motion.edge)
   end
@@ -129,8 +127,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
                                       forwarded_user_id: manager.id,
                                       forwarded_group_id: freetown.edge.granted_groups('manager').first.id,
                                       content: 'Content',
-                                      happening_attributes: {happened_at: Time.current},
-                                      edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
+                                      happening_attributes: {happened_at: Time.current})
            }
     end
     # Notification for creator and follower of Motion
@@ -145,8 +142,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
              decision: attributes_for(:decision,
                                       state: 'approved',
                                       content: 'Content',
-                                      happening_attributes: {happened_at: Time.current},
-                                      edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
+                                      happening_attributes: {happened_at: Time.current})
            }
     end
     # Notification for creator, follower and news_follower of Motion
@@ -169,8 +165,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
                                       forwarded_user_id: user.id,
                                       forwarded_group_id: group.id,
                                       content: 'Content',
-                                      happening_attributes: {happened_at: Time.current},
-                                      edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
+                                      happening_attributes: {happened_at: Time.current})
            }
     end
     # Notification for creator and follower of Motion and forwarded_to_user
@@ -189,11 +184,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     sign_in owner
 
     assert_differences([['Project.count', 1]]) do
-      post forum_projects_path(freetown),
-           params: {
-             project: attributes_for(:project,
-                                     edge_attributes: {argu_publication_attributes: {publish_type: :direct}})
-           }
+      post forum_projects_path(freetown), params: {project: attributes_for(:project)}
     end
 
     # Notification for follower of Forum
@@ -213,9 +204,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_differences([['BlogPost.count', 1]]) do
       post project_blog_posts_path(project),
            params: {
-             blog_post: attributes_for(:blog_post,
-                                       edge_attributes: {argu_publication_attributes: {publish_type: :direct}},
-                                       happening_attributes: {happened_at: Time.current})
+             blog_post: attributes_for(:blog_post, happening_attributes: {happened_at: Time.current})
            }
     end
 

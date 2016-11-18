@@ -31,18 +31,18 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
            edge_attributes: {trashed_at: DateTime.current})
   end
 
-  let(:project) { create(:project, parent: freetown.edge) }
+  let(:project) do
+    create(:project,
+           parent: freetown.edge,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+  end
   let(:project_motion) { create(:motion, parent: project.edge) }
   let(:project_argument) do
     create(:argument,
            parent: project_motion.edge)
   end
 
-  let(:pub_project) do
-    create(:project,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
-           parent: freetown.edge)
-  end
+  let(:pub_project) { create(:project, parent: freetown.edge) }
   let(:pub_project_motion) { create(:motion, parent: pub_project.edge) }
   let(:pub_project_argument) do
     create(:argument,

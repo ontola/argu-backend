@@ -9,16 +9,14 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   define_cologne
   define_helsinki
 
-  let(:project) { create(:project, parent: holland.edge) }
+  let(:project) do
+    create(:project, parent: holland.edge, edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+  end
   let(:q1) { create(:question, parent: project.edge) }
   let(:m0) { create(:motion, parent: q1.edge) }
   let(:m1) { create(:motion, parent: project.edge) }
 
-  let(:published_project) do
-    create(:project,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
-           parent: holland.edge)
-  end
+  let(:published_project) { create(:project, parent: holland.edge) }
   let(:q2) { create(:question, parent: published_project.edge) }
   let(:m2) { create(:motion, parent: q2.edge) }
   let(:m3) { create(:motion, parent: published_project.edge) }

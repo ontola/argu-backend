@@ -28,13 +28,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   test 'guest should get resources' do
     parent = freetown
     %i(project question motion argument).each do |klass|
-      resource = if klass == :project
-                   create(klass,
-                          parent: parent.edge,
-                          edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
-                 else
-                   create(klass, parent: parent.edge)
-                 end
+      resource = create(klass, parent: parent.edge)
       parent = resource
 
       shortname = create(:shortname, forum: freetown, owner: resource)

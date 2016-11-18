@@ -5,12 +5,12 @@ class PhasesControllerTest < ActionController::TestCase
   define_freetown
   let!(:page) { argu }
   let!(:owner) { argu.owner.profileable }
-  let!(:project) do
+  let!(:project) { create(:project, parent: freetown.edge) }
+  let!(:unpublished_project) do
     create(:project,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
-           parent: freetown.edge)
+           parent: freetown.edge,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
   end
-  let!(:unpublished_project) { create(:project, parent: freetown.edge) }
   let(:subject) { create(:phase, parent: project.edge) }
   let(:unpublished_subject) { create(:phase, parent: unpublished_project.edge) }
 

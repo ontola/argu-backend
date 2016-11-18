@@ -25,11 +25,6 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
-           edge_attributes: {
-             argu_publication_attributes: {
-               publish_type: 'direct'
-             }
-           },
            publisher: creator,
            forwarded_user: actor,
            forwarded_group: actor_membership.group,
@@ -40,11 +35,6 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            parent: motion.edge,
            happening_attributes: {
              happened_at: DateTime.current
-           },
-           edge_attributes: {
-             argu_publication_attributes: {
-               publish_type: 'direct'
-             }
            },
            publisher: creator,
            state: Decision.states[:approved])
@@ -185,11 +175,6 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: DateTime.current
            },
-           edge_attributes: {
-             argu_publication_attributes: {
-               publish_type: 'direct'
-             }
-           },
            publisher: creator,
            forwarded_user: nil,
            forwarded_group: Group.last,
@@ -277,10 +262,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
               decision: attributes_for(:decision,
                                        state: state,
                                        content: 'Content',
-                                       happening_attributes: {happened_at: Time.current},
-                                       edge_attributes: {
-                                         argu_publication_attributes: {publish_type: :direct}
-                                       })
+                                       happening_attributes: {happened_at: Time.current})
             }
     end
     reset_publication(Publication.last)
@@ -305,9 +287,6 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
                                       state: 'forwarded',
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current},
-                                      edge_attributes: {
-                                        argu_publication_attributes: {publish_type: :direct}
-                                      },
                                       forwarded_user_id: user_id,
                                       forwarded_group_id: group_id)
            }
