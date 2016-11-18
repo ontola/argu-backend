@@ -71,10 +71,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       attributes: {
         happened_at: DateTime.current,
         edge_attributes: {argu_publication_attributes: {publish_type: :direct}}
-      },
-      differences: [['Project.published', 1],
-                    ['Activity.loggings', 2],
-                    ['Notification', 1]]
+      }
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {

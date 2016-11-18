@@ -17,7 +17,8 @@ module Argu
       def general_create(results: {},
                          parent: nil,
                          attributes: {},
-                         differences: [[model_class.to_s, 1], ['Activity.loggings', 1]],
+                         differences: [[model_class.to_s, 1],
+                                       ['Activity.loggings', model_class.is_publishable? ? 2 : 1]],
                          **opts)
         parent = send(parent) if parent.is_a?(Symbol)
         attributes = default_create_attributes(parent: parent).merge(attributes)

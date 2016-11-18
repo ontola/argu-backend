@@ -82,10 +82,7 @@ class BlogPostsControllerTest < ActionDispatch::IntegrationTest
       attributes: {
         happening_attributes: {happened_at: DateTime.current},
         edge_attributes: {argu_publication_attributes: {publish_type: :direct}}
-      },
-      differences: [['BlogPost.published', 1],
-                    ['Activity.loggings', 2],
-                    ['Notification', 2]]
+      }
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {
