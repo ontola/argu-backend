@@ -19,7 +19,7 @@ module ActivityHelper
       %w(update create).exclude?(activity.action)
     when 'vote'
       return false
-    when 'project', 'blog_post'
+    when 'project', 'blog_post', 'motion'
       activity.action == 'publish'
     else
       activity.action == 'create'

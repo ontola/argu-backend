@@ -4,7 +4,7 @@ class NotificationListener
     case activity.object
     when 'vote', 'banner'
       nil
-    when 'blog_post', 'project'
+    when 'blog_post', 'project', 'motion'
       create_notifications_for(activity) if activity.action == 'publish'
     when 'decision'
       create_notifications_for(activity) unless %w(update create).include?(activity.action)

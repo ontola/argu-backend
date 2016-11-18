@@ -91,6 +91,15 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' for forum', options: options)
     options = {
+      parent: :freetown,
+      attributes: {
+        edge_attributes: {argu_publication_attributes: {publish_type: :schedule}}
+      }
+    }
+    define_test(hash, :create, suffix: ' scheduled', options: options) do
+      {user: exp_res(should: false)}
+    end
+    options = {
       parent: :question,
       analytics: stats_opt('motions', 'create_success')
     }

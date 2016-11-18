@@ -5,7 +5,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
   subject { NotificationListener.new }
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
-  let!(:motion_activity) { motion.activities.first }
+  let!(:motion_activity) { motion.activities.second }
   let!(:vote_activity) do
     create(
       :activity,

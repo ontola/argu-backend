@@ -175,8 +175,8 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, Vote.where(voteable_id: motion.id, voteable_type: 'Motion').count
     assert_equal 0, Activity.where(trackable: motion).count
 
-    # Activity for Create and Convert
-    assert_equal 2, edge.owner.activities.count
+    # Activity for Create, Publish and Convert
+    assert_equal 3, edge.owner.activities.count
   end
 
   test 'staff should post convert question motion' do

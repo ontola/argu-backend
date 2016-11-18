@@ -66,7 +66,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
     email = NotificationsMailer
             .notifications_email(
               follower,
-              motion.activities.first.notifications.where(user: follower)
+              motion.activities.second.notifications.where(user: follower)
             )
     assert_emails 1 do
       email.deliver_now
@@ -212,10 +212,10 @@ class NotificationsMailerTest < ActionMailer::TestCase
   end
 
   test 'action_path should return paths' do
-    [question, motion, argument_pro, comment].each do |item|
+    [question, argument_pro, comment].each do |item|
       assert action_path(item.activities.first.notifications.first).length > 13
     end
-    [blog_post, project, decision].each do |item|
+    [motion, blog_post, project, decision].each do |item|
       assert action_path(item.activities.second.notifications.first).length > 13
     end
   end

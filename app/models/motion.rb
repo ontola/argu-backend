@@ -4,7 +4,7 @@ include ActionView::Helpers::NumberHelper
 class Motion < ApplicationRecord
   include Trashable, Argumentable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
           BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
-          Decisionable, Ldable, Voteable
+          Decisionable, Ldable, Voteable, ActivePublishable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions

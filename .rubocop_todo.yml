@@ -52,6 +52,7 @@ Metrics/ClassLength:
     - 'test/integration/conversions_controller_test.rb'
     - 'test/integration/decisions_controller_test.rb'
     - 'test/integration/forums_controller_test.rb'
+    - 'test/integration/motions_controller_test.rb'
     - 'test/integration/pages_controller_test.rb'
     - 'test/integration/projects_controller_test.rb'
     - 'test/integration/users_controller_test.rb'

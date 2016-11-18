@@ -13,6 +13,8 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: motion }
       .motion-votes= react_component_store 'BigVoteContainer', props: motion_vote_props(current_profile, motion, @vote), **prerender_options
+    -unless motion.is_published?
+      = render partial: 'application/publish', locals: {resource: motion}
 - if motion.happenings.present?
   .col-1
     =render partial: 'happenings/timeline',
