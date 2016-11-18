@@ -29,6 +29,7 @@ class ProjectPolicy < EdgeTreePolicy
   end
 
   def create?
+    assert_publish_type
     return unless active_for_user?(:projects, user)
     rule is_moderator?, is_manager?, is_owner?, super
   end

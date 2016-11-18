@@ -118,6 +118,12 @@ class EdgeTreePolicy < RestrictivePolicy
     raise('No edge avaliable in policy') unless edge
   end
 
+  def assert_publish_type
+    return if record.edge.argu_publication&.publish_type.nil?
+    assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
+            "#{record.edge.argu_publication.publish_type}?"
+  end
+
   def context_forum
     @context_forum ||= persisted_edge.get_parent(:forum)&.owner
   end
@@ -126,6 +132,10 @@ class EdgeTreePolicy < RestrictivePolicy
     attributes = super
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
     attributes
+  end
+
+  def permitted_publish_types
+    Publication.publish_types
   end
 
   def change_owner?

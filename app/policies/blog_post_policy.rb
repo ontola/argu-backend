@@ -21,6 +21,7 @@ class BlogPostPolicy < EdgeTreePolicy
   end
 
   def create?
+    assert_publish_type
     rule is_moderator?, is_manager?, is_owner?, super
   end
 
