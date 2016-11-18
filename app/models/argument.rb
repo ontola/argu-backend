@@ -17,7 +17,7 @@ class Argument < ApplicationRecord
   }
 
   contextualize_as_type 'http://schema.org/CreativeWork'
-  contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m) }
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m, protocol: :https) }
   contextualize :display_name, as: 'http://schema.org/name'
   contextualize :content, as: 'http://schema.org/text'
   contextualize :pro, as: 'http://schema.org/option'

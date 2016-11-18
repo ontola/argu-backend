@@ -54,7 +54,7 @@ class Forum < ApplicationRecord
   }
 
   contextualize_as_type 'http://schema.org/Thing'
-  contextualize_with_id { |f| Rails.application.routes.url_helpers.forum_url(f) }
+  contextualize_with_id { |f| Rails.application.routes.url_helpers.forum_url(f, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
 
   def access_token

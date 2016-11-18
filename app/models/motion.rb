@@ -36,7 +36,7 @@ class Motion < ApplicationRecord
   before_save :cap_title
 
   contextualize_as_type 'schema:CreativeWork'
-  contextualize_with_id { |m| Rails.application.routes.url_helpers.motion_url(m) }
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.motion_url(m, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'
 

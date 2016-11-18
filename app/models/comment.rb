@@ -20,7 +20,7 @@ class Comment < ApplicationRecord
   attr_accessor :is_processed
 
   contextualize_as_type 'schema:Comment'
-  contextualize_with_id { |c| Rails.application.routes.url_helpers.comment_url(c) }
+  contextualize_with_id { |c| Rails.application.routes.url_helpers.comment_url(c, protocol: :https) }
   contextualize :body, as: 'schema:text'
 
   # Helper class method to lookup all comments assigned

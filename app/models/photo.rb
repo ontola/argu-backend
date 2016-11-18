@@ -17,7 +17,7 @@ class Photo < ApplicationRecord
   delegate :url, :file, :icon, :avatar, to: :image
 
   contextualize_as_type 'schema:ImageObject'
-  contextualize_with_id { |p| Rails.application.routes.url_helpers.root_url + "photos/#{p.id}" }
+  contextualize_with_id { |p| Rails.application.routes.url_helpers.root_url(protocol: :https) + "photos/#{p.id}" }
   contextualize :display_name, as: 'schema:name'
   contextualize :thumbnail, as: 'schema:thumbnail'
 

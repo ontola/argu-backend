@@ -51,7 +51,7 @@ class User < ApplicationRecord
   enum decisions_email: {never_decisions_email: 0, weekly_decisions_email: 1, direct_decisions_email: 3}
 
   contextualize_as_type 'schema:Person'
-  contextualize_with_id { |m| Rails.application.routes.url_helpers.user_url(m) }
+  contextualize_with_id { |m| Rails.application.routes.url_helpers.user_url(m, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :about, as: 'schema:description'
 
