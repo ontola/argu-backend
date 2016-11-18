@@ -104,7 +104,7 @@ class AuthorizedController < ApplicationController
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    get_parent_resource
+    resource = get_parent_resource
       .edge
       .children
       .new(owner: controller_name
@@ -113,6 +113,11 @@ class AuthorizedController < ApplicationController
                     .new(resource_new_params),
            parent: get_parent_resource.edge)
       .owner
+    if resource.is_publishable?
+      resource.edge.build_argu_publication(publish_type: 'direct', published_at: DateTime.current)
+    end
+    resource.build_happening(created_at: DateTime.current) if resource.is_happenable?
+    resource
   end
 
   def permit_params

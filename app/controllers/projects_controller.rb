@@ -136,12 +136,6 @@ class ProjectsController < AuthorizedController
 
   private
 
-  def new_resource_from_params
-    resource = super
-    resource.edge.build_argu_publication(publish_type: 'direct', published_at: DateTime.current)
-    resource
-  end
-
   def redirect_pages
     redirect_to page_path(params[:id]) if params[:id].to_i.zero?
   end

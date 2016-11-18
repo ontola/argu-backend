@@ -126,14 +126,6 @@ class BlogPostsController < AuthorizedController
 
   private
 
-  def new_resource_from_params
-    blog_post = super
-    blog_post.build_happening(created_at: Time.current)
-    blog_post.edge.build_argu_publication(publish_type: :direct,
-                                          published_at: DateTime.current)
-    blog_post
-  end
-
   def resource_tenant
     get_parent_resource.forum if current_resource_is_nested?
   end

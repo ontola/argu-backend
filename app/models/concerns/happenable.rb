@@ -15,4 +15,27 @@ module Happenable
     attr_accessor :happened_at
     delegate :happened_at, to: :happening, allow_nil: true
   end
+
+  def is_happenable?
+    true
+  end
+
+  def self.is_happenable?
+    true
+  end
+
+  module ActiveRecordExtension
+    def self.included(base)
+      base.class_eval do
+        def self.is_happenable?
+          false
+        end
+      end
+    end
+
+    def is_happenable?
+      false
+    end
+  end
+  ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end
