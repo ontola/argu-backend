@@ -130,9 +130,5 @@ module Portal
     def settings_location
       'portal/portal/home'
     end
-
-    def tenant_by_param
-      portal_request? ? nil : super
-    end
   end
 end
