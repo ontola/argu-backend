@@ -19,6 +19,7 @@ class UsersController < ApplicationController
           render 'profiles/show'
         end
       end
+      format.json { render json: @user }
       format.json_api { render json: @user, include: :profile_photo }
     end
   end

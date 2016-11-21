@@ -17,6 +17,10 @@ class BaseSerializer < ActiveModel::Serializer
     object.context_id
   end
 
+  def service_scope?
+    scope.include? 'service'
+  end
+
   def tenant
     object.forum.url if object.respond_to? :forum
   end

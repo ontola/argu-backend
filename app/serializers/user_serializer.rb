@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 class UserSerializer < BaseSerializer
   attributes :display_name, :about
+  attribute :language, if: :service_scope?
+  attribute :email, if: :service_scope?
+
   has_one :profile_photo do
     obj = object.profile.default_profile_photo
     link(:self) do
@@ -23,5 +26,9 @@ class UserSerializer < BaseSerializer
 
   def about
     object.profile.about
+  end
+
+  def shortname
+    object.url
   end
 end

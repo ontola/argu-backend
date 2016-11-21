@@ -47,6 +47,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  serialization_scope :doorkeeper_scopes
+
   def verify_authenticity_token?
     doorkeeper_token.nil? || doorkeeper_guest_token? || !doorkeeper_oauth_header?
   end
