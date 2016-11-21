@@ -46,10 +46,10 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     create(:argument, parent: motion.edge)
   end
   let(:motion_blog_post) do
-    create(:blog_post, parent: motion.edge)
+    create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: DateTime.current})
   end
   let(:question_blog_post) do
-    create(:blog_post, parent: question.edge)
+    create(:blog_post, parent: question.edge, happening_attributes: {happened_at: DateTime.current})
   end
 
   ####################################

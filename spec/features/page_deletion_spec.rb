@@ -33,7 +33,8 @@ RSpec.feature 'Page deletion', type: :feature do
     create(:blog_post,
            creator: forum_page.profile,
            parent: project.edge,
-           publisher: user)
+           publisher: user,
+           happening_attributes: {happened_at: DateTime.current})
   end
   let(:comment) do
     create(:comment,

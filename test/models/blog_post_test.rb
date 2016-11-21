@@ -11,7 +11,7 @@ class BlogPostTest < ActiveSupport::TestCase
   end
   subject do
     create(:blog_post,
-           happened_at: DateTime.current,
+           happening_attributes: {happened_at: DateTime.current},
            parent: project.edge)
   end
   test 'valid' do

@@ -2,7 +2,7 @@
 module Argu
   module TestHelpers
     class TraitListener
-      include FactoryGirl::Syntax::Methods
+      include FactoryGirl::Syntax::Methods, Argu::TestHelpers::TestHelperMethods
 
       def initialize(resource)
         @resource = resource
@@ -15,6 +15,7 @@ module Argu
                          attributes: attributes_for(:motion),
                          options: service_options)
           service.commit
+          reset_publication(service.resource.publications.last)
           CreateArgument
             .new(service.resource.edge,
                  attributes: attributes_for(:argument),
@@ -34,11 +35,13 @@ module Argu
                        attributes: attributes_for(:question),
                        options: service_options)
         service.commit
-        CreateMotion
-          .new(service.resource.edge,
-               attributes: attributes_for(:motion),
-               options: service_options)
-          .commit
+        reset_publication(service.resource.publications.last)
+        service = CreateMotion
+                    .new(service.resource.edge,
+                         attributes: attributes_for(:motion),
+                         options: service_options)
+        service.commit
+        reset_publication(service.resource.publications.last)
         create(:access_token, item: @resource)
         @resource.page.owner.profileable.follow @resource.edge
       end
@@ -84,13 +87,14 @@ module Argu
       # Adds 2 published and 2 trashed motions to the resource
       def with_motions
         2.times do
-          CreateMotion
-            .new(
-              @resource.edge,
-              attributes: attributes_for(:motion),
-              options: service_options
-            )
-            .commit
+          service = CreateMotion
+                      .new(
+                        @resource.edge,
+                        attributes: attributes_for(:motion),
+                        options: service_options
+                      )
+          service.commit
+          reset_publication(service.resource.publications.last)
           service = CreateMotion
                       .new(
                         @resource.edge,

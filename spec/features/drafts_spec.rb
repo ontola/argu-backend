@@ -6,21 +6,21 @@ RSpec.feature 'Show drafts', type: :feature do
   let(:user) { create(:user, has_drafts: true) }
   let(:user2) { create(:user, has_drafts: true) }
   let!(:project) do
-    create(:project, parent: freetown.edge, publisher: user)
-  end
-  let!(:published_project) do
     create(:project,
            parent: freetown.edge,
-           publisher: user)
+           publisher: user,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
   end
+  let!(:published_project) { create(:project, parent: freetown.edge, publisher: user) }
   let!(:blog_post) do
-    create(:blog_post, parent: project.edge, happened_at: DateTime.current, publisher: user)
+    create(:blog_post,
+           parent: project.edge,
+           happened_at: DateTime.current,
+           publisher: user,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
   end
   let!(:published_blog_post) do
-    create(:blog_post,
-           parent: published_project.edge,
-           happened_at: DateTime.current,
-           publisher: user)
+    create(:blog_post, parent: published_project.edge, happened_at: DateTime.current, publisher: user)
   end
 
   scenario 'User with drafts shows drafts' do
