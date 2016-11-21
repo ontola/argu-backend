@@ -18,7 +18,7 @@ class BaseSerializer < ActiveModel::Serializer
   end
 
   def service_scope?
-    scope.doorkeeper_scopes.include? 'service'
+    scope&.doorkeeper_scopes&.include? 'service'
   end
 
   def tenant

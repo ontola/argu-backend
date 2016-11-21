@@ -3,11 +3,12 @@ source 'https://rubygems.org/'
 ruby '2.3.1'
 ruby = '2.3.1'
 
+gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>5.0.0.1'
-gem 'active_model_serializers', '~> 0.10.2'
+gem 'active_model_serializers', '~> 0.10.4'
 gem 'pragmatic_context'
 
 gem 'simple_text', '~> 0.0.23'

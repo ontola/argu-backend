@@ -36,23 +36,18 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_content('Current password')
 
     new_password = 'new password'
-    expect do
-      within("#edit_user_#{user.id}") do
-        fill_in 'user_password', with: new_password
-        fill_in 'user_password_confirmation', with: new_password
-        fill_in 'user_current_password', with: user.password
-        click_button 'Save'
-      end
-      expect(page).to have_current_path settings_path(tab: :authentication)
-    end.to change {
-      Sidekiq::Worker.jobs.size
-    }.by(1)
+    within("#edit_user_#{user.id}") do
+      fill_in 'user_password', with: new_password
+      fill_in 'user_password_confirmation', with: new_password
+      fill_in 'user_current_password', with: user.password
+      click_button 'Save'
+    end
+    expect(page).to have_current_path settings_path(tab: :authentication)
 
     visit destroy_user_session_path
     expect(page).to have_content 'You have signed out successfully.'
 
     visit new_user_session_path
-
     expect do
       within('#new_user') do
         fill_in 'user_email', with: user.email
@@ -73,18 +68,14 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_content('Confirm password')
     expect(page).to have_content('Current password')
 
-    expect do
-      new_password = 'new password'
-      within("#edit_user_#{user_omni_both.id}") do
-        fill_in 'user_password', with: new_password
-        fill_in 'user_password_confirmation', with: new_password
-        fill_in 'user_current_password', with: user_omni_both.password
-        click_button 'Save'
-      end
-      expect(page).to have_current_path settings_path(tab: :authentication)
-    end.to change {
-      Sidekiq::Worker.jobs.size
-    }.by(1)
+    new_password = 'new password'
+    within("#edit_user_#{user_omni_both.id}") do
+      fill_in 'user_password', with: new_password
+      fill_in 'user_password_confirmation', with: new_password
+      fill_in 'user_current_password', with: user_omni_both.password
+      click_button 'Save'
+    end
+    expect(page).to have_current_path settings_path(tab: :authentication)
 
     expect(page).to have_content('User settings')
   end

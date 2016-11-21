@@ -17,6 +17,7 @@ services:
       - "postgres:db"
       - "redis:redis"
       - "mailcatcher:mail"
+      - "rabbitmq:rabbitmq"
   sidekiq:
     image: fletcher91/argu-dev
     command: bundle exec sidekiq
@@ -45,6 +46,11 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+  rabbitmq:
+    image: rabbitmq
+    hostname: argu-rabbit
+    ports:
+      - "5672:5672"
 volumes:
   data:
     external: true

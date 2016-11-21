@@ -44,6 +44,7 @@ class User < ApplicationRecord
   before_destroy :expropriate_dependencies
   before_save :adjust_birthday, if: :birthday_changed?
   before_save { |user| user.email = email.downcase unless email.blank? }
+  after_commit :publish_data_event
 
   attr_accessor :current_password, :confirmation_string, :tab
 
@@ -182,6 +183,10 @@ class User < ApplicationRecord
       email_was.present?
     @bypass_confirmation_postpone = false
     postpone
+  end
+
+  def publish_data_event
+    DataEvent.publish(self)
   end
 
   def has_password?
