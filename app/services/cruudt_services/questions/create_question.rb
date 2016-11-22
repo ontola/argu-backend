@@ -3,11 +3,6 @@
 class CreateQuestion < PublishedCreateService
   private
 
-  def after_save
-    super
-    resource.project.touch if resource.project.present?
-  end
-
   def object_attributes=(obj)
     obj.forum ||= resource.forum
     obj.creator ||= resource.creator

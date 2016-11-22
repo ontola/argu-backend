@@ -12,7 +12,7 @@ class Comment < ApplicationRecord
   paginates_per 30
   parentable :commentable
 
-  after_create :increment_counter_cache, :touch_parent
+  after_create :increment_counter_cache
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :forum, :creator, presence: true
   auto_strip_attributes :body
@@ -68,10 +68,6 @@ class Comment < ApplicationRecord
   # helper method to check if a comment has children
   def has_children?
     lft || rgt
-  end
-
-  def touch_parent
-    parent_model.touch
   end
 
   def increment_counter_cache
