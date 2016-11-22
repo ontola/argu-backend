@@ -120,7 +120,7 @@ module Portal
     end
 
     def announcements_settings_path
-      settings_portal_path(tab: :announcements)
+      portal_settings_path(tab: :announcements)
     end
 
     def set_settings_view_path

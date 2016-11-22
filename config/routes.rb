@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'argu/destroy_constraint'
+require 'argu/staff_constraint'
 ####
 # Routes
 # a: arguments
@@ -211,19 +212,6 @@ Rails.application.routes.draw do
         to: 'static_pages#dismiss_announcement'
   end
 
-  authenticate :user, ->(p) { p.profile.has_role? :staff } do
-    resources :documents, only: [:edit, :update, :index, :new, :create]
-    resources :notifications, only: :create
-    get 'portal/settings', to: 'portal/portal#home', as: :settings_portal
-    namespace :portal do
-      get :settings, to: 'portal#home'
-      post 'setting', to: 'portal#setting!', as: :update_setting
-      resources :announcements, except: :index
-      resources :forums, only: [:new, :create]
-      mount Sidekiq::Web => '/sidekiq'
-    end
-  end
-
   resources :profiles, only: [:index, :update] do
     post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
@@ -256,8 +244,6 @@ Rails.application.routes.draw do
   get '/how_argu_works', to: 'static_pages#how_argu_works'
   # end
 
-  get '/portal', to: 'portal/portal#home'
-
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
   get '/privacy', to: 'documents#show', name: 'privacy'
@@ -268,6 +254,19 @@ Rails.application.routes.draw do
   resources :info, path: 'i', only: [:show]
 
   get '/quawonen_feedback', to: redirect('/quawonen')
+
+  constraints(Argu::StaffConstraint) do
+    resources :documents, only: [:edit, :update, :index, :new, :create]
+    resources :notifications, only: :create
+    namespace :portal do
+      get '/', to: 'portal#home'
+      get :settings, to: 'portal#home'
+      post 'setting', to: 'portal#setting!', as: :update_setting
+      resources :announcements, except: :index
+      resources :forums, only: [:new, :create]
+      mount Sidekiq::Web => '/sidekiq'
+    end
+  end
 
   resources :forums,
             only: [:show, :update],

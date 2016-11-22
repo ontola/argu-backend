@@ -50,6 +50,7 @@ module SettingsHelper
   end
 
   def settings_url_for(resource, tab)
+    return portal_settings_path if resource == :Portal
     for_resource = if resource.is_a?(Symbol)
                      resource.downcase
                    else
