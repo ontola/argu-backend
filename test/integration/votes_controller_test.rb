@@ -6,7 +6,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   define_cairo
   let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown.edge) }
   let(:closed_question_motion) { create(:motion, parent: closed_question.edge) }
+  let(:closed_question_argument) { create(:argument, parent: closed_question_motion.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:argument) { create(:argument, parent: motion.edge) }
   let!(:vote) { create(:vote, parent: motion.edge) }
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.edge) }
@@ -47,11 +49,29 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:model)
   end
 
-  test 'user should post create' do
+  test 'user should post create for motion' do
     sign_in user
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
       post motion_votes_path(motion),
+           params: {
+             for: :pro,
+             format: :json
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert_analytics_collected('votes', 'create', 'pro')
+  end
+
+  test 'user should post create for argument' do
+    sign_in user
+    argument
+
+    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+      post argument_votes_path(argument),
            params: {
              for: :pro,
              format: :json
@@ -77,6 +97,21 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_not_authorized
+  end
+
+  test 'user should not post create for argument of closed question' do
+    sign_in user
+    closed_question_argument
+
+    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
+      post motion_votes_path(closed_question_argument),
+           params: {
+             for: :pro,
+             format: :json
+           }
+    end
+
+    assert_response 404
   end
 
   test 'user should post create json_api' do
@@ -109,7 +144,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.pro?
   end
 
-  test 'user should not create new vote when existing one is present' do
+  test 'user should not create new vote for motion when existing one is present' do
     create(:vote,
            parent: motion.edge,
            voter: user.profile,
@@ -125,6 +160,32 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            params: {
              vote: {
                for: 'neutral'
+             },
+             format: :json
+           }
+    end
+
+    assert_response 304
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+  end
+
+  test 'user should not create new vote for argument when existing one is present' do
+    create(:vote,
+           parent: argument.edge,
+           voter: user.profile,
+           options: {
+             publisher: user,
+             owner: user.profile
+           },
+           for: 'pro')
+    sign_in user
+
+    assert_no_difference('Vote.count') do
+      post argument_votes_path(argument),
+           params: {
+             vote: {
+               for: 'pro'
              },
              format: :json
            }
@@ -263,9 +324,26 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.pro?
   end
 
-  test 'user should delete destroy own vote' do
+  test 'user should delete destroy own vote for motion' do
     user_vote = create(:vote,
                        parent: motion.edge,
+                       options: {
+                         creator: user.profile
+                       },
+                       for: 'neutral')
+    sign_in user
+
+    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
+      delete vote_path(user_vote), params: {format: :json}
+    end
+
+    assert_response 204
+    assert_analytics_collected('votes', 'destroy', 'neutral')
+  end
+
+  test 'user should delete destroy own vote for argument' do
+    user_vote = create(:vote,
+                       parent: argument.edge,
                        options: {
                          creator: user.profile
                        },

@@ -21,6 +21,8 @@ module ProCon
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 
+    delegate :closed?, to: :motion
+
     parentable :motion, :forum
 
     scope :pro, -> { where(pro: true) }
