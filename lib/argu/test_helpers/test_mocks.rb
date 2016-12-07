@@ -145,6 +145,13 @@ module Argu
                      'WRONG_POSTAL_CODE')
           .to_return(body: [].to_json)
       end
+
+      def linked_record_mock(id)
+        stub_request(:get, "https://iri.test/resource/#{id}")
+          .to_return(status: 200, body: {
+            title: 'Record name'
+          }.to_json)
+      end
     end
   end
 end

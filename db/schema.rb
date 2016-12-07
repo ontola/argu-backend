@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213085837) do
+ActiveRecord::Schema.define(version: 20161216200345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -328,6 +328,17 @@ ActiveRecord::Schema.define(version: 20161213085837) do
     t.index ["uid", "provider"], name: "index_identities_on_uid_and_provider", using: :btree
     t.index ["uid"], name: "index_identities_on_uid", using: :btree
     t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
+  end
+
+  create_table "linked_records", force: :cascade do |t|
+    t.integer  "page_id",    null: false
+    t.integer  "source_id",  null: false
+    t.string   "iri",        null: false
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["iri", "source_id", "page_id"], name: "index_linked_records_on_iri_and_source_id_and_page_id", using: :btree
+    t.index ["iri"], name: "index_linked_records_on_iri", unique: true, using: :btree
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -796,6 +807,8 @@ ActiveRecord::Schema.define(version: 20161213085837) do
   add_foreign_key "groups", "forums"
   add_foreign_key "groups", "pages"
   add_foreign_key "identities", "users"
+  add_foreign_key "linked_records", "pages"
+  add_foreign_key "linked_records", "sources"
   add_foreign_key "motions", "forums"
   add_foreign_key "motions", "places"
   add_foreign_key "motions", "profiles", column: "creator_id"

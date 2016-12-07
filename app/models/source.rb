@@ -3,6 +3,7 @@ class Source < ApplicationRecord
   include Parentable
 
   belongs_to :page, inverse_of: :sources
+  has_many :linked_records
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   alias_attribute :display_name, :name

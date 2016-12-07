@@ -17,7 +17,7 @@ class BaseEdgeSerializer < RecordSerializer
     end
     link(:related) do
       {
-        href: url_for(obj),
+        href: obj.class.try(:context_id_factory)&.call(obj),
         meta: {
           attributes: {
             '@id': obj.class.try(:context_id_factory)&.call(obj),
@@ -45,7 +45,7 @@ class BaseEdgeSerializer < RecordSerializer
     end
     link(:related) do
       {
-        href: url_for(obj),
+        href: obj.class.try(:context_id_factory)&.call(obj),
         meta: {
           attributes: {
             '@context': {
