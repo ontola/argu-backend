@@ -51,11 +51,16 @@ module SettingsHelper
 
   def settings_url_for(resource, tab)
     return portal_settings_path if resource == :Portal
-    for_resource = if resource.is_a?(Symbol)
+    for_resource = case resource
+                   when Symbol
                      resource.downcase
+                   when User
+                     nil
+                   when Source
+                     [resource.page, resource]
                    else
-                     resource.is_a?(User) ? nil : resource
+                     resource
                    end
-    url_for([:settings, for_resource, tab: tab])
+    url_for([:settings, for_resource, tab: tab].flatten)
   end
 end

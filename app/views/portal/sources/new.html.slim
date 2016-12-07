@@ -1,0 +1,16 @@
+=set_title t('sources.form.title_heading', page: source.page.profile.name)
+.col-1
+  .box
+    section
+      h1= t('sources.form.title_heading', page: source.page.profile.name)
+      =semantic_form_for [:portal, source] do |f|
+        =f.inputs do
+          =f.input :name
+          =f.input :shortname
+          li.form-helper
+            span=t('sources.shortname_helper_html', page: source.page.url)
+            =f.input :page_id, as: :hidden
+          =f.input :iri_base
+          =f.actions do
+            =f.action :submit, as: :button
+            =f.action :cancel, as: :link

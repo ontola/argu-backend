@@ -137,16 +137,6 @@ class Forum < ApplicationRecord
     super(value.downcase.strip)
   end
 
-  def reset_public_grant
-    if open?
-      unless grants.find_by(group_id: Group::PUBLIC_GROUP_ID)
-        edge.grants.create(group_id: Group::PUBLIC_GROUP_ID, role: Grant.roles['member'])
-      end
-    else
-      grants.where(group_id: Group::PUBLIC_GROUP_ID).destroy_all
-    end
-  end
-
   # Is the forum out of its shortname limit
   # @see {max_shortname_count}
   # @return [Boolean] True if the forum has reached its maximum shortname count.

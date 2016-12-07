@@ -1,0 +1,15 @@
+nl:
+  sources:
+    type: "Bron"
+    type_new: "Nieuwe bron"
+    plural: "Bronnen"
+    shortname_helper_html: "https://argu.co/o/%{page}/s/<b>jouw_argu_url</b>"
+    form:
+      title_heading: "Voeg een bron toe aan %{page}"
+    settings:
+      title: "Bron instellingen"
+      general: "Algemene instellingen"
+      menu:
+        general: "Algemeen"
+        privacy: "Privacy"
+        groups: "Groepen"

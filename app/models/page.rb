@@ -7,6 +7,7 @@ class Page < ApplicationRecord
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
+  has_many :sources, dependent: :restrict_with_exception, inverse_of: :page
 
   attr_accessor :confirmation_string, :tab, :active
 

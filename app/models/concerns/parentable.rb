@@ -25,6 +25,16 @@ module Parentable
     end
   end
 
+  def reset_public_grant
+    if open?
+      unless grants.find_by(group_id: Group::PUBLIC_GROUP_ID)
+        edge.grants.create(group_id: Group::PUBLIC_GROUP_ID, role: Grant.roles['member'])
+      end
+    else
+      grants.where(group_id: Group::PUBLIC_GROUP_ID).destroy_all
+    end
+  end
+
   module ClassMethods
     # Add to a model which includes {Parentable} to set the possible parents for the model
     # @param relation [Symbol splat] List of symbolized model names.

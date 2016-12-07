@@ -11,6 +11,7 @@ en:
         groups: 'Groups'
         grants: 'Grants'
         forums: 'Forums'
+        sources: 'Sources'
       managers:
         owner: "Owner"
         about_owner: "Users own an organization. Users can own multiple organizations, but organization can only have a single owner."

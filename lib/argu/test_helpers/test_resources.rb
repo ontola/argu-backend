@@ -120,6 +120,19 @@ module Argu
           forum
         end
       end
+
+      def define_public_source
+        define_page
+        let!(:public_source) do
+          source = create(:source,
+                          parent: argu.edge,
+                          iri_base: 'https://iri.test',
+                          visibility: Source.visibilities[:open],
+                          shortname: 'public_source')
+          source.reset_public_grant
+          source
+        end
+      end
     end
   end
 end

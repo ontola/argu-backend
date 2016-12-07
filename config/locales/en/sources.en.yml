@@ -1,0 +1,15 @@
+en:
+  sources:
+    type: "Source"
+    type_new: "New source"
+    plural: "Sources"
+    shortname_helper_html: "https://argu.co/o/%{page}/s/<b>your_argu_url</b>"
+    form:
+      title_heading: "Create a new source for %{page}"
+    settings:
+      title: "Source settings"
+      general: "General settings"
+      menu:
+        general: "General"
+        privacy: "Privacy"
+        groups: "Groups"

@@ -1,0 +1,17 @@
+h3= t('sources.plural')
+- if resource.sources.present?
+  table.styled
+    thead
+      tr
+        td= t('portal.name')
+        td= t('portal.shortname')
+    - resource.sources.each do |source|
+      tr
+        td
+          =link_to source.display_name, settings_page_source_path(source.page, source)
+        td
+          =source.url
+- if policy(resource).create_child?(:sources)
+  =link_to new_portal_source_path(page: resource), class: 'btn margin-bottom' do
+      span.fa.fa-plus
+      span.icon-left= t('sources.type_new')

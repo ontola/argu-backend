@@ -186,6 +186,9 @@ Rails.application.routes.draw do
     resources :group_memberships, only: :index do
       post :index, action: :index, on: :collection
     end
+    resources :sources, only: [:update], path: 's' do
+      get :settings, on: :member
+    end
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
@@ -266,6 +269,7 @@ Rails.application.routes.draw do
       post 'setting', to: 'portal#setting!', as: :update_setting
       resources :announcements, except: :index
       resources :forums, only: [:new, :create]
+      resources :sources, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end
   end

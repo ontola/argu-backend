@@ -16,6 +16,16 @@ class ForumTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
+  test 'should reset public grant' do
+    assert_equal subject.grants.where(group_id: -1).count, 1
+    subject.closed!
+    assert_equal subject.grants.where(group_id: -1).count, 0
+
+    assert_equal cairo.grants.where(group_id: -1).count, 0
+    cairo.open!
+    assert_equal cairo.grants.where(group_id: -1).count, 1
+  end
+
   test 'should not leak access_token if disabled' do
     assert_equal false, subject.visible_with_a_link?
     assert_equal nil, subject.access_token, 'access tokens are returned if turned off'

@@ -119,6 +119,7 @@ Style/AccessorMethodName:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/notifications_controller.rb'
+    - 'app/controllers/portal/sources_controller.rb'
     - 'app/controllers/votes_controller.rb'
     - 'app/helpers/actors_helper.rb'
 

@@ -14,7 +14,7 @@ module Argu
       module InstanceMethods
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i(argument blog_post comment forum group_membership motion
-                            phase banner group project question vote decision grant).freeze
+                            phase banner group project question vote decision grant source).freeze
 
         def assert_analytics_collected(category = nil, action = nil, label = nil, **options)
           category ||= options[:category]
@@ -109,13 +109,14 @@ module Argu
           user
         end
 
-        def create_member(forum, user = nil)
+        def create_member(record, user = nil)
           user ||= create(:user)
-          group = create(:group, parent: forum.page.edge)
+          page = record.is_a?(Page) ? record : record.page
+          group = create(:group, parent: page.edge)
           create(:group_membership,
                  parent: group.edge,
                  shortname: user.url)
-          create(:grant, edge: forum.edge, group: group, role: Grant.roles['member'])
+          create(:grant, edge: record.edge, group: group, role: Grant.roles['member'])
           user
         end
 
@@ -126,13 +127,14 @@ module Argu
           user
         end
 
-        # Makes the given `User` a manager of the `Page` of the `Forum`
+        # Makes the given `User` a manager of the `Page` of the record
         # Creates one if not given
         # @note overwrites the current owner in the `Page`
-        def create_owner(forum, user = nil)
+        def create_owner(record, user = nil)
           user ||= create(:user)
-          forum.page.owner = user.profile
-          assert_equal true, forum.page.save, "Couldn't create owner"
+          page = record.is_a?(Page) ? record : record.page
+          page.owner = user.profile
+          assert_equal true, page.save, "Couldn't create owner"
           user
         end
 

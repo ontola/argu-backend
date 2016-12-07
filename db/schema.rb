@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161209085751) do
+ActiveRecord::Schema.define(version: 20161213085837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -653,6 +653,20 @@ ActiveRecord::Schema.define(version: 20161209085751) do
     t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
   end
 
+  create_table "sources", force: :cascade do |t|
+    t.string   "name",                     null: false
+    t.integer  "page_id",                  null: false
+    t.string   "iri_base",                 null: false
+    t.integer  "creator_id",               null: false
+    t.integer  "publisher_id",             null: false
+    t.integer  "visibility",   default: 3
+    t.string   "shortname",                null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["iri_base"], name: "index_sources_on_iri_base", unique: true, using: :btree
+    t.index ["page_id", "shortname"], name: "index_sources_on_page_id_and_shortname", unique: true, using: :btree
+  end
+
   create_table "stepups", force: :cascade do |t|
     t.integer "forum_id",    null: false
     t.integer "record_id",   null: false
@@ -813,6 +827,9 @@ ActiveRecord::Schema.define(version: 20161209085751) do
   add_foreign_key "questions", "users", column: "publisher_id"
   add_foreign_key "rules", "edges", column: "branch_id"
   add_foreign_key "shortnames", "forums"
+  add_foreign_key "sources", "pages"
+  add_foreign_key "sources", "profiles", column: "creator_id"
+  add_foreign_key "sources", "users", column: "publisher_id"
   add_foreign_key "stepups", "forums"
   add_foreign_key "stepups", "groups"
   add_foreign_key "stepups", "profiles", column: "creator_id"
