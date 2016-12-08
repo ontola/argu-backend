@@ -14,12 +14,12 @@ section.section--details
                 span.project-t.fa.fa-rocket
               .detail__text
                 span[itemprop="headline"]= truncate(question.project.title, length: 30)
-    - if question.motions_count > 0
-      .detail[data-title=t('motions.tooltips.count', count: question.motions_count)]
+    - if question.children_count(:motions) > 0
+      .detail[data-title=t('motions.tooltips.count', count: question.children_count(:motions))]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]
         .detail__text
-          span= question.motions_count
+          span= question.children_count(:motions)
     =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
     - if question.pinned?
       .detail[data-title=t('edges.pinned_at', datetime: question.edge.pinned_at.to_formatted_s(:short))]

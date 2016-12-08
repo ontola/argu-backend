@@ -34,9 +34,9 @@ module MotionsHelper
 
   def motion_vote_counts(motion, opts = {})
     opts.merge(
-      pro: motion.votes_pro_count,
-      neutral: motion.votes_neutral_count,
-      con: motion.votes_con_count
+      pro: motion.children_count(:votes_pro),
+      neutral: motion.children_count(:votes_neutral),
+      con: motion.children_count(:votes_con)
     )
   end
 

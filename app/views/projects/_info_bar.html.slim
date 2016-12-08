@@ -5,24 +5,24 @@ section.section--details
         span[class="fa fa-#{project_icon}"]
       .detail__text
         span= project_type
-    - if project.questions_count > 0
-      .detail[data-title=t('questions.tooltips.count', count: project.questions_count)]
+    - if project.children_count(:questions) > 0
+      .detail[data-title=t('questions.tooltips.count', count: project.children_count(:questions))]
         .detail__icon.question-t
           span[class="fa fa-#{question_icon}"]
         .detail__text
-          span= project.questions_count
-    - if project.motions_count > 0
-      .detail[data-title=t('motions.tooltips.count', count: project.motions_count)]
+          span= project.children_count(:questions)
+    - if project.children_count(:motions) > 0
+      .detail[data-title=t('motions.tooltips.count', count: project.children_count(:motions))]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]
         .detail__text
-          span= project.motions_count
-    - if project.blog_posts_count > 0
-      .detail[data-title=t('motions.tooltips.count', count: project.blog_posts_count)]
+          span= project.children_count(:motions)
+    - if project.children_count(:blog_posts) > 0
+      .detail[data-title=t('motions.tooltips.count', count: project.children_count(:blog_posts))]
         .detail__icon.blog_post-t
           span[class="fa fa-#{blog_post_icon}"]
         .detail__text
-          span= project.blog_posts_count
+          span= project.children_count(:blog_posts)
     - if local_assigns[:show_profile]
       =render partial: 'profiles/detail_profile', locals: {resource: project}
     - if local_assigns[:show_date]

@@ -3,10 +3,6 @@ namespace :counter_culture do
   desc 'Reset the counter_culture columns'
   task reset: :environment do
     puts_result Follow.counter_culture_fix_counts
-    puts_result Motion.counter_culture_fix_counts
-    puts_result Question.counter_culture_fix_counts
-    puts_result Project.counter_culture_fix_counts
-    puts_result Argument.counter_culture_fix_counts
     puts 'CounterCulture columns are reset'
   end
 

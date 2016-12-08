@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161201082111) do
+ActiveRecord::Schema.define(version: 20161208113506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "ltree"
+  enable_extension "hstore"
 
   create_table "access_tokens", force: :cascade do |t|
     t.integer  "item_id"
@@ -196,6 +197,7 @@ ActiveRecord::Schema.define(version: 20161201082111) do
     t.datetime "last_activity_at"
     t.datetime "trashed_at"
     t.boolean  "is_published",     default: false
+    t.hstore   "children_counts",  default: {}
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
   end
 

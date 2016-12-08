@@ -33,15 +33,7 @@ class Project < ApplicationRecord
 
   before_save :update_start_date_of_first_phase
 
-  def self.counter_culture_opts
-    {
-      column_name: proc { |model| model.is_published && !model.is_trashed? ? 'projects_count' : nil },
-      column_names: {
-        ['projects.is_published = ? AND projects.trashed_at IS NULL', true] => 'projects_count'
-      }
-    }
-  end
-  counter_culture :forum, counter_culture_opts
+  counter_cache true
   parentable :forum
 
   validates :content, presence: true, length: {minimum: 2, maximum: 5000}

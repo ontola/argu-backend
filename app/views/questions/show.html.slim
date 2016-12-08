@@ -15,7 +15,7 @@
     section
       .markdown[itemprop="text"]
         =markdown_to_html(question.content)
-      span.hidden[itemprop="answerCount"]= question.motions_count
+      span.hidden[itemprop="answerCount"]= question.children_count(:motions)
     section.section--footer
       =render question.creator, locals= {resource: question}
       ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background

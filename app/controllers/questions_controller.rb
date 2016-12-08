@@ -5,9 +5,10 @@ class QuestionsController < AuthorizedController
   def show
     scope = authenticated_resource
               .motions
+              .joins(:edge)
               .includes(:default_cover_photo, :edge, :votes,
                         creator: {default_profile_photo: []})
-              .order(votes_pro_count: :desc)
+              .order("edges.children_counts -> 'votes_pro' DESC")
 
     if current_user.present?
       @user_votes = Vote.where(voteable: scope, voter: current_profile).eager_load!

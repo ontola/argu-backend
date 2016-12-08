@@ -16,7 +16,12 @@ module Edgeable
     scope :untrashed, -> { joins(:edge).where('edges.trashed_at IS NULL') }
 
     accepts_nested_attributes_for :edge
-    delegate :persisted_edge, :last_activity_at, to: :edge
+    delegate :persisted_edge, :last_activity_at, :children_count, to: :edge
+    counter_cache false
+
+    def counter_cache_name
+      class_name
+    end
 
     def is_published?
       persisted? && edge.is_published?
@@ -33,6 +38,16 @@ module Edgeable
 
     def pinned=(value)
       edge.pinned_at = value == '1' ? DateTime.current : nil
+    end
+  end
+
+  module ClassMethods
+    # @param counter_cache [Bool, Array<String>] Bool for the parent
+    #                                            Array of class names for ancestors of specific types
+    def counter_cache(bool)
+      cattr_accessor :counter_cache_enabled do
+        bool
+      end
     end
   end
 end

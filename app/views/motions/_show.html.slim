@@ -17,10 +17,10 @@
               span.fa.fa-plus
               .list-item.icon-left
                 span[title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument.content, '...')) : nil)]= argument.title
-                - if argument.comments_count > 0
+                - if argument.children_count(:comments) > 0
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
-                    .icon-left= argument.comments_count
+                    .icon-left= argument.children_count(:comments)
         - unless model.closed?
           li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'pro') do
             span= t('arguments.new.pro')
@@ -31,10 +31,10 @@
               span.fa.fa-minus
               .list-item.icon-left
                 span[title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument.content, '...')) : nil)]= argument.title
-                - if argument.comments_count > 0
+                - if argument.children_count(:comments) > 0
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
-                    .icon-left= argument.comments_count
+                    .icon-left= argument.children_count(:comments)
         - unless model.closed?
           li.box-list-item--subtle= link_to new_forum_argument_path(model.forum, motion_id: model, pro: 'con') do
             span= t('arguments.new.con')

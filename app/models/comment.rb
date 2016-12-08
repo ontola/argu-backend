@@ -9,10 +9,10 @@ class Comment < ApplicationRecord
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   acts_as_nested_set scope: [:commentable_id, :commentable_type]
+  counter_cache true
   paginates_per 30
   parentable :commentable
 
-  after_create :increment_counter_cache
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :forum, :creator, presence: true
   auto_strip_attributes :body
@@ -68,14 +68,6 @@ class Comment < ApplicationRecord
   # helper method to check if a comment has children
   def has_children?
     lft || rgt
-  end
-
-  def increment_counter_cache
-    commentable.increment!(:comments_count)
-  end
-
-  def decrement_counter_cache
-    commentable.decrement!(:comments_count)
   end
 
   # Comments can't be deleted since all comments below would be hidden as well

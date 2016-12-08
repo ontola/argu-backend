@@ -7,7 +7,7 @@
       - if resource.top_comment.present? && policy(resource).index_children?(:comment_threads)
         =link_to blog_post_path(resource) + '#comments'
           .comments-counter
-            span.icon-right= resource.comments_count.to_s
+            span.icon-right= resource.children_count(:comments).to_s
             span.fa.fa-comments
       - elsif policy(resource).create_child?(:comment_threads)
         =link_to blog_post_path(resource) + '#comments'

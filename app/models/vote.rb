@@ -10,14 +10,16 @@ class Vote < ApplicationRecord
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
 
+  counter_cache true
   parentable :voteable
-
-  after_save :update_parentable_counter
-  after_destroy :update_parentable_counter
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
   validates :voteable, :voter, :forum, :for, presence: true
+
+  def counter_cache_name
+    [class_name, key.to_s].join('_')
+  end
 
   # #########methods###########
   # Needed for ActivityListener#audit_data
@@ -38,10 +40,6 @@ class Vote < ApplicationRecord
   end
 
   delegate :is_trashed?, to: :voteable
-
-  def update_parentable_counter
-    voteable.update_vote_counters
-  end
 
   # #########Class methods###########
   def self.ordered(votes)

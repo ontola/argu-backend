@@ -46,6 +46,7 @@ class Edge < ActiveRecord::Base
 
   validates :parent, presence: true, unless: :root_object?
 
+  before_destroy :decrement_counter_cache, unless: :is_trashable?
   before_destroy :update_children
   before_save :set_user_id
   before_save :trash_or_untrash, if: :is_trashed_changed?
@@ -54,7 +55,7 @@ class Edge < ActiveRecord::Base
   has_ltree_hierarchy
 
   attr_writer :is_trashed
-  delegate :display_name, :root_object?, to: :owner
+  delegate :display_name, :root_object?, :is_trashable?, to: :owner
 
   # For Rails 5 attributes
   # The user that has created the edge's owner.
@@ -67,6 +68,10 @@ class Edge < ActiveRecord::Base
 
   def ancestor_ids
     path.split('.').map(&:to_i)
+  end
+
+  def children_count(association)
+    children_counts[association.to_s].to_i || 0
   end
 
   def get_parent(type)
@@ -130,6 +135,7 @@ class Edge < ActiveRecord::Base
     self.class.transaction do
       update!(is_published: true)
       owner.happening.update!(is_published: true) if owner.respond_to?(:happening)
+      increment_counter_cache
     end
   end
 
@@ -137,11 +143,27 @@ class Edge < ActiveRecord::Base
     self.class.transaction do
       update!(trashed_at: DateTime.current)
       owner.destroy_notifications if owner.is_loggable?
+      decrement_counter_cache
     end
   end
 
   def untrash
-    update!(trashed_at: nil)
+    self.class.transaction do
+      update!(trashed_at: nil)
+      increment_counter_cache
+    end
+  end
+
+  def decrement_counter_cache
+    return unless owner.class.counter_cache_enabled
+    parent.children_counts[owner.counter_cache_name] = (parent.children_counts[owner.counter_cache_name].to_i || 0) - 1
+    parent.save
+  end
+
+  def increment_counter_cache
+    return unless owner.class.counter_cache_enabled
+    parent.children_counts[owner.counter_cache_name] = (parent.children_counts[owner.counter_cache_name].to_i || 0) + 1
+    parent.save
   end
 
   private

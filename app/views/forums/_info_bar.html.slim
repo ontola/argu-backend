@@ -8,7 +8,7 @@ section.section-info
       span.icon-left= forum.memberships_count
     .details-part[data-title=t('questions.tooltips.count')]
       span.fa.fa-question
-      span.icon-left= forum.questions_count
+      span.icon-left= forum.children_count(:questions)
     .details-part[data-title=t('motions.tooltips.count')]
       span.fa.fa-lightbulb-o
-      span.icon-left= forum.motions_count
+      span.icon-left= forum.children_count(:motions)

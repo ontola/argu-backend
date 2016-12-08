@@ -1,5 +1,5 @@
 ul.sticky--top-right[id="votebtn#{model.id}"]
   li
     =toggle_vote_link model, vote do
-      span.icon-right= model.votes_pro_count.to_s
+      span.icon-right= model.children_count(:votes_pro).to_s
       span.fa.fa-arrow-up

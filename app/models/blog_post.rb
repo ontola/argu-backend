@@ -24,11 +24,7 @@ class BlogPost < ApplicationRecord
              class_name: 'Project',
              foreign_key: :blog_postable_id
 
-  counter_culture :project,
-                  column_name: proc { |model| model.is_published && !model.is_trashed? ? 'blog_posts_count' : nil },
-                  column_names: {
-                    ['blog_posts.is_published = ? AND blog_posts.trashed_at IS NULL', false] => 'blog_posts_count'
-                  }
+  counter_cache true
   parentable :blog_postable, :forum
 
   validates :content, presence: true, length: {minimum: 2}

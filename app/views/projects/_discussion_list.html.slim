@@ -4,9 +4,9 @@ ul.box-list.box-list--icons
       h3[class="#{discussion.model_name.singular}-t"]
         span[class='fa fa-#{public_send("#{discussion.model_name.singular}_icon")}']
         span.icon-left= discussion.title
-  - if (project.motions_count + project.questions_count) > 3
+  - if (project.children_count(:motions) + project.children_count(:questions)) > 3
     li= link_to project_path(project)
       h3
         span.fa.fa-chevron-right
         .list-item
-          span= t('discussions.show_all', amount: (project.motions_count + project.questions_count))
+          span= t('discussions.show_all', amount: (project.children_count(:motions) + project.children_count(:questions)))

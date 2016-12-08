@@ -6,4 +6,4 @@ _parent.append('<%= escape_javascript render partial: 'comments/comment', locals
 _parent.find('textarea').first().val('');
 _parent.find('.comments').prepend('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.commentable, c: @comment } %>');
 <% end %>
-$('.comments [itemprop="commentCount"]').text(<%= @comment.commentable.comments_count %>);
+$('.comments [itemprop="commentCount"]').text(<%= @comment.commentable.children_count(:comments) %>);

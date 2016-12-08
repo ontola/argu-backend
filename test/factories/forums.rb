@@ -4,9 +4,6 @@ FactoryGirl.define do
     association :shortname, strategy: :build
     association :page, strategy: :create
     visibility Forum.visibilities[:open]
-    transient do
-      motion_count 0
-    end
 
     sequence(:name) { |n| "fg_forum#{n}end" }
 

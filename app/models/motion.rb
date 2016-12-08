@@ -14,16 +14,18 @@ class Motion < ApplicationRecord
   has_many :arguments, -> { argument_comments }, dependent: :destroy
   has_many :top_arguments_con, (lambda do
     argument_comments
+      .joins(:edge)
       .where(pro: false)
       .untrashed
-      .order(votes_pro_count: :desc)
+      .order("edges.children_counts -> 'votes_pro' DESC")
       .limit(5)
   end), class_name: 'Argument'
   has_many :top_arguments_pro, (lambda do
     argument_comments
+      .joins(:edge)
       .where(pro: true)
       .untrashed
-      .order(votes_pro_count: :desc)
+      .order("edges.children_counts -> 'votes_pro' DESC")
       .limit(5)
   end), class_name: 'Argument'
   has_many :arguments_plain, class_name: 'Argument'
@@ -32,18 +34,8 @@ class Motion < ApplicationRecord
 
   before_save :cap_title
 
-  def self.counter_culture_opts
-    {
-      column_name: proc { |model| !model.is_trashed? ? 'motions_count' : nil },
-      column_names: {
-        ['motions.is_trashed = ?', false] => 'motions_count'
-      }
-    }
-  end
   convertible questions: %i(votes taggings activities)
-  counter_culture :forum, counter_culture_opts
-  counter_culture :project, counter_culture_opts
-  counter_culture :question, counter_culture_opts
+  counter_cache true
   paginates_per 30
   parentable :question, :project, :forum
   resourcify
@@ -160,7 +152,7 @@ class Motion < ApplicationRecord
   end
 
   def raw_score
-    votes_pro_count - votes_con_count
+    children_count(:votes_pro) - children_count(:votes_con)
   end
 
   def score
@@ -176,27 +168,19 @@ class Motion < ApplicationRecord
   end
 
   def total_vote_count
-    votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
-  end
-
-  def update_vote_counters
-    vote_counts = votes.group('"for"').count
-    update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-           votes_con_count: vote_counts[Vote.fors[:con]] || 0,
-           votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
-           votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
+    children_count(:votes_pro).abs + children_count(:votes_con).abs + children_count(:votes_neutral).abs
   end
 
   def votes_pro_percentage
-    vote_percentage votes_pro_count
+    vote_percentage children_count(:votes_pro)
   end
 
   def votes_neutral_percentage
-    vote_percentage votes_neutral_count
+    vote_percentage children_count(:votes_neutral)
   end
 
   def votes_con_percentage
-    vote_percentage votes_con_count
+    vote_percentage children_count(:votes_con)
   end
 
   def vote_percentage(vote_count)

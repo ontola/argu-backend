@@ -12,17 +12,8 @@ class Question < ApplicationRecord
   has_many :top_motions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  def self.counter_culture_opts
-    {
-      column_name: proc { |model| !model.is_trashed? ? 'questions_count' : nil },
-      column_names: {
-        ['questions.is_trashed = ?', false] => 'questions_count'
-      }
-    }
-  end
   convertible motions: %i(votes taggings activities)
-  counter_culture :forum, counter_culture_opts
-  counter_culture :project, counter_culture_opts
+  counter_cache true
   parentable :project, :forum
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
@@ -97,12 +88,6 @@ class Question < ApplicationRecord
 
   def tag_list
     super.join(',')
-  end
-
-  def update_vote_counters
-    vote_counts = votes.group('"for"').count
-    update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-           votes_con_count: vote_counts[Vote.fors[:con]] || 0
   end
 
   scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }

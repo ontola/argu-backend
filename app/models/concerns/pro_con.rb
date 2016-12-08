@@ -13,7 +13,6 @@ module ProCon
     belongs_to :forum
 
     before_save :cap_title
-    after_create :update_vote_counters
 
     validates :content, presence: false, length: {maximum: 5000}
     validates :title, presence: true, length: {minimum: 5, maximum: 75}
@@ -56,13 +55,6 @@ module ProCon
 
   def root_comments
     comment_threads.untrashed.where(parent_id: nil)
-  end
-
-  def update_vote_counters
-    vote_counts = votes.group('"for"').count
-    update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-           votes_con_count: vote_counts[Vote.fors[:con]] || 0,
-           votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   module ClassMethods

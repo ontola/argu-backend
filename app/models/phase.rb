@@ -25,7 +25,7 @@ class Phase < ApplicationRecord
   before_save :update_date_of_project_or_next_phase
 
   parentable :project
-  counter_culture :project
+  counter_cache true
 
   def end_date_after_start_date
     return unless start_date.present? && end_date.present? && end_date < start_date

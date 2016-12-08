@@ -1,5 +1,5 @@
 ul.votes-score
   li
-    span.btns-opinion-value = @motion.votes_pro_count
+    span.btns-opinion-value = @motion.children_count(:votes_pro)
   li
-    span.btns-opinion-value = @motion.votes_con_count
+    span.btns-opinion-value = @motion.children_count(:votes_con)

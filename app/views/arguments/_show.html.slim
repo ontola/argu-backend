@@ -16,5 +16,5 @@
         p.wrap-normal
           =model.top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(model.top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
         .comments-counter
-          span.icon-right= model.comments_count.to_s
+          span.icon-right= model.children_count(:comments).to_s
           span.fa.fa-comments
