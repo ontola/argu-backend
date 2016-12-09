@@ -5,12 +5,6 @@ class Edge < ActiveRecord::Base
              inverse_of: :edge,
              polymorphic: true,
              required: true
-  # Convert the polymorphic association Owner to a direct association with a Forum
-  # This allows defining a counter_culture from Follow to Forum
-  # @todo convert Forum.memberships_count to Edge.follows_count to remove this association
-  belongs_to :forum,
-             foreign_key: :owner_id,
-             class_name: 'Forum'
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children

@@ -7,7 +7,7 @@ h3= t('forums.plural')
         td= t('portal.shortname')
         td= t('portal.members')
         td= t('groups.plural')
-    - resource.forums.order(memberships_count: :desc).each do |forum|
+    - resource.forums.joins(:edge).order('edges.follows_count ASC').each do |forum|
       tr
         td
           span[class="fa fa-#{visibility_icon_for(forum)}"]
@@ -15,7 +15,7 @@ h3= t('forums.plural')
         td
           =forum.url
         td
-          =forum.memberships_count
+          =forum.follows_count
         td
           =forum.edge.groups.count
 - if policy(resource).create_child?(:forums)

@@ -45,9 +45,12 @@ class Forum < ApplicationRecord
   # @return [Enum] The visibility of the {Forum}
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
-  scope :top_public_forums,
-        ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
-  scope :public_forums, -> { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC') }
+  scope :top_public_forums, lambda { |limit = 10|
+    where(visibility: Forum.visibilities[:open]).joins(:edge).order('edges.follows_count DESC').first(limit)
+  }
+  scope :public_forums, lambda {
+    where(visibility: Forum.visibilities[:open]).joins(:edge).order('edges.follows_count DESC')
+  }
 
   def access_token
     access_token! if visible_with_a_link
