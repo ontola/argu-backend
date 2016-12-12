@@ -35,10 +35,11 @@ class Motion < ApplicationRecord
 
   before_save :cap_title
 
-  contextualize_as_type 'schema:CreativeWork'
+  contextualize_as_type 'argu:Motion'
   contextualize_with_id { |m| Rails.application.routes.url_helpers.motion_url(m, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'
+  attr_accessor :arguments_relation
 
   convertible questions: %i(votes taggings activities)
   counter_cache true

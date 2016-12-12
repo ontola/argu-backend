@@ -53,9 +53,10 @@ class Forum < ApplicationRecord
     where(visibility: Forum.visibilities[:open]).joins(:edge).order('edges.follows_count DESC')
   }
 
-  contextualize_as_type 'http://schema.org/Thing'
+  contextualize_as_type 'argu:Forum'
   contextualize_with_id { |f| Rails.application.routes.url_helpers.forum_url(f, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
+
 
   def access_token
     access_token! if visible_with_a_link

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Vote < ApplicationRecord
-  include Parentable, Loggable, PublicActivity::Model
+  include Parentable, Loggable, PublicActivity::Model, Ldable
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, class_name: 'Profile', inverse_of: :votes
@@ -16,6 +16,10 @@ class Vote < ApplicationRecord
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
   validates :voteable, :voter, :forum, :for, presence: true
+
+  contextualize_as_type 'argu:Vote'
+  contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url([v.voteable, v], protocol: :https) }
+  contextualize :for, as: 'schema:option'
 
   def counter_cache_name
     [class_name, key.to_s].join('_')

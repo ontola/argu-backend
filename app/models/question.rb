@@ -24,11 +24,11 @@ class Question < ApplicationRecord
   auto_strip_attributes :content
   # TODO: validate expires_at
 
-  contextualize_as_type 'http://schema.org/Challenge'
+  contextualize_as_type 'argu:Question'
   contextualize_with_id { |m| Rails.application.routes.url_helpers.question_url(m, protocol: :https) }
-  contextualize :display_name, as: 'http://schema.org/name'
-  contextualize :content, as: 'http://schema.org/text'
-  contextualize :potential_action, as: 'http://schema.org/potentialAction'
+  contextualize :display_name, as: 'schema:name'
+  contextualize :content, as: 'schema:text'
+  contextualize :potential_action, as: 'schema:potentialAction'
 
   attr_accessor :include_motions
 
