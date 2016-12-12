@@ -3,6 +3,14 @@ class ArgumentSerializer < BaseCommentSerializer
   attributes :display_name, :content, :pro
 
   has_many :comment_threads do
+    link(:self) do
+      {
+        href: "#{object.class.try(:context_id_factory)&.call(object)}/c",
+        meta: {
+          '@type': 'schema:comments'
+        }
+      }
+    end
     meta do
       href = object.class.try(:context_id_factory)&.call(object)
       {

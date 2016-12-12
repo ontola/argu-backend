@@ -3,7 +3,6 @@ class BaseSerializer < ActiveModel::Serializer
   link(:self) { object.class.try(:context_id_factory)&.call(object) }
   attribute :ld_context, key: '@context'
   attribute :ld_type, key: '@type'
-  attribute :ld_id, key: '@id'
   attribute :potential_action
 
   def ld_context

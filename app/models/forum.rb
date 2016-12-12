@@ -57,7 +57,6 @@ class Forum < ApplicationRecord
   contextualize_with_id { |f| Rails.application.routes.url_helpers.forum_url(f, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
 
-
   def access_token
     access_token! if visible_with_a_link
   end

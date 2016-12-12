@@ -5,13 +5,23 @@ class BaseEdgeSerializer < RecordSerializer
 
   has_one :parent do
     obj = object.parent_model
+    link(:self) do
+      {
+        meta: {
+          '@type': 'schema:isPartOf',
+          attributes: {
+            '@type': 'schema:isPartOf'
+          }
+        }
+      }
+    end
     link(:related) do
       {
         href: url_for(obj),
         meta: {
-          '@type': 'schema:isPartOf',
           attributes: {
             '@id': obj.class.try(:context_id_factory)&.call(obj),
+            '@type': obj.class.try(:contextualized_type),
             '@context': {
               schema: 'http://schema.org/',
               title: 'schema:name'
@@ -26,17 +36,23 @@ class BaseEdgeSerializer < RecordSerializer
 
   has_one :creator do
     obj = object.creator.profileable
+    link(:self) do
+      {
+        meta: {
+          '@type': 'schema:creator'
+        }
+      }
+    end
     link(:related) do
       {
         href: url_for(obj),
         meta: {
-          '@type': 'schema:creator',
           attributes: {
-            '@id': obj.class.try(:context_id_factory)&.call(obj),
             '@context': {
               schema: 'http://schema.org/',
               name: 'schema:name'
             },
+            '@type': 'schema:Person',
             name: obj.display_name
           }
         }

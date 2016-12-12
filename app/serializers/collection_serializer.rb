@@ -1,8 +1,34 @@
 # frozen_string_literal: true
 class CollectionSerializer < BaseSerializer
   attributes :member, :title, :group_by
-  belongs_to :parent
-  # has_many :member
+
+  has_one :parent do
+    obj = object.parent
+    link(:self) do
+      {
+        meta: {
+          '@type': 'schema:isPartOf'
+        }
+      }
+    end
+    link(:related) do
+      {
+        href: url_for(obj),
+        meta: {
+          '@type': obj.class.try(:contextualized_type),
+          attributes: {
+            '@id': obj.class.try(:context_id_factory)&.call(obj),
+            '@context': {
+              schema: 'http://schema.org/',
+              title: 'schema:name'
+            },
+            title: obj.display_name
+          }
+        }
+      }
+    end
+    obj
+  end
 
   def member
     object.member.map do |i|

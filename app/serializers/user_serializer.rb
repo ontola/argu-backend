@@ -3,14 +3,18 @@ class UserSerializer < BaseSerializer
   attributes :display_name, :about
   has_one :profile_photo do
     obj = object.profile.default_profile_photo
+    link(:self) do
+      {
+        meta: {
+          '@type': 'http://schema.org/image'
+        }
+      }
+    end
     link(:related) do
       {
-        href: nil,
+        href: obj.class.try(:context_id_factory)&.call(obj),
         meta: {
-          '@type': 'http://schema.org/image',
-          attributes: {
-            '@id': obj.class.try(:context_id_factory)&.call(obj)
-          }
+          '@type': 'http://schema.org/ImageObject'
         }
       }
     end
