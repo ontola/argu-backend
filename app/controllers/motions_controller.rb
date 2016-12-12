@@ -14,7 +14,7 @@ class MotionsController < AuthorizedController
     )
     respond_to do |format|
       format.json_api do
-        render json: collection, include: {member: collection.member}
+        render json: collection
       end
     end
   end

@@ -38,7 +38,7 @@ class ArgumentsController < AuthorizedController
                locals: {argument: authenticated_resource}
       end
       format.json { render json: authenticated_resource }
-      format.json_api { render json: authenticated_resource }
+      format.json_api { render json: authenticated_resource, include: :parent }
     end
   end
 

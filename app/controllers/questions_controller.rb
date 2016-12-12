@@ -23,7 +23,7 @@ class QuestionsController < AuthorizedController
       format.html { render locals: {question: authenticated_resource} } # show.html.erb
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
-      format.json_api { render json: authenticated_resource }
+      format.json_api { render json: authenticated_resource, include: '*' }
     end
   end
 
