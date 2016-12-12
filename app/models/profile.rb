@@ -7,8 +7,7 @@ class Profile < ApplicationRecord
   # has_one :profileable, class_name: 'User'
   belongs_to :profileable,
              polymorphic: true,
-             inverse_of: :profile,
-             autosave: true
+             inverse_of: :profile
   rolify after_remove: :role_removed, before_add: :role_added
 
   before_destroy :anonymize_dependencies
@@ -33,7 +32,6 @@ class Profile < ApplicationRecord
            inverse_of: :creator,
            foreign_key: 'creator_id',
            dependent: :restrict_with_exception
-  accepts_nested_attributes_for :profileable
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
