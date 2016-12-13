@@ -124,15 +124,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro
-               },
-               relationships: {
-                 parent: {
-                   data: {
-                     type: 'motions',
-                     id: motion.id
-                   }
-                 }
+                 side: :pro,
+                 parent: url_for(motion)
                }
              }
            }
@@ -214,15 +207,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :neutral
-               },
-               relationships: {
-                 parent: {
-                   data: {
-                     type: 'motions',
-                     id: motion.id
-                   }
-                 }
+                 side: :neutral,
+                 parent: url_for(motion)
                }
              }
            }
@@ -304,15 +290,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro
-               },
-               relationships: {
-                 parent: {
-                   data: {
-                     type: 'motions',
-                     id: motion.id
-                   }
-                 }
+                 side: :pro,
+                 parent: url_for(motion)
                }
              }
            }
@@ -399,15 +378,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro
-               },
-               relationships: {
-                 parent: {
-                   data: {
-                     type: 'motions',
-                     id: cairo_motion.id
-                   }
-                 }
+                 side: :pro,
+                 parent: url_for(cairo_motion)
                }
              }
            }
@@ -473,15 +445,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro
-               },
-               relationships: {
-                 parent: {
-                   data: {
-                     type: 'motions',
-                     id: cairo_motion.id
-                   }
-                 }
+                 side: :pro,
+                 parent: url_for(cairo_motion)
                }
              }
            }

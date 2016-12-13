@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
           PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
           NestedAttributesHelper
-  helper_method :current_profile, :show_trashed?, :collect_announcements
+  helper_method :current_profile, :show_trashed?, :collect_announcements, :deserialized_params
 
   protect_from_forgery with: :exception, prepend: true
   prepend_before_action :check_for_access_token
@@ -71,6 +71,31 @@ class ApplicationController < ActionController::Base
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
   def current_profile
     @current_profile ||= get_current_actor if current_user.present?
+  end
+
+  # The params for the requested resource
+  # @return [Hash] The parameters
+  # @example Resource params from form submit
+  #   params = {motion: {body: 'body', question_id: 1}}
+  #   deserialized_params # => {body: 'body', question_id: 1}
+  # @example Resource params from json_api request
+  #   params = {
+  #     data: {type: 'motions', attributes: {body: 'body'}},
+  #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
+  #   }
+  #   deserialized_params # => {body: 'body', relation_type: 'motions', relation_id: 1}
+  def deserialized_params
+    if request.format.json_api? && request.method != 'GET'
+      ActionController::Parameters.new(
+        ActiveModelSerializers::Deserialization.jsonapi_parse!(params, deserialize_params_options)
+      )
+    else
+      params[controller_name.singularize] || {}
+    end
+  end
+
+  def deserialize_params_options
+    {}
   end
 
   def forum_by_geocode

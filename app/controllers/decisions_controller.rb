@@ -110,7 +110,7 @@ class DecisionsController < AuthorizedController
     end
   end
 
-  def get_parent_resource(_opts = {}, _url_params = {})
+  def get_parent_resource(_opts = {})
     get_parent_edge.owner
   end
 

@@ -73,16 +73,6 @@ class AuthorizedController < ApplicationController
     )
   end
 
-  def deserialized_params
-    if request.format.json_api? && request.method != 'GET'
-      ActionController::Parameters.new(
-        ActiveModelSerializers::Deserialization.jsonapi_parse!(params, keys: {side: :for}, polymorphic: [:parent])
-      )
-    else
-      params
-    end
-  end
-
   def service_klass
     "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
       "#{action_name.classify}Service".constantize

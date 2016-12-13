@@ -140,6 +140,15 @@ class VotesController < AuthorizedController
     @forum = (@vote || @model).forum
   end
 
+  def deserialized_params
+    return super if request.format.json_api? && request.method != 'GET'
+    params
+  end
+
+  def deserialize_params_options
+    {keys: {side: :for}}
+  end
+
   def permit_params
     deserialized_params.permit(:id)
   end
