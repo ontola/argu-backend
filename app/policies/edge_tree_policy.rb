@@ -140,20 +140,18 @@ class EdgeTreePolicy < RestrictivePolicy
     false
   end
 
-  # Checks whether creating a child of a has_many relation is allowed
+  # Checks whether creating a child of a given class is allowed
   # Initialises a child with the given attributes and checks its policy for new?
-  # @param klass [Symbol] has_many association of the record
+  # @param klass [Symbol] the class of the child
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def create_child?(klass, attrs = {})
     @create_child ||= {}
     @create_child[klass] ||=
       if children_classes.include?(klass)
-        child = record.send(klass).new(attrs)
+        child = klass.to_s.classify.constantize.new(attrs)
         child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        verdict = Pundit.policy(context, child).create? || false
-        record.send(klass).try(:delete, child)
-        verdict
+        Pundit.policy(context, child).create? || false
       else
         false
       end
@@ -172,18 +170,16 @@ class EdgeTreePolicy < RestrictivePolicy
 
   # Checks whether indexing children of a has_many relation is allowed
   # Initialises a child with the given attributes and checks its policy for show?
-  # @param klass [Symbol] has_many association of the record
+  # @param klass [Symbol] the class of the child
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def index_children?(klass, attrs = {})
     @index_children ||= {}
     @index_children[klass] ||=
       if children_classes.include?(klass)
-        child = record.send(klass).new(attrs)
+        child = klass.to_s.classify.constantize.new(attrs)
         child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        verdict = Pundit.policy(context, child).show? || false
-        record.send(klass).try(:delete, child)
-        verdict
+        Pundit.policy(context, child).show? || false
       else
         false
       end

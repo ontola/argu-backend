@@ -20,6 +20,10 @@ class BlogPostPolicy < EdgeTreePolicy
     attributes
   end
 
+  def children_classes
+    super.append(:comments)
+  end
+
   def create?
     rule is_moderator?, is_manager?, is_owner?, super
   end

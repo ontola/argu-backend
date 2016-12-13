@@ -55,7 +55,7 @@ class MotionsController < AuthorizedController
   # GET /motions/new
   # GET /motions/new.json
   def new
-    authorize authenticated_resource, authenticated_resource.question.presence ? :new? : :new_without_question?
+    authorize authenticated_resource, :new?
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
       format.html { render 'form', locals: {motion: authenticated_resource} }

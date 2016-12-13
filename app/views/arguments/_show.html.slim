@@ -5,11 +5,11 @@
     =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(voter: current_profile)}
     -if model.content.present?
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
-    - if policy(model).create_child?(:comment_threads)
+    - if policy(model).create_child?(:comments)
       =link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini'
         span.icon-right= t('reply')
         span.fa.fa-comments
-- if model.top_comment.present? && policy(model).index_children?(:comment_threads)
+- if model.top_comment.present? && policy(model).index_children?(:comments)
   =link_to argument_path(model) + '#comments'
     .top-comment-container[class=status_classes_for(model.top_comment)]
       .top-comment

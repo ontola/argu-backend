@@ -12,7 +12,7 @@
         - if current_user.present? && policy(c).update? || policy(c).trash? || active_for_user?(:notifications, current_user)
           li
             ul= react_component_store 'HyperDropdown', props: comment_items(resource, c)
-        - if !c.is_trashed? && policy(c).create_child?(:children, commentable: c.commentable)
+        - if !c.is_trashed? && policy(c.commentable).create_child?(:comments, parent_id: c.id)
           li= link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, turbolinks: false }, class: 'btn-reply'} do
             span.fa.fa-reply
             span.icon-left= t('reply')

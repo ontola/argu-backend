@@ -27,7 +27,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def create?
-    if record.group.grants.member.present?
+    if record.parent_model.grants.member.present?
       rule has_access_token?, is_member?, is_manager?, super
     else
       rule is_manager?, is_owner?, super
@@ -45,7 +45,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   private
 
   def granted_resource
-    record.group.grants.member.first.edge.owner
+    record.parent_model.grants.member.first.edge.owner
   end
 
   def has_access_token?

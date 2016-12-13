@@ -14,7 +14,7 @@ class DecisionPolicy < EdgeTreePolicy
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
   def decision_is_assigned?
-    group_grant if record.edge.parent.owner.assigned_to_user?(user)
+    group_grant if record.parent_model.assigned_to_user?(user)
   end
 
   def permitted_attributes

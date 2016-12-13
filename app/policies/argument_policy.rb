@@ -12,6 +12,10 @@ class ArgumentPolicy < EdgeTreePolicy
     delegate :user, to: :context
   end
 
+  def children_classes
+    super.append(:comments)
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(title content pro motion_id forum_id) if create?
@@ -19,7 +23,7 @@ class ArgumentPolicy < EdgeTreePolicy
   end
 
   def create?
-    return if record.edge.parent.owner.closed?
+    return if record.parent_model.closed?
     rule is_member?, is_manager?, is_owner?, super
   end
 

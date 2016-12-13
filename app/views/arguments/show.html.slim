@@ -9,5 +9,5 @@
   =render partial: 'contextualize/context_horizontal', locals: {item: argument, type: 'argument'}
   .intro-filler[data-intro= t('intro.argument.body')]
   =render partial: 'body', locals: {argument: argument}
-  -if policy(argument).index_children?(:comment_threads)
+  -if policy(argument).index_children?(:comments)
     =render template: 'comments/show', locals: { resource: argument, comment: comment }

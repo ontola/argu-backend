@@ -28,8 +28,8 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def create?
-    return create_without_question? unless record.question.present?
-    return nil if record.question.present? && record.question.expired?
+    return create_without_question? unless record.parent_model.is_a?(Question)
+    return nil if record.parent_model.is_a?(Question) && record.parent_model.expired?
     rule is_member?, is_manager?, is_owner?, super
   end
 

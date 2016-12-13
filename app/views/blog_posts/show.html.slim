@@ -14,5 +14,5 @@
             ul= react_component_store 'ShareDropdown', props: share_items(blog_post)
   - unless blog_post.is_published?
     =render partial: 'application/publish', locals: {resource: blog_post}
-  - if policy(blog_post).index_children?(:comment_threads)
+  - if policy(blog_post).index_children?(:comments)
     =render template: 'comments/show', locals: {resource: blog_post, comment: comment}
