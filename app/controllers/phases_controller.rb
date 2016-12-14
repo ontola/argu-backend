@@ -19,7 +19,7 @@ class PhasesController < AuthorizedController
   def update
     update_service.on(:update_phase_successful) do |phase|
       respond_to do |format|
-        format.html { redirect_to phase.project, notice: t('type_save_success', type: t('projects.phases.type')) }
+        format.html { redirect_to phase.parent_model, notice: t('type_save_success', type: t('projects.phases.type')) }
         format.json { head :no_content }
       end
     end

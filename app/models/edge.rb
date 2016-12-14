@@ -14,7 +14,7 @@ class Edge < ActiveRecord::Base
            class_name: 'Edge',
            inverse_of: :parent,
            foreign_key: :parent_id
-  has_many :decisions, foreign_key: :decisionable_id, source: :decisionable, inverse_of: :decisionable
+  has_many :decisions, foreign_key: :decisionable_id, source: :decisionable
   has_many :favorites, dependent: :destroy
   has_many :follows,
            class_name: 'Follow',
@@ -61,7 +61,7 @@ class Edge < ActiveRecord::Base
   # attribute :parent_id, :integer
 
   def ancestor_ids
-    path.split('.').map(&:to_i)
+    persisted_edge.path.split('.').map(&:to_i)
   end
 
   def children_count(association)
@@ -69,6 +69,7 @@ class Edge < ActiveRecord::Base
   end
 
   def get_parent(type)
+    return self if owner_type == type.to_s.classify
     if type == :page
       root
     elsif type == :forum

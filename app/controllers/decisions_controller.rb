@@ -56,18 +56,18 @@ class DecisionsController < AuthorizedController
       respond_to do |format|
         format.html do
           notice = if decision.edge.argu_publication.published_at.present?
-                     t("decisions.#{decision.decisionable.owner.model_name.singular}.#{decision.state}")
+                     t("decisions.#{decision.parent_model.model_name.singular}.#{decision.state}")
                    else
                      t('type_save_success', type: t('decisions.type').capitalize)
                    end
-          redirect_to decision.decisionable.owner, notice: notice
+          redirect_to decision.parent_model, notice: notice
         end
         format.json { render json: decision, status: 201, location: decision }
       end
     end
     create_service.on(:create_decision_failed) do |decision|
       respond_to do |format|
-        format.html { render action: 'index', locals: {decision: decision, decisionable: decision.decisionable.owner} }
+        format.html { render action: 'index', locals: {decision: decision, decisionable: decision.parent_model} }
         format.json { render json: decision.errors, status: 422 }
       end
     end
@@ -78,10 +78,10 @@ class DecisionsController < AuthorizedController
     update_service.on(:update_decision_successful) do |decision|
       respond_to do |format|
         format.html do
-          redirect_to decision.decisionable.owner,
+          redirect_to decision.parent_model,
                       notice: t('type_save_success', type: t('decisions.type').capitalize)
         end
-        format.json { render json: decision.decisionable.owner, status: :updated, location: decision }
+        format.json { render json: decision.parent_model, status: :updated, location: decision }
       end
     end
     update_service.on(:update_decision_failed) do |decision|
@@ -89,7 +89,7 @@ class DecisionsController < AuthorizedController
         format.html do
           render action: 'index',
                  locals: {
-                   decisionable: decision.decisionable.owner,
+                   decisionable: decision.parent_model,
                    decision: decision
                  }
         end
@@ -119,7 +119,7 @@ class DecisionsController < AuthorizedController
     if decision.nil?
       decision = Edge.find(params[:motion_id])
                      .children
-                     .new(owner: Decision.new(resource_new_params.merge(decisionable: get_parent_edge)))
+                     .new(owner: Decision.new(resource_new_params.merge(decisionable_id: get_parent_edge.id)))
                      .owner
       decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
       decision.edge.build_argu_publication(publish_type: :direct)

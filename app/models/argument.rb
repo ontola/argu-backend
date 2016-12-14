@@ -23,7 +23,7 @@ class Argument < ApplicationRecord
   contextualize :pro, as: 'schema:option'
 
   def assert_tenant
-    return if forum == motion.forum
+    return if forum == parent_model.forum
     errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
   end
 
@@ -42,10 +42,10 @@ class Argument < ApplicationRecord
   end
 
   def adjacent(direction, _show_trashed = nil)
-    ids = motion.arguments_plain.joins(:edge).order("edges.children_counts -> 'votes_pro' DESC").ids
+    ids = parent_model.arguments_plain.joins(:edge).order("edges.children_counts -> 'votes_pro' DESC").ids
     index = ids.index(self[:id])
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
-    motion.arguments.find_by(id: p_id)
+    parent_model.arguments.find_by(id: p_id)
   end
 end

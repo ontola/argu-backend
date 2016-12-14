@@ -52,18 +52,22 @@ module DecisionsHelper
     }
   end
 
+  def decisionable_path(edge)
+    url_for(controller: edge.owner_type.tableize, id: edge.id, action: 'show')
+  end
+
   def decision_path(decision)
-    "#{motion_url(decision.decisionable)}/decision/#{decision.step}"
+    "#{decisionable_path(decision.edge.parent)}/decision/#{decision.step}"
   end
   alias decision_url decision_path
 
   def edit_decision_path(decision)
-    "#{motion_url(decision.decisionable)}/decision/#{decision.step}/edit"
+    "#{decisionable_path(decision.edge.parent)}/decision/#{decision.step}/edit"
   end
   alias edit_decision_url edit_decision_path
 
   def new_decision_path(edge, opts = {})
-    path = "#{motion_url(edge)}/decision/new"
+    path = "#{decisionable_path(edge)}/decision/new"
     opts.present? ? [path, opts.to_param].join('?') : path
   end
   alias new_decision_url new_decision_path

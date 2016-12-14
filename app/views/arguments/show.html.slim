@@ -1,6 +1,6 @@
-=set_title argument, motiontitle: argument.motion.title, side: (argument.pro? ? I18n.t('pro') : I18n.t('con'))
+=set_title argument, motiontitle: argument.parent_model.title, side: (argument.pro? ? I18n.t('pro') : I18n.t('con'))
 =connected_web url: argument_url(argument),
-               name: argument.title + seolized_title(argument, motiontitle: argument.motion.title, side: (argument.pro? ? I18n.t('pro').downcase : I18n.t('con').downcase)),
+               name: argument.title + seolized_title(argument, motiontitle: argument.parent_model.title, side: (argument.pro? ? I18n.t('pro').downcase : I18n.t('con').downcase)),
                description: seolized_description(argument),
                image: image_url('logo-social.png')
 .col-1[itemscope itemtype="http://schema.org/CreativeWork/Argument"]

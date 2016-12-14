@@ -192,7 +192,7 @@ RSpec.feature 'Adam west', type: :feature do
     # Anti-test
     arg = create(:argument, parent: create(:motion, parent: default.edge).edge)
 
-    visit motion_path(arg.motion)
+    visit motion_path(arg.parent_model)
 
     expect(page).to have_content(arg.title)
     expect(page.body).to have_content('Reply')
@@ -201,7 +201,7 @@ RSpec.feature 'Adam west', type: :feature do
     c = create(:comment,
                parent: arg.edge)
 
-    visit motion_path(arg.motion)
+    visit motion_path(arg.parent_model)
     expect(page).to have_content(arg.title)
     expect(page).to have_content(c.body)
   end

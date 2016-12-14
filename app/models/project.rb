@@ -20,11 +20,11 @@ class Project < ApplicationRecord
   belongs_to :forum, inverse_of: :projects
   belongs_to :publisher, class_name: 'User'
 
-  has_many :motions, inverse_of: :project, dependent: :nullify
+  has_many :motions, dependent: :nullify
   has_many :top_motions, -> { where(question_id: nil).untrashed.order(updated_at: :desc) }, class_name: 'Motion'
-  has_many :phases, -> { order(:id) }, inverse_of: :project, dependent: :destroy
+  has_many :phases, -> { order(:id) }, dependent: :destroy
   has_many :stepups, as: :record, dependent: :destroy
-  has_many :questions, inverse_of: :project, dependent: :nullify
+  has_many :questions, dependent: :nullify
   has_many :top_questions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Question'
   has_many :activities, -> { order(:created_at) }, as: :trackable
 

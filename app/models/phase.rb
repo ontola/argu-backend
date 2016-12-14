@@ -4,12 +4,10 @@ class Phase < ApplicationRecord
   attr_accessor :finish_phase
 
   belongs_to :forum
-  belongs_to :project, inverse_of: :phases
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
   validates :forum, presence: true
-  validates :project, presence: true
   validates :creator, presence: true
   validate :end_date_after_start_date
 
@@ -37,16 +35,16 @@ class Phase < ApplicationRecord
   end
 
   def next_phase
-    @next_phase ||= project.phases.where('id > ?', id).try(:first)
+    @next_phase ||= parent_model.phases.where('id > ?', id).try(:first)
   end
 
   def previous_phase
-    @previous_phase ||= project.phases.where('id < ?', id).try(:last)
+    @previous_phase ||= parent_model.phases.where('id < ?', id).try(:last)
   end
 
   def update_date_of_project_or_next_phase
     return unless end_date_changed?
-    next_phase.present? ? next_phase.update!(start_date: end_date + 1.second) : project.update!(end_date: end_date)
+    next_phase.present? ? next_phase.update!(start_date: end_date + 1.second) : parent_model.update!(end_date: end_date)
   end
 
   # Activities with *.happened key that happened during this phase
@@ -55,13 +53,13 @@ class Phase < ApplicationRecord
   def happenings(show_unpublished = false)
     return Activity.none if start_date.nil?
     if end_date.present?
-      project
+      parent_model
         .happenings
         .published(show_unpublished)
         .where(created_at: start_date..end_date)
         .order(created_at: :asc)
     else
-      project
+      parent_model
         .happenings
         .published(show_unpublished)
         .where('created_at > ?', start_date)

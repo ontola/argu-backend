@@ -8,9 +8,7 @@ class Motion < ApplicationRecord
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions
-  belongs_to :project, inverse_of: :motions
   belongs_to :publisher, class_name: 'User'
-  belongs_to :question, inverse_of: :motions
 
   has_many :arguments, -> { argument_comments }, dependent: :destroy
   has_many :top_arguments_con, (lambda do
@@ -75,7 +73,7 @@ class Motion < ApplicationRecord
   end
 
   def assert_tenant
-    return unless question.present? && question.forum_id != forum_id
+    return unless parent_model.is_a?(Question) && parent_model.forum_id != forum_id
     errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
   end
 
@@ -95,7 +93,7 @@ class Motion < ApplicationRecord
   end
 
   def closed?
-    question&.expired? || false
+    parent_model.try(:expired?) || false
   end
 
   def creator
@@ -129,7 +127,7 @@ class Motion < ApplicationRecord
       self.forum = forum.lock!
       self.question_id = nil if unlink_question
       edge.parent = forum.edge
-      save
+      save!
       arguments.lock(true).update_all forum_id: forum.id
       votes.lock(true).update_all forum_id: forum.id
       activities.lock(true).update_all forum_id: forum.id

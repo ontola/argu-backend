@@ -4,8 +4,8 @@ require 'test_helper'
 class PhaseTest < ActiveSupport::TestCase
   define_freetown
   let(:project) { create(:project, parent: freetown.edge) }
-  subject { create(:phase, id: 1, project: project, parent: project.edge) }
-  let!(:next_phase) { create(:phase, id: 2, project: project, parent: project.edge) }
+  subject { create(:phase, id: 1, parent: project.edge) }
+  let!(:next_phase) { create(:phase, id: 2, parent: project.edge) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s

@@ -7,7 +7,6 @@ module ProCon
   included do
     include Trashable, Parentable, HasLinks, PublicActivity::Common, Commentable
 
-    belongs_to :motion
     has_many :votes, as: :voteable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'
     belongs_to :forum
@@ -16,11 +15,11 @@ module ProCon
 
     validates :content, presence: false, length: {maximum: 5000}
     validates :title, presence: true, length: {minimum: 5, maximum: 75}
-    validates :creator, :motion, :forum, presence: true
+    validates :creator, :forum, presence: true
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 
-    delegate :closed?, to: :motion
+    delegate :closed?, to: :parent_model
 
     parentable :motion
 

@@ -27,11 +27,11 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def self.assert_has_no_motions
-    'assert_equal 0, assigns(:resource).motions.count'
+    'assert_equal 0, assigns(:resource).reload.motions.count'
   end
 
   def self.assert_has_five_motions
-    'assert_equal 5, assigns(:resource).motions.count'
+    'assert_equal 5, assigns(:resource).reload.motions.count'
   end
 
   define_tests do

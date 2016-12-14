@@ -12,7 +12,7 @@ class ActivityListener
   # @see {ApplicationService#commit} and {ApplicationService#signal_base} for the naming.
   %w(create destroy trash untrash update publish).each do |method|
     define_method "#{method}_argument_successful" do |resource|
-      create_activity(resource, resource.motion, method)
+      create_activity(resource, resource.parent_model, method)
     end
 
     define_method "#{method}_banner_successful" do |resource|
@@ -28,22 +28,20 @@ class ActivityListener
     end
 
     define_method "#{method}_motion_successful" do |resource|
-      recipient = resource.question || resource.project || resource.forum
-      create_activity(resource, recipient, method)
+      create_activity(resource, resource.parent_model, method)
     end
 
     define_method "#{method}_project_successful" do |resource|
-      create_activity(resource, resource.forum, method)
+      create_activity(resource, resource.parent_model, method)
     end
 
     define_method "#{method}_question_successful" do |resource|
-      recipient = resource.project || resource.forum
-      create_activity(resource, recipient, method)
+      create_activity(resource, resource.parent_model, method)
     end
 
     define_method "#{method}_decision_successful" do |resource|
       action = method == 'publish' ? resource.state : method
-      create_activity(resource, resource.decisionable.owner, action)
+      create_activity(resource, resource.parent_model, action)
     end
   end
 

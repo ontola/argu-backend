@@ -70,7 +70,7 @@ class Activity < PublicActivity::Activity
   private
 
   def validate_happening_within_project_scope
-    return unless trackable.parent_model.is_a?(Project) && action == 'happened'
+    return unless action == 'happened' && trackable.parent_model.is_a?(Project)
     return unless trackable.parent_model.start_date > created_at ||
         (trackable.parent_model.end_date.present? && trackable.parent_model.end_date < created_at)
     errors.add(:happened_at, 'must be published during a phase of the project')

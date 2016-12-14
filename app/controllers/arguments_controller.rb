@@ -75,8 +75,7 @@ class ArgumentsController < AuthorizedController
   def create
     create_service.on(:create_argument_successful) do |argument|
       respond_to do |format|
-        argument = permit_params[:motion_id].blank? ? argument : argument.motion
-        format.html { redirect_to argument, notice: t('arguments.notices.created') }
+        format.html { redirect_to argument.parent_model, notice: t('arguments.notices.created') }
         format.json { render json: argument, status: :created, location: argument }
       end
     end
@@ -113,7 +112,7 @@ class ArgumentsController < AuthorizedController
     destroy_service.on(:destroy_argument_successful) do |argument|
       respond_to do |format|
         format.html do
-          redirect_to motion_path(argument.motion_id),
+          redirect_to argument.parent_model,
                       notice: t('type_destroy_success', type: t('arguments.type'))
         end
         format.json { head :no_content }
@@ -134,7 +133,7 @@ class ArgumentsController < AuthorizedController
     trash_service.on(:trash_argument_successful) do |argument|
       respond_to do |format|
         format.html do
-          redirect_to motion_path(argument.motion_id),
+          redirect_to argument.parent_model,
                       notice: t('type_trash_success', type: t('arguments.type'))
         end
         format.json { head :no_content }

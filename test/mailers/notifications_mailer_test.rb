@@ -109,7 +109,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
     assert_equal ['noreply@argu.co'], email.from
     assert_equal [follower.email], email.to
-    assert_equal "New argument: '#{argument_pro.motion.display_name}'"\
+    assert_equal "New argument: '#{argument_pro.parent_model.display_name}'"\
                    " by #{publisher.first_name} #{publisher.last_name}",
                  email.subject
   end
@@ -126,7 +126,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
     assert_equal ['noreply@argu.co'], email.from
     assert_equal [follower.email], email.to
-    assert_equal "New argument: '#{argument_con.motion.display_name}'"\
+    assert_equal "New argument: '#{argument_con.parent_model.display_name}'"\
                    " by #{publisher.first_name} #{publisher.last_name}",
                  email.subject
   end

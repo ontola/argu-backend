@@ -16,7 +16,7 @@ module Edgeable
     scope :untrashed, -> { joins(:edge).where('edges.trashed_at IS NULL') }
 
     accepts_nested_attributes_for :edge
-    delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, to: :edge
+    delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, to: :edge
     counter_cache false
 
     def counter_cache_name

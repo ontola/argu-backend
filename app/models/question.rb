@@ -6,10 +6,9 @@ class Question < ApplicationRecord
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
-  belongs_to :project, inverse_of: :questions
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
-  has_many :motions, dependent: :nullify, inverse_of: :question
+  has_many :motions, dependent: :nullify
   has_many :top_motions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
@@ -54,7 +53,7 @@ class Question < ApplicationRecord
     Question.transaction do
       self.forum = forum.lock!
       edge.parent = forum.edge
-      save
+      save!
       votes.lock(true).update_all forum_id: forum.id
       activities.lock(true).update_all forum_id: forum.id
       if include_motions
@@ -63,8 +62,8 @@ class Question < ApplicationRecord
         end
       else
         motions.each do |motion|
-          motion.update(question: nil)
-          motion.edge.update(parent: motion.forum.edge)
+          motion.edge.update!(parent: motion.forum.edge)
+          motion.update!(question_id: nil)
         end
       end
     end

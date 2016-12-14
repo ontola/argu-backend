@@ -3,7 +3,6 @@ class Decision < ApplicationRecord
   include Loggable, Happenable, HasLinks, Parentable, ActivePublishable
 
   belongs_to :creator, class_name: 'Profile'
-  belongs_to :decisionable, class_name: 'Edge'
   belongs_to :forum
   belongs_to :forwarded_group, class_name: 'Group'
   belongs_to :forwarded_user, class_name: 'User'
@@ -12,7 +11,6 @@ class Decision < ApplicationRecord
           -> { where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
           class_name: 'Activity',
           as: :trackable
-  has_one :motion, through: :decisionable, source: :owner, source_type: 'Motion'
 
   enum state: {pending: 0, approved: 1, rejected: 2, forwarded: 3}
   validates :happening, presence: true, unless: :pending?
@@ -27,7 +25,7 @@ class Decision < ApplicationRecord
   end
 
   def display_name
-    I18n.t("decisions.#{decisionable.owner.model_name.i18n_key}.#{state}")
+    I18n.t("decisions.#{parent_model.model_name.i18n_key}.#{state}")
   end
 
   private

@@ -117,11 +117,11 @@ class ForumsController < AuthorizedController
     questions = policy_scope(resource_by_id
                                .questions
                                .where(project_id: nil)
-                               .includes(:edge, :project, :default_cover_photo))
+                               .includes(:edge, :default_cover_photo))
     motions = policy_scope(resource_by_id
                              .motions
                              .where(project_id: nil, question_id: nil)
-                             .includes(:edge, :question, :project, :default_cover_photo, :votes))
+                             .includes(:edge, :default_cover_photo, :votes))
 
     Kaminari
       .paginate_array((projects + questions + motions)
