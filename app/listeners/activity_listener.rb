@@ -20,7 +20,7 @@ class ActivityListener
     end
 
     define_method "#{method}_blog_post_successful" do |resource|
-      create_activity(resource, resource.blog_postable, method)
+      create_activity(resource, resource.parent_model, method)
     end
 
     define_method "#{method}_comment_successful" do |resource|

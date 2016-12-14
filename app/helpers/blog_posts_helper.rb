@@ -24,6 +24,6 @@ module BlogPostsHelper
   end
 
   def url_for_blog_post(blog_post)
-    url_for([blog_post.blog_postable, happening_id: blog_post.happening.id])
+    url_for([blog_post.parent_model, happening_id: blog_post.happening.id])
   end
 end

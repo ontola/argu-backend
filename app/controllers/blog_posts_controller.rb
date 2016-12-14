@@ -70,7 +70,7 @@ class BlogPostsController < AuthorizedController
     destroy_service.on(:destroy_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html do
-          redirect_to blog_post.blog_postable,
+          redirect_to blog_post.parent_model,
                       notice: t('type_destroy_success', type: t('blog_posts.type'))
         end
         format.json { head :no_content }
@@ -91,7 +91,7 @@ class BlogPostsController < AuthorizedController
     trash_service.on(:trash_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html do
-          redirect_to blog_post.blog_postable,
+          redirect_to blog_post.parent_model,
                       notice: t('type_trash_success', type: t('blog_posts.type'))
         end
         format.json { head :no_content }
@@ -132,12 +132,6 @@ class BlogPostsController < AuthorizedController
     blog_post.edge.build_argu_publication(publish_type: :direct,
                                           published_at: DateTime.current)
     blog_post
-  end
-
-  def resource_new_params
-    h = super.merge(blog_postable: get_parent_resource)
-    h.delete(parent_resource_param)
-    h
   end
 
   def resource_tenant

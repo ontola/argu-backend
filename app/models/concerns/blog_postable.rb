@@ -3,9 +3,7 @@ module BlogPostable
   extend ActiveSupport::Concern
 
   included do
-    has_many :blog_posts,
-             as: :blog_postable,
-             inverse_of: :blog_postable
+    has_many :blog_posts, as: :blog_postable
   end
 
   module ClassMethods

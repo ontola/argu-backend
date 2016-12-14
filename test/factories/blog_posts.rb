@@ -10,7 +10,6 @@ FactoryGirl.define do
         publisher.present? ? publisher.profile : create(:profile)
       end
     end
-    association :blog_postable, factory: :project
 
     sequence(:title) { |n| "fg blog post #{n}end" }
     content 'contents'

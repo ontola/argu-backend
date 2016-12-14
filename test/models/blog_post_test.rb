@@ -25,7 +25,7 @@ class BlogPostTest < ActiveSupport::TestCase
                'blog_post can be published after end_date of project'
     assert subject.happening.update(created_at: DateTime.current),
            "blog_post can't be published while within scope of project"
-    subject.blog_postable.update(end_date: nil)
+    subject.parent_model.update(end_date: nil)
     subject.happening.reload
     assert subject.happening.update(created_at: 1.month.from_now),
            "blog_post can't be published in future while project has no end_date"

@@ -14,7 +14,7 @@ class BlogPostPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(title content blog_postable trashed_at happened_at) if create?
+    attributes.concat %i(title content trashed_at happened_at) if create?
     happening_attributes = %i(id happened_at)
     attributes.append(happening_attributes: happening_attributes)
     attributes
@@ -48,6 +48,6 @@ class BlogPostPolicy < EdgeTreePolicy
   private
 
   def parent_policy
-    Pundit.policy(context, record.blog_postable)
+    Pundit.policy(context, record.parent_model)
   end
 end

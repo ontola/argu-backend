@@ -2,7 +2,8 @@
 # frozen_string_literal: true
 class CreateBlogPost < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
-    attributes[:blog_postable] = parent.owner
+    attributes[:blog_postable_id] = parent.owner_id
+    attributes[:blog_postable_type] = parent.owner_type
     super
     build_happening if attributes[:happened_at].present?
   end
@@ -15,7 +16,7 @@ class CreateBlogPost < PublishedCreateService
       created_at: @attributes[:happened_at],
       owner: resource.creator,
       key: 'blog_post.happened',
-      recipient: resource.blog_postable
+      recipient: resource.parent_model
     )
   end
 
@@ -25,6 +26,6 @@ class CreateBlogPost < PublishedCreateService
     obj.forum ||= resource.forum
     obj.owner ||= resource.creator
     obj.key ||= 'blog_post.happened'
-    obj.recipient ||= resource.blog_postable
+    obj.recipient ||= resource.parent_model
   end
 end
