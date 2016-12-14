@@ -9,6 +9,7 @@ module Edgeable
             inverse_of: :owner,
             dependent: :destroy,
             required: true
+    has_many :edge_children, through: :edge, source: :children
     has_many :grants, through: :edge
     scope :published, -> { joins(:edge).where('edges.is_published = true') }
     scope :unpublished, -> { joins(:edge).where('edges.is_published = false') }
@@ -62,6 +63,22 @@ module Edgeable
       cattr_accessor :counter_cache_options do
         value
       end
+    end
+
+    # Adds an association for children through the edge tree
+    # Usage is the same as regular has_many
+    # @note The official relation name is suffixed with '_from_tree', to prevent join naming conflicts.
+    #       An alias with the original given name is added as well
+    # @example edge_tree_has_many :arguments
+    #   has_many :arguments_from_tree, through: :edge_children, source: :owner, source_type: 'Argument'
+    #   alias :arguments, :arguments_from_tree
+    #   arguments # => [ActiveRecord::Associations::CollectionProxy<Arguments>]
+    def edge_tree_has_many(name, scope = nil, options = {})
+      options[:through] = :edge_children
+      options[:source] = :owner
+      options[:source_type] = options[:class_name] || name.to_s.classify
+      has_many "#{name}_from_tree".to_sym, scope, options
+      alias_attribute name.to_sym, "#{name}_from_tree".to_sym
     end
 
     # Resets the counter_caches of the parents of all instances of this class

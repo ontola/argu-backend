@@ -1,10 +1,10 @@
-
 # frozen_string_literal: true
 class Edge < ActiveRecord::Base
   belongs_to :owner,
              inverse_of: :edge,
              polymorphic: true,
-             required: true
+             required: true,
+             dependent: :destroy
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
@@ -41,7 +41,8 @@ class Edge < ActiveRecord::Base
   validates :parent, presence: true, unless: :root_object?
 
   before_destroy :decrement_counter_cache, unless: :is_trashable?
-  before_destroy :update_children
+  before_destroy :reset_persisted_edge
+  before_destroy :destroy_children
   before_save :set_user_id
   before_save :trash_or_untrash, if: :is_trashed_changed?
 
@@ -70,6 +71,7 @@ class Edge < ActiveRecord::Base
 
   def get_parent(type)
     return self if owner_type == type.to_s.classify
+    return persisted_edge&.get_parent(type) unless persisted?
     if type == :page
       root
     elsif type == :forum
@@ -163,6 +165,10 @@ class Edge < ActiveRecord::Base
 
   private
 
+  def reset_persisted_edge
+    @persisted_edge = nil
+  end
+
   def set_user_id
     self.user_id = owner.publisher.present? ? owner.publisher.id : 0
   end
@@ -175,9 +181,8 @@ class Edge < ActiveRecord::Base
     changed.include?('is_trashed')
   end
 
-  def update_children
-    children.each do |child|
-      child.update(parent: parent)
-    end
+  def destroy_children
+    return if owner_type == 'Page'
+    children.destroy_all
   end
 end

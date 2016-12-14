@@ -45,6 +45,12 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
   let(:argument) do
     create(:argument, parent: motion.edge)
   end
+  let(:motion_blog_post) do
+    create(:blog_post, parent: motion.edge)
+  end
+  let(:question_blog_post) do
+    create(:blog_post, parent: question.edge)
+  end
 
   ####################################
   # As User
@@ -141,6 +147,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'staff should post convert motion' do
     sign_in staff
+    motion_blog_post
 
     edge = motion.edge
     vote_count = motion.votes.count
@@ -148,7 +155,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
            'no votes to test'
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', 0], ['Edge.count', -6], ['Activity.count', 1]]) do
+                        ['Vote.count', -6], ['Edge.count', -12], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(motion.edge),
            params: {
              conversion: {
@@ -168,19 +175,18 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 0, Vote.where(voteable_id: motion.id, voteable_type: 'Motion').count
     assert_equal 0, Activity.where(trackable: motion).count
 
-    assert_equal vote_count, edge.owner.votes.count
-    assert edge.owner.votes.none? { |v| v.edge.parent != edge }
     # Activity for Create and Convert
     assert_equal 2, edge.owner.activities.count
   end
 
   test 'staff should post convert question motion' do
     sign_in staff
+    motion_blog_post
 
     edge = question_motion.edge
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', 0], ['Edge.count', -6], ['Activity.count', 1]]) do
+                        ['Vote.count', -6], ['Edge.count', -12], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(question_motion.edge),
            params: {
              conversion: {
@@ -198,11 +204,12 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'staff should post convert project motion' do
     sign_in staff
+    motion_blog_post
 
     edge = project_motion.edge
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', 0], ['Edge.count', -6], ['Activity.count', 1]]) do
+                        ['Vote.count', -6], ['Edge.count', -12], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(project_motion.edge),
            params: {
              conversion: {
@@ -227,6 +234,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'staff should post convert question' do
     sign_in staff
+    question_blog_post
 
     edge = question.edge
 
@@ -236,7 +244,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
            'no votes to test'
 
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],
-                        ['Edge.count', 0], ['Activity.count', 1]]) do
+                        ['Edge.count', 0], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(question.edge),
            params: {
              conversion: {
@@ -254,20 +262,20 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     # Test direct relations
     assert_equal 0, Vote.where(voteable_id: question.id, voteable_type: 'Question').count
     assert_equal 0, Activity.where(trackable: question).count
+    assert_equal question_blog_post.reload.blog_postable_type, 'Motion'
 
-    assert_equal vote_count, edge.owner.votes.count
-    assert edge.owner.votes.none? { |v| v.edge.parent != edge }
     # Activity for Create and Convert
     assert_equal 2, edge.owner.activities.count
   end
 
   test 'staff should post convert project question' do
     sign_in staff
+    question_blog_post
 
     edge = project_question.edge
 
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],
-                        ['Edge.count', 0], ['Activity.count', 1]]) do
+                        ['Edge.count', 0], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(project_question.edge),
            params: {
              conversion: {

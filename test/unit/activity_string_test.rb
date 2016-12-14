@@ -73,19 +73,18 @@ class ActivityStringTest < ActiveSupport::TestCase
   end
 
   test 'string for activities of question with deleted parent' do
-    destroy_resource(project)
-    question.reload
     create_activity = question.activities.first
     update_activity = update_resource(question, {content: 'updated content'}, updater).activities.last
     trash_activity = trash_resource(question, updater).activities.last
+    destroy_resource(project)
     assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
                   "posted a challenge in #{project.display_name}",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
-                  "updated [#{question.display_name}](/q/#{question.id})",
+                  "updated #{question.display_name}",
                  Argu::ActivityString.new(update_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
-                  "trashed [#{question.display_name}](/q/#{question.id})",
+                  "trashed #{question.display_name}",
                  Argu::ActivityString.new(trash_activity, receiver, true).to_s
   end
 

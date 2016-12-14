@@ -12,7 +12,7 @@ class Question < ApplicationRecord
   has_many :top_motions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  convertible motions: %i(votes taggings activities)
+  convertible motions: %i(votes taggings activities blog_posts)
   counter_cache true
   parentable :project, :forum
 

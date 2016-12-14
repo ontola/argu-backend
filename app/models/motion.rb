@@ -10,8 +10,8 @@ class Motion < ApplicationRecord
   belongs_to :forum, inverse_of: :motions
   belongs_to :publisher, class_name: 'User'
 
-  has_many :arguments, -> { argument_comments }, dependent: :destroy
-  has_many :top_arguments_con, (lambda do
+  edge_tree_has_many :arguments, -> { argument_comments }
+  edge_tree_has_many :top_arguments_con, (lambda do
     argument_comments
       .joins(:edge)
       .where(pro: false)
@@ -19,7 +19,7 @@ class Motion < ApplicationRecord
       .order("edges.children_counts -> 'votes_pro' DESC")
       .limit(5)
   end), class_name: 'Argument'
-  has_many :top_arguments_pro, (lambda do
+  edge_tree_has_many :top_arguments_pro, (lambda do
     argument_comments
       .joins(:edge)
       .where(pro: true)
@@ -39,7 +39,7 @@ class Motion < ApplicationRecord
   contextualize :content, as: 'schema:text'
   attr_accessor :arguments_relation
 
-  convertible questions: %i(votes taggings activities)
+  convertible questions: %i(votes taggings activities blog_posts)
   counter_cache true
   paginates_per 30
   parentable :question, :project, :forum

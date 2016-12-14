@@ -11,7 +11,6 @@ class Argument < ApplicationRecord
 
   scope :argument_comments, lambda {
     includes(:comment_threads)
-      .joins(:edge)
       .order("edges.children_counts -> 'votes_pro' DESC")
       .references(:comment_threads)
   }
