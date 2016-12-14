@@ -112,7 +112,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert assigns(:collection)[:pro][:collection].length.positive?
-    assert_not assigns(:collection)[:pro][:collection].any? { |v| v.voteable.is_trashed? }
+    assert_not assigns(:collection)[:pro][:collection].any? { |v| v.parent_model.is_trashed? }
   end
 
   test 'user should show settings and all tabs' do

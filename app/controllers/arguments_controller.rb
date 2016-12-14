@@ -24,7 +24,11 @@ class ArgumentsController < AuthorizedController
   def show
     @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
     @length = authenticated_resource.root_comments.length
-    @vote = Vote.find_by(voteable: authenticated_resource, voter: current_profile)
+    @vote = Vote.find_by(
+      voteable_id: authenticated_resource.id,
+      voteable_type: 'Argument',
+      voter: current_profile
+    )
 
     respond_to do |format|
       format.html do

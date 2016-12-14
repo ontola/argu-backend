@@ -11,7 +11,9 @@ class QuestionsController < AuthorizedController
               .order("edges.children_counts -> 'votes_pro' DESC")
 
     if current_user.present?
-      @user_votes = Vote.where(voteable: scope, voter: current_profile).eager_load!
+      @user_votes = Vote.where(voteable_id: scope.ids,
+                               voteable_type: 'Motion',
+                               voter: current_profile).eager_load!
     end
 
     @motions = policy_scope(scope)

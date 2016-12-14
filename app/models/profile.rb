@@ -136,9 +136,12 @@ class Profile < ApplicationRecord
 
   # ######Methods########
   def voted_on?(item)
-    Vote.where(voter_id: id, voter_type: self.class.name,
-               voteable_id: item.id, voteable_type: item.class.to_s).last
-        .try(:for) == 'pro'
+    Vote.where(voter_id: id,
+               voter_type: self.class.name,
+               voteable_id: item.id,
+               voteable_type: item.class.to_s)
+      .last
+      .try(:for) == 'pro'
   end
 
   # Warn: Doesn't check for parent deletion

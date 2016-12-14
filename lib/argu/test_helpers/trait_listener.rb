@@ -141,7 +141,8 @@ module Argu
 
       def vote_attrs(side)
         {
-          voteable: @resource,
+          voteable_id: @resource.id,
+          voteable_type: @resource.class.name,
           for: side
         }
       end

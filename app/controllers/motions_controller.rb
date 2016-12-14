@@ -41,8 +41,18 @@ class MotionsController < AuthorizedController
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]
     )
-    @vote = Vote.where(voteable: authenticated_resource, voter: current_profile).last unless current_user.blank?
-    @vote ||= Vote.new(voteable: authenticated_resource, voter: current_profile)
+    unless current_user.blank?
+      @vote = Vote.where(
+        voteable_id: authenticated_resource.id,
+        voteable_type: 'Motion',
+        voter: current_profile
+      ).last
+    end
+    @vote ||= Vote.new(
+      voteable_id: authenticated_resource.id,
+      voteable_type: authenticated_resource.class.name,
+      voter: current_profile
+    )
 
     respond_to do |format|
       format.html { render locals: {motion: authenticated_resource} }

@@ -33,9 +33,9 @@ module Convertible
         klass_association = self.class.reflect_on_association(association)
         # Just to be sure
         next unless klass_association.macro == :has_many
-        remote_association_name = klass_association.options[:as]
         send(association).each do |associated_model|
-          associated_model.send("#{remote_association_name}=", new_model)
+          associated_model.send("#{klass_association.foreign_key}=", new_model.id)
+          associated_model.send("#{klass_association.type}=", new_model.class.name) if klass_association.type.present?
           associated_model.save!
         end
         send(association).clear

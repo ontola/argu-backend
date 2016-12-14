@@ -2,8 +2,9 @@
 # frozen_string_literal: true
 class CreateVote < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
+    attributes[:voteable_id] = parent.owner_id
+    attributes[:voteable_type] = parent.owner_type
     super
-    resource.voteable = parent.owner
   end
 
   private

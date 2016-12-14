@@ -165,7 +165,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     # Test direct relations
     assert_equal 0, Argument.where(motion_id: motion.id).count
-    assert_equal 0, Vote.where(voteable: motion).count
+    assert_equal 0, Vote.where(voteable_id: motion.id, voteable_type: 'Motion').count
     assert_equal 0, Activity.where(trackable: motion).count
 
     assert_equal vote_count, edge.owner.votes.count
@@ -252,7 +252,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Forum, edge.parent.owner.class
 
     # Test direct relations
-    assert_equal 0, Vote.where(voteable: question).count
+    assert_equal 0, Vote.where(voteable_id: question.id, voteable_type: 'Question').count
     assert_equal 0, Activity.where(trackable: question).count
 
     assert_equal vote_count, edge.owner.votes.count

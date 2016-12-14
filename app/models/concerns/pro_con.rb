@@ -8,7 +8,7 @@ module ProCon
     include Trashable, Parentable, HasLinks, PublicActivity::Common, Commentable
 
     belongs_to :motion
-    has_many :votes, as: :voteable, dependent: :destroy, inverse_of: :voteable
+    has_many :votes, as: :voteable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'
     belongs_to :forum
 

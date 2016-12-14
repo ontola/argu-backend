@@ -57,10 +57,10 @@ class ActivityListener
 
   def create_vote_successful(resource)
     ActiveRecord::Base.transaction do
-      destroy_recent_similar_activities(resource, resource.voteable, 'create')
+      destroy_recent_similar_activities(resource, resource.parent_model, 'create')
       create_activity(
         resource,
-        resource.voteable,
+        resource.parent_model,
         :create,
         parameters: {for: resource.for}
       )

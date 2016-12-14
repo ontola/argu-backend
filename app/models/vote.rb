@@ -2,7 +2,6 @@
 class Vote < ApplicationRecord
   include Parentable, Loggable, PublicActivity::Model, Ldable
 
-  belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, class_name: 'Profile', inverse_of: :votes
   alias creator voter
   alias creator= voter=
@@ -17,16 +16,16 @@ class Vote < ApplicationRecord
                 votes_con: {for: Vote.fors[:con]},
                 votes_neutral: {for: Vote.fors[:neutral]}
 
-  validates :voteable, :voter, :forum, :for, presence: true
+  validates :voter, :forum, :for, presence: true
 
   contextualize_as_type 'argu:Vote'
-  contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url([v.voteable, v], protocol: :https) }
+  contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url([v.parent_model, v], protocol: :https) }
   contextualize :for, as: 'schema:option'
 
   # #########methods###########
   # Needed for ActivityListener#audit_data
   def display_name
-    "#{self.for} vote for #{voteable.display_name}"
+    "#{self.for} vote for #{parent_model.display_name}"
   end
 
   def for?(item)
@@ -41,7 +40,7 @@ class Vote < ApplicationRecord
     self.for.to_sym
   end
 
-  delegate :is_trashed?, to: :voteable
+  delegate :is_trashed?, to: :parent_model
 
   # #########Class methods###########
   def self.ordered(votes)

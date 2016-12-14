@@ -88,7 +88,6 @@ class VotesController < AuthorizedController
     authorize vote, :destroy?
     respond_to do |format|
       if vote.destroy
-        vote.voteable.reload
         send_event category: 'votes',
                    action: 'destroy',
                    label: vote.for
@@ -120,7 +119,8 @@ class VotesController < AuthorizedController
   def resource_by_id
     return super unless params[:action] == 'show'
     @_resource_by_id ||= Vote.find_by(
-      voteable: get_parent_resource,
+      voteable_id: get_parent_resource.id,
+      voteable_type: get_parent_resource.class.name,
       voter: current_profile,
       forum: get_parent_resource.forum
     )

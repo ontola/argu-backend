@@ -16,14 +16,16 @@ class VoteTest < ActiveSupport::TestCase
       Vote.transaction do
         Vote.create(
           edge: motion.edge.children.new(user: user),
-          voteable: motion,
+          voteable_id: motion.id,
+          voteable_type: 'Motion',
           voter: user.profile,
           forum: motion.forum,
           publisher: user
         )
         Vote.create(
           edge: motion.edge.children.new(user: user),
-          voteable: motion,
+          voteable_id: motion.id,
+          voteable_type: 'Motion',
           voter: user.profile,
           forum: motion.forum,
           publisher: user
