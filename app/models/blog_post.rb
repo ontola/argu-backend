@@ -25,7 +25,7 @@ class BlogPost < ApplicationRecord
              foreign_key: :blog_postable_id
 
   counter_cache true
-  parentable :blog_postable, :forum
+  parentable :motion, :question, :project
 
   validates :content, presence: true, length: {minimum: 2}
   validates :title, presence: true, length: {minimum: 2, maximum: 110}

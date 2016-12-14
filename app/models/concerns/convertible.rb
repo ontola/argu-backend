@@ -25,7 +25,7 @@ module Convertible
       shared_attributes = klass.column_names.reject { |n| !attribute_names.include?(n) || n == 'id' }
       new_model = klass.new Hash[shared_attributes.map { |i| [i, attributes[i]] }]
       new_model.edge = edge
-      until new_model.parent_is.include?(new_model.edge.parent.owner_type.underscore.to_sym)
+      until new_model.parent_classes.include?(new_model.edge.parent.owner_type.underscore.to_sym)
         new_model.edge.parent = new_model.edge.parent.parent
       end
       new_model.save!

@@ -16,4 +16,8 @@ class Grant < ApplicationRecord
   def page
     edge.root.owner
   end
+
+  def self.parent_classes
+    %i(edge)
+  end
 end

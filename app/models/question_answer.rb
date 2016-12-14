@@ -21,6 +21,10 @@ class QuestionAnswer
     false
   end
 
+  def self.parent_classes
+    %i(motion question)
+  end
+
   def question_id
     question.try(:id)
   end

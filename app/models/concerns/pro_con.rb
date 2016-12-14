@@ -22,7 +22,7 @@ module ProCon
 
     delegate :closed?, to: :motion
 
-    parentable :motion, :forum
+    parentable :motion
 
     scope :pro, -> { where(pro: true) }
     scope :con, -> { where(pro: false) }

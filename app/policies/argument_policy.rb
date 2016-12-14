@@ -12,10 +12,6 @@ class ArgumentPolicy < EdgeTreePolicy
     delegate :user, to: :context
   end
 
-  def children_classes
-    super.append(:comments)
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i(title content pro motion_id forum_id) if create?

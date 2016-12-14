@@ -132,10 +132,6 @@ class EdgeTreePolicy < RestrictivePolicy
     rule is_owner?, staff?
   end
 
-  def children_classes
-    record.class.reflect_on_all_associations(:has_many).map(&:name)
-  end
-
   def convert?
     false
   end
@@ -146,10 +142,11 @@ class EdgeTreePolicy < RestrictivePolicy
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def create_child?(klass, attrs = {})
+    klass = klass.to_s.classify.constantize
     @create_child ||= {}
     @create_child[klass] ||=
-      if children_classes.include?(klass)
-        child = klass.to_s.classify.constantize.new(attrs)
+      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
+        child = klass.new(attrs)
         child = record.edge.children.new(owner: child).owner if child.is_fertile?
         Pundit.policy(context, child).create? || false
       else
@@ -174,10 +171,11 @@ class EdgeTreePolicy < RestrictivePolicy
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def index_children?(klass, attrs = {})
+    klass = klass.to_s.classify.constantize
     @index_children ||= {}
     @index_children[klass] ||=
-      if children_classes.include?(klass)
-        child = klass.to_s.classify.constantize.new(attrs)
+      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
+        child = klass.new(attrs)
         child = record.edge.children.new(owner: child).owner if child.is_fertile?
         Pundit.policy(context, child).show? || false
       else

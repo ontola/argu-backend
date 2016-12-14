@@ -10,7 +10,7 @@ class Vote < ApplicationRecord
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
 
-  parentable :voteable
+  parentable :argument, :motion
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
   counter_cache votes_pro: {for: Vote.fors[:pro]},

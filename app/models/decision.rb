@@ -19,7 +19,7 @@ class Decision < ApplicationRecord
   validate :correctly_forwarded, if: :forwarded?
   alias_attribute :title, :display_name
   alias_attribute :description, :content
-  parentable :decisionable
+  parentable :motion
 
   # @return [Array<Symbol>] States that indicate an action was taken on this decision
   def self.actioned_keys

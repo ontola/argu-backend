@@ -31,7 +31,7 @@ module Parentable
     # Add to a model which includes {Parentable} to set the possible parents for the model
     # @param relation [Symbol splat] List of symbolized model names.
     def parentable(*relation)
-      cattr_accessor :parent_is do
+      cattr_accessor :parent_classes do
         relation
       end
     end
