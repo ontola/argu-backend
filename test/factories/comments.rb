@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 FactoryGirl.define do
   factory :comment, traits: [:set_publisher] do
-    association :commentable, factory: :argument
     association :publisher, factory: [:user, :follows_reactions_directly]
     creator do
       if passed_in?(:creator)

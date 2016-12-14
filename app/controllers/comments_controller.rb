@@ -21,7 +21,7 @@ class CommentsController < AuthorizedController
   def new
     render locals: {
       parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
-      resource: authenticated_resource.commentable,
+      resource: authenticated_resource.parent_model,
       comment: authenticated_resource
     }
   end
@@ -29,7 +29,7 @@ class CommentsController < AuthorizedController
   def show
     respond_to do |format|
       format.html do
-        redirect_to url_for([authenticated_resource.commentable, anchor: authenticated_resource.identifier])
+        redirect_to url_for([authenticated_resource.parent_model, anchor: authenticated_resource.identifier])
       end
       format.json_api { render json: authenticated_resource }
     end
@@ -39,13 +39,13 @@ class CommentsController < AuthorizedController
     respond_to do |format|
       format.html do
         render locals: {
-          resource: authenticated_resource.commentable,
+          resource: authenticated_resource.parent_model,
           comment: authenticated_resource
         }
       end
       format.js do
         render locals: {
-          resource: authenticated_resource.commentable,
+          resource: authenticated_resource.parent_model,
           comment: authenticated_resource,
           parent_id: nil,
           visible: true
@@ -57,11 +57,11 @@ class CommentsController < AuthorizedController
   # POST /resource/1/comments
   def create
     create_service.on(:create_comment_successful) do |c|
-      redirect_to polymorphic_url(c.commentable, anchor: c.identifier),
+      redirect_to polymorphic_url(c.parent_model, anchor: c.identifier),
                   notice: t('type_create_success', type: t('comments.type'))
     end
     create_service.on(:create_comment_failed) do |c|
-      redirect_to polymorphic_url([c.commentable],
+      redirect_to polymorphic_url([c.parent_model],
                                   comment: {
                                     body: c.body,
                                     parent_id: c.parent_id
@@ -87,7 +87,7 @@ class CommentsController < AuthorizedController
         format.html do
           render 'edit',
                  locals: {
-                   resource: comment.commentable,
+                   resource: comment.parent_model,
                    comment: comment,
                    parent_id: nil
                  }
@@ -109,14 +109,14 @@ class CommentsController < AuthorizedController
   def destroy
     destroy_service.on(:destroy_comment_successful) do |comment|
       respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id) }
+        format.html { redirect_to polymorphic_url([comment.parent_model], anchor: comment.id) }
         format.js # destroy_comment.js
       end
     end
     destroy_service.on(:destroy_comment_failed) do |comment|
       respond_to do |format|
         format.html do
-          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
                       notice: t('errors.general')
         end
         format.js # destroy_comment.js
@@ -130,7 +130,7 @@ class CommentsController < AuthorizedController
     trash_service.on(:trash_comment_successful) do |comment|
       respond_to do |format|
         format.html do
-          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
                       notice: t('type_trash_success', type: t('comments.type'))
         end
         format.js # destroy_comment.js
@@ -139,7 +139,7 @@ class CommentsController < AuthorizedController
     trash_service.on(:trash_comment_failed) do |comment|
       respond_to do |format|
         format.html do
-          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
                       notice: t('errors.general')
         end
         format.js # destroy_comment.js
@@ -154,7 +154,7 @@ class CommentsController < AuthorizedController
     untrash_service.on(:untrash_comment_successful) do |comment|
       respond_to do |format|
         format.html do
-          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
                       notice: t('type_untrash_success', type: t('comments.type'))
         end
         format.js # destroy_comment.js
@@ -163,7 +163,7 @@ class CommentsController < AuthorizedController
     untrash_service.on(:untrash_comment_failed) do |comment|
       respond_to do |format|
         format.html do
-          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
                       notice: t('errors.general')
         end
         format.js # destroy_comment.js
@@ -175,7 +175,7 @@ class CommentsController < AuthorizedController
   def forum_for(url_options)
     comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
     if comment.present?
-      comment.commentable.try(:forum)
+      comment.parent_model(:forum)
     elsif url_options[:argument_id].present?
       Argument.find_by(id: url_options[:argument_id]).try(:forum)
     end
@@ -200,12 +200,7 @@ class CommentsController < AuthorizedController
   end
 
   def resource_new_params
-    h = super.merge(
-      commentable: get_parent_resource,
-      body: comment_body
-    )
-    h.delete(parent_resource_param)
-    h
+    super.merge(body: comment_body)
   end
 
   def query_payload(opts = {})

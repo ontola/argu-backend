@@ -45,7 +45,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'guest should get comment' do
     general_show(302, comment, comment_shortname) do
-      assert_redirected_to argument_path(comment.commentable, anchor: comment.identifier)
+      assert_redirected_to argument_path(comment.parent_model, anchor: comment.identifier)
     end
   end
 

@@ -50,13 +50,13 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def has_access_to_platform?
-    user || has_access_token_access_to(record.commentable.forum)
+    user || has_access_token_access_to(record.parent_model(:forum))
   end
 
   private
 
   def assert_siblings!
-    assert! record.commentable == record.parent.commentable, :siblings?
+    assert! record.parent_model == record.parent.parent_model, :siblings?
   end
 
   def forum_policy

@@ -51,15 +51,15 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def edit_path(record)
-    url_for([:edit, record.commentable, record])
+    url_for([:edit, record.parent_model, record])
   end
 
   def update_path(record)
-    url_for([record.commentable, record])
+    url_for([record.parent_model, record])
   end
 
   def destroy_path(record)
-    url_for([record.commentable, record, destroy: true])
+    url_for([record.parent_model, record, destroy: true])
   end
 
   def self.assert_redirect_new_user_argument
@@ -73,12 +73,12 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def self.assert_redirect_argument
-    'assert_redirected_to argument_path(send(test_case[:options]&.try(:[], :record) || :subject).commentable, '\
+    'assert_redirected_to argument_path(send(test_case[:options]&.try(:[], :record) || :subject).parent_model, '\
     'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
   end
 
   def self.assert_redirect_blog_post
-    'assert_redirected_to blog_post_path(send(test_case[:options]&.try(:[], :record) || :subject).commentable, '\
+    'assert_redirected_to blog_post_path(send(test_case[:options]&.try(:[], :record) || :subject).parent_model, '\
     'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
   end
 
@@ -266,13 +266,13 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   test 'member should not delete wipe own comment twice affecting counter caches' do
     sign_in venice_member
 
-    assert_equal 1, venice_comment.commentable.children_count(:comments)
+    assert_equal 1, venice_comment.parent_model.children_count(:comments)
 
-    assert_differences([['venice_comment.commentable.reload.children_count(:comments)', -1],
+    assert_differences([['venice_comment.parent_model.reload.children_count(:comments)', -1],
                         ['venice_member.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(venice_comment.commentable, venice_comment)
+      delete trash_argument_comment_path(venice_comment.parent_model, venice_comment)
       delete destroy_argument_comment_path(
-        venice_comment.commentable,
+        venice_comment.parent_model,
         venice_comment,
         destroy: 'true'
       )
@@ -287,13 +287,13 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   test 'owner should not delete wipe own comment twice affecting counter caches' do
     sign_in create_owner(venice)
 
-    assert_equal 1, venice_comment.commentable.children_count(:comments)
+    assert_equal 1, venice_comment.parent_model.children_count(:comments)
 
-    assert_differences([['venice_comment.commentable.reload.children_count(:comments)', -1],
+    assert_differences([['venice_comment.parent_model.reload.children_count(:comments)', -1],
                         ['venice_member.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(venice_comment.commentable, venice_comment)
+      delete trash_argument_comment_path(venice_comment.parent_model, venice_comment)
       delete destroy_argument_comment_path(
-        venice_comment.commentable,
+        venice_comment.parent_model,
         venice_comment,
         destroy: 'true'
       )

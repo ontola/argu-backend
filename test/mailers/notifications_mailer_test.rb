@@ -143,7 +143,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
     assert_equal ['noreply@argu.co'], email.from
     assert_equal [follower.email], email.to
-    assert_equal "New comment on '#{comment.commentable.display_name}'"\
+    assert_equal "New comment on '#{comment.parent_model.display_name}'"\
                    " by #{publisher.first_name} #{publisher.last_name}",
                  email.subject
   end
@@ -160,7 +160,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
 
     assert_equal ['noreply@argu.co'], email.from
     assert_equal [follower.email], email.to
-    assert_equal "New comment on '#{comment_comment.commentable.display_name}'"\
+    assert_equal "New comment on '#{comment_comment.parent_model.display_name}'"\
                    " by #{publisher.first_name} #{publisher.last_name}",
                  email.subject
   end
