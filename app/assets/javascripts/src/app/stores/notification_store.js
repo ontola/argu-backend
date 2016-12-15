@@ -39,7 +39,7 @@ const notificationStore = Reflux.createStore({
                 if (count >= 0) {
                     return NotificationActions.fetchNew();
                 }
-                
+
             });
     },
 
@@ -108,9 +108,6 @@ const notificationStore = Reflux.createStore({
     output (notifications) {
         if (notifications) {
             if (notifications.lastNotification) {
-                if (this.state.notifications.lastNotification && Date.parse(notifications.lastNotification) > this.state.notifications.lastNotification && notifications.notifications[0].read === false) {
-                    document.getElementById('notificationSound').play();
-                }
                 this.state.notifications.notifications = this
                     .state
                     .notifications
