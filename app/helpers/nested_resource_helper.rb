@@ -109,14 +109,6 @@ module NestedResourceHelper
     end
   end
 
-  def resource_new_params
-    if parent_resource_klass(request.path_parameters) == Forum
-      super
-    else
-      super.merge(parent_resource_param => params[parent_resource_param])
-    end
-  end
-
   # @see {get_parent_resource}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [Forum, nil] The tenant of the found resource by its parent
