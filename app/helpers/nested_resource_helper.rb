@@ -36,7 +36,9 @@ module NestedResourceHelper
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_resource(opts = params)
     @parent_resource ||=
-      if parent_resource_class(opts).try(:shortnameable?)
+      if linked_parent?
+        linked_parent
+      elsif parent_resource_class(opts).try(:shortnameable?)
         parent_resource_class(opts).find_via_shortname! parent_id_from_params(opts)
       else
         parent_resource_class(opts).find parent_id_from_params(opts)
@@ -57,6 +59,19 @@ module NestedResourceHelper
       id_and_type_from_iri(resource_params[:parent])[:id]
     else
       opts[parent_resource_param(opts)]
+    end
+  end
+
+  # A parent is a linked parent when the `parent` parameter is present and it doesn't match on a known Argu IRI
+  def linked_parent?
+    resource_params[:parent].present? && id_and_type_from_iri(resource_params[:parent]).empty?
+  end
+
+  def linked_parent
+    source = Source.where("? LIKE iri_base || '%'", resource_params[:parent]).first
+    raise ActiveRecord::RecordNotFound unless source.present?
+    LinkedRecord.find_or_initialize_by(iri: resource_params[:parent], source: source, page: source.page) do |record|
+      record.edge = Edge.new(parent: source.edge, user_id: 0)
     end
   end
 

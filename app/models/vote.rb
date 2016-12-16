@@ -10,14 +10,14 @@ class Vote < ApplicationRecord
   belongs_to :forum
   before_save :decrement_previous_counter_cache, unless: :new_record?
 
-  parentable :argument, :motion
+  parentable :argument, :motion, :linked_record
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
   counter_cache votes_pro: {for: Vote.fors[:pro]},
                 votes_con: {for: Vote.fors[:con]},
                 votes_neutral: {for: Vote.fors[:neutral]}
 
-  validates :voter, :forum, :for, presence: true
+  validates :voter, :for, presence: true
 
   contextualize_as_type 'argu:Vote'
   contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url([v.parent_model, v], protocol: :https) }

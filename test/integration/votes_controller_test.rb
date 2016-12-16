@@ -2,6 +2,7 @@
 require 'test_helper'
 
 class VotesControllerTest < ActionDispatch::IntegrationTest
+  define_public_source
   define_freetown
   define_cairo
   let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown.edge) }
@@ -12,6 +13,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   let!(:vote) { create(:vote, parent: motion.edge) }
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.edge) }
+  let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
 
   ####################################
   # As Guest
@@ -145,6 +147,105 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create json_api for existing linked record' do
+    linked_record_mock(1)
+    linked_record
+    sign_in user
+
+    assert_differences([['Vote.count', 1], ['LinkedRecord.count', 0], ['Edge.count', 1]]) do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro,
+                 parent: 'https://iri.test/resource/1'
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create pro json_api for new linked record' do
+    linked_record_mock(1)
+    linked_record_mock(2)
+    linked_record
+    sign_in user
+
+    assert_differences([['Vote.count', 1], ['LinkedRecord.count', 1], ['Edge.count', 2]]) do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro,
+                 parent: 'https://iri.test/resource/2'
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create con json_api for new linked record' do
+    linked_record_mock(1)
+    linked_record_mock(2)
+    linked_record
+    sign_in user
+
+    assert_differences([['Vote.count', 1], ['LinkedRecord.count', 1], ['Edge.count', 2]]) do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :con,
+                 parent: 'https://iri.test/resource/2'
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.con?
+  end
+
+  test 'user should not post create json_api for unregistered linked record' do
+    linked_record_mock(1)
+    linked_record
+    sign_in user
+
+    assert_differences([['Vote.count', 0], ['LinkedRecord.count', 0], ['Edge.count', 0]]) do
+      post votes_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro,
+                 parent: 'https://iri.invalid/resource/1'
+               }
+             }
+           }
+    end
+
+    assert_response 404
   end
 
   test 'user should not create new vote for motion when existing one is present' do

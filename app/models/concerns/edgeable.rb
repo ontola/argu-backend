@@ -16,6 +16,8 @@ module Edgeable
     scope :trashed, -> { joins(:edge).where('edges.trashed_at IS NOT NULL') }
     scope :untrashed, -> { joins(:edge).where('edges.trashed_at IS NULL') }
 
+    before_save :save_linked_record
+
     accepts_nested_attributes_for :edge
     delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, to: :edge
     counter_cache false
@@ -38,6 +40,11 @@ module Edgeable
 
     def parent_edge(type = nil)
       type.nil? ? edge.parent : edge.get_parent(type)
+    end
+
+    def save_linked_record
+      return unless parent_model&.is_a?(LinkedRecord) && parent_model.changed?
+      parent_model.save!
     end
 
     def parent_model(type = nil)

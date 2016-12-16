@@ -34,7 +34,8 @@ class ApplicationController < ActionController::Base
   rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
   rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
   rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
-  rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
+  rescue_from ActionController::ParameterMissing, with: :handle_bad_request
+  rescue_from ActionController::BadRequest, with: :handle_bad_request
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
   rescue_from Redis::ConnectionError, with: :handle_redis_connection_error
   rescue_from ActionController::RoutingError, with: :route_not_found
@@ -308,6 +309,7 @@ class ApplicationController < ActionController::Base
                  }]
                }
       end
+      format.json_api { render json_api_error(401) }
       format.html { redirect_to new_user_session_path(r: exception.r), alert: exception.message }
     end
   end
@@ -326,11 +328,11 @@ class ApplicationController < ActionController::Base
                  quote: @quote
                }
       end
-      format.json_api { head 404 }
+      format.json_api { render json_api_error(404) }
     end
   end
 
-  def handle_parameter_missing(exception)
+  def handle_bad_request(exception)
     @additional_error_info = exception.to_s
     respond_to do |format|
       format.html { render 'status/400', status: 400 }
@@ -341,6 +343,13 @@ class ApplicationController < ActionController::Base
                  message: t('status.s_400.body'),
                  quote: @quote
                }
+      end
+      format.json_api do
+        error_hash = {
+          message: exception.to_s,
+          code: 'BAD_REQUEST'
+        }
+        render json_api_error(400, error_hash)
       end
       format.js { head 400 }
     end

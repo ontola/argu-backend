@@ -30,7 +30,6 @@ class VotesController < AuthorizedController
   # POST /model/:model_id/v/:for
   def create
     @model = get_parent_resource
-    get_context
 
     method = create_service.resource.persisted? ? :update? : :create?
     authorize create_service.resource, method
@@ -134,10 +133,6 @@ class VotesController < AuthorizedController
       param = params[:vote][:for]
     end
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
-  end
-
-  def get_context
-    @forum = (@vote || @model).forum
   end
 
   def deserialize_params_options

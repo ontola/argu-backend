@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216200345) do
+ActiveRecord::Schema.define(version: 20161216212203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -760,8 +760,8 @@ ActiveRecord::Schema.define(version: 20161216200345) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer  "voteable_id",                           null: false
-    t.string   "voteable_type", limit: 255,             null: false
+    t.integer  "voteable_id"
+    t.string   "voteable_type", limit: 255
     t.integer  "voter_id",                              null: false
     t.string   "voter_type",    limit: 255
     t.integer  "for",                       default: 3, null: false

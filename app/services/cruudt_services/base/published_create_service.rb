@@ -16,7 +16,7 @@ class PublishedCreateService < EdgeableCreateService
     end
     resource.publisher.follow(resource.edge, :reactions, :news)
 
-    return if !resource.respond_to?(:forum) || resource.publisher.has_favorite?(resource.forum.edge)
+    return if resource.try(:forum).nil? || resource.publisher.has_favorite?(resource.forum.edge)
     resource.publisher.favorites.create(edge: resource.forum.edge)
   end
 end
