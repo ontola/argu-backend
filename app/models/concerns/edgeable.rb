@@ -35,6 +35,14 @@ module Edgeable
       false
     end
 
+    def parent_edge(type = nil)
+      type.nil? ? edge.parent : edge.get_parent(type)
+    end
+
+    def parent_model(type = nil)
+      parent_edge(type)&.owner
+    end
+
     def pinned
       edge.pinned_at.present?
     end

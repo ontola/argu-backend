@@ -19,14 +19,6 @@ module Parentable
     end
   end
 
-  def parent_edge
-    edge.parent
-  end
-
-  def parent_model
-    parent_edge.owner
-  end
-
   module ClassMethods
     # Add to a model which includes {Parentable} to set the possible parents for the model
     # @param relation [Symbol splat] List of symbolized model names.
