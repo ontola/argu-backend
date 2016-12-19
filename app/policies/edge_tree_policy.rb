@@ -163,6 +163,13 @@ class EdgeTreePolicy < RestrictivePolicy
     rule is_member?, is_moderator?, is_owner?, staff?
   end
 
+  def has_unpublished_ancestors?
+    persisted_edge
+      .self_and_ancestors
+      .unpublished
+      .present?
+  end
+
   # Checks whether indexing children of a has_many relation is allowed
   # Initialises a child with the given attributes and checks its policy for show?
   # @param klass [Symbol] has_many association of the record
@@ -189,6 +196,10 @@ class EdgeTreePolicy < RestrictivePolicy
   # Move items between forums or converting items
   def move?
     staff?
+  end
+
+  def show_unpublished?
+    rule is_creator?, is_moderator?, is_manager?, is_owner?, staff?
   end
 
   def trash?

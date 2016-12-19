@@ -26,6 +26,7 @@ class DecisionPolicy < EdgeTreePolicy
   end
 
   def show?
+    return show_unpublished? if has_unpublished_ancestors?
     rule parent_policy.show?
   end
 

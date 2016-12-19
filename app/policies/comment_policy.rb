@@ -33,6 +33,7 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def show?
+    return show_unpublished? if has_unpublished_ancestors?
     rule forum_policy.show?, super
   end
 

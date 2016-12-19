@@ -37,6 +37,10 @@ class Edge < ActiveRecord::Base
           -> { where(channel: 'argu') },
           class_name: 'Publication',
           foreign_key: :publishable_id
+  scope :published, -> { where('is_published = true') }
+  scope :unpublished, -> { where('is_published = false') }
+  scope :trashed, -> { where('trashed_at IS NOT NULL') }
+  scope :untrashed, -> { where('trashed_at IS NULL') }
 
   accepts_nested_attributes_for :argu_publication
 

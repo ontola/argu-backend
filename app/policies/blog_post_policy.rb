@@ -29,11 +29,8 @@ class BlogPostPolicy < EdgeTreePolicy
   end
 
   def show?
-    if record.is_published? && !record.is_trashed?
-      rule parent_policy.show?
-    else
-      rule is_moderator?, is_manager?, is_owner?, super
-    end
+    return show_unpublished? if has_unpublished_ancestors?
+    rule parent_policy.show?
   end
 
   def trash?

@@ -41,10 +41,7 @@ class ArgumentPolicy < EdgeTreePolicy
   end
 
   def show?
-    if record.motion.project.present?
-      rule Pundit.policy(context, record.motion.project).show?, super
-    else
-      rule has_access_token?, is_member?, is_manager?, is_owner?, super
-    end
+    return show_unpublished? if has_unpublished_ancestors?
+    rule has_access_token?, is_member?, is_manager?, is_owner?, super
   end
 end
