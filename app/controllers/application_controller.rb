@@ -304,6 +304,7 @@ class ApplicationController < ActionController::Base
                  quote: @quote
                }
       end
+      format.json_api { head 404 }
     end
   end
 

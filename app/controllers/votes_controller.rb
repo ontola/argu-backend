@@ -9,11 +9,12 @@ class VotesController < AuthorizedController
 
     authorize @model.forum, :show?
 
-    @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
+    @vote = authenticated_resource
 
     respond_to do |format|
       format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
       format.json { render 'create', location: @vote }
+      format.json_api { render json: @vote }
     end
   end
 
@@ -112,11 +113,18 @@ class VotesController < AuthorizedController
 
   private
 
-  def check_if_registered
-    return if current_profile.present?
-    resource = get_parent_resource
-    authorize resource, :show?
-    raise Argu::NotAUserError.new(forum: resource.forum, r: redirect_url)
+  def authorize_action
+    return super unless params[:action] == 'show'
+    authorize authenticated_resource.edge.parent.owner, :show?
+  end
+
+  def resource_by_id
+    return super unless params[:action] == 'show'
+    @_resource_by_id ||= Vote.find_by(
+      voteable: get_parent_resource,
+      voter: current_profile,
+      forum: get_parent_resource.forum
+    )
   end
 
   def for_param

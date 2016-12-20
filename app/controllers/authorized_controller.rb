@@ -74,7 +74,7 @@ class AuthorizedController < ApplicationController
   end
 
   def deserialized_params
-    if request.format.json_api? && params[:action] != 'index'
+    if request.format.json_api? && request.method != 'GET'
       ActionController::Parameters.new(
         ActiveModelSerializers::Deserialization.jsonapi_parse!(params, keys: {side: :for}, polymorphic: [:parent])
       )

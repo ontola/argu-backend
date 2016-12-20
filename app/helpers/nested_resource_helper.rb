@@ -36,7 +36,7 @@ module NestedResourceHelper
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_resource(opts = request.path_parameters, url_params = params)
     @parent_resource ||=
-      if request.format.json_api? && params[:action] != 'index'
+      if request.format.json_api? && request.method != 'GET'
         deserialized_params[:parent_type].classify.constantize.find(deserialized_params[:parent_id])
       elsif parent_resource_class(opts).try(:shortnameable?)
         parent_resource_class(opts).find_via_shortname! parent_id_from_params(url_params)
