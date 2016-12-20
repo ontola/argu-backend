@@ -5,7 +5,11 @@ class ActivityStringTest < ActiveSupport::TestCase
   define_freetown
   let(:updater) { create_member(freetown) }
   let(:receiver) { create_member(freetown) }
-  let!(:project) { create(:project, parent: freetown.edge) }
+  let!(:project) do
+    create(:project,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
+           parent: freetown.edge)
+  end
   let!(:question) { create(:question, parent: project.edge) }
   let!(:motion) { create(:motion, parent: question.edge) }
   let!(:approved_decision) do

@@ -4,7 +4,13 @@ require 'test_helper'
 class NotificationsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
-  let(:project) { create(:project, :with_follower, :with_news_follower, parent: freetown.edge) }
+  let(:project) do
+    create(:project,
+           :with_follower,
+           :with_news_follower,
+           parent: freetown.edge,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}})
+  end
   let(:question) { create(:question, :with_follower, :with_news_follower, parent: project.edge) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question.edge) }
   let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion.edge) }
@@ -16,7 +22,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            :with_news_follower,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            parent: motion.edge)
   end
@@ -130,9 +136,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     # Notification for creator and follower of Motion
     assert_differences([['Notification.count', 2]]) do
-      Sidekiq::Testing.inline! do
-        Publication.last.send(:reset)
-      end
+      reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
@@ -148,9 +152,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     # Notification for creator, follower and news_follower of Motion
     assert_differences([['Notification.count', 3]]) do
-      Sidekiq::Testing.inline! do
-        Publication.last.send(:reset)
-      end
+      reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, 'decision'
   end
@@ -174,9 +176,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     # Notification for creator and follower of Motion and forwarded_to_user
     assert_differences([['Notification.count', 3]]) do
-      Sidekiq::Testing.inline! do
-        Publication.last.send(:reset)
-      end
+      reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, 'reaction'
   end
@@ -199,9 +199,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     # Notification for follower of Forum
     assert_differences([['Notification.count', 1]]) do
-      Sidekiq::Testing.inline! do
-        Publication.last.send(:reset)
-      end
+      reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
@@ -224,9 +222,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     # Notification for creator, follower and news_follower of Project
     assert_differences([['Notification.count', 3]]) do
-      Sidekiq::Testing.inline! do
-        Publication.last.send(:reset)
-      end
+      reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, 'news'
 

@@ -10,10 +10,6 @@ class PhasePolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-
-    def resolve
-      scope
-    end
   end
 
   def permitted_attributes(force = false)

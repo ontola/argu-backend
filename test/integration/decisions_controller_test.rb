@@ -283,9 +283,8 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
                                        })
             }
     end
-    Sidekiq::Testing.inline! do
-      Publication.last.send(:reset)
-    end
+    reset_publication(Publication.last)
+
     if changed
       motion.reload
       assert_equal state, motion.state
@@ -313,9 +312,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
                                       forwarded_group_id: group_id)
            }
     end
-    Sidekiq::Testing.inline! do
-      Publication.last.send(:reset)
-    end
+    reset_publication(Publication.last)
     assert_response response
   end
 

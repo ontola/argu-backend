@@ -16,6 +16,7 @@ class EdgeableCreateService < CreateService
   protected
 
   def after_save
+    @edge.publish! unless resource_klass.is_publishable?
     notify
     super
   end
@@ -24,7 +25,7 @@ class EdgeableCreateService < CreateService
   # @option options [User] publisher The publisher of the new child
   def initialize_edge(parent, options)
     parent_edge = parent.is_a?(Edge) ? parent : Edge.find(parent)
-    @edge = parent_edge.children.new(
+    parent_edge.children.new(
       user: options[:publisher],
       owner: resource_klass.new
     )

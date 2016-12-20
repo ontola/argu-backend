@@ -10,17 +10,11 @@ class BlogPostPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-
-    def resolve
-      super.published_for_user(user)
-    end
   end
 
   def permitted_attributes
     attributes = super
     attributes.concat %i(title content blog_postable trashed_at happened_at) if create?
-    publication_attributes = %i(id published_at publish_type)
-    attributes.append(edge_attributes: {argu_publication_attributes: publication_attributes})
     happening_attributes = %i(id happened_at)
     attributes.append(happening_attributes: happening_attributes)
     attributes

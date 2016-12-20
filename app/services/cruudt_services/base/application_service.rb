@@ -12,7 +12,7 @@ class ApplicationService
     @actions = {}
     @options = options
     if @attributes[:edge_attributes].try(:[], :argu_publication_attributes).present? &&
-        !(resource.is_a?(Edge) ? resource.owner : resource).is_published?
+        !(resource.is_a?(Edge) ? resource : resource.edge).is_published?
       prepare_argu_publication_attributes
     end
     assign_attributes

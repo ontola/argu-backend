@@ -10,10 +10,6 @@ class DecisionPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-
-    def resolve
-      super.published
-    end
   end
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
@@ -26,7 +22,6 @@ class DecisionPolicy < EdgeTreePolicy
     attributes.concat %i(content)
     attributes.concat %i(state forwarded_user_id forwarded_group_id) if record.new_record?
     attributes.append(happening_attributes: %i(id happened_at))
-    attributes.append(edge_attributes: {argu_publication_attributes: %i(id publish_type)})
     attributes
   end
 

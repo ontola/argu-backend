@@ -7,7 +7,7 @@ RSpec.feature 'Comments', type: :feature do
   let!(:argument) { create(:argument, parent: motion.edge) }
   let!(:blog_post) do
     create(:blog_post,
-           argu_publication: build(:publication),
+           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            parent: motion.edge)
   end

@@ -3,20 +3,20 @@ require 'test_helper'
 
 class DiscussionsControllerTest < ActionController::TestCase
   define_freetown
-  let!(:project) do
+  let(:project) do
     create(:project,
            edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: freetown.edge)
   end
-  let!(:unpublished_project) { create(:project, parent: freetown.edge) }
-  let!(:helsinki) do
+  let(:unpublished_project) { create(:project, parent: freetown.edge) }
+  let(:helsinki) do
     create_forum(
       name: 'helsinki',
       visibility: Forum.visibilities[:hidden],
       visible_with_a_link: true
     )
   end
-  let!(:helsinki_project) do
+  let(:helsinki_project) do
     create(:project,
            edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: helsinki.edge)

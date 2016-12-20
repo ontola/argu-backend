@@ -10,8 +10,10 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def resolve
-      return scope if staff?
+      return scope.published.trashed(false) if staff?
       scope
+        .published
+        .trashed(false)
         .joins(:forum)
         .where("#{class_name.tableize}.forum_id IN (?) OR forums.visibility = ?",
                forum_ids_by_access_tokens.concat(user&.profile&.forum_ids || []),
@@ -122,7 +124,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.append :is_trashed if !record.is_a?(Class) && trash?
+    attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
     attributes
   end
 

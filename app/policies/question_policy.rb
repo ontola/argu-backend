@@ -10,10 +10,6 @@ class QuestionPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-
-    def resolve
-      super.published
-    end
   end
 
   def children_classes

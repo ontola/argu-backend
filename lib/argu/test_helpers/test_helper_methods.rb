@@ -55,52 +55,50 @@ module Argu
         def create(model_type, *args)
           attributes = HashWithIndifferentAccess.new
           attributes.merge!(args.pop) if args.last.is_a?(Hash)
-          traits_with_args = attributes.delete(:traits_with_args) || {}
           if SERVICE_MODELS.include?(model_type)
-            klass = model_type.to_s.classify.constantize
-
-            options = attributes.delete(:options) || {}
-            options[:publisher] ||= attributes.delete(:publisher)
-            options[:creator] ||= attributes.delete(:creator)
-
-            attributes.merge!(attributes_for(model_type, attributes))
-
-            if klass.nested_attributes_options?
-              klass.nested_attributes_options.keys.each do |association|
-                if attributes.include? association
-                  attributes["#{association}_attributes"] = attributes.delete(association).attributes
-                end
-              end
-            end
-
-            resource = create_resource(
-              klass,
-              attributes,
-              options
-            )
-
-            args.each do |trait|
-              TraitListener.new(resource).public_send(trait)
-            end
-            traits_with_args.each do |trait|
-              TraitListener.new(resource).public_send(trait[0], trait[1])
-            end
-
-            if resource.respond_to?(:publications) && resource.publications.present?
-              if Publication.last.published_at.present? && Publication.last.published_at <= 10.seconds.from_now
-                Sidekiq::Testing.inline! do
-                  Publication.last.send(:reset)
-                end
-              else
-                Publication.last.send(:reset)
-              end
-              resource.reload
-            end
-
-            resource
+            create_with_service(model_type, args, attributes)
           else
             FactoryGirl.create(model_type, *args, attributes)
           end
+        end
+
+        def create_with_service(model_type, args, attributes)
+          traits_with_args = attributes.delete(:traits_with_args) || {}
+          klass = model_type.to_s.classify.constantize
+
+          options = attributes.delete(:options) || {}
+          options[:publisher] ||= attributes.delete(:publisher)
+          options[:creator] ||= attributes.delete(:creator)
+
+          attributes.merge!(attributes_for(model_type, attributes))
+
+          if klass.nested_attributes_options?
+            klass.nested_attributes_options.keys.each do |association|
+              if attributes.include? association
+                attributes["#{association}_attributes"] = attributes.delete(association).attributes
+              end
+            end
+          end
+
+          resource = create_resource(
+            klass,
+            attributes,
+            options
+          )
+
+          args.each do |trait|
+            TraitListener.new(resource).public_send(trait)
+          end
+          traits_with_args.each do |trait|
+            TraitListener.new(resource).public_send(trait[0], trait[1])
+          end
+
+          if resource.respond_to?(:publications)
+            reset_publication(resource.publications.last)
+            resource.reload
+          end
+
+          resource
         end
 
         def create_manager(item, user = nil)
@@ -182,6 +180,18 @@ module Argu
 
         def open_file(filename)
           File.open("test/files/#{filename}")
+        end
+
+        def reset_publication(publication)
+          return if publication.nil?
+          publication.update(published_at: publication.published_at - 10.seconds) if publication.published_at.present?
+          if publication.published_at.present? && publication.published_at <= DateTime.current
+            Sidekiq::Testing.inline! do
+              publication.send(:reset)
+            end
+          else
+            publication.send(:reset)
+          end
         end
 
         def stats_opt(category, action)

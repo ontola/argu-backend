@@ -14,7 +14,7 @@ FactoryGirl.define do
     visibility Page.visibilities[:open]
 
     before(:create) do |page|
-      page.edge = Edge.new(owner: page, user: page.publisher) if page.edge.blank?
+      page.edge = Edge.new(owner: page, user: page.publisher, is_published: true) if page.edge.blank?
       page.profile.update name: generate(:page_name)
     end
   end

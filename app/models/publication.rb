@@ -9,14 +9,16 @@ class Publication < ApplicationRecord
   before_destroy :cancel
   after_rollback :cancel
 
+  validates :creator, :publisher, :channel, presence: true
+
   attr_accessor :publish_type
   enum publish_type: {direct: 0, draft: 1, schedule: 2}
 
   # @TODO: wrap in transaction
   def commit
-    return if publishable.owner.is_published?
-    publishable.owner.update(is_published: true)
-    publishable.owner.happening.update(is_published: true) if publishable.owner.respond_to?(:happening)
+    return if publishable.is_published?
+    publishable.publish!
+    return unless publishable.is_published
     publish("publish_#{publishable.owner.model_name.singular}_successful", publishable.owner)
   end
 
@@ -29,7 +31,7 @@ class Publication < ApplicationRecord
 
   # Cancel a previously scheduled job and schedule a new job if needed
   def reset
-    return if publishable.owner.is_published?
+    return if publishable.is_published?
 
     cancel if job_id.present?
     schedule if published_at.present?

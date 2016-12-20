@@ -37,7 +37,7 @@ class VotesController < AuthorizedController
 
     if create_service.resource.persisted? && !create_service.resource.for_changed?
       respond_to do |format|
-        format.json { render status: 304, locals: {model: @model, vote: create_service.resource} }
+        format.json { render status: 304, locals: {model: vote.parent_model, vote: create_service.resource} }
         format.json_api { head 304 }
         format.js { head :not_modified }
         format.html do
@@ -52,9 +52,9 @@ class VotesController < AuthorizedController
     else
       create_service.on(:create_vote_successful) do |vote|
         respond_to do |format|
-          format.json { render location: vote, locals: {model: @model, vote: vote} }
+          format.json { render location: vote, locals: {model: vote.parent_model, vote: vote} }
           format.json_api { render json: vote }
-          format.js { render locals: {model: @model, vote: vote} }
+          format.js { render locals: {model: vote.parent_model, vote: vote} }
           format.html do
             if params[:vote].try(:[], :r).present?
               redirect_to redirect_param

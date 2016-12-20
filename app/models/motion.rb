@@ -65,11 +65,6 @@ class Motion < ApplicationRecord
           "%#{q}%")
   end
 
-  def self.published
-    joins('LEFT OUTER JOIN projects ON projects.id = project_id')
-      .where('is_published = true OR project_id IS NULL')
-  end
-
   # @param [Profile] profile What profile's votes should be included
   def self.votes_for_profile(profile)
     join = "LEFT JOIN votes ON votes.voteable_type = 'Motion'"
@@ -148,9 +143,9 @@ class Motion < ApplicationRecord
     forum
       .motions
       .trashed(show_trashed)
-      .where('updated_at < :date',
+      .where('motions.updated_at < :date',
              date: updated_at)
-      .order('updated_at')
+      .order('motions.updated_at')
       .last
   end
 
@@ -158,9 +153,9 @@ class Motion < ApplicationRecord
     forum
       .motions
       .trashed(show_trashed)
-      .where('updated_at > :date',
+      .where('motions.updated_at > :date',
              date: updated_at)
-      .order('updated_at')
+      .order('motions.updated_at')
       .first
   end
 

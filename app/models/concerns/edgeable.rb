@@ -10,10 +10,14 @@ module Edgeable
             dependent: :destroy,
             required: true
     has_many :grants, through: :edge
+    scope :published, -> { joins(:edge).where('edges.is_published = true') }
+    scope :unpublished, -> { joins(:edge).where('edges.is_published = false') }
     accepts_nested_attributes_for :edge
     delegate :persisted_edge, :last_activity_at, to: :edge
 
-    accepts_nested_attributes_for :edge
+    def is_published?
+      persisted? && edge.is_published?
+    end
 
     def root_object?
       false

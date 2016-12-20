@@ -10,10 +10,6 @@ class ProjectPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-
-    def resolve
-      super.published_for_user(user)
-    end
   end
   include ApplicationHelper
 
@@ -29,8 +25,6 @@ class ProjectPolicy < EdgeTreePolicy
       attributes.append(stepups_attributes: Pundit.policy(context, stepup).permitted_attributes(true))
     end
     append_default_photo_params(attributes)
-    publication_attributes = %i(id published_at publish_type)
-    attributes.append(edge_attributes: {argu_publication_attributes: publication_attributes})
     attributes
   end
 

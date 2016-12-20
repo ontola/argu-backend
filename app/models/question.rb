@@ -34,11 +34,6 @@ class Question < ApplicationRecord
 
   attr_accessor :include_motions
 
-  def self.published
-    joins('LEFT OUTER JOIN projects ON projects.id = project_id')
-      .where('is_published = true OR project_id IS NULL')
-  end
-
   # Might not be a good idea
   def creator
     super || Profile.first_or_initialize(shortname: 'Onbekend')
@@ -82,8 +77,8 @@ class Question < ApplicationRecord
     forum
       .questions
       .trashed(show_trashed)
-      .where('updated_at < :date', date: updated_at)
-      .order('updated_at')
+      .where('questions.updated_at < :date', date: updated_at)
+      .order('questions.updated_at')
       .last
   end
 
@@ -91,8 +86,8 @@ class Question < ApplicationRecord
     forum
       .questions
       .trashed(show_trashed)
-      .where('updated_at > :date', date: updated_at)
-      .order('updated_at')
+      .where('questions.updated_at > :date', date: updated_at)
+      .order('questions.updated_at')
       .first
   end
 

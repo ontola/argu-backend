@@ -3,8 +3,8 @@ class DraftsController < ApplicationController
   def index
     @user = User.find_via_shortname params[:id]
 
-    projects = policy_scope(@user.projects.unpublished.trashed(false))
-    blog_posts = policy_scope(@user.blog_posts.unpublished.trashed(false))
+    projects = @user.projects.unpublished.trashed(false)
+    blog_posts = @user.blog_posts.unpublished.trashed(false)
     return unless policy(@user).show?
     @items = Kaminari
              .paginate_array((projects + blog_posts)

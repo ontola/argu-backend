@@ -19,7 +19,7 @@ RSpec.feature 'Show drafts', type: :feature do
   end
   let!(:published_blog_post) do
     create(:blog_post,
-           parent: project.edge,
+           parent: published_project.edge,
            happened_at: DateTime.current,
            edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            publisher: user)

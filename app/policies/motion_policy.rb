@@ -10,10 +10,6 @@ class MotionPolicy < EdgeTreePolicy
     end
 
     delegate :user, to: :context
-
-    def scope
-      super.published
-    end
   end
 
   def permitted_attributes

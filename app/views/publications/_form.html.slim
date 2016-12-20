@@ -5,7 +5,7 @@
 -elsif !resource.is_trashed?
   =f.semantic_fields_for :edge do |ef|
     =ef.semantic_fields_for :argu_publication do |pf|
-      - if policy(resource).permitted_nested_attributes(:edge_attributes)[:argu_publication_attributes].include?(:publish_type)
+      - if policy(resource).permitted_nested_attributes(:edge_attributes, :argu_publication_attributes).include?(:publish_type)
         =pf.input(:publish_type, as: :radio, collection: Publication.publish_types.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
         =pf.input(:published_at, as: :datetime_picker, label: false)
       - else

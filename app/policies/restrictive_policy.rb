@@ -55,9 +55,14 @@ class RestrictivePolicy
   end
 
   # @param parent_key [String, Symbol] Parent key of the wanted subset
+  # @param second_key [String, Symbol] Key for further digging
   # @return [Array] Allowed attributes, nested under a parent key
-  def permitted_nested_attributes(parent_key)
-    (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key]
+  def permitted_nested_attributes(parent_key, second_key = nil)
+    attributes = (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key]
+    unless second_key.nil?
+      attributes = attributes.detect { |value| value.is_a?(Hash) && value.keys == [second_key] }[second_key]
+    end
+    attributes
   end
 
   def assert!(assertion, query = nil)

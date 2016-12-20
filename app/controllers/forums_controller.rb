@@ -27,22 +27,15 @@ class ForumsController < AuthorizedController
     return unless policy(resource_by_id).show?
     projects = policy_scope(resource_by_id
                               .projects
-                              .includes(:edge, :default_cover_photo)
-                              .published
-                              .trashed(show_trashed?))
+                              .includes(:edge, :default_cover_photo))
     questions = policy_scope(resource_by_id
                                .questions
                                .where(project_id: nil)
-                               .includes(:edge, :project, :default_cover_photo)
-                               .published
-                               .trashed(show_trashed?))
+                               .includes(:edge, :project, :default_cover_photo))
     motions = policy_scope(resource_by_id
                              .motions
                              .where(project_id: nil, question_id: nil)
-                             .includes(:edge, :question, :project, :default_cover_photo, :votes,
-                                       :last_decision)
-                             .published
-                             .trashed(show_trashed?))
+                             .includes(:edge, :question, :project, :default_cover_photo, :votes))
 
     @items = Kaminari
              .paginate_array((projects + questions + motions)

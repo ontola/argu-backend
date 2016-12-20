@@ -63,10 +63,6 @@ class Edge < ActiveRecord::Base
     path.split('.').map(&:to_i)
   end
 
-  def is_child_of?(edge)
-    ancestor_ids.include?(edge.id)
-  end
-
   def get_parent(type)
     if type == :page
       root
@@ -90,6 +86,10 @@ class Edge < ActiveRecord::Base
     granted_groups(role).pluck(:id)
   end
 
+  def is_child_of?(edge)
+    ancestor_ids.include?(edge.id)
+  end
+
   def persisted_edge
     return @persisted_edge if @persisted_edge.present?
     persisted = self
@@ -107,6 +107,13 @@ class Edge < ActiveRecord::Base
   # @return [Integer] The number of followers
   def potential_audience(level = :reactions)
     follows.where('follow_type >= ?', Follow.follow_types[level]).uniq.count
+  end
+
+  def publish!
+    self.class.transaction do
+      update!(is_published: true)
+      owner.happening.update!(is_published: true) if owner.respond_to?(:happening)
+    end
   end
 
   private
