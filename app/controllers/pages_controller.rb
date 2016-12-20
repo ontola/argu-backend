@@ -20,9 +20,7 @@ class PagesController < ApplicationController
     authorize @page, :show?
 
     if @profile.are_votes_public?
-      votes = Vote.find_by_sql(voted_select_query)
-      @pubic_vote_count = votes.count
-      @collection = Vote.ordered votes
+      @collection = Vote.ordered(@profile.visible_votes_for(current_user))
     end
 
     render 'profiles/show'
@@ -181,15 +179,5 @@ class PagesController < ApplicationController
 
   def tab
     @tab ||= policy(@page || Page).verify_tab(params[:tab])
-  end
-
-  def voted_select_query
-    'SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" '\
-      'WHERE ("votes"."voter_type" = \'Profile\' AND '\
-      '"votes"."voter_id" = ' + @profile.id.to_s + ') AND '\
-      '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') '\
-      'AND ("forums"."visibility" = ' + Forum.visibilities[:open].to_s + ' OR '\
-      '"forums"."id" IN (' + (current_profile&.joined_forum_ids || 0.to_s) + ')) '\
-      'ORDER BY created_at DESC'
   end
 end

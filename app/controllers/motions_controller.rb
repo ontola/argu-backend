@@ -20,7 +20,7 @@ class MotionsController < AuthorizedController
   # GET /motions/1.json
   def show
     @arguments = Argument.ordered(
-      policy_scope(authenticated_resource.arguments.trashed(show_trashed?).includes(:votes)),
+      policy_scope(authenticated_resource.arguments.show_trashed(show_trashed?).includes(:votes)),
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]
     )

@@ -23,7 +23,10 @@ module Commentable
     end
 
     def top_comment(_show_trashed = nil)
-      @top_comment ||= comment_threads.where(parent_id: nil, is_trashed: false).order('created_at ASC').first
+      @top_comment ||= comment_threads
+                         .joins(:edge)
+                         .untrashed
+                         .order('created_at ASC').first
     end
   end
 end

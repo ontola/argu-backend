@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     authorize @user, :show?
 
     if @profile.are_votes_public? || current_user == @user
-      @collection = Vote.ordered Vote.find_by_sql(voted_select_query).reject { |v| v.voteable.is_trashed? }
+      @collection = Vote.ordered(@profile.visible_votes_for(current_user))
     end
 
     respond_to do |format|
@@ -211,14 +211,5 @@ class UsersController < ApplicationController
       user.update r: ''
     end
     redirect_to r.presence || root_path
-  end
-
-  def voted_select_query
-    'SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" '\
-      'WHERE "votes"."voter_id" = ' + @profile.id.to_s + ' AND '\
-      '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND '\
-      '("forums"."visibility" = ' + Forum.visibilities[:open].to_s + ' OR '\
-      '"forums"."id" IN (' + (current_profile&.joined_forum_ids || 0.to_s) + ')) '\
-      'ORDER BY created_at DESC'
   end
 end

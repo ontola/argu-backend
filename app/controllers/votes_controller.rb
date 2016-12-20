@@ -37,7 +37,10 @@ class VotesController < AuthorizedController
 
     if create_service.resource.persisted? && !create_service.resource.for_changed?
       respond_to do |format|
-        format.json { render status: 304, locals: {model: vote.parent_model, vote: create_service.resource} }
+        format.json do
+          render status: 304,
+                 locals: {model: create_service.resource.parent_model, vote: create_service.resource}
+        end
         format.json_api { head 304 }
         format.js { head :not_modified }
         format.html do

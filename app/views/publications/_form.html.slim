@@ -1,7 +1,8 @@
 -if resource.is_published?
   -if policy(resource).trash?
-     =f.inputs(name: t('forms.danger_zone'), class: 'danger-zone') do
-      =f.input :trashed_at, as: :reverse_boolean
+    =f.semantic_fields_for :edge do |ef|
+      =ef.inputs(name: t('forms.danger_zone'), class: 'danger-zone') do
+        =ef.input :is_trashed, as: :reverse_boolean
 -elsif !resource.is_trashed?
   =f.semantic_fields_for :edge do |ef|
     =ef.semantic_fields_for :argu_publication do |pf|

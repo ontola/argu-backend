@@ -42,7 +42,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Motion.trashed_only.count', 1], ['Notification.count', -1]]) do
+    assert_differences([['Motion.trashed.count', 1], ['Notification.count', -1]]) do
       delete motion_path(Motion.last)
     end
   end
@@ -57,7 +57,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Question.trashed_only.count', 1], ['Notification.count', -1]]) do
+    assert_differences([['Question.trashed.count', 1], ['Notification.count', -1]]) do
       delete question_path(Question.last)
     end
   end
@@ -76,7 +76,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Argument.trashed_only.count', 1], ['Notification.count', -2]]) do
+    assert_differences([['Argument.trashed.count', 1], ['Notification.count', -2]]) do
       delete argument_path(Argument.last)
     end
   end
@@ -92,7 +92,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Comment.trashed_only.count', 1], ['Notification.count', -2]]) do
+    assert_differences([['Comment.trashed.count', 1], ['Notification.count', -2]]) do
       delete destroy_argument_comment_path(argument, Comment.last)
     end
   end
@@ -108,7 +108,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Comment.trashed_only.count', 1], ['Notification.count', -2]]) do
+    assert_differences([['Comment.trashed.count', 1], ['Notification.count', -2]]) do
       delete destroy_blog_post_comment_path(blog_post, Comment.last)
     end
   end
@@ -203,7 +203,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Project.trashed_only.count', 1], ['Notification.count', -1]]) do
+    assert_differences([['Project.trashed.count', 1], ['Notification.count', -1]]) do
       delete project_path(Project.last)
     end
   end
@@ -226,7 +226,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'news'
 
-    assert_differences([['BlogPost.trashed_only.count', 1], ['Notification.count', -3]]) do
+    assert_differences([['BlogPost.trashed.count', 1], ['Notification.count', -3]]) do
       delete blog_post_path(BlogPost.last)
     end
   end

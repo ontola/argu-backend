@@ -29,11 +29,7 @@ module Argu
                headers: @_argu_headers,
                params: {model_sym => attributes}
 
-          if Publication.any?
-            Sidekiq::Testing.inline! do
-              Publication.last.send(:reset)
-            end
-          end
+          reset_publication(Publication.last)
         end
 
         assert_response results[:response]
@@ -88,7 +84,7 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         difference = results[:should] ? 1 : 0
-        assert_differences([["#{model_class}.trashed_only.count", difference],
+        assert_differences([["#{model_class}.trashed.count", difference],
                             ['Activity.count', difference.abs]]) do
           delete update_path(record),
                  headers: @_argu_headers

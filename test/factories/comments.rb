@@ -11,6 +11,5 @@ FactoryGirl.define do
       end
     end
     sequence(:body) { |i| "fg comment body #{i}end" }
-    is_trashed false
   end
 end

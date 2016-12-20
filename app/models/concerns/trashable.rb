@@ -6,48 +6,10 @@ module Trashable
     scope :anonymous, -> { where(creator_id: 0) }
   end
 
+  delegate :trash, :untrash, :is_trashed?, to: :edge
+
   def is_trashable?
     true
-  end
-
-  def is_trashed?
-    if respond_to?(:trashed_at)
-      self[:trashed_at]
-    else
-      self[:is_trashed]
-    end
-  end
-
-  def trash
-    self.class.transaction do
-      decrement_counter_cache if respond_to?(:decrement_counter_cache) && !is_trashed?
-      publications.destroy_all if respond_to?(:is_published?) && !is_published?
-      happening.update(is_published: false) if respond_to?(:happening)
-      if respond_to?(:trashed_at)
-        update(trashed_at: DateTime.current)
-      else
-        update(is_trashed: true)
-      end
-      destroy_notifications
-    end
-  end
-
-  def untrash
-    self.class.transaction do
-      increment_counter_cache if respond_to?(:increment_counter_cache) && is_trashed?
-      happening.update(is_published: true) if respond_to?(:happening) && is_published?
-      if respond_to?(:trashed_at)
-        update(trashed_at: nil)
-      else
-        update(is_trashed: false)
-      end
-    end
-  end
-
-  def destroy_notifications
-    activities.each do |activity|
-      activity.notifications.destroy_all
-    end
   end
 
   module ClassMethods
@@ -65,23 +27,11 @@ module Trashable
       true
     end
 
-    # Scope to filter trashed items
+    # Scope to conditionally filter trashed items
     # @param [boolean] trashed Whether trashed records should be included
     # @return [ActiveRecord::Relation]
-    def trashed(trashed = nil)
-      scope_type = column_names.include?('trashed_at') ? {trashed_at: nil} : {is_trashed: false}
-      scope = trashed ? nil : scope_type
-      where(scope)
-    end
-
-    # Scope to select only trashed items.
-    # @return [ActiveRecord::Relation]
-    def trashed_only
-      if column_names.include?('trashed_at')
-        where.not(trashed_at: nil)
-      else
-        where(is_trashed: true)
-      end
+    def show_trashed(show_trashed = nil)
+      show_trashed ? where(nil) : untrashed
     end
   end
 

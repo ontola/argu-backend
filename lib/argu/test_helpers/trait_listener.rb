@@ -23,11 +23,12 @@ module Argu
             .commit
         end
         3.times do
-          CreateMotion
-            .new(@resource.edge,
-                 attributes: attributes_for(:motion, is_trashed: true),
-                 options: service_options)
-            .commit
+          service = CreateMotion
+                      .new(@resource.edge,
+                           attributes: attributes_for(:motion),
+                           options: service_options)
+          service.commit
+          TrashService.new(service.resource, options: service_options).commit
         end
         service = CreateQuestion
                   .new(@resource.edge,
@@ -51,15 +52,12 @@ module Argu
                  attributes: attributes_for(:argument),
                  options: service_options)
             .commit
-          CreateArgument
-            .new(@resource.edge,
-                 attributes: attributes_for(:argument)
-                   .merge(
-                     pro: false,
-                     is_trashed: true
-                   ),
-                 options: service_options)
-            .commit
+          service = CreateArgument
+                      .new(@resource.edge,
+                           attributes: attributes_for(:argument).merge(pro: false),
+                           options: service_options)
+          service.commit
+          TrashService.new(service.resource, options: service_options).commit
         end
       end
 
@@ -94,14 +92,14 @@ module Argu
               options: service_options
             )
             .commit
-          CreateMotion
-            .new(
-              @resource.edge,
-              attributes: attributes_for(:motion)
-                .merge(is_trashed: true),
-              options: service_options
-            )
-            .commit
+          service = CreateMotion
+                      .new(
+                        @resource.edge,
+                        attributes: attributes_for(:motion),
+                        options: service_options
+                      )
+          service.commit
+          TrashService.new(service.resource, options: service_options).commit
         end
       end
 

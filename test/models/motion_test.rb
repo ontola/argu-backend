@@ -10,14 +10,14 @@ class MotionTest < ActiveSupport::TestCase
   end
 
   test 'top_arguments_con_light should not include trashed motions' do
-    trashed_args = subject.arguments.where(is_trashed: true).pluck(:id)
+    trashed_args = subject.arguments.untrashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
     assert_not((subject.top_arguments_con.map(&:id) & trashed_args).present?)
   end
 
   test 'top_arguments_pro_light should not include trashed motions' do
-    trashed_args = subject.arguments.where(is_trashed: true).pluck(:id)
+    trashed_args = subject.arguments.untrashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
     assert_not((subject.top_arguments_con.map(&:id) & trashed_args).present?)

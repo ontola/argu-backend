@@ -9,7 +9,7 @@ class Question < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify, inverse_of: :question
-  has_many :top_motions, -> { trashed(false).order(updated_at: :desc) }, class_name: 'Motion'
+  has_many :top_motions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   def self.counter_culture_opts
@@ -76,7 +76,7 @@ class Question < ApplicationRecord
   def next(show_trashed = false)
     forum
       .questions
-      .trashed(show_trashed)
+      .show_trashed(show_trashed)
       .where('questions.updated_at < :date', date: updated_at)
       .order('questions.updated_at')
       .last
@@ -85,7 +85,7 @@ class Question < ApplicationRecord
   def previous(show_trashed = false)
     forum
       .questions
-      .trashed(show_trashed)
+      .show_trashed(show_trashed)
       .where('questions.updated_at > :date', date: updated_at)
       .order('questions.updated_at')
       .first
@@ -105,5 +105,5 @@ class Question < ApplicationRecord
            votes_con_count: vote_counts[Vote.fors[:con]] || 0
   end
 
-  scope :index, ->(trashed, page) { trashed(trashed).page(page) }
+  scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }
 end

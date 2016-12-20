@@ -26,9 +26,9 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:q3) { create(:question, parent: holland.edge) }
   let(:m4) { create(:motion, parent: q3.edge) }
 
-  let(:tq) { create(:motion, is_trashed: true, parent: holland.edge) }
-  let(:tm) { create(:question, is_trashed: true, parent: holland.edge) }
-  let(:tp) { create(:project, trashed_at: DateTime.current, parent: holland.edge) }
+  let(:tm) { create(:motion, edge_attributes: {trashed_at: DateTime.current}, parent: holland.edge) }
+  let(:tq) { create(:question, edge_attributes: {trashed_at: DateTime.current}, parent: holland.edge) }
+  let(:tp) { create(:project, edge_attributes: {trashed_at: DateTime.current}, parent: holland.edge) }
   def holland_nested_project_items
     [m0, m1, m2, m3, m4, q1, q2, q3, tq, tm, tp]
   end

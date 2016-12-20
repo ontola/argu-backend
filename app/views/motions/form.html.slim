@@ -30,7 +30,8 @@
           -if !motion.new_record? && policy(motion).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
               - if policy(motion).trash?
-                =f.input :is_trashed, as: :reverse_boolean
+                =f.semantic_fields_for :edge do |ef|
+                  =ef.input :is_trashed, as: :reverse_boolean
               - if policy(motion).move?
                 =f.input :f_move, as: :link, url: motion_move_url(motion), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(motion.edge), input_html: {data: {remote: true}, class: 'btn--warning'}

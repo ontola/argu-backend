@@ -25,7 +25,7 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
   let!(:trashed_comment) do
     create(:comment,
            parent: subject.edge,
-           is_trashed: true)
+           edge_attributes: {trashed_at: DateTime.current})
   end
 
   let(:project) { create(:project, parent: freetown.edge) }

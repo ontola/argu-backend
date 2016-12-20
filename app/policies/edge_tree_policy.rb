@@ -10,10 +10,10 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def resolve
-      return scope.published.trashed(false) if staff?
+      return scope.published.untrashed if staff?
       scope
         .published
-        .trashed(false)
+        .untrashed
         .joins(:forum)
         .where("#{class_name.tableize}.forum_id IN (?) OR forums.visibility = ?",
                forum_ids_by_access_tokens.concat(user&.profile&.forum_ids || []),

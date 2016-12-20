@@ -44,10 +44,12 @@ class Edge < ActiveRecord::Base
 
   before_destroy :update_children
   before_save :set_user_id
+  before_save :trash_or_untrash, if: :is_trashed_changed?
 
   acts_as_followable
   has_ltree_hierarchy
 
+  attr_writer :is_trashed
   delegate :display_name, :root_object?, to: :owner
 
   # For Rails 5 attributes
@@ -90,6 +92,17 @@ class Edge < ActiveRecord::Base
     ancestor_ids.include?(edge.id)
   end
 
+  def is_trashed?
+    @is_trashed ||= trashed_at.present?
+  end
+  alias is_trashed is_trashed?
+
+  def is_trashed=(value)
+    value = (value == true || value == '1')
+    attribute_will_change!('is_trashed') if is_trashed != value
+    @is_trashed = value
+  end
+
   def persisted_edge
     return @persisted_edge if @persisted_edge.present?
     persisted = self
@@ -116,10 +129,29 @@ class Edge < ActiveRecord::Base
     end
   end
 
+  def trash
+    self.class.transaction do
+      update!(trashed_at: DateTime.current)
+      owner.destroy_notifications if owner.is_loggable?
+    end
+  end
+
+  def untrash
+    update!(trashed_at: nil)
+  end
+
   private
 
   def set_user_id
     self.user_id = owner.publisher.present? ? owner.publisher.id : 0
+  end
+
+  def trash_or_untrash
+    is_trashed? ? trash : untrash
+  end
+
+  def is_trashed_changed?
+    changed.include?('is_trashed')
   end
 
   def update_children

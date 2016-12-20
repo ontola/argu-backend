@@ -13,6 +13,10 @@ module Parentable
     def is_fertile?
       true
     end
+
+    def self.is_fertile?
+      true
+    end
   end
 
   def parent_edge

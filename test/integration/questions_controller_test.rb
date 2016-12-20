@@ -11,11 +11,11 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: freetown.edge)
   end
-  let!(:trashed_motion) { create(:motion, is_trashed: true, parent: subject.edge) }
+  let!(:trashed_motion) { create(:motion, edge_attributes: {trashed_at: DateTime.current}, parent: subject.edge) }
   let(:forum_move_to) { create_forum }
 
   def self.assert_no_trashed_motions
-    'assigns(:motions).none? { |motion| motion.is_trashed?}'
+    '(assigns(:motions) || []).none? { |motion| motion.is_trashed?}'
   end
 
   def self.assert_motions_forum_changed

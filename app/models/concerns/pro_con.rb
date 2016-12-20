@@ -55,7 +55,7 @@ module ProCon
   end
 
   def root_comments
-    comment_threads.where(is_trashed: false, parent_id: nil)
+    comment_threads.untrashed.where(parent_id: nil)
   end
 
   def update_vote_counters

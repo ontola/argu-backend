@@ -26,11 +26,11 @@ class TagsController < ApplicationController
 
     @collection = Motion.tagged_with(params[:id])
                         .where(forum_id: @forum.id)
-                        .trashed(show_trashed?)
+                        .show_trashed(show_trashed?)
                         .concat(Question
                                .tagged_with(params[:id])
                                .where(forum_id: @forum.id)
-                               .trashed(show_trashed?))
+                               .show_trashed(show_trashed?))
                         .sort_by(&:created_at)
                         .reverse
 

@@ -122,6 +122,18 @@ class Profile < ApplicationRecord
   # TODO: Crashes if false
   delegate :finished_intro?, to: :profileable
 
+  def visible_votes_for(user)
+    votes
+      .joins(edge: :parent)
+      .where(voteable_type: %w(Question Motion), parents_edges: {trashed_at: nil})
+      .joins('LEFT OUTER JOIN forums ON votes.forum_id = forums.id')
+      .where('forums.visibility = ? OR "forums"."id" IN (?)',
+             Forum.visibilities[:open],
+             user&.profile&.forum_ids)
+      .order(created_at: :desc)
+      .select('votes.*, forums.visibility')
+  end
+
   # ######Methods########
   def voted_on?(item)
     Vote.where(voter_id: id, voter_type: self.class.name,

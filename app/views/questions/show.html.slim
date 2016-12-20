@@ -26,7 +26,7 @@
         - if question.forum.visibility
           li
             ul= react_component_store 'ShareDropdown', props: share_items(question)
-- if question.blog_posts.present?
+- if question.blog_posts.untrashed.present?
   .col-1
     =render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?}
 .col-1

@@ -70,7 +70,7 @@ FactoryGirl.define do
 
     factory :user_with_votes do
       after(:create) do |user|
-        motion = Motion.find_by(is_trashed: false)
+        motion = Motion.untrashed.first
         CreateVote.new(
           motion.edge,
           attributes: {for: :pro},
@@ -79,7 +79,7 @@ FactoryGirl.define do
             publisher: user
           }
         ).commit
-        trashed = Motion.find_by(is_trashed: true)
+        trashed = Motion.trashed.first
         CreateVote.new(
           trashed.edge,
           attributes: {for: :pro},

@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(version: 20161201082111) do
     t.datetime "updated_at",                       null: false
     t.datetime "pinned_at"
     t.datetime "last_activity_at"
+    t.datetime "trashed_at"
     t.boolean  "is_published",     default: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
   end

@@ -15,14 +15,14 @@ class Motion < ApplicationRecord
   has_many :top_arguments_con, (lambda do
     argument_comments
       .where(pro: false)
-      .trashed(false)
+      .untrashed
       .order(votes_pro_count: :desc)
       .limit(5)
   end), class_name: 'Argument'
   has_many :top_arguments_pro, (lambda do
     argument_comments
       .where(pro: true)
-      .trashed(false)
+      .untrashed
       .order(votes_pro_count: :desc)
       .limit(5)
   end), class_name: 'Argument'
@@ -142,7 +142,7 @@ class Motion < ApplicationRecord
   def next(show_trashed = false)
     forum
       .motions
-      .trashed(show_trashed)
+      .show_trashed(show_trashed)
       .where('motions.updated_at < :date',
              date: updated_at)
       .order('motions.updated_at')
@@ -152,7 +152,7 @@ class Motion < ApplicationRecord
   def previous(show_trashed = false)
     forum
       .motions
-      .trashed(show_trashed)
+      .show_trashed(show_trashed)
       .where('motions.updated_at > :date',
              date: updated_at)
       .order('motions.updated_at')
