@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 module Ldable
   extend ActiveSupport::Concern
 
