@@ -34,7 +34,7 @@ class ArgumentsController < AuthorizedController
       format.html do
         render locals: {
           argument: authenticated_resource,
-          comment: Comment.new
+          comment: Edge.new(owner: Comment.new, parent: authenticated_resource.edge).owner
         }
       end
       format.widget do
@@ -180,15 +180,6 @@ class ArgumentsController < AuthorizedController
   def authenticated_resource!
     return super unless params[:action] == 'index'
     get_parent_resource
-  end
-
-  def get_parent_resource(opts = request.path_parameters, url_params = params)
-    return super unless %w(new create index).include?(params[:action])
-    @parent_resource ||= Motion.find(params[:motion_id] || params[:argument][:motion_id])
-  end
-
-  def resource_new_params
-    super.merge(motion_id: params[:motion_id])
   end
 
   def service_options(opts = {})

@@ -166,7 +166,7 @@ Rails.application.routes.draw do
 
   resources :arguments,
             path: 'a',
-            except: [:index, :new, :create, :destroy],
+            except: [:index, :destroy],
             concerns: [:votable, :flowable, :trashable, :commentable]
 
   resources :groups,
@@ -283,7 +283,6 @@ Rails.application.routes.draw do
     get :statistics, on: :member
     resources :shortnames, only: [:new, :create]
     resources :projects, path: 'p', only: [:new, :create]
-    resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :banners, except: [:index, :show]
   end

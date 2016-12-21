@@ -47,15 +47,15 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def default_create_attributes(parent: nil)
-    super.merge(motion_id: parent.id)
+    super.merge(parent: url_for(parent))
   end
 
-  def create_path(parent)
-    url_for([parent.forum, model_class])
+  def create_path(_parent)
+    url_for(model_class)
   end
 
   def new_path(parent)
-    url_for([:new, parent.forum, :argument, motion_id: parent.id, pro: 'pro'])
+    url_for([:new, :argument, motion_id: parent.id, pro: 'pro'])
   end
 
   def self.assert_only_allowed_comments

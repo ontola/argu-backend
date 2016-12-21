@@ -14,7 +14,7 @@ class ArgumentPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(title content pro motion_id forum_id) if create?
+    attributes.concat %i(title content pro) if create?
     attributes
   end
 
