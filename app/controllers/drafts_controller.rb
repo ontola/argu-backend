@@ -2,10 +2,10 @@
 class DraftsController < ApplicationController
   def index
     @user = User.find_via_shortname params[:id]
+    authorize @user, :edit?
 
     projects = @user.projects.unpublished.untrashed
     blog_posts = @user.blog_posts.unpublished.untrashed
-    return unless policy(@user).show?
     @items = Kaminari
              .paginate_array((projects + blog_posts)
                                  .sort_by(&:updated_at)

@@ -8,4 +8,7 @@ header
     =render @items
   =paginate @items
 -else
-  p.center=t('users.drafts.empty')
+  - if current_user == @user
+    p.center=t('users.drafts.empty.self')
+  - else
+    p.center=t('users.drafts.empty.other', user: @user.display_name.capitalize)

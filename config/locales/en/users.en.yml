@@ -60,4 +60,6 @@ en:
     shortname_helper_html: "https://argu.co/u/<b>your_username</b>"
     drafts:
       title: "My drafts"
-      empty: "You currently have no drafts"
+      empty:
+        self: "You currently have no drafts"
+        other: "%{user} currently has no drafts"

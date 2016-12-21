@@ -60,4 +60,6 @@ nl:
     shortname_helper_html: "https://argu.co/u/<b>jouw_gebruikersnaam</b>"
     drafts:
       title: "Mijn concepten"
-      empty: "Je hebt momenteel geen concepten"
+      empty:
+        self: "Je hebt momenteel geen concepten"
+        other: "%{user} heeft momenteel geen concepten"
