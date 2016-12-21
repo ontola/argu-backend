@@ -101,4 +101,48 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :destroy, options: {analytics: stats_opt('arguments', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('arguments', 'trash_success')})
   end
+
+  test 'user should post create pro json_api' do
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
+      post arguments_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'arguments',
+               attributes: {
+                 pro: true,
+                 title: 'Argument title',
+                 parent: url_for(motion)
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create con json_api' do
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
+      post arguments_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'arguments',
+               attributes: {
+                 pro: false,
+                 title: 'Argument title',
+                 parent: url_for(motion)
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert_not assigns(:create_service).resource.pro?
+  end
 end

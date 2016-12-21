@@ -77,12 +77,14 @@ class ArgumentsController < AuthorizedController
       respond_to do |format|
         format.html { redirect_to argument.parent_model, notice: t('arguments.notices.created') }
         format.json { render json: argument, status: :created, location: argument }
+        format.json_api { render json: argument }
       end
     end
     create_service.on(:create_argument_failed) do |argument|
       respond_to do |format|
         format.html { render action: 'form', locals: {argument: argument} }
         format.json { render json: argument.errors, status: :unprocessable_entity }
+        format.json_api { render json: argument.errors, status: :unprocessable_entity }
       end
     end
     create_service.commit

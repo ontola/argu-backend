@@ -110,7 +110,8 @@ class AuthorizedController < ApplicationController
       .new(owner: controller_name
                     .classify
                     .constantize
-                    .new(resource_new_params))
+                    .new(resource_new_params),
+           parent: get_parent_resource.edge)
       .owner
   end
 
