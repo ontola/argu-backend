@@ -6,8 +6,10 @@ class DraftsController < ApplicationController
 
     projects = @user.projects.unpublished.untrashed
     blog_posts = @user.blog_posts.unpublished.untrashed
+    motions = @user.motions.unpublished.untrashed
+    questions = @user.questions.unpublished.untrashed
     @items = Kaminari
-             .paginate_array((projects + blog_posts)
+             .paginate_array((projects + blog_posts + motions + questions)
                                  .sort_by(&:updated_at)
                                  .reverse)
              .page(show_params[:page])
