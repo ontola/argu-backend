@@ -15,13 +15,13 @@ module ProCon
 
     validates :content, presence: false, length: {maximum: 5000}
     validates :title, presence: true, length: {minimum: 5, maximum: 75}
-    validates :creator, :forum, presence: true
+    validates :creator, presence: true
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 
     delegate :closed?, to: :parent_model
 
-    parentable :motion
+    parentable :motion, :linked_record
 
     scope :pro, -> { where(pro: true) }
     scope :con, -> { where(pro: false) }

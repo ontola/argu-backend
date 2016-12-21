@@ -20,8 +20,4 @@ class CreateArgument < PublishedCreateService
       )
       .commit
   end
-
-  def parent_columns
-    %i(forum_id motion_id)
-  end
 end

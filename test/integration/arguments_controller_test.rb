@@ -2,6 +2,9 @@
 require 'test_helper'
 
 class ArgumentsControllerTest < ActionDispatch::IntegrationTest
+  define_public_source
+  let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
+
   define_automated_tests_objects
 
   let!(:motion) do
@@ -106,18 +109,7 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
-      post arguments_path,
-           params: {
-             format: :json_api,
-             data: {
-               type: 'arguments',
-               attributes: {
-                 pro: true,
-                 title: 'Argument title',
-                 parent: url_for(motion)
-               }
-             }
-           }
+      general_create_json(url_for(motion))
     end
 
     assert_response 200
@@ -128,21 +120,78 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
-      post arguments_path,
-           params: {
-             format: :json_api,
-             data: {
-               type: 'arguments',
-               attributes: {
-                 pro: false,
-                 title: 'Argument title',
-                 parent: url_for(motion)
-               }
-             }
-           }
+      general_create_json(url_for(motion), false)
     end
 
     assert_response 200
     assert_not assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create json_api for existing linked record' do
+    linked_record_mock(1)
+    linked_record
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 0], ['Edge.count', 1]]) do
+      general_create_json('https://iri.test/resource/1')
+    end
+
+    assert_response 200
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create pro json_api for new linked record' do
+    linked_record_mock(1)
+    linked_record_mock(2)
+    linked_record
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 1], ['Edge.count', 2]]) do
+      general_create_json('https://iri.test/resource/2')
+    end
+
+    assert_response 200
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create con json_api for new linked record' do
+    linked_record_mock(1)
+    linked_record_mock(2)
+    linked_record
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 1], ['Edge.count', 2]]) do
+      general_create_json('https://iri.test/resource/2', false)
+    end
+
+    assert_response 200
+    assert_not assigns(:create_service).resource.pro?
+  end
+
+  test 'user should not post create json_api for unregistered linked record' do
+    linked_record_mock(1)
+    linked_record
+    sign_in user
+    assert_differences([['Argument.count', 0], ['LinkedRecord.count', 0], ['Edge.count', 0]]) do
+      general_create_json('https://iri.invalid/resource/1')
+    end
+    assert_response 404
+  end
+
+  private
+
+  def general_create_json(parent_url, pro = true)
+    post arguments_path,
+         params: {
+           format: :json_api,
+           data: {
+             type: 'arguments',
+             attributes: {
+               pro: pro,
+               title: 'Argument title',
+               parent: parent_url
+             }
+           }
+         }
   end
 end

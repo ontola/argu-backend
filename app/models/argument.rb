@@ -22,7 +22,7 @@ class Argument < ApplicationRecord
   contextualize :pro, as: 'schema:option'
 
   def assert_tenant
-    return if forum == parent_model.forum
+    return if parent_model.is_a?(LinkedRecord) || forum == parent_model.forum
     errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
   end
 
