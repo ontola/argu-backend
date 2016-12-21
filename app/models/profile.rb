@@ -73,12 +73,12 @@ class Profile < ApplicationRecord
     granted_records('Forum')
   end
 
-  def forum_ids(role = :member)
+  def forum_ids(role = nil)
     @forum_ids ||= {}
     @forum_ids[role] ||= granted_record_ids('Forum', role)
   end
 
-  def joined_forum_ids(role = :member)
+  def joined_forum_ids(role = nil)
     forum_ids(role).join(',').presence
   end
 
