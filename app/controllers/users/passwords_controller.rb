@@ -19,6 +19,10 @@ class Users::PasswordsController < Devise::PasswordsController
     end
   end
 
+  def sign_in(scope, resource)
+    super(resource, scope)
+  end
+
   private
 
   def no_password_required?

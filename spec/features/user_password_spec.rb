@@ -123,11 +123,23 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. "\
                                    'Do you want to set a password?')
 
-    expect do
+    Sidekiq::Testing.inline! do
       click_link 'send-instructions'
       expect(page).to have_content('You will receive an email shortly with instructions to reset your password.')
-    end.to change {
-      Sidekiq::Worker.jobs.size
-    }.by(1)
+    end
+
+    open_email(user_omni_only.email)
+
+    expect(current_email.subject).to eq 'Password reset instructions'
+    current_email.click_link 'Change my password'
+
+    expect(page).to have_content('Change password')
+    within('#new_user') do
+      fill_in 'user_password', with: 'new_password'
+      fill_in 'user_password_confirmation', with: 'new_password'
+      click_button 'Edit'
+    end
+
+    expect(page).to have_content('Your password has been updated successfully. You are now logged in.')
   end
 end
