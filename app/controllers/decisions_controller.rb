@@ -127,7 +127,7 @@ class DecisionsController < AuthorizedController
     decision
   end
 
-  def resource_by_id
+  def resource_by_id!
     get_parent_resource.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
   end
 

@@ -320,6 +320,26 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('votes', 'destroy', 'neutral')
   end
 
+  test 'user should not delete destroy own vote for motion twice' do
+    user_vote = create(:vote,
+                       parent: motion.edge,
+                       options: {
+                         creator: user.profile
+                       },
+                       for: 'neutral')
+    sign_in user
+
+    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
+      delete vote_path(user_vote), params: {format: :json}
+    end
+
+    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
+      delete vote_path(user_vote), params: {format: :json}
+    end
+
+    assert_response 404
+  end
+
   test 'user should delete destroy own vote for argument' do
     user_vote = create(:vote,
                        parent: argument.edge,

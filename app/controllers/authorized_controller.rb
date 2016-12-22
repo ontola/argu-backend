@@ -96,7 +96,7 @@ class AuthorizedController < ApplicationController
   #   destroy_service.commit # => true (Comment destroyed)
   def destroy_service
     @destroy_service ||= service_klass.new(
-      resource_by_id,
+      resource_by_id!,
       options: service_options
     )
   end
@@ -142,6 +142,13 @@ class AuthorizedController < ApplicationController
                          .find_by id: resource_id
   end
 
+  # Searches the current primary resource by its id, raises if the record cannot be found
+  # @return [ActiveRecord::Base, nil] The resource by its id
+  # @raise [ActiveRecord::RecordNotFound]
+  def resource_by_id!
+    resource_by_id || raise(ActiveRecord::RecordNotFound)
+  end
+
   # Used in {authenticated_resource!} to build a new object. Overwrite this
   #   function if the model needs more than just the {Forum}
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
@@ -171,7 +178,7 @@ class AuthorizedController < ApplicationController
   #   trash_service.commit # => true (Comment trashed)
   def trash_service
     @trash_service ||= service_klass.new(
-      resource_by_id,
+      resource_by_id!,
       options: service_options
     )
   end
@@ -183,7 +190,7 @@ class AuthorizedController < ApplicationController
   #   untrash_service.commit # => true (Comment untrashed)
   def untrash_service
     @untrash_service ||= service_klass.new(
-      resource_by_id,
+      resource_by_id!,
       options: service_options
     )
   end
@@ -195,7 +202,7 @@ class AuthorizedController < ApplicationController
   #   update_service.commit # => true (Comment updated)
   def update_service
     @update_service ||= service_klass.new(
-      resource_by_id,
+      resource_by_id!,
       attributes: permit_params,
       options: service_options
     )
