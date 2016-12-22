@@ -129,7 +129,7 @@ class Edge < ActiveRecord::Base
     self.class.transaction do
       update!(is_published: true)
       owner.happening.update!(is_published: true) if owner.respond_to?(:happening)
-      increment_counter_cache
+      increment_counter_cache unless is_trashed?
     end
   end
 
@@ -137,25 +137,25 @@ class Edge < ActiveRecord::Base
     self.class.transaction do
       update!(trashed_at: DateTime.current)
       owner.destroy_notifications if owner.is_loggable?
-      decrement_counter_cache
+      decrement_counter_cache if is_published?
     end
   end
 
   def untrash
     self.class.transaction do
       update!(trashed_at: nil)
-      increment_counter_cache
+      increment_counter_cache if is_published?
     end
   end
 
   def decrement_counter_cache
-    return unless owner.class.counter_cache_enabled
+    return unless owner.class.counter_cache_options
     parent.children_counts[owner.counter_cache_name] = (parent.children_counts[owner.counter_cache_name].to_i || 0) - 1
     parent.save
   end
 
   def increment_counter_cache
-    return unless owner.class.counter_cache_enabled
+    return unless owner.class.counter_cache_options
     parent.children_counts[owner.counter_cache_name] = (parent.children_counts[owner.counter_cache_name].to_i || 0) + 1
     parent.save
   end

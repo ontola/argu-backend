@@ -23,8 +23,8 @@ class AddChildrenCountsToEdges < ActiveRecord::Migration[5.0]
     puts "Processed #{Edge.where(owner_type: 'BlogPost').count} blogsposts"
     Edge.where(owner_type: 'Forum').find_each do |edge|
       edge.children_counts = {
-        questions: edge.children.where(owner_type: 'Question').count,
-        motions: edge.children.where(owner_type: 'Motion').count,
+        questions: edge.children.where(owner_type: 'Question', is_published: true, trashed_at: nil).count,
+        motions: edge.children.where(owner_type: 'Motion', is_published: true, trashed_at: nil).count,
         projects: edge.owner.projects_count,
       }
       edge.save!
@@ -44,8 +44,8 @@ class AddChildrenCountsToEdges < ActiveRecord::Migration[5.0]
     puts "Processed #{Edge.where(owner_type: 'Motion').count} motions"
     Edge.where(owner_type: 'Project').find_each do |edge|
       edge.children_counts = {
-        questions: edge.children.where(owner_type: 'Question').count,
-        motions: edge.children.where(owner_type: 'Motion').count,
+        questions: edge.children.where(owner_type: 'Question', is_published: true, trashed_at: nil).count,
+        motions: edge.children.where(owner_type: 'Motion', is_published: true, trashed_at: nil).count,
         phases: edge.owner.phases_count,
         blog_posts: edge.owner.blog_posts_count,
       }

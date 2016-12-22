@@ -10,20 +10,18 @@ class Vote < ApplicationRecord
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
 
-  counter_cache true
   parentable :voteable
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
+  counter_cache votes_pro: {for: Vote.fors[:pro]},
+                votes_con: {for: Vote.fors[:con]},
+                votes_neutral: {for: Vote.fors[:neutral]}
 
   validates :voteable, :voter, :forum, :for, presence: true
 
   contextualize_as_type 'argu:Vote'
   contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url([v.voteable, v], protocol: :https) }
   contextualize :for, as: 'schema:option'
-
-  def counter_cache_name
-    [class_name, key.to_s].join('_')
-  end
 
   # #########methods###########
   # Needed for ActivityListener#audit_data

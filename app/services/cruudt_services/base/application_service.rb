@@ -111,7 +111,8 @@ class ApplicationService
       attributes[:creator] ||= @options[:creator]
     end
     attributes[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
-    @attributes[:edge_attributes] = {id: resource.edge.id, argu_publication_attributes: attributes}
+    @attributes[:edge_attributes][:id] = resource.edge.id
+    @attributes[:edge_attributes][:argu_publication_attributes] = attributes
   end
 
   def signal_base

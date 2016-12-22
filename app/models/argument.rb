@@ -4,7 +4,7 @@ class Argument < ApplicationRecord
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 
-  counter_cache true
+  counter_cache arguments_pro: {pro: true}, arguments_con: {pro: false}
   paginates_per 10
 
   validate :assert_tenant
@@ -25,10 +25,6 @@ class Argument < ApplicationRecord
   def assert_tenant
     return if forum == motion.forum
     errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
-  end
-
-  def counter_cache_name
-    [class_name, key.to_s].join('_')
   end
 
   # http://schema.org/description
