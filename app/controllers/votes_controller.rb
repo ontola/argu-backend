@@ -20,16 +20,10 @@ class VotesController < AuthorizedController
 
   # GET /model/:model_id/vote
   def show
-    @model = get_parent_resource
-
-    authorize @model.forum, :show?
-
-    @vote = authenticated_resource
-
     respond_to do |format|
-      format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
-      format.json { render 'create', location: @vote }
-      format.json_api { render json: @vote }
+      format.html { redirect_to url_for([:new, authenticated_resource.parent_model, :vote, for: for_param]) }
+      format.json { render 'create', location: authenticated_resource }
+      format.json_api { render json: authenticated_resource }
     end
   end
 
@@ -126,13 +120,8 @@ class VotesController < AuthorizedController
 
   private
 
-  def authorize_action
-    return super unless params[:action] == 'show'
-    authorize authenticated_resource.parent_model.voteable, :show?
-  end
-
   def resource_by_id
-    return super unless params[:action] == 'show'
+    return super unless params[:action] == 'show' && params[:motion_id].present?
     @_resource_by_id ||= Vote.find_by(
       voteable_id: get_parent_resource.voteable.id,
       voteable_type: get_parent_resource.voteable.class.name,

@@ -20,7 +20,7 @@ class Vote < ApplicationRecord
   validates :voter, :for, presence: true
 
   contextualize_as_type 'argu:Vote'
-  contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url([v.parent_model, v], protocol: :https) }
+  contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url(v, protocol: :https) }
   contextualize :for, as: 'schema:option'
 
   # #########methods###########
