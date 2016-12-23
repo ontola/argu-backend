@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
           PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
           NestedAttributesHelper
-  helper_method :current_profile, :show_trashed?, :collect_announcements, :deserialized_params
+  helper_method :current_profile, :show_trashed?, :collect_announcements
 
   protect_from_forgery with: :exception, prepend: true
   prepend_before_action :check_for_access_token
@@ -73,25 +73,22 @@ class ApplicationController < ActionController::Base
     @current_profile ||= get_current_actor if current_user.present?
   end
 
-  # The params for the requested resource
-  # @return [Hash] The parameters
-  # @example Resource params from form submit
-  #   params = {motion: {body: 'body', question_id: 1}}
-  #   deserialized_params # => {body: 'body', question_id: 1}
+  # The params, deserialized when format is json_api and method is not GET
+  # @return [Hash] The params
   # @example Resource params from json_api request
   #   params = {
   #     data: {type: 'motions', attributes: {body: 'body'}},
   #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
   #   }
-  #   deserialized_params # => {body: 'body', relation_type: 'motions', relation_id: 1}
-  def deserialized_params
-    if request.format.json_api? && request.method != 'GET'
-      ActionController::Parameters.new(
-        ActiveModelSerializers::Deserialization.jsonapi_parse!(params, deserialize_params_options)
+  #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
+  def params
+    return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
+    ActionController::Parameters.new(
+      super.merge(
+        super.require(:data).require(:type).singularize =>
+          ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
       )
-    else
-      params[controller_name.singularize] || {}
-    end
+    )
   end
 
   def deserialize_params_options

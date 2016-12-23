@@ -53,8 +53,8 @@ module NestedResourceHelper
   #   params = {motion_id: 1}
   #   parent_id_from_params # => '1'
   def parent_id_from_params(opts = params)
-    if deserialized_params[:parent].present?
-      id_and_type_from_iri(deserialized_params[:parent])[:id]
+    if resource_params[:parent].present?
+      id_and_type_from_iri(resource_params[:parent])[:id]
     else
       opts[parent_resource_param(opts)]
     end
@@ -102,11 +102,19 @@ module NestedResourceHelper
   #   params = {motion_id: 1}
   #   parent_resource_type # => 'motion'
   def parent_resource_type(opts = params)
-    if deserialized_params[:parent].present?
-      id_and_type_from_iri(deserialized_params[:parent])[:type]
+    if resource_params[:parent].present?
+      id_and_type_from_iri(resource_params[:parent])[:type]
     else
       parent_resource_key(opts)[0..-4]
     end
+  end
+
+  # Return the params nested for the current resource
+  # @example params in motions_controller
+  #   params = {motion: {id: 1}}
+  #   resource_params # => {id: 1}
+  def resource_params
+    params[controller_name.singularize] || {}
   end
 
   # @see {get_parent_resource}

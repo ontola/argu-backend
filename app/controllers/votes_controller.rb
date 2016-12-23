@@ -84,7 +84,7 @@ class VotesController < AuthorizedController
   end
 
   def destroy
-    vote = Vote.find deserialized_params[:id]
+    vote = Vote.find params[:id]
     authorize vote, :destroy?
     respond_to do |format|
       if vote.destroy
@@ -127,11 +127,11 @@ class VotesController < AuthorizedController
   end
 
   def for_param
-    if deserialized_params[:for].is_a?(String) && deserialized_params[:for].present?
+    if params[:for].is_a?(String) && params[:for].present?
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
-      param = deserialized_params[:for]
-    elsif deserialized_params[:vote].is_a?(ActionController::Parameters)
-      param = deserialized_params[:vote][:for]
+      param = params[:for]
+    elsif params[:vote].is_a?(ActionController::Parameters)
+      param = params[:vote][:for]
     end
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
@@ -140,17 +140,12 @@ class VotesController < AuthorizedController
     @forum = (@vote || @model).forum
   end
 
-  def deserialized_params
-    return super if request.format.json_api? && request.method != 'GET'
-    params
-  end
-
   def deserialize_params_options
     {keys: {side: :for}}
   end
 
   def permit_params
-    deserialized_params.permit(:id)
+    params.permit(:id)
   end
 
   def redirect_param
