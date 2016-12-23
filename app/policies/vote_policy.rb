@@ -33,6 +33,14 @@ class VotePolicy < EdgeTreePolicy
   end
   include Roles
 
+  def show?
+    if record.voter.are_votes_public
+      Pundit.policy(context, record.parent_model).show?
+    else
+      rule staff?
+    end
+  end
+
   def create?
     return create_expired? if has_expired_ancestors?
     if record.parent_model.is_a?(VoteEvent)
