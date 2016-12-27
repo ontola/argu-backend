@@ -39,7 +39,7 @@ class Motion < ApplicationRecord
   contextualize :content, as: 'schema:text'
   attr_accessor :arguments_relation
 
-  convertible questions: %i(votes taggings activities blog_posts)
+  convertible questions: %i(taggings activities blog_posts)
   counter_cache true
   paginates_per 30
   parentable :question, :project, :forum

@@ -8,6 +8,12 @@ module Parentable
 
   included do
     include Edgeable
+    validate :validate_parent_type
+
+    def validate_parent_type
+      return if edge.nil? || self.class.parent_classes.include?(edge.parent.owner_type.underscore.to_sym)
+      errors.add(:parent, "#{edge.parent.owner_type} is not permitted as parent for #{class_name}")
+    end
 
     # Simple method to verify that a model uses {Parentable}
     def is_fertile?

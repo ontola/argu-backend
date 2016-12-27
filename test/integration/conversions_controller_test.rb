@@ -238,13 +238,8 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     edge = question.edge
 
-    create(:vote, parent: question.edge)
-    vote_count = question.votes.count
-    assert vote_count.positive?,
-           'no votes to test'
-
-    assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],
-                        ['Edge.count', 0], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+    assert_differences([['Question.count', -1], ['Motion.count', 1], ['Edge.count', 0],
+                        ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(question.edge),
            params: {
              conversion: {
@@ -260,7 +255,6 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Forum, edge.parent.owner.class
 
     # Test direct relations
-    assert_equal 0, Vote.where(voteable_id: question.id, voteable_type: 'Question').count
     assert_equal 0, Activity.where(trackable: question).count
     assert_equal question_blog_post.reload.blog_postable_type, 'Motion'
 
