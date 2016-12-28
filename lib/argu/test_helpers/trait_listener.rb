@@ -111,21 +111,21 @@ module Argu
         2.times do
           CreateVote
             .new(
-              @resource.edge,
+              @resource.default_vote_event.edge,
               attributes: vote_attrs(:pro),
               options: service_options
             )
             .commit
           CreateVote
             .new(
-              @resource.edge,
+              @resource.default_vote_event.edge,
               attributes: vote_attrs(:neutral),
               options: service_options
             )
             .commit
           CreateVote
             .new(
-              @resource.edge,
+              @resource.default_vote_event.edge,
               attributes: vote_attrs(:con),
               options: service_options
             )

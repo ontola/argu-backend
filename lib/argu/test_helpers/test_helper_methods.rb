@@ -13,8 +13,8 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i(argument blog_post comment forum group_membership motion
-                            phase banner group project question vote decision grant source).freeze
+        SERVICE_MODELS = %i(argument blog_post comment forum group_membership motion source
+                            phase banner group project question vote decision grant vote_event).freeze
 
         def assert_analytics_collected(category = nil, action = nil, label = nil, **options)
           category ||= options[:category]
@@ -167,6 +167,7 @@ module Argu
           service_class = "Create#{klass}".safe_constantize || CreateService
           service = service_class.new(parent_edge, attributes: attributes, options: options)
           service.commit
+          raise service.resource.errors.full_messages.first unless service.resource.valid?
           service.resource.reload
         end
 

@@ -740,6 +740,19 @@ ActiveRecord::Schema.define(version: 20170110162841) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "vote_events", force: :cascade do |t|
+    t.integer  "group_id",     default: -1, null: false
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.integer  "result",       default: 0,  null: false
+    t.integer  "creator_id",                null: false
+    t.integer  "publisher_id",              null: false
+    t.integer  "forum_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["group_id"], name: "index_vote_events_on_group_id", using: :btree
+  end
+
   create_table "votes", force: :cascade do |t|
     t.integer  "voteable_id"
     t.string   "voteable_type", limit: 255
@@ -828,6 +841,10 @@ ActiveRecord::Schema.define(version: 20170110162841) do
   add_foreign_key "stepups", "groups"
   add_foreign_key "stepups", "profiles", column: "creator_id"
   add_foreign_key "stepups", "users"
+  add_foreign_key "vote_events", "forums"
+  add_foreign_key "vote_events", "groups"
+  add_foreign_key "vote_events", "profiles", column: "creator_id"
+  add_foreign_key "vote_events", "users", column: "publisher_id"
   add_foreign_key "votes", "profiles", column: "voter_id"
   add_foreign_key "votes", "users", column: "publisher_id"
 end
