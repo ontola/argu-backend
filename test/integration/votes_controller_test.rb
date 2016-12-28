@@ -52,7 +52,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   test 'user should post create for motion' do
     sign_in user
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['motion.reload.children_count(:votes_pro)', 1]]) do
       post motion_votes_path(motion),
            params: {
              for: :pro,
@@ -70,7 +72,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     argument
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['argument.reload.children_count(:votes_pro)', 1]]) do
       post argument_votes_path(argument),
            params: {
              for: :pro,
@@ -88,7 +92,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     closed_question_motion
 
-    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
+    assert_differences([['Vote.count', 0],
+                        ['Edge.count', 0],
+                        ['closed_question_motion.reload.children_count(:votes_pro)', 0]]) do
       post motion_votes_path(closed_question_motion),
            params: {
              for: :pro,
@@ -103,7 +109,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     closed_question_argument
 
-    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
+    assert_differences([['Vote.count', 0],
+                        ['Edge.count', 0],
+                        ['closed_question_argument.reload.children_count(:votes_pro)', 0]]) do
       post motion_votes_path(closed_question_argument),
            params: {
              for: :pro,
@@ -117,7 +125,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   test 'user should post create json_api' do
     sign_in user
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['motion.reload.children_count(:votes_pro)', 1]]) do
       post votes_path,
            params: {
              format: :json_api,
@@ -148,7 +158,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            for: 'neutral')
     sign_in user
 
-    assert_no_difference('Vote.count') do
+    assert_differences([['Vote.count', 0],
+                        ['motion.reload.total_vote_count', 0],
+                        ['motion.children_count(:votes_neutral)', 0]]) do
       post motion_votes_path(motion),
            params: {
              vote: {
@@ -174,7 +186,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            for: 'pro')
     sign_in user
 
-    assert_no_difference('Vote.count') do
+    assert_differences([['Vote.count', 0],
+                        ['motion.reload.total_vote_count', 0],
+                        ['argument.children_count(:votes_pro)', 0]]) do
       post argument_votes_path(argument),
            params: {
              vote: {
@@ -200,7 +214,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            for: 'neutral')
     sign_in user
 
-    assert_no_difference('Vote.count') do
+    assert_differences([['Vote.count', 0],
+                        ['motion.reload.total_vote_count', 0],
+                        ['motion.children_count(:votes_neutral)', 0]]) do
       post votes_path,
            params: {
              format: :json_api,
@@ -231,7 +247,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            for: 'neutral')
     sign_in user
 
-    assert_no_difference('Vote.count') do
+    assert_differences([['Vote.count', 0],
+                        ['motion.reload.total_vote_count', 0],
+                        ['motion.children_count(:votes_neutral)', 0]]) do
       post motion_votes_path(motion),
            params: {
              vote: {
@@ -256,7 +274,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            for: 'neutral')
     sign_in user
 
-    assert_no_difference('Vote.count') do
+    assert_differences([['Vote.count', 0],
+                        ['motion.reload.total_vote_count', 0],
+                        ['motion.children_count(:votes_neutral)', -1],
+                        ['motion.children_count(:votes_pro)', 1]]) do
       post motion_votes_path(motion),
            params: {
              vote: {
@@ -283,7 +304,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
            for: 'neutral')
     sign_in user
 
-    assert_no_difference('Vote.count') do
+    assert_differences([['Vote.count', 0],
+                        ['motion.reload.total_vote_count', 0],
+                        ['motion.children_count(:votes_neutral)', -1],
+                        ['motion.children_count(:votes_pro)', 1]]) do
       post votes_path,
            params: {
              format: :json_api,
@@ -312,7 +336,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                        for: 'neutral')
     sign_in user
 
-    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
+    assert_differences([['Vote.count', -1],
+                        ['Edge.count', -1],
+                        ['motion.reload.children_count(:votes_neutral)', -1]]) do
       delete vote_path(user_vote), params: {format: :json}
     end
 
@@ -329,11 +355,15 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                        for: 'neutral')
     sign_in user
 
-    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
+    assert_differences([['Vote.count', -1],
+                        ['Edge.count', -1],
+                        ['motion.reload.children_count(:votes_neutral)', -1]]) do
       delete vote_path(user_vote), params: {format: :json}
     end
 
-    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
+    assert_differences([['Vote.count', 0],
+                        ['Edge.count', 0],
+                        ['motion.reload.children_count(:votes_neutral)', 0]]) do
       delete vote_path(user_vote), params: {format: :json}
     end
 
@@ -349,7 +379,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                        for: 'neutral')
     sign_in user
 
-    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
+    assert_differences([['Vote.count', -1],
+                        ['Edge.count', -1],
+                        ['argument.reload.children_count(:votes_neutral)', -1]]) do
       delete vote_path(user_vote), params: {format: :json}
     end
 
@@ -374,7 +406,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   test 'member should post create' do
     sign_in member
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['cairo_motion.reload.children_count(:votes_pro)', 1]]) do
       post motion_votes_path(cairo_motion),
            params: {
              for: :pro,
@@ -391,7 +425,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   test 'member should post create json_api' do
     sign_in member
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['cairo_motion.reload.children_count(:votes_pro)', 1]]) do
       post votes_path,
            params: {
              format: :json_api,
@@ -420,7 +456,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                          for: 'neutral')
     sign_in member
 
-    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
+    assert_differences([['Vote.count', -1],
+                        ['Edge.count', -1],
+                        ['cairo_motion.reload.children_count(:votes_neutral)', -1]]) do
       delete vote_path(member_vote), params: {format: :json}
     end
 

@@ -8,6 +8,7 @@ class Vote < ApplicationRecord
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id'
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
+  before_save :decrement_previous_counter_cache, unless: :new_record?
 
   parentable :argument, :motion
 
@@ -23,6 +24,10 @@ class Vote < ApplicationRecord
   contextualize :for, as: 'schema:option'
 
   # #########methods###########
+  def decrement_previous_counter_cache
+    edge.decrement_counter_cache("votes_#{for_was}")
+  end
+
   # Needed for ActivityListener#audit_data
   def display_name
     "#{self.for} vote for #{parent_model.display_name}"

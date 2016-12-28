@@ -151,15 +151,17 @@ class Edge < ActiveRecord::Base
     end
   end
 
-  def decrement_counter_cache
+  def decrement_counter_cache(counter_cache_name = nil)
     return unless owner.class.counter_cache_options
-    parent.children_counts[owner.counter_cache_name] = (parent.children_counts[owner.counter_cache_name].to_i || 0) - 1
+    counter_cache_name ||= owner.counter_cache_name
+    parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) - 1
     parent.save
   end
 
-  def increment_counter_cache
+  def increment_counter_cache(counter_cache_name = nil)
     return unless owner.class.counter_cache_options
-    parent.children_counts[owner.counter_cache_name] = (parent.children_counts[owner.counter_cache_name].to_i || 0) + 1
+    counter_cache_name ||= owner.counter_cache_name
+    parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) + 1
     parent.save
   end
 
