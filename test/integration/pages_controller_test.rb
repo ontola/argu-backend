@@ -355,8 +355,8 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     motion1 = create(:motion, parent: utrecht.edge)
     motion3 = create(:motion, parent: amsterdam.edge, creator: user2.profile)
     argument1 = create(:argument, parent: motion1.edge)
-    create(:vote, parent: motion1.edge, for: :neutral)
-    create(:vote, parent: motion3.edge, for: :pro)
+    create(:vote, parent: motion1.default_vote_event.edge, for: :neutral)
+    create(:vote, parent: motion3.default_vote_event.edge, for: :pro)
     create(:vote, parent: argument1.edge, for: :neutral)
   end
 end

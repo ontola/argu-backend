@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :uploaded_photos, class_name: 'Photo', inverse_of: :publisher, foreign_key: 'publisher_id'
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank
@@ -226,7 +227,7 @@ class User < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w(comments motions arguments questions blog_posts projects).each do |association|
+    %w(comments motions arguments questions blog_posts projects vote_events).each do |association|
       association
         .classify
         .constantize

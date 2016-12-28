@@ -137,6 +137,9 @@ Rails.application.routes.draw do
   end
 
   resources :votes, only: [:destroy], path: :v, as: :vote
+  resources :vote_events, only: [:show], concerns: [:votable] do
+    resources :votes, only: :index
+  end
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
@@ -161,6 +164,7 @@ Rails.application.routes.draw do
     resources :tags, path: 't', only: [:index]
     resources :arguments, only: [:new, :create, :index]
     resources :votes, only: :index
+    resources :vote_events, only: :index
   end
 
   resources :arguments,
@@ -237,6 +241,7 @@ Rails.application.routes.draw do
     get '/', action: :show, on: :collection
     resources :arguments, only: [:new, :create, :index]
     resources :votes, only: :index
+    resources :vote_events, only: :index
   end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]

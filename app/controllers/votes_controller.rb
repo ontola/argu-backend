@@ -34,7 +34,7 @@ class VotesController < AuthorizedController
   end
 
   def new
-    @model = get_parent_resource
+    @model = get_parent_resource.voteable
     authorize @model, :show?
 
     render locals: {
@@ -54,7 +54,7 @@ class VotesController < AuthorizedController
       respond_to do |format|
         format.json do
           render status: 304,
-                 locals: {model: create_service.resource.parent_model, vote: create_service.resource}
+                 locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
         end
         format.json_api { head 304 }
         format.js { head :not_modified }
@@ -62,7 +62,7 @@ class VotesController < AuthorizedController
           if params[:vote].try(:[], :r).present?
             redirect_to redirect_param
           else
-            redirect_to polymorphic_url(create_service.resource.edge.parent.owner),
+            redirect_to polymorphic_url(create_service.resource.parent_model.voteable),
                         notice: t('votes.alerts.not_modified')
           end
         end
@@ -77,7 +77,7 @@ class VotesController < AuthorizedController
             if params[:vote].try(:[], :r).present?
               redirect_to redirect_param
             else
-              redirect_to polymorphic_url(vote.edge.parent.owner),
+              redirect_to polymorphic_url(vote.parent_model.voteable),
                           notice: t('votes.alerts.success')
             end
           end
@@ -89,7 +89,7 @@ class VotesController < AuthorizedController
           format.json_api { render json: vote.errors, status: 400 }
           # format.js { head :bad_request }
           format.html do
-            redirect_to polymorphic_url(vote.edge.parent.owner),
+            redirect_to polymorphic_url(vote.parent_model.voteable),
                         notice: t('votes.alerts.failed')
           end
         end
@@ -128,14 +128,14 @@ class VotesController < AuthorizedController
 
   def authorize_action
     return super unless params[:action] == 'show'
-    authorize authenticated_resource.edge.parent.owner, :show?
+    authorize authenticated_resource.parent_model.voteable, :show?
   end
 
   def resource_by_id
     return super unless params[:action] == 'show'
     @_resource_by_id ||= Vote.find_by(
-      voteable_id: get_parent_resource.id,
-      voteable_type: get_parent_resource.class.name,
+      voteable_id: get_parent_resource.voteable.id,
+      voteable_type: get_parent_resource.voteable.class.name,
       voter: current_profile,
       forum: get_parent_resource.forum
     )
@@ -152,6 +152,10 @@ class VotesController < AuthorizedController
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
+  def get_parent_resource
+    @parent_resource ||= super.try(:default_vote_event) || super
+  end
+
   def deserialize_params_options
     {keys: {side: :for}}
   end
@@ -165,7 +169,9 @@ class VotesController < AuthorizedController
   end
 
   def redirect_url
-    tpl = URITemplate.new("#{url_for([:new, get_parent_resource, :vote, only_path: true])}{?confirm,r,vote%5Bfor%5D}")
+    tpl = URITemplate.new(
+      "#{url_for([:new, get_parent_resource.voteable, :vote, only_path: true])}{?confirm,r,vote%5Bfor%5D}"
+    )
     tpl.expand(confirm: true, r: params[:r], 'vote%5Bfor%5D' => for_param)
   end
 

@@ -4,50 +4,35 @@ module Voteable
   include PragmaticContext::Contextualizable
 
   included do
-    contextualize :votes_pro_count, as: 'http://schema.org/upvoteCount'
-    contextualize :votes_neutral_count, as: 'http://schema.org/abstainvoteCount'
-    contextualize :votes_con_count, as: 'http://schema.org/downvoteCount'
-
     has_many :votes, as: :voteable, dependent: :destroy
+    edge_tree_has_many :vote_events
 
-    def total_vote_count
-      children_count(:votes_pro).abs + children_count(:votes_con).abs + children_count(:votes_neutral).abs
+    after_create :create_default_vote_event
+
+    def create_default_vote_event
+      VoteEvent.create!(
+        edge: Edge.new(parent: edge, user: publisher),
+        starts_at: DateTime.current,
+        creator_id: creator.id,
+        publisher_id: publisher.id,
+        forum_id: try(:forum_id)
+      )
     end
 
-    def votes_pro_percentage
-      vote_percentage children_count(:votes_pro)
-    end
-
-    def votes_neutral_percentage
-      vote_percentage children_count(:votes_neutral)
-    end
-
-    def votes_con_percentage
-      vote_percentage children_count(:votes_con)
-    end
-
-    def vote_percentage(vote_count)
-      if vote_count.zero?
-        if total_vote_count.zero?
-          33
-        else
-          0
-        end
-      else
-        (vote_count.to_f / total_vote_count * 100).round.abs
-      end
+    def default_vote_event
+      @default_vote_event ||= VoteEvent.joins(:edge).where(edges: {parent_id: edge.id}).find_by(group_id: -1)
     end
   end
 
   module Serlializer
     extend ActiveSupport::Concern
     included do
-      has_many :votes do
+      has_many :vote_events do
         link(:self) do
           {
-            href: "#{object.context_id}/votes",
+            href: "#{object.context_id}/vote_events",
             meta: {
-              '@type': 'argu:votes'
+              '@type': 'argu:voteEvents'
             }
           }
         end
@@ -55,7 +40,7 @@ module Voteable
           href = object.context_id
           {
             '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/votes"
+            '@id': "#{href}/vote_events"
           }
         end
       end

@@ -64,6 +64,11 @@ module Edgeable
   end
 
   module ClassMethods
+    # Hands over publication of a collection to the Community profile (0)
+    def anonymize(collection)
+      collection.update_all(creator_id: 0)
+    end
+
     # @param value [Bool, Hash] True to use default counter_cache_name
     #                           Hash to use conditional counter_cache_names
     # @example counter cache for pro_arguments and con_arguments
@@ -88,6 +93,11 @@ module Edgeable
       options[:source_type] = options[:class_name] || name.to_s.classify
       has_many "#{name}_from_tree".to_sym, scope, options
       alias_attribute name.to_sym, "#{name}_from_tree".to_sym
+    end
+
+    # Hands over ownership of a collection to the Community user (0)
+    def expropriate(collection)
+      collection.update_all(publisher_id: 0)
     end
 
     # Resets the counter_caches of the parents of all instances of this class

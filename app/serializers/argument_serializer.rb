@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ArgumentSerializer < BaseCommentSerializer
+class ArgumentSerializer < BaseEdgeSerializer
   attributes :display_name, :content, :pro
 
   has_many :comment_threads do
@@ -19,8 +19,4 @@ class ArgumentSerializer < BaseCommentSerializer
       }
     end
   end
-
-  def votes_neutral_count; end
-
-  def votes_con_count; end
 end
