@@ -57,6 +57,10 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     'assigns(:arguments).none? { |arr| arr[1][:collection].any?(&:is_trashed?) }'
   end
 
+  def self.assert_is_trashed
+    'resource.reload.is_trashed?'
+  end
+
   define_tests do
     hash = {}
     define_test(hash, :new, suffix: ' for forum', options: {parent: :freetown})
@@ -151,6 +155,16 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     define_test(hash, :update)
     define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Motion', content: 'C'}}) do
       {creator: exp_res(response: 200, asserts: [assert_has_title, assert_has_content])}
+    end
+    options = {
+      attributes: {
+        edge_attributes: {
+          is_trashed: '1'
+        }
+      }
+    }
+    define_test(hash, :update, suffix: ' trash', options: options) do
+      {creator: exp_res(should: true, asserts: [assert_is_trashed])}
     end
     options = {
       attributes: {

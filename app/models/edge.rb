@@ -137,6 +137,7 @@ class Edge < ActiveRecord::Base
   end
 
   def trash
+    return if trashed_at.present?
     self.class.transaction do
       update!(trashed_at: DateTime.current)
       owner.destroy_notifications if owner.is_loggable?
@@ -145,6 +146,7 @@ class Edge < ActiveRecord::Base
   end
 
   def untrash
+    return if trashed_at.nil?
     self.class.transaction do
       update!(trashed_at: nil)
       increment_counter_cache if is_published?
