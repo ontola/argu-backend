@@ -21,7 +21,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
 
   test 'guest should get show new iri' do
     linked_record_mock(2)
-    assert_differences([['LinkedRecord.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 2]]) do
       get linked_records_path(iri: 'https://iri.test/resource/2')
     end
 
@@ -61,7 +61,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
   test 'user should get show new iri' do
     sign_in user
     linked_record_mock(2)
-    assert_differences([['LinkedRecord.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 2]]) do
       get linked_records_path(iri: 'https://iri.test/resource/2')
     end
 

@@ -150,12 +150,12 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     motion_blog_post
 
     edge = motion.edge
-    vote_count = motion.votes.count
+    vote_count = motion.default_vote_event.edge.children.where(owner_type: 'Vote').count
     assert vote_count.positive?,
            'no votes to test'
 
-    assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -6], ['Edge.count', -12], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+    assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
+                        ['Vote.count', -6], ['Edge.count', -13], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(motion.edge),
            params: {
              conversion: {
@@ -185,8 +185,8 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     edge = question_motion.edge
 
-    assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -6], ['Edge.count', -12], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+    assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
+                        ['Vote.count', -6], ['Edge.count', -13], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(question_motion.edge),
            params: {
              conversion: {
@@ -208,8 +208,8 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     edge = project_motion.edge
 
-    assert_differences([['Motion.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -6], ['Edge.count', -12], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+    assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
+                        ['Vote.count', -6], ['Edge.count', -13], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(project_motion.edge),
            params: {
              conversion: {
@@ -238,7 +238,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     edge = question.edge
 
-    assert_differences([['Question.count', -1], ['Motion.count', 1], ['Edge.count', 0],
+    assert_differences([['Question.count', -1], ['Motion.count', 1], ['VoteEvent.count', 1], ['Edge.count', 1],
                         ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(question.edge),
            params: {
@@ -268,8 +268,8 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
 
     edge = project_question.edge
 
-    assert_differences([['Question.count', -1], ['Motion.count', 1], ['Vote.count', 0],
-                        ['Edge.count', 0], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+    assert_differences([['Question.count', -1], ['Motion.count', 1], ['VoteEvent.count', 1], ['Vote.count', 0],
+                        ['Edge.count', 1], ['Activity.count', 1], ['BlogPost.count', 0]]) do
       post edge_conversions_path(project_question.edge),
            params: {
              conversion: {

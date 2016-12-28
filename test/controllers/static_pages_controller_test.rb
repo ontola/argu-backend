@@ -10,7 +10,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   let(:question) { create(:question, parent: freetown.edge) }
   let(:motion) { create(:motion, parent: question.edge) }
   let(:blog_post) { create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: DateTime.current}) }
-  let(:vote) { create(:vote, parent: motion.edge) }
+  let(:vote) { create(:vote, parent: motion.default_vote_event.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
 

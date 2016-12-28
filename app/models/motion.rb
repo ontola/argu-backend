@@ -2,9 +2,9 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
-  include Trashable, Argumentable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
+  include Trashable, Argumentable, Voteable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
           BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
-          Decisionable, Ldable, Voteable, ActivePublishable
+          Decisionable, Ldable, ActivePublishable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions
@@ -40,16 +40,6 @@ class Motion < ApplicationRecord
             'lower(motions.content) LIKE lower(?)',
           "%#{q}%",
           "%#{q}%")
-  end
-
-  # @param [Profile] profile What profile's votes should be included
-  def self.votes_for_profile(profile)
-    join = "LEFT JOIN votes ON votes.voteable_type = 'Motion'"
-    join << " AND votes.voteable_id = motions.id AND votes.voter_type = 'Profile'"
-    join << " AND votes.voter_id = #{profile.id}"
-    joins(join)
-      .references(:votes)
-      .select('motions.*,votes.*')
   end
 
   def assert_tenant
@@ -88,8 +78,9 @@ class Motion < ApplicationRecord
       self.question_id = nil if unlink_question
       edge.parent = forum.edge
       save!
-      arguments.lock(true).update_all forum_id: forum.id
-      votes.lock(true).update_all forum_id: forum.id
+      edge.descendants.includes(:owner).find_each do |descendant|
+        descendant.owner.update_column(:forum_id, forum.id)
+      end
       activities.lock(true).update_all forum_id: forum.id
       taggings.lock(true).update_all forum_id: forum.id
       true

@@ -26,12 +26,20 @@ class VotePolicy < EdgeTreePolicy
     def is_creator?
       creator if user && actor == record.voter
     end
+
+    def is_group_member?
+      group_grant if is_member? && user&.profile&.group_ids.include?(record.parent_model.group.id)
+    end
   end
   include Roles
 
   def create?
     return create_expired? if has_expired_ancestors?
-    rule is_member?, is_manager?, is_owner?, super
+    if record.parent_model.is_a?(VoteEvent)
+      rule is_group_member?
+    else
+      rule is_member?, is_manager?, is_owner?, super
+    end
   end
 
   def update?

@@ -23,11 +23,23 @@ class LinkedRecord < ApplicationRecord
     self.title = response['title']
   end
 
-  def publisher
-    User.first
-  end
-
   def creator
     Profile.first
+  end
+
+  def default_vote_event
+    return @default_vote_event if @default_vote_event
+    @default_vote_event = VoteEvent.joins(:edge).where(edges: {parent_id: edge.id}).find_by(group_id: -1)
+    @default_vote_event ||= VoteEvent.create!(
+      edge: Edge.new(parent: edge, user: User.first),
+      starts_at: DateTime.current,
+      creator: Profile.first,
+      publisher: User.first
+    )
+    @default_vote_event
+  end
+
+  def publisher
+    User.first
   end
 end

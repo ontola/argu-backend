@@ -26,6 +26,10 @@ class Argument < ApplicationRecord
     errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
   end
 
+  def default_vote_event
+    self
+  end
+
   # http://schema.org/description
   def description
     content
@@ -46,5 +50,9 @@ class Argument < ApplicationRecord
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
     parent_model.arguments.find_by(id: p_id)
+  end
+
+  def voteable
+    self
   end
 end

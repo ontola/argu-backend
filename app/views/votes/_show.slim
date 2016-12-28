@@ -1,4 +1,4 @@
 .box
   =link_to url_for(model.parent_model) do
     section
-      h3[class="#{model.for}-t"]= model.parent_model.title
+      h3[class="#{model.for}-t"]= model.parent_model.voteable.title
