@@ -323,10 +323,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                      creator: user2.profile,
                      edge_attributes: {trashed_at: DateTime.current})
     argument1 = create(:argument, parent: motion1.edge)
-    create(:vote, for: :neutral, parent: motion1.edge, voter: user2.profile, publisher: user2)
-    create(:vote, for: :pro, parent: motion3.edge, voter: user2.profile, publisher: user2)
+    create(:vote, for: :neutral, parent: motion1.default_vote_event.edge, voter: user2.profile, publisher: user2)
+    create(:vote, for: :pro, parent: motion3.default_vote_event.edge, voter: user2.profile, publisher: user2)
     create(:vote, for: :neutral, parent: argument1.edge, voter: user2.profile, publisher: user2)
-    create(:vote, for: :pro, parent: motion4.edge, voter: user2.profile, publisher: user2)
+    create(:vote, for: :pro, parent: motion4.default_vote_event.edge, voter: user2.profile, publisher: user2)
     user2
   end
 end

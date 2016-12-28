@@ -23,20 +23,20 @@ module MotionsHelper
       objectId: motion.id,
       objectType: 'motion',
       percent: {
-        pro: motion.votes_pro_percentage,
-        neutral: motion.votes_neutral_percentage,
-        con: motion.votes_con_percentage
+        pro: motion.default_vote_event.votes_pro_percentage,
+        neutral: motion.default_vote_event.votes_neutral_percentage,
+        con: motion.default_vote_event.votes_con_percentage
       },
-      total_votes: motion.total_vote_count,
+      total_votes: motion.default_vote_event.total_vote_count,
       vote_url: motion_votes_path(motion)
     }.merge(opts))
   end
 
   def motion_vote_counts(motion, opts = {})
     opts.merge(
-      pro: motion.children_count(:votes_pro),
-      neutral: motion.children_count(:votes_neutral),
-      con: motion.children_count(:votes_con)
+      pro: motion.default_vote_event.children_count(:votes_pro),
+      neutral: motion.default_vote_event.children_count(:votes_neutral),
+      con: motion.default_vote_event.children_count(:votes_con)
     )
   end
 

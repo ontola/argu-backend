@@ -27,6 +27,7 @@ class Profile < ApplicationRecord
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :uploaded_photos,
            class_name: 'Photo',
            inverse_of: :creator,
@@ -132,8 +133,8 @@ class Profile < ApplicationRecord
 
   def visible_votes_for(user)
     votes
-      .joins(edge: :parent)
-      .where(voteable_type: %w(Question Motion), parents_edges: {trashed_at: nil})
+      .joins(edge: {parent: :parent})
+      .where(voteable_type: %w(Question Motion), parents_edges_2: {trashed_at: nil})
       .joins('LEFT OUTER JOIN forums ON votes.forum_id = forums.id')
       .where('forums.visibility = ? OR "forums"."id" IN (?)',
              Forum.visibilities[:open],
@@ -196,7 +197,7 @@ class Profile < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
-    %w(comments motions arguments questions blog_posts projects activities).each do |association|
+    %w(comments motions arguments questions blog_posts projects vote_events activities).each do |association|
       association
         .classify
         .constantize

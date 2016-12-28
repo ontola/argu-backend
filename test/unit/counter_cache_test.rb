@@ -42,32 +42,26 @@ class CounterCacheTest < ActiveSupport::TestCase
   end
 
   test 'fix counts for motion' do
-    assert_counts(
-      motion,
-      blog_posts: 1, arguments_pro: 3, arguments_con: 0, votes_pro: 2, votes_con: 2, votes_neutral: 2
-    )
-    assert_counts(
-      other_motion,
-      blog_posts: 0, arguments_pro: 0, arguments_con: 0, votes_pro: 0, votes_con: 0, votes_neutral: 0
-    )
+    assert_counts(motion, blog_posts: 1, arguments_pro: 3, arguments_con: 0)
+    assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
+    assert_counts(other_motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
+    assert_counts(other_motion.default_vote_event, votes_pro: 0, votes_con: 0, votes_neutral: 0)
 
     motion.edge.update(children_counts: {})
+    motion.default_vote_event.edge.update(children_counts: {})
     other_motion.edge.update(children_counts: {})
-    assert_counts(
-      motion,
-      blog_posts: 0, arguments_pro: 0, arguments_con: 0, votes_pro: 0, votes_con: 0, votes_neutral: 0
-    )
-    assert_counts(
-      other_motion,
-      blog_posts: 0, arguments_pro: 0, arguments_con: 0, votes_pro: 0, votes_con: 0, votes_neutral: 0
-    )
+    other_motion.default_vote_event.edge.update(children_counts: {})
+    assert_counts(motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
+    assert_counts(motion.default_vote_event, votes_pro: 0, votes_con: 0, votes_neutral: 0)
+    assert_counts(other_motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
+    assert_counts(other_motion.default_vote_event, votes_pro: 0, votes_con: 0, votes_neutral: 0)
 
     BlogPost.fix_counts
     assert_counts(motion, blog_posts: 1)
     Argument.fix_counts
     assert_counts(motion, arguments_pro: 3, arguments_con: 0)
     Vote.fix_counts
-    assert_counts(motion, votes_pro: 2, votes_con: 2, votes_neutral: 2)
+    assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
   end
 
   test 'update count when trashing' do

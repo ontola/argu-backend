@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class MotionSerializer < BaseCommentSerializer
+class MotionSerializer < BaseEdgeSerializer
   include Loggable::Serlializer
   include Argumentable::Serlializer
   include Voteable::Serlializer

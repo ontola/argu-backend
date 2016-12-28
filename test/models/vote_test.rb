@@ -5,7 +5,7 @@ class VoteTest < ActiveSupport::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:user) { create(:user) }
-  subject { create(:vote, parent: motion.edge) }
+  subject { create(:vote, parent: motion.default_vote_event.edge) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -15,7 +15,7 @@ class VoteTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordNotUnique do
       Vote.transaction do
         Vote.create(
-          edge: motion.edge.children.new(user: user),
+          edge: motion.default_vote_event.edge.children.new(user: user),
           voteable_id: motion.id,
           voteable_type: 'Motion',
           voter: user.profile,
@@ -23,7 +23,7 @@ class VoteTest < ActiveSupport::TestCase
           publisher: user
         )
         Vote.create(
-          edge: motion.edge.children.new(user: user),
+          edge: motion.default_vote_event.edge.children.new(user: user),
           voteable_id: motion.id,
           voteable_type: 'Motion',
           voter: user.profile,

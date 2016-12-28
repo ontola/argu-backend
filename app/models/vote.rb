@@ -10,7 +10,7 @@ class Vote < ApplicationRecord
   belongs_to :forum
   before_save :decrement_previous_counter_cache, unless: :new_record?
 
-  parentable :argument, :motion, :linked_record
+  parentable :argument, :vote_event
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
   counter_cache votes_pro: {for: Vote.fors[:pro]},

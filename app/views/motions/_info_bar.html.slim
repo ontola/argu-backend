@@ -22,14 +22,14 @@ section.section--details
                 span.project-t.fa.fa-rocket
               .detail__text
                 span[itemprop="headline"]= truncate(motion.project.title, length: 30)
-    - if local_assigns[:show_vote_pie] && motion.votes.present?
-      .detail[data-title=t('motions.percentage_in_favor', percentage: motion.votes_pro_percentage, count: motion.total_vote_count)]
+    - if local_assigns[:show_vote_pie] && motion.default_vote_event.total_vote_count.positive?
+      .detail[data-title=t('motions.percentage_in_favor', percentage: motion.default_vote_event.votes_pro_percentage, count: motion.default_vote_event.total_vote_count)]
         .detail__icon
           .vote-pie-container
             =react_component_store 'VotePie', props: motion_vote_counts(motion)
         .detail__text
           .span
-            =motion.total_vote_count
+            =motion.default_vote_event.total_vote_count
     - if local_assigns[:show_profile]
       =render partial: 'profiles/detail_profile', locals: {resource: motion}
     - if local_assigns[:show_vote_results]
