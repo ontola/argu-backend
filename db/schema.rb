@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221083043) do
+ActiveRecord::Schema.define(version: 20161229120356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,18 +71,14 @@ ActiveRecord::Schema.define(version: 20161221083043) do
   create_table "arguments", force: :cascade do |t|
     t.text     "content"
     t.integer  "motion_id"
-    t.boolean  "pro",                             default: true
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "title",               limit: 255
-    t.boolean  "is_trashed",                      default: false
-    t.integer  "votes_pro_count",                 default: 0,     null: false
-    t.integer  "comments_count",                  default: 0,     null: false
-    t.integer  "votes_abstain_count",             default: 0,     null: false
-    t.integer  "creator_id",                                      null: false
-    t.integer  "votes_con_count",                 default: 0,     null: false
+    t.boolean  "pro",                      default: true
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "title",        limit: 255
+    t.boolean  "is_trashed",               default: false
+    t.integer  "creator_id",                               null: false
     t.integer  "forum_id"
-    t.integer  "publisher_id",                                    null: false
+    t.integer  "publisher_id",                             null: false
     t.index ["id"], name: "index_arguments_on_id", using: :btree
     t.index ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro", using: :btree
     t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id", using: :btree
@@ -131,7 +127,6 @@ ActiveRecord::Schema.define(version: 20161221083043) do
     t.integer  "state",              default: 0,     null: false
     t.string   "title",                              null: false
     t.text     "content"
-    t.integer  "comments_count",     default: 0,     null: false
     t.datetime "trashed_at"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
@@ -242,9 +237,6 @@ ActiveRecord::Schema.define(version: 20161221083043) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",         default: 0,     null: false
-    t.integer  "motions_count",           default: 0,     null: false
-    t.integer  "memberships_count",       default: 0,     null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
     t.datetime "created_at",                              null: false
@@ -259,7 +251,6 @@ ActiveRecord::Schema.define(version: 20161221083043) do
     t.text     "bio_long",                default: ""
     t.integer  "lock_version",            default: 0
     t.bigint   "place_id"
-    t.integer  "projects_count",          default: 0,     null: false
     t.integer  "max_shortname_count",     default: 0,     null: false
     t.index ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
     t.index ["visibility"], name: "index_forums_on_visibility", using: :btree
@@ -359,12 +350,6 @@ ActiveRecord::Schema.define(version: 20161221083043) do
     t.integer  "con_count",                           default: 0
     t.integer  "tag_id"
     t.boolean  "is_trashed",                          default: false
-    t.integer  "votes_pro_count",                     default: 0,     null: false
-    t.integer  "votes_con_count",                     default: 0,     null: false
-    t.integer  "votes_neutral_count",                 default: 0,     null: false
-    t.integer  "argument_pro_count",                  default: 0,     null: false
-    t.integer  "argument_con_count",                  default: 0,     null: false
-    t.integer  "votes_abstain_count",                 default: 0,     null: false
     t.integer  "forum_id"
     t.integer  "creator_id",                                          null: false
     t.string   "cover_photo",                         default: ""
@@ -552,16 +537,12 @@ ActiveRecord::Schema.define(version: 20161221083043) do
     t.string   "email"
     t.datetime "end_date"
     t.datetime "achieved_end_date"
-    t.integer  "questions_count",         default: 0,     null: false
-    t.integer  "motions_count",           default: 0,     null: false
-    t.integer  "phases_count",            default: 0,     null: false
     t.datetime "trashed_at"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.string   "cover_photo",             default: ""
     t.string   "cover_photo_attribution", default: ""
     t.boolean  "is_published",            default: false, null: false
-    t.integer  "blog_posts_count",        default: 0,     null: false
     t.index ["forum_id", "is_published"], name: "index_projects_on_forum_id_and_is_published", using: :btree
     t.index ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
     t.index ["forum_id"], name: "index_projects_on_forum_id", using: :btree
@@ -595,9 +576,6 @@ ActiveRecord::Schema.define(version: 20161221083043) do
     t.integer  "forum_id"
     t.integer  "creator_id",                                          null: false
     t.boolean  "is_trashed",                          default: false
-    t.integer  "motions_count",                       default: 0
-    t.integer  "votes_pro_count",                     default: 0
-    t.integer  "votes_con_count",                     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cover_photo",                         default: ""

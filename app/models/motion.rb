@@ -80,10 +80,7 @@ class Motion < ApplicationRecord
   def as_json(options = {})
     super((options || {}).merge(
       methods: %i(display_name),
-      only: %i(id content forum_id created_at cover_photo
-               updated_at pro_count con_count
-               votes_pro_count votes_con_count votes_neutral_count
-               argument_pro_count argument_con_count)
+      only: %i(id content forum_id created_at cover_photo updated_at)
     ))
   end
 
