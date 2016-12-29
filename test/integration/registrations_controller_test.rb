@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 require 'test_helper'
+require 'capybara/email'
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
-  include TestHelper
+  include TestHelper, Capybara::Email::DSL
 
   setup do
     analytics_collect
@@ -11,7 +12,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
   let(:place) { create(:place) }
-  let(:page) { create(:page) }
+  let(:argu) { create(:page) }
   let(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################
@@ -46,6 +47,45 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
+  end
+
+  test 'should post create without password' do
+    clear_emails
+
+    assert_differences([['User.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post user_registration_path,
+           params: {
+             format: :json,
+             user: {
+               email: 'test@example.com'
+             }
+           }
+      assert_response 201
+      assert_analytics_collected('registrations', 'create', 'email')
+    end
+    get forum_path(freetown), params: {format: :json_api}
+    assert_response 200
+    get forum_path(freetown)
+    assert_redirected_to setup_users_path
+
+    delete destroy_user_session_path
+
+    # Send mail
+    Sidekiq::Extensions::DelayedMailer.process_job(Sidekiq::Worker.jobs.last)
+
+    open_email('test@example.com')
+    assert_equal current_email.subject, 'Welcome to Argu'
+    current_email.click_link 'Set my password'
+
+    # Set password
+    assert_difference('User.where(confirmed_at: nil).count', -1) do
+      fill_in('user_password', with: 'password')
+      fill_in('user_password_confirmation', with: 'password')
+      click_button('Edit')
+    end
+
+    assert_equal current_path, setup_users_path
   end
 
   test "guest should not post create when passwords don't match" do
@@ -129,9 +169,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should delete destroy with content published by page' do
-    create :motion, publisher: user, creator: page.profile, parent: freetown.edge
-    create :question, publisher: user, creator: page.profile, parent: freetown.edge
-    create :argument, publisher: user, creator: page.profile, parent: Motion.last.edge
+    create :motion, publisher: user, creator: argu.profile, parent: freetown.edge
+    create :question, publisher: user, creator: argu.profile, parent: freetown.edge
+    create :argument, publisher: user, creator: argu.profile, parent: Motion.last.edge
 
     sign_in user
 

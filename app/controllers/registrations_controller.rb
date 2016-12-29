@@ -2,8 +2,10 @@
 class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
   include NestedResourceHelper, OauthHelper
+  respond_to :json
 
   def create
+    @registration_without_password = !devise_parameter_sanitizer.sanitize(:sign_up).include?(:password)
     super do |resource|
       unless resource.persisted?
         send_event user: resource,
@@ -62,7 +64,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
-    resource.send_confirmation_instructions
+    @registration_without_password ? resource.send_set_password_instructions : resource.send_confirmation_instructions
     setup_favorites(resource)
     send_event user: resource,
                category: 'registrations',
@@ -80,5 +82,9 @@ class RegistrationsController < Devise::RegistrationsController
     return unless session[:omniauth]
     @user.apply_omniauth(session[:omniauth])
     @user.valid?
+  end
+
+  def sign_up_params
+    {password: SecureRandom.hex}.merge(super)
   end
 end

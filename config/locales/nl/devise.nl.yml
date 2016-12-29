@@ -77,6 +77,10 @@ nl:
         someone_requested: 'Iemand heeft gevraagd om een wachtwoord-reset mail te sturen naar dit adres. Klik op onderstaande link als je jouw Argu wachtwoord zou willen wijzigen.'
         confirm_link: 'Wijzig mijn wachtwoord'
         ignore: 'Als jij niet hebt aangevraagd om je wachtwoord te wijzigen, kan je deze e-mail negeren.'
+      set_password_instructions:
+        subject: 'Welkom bij Argu'
+        body: 'Je hebt nu een account bij Argu. Als je dit account in de toekomst nog wilt gebruiken, stel dan een wachtwoord in door op de volgende link te klikken.'
+        set_password_link: 'Stel mijn wachtwoord in'
       unlock_instructions:
         subject: 'Ontgrendel instructies'
     activerecord:

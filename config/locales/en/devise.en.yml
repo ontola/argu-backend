@@ -77,6 +77,10 @@ en:
         someone_requested: 'Someone requested to send a password reset mail to this address. Click the link below if you would like to change your Argu password.'
         confirm_link: 'Change my password'
         ignore: 'If you did not request the password change, you may ignore this mail.'
+      set_password_instructions:
+        subject: 'Welcome to Argu'
+        body: 'You are now registered at Argu. If you wish to use your account again in the future, please set a password by clicking the link below.'
+        set_password_link: 'Set my password'
       unlock_instructions:
         subject: 'Unlock instructions'
     activerecord:
