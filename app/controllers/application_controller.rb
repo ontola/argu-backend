@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :write_client_access_token
   before_action :set_layout
   before_action :doorkeeper_authorize!
-  before_action :check_finished_intro
+  before_action :check_finished_intro, if: :format_html?
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   after_action :verify_authorized, except: :index, unless: :devise_controller?
@@ -94,6 +94,10 @@ class ApplicationController < ActionController::Base
 
   def deserialize_params_options
     {}
+  end
+
+  def format_html?
+    request.format.html?
   end
 
   def forum_by_geocode
