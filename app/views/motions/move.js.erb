@@ -1,4 +1,4 @@
-$('.container').append("<%= escape_javascript render(template: 'motions/move.html', layout: false, locals: {resource: @motion}) %>");
+$('.container').append("<%= escape_javascript render(template: 'motions/move.html', layout: false, locals: {resource: resource}) %>");
 window.setTimeout(function () {
     $('body').addClass('modal-opened');
 }, 300);

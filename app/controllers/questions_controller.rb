@@ -136,7 +136,7 @@ class QuestionsController < AuthorizedController
   def move
     respond_to do |format|
       format.html { render locals: {resource: authenticated_resource} }
-      format.js { render }
+      format.js { render locals: {resource: authenticated_resource} }
     end
   end
 
