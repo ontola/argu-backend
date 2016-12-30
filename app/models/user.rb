@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    [first_name, middle_name, last_name].compact.join(' ').presence || url
+    [first_name, middle_name, last_name].compact.join(' ').presence || url || I18n.t('users.no_shortname', id: id)
   end
 
   def email_verified?

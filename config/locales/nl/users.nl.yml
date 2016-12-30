@@ -4,6 +4,7 @@ nl:
   users:
     type: "Gebruiker"
     plural: "Gebruikers"
+    no_shortname: "Gebruiker %{id}"
     settings:
       title: "Gebruikersinstellingen"
       menu:
