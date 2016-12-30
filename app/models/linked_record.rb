@@ -13,7 +13,7 @@ class LinkedRecord < ApplicationRecord
   validates :page, presence: true
   validates :source, presence: true
 
-  contextualize_with_id(&:iri)
+  contextualize_with_id { |r| Rails.application.routes.url_helpers.linked_record_url(r, protocol: :https) }
   contextualize :title, as: 'schema:name'
 
   parentable :source

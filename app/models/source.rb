@@ -24,6 +24,14 @@ class Source < ApplicationRecord
   # @private
   attr_accessor :tab, :active
 
+  def self.find_by_iri(iri)
+    find_by("? LIKE iri_base || '%'", iri)
+  end
+
+  def self.find_by_iri!(iri)
+    find_by_iri(iri) || raise(ActiveRecord::RecordNotFound)
+  end
+
   def page=(value)
     super value.is_a?(Page) ? value : Page.find_via_shortname(value)
   end
