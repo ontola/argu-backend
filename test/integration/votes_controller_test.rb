@@ -59,8 +59,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                         ['motion.reload.children_count(:votes_pro)', 1]]) do
       post motion_votes_path(motion),
            params: {
-             for: :pro,
-             format: :json
+             format: :json,
+             vote: {
+               for: :pro
+             }
            }
     end
 
@@ -79,8 +81,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                         ['argument.reload.children_count(:votes_pro)', 1]]) do
       post argument_votes_path(argument),
            params: {
-             for: :pro,
-             format: :json
+             format: :json,
+             vote: {
+               for: :pro
+             }
            }
     end
 
@@ -99,8 +103,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                         ['closed_question_motion.reload.children_count(:votes_pro)', 0]]) do
       post motion_votes_path(closed_question_motion),
            params: {
-             for: :pro,
-             format: :json
+             format: :json,
+             vote: {
+               for: :pro
+             }
            }
     end
 
@@ -460,8 +466,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
                         ['cairo_motion.reload.children_count(:votes_pro)', 1]]) do
       post motion_votes_path(cairo_motion),
            params: {
-             for: :pro,
-             format: :json
+             format: :json,
+             vote: {
+               for: :pro
+             }
            }
     end
 
@@ -532,8 +540,10 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
       post motion_votes_path(cairo_motion),
            params: {
-             for: :pro,
-             format: :json
+             format: :json,
+             vote: {
+               for: :pro
+             }
            }
     end
 

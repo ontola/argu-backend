@@ -140,7 +140,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                    at: helsinki_at.access_token)
     assert_response :success
 
-    post motion_vote_path(hidden_one, 'neutral')
+    post motion_votes_path(hidden_one), params: {vote: {for: :neutral}}
     redirect_url = new_motion_vote_path(motion_id: hidden_one.id,
                                         vote: {for: :neutral},
                                         confirm: true)
@@ -188,7 +188,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_difference 'Vote.count', 1 do
       url = document_root_element.css('.btns-opinion form:first').attribute('action').to_s
       vote_for = document_root_element.css('.btns-opinion form:first').css('#vote_for').attribute('value').to_s
-      post "#{url}?for=#{vote_for}"
+      post url, params: {vote: {for: vote_for}}
       assert_redirected_to motion_url(hidden_one)
     end
 

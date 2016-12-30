@@ -82,8 +82,7 @@ RSpec.feature 'Adam west', type: :feature do
     find('a', text: 'Neutral').click
 
     redirect_url = new_motion_vote_path(motion_id: motion,
-                                        confirm: 'true',
-                                        vote: {for: 'neutral'})
+                                        confirm: 'true')
     sign_up_and_setup(redirect_url)
 
     click_button 'btn-neutral'

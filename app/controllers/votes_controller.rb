@@ -2,6 +2,22 @@
 class VotesController < AuthorizedController
   include NestedResourceHelper
 
+  def index
+    collection = Collection.new(
+      association: :votes,
+      group_by: 'http://schema.org/option',
+      id: url_for([get_parent_resource, :votes]),
+      member: policy_scope(Vote.joins(:edge).where(edges: {parent_id: get_parent_resource.edge.id})),
+      parent: get_parent_resource,
+      title: 'Votes'
+    )
+    respond_to do |format|
+      format.json_api do
+        render json: collection, include: {member: collection.member}
+      end
+    end
+  end
+
   # GET /model/:model_id/vote
   def show
     @model = get_parent_resource
@@ -126,12 +142,7 @@ class VotesController < AuthorizedController
   end
 
   def for_param
-    if params[:for].is_a?(String) && params[:for].present?
-      warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
-      param = params[:for]
-    elsif params[:vote].is_a?(ActionController::Parameters)
-      param = params[:vote][:for]
-    end
+    param = params[:vote].try(:[], :for)
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 

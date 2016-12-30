@@ -22,8 +22,7 @@ RSpec.feature 'Voting', type: :feature do
 
     click_link 'Sign up with email'
     expect(page).to have_current_path new_user_registration_path(r: new_motion_vote_path(motion,
-                                                                                         confirm: true,
-                                                                                         vote: {for: :con}))
+                                                                                         confirm: true))
 
     user_attr = attributes_for(:user)
     within('#new_user') do

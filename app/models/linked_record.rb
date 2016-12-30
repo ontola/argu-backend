@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class LinkedRecord < ApplicationRecord
-  include Argumentable, Parentable, Ldable
+  include Argumentable, Voteable, Parentable, Ldable
 
   belongs_to :page
   belongs_to :source
@@ -15,6 +15,8 @@ class LinkedRecord < ApplicationRecord
   contextualize :title, as: 'schema:name'
 
   parentable :source
+
+  VOTE_OPTIONS = [:pro, :neutral, :con].freeze
 
   def fetch_record
     response = JSON.parse(HTTParty.get(iri).body)

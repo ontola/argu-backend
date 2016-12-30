@@ -11,7 +11,6 @@ class Motion < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
 
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
-  has_many :votes, as: :voteable, dependent: :destroy
 
   before_save :cap_title
 
@@ -135,33 +134,5 @@ class Motion < ApplicationRecord
 
   def tag_list=(value)
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
-  end
-
-  def total_vote_count
-    children_count(:votes_pro).abs + children_count(:votes_con).abs + children_count(:votes_neutral).abs
-  end
-
-  def votes_pro_percentage
-    vote_percentage children_count(:votes_pro)
-  end
-
-  def votes_neutral_percentage
-    vote_percentage children_count(:votes_neutral)
-  end
-
-  def votes_con_percentage
-    vote_percentage children_count(:votes_con)
-  end
-
-  def vote_percentage(vote_count)
-    if vote_count.zero?
-      if total_vote_count.zero?
-        33
-      else
-        0
-      end
-    else
-      (vote_count.to_f / total_vote_count * 100).round.abs
-    end
   end
 end

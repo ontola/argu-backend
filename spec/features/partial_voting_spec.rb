@@ -23,8 +23,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     click_link 'Sign up with email'
     expect(page).to have_current_path new_user_registration_path(r: new_motion_vote_path(subject,
                                                                                          confirm: true,
-                                                                                         r: "/q/#{question.id}",
-                                                                                         vote: {for: :con}))
+                                                                                         r: "/q/#{question.id}"))
 
     user_attr = attributes_for(:user)
     within('#new_user') do

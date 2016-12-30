@@ -53,8 +53,13 @@ const VoteMixin = {
     },
 
     vote (side) {
-        fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
-            method: 'POST'
+        fetch(`${this.props.vote_url}.json`, safeCredentials({
+            method: 'POST',
+            body: JSON.stringify({
+                vote: {
+                    for: side
+                }
+            })
         })).then(statusSuccess, tryLogin)
             .then(json)
             .then(data => {

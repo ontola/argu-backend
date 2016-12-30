@@ -9,7 +9,7 @@ import { IntlMixin, FormattedMessage } from 'react-intl';
 import VoteMixin from '../mixins/VoteMixin';
 
 const HUNDRED_PERCENT = 100;
-const voteURL = urltemplate.parse('/m{/id}/v{/side}{?r}');
+const voteURL = urltemplate.parse('/m{/id}/votes{?r}');
 
 /**
  * Component for the POST-ing of a vote.

@@ -79,10 +79,8 @@ Rails.application.routes.draw do
     match '/', action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
-    resources :votes, only: [:new, :create], path: 'v'
-    get 'v' => 'votes#show', shallow: true, as: :show_vote
-    post 'v/:for' => 'votes#create', shallow: true, as: :vote
-    get 'v/:for' => 'votes#new', shallow: true
+    resources :votes, only: [:new, :create]
+    get 'vote' => 'votes#show', as: :show_vote
   end
 
   use_doorkeeper do
@@ -161,6 +159,7 @@ Rails.application.routes.draw do
             concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :decisionable] do
     resources :tags, path: 't', only: [:index]
     resources :arguments, only: [:new, :create, :index]
+    resources :votes, only: :index
   end
 
   resources :arguments,
@@ -236,6 +235,7 @@ Rails.application.routes.draw do
   resources :linked_records, only: %i(show), path: :lr, concerns: [:votable] do
     get '/', action: :show, on: :collection
     resources :arguments, only: [:new, :create, :index]
+    resources :votes, only: :index
   end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]

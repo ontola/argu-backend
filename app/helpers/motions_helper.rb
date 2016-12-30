@@ -28,7 +28,7 @@ module MotionsHelper
         con: motion.votes_con_percentage
       },
       total_votes: motion.total_vote_count,
-      vote_url: motion_show_vote_path(motion)
+      vote_url: motion_votes_path(motion)
     }.merge(opts))
   end
 
