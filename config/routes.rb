@@ -235,7 +235,7 @@ Rails.application.routes.draw do
 
   resources :linked_records, only: %i(show), path: :lr, concerns: [:votable] do
     get '/', action: :show, on: :collection
-    resources :arguments, only: [:new, :create]
+    resources :arguments, only: [:new, :create, :index]
   end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
