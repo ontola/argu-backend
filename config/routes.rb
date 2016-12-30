@@ -137,7 +137,6 @@ Rails.application.routes.draw do
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
 
-  post 'v' => 'votes#create', as: :votes
   resources :votes, only: [:destroy], path: :v, as: :vote
 
   resources :questions,
@@ -234,7 +233,7 @@ Rails.application.routes.draw do
 
   resources :shortnames, only: %i(edit update destroy)
 
-  resources :linked_records, path: :lr do
+  resources :linked_records, path: :lr, concerns: [:votable] do
     resources :arguments, only: [:new, :create]
   end
 
