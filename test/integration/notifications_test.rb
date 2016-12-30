@@ -68,10 +68,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Motion
     assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
-      post arguments_path,
+      post motion_arguments_path(motion),
            params: {
              argument: attributes_for(:argument)
-               .merge(parent: url_for(motion))
            }
     end
     assert_equal Notification.last.notification_type, 'reaction'

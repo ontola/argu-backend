@@ -21,7 +21,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
 .argument-columns= render_columns(@arguments,
-                                  buttons_url: new_argument_path(motion_id: motion),
+                                  buttons_url: new_motion_argument_path(motion),
                                   collection_model: Argument,
                                   buttons_param: :pro,
                                   buttons_form_on_empty: false,

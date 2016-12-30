@@ -22,7 +22,7 @@
                     .fa.fa-comment
                     .icon-left= argument.children_count(:comments)
         - unless model.closed?
-          li.box-list-item--subtle= link_to new_argument_path(motion_id: model, pro: 'pro') do
+          li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
             span= t('arguments.new.pro')
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con.first(5).each do |argument|
@@ -36,14 +36,14 @@
                     .fa.fa-comment
                     .icon-left= argument.children_count(:comments)
         - unless model.closed?
-          li.box-list-item--subtle= link_to new_argument_path(motion_id: model, pro: 'con') do
+          li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
             span= t('arguments.new.con')
     - else
       ul.box-list.box-list--arguments
-        li.box-list-item--subtle= link_to new_argument_path(motion_id: model, pro: 'pro') do
+        li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
           span= t('arguments.new.pro')
       ul.box-list.box-list--arguments
-        li.box-list-item--subtle= link_to new_argument_path(motion_id: model, pro: 'con') do
+        li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
           span= t('arguments.new.con')
   =yield
   section.unpadded

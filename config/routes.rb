@@ -161,12 +161,12 @@ Rails.application.routes.draw do
             except: [:index, :new, :create, :destroy],
             concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :decisionable] do
     resources :tags, path: 't', only: [:index]
-    resources :arguments, only: :index
+    resources :arguments, only: [:new, :create, :index]
   end
 
   resources :arguments,
             path: 'a',
-            except: [:index, :destroy],
+            except: [:index, :new, :create, :destroy],
             concerns: [:votable, :flowable, :trashable, :commentable]
 
   resources :groups,
@@ -233,6 +233,10 @@ Rails.application.routes.draw do
   end
 
   resources :shortnames, only: %i(edit update destroy)
+
+  resources :linked_records, path: :lr do
+    resources :arguments, only: [:new, :create]
+  end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
