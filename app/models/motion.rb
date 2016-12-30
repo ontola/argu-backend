@@ -2,7 +2,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
-  include Trashable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
+  include Trashable, Argumentable, Parentable, ForumTaggable, Attribution, HasLinks, Convertible, Loggable,
           BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
           Decisionable, Ldable, Voteable
 
@@ -10,24 +10,6 @@ class Motion < ApplicationRecord
   belongs_to :forum, inverse_of: :motions
   belongs_to :publisher, class_name: 'User'
 
-  edge_tree_has_many :arguments, -> { argument_comments }
-  edge_tree_has_many :top_arguments_con, (lambda do
-    argument_comments
-      .joins(:edge)
-      .where(pro: false)
-      .untrashed
-      .order("edges.children_counts -> 'votes_pro' DESC")
-      .limit(5)
-  end), class_name: 'Argument'
-  edge_tree_has_many :top_arguments_pro, (lambda do
-    argument_comments
-      .joins(:edge)
-      .where(pro: true)
-      .untrashed
-      .order("edges.children_counts -> 'votes_pro' DESC")
-      .limit(5)
-  end), class_name: 'Argument'
-  has_many :arguments_plain, class_name: 'Argument'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
 
@@ -37,7 +19,6 @@ class Motion < ApplicationRecord
   contextualize_with_id { |m| Rails.application.routes.url_helpers.motion_url(m, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'
-  attr_accessor :arguments_relation
 
   convertible questions: %i(taggings activities blog_posts)
   counter_cache true
@@ -104,19 +85,6 @@ class Motion < ApplicationRecord
 
   def display_name
     title
-  end
-
-  def invert_arguments
-    false
-  end
-
-  def invert_arguments=(invert)
-    return if invert == '0'
-    Motion.transaction do
-      arguments.each do |a|
-        a.update_attributes pro: !a.pro
-      end
-    end
   end
 
   def move_to(forum, unlink_question = true)
