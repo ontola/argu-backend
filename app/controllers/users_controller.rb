@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include NestedResourceHelper
 
   def show
-    @user = User.preload(:profile).find_via_shortname params[:id]
+    @user = User.preload(:profile).find_via_shortname!(params[:id])
     @profile = @user.profile
     authorize @user, :show?
 

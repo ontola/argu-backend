@@ -49,6 +49,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
+  test 'user should get show by id' do
+    sign_in user
+
+    get user_path(user2.id)
+
+    assert_response 200
+  end
+
   let(:amsterdam) { create_forum }
   let(:utrecht) { create_forum }
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }

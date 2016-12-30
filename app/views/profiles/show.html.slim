@@ -1,5 +1,5 @@
 =set_title @user || @page || @profile
-=connected_web url: dual_profile_url(@profile),
+=connected_web url: dual_profile_url(@profile, only_path: false, canonical: true),
                name: seolized_title(@user || @page || @profile),
                description: seolized_description(@user || @page || @profile),
                image: @profile.default_profile_photo

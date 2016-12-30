@@ -2,11 +2,15 @@
 module ProfilesHelper
   # Generates a link to the Profile's profileable
   # Either a Page or a User
-  def dual_profile_url(profile)
+  def dual_profile_url(profile, only_path: true, canonical: false)
     if profile.profileable.class == User
-      user_url(profile.profileable, only_path: true)
+      if canonical
+        user_url(profile.profileable.id, only_path: only_path)
+      else
+        user_url(profile.profileable, only_path: only_path)
+      end
     elsif profile.profileable.class == Page
-      page_url(profile.profileable, only_path: true)
+      page_url(profile.profileable, only_path: only_path)
     else
       'deleted'
     end
