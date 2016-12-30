@@ -4,8 +4,6 @@ class LinkedRecord < ApplicationRecord
 
   belongs_to :page
   belongs_to :source
-  belongs_to :creator, class_name: 'Profile'
-  belongs_to :publisher, class_name: 'User'
   alias_attribute :display_name, :title
 
   before_save :fetch_record
@@ -21,5 +19,13 @@ class LinkedRecord < ApplicationRecord
   def fetch_record
     response = JSON.parse(HTTParty.get(iri).body)
     self.title = response['title']
+  end
+
+  def publisher
+    User.first
+  end
+
+  def creator
+    Profile.first
   end
 end
