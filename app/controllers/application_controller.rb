@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base
   def params
     return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
     ActionController::Parameters.new(
-      super.merge(
+      super.to_unsafe_h.merge(
         super.require(:data).require(:type).singularize =>
           ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
       )

@@ -125,7 +125,7 @@ class Edge < ActiveRecord::Base
   # @param [Symbol] level The lowest type of follower to include
   # @return [Integer] The number of followers
   def potential_audience(level = :reactions)
-    follows.where('follow_type >= ?', Follow.follow_types[level]).uniq.count
+    follows.where('follow_type >= ?', Follow.follow_types[level]).distinct.count
   end
 
   def publish!
