@@ -413,6 +413,7 @@ GEM
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
+    puma (3.6.2)
     pundit (1.0.1)
       activesupport (>= 3.0.0)
     rack (2.0.1)
@@ -719,6 +720,7 @@ DEPENDENCIES
   pragmatic_context
   pry
   public_activity (~> 1.5)
+  puma
   pundit (~> 1.0.0)
   rack-attack (~> 4.3.1)
   rack-cors
@@ -777,4 +779,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

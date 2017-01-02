@@ -166,7 +166,7 @@ group :development do
   gem 'yard-activesupport-concern'
   gem 'web-console', '~> 3.1.1'
   gem 'active_record_query_trace'
-  # gem 'puma', platform: :ruby
+  gem 'puma', platform: :ruby
 end
 
 group :production, :staging do
