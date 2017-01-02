@@ -63,7 +63,7 @@ class GrantsController < AuthorizedController
     )
   end
 
-  def parent_resource_param(_url_params)
+  def parent_resource_key(_url_params)
     :edge_id
   end
 

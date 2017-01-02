@@ -72,7 +72,7 @@ class GroupMembershipsController < AuthorizedController
 
   private
 
-  def parent_resource_param(opts)
+  def parent_resource_key(opts)
     action_name == 'index' ? super : :group_id
   end
 
