@@ -93,12 +93,14 @@ class MotionsController < AuthorizedController
                       notice: t('type_save_success', type: motion_type)
         end
         format.json { render json: motion, status: :created, location: motion }
+        format.json_api { render json: motion, status: :created, location: motion }
       end
     end
     create_service.on(:create_motion_failed) do |motion|
       respond_to do |format|
         format.html { render 'form', locals: {motion: motion} }
         format.json { render json: motion.errors, status: :unprocessable_entity }
+        format.json_api { render json_api_error(422, motion.errors) }
       end
     end
     create_service.commit
@@ -117,12 +119,14 @@ class MotionsController < AuthorizedController
           format.html { redirect_to motion, notice: t('type_save_success', type: motion_type) }
         end
         format.json { head :no_content }
+        format.json_api { head :no_content }
       end
     end
     update_service.on(:update_motion_failed) do |motion|
       respond_to do |format|
         format.html { render 'form', locals: {motion: motion} }
         format.json { render json: motion.errors, status: :unprocessable_entity }
+        format.json_api { render json_api_error(422, motion.errors) }
       end
     end
     update_service.commit

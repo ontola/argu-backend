@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
   rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
   rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
   rescue_from ActionController::ParameterMissing, with: :handle_bad_request
+  rescue_from ActionController::UnpermittedParameters, with: :handle_bad_request
   rescue_from ActionController::BadRequest, with: :handle_bad_request
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
   rescue_from Redis::ConnectionError, with: :handle_redis_connection_error
@@ -84,6 +85,10 @@ class ApplicationController < ActionController::Base
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
   def params
     return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
+    if super['data']['type'].present? && super['data']['type'] != controller_name
+      raise ActionController::UnpermittedParameters.new(%w(type))
+    end
+    raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?
     ActionController::Parameters.new(
       super.to_unsafe_h.merge(
         super.require(:data).require(:type).singularize =>
@@ -112,17 +117,25 @@ class ApplicationController < ActionController::Base
   # @param [Integer] status HTML response code
   # @param [Array<Hash, String>] errors A list of errors
   # @return [Hash] JSONApi error hash to use in a render method
-  def json_api_error(status, *errors)
-    errors = errors.map do |error|
-      if error.is_a?(Hash)
-        {type: Rack::Utils::HTTP_STATUS_CODES[status]}.merge(error)
+  def json_api_error(status, errors = nil)
+    human_status = Rack::Utils::HTTP_STATUS_CODES[status]
+    errors =
+      case errors
+      when Array
+        errors.map do |error|
+          error.is_a?(Hash) ? error.merge(status: human_status) : {status: human_status, message: error}
+        end
+      when ActiveModel::Errors
+        errors.keys.map do |key|
+          errors[key].map { |error| {status: human_status, source: {parameter: key}, message: error} }
+        end.flatten
+      when Hash
+        [errors.merge(status: human_status)]
+      when String
+        [{status: human_status, message: errors}]
       else
-        {
-          type: Rack::Utils::HTTP_STATUS_CODES[status],
-          message: error.is_a?(Hash) ? error[:message] : error
-        }
+        [{status: human_status}]
       end
-    end
     {
       json: {
         errors: errors
@@ -273,7 +286,7 @@ class ApplicationController < ActionController::Base
       end
       format.json_api do
         error_hash = {
-          message: 'Not authorized',
+          message: exception.message,
           code: 'NOT_AUTHORIZED'
         }
         render json_api_error(403, error_hash)
@@ -313,7 +326,7 @@ class ApplicationController < ActionController::Base
                  }]
                }
       end
-      format.json_api { render json_api_error(401) }
+      format.json_api { render json_api_error(401, exception.message) }
       format.html { redirect_to new_user_session_path(r: exception.r), alert: exception.message }
     end
   end
