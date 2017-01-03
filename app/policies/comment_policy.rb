@@ -34,7 +34,7 @@ class CommentPolicy < EdgeTreePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule forum_policy.show?, super
+    rule parent_policy.show?, super
   end
 
   def trash?
@@ -57,9 +57,5 @@ class CommentPolicy < EdgeTreePolicy
 
   def assert_siblings!
     assert! record.parent_model == record.parent.parent_model, :siblings?
-  end
-
-  def forum_policy
-    Pundit.policy(context, context_forum)
   end
 end

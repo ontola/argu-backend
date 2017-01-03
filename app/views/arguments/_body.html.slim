@@ -12,6 +12,6 @@
         li
           ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(argument, follow_types: [:reactions, :never])
       =crud_menu_item(argument)
-      - if argument.forum.visibility
+      - if argument.edge.is_public?
         li
           ul= react_component_store 'ShareDropdown', props: share_items(argument)

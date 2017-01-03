@@ -18,7 +18,7 @@
     =render partial: resource.creator, locals: {resource: resource}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       =crud_menu_item(resource)
-      - if resource.forum.visibility
+      - if resource.edge.is_public?
         li.share-menu
           ul= react_component_store 'ShareDropdown', props: share_items(resource)
 - unless resource.is_published?

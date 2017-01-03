@@ -225,8 +225,9 @@ class EdgeTreePolicy < RestrictivePolicy
     {a_tokens: context.a_tokens}
   end
 
-  # Can the current user change the item shortname?
-  def shortname?
-    new_record? || is_manager? || staff?
+  private
+
+  def parent_policy
+    Pundit.policy(context, record.parent_model)
   end
 end

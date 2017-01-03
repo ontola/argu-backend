@@ -76,7 +76,8 @@ class Edge < ActiveRecord::Base
     if type == :page
       root
     elsif type == :forum
-      Edge.find(ancestor_ids[1])
+      tenant = Edge.find(ancestor_ids[1])
+      tenant.owner_type == 'Forum' ? tenant : nil
     else
       ancestors.find_by(owner_type: type.to_s.classify)
     end
@@ -111,6 +112,10 @@ class Edge < ActiveRecord::Base
 
   def is_child_of?(edge)
     ancestor_ids.include?(edge.id)
+  end
+
+  def is_public?
+    granted_groups(:member).pluck(:id).include?(-1)
   end
 
   def is_trashed?
