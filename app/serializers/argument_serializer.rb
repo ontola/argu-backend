@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class ArgumentSerializer < BaseEdgeSerializer
-  attributes :display_name, :content, :pro
+  attribute :content, key: :text
+  attribute :display_name, key: :name
+  attributes :pro
 
   has_many :comment_threads do
     link(:self) do
