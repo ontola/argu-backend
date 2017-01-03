@@ -15,6 +15,7 @@ class SourcePolicy < EdgeTreePolicy
   def permitted_attributes
     attributes = super
     attributes.concat %i(name iri_base shortname)
+    attributes.concat %i(visibility) if change_owner?
     attributes
   end
 
