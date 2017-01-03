@@ -6,7 +6,7 @@ class LinkedRecordsController < AuthorizedController
     if params[:id].nil?
       redirect_to url_for(resource_by_id)
     else
-      render json: authenticated_resource!
+      render json: authenticated_resource!, include: [:arguments, :top_arguments_pro, :top_arguments_con, :vote_events]
     end
   end
 

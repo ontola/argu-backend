@@ -56,6 +56,42 @@ module Argumentable
           }
         end
       end
+
+      has_many :top_arguments_pro do
+        link(:self) do
+          {
+            href: "#{object.context_id}/arguments?filter=pro",
+            meta: {
+              '@type': 'argu:topArgumentsPro'
+            }
+          }
+        end
+        meta do
+          href = object.context_id
+          {
+            '@type': 'argu:collectionAssociation',
+            '@id': "#{href}/arguments?filter=pro"
+          }
+        end
+      end
+
+      has_many :top_arguments_con do
+        link(:self) do
+          {
+            href: "#{object.context_id}/arguments?filter=con",
+            meta: {
+              '@type': 'argu:topArgumentsCon'
+            }
+          }
+        end
+        meta do
+          href = object.context_id
+          {
+            '@type': 'argu:collectionAssociation',
+            '@id': "#{href}/arguments?filter=con"
+          }
+        end
+      end
     end
   end
 end
