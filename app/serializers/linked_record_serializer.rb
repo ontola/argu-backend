@@ -6,5 +6,5 @@ class LinkedRecordSerializer < RecordSerializer
   link(:self) { object.context_id if object.persisted? }
   link(:resource) { object.iri }
 
-  attributes :title
+  attributes :title, :record_type
 end

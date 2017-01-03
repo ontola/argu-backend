@@ -323,12 +323,13 @@ ActiveRecord::Schema.define(version: 20170110162841) do
   end
 
   create_table "linked_records", force: :cascade do |t|
-    t.integer  "page_id",    null: false
-    t.integer  "source_id",  null: false
-    t.string   "iri",        null: false
+    t.integer  "page_id",     null: false
+    t.integer  "source_id",   null: false
+    t.string   "iri",         null: false
     t.string   "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "record_type"
     t.index ["iri", "source_id", "page_id"], name: "index_linked_records_on_iri_and_source_id_and_page_id", using: :btree
     t.index ["iri"], name: "index_linked_records_on_iri", unique: true, using: :btree
   end

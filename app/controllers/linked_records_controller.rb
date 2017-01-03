@@ -13,12 +13,6 @@ class LinkedRecordsController < AuthorizedController
   private
 
   def resource_by_id
-    return super if params[:id].present?
-    @_resource_by_id ||= LinkedRecord.find_or_create_by!(iri: params[:iri]) do |linked_record|
-      source = Source.find_by_iri!(params[:iri])
-      linked_record.source = source
-      linked_record.edge = Edge.new(parent: source.edge, user_id: 0)
-      linked_record.page = source.page
-    end
+    @_resource_by_id ||= params[:id].present? ? super : LinkedRecord.find_or_fetch_by_iri(params.fetch(:iri))
   end
 end
