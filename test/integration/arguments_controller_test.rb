@@ -157,7 +157,7 @@ class ArgumentsControllerTest < ActionDispatch::IntegrationTest
              type: 'arguments',
              attributes: {
                pro: pro,
-               title: 'Argument title'
+               name: 'Argument title'
              }
            }
          }

@@ -15,10 +15,10 @@ class ContextTest < ActionDispatch::IntegrationTest
       get polymorphic_path(send(kind), format: :json_api)
 
       assert_response 200
-      body = JSON.parse(response.body)
-      assert_equal "argu:#{kind.capitalize}", body['data']['attributes']['@type']
+      attributes = JSON.parse(response.body)['data']['attributes']
+      assert_equal "argu:#{kind.capitalize}", attributes['@type']
       assert_equal 'schema:text',
-                   body['data']['attributes']['@context']['content'],
+                   attributes['@context']['content'] || attributes['@context']['text'],
                    "#{kind} has no context or content"
     end
   end
