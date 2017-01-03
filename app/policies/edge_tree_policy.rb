@@ -224,9 +224,4 @@ class EdgeTreePolicy < RestrictivePolicy
   def session
     {a_tokens: context.a_tokens}
   end
-
-  # Can the current user change the item shortname?
-  def shortname?
-    new_record? || is_manager? || staff?
-  end
 end

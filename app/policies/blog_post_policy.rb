@@ -45,10 +45,4 @@ class BlogPostPolicy < EdgeTreePolicy
   def update?
     rule is_creator?, is_manager?, is_owner?, super
   end
-
-  private
-
-  def parent_policy
-    Pundit.policy(context, record.parent_model)
-  end
 end
