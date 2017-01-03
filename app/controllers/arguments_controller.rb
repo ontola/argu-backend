@@ -186,6 +186,10 @@ class ArgumentsController < AuthorizedController
     get_parent_resource
   end
 
+  def deserialize_params_options
+    {keys: {name: :title, text: :content}}
+  end
+
   def service_options(opts = {})
     super(opts.merge(auto_vote:
                        params.dig(:argument, :auto_vote) == 'true' &&
