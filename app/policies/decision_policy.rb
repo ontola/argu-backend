@@ -45,10 +45,4 @@ class DecisionPolicy < EdgeTreePolicy
   def update?
     rule decision_is_assigned?, is_creator?, is_manager?, is_owner?, super
   end
-
-  private
-
-  def parent_policy
-    Pundit.policy(context, record.edge.parent.owner)
-  end
 end

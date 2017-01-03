@@ -18,7 +18,8 @@ class AuthorizedController < ApplicationController
 
     banners = stubborn_hgetall('banners') || {}
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
-    forum = authenticated_resource.persisted_edge.get_parent(:forum).owner
+    forum = authenticated_resource.persisted_edge.get_parent(:forum)&.owner
+    return unless forum.present?
     @banners = policy_scope(forum.banners.published)
                  .reject { |b| banners[b.identifier] == 'hidden' }
   end
