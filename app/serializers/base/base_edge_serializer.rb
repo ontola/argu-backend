@@ -16,12 +16,14 @@ class BaseEdgeSerializer < RecordSerializer
       }
     end
     link(:related) do
+      href = obj.is_a?(LinkedRecord) ? obj.iri : obj.context_id
+      type = obj.is_a?(LinkedRecord) ? obj.record_type : obj.class.try(:contextualized_type)
       {
-        href: obj.context_id,
+        href: href,
         meta: {
           attributes: {
-            '@id': obj.context_id,
-            '@type': obj.class.try(:contextualized_type),
+            '@id': href,
+            '@type': type,
             '@context': {
               schema: 'http://schema.org/',
               title: 'schema:name'
