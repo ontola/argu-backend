@@ -9,7 +9,11 @@ class Source < ApplicationRecord
   alias_attribute :display_name, :name
   alias_attribute :url, :shortname
 
-  validates :shortname, presence: true, length: {minimum: 4, maximum: 75}, uniqueness: {scope: :page_id}
+  validates :shortname,
+            presence: true,
+            length: {minimum: 4, maximum: 75},
+            uniqueness: {scope: :page_id},
+            format: {with: /\A[_a-zA-Z0-9]*\z/i}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :page, presence: true
 
