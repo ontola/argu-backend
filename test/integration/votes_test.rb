@@ -219,6 +219,36 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.pro?
+    assert_nil assigns(:create_service).resource.explanation
+    assert_nil assigns(:create_service).resource.explained_at
+  end
+
+  test 'user should post create json_api with explanation' do
+    sign_in user
+
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
+      post motion_votes_path(motion),
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro,
+                 explanation: 'Explanation'
+               }
+             }
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
+    assert_equal 'Explanation', assigns(:create_service).resource.explanation
+    assert_not_nil assigns(:create_service).resource.explained_at
   end
 
   test 'user should post create json_api on vote_event' do
@@ -511,6 +541,49 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 204
     assert_analytics_collected('votes', 'destroy', 'pro')
+  end
+
+  test 'creator should not put update json_api side' do
+    sign_in creator
+
+    assert_differences([['Vote.count', 0],
+                        ['motion.default_vote_event.reload.total_vote_count', 0],
+                        ['motion.default_vote_event.children_count(:votes_pro)', 0],
+                        ['motion.default_vote_event.children_count(:votes_con)', 0]]) do
+      put vote_path(vote),
+          params: {
+            format: :json_api,
+            data: {
+              type: 'votes',
+              attributes: {
+                side: :con
+              }
+            }
+          }
+    end
+
+    assert_response 204
+    assert assigns(:update_service).resource.valid?
+    assert assigns(:update_service).resource.pro?
+  end
+
+  test 'creator should put update json_api explanation' do
+    sign_in creator
+
+    put vote_path(vote),
+        params: {
+          format: :json_api,
+          data: {
+            type: 'votes',
+            attributes: {
+              explanation: 'Updated explanation'
+            }
+          }
+        }
+
+    assert_response 204
+    assert_equal 'Updated explanation', vote.reload.explanation
+    assert_not_nil vote.reload.explained_at
   end
 
   test 'creator should not delete destroy vote for motion twice' do

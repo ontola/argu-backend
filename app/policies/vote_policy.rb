@@ -48,6 +48,12 @@ class VotePolicy < EdgeTreePolicy
     end
   end
 
+  def permitted_attributes
+    attributes = super
+    attributes.append(:explanation)
+    attributes
+  end
+
   def create?
     return create_expired? if has_expired_ancestors?
     if record.parent_model.is_a?(VoteEvent)

@@ -5,9 +5,11 @@ class VotesControllerTest < ActionController::TestCase
   define_freetown
   define_public_source
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
+  let(:argument) { motion.arguments.first }
   let(:vote_event) { motion.default_vote_event }
   let(:vote) { motion.votes.first }
   let(:linked_record) { create(:linked_record, :with_arguments, :with_votes, source: public_source) }
+  let(:user) { create(:user) }
 
   ####################################
   # Show
@@ -18,6 +20,15 @@ class VotesControllerTest < ActionController::TestCase
 
     expect_relationship('parent', 1)
     expect_relationship('creator', 1)
+  end
+
+  ####################################
+  # Create
+  ####################################
+  test 'should post create vote for argument as JS' do
+    sign_in user
+    post :create, params: {format: :js, argument_id: argument.id, for: 'pro'}
+    assert_response 200
   end
 
   ####################################
