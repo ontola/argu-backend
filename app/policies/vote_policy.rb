@@ -33,6 +33,12 @@ class VotePolicy < EdgeTreePolicy
   end
   include Roles
 
+  def permitted_attributes
+    attributes = super
+    attributes.append(:explanation)
+    attributes
+  end
+
   def show?
     if record.voter.are_votes_public
       Pundit.policy(context, record.parent_model).show?

@@ -9,6 +9,7 @@ class Vote < ApplicationRecord
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
   before_save :decrement_previous_counter_cache, unless: :new_record?
+  before_save :set_explained_at, if: :explanation_changed?
 
   parentable :argument, :vote_event
 
@@ -25,6 +26,7 @@ class Vote < ApplicationRecord
 
   # #########methods###########
   def decrement_previous_counter_cache
+    return unless for_changed?
     edge.decrement_counter_cache("votes_#{for_was}")
   end
 
@@ -55,6 +57,10 @@ class Vote < ApplicationRecord
       neutral: {collection: grouped['neutral'] || []},
       con: {collection: grouped['con'] || []}
     )
+  end
+
+  def set_explained_at
+    self.explained_at = DateTime.current
   end
 
   def voter_type

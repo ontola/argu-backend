@@ -92,6 +92,20 @@ class VotesController < AuthorizedController
     end
   end
 
+  def update
+    update_service.on(:update_vote_successful) do
+      respond_to do |format|
+        format.json_api { head :no_content }
+      end
+    end
+    update_service.on(:update_vote_failed) do |vote|
+      respond_to do |format|
+        format.json_api { render json_api_error(422, vote.errors) }
+      end
+    end
+    update_service.commit
+  end
+
   def destroy
     vote = Vote.find params[:id]
     authorize vote, :destroy?
@@ -141,10 +155,6 @@ class VotesController < AuthorizedController
 
   def deserialize_params_options
     {keys: {side: :for}}
-  end
-
-  def permit_params
-    params.permit(:id)
   end
 
   def redirect_param

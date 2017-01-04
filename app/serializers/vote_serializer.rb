@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class VoteSerializer < BaseEdgeSerializer
-  attributes :option, :upvoted_arguments
+  attributes :option, :explanation, :explained_at, :upvoted_arguments
 
   def option
     case object.for

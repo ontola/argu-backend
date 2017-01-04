@@ -763,6 +763,8 @@ ActiveRecord::Schema.define(version: 20170110162841) do
     t.datetime "updated_at"
     t.integer  "forum_id"
     t.integer  "publisher_id",                          null: false
+    t.text     "explanation"
+    t.datetime "explained_at"
     t.index ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree
     t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
     t.index ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree

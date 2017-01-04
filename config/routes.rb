@@ -136,7 +136,7 @@ Rails.application.routes.draw do
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
 
-  resources :votes, only: [:destroy, :show], path: :v, as: :vote
+  resources :votes, only: [:destroy, :show, :update], path: :v, as: :vote
   resources :vote_events, only: [:show], concerns: [:votable] do
     resources :votes, only: :index
   end
