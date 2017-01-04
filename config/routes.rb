@@ -132,6 +132,7 @@ Rails.application.routes.draw do
     get :pages, to: 'pages#index', on: :member
     get :forums, to: 'forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
+    resources :vote_matches, only: [:show]
 
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
@@ -140,6 +141,8 @@ Rails.application.routes.draw do
   resources :vote_events, only: [:show], concerns: [:votable] do
     resources :votes, only: :index
   end
+
+  resources :vote_matches, only: [:show]
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
@@ -189,6 +192,7 @@ Rails.application.routes.draw do
     resources :group_memberships, only: :index do
       post :index, action: :index, on: :collection
     end
+    resources :vote_matches, only: [:show]
     resources :sources, only: [:update], path: 's' do
       get :settings, on: :member
     end
