@@ -21,7 +21,7 @@ class Vote < ApplicationRecord
 
   contextualize_as_type 'argu:Vote'
   contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url(v, protocol: :https) }
-  contextualize :for, as: 'schema:option'
+  contextualize :option, as: 'schema:option'
 
   # #########methods###########
   def decrement_previous_counter_cache
