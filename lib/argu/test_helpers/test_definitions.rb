@@ -9,6 +9,7 @@ module Argu
       # General methods
       def general_new(results: {}, parent: nil)
         get new_path(send(parent)),
+            params: {format: request_format},
             headers: @_argu_headers
 
         assert_response results[:response]
@@ -27,7 +28,7 @@ module Argu
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           post create_path(parent),
                headers: @_argu_headers,
-               params: {model_sym => attributes}
+               params: {format: request_format, model_sym => attributes}
 
           reset_publication(Publication.last)
         end
@@ -40,6 +41,7 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         get record_path(record),
+            params: {format: request_format},
             headers: @_argu_headers
 
         assert_response results[:response]
@@ -49,6 +51,7 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         get edit_path(record),
+            params: {format: request_format},
             headers: @_argu_headers
 
         assert_response results[:response]
@@ -64,7 +67,7 @@ module Argu
         assert_difference('Activity.loggings.count', results[:should] ? 1 : 0) do
           patch update_path(record),
                 headers: @_argu_headers,
-                params: {model_sym => attributes}
+                params: {format: request_format, model_sym => attributes}
         end
 
         assert_response results[:response]
@@ -88,6 +91,7 @@ module Argu
         assert_differences([["#{model_class}.trashed.count", difference],
                             ['Activity.count', difference.abs]]) do
           delete update_path(record),
+                 params: {format: request_format},
                  headers: @_argu_headers
         end
 
@@ -102,6 +106,7 @@ module Argu
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           delete destroy_path(record),
+                 params: {format: request_format},
                  headers: @_argu_headers
         end
 
@@ -113,6 +118,7 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         get move_path(record),
+            params: {format: request_format},
             headers: @_argu_headers
 
         assert_response results[:response]
@@ -126,7 +132,7 @@ module Argu
                              results[:should] ? 1 : 0]] do
           put move_path(record),
               headers: @_argu_headers,
-              params: {model_sym => attributes.merge(forum_id: forum_to.id)}
+              params: {format: request_format, model_sym => attributes.merge(forum_id: forum_to.id)}
         end
 
         assert_response results[:response]
@@ -199,6 +205,10 @@ module Argu
 
       def move_path(record)
         url_for([record, :move])
+      end
+
+      def request_format
+        :html
       end
 
       private
