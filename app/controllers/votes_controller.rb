@@ -18,7 +18,7 @@ class VotesController < AuthorizedController
     respond_to do |format|
       format.html { redirect_to url_for([:new, authenticated_resource.parent_model, :vote, for: for_param]) }
       format.json { render 'create', location: authenticated_resource }
-      format.json_api { render json: authenticated_resource }
+      format.json_api { render json: authenticated_resource, include: :upvoted_arguments }
     end
   end
 

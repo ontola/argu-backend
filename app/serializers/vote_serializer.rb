@@ -45,4 +45,17 @@ class VoteSerializer < BaseEdgeSerializer
     end
     obj
   end
+
+  has_many :upvoted_arguments do
+    link(:self) do
+      {
+        meta: {
+          '@type': 'argu:upvotedArguments'
+        }
+      }
+    end
+    Argument
+      .joins(:votes, :edge)
+      .where(votes: {creator: object.creator}, edges: {parent_id: object.parent_model.edge.parent_id})
+  end
 end
