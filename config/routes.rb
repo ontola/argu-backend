@@ -142,7 +142,9 @@ Rails.application.routes.draw do
     resources :votes, only: :index
   end
 
-  resources :vote_matches, only: [:show]
+  resources :vote_matches, only: [:show] do
+    get :voteables, to: 'list_items#index', relationship: :voteables
+  end
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],

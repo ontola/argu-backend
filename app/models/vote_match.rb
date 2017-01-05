@@ -19,4 +19,6 @@ class VoteMatch < ApplicationRecord
   contextualize_with_id { |r| Rails.application.routes.url_helpers.vote_match_url(r, protocol: :https) }
   contextualize :name, as: 'schema:name'
   contextualize :text, as: 'schema:text'
+
+  alias_attribute :display_name, :name
 end
