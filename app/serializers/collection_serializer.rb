@@ -34,13 +34,14 @@ class CollectionSerializer < BaseSerializer
 
   def member
     object.member.map do |i|
-      h = i.respond_to?(:pro) ? {pro: i.pro} : {}
-      h.merge(
-        '@context': {
+      h = {'@id': i.context_id}
+      if i.respond_to?(:pro)
+        h[:pro] = i.pro
+        h['@context'] = {
           pro: 'schema:option'
-        },
-        '@id': i.context_id
-      )
+        }
+      end
+      h
     end
   end
 end
