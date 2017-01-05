@@ -144,6 +144,7 @@ Rails.application.routes.draw do
 
   resources :vote_matches, only: [:show] do
     get :voteables, to: 'list_items#index', relationship: :voteables
+    get :comparables, to: 'list_items#index', relationship: :comparables
   end
 
   resources :questions,
