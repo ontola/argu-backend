@@ -41,6 +41,8 @@ class Profile < ApplicationRecord
 
   auto_strip_attributes :name, squish: true
   auto_strip_attributes :about, nullify: false
+  
+  COMMUNITY_ID = 0
 
   def as_json(options)
     # Hide profileable for the more friendly actor
@@ -53,6 +55,10 @@ class Profile < ApplicationRecord
 
   def actor_id
     profileable_id
+  end
+
+  def self.community
+    Profile.find(Profile::COMMUNITY_ID)
   end
 
   def confirmed?

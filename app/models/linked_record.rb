@@ -44,7 +44,7 @@ class LinkedRecord < ApplicationRecord
   end
 
   def creator
-    Profile.first
+    Profile.community
   end
 
   def default_vote_event
@@ -53,7 +53,7 @@ class LinkedRecord < ApplicationRecord
     @default_vote_event ||= VoteEvent.create!(
       edge: Edge.new(parent: edge, user: User.community),
       starts_at: DateTime.current,
-      creator: Profile.first,
+      creator: Profile.community,
       publisher: User.community
     )
     @default_vote_event

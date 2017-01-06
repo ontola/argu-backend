@@ -37,7 +37,7 @@ module TestHelper
     user.last_name = nil
     user.password = 'password'
     user.finished_intro = true
-    user.profile = Profile.new(id: 0)
+    user.profile = Profile.new(id: Profile::COMMUNITY_ID)
   end
 
   Page.find_or_create_by(id: 0) do |page|
@@ -57,7 +57,7 @@ module TestHelper
     Doorkeeper::Application.create!(
       id: 0,
       name: 'Argu',
-      owner: Profile.find(0),
+      owner: Profile.community,
       redirect_uri: 'http://example.com/'
     )
   end

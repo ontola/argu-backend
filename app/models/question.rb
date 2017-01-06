@@ -33,7 +33,7 @@ class Question < ApplicationRecord
 
   # Might not be a good idea
   def creator
-    super || Profile.first_or_initialize(shortname: 'Onbekend')
+    super || Profile.community
   end
 
   def display_name

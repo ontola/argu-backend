@@ -21,9 +21,9 @@ class Photo < ApplicationRecord
   contextualize :display_name, as: 'schema:name'
   contextualize :thumbnail, as: 'schema:thumbnail'
 
-  # Hands over publication of a collection to the Community profile (0)
+  # Hands over publication of a collection to the Community profile
   def self.anonymize(collection)
-    collection.update_all(creator_id: 0)
+    collection.update_all(creator_id: Profile::COMMUNITY_ID)
   end
 
   # Hands over ownership of a collection to the Community user

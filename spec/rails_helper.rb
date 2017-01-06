@@ -154,9 +154,9 @@ RSpec.configure do |config|
              first_name: nil,
              last_name: nil,
              finished_intro: true,
-             profile: build(:profile, id: 0))
+             profile: build(:profile, id: Profile::COMMUNITY_ID))
     end
-    if Page.find_by(id: 0).blank?
+    if Page.find_by(id: Profile::COMMUNITY_ID).blank?
       create(:page,
              id: 0,
              last_accepted: DateTime.current,
@@ -171,7 +171,7 @@ RSpec.configure do |config|
       Doorkeeper::Application.create!(
         id: 0,
         name: 'Argu',
-        owner: Profile.find(0),
+        owner: Profile.community,
         redirect_uri: 'http://example.com/'
       )
     end

@@ -10,7 +10,7 @@ u1 = User
        password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
        finished_intro: true
      )
-u1.build_profile(id: 0, profileable: u1)
+u1.build_profile(id: Profile::COMMUNITY_ID, profileable: u1)
 u1.save!
 u1.update(encrypted_password: '')
 

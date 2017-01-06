@@ -63,7 +63,7 @@ class Motion < ApplicationRecord
   end
 
   def creator
-    super || Profile.first_or_create(name: 'Onbekend')
+    super || Profile.community
   end
 
   # http://schema.org/description

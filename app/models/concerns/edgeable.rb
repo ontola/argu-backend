@@ -64,9 +64,9 @@ module Edgeable
   end
 
   module ClassMethods
-    # Hands over publication of a collection to the Community profile (0)
+    # Hands over publication of a collection to the Community profile
     def anonymize(collection)
-      collection.update_all(creator_id: 0)
+      collection.update_all(creator_id: Profile::COMMUNITY_ID)
     end
 
     # @param value [Bool, Hash] True to use default counter_cache_name

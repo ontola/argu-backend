@@ -3,7 +3,7 @@ module Trashable
   extend ActiveSupport::Concern
 
   included do
-    scope :anonymous, -> { where(creator_id: 0) }
+    scope :anonymous, -> { where(creator_id: Profile::COMMUNITY_ID) }
   end
 
   delegate :trash, :untrash, :is_trashed?, to: :edge
