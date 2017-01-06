@@ -13,7 +13,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should not get show unregistered iri' do
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: 'https://iri.invalid/resource/2')
+      get linked_records_path(iri: 'https://iri.invalid/resource/2'), params: {format: :json_api}
     end
 
     assert_response 404
@@ -22,7 +22,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
   test 'guest should get show new iri' do
     linked_record_mock(2)
     assert_differences([['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 2]]) do
-      get linked_records_path(iri: 'https://iri.test/resource/2')
+      get linked_records_path(iri: 'https://iri.test/resource/2'), params: {format: :json_api}
     end
 
     assert_redirected_to linked_record_path(LinkedRecord.last)
@@ -30,7 +30,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
 
   test 'guest should get show existing iri' do
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: linked_record.iri)
+      get linked_records_path(iri: linked_record.iri), params: {format: :json_api}
     end
 
     assert_redirected_to linked_record_path(linked_record)
@@ -38,7 +38,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
 
   test 'guest should get show id' do
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_record_path(linked_record)
+      get linked_record_path(linked_record), params: {format: :json_api}
     end
 
     assert_response 200
@@ -52,7 +52,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
   test 'user should not get show unregistered iri' do
     sign_in user
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: 'https://iri.invalid/resource/2')
+      get linked_records_path(iri: 'https://iri.invalid/resource/2'), params: {format: :json_api}
     end
 
     assert_response 404
@@ -62,7 +62,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     linked_record_mock(2)
     assert_differences([['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 2]]) do
-      get linked_records_path(iri: 'https://iri.test/resource/2')
+      get linked_records_path(iri: 'https://iri.test/resource/2'), params: {format: :json_api}
     end
     assert LinkedRecord.last.edge.is_published?
     assert_equal 'Record name', LinkedRecord.last.title
@@ -75,7 +75,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     linked_record_mock(2, url: 'https://iri.test/resource/2?noise=true')
     assert_differences([['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 2]]) do
-      get linked_records_path(iri: 'https://iri.test/resource/2?noise=true'.to_param)
+      get linked_records_path(iri: 'https://iri.test/resource/2?noise=true'.to_param), params: {format: :json_api}
     end
     assert LinkedRecord.last.edge.is_published?
     assert_equal 'Record name', LinkedRecord.last.title
@@ -88,7 +88,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     linked_record_mock(2, status: 404, body: nil)
     assert_differences([['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 2]]) do
-      get linked_records_path(iri: 'https://iri.test/resource/2')
+      get linked_records_path(iri: 'https://iri.test/resource/2'), params: {format: :json_api}
     end
     assert LinkedRecord.last.edge.is_published?
     assert_equal nil, LinkedRecord.last.title
@@ -100,7 +100,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
   test 'user should get show existing iri' do
     sign_in user
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: linked_record.iri)
+      get linked_records_path(iri: linked_record.iri), params: {format: :json_api}
     end
     linked_record.reload
     assert_equal nil, linked_record.title
@@ -113,7 +113,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     linked_record_mock(1, url: 'https://iri.test/resource/1?noise=true')
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: 'https://iri.test/resource/1?noise=true')
+      get linked_records_path(iri: 'https://iri.test/resource/1?noise=true'), params: {format: :json_api}
     end
     linked_record.reload
     assert_equal nil, linked_record.title
@@ -125,7 +125,7 @@ class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
   test 'user should get show id' do
     sign_in user
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_record_path(linked_record)
+      get linked_record_path(linked_record), params: {format: :json_api}
     end
     linked_record.reload
     assert_equal nil, linked_record.title
