@@ -35,6 +35,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create en' do
+    clear_emails
     locale = :en
     cookies[:locale] = locale.to_s
 
@@ -42,11 +43,34 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
                         ['Favorite.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post user_registration_path,
-           params: {user: attributes_for(:user)}
+           params: {
+             user: {
+               email: 'test@example.com',
+               password: 'password',
+               password_confirmation: 'password'
+             }
+           }
       assert_redirected_to setup_users_path
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
+
+    delete destroy_user_session_path
+
+    # Send mail
+    Sidekiq::Extensions::DelayedMailer.process_job(Sidekiq::Worker.jobs.last)
+
+    open_email('test@example.com')
+    assert_equal current_email.subject, 'Confirm your e-mail address'
+    current_email.click_link 'Confirm your e-mail'
+
+    assert_equal current_path, new_user_session_path
+
+    fill_in('user_email', with: 'test@example.com')
+    fill_in('user_password', with: 'password')
+    click_button('Log in')
+
+    assert_equal current_path, setup_users_path
   end
 
   test 'should post create without password' do
