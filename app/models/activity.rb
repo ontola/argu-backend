@@ -16,7 +16,7 @@ class Activity < PublicActivity::Activity
   alias_attribute :happened_at, :created_at
   alias context_id id
 
-  validates :forum, :key, :trackable, :owner, :recipient, presence: true
+  validates :key, :trackable, :owner, :recipient, presence: true
   validate :validate_happening_within_project_scope
 
   # Represents the physical event of the trackable.

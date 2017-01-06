@@ -13,7 +13,7 @@ class Comment < ApplicationRecord
   parentable :argument, :blog_post
 
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
-  validates :forum, :creator, presence: true
+  validates :creator, presence: true
   auto_strip_attributes :body
 
   attr_accessor :is_processed
