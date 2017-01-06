@@ -164,8 +164,8 @@ RSpec.configure do |config|
              owner: User.community.profile,
              shortname: Shortname.new(shortname: 'public_page'))
     end
-    if Group.find_by(id: 0).blank?
-      create(:group, id: Group::PUBLIC_GROUP_ID, parent: Page.find(0).edge)
+    if Group.find_by(id: Group::PUBLIC_ID).blank?
+      create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge)
     end
     if Doorkeeper::Application.find_by(id: 0).blank?
       Doorkeeper::Application.create!(

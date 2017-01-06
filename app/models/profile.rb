@@ -41,7 +41,7 @@ class Profile < ApplicationRecord
 
   auto_strip_attributes :name, squish: true
   auto_strip_attributes :about, nullify: false
-  
+
   COMMUNITY_ID = 0
 
   def as_json(options)
@@ -113,7 +113,7 @@ class Profile < ApplicationRecord
   end
 
   def group_ids
-    super.append(Group::PUBLIC_GROUP_ID)
+    super.append(Group::PUBLIC_ID)
   end
 
   def owner

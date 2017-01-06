@@ -27,11 +27,11 @@ module Parentable
 
   def reset_public_grant
     if open?
-      unless grants.find_by(group_id: Group::PUBLIC_GROUP_ID)
-        edge.grants.create(group_id: Group::PUBLIC_GROUP_ID, role: Grant.roles['member'])
+      unless grants.find_by(group_id: Group::PUBLIC_ID)
+        edge.grants.create(group_id: Group::PUBLIC_ID, role: Grant.roles['member'])
       end
     else
-      grants.where(group_id: Group::PUBLIC_GROUP_ID).destroy_all
+      grants.where(group_id: Group::PUBLIC_ID).destroy_all
     end
   end
 

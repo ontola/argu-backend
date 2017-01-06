@@ -48,7 +48,7 @@ module TestHelper
     page.shortname = Shortname.new(shortname: 'public_page')
   end
 
-  Group.find_or_create_by(id: Group::PUBLIC_GROUP_ID) do |group|
+  Group.find_or_create_by(id: Group::PUBLIC_ID) do |group|
     group.edge = Edge.new(user: User.community, parent: Page.find(0).edge)
     group.page = Page.find(0)
   end

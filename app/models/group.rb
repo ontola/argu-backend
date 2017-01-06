@@ -12,21 +12,21 @@ class Group < ApplicationRecord
   validates :name, length: {maximum: 75}
   validates :visibility, presence: true
 
-  scope :custom, -> { where('groups.id != ?', PUBLIC_GROUP_ID) }
+  scope :custom, -> { where('groups.id != ?', Group::PUBLIC_ID) }
 
   delegate :publisher, to: :page
 
   enum visibility: {hidden: 0, visible: 1, discussion: 2}
   parentable :page
 
-  PUBLIC_GROUP_ID = -1
+  PUBLIC_ID = -1
 
   def as_json(options)
     super(options.merge(except: [:created_at, :updated_at]))
   end
 
   def display_name
-    id == PUBLIC_GROUP_ID ? I18n.t('groups.public') : name
+    id == Group::PUBLIC_ID ? I18n.t('groups.public') : name
   end
 
   delegate :include?, to: :members
@@ -35,5 +35,9 @@ class Group < ApplicationRecord
     grants
       .joins(:edge)
       .where(edges: {id: edge.ancestor_ids})
+  end
+
+  def self.public
+    Group.find(Group::PUBLIC_ID)
   end
 end
