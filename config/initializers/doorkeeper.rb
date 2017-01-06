@@ -2,6 +2,13 @@
 require 'argu/invalid_credentials_error'
 
 module Doorkeeper
+  class Application < ActiveRecord::Base
+    ARGU_ID = 0
+    def self.argu
+      Doorkeeper::Application.find(Doorkeeper::Application::ARGU_ID)
+    end
+  end
+
   module OAuth
     class Token
       module Methods

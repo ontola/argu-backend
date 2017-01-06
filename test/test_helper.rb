@@ -53,9 +53,9 @@ module TestHelper
     group.page = Page.find(0)
   end
 
-  if Doorkeeper::Application.find_by(id: 0).blank?
+  if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
     Doorkeeper::Application.create!(
-      id: 0,
+      id: Doorkeeper::Application::ARGU_ID,
       name: 'Argu',
       owner: Profile.community,
       redirect_uri: 'http://example.com/'
@@ -161,7 +161,7 @@ module ActionDispatch
 
     def sign_in(user = create(:user))
       t = Doorkeeper::AccessToken.find_or_create_for(
-        Doorkeeper::Application.find(0),
+        Doorkeeper::Application.argu,
         user.id,
         'user',
         10.minutes,

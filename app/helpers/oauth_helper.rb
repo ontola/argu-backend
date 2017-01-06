@@ -8,7 +8,7 @@ module OauthHelper
 
   def sign_in(resource, *_args)
     t = Doorkeeper::AccessToken.find_or_create_for(
-      Doorkeeper::Application.find(0),
+      Doorkeeper::Application.argu,
       resource.id,
       'user',
       Doorkeeper.configuration.access_token_expires_in,
@@ -43,7 +43,7 @@ module OauthHelper
   def generate_guest_token
     session[:load] = true unless session.loaded?
     Doorkeeper::AccessToken.find_or_create_for(
-      Doorkeeper::Application.find(0),
+      Doorkeeper::Application.argu,
       session.id.to_s,
       'guest',
       1.hour,

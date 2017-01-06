@@ -167,9 +167,9 @@ RSpec.configure do |config|
     if Group.find_by(id: Group::PUBLIC_ID).blank?
       create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge)
     end
-    if Doorkeeper::Application.find_by(id: 0).blank?
+    if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
       Doorkeeper::Application.create!(
-        id: 0,
+        id: Doorkeeper::Application::ARGU_ID,
         name: 'Argu',
         owner: Profile.community,
         redirect_uri: 'http://example.com/'

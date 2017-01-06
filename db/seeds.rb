@@ -61,7 +61,7 @@ forum.edge = Edge.new(owner: forum,
 forum.save!
 
 Doorkeeper::Application.create!(
-  id: 0,
+  id: Doorkeeper::Application::ARGU_ID,
   name: 'Argu',
   owner: u1.profile,
   redirect_uri: 'https://argu.co/'

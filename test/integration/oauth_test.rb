@@ -22,7 +22,7 @@ class OauthTest < ActionDispatch::IntegrationTest
 
   test 'guest should assign guest token when expired' do
     t = Doorkeeper::AccessToken.find_or_create_for(
-      Doorkeeper::Application.find(0),
+      Doorkeeper::Application.argu,
       user.id,
       'user',
       1.minute,
