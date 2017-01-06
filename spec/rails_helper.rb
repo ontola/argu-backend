@@ -145,9 +145,9 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    if User.find_by(id: 0).blank?
+    if User.find_by(id: User::COMMUNITY_ID).blank?
       create(:user,
-             id: 0,
+             id: User::COMMUNITY_ID,
              shortname: build(:shortname, shortname: 'community'),
              email: 'community@argu.co',
              password: 'password',
@@ -161,7 +161,7 @@ RSpec.configure do |config|
              id: 0,
              last_accepted: DateTime.current,
              profile: Profile.new(name: 'public page profile'),
-             owner: User.find(0).profile,
+             owner: User.community.profile,
              shortname: Shortname.new(shortname: 'public_page'))
     end
     if Group.find_by(id: 0).blank?

@@ -95,9 +95,9 @@ module Edgeable
       alias_attribute name.to_sym, "#{name}_from_tree".to_sym
     end
 
-    # Hands over ownership of a collection to the Community user (0)
+    # Hands over ownership of a collection to the Community user
     def expropriate(collection)
-      collection.update_all(publisher_id: 0)
+      collection.update_all(publisher_id: User::COMMUNITY_ID)
     end
 
     # Resets the counter_caches of the parents of all instances of this class

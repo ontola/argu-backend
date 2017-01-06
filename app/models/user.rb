@@ -35,6 +35,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook].freeze
   acts_as_follower
 
+  COMMUNITY_ID = 0
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
@@ -77,6 +78,10 @@ class User < ApplicationRecord
 
   def apply_omniauth(omniauth)
     authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
+  end
+
+  def self.community
+    User.find(User::COMMUNITY_ID)
   end
 
   def display_name
@@ -234,7 +239,7 @@ class User < ApplicationRecord
         .expropriate(send(association))
     end
     Photo.expropriate(uploaded_photos)
-    edges.update_all user_id: 0
+    edges.update_all user_id: User::COMMUNITY_ID
   end
 
   def adjust_birthday

@@ -30,7 +30,7 @@ module TestHelper
 
   MiniTest.after_run { FileUtils.rm_rf(Dir["#{Rails.root}/public/photos/[^.]*"]) }
 
-  User.find_or_create_by(id: 0) do |user|
+  User.find_or_create_by(id: User::COMMUNITY_ID) do |user|
     user.shortname = Shortname.new(shortname: 'community')
     user.email = 'community@argu.co'
     user.first_name = nil
@@ -41,15 +41,15 @@ module TestHelper
   end
 
   Page.find_or_create_by(id: 0) do |page|
-    page.edge = Edge.new(user: User.find(0))
+    page.edge = Edge.new(user: User.community)
     page.last_accepted = DateTime.current
     page.profile = Profile.new(name: 'public page profile')
-    page.owner = User.find(0).profile
+    page.owner = User.community.profile
     page.shortname = Shortname.new(shortname: 'public_page')
   end
 
   Group.find_or_create_by(id: Group::PUBLIC_GROUP_ID) do |group|
-    group.edge = Edge.new(user: User.find(0), parent: Page.find(0).edge)
+    group.edge = Edge.new(user: User.community, parent: Page.find(0).edge)
     group.page = Page.find(0)
   end
 

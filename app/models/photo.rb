@@ -26,8 +26,8 @@ class Photo < ApplicationRecord
     collection.update_all(creator_id: 0)
   end
 
-  # Hands over ownership of a collection to nil
+  # Hands over ownership of a collection to the Community user
   def self.expropriate(collection)
-    collection.update_all(publisher_id: 0)
+    collection.update_all(publisher_id: User::COMMUNITY_ID)
   end
 end

@@ -23,7 +23,7 @@ class LinkedRecord < ApplicationRecord
     record = LinkedRecord.find_or_initialize_by(iri: iri) do |linked_record|
       source = Source.find_by_iri!(iri)
       linked_record.source = source
-      linked_record.edge = Edge.new(parent: source.edge, user_id: 0, is_published: true)
+      linked_record.edge = Edge.new(parent: source.edge, user_id: User::COMMUNITY_ID, is_published: true)
       linked_record.page = source.page
       linked_record.fetch
     end
@@ -51,15 +51,15 @@ class LinkedRecord < ApplicationRecord
     return @default_vote_event if @default_vote_event
     @default_vote_event = VoteEvent.joins(:edge).where(edges: {parent_id: edge.id}).find_by(group_id: -1)
     @default_vote_event ||= VoteEvent.create!(
-      edge: Edge.new(parent: edge, user: User.first),
+      edge: Edge.new(parent: edge, user: User.community),
       starts_at: DateTime.current,
       creator: Profile.first,
-      publisher: User.first
+      publisher: User.community
     )
     @default_vote_event
   end
 
   def publisher
-    User.first
+    User.community
   end
 end

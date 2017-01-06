@@ -2,7 +2,7 @@
 FactoryGirl.define do
   factory :linked_record do
     before :create do |record|
-      record.edge = Edge.new(parent: record.source.edge, user_id: 0)
+      record.edge = Edge.new(parent: record.source.edge, user_id: User::COMMUNITY_ID)
       record.page = record.source.page
     end
   end

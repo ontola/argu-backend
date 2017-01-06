@@ -4,7 +4,7 @@
 
 u1 = User
      .new(
-       id: 0,
+       id: User::COMMUNITY_ID,
        shortname: Shortname.new(shortname: 'community'),
        email: 'community@argu.co',
        password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
