@@ -20,6 +20,7 @@ en:
       general: "General settings"
       profile: "Forum profile"
       menu:
+        return: "View %{resource}"
         general: "General"
         advanced: 'Advanced'
         groups: 'Groups'

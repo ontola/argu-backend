@@ -6,6 +6,7 @@ nl:
     settings:
       title: "Organisatie instellingen"
       menu:
+        return: "Bekijk %{resource}"
         general: 'Algemeen'
         advanced: 'Geavanceerd'
         groups: 'Groepen'

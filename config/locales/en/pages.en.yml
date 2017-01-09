@@ -6,6 +6,7 @@ en:
     settings:
       title: "Organization settings"
       menu:
+        return: "View %{resource}"
         general: 'General'
         advanced: 'Advanced'
         groups: 'Groups'

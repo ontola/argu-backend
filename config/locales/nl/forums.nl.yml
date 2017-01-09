@@ -20,6 +20,7 @@ nl:
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
       menu:
+        return: "Bekijk %{resource}"
         general: "Algemeen"
         advanced: 'Geavanceerd'
         groups: 'Groepen'
