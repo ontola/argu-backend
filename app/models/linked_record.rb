@@ -43,6 +43,10 @@ class LinkedRecord < ApplicationRecord
     Bugsnag.notify(e)
   end
 
+  def closed?
+    false
+  end
+
   def creator
     Profile.first
   end
