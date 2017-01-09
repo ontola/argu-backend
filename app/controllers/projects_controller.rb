@@ -51,13 +51,6 @@ class ProjectsController < AuthorizedController
   end
 
   def edit
-    if authenticated_resource!.edge.argu_publication.try(:published_at).present?
-      authenticated_resource!.edge.argu_publication.schedule!
-    else
-      authenticated_resource!.edge.argu_publication.draft!
-      authenticated_resource!.edge.argu_publication.published_at = DateTime.current
-    end
-
     respond_to do |format|
       format.html { render locals: {project: authenticated_resource!} }
       format.json { render json: authenticated_resource! }

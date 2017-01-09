@@ -11,7 +11,7 @@ class Publication < ApplicationRecord
 
   validates :creator, :publisher, :channel, presence: true
 
-  attr_accessor :publish_type
+  attr_writer :publish_type
   enum publish_type: {direct: 0, draft: 1, schedule: 2}
 
   # @TODO: wrap in transaction
@@ -20,6 +20,18 @@ class Publication < ApplicationRecord
     publishable.publish!
     return unless publishable.is_published
     publish("publish_#{publishable.owner.model_name.singular}_successful", publishable.owner)
+  end
+
+  def publish_type
+    @publish_type ||=
+      if published_at.nil?
+        self.published_at = DateTime.current
+        'draft'
+      elsif published_at < DateTime.current
+        'direct'
+      else
+        'schedule'
+      end
   end
 
   private
