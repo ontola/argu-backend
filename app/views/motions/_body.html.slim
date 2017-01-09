@@ -10,7 +10,7 @@
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       - if current_user.present?
         li
-          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(motion, follow_types: [:decisions, :news, :reactions, :never])
+          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(motion, follow_types: [:news, :reactions, :never])
       =crud_menu_item(motion)
       - if motion.forum.visibility
         li.share-menu

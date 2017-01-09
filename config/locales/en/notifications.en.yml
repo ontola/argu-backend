@@ -9,7 +9,7 @@ en:
       beta: "Email notifications are still in beta, so not all the kinks and quirks are ironed out yet"
     receive:
       never: 'Never'
-      reactions: 'All new replies'
-      news: 'All important news'
+      reactions: 'All items'
+      news: 'Important items'
       decisions: 'Only official decisions'
       title: 'Receive notifications for:'
