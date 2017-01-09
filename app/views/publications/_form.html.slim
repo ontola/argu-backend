@@ -1,13 +1,13 @@
 -if resource.is_published?
   -if policy(resource).trash?
     =f.semantic_fields_for :edge do |ef|
-      =ef.inputs(name: t('forms.danger_zone'), class: 'danger-zone') do
-        =ef.input :is_trashed, as: :reverse_boolean
+      =ef.input :is_trashed, as: :reverse_boolean
 -elsif !resource.is_trashed?
   =f.semantic_fields_for :edge do |ef|
     =ef.semantic_fields_for :argu_publication do |pf|
       - if policy(resource).permitted_publish_types.present?
-        =pf.input(:publish_type, as: :radio, collection: policy(resource).permitted_publish_types.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
+        label= t('formtastic.labels.publication.publish_type')
+        =pf.input(:publish_type, label: false, as: :radio, collection: policy(resource).permitted_publish_types.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
         - if policy(resource).permitted_publish_types.include? 'schedule'
           =pf.input(:published_at, as: :datetime_picker, label: false)
       - else

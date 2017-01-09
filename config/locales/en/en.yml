@@ -234,6 +234,7 @@ en:
   embed: "embed"
   forms:
     danger_zone: "Danger zone"
+    advanced: "Advanced"
     admin: "Administrative functions"
     legal_html: "By creating an Argu account you agree to our %{link}."
   users:

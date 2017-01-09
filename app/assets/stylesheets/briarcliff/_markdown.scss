@@ -120,6 +120,16 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
     @include transition(background-color .2s);
   }
+
+  &--form:before {
+    left: -1em;
+    right: -1em;
+    width: calc(100% + 2em)
+  }
+}
+
+.collapsible-wrapper {
+  position: relative;
 }
 
 .collapsible-input {

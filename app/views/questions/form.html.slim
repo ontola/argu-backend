@@ -24,25 +24,24 @@
                            type: :cover_photo,
                            relation: :default_cover_photo,
                            preview_style: 'max-height: 256px;'}
-          - if policy(question).permitted_attributes.include?(:pinned)
-            =f.input :pinned, as: :reverse_boolean
-            li.form-helper
-              span= t('edges.form.helper.pinned')
-          /TODO Add Checkbox for using expires_at.
-          /TODO Hide expires_at input unless checkbox is checked.
-          /TODO Use current datetime as default input.
-          - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
-            =f.inputs name: t('deadline') do
-              =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
-          - if !question.new_record? && policy(question).trash?
-            =f.inputs name: t('forms.danger_zone'), class: 'danger-zone'
-              - if policy(question).trash?
-                =f.semantic_fields_for :edge do |ef|
-                  =ef.input :is_trashed, as: :reverse_boolean
-              - if policy(question).move?
+          .collapsible-wrapper
+            input.collapsible-input[type="checkbox" value="selected" id="collapse-advanced"]
+            label.collapsible-label.collapsible-label--form[for="collapse-advanced"]
+            .collapsible-content
+              =f.inputs name: t('forms.advanced')
+                - if policy(question).permitted_attributes.include?(:pinned)
+                  =f.input :pinned, as: :reverse_boolean
+                  li.form-helper
+                    span= t('edges.form.helper.pinned')
+              /TODO Add Checkbox for using expires_at.
+              /TODO Hide expires_at input unless checkbox is checked.
+              /TODO Use current datetime as default input.
+              - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
+                =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
+              - if question.persisted? && policy(question).move?
                 =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
-          =render partial: 'publications/form', locals: {f: f, resource: question}
+              =render partial: 'publications/form', locals: {f: f, resource: question}
         section.section--footer
           - if question.new_record?
             =render partial: 'profiles/profile_current'

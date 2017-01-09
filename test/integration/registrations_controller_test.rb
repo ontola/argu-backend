@@ -50,6 +50,8 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create without password' do
+    locale = :en
+    cookies[:locale] = locale.to_s
     clear_emails
 
     assert_differences([['User.count', 1],

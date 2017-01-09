@@ -80,7 +80,7 @@ en:
         news_email: "For important news"
         decisions_email: "For official decisions"
       publication:
-        publish_type: "Publication"
+        publish_type: "Publication:"
         target: 'Notify'
     hints:
       tag_list: "Choose themes related to your subject."
