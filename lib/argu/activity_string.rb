@@ -47,8 +47,9 @@ module Argu
 
     # @return [String, nil] Display name of activity.trackable.get_parent, as link or bold text
     def parent_string
-      string = @activity.recipient.present? ? @activity.recipient.display_name : @activity.audit_data['recipient_name']
-      @embedded_link && @activity.recipient.present? ? "[#{string}](#{url_for(@activity.recipient)})" : string.to_s
+      recipient = @activity.trackable_type == 'Vote' ? @activity.recipient&.voteable : @activity.recipient
+      return @activity.audit_data['recipient_name'] if recipient.nil?
+      @embedded_link ? "[#{recipient.display_name}](#{url_for(recipient)})" : recipient.display_name
     end
 
     # @return [String, nil] Translation of pro, neutral or con
