@@ -1,0 +1,43 @@
+.box.box--extra-margin.motion
+  section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
+    =link_to model.iri
+    h3.motion-t[itemprop="headline"]= model.title
+  section
+    - if model.top_arguments_pro.present? || model.top_arguments_con.present?
+      ul.box-list.box-list--arguments.box-list--icons
+        - model.top_arguments_pro.first(5).each do |argument|
+          li= link_to argument_path(argument.id)
+          h4[class="pro-t tooltip--wider"]
+            span.fa.fa-plus
+            .list-item.icon-left
+              span[title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument.content, '...')) : nil)]= argument.title
+              - if argument.children_count(:comments) > 0
+                .comments-counter.comments-counter--inline
+                  .fa.fa-comment
+                  .icon-left= argument.children_count(:comments)
+          li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
+            span= t('arguments.new.pro')
+      ul.box-list.box-list--arguments.box-list--icons
+        - model.top_arguments_con.first(5).each do |argument|
+          li= link_to argument_path(argument.id)
+          h4[class="con-t tooltip--wider"]
+            span.fa.fa-minus
+            .list-item.icon-left
+              span[title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument.content, '...')) : nil)]= argument.title
+              - if argument.children_count(:comments) > 0
+                .comments-counter.comments-counter--inline
+                  .fa.fa-comment
+                  .icon-left= argument.children_count(:comments)
+          li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
+            span= t('arguments.new.con')
+    - else
+      ul.box-list.box-list--arguments
+        li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
+          span= t('arguments.new.pro')
+      ul.box-list.box-list--arguments
+        li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
+          span= t('arguments.new.con')
+  =yield
+  section.unpadded
+    - unless local_assigns[:hide_vote_buttons] || current_profile && current_profile.profileable.is_a?(Page)
+      .motion-votes= react_component_store 'SmallVoteContainer', props: motion_vote_props(current_profile, model, user_vote_for(model), buttonsType: 'bottom', r: request.env['PATH_INFO']), **prerender_options

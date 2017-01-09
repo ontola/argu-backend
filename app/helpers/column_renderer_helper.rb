@@ -12,7 +12,7 @@ module ColumnRendererHelper
   def render_columns(columns, options = {})
     return if columns.nil?
     included_models = [Motion, Argument, Vote, Question, QuestionAnswer,
-                       Comment, Project, BlogPost, Decision]
+                       Comment, Project, BlogPost, Decision, LinkedRecord]
     partial = included_models.include?(columns.class) ? "#{columns.class_name}/show" : 'column_renderer/show'
     partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
