@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Comment < ApplicationRecord
-  include Loggable, Parentable, Trashable, PublicActivity::Common, Ldable
+  include Loggable, Parentable, Trashable, PublicActivity::Common, Ldable, TruncateHelper
 
   belongs_to :forum
   belongs_to :creator, class_name: 'Profile'
@@ -55,7 +55,7 @@ class Comment < ApplicationRecord
   end
 
   def display_name
-    body
+    safe_truncated_text(body, 40)
   end
 
   # Helper class method to look up a commentable object
