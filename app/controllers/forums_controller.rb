@@ -56,8 +56,7 @@ class ForumsController < AuthorizedController
     render :statistics,
            locals: {
              content_counts: content_count(resource_by_id),
-             city_counts: city_count(resource_by_id),
-             tag_counts: tag_count(resource_by_id)
+             city_counts: city_count(resource_by_id)
            }
   end
 
@@ -186,15 +185,5 @@ class ForumsController < AuthorizedController
 
   def tab
     policy(resource_by_id || Forum).verify_tab(params[:tab] || params[:forum].try(:[], :tab))
-  end
-
-  def tag_count(forum)
-    tags = []
-    tag_ids = Tagging.where(forum_id: forum.id).select(:tag_id).distinct.map(&:tag_id)
-    tag_ids.each do |tag_id|
-      taggings = Tagging.where(forum_id: forum.id, tag_id: tag_id)
-      tags << {name: Tag.find_by(id: taggings.first.tag_id).try(:name) || '[not found]', count: taggings.length}
-    end
-    tags.sort { |x, y| y[:count] <=> x[:count] }
   end
 end

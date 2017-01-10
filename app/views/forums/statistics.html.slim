@@ -17,12 +17,3 @@
             tr.city-row
               td.city= city[0] || t('forums.statistics.cities.unknown')
               td.city-count= city[1]
-      h2= t('forums.statistics.tags')
-      - if tag_counts.present?
-        table.styled.tag-table
-          - tag_counts.each do |tag|
-            tr.tag-row
-              td.tag= link_to tag[:name], forum_tag_url(@forum.url, id: tag[:name])
-              td.tag-count= tag[:count]
-      - else
-        p= t('forums.statistics.no_tags')

@@ -7,7 +7,6 @@
     =f.input :name
     =f.input :bio, input_html: { rows: 2, maxlength: 80}
     =f.input :bio_long, input_html: { rows: 4}
-    =f.input :featured_tags, as: :tags
   =render partial: 'photos/form',
           locals: {form: f,
                    type: :profile_photo,
