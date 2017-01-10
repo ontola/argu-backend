@@ -1,5 +1,5 @@
 =set_title(@forum)
-=connected_web url: forum_url(@forum),
+=connected_web url: @forum.context_id,
                name: (@forum.bio.present? ? seolized_title(@forum) + ' | '+ @forum.bio : seolized_title(@forum)),
                description: seolized_description(@forum),
                image: @forum.default_cover_photo&.url

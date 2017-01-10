@@ -1,5 +1,5 @@
 =set_title question
-=connected_web url: question_url(question),
+=connected_web url: question.context_id,
                name: seolized_title(question),
                description: seolized_description(question),
                image: question.default_cover_photo&.url || image_url('logo-social.png')
