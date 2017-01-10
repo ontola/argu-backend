@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
-  include Edgeable, Shortnameable, Flowable
+  include Edgeable, Shortnameable, Flowable, Ldable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
@@ -19,6 +19,11 @@ class Page < ApplicationRecord
   after_create :create_default_group
 
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
+
+  contextualize_as_type 'schema:Organization'
+  contextualize_with_id { |r| Rails.application.routes.url_helpers.page_url(r.id, protocol: :https) }
+  contextualize :display_name, as: 'schema:name'
+  contextualize :about, as: 'schema:description'
 
   def build_profile(*options)
     super(*options) if profile.nil?

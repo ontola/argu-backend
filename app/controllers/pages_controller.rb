@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = Page.find_via_shortname(params[:id])
+    @page = Page.find_via_shortname!(params[:id])
     @profile = @page.profile
     authorize @page, :show?
 
@@ -23,7 +23,16 @@ class PagesController < ApplicationController
       @collection = Vote.ordered(@profile.visible_votes_for(current_user))
     end
 
-    render 'profiles/show'
+    respond_to do |format|
+      format.html do
+        if (/[a-zA-Z]/i =~ params[:id]).nil?
+          redirect_to url_for(@page), status: 307
+        else
+          render 'profiles/show'
+        end
+      end
+      format.json_api { render json: @page, include: :profile_photo }
+    end
   end
 
   def new

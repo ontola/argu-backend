@@ -10,7 +10,11 @@ module ProfilesHelper
         user_url(profile.profileable, only_path: only_path)
       end
     elsif profile.profileable.class == Page
-      page_url(profile.profileable, only_path: only_path)
+      if canonical
+        page_url(profile.profileable.id, only_path: only_path)
+      else
+        page_url(profile.profileable, only_path: only_path)
+      end
     else
       'deleted'
     end
