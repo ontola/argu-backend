@@ -27,10 +27,4 @@ class BlogPost < ApplicationRecord
   alias_attribute :display_name, :title
   attr_accessor :happened_at
   delegate :happened_at, to: :happening, allow_nil: true
-
-  # The amount of followers this blog_post will reach
-  # @return [Integer] The number of followers
-  def potential_audience
-    parent_model.edge.potential_audience(:news)
-  end
 end

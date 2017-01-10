@@ -21,6 +21,7 @@ module Edgeable
 
     accepts_nested_attributes_for :edge
     delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, :expires_at, to: :edge
+    delegate :potential_audience, to: :parent_edge
     counter_cache false
 
     def counter_cache_name
