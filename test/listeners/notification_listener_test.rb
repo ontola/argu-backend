@@ -6,6 +6,10 @@ class NotificationListenerTest < ActiveSupport::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let!(:motion_activity) { motion.activities.second }
+  let(:news_motion) do
+    create(:motion, parent: freetown.edge, mark_as_important: '1')
+  end
+  let!(:news_motion_activity) { news_motion.activities.second }
   let!(:vote_activity) do
     create(
       :activity,
@@ -14,10 +18,19 @@ class NotificationListenerTest < ActiveSupport::TestCase
     )
   end
 
-  test 'should create notification on activity' do
+  test 'should create notification on motion activity' do
     assert_difference('Notification.count', 1) do
       subject.create_activity_successful(motion_activity)
     end
+    assert_equal 'reaction', Notification.last.notification_type
+  end
+
+  test 'should create notification on news motion activity' do
+    # Create notifications for the follower and the creators of the vote and the motion
+    assert_difference('Notification.count', 3) do
+      subject.create_activity_successful(news_motion_activity)
+    end
+    assert_equal 'news', Notification.last.notification_type
   end
 
   test 'should not create notifications for votes' do

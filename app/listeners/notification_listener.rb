@@ -17,7 +17,7 @@ class NotificationListener
 
   def create_notifications_for(activity)
     recipients = FollowersCollector
-                 .new(activity.recipient, follow_type(activity))
+                 .new(activity.recipient, activity.follow_type)
                  .call
                  .reject { |u| u.profile == activity.owner }
     if activity.trackable_type == 'Decision'
@@ -29,17 +29,6 @@ class NotificationListener
       end
     end
     Notification.create!(prepare_recipients(activity, recipients))
-  end
-
-  def follow_type(activity)
-    case activity.trackable_type
-    when 'BlogPost'
-      :news
-    when 'Decision'
-      activity.trackable.forwarded? ? :reactions : :decisions
-    else
-      :reactions
-    end
   end
 
   # @return [Array<Hash{Symbol => User, Symbol => Activity}>] List of attributes for {Notification} creation

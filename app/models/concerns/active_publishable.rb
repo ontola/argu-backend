@@ -10,18 +10,22 @@ module ActivePublishable
             -> { where(channel: 'argu') },
             class_name: 'Publication',
             through: :edge
-  end
 
-  def is_draft?
-    publications.where('published_at IS NOT NULL').empty?
-  end
+    def is_draft?
+      publications.where('published_at IS NOT NULL').empty?
+    end
 
-  def is_publishable?
-    true
-  end
+    def is_publishable?
+      true
+    end
 
-  def published_at
-    argu_publication.try(:published_at)
+    def mark_as_important
+      edge.argu_publication&.follow_type&.to_s == 'news'
+    end
+
+    def published_at
+      argu_publication.try(:published_at)
+    end
   end
 
   module ClassMethods

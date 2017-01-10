@@ -13,6 +13,7 @@ class Publication < ApplicationRecord
 
   attr_writer :publish_type
   enum publish_type: {direct: 0, draft: 1, schedule: 2}
+  enum follow_type: {news: 2, reactions: 3}
 
   # @TODO: wrap in transaction
   def commit

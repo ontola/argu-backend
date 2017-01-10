@@ -557,6 +557,7 @@ ActiveRecord::Schema.define(version: 20170110162841) do
     t.string   "channel"
     t.integer  "creator_id",                        null: false
     t.integer  "publisher_id"
+    t.integer  "follow_type",      default: 3,      null: false
   end
 
   create_table "question_answers", force: :cascade do |t|

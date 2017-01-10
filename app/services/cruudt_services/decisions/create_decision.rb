@@ -32,4 +32,10 @@ class CreateDecision < PublishedCreateService
   def parent_columns
     %i(forum_id)
   end
+
+  def prepare_argu_publication_attributes
+    super
+    return if @attributes['state'] == 'forwarded'
+    @attributes[:edge_attributes][:argu_publication_attributes][:follow_type] = 'news'
+  end
 end

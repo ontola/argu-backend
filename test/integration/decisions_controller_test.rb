@@ -271,6 +271,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
       motion.reload
       assert_equal state, motion.state
       assert_equal state, Decision.last.activities.last.action
+      assert_equal 'news', Decision.last.activities.last.follow_type
     else
       assert_equal motion.state, 'pending'
     end
@@ -293,6 +294,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
     end
     reset_publication(Publication.last)
     assert_response response
+    assert_equal 'reactions', Decision.last.activities.last.follow_type if changed
   end
 
   def general_update_approved(response = 302, changed = false)

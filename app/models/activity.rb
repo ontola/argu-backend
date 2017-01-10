@@ -47,6 +47,13 @@ class Activity < PublicActivity::Activity
     "#{self.class.name.tableize}_#{id}"
   end
 
+  # Used to find followers for the notifications generated for this activity and to set the type of these notifications
+  # @note See Follow.follow_types, Publication.follow_types and Notification.notification_types
+  # @return [String] The follow type
+  def follow_type
+    trackable.try(:argu_publication)&.follow_type || 'reactions'
+  end
+
   def object
     trackable_type.underscore
   end

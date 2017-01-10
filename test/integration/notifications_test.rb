@@ -159,7 +159,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_differences([['Notification.count', 3]]) do
       reset_publication(Publication.last)
     end
-    assert_equal Notification.last.notification_type, 'decision'
+    assert_equal Notification.last.notification_type, 'news'
   end
 
   test 'manager should forward to other with notification' do

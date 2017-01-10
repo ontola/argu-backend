@@ -33,6 +33,7 @@ en:
       invert_arguments: "Invert argumens"
       last_accepted: "I agree"
       language: "Language"
+      mark_as_important: "Mark as important"
       password_confirmation: "Confirm password"
       password: "Password"
       pinned: "Pin"

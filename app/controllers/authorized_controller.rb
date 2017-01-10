@@ -114,7 +114,11 @@ class AuthorizedController < ApplicationController
            parent: get_parent_resource.edge)
       .owner
     if resource.is_publishable?
-      resource.edge.build_argu_publication(publish_type: 'direct', published_at: DateTime.current)
+      resource.edge.build_argu_publication(
+        publish_type: 'direct',
+        published_at: DateTime.current,
+        follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
+      )
     end
     resource.build_happening(created_at: DateTime.current) if resource.is_happenable?
     resource

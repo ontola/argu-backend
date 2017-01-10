@@ -111,6 +111,8 @@ class ApplicationService
       attributes[:creator] ||= @options[:creator]
     end
     attributes[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
+    mark_as_important = @attributes.delete(:mark_as_important)
+    attributes[:follow_type] = (mark_as_important == true || mark_as_important == '1' ? :news : :reactions)
     @attributes[:edge_attributes][:id] = resource.edge.id
     @attributes[:edge_attributes][:argu_publication_attributes] = attributes
   end

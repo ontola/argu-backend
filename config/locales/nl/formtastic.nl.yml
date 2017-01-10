@@ -33,6 +33,7 @@ nl:
       invert_arguments: "Argumenten omdraaien"
       last_accepted: "Ik ga akkoord"
       language: "Taal"
+      mark_as_important: "Markeer als belangrijk"
       password_confirmation: "Wachtwoord bevestigen"
       password: "Wachtwoord"
       pinned: "Vastzetten"

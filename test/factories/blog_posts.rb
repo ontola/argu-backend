@@ -13,5 +13,6 @@ FactoryGirl.define do
 
     sequence(:title) { |n| "fg blog post #{n}end" }
     content 'contents'
+    mark_as_important '1'
   end
 end

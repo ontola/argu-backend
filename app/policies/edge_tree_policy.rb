@@ -64,6 +64,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_member?
+      return if persisted_edge.nil?
       if ((user&.profile&.group_ids || []).append(Group::PUBLIC_GROUP_ID) &
         persisted_edge.granted_group_ids('member')).any? ||
           has_access_token_access_to(persisted_edge.owner)
@@ -94,6 +95,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_manager?
+      return if persisted_edge.nil?
       if ((user&.profile&.group_ids || []).append(Group::PUBLIC_GROUP_ID) &
         persisted_edge.granted_group_ids('manager')).any?
         return manager
@@ -102,6 +104,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_owner?
+      return if persisted_edge.nil?
       owner if user && persisted_edge.get_parent(:page).owner.owner == user.profile
     end
 
@@ -130,6 +133,9 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
+    if is_manager? && record.is_publishable? && !record.is_published? && !record.is_a?(Decision)
+      attributes.append(:mark_as_important)
+    end
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
     attributes
   end

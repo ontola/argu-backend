@@ -54,14 +54,7 @@ class Notification < ApplicationRecord
   end
 
   def set_notification_type
-    self.notification_type = case activity.trackable
-                             when BlogPost
-                               :news
-                             when Decision
-                               activity.trackable.forwarded? ? :reaction : :decision
-                             else
-                               :reaction
-                             end
+    self.notification_type = activity.follow_type.singularize.to_sym
   end
 
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
