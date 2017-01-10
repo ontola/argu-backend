@@ -12,7 +12,7 @@ class PageSerializer < RecordSerializer
     end
     link(:related) do
       {
-        href: obj.class.try(:context_id_factory)&.call(obj),
+        href: obj.context_id,
         meta: {
           '@type': 'http://schema.org/ImageObject'
         }

@@ -17,7 +17,7 @@ class CollectionSerializer < BaseSerializer
         meta: {
           '@type': obj.class.try(:contextualized_type),
           attributes: {
-            '@id': obj.class.try(:context_id_factory)&.call(obj),
+            '@id': obj.context_id,
             '@context': {
               schema: 'http://schema.org/',
               title: 'schema:name'
@@ -37,7 +37,7 @@ class CollectionSerializer < BaseSerializer
         '@context': {
           pro: 'schema:option'
         },
-        '@id': i.class.context_id_factory.call(i)
+        '@id': i.context_id
       )
     end
   end

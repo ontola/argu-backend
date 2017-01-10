@@ -17,10 +17,10 @@ class BaseEdgeSerializer < RecordSerializer
     end
     link(:related) do
       {
-        href: obj.class.try(:context_id_factory)&.call(obj),
+        href: obj.context_id,
         meta: {
           attributes: {
-            '@id': obj.class.try(:context_id_factory)&.call(obj),
+            '@id': obj.context_id,
             '@type': obj.class.try(:contextualized_type),
             '@context': {
               schema: 'http://schema.org/',
@@ -45,7 +45,7 @@ class BaseEdgeSerializer < RecordSerializer
     end
     link(:related) do
       {
-        href: obj.class.try(:context_id_factory)&.call(obj),
+        href: obj.context_id,
         meta: {
           attributes: {
             '@context': {

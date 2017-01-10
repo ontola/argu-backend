@@ -42,14 +42,14 @@ module Argumentable
       has_many :arguments do
         link(:self) do
           {
-            href: "#{object.class.try(:context_id_factory)&.call(object)}/arguments",
+            href: "#{object.context_id}/arguments",
             meta: {
               '@type': 'argu:arguments'
             }
           }
         end
         meta do
-          href = object.class.try(:context_id_factory)&.call(object)
+          href = object.context_id
           {
             '@type': 'argu:collectionAssociation',
             '@id': "#{href}/arguments"

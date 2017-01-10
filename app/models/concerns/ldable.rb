@@ -10,5 +10,9 @@ module Ldable
 
     contextualize :created_at, as: 'http://schema.org/dateCreated'
     contextualize :updated_at, as: 'http://schema.org/dateModified'
+
+    def context_id
+      self.class.context_id_factory.call(self)
+    end
   end
 end

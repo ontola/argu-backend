@@ -4,7 +4,7 @@ class QuestionSerializer < BaseEdgeSerializer
   has_many :motions do
     link(:self) do
       {
-        href: "#{object.class.try(:context_id_factory)&.call(object)}/m",
+        href: "#{object.context_id}/m",
         meta: {
           '@type': 'argu:collectionAssociation'
         }

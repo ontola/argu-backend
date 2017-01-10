@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BaseSerializer < ActiveModel::Serializer
-  link(:self) { object.class.try(:context_id_factory)&.call(object) }
+  link(:self) { object.context_id }
   attribute :ld_context, key: '@context'
   attribute :ld_type, key: '@type'
   attribute :potential_action
@@ -14,7 +14,7 @@ class BaseSerializer < ActiveModel::Serializer
 
   def ld_id
     return unless object.respond_to?(:jsonld_context)
-    object.class.try(:context_id_factory)&.call(object)
+    object.context_id
   end
 
   def tenant

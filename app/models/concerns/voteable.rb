@@ -45,14 +45,14 @@ module Voteable
       has_many :votes do
         link(:self) do
           {
-            href: "#{object.class.try(:context_id_factory)&.call(object)}/votes",
+            href: "#{object.context_id}/votes",
             meta: {
               '@type': 'argu:votes'
             }
           }
         end
         meta do
-          href = object.class.try(:context_id_factory)&.call(object)
+          href = object.context_id
           {
             '@type': 'argu:collectionAssociation',
             '@id': "#{href}/votes"
