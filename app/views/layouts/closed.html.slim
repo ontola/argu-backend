@@ -13,8 +13,6 @@ html[class="no-js"]
 
     / unless current_user.blank?
     =stylesheet_link_tag 'application', :media => 'all'
-    - if active_for_user?('inspectlet', current_user)
-      =render partial:'external/inspectlet'
     - if Rails.env.production?
       =render partial: 'analytics'
     - if Rails.env.test?
