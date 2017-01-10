@@ -9,7 +9,7 @@
         - if current_user.present?
           li
             ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(c, follow_types: [:reactions, :never])
-        - if current_user.present? && policy(c).update? || policy(c).trash? || active_for_user?(:notifications, current_user)
+        - if current_user.present? && policy(c).update? || policy(c).trash?
           li
             ul= react_component_store 'HyperDropdown', props: comment_items(resource, c)
         - if !c.is_trashed? && policy(c.parent_model).create_child?(:comments, parent_id: c.id)
