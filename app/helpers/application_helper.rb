@@ -4,8 +4,8 @@ require 'bcrypt/engine'
 require 'stubborn_cookie'
 
 module ApplicationHelper
-  include ActivityHelper, NamesHelper, UsersHelper, StubbornCookie, MarkdownHelper,
-          Devise::OmniAuth::UrlHelpers
+  include ActivityHelper, NamesHelper, UsersHelper, StubbornCookie,
+          Devise::OmniAuth::UrlHelpers, TruncateHelper
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV
                     LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR).freeze
 
@@ -187,15 +187,5 @@ module ApplicationHelper
     elsif preview.class == Profile
       true
     end
-  end
-
-  def safe_truncated_text(contents, url, cutting_point = 220)
-    adjusted_content = markdown_to_plaintext(contents)
-    html = escape_once HTML_Truncator.truncate(adjusted_content,
-                                               cutting_point,
-                                               length_in_chars: true,
-                                               ellipsis: '... ')
-    html << url if adjusted_content.length > cutting_point
-    html
   end
 end

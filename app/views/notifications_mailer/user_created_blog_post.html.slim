@@ -10,5 +10,5 @@ tr
         td.mail-h3
           =link_to item.display_name, url_for_blog_post(item)
       tr
-        td.mail-p= safe_truncated_text(item.content, url_for_blog_post(item))
+        td.mail-p= safe_truncated_text(item.content)
   td.mail-p
