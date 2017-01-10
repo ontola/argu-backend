@@ -54,7 +54,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     get user_path(user2.id)
 
-    assert_response 200
+    assert_redirected_to user2
   end
 
   let(:amsterdam) { create_forum }

@@ -12,7 +12,13 @@ class UsersController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render 'profiles/show' }
+      format.html do
+        if (/[a-zA-Z]/i =~ params[:id]).nil?
+          redirect_to url_for(@user), status: 307
+        else
+          render 'profiles/show'
+        end
+      end
       format.json_api { render json: @user, include: :profile_photo }
     end
   end

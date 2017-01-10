@@ -48,7 +48,7 @@ module Shortnameable
     # Finds an object via its shortname or id, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
     def find_via_shortname!(url)
-      if (/\D/ =~ url).nil?
+      if (/[a-zA-Z]/i =~ url).nil?
         find(url)
       else
         find_via_shortname(url)
