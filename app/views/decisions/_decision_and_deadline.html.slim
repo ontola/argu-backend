@@ -1,4 +1,4 @@
--if deadline.present? && active_for_user?(:expires_at, current_user)
+-if deadline.present?
   -if deadline > DateTime.current
     .detail[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]
       .detail__icon.detail__icon--alert
