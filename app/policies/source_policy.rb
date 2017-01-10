@@ -14,8 +14,7 @@ class SourcePolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(name iri_base)
-    attributes.append(shortname_attributes: %i(shortname)) if new_record?
+    attributes.concat %i(name iri_base shortname)
     attributes
   end
 

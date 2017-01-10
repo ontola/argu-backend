@@ -10,10 +10,12 @@
       - if policy(@page).permitted_attributes.include?(:visibility)
         =f.input :visibility, as: :select, collection: Forum.visibilities.keys, required: false, include_blank: false
     =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-      - if policy(@page).transfer?
-        =link_to t('formtastic.labels.f_move'), transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
       - if policy(@page).shortname?
         =f.inputs :shortname, for: :shortname
+        li.form-helper
+          span= t('pages.shortname.warning')
+      - if policy(@page).transfer?
+        =link_to t('formtastic.labels.f_move'), transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
       - if policy(@page).transfer?
       =f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden

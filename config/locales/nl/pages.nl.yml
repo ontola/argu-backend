@@ -49,6 +49,8 @@ nl:
     limit_reached_amount: "Je kunt maximaal %{amount} organisatie(s) aanmaken."
     page_management_html: "Ga naar %{href} om je organisaties te beheren."
     shortname_helper_html: "http://argu.co/o/<b>jouw_argu_url</b>"
+    shortname:
+      warning: "Let op! Hierdoor verandert de url van deze organisatie. Sommige links zullen niet meer werken als je dit wijzigt."
     helper:
       side: "<h2>Wat is een organisatie?</h2>
              <p>Een organisatie is een <b>profiel</b> van een organisatie, zoals een bedrijf, NGO, politieke partij of actiegroep. Meerdere mensen kunnen dit profiel beheren.

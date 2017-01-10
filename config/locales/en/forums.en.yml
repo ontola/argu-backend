@@ -111,6 +111,8 @@ en:
     get_one:
       title: "A forum for your organisation?"
       body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
+    shortname:
+      warning: "Warning! This changes the url of this forum. Some links will no longer be valid when changing this."
     tooltips:
       members_count: "Followers of this forum"
     visit: "Visit forum"

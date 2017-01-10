@@ -8,7 +8,9 @@
   - if policy(resource).change_owner? || policy(resource).shortname?
     =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
       -if policy(resource).shortname?
-        =f.input :shortname
+        =f.inputs :shortname, for: :shortname
+        li.form-helper
+          span= t('forums.shortname.warning')
       -if policy(resource).change_owner?
         =f.input :page
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden

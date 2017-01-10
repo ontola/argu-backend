@@ -110,6 +110,8 @@ nl:
     get_one:
       title: "Een forum voor jouw organisatie?"
       body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
+    shortname:
+      warning: "Let op! Hierdoor verandert de url van het forum. Sommige links zullen niet meer werken als je dit wijzigt."
     tooltips:
       members_count: "Volgers van dit forum"
     visit: "Bezoek forum"
