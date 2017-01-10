@@ -29,7 +29,13 @@ class ForumsController < AuthorizedController
     @items = collect_items
 
     respond_to do |format|
-      format.html
+      format.html do
+        if (/[a-zA-Z]/i =~ params[:id]).nil?
+          redirect_to url_for(@forum), status: 307
+        else
+          render
+        end
+      end
       format.json
       format.js
       format.json_api { render json: authenticated_resource }
@@ -160,6 +166,7 @@ class ForumsController < AuthorizedController
   end
 
   def redirect_generic_shortnames
+    return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(Forum)
     send_event category: 'short_url',
@@ -170,7 +177,7 @@ class ForumsController < AuthorizedController
 
   def resource_by_id
     return if action_name == 'index' || action_name == 'discover'
-    @forum ||= Forum.find_via_shortname params[:id]
+    @forum ||= Forum.find_via_shortname!(params[:id])
   end
 
   def show_params

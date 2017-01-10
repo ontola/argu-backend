@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
+require 'argu/forums_constraint'
 ####
 # Routes
 # a: arguments
@@ -278,20 +279,21 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :forums,
-            only: [:show, :update],
-            path: '',
-            concerns: [:flowable, :discussable, :favorable] do
-    get :discover, on: :collection, action: :discover
-    get :settings, on: :member
-    get :statistics, on: :member
-    resources :shortnames, only: [:new, :create]
-    resources :projects, path: 'p', only: [:new, :create]
-    resources :tags, path: 't', only: [:show, :index]
-    resources :banners, except: [:index, :show]
+  get :discover, to: 'forums#discover', as: :discover_forums
+  constraints(Argu::ForumsConstraint) do
+    resources :forums,
+              only: [:show, :update],
+              path: '',
+              concerns: [:flowable, :discussable, :favorable] do
+      get :settings, on: :member
+      get :statistics, on: :member
+      resources :shortnames, only: [:new, :create]
+      resources :projects, path: 'p', only: [:new, :create]
+      resources :tags, path: 't', only: [:show, :index]
+      resources :banners, except: [:index, :show]
+    end
   end
-  get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
-  get 'forums/:id', to: 'forums#show'
+  resources :forums, only: [:show, :update], path: 'f', as: :canonical_forum
 
   get '/ns/core/:model', to: 'static_pages#context'
 

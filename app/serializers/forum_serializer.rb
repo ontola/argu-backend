@@ -1,8 +1,4 @@
 # frozen_string_literal: true
-class ForumSerializer < BaseSerializer
+class ForumSerializer < RecordSerializer
   attributes :display_name, :shortname
-
-  def id
-    object.shortname.shortname
-  end
 end
