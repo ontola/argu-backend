@@ -32,6 +32,9 @@
                   =f.input :pinned, as: :reverse_boolean
                   li.form-helper
                     span= t('edges.form.helper.pinned')
+                - if policy(motion).permitted_nested_attributes(:edge_attributes).include?(:expires_at)
+                  =f.semantic_fields_for :edge do |ef|
+                    =ef.input :expires_at, as: :datetime_picker
                 - if motion.persisted? && policy(motion).move?
                   =f.input :invert_arguments, as: :reverse_boolean
                   =f.input :f_move, as: :link, url: motion_move_url(motion), input_html: {data: {remote: true}, class: 'btn--warning'}
