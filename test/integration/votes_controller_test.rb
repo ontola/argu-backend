@@ -5,7 +5,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   define_public_source
   define_freetown
   define_cairo
-  let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown.edge) }
+  let(:closed_question) { create(:question, edge_attributes: {expires_at: 1.day.ago}, parent: freetown.edge) }
   let(:closed_question_motion) { create(:motion, parent: closed_question.edge) }
   let(:closed_question_argument) { create(:argument, parent: closed_question_motion.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }

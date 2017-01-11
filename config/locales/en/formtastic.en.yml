@@ -101,6 +101,7 @@ en:
       user:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
       password_confirmation: "Same as above"
+      expires_at: "Please fill in all fields if you want to set a deadline"
     placeholders:
       email: "email@example.com"
       login: "email or username"

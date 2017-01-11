@@ -36,8 +36,9 @@
               /TODO Add Checkbox for using expires_at.
               /TODO Hide expires_at input unless checkbox is checked.
               /TODO Use current datetime as default input.
-              - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
-                =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
+              - if policy(question).permitted_nested_attributes(:edge_attributes).include?(:expires_at)
+                =f.semantic_fields_for :edge do |ef|
+                  =ef.input :expires_at, as: :datetime_picker
               - if question.persisted? && policy(question).move?
                 =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}

@@ -15,7 +15,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
   let(:closed_question) do
     create(:question,
            :with_follower,
-           expires_at: 1.day.ago,
+           edge_attributes: {expires_at: 1.day.ago},
            parent: freetown.edge,
            creator: create(:profile_direct_email))
   end

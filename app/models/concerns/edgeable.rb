@@ -19,7 +19,7 @@ module Edgeable
     before_save :save_linked_record
 
     accepts_nested_attributes_for :edge
-    delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, to: :edge
+    delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, :expires_at, to: :edge
     counter_cache false
 
     def counter_cache_name

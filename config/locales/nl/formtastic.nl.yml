@@ -102,6 +102,7 @@ nl:
       user:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
       password_confirmation: "Zelfde als hierboven"
+      expires_at: "Vul alle velden in als je een deadline in wil stellen"
     placeholders:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
