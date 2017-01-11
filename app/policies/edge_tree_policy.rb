@@ -111,7 +111,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
   include Roles
   delegate :edge, to: :record
-  delegate :persisted_edge, to: :edge
+  delegate :persisted_edge, :has_expired_ancestors?, :has_unpublished_ancestors?, to: :edge
 
   def initialize(context, record)
     super
@@ -168,13 +168,6 @@ class EdgeTreePolicy < RestrictivePolicy
     rule is_member?, is_moderator?, is_owner?, staff?
   end
 
-  def has_unpublished_ancestors?
-    persisted_edge
-      .self_and_ancestors
-      .unpublished
-      .present?
-  end
-
   # Checks whether indexing children of a has_many relation is allowed
   # Initialises a child with the given attributes and checks its policy for show?
   # @param klass [Symbol] the class of the child
@@ -204,6 +197,10 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def show_unpublished?
     rule is_creator?, is_moderator?, is_manager?, is_owner?, staff?
+  end
+
+  def create_expired?
+    rule staff?
   end
 
   def trash?

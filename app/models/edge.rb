@@ -35,6 +35,7 @@ class Edge < ActiveRecord::Base
   scope :unpublished, -> { where('is_published = false') }
   scope :trashed, -> { where('trashed_at IS NOT NULL') }
   scope :untrashed, -> { where('trashed_at IS NULL') }
+  scope :expired, -> { where('expires_at <= ?', DateTime.current) }
 
   accepts_nested_attributes_for :argu_publication
 
@@ -92,6 +93,20 @@ class Edge < ActiveRecord::Base
 
   def granted_group_ids(role)
     granted_groups(role).pluck(:id)
+  end
+
+  def has_expired_ancestors?
+    persisted_edge
+      .self_and_ancestors
+      .expired
+      .present?
+  end
+
+  def has_unpublished_ancestors?
+    persisted_edge
+      .self_and_ancestors
+      .unpublished
+      .present?
   end
 
   def is_child_of?(edge)

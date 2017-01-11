@@ -19,7 +19,7 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def create?
-    return if record.parent_model.is_a?(Argument) && record.parent_model.parent_model.closed?
+    return create_expired? if has_expired_ancestors?
     assert_siblings! if record.try(:parent_id).present?
     rule is_member?, super
   end

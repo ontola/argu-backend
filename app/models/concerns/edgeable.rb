@@ -15,6 +15,7 @@ module Edgeable
     scope :unpublished, -> { joins(:edge).where('edges.is_published = false') }
     scope :trashed, -> { joins(:edge).where('edges.trashed_at IS NOT NULL') }
     scope :untrashed, -> { joins(:edge).where('edges.trashed_at IS NULL') }
+    scope :expired, -> { joins(:edge).where('edges.expires_at <= ?', DateTime.current) }
 
     before_save :save_linked_record
 

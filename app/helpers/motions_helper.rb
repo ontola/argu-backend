@@ -18,7 +18,7 @@ module MotionsHelper
       actor: actor_props(actor),
       buttonsType: opts.fetch(:buttons_type, 'big'),
       currentVote: vote.try(:for) || 'abstain',
-      closed: motion.closed?,
+      closed: motion.edge.has_expired_ancestors?,
       distribution: motion_vote_counts(motion),
       objectId: motion.id,
       objectType: 'motion',

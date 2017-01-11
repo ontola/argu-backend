@@ -74,7 +74,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
         owner: exp_res(asserts: [assert_not_authorized], analytics: false),
-        staff: exp_res(asserts: [assert_not_authorized], analytics: false)
+        staff: exp_res(should: true, response: 200, analytics: true)
       }
     end
     options = {
@@ -121,7 +121,7 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
         moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
         owner: exp_res(asserts: [assert_not_authorized], analytics: false),
-        staff: exp_res(asserts: [assert_not_authorized], analytics: false)
+        staff: exp_res(should: true, analytics: true)
       }
     end
     options = {

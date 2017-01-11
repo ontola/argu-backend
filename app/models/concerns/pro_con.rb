@@ -19,8 +19,6 @@ module ProCon
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 
-    delegate :closed?, to: :parent_model
-
     parentable :motion, :linked_record
 
     scope :pro, -> { where(pro: true) }

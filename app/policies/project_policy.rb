@@ -31,6 +31,7 @@ class ProjectPolicy < EdgeTreePolicy
   def create?
     assert_publish_type
     return unless active_for_user?(:projects, user)
+    return create_expired? if has_expired_ancestors?
     rule is_moderator?, is_manager?, is_owner?, super
   end
 

@@ -37,6 +37,7 @@ class QuestionPolicy < EdgeTreePolicy
 
   def create?
     assert_publish_type
+    return create_expired? if has_expired_ancestors?
     rule is_member?, is_manager?, super
   end
 

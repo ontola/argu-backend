@@ -21,7 +21,7 @@
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
                     .icon-left= argument.children_count(:comments)
-        - unless model.closed?
+        - if policy(model).create_child?(:arguments)
           li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
             span= t('arguments.new.pro')
       ul.box-list.box-list--arguments.box-list--icons
@@ -35,7 +35,7 @@
                   .comments-counter.comments-counter--inline
                     .fa.fa-comment
                     .icon-left= argument.children_count(:comments)
-        - unless model.closed?
+        - if policy(model).create_child?(:arguments)
           li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
             span= t('arguments.new.con')
     - else

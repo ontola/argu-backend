@@ -19,7 +19,7 @@ class ArgumentPolicy < EdgeTreePolicy
   end
 
   def create?
-    return if record.parent_model.try(:closed?)
+    return create_expired? if has_expired_ancestors?
     rule is_member?, is_manager?, is_owner?, super
   end
 
