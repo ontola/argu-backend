@@ -11,8 +11,8 @@ class Argument < ApplicationRecord
 
   scope :argument_comments, lambda {
     includes(:comment_threads)
+      .joins(:edge)
       .order("edges.children_counts -> 'votes_pro' DESC")
-      .references(:comment_threads)
   }
 
   contextualize_as_type 'argu:Argument'
@@ -33,6 +33,13 @@ class Argument < ApplicationRecord
   # http://schema.org/description
   def description
     content
+  end
+
+  def self.filter_query(filters)
+    options_map = HashWithIndifferentAccess.new
+    options_map['yes'] = true
+    options_map['no'] = false
+    {pro: options_map[filters[:option]]}
   end
 
   def next(show_trashed = false)

@@ -3,17 +3,11 @@ class VotesController < AuthorizedController
   include NestedResourceHelper
 
   def index
-    collection = Collection.new(
-      association: :votes,
-      group_by: 'http://schema.org/option',
-      id: url_for([get_parent_resource, :votes]),
-      member: policy_scope(Vote.joins(:edge).where(edges: {parent_id: get_parent_resource.edge.id})),
-      parent: get_parent_resource,
-      title: 'Votes'
-    )
+    skip_verify_policy_scoped(true)
     respond_to do |format|
       format.json_api do
-        render json: collection, include: {member: collection.member}
+        render json: get_parent_resource.vote_collection(collection_params),
+               include: [:members, views: [:members, views: :members]]
       end
     end
   end
@@ -133,6 +127,10 @@ class VotesController < AuthorizedController
   end
 
   private
+
+  def collection_params
+    params.permit(:page, filter: %i(option)).to_h
+  end
 
   def resource_by_id
     return super unless params[:action] == 'show' && params[:motion_id].present?

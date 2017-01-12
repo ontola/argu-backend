@@ -35,6 +35,14 @@ class Vote < ApplicationRecord
     "#{self.for} vote for #{parent_model.display_name}"
   end
 
+  def self.filter_query(filters)
+    options_map = HashWithIndifferentAccess.new
+    options_map['yes'] = :pro
+    options_map['other'] = :neutral
+    options_map['no'] = :con
+    {for: options_map[filters[:option]]}
+  end
+
   def for?(item)
     self.for.to_s == item.to_s
   end

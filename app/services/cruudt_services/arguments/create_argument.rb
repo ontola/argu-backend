@@ -1,6 +1,12 @@
 
 # frozen_string_literal: true
 class CreateArgument < PublishedCreateService
+  def initialize(parent, attributes: {}, options: {})
+    attributes[:argumentable_id] = parent.owner_id
+    attributes[:argumentable_type] = parent.owner_type
+    super
+  end
+
   private
 
   def after_save

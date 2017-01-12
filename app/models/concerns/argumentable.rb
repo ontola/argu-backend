@@ -3,8 +3,8 @@ module Argumentable
   extend ActiveSupport::Concern
 
   included do
-    edge_tree_has_many :arguments, -> { argument_comments }
-    edge_tree_has_many :top_arguments_con, (lambda do
+    has_many :arguments, -> { argument_comments }, as: :argumentable
+    has_many :top_arguments_con, (lambda do
       argument_comments
         .joins(:edge)
         .where(pro: false)
@@ -12,7 +12,7 @@ module Argumentable
         .order("edges.children_counts -> 'votes_pro' DESC")
         .limit(5)
     end), class_name: 'Argument'
-    edge_tree_has_many :top_arguments_pro, (lambda do
+    has_many :top_arguments_pro, (lambda do
       argument_comments
         .joins(:edge)
         .where(pro: true)
@@ -21,6 +21,19 @@ module Argumentable
         .limit(5)
     end), class_name: 'Argument'
     has_many :arguments_plain, class_name: 'Argument'
+
+    def argument_collection(opts = {})
+      Collection.new(
+        {
+          parent: self,
+          association: :arguments,
+          views: [
+            Collection.new(filter: {option: :yes}, title: 'Arguments pro'),
+            Collection.new(filter: {option: :no}, title: 'Arguments con')
+          ]
+        }.merge(opts)
+      )
+    end
 
     def invert_arguments
       false
@@ -39,7 +52,7 @@ module Argumentable
   module Serlializer
     extend ActiveSupport::Concern
     included do
-      has_many :arguments do
+      has_many :argument_collection do
         link(:self) do
           {
             href: "#{object.context_id}/arguments",
@@ -53,42 +66,6 @@ module Argumentable
           {
             '@type': 'argu:collectionAssociation',
             '@id': "#{href}/arguments"
-          }
-        end
-      end
-
-      has_many :top_arguments_pro do
-        link(:self) do
-          {
-            href: "#{object.context_id}/arguments?filter=pro",
-            meta: {
-              '@type': 'argu:topArgumentsPro'
-            }
-          }
-        end
-        meta do
-          href = object.context_id
-          {
-            '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/arguments?filter=pro"
-          }
-        end
-      end
-
-      has_many :top_arguments_con do
-        link(:self) do
-          {
-            href: "#{object.context_id}/arguments?filter=con",
-            meta: {
-              '@type': 'argu:topArgumentsCon'
-            }
-          }
-        end
-        meta do
-          href = object.context_id
-          {
-            '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/arguments?filter=con"
           }
         end
       end

@@ -41,6 +41,20 @@ class VoteEvent < ApplicationRecord
     parent_model
   end
 
+  def vote_collection(opts = {})
+    Collection.new(
+      {
+        parent: self,
+        association: :votes,
+        views: [
+          Collection.new(filter: {option: :yes}, title: 'Votes pro'),
+          Collection.new(filter: {option: :other}, title: 'Votes neutral'),
+          Collection.new(filter: {option: :no}, title: 'Votes con')
+        ]
+      }.merge(opts)
+    )
+  end
+
   def votes_pro_percentage
     vote_percentage children_count(:votes_pro)
   end

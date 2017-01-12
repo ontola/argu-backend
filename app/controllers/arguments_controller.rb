@@ -4,17 +4,11 @@ class ArgumentsController < AuthorizedController
   skip_before_action :check_if_registered, only: :index
 
   def index
-    collection = Collection.new(
-      association: :arguments,
-      group_by: 'http://schema.org/option',
-      id: url_for([get_parent_resource, :arguments]),
-      member: policy_scope(get_parent_resource.arguments),
-      parent: get_parent_resource,
-      title: 'Arguments'
-    )
+    skip_verify_policy_scoped(true)
     respond_to do |format|
       format.json_api do
-        render json: collection, include: {member: collection.member}
+        render json: get_parent_resource.argument_collection(collection_params),
+               include: [:members, views: [:members, views: :members]]
       end
     end
   end
@@ -184,6 +178,10 @@ class ArgumentsController < AuthorizedController
   def authenticated_resource!
     return super unless params[:action] == 'index'
     get_parent_resource
+  end
+
+  def collection_params
+    params.permit(:page, filter: %i(option)).to_h
   end
 
   def deserialize_params_options

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170110162841) do
+ActiveRecord::Schema.define(version: 20170112154533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,20 +71,21 @@ ActiveRecord::Schema.define(version: 20170110162841) do
 
   create_table "arguments", force: :cascade do |t|
     t.text     "content"
-    t.integer  "motion_id"
-    t.boolean  "pro",                      default: true
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.string   "title",        limit: 255
-    t.boolean  "is_trashed",               default: false
-    t.integer  "creator_id",                               null: false
+    t.integer  "argumentable_id"
+    t.boolean  "pro",                           default: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "title",             limit: 255
+    t.boolean  "is_trashed",                    default: false
+    t.integer  "creator_id",                                    null: false
     t.integer  "forum_id"
-    t.integer  "publisher_id",                             null: false
+    t.integer  "publisher_id",                                  null: false
+    t.string   "argumentable_type",                             null: false
+    t.index ["argumentable_id", "id", "pro"], name: "index_arguments_on_argumentable_id_and_id_and_pro", using: :btree
+    t.index ["argumentable_id", "id"], name: "index_arguments_on_argumentable_id_and_id", using: :btree
+    t.index ["argumentable_id", "is_trashed"], name: "index_arguments_on_argumentable_id_and_is_trashed", using: :btree
+    t.index ["argumentable_id"], name: "statement_id", using: :btree
     t.index ["id"], name: "index_arguments_on_id", using: :btree
-    t.index ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro", using: :btree
-    t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id", using: :btree
-    t.index ["motion_id", "is_trashed"], name: "index_arguments_on_motion_id_and_is_trashed", using: :btree
-    t.index ["motion_id"], name: "statement_id", using: :btree
   end
 
   create_table "authentications", force: :cascade do |t|

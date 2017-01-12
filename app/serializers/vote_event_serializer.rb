@@ -11,10 +11,10 @@ class VoteEventSerializer < BaseEdgeSerializer
     }
   end
 
-  has_many :votes do
+  has_one :vote_collection do
     link(:self) do
       {
-        href: "#{object.context_id}/votes",
+        href: "#{object.class.try(:context_id_factory)&.call(object)}/votes",
         meta: {
           '@type': 'argu:votes'
         }
@@ -22,7 +22,7 @@ class VoteEventSerializer < BaseEdgeSerializer
     end
     link(:related) do
       {
-        href: "#{object.class.context_id}/votes",
+        href: "#{object.class.try(:context_id_factory)&.call(object)}/votes",
         meta: {
           '@type': 'argu:VoteCollection'
         }
