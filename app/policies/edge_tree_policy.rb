@@ -224,4 +224,10 @@ class EdgeTreePolicy < RestrictivePolicy
   def session
     {a_tokens: context.a_tokens}
   end
+
+  private
+
+  def parent_policy
+    Pundit.policy(context, record.parent_model)
+  end
 end
