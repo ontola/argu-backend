@@ -12,12 +12,12 @@ class FavoritesControllerTest < ActionDispatch::IntegrationTest
   define_tests do
     hash = {}
     define_test(hash, :create, options: {parent: :freetown, differences: [['Favorite', 1]]}) do
-      user_types[:create].merge(user: exp_res(should: false))
+      user_types[:create].merge(user: exp_res(response: 302, should: false))
     end
     define_test(hash, :destroy, options: {differences: [['Favorite', -1]]}) do
       {
-        guest: exp_res(asserts: [assert_not_a_user], analytics: false),
-        user: exp_res(should: true)
+        guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
+        user: exp_res(response: 302, should: true)
       }
     end
   end

@@ -12,7 +12,7 @@ class Portal::PortalControllerTest < ActionController::TestCase
     sign_in user
 
     get :home
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################

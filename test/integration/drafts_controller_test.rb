@@ -11,7 +11,7 @@ class DraftsControllerTest < ActionDispatch::IntegrationTest
   test 'guest should not get index' do
     get drafts_user_path(user)
     assert_not_authorized
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################
@@ -23,7 +23,7 @@ class DraftsControllerTest < ActionDispatch::IntegrationTest
     sign_in other_user
     get drafts_user_path(user)
     assert_not_authorized
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'user should get index' do

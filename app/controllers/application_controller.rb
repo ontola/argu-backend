@@ -292,13 +292,9 @@ class ApplicationController < ActionController::Base
         render json_api_error(403, error_hash)
       end
       format.html do
-        redirect_location =
-          if request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
-            request.env['HTTP_REFERER']
-          else
-            root_path
-          end
-        redirect_to redirect_location, alert: exception.message
+        user = User.new(r: request.original_url, shortname: Shortname.new) if @resource.class != User
+        flash[:alert] = exception.message
+        render 'status/403', status: 403, locals: {resource: user, message: exception.message}
       end
     end
   end

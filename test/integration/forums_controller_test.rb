@@ -87,7 +87,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in
 
     get settings_forum_path(freetown)
-    assert_response 302
+    assert_response 403
     assert_not_authorized
   end
 
@@ -95,7 +95,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in
 
     get statistics_forum_path(freetown)
-    assert_response 302
+    assert_response 403
     assert_not_authorized
   end
 
@@ -129,7 +129,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_response 302
+    assert_response 403
     assert_not_authorized
   end
 
@@ -267,9 +267,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     get statistics_forum_path(holland)
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
-    follow_redirect!
-    assert_redirected_to forum_path(holland)
-    # assert_equal 2, assigns(:tags).length
+    assert_response 403
   end
 
   ####################################
@@ -295,8 +293,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     [:privacy, :managers].each do |tab|
       get settings_forum_path(holland),
           params: {tab: tab}
-      follow_redirect!
-      assert_redirected_to forum_path(holland)
+      assert_response 403
     end
   end
 

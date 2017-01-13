@@ -130,35 +130,32 @@ module Argu
         end
 
         assert_response results[:response]
-        if results[:should]
-          assert_redirected_to record
+        return unless results[:should]
+        assert_redirected_to record
 
-          assert assigns(:resource)
-          assert_equal forum_to, assigns(:resource).forum
-          forum_id = forum_to.id
-          case model_class
-          when Motion
-            assert assigns(:resource).arguments.count.positive?
-            assigns(:resource).arguments.pluck(:forum_id).each do |id|
-              assert_equal forum_id, id
-            end
-            assert assigns(:resource).question.blank?
-          when Question
-            assert record.forum != forum_to.id
-            assigns(:resource).motions.pluck(:forum_id).each do |id|
-              assert_equal record.forum.id, id
-            end
-            assert assigns(:resource).reload.motions.blank?
-          end
-          assert assigns(:resource).activities.count.positive?
-          assigns(:resource).activities.pluck(:forum_id).each do |id|
+        assert assigns(:resource)
+        assert_equal forum_to, assigns(:resource).forum
+        forum_id = forum_to.id
+        case model_class
+        when Motion
+          assert assigns(:resource).arguments.count.positive?
+          assigns(:resource).arguments.pluck(:forum_id).each do |id|
             assert_equal forum_id, id
           end
-          assigns(:resource).taggings.pluck(:forum_id).each do |id|
-            assert_equal forum_id, id
+          assert assigns(:resource).question.blank?
+        when Question
+          assert record.forum != forum_to.id
+          assigns(:resource).motions.pluck(:forum_id).each do |id|
+            assert_equal record.forum.id, id
           end
-        else
-          assert_response 302
+          assert assigns(:resource).reload.motions.blank?
+        end
+        assert assigns(:resource).activities.count.positive?
+        assigns(:resource).activities.pluck(:forum_id).each do |id|
+          assert_equal forum_id, id
+        end
+        assigns(:resource).taggings.pluck(:forum_id).each do |id|
+          assert_equal forum_id, id
         end
       end
 

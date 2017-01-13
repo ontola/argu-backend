@@ -99,7 +99,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   test 'guest should not get show when not public' do
     get page_path(page_non_public)
 
-    assert_redirected_to root_path
+    assert_response 403
     assert_nil assigns(:collection)
   end
 
@@ -178,7 +178,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     get settings_page_path(page)
 
-    assert_response 302
+    assert_response 403
     assert_equal page, assigns(:page)
   end
 
@@ -195,7 +195,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assert_redirected_to root_path
+    assert_response 403
     assert_equal page, assigns(:page)
     assert_equal page.profile.about, assigns(:page).profile.reload.about
   end

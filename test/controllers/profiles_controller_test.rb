@@ -51,7 +51,7 @@ class ProfilesControllerTest < ActionController::TestCase
 
     get :edit, params: {id: user2.url}
 
-    assert_response 302
+    assert_response 403
     assert_equal user2, assigns(:resource)
   end
 end

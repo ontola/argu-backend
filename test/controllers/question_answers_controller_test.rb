@@ -18,7 +18,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
             question_id: question
           }
         }
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'guest should not post create' do
@@ -32,7 +32,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
            }
          }
     assert_equal nil, assigns(:resource).motion.question_id
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################
@@ -49,7 +49,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
             question_id: question
           }
         }
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'user should not post create' do
@@ -64,7 +64,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
          }
     assert_equal nil, assigns(:resource).motion.question_id
 
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################

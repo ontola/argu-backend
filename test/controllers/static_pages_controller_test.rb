@@ -3,7 +3,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion,
-                      :dismiss_announcement, :context].freeze
+                      :dismiss_announcement, :context, :developers].freeze
 
   let(:user) { create(:user) }
   define_freetown
@@ -24,6 +24,9 @@ class StaticPagesControllerTest < ActionController::TestCase
       get action
       assert_response 302, "#{action} doesn't redirect"
     end
+
+    get :developers
+    assert_response 403, "developers doesn't 403"
   end
 
   test 'should get how_argu_works' do

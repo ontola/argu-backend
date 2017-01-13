@@ -1,0 +1,36 @@
+=set_title t('status.s_403.header')
+.col-1
+  .box
+    section
+      h1= t('status.s_403.header')
+      p= message
+      - if current_user.nil?
+        p= t('status.s_403.sign_in')
+        =semantic_form_for(resource, as: :user, url: oauth_token_path(host_url: params[:host_url].presence)) do |f|
+          .inspectlet-sensitive= f.inputs do
+            =f.input :email,
+                    placeholder: false,
+                    input_html: {name: 'username', autofocus: :autofocus, required: true}
+            =f.input :password,
+                    placeholder: false,
+                    hint: false,
+                    input_html: {name: 'password', required: true}
+            =hidden_field_tag :grant_type, 'password'
+            =hidden_field_tag :scope, 'user'
+            =f.input :r, as: :hidden
+            =f.actions do
+              =f.action :submit, as: :button, label: t('sign_in'), button_html: {id: 'log_in'}
+            ul.btns-devise
+              li= link_to t('sign_up'), new_user_registration_path(r: resource.r)
+              li= link_to t('forgot_password'), new_password_path(:user)
+              li= link_to t('no_confirmation_instructions'), new_confirmation_path(:user)
+      - if @additional_error_info.present?
+        p= t('status.extra_info', info_string: @additional_error_info)
+      p
+        =>t('status.mistaken')
+        =link_to t('status.let_us_know'), 'https://argu.freshdesk.com/support/tickets/new', target: '_blank', rel: 'nofollow'
+      p
+        a[href=t('status.s_404.reference_link_url') target="_blank"]= t('status.s_404.reference_link_body')
+  - if @quote.present?
+    .bigger.center
+      blockquote.blockquote--inline= @quote

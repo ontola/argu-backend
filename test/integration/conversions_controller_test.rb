@@ -61,7 +61,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
     get new_edge_conversion_url(motion.edge)
     assert_not_authorized
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'user should not post convert motion' do
@@ -73,14 +73,14 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
            }
          }
     assert_not_authorized
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'user should not get convert question' do
     sign_in user
     get new_edge_conversion_url(question.edge)
     assert_not_authorized
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'user should not post convert question' do
@@ -92,7 +92,7 @@ class ConversionsControllerTest < ActionDispatch::IntegrationTest
            }
          }
     assert_not_authorized
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################

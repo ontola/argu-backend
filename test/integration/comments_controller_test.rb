@@ -97,7 +97,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' for argument', options: options) do
       user_types[:create].merge(
-        guest: exp_res(asserts: [assert_not_a_user, assert_redirect_new_user_argument], analytics: false)
+        guest: exp_res(response: 302, asserts: [assert_not_a_user, assert_redirect_new_user_argument], analytics: false)
       )
     end
     options = {
@@ -107,7 +107,9 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' for blog_post', options: options) do
       user_types[:create].merge(
-        guest: exp_res(asserts: [assert_not_a_user, assert_redirect_new_user_blog_post], analytics: false)
+        guest: exp_res(response: 302,
+                       asserts: [assert_not_a_user, assert_redirect_new_user_blog_post],
+                       analytics: false)
       )
     end
     # @todo body is lost on errorneous post
@@ -117,51 +119,51 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       attributes: {body: 'C'}
     }
     define_test(hash, :create, suffix: ' erroneous', options: options) do
-      {manager: exp_res(asserts: [])}
+      {manager: exp_res(response: 302, asserts: [])}
     end
     define_test(hash, :show, asserts: [assert_redirect_argument]) do
       {
-        guest: exp_res(should: true),
-        user: exp_res(should: true),
-        member: exp_res(should: true),
-        moderator: exp_res(should: true),
-        manager: exp_res(should: true),
-        owner: exp_res(should: true),
-        staff: exp_res(should: true)
+        guest: exp_res(response: 302, should: true),
+        user: exp_res(response: 302, should: true),
+        member: exp_res(response: 302, should: true),
+        moderator: exp_res(response: 302, should: true),
+        manager: exp_res(response: 302, should: true),
+        owner: exp_res(response: 302, should: true),
+        staff: exp_res(response: 302, should: true)
       }
     end
     define_test(hash, :show, suffix: ' for blog_post', options: {record: :blog_post_subject}) do
       {
-        guest: exp_res(should: true, asserts: [assert_redirect_blog_post]),
-        user: exp_res(should: true, asserts: [assert_redirect_blog_post]),
-        member: exp_res(should: true, asserts: [assert_redirect_blog_post]),
-        moderator: exp_res(should: true, asserts: [assert_redirect_blog_post]),
-        manager: exp_res(should: true, asserts: [assert_redirect_blog_post]),
-        owner: exp_res(should: true, asserts: [assert_redirect_blog_post]),
-        staff: exp_res(should: true, asserts: [assert_redirect_blog_post])
+        guest: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        user: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        member: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        moderator: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        manager: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        owner: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
+        staff: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post])
       }
     end
     define_test(hash, :show, suffix: ' cairo', options: {record: :cairo_subject}) do
       {
-        guest: exp_res(asserts: [assert_redirect_root]),
-        user: exp_res(asserts: [assert_redirect_root]),
-        member: exp_res(asserts: [assert_redirect_root]),
-        moderator: exp_res(asserts: [assert_redirect_root]),
-        manager: exp_res(asserts: [assert_redirect_root]),
-        owner: exp_res(asserts: [assert_redirect_root]),
-        cairo_member: exp_res(should: true, asserts: [assert_redirect_argument]),
-        staff: exp_res(should: true, asserts: [assert_redirect_argument])
+        guest: exp_res(response: 403),
+        user: exp_res(response: 403),
+        member: exp_res(response: 403),
+        moderator: exp_res(response: 403),
+        manager: exp_res(response: 403),
+        owner: exp_res(response: 403),
+        cairo_member: exp_res(response: 302, should: true, asserts: [assert_redirect_argument]),
+        staff: exp_res(response: 302, should: true, asserts: [assert_redirect_argument])
       }
     end
     define_test(hash, :show, suffix: ' cairo', options: {record: :second_cairo_subject}) do
-      {cairo_member: exp_res(asserts: [assert_redirect_root])}
+      {cairo_member: exp_res(response: 403)}
     end
     define_test(hash, :show, suffix: ' non-existent', options: {record: 'none'}) do
       {user: exp_res(response: 404)}
     end
     define_test(hash, :edit) do
       {
-        guest: exp_res(asserts: [assert_not_a_user]),
+        guest: exp_res(response: 302, asserts: [assert_not_a_user]),
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
         creator: exp_res(should: true, response: 200),
@@ -173,10 +175,10 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     end
     define_test(hash, :update) do
       {
-        guest: exp_res(asserts: [assert_not_a_user]),
+        guest: exp_res(response: 302, asserts: [assert_not_a_user]),
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
-        creator: exp_res(should: true),
+        creator: exp_res(response: 302, should: true),
         moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized]),
         owner: exp_res(asserts: [assert_not_authorized]),

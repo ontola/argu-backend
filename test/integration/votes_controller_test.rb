@@ -530,7 +530,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
 
     get new_motion_vote_path(cairo_motion)
 
-    assert_response 302
+    assert_response 403
     assert_not_authorized
   end
 

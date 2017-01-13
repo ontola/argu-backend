@@ -37,13 +37,13 @@ class DiscussionsControllerTest < ActionController::TestCase
   test 'guest should not get new on unpublished project' do
     get :new, params: {project_id: unpublished_project}
 
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'guest should not get new on closed forum project' do
     get :new, params: {project_id: helsinki_project}
 
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################
@@ -64,7 +64,7 @@ class DiscussionsControllerTest < ActionController::TestCase
   test 'spectator should not get new on unpublished project' do
     get :new, params: {project_id: unpublished_project, at: helsinki_key.access_token}
 
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   test 'spectator should get new on closed forum project' do
@@ -107,7 +107,7 @@ class DiscussionsControllerTest < ActionController::TestCase
 
     get :new, params: {project_id: unpublished_project}
 
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################
@@ -137,7 +137,7 @@ class DiscussionsControllerTest < ActionController::TestCase
 
     get :new, params: {project_id: unpublished_project}
 
-    assert_redirected_to root_path
+    assert_response 403
   end
 
   ####################################

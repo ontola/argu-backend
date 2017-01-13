@@ -68,13 +68,13 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'user should not post approve' do
     sign_in user
-    general_decide 302
+    general_decide 403
     assert_not_authorized
   end
 
   test 'user should not patch update approved' do
     sign_in user
-    general_update_approved 302, false
+    general_update_approved 403, false
     assert_not_authorized
   end
 
@@ -90,12 +90,12 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'member should not post approve' do
     sign_in member
-    general_decide
+    general_decide 403
   end
 
   test 'member should not patch update approved' do
     sign_in member
-    general_update_approved 302, false
+    general_update_approved 403, false
   end
 
   ####################################
@@ -139,7 +139,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
            state: Decision.states[:forwarded])
     sign_in actor
 
-    general_decide 302, false
+    general_decide 403, false
   end
 
   test 'actor should not post forward to nil' do
@@ -159,7 +159,7 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'actor should not patch update approved' do
     sign_in actor
-    general_update_approved 302, false
+    general_update_approved 403, false
   end
 
   ####################################
@@ -194,12 +194,12 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'manager should not post approve' do
     sign_in manager
-    general_decide 302, false
+    general_decide 403, false
   end
 
   test 'manager should not post reject' do
     sign_in manager
-    general_decide 302, false, 'rejected'
+    general_decide 403, false, 'rejected'
   end
 
   test 'manager should post forward' do
@@ -224,12 +224,12 @@ class DecisionsControllerTest < ActionDispatch::IntegrationTest
 
   test 'staff should not post update approve' do
     sign_in staff
-    general_decide 302, false
+    general_decide 403, false
   end
 
   test 'staff should not post update rejected' do
     sign_in staff
-    general_decide 302, false, 'rejected'
+    general_decide 403, false, 'rejected'
   end
 
   test 'staff should post forward' do

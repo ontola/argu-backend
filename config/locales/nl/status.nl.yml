@@ -10,6 +10,11 @@ nl:
       body: "Het verzoek bevat een fout waardoor deze niet verwerkt kan worden, check de URL parameters en probeer de pagina welke naar deze verwees te herladen."
       reference_link_url: "https://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-responses"
       reference_link_body: "Klik hier om meer te leren over HTTP en status 400 :)"
+    s_403:
+      header: "Nit toegestaan (403 Forbidden)"
+      sign_in: "Deze actie is mogelijk wel toegestaan nadat je bent ingelogd:"
+      reference_link_url: "https://nl.wikipedia.org/wiki/Error_403"
+      reference_link_body: "Klik hier om meer te leren over HTTP en status 403 :)"
     s_404:
       header: "Item niet gevonden (404 Not Found)"
       body: "De link bestaat niet. Dit kan zijn doordat het object wat je zoekt is verwijderd of nooit bestaan heeft."

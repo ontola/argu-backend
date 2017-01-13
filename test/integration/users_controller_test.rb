@@ -23,7 +23,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'guest should not get show when not public' do
     get user_path(user_non_public)
 
-    assert_redirected_to root_path
+    assert_response 403
     assert_nil assigns(:collection)
   end
 

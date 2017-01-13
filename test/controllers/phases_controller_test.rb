@@ -23,7 +23,7 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   test 'guest should not get show unpublished' do
-    general_show_unpublished
+    general_show_unpublished 403
   end
 
   test 'guest should not get edit' do
@@ -46,18 +46,18 @@ class PhasesControllerTest < ActionController::TestCase
 
   test 'user should not get show unpublished' do
     sign_in user
-    general_show_unpublished
+    general_show_unpublished 403
   end
 
   test 'user should not get edit' do
     sign_in user
-    general_edit 302
+    general_edit 403
     assert_not_authorized
   end
 
   test 'user should not patch update' do
     sign_in user
-    general_update 302
+    general_update 403
     assert_not_authorized
   end
 
@@ -73,17 +73,17 @@ class PhasesControllerTest < ActionController::TestCase
 
   test 'member should not get show unpublished' do
     sign_in member
-    general_show_unpublished
+    general_show_unpublished 403
   end
 
   test 'member should not get edit' do
     sign_in member
-    general_edit
+    general_edit 403
   end
 
   test 'member should not patch update' do
     sign_in member
-    general_update
+    general_update 403
   end
 
   ####################################

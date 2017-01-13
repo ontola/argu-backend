@@ -43,11 +43,7 @@ module Argu
           'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier'
         end
 
-        def assert_redirect_root
-          'assert_redirected_to root_path'
-        end
-
-        def exp_res(should: false, response: 302, asserts: [], analytics: nil)
+        def exp_res(should: false, response: 403, asserts: [], analytics: nil)
           {should: should, response: response, asserts: asserts, analytics: analytics}
         end
       end

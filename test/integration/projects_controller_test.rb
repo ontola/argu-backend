@@ -56,13 +56,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' draft', options: options) do
       {
-        guest: exp_res(asserts: [assert_not_a_user], analytics: false),
+        guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
         user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
-        moderator: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
-        manager: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
-        owner: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published]),
-        staff: exp_res(should: true, asserts: [assert_has_drafts, assert_not_published])
+        moderator: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
+        manager: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
+        owner: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
+        staff: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published])
       }
     end
     options = {
@@ -72,10 +72,10 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {
-        moderator: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published]),
-        manager: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published]),
-        owner: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published]),
-        staff: exp_res(should: true, asserts: [assert_no_drafts, assert_is_published])
+        moderator: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
+        manager: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
+        owner: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
+        staff: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published])
       }
     end
     options = {
@@ -96,13 +96,13 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
-      {manager: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
+      {manager: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :edit) do
       user_types[:edit].except(:creator).merge(moderator: exp_res(should: true, response: 200))
     end
     define_test(hash, :update) do
-      user_types[:update].except(:creator).merge(moderator: exp_res(should: true))
+      user_types[:update].except(:creator).merge(moderator: exp_res(response: 302, should: true))
     end
     define_test(hash, :update, suffix: ' erroneous', options: {attributes: {title: 'Project', content: 'C'}}) do
       {manager: exp_res(response: 200, asserts: [assert_has_content, assert_has_title])}
@@ -115,11 +115,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :update, suffix: ' with cover_photo', options: options) do
-      {manager: exp_res(should: true, asserts: [assert_photo_identifier, assert_has_photo])}
+      {manager: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_photo])}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('projects', 'trash_success')}) do
-      user_types[:trash].merge(moderator: exp_res(should: true))
+      user_types[:trash].merge(moderator: exp_res(response: 302, should: true))
     end
   end
 
@@ -206,8 +206,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     sign_in discussion_member
 
     moderator.shortname.update(shortname: 'moderator_name')
-    general_new(results: {response: 302}, parent: :freetown)
-    general_create(results: {response: 302, should: false},
+    general_new(results: {response: 403}, parent: :freetown)
+    general_create(results: {response: 403, should: false},
                    parent: :freetown,
                    attributes: attributes_for(
                      :project,

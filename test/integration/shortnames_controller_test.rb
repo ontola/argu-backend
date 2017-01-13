@@ -50,19 +50,19 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
 
   test 'member should not post create' do
     sign_in member
-    general_create(302, [['Shortname.count', 0]])
+    general_create(403, [['Shortname.count', 0]])
     assert_not_authorized
   end
 
   test 'member should not put update' do
     sign_in member
-    general_update
+    general_update(403)
   end
 
   test 'member should not delete destroy' do
     subject
     sign_in member
-    general_destroy
+    general_destroy(403)
   end
 
   ####################################
@@ -79,7 +79,7 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
     create(:discussion_shortname, forum: freetown, owner: motion)
     assert freetown.max_shortname_count, freetown.shortnames.count
     sign_in manager
-    general_create 302, [['Shortname.count', 0]]
+    general_create 403, [['Shortname.count', 0]]
   end
 
   test 'manager should put update' do
