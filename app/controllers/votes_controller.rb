@@ -142,7 +142,13 @@ class VotesController < AuthorizedController
   end
 
   def for_param
-    param = params[:vote].try(:[], :for)
+    if params[:for].is_a?(String) && params[:for].present?
+      # Still used for upvoting arguments
+      warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
+      param = params[:for]
+    elsif params[:vote].is_a?(ActionController::Parameters)
+      param = params[:vote][:for]
+    end
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
