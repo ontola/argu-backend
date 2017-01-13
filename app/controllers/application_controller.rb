@@ -335,7 +335,10 @@ class ApplicationController < ActionController::Base
     @quote = (Setting.get(:quotes) || '').split(';').sample
     @additional_error_info = exception.to_s
     respond_to do |format|
-      format.html { render 'status/404', status: 404 }
+      format.html do
+        user = User.new(r: request.original_url, shortname: Shortname.new) if @resource.class != User
+        render 'status/404', status: 404, locals: {resource: user}
+      end
       format.js { head 404 }
       format.json do
         render status: 404,

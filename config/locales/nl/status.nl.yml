@@ -13,6 +13,7 @@ nl:
     s_404:
       header: "Item niet gevonden (404 Not Found)"
       body: "De link bestaat niet. Dit kan zijn doordat het object wat je zoekt is verwijderd of nooit bestaan heeft."
+      sign_in: "Dit item is mogelijk wel beschikbaar nadat je bent ingelogd:"
       reference_link_url: "https://nl.wikipedia.org/wiki/Error_404"
       reference_link_body: "Klik hier om meer te leren over HTTP en status 404 :)"
     s_413:

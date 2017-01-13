@@ -14,6 +14,7 @@ en:
     s_404:
       header: "Item not found (404 Not Found)"
       body: "The link does not exist. This could be because the object you're looking for is deleted or never existed."
+      sign_in: "This item might be available after signing in:"
       reference_link_url: "https://en.wikipedia.org/wiki/HTTP_404"
       reference_link_body: "Click here to learn more about HTTP & status 404 :)"
     s_413:
