@@ -78,6 +78,8 @@ class Profile < ApplicationRecord
   def forum_ids(role = nil)
     @forum_ids ||= {}
     @forum_ids[role] ||= granted_record_ids('Forum', role)
+                           .concat(Forum.where(page: granted_record_ids('Page', role)).ids)
+                           .uniq
   end
 
   def joined_forum_ids(role = nil)
