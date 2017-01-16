@@ -11,6 +11,7 @@ class Vote < ApplicationRecord
   before_save :decrement_previous_counter_cache, unless: :new_record?
 
   parentable :argument, :vote_event
+  filterable option: {key: :for, values: {yes: :pro, other: :neutral, no: :con}}
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
   counter_cache votes_pro: {for: Vote.fors[:pro]},

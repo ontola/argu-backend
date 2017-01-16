@@ -62,6 +62,7 @@ class MotionsController < AuthorizedController
         render json: authenticated_resource,
                include: [
                  argument_collection: [:members, views: [:members, views: :members]],
+                 vote_event_collection: {members: {vote_collection: [:members, views: [:members, views: :members]]}}
                ]
       end
     end

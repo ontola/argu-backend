@@ -3,17 +3,11 @@ class VoteEventsController < AuthorizedController
   include NestedResourceHelper
 
   def index
-    collection = Collection.new(
-      association: :vote_events,
-      id: url_for([get_parent_resource, :vote_events]),
-      member: policy_scope(get_parent_resource.vote_events),
-      parent: get_parent_resource,
-      title: 'VoteEvents'
-    )
-
+    skip_verify_policy_scoped(true)
     respond_to do |format|
       format.json_api do
-        render json: collection, include: {member: collection.member}
+        render json: get_parent_resource.vote_event_collection(collection_options),
+               include: [members: {vote_collection: {views: [:members, views: :members]}}]
       end
     end
   end
@@ -21,7 +15,7 @@ class VoteEventsController < AuthorizedController
   def show
     respond_to do |format|
       format.json_api do
-        render json: authenticated_resource
+        render json: authenticated_resource, include: [vote_collection: [:members, views: [:members, views: :members]]]
       end
     end
   end

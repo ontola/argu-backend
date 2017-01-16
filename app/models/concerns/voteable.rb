@@ -22,25 +22,35 @@ module Voteable
     def default_vote_event
       @default_vote_event ||= VoteEvent.joins(:edge).where(edges: {parent_id: edge.id}).find_by(group_id: -1)
     end
+
+    def vote_event_collection(opts = {})
+      Collection.new(
+        {
+          parent: self,
+          association: :vote_events
+        }.merge(opts)
+      )
+    end
   end
 
   module Serlializer
     extend ActiveSupport::Concern
     included do
-      has_many :vote_events do
+      has_one :vote_event_collection do
         link(:self) do
           {
             href: "#{object.context_id}/vote_events",
             meta: {
-              '@type': 'argu:voteEvents'
+              '@type': 'argu:vote_events'
             }
           }
         end
-        meta do
-          href = object.context_id
+        link(:related) do
           {
-            '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/vote_events"
+            href: "#{object.context_id}/vote_events",
+            meta: {
+              '@type': 'argu:VoteEventCollection'
+            }
           }
         end
       end
