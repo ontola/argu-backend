@@ -36,7 +36,12 @@ class ArgumentsController < AuthorizedController
                locals: {argument: authenticated_resource}
       end
       format.json { render json: authenticated_resource }
-      format.json_api { render json: authenticated_resource, include: :parent }
+      format.json_api do
+      render json: authenticated_resource,
+             include: [
+               comment_collection: [:members, views: [:members, views: :members]]
+             ]
+      end
     end
   end
 
