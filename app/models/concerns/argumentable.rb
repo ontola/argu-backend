@@ -22,6 +22,19 @@ module Argumentable
     end), class_name: 'Argument'
     edge_tree_has_many :arguments_plain, -> { all }, class_name: 'Argument'
 
+    def argument_collection(opts = {})
+      Collection.new(
+        {
+          parent: self,
+          association: :arguments,
+          views: [
+            Collection.new(filter: {option: :yes}, title: I18n.t('arguments.collection.pro'), pagination: true),
+            Collection.new(filter: {option: :no}, title: I18n.t('arguments.collection.con'), pagination: true)
+          ]
+        }.merge(opts)
+      )
+    end
+
     def invert_arguments
       false
     end
@@ -39,7 +52,7 @@ module Argumentable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_many :arguments do
+      has_one :argument_collection do
         link(:self) do
           {
             href: "#{object.context_id}/arguments",
