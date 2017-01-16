@@ -90,9 +90,6 @@ class BannersController < AuthorizedController
   private
 
   def new_resource_from_params
-    controller_name
-      .classify
-      .constantize
-      .new resource_new_params
+    controller_class.new resource_new_params
   end
 end
