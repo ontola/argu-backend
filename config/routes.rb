@@ -153,6 +153,7 @@ Rails.application.routes.draw do
             concerns: [:blog_postable, :moveable, :flowable, :trashable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
+    resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
     get :search, to: 'motions#search', on: :member
   end
 
@@ -309,6 +310,9 @@ Rails.application.routes.draw do
     end
   end
   resources :forums, only: [:show, :update], path: 'f', as: :canonical_forum
+  resources :forums, only: [], path: 'f' do
+    resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
+  end
 
   get '/ns/core/:model', to: 'static_pages#context'
 

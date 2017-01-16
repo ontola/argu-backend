@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Forum < ApplicationRecord
   include Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable, Parentable,
-          Loggable, Ldable
+          Loggable, Motionable, Ldable
 
   belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
@@ -15,6 +15,8 @@ class Forum < ApplicationRecord
   has_many :motions, inverse_of: :forum, dependent: :destroy
   has_many :projects, inverse_of: :forum, dependent: :destroy
   has_many :questions, inverse_of: :forum, dependent: :destroy
+
+  has_collection :motions, pagination: true, url_constructor: :forum_canonical_motions_url
 
   # @private
   attr_accessor :tab, :active
