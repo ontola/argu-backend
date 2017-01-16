@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class CollectionSerializer < BaseSerializer
-  attributes :member, :title, :group_by
+  attributes :title
 
   has_one :parent do
     obj = object.parent
@@ -31,17 +31,23 @@ class CollectionSerializer < BaseSerializer
     end
     obj
   end
-
-  def member
-    object.member.map do |i|
-      h = {'@id': i.context_id}
-      if i.respond_to?(:pro)
-        h[:pro] = i.pro
-        h['@context'] = {
-          pro: 'schema:option'
+  has_many :views do
+    link(:self) do
+      {
+        meta: {
+          '@type': 'argu:views'
         }
-      end
-      h
+      }
+    end
+  end
+
+  has_many :members do
+    link(:self) do
+      {
+        meta: {
+          '@type': 'argu:members'
+        }
+      }
     end
   end
 end

@@ -71,6 +71,14 @@ class AuthorizedController < ApplicationController
                  .reject { |b| banners[b.identifier] == 'hidden' }
   end
 
+  def collection_options
+    params
+      .permit(:page, filter: controller_class.filter_options.keys)
+      .to_h
+      .merge(user_context: user_context)
+      .to_options
+  end
+
   def controller_class
     controller_name.classify.constantize
   end
