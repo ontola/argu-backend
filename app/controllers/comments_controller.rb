@@ -4,16 +4,11 @@ class CommentsController < AuthorizedController
   skip_before_action :check_if_registered, only: :index
 
   def index
-    collection = Collection.new(
-      association: :motions,
-      id: url_for([get_parent_resource, :comments]),
-      member: policy_scope(get_parent_resource.filtered_threads(show_trashed?, params[:page])),
-      parent: get_parent_resource,
-      title: 'Comments'
-    )
+    skip_verify_policy_scoped(true)
     respond_to do |format|
       format.json_api do
-        render json: collection, include: {member: collection.member}
+        render json: get_parent_resource.comment_collection(collection_options),
+               include: [:members, views: [:members, views: :members]]
       end
     end
   end
