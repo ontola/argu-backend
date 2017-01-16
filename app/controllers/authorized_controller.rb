@@ -13,17 +13,6 @@ class AuthorizedController < ApplicationController
     authorize authenticated_resource, "#{params[:action].chomp('!')}?"
   end
 
-  def collect_banners
-    @banners if @banners.present?
-
-    banners = stubborn_hgetall('banners') || {}
-    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
-    forum = authenticated_resource.persisted_edge.get_parent(:forum)&.owner
-    return unless forum.present?
-    @banners = policy_scope(forum.banners.published)
-                 .reject { |b| banners[b.identifier] == 'hidden' }
-  end
-
   # A version of {authenticated_resource!} that raises if the record cannot be found
   # @see {authenticated_resource!}
   # @raise [ActiveRecord::RecordNotFound]
@@ -59,6 +48,21 @@ class AuthorizedController < ApplicationController
   def check_if_registered
     return if current_profile.present?
     raise Argu::NotAUserError.new(r: redirect_url)
+  end
+
+  def collect_banners
+    @banners if @banners.present?
+
+    banners = stubborn_hgetall('banners') || {}
+    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
+    forum = authenticated_resource.persisted_edge.get_parent(:forum)&.owner
+    return unless forum.present?
+    @banners = policy_scope(forum.banners.published)
+                 .reject { |b| banners[b.identifier] == 'hidden' }
+  end
+
+  def controller_class
+    controller_name.classify.constantize
   end
 
   # Prepares a memoized {CreateService} for the relevant model for use in controller#create
@@ -108,10 +112,7 @@ class AuthorizedController < ApplicationController
     resource = get_parent_resource
       .edge
       .children
-      .new(owner: controller_name
-                    .classify
-                    .constantize
-                    .new(resource_new_params),
+      .new(owner: controller_class.new(resource_new_params),
            parent: get_parent_resource.edge)
       .owner
     if resource.is_publishable?
@@ -147,10 +148,7 @@ class AuthorizedController < ApplicationController
   # Searches the current primary resource by its id
   # @return [ActiveRecord::Base, nil] The resource by its id
   def resource_by_id
-    @_resource_by_id ||= controller_name
-                         .classify
-                         .constantize
-                         .find_by id: resource_id
+    @_resource_by_id ||= controller_class.find_by(id: resource_id)
   end
 
   # Searches the current primary resource by its id, raises if the record cannot be found
