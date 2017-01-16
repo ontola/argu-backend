@@ -64,6 +64,9 @@ en:
       restored: "The argument has been restored."
       created: "The argument has been placed."
       updated: "The argument has been updated."
+    collection:
+      'yes': "Advantages"
+      'no': "Problems"
   activerecord:
     errors:
       models:

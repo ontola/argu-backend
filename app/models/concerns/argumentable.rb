@@ -22,6 +22,8 @@ module Argumentable
     end), class_name: 'Argument'
     edge_tree_has_many :arguments_plain, -> { all }, class_name: 'Argument'
 
+    has_collection :arguments, pagination: true
+
     def invert_arguments
       false
     end
@@ -39,7 +41,7 @@ module Argumentable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_many :arguments do
+      has_one :argument_collection do
         link(:self) do
           {
             href: "#{object.context_id}/arguments",
@@ -55,6 +57,10 @@ module Argumentable
             '@id': "#{href}/arguments"
           }
         end
+      end
+
+      def argument_collection
+        object.argument_collection(user_context: scope)
       end
     end
   end

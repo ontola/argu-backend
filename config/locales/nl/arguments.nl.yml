@@ -66,6 +66,9 @@ nl:
       restored: "Het argument is teruggeplaatst."
       created: "Het argument is geplaatst."
       updated: "Het argument is gewijzigd."
+    collection:
+      'yes': "Voordelen"
+      'no': "Problemen"
   activerecord:
     errors:
       models:
