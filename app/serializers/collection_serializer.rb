@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class CollectionSerializer < BaseSerializer
-  attributes :member, :title, :group_by
+  attributes :title
 
   has_one :parent do
     obj = object.parent
@@ -31,16 +31,23 @@ class CollectionSerializer < BaseSerializer
     end
     obj
   end
+  has_many :views do
+    link(:self) do
+      {
+        meta: {
+          '@type': 'argu:views'
+        }
+      }
+    end
+  end
 
-  def member
-    object.member.map do |i|
-      h = i.respond_to?(:pro) ? {pro: i.pro} : {}
-      h.merge(
-        '@context': {
-          pro: 'schema:option'
-        },
-        '@id': i.context_id
-      )
+  has_many :members do
+    link(:self) do
+      {
+        meta: {
+          '@type': 'argu:members'
+        }
+      }
     end
   end
 end

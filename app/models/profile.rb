@@ -42,7 +42,7 @@ class Profile < ApplicationRecord
   auto_strip_attributes :name, squish: true
   auto_strip_attributes :about, nullify: false
 
-  def as_json(options)
+  def as_json(options = {})
     # Hide profileable for the more friendly actor
     super(options.merge(except: [:profileable, :profileable_type, :profileable_id], methods: [:actor_type, :actor_id]))
   end
