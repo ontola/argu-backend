@@ -7,6 +7,8 @@ class VoteEvent < ApplicationRecord
   belongs_to :publisher, class_name: 'User', required: true
   edge_tree_has_many :votes
 
+  has_collection :votes, pagination: true
+
   validate :ends_at_after_starts_at
 
   contextualize_as_type 'argu:VoteEvent'

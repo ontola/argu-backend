@@ -6,6 +6,7 @@ module Voteable
   included do
     has_many :votes, as: :voteable, dependent: :destroy
     edge_tree_has_many :vote_events
+    has_collection :vote_events
 
     after_create :create_default_vote_event
 
@@ -27,7 +28,7 @@ module Voteable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_many :vote_events do
+      has_one :vote_event_collection do
         link(:self) do
           {
             href: "#{object.context_id}/vote_events",
@@ -36,13 +37,18 @@ module Voteable
             }
           }
         end
-        meta do
-          href = object.context_id
+        link(:related) do
           {
-            '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/vote_events"
+            href: "#{object.context_id}/vote_events",
+            meta: {
+              '@type': 'argu:VoteEventCollection'
+            }
           }
         end
+      end
+
+      def vote_event_collection
+        object.vote_event_collection(user_context: scope)
       end
     end
   end

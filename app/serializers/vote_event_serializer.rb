@@ -11,7 +11,7 @@ class VoteEventSerializer < BaseEdgeSerializer
     }
   end
 
-  has_many :votes do
+  has_one :vote_collection do
     link(:self) do
       {
         href: "#{object.context_id}/votes",
@@ -28,5 +28,9 @@ class VoteEventSerializer < BaseEdgeSerializer
         }
       }
     end
+  end
+
+  def vote_collection
+    object.vote_collection(user_context: scope)
   end
 end
