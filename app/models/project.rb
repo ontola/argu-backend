@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Project < ApplicationRecord
   include Placeable, Flowable, Trashable, HasLinks, BlogPostable, ActivePublishable,
-          Parentable, Photoable, Loggable, Timelineable, PublicActivity::Common
+          Parentable, Photoable, Loggable, Timelineable, PublicActivity::Common, Motionable
 
   # For Rails 5 attributes
   # attribute :title, :string

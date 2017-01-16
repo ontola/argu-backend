@@ -4,17 +4,11 @@ class MotionsController < AuthorizedController
   skip_before_action :check_if_registered, only: :index
 
   def index
-    parent_resource = Question.includes(:motions).find(params[:question_id])
-    collection = Collection.new(
-      association: :motions,
-      id: url_for([parent_resource, :motions]),
-      member: policy_scope(parent_resource.motions),
-      parent: parent_resource,
-      title: 'Motions'
-    )
+    skip_verify_policy_scoped(true)
     respond_to do |format|
       format.json_api do
-        render json: collection
+        render json: get_parent_resource.motion_collection(collection_options),
+               include: [:members, views: [:members, views: :members]]
       end
     end
   end
