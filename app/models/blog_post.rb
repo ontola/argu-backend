@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class BlogPost < ApplicationRecord
   include Trashable, Flowable, Placeable, HasLinks, Loggable, PublicActivity::Common,
-          ActivePublishable, Parentable, Happenable, Commentable
+          ActivePublishable, Parentable, Happenable, Commentable, Ldable
 
   # For Rails 5 attributes
   # attribute :state, :enum
@@ -15,6 +15,11 @@ class BlogPost < ApplicationRecord
              class_name: 'Profile'
   belongs_to :publisher,
              class_name: 'User'
+
+  contextualize_as_type 'argu:BlogPost'
+  contextualize_with_id { |r| Rails.application.routes.url_helpers.blog_post_url(r, protocol: :https) }
+  contextualize :display_name, as: 'schema:name'
+  contextualize :description, as: 'schema:text'
 
   counter_cache true
   parentable :motion, :question, :project
