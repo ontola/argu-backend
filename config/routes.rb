@@ -299,6 +299,9 @@ Rails.application.routes.draw do
     end
   end
   resources :forums, only: [:show, :update], path: 'f', as: :canonical_forum
+  resources :forums, only: [], path: 'f' do
+    resources :motions, path: 'motions', only: [:index]
+  end
 
   get '/ns/core/:model', to: 'static_pages#context'
 

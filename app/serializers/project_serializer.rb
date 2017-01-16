@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class ProjectSerializer < BaseSerializer
+  include Motionable::Serlializer
   attributes :display_name, :content
 
   has_many :phases

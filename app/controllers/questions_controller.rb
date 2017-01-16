@@ -25,7 +25,12 @@ class QuestionsController < AuthorizedController
       format.html { render locals: {question: authenticated_resource} } # show.html.erb
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
-      format.json_api { render json: authenticated_resource, include: '*' }
+      format.json_api do
+        render json: authenticated_resource,
+               include: [
+                 motion_collection: [:members, views: [:members, views: :members]]
+               ]
+      end
     end
   end
 
