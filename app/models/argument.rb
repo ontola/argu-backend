@@ -5,14 +5,15 @@ class Argument < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
 
   counter_cache arguments_pro: {pro: true}, arguments_con: {pro: false}
+  filterable option: {key: :pro, values: {yes: true, no: false}}
   paginates_per 10
 
   validate :assert_tenant
 
   scope :argument_comments, lambda {
     includes(:comment_threads)
+      .joins(:edge)
       .order("edges.children_counts -> 'votes_pro' DESC")
-      .references(:comment_threads)
   }
 
   contextualize_as_type 'argu:Argument'

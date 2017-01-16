@@ -13,7 +13,9 @@ class LinkedRecordsController < AuthorizedController
         format.html { redirect_to url_for(authenticated_resource!.iri) }
         format.json_api do
           render json: authenticated_resource!,
-                 include: [:arguments, :top_arguments_pro, :top_arguments_con, :vote_events]
+                 include: [
+                   argument_collection: [:members, views: [:members, views: :members]],
+                 ]
         end
       end
     end

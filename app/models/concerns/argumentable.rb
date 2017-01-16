@@ -22,6 +22,20 @@ module Argumentable
     end), class_name: 'Argument'
     has_many :arguments_plain, class_name: 'Argument'
 
+    def argument_collection(opts = {})
+      Collection.new(
+        {
+          parent: self,
+          association: :arguments,
+          pagination: true,
+          views: [
+            Collection.new(filter: {option: :yes}, title: I18n.t('arguments.collection.pro')),
+            Collection.new(filter: {option: :no}, title: I18n.t('arguments.collection.con'))
+          ]
+        }.merge(opts)
+      )
+    end
+
     def invert_arguments
       false
     end
@@ -39,7 +53,7 @@ module Argumentable
   module Serlializer
     extend ActiveSupport::Concern
     included do
-      has_many :arguments do
+      has_one :argument_collection do
         link(:self) do
           {
             href: "#{object.context_id}/arguments",
