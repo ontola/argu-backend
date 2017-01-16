@@ -14,6 +14,10 @@ class CurrentActor
     end
   end
 
+  def context_id
+    actor.try(:id)
+  end
+
   def current_forum
     return {} unless actor.present?
     {
