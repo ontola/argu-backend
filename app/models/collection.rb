@@ -13,6 +13,7 @@ class Collection
   contextualize_as_type 'argu:Collection'
   contextualize_with_id(&:id)
   contextualize :title, as: 'schema:name'
+  contextualize :total_count, as: 'argu:totalCount'
 
   # prevents a `stack level too deep`
   def as_json(options = {})
@@ -52,6 +53,10 @@ class Collection
                            default: association_class.name.tableize.humanize))
   end
 
+  def total_count
+    members&.count || parent_total_count
+  end
+
   private
 
   def child_with_options(options)
@@ -87,6 +92,10 @@ class Collection
 
   def paginate?
     pagination && page.nil?
+  end
+
+  def parent_total_count
+    policy_scope(parent.try(association).try(:joins, :edge).try(:where, filter_query)).try(:count)
   end
 
   def query_opts
