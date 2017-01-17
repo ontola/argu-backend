@@ -285,6 +285,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/csrf', to: 'csrf#show'
+
   get :discover, to: 'forums#discover', as: :discover_forums
   constraints(Argu::ForumsConstraint) do
     resources :forums,

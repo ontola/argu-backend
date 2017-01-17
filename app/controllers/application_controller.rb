@@ -210,6 +210,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def skip_verify_policy_authorized(sure = false)
+    @_pundit_policy_authorized = true if sure
+  end
+
   def skip_verify_policy_scoped(sure = false)
     @_pundit_policy_scoped = true if sure
   end
