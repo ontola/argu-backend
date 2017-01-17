@@ -20,7 +20,7 @@ module Argumentable
         .order("edges.children_counts -> 'votes_pro' DESC")
         .limit(5)
     end), class_name: 'Argument'
-    has_many :arguments_plain, class_name: 'Argument'
+    edge_tree_has_many :arguments_plain, -> { all }, class_name: 'Argument'
 
     def invert_arguments
       false
