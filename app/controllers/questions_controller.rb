@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 class QuestionsController < AuthorizedController
   include NestedResourceHelper, MenuHelper
+  skip_before_action :check_if_registered, only: :index
+
+  def index
+    skip_verify_policy_scoped(true)
+    respond_to do |format|
+      format.json_api do
+        render json: get_parent_resource.question_collection(collection_options),
+               include: [:members, views: [:members, views: :members]]
+      end
+    end
+  end
 
   def show
     scope = authenticated_resource
