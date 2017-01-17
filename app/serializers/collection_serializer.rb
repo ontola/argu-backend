@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class CollectionSerializer < BaseSerializer
-  attributes :title
+  attributes :title, :total_count
 
   has_one :parent do
     obj = object.parent

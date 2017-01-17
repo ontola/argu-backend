@@ -12,6 +12,7 @@ class Collection
   contextualize_as_type 'argu:Collection'
   contextualize_with_id(&:id)
   contextualize :title, as: 'schema:name'
+  contextualize :total_count, as: 'argu:totalCount'
 
   def as_json(options = {})
     super(options.merge(except: ['association_class']))
@@ -75,6 +76,10 @@ class Collection
     @title || I18n.t("#{association_class.name.tableize}.plural", default: association_class.name.tableize.humanize)
   end
 
+  def total_count
+    members&.count || parent_total_count
+  end
+
   private
 
   def association_class
@@ -105,6 +110,10 @@ class Collection
 
   def paginate?
     (pagination || pagination.nil? && filter.present?) && page.nil?
+  end
+
+  def parent_total_count
+    parent.try(association).try(:joins, :edge).try(:where, filter_query).try(:count)
   end
 
   def pundit_user
