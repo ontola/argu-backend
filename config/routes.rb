@@ -300,6 +300,7 @@ Rails.application.routes.draw do
   end
   resources :forums, only: [:show, :update], path: 'f', as: :canonical_forum
   resources :forums, only: [], path: 'f' do
+    resources :questions, path: 'questions', only: [:index]
     resources :motions, path: 'motions', only: [:index]
   end
 

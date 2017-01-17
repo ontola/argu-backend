@@ -41,7 +41,8 @@ class ForumsController < AuthorizedController
       format.json_api do
         render json: authenticated_resource,
                include: [
-                 motion_collection: [:members, views: [:members, views: :members]]
+                 motion_collection: [:members, views: [:members, views: :members]],
+                 question_collection: [:members, views: [:members, views: :members]]
                ]
       end
     end

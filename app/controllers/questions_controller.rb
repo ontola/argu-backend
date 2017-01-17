@@ -2,6 +2,16 @@
 class QuestionsController < AuthorizedController
   include NestedResourceHelper, MenuHelper
 
+  def index
+    skip_verify_policy_scoped(true)
+    respond_to do |format|
+      format.json_api do
+        render json: get_parent_resource.question_collection(collection_options),
+               include: [:members, views: [:members, views: :members]]
+      end
+    end
+  end
+
   def show
     scope = authenticated_resource
               .motions
