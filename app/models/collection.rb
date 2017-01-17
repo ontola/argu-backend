@@ -23,6 +23,19 @@ class Collection
     "#{(uri || url_for([parent, association_class, protocol: :https]))}#{query_values}"
   end
 
+  def first
+    opts = query_opts.merge(page: 1)
+    query_values = "?#{opts.to_param}" if opts.present?
+    "#{(uri || url_for([parent, association_class, protocol: :https]))}#{query_values}"
+  end
+
+  def last
+    opts = query_opts
+    opts[:page] = total_page_count
+    query_values = "?#{opts.to_param}" if opts.present?
+    "#{(uri || url_for([parent, association_class, protocol: :https]))}#{query_values}"
+  end
+
   def members
     return if paginate? || include_views?
     if association == :votes
@@ -42,6 +55,20 @@ class Collection
           .where(filter_query)
       ).page(page)
     end
+  end
+
+  def next
+    return if page.nil? || page.to_i >= total_page_count
+    opts = query_opts.merge(page: page.to_i + 1)
+    query_values = "?#{opts.to_param}" if opts.present?
+    "#{(uri || url_for([parent, association_class, protocol: :https]))}#{query_values}"
+  end
+
+  def previous
+    return if page.nil? || page.to_i <= 1
+    opts = query_opts.merge(page: page.to_i - 1)
+    query_values = "?#{opts.to_param}" if opts.present?
+    "#{(uri || url_for([parent, association_class, protocol: :https]))}#{query_values}"
   end
 
   def views
@@ -129,5 +156,9 @@ class Collection
     opts[:page] = page if page.present?
     opts[:filter] = filter if filter.present?
     opts
+  end
+
+  def total_page_count
+    (parent_total_count / association_class.default_per_page).ceil
   end
 end
