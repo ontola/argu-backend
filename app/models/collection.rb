@@ -21,8 +21,15 @@ class Collection
   end
 
   def id
-    query_values = "?#{query_opts.to_param}" if query_opts.present?
-    "#{(uri || url_for([parent, association_class, protocol: :https]))}#{query_values}"
+    uri(query_opts)
+  end
+
+  def first
+    uri(query_opts.merge(page: 1))
+  end
+
+  def last
+    uri(query_opts.merge(page: [total_page_count, 1].max))
   end
 
   def members
@@ -35,6 +42,16 @@ class Collection
         .includes(includes)
         .where(filter_query)
     ).page(page)
+  end
+
+  def next
+    return if page.nil? || page.to_i >= total_page_count
+    uri(query_opts.merge(page: page.to_i + 1))
+  end
+
+  def previous
+    return if page.nil? || page.to_i <= 1
+    uri(query_opts.merge(page: page.to_i - 1))
   end
 
   def views
@@ -103,5 +120,18 @@ class Collection
     opts[:page] = page if page.present?
     opts[:filter] = filter if filter.present?
     opts
+  end
+
+  def total_page_count
+    (parent_total_count / association_class.default_per_page).ceil
+  end
+
+  def uri(query_values = '')
+    base = if url_constructor.present?
+             send(url_constructor, parent.id, protocol: :https)
+           else
+             url_for([parent, association_class, protocol: :https])
+           end
+    [base, query_values.to_param].reject(&:empty?).join('?')
   end
 end

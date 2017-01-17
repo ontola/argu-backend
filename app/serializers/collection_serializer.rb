@@ -2,6 +2,11 @@
 class CollectionSerializer < BaseSerializer
   attributes :title, :total_count
 
+  link(:first) { object.first }
+  link(:previous) { object.previous }
+  link(:next) { object.next }
+  link(:last) { object.last }
+
   has_one :parent do
     obj = object.parent
     link(:self) do
