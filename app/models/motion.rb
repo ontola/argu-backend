@@ -12,12 +12,15 @@ class Motion < ApplicationRecord
 
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
+  attr_accessor :current_vote
+
   before_save :cap_title
 
   contextualize_as_type 'argu:Motion'
   contextualize_with_id { |m| Rails.application.routes.url_helpers.motion_url(m, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'
+  contextualize :current_vote, as: 'argu:currentVote'
 
   convertible questions: %i(taggings activities blog_posts)
   counter_cache true

@@ -53,6 +53,7 @@ class MotionsController < AuthorizedController
       voteable_type: authenticated_resource.class.name,
       voter: current_profile
     )
+    authenticated_resource.current_vote = @vote
 
     respond_to do |format|
       format.html { render locals: {motion: authenticated_resource} }
