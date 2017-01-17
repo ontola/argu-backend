@@ -25,7 +25,10 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do
-    request.params[:user] = {email: request.params[:username], password: request.params[:password]}
+    request.params[:user] = {
+      email: request.params[:username] || request.params[:email],
+      password: request.params[:password]
+    }
     request.env['devise.allow_params_authentication'] = true
     user = request.env['warden'].authenticate(scope: :user)
     raise(Argu::InvalidCredentialsError.new) unless user.present?
