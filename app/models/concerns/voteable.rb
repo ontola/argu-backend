@@ -24,7 +24,7 @@ module Voteable
     end
   end
 
-  module Serlializer
+  module Serializer
     extend ActiveSupport::Concern
     included do
       has_many :vote_events do

@@ -23,7 +23,7 @@ module Loggable
     end
   end
 
-  module Serlializer
+  module Serializer
     extend ActiveSupport::Concern
     included do
       link(:log) { log_url(object.edge) }

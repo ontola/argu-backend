@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class MotionSerializer < BaseEdgeSerializer
-  include Loggable::Serlializer
-  include Argumentable::Serlializer
-  include Voteable::Serlializer
+  include Loggable::Serializer
+  include Argumentable::Serializer
+  include Voteable::Serializer
   attributes :content, :current_vote
 
   def current_vote
