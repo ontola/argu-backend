@@ -9,7 +9,7 @@ module Motionable
           parent: self,
           association: :motions,
           pagination: true,
-          uri: "#{context_id}/motions"
+          uri: "#{context_id}/m"
         }.merge(opts)
       )
     end
@@ -21,7 +21,7 @@ module Motionable
       has_one :motion_collection do
         link(:self) do
           {
-            href: "#{object.context_id}/motions",
+            href: "#{object.context_id}/m",
             meta: {
               '@type': 'argu:motions'
             }
@@ -31,7 +31,7 @@ module Motionable
           href = object.context_id
           {
             '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/motions"
+            '@id': "#{href}/m"
           }
         end
       end

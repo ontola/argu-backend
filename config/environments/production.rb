@@ -4,7 +4,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:host] = config.host
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.logstasher.enabled = true
+  config.logstasher.enabled = false
   config.react.variant = :production
 
   # Code is not reloaded between requests.
@@ -58,15 +58,16 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  config.cache_store = :memory_store, { size: 128.megabytes }
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "argu_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = {host: 'https://argu.co'}
-  Rails.application.routes.default_url_options[:host] = 'https://argu.co'
-  config.roadie.url_options = {host: 'argu.co', scheme: 'https'}
+  config.action_mailer.default_url_options = {host: 'https://argu.local'}
+  Rails.application.routes.default_url_options[:host] = 'https://argu.local'
+  config.roadie.url_options = {host: 'argu.local', scheme: 'https'}
   config.action_mailer.asset_host = nil
 
   config.action_mailer.delivery_method = :mailgun

@@ -4,6 +4,6 @@ class PhotoSerializer < BaseSerializer
 
   def thumbnail
     url = object.url(:icon)
-    url.include?('gravatar.com') ? url : "https://argu-logos.s3.amazonaws.com#{object.url(:icon)}"
+    url.include?('gravatar.com') ? url : "#{object.url(:icon)}"
   end
 end

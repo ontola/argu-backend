@@ -96,7 +96,7 @@ class Forum < ApplicationRecord
 
   # http://schema.org/description
   def description
-    bio
+    bio_long
   end
 
   def self.find(*ids)

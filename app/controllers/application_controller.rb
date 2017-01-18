@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
           NestedAttributesHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
-  protect_from_forgery with: :exception, prepend: true
+  protect_from_forgery only: :never ,with: :exception, prepend: true
   prepend_before_action :check_for_access_token
   skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?
   prepend_before_action :write_client_access_token

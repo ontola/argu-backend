@@ -57,7 +57,9 @@ Rails.application.routes.draw do
   concern :discussable do
     resources :discussions, only: [:new]
     resources :questions, path: 'q', only: [:index, :new, :create]
+    # resources :questions, path: 'questions', only: [:index, :create]
     resources :motions, path: 'm', only: [:index, :new, :create]
+    # resources :motions, path: 'motions', only: [:index, :create]
   end
   concern :favorable do
     resources :favorites, only: [:create]
