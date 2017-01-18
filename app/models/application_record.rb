@@ -13,6 +13,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   def context_id
     Rails.application.routes.url_helpers.url_for(action: 'show', controller: class_name, id: id)
+  rescue ActionController::UrlGenerationError
+    id
   end
 
   def edited?
