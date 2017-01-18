@@ -141,10 +141,17 @@ export const ActorSelect = React.createClass({
                                         return obj.type === 'groups' && obj.id === gId;
                                     })
                                     .attributes;
-                                const uAttrs = data
+                                const user = data
                                     .included
                                     .find(obj => {
                                         return obj.type === 'users' && obj.id === uId;
+                                    });
+                                const uAttrs = user.attributes;
+                                const pAttrs = data
+                                    .included
+                                    .find(obj => {
+                                        return obj.type === 'photos' &&
+                                            obj.id === user.relationships.profilePhoto.data.id;
                                     })
                                     .attributes;
                                 return {
@@ -153,7 +160,7 @@ export const ActorSelect = React.createClass({
                                     groupName: gAttrs.displayName,
                                     userId: uId.toString(),
                                     userName: uAttrs.displayName,
-                                    image: uAttrs.profilePhoto.image.url
+                                    image: pAttrs.thumbnail
                                 };
                             })),
                         complete: false
