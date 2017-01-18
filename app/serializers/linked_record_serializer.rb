@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class LinkedRecordSerializer < RecordSerializer
-  include Argumentable::Serlializer
-  include Voteable::Serlializer
+  include Argumentable::Serializer
+  include Voteable::Serializer
 
   link(:self) { object.context_id if object.persisted? }
   link(:related) do
