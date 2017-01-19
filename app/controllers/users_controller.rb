@@ -7,9 +7,7 @@ class UsersController < ApplicationController
     @profile = @user.profile
     authorize @user, :show?
 
-    if @profile.are_votes_public? || current_user == @user
-      @collection = Vote.ordered(@profile.visible_votes_for(current_user))
-    end
+    @collection = Vote.ordered(policy_scope(@profile.votes.order(created_at: :desc)))
 
     respond_to do |format|
       format.html do
