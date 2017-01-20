@@ -92,6 +92,7 @@ module ActiveSupport
     include Argu::TestHelpers::TestMocks
     include Argu::TestHelpers::AutomatedTests
     include Argu::TestHelpers::TestDefinitions
+    include Argu::TestHelpers::TestAssertions
     ActiveRecord::Migration.check_pending!
 
     # FactoryGirl.lint
