@@ -41,7 +41,7 @@ module Argu
           end
 
           ((action_methods.keys - tests.keys) &
-            name.sub('Test', '').constantize.instance_methods).each do |a|
+            name.sub('Test', '').singularize.constantize.instance_methods).each do |a|
             warn "No tests for #{a} in #{name}"
           end
         end

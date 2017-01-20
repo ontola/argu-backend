@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class VoteEventsControllerTest < ActionDispatch::IntegrationTest
+class VoteEventsTest < ActionDispatch::IntegrationTest
   define_freetown
   let!(:motion) { create(:motion, parent: freetown.edge) }
 

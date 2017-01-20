@@ -3,7 +3,7 @@ require 'test_helper'
 
 # Usual controller method tests
 # Additionally tests for shortnames to be routed correctly between forums and dynamic redirects.
-class ShortnamesControllerTest < ActionDispatch::IntegrationTest
+class ShortnamesTest < ActionDispatch::IntegrationTest
   define_freetown(attributes: {max_shortname_count: 1})
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }

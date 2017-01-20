@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class SourcesControllerTest < ActionDispatch::IntegrationTest
+class SourcesTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   let(:page) { create(:page) }

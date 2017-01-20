@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class QuestionsControllerTest < ActionDispatch::IntegrationTest
+class QuestionsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:project) { create(:project, :with_follower, parent: freetown.edge) }

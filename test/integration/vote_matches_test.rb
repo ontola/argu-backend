@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class VoteMatchesControllerTest < ActionDispatch::IntegrationTest
+class VoteMatchesTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let!(:subject) { create(:vote_match, publisher: creator, parent: freetown.edge) }

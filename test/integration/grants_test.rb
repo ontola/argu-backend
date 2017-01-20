@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class GrantsControllerTest < ActionDispatch::IntegrationTest
+class GrantsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:subject) { create(:grant, parent: freetown.edge, group: group) }

@@ -4,7 +4,7 @@ module Argu
     module AutomatedTests
       module Asserts
         def assert_has_content
-          "assert_select '##{name.split('sControllerTest')[0].underscore}_content', 'C'"
+          "assert_select '##{name.split('sTest')[0].underscore}_content', 'C'"
         end
 
         def assert_has_drafts
@@ -12,7 +12,7 @@ module Argu
         end
 
         def assert_has_title
-          "assert_select '##{name.split('sControllerTest')[0].underscore}_title', '#{name.split('sControllerTest')[0]}'"
+          "assert_select '##{name.split('sTest')[0].underscore}_title', '#{name.split('sTest')[0]}'"
         end
 
         def assert_has_photo

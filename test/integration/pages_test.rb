@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class PagesControllerTest < ActionDispatch::IntegrationTest
+class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
   let(:freetown) { create_forum(name: 'freetown', page: page_non_public) }

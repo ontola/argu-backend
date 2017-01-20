@@ -171,7 +171,7 @@ module Argu
       end
 
       def model_name
-        self.class.name.split('ControllerTest').first.singularize
+        self.class.name.split('Test').first.singularize
       end
 
       def model_sym

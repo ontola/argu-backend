@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class GroupsControllerTest < ActionDispatch::IntegrationTest
+class GroupsTest < ActionDispatch::IntegrationTest
   define_freetown
   let!(:group) { create(:group, parent: freetown.page.edge) }
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class VotesControllerTest < ActionDispatch::IntegrationTest
+class VotesTest < ActionDispatch::IntegrationTest
   define_public_source
   define_freetown
   define_cairo

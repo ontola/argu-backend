@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class BlogPostsControllerTest < ActionDispatch::IntegrationTest
+class BlogPostsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let!(:project) do

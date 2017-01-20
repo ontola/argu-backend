@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class ConversionsControllerTest < ActionDispatch::IntegrationTest
+class ConversionsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:project) do
     create(:project,

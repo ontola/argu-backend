@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class MotionsControllerTest < ActionDispatch::IntegrationTest
+class MotionsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:question) do

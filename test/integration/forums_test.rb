@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class ForumsControllerTest < ActionDispatch::IntegrationTest
+class ForumsTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   define_freetown

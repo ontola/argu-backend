@@ -49,15 +49,15 @@ Metrics/ClassLength:
     - 'app/helpers/motions_helper.rb'
     - 'app/models/user.rb'
     - 'test/controllers/phases_controller_test.rb'
-    - 'test/integration/comments_controller_test.rb'
-    - 'test/integration/conversions_controller_test.rb'
-    - 'test/integration/decisions_controller_test.rb'
-    - 'test/integration/forums_controller_test.rb'
-    - 'test/integration/motions_controller_test.rb'
-    - 'test/integration/pages_controller_test.rb'
-    - 'test/integration/projects_controller_test.rb'
-    - 'test/integration/users_controller_test.rb'
-    - 'test/integration/votes_controller_test.rb'
+    - 'test/integration/comments_test.rb'
+    - 'test/integration/conversions_test.rb'
+    - 'test/integration/decisions_test.rb'
+    - 'test/integration/forums_test.rb'
+    - 'test/integration/motions_test.rb'
+    - 'test/integration/pages_test.rb'
+    - 'test/integration/projects_test.rb'
+    - 'test/integration/users_test.rb'
+    - 'test/integration/votes_test.rb'
 
 # Offense count: 30
 Metrics/CyclomaticComplexity:
@@ -88,12 +88,12 @@ Metrics/MethodLength:
     - 'test/controllers/phases_controller_test.rb'
     - 'test/controllers/questions_controller_test.rb'
     - 'test/controllers/users_controller_test.rb'
-    - 'test/integration/conversions_controller_test.rb'
-    - 'test/integration/decisions_controller_test.rb'
-    - 'test/integration/decisions_controller_test.rb'
-    - 'test/integration/forums_controller_test.rb'
-    - 'test/integration/motions_controller_test.rb'
-    - 'test/integration/votes_controller_test.rb'
+    - 'test/integration/conversions_test.rb'
+    - 'test/integration/decisions_test.rb'
+    - 'test/integration/decisions_test.rb'
+    - 'test/integration/forums_test.rb'
+    - 'test/integration/motions_test.rb'
+    - 'test/integration/votes_test.rb'
 
 # Offense count: 19
 Metrics/PerceivedComplexity:

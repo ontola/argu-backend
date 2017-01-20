@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class CommentsControllerTest < ActionDispatch::IntegrationTest
+class CommentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:cairo_member) { create_member(cairo) }

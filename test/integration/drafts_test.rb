@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class DraftsControllerTest < ActionDispatch::IntegrationTest
+class DraftsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
 

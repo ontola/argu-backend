@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class FavoritesControllerTest < ActionDispatch::IntegrationTest
+class FavoritesTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
   let!(:subject) { create(:favorite, user: user, edge: freetown.edge) }
 

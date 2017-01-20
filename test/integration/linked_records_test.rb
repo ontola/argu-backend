@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class LinkedRecordsControllerTest < ActionDispatch::IntegrationTest
+class LinkedRecordsTest < ActionDispatch::IntegrationTest
   define_public_source
   let!(:linked_record) do
     linked_record_mock(1)

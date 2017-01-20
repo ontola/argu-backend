@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class UsersControllerTest < ActionDispatch::IntegrationTest
+class UsersTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
 

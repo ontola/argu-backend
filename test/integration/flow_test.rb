@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class FlowControllerTest < ActionDispatch::IntegrationTest
+class FlowTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:subject) { create(:motion, parent: freetown.edge) }
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class TokensControllerTest < ActionDispatch::IntegrationTest
+class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################

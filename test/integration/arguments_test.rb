@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class ArgumentsControllerTest < ActionDispatch::IntegrationTest
+class ArgumentsTest < ActionDispatch::IntegrationTest
   define_public_source
   let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
 

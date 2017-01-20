@@ -2,7 +2,7 @@
 require 'test_helper'
 require 'capybara/email'
 
-class RegistrationsControllerTest < ActionDispatch::IntegrationTest
+class RegistrationsTest < ActionDispatch::IntegrationTest
   include TestHelper, Capybara::Email::DSL
 
   setup do

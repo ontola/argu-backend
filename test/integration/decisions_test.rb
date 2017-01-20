@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class DecisionsControllerTest < ActionDispatch::IntegrationTest
+class DecisionsTest < ActionDispatch::IntegrationTest
   define_freetown
   let!(:owner) { create(:user) }
   let!(:page) { create(:page, owner: owner.profile) }
