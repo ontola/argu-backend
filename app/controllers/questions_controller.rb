@@ -8,7 +8,7 @@ class QuestionsController < AuthorizedController
               .joins(:edge)
               .includes(:default_cover_photo, :edge, :votes,
                         creator: {default_profile_photo: []})
-              .order("edges.children_counts -> 'votes_pro' DESC")
+              .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
 
     if current_user.present?
       @user_votes = Vote.where(voteable_id: scope.ids,
