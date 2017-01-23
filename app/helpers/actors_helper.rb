@@ -6,7 +6,9 @@ module ActorsHelper
     @_current_actor ||=
       if actor_token
         p = Profile.find(actor_token)
-        raise 'not authorized' unless ActorPolicy.new(UserContext.new(current_user, nil, session[:a_tokens]), p).show?
+        unless ActorPolicy.new(UserContext.new(current_user, nil, doorkeeper_scopes, session[:a_tokens]), p).show?
+          raise 'not authorized'
+        end
         p
       else
         current_user.profile

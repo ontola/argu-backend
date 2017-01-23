@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
       Rack::MiniProfiler.authorize_request if current_user && current_user.profile.has_role?(:staff)
     end
   end
+  alias_attribute :pundit_user, :user_context
 
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
   rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
@@ -47,7 +48,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  serialization_scope :doorkeeper_scopes
+  serialization_scope :user_context
 
   def verify_authenticity_token?
     doorkeeper_token.nil? || doorkeeper_guest_token? || !doorkeeper_oauth_header?
@@ -144,10 +145,11 @@ class ApplicationController < ActionController::Base
   end
 
   # @private
-  def pundit_user
+  def user_context
     UserContext.new(
       current_user,
       current_profile,
+      doorkeeper_scopes,
       session[:a_tokens]
     )
   end

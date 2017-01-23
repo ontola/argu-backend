@@ -7,6 +7,16 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action, except: :index
   helper_method :authenticated_resource, :collect_banners
 
+  # @private
+  def user_context
+    UserContext.new(
+      current_user,
+      current_profile,
+      doorkeeper_scopes,
+      session[:a_tokens]
+    )
+  end
+
   private
 
   def authorize_action
@@ -130,15 +140,6 @@ class AuthorizedController < ApplicationController
     params
       .require(controller_name.singularize.to_sym)
       .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
-  end
-
-  # @private
-  def pundit_user
-    UserContext.new(
-      current_user,
-      current_profile,
-      session[:a_tokens]
-    )
   end
 
   def redirect_url
