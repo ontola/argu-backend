@@ -30,14 +30,24 @@ module Argu
           service.commit
           TrashService.new(service.resource, options: service_options).commit
         end
-        service = CreateQuestion
-                  .new(@resource.edge,
-                       attributes: attributes_for(:question),
-                       options: service_options)
-        service.commit
-        reset_publication(service.resource.publications.last)
+        3.times do
+          service = CreateQuestion
+                    .new(@resource.edge,
+                         attributes: attributes_for(:question),
+                         options: service_options)
+          service.commit
+          reset_publication(service.resource.publications.last)
+        end
+        3.times do
+          service = CreateQuestion
+                      .new(@resource.edge,
+                           attributes: attributes_for(:question),
+                           options: service_options)
+          service.commit
+          TrashService.new(service.resource, options: service_options).commit
+        end
         service = CreateMotion
-                    .new(service.resource.edge,
+                    .new(Question.last.edge,
                          attributes: attributes_for(:motion),
                          options: service_options)
         service.commit
@@ -46,21 +56,30 @@ module Argu
         @resource.page.owner.profileable.follow @resource.edge
       end
 
-      # Adds 3 pro and 3 con arguments to the resource
+      # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource
       def with_arguments
+        [true, false].each do |pro|
+          3.times do
+            CreateArgument
+              .new(@resource.edge,
+                   attributes: attributes_for(:argument).merge(pro: pro),
+                   options: service_options)
+              .commit
+          end
+          TrashService.new(Argument.last, options: service_options).commit
+        end
+      end
+
+      # Adds 3 comments (1 trashed) to the resource
+      def with_comments
         3.times do
-          CreateArgument
+          CreateComment
             .new(@resource.edge,
-                 attributes: attributes_for(:argument),
+                 attributes: attributes_for(:comment),
                  options: service_options)
             .commit
-          service = CreateArgument
-                      .new(@resource.edge,
-                           attributes: attributes_for(:argument).merge(pro: false),
-                           options: service_options)
-          service.commit
-          TrashService.new(service.resource, options: service_options).commit
         end
+        TrashService.new(Comment.last, options: service_options).commit
       end
 
       # Adds a follower to the edge of the resource
@@ -106,28 +125,23 @@ module Argu
         end
       end
 
-      # Adds 2 pro, 2 neutral and 2 con votes to the resource
+      # Adds 2 public and 1 hidden votes to the resource for pro, neutral and con
       def with_votes
-        2.times do
+        %i(pro neutral con).each do |side|
+          2.times do
+            CreateVote
+              .new(
+                @resource.default_vote_event.edge,
+                attributes: vote_attrs(side),
+                options: service_options
+              )
+              .commit
+          end
           CreateVote
             .new(
               @resource.default_vote_event.edge,
-              attributes: vote_attrs(:pro),
-              options: service_options
-            )
-            .commit
-          CreateVote
-            .new(
-              @resource.default_vote_event.edge,
-              attributes: vote_attrs(:neutral),
-              options: service_options
-            )
-            .commit
-          CreateVote
-            .new(
-              @resource.default_vote_event.edge,
-              attributes: vote_attrs(:con),
-              options: service_options
+              attributes: vote_attrs(side),
+              options: service_options(are_votes_public: false)
             )
             .commit
         end
@@ -135,11 +149,11 @@ module Argu
 
       private
 
-      def service_options
-        user = create(:user)
+      def service_options(opts = {})
+        profile = create(:profile, opts)
         {
-          creator: user.profile,
-          publisher: user
+          creator: profile,
+          publisher: profile.profileable
         }
       end
 

@@ -28,6 +28,42 @@ module Argu
       def assert_not_authorized
         assert_equal true, assigns(:_not_authorized_caught)
       end
+
+      def assert_relationship(key, size)
+        relationships = JSON.parse(response.body)['data']['relationships']
+        assert relationships.keys.include?(key), "#{key} is not in relationships"
+
+        return if size == 1 && relationships.is_a?(Hash)
+        assert_equal relationships[key]['data']&.size || 0, size, 'Size of relationship is incorrect'
+      end
+
+      def assert_included(id)
+        if id.is_a?(Array)
+          assert_not_empty id, 'No entries given'
+          id.each do |single|
+            assert_included(single)
+          end
+          return
+        end
+
+        id = ['https://', Rails.application.config.host, id].join
+        assert JSON.parse(response.body)['included'].any? { |included| included['id'] == id },
+               "#{id} is not included"
+      end
+
+      def assert_not_included(id)
+        if id.is_a?(Array)
+          assert_not_empty id, 'No entries given'
+          id.each do |single|
+            assert_not_included(single)
+          end
+          return
+        end
+
+        id = ['https://', Rails.application.config.host, id].join
+        assert_not JSON.parse(response.body)['included'].any? { |included| included['id'] == id },
+                   "#{id} is included"
+      end
     end
   end
 end
