@@ -26,6 +26,7 @@ class CurrentActor
   def id
     user&.id || 0
   end
+  alias context_id id
 
   def potential_action; end
 
