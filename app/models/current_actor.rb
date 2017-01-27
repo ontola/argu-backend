@@ -5,6 +5,7 @@ class CurrentActor
   attr_accessor :actor, :potential_action, :user
   delegate :display_name, to: :actor, allow_nil: true
   delegate :finished_intro, to: :user, allow_nil: true
+  alias context_id id
 
   def actor_type
     if actor.present?
