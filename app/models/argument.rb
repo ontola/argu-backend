@@ -13,7 +13,7 @@ class Argument < ApplicationRecord
   scope :argument_comments, lambda {
     includes(:comment_threads)
       .joins(:edge)
-      .order("edges.children_counts -> 'votes_pro' DESC, edges.last_activity_at DESC")
+      .order("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int) DESC, edges.last_activity_at DESC")
   }
 
   contextualize_as_type 'argu:Argument'
@@ -46,7 +46,11 @@ class Argument < ApplicationRecord
   end
 
   def adjacent(direction, _show_trashed = nil)
-    ids = parent_model.arguments_plain.joins(:edge).order("edges.children_counts -> 'votes_pro' DESC").ids
+    ids = parent_model
+            .arguments_plain
+            .joins(:edge)
+            .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+            .ids
     index = ids.index(self[:id])
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]

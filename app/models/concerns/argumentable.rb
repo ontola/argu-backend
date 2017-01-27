@@ -9,7 +9,7 @@ module Argumentable
         .joins(:edge)
         .where(pro: false)
         .untrashed
-        .order("edges.children_counts -> 'votes_pro' DESC")
+        .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
         .limit(5)
     end), class_name: 'Argument'
     edge_tree_has_many :top_arguments_pro, (lambda do
@@ -17,7 +17,7 @@ module Argumentable
         .joins(:edge)
         .where(pro: true)
         .untrashed
-        .order("edges.children_counts -> 'votes_pro' DESC")
+        .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
         .limit(5)
     end), class_name: 'Argument'
     edge_tree_has_many :arguments_plain, -> { all }, class_name: 'Argument'
