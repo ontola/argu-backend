@@ -4,6 +4,11 @@ module Voteable
   include PragmaticContext::Contextualizable
 
   included do
+    has_one :default_vote_event_edge,
+            -> { where(owner_type: 'VoteEvent') },
+            through: :edge,
+            source: :children,
+            class_name: 'Edge'
     has_many :votes, as: :voteable, dependent: :destroy
     edge_tree_has_many :vote_events
     has_collection :vote_events

@@ -16,10 +16,10 @@ class QuestionsController < AuthorizedController
   def show
     scope = authenticated_resource
               .motions
-              .joins(:edge)
+              .joins(:edge, :default_vote_event_edge)
               .includes(:default_cover_photo, :edge, :votes,
                         creator: {default_profile_photo: []})
-              .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+              .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
 
     if current_user.present?
       @user_votes = Vote.where(voteable_id: scope.ids,
