@@ -29,4 +29,8 @@ module JsonApiHelper
       status: status
     }
   end
+
+  def json_api_type
+    controller_name
+  end
 end

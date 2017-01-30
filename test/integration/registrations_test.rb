@@ -73,7 +73,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_equal current_path, setup_users_path
   end
 
-  test 'should post create without password' do
+  test 'should post create without password json' do
     locale = :en
     cookies[:locale] = locale.to_s
     clear_emails
@@ -90,28 +90,69 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_response 201
       assert_analytics_collected('registrations', 'create', 'email')
     end
-    get forum_path(freetown), params: {format: :json_api}
-    assert_response 200
-    get forum_path(freetown)
-    assert_redirected_to setup_users_path
 
-    delete destroy_user_session_path
+    finish_registration_when_no_password_was_given
+  end
 
-    # Send mail
-    Sidekiq::Extensions::DelayedMailer.process_job(Sidekiq::Worker.jobs.last)
+  test 'should post create without password json_api' do
+    locale = :en
+    cookies[:locale] = locale.to_s
+    clear_emails
 
-    open_email('test@example.com')
-    assert_equal current_email.subject, 'Welcome to Argu'
-    current_email.click_link 'Set my password'
-
-    # Set password
-    assert_difference('User.where(confirmed_at: nil).count', -1) do
-      fill_in('user_password', with: 'password')
-      fill_in('user_password_confirmation', with: 'password')
-      click_button('Edit')
+    assert_differences([['User.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post user_registration_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'users',
+               attributes: {
+                 email: 'test@example.com'
+               }
+             }
+           }
+      assert_response 201
+      assert_equal JSON.parse(response.body).keys, ['data']
+      assert_analytics_collected('registrations', 'create', 'email')
     end
 
-    assert_equal current_path, setup_users_path
+    finish_registration_when_no_password_was_given
+  end
+
+  test 'should post create without password with existing email json' do
+    user
+    assert_differences([['User.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
+      post user_registration_path,
+           params: {
+             format: :json,
+             user: {
+               email: user.email
+             }
+           }
+      assert_response 422
+      assert_equal JSON.parse(response.body), 'errors' => {'email' => ['has already been taken']}
+    end
+  end
+
+  test 'should post create without password with existing email json_api' do
+    user
+    assert_differences([['User.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
+      post user_registration_path,
+           params: {
+             format: :json_api,
+             data: {
+               type: 'users',
+               attributes: {
+                 email: user.email
+               }
+             }
+           }
+      assert_response 422
+      assert_equal JSON.parse(response.body),
+                   'errors' => [{'email' => ['has already been taken'], 'status' => 'Unprocessable Entity'}]
+    end
   end
 
   test "guest should not post create when passwords don't match" do
@@ -231,5 +272,32 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
     assert_analytics_not_collected
+  end
+
+  private
+
+  def finish_registration_when_no_password_was_given
+    get forum_path(freetown), params: {format: :json_api}
+    assert_response 200
+    get forum_path(freetown)
+    assert_redirected_to setup_users_path
+
+    delete destroy_user_session_path
+
+    # Send mail
+    Sidekiq::Extensions::DelayedMailer.process_job(Sidekiq::Worker.jobs.last)
+
+    open_email('test@example.com')
+    assert_equal current_email.subject, 'Welcome to Argu'
+    current_email.click_link 'Set my password'
+
+    # Set password
+    assert_difference('User.where(confirmed_at: nil).count', -1) do
+      fill_in('user_password', with: 'password')
+      fill_in('user_password_confirmation', with: 'password')
+      click_button('Edit')
+    end
+
+    assert_equal current_path, setup_users_path
   end
 end

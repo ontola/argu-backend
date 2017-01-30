@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
   def params
     return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
-    if super['data']['type'].present? && super['data']['type'] != controller_name
+    if super['data']['type'].present? && super['data']['type'] != json_api_type
       raise ActionController::UnpermittedParameters.new(%w(type))
     end
     raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?

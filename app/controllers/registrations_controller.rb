@@ -2,7 +2,7 @@
 class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
   include NestedResourceHelper, OauthHelper
-  respond_to :json
+  respond_to :html, :json, :json_api
 
   def create
     @registration_without_password = !devise_parameter_sanitizer.sanitize(:sign_up).include?(:password)
@@ -82,6 +82,10 @@ class RegistrationsController < Devise::RegistrationsController
     return unless session[:omniauth]
     @user.apply_omniauth(session[:omniauth])
     @user.valid?
+  end
+
+  def json_api_type
+    'users'
   end
 
   def sign_up_params
