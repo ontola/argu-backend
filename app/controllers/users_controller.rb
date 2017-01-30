@@ -33,7 +33,10 @@ class UsersController < ApplicationController
       user: current_user,
       actor: current_profile
     )
-    render json: actor
+    respond_to do |format|
+      format.json { render json: actor }
+      format.json_api { render json: actor }
+    end
   end
 
   def settings
