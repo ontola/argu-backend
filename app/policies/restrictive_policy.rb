@@ -30,6 +30,10 @@ class RestrictivePolicy
   end
 
   module Roles
+    def creator
+      4
+    end
+
     def staff
       10
     end

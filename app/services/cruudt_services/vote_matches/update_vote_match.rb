@@ -1,11 +1,9 @@
 # frozen_string_literal: true
-class CreateVoteMatch < CreateService
+class UpdateVoteMatch < CreateService
   def initialize(resource, attributes: {}, options: {})
-    @resource = VoteMatch.new
+    @resource = resource
     @voteables = attributes.delete(:voteables)
     @comparables = attributes.delete(:comparables)
-    attributes[:publisher] = options.fetch(:publisher)
-    attributes[:creator] = options.fetch(:creator)
     super
   end
 

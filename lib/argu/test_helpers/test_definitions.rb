@@ -57,14 +57,14 @@ module Argu
         assert_response results[:response]
       end
 
-      def general_update(results: {}, record: subject, attributes: {})
+      def general_update(results: {}, record: subject, attributes: {}, differences: [['Activity.loggings', 1]])
         record = record.is_a?(Symbol) ? send(record) : record.reload
 
         attributes = attributes_for(model_sym).merge(attributes)
         attributes[:edge_attributes][:id] = record.edge.id if attributes[:edge_attributes].present?
         ch_method = method(results[:should] ? :assert_not_equal : :assert_equal)
 
-        assert_difference('Activity.loggings.count', results[:should] ? 1 : 0) do
+        assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           patch update_path(record),
                 headers: @_argu_headers,
                 params: {format: request_format, model_sym => attributes}

@@ -39,10 +39,6 @@ class EdgeTreePolicy < RestrictivePolicy
       3
     end
 
-    def creator
-      4
-    end
-
     # Not an actual role, but reserved nevertheless
     def group_grant
       5

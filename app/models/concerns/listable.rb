@@ -3,7 +3,7 @@ module Listable
   extend ActiveSupport::Concern
 
   included do
-    has_many :list_items, -> { order(:order) }, as: :listable
+    has_many :list_items, -> { order(:order) }, as: :listable, dependent: :destroy
 
     # Add an item to the end of the list
     # @param [String] relationship The relationship to the list of the new item
