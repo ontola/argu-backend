@@ -222,6 +222,8 @@ Rails.application.routes.draw do
     put :finish, to: 'phases#finish'
   end
 
+  resources :photos, only: :show
+
   resources :announcements, only: [] do
     post '/dismissals',
          to: 'static_pages#dismiss_announcement'
