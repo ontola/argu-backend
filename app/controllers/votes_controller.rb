@@ -120,7 +120,7 @@ class VotesController < AuthorizedController
     @_resource_by_id ||= Vote.find_by(
       voteable_id: get_parent_resource.voteable.id,
       voteable_type: get_parent_resource.voteable.class.name,
-      voter: current_profile,
+      creator: current_profile,
       forum: get_parent_resource.forum
     )
   end

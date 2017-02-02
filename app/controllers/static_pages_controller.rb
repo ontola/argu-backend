@@ -38,7 +38,7 @@ class StaticPagesController < ApplicationController
                       .limit(10)
       @user_votes = Vote.where(voteable_id: @activities.where(trackable_type: 'Motion').pluck(:trackable_id),
                                voteable_type: 'Motion',
-                               voter: current_profile).eager_load!
+                               creator: current_profile).eager_load!
       render # stream: true
     else
       redirect_to(preferred_forum.presence || info_url('about'))

@@ -19,7 +19,7 @@ class CreateVote < PublishedCreateService
       parent
       .children.where(owner_type: 'Vote')
       .joins('JOIN votes ON edges.owner_id = votes.id')
-      .find_by(votes: {voter_id: options.fetch(:creator).id})
+      .find_by(votes: {creator_id: options.fetch(:creator).id})
     existing || super
   end
 end

@@ -2,9 +2,7 @@
 class Vote < ApplicationRecord
   include Parentable, Loggable, PublicActivity::Model, Ldable
 
-  belongs_to :voter, class_name: 'Profile', inverse_of: :votes
-  alias creator voter
-  alias creator= voter=
+  belongs_to :creator, class_name: 'Profile', inverse_of: :votes
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id'
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
@@ -18,7 +16,7 @@ class Vote < ApplicationRecord
                 votes_con: {for: Vote.fors[:con]},
                 votes_neutral: {for: Vote.fors[:neutral]}
 
-  validates :voter, :for, presence: true
+  validates :creator, :for, presence: true
 
   contextualize_as_type 'argu:Vote'
   contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url(v, protocol: :https) }
@@ -56,9 +54,5 @@ class Vote < ApplicationRecord
       neutral: {collection: grouped['neutral'] || []},
       con: {collection: grouped['con'] || []}
     )
-  end
-
-  def voter_type
-    'Profile'
   end
 end

@@ -10,14 +10,14 @@ class VotesTest < ActionDispatch::IntegrationTest
   let(:closed_question_argument) { create(:argument, parent: closed_question_motion.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
-  let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, voter: creator.profile, publisher: creator) }
+  let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, creator: creator.profile, publisher: creator) }
   let(:hidden_vote) do
     create(:vote,
            parent: motion.default_vote_event.edge,
-           voter: profile_hidden_votes,
+           creator: profile_hidden_votes,
            publisher: profile_hidden_votes.profileable)
   end
-  let!(:argument_vote) { create(:vote, parent: argument.edge, voter: creator.profile, publisher: creator) }
+  let!(:argument_vote) { create(:vote, parent: argument.edge, creator: creator.profile, publisher: creator) }
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event.edge) }
   let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }

@@ -39,13 +39,13 @@ class MotionsController < AuthorizedController
       @vote = Vote.where(
         voteable_id: authenticated_resource.id,
         voteable_type: 'Motion',
-        voter: current_profile
+        creator: current_profile
       ).last
     end
     @vote ||= Vote.new(
       voteable_id: authenticated_resource.id,
       voteable_type: authenticated_resource.class.name,
-      voter: current_profile
+      creator: current_profile
     )
     authenticated_resource.current_vote = @vote
 

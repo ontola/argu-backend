@@ -8,7 +8,7 @@ class ContextTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: question.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
-  let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, voter: user.profile, for: :pro) }
+  let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, creator: user.profile, for: :pro) }
 
   test 'major content models should have a context' do
     %i(question motion argument comment).each do |kind|
@@ -24,7 +24,7 @@ class ContextTest < ActionDispatch::IntegrationTest
   end
 
   test 'vote should have a context model' do
-    sign_in vote.voter.profileable
+    sign_in vote.creator.profileable
 
     get polymorphic_path([motion, :show, :vote], format: :json_api)
 

@@ -36,8 +36,10 @@ class MotionsControllerTest < ActionController::TestCase
     assert_included("/vote_events/#{motion.default_vote_event.id}/votes?filter%5Boption%5D=other&page=1")
     assert_included("/vote_events/#{motion.default_vote_event.id}/votes?filter%5Boption%5D=no")
     assert_included("/vote_events/#{motion.default_vote_event.id}/votes?filter%5Boption%5D=no&page=1")
-    assert_included(motion.votes.joins(:voter).where(profiles: {are_votes_public: true}).map { |v| "/v/#{v.id}" })
-    assert_not_included(motion.votes.joins(:voter).where(profiles: {are_votes_public: false}).map { |v| "/v/#{v.id}" })
+    assert_included(motion.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| "/v/#{v.id}" })
+    assert_not_included(
+      motion.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| "/v/#{v.id}" }
+    )
   end
 
   ####################################

@@ -32,7 +32,7 @@ FactoryGirl.define do
     end
 
     trait :t_vote do
-      trackable { create(:vote, voter: owner) }
+      trackable { create(:vote, creator: owner) }
       recipient { passed_in?(:recipient) ? recipient : create(:motion, parent: tenant.edge) }
       parameters { passed_in?(:parameters) ? parameters : {for: trackable.for} }
     end

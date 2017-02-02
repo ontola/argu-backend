@@ -37,9 +37,9 @@ class VotesControllerTest < ActionController::TestCase
     assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=other&page=1")
     assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=no")
     assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=no&page=1")
-    assert_included(vote_event.votes.joins(:voter).where(profiles: {are_votes_public: true}).map { |v| "/v/#{v.id}" })
+    assert_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| "/v/#{v.id}" })
     assert_not_included(
-      vote_event.votes.joins(:voter).where(profiles: {are_votes_public: false}).map { |v| "/v/#{v.id}" }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| "/v/#{v.id}" }
     )
   end
 end

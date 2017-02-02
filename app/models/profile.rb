@@ -19,7 +19,7 @@ class Profile < ApplicationRecord
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id, dependent: :restrict_with_exception
-  has_many :votes, inverse_of: :voter, foreign_key: :voter_id, dependent: :destroy
+  has_many :votes, inverse_of: :creator, foreign_key: :creator_id, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
@@ -139,8 +139,7 @@ class Profile < ApplicationRecord
 
   # ######Methods########
   def voted_on?(item)
-    Vote.where(voter_id: id,
-               voter_type: self.class.name,
+    Vote.where(creator_id: id,
                voteable_id: item.id,
                voteable_type: item.class.to_s)
       .last

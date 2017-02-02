@@ -21,7 +21,7 @@ class ArgumentsController < AuthorizedController
     @vote = Vote.find_by(
       voteable_id: authenticated_resource.id,
       voteable_type: 'Argument',
-      voter: current_profile
+      creator: current_profile
     )
 
     respond_to do |format|

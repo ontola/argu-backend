@@ -328,18 +328,18 @@ class UsersTest < ActionDispatch::IntegrationTest
 
   def initialize_votes(user)
     public_motion = create(:motion, parent: freetown.edge)
-    create(:vote, for: :neutral, parent: public_motion.default_vote_event.edge, voter: user.profile, publisher: user)
+    create(:vote, for: :neutral, parent: public_motion.default_vote_event.edge, creator: user.profile, publisher: user)
     argument = create(:argument, parent: public_motion.edge)
-    create(:vote, for: :neutral, parent: argument.edge, voter: user.profile, publisher: user)
+    create(:vote, for: :neutral, parent: argument.edge, creator: user.profile, publisher: user)
 
     closed_motion = create(:motion, parent: cairo.edge, creator: user.profile)
-    create(:vote, for: :pro, parent: closed_motion.default_vote_event.edge, voter: user.profile, publisher: user)
+    create(:vote, for: :pro, parent: closed_motion.default_vote_event.edge, creator: user.profile, publisher: user)
 
     trashed_motion = create(:motion,
                             parent: freetown.edge,
                             creator: user.profile,
                             edge_attributes: {trashed_at: DateTime.current})
-    create(:vote, for: :pro, parent: trashed_motion.default_vote_event.edge, voter: user.profile, publisher: user)
+    create(:vote, for: :pro, parent: trashed_motion.default_vote_event.edge, creator: user.profile, publisher: user)
     user
   end
 end

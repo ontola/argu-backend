@@ -17,7 +17,7 @@ class VotePolicy < EdgeTreePolicy
       else
         voter_ids = user&.managed_pages&.pluck(:id)&.append(user&.profile&.id) || []
         scope
-          .joins(:voter)
+          .joins(:creator)
           .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
           .joins(edge: {parent: :parent})
           .where(voteable_type: %w(Question Motion LinkedRecord), parents_edges_2: {trashed_at: nil})
@@ -31,7 +31,7 @@ class VotePolicy < EdgeTreePolicy
 
   module Roles
     def is_creator?
-      creator if user && actor == record.voter
+      creator if user && actor == record.creator
     end
 
     def is_group_member?
@@ -41,7 +41,7 @@ class VotePolicy < EdgeTreePolicy
   include Roles
 
   def show?
-    if record.voter.are_votes_public
+    if record.creator.are_votes_public
       Pundit.policy(context, record.parent_model).show?
     else
       rule is_creator?, staff?

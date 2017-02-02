@@ -24,7 +24,7 @@ class QuestionsController < AuthorizedController
     if current_user.present?
       @user_votes = Vote.where(voteable_id: scope.ids,
                                voteable_type: 'Motion',
-                               voter: current_profile).eager_load!
+                               creator: current_profile).eager_load!
     end
 
     @motions = policy_scope(scope)

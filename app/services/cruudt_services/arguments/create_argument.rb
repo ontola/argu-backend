@@ -11,7 +11,7 @@ class CreateArgument < PublishedCreateService
         resource.edge,
         attributes: {
           for: :pro,
-          voter: resource.creator
+          creator: resource.creator
         },
         options: {
           creator: resource.creator,

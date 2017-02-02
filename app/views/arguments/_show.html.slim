@@ -2,7 +2,7 @@
   section
     =link_to argument_path(model)
       h4[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
-    =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(voter: current_profile)}
+    =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(creator: current_profile)}
     -if model.content.present?
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if policy(model).create_child?(:comments)

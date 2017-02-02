@@ -14,8 +14,8 @@ ActiveRecord::Schema.define(version: 20170202125028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "ltree"
   enable_extension "hstore"
+  enable_extension "ltree"
   enable_extension "uuid-ossp"
 
   create_table "access_tokens", force: :cascade do |t|
@@ -777,16 +777,15 @@ ActiveRecord::Schema.define(version: 20170202125028) do
   create_table "votes", force: :cascade do |t|
     t.integer  "voteable_id"
     t.string   "voteable_type", limit: 255
-    t.integer  "voter_id",                              null: false
-    t.string   "voter_type",    limit: 255
+    t.integer  "creator_id",                            null: false
     t.integer  "for",                       default: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "forum_id"
     t.integer  "publisher_id",                          null: false
-    t.index ["voteable_id", "voteable_type", "voter_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_voter_id", unique: true, using: :btree
+    t.index ["creator_id"], name: "index_votes_on_creator_id", using: :btree
+    t.index ["voteable_id", "voteable_type", "creator_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_creator_id", unique: true, using: :btree
     t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
-    t.index ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
   end
 
   add_foreign_key "access_tokens", "profiles"
@@ -868,6 +867,6 @@ ActiveRecord::Schema.define(version: 20170202125028) do
   add_foreign_key "vote_events", "users", column: "publisher_id"
   add_foreign_key "vote_matches", "profiles", column: "creator_id"
   add_foreign_key "vote_matches", "users", column: "publisher_id"
-  add_foreign_key "votes", "profiles", column: "voter_id"
+  add_foreign_key "votes", "profiles", column: "creator_id"
   add_foreign_key "votes", "users", column: "publisher_id"
 end

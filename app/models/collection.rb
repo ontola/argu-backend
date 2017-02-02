@@ -34,12 +34,11 @@ class Collection
 
   def members
     return if paginate? || filter?
-    includes = association == :votes ? {voter: :profileable, edge: :parent} : {creator: :profileable, edge: :parent}
     @members ||= policy_scope(
       parent
         .send(association)
         .joins(:edge)
-        .includes(includes)
+        .includes(creator: :profileable, edge: :parent)
         .where(filter_query)
     ).page(page)
   end

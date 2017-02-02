@@ -18,7 +18,7 @@ class VoteTest < ActiveSupport::TestCase
           edge: motion.default_vote_event.edge.children.new(user: user),
           voteable_id: motion.id,
           voteable_type: 'Motion',
-          voter: user.profile,
+          creator: user.profile,
           forum: motion.forum,
           publisher: user
         )
@@ -26,7 +26,7 @@ class VoteTest < ActiveSupport::TestCase
           edge: motion.default_vote_event.edge.children.new(user: user),
           voteable_id: motion.id,
           voteable_type: 'Motion',
-          voter: user.profile,
+          creator: user.profile,
           forum: motion.forum,
           publisher: user
         )
