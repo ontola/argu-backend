@@ -74,9 +74,9 @@ nl:
         confirm_link: 'Bevestig jouw e-mailadres'
       reset_password_instructions:
         subject: 'Wachtwoord reset instructies'
-        someone_requested: 'Iemand heeft gevraagd om een wachtwoord-reset mail te sturen naar dit adres. Klik op onderstaande link als je jouw Argu wachtwoord zou willen wijzigen.'
+        someone_requested: 'Er is een verzoek ingediend om jouw wachtwoord te wijzigen.'
+        ignore: 'Als jij niet hebt gevraagd om jouw wachtwoord te wijzigen, kan je deze e-mail negeren.'
         confirm_link: 'Wijzig mijn wachtwoord'
-        ignore: 'Als jij niet hebt aangevraagd om je wachtwoord te wijzigen, kan je deze e-mail negeren.'
       set_password_instructions:
         subject: 'Welkom bij Argu'
         body: 'Je hebt nu een account bij Argu. Als je dit account in de toekomst nog wilt gebruiken, stel dan een wachtwoord in door op de volgende link te klikken.'
