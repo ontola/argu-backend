@@ -195,7 +195,6 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page).to have_content(arg.title)
     expect(page.body).to have_content('Reply')
-    expect(page.body).to have_content('Start a new discussion')
 
     c = create(:comment,
                parent: arg.edge)
