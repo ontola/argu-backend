@@ -77,8 +77,8 @@ en:
         middle_name: "Middele name(s)"
         last_name: "Last name*"
         has_analytics: "Browser services"
-        reactions_email: "For new reactions"
-        news_email: "For important news"
+        reactions_email: "For new items"
+        news_email: "For important items"
         decisions_email: "For official decisions"
       publication:
         publish_type: "Publication:"

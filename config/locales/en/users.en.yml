@@ -20,7 +20,7 @@ en:
       categories:
         general: "General"
         authentication: "Authentication"
-        notifications: "Alerts beta"
+        notifications: "Alerts"
       confirmed: "Email confirmed"
       unconfirmed: "Email not yet confirmed"
       unconfirmed_email: "Pending email: %{email}"

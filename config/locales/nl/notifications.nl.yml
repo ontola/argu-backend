@@ -6,7 +6,7 @@ nl:
     mark_as_read: "Markeer als gelezen"
     email:
       tooltip: "Email notificaties"
-      beta: "Email notificaties zijn nog in bèta, dus het kan zijn dat er dingen nog niet helemaal goed werken."
+      info_html: "Wanneer wil je een email ontvangen over items die je volgt?</br>Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."
     receive:
       never: 'Nooit meldingen ontvangen'
       reactions: 'Alle items'

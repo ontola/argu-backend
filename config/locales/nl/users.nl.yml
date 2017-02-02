@@ -20,7 +20,7 @@ nl:
       categories:
         general: "Algemeen"
         authentication: "Authenticatie"
-        notifications: "Meldingen bèta"
+        notifications: "Meldingen"
       confirmed: "E-mail bevestigd"
       unconfirmed: "E-mail nog niet bevestigd"
       unconfirmed_email: "Email in afwachting: %{email}"

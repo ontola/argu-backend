@@ -6,7 +6,7 @@ en:
     mark_as_read: "Mark as read"
     email:
       tooltip: "Email notifications"
-      beta: "Email notifications are still in beta, so not all the kinks and quirks are ironed out yet"
+      info_html: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."
     receive:
       never: 'Never'
       reactions: 'All items'

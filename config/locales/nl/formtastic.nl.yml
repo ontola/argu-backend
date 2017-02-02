@@ -77,8 +77,8 @@ nl:
         middle_name: "Middelste naam(en)"
         last_name: "Achternaam*"
         has_analytics: "Browser diensten"
-        reactions_email: "Bij nieuwe reacties"
-        news_email: "Bij belangrijk nieuws"
+        reactions_email: "Bij nieuwe items"
+        news_email: "Bij belangrijke items"
         decisions_email: "Bij officiele besluiten"
       publication:
         publish_type: "Publicatie:"
