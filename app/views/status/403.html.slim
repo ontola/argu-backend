@@ -3,7 +3,6 @@
   .box
     section
       h1= t('status.s_403.header')
-      p= message
       - if current_user.nil?
         p= t('status.s_403.sign_in')
         =semantic_form_for(resource, as: :user, url: oauth_token_path(host_url: params[:host_url].presence)) do |f|
@@ -29,8 +28,6 @@
       p
         =>t('status.mistaken')
         =link_to t('status.let_us_know'), 'https://argu.freshdesk.com/support/tickets/new', target: '_blank', rel: 'nofollow'
-      p
-        a[href=t('status.s_404.reference_link_url') target="_blank"]= t('status.s_404.reference_link_body')
   - if @quote.present?
     .bigger.center
       blockquote.blockquote--inline= @quote

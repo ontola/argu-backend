@@ -61,7 +61,7 @@ RSpec.feature 'Access tokens', type: :feature do
     sign_in user
 
     visit forum_path(helsinki)
-    expect(page).to have_content 'Item not found (404 Not Found)'
+    expect(page).to have_content 'This item is not found'
 
     expect do
       visit forum_path(helsinki, at: helsinki_key.access_token)

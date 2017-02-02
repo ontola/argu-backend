@@ -11,16 +11,11 @@ nl:
       reference_link_url: "https://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-responses"
       reference_link_body: "Klik hier om meer te leren over HTTP en status 400 :)"
     s_403:
-      header: "Nit toegestaan (403 Forbidden)"
-      sign_in: "Deze actie is mogelijk wel toegestaan nadat je bent ingelogd:"
-      reference_link_url: "https://nl.wikipedia.org/wiki/Error_403"
-      reference_link_body: "Klik hier om meer te leren over HTTP en status 403 :)"
+      header: "Dit item is verborgen"
+      sign_in: "Misschien lukt het wel als je eerst inlogt:"
     s_404:
-      header: "Item niet gevonden (404 Not Found)"
-      body: "De link bestaat niet. Dit kan zijn doordat het object wat je zoekt is verwijderd of nooit bestaan heeft."
-      sign_in: "Dit item is mogelijk wel beschikbaar nadat je bent ingelogd:"
-      reference_link_url: "https://nl.wikipedia.org/wiki/Error_404"
-      reference_link_body: "Klik hier om meer te leren over HTTP en status 404 :)"
+      header: "Dit item is niet gevonden"
+      body: "Misschien is het item dat je zoekt verwijderd of heeft het nooit bestaan."
     s_413:
       header: "Item te groot (413 Payload Too Large)"
       body: "Het item dat je probeert te verzenden is te groot. Ga terug en probeer een kleiner bestand."

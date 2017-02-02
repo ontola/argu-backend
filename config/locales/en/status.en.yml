@@ -12,16 +12,11 @@ en:
       reference_link_url: "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_Client_Error"
       reference_link_body: "Click here to learn more about HTTP & status 400 :)"
     s_403:
-      header: "Not allowed (403 Forbidden)"
-      sign_in: "This action might be available after signing in:"
-      reference_link_url: "https://en.wikipedia.org/wiki/HTTP_403"
-      reference_link_body: "Click here to learn more about HTTP & status 403 :)"
+      header: "This item is hidden"
+      sign_in: "Maybe it's visible after logging in:"
     s_404:
-      header: "Item not found (404 Not Found)"
-      body: "The link does not exist. This could be because the object you're looking for is deleted or never existed."
-      sign_in: "This item might be available after signing in:"
-      reference_link_url: "https://en.wikipedia.org/wiki/HTTP_404"
-      reference_link_body: "Click here to learn more about HTTP & status 404 :)"
+      header: "This item is not found"
+      body: "Maybe the item you are looking for is deleted or never existed."
     s_413:
       header: "Request entity too large (413 Payload Too Large)"
       body: "The item that you are uploading is too large. Go back and try a smaller file."
