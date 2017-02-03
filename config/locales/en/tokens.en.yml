@@ -1,13 +1,13 @@
 en:
   tokens:
-    generate: "Generate token"
+    generate: "Generate link"
     loading: "Loading..."
     retract:
       button: "retract"
-      confirm: "Are you sure you want to retract this token?"
+      confirm: "Are you sure you want to retract this link?"
     labels:
       link: "Link"
       usages: "Usages"
     bearer:
-      title: "Public tokens"
-      description: "Everyone with a public token can join this group. These tokens can be used infinitely."
+      title: "Invite links"
+      description: "Anyone who clicks on this link will be added to this group automatically. These tokens can be used infinitely."

@@ -1,13 +1,13 @@
 nl:
   tokens:
-    generate: "Genereer token"
+    generate: "Genereer link"
     loading: "Laden..."
     retract:
       button: "intrekken"
-      confirm: "Weet je zeker dat je dit token wil intrekken?"
+      confirm: "Weet je zeker dat je deze link wil intrekken?"
     labels:
       link: "Link"
       usages: "Aantal keer gebruikt"
     bearer:
-      title: "Openbare tokens"
-      description: "Iedereen die een openbare token heeft kan lid worden van deze groep. De tokens kunnen onbeperkt worden herbruikt."
+      title: "Uitnodigingslinks"
+      description: "Als mensen op een uitnodigingslink klikken worden ze automatisch toegevoegd aan deze groep. De links kunnen onbeperkt worden herbruikt."

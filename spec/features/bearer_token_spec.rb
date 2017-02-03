@@ -13,12 +13,12 @@ RSpec.feature 'Bearer token', type: :feature do
 
     expect(page).to have_css 'table tbody tr', count: 2
 
-    click_button('Generate token')
+    click_button('Generate link')
 
     expect(page).to have_css 'table tbody tr', count: 3
 
     within('table tbody tr:first-child') do
-      page.accept_confirm 'Are you sure you want to retract this token?' do
+      page.accept_confirm 'Are you sure you want to retract this link?' do
         click_link('retract')
       end
     end
