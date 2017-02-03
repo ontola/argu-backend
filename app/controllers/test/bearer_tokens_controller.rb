@@ -29,7 +29,7 @@ module Test
           'retracted-at': nil
         },
         links: {
-          url: "#{Rails.configuration.bearer_token_url}/#{id}"
+          url: "#{Rails.configuration.token_url}/#{id}"
         }
       }
     end

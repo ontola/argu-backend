@@ -5,7 +5,8 @@ import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 export const BearerTokens = React.createClass({
     propTypes: {
         createTokenUrl: React.PropTypes.string,
-        groupId: React.PropTypes.number
+        groupId: React.PropTypes.number,
+        indexTokenUrl: React.PropTypes.string
     },
 
     getInitialState () {
@@ -15,7 +16,8 @@ export const BearerTokens = React.createClass({
     },
 
     componentDidMount () {
-        fetch(`/tokens/bearer/g/${this.props.groupId}`, safeCredentials())
+        const { indexTokenUrl } = this.props;
+        fetch(`${indexTokenUrl}/g/${this.props.groupId}`, safeCredentials())
             .then(statusSuccess)
             .then(json)
             .then(data => {

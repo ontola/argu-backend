@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class GroupMembershipPolicy < EdgeTreePolicy
   include JWTHelper
-  VERIFY_TEMPLATE = URITemplate.new("#{Rails.configuration.bearer_token_url}/verify{?jwt}")
+  VERIFY_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/verify{?jwt}")
 
   class Scope < Scope
     attr_reader :context, :scope

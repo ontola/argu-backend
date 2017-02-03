@@ -164,13 +164,13 @@ module Argu
 
       def validate_valid_bearer_token
         stub_request(:get,
-                     Addressable::Template.new("#{Rails.configuration.bearer_token_url}/verify{?jwt}"))
+                     Addressable::Template.new("#{Rails.configuration.token_url}/verify{?jwt}"))
           .to_return(status: 200)
       end
 
       def validate_invalid_bearer_token
         stub_request(:get,
-                     Addressable::Template.new("#{Rails.configuration.bearer_token_url}/verify{?jwt}"))
+                     Addressable::Template.new("#{Rails.configuration.token_url}/verify{?jwt}"))
           .to_return(status: 404)
       end
     end
