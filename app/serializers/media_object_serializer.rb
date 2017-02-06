@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PhotoSerializer < BaseSerializer
+class MediaObjectSerializer < BaseSerializer
   attributes :id, :url, :thumbnail
 
   def thumbnail

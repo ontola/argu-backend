@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PhotosController < AuthorizedController
+class MediaObjectsController < AuthorizedController
   def show
     respond_to do |format|
       format.json { render json: resource_by_id }

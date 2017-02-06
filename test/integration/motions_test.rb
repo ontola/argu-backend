@@ -147,7 +147,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_success'),
       attributes: {
         default_cover_photo_attributes: {
-          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
       }
     }
@@ -178,7 +178,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         default_cover_photo_attributes: {
-          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
       }
     }

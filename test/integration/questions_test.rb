@@ -54,7 +54,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('questions', 'create_success'),
       attributes: {
         default_cover_photo_attributes: {
-          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
       }
     }
@@ -73,7 +73,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         default_cover_photo_attributes: {
-          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
       }
     }

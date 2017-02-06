@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 require 'gravatar'
 
-class PhotoUploader < CarrierWave::Uploader::Base
+class MediaObjectUploader < CarrierWave::Uploader::Base
   include ::CarrierWave::Backgrounder::Delay
 
   include CarrierWave::Vips

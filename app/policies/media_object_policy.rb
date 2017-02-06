@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PhotoPolicy < RestrictivePolicy
+class MediaObjectPolicy < RestrictivePolicy
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -18,9 +18,9 @@ class PhotoPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(id image remote_image remove_image image_cache image_aspect image_attribution image_box_w
-                         image_crop_h image_crop_w image_crop_x image_crop_y image_original_h image_original_w _destroy
-                         used_as)
+    attributes.concat %i(id content remote_content remove_content content_cache content_aspect content_attribution
+                         content_box_w content_crop_h content_crop_w content_crop_x content_crop_y content_original_h
+                         content_original_w _destroy used_as description)
     attributes
   end
 end

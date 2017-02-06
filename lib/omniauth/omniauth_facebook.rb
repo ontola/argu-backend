@@ -22,7 +22,7 @@ module Omniauth
           r: r,
           profile_attributes: {
             default_profile_photo_attributes: {
-              remote_image_url: image_url
+              remote_content_url: image_url
             }
           }
         )

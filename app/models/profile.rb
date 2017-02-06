@@ -28,8 +28,8 @@ class Profile < ApplicationRecord
   has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
-  has_many :uploaded_photos,
-           class_name: 'Photo',
+  has_many :uploaded_media_objects,
+           class_name: 'MediaObject',
            inverse_of: :creator,
            foreign_key: 'creator_id',
            dependent: :restrict_with_exception
@@ -196,7 +196,7 @@ class Profile < ApplicationRecord
         .constantize
         .anonymize(send(association))
     end
-    Photo.anonymize(uploaded_photos)
+    MediaObject.anonymize(uploaded_media_objects)
   end
 
   def role_added(role)

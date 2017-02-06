@@ -141,18 +141,18 @@ class UsersTest < ActionDispatch::IntegrationTest
               id: user.profile.id,
               default_profile_photo_attributes: {
                 id: user.profile.default_profile_photo.id,
-                image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
+                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
               },
               default_cover_photo_attributes: {
-                image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
+                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
               }
             }
           }
         }
     assert_equal 'name', user.reload.first_name
-    assert_equal 2, user.profile.photos.reload.count
-    assert_equal('profile_photo.png', user.profile.default_profile_photo.image_identifier)
-    assert_equal('cover_photo.jpg', user.profile.default_cover_photo.image_identifier)
+    assert_equal 2, user.profile.media_objects.reload.count
+    assert_equal('profile_photo.png', user.profile.default_profile_photo.content_identifier)
+    assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
 
     assert_redirected_to settings_path(tab: :general)
   end

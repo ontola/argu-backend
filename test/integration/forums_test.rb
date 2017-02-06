@@ -242,11 +242,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
               bio: 'new bio',
               default_profile_photo_attributes: {
                 id: holland.default_profile_photo.id,
-                image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
+                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
                 used_as: 'profile_photo'
               },
               default_cover_photo_attributes: {
-                image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
+                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
                 used_as: 'cover_photo'
               }
             }
@@ -256,9 +256,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_forum_path(holland.url, tab: :general)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
-    assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.image_identifier
-    assert_equal 'cover_photo.jpg', assigns(:forum).default_cover_photo.image_identifier
-    assert_equal 2, assigns(:forum).photos.count
+    assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.content_identifier
+    assert_equal 'cover_photo.jpg', assigns(:forum).default_cover_photo.content_identifier
+    assert_equal 2, assigns(:forum).media_objects.count
   end
 
   test 'owner should not show statistics yet' do

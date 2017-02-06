@@ -230,19 +230,19 @@ class PagesTest < ActionDispatch::IntegrationTest
               about: 'new_about',
               default_profile_photo_attributes: {
                 id: page.profile.default_profile_photo.id,
-                image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
+                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
               },
               default_cover_photo_attributes: {
-                image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
+                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
               }
             }
           }
         }
 
     assigns(:page).profile.reload
-    assert_equal 2, assigns(:page).profile.photos.count
-    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.image_identifier
-    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.image_identifier
+    assert_equal 2, assigns(:page).profile.media_objects.count
+    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
+    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
     assert_redirected_to settings_page_path(page, tab: :profile)
     assert_equal page, assigns(:page)
     assert_equal 'new_about', assigns(:page).profile.about
@@ -327,10 +327,10 @@ class PagesTest < ActionDispatch::IntegrationTest
                name: 'Utrecht Two',
                about: 'Utrecht Two bio',
                default_profile_photo_attributes: {
-                 image: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
+                 content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png')
                },
                default_cover_photo_attributes: {
-                 image: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
+                 content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
                }
              },
              shortname_attributes: {
@@ -344,9 +344,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response 303
     assert assigns(:page)
     assert assigns(:page).persisted?
-    assert_equal 2, assigns(:page).profile.photos.count
-    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.image_identifier
-    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.image_identifier
+    assert_equal 2, assigns(:page).profile.media_objects.count
+    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
+    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
   end
 
   private

@@ -91,7 +91,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('projects', 'create_success'),
       attributes: {
         default_cover_photo_attributes: {
-          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
       }
     }
@@ -110,7 +110,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         default_cover_photo_attributes: {
-          image: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
       }
     }

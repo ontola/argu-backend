@@ -161,7 +161,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0],
-                        ['Photo.count', -1], ['Photo.where(publisher_id: 0, creator_id: 0).count', 1]]) do
+                        ['MediaObject.count', -1], ['MediaObject.where(publisher_id: 0, creator_id: 0).count', 1]]) do
       delete user_registration_path,
              params: {
                user: {

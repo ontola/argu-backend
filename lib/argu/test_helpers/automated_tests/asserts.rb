@@ -16,7 +16,7 @@ module Argu
         end
 
         def assert_has_photo
-          'assert_equal 1, resource.photos.count'
+          'assert_equal 1, resource.media_objects.count'
         end
 
         def assert_is_published
@@ -40,7 +40,7 @@ module Argu
         end
 
         def assert_photo_identifier
-          'assert_equal "cover_photo.jpg", resource.default_cover_photo.image_identifier'
+          'assert_equal "cover_photo.jpg", resource.default_cover_photo.content_identifier'
         end
 
         def exp_res(should: false, response: 403, asserts: [], analytics: nil)

@@ -4,9 +4,9 @@ module ProfilePhotoable
 
   included do
     has_one :default_profile_photo,
-            -> { where(used_as: Photo.used_as[:profile_photo]) },
+            -> { where(used_as: MediaObject.used_as[:profile_photo]) },
             as: :about,
-            class_name: 'Photo',
+            class_name: 'MediaObject',
             inverse_of: :about,
             required: true,
             autosave: true
@@ -14,10 +14,10 @@ module ProfilePhotoable
     accepts_nested_attributes_for :default_profile_photo,
                                   allow_destroy: true,
                                   reject_if: proc { |attrs|
-                                    attrs['image'].blank? &&
-                                      attrs['image_cache'].blank? &&
-                                      attrs['remove_image'] != '1' &&
-                                      attrs['remote_profile_photo_url'].blank?
+                                    attrs['content'].blank? &&
+                                      attrs['content_cache'].blank? &&
+                                      attrs['remove_content'] != '1' &&
+                                      attrs['remote_content_url'].blank?
                                   }
 
     before_validation :build_profile_photo

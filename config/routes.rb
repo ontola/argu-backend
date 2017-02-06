@@ -222,7 +222,7 @@ Rails.application.routes.draw do
     put :finish, to: 'phases#finish'
   end
 
-  resources :photos, only: :show
+  resources :media_objects, only: :show
 
   resources :announcements, only: [] do
     post '/dismissals',

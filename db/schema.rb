@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170202125028) do
+ActiveRecord::Schema.define(version: 20170203132140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,6 +344,25 @@ ActiveRecord::Schema.define(version: 20170202125028) do
     t.string  "resource_type", null: false
   end
 
+  create_table "media_objects", force: :cascade do |t|
+    t.integer  "forum_id"
+    t.integer  "about_id",                 null: false
+    t.string   "about_type",               null: false
+    t.integer  "used_as",      default: 0, null: false
+    t.integer  "creator_id",               null: false
+    t.integer  "publisher_id",             null: false
+    t.string   "content_uid"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "date_created"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "content_type"
+    t.string   "filename"
+    t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type", using: :btree
+    t.index ["forum_id"], name: "index_media_objects_on_forum_id", using: :btree
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "forum_id",               null: false
@@ -461,23 +480,6 @@ ActiveRecord::Schema.define(version: 20170202125028) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["forum_id", "project_id"], name: "index_phases_on_forum_id_and_project_id", using: :btree
-  end
-
-  create_table "photos", force: :cascade do |t|
-    t.integer  "forum_id"
-    t.integer  "about_id",                 null: false
-    t.string   "about_type",               null: false
-    t.integer  "used_as",      default: 0, null: false
-    t.integer  "creator_id",               null: false
-    t.integer  "publisher_id",             null: false
-    t.string   "image_uid"
-    t.string   "title"
-    t.text     "description"
-    t.datetime "date_created"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.index ["about_id", "about_type"], name: "index_photos_on_about_id_and_about_type", using: :btree
-    t.index ["forum_id"], name: "index_photos_on_forum_id", using: :btree
   end
 
   create_table "placements", force: :cascade do |t|
@@ -823,6 +825,9 @@ ActiveRecord::Schema.define(version: 20170202125028) do
   add_foreign_key "identities", "users"
   add_foreign_key "linked_records", "pages"
   add_foreign_key "linked_records", "sources"
+  add_foreign_key "media_objects", "forums"
+  add_foreign_key "media_objects", "profiles", column: "creator_id"
+  add_foreign_key "media_objects", "users", column: "publisher_id"
   add_foreign_key "motions", "forums"
   add_foreign_key "motions", "places"
   add_foreign_key "motions", "profiles", column: "creator_id"
@@ -836,9 +841,6 @@ ActiveRecord::Schema.define(version: 20170202125028) do
   add_foreign_key "phases", "profiles", column: "creator_id"
   add_foreign_key "phases", "projects"
   add_foreign_key "phases", "users", column: "publisher_id"
-  add_foreign_key "photos", "forums"
-  add_foreign_key "photos", "profiles", column: "creator_id"
-  add_foreign_key "photos", "users", column: "publisher_id"
   add_foreign_key "placements", "forums"
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"

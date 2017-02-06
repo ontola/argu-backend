@@ -1,20 +1,20 @@
 # frozen_string_literal: true
-class Photo < ApplicationRecord
+class MediaObject < ApplicationRecord
   include Ldable
+  belongs_to :about, polymorphic: true, inverse_of: :media_objects
   belongs_to :forum
-  belongs_to :about, polymorphic: true, inverse_of: :photos
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
-  mount_uploader :image, PhotoUploader, mount_on: :image_uid
+  mount_uploader :content, MediaObjectUploader, mount_on: :content_uid
 
-  validates_integrity_of :image
-  validates_processing_of :image
-  validates_download_of :image
+  validates_integrity_of :content
+  validates_processing_of :content
+  validates_download_of :content
 
-  enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2}
+  enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
 
-  delegate :url, :file, :icon, :avatar, to: :image
+  delegate :url, :file, :icon, :avatar, to: :content
 
   contextualize_as_type 'schema:ImageObject'
   contextualize_with_id { |p| Rails.application.routes.url_helpers.root_url(protocol: :https) + "photos/#{p.id}" }
