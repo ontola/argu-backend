@@ -19,6 +19,7 @@ class QuestionPolicy < EdgeTreePolicy
     attributes.concat %i(include_motions f_convert) if staff?
     attributes.concat %i(pinned) if is_manager? || staff?
     append_default_photo_params(attributes)
+    append_attachment_params(attributes)
     attributes
   end
 

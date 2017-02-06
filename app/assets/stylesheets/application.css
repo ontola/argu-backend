@@ -27,3 +27,8 @@
  *= require_tree ./widgets
  *= require_tree ./app
 */
+
+.gallery span.fa {
+    font-size: 4em;
+    display: table-caption;
+}

@@ -27,6 +27,12 @@
             =f.input :mark_as_important, as: :reverse_boolean
             li.form-helper
               span= t('publications.follow_type.helper', news_audience: resource.potential_audience(:news), reactions_audience: resource.potential_audience(:reactions))
+          =f.semantic_fields_for :attachments do |attachment|
+            =render 'attachment_fields', f: attachment
+          .links
+            =link_to_add_association f, :attachments, class: 'btn-subtle' do
+              span.fa.fa-plus
+              span.icon-left= t('attachments.add')
           .collapsible-wrapper
             input.collapsible-input[type="checkbox" value="selected" id="collapse-advanced"]
             label.collapsible-label.collapsible-label--form[for="collapse-advanced"]

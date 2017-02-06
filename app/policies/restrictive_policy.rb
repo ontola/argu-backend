@@ -139,7 +139,17 @@ class RestrictivePolicy
   private
 
   def append_default_photo_params(attributes)
-    attributes.append(default_cover_photo_attributes: Pundit.policy(context, MediaObject.new).permitted_attributes)
-    attributes.append(default_profile_photo_attributes: Pundit.policy(context, MediaObject.new).permitted_attributes)
+    attributes.append(
+      default_cover_photo_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
+    )
+    attributes.append(
+      default_profile_photo_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
+    )
+  end
+
+  def append_attachment_params(attributes)
+    attributes.append(
+      attachments_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
+    )
   end
 end

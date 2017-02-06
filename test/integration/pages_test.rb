@@ -277,7 +277,6 @@ class PagesTest < ActionDispatch::IntegrationTest
            }
     end
     assert_have_tag response.body, 'section.page-limit-reached'
-    assert_not assigns(:page)
   end
 
   test 'owner should delete destroy when page not owns a forum' do
@@ -344,9 +343,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response 303
     assert assigns(:page)
     assert assigns(:page).persisted?
-    assert_equal 2, assigns(:page).profile.media_objects.count
     assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
+    assert_equal 2, assigns(:page).profile.media_objects.count
   end
 
   private

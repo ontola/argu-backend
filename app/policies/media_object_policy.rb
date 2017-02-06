@@ -18,9 +18,9 @@ class MediaObjectPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(id content remote_content remove_content content_cache content_aspect content_attribution
-                         content_box_w content_crop_h content_crop_w content_crop_x content_crop_y content_original_h
-                         content_original_w _destroy used_as description)
+    attributes.concat %i(id used_as content remote_content remove_content content_cache content_aspect
+                         content_attribution content_box_w content_crop_h content_crop_w content_crop_x content_crop_y
+                         content_original_h content_original_w _destroy description)
     attributes
   end
 end

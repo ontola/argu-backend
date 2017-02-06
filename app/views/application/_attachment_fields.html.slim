@@ -1,0 +1,16 @@
+.nested-fields
+  =f.inputs do
+    =f.input :id, as: :hidden
+    =f.input :used_as, as: :hidden, input_html: {value: :attachment}
+    =f.input :content, as: :file, required: false, label: t('attachments.type')
+    =f.input :content_cache, as: :hidden
+    li.form-helper
+      span= t('attachments.file_limit_notice')
+    - if f.object&.url.present?
+      - if f.object.is_image?
+        =f.input :content, as: :preview_image, html_options: {style: 'max-height: 256px;'}, label: '&nbsp;'
+      - else
+        =f.label ' '
+        span= f.object.filename
+    =f.input :description, input_html: { rows: 5 }, label: '&nbsp;'
+  =link_to_remove_association t('delete_type', type: t('attachments.type')), f, class: 'btn btn--light'

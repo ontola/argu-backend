@@ -7,6 +7,7 @@ module ProfilePhotoable
             -> { where(used_as: MediaObject.used_as[:profile_photo]) },
             as: :about,
             class_name: 'MediaObject',
+            dependent: :destroy,
             inverse_of: :about,
             required: true,
             autosave: true
@@ -45,6 +46,6 @@ module ProfilePhotoable
   end
 
   def remove_marked_profile_photo
-    default_profile_photo.save if default_profile_photo&.remove_image
+    default_profile_photo.save if default_profile_photo&.remove_content
   end
 end

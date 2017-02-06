@@ -46,10 +46,8 @@ class PagesController < ApplicationController
   end
 
   def create
-    authorize(Edge.new(owner: Page.new).owner, :create?)
-
-    @page = Page.create(permit_params)
-    @page.edge = Edge.new(owner: @page, user: @page.publisher, is_published: true)
+    authorize(new_resource_from_params, :create?)
+    @page.assign_attributes(permit_params)
 
     if @page.save
       redirect_to page_url(@page), status: 303
@@ -169,14 +167,18 @@ class PagesController < ApplicationController
   end
 
   def new_resource_from_params
-    @resource ||= Edge.new(owner: Page.new).owner
+    @page ||= Edge.new(
+      owner: Profile.new(profileable: Page.new).profileable,
+      user: current_user,
+      is_published: true
+    ).owner
   end
 
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = params
                       .require(:page)
-                      .permit(*policy(@page || Edge.new(owner: Page.new).owner).permitted_attributes)
+                      .permit(*policy(@page).permitted_attributes)
                       .to_h
                       .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)

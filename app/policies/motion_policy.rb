@@ -20,6 +20,7 @@ class MotionPolicy < EdgeTreePolicy
     attributes.append :id if record.is_a?(Motion) && edit?
     attributes.append(question_answers_attributes: %i(id question_id motion_id)) if create?
     append_default_photo_params(attributes)
+    append_attachment_params(attributes)
     attributes
   end
 

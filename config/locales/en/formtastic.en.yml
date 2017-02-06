@@ -42,7 +42,7 @@ en:
       profile_photo: "Profile photo"
       remember_me: "Remember data"
       remove_cover_photo: "Remove cover photo"
-      remove_image: "Remove image"
+      remove_content: "Remove image"
       remove_profile_photo: "Remove profile photo"
       confirmation_string: "Confirmation"
       shortname: "Argu URL"
@@ -115,7 +115,6 @@ en:
         content: "Enter details and background information on your update here."
       motion:
         title: "Enter the core of your %{type} here"
-        content: "Enter details and background information on your %{type} here."
       project:
         title: "Enter the title of your project here"
         content: "Enter a description of the project here"

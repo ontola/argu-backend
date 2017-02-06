@@ -1,14 +1,14 @@
 =form.semantic_fields_for "#{relation}_attributes".to_sym, form.object.send(relation) do |pf|
   =pf.input :id, as: :hidden
-  =pf.input :image, as: :file, required: false, label: t("profiles.edit.#{type}")
-  =pf.input :image_cache, as: :hidden
+  =pf.input :content, as: :file, required: false, label: t("profiles.edit.#{type}")
+  =pf.input :content_cache, as: :hidden
   =pf.input :used_as, as: :hidden, input_html: {value: type}
   li.form-helper
     span= t('profiles.edit.file_limit_notice')
     - if pf.object&.url.present?
-      =pf.input :image, as: :preview_image, html_options: {style: preview_style}
+      =pf.input :content, as: :preview_image, html_options: {style: preview_style}
       - if pf.object&.file.present?
         - if relation == :default_profile_photo
-          =pf.input :remove_image, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
+          =pf.input :remove_content, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
         - else
           =pf.input :_destroy, as: :reverse_boolean, label: t('formtastic.labels.remove_image')

@@ -3,10 +3,11 @@ module Photoable
   extend ActiveSupport::Concern
 
   included do
-    has_many :media_objects, as: :about, dependent: :destroy
+    has_many :media_objects, as: :about, inverse_of: :about, dependent: :destroy
     has_one :default_cover_photo,
             -> { where(used_as: MediaObject.used_as[:cover_photo]) },
             as: :about,
+            dependent: :destroy,
             inverse_of: :about,
             class_name: 'MediaObject'
 

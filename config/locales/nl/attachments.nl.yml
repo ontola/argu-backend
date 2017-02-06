@@ -1,0 +1,5 @@
+nl:
+  attachments:
+    type: "Bijlage"
+    add: "Bijlage toevoegen"
+    file_limit_notice: "Het bestand moet kleiner zijn dan 18MB."
