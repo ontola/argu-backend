@@ -17,5 +17,34 @@ module Attachable
                                       attrs['remote_content_url'].blank? &&
                                       attrs['description'].blank?
                                   }
+
+    has_collection :attachments, pagination: true, association_class: MediaObject, filter: {used_as: :attachment}
+  end
+
+  module Serializer
+    extend ActiveSupport::Concern
+    included do
+      has_one :attachment_collection do
+        link(:self) do
+          {
+            href: "#{object.context_id}/media_objects?filter[used_as]=attachment",
+            meta: {
+              '@type': 'argu:attachments'
+            }
+          }
+        end
+        meta do
+          href = object.context_id
+          {
+            '@type': 'argu:collectionAssociation',
+            '@id': "#{href}/media_objects?filter[used_as]=attachment"
+          }
+        end
+      end
+
+      def attachment_collection
+        object.attachment_collection(user_context: scope)
+      end
+    end
   end
 end

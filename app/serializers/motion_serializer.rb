@@ -2,6 +2,7 @@
 class MotionSerializer < BaseEdgeSerializer
   include Loggable::Serializer
   include Argumentable::Serializer
+  include Attachable::Serializer
   include Voteable::Serializer
   attributes :content, :current_vote
 

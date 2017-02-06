@@ -70,6 +70,19 @@ module Argu
         end
       end
 
+      # Adds 3 attachments to the resource
+      def with_attachments
+        3.times do
+          profile = create(:profile)
+          @resource.attachments.create(
+            creator: profile,
+            forum: @resource.forum,
+            publisher: profile.profileable,
+            content: Rack::Test::UploadedFile.new(File.join(Rails.root, 'test', 'fixtures', 'profile_photo.png'))
+          )
+        end
+      end
+
       # Adds 3 comments (1 trashed) to the resource
       def with_comments
         3.times do

@@ -37,8 +37,8 @@ class Collection
     @members ||= policy_scope(
       parent
         .send(association)
-        .joins(:edge)
-        .includes(creator: :profileable, edge: :parent)
+        .joins(joined_associations)
+        .includes(included_associations)
         .where(filter_query)
     ).page(page)
   end
@@ -106,12 +106,24 @@ class Collection
     ]
   end
 
+  def included_associations
+    included_associations = {}
+    included_associations[:creator] = :profileable
+    included_associations[:edge] = :parent if association_class.is_fertile?
+    included_associations
+  end
+
+  def joined_associations
+    association_class.is_fertile? ? [:edge] : nil
+  end
+
   def paginate?
     pagination && page.nil?
   end
 
   def parent_total_count
-    policy_scope(parent.try(association).try(:joins, :edge).try(:where, filter_query)).try(:count)
+    return unless parent.present?
+    policy_scope(parent.send(association).joins(joined_associations).where(filter_query)).count
   end
 
   def query_opts

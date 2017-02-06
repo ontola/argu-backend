@@ -4,7 +4,7 @@ require 'test_helper'
 class QuestionsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
-  let(:question) { create(:question, :with_motions, parent: freetown.edge) }
+  let(:question) { create(:question, :with_motions, :with_attachments, parent: freetown.edge) }
 
   ####################################
   # Show
@@ -15,6 +15,10 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_relationship('parent', 1)
     assert_relationship('creator', 1)
+
+    assert_relationship('attachmentCollection', 1)
+    assert_included("/q/#{question.id}/media_objects?filter%5Bused_as%5D=attachment")
+    assert_included(question.attachments.map { |r| "/media_objects/#{r.id}" })
 
     assert_relationship('motionCollection', 1)
     assert_included("/q/#{question.id}/motions")

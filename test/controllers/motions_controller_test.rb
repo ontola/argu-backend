@@ -5,7 +5,7 @@ class MotionsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
   let(:question) { create(:question, :with_motions, parent: freetown.edge) }
-  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, :with_attachments, parent: freetown.edge) }
 
   ####################################
   # Show
@@ -25,6 +25,10 @@ class MotionsControllerTest < ActionController::TestCase
     assert_included("/m/#{motion.id}/arguments?filter%5Boption%5D=no&page=1")
     assert_included(motion.arguments.untrashed.map { |a| "/a/#{a.id}" })
     assert_not_included(motion.arguments.trashed.map { |a| "/a/#{a.id}" })
+
+    assert_relationship('attachmentCollection', 1)
+    assert_included("/m/#{motion.id}/media_objects?filter%5Bused_as%5D=attachment")
+    assert_included(motion.attachments.map { |r| "/media_objects/#{r.id}" })
 
     assert_relationship('voteEventCollection', 1)
     assert_included("/m/#{motion.id}/vote_events")

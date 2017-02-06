@@ -1,6 +1,10 @@
 # frozen_string_literal: true
-class MediaObjectSerializer < BaseSerializer
-  attributes :id, :url, :thumbnail
+class MediaObjectSerializer < RecordSerializer
+  def self.type(type = nil, &block)
+    self._type = block || type
+  end
+  type(&:ld_type)
+  attributes :url, :thumbnail, :used_as
 
   def thumbnail
     url = object.url(:icon)

@@ -13,11 +13,14 @@ class MediaObject < ApplicationRecord
   validates_download_of :content
 
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
+  filterable used_as: {values: MediaObject.used_as}
 
   delegate :url, :file, :icon, :avatar, :is_image?, to: :content
 
-  contextualize_as_type 'schema:ImageObject'
-  contextualize_with_id { |p| Rails.application.routes.url_helpers.root_url(protocol: :https) + "photos/#{p.id}" }
+  contextualize_as_type 'schema:MediaObject'
+  contextualize_with_id do |p|
+    Rails.application.routes.url_helpers.root_url(protocol: :https) + "media_objects/#{p.id}"
+  end
   contextualize :display_name, as: 'schema:name'
   contextualize :thumbnail, as: 'schema:thumbnail'
 
@@ -31,6 +34,10 @@ class MediaObject < ApplicationRecord
   # Hands over ownership of a collection to the Community user
   def self.expropriate(collection)
     collection.update_all(publisher_id: User::COMMUNITY_ID)
+  end
+
+  def ld_type
+    is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
 
   def set_file_name_and_type
