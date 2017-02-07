@@ -96,7 +96,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
-      {manager: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_photo])}
+      {manager: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_media_object])}
     end
     define_test(hash, :edit) do
       user_types[:edit].except(:creator).merge(moderator: exp_res(should: true, response: 200))
@@ -115,7 +115,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :update, suffix: ' with cover_photo', options: options) do
-      {manager: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_photo])}
+      {manager: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_media_object])}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('projects', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('projects', 'trash_success')}) do

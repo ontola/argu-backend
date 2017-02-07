@@ -15,7 +15,7 @@ module Argu
           "assert_select '##{name.split('sTest')[0].underscore}_title', '#{name.split('sTest')[0]}'"
         end
 
-        def assert_has_photo
+        def assert_has_media_object
           'assert_equal 1, resource.media_objects.count'
         end
 
@@ -41,6 +41,10 @@ module Argu
 
         def assert_photo_identifier
           'assert_equal "cover_photo.jpg", resource.default_cover_photo.content_identifier'
+        end
+
+        def assert_attachment_identifier
+          'assert_equal "cover_photo.jpg", resource.attachments.first.content_identifier'
         end
 
         def exp_res(should: false, response: 403, asserts: [], analytics: nil)

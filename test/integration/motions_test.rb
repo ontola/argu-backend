@@ -152,7 +152,21 @@ class MotionsTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with cover_photo', options: options) do
-      {creator: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_photo])}
+      {creator: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_media_object])}
+    end
+    options = {
+      parent: :project,
+      analytics: stats_opt('motions', 'create_success'),
+      attributes: {
+        attachments_attributes: {
+          '1234': {
+            content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          }
+        }
+      }
+    }
+    define_test(hash, :create, suffix: ' with attachment', options: options) do
+      {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
     define_test(hash, :show, asserts: [assert_no_trashed_arguments]) do
       user_types[:show].except!(:non_member)
@@ -183,7 +197,19 @@ class MotionsTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :update, suffix: ' with cover_photo', options: options) do
-      {creator: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_photo])}
+      {creator: exp_res(response: 302, should: true, asserts: [assert_photo_identifier, assert_has_media_object])}
+    end
+    options = {
+      attributes: {
+        attachments_attributes: {
+          '1234': {
+            content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
+          }
+        }
+      }
+    }
+    define_test(hash, :update, suffix: ' with attachment', options: options) do
+      {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
     define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
     define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
