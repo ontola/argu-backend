@@ -14,7 +14,12 @@ module OauthHelper
       Doorkeeper.configuration.access_token_expires_in,
       false
     )
-    cookies.encrypted['client_token'] = t.token
+    cookies.encrypted['client_token'] = {
+      value: t.token,
+      secure: !Rails.env.test?,
+      httponly: true,
+      domain: :all
+    }
   end
 
   def write_client_access_token
@@ -69,7 +74,12 @@ module OauthHelper
   def refresh_guest_token
     raw_doorkeeper_token.destroy! if raw_doorkeeper_token&.expired?
     @_raw_doorkeeper_token = generate_guest_token
-    cookies.encrypted['client_token'] = raw_doorkeeper_token.token
+    cookies.encrypted['client_token'] = {
+      value: raw_doorkeeper_token.token,
+      secure: !Rails.env.test?,
+      httponly: true,
+      domain: :all
+    }
     true
   end
 

@@ -40,7 +40,12 @@ module Argu
           false
         )
         if defined?(cookies) && defined?(cookies.encrypted)
-          cookies.encrypted['client_token'] = t.token
+          cookies.encrypted['client_token'] = {
+            value: t.token,
+            secure: !Rails.env.test?,
+            httponly: true,
+            domain: :all
+          }
         else
           allow_any_instance_of(Doorkeeper::OAuth::Token::Methods)
             .to receive(:cookie_token_extractor).and_return(t.token)
