@@ -421,7 +421,7 @@ GEM
       rack
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
-    rack-cors (0.4.0)
+    rack-cors (0.4.1)
     rack-mini-profiler (0.10.1)
       rack (>= 1.2.0)
     rack-protection (1.5.3)
@@ -779,4 +779,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.6
+   1.13.7

@@ -12,6 +12,7 @@ Bundler.require(*Rails.groups)
 module Argu
   class Application < Rails::Application
     config.token_url = ENV['TOKEN_SERVICE_URL']
+    config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || 'beta.argu.co'}"
 
     config.autoload_paths += %W(#{config.root}/app/models/banners)
     config.autoload_paths += %W(#{config.root}/app/services)
@@ -48,7 +49,21 @@ module Argu
     # Middlewares
     ############################
 
-    config.middleware.use Rack::Cors do
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins Rails.configuration.frontend_url
+        resource '*',
+                 headers: :any,
+                 methods: %i(get post put patch delete options)
+      end
+
+      allow do
+        origins 'd3hv9pr8szmavn.cloudfront.net'
+        resource '/assets/*',
+                 headers: :any,
+                 methods: %i(get options)
+      end
+
       allow do
         origins '*'
         resource(/\d+.widget/,
