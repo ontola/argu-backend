@@ -14,7 +14,7 @@ module OauthHelper
       Doorkeeper.configuration.access_token_expires_in,
       false
     )
-    cookies.encrypted['client_token'] = {
+    cookies.encrypted['argu_client_token'] = {
       value: t.token,
       secure: !Rails.env.test?,
       httponly: true,
@@ -23,7 +23,7 @@ module OauthHelper
   end
 
   def write_client_access_token
-    sign_in_from_cookie if raw_doorkeeper_token.blank?
+    migrate_token
     refresh_guest_token if needs_new_guest_token
   end
 
@@ -74,7 +74,7 @@ module OauthHelper
   def refresh_guest_token
     raw_doorkeeper_token.destroy! if raw_doorkeeper_token&.expired?
     @_raw_doorkeeper_token = generate_guest_token
-    cookies.encrypted['client_token'] = {
+    cookies.encrypted['argu_client_token'] = {
       value: raw_doorkeeper_token.token,
       secure: !Rails.env.test?,
       httponly: true,
@@ -83,9 +83,16 @@ module OauthHelper
     true
   end
 
-  # @todo remove when enough people had the chance to migrate to oauth2
-  def sign_in_from_cookie
-    return unless (user = request.env['warden']&.authenticate)
-    sign_in(user)
+  # @todo remove when enough people had the chance to migrate to the new token
+  def migrate_token
+    return unless cookies['client_token'].present?
+    cookies.encrypted['argu_client_token'] = {
+      value: cookies.encrypted['client_token'],
+      secure: !Rails.env.test?,
+      httponly: true,
+      domain: :all
+    }
+    request.cookies['argu_client_token'] = cookies['argu_client_token']
+    cookies.delete 'client_token', domain: :all
   end
 end

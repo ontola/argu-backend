@@ -11,7 +11,7 @@ module Oauth
       return super unless argu_request?
       r = r_with_authenticity_token(params.dig(:user, :r) || '')
       response = authorize_response
-      cookies.encrypted['client_token'] = {
+      cookies.encrypted['argu_client_token'] = {
         value: response.token.token,
         secure: !Rails.env.test?,
         httponly: true,

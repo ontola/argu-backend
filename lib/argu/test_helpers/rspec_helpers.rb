@@ -40,7 +40,7 @@ module Argu
           false
         )
         if defined?(cookies) && defined?(cookies.encrypted)
-          cookies.encrypted['client_token'] = {
+          cookies.encrypted['argu_client_token'] = {
             value: t.token,
             secure: !Rails.env.test?,
             httponly: true,

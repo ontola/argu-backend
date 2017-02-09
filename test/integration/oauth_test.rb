@@ -60,7 +60,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     at = Doorkeeper::AccessToken.last
     assert_equal %w(user), at.scopes.to_a
     assert_equal user.id, at.resource_owner_id.to_i
-    assert response.cookies['client_token'].present?
+    assert response.cookies['argu_client_token'].present?
 
     assert_redirected_to root_path
   end
@@ -85,7 +85,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     at = Doorkeeper::AccessToken.last
     assert_equal %w(user), at.scopes.to_a
     assert_equal user.id, at.resource_owner_id.to_i
-    assert response.cookies['client_token'].present?
+    assert response.cookies['argu_client_token'].present?
 
     assert_redirected_to forum_path(freetown)
   end

@@ -13,7 +13,7 @@ module Doorkeeper
     class Token
       module Methods
         def cookie_token_extractor(req)
-          req.cookie_jar.encrypted['client_token']
+          req.cookie_jar.encrypted['argu_client_token']
         end
       end
     end
