@@ -42,7 +42,7 @@ module Argu
         if defined?(cookies) && defined?(cookies.encrypted)
           cookies.encrypted['argu_client_token'] = {
             value: t.token,
-            secure: !Rails.env.test?,
+            secure: Rails.env.production?,
             httponly: true,
             domain: :all
           }

@@ -13,7 +13,7 @@ module Oauth
       response = authorize_response
       cookies.encrypted['argu_client_token'] = {
         value: response.token.token,
-        secure: !Rails.env.test?,
+        secure: Rails.env.production?,
         httponly: true,
         domain: :all
       }

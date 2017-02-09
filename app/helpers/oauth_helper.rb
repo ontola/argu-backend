@@ -16,7 +16,7 @@ module OauthHelper
     )
     cookies.encrypted['argu_client_token'] = {
       value: t.token,
-      secure: !Rails.env.test?,
+      secure: Rails.env.production?,
       httponly: true,
       domain: :all
     }
@@ -76,7 +76,7 @@ module OauthHelper
     @_raw_doorkeeper_token = generate_guest_token
     cookies.encrypted['argu_client_token'] = {
       value: raw_doorkeeper_token.token,
-      secure: !Rails.env.test?,
+      secure: Rails.env.production?,
       httponly: true,
       domain: :all
     }
@@ -88,7 +88,7 @@ module OauthHelper
     return unless cookies['client_token'].present?
     cookies.encrypted['argu_client_token'] = {
       value: cookies.encrypted['client_token'],
-      secure: !Rails.env.test?,
+      secure: Rails.env.production?,
       httponly: true,
       domain: :all
     }
