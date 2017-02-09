@@ -23,11 +23,7 @@ class UsersController < ApplicationController
   end
 
   def current_actor
-    if current_profile.present?
-      authorize current_profile.profileable, :show?
-    else
-      skip_authorization
-    end
+    skip_authorization
 
     actor = CurrentActor.new(
       user: current_user,
@@ -35,7 +31,7 @@ class UsersController < ApplicationController
     )
     respond_to do |format|
       format.json { render json: actor }
-      format.json_api { render json: actor }
+      format.json_api { render json: actor, include: :profile_photo }
     end
   end
 

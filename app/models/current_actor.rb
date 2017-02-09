@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 class CurrentActor
-  include ActiveModel::Model, ActiveModel::Serialization
+  include ActiveModel::Model, ActiveModel::Serialization, Ldable, ProfilesHelper
+  include Rails.application.routes.url_helpers
 
   attr_accessor :actor, :potential_action, :user
   delegate :display_name, to: :actor, allow_nil: true
   delegate :finished_intro, to: :user, allow_nil: true
+
+  contextualize_as_type 'argu:CurrentActor'
+  contextualize :display_name, as: 'schema:name'
 
   def actor_type
     if actor.present?
@@ -35,6 +39,6 @@ class CurrentActor
   end
 
   def url
-    dual_profile_url(actor)
+    actor && dual_profile_url(actor)
   end
 end
