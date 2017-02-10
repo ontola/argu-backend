@@ -58,7 +58,7 @@ module Argu
       end
 
       allow do
-        origins 'd3hv9pr8szmavn.cloudfront.net'
+        origins Rails.configuration.host, 'argu.co', 'd3hv9pr8szmavn.cloudfront.net'
         resource '/assets/*',
                  headers: :any,
                  methods: %i(get options)
