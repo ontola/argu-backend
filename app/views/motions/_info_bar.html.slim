@@ -9,19 +9,19 @@ section.section--details
     - if local_assigns[:show_parent]
       - unless params[:controller] == 'projects'
         - if motion.question_id
-          =link_to motion.question
+          =link_to motion.parent_model
             .detail[data-title=t('questions.go_to_parent')]
               .detail__icon
                 span.question-t.fa.fa-question
               .detail__text
-                span[itemprop="headline"]= truncate(motion.question.title, length: 30)
+                span[itemprop="headline"]= truncate(motion.parent_model.title, length: 30)
         - elsif motion.project_id
-          =link_to motion.project
+          =link_to motion.parent_model
             .detail[data-title=t('projects.go_to_parent')]
               .detail__icon
                 span.project-t.fa.fa-rocket
               .detail__text
-                span[itemprop="headline"]= truncate(motion.project.title, length: 30)
+                span[itemprop="headline"]= truncate(motion.parent_model.title, length: 30)
     - if local_assigns[:show_vote_pie] && motion.default_vote_event.total_vote_count.positive?
       .detail[data-title=t('motions.percentage_in_favor', percentage: motion.default_vote_event.votes_pro_percentage, count: motion.default_vote_event.total_vote_count)]
         .detail__icon
