@@ -88,13 +88,13 @@ class ApplicationController < ActionController::Base
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
   def params
     return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
-    if super['data']['type'].present? && super['data']['type'] != controller_name
+    if super['data']['type'].present? && super['data']['type'] != controller_name.camelcase(:lower)
       raise ActionController::UnpermittedParameters.new(%w(type))
     end
     raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?
     ActionController::Parameters.new(
       super.to_unsafe_h.merge(
-        super.require(:data).require(:type).singularize =>
+        super.require(:data).require(:type).singularize.underscore =>
           ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
       )
     )
