@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class MediaObjectSerializer < RecordSerializer
+  delegate :ld_type, to: :object
   def self.type(type = nil, &block)
     self._type = block || type
   end
@@ -8,6 +9,6 @@ class MediaObjectSerializer < RecordSerializer
 
   def thumbnail
     url = object.url(:icon)
-    url.include?('gravatar.com') ? url : "https://argu-logos.s3.amazonaws.com#{object.url(:icon)}"
+    url&.include?('gravatar.com') ? url : "https://argu-logos.s3.amazonaws.com#{object.url(:icon)}"
   end
 end
