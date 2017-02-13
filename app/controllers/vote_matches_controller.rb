@@ -1,5 +1,23 @@
 # frozen_string_literal: true
 class VoteMatchesController < AuthorizedController
+  def index
+    skip_verify_policy_scoped(true)
+    opts = {
+      association_class: VoteMatch,
+      user_context: user_context,
+      page: params[:page],
+      pagination: true
+    }
+    collection = Collection.new(opts)
+
+    respond_to do |format|
+      format.json_api do
+        render json: collection,
+               include: [:members, views: [:members, views: :members]]
+      end
+    end
+  end
+
   def show
     respond_to do |format|
       format.json_api do
