@@ -37,4 +37,31 @@ class VoteMatchSerializer < RecordSerializer
       }
     end
   end
+
+  has_one :creator do
+    obj = object.creator.profileable
+    link(:self) do
+      {
+        meta: {
+          '@type': 'schema:creator'
+        }
+      }
+    end
+    link(:related) do
+      {
+        href: obj.context_id,
+        meta: {
+          attributes: {
+            '@context': {
+              schema: 'http://schema.org/',
+              name: 'schema:name'
+            },
+            '@type': 'schema:Person',
+            name: obj.display_name
+          }
+        }
+      }
+    end
+    obj
+  end
 end
