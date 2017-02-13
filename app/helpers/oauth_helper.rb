@@ -86,13 +86,16 @@ module OauthHelper
   # @todo remove when enough people had the chance to migrate to the new token
   def migrate_token
     return unless cookies['client_token'].present?
-    cookies.encrypted['argu_client_token'] = {
-      value: cookies.encrypted['client_token'],
-      secure: Rails.env.production?,
-      httponly: true,
-      domain: :all
-    }
-    request.cookies['argu_client_token'] = cookies['argu_client_token']
+    if cookies['argu_client_token'].blank?
+      cookies.encrypted['argu_client_token'] = {
+        value: cookies.encrypted['client_token'],
+        secure: Rails.env.production?,
+        httponly: true,
+        domain: :all
+      }
+      request.cookies['argu_client_token'] = cookies['argu_client_token']
+    end
+    cookies.delete 'client_token'
     cookies.delete 'client_token', domain: :all
   end
 end
