@@ -34,13 +34,7 @@ class Collection
 
   def members
     return if paginate? || filter?
-    @members ||= policy_scope(
-      parent
-        .send(association)
-        .joins(joined_associations)
-        .includes(included_associations)
-        .where(filter_query)
-    ).page(page)
+    @members ||= policy_scope(association_base).includes(included_associations).page(page)
   end
 
   def next
@@ -64,16 +58,24 @@ class Collection
   end
 
   def title
-    I18n.t("#{association_class.name.tableize}.collection.#{filter.values.join('.')}",
+    I18n.t("#{association_class.name.tableize}.collection.#{filter&.values&.join('.')}",
            default: I18n.t("#{association_class.name.tableize}.plural",
                            default: association_class.name.tableize.humanize))
   end
 
   def total_count
-    members&.count || parent_total_count
+    members&.count || association_base.count
   end
 
   private
+
+  def association_base
+    policy_scope(
+      (parent&.send(association) || association_class)
+        .joins(joined_associations)
+        .where(filter_query)
+    )
+  end
 
   def child_with_options(options)
     options = {
@@ -81,7 +83,7 @@ class Collection
       filter: filter,
       page: page
     }.merge(options)
-    parent.collection_for(name, options)
+    parent&.collection_for(name, options) || Collection.new(options.merge(association_class: association_class))
   end
 
   def filter?
@@ -121,11 +123,6 @@ class Collection
     pagination && page.nil?
   end
 
-  def parent_total_count
-    return unless parent.present?
-    policy_scope(parent.send(association).joins(joined_associations).where(filter_query)).count
-  end
-
   def query_opts
     opts = {}
     opts[:page] = page if page.present?
@@ -134,7 +131,7 @@ class Collection
   end
 
   def total_page_count
-    (parent_total_count / association_class.default_per_page).ceil
+    (association_base.count / association_class.default_per_page).ceil
   end
 
   def uri(query_values = '')
