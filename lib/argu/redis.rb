@@ -14,6 +14,12 @@ module Argu
       rescue_redis_connection_error(e)
     end
 
+    def self.expire(key, seconds, redis = redis_instance)
+      redis.expire(key, seconds)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+    end
+
     def self.get(key, redis = redis_instance)
       redis.get(key)
     rescue ::Redis::CannotConnectError => e

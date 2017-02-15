@@ -13,8 +13,8 @@ class VoteMatchesControllerTest < ActionController::TestCase
 
     assert_relationship('creator', 1)
 
-    assert_relationship('voteables', 1)
-    assert_relationship('voteComparables', 1)
+    assert_relationship('voteables', 2)
+    assert_relationship('voteComparables', 0)
   end
 
   ####################################
@@ -24,7 +24,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api}
     assert_response 200
 
-    assert_relationship('parent', 1)
+    assert_relationship('parent', 0)
     assert_relationship('members', 0)
 
     assert_relationship('views', 1)
@@ -36,7 +36,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, page: 1}
     assert_response 200
 
-    assert_relationship('parent', 1)
+    assert_relationship('parent', 0)
     assert_relationship('views', 0)
 
     assert_relationship('members', VoteMatch.count)

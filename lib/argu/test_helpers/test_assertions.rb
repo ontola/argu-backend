@@ -29,12 +29,14 @@ module Argu
         assert_equal true, assigns(:_not_authorized_caught)
       end
 
-      def assert_relationship(key, size)
+      def assert_relationship(key, size = 1)
         relationships = JSON.parse(response.body)['data']['relationships']
         assert relationships.keys.include?(key), "#{key} is not in relationships"
 
-        return if size == 1 && relationships.is_a?(Hash)
-        assert_equal relationships[key]['data']&.size || 0, size, 'Size of relationship is incorrect'
+        unless size == 1 && relationships[key]['data'].is_a?(Hash)
+          assert_equal relationships[key]['data']&.size || 0, size, 'Size of relationship is incorrect'
+        end
+        relationships[key]
       end
 
       def assert_included(id)

@@ -38,6 +38,7 @@ class CollectionSerializer < BaseSerializer
     end
     obj
   end
+
   has_many :views do
     link(:self) do
       {
