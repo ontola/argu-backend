@@ -83,6 +83,19 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to forum_path('freetown')
   end
 
+  test 'should sign in with facebook with r' do
+    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: 'user_fb_only@argu.co',
+                                                              uid: '111903726898977')
+    Identity.any_instance.stubs(:email).returns('user_fb_only@argu.co')
+    Identity.any_instance.stubs(:name).returns('First Last')
+    Identity.any_instance.stubs(:image_url).returns('')
+
+    get user_facebook_omniauth_authorize_path(r: user_path(user2))
+    assert_redirected_to user_facebook_omniauth_callback_path(r: user_path(user2))
+    follow_redirect!
+    assert_redirected_to user_path(user2)
+  end
+
   test 'should connect to facebook' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(uid: '1119134323213',
                                                               email: 'user3@argu.co',
