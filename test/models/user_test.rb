@@ -43,6 +43,17 @@ class UserTest < ActiveSupport::TestCase
     assert_equal Date.new(1970, 7, 1), subject.birthday
   end
 
+  test 'should validate r' do
+    subject.r = ''
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
+    subject.r = '/users/sign_in'
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
+    subject.r = 'https://beta.argu.local/users/sign_in'
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
+    subject.r = 'https://evilwebsite.com/users/sign_in'
+    assert_not subject.valid?
+  end
+
   def notification_count(user)
     Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end

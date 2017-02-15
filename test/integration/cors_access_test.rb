@@ -24,12 +24,12 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
     options motion_path(5),
             headers: {
               Host: 'https://argu.co',
-              Origin: 'https://beta.argu.co',
+              Origin: 'https://beta.argu.local',
               'Access-Control-Request-Method': 'POST',
               'Access-Control-Request-Headers': 'origin, X-Requested-With'
             }
 
-    assert_equal 'https://beta.argu.co',
+    assert_equal 'https://beta.argu.local',
                  response.headers['Access-Control-Allow-Origin']
     assert_equal 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
                  response.headers['Access-Control-Allow-Methods']

@@ -38,6 +38,7 @@ class User < ApplicationRecord
   COMMUNITY_ID = 0
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
+  VALID_HOSTNAMES = ["https://#{Rails.application.config.host}", Rails.application.config.frontend_url]
 
   after_create :update_acesss_token_counts
   before_destroy :expropriate_dependencies
@@ -66,6 +67,7 @@ class User < ApplicationRecord
               in: I18n.available_locales.map(&:to_s),
               message: '%{value} is not a valid locale'
             }
+  validate :r, :validate_r
   auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
 
   def active_at(redis = nil)
@@ -220,6 +222,13 @@ class User < ApplicationRecord
 
   def user_to_recipient_option
     Hash[profile.email, profile.attributes.slice('id', 'name')]
+  end
+
+  def validate_r
+    uri = r && URI.parse(r)
+    if uri.present? && uri.hostname.present? && !VALID_HOSTNAMES.include?("#{uri.scheme}://#{uri.host}")
+      errors.add(:r, "Redirecting to #{r} is not allowed")
+    end
   end
 
   protected
