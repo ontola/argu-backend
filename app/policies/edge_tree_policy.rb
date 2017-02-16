@@ -6,7 +6,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def forum_ids_by_access_tokens
-      get_access_tokens.select { |at| at.item_type == 'Forum' }.map(&:item_id)
+      get_access_tokens(user).select { |at| at.item_type == 'Forum' }.map(&:item_id)
     end
 
     def resolve
@@ -57,14 +57,14 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def has_access_token?
-      access_token if has_access_token_access_to(record)
+      access_token if has_access_token_access_to(record, user)
     end
 
     def is_member?
       return if persisted_edge.nil?
       if ((user&.profile&.group_ids || [Group::PUBLIC_ID]) &
         persisted_edge.granted_group_ids('member')).any? ||
-          has_access_token_access_to(persisted_edge.owner)
+          has_access_token_access_to(persisted_edge.owner, user)
         member
       end
     end

@@ -129,7 +129,7 @@ class RestrictivePolicy
   # Note: Not to be confused with policy(record).show? which validates
   #       access for a specific item
   def has_access_to_record?
-    user || has_access_token_access_to(record)
+    user || has_access_token_access_to(record, user)
   end
 
   def scope

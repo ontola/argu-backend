@@ -65,7 +65,7 @@ class ProfilesController < ApplicationController
       updated = @resource.update setup_permit_params
       if updated
         if has_valid_token?(@resource)
-          get_access_tokens(@resource).compact.each do |at|
+          get_access_tokens(@resource).each do |at|
             next unless at.item.class == Forum && !at.item.open?
             group = at.item.grants.member.first&.group
             if group.present?

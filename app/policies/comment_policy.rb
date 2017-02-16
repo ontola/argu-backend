@@ -50,7 +50,7 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def has_access_to_platform?
-    user || has_access_token_access_to(record.parent_model(:forum))
+    user || has_access_token_access_to(record.parent_model(:forum), user)
   end
 
   private

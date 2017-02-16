@@ -52,7 +52,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def has_access_token?
-    access_token if has_access_token_access_to(granted_resource)
+    access_token if has_access_token_access_to(granted_resource, user)
   end
 
   def page_policy
