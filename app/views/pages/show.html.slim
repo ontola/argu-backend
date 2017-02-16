@@ -5,3 +5,9 @@
                image: @profile.default_profile_photo
 =render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
 =render partial: 'profiles/show', locals: {resource: @profile}
+.col-1
+  header
+    h1= t('forums.plural')
+  .selector.grid
+    .box-grid-sizer
+    =render collection: @forums, partial: 'forums/forum'

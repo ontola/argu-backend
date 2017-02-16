@@ -89,10 +89,6 @@ class Profile < ApplicationRecord
                            .uniq
   end
 
-  def joined_forum_ids(role = nil)
-    forum_ids(role).join(',').presence
-  end
-
   def granted_edges(owner_type = nil, role = nil)
     scope = granted_edges_scope
     scope = scope.where(owner_type: owner_type) if owner_type.present?

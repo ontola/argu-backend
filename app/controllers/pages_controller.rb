@@ -16,6 +16,7 @@ class PagesController < ApplicationController
 
   def show
     @page = Page.find_via_shortname!(params[:id])
+    @forums = policy_scope(@page.forums).joins(:edge).order('edges.follows_count DESC')
     @profile = @page.profile
     authorize @page, :show?
 

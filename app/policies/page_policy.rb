@@ -14,7 +14,7 @@ class PagePolicy < EdgeTreePolicy
     def resolve
       t = Page.arel_table
 
-      cond = t[:visibility].eq(Page.visibilities[:open])
+      cond = t[:visibility].eq_any([Page.visibilities[:open], Page.visibilities[:closed]])
       if user.present?
         cond = cond.or(t[:id].in(user.profile.granted_record_ids('Page')
                                    .concat(user.profile.pages.pluck(:id))))
