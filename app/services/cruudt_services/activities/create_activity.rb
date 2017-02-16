@@ -5,4 +5,8 @@ class CreateActivity < CreateService
     @resource = resource
     super
   end
+
+  private
+
+  def broadcast_event; end
 end

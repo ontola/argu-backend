@@ -5,4 +5,6 @@ class CreateConversion < CreateService
     attributes[:klass] = attributes[:klass].classify.constantize if attributes[:klass].is_a?(String)
     super
   end
+
+  def broadcast_event; end
 end

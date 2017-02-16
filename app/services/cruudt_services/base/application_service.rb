@@ -38,6 +38,8 @@ class ApplicationService
       publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
       publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
       publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
+
+      broadcast_event
     end
   rescue ActiveRecord::RecordInvalid, ActiveRecord::ActiveRecordError => e
     raise(e) if e.is_a?(ActiveRecord::StatementInvalid)
@@ -55,6 +57,10 @@ class ApplicationService
 
   def assign_attributes
     resource.assign_attributes(@attributes)
+  end
+
+  def broadcast_event
+    DataEvent.publish(resource)
   end
 
   # The action that called this service.
