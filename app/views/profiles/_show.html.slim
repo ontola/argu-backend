@@ -1,0 +1,21 @@
+.cover-behind.cover--profile
+  .cover-image[style="background-image: url('#{resource.default_cover_photo&.url(:cover)}'); "]
+.col-1
+  .profile-top-container
+    =image_tag resource.default_profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
+    .profile-header
+      h1= resource.display_name
+  .profile[data-intro= t('intro.profile.show', name: resource.display_name)]
+    .box
+      section
+        - if resource.roles.pluck(:name).include?('staff')
+          span.role Staff
+        p= resource.about
+        - if resource.profileable_type == 'User' && resource.profileable.favorite_forums.present?
+          label Forums:
+          ul.icon-list.margin-bottom
+            - resource.profileable.favorites.joins(:edge).where(edges: {owner_type: 'Forum'}).each do |favorite|
+              -next if favorite.edge.owner.hidden?
+              li
+                =link_to forum_path(favorite.edge.owner) do
+                  span= favorite.edge.owner.name

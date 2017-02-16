@@ -14,7 +14,7 @@ class UsersController < ApplicationController
         if (/[a-zA-Z]/i =~ params[:id]).nil?
           redirect_to url_for(@user), status: 307
         else
-          render 'profiles/show'
+          render 'show'
         end
       end
       format.json { render json: @user }

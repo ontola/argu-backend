@@ -26,7 +26,7 @@ class PagesController < ApplicationController
         if (/[a-zA-Z]/i =~ params[:id]).nil?
           redirect_to url_for(@page), status: 307
         else
-          render 'profiles/show'
+          render 'show'
         end
       end
       format.json_api { render json: @page, include: :profile_photo }

@@ -1,0 +1,7 @@
+=set_title @page || @profile
+=connected_web url: @profile.profileable.context_id,
+               name: seolized_title(@page || @profile),
+               description: seolized_description(@page || @profile),
+               image: @profile.default_profile_photo
+=render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
+=render partial: 'profiles/show', locals: {resource: @profile}
