@@ -36,7 +36,8 @@ module AccessTokenHelper
   def get_access_token(user = nil)
     # Eval is used here, but as long as get_safe_raw_access_tokens is used
     # to set access_tokens on User, it's safe to do so.
-    access_token = params[:at].presence || user && eval(user.access_tokens).try(:first).presence
+    user ||= current_user
+    access_token = params[:at].presence || user&.access_tokens && eval(user.access_tokens).try(:first).presence
     return unless access_token.present?
     @access_token = AccessToken.find_by_access_token access_token
   end
