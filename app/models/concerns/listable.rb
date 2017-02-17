@@ -41,6 +41,7 @@ module Listable
     #   replace_voteables(array)
     def has_many_list_items(name)
       has_many name, -> { where(relationship: name).order(:order) }, class_name: 'ListItem', as: :listable
+      has_collection name, association_class: ListItem, url_constructor: "#{self.name.underscore}_#{name}_url".to_sym
 
       define_method "add_#{name.to_s.singularize}" do |iri, resource_type|
         add_item(name, iri, resource_type)
