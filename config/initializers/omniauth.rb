@@ -22,8 +22,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            image_size: 'large',
            callback_path: callback_path,
            client_options: {
-             site: 'https://graph.facebook.com/v2.6',
-             authorize_url: 'https://www.facebook.com/v2.6/dialog/oauth',
+             site: 'https://graph.facebook.com/v2.8',
+             authorize_url: 'https://www.facebook.com/v2.8/dialog/oauth',
              ssl: {
                ca_file: "#{Rails.root}/config/ca-bundle.crt"
              }

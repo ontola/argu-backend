@@ -9,7 +9,7 @@ module Argu
 
       def facebook_picture(opts = {})
         uid = opts[:uid] || '102555400181774'
-        stub_request(:get, "https://graph.facebook.com/v2.6/#{uid}/picture?redirect=false")
+        stub_request(:get, "https://graph.facebook.com/v2.8/#{uid}/picture?redirect=false")
           .to_return(
             status: 200,
             body: File.new(File.expand_path('./test/fixtures/fb_image_silhouette.jpg'))
@@ -25,7 +25,7 @@ module Argu
           info: {
             email: opts[:email] || 'bpvjlwt_zuckersen_1467905538@tfbnw.net',
             name: opts[:name] || 'Rick Alabhaidbbdfg Zuckersen',
-            image: opts[:image] || "https://graph.facebook.com/v2.6/#{uid}/picture?type=large"
+            image: opts[:image] || "https://graph.facebook.com/v2.8/#{uid}/picture?type=large"
           },
           credentials: {
             token: opts[:token] ||

@@ -100,10 +100,10 @@ gem 'redcarpet', '~> 3.3.4'
 
 ################## User management ########################
 gem 'devise', '~> 4.2.0'
-gem 'omniauth', '~> 1.3.1'
+gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.2.0'
-gem 'omniauth-facebook', '~> 3.0.0'
-gem 'koala', '~> 2.3.0'
+gem 'omniauth-facebook', '~> 4.0.0'
+gem 'koala', '~> 2.5.0'
 gem 'omniauth-twitter', '~> 1.2.0'
 # gem 'omniauth-openid'
 gem 'pundit', '~> 1.0.0'
