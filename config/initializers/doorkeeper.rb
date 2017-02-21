@@ -145,7 +145,8 @@ Doorkeeper::JWT.configure do
       {
         iat: Time.current.iso8601(5),
         user: {
-          type: 'guest'
+          type: 'guest',
+          '@id': "https://#{Rails.application.config.host}/sessions/#{opts[:resource_owner_id]}"
         }
       }
     else
@@ -155,6 +156,7 @@ Doorkeeper::JWT.configure do
         iat: Time.current.iso8601(5),
         user: {
           type: 'user',
+          '@id': user.context_id,
           id: user.id,
           email: user.email
         }
