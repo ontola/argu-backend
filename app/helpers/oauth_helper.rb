@@ -51,7 +51,7 @@ module OauthHelper
       Doorkeeper::Application.argu,
       session.id.to_s,
       'guest',
-      1.hour,
+      2.days,
       false
     )
   end
