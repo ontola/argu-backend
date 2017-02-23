@@ -1,0 +1,4 @@
+nl:
+  vote_matches:
+    type: "Stemwijzer"
+    plural: "Stemwijzers"

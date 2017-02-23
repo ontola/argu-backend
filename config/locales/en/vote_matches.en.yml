@@ -1,0 +1,4 @@
+en:
+  vote_matches:
+    type: "Vote match"
+    plural: "Vote matches"
