@@ -18,7 +18,7 @@ module Attachable
                                       attrs['description'].blank?
                                   }
 
-    has_collection :attachments, pagination: true, association_class: MediaObject, filter: {used_as: :attachment}
+    with_collection :attachments, pagination: true, association_class: MediaObject, filter: {used_as: :attachment}
   end
 
   module Serializer

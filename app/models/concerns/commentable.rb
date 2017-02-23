@@ -5,7 +5,7 @@ module Commentable
   included do
     acts_as_commentable
 
-    has_collection :comments, association: :filtered_threads, pagination: true
+    with_collection :comments, association: :filtered_threads, pagination: true
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'created_at ASC')
       i = comment_threads.where(parent_id: nil).order(order).page(page)

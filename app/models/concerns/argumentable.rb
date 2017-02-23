@@ -22,7 +22,7 @@ module Argumentable
     end), class_name: 'Argument'
     edge_tree_has_many :arguments_plain, -> { all }, class_name: 'Argument'
 
-    has_collection :arguments, pagination: true
+    with_collection :arguments, pagination: true
 
     def invert_arguments
       false

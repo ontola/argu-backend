@@ -12,7 +12,7 @@ class Question < ApplicationRecord
   has_many :top_motions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  has_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
+  with_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
 
   convertible motions: %i(taggings activities blog_posts)
   counter_cache true

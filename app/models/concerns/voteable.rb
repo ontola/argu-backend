@@ -11,7 +11,7 @@ module Voteable
             class_name: 'Edge'
     has_many :votes, as: :voteable, dependent: :destroy
     edge_tree_has_many :vote_events
-    has_collection :vote_events
+    with_collection :vote_events
 
     after_create :create_default_vote_event
 

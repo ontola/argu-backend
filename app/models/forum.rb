@@ -16,8 +16,8 @@ class Forum < ApplicationRecord
   has_many :projects, inverse_of: :forum, dependent: :destroy
   has_many :questions, inverse_of: :forum, dependent: :destroy
 
-  has_collection :motions, pagination: true, url_constructor: :forum_canonical_motions_url
-  has_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
+  with_collection :motions, pagination: true, url_constructor: :forum_canonical_motions_url
+  with_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
 
   # @private
   attr_accessor :tab, :active
