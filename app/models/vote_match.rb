@@ -5,7 +5,7 @@ class VoteMatch < ApplicationRecord
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   has_many_list_items :voteables
-  has_many_list_items :comparables
+  has_many_list_items :vote_comparables
 
   validates :shortname,
             allow_nil: true,

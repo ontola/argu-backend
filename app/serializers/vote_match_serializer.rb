@@ -20,10 +20,10 @@ class VoteMatchSerializer < RecordSerializer
     end
   end
 
-  has_many :comparables do
+  has_many :vote_comparables do
     link(:self) do
       {
-        href: "#{object.context_id}/comparables",
+        href: "#{object.context_id}/vote_comparables",
         meta: {
           '@type': 'argu:profiles'
         }
@@ -33,7 +33,7 @@ class VoteMatchSerializer < RecordSerializer
       href = object.context_id
       {
         '@type': 'argu:collectionAssociation',
-        '@id': "#{href}/comparables"
+        '@id': "#{href}/vote_comparables"
       }
     end
   end

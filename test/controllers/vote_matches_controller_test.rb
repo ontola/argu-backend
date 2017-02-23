@@ -14,7 +14,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     assert_relationship('creator', 1)
 
     assert_relationship('voteables', 1)
-    assert_relationship('comparables', 1)
+    assert_relationship('voteComparables', 1)
   end
 
   ####################################
