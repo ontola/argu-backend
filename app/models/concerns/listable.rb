@@ -26,7 +26,7 @@ module Listable
     def replace_items(relationship, *array)
       array = array.first if array.first.is_a?(Array)
       raise 'Please provide an array of values' unless array.is_a?(Array)
-      list_items.destroy_all
+      send(relationship).destroy_all
       array.each { |value| add_item(relationship, value.fetch(:iri), value.fetch(:resource_type)) }
       list_items
     end
