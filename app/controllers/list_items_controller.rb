@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class ListItemsController < AuthorizedController
   include NestedResourceHelper
+  skip_before_action :check_if_registered, only: :index
 
   def index
     skip_verify_policy_scoped(true)
