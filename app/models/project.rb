@@ -21,11 +21,13 @@ class Project < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
 
   has_many :motions, dependent: :nullify
-  has_many :top_motions, -> { where(question_id: nil).untrashed.order(updated_at: :desc) }, class_name: 'Motion'
+  has_many :top_motions,
+           -> { where(question_id: nil).published.untrashed.order(updated_at: :desc) },
+           class_name: 'Motion'
   has_many :phases, -> { order(:id) }, dependent: :destroy
   has_many :stepups, as: :record, dependent: :destroy
   has_many :questions, dependent: :nullify
-  has_many :top_questions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Question'
+  has_many :top_questions, -> { published.untrashed.order(updated_at: :desc) }, class_name: 'Question'
   has_many :activities, -> { order(:created_at) }, as: :trackable
 
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true

@@ -9,7 +9,7 @@
   section
     .markdown[itemprop="text"]
       =markdown_to_html(model.content)
-    - if model.motions.present?
+    - if model.children_count(:motions) > 0
       =render partial: 'questions/motions_list', locals: {question: model}
     =link_to question_path(model), class: 'btn-subtle sticky--bottom-right' do
       span.icon-right= t('read_more')

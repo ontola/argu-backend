@@ -9,7 +9,7 @@ class Question < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify
-  has_many :top_motions, -> { untrashed.order(updated_at: :desc) }, class_name: 'Motion'
+  has_many :top_motions, -> { published.untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   with_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
