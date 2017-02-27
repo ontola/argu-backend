@@ -139,6 +139,27 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_redirected_to page_path(Page.last)
   end
 
+  test 'user should not post create invalid' do
+    sign_in user
+
+    assert_difference('Page.count', 0) do
+      post pages_path,
+           params: {
+             page: {
+               profile_attributes: {
+                 name: 'a',
+                 about: 'bio'
+               },
+               shortname_attributes: {
+                 shortname: 'shortnmae'
+               },
+               last_accepted: '1'
+             }
+           }
+    end
+    assert_response 200
+  end
+
   test 'user should get show' do
     sign_in user
 

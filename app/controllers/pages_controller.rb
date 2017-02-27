@@ -56,7 +56,8 @@ class PagesController < ApplicationController
       respond_to do |format|
         format.html do
           render 'new', locals: {
-            page: @page
+            page: @page,
+            errors: @page.errors
           }, notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
         end
       end
