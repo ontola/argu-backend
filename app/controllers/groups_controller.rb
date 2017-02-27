@@ -39,19 +39,7 @@ class GroupsController < AuthorizedController
     create_service.commit
   end
 
-  def edit
-    render 'pages/settings',
-           locals: {
-             tab: 'groups/edit',
-             active: 'groups',
-             group: authenticated_resource!,
-             resource: authenticated_resource!.page
-           }
-  end
-
   def settings
-    prepend_view_path 'app/views/forums'
-
     if tab == 'members'
       @members = resource
                  .group_memberships
@@ -73,9 +61,16 @@ class GroupsController < AuthorizedController
         end
       end
     end
-    update_service.on(:update_group_failed) do
+    update_service.on(:update_group_failed) do |group|
       respond_to do |format|
-        format.html { render 'edit' }
+        format.html do
+          render 'settings',
+                 locals: {
+                   tab: tab,
+                   active: tab,
+                   resource: group
+                 }
+        end
       end
     end
     update_service.commit
@@ -122,6 +117,6 @@ class GroupsController < AuthorizedController
   end
 
   def tab
-    policy(resource_by_id || Group).verify_tab(params[:tab] || params[:forum].try(:[], :tab))
+    policy(resource_by_id || Group).verify_tab(params[:tab] || params[:group].try(:[], :tab))
   end
 end

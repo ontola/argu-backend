@@ -4,5 +4,6 @@
   =f.inputs name: t('update_type', type: t('groups.type')) do
     =f.inputs :name, :name_singular, :icon
     =f.input :visibility, as: :select, collection: Hash[Group.visibilities.map { |k, v| [k, k] }], required: false, include_blank: false
+    =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
     =f.actions do
-      =f.action :submit, :as => :button
+      =f.action :submit, as: :button
