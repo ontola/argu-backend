@@ -75,6 +75,7 @@ class Question < ApplicationRecord
   def next(show_trashed = false)
     forum
       .questions
+      .published
       .show_trashed(show_trashed)
       .where('questions.updated_at < :date', date: updated_at)
       .order('questions.updated_at')
@@ -84,6 +85,7 @@ class Question < ApplicationRecord
   def previous(show_trashed = false)
     forum
       .questions
+      .published
       .show_trashed(show_trashed)
       .where('questions.updated_at > :date', date: updated_at)
       .order('questions.updated_at')

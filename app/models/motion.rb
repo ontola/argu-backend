@@ -93,6 +93,7 @@ class Motion < ApplicationRecord
   def next(show_trashed = false)
     forum
       .motions
+      .published
       .show_trashed(show_trashed)
       .where('motions.updated_at < :date',
              date: updated_at)
@@ -103,6 +104,7 @@ class Motion < ApplicationRecord
   def previous(show_trashed = false)
     forum
       .motions
+      .published
       .show_trashed(show_trashed)
       .where('motions.updated_at > :date',
              date: updated_at)
