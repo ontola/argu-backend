@@ -32,6 +32,10 @@ class ProfilePolicy < RestrictivePolicy
     Pundit.policy(context, record.profileable).update? || super
   end
 
+  def index_votes?
+    record.are_votes_public? || Pundit.policy(context, record.profileable).update?
+  end
+
   private
 
   def is_manager_somewhere?

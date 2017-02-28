@@ -6,12 +6,13 @@
 =render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
 =render partial: 'profiles/show', locals: {resource: @profile}
 .boxes-list[data-intro= t('intro.profile.votes') data-position="top"]
-  - if (@profile.are_votes_public? || current_user == @user) && @profile.votes.count > 0
-    .col-1
-      - unless @profile.are_votes_public?
-        span.fa.fa-lock
-        span.icon-left= t('profiles.votes_are_private')
-      .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
-    =render_columns(@collection, collection_model: Vote)
-  - elsif @profile.are_votes_public?
-    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name)
+  - if policy(@profile).index_votes?
+    - if @profile.votes.count > 0
+      .col-1
+        - unless current_user == @user && !@profile.are_votes_public?
+          span.fa.fa-lock
+          span.icon-left= t('profiles.votes_are_private')
+        .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
+      =render_columns(@collection, collection_model: Vote)
+    - else
+      h2.center= t('profiles.didnt_vote_name', name: @profile.display_name)
