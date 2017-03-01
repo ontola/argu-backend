@@ -8,10 +8,7 @@ class BaseEdgeSerializer < RecordSerializer
     link(:self) do
       {
         meta: {
-          '@type': 'schema:isPartOf',
-          attributes: {
-            '@type': 'schema:isPartOf'
-          }
+          '@type': 'schema:isPartOf'
         }
       }
     end
@@ -24,6 +21,35 @@ class BaseEdgeSerializer < RecordSerializer
           attributes: {
             '@id': href,
             '@type': type,
+            '@context': {
+              schema: 'http://schema.org/',
+              title: 'schema:name'
+            },
+            title: obj.display_name
+          }
+        }
+      }
+    end
+    obj
+  end
+
+  has_one :organization do
+    obj = object.get_parent(:page).owner
+    link(:self) do
+      {
+        meta: {
+          '@type': 'schema:organization'
+        }
+      }
+    end
+    link(:related) do
+      href = obj.context_id
+      {
+        href: href,
+        meta: {
+          attributes: {
+            '@id': href,
+            '@type': 'schema:Organization',
             '@context': {
               schema: 'http://schema.org/',
               title: 'schema:name'
