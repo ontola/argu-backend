@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Profile < ApplicationRecord
-  include Photoable, ProfilePhotoable
+  include Photoable, ProfilePhotoable, Ldable
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient
@@ -28,6 +28,7 @@ class Profile < ApplicationRecord
   has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :vote_matches, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
            inverse_of: :creator,
@@ -186,7 +187,8 @@ class Profile < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
-    %w(comments motions arguments questions blog_posts projects vote_events activities).each do |association|
+    %w(comments motions arguments questions blog_posts projects vote_events vote_matches activities)
+      .each do |association|
       association
         .classify
         .constantize

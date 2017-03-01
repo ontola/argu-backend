@@ -23,7 +23,9 @@ class User < ApplicationRecord
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :vote_matches, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :uploaded_media_objects, class_name: 'MediaObject', inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :profile_vote_matches, through: :profile, source: :vote_matches
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank
 
@@ -34,6 +36,10 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable,
          :omniauthable, omniauth_providers: [:facebook].freeze
   acts_as_follower
+  with_collection :vote_matches,
+                  association: :profile_vote_matches,
+                  pagination: true,
+                  url_constructor: :user_vote_matches_url
 
   COMMUNITY_ID = 0
   TEMP_EMAIL_PREFIX = 'change@me'
@@ -245,7 +251,7 @@ class User < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w(comments motions arguments questions blog_posts projects vote_events).each do |association|
+    %w(comments motions arguments questions blog_posts projects vote_events vote_matches).each do |association|
       association
         .classify
         .constantize

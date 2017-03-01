@@ -22,4 +22,12 @@ class VoteMatch < ApplicationRecord
   contextualize :text, as: 'schema:text'
 
   alias_attribute :display_name, :name
+
+  def self.anonymize(collection)
+    collection.update_all(creator_id: Profile::COMMUNITY_ID)
+  end
+
+  def self.expropriate(collection)
+    collection.update_all(publisher_id: User::COMMUNITY_ID)
+  end
 end

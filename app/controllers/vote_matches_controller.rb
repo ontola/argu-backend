@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 class VoteMatchesController < AuthorizedController
+  include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
 
   def index
     skip_verify_policy_scoped(true)
-    opts = {
-      association_class: VoteMatch,
-      user_context: user_context,
-      page: params[:page],
-      pagination: true
-    }
-    collection = Collection.new(opts)
-
+    collection = if get_parent_resource.present?
+                   get_parent_resource.vote_match_collection(collection_options)
+                 else
+                   Collection.new(
+                     association_class: VoteMatch,
+                     user_context: user_context,
+                     page: params[:page],
+                     pagination: true
+                   )
+                 end
     respond_to do |format|
       format.json_api do
         render json: collection,
@@ -78,6 +81,10 @@ class VoteMatchesController < AuthorizedController
 
   private
 
+  def get_parent_resource
+    super if current_resource_is_nested?
+  end
+
   def create_service
     @create_service ||= CreateVoteMatch.new(
       nil,
@@ -92,12 +99,7 @@ class VoteMatchesController < AuthorizedController
 
   def resource_by_id
     return super if params[:page_id].nil? && params[:user_id].nil? || @_resource_by_id.present?
-    profile = if params[:page_id].present?
-                Page.find_via_shortname(params[:page_id]).profile
-              else
-                User.find_via_shortname(params[:user_id]).profile
-              end
-    @_resource_by_id ||= VoteMatch.find_by(creator: profile, shortname: params[:id])
+    @_resource_by_id ||= VoteMatch.find_by(creator: get_parent_resource.profile, shortname: params[:id])
   end
 
   def resource_new_params

@@ -8,6 +8,7 @@ class Page < ApplicationRecord
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
   has_many :sources, dependent: :restrict_with_exception, inverse_of: :page
+  has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
   attr_accessor :confirmation_string, :tab, :active
 
@@ -19,6 +20,11 @@ class Page < ApplicationRecord
   after_create :create_default_group
 
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
+
+  with_collection :vote_matches,
+                  association: :profile_vote_matches,
+                  pagination: true,
+                  url_constructor: :page_vote_matches_url
 
   contextualize_as_type 'schema:Organization'
   contextualize_with_id { |r| Rails.application.routes.url_helpers.page_url(r.id, protocol: :https) }

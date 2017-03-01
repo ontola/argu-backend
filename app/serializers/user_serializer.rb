@@ -24,6 +24,28 @@ class UserSerializer < RecordSerializer
     obj
   end
 
+  has_one :vote_match_collection do
+    link(:self) do
+      {
+        href: "#{object.context_id}/vote_matches",
+        meta: {
+          '@type': 'argu:vote_matches'
+        }
+      }
+    end
+    meta do
+      href = object.context_id
+      {
+        '@type': 'argu:collectionAssociation',
+        '@id': "#{href}/vote_matches"
+      }
+    end
+  end
+
+  def vote_match_collection
+    object.vote_match_collection(user_context: scope)
+  end
+
   def about
     object.profile.about
   end
