@@ -30,7 +30,13 @@ class PagesController < ApplicationController
           render 'show'
         end
       end
-      format.json_api { render json: @page, include: :profile_photo }
+      format.json_api do
+        render json: @page,
+               include: [
+                 :profile_photo,
+                 vote_match_collection: [:members, views: [:members, views: :members]]
+               ]
+      end
     end
   end
 

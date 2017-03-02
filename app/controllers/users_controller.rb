@@ -18,7 +18,13 @@ class UsersController < ApplicationController
         end
       end
       format.json { render json: @user }
-      format.json_api { render json: @user, include: :profile_photo }
+      format.json_api do
+        render json: @user,
+               include: [
+                 :profile_photo,
+                 vote_match_collection: [:members, views: [:members, views: :members]]
+               ]
+      end
     end
   end
 

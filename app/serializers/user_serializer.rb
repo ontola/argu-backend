@@ -29,7 +29,7 @@ class UserSerializer < RecordSerializer
       {
         href: "#{object.context_id}/vote_matches",
         meta: {
-          '@type': 'argu:vote_matches'
+          '@type': 'argu:voteMatches'
         }
       }
     end
