@@ -41,6 +41,10 @@ class UserPolicy < RestrictivePolicy
     (record.profile.is_public? || user.present?) && record.finished_intro? || super
   end
 
+  def index_votes?
+    Pundit.policy(context, record.profile).index_votes?
+  end
+
   def create?
     true
   end
