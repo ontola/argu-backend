@@ -14,7 +14,7 @@ class PageSerializer < RecordSerializer
       {
         href: obj.context_id,
         meta: {
-          '@type': 'http://schema.org/ImageObject'
+          '@type': obj.context_type
         }
       }
     end

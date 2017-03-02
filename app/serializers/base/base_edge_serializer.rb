@@ -49,7 +49,7 @@ class BaseEdgeSerializer < RecordSerializer
         meta: {
           attributes: {
             '@id': href,
-            '@type': 'schema:Organization',
+            '@type': obj.context_type,
             '@context': {
               schema: 'http://schema.org/',
               title: 'schema:name'
@@ -80,7 +80,7 @@ class BaseEdgeSerializer < RecordSerializer
               schema: 'http://schema.org/',
               name: 'schema:name'
             },
-            '@type': 'schema:Person',
+            '@type': obj.context_type,
             name: obj.display_name
           }
         }

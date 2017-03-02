@@ -15,7 +15,7 @@ class CurrentActorSerializer < BaseSerializer
         {
           href: obj.context_id,
           meta: {
-            '@type': 'http://schema.org/ImageObject'
+            '@type': obj.context_type
           }
         }
       end
@@ -37,7 +37,7 @@ class CurrentActorSerializer < BaseSerializer
         {
           href: obj.context_id,
           meta: {
-            '@type': object.actor.profileable.class.contextualized_type
+            '@type': object.actor.profileable.context_type
           }
         }
       end
@@ -59,7 +59,7 @@ class CurrentActorSerializer < BaseSerializer
         {
           href: obj.context_id,
           meta: {
-            '@type': object.actor.profileable.class.contextualized_type
+            '@type': object.actor.profileable.context_type
           }
         }
       end

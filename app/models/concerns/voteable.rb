@@ -67,7 +67,7 @@ module Voteable
             {
               href: obj.context_id,
               meta: {
-                '@type': 'argu:VoteEvent'
+                '@type': obj.context_type
               }
             }
           end

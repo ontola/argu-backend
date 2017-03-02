@@ -27,6 +27,6 @@ class BaseSerializer < ActiveModel::Serializer
 
   def ld_type
     return unless object.respond_to?(:jsonld_context)
-    object.class.contextualized_type
+    object.context_type
   end
 end

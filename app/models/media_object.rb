@@ -37,7 +37,7 @@ class MediaObject < ApplicationRecord
     collection.update_all(publisher_id: User::COMMUNITY_ID)
   end
 
-  def ld_type
+  def context_type
     is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
 
