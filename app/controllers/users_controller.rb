@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     )
     respond_to do |format|
       format.json { render json: actor }
-      format.json_api { render json: actor, include: :profile_photo }
+      format.json_api { render json: actor, include: [:profile_photo, :user, :actor] }
     end
   end
 

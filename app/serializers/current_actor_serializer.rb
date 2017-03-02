@@ -22,4 +22,48 @@ class CurrentActorSerializer < BaseSerializer
     end
     obj
   end
+
+  has_one :user do
+    obj = object.user
+    if obj
+      link(:self) do
+        {
+          meta: {
+            '@type': 'argu:user'
+          }
+        }
+      end
+      link(:related) do
+        {
+          href: obj.context_id,
+          meta: {
+            '@type': object.actor.profileable.class.contextualized_type
+          }
+        }
+      end
+    end
+    obj
+  end
+
+  has_one :actor do
+    obj = object.actor.profileable
+    if obj
+      link(:self) do
+        {
+          meta: {
+            '@type': 'argu:actor'
+          }
+        }
+      end
+      link(:related) do
+        {
+          href: obj.context_id,
+          meta: {
+            '@type': object.actor.profileable.class.contextualized_type
+          }
+        }
+      end
+    end
+    obj
+  end
 end
