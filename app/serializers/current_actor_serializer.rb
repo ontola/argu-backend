@@ -37,7 +37,7 @@ class CurrentActorSerializer < BaseSerializer
         {
           href: obj.context_id,
           meta: {
-            '@type': object.actor.profileable.context_type
+            '@type': obj.context_type
           }
         }
       end
@@ -46,7 +46,7 @@ class CurrentActorSerializer < BaseSerializer
   end
 
   has_one :actor do
-    obj = object.actor.profileable
+    obj = object.actor&.profileable
     if obj
       link(:self) do
         {
