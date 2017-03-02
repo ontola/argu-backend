@@ -99,6 +99,30 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
+  # Sign out
+  ####################################
+  test 'user should sign out' do
+    sign_in user
+
+    get destroy_user_session_path
+    assert_redirected_to '/'
+  end
+
+  test 'user should sign out with r' do
+    sign_in user
+
+    get destroy_user_session_path(r: forum_path(freetown))
+    assert_redirected_to forum_path(freetown)
+  end
+
+  test 'user should sign out with invalid r' do
+    sign_in user
+
+    get destroy_user_session_path(r: 'https://evil_website.com')
+    assert_redirected_to '/'
+  end
+
+  ####################################
   # Settings and Update
   ####################################
   test 'user should show settings and all tabs' do

@@ -6,7 +6,7 @@ require 'argu/not_a_user_error'
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
           PublicActivity::StoreController, AccessTokenHelper, NamesHelper, UsersHelper,
-          NestedAttributesHelper, JsonApiHelper
+          NestedAttributesHelper, JsonApiHelper, RedirectHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
   INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
@@ -62,6 +62,10 @@ class ApplicationController < ActionController::Base
     else
       super(resource || current_resource_owner)
     end
+  end
+
+  def after_sign_out_path_for(_resource_or_scope)
+    params[:r].present? && valid_redirect?(params[:r]) ? params[:r] : super
   end
 
   def collect_announcements

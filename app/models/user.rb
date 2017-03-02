@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class User < ApplicationRecord
-  include Shortnameable, Flowable, Placeable, Ldable
+  include Shortnameable, Flowable, Placeable, Ldable, RedirectHelper
 
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,
@@ -44,7 +44,6 @@ class User < ApplicationRecord
   COMMUNITY_ID = 0
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
-  VALID_HOSTNAMES = ["https://#{Rails.application.config.host}", Rails.application.config.frontend_url].freeze
 
   after_create :update_acesss_token_counts
   before_destroy :expropriate_dependencies
@@ -236,8 +235,7 @@ class User < ApplicationRecord
   end
 
   def validate_r
-    uri = r && URI.parse(r)
-    return if uri.nil? || uri.hostname.nil? || VALID_HOSTNAMES.include?("#{uri.scheme}://#{uri.host}")
+    return if valid_redirect?(r)
     errors.add(:r, "Redirecting to #{r} is not allowed")
   end
 
