@@ -52,6 +52,29 @@ module Voteable
         end
       end
 
+      has_one :default_vote_event, key: :voteable_vote_event do
+        obj = object.default_vote_event
+        if obj
+          link(:self) do
+            {
+              href: obj.context_id,
+              meta: {
+                '@type': 'argu:voteableVoteEvent'
+              }
+            }
+          end
+          link(:related) do
+            {
+              href: obj.context_id,
+              meta: {
+                '@type': 'argu:VoteEvent'
+              }
+            }
+          end
+        end
+        obj
+      end
+
       def vote_event_collection
         object.vote_event_collection(user_context: scope)
       end
