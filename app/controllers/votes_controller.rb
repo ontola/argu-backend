@@ -8,7 +8,7 @@ class VotesController < AuthorizedController
     respond_to do |format|
       format.json_api do
         render json: get_parent_resource.vote_collection(collection_options),
-               include: [:members, views: [:members, views: :members]]
+               include: INC_NESTED_COLLECTION
       end
     end
   end

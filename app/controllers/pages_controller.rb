@@ -34,7 +34,7 @@ class PagesController < ApplicationController
         render json: @page,
                include: [
                  :profile_photo,
-                 vote_match_collection: [:members, views: [:members, views: :members]]
+                 vote_match_collection: INC_NESTED_COLLECTION
                ]
       end
     end

@@ -8,7 +8,7 @@ class ArgumentsController < AuthorizedController
     respond_to do |format|
       format.json_api do
         render json: get_parent_resource.argument_collection(collection_options),
-               include: [:members, views: [:members, views: :members]]
+               include: INC_NESTED_COLLECTION
       end
     end
   end
@@ -39,7 +39,7 @@ class ArgumentsController < AuthorizedController
       format.json_api do
         render json: authenticated_resource,
                include: [
-                 comment_collection: [:members, views: [:members, views: :members]]
+                 comment_collection: INC_NESTED_COLLECTION
                ]
       end
     end

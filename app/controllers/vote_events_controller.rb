@@ -16,7 +16,7 @@ class VoteEventsController < AuthorizedController
   def show
     respond_to do |format|
       format.json_api do
-        render json: authenticated_resource, include: [vote_collection: [:members, views: [:members, views: :members]]]
+        render json: authenticated_resource, include: [vote_collection: INC_NESTED_COLLECTION]
       end
     end
   end

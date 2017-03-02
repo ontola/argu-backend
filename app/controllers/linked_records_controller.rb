@@ -14,8 +14,8 @@ class LinkedRecordsController < AuthorizedController
         format.json_api do
           render json: authenticated_resource!,
                  include: [
-                   argument_collection: [:members, views: [:members, views: :members]],
-                   vote_event_collection: {members: {vote_collection: [:members, views: [:members, views: :members]]}}
+                   argument_collection: INC_NESTED_COLLECTION,
+                   vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}
                  ]
         end
       end

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
           NestedAttributesHelper, JsonApiHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
+  INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
+
   protect_from_forgery with: :exception, prepend: true
   prepend_before_action :check_for_access_token
   skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?

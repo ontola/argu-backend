@@ -22,7 +22,7 @@ class UsersController < ApplicationController
         render json: @user,
                include: [
                  :profile_photo,
-                 vote_match_collection: [:members, views: [:members, views: :members]]
+                 vote_match_collection: INC_NESTED_COLLECTION
                ]
       end
     end

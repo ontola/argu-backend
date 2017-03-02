@@ -8,7 +8,7 @@ class MotionsController < AuthorizedController
     respond_to do |format|
       format.json_api do
         render json: get_parent_resource.motion_collection(collection_options),
-               include: [:members, views: [:members, views: :members]]
+               include: INC_NESTED_COLLECTION
       end
     end
   end
@@ -56,9 +56,9 @@ class MotionsController < AuthorizedController
       format.json_api do
         render json: authenticated_resource,
                include: [
-                 argument_collection: [:members, views: [:members, views: :members]],
-                 attachment_collection: [:members, views: [:members, views: :members]],
-                 vote_event_collection: {members: {vote_collection: [:members, views: [:members, views: :members]]}}
+                 argument_collection: INC_NESTED_COLLECTION,
+                 attachment_collection: INC_NESTED_COLLECTION,
+                 vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}
                ]
       end
     end

@@ -18,7 +18,7 @@ class VoteMatchesController < AuthorizedController
     respond_to do |format|
       format.json_api do
         render json: collection,
-               include: [:members, views: [:members, views: :members]]
+               include: INC_NESTED_COLLECTION
       end
     end
   end
