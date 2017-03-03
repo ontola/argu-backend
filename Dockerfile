@@ -1,4 +1,4 @@
-FROM fletcher91/ruby-vips-qt-unicorn:latest
+FROM fletcher91/ruby-vips-qt-unicorn:2.4
 ARG C66=true
 
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -

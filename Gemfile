@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 source 'https://rubygems.org/'
-ruby '2.3.1'
-ruby = '2.3.1'
+ruby '2.4.0'
+ruby = '2.4.0'
 
 gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>5.0.0.1'
+gem 'rails', '~>5.0.2'
 gem 'active_model_serializers', '~> 0.10.4'
 gem 'pragmatic_context'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
-gem 'logstasher'
+gem 'logstasher', '~> 1.2.0'
 gem 'uri_template'
 gem 'health_check'
 
@@ -30,7 +30,7 @@ gem 'tzinfo-data'
 
 gem 'rack-cors', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
-gem 'redis', '~> 3.3.1'
+gem 'redis', '~> 3.3.3'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap',
@@ -64,7 +64,7 @@ gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
-gem 'roadie', '~> 3.1.1'
+gem 'roadie', '~> 3.2.1'
 gem 'roadie-rails', '~> 1.1.1'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
@@ -81,7 +81,7 @@ gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'carrierwave-vips'
+gem 'carrierwave-vips', '~> 1.0.5'
 # gem 'rmagick', '2.14.0'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
@@ -92,8 +92,8 @@ gem 'sidekiq-logging-json',
     git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',
     ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'render_anywhere', require: false
-gem 'uglifier', '>= 2.5.3'
-gem 'sprockets', '~>3.6.3'
+gem 'uglifier', '>= 3.1.3'
+gem 'sprockets', '~>3.7.1'
 gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails', '~> 4.6.3'
 gem 'babel-transpiler'
@@ -136,13 +136,13 @@ group :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'license_finder'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.5.3'
   gem 'bundler-audit', '~> 0.5.0'
   gem 'wisper-minitest', '~> 0.0.3', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', '~> 0.6.0', require: false
   gem 'simplecov', require: false
-  gem 'webmock'
+  gem 'webmock', '~> 2.3.2'
   gem 'rails-controller-testing'
 end
 
@@ -156,7 +156,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'nokogiri', '~> 1.6.8'
+  gem 'nokogiri', '~> 1.7.0.1'
   gem 'pry'
   # gem 'byebug'
   # gem 'pry-byebug'
@@ -173,7 +173,7 @@ end
 
 group :production, :staging do
   gem 'libv8', '~> 3.16.14.13'
-  gem 'therubyracer', '~> 0.12.2'
+  gem 'therubyracer', '~> 0.12.3'
   gem 'unicorn', '5.0.1'
   gem 'rack-test', '~> 0.6.2'
 end

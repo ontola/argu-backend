@@ -72,8 +72,8 @@ class StaticPagesController < ApplicationController
   def modern
     authorize :static_page, :about?
     render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, "\
-                 "safari: #{browser.safari?}, mobile: #{browser.mobile?}, "\
-                 "tablet: #{browser.tablet?}, ua: #{browser.ua}"
+                 "safari: #{browser.safari?}, mobile: #{browser.device.mobile?}, "\
+                 "tablet: #{browser.device.tablet?}, ua: #{browser.ua}"
   end
 
   # Used for persistent redis-backed cookies
