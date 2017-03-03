@@ -20,7 +20,7 @@ module Guest
 
     # Create a temporary vote within this session
     def create
-      unless policy(get_parent_resource.default_vote_event).create_child?(:votes)
+      unless policy(get_parent_resource).create_child?(:votes)
         raise Argu::NotAuthorizedError.new(query: 'create?')
       end
       is_update = authenticated_resource.created_at.present?
@@ -53,11 +53,11 @@ module Guest
     def new_resource_from_params
       Vote.new(
         id: ActiveRecord::Base.connection.execute("SELECT nextval('votes_id_seq'::regclass)").first['nextval'],
-        voteable_id: parent_id_from_params,
-        voteable_type: parent_resource_klass.name,
+        voteable_id: get_parent_resource.id,
+        voteable_type: get_parent_resource.class.name,
         'for': params[:vote][:for],
         creator: current_user.profile,
-        edge: Edge.new(parent: get_parent_resource.default_vote_event.edge)
+        edge: Edge.new(parent: get_parent_resource.edge)
       )
     end
 
@@ -72,11 +72,11 @@ module Guest
       Vote.new(
         created_at: vote['created_at'],
         id: vote['id'],
-        voteable_id: parent_id_from_params,
-        voteable_type: parent_resource_klass.name,
+        voteable_id: get_parent_resource.id,
+        voteable_type: get_parent_resource.class.name,
         for: vote['for'],
         creator: current_user.profile,
-        edge: Edge.new(parent: get_parent_resource.default_vote_event.edge)
+        edge: Edge.new(parent: get_parent_resource.edge)
       )
     rescue JSON::ParserError
       nil
@@ -84,6 +84,10 @@ module Guest
 
     def current_vote!
       current_vote || raise(ActiveRecord::RecordNotFound)
+    end
+
+    def get_parent_resource
+      @parent_resource ||= super.try(:default_vote_event) || super
     end
 
     def handle_not_authorized_error(exception)
@@ -124,7 +128,7 @@ module Guest
     end
 
     def key
-      "guest.#{controller_name}.#{parent_resource_type.pluralize}.#{parent_id_from_params}.#{session.id}"
+      "guest.#{controller_name}.#{get_parent_resource.class.name.tableize}.#{get_parent_resource.id}.#{session.id}"
     end
 
     def pundit_user

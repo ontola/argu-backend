@@ -15,14 +15,18 @@ module Guest
     ####################################
     test 'should not get show vote without guest header' do
       get root_path
-      Argu::Redis.set(key(motion.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json)
+      Argu::Redis.set(
+        key(motion.default_vote_event.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json
+      )
       get motion_vote_path(motion.id, format: :json_api)
       assert_response 404
     end
 
     test 'should get show vote' do
       get root_path
-      Argu::Redis.set(key(motion.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json)
+      Argu::Redis.set(
+        key(motion.default_vote_event.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json
+      )
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
       assert_response 200
 
@@ -34,8 +38,12 @@ module Guest
 
     test 'should not get show non-existent vote' do
       get root_path
-      Argu::Redis.set(key(motion.id, 'other_session_id'), {for: :pro, created_at: DateTime.current, id: 1}.to_json)
-      Argu::Redis.set(key('other_motion_id', session.id), {for: :pro, created_at: DateTime.current, id: 2}.to_json)
+      Argu::Redis.set(
+        key(motion.default_vote_event.id, 'other_session_id'), {for: :pro, created_at: DateTime.current, id: 1}.to_json
+      )
+      Argu::Redis.set(
+        key('other_id', session.id), {for: :pro, created_at: DateTime.current, id: 2}.to_json
+      )
       get motion_vote_path(motion.id, format: :json_api)
       assert_response 404
     end
@@ -43,8 +51,17 @@ module Guest
     ####################################
     # Create
     ####################################
-    test 'should post create vote' do
+    test 'should post create vote for motion' do
+      get root_path
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con}), **GUEST_HEADER
+      assert_response 201
+      get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
+      assert_response 200
+    end
+
+    test 'should post create vote for vote_event' do
+      get root_path
+      post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con}), **GUEST_HEADER
       assert_response 201
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
       assert_response 200
@@ -52,7 +69,9 @@ module Guest
 
     test 'should post update vote' do
       get root_path
-      Argu::Redis.set(key(motion.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json)
+      Argu::Redis.set(
+        key(motion.default_vote_event.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json
+      )
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con}), **GUEST_HEADER
       assert_response 200
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
@@ -60,6 +79,7 @@ module Guest
     end
 
     test 'should post not create vote for closed motion' do
+      get root_path
       post motion_votes_path(closed_question_motion.id, format: :json_api, vote: {for: :con}), **GUEST_HEADER
       assert_response 403
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
@@ -68,8 +88,8 @@ module Guest
 
     private
 
-    def key(motion_id, session_id)
-      "guest.votes.motions.#{motion_id}.#{session_id}"
+    def key(vote_event_id, session_id)
+      "guest.votes.vote_events.#{vote_event_id}.#{session_id}"
     end
   end
 end

@@ -125,6 +125,7 @@ Style/AccessorMethodName:
     - 'app/controllers/portal/sources_controller.rb'
     - 'app/controllers/vote_matches_controller.rb'
     - 'app/controllers/votes_controller.rb'
+    - 'app/controllers/guest/votes_controller.rb'
     - 'app/helpers/actors_helper.rb'
 
 # Offense count: 13
