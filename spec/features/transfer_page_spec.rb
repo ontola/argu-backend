@@ -16,8 +16,8 @@ RSpec.feature 'Transfer Page', type: :feature do
     expect(page).to have_content 'Are you absolutely sure?'
 
     within('.modal form.page') do
-      fill_in_select with: user.first_name
       fill_in 'page_confirmation_string', with: 'transfer'
+      fill_in_select with: user.first_name
 
       click_button 'I understand the consequences, transfer ownership of this organization.'
     end
