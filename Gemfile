@@ -140,7 +140,7 @@ group :test do
   gem 'bundler-audit', '~> 0.5.0'
   gem 'wisper-minitest', '~> 0.0.3', require: false
   gem 'wisper-rspec', require: false
-  gem 'fakeredis', require: false
+  gem 'fakeredis', '~> 0.6.0', require: false
   gem 'simplecov', require: false
   gem 'webmock'
   gem 'rails-controller-testing'

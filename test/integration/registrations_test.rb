@@ -14,6 +14,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:place) { create(:place) }
   let(:argu) { create(:page) }
   let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion2) { create(:motion, parent: freetown.edge) }
+  let(:motion3) { create(:motion, parent: freetown.edge) }
 
   ####################################
   # As Guest
@@ -112,6 +114,24 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_equal current_path, setup_users_path
+  end
+
+  test 'should post create transfer guest votes' do
+    get root_path
+    create_guest_vote(motion.default_vote_event.id, session.id)
+    create_guest_vote(motion2.default_vote_event.id, session.id)
+    create_guest_vote(motion.default_vote_event.id, 'other_session')
+    create_guest_vote(motion3.default_vote_event.id, 'other_session')
+
+    assert_differences([['User.count', 1],
+                        ['Vote.count', 2],
+                        ['Favorite.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post user_registration_path,
+           params: {user: attributes_for(:user)}
+      assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'email')
+    end
   end
 
   test "guest should not post create when passwords don't match" do

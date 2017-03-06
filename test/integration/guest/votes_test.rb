@@ -15,18 +15,14 @@ module Guest
     ####################################
     test 'should not get show vote without guest header' do
       get root_path
-      Argu::Redis.set(
-        key(motion.default_vote_event.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json
-      )
+      create_guest_vote(motion.default_vote_event.id, session.id)
       get motion_vote_path(motion.id, format: :json_api)
       assert_response 404
     end
 
     test 'should get show vote' do
       get root_path
-      Argu::Redis.set(
-        key(motion.default_vote_event.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json
-      )
+      create_guest_vote(motion.default_vote_event.id, session.id)
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
       assert_response 200
 
@@ -38,12 +34,8 @@ module Guest
 
     test 'should not get show non-existent vote' do
       get root_path
-      Argu::Redis.set(
-        key(motion.default_vote_event.id, 'other_session_id'), {for: :pro, created_at: DateTime.current, id: 1}.to_json
-      )
-      Argu::Redis.set(
-        key('other_id', session.id), {for: :pro, created_at: DateTime.current, id: 2}.to_json
-      )
+      create_guest_vote(motion.default_vote_event.id, 'other_session_id')
+      create_guest_vote('other_id', session.id)
       get motion_vote_path(motion.id, format: :json_api)
       assert_response 404
     end
@@ -69,9 +61,7 @@ module Guest
 
     test 'should post update vote' do
       get root_path
-      Argu::Redis.set(
-        key(motion.default_vote_event.id, session.id), {for: :pro, created_at: DateTime.current, id: 1}.to_json
-      )
+      create_guest_vote(motion.default_vote_event.id, session.id)
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con}), **GUEST_HEADER
       assert_response 200
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
@@ -84,12 +74,6 @@ module Guest
       assert_response 403
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
       assert_response 404
-    end
-
-    private
-
-    def key(vote_event_id, session_id)
-      "guest.votes.vote_events.#{vote_event_id}.#{session_id}"
     end
   end
 end

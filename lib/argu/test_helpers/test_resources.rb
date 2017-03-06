@@ -21,6 +21,14 @@ module Argu
         forum.reset_public_grant
         forum
       end
+
+      def create_guest_vote(vote_event_id, session_id, body = {})
+        body[:for] ||= :pro
+        body[:created_at] ||= DateTime.current
+        body[:id] ||= ActiveRecord::Base.connection.execute("SELECT nextval('votes_id_seq'::regclass)").first['nextval']
+        key = "guest.votes.vote_events.#{vote_event_id}.#{session_id}"
+        Argu::Redis.set(key, body.to_json)
+      end
     end
 
     module ClassMethods

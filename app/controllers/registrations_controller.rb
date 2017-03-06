@@ -65,6 +65,7 @@ class RegistrationsController < Devise::RegistrationsController
   def sign_up(resource_name, resource)
     super
     @registration_without_password ? resource.send_set_password_instructions : resource.send_confirmation_instructions
+    transfer_guest_votes(resource)
     setup_favorites(resource)
     send_event user: resource,
                category: 'registrations',
@@ -86,5 +87,26 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     {password: SecureRandom.hex}.merge(super)
+  end
+
+  def transfer_guest_votes(user)
+    return if session.id.nil?
+    Argu::Redis.redis_instance.scan_each(match: "guest.votes.*.*.#{session.id}") do |key|
+      raw = Argu::Redis.get(key)
+      vote = raw && JSON.parse(raw)
+      service = CreateVote.new(
+        key.split('.')[2].classify.constantize.find(key.split('.')[3]).edge,
+        attributes: {for: vote['for']},
+        options: {
+          creator: user.profile,
+          publisher: user
+        }
+      )
+      service.on(:create_vote_failed) do |v|
+        Bugsnag.notify(StandardError.new(v.errors.full_messages))
+      end
+      service.commit
+      Argu::Redis.delete(key)
+    end
   end
 end
