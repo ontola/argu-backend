@@ -125,6 +125,10 @@ class OmniauthTest < ActionDispatch::IntegrationTest
            }
          }
     assert_redirected_to root_path
+    assert_equal user3.reload.identities.first.access_token,
+                 'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
+                 'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\
+                 'Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD'
   end
 
   test 'should not connect different accounts to facebook' do

@@ -6,29 +6,26 @@ class Identity < ApplicationRecord
   after_destroy :clear_token_connection
   validates :uid, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
+  KEY_GENERATOR = ActiveSupport::KeyGenerator.new(Rails.application.secrets.secret_key_base)
 
   def self.find_for_oauth(auth)
     find_or_initialize_by(uid: auth.uid, provider: auth.provider)
   end
 
   def access_token=(value)
-    super ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).encrypt_and_sign(value)
+    super encrypt_value(value)
   end
 
   def access_token
-    ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
-  rescue ActiveSupport::MessageVerifier::InvalidSignature => e
-    Bugsnag.notify(e)
+    decrypt_value(super)
   end
 
   def access_secret=(value)
-    super ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).encrypt_and_sign(value)
+    super encrypt_value(value)
   end
 
   def access_secret
-    ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
-  rescue ActiveSupport::MessageVerifier::InvalidSignature => e
-    Bugsnag.notify(e)
+    decrypt_value(super)
   end
 
   def clear_token_connection
@@ -50,4 +47,21 @@ class Identity < ApplicationRecord
   delegate :username, to: :client
 
   delegate :image_url, to: :client
+
+  private
+
+  def encrypt_value(value)
+    salt = SecureRandom.random_bytes(64)
+    key = KEY_GENERATOR.generate_key(salt, 32)
+    "#{Base64.encode64(salt)}.#{ActiveSupport::MessageEncryptor.new(key, digest: 'RIPEMD160').encrypt_and_sign(value)}"
+  end
+
+  def decrypt_value(value)
+    return if value.nil?
+    salt, value = value.split('.')
+    key = KEY_GENERATOR.generate_key(Base64.decode64(salt), 32)
+    ActiveSupport::MessageEncryptor.new(key, digest: 'RIPEMD160').decrypt_and_verify(value)
+  rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+    Bugsnag.notify(e)
+  end
 end
