@@ -6,6 +6,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
+  let(:owner) { create_owner(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
@@ -96,6 +97,42 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_show_all_untrashed_votes(user_public)
+  end
+
+  ####################################
+  # Show current actor
+  ####################################
+  test 'guest should get show current actor' do
+    get c_a_path, params: {format: :json_api}
+
+    assert_response 200
+    assert_nil JSON.parse(response.body)['data']['relationships']['user']['data']
+    assert_nil JSON.parse(response.body)['data']['relationships']['actor']['data']
+  end
+
+  test 'user should get show current actor' do
+    sign_in user
+
+    get c_a_path, params: {format: :json_api}
+
+    assert_response 200
+    assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
+                 "https://#{Rails.application.config.host}/u/#{user.id}"
+    assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
+                 "https://#{Rails.application.config.host}/u/#{user.id}"
+  end
+
+  test 'user with actor should get show current actor' do
+    sign_in owner
+    change_actor freetown.page
+
+    get c_a_path, params: {format: :json_api}
+
+    assert_response 200
+    assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
+                 "https://#{Rails.application.config.host}/u/#{owner.id}"
+    assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
+                 "https://#{Rails.application.config.host}/o/#{freetown.page.id}"
   end
 
   ####################################
