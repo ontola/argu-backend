@@ -68,7 +68,7 @@ class VoteMatchSerializer < RecordSerializer
   has_one :vote_compare_result do
     link(:related) do
       {
-        href: "https://#{Rails.application.config.host}/compare/votes?vote_match=#{object.id}",
+        href: "https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}",
         meta: {
           '@type': 'argu:VoteCompareResult'
         }
@@ -82,7 +82,7 @@ class VoteMatchSerializer < RecordSerializer
       }
     end
     {
-      id: "https://#{Rails.application.config.host}/compare/votes?vote_match=#{object.id}",
+      id: "https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}",
       type: 'argu:voteCompareResults'
     }
   end

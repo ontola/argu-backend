@@ -5,7 +5,7 @@ module Oauth
   class TokensController < Doorkeeper::TokensController
     include ActionController::Cookies, ActionController::Redirecting, ActionController::RequestForgeryProtection
     include Rails.application.routes.url_helpers
-    ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host)}|argu.co)(:[0-9]{0,5})?$/
+    ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
 
     def create
       return super unless argu_request?

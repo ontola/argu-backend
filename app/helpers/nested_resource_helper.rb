@@ -4,7 +4,7 @@
 # @note Has been designed with a single parent resource in mind (route wise)
 # @author Fletcher91 <thom@argu.co>
 module NestedResourceHelper
-  ARGU_URI_MATCH = /(#{Regexp.quote(Rails.configuration.host)}|argu.co)/
+  ARGU_URI_MATCH = /(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)/
 
   def current_resource_is_nested?(opts = params)
     parent_id_from_params(opts).present?

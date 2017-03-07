@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 Rails.application.configure do
-  config.host = '127.0.0.1:42000'
+  config.host_name = '127.0.0.1:42000'
   config.token_url = 'http://www.example.com/tokens'
 
-  Rails.application.routes.default_url_options[:host] = config.host
+  Rails.application.routes.default_url_options[:host] = config.host_name
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.logstasher.enabled = true

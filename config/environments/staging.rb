@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Rails.application.configure do
-  config.host = ENV['HOSTNAME']
-  Rails.application.routes.default_url_options[:host] = config.host
+  config.host_name = ENV['HOSTNAME']
+  Rails.application.routes.default_url_options[:host] = config.host_name
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.logstasher.enabled = true

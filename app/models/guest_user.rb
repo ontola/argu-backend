@@ -5,7 +5,7 @@ class GuestUser < User
   delegate :member_of?, to: :profile
 
   contextualize_as_type 'schema:Person'
-  contextualize_with_id { |r| "https://#{Rails.application.config.host}/sessions/#{r.id}" }
+  contextualize_with_id { |r| "https://#{Rails.application.config.host_name}/sessions/#{r.id}" }
   contextualize :display_name, as: 'schema:name'
 
   def access_tokens
