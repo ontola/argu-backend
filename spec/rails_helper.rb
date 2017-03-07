@@ -50,6 +50,7 @@ RSpec.configure do |config|
   config.include Argu::TestHelpers::RspecHelpers
   config.include Argu::TestHelpers::TestMocks
   config.include Argu::TestHelpers::TestAssertions
+  config.include Argu::TestHelpers::RequestHelpers
   config.include BrowserWrapper
 
   Sidekiq::Testing.fake!
