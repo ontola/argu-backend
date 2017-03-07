@@ -28,12 +28,11 @@ class TokensTest < ActionDispatch::IntegrationTest
            scope: 'user'
          }
 
-    res = JSON.parse(response.body)
     assert_response 200
-    assert_equal 'user', res['scope']
-    assert_equal 'bearer', res['token_type']
-    assert_equal 1_209_600, res['expires_in']
-    token = JWT.decode(res['access_token'], nil, false)[0]
+    assert_equal 'user', parsed_body['scope']
+    assert_equal 'bearer', parsed_body['token_type']
+    assert_equal 1_209_600, parsed_body['expires_in']
+    token = JWT.decode(parsed_body['access_token'], nil, false)[0]
     token_user = token['user']
     assert_equal 'user', token_user['type']
     assert_equal user.email, token_user['email']

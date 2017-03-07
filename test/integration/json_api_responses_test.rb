@@ -21,7 +21,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 401
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Unauthorized',
@@ -45,7 +45,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 403
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'message' => "You're not authorized for that action. (create)",
@@ -63,7 +63,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 400
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Bad Request',
@@ -82,7 +82,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 400
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Bad Request',
@@ -106,7 +106,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 400
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Bad Request',
@@ -131,7 +131,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 400
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Bad Request',
@@ -152,7 +152,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 400
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Bad Request',
@@ -176,7 +176,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
          }
 
     assert_response 422
-    assert_equal JSON.parse(response.body),
+    assert_equal parsed_body,
                  'errors' => [
                    {
                      'status' => 'Unprocessable Entity',

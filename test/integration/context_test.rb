@@ -12,10 +12,12 @@ class ContextTest < ActionDispatch::IntegrationTest
 
   test 'major content models should have a context' do
     %i(question motion argument comment).each do |kind|
+      @json = nil
+
       get polymorphic_path(send(kind), format: :json_api)
 
       assert_response 200
-      attributes = JSON.parse(response.body)['data']['attributes']
+      attributes = parsed_body['data']['attributes']
       assert_equal "argu:#{kind.capitalize}", attributes['@type']
       assert_equal 'schema:text',
                    attributes['@context']['content'] || attributes['@context']['text'],
@@ -29,7 +31,7 @@ class ContextTest < ActionDispatch::IntegrationTest
     get polymorphic_path([motion, :show, :vote], format: :json_api)
 
     assert_response 200
-    body = JSON.parse(response.body)
+    body = parsed_body
     assert_equal 'argu:Vote', body['data']['attributes']['@type']
     assert_equal 'schema:option',
                  body['data']['attributes']['@context']['option'],

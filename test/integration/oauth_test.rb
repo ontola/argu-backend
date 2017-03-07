@@ -104,9 +104,8 @@ class OauthTest < ActionDispatch::IntegrationTest
            }
     end
 
-    res = JSON.parse(response.body)
-    assert res['access_token'].present?
-    token = JWT.decode(res['access_token'],
+    assert parsed_body['access_token'].present?
+    token = JWT.decode(parsed_body['access_token'],
                        Rails.application.secrets.jwt_encryption_token,
                        algorithm: 'HS256')[0]
 
@@ -114,8 +113,8 @@ class OauthTest < ActionDispatch::IntegrationTest
     assert_equal user.id, token.dig('user', 'id')
     assert_equal 'user', token.dig('user', 'type')
 
-    assert_equal 1_209_600, res['expires_in']
-    assert_equal 'user', res['scope']
-    assert_equal 'bearer', res['token_type']
+    assert_equal 1_209_600, parsed_body['expires_in']
+    assert_equal 'user', parsed_body['scope']
+    assert_equal 'bearer', parsed_body['token_type']
   end
 end

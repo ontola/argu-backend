@@ -49,7 +49,6 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
         }
 
     assert_response 200
-    res = JSON.parse(response.body)
-    assert res['token'].length > 15
+    assert parsed_body['token'].length > 15
   end
 end

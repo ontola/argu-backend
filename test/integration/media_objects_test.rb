@@ -14,15 +14,13 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
     get media_object_path(media_object, format: :json_api)
 
     assert_response 200
-    res = JSON.parse(response.body)
-    assert_equal 'schema:MediaObject', res['data']['attributes']['@type']
+    assert_equal 'schema:MediaObject', parsed_body['data']['attributes']['@type']
   end
 
   test 'Guest should get show ImageObject' do
     get media_object_path(image_object, format: :json_api)
 
     assert_response 200
-    res = JSON.parse(response.body)
-    assert_equal 'schema:ImageObject', res['data']['attributes']['@type']
+    assert_equal 'schema:ImageObject', parsed_body['data']['attributes']['@type']
   end
 end
