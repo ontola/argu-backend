@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     get 'users/verify', to: 'users/sessions#verify'
     get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
     get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
+    get 'users/wrong_email', to: 'users#wrong_email'
     post 'users', to: 'registrations#create', as: :user_registration
     delete 'users', to: 'registrations#destroy', as: nil
   end

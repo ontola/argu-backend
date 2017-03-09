@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
-  include NestedResourceHelper
+  include NestedResourceHelper, UrlHelper
 
   def show
     @user = User.preload(:profile).find_via_shortname!(params[:id])
@@ -20,10 +20,7 @@ class UsersController < ApplicationController
       format.json { render json: @user }
       format.json_api do
         render json: @user,
-               include: [
-                 :profile_photo,
-                 vote_match_collection: INC_NESTED_COLLECTION
-               ]
+               include: [:profile_photo, vote_match_collection: INC_NESTED_COLLECTION]
       end
     end
   end
@@ -153,6 +150,11 @@ class UsersController < ApplicationController
 
   def tab
     policy(@user || User).verify_tab(params[:tab] || params[:user].try(:[], :tab))
+  end
+
+  def wrong_email
+    skip_authorization
+    render
   end
 
   def language

@@ -1,0 +1,7 @@
+header
+  h1= t('users.wrong_email.title')
+.col-1
+  .box
+    section
+      p= t('users.wrong_email.description')
+      p=link_to t('users.wrong_email.switch'), destroy_user_session_path(r: argu_url('/users/sign_in', r: params[:r]).to_param)
