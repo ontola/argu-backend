@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Group < ApplicationRecord
-  include Parentable
+  include Parentable, Ldable
 
   has_many :grants, dependent: :destroy
   has_many :group_memberships, dependent: :destroy
@@ -17,12 +17,15 @@ class Group < ApplicationRecord
   delegate :publisher, to: :page
   attr_accessor :confirmation_string
 
+  contextualize_as_type 'argu:Group'
+  contextualize_with_id { |r| Rails.application.routes.url_helpers.group_url(r, protocol: :https) }
+
   enum visibility: {hidden: 0, visible: 1, discussion: 2}
   parentable :page
 
   PUBLIC_ID = -1
 
-  def as_json(options)
+  def as_json(options = {})
     super(options.merge(except: [:created_at, :updated_at]))
   end
 

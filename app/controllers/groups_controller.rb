@@ -3,8 +3,15 @@ class GroupsController < AuthorizedController
   include NestedResourceHelper
 
   def show
-    flash[:notice] = t('group_memberships.welcome', group: authenticated_resource.name) if params[:welcome] == 'true'
-    redirect_to page_path(authenticated_resource.page)
+    respond_to do |format|
+      format.html do
+        if params[:welcome] == 'true'
+          flash[:notice] = t('group_memberships.welcome', group: authenticated_resource.name)
+        end
+        redirect_to page_path(authenticated_resource.page)
+      end
+      format.json_api { render json: authenticated_resource, include: %i(organization) }
+    end
   end
 
   def new

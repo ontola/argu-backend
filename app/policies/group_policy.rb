@@ -20,7 +20,7 @@ class GroupPolicy < EdgeTreePolicy
   end
 
   def is_member?
-    member if user.profile.group_memberships.pluck(:group_id).include? record.id
+    member if user&.profile&.group_memberships&.pluck(:group_id)&.include? record.id
   end
 
   def permitted_attributes
