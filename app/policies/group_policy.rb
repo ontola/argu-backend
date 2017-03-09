@@ -38,7 +38,7 @@ class GroupPolicy < EdgeTreePolicy
   end
 
   def show?
-    rule is_member?, is_manager?, is_super_admin?, staff?
+    rule is_member?, is_manager?, is_super_admin?, service?, staff?
   end
 
   def create?

@@ -40,6 +40,14 @@ class RestrictivePolicy
     def staff?
       staff if user.profile.has_role?(:staff)
     end
+
+    def service
+      9
+    end
+
+    def service?
+      service if context.doorkeeper_scopes.include? 'service'
+    end
   end
   include Roles
 
