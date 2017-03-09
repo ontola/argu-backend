@@ -15,7 +15,10 @@ RSpec.feature 'Manager', type: :feature do
 
     expect(page).to have_content 'Members'
 
-    click_link('Add Manager')
+    within('.box') do
+      click_link('Invite')
+    end
+
     within('form.group') do
       fill_in_select with: user.first_name
       click_button 'Save'

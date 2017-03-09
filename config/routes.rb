@@ -340,6 +340,7 @@ Rails.application.routes.draw do
   # @todo remove when front-end is detached
   if Rails.env.test?
     get 'tokens/bearer/g/:group_id', to: 'test/bearer_tokens#index'
+    get 'tokens/email/g/:group_id', to: 'test/bearer_tokens#index'
     post 'tokens', to: 'test/bearer_tokens#create'
   end
 

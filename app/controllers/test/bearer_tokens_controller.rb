@@ -29,7 +29,7 @@ module Test
           retractedAt: nil
         },
         links: {
-          url: "#{Rails.configuration.token_url}/#{id}"
+          self: "#{Rails.configuration.token_url}/#{id}"
         }
       }
     end

@@ -2,6 +2,6 @@ en:
   group_memberships:
     type: "Membership"
     plural: "Memberships"
-    new: "Add %{singular}"
+    new: "Add user"
     empty: "No members"
     welcome: "You are successfully added to the group '%{group}'"

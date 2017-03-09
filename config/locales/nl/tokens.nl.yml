@@ -8,6 +8,18 @@ nl:
     labels:
       link: "Link"
       usages: "Aantal keer gebruikt"
+      email: "Email"
+      invited_at: "Uitgenodigd op"
     bearer:
       title: "Uitnodigingslinks"
       description: "Als mensen op een uitnodigingslink klikken worden ze automatisch toegevoegd aan deze groep. De links kunnen onbeperkt worden herbruikt."
+      empty: "Nog geen links"
+    email:
+      title: "Nodig uit via email"
+      description: "Stuur emails met daarin persoonlijke links waarmee mensen lid kunnen worden van deze groep."
+      empty: "Geen openstaande uitnodigingen"
+      create: "Verstuur uitnodigingen"
+      input_placeholder: "Voer een of meer emailadressen in"
+      success: "De uitnodigingen zijn verstuurd"
+    errors:
+      parsing: "Kon niet alle emails goed lezen"

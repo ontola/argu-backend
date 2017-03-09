@@ -11,18 +11,18 @@ RSpec.feature 'Bearer token', type: :feature do
 
     visit(settings_group_path(group, tab: :invite))
 
-    expect(page).to have_css 'table tbody tr', count: 2
+    expect(page).to have_css '.bearer-token-management table tbody tr', count: 2
 
     click_button('Generate link')
 
-    expect(page).to have_css 'table tbody tr', count: 3
+    expect(page).to have_css '.bearer-token-management table tbody tr', count: 3
 
-    within('table tbody tr:first-child') do
+    within('.bearer-token-management table tbody tr:first-child') do
       page.accept_confirm 'Are you sure you want to retract this link?' do
         click_link('retract')
       end
     end
 
-    expect(page).to have_css 'table tbody tr', count: 2
+    expect(page).to have_css '.bearer-token-management table tbody tr', count: 2
   end
 end

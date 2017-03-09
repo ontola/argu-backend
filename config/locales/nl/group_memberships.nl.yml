@@ -2,6 +2,6 @@ nl:
   group_memberships:
     type: "Lidmaatschap"
     plural: "Lidmaatschappen"
-    new: "%{singular} toevoegen"
+    new: "Gebruiker toevoegen"
     empty: "Geen groepsleden"
     welcome: "Je bent toegevoegd aan de groep '%{group}'"

@@ -14,4 +14,4 @@ h3= t('group_memberships.plural')
   =paginate @members
 =link_to new_group_membership_path(resource), class: 'btn--light btn--smaller' do
   span.fa.fa-plus
-  span.icon-left= t('group_memberships.new', singular: resource.name_singular)
+  span.icon-left= t('groups.settings.menu.invite', singular: resource.name_singular)

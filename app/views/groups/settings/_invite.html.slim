@@ -1,6 +1,16 @@
 =semantic_form_for(resource, url: group_membership_index_path(resource, r: group_redirect_url(resource)), method: :post) do |f|
-  =f.inputs name: t('group_memberships.new', singular: resource.name_singular) do
+  =f.inputs name: t('group_memberships.new') do
     =react_component_store 'NewMembership', props: {things: 'users,pages'}
   =f.actions do
     =f.action :submit, as: :button
-=react_component_store 'BearerTokens', props: {groupId: resource.id, createTokenUrl: '/tokens', indexTokenUrl: '/tokens/bearer'}
+.bearer-token-management
+  legend
+    span= t('tokens.bearer.title')
+  p= t('tokens.bearer.description')
+  =react_component_store 'BearerTokens', props: {groupId: resource.id, createTokenUrl: '/tokens', indexTokenUrl: '/tokens/bearer'}
+- if active_for_user?(:email_token_management, current_user)
+  .email-token-management
+    legend
+      span= t('tokens.email.title')
+    p= t('tokens.email.description')
+    =react_component_store 'EmailTokenInvite', props: {groupId: resource.id, createTokenUrl: '/tokens', indexTokenUrl: '/tokens/email'}
