@@ -25,11 +25,7 @@ class GroupMembershipsController < AuthorizedController
   end
 
   def new
-    render 'groups/settings', locals: {
-      tab: 'invite',
-      active: 'invite',
-      resource: authenticated_resource.group
-    }
+    redirect_to settings_group_path(authenticated_resource!.group, tab: :invite)
   end
 
   def create

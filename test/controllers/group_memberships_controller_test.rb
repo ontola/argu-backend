@@ -88,7 +88,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :new, params: {group_id: group}
 
-    assert_response 200
+    assert_redirected_to settings_group_path(group, tab: :invite)
   end
 
   test 'super_admin should not post create member' do
