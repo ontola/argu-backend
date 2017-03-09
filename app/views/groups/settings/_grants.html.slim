@@ -2,14 +2,25 @@ h3= t('grants.plural').capitalize
 - if resource.grants.empty?
   p= t('grants.empty')
 - else
-  - resource.grants.includes(:edge).group_by { |g| g.edge.owner_type }.each do |type, grants|
-    table.styled.grants
-      thead
+  table.styled.grants
+    thead
+      tr
+        td= t('forums.type').capitalize
+        td= t('grants.type').capitalize
+        td
+    - resource.grants.each do |grant|
+      tbody
         tr
-          td= type
-          td= t('grants.type').capitalize
-      - grants.each do |grant|
-        tbody
-          tr
-            td= link_to grant.edge.owner.display_name, grant.edge.owner
-            td= grant.role.capitalize
+          td
+            - case grant.edge.owner_type
+            - when 'Forum'
+              =link_to grant.edge.owner.display_name, grant.edge.owner
+            - when 'Page'
+              =t('grants.all_forums')
+            - else
+              = 'other'
+          td= grant.role.capitalize
+          td= t('roles.list.remove_html', url: grant_path(grant))
+=link_to new_page_grant_path(resource.page, group_id: resource.id), class: 'btn--light btn--smaller' do
+  span.fa.fa-plus
+  span.icon-left= t('grants.new')

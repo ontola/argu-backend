@@ -166,7 +166,6 @@ Rails.application.routes.draw do
   resources :question_answers, path: 'qa', only: [:new, :create]
   resources :edges, only: [] do
     resources :conversions, path: 'conversion', only: [:new, :create]
-    resources :grants, path: 'grants', only: [:new, :create]
   end
   resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log
@@ -200,6 +199,7 @@ Rails.application.routes.draw do
             path: 'o',
             only: [:new, :create, :show, :update, :destroy],
             concerns: [:flowable, :destroyable] do
+    resources :grants, path: 'grants', only: [:new, :create]
     resources :groups, path: 'g', only: [:create, :new]
     resources :group_memberships, only: :index do
       post :index, action: :index, on: :collection

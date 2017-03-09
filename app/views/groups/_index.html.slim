@@ -21,7 +21,7 @@ table.styled
         =>role_list(group.inherited_grants(resource.edge).pluck(:role, :edge_id, :id), resource.edge)
       td
         - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
-          =link_to new_edge_grant_path(resource.edge, group_id: group.id), class: 'btn--light btn--smaller' do
+          =link_to new_page_grant_path(page, edge_id: resource.edge, group_id: group.id), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
 - if policy(page).create_child?(:groups)
   =link_to new_page_group_path(page), class: 'btn margin-bottom' do

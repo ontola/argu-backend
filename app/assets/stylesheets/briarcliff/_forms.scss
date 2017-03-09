@@ -325,6 +325,12 @@ p.inline-hints {
   background-color: $red;
 }
 
+.formtastic--full-width {
+  label {
+    width: 100%;
+  }
+}
+
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
   width: 70%;

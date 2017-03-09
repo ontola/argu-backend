@@ -4,19 +4,19 @@ require 'test_helper'
 class GrantsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
-  let(:subject) { create(:grant, parent: freetown.edge, group: group) }
+  let(:subject) { create(:grant, edge: freetown.edge, group: group) }
   let(:group) { create(:group, parent: freetown.page.edge) }
 
   def default_create_attributes(parent: nil)
-    super.merge(group_id: group.id)
+    super.merge(group_id: group.id, edge_id: parent.edge.id)
   end
 
   def create_path(parent)
-    url_for([parent.edge, model_class])
+    url_for([parent.page, model_class])
   end
 
   def new_path(parent)
-    url_for([:new, parent.edge, :grant])
+    url_for([:new, parent.page, :grant, edge_id: parent.edge.id])
   end
 
   define_tests do

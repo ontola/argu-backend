@@ -8,6 +8,11 @@ en:
     empty: "No grants"
     new: "Assign new grants"
     inherited: "This role is inherited from the %{type}"
+    all_forums: "All forums"
+    labels:
+      role: "Which role you want to grant?"
+      group: "To which group you want tot provide this role?"
+      edge: "For which forum should this role be granted?"
   roles:
     type: "role"
     plural: "roles"

@@ -8,6 +8,11 @@ nl:
     empty: "Geen rechten"
     new: "Verleen nieuwe rechten"
     inherited: "Deze rol is geërfd van bovenliggend %{type}"
+    all_forums: "Alle forums"
+    labels:
+      role: "Welke rol wil je verlenen?"
+      group: "Aan welke groep wil je deze rol verlenen?"
+      edge: "Voor welk forum geldt deze rol?"
   roles:
     type: "rol"
     plural: "rollen"

@@ -3,11 +3,11 @@ class GrantsController < AuthorizedController
   include NestedResourceHelper
 
   def new
-    render "#{authenticated_resource.edge.owner_type.pluralize.underscore}/settings",
+    render 'pages/settings',
            locals: {
              tab: 'grants/new',
-             active: 'grants',
-             resource: authenticated_resource.edge.owner,
+             active: 'groups',
+             resource: authenticated_resource.page,
              grant: authenticated_resource
            }
   end
@@ -57,14 +57,14 @@ class GrantsController < AuthorizedController
 
   def create_service
     @create_service ||= service_klass.new(
-      get_parent_resource,
+      nil,
       attributes: resource_new_params.merge(permit_params.to_h),
       options: service_options
     )
   end
 
   def parent_resource_key(_url_params)
-    :edge_id
+    :page_id
   end
 
   def new_resource_from_params
@@ -81,7 +81,7 @@ class GrantsController < AuthorizedController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      edge: get_parent_resource,
+      edge_id: params[:edge_id] || get_parent_resource.edge.id,
       group_id: params[:group_id]
     )
   end
