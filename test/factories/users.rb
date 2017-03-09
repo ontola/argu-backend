@@ -42,6 +42,10 @@ FactoryGirl.define do
       reactions_email User.reactions_emails[:direct_reactions_email]
     end
 
+    trait :follows_reactions_daily do
+      reactions_email User.reactions_emails[:daily_reactions_email]
+    end
+
     trait :follows_reactions_weekly do
       reactions_email User.reactions_emails[:weekly_reactions_email]
     end
@@ -52,6 +56,10 @@ FactoryGirl.define do
 
     trait :follows_news_directly do
       news_email User.news_emails[:direct_news_email]
+    end
+
+    trait :follows_news_daily do
+      news_email User.news_emails[:daily_news_email]
     end
 
     trait :follows_news_weekly do

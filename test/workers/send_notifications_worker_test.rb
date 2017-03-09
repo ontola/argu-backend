@@ -14,6 +14,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
 
   let!(:follower) { create :user, :viewed_notifications_hour_ago, :follows_reactions_directly }
 
+  let!(:follower_daily) { create :user, :viewed_notifications_hour_ago, :follows_reactions_daily }
   let!(:follower_weekly) { create :user, :viewed_notifications_hour_ago, :follows_reactions_weekly }
 
   def create_notification_pair_for(user)
@@ -42,6 +43,23 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
 
     follower.reload
     assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
+  end
+
+  test 'should send mail to daily follower' do
+    create_notification_pair_for follower_daily
+
+    snw = SendNotificationsWorker.new
+    assert_equal 1, snw.collect_notifications(follower_daily).length
+
+    email_type = User.reactions_emails[:daily_reactions_email]
+    assert_difference 'ActionMailer::Base.deliveries.count', 1 do
+      Sidekiq::Testing.inline! do
+        SendNotificationsWorker.perform_async(follower_daily.id, email_type)
+      end
+    end
+
+    follower_daily.reload
+    assert_equal 0, snw.collect_notifications(follower_daily).length, 'Notifications will be send twice'
   end
 
   test 'should send mail to weekly follower' do

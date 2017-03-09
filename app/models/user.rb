@@ -55,9 +55,19 @@ class User < ApplicationRecord
 
   delegate :description, :member_of?, to: :profile
 
-  enum reactions_email: {never_reactions_email: 0, weekly_reactions_email: 1, direct_reactions_email: 3}
-  enum news_email: {never_news_email: 0, weekly_news_email: 1, direct_news_email: 3}
-  enum decisions_email: {never_decisions_email: 0, weekly_decisions_email: 1, direct_decisions_email: 3}
+  enum reactions_email: {
+    never_reactions_email: 0,
+    weekly_reactions_email: 1,
+    daily_reactions_email: 2,
+    direct_reactions_email: 3
+  }
+  enum news_email: {never_news_email: 0, weekly_news_email: 1, daily_news_email: 2, direct_news_email: 3}
+  enum decisions_email: {
+    never_decisions_email: 0,
+    weekly_decisions_email: 1,
+    daily_decisions_email: 2,
+    direct_decisions_email: 3
+  }
 
   contextualize_as_type 'schema:Person'
   contextualize_with_id { |m| Rails.application.routes.url_helpers.user_url(m.id, protocol: :https) }
