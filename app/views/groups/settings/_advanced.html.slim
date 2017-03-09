@@ -1,0 +1,7 @@
+=semantic_form_for resource, url: group_path, method: :delete, html: {class: 'confirm'} do |f|
+  p= t('groups.delete.info', group: resource.display_name)
+  p= t('groups.delete.howto', cancel_string: t('groups.delete.cancel_string'))
+  =f.inputs do
+    =f.input :confirmation_string, input_html: {class: 'confirm-text', :'confirm-text' => t('groups.delete.cancel_string')}
+    =f.actions do
+      =f.action :submit, as: :button, label: t('destroy'), button_html: {class: 'confirm-action', disabled: true}

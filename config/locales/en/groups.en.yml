@@ -16,3 +16,8 @@ en:
         members: 'Members'
         invite: 'Invite'
         grants: 'Grants'
+        advanced: 'Advanced'
+    delete:
+      info: "Are you sure you wish to delete the group '%{group}'?"
+      howto: "Please enter '%{cancel_string}' below to confirm the deletion of this group."
+      cancel_string: "remove"

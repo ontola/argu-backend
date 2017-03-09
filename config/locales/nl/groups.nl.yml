@@ -16,3 +16,8 @@ nl:
         members: 'Leden'
         invite: 'Uitnodigen'
         grants: 'Rechten'
+        advanced: 'Geavanceerd'
+    delete:
+      info: "Weet je zeker dat je de groep '%{group}' wil verwijderen?"
+      howto: "Voer hieronder '%{cancel_string}' in om het verwijderen van de groep te bevestigen."
+      cancel_string: "verwijder"

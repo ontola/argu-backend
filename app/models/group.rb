@@ -15,6 +15,7 @@ class Group < ApplicationRecord
   scope :custom, -> { where('groups.id != ?', Group::PUBLIC_ID) }
 
   delegate :publisher, to: :page
+  attr_accessor :confirmation_string
 
   enum visibility: {hidden: 0, visible: 1, discussion: 2}
   parentable :page

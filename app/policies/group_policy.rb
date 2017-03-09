@@ -33,7 +33,7 @@ class GroupPolicy < EdgeTreePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i(members invite general) if is_manager? || staff?
-    tabs.concat %i(grants) if is_owner? || staff?
+    tabs.concat %i(grants advanced) if is_owner? || staff?
     tabs
   end
 
