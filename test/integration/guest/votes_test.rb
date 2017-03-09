@@ -30,8 +30,8 @@ module Guest
       get motion_vote_path(motion.id, format: :json_api), **GUEST_HEADER
       assert_response 200
 
-      assert_relationship('parent')
-      creator = assert_relationship('creator')
+      expect_relationship('parent')
+      creator = expect_relationship('creator')
       assert_equal creator.dig('data', 'id'), "https://127.0.0.1:42000/sessions/#{session.id}"
       assert_equal creator.dig('links', 'related', 'href'), "https://127.0.0.1:42000/sessions/#{session.id}"
     end

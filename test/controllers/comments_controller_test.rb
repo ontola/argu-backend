@@ -15,8 +15,8 @@ class CommentsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: comment}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('creator', 1)
+    expect_relationship('parent', 1)
+    expect_relationship('creator', 1)
   end
 
   ####################################
@@ -26,25 +26,25 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, argument_id: argument.id}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('members', 0)
+    expect_relationship('parent', 1)
+    expect_relationship('members', 0)
 
-    assert_relationship('views', 1)
-    assert_included("/a/#{argument.id}/c?page=1")
-    assert_included(argument.comment_threads.untrashed.map { |c| "/comments/#{c.id}" })
-    assert_not_included(argument.comment_threads.trashed.map { |c| "/comments/#{c.id}" })
+    expect_relationship('views', 1)
+    expect_included(argu_url("/a/#{argument.id}/c", page: 1))
+    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end
 
   test 'should get index comments of argument with page=1' do
     get :index, params: {format: :json_api, argument_id: argument.id, page: 1}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('views', 0)
+    expect_relationship('parent', 1)
+    expect_relationship('views', 0)
 
-    assert_relationship('members', argument.comment_threads.untrashed.count)
-    assert_included(argument.comment_threads.untrashed.map { |c| "/comments/#{c.id}" })
-    assert_not_included(argument.comment_threads.trashed.map { |c| "/comments/#{c.id}" })
+    expect_relationship('members', argument.comment_threads.untrashed.count)
+    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end
 
   ####################################
@@ -54,24 +54,24 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, blog_post_id: blog_post.id}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('members', 0)
+    expect_relationship('parent', 1)
+    expect_relationship('members', 0)
 
-    assert_relationship('views', 1)
-    assert_included("/posts/#{blog_post.id}/c?page=1")
-    assert_included(blog_post.comment_threads.untrashed.map { |c| "/comments/#{c.id}" })
-    assert_not_included(blog_post.comment_threads.trashed.map { |c| "/comments/#{c.id}" })
+    expect_relationship('views', 1)
+    expect_included(argu_url("/posts/#{blog_post.id}/c", page: 1))
+    expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end
 
   test 'should get index comments of blog_post with page=1' do
     get :index, params: {format: :json_api, blog_post_id: blog_post.id, page: 1}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('views', 0)
+    expect_relationship('parent', 1)
+    expect_relationship('views', 0)
 
-    assert_relationship('members', blog_post.comment_threads.untrashed.count)
-    assert_included(blog_post.comment_threads.untrashed.map { |c| "/comments/#{c.id}" })
-    assert_not_included(blog_post.comment_threads.trashed.map { |c| "/comments/#{c.id}" })
+    expect_relationship('members', blog_post.comment_threads.untrashed.count)
+    expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end
 end

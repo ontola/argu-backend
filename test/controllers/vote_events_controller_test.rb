@@ -16,20 +16,22 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: vote_event.id}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('creator', 1)
+    expect_relationship('parent', 1)
+    expect_relationship('creator', 1)
 
-    assert_relationship('voteCollection', 1)
-    assert_included("/vote_events/#{vote_event.id}/votes")
-    assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=yes")
-    assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=yes&page=1")
-    assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=other")
-    assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=other&page=1")
-    assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=no")
-    assert_included("/vote_events/#{vote_event.id}/votes?filter%5Boption%5D=no&page=1")
-    assert_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| "/v/#{v.id}" })
-    assert_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| "/v/#{v.id}" }
+    expect_relationship('voteCollection', 1)
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes"))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, page: 1))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, page: 1))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, page: 1))
+    expect_included(
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
+    )
+    expect_not_included(
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/v/#{v.id}") }
     )
   end
 
@@ -40,21 +42,29 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('views', 0)
-    assert_relationship('members', 1)
+    expect_relationship('parent', 1)
+    expect_relationship('views', 0)
+    expect_relationship('members', 1)
 
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=yes" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=yes&page=1" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=other" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=other&page=1" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=no" })
-    assert_included(motion.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=no&page=1" })
-    assert_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| "/v/#{v.id}" })
-    assert_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| "/v/#{v.id}" }
+    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}") })
+    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes") })
+    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}) })
+    expect_included(
+      motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, page: 1) }
+    )
+    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}) })
+    expect_included(
+      motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, page: 1) }
+    )
+    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}) })
+    expect_included(
+      motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, page: 1) }
+    )
+    expect_included(
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
+    )
+    expect_not_included(
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/v/#{v.id}") }
     )
   end
 
@@ -65,19 +75,29 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, linked_record_id: linked_record.id}
     assert_response 200
 
-    assert_relationship('parent', 1)
-    assert_relationship('views', 0)
-    assert_relationship('members', 1)
+    expect_relationship('parent', 1)
+    expect_relationship('views', 0)
+    expect_relationship('members', 1)
 
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}" })
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes" })
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=yes" })
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=yes&page=1" })
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=other" })
-    assert_included(
-      linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=other&page=1" }
+    expect_included(linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}") })
+    expect_included(linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes") })
+    expect_included(
+      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}) }
     )
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=no" })
-    assert_included(linked_record.vote_events.map { |ve| "/vote_events/#{ve.id}/votes?filter%5Boption%5D=no&page=1" })
+    expect_included(
+      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, page: 1) }
+    )
+    expect_included(
+      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}) }
+    )
+    expect_included(
+      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, page: 1) }
+    )
+    expect_included(
+      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}) }
+    )
+    expect_included(
+      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, page: 1) }
+    )
   end
 end

@@ -16,6 +16,8 @@ require 'minitest/reporters'
 require 'webmock/minitest'
 require 'argu/test_helpers'
 require 'minitest/reporters'
+require 'rspec/matchers'
+require 'rspec/expectations'
 Minitest::Reporters.use!
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
@@ -25,6 +27,7 @@ Minitest::Reporters.use!
 DatabaseCleaner.strategy = :transaction
 
 module TestHelper
+  include RSpec::Matchers, RSpec::Expectations
   Sidekiq::Testing.fake!
   MiniTest::Reporters.use!
 
@@ -94,6 +97,7 @@ module ActiveSupport
     include Argu::TestHelpers::TestDefinitions
     include Argu::TestHelpers::TestAssertions
     include Argu::TestHelpers::RequestHelpers
+    include UrlHelper
     ActiveRecord::Migration.check_pending!
 
     # FactoryGirl.lint
