@@ -20,7 +20,7 @@ module Oauth
       User.find(response.token.resource_owner_id).update r: ''
       redirect_to r.presence || root_path
     rescue Argu::InvalidCredentialsError
-      redirect_to new_user_session_path(r: params.dig(:user, :r), show_error: true)
+      redirect_to new_user_session_path(r: r, show_error: true)
     end
 
     private
