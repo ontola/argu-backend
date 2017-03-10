@@ -15,6 +15,7 @@ gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
 gem 'uri_template'
+gem 'health_check'
 
 ################## DB ########################
 gem 'pg', '0.18.2'

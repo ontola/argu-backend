@@ -90,6 +90,10 @@ Rails.application.routes.draw do
     get 'vote' => 'votes#show', as: :show_vote
   end
 
+  constraints(Argu::WhitelistConstraint) do
+    health_check_routes
+  end
+
   use_doorkeeper do
     controllers applications: 'oauth/applications',
                 tokens: 'oauth/tokens'
