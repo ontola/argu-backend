@@ -119,9 +119,9 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "https://#{Rails.application.config.host}/u/#{user.id}"
+                 "https://#{Rails.application.config.host_name}/u/#{user.id}"
     assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
-                 "https://#{Rails.application.config.host}/u/#{user.id}"
+                 "https://#{Rails.application.config.host_name}/u/#{user.id}"
   end
 
   test 'user with actor should get show current actor' do
@@ -132,9 +132,9 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "https://#{Rails.application.config.host}/u/#{owner.id}"
+                 "https://#{Rails.application.config.host_name}/u/#{owner.id}"
     assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
-                 "https://#{Rails.application.config.host}/o/#{freetown.page.id}"
+                 "https://#{Rails.application.config.host_name}/o/#{freetown.page.id}"
   end
 
   ####################################

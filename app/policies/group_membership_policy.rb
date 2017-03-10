@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class GroupMembershipPolicy < EdgeTreePolicy
-  include JWTHelper
-  VERIFY_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/verify{?jwt}")
-
+  include JWTHelper, UriTemplateHelper
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -65,7 +63,9 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def valid_token?
     return unless record.token.present?
-    response = HTTParty.get(VERIFY_TEMPLATE.expand(jwt: sign_payload(secret: record.token, group_id: record.group_id)))
+    response = HTTParty.get(
+      expand_uri_template(:verify_token, jwt: sign_payload(secret: record.token, group_id: record.group_id))
+    )
     token if response.code == 200
   end
 end

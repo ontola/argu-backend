@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class VotesController < AuthorizedController
-  include NestedResourceHelper
+  include NestedResourceHelper, UriTemplateHelper
   skip_before_action :check_if_registered, only: :index
 
   def index
@@ -153,10 +153,14 @@ class VotesController < AuthorizedController
   end
 
   def redirect_url
-    tpl = URITemplate.new(
-      "#{url_for([:new, get_parent_resource.voteable, :vote, only_path: true])}{?confirm,r,vote%5Bfor%5D}"
+    expand_uri_template(
+      :new_vote,
+      voteable_path: url_for([get_parent_resource.voteable, only_path: true]).split('/').select(&:present?),
+      confirm: true,
+      r: params[:r],
+      'vote%5Bfor%5D' => for_param,
+      path_only: true
     )
-    tpl.expand(confirm: true, r: params[:r], 'vote%5Bfor%5D' => for_param)
   end
 
   def resource_new_params
