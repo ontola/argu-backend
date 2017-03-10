@@ -47,23 +47,14 @@ class UsersController < ApplicationController
 
     @user.build_home_placement if @user.home_placement.nil?
 
-    if @user.present?
-      prepend_view_path 'app/views/users'
+    prepend_view_path 'app/views/users'
 
-      render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
-    else
-      flash[:error] = 'User not found'
-      request.env['HTTP_REFERER'] ||= root_path
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path) }
-        format.json { render json: 'Error: user not found' }
-      end
-    end
+    render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
   end
 
   # PUT /settings
   def update
-    @user = User.find current_user.try :id
+    @user = User.find(current_user.id)
     authorize @user
 
     respond_to do |format|
@@ -169,7 +160,7 @@ class UsersController < ApplicationController
     locale = permit_locale_params
     if I18n.available_locales.include?(locale.to_sym)
       success =
-        if current_user.blank?
+        if current_user.guest?
           cookies['locale'] = locale
         else
           current_user.update(language: locale)
@@ -194,7 +185,7 @@ class UsersController < ApplicationController
 
   def get_user_or_redirect(redirect = nil)
     @user = current_user
-    return if current_user.present?
+    return unless current_user.guest?
     flash[:error] = t('devise.failure.unauthenticated')
     raise Argu::NotAUserError.new(r: redirect)
   end
@@ -218,7 +209,7 @@ class UsersController < ApplicationController
   end
 
   def redirect_with_r(user)
-    if user&.r&.present? && user.finished_intro?
+    if user.r.present? && user.finished_intro?
       r = URI.decode(user.r)
       user.update r: ''
     end

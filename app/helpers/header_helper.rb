@@ -91,7 +91,7 @@ module HeaderHelper
   end
 
   def profile_favorite_items
-    ids = current_profile.present? ? current_user.favorite_forum_ids : []
+    ids = current_user.favorite_forum_ids
     Shortname
       .shortname_owners_for_klass('Forum', ids)
       .includes(owner: :default_profile_photo)

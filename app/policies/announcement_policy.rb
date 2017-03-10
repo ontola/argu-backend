@@ -14,10 +14,10 @@ class AnnouncementPolicy < RestrictivePolicy
     def resolve
       audience = [Announcement.audiences[:everyone]]
       audience <<
-        if user.present?
-          Announcement.audiences[:users]
-        else
+        if user.guest?
           Announcement.audiences[:guests]
+        else
+          Announcement.audiences[:users]
         end
       scope
         .where(audience: audience)

@@ -5,15 +5,13 @@ class NotificationsController < ApplicationController
   def index
     # This must be performed to prevent pundit errors
     policy_scope(Notification)
-    if current_user.present?
-      if params[:from_time].present?
-        fetch_more
-      else
-        refresh
-      end
-    else
+    if current_user.guest?
       policy_scope(Notification)
       head 204
+    elsif params[:from_time].present?
+      fetch_more
+    else
+      refresh
     end
   end
 
@@ -133,7 +131,7 @@ class NotificationsController < ApplicationController
   end
 
   def update_viewed_time
-    current_user.update(notifications_viewed_at: Time.current) if current_user.present?
+    current_user.update(notifications_viewed_at: Time.current) unless current_user.guest?
   end
 
   def last_notification

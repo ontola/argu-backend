@@ -9,7 +9,7 @@ nav#navbar.navbar role="navigation"
         a.navbar-item[href="/"]
           span.fa.fa-home
     ul.navbar-links.navbar-links-right
-      -if current_user.present?
+      - unless current_user.guest?
         =link_to(destroy_user_session_url, class: 'navbar-item', data: {method: 'delete', turbolinks: 'false'})
           span.fa.fa-sign-out
           span= t('sign_out')

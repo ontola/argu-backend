@@ -58,7 +58,7 @@ module ExceptionToTheRule
 
   # @return [Array] Array of the relevant rules
   def filter_groups(rules)
-    if rules && user && (mem_groups = user.profile.groups.where(page: persisted_edge.root.owner))
+    if rules && (mem_groups = user.profile.groups.where(page: persisted_edge.root.owner))
       group_ids = rules
                     .map { |r| r.role.split('_') }
                     .select { |arr| arr[0].eql?('groups') }

@@ -65,7 +65,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'guest should not get new' do
     get new_page_path
 
-    assert_not_authorized
+    assert_not_a_user
   end
 
   test 'guest should not post create' do
@@ -84,7 +84,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_not_authorized
+    assert_not_a_user
   end
 
   test 'guest should get show when public' do

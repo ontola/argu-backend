@@ -43,10 +43,9 @@ class QuestionPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    user &&
-      (record.creator_id == user.profile.id &&
-        15.minutes.ago < record.created_at ||
-        record.motions.count.zero?) ||
+    (record.creator_id == user.profile.id &&
+      15.minutes.ago < record.created_at ||
+      record.motions.count.zero?) ||
       is_manager? ||
       is_owner? ||
       super
@@ -58,11 +57,11 @@ class QuestionPolicy < EdgeTreePolicy
   end
 
   def trash?
-    user && record.creator_id == user.profile.id || is_manager? || super
+    record.creator_id == user.profile.id || is_manager? || super
   end
 
   def untrash?
-    user && record.creator_id == user.profile.id || is_manager? || super
+    record.creator_id == user.profile.id || is_manager? || super
   end
 
   def update?

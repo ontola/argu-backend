@@ -32,7 +32,7 @@ class NotificationPolicy < RestrictivePolicy
   end
 
   def read?
-    user.present?
+    !user.guest?
   end
 
   def create?
@@ -40,6 +40,6 @@ class NotificationPolicy < RestrictivePolicy
   end
 
   def update?
-    user && user == record.user
+    user == record.user
   end
 end

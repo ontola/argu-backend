@@ -21,7 +21,7 @@
     section.section--footer
       =render question.creator, locals= {resource: question}
       ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
-        - if current_user.present?
+        - unless current_user.guest?
           li
             ul=react_component_store 'HyperDropdown', props: follow_dropdown_items(question)
         =crud_menu_item(question, question_items(question))

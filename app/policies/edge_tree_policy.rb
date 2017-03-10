@@ -17,7 +17,7 @@ class EdgeTreePolicy < RestrictivePolicy
         .joins("LEFT JOIN forums ON #{class_name.tableize}.forum_id = forums.id")
         .where("#{class_name.tableize}.forum_id IS NULL OR #{class_name.tableize}.forum_id IN (?) "\
                'OR forums.visibility = ?',
-               forum_ids_by_access_tokens.concat(user&.profile&.forum_ids || []),
+               forum_ids_by_access_tokens.concat(user.profile.forum_ids),
                Forum.visibilities[:open])
     end
 
@@ -62,8 +62,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_member?
       return if persisted_edge.nil?
-      if ((user&.profile&.group_ids || [Group::PUBLIC_ID]) &
-        persisted_edge.granted_group_ids('member')).any? ||
+      if (user.profile.group_ids & persisted_edge.granted_group_ids('member')).any? ||
           has_access_token_access_to(persisted_edge.owner, user)
         member
       end
@@ -75,7 +74,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_moderator?
       c_model = context_forum
-      return unless user.present? && c_model.present?
+      return if user.guest? || c_model.nil?
       # Stepups within the forum based if they apply to the user or one of its group memberships
       forum_stepups = c_model.stepups.where('user_id=? OR group_id IN (?)',
                                             user.id,
@@ -93,16 +92,13 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_manager?
       return if persisted_edge.nil?
-      if ((user&.profile&.group_ids || [Group::PUBLIC_ID]) &
-        persisted_edge.granted_group_ids('manager')).any?
-        return manager
-      end
+      return manager if (user.profile.group_ids & persisted_edge.granted_group_ids('manager')).any?
       is_owner?
     end
 
     def is_owner?
       return if persisted_edge.nil?
-      owner if user && persisted_edge.get_parent(:page).owner.owner == user.profile
+      owner if persisted_edge.get_parent(:page).owner.owner == user.profile
     end
 
     def is_manager_up?

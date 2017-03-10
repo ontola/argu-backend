@@ -5,7 +5,7 @@ class CurrentActor
 
   attr_accessor :actor, :potential_action, :user
   delegate :display_name, to: :actor, allow_nil: true
-  delegate :finished_intro, to: :user, allow_nil: true
+  delegate :finished_intro, :context_id, :id, to: :user
 
   contextualize_as_type 'argu:CurrentActor'
   contextualize :display_name, as: 'schema:name'
@@ -26,11 +26,6 @@ class CurrentActor
       cover_photo: actor.preferred_forum.default_cover_photo
     }
   end
-
-  def id
-    user&.id || 0
-  end
-  alias context_id id
 
   def potential_action; end
 

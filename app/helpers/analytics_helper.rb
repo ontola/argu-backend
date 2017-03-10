@@ -11,7 +11,7 @@ module AnalyticsHelper
 
   def a_uuid(user = nil)
     user ||= current_user
-    return unless user.present?
+    return if user.guest?
     ary = analytics_token(user).unpack('NnnnnN')
     ary[2] = (ary[2] & 0x0fff) | 0x4000
     ary[3] = (ary[3] & 0x3fff) | 0x8000

@@ -30,7 +30,7 @@ class StaticPagesController < ApplicationController
 
   def home
     authorize :static_page
-    if current_user && policy(current_user).staff?
+    if current_user.profile.has_role?(:staff)
       @activities = policy_scope(Activity)
                       .loggings
                       .where('trackable_type != ?', 'Banner')
@@ -91,6 +91,6 @@ class StaticPagesController < ApplicationController
   private
 
   def default_forum_path
-    current_profile.present? ? preferred_forum : Forum.first_public
+    preferred_forum
   end
 end

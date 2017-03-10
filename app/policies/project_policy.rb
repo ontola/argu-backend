@@ -36,7 +36,7 @@ class ProjectPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
+    (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
       is_manager? ||
       is_owner? ||
       super

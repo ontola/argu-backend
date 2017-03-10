@@ -11,7 +11,7 @@ module SPI
     def user_context
       UserContext.new(
         current_user,
-        current_user&.profile,
+        current_user.profile,
         doorkeeper_scopes,
         []
       )

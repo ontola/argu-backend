@@ -6,10 +6,10 @@
     section.section--footer
       =render partial: 'profiles/profile', locals: {profile: c.creator, resource: c} if c.creator.present?
       ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-        - if current_user.present?
+        - unless current_user.guest?
           li
             ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(c, follow_types: [:reactions, :never])
-        - if current_user.present? && policy(c).update? || policy(c).trash?
+        - if policy(c).update? || policy(c).trash?
           li
             ul= react_component_store 'HyperDropdown', props: comment_items(resource, c)
         - if !c.is_trashed? && policy(c.parent_model).create_child?(:comments, parent_id: c.id)

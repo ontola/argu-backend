@@ -12,7 +12,7 @@ module AccessTokenHelper
     current_access_tokens = get_safe_raw_access_tokens(user)
     return if current_access_tokens.include? item.access_token
     session[:a_tokens] = Set.new(current_access_tokens).add(item.access_token)
-    user&.update(access_tokens: get_safe_raw_access_tokens(user))
+    user.update(access_tokens: get_safe_raw_access_tokens(user))
     increment_token_usages(item)
   end
 

@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   # after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
-      Rack::MiniProfiler.authorize_request if current_user && current_user.profile.has_role?(:staff)
+      Rack::MiniProfiler.authorize_request if current_user.profile.has_role?(:staff)
     end
   end
   alias_attribute :pundit_user, :user_context
@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
   def current_profile
-    @current_profile ||= get_current_actor if current_user.present?
+    @current_profile ||= get_current_actor
   end
 
   # The params, deserialized when format is json_api and method is not GET
@@ -125,8 +125,8 @@ class ApplicationController < ActionController::Base
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
   def preferred_forum(profile = nil)
-    profile ||= current_profile
-    if profile.present?
+    if !current_user.guest? || profile.present?
+      profile ||= current_profile
       @_preferred_forum = profile.preferred_forum
       if @_preferred_forum && policy(@_preferred_forum).show?
         @_preferred_forum
@@ -173,21 +173,18 @@ class ApplicationController < ActionController::Base
 
   # @private
   def set_locale
-    I18n.locale =
-      current_user.try(:language) ||
-      cookies['locale'] ||
-      http_accept_language.compatible_language_from(I18n.available_locales)
+    I18n.locale = current_user.language
   end
 
   # @private
   def set_notification_header
-    if current_user.present?
+    if current_user.guest?
+      response.headers[:lastNotification] = '-1'
+    else
       response.headers[:lastNotification] = policy_scope(Notification)
                                             .order(created_at: :desc)
                                             .limit(1)
                                             .pluck(:created_at)[0] || '-1'
-    else
-      response.headers[:lastNotification] = '-1'
     end
   end
 
@@ -197,7 +194,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_profile_forum
-    if instance_variable_defined?(:@forum) && @forum.is_a?(Forum) && current_profile.present?
+    if instance_variable_defined?(:@forum) && @forum.is_a?(Forum) && !current_user.guest?
       Argu::Redis.set("profile:#{current_profile.id}:last_forum", @forum.id)
     elsif instance_variable_defined?(:@forum) && @forum.is_a?(Forum)
       Argu::Redis.setex("session:#{session.id}:last_forum", 1.day.seconds.to_i, @forum.id)
@@ -205,7 +202,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_time_zone(&block)
-    time_zone = current_user&.time_zone || 'Amsterdam'
+    time_zone = current_user.time_zone
     Time.use_zone(time_zone, &block)
   end
 
@@ -238,7 +235,7 @@ class ApplicationController < ActionController::Base
   # @private
   # Before_action which redirects the {User} if he didn't finish the intro.
   def check_finished_intro
-    return unless current_user
+    return if current_user.guest?
     if current_user.url.blank?
       redirect_to setup_users_path if request.original_url != setup_users_url
     elsif !current_user.finished_intro? && !request.original_url.in?(intro_urls)
@@ -387,9 +384,9 @@ class ApplicationController < ActionController::Base
   # @private
   # Determines what layout the {User} should see.
   def set_layout
-    if current_user.present? && current_user.finished_intro? && current_user.url.present?
+    if !current_user.guest? && current_user.finished_intro? && current_user.url.present?
       self.class.layout 'application'
-    elsif current_user.present? && current_user.url.blank?
+    elsif !current_user.guest? && current_user.url.blank?
       self.class.layout 'closed'
     else
       self.class.layout 'guest'

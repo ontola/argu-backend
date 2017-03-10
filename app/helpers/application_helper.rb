@@ -98,13 +98,13 @@ module ApplicationHelper
     if !override.nil?
       override ? {remote: override} : {}
     else
-      current_profile.present? ? {remote: true} : {}
+      current_user.guest? ? {} : {remote: true}
     end
   end
 
   # Used in forms for the 'r' system
   def remote_unless_user
-    current_profile.present? ? {} : {remote: true, turbolinks: true}
+    current_user.guest? ? {remote: true, turbolinks: true} : {}
   end
 
   def resource

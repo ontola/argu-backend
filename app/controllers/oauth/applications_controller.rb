@@ -20,7 +20,7 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   private
 
   def authenticate_admin!
-    current_resource_owner&.profile&.has_role?(:staff)
+    current_user.profile.has_role?(:staff)
   end
 
   def current_resource_owner

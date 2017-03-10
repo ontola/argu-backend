@@ -44,7 +44,7 @@ class FollowsController < ApplicationController
   private
 
   def check_user
-    return if current_user.present?
+    return unless current_user.guest?
     flash[:error] = t('devise.failure.unauthenticated')
     redirect_back(fallback_location: root_path)
   end

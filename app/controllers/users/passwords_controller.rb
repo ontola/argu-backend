@@ -32,6 +32,6 @@ class Users::PasswordsController < Devise::PasswordsController
   private
 
   def no_password_required?
-    current_user && !current_user.password_required?
+    !current_user.password_required?
   end
 end

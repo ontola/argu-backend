@@ -43,11 +43,11 @@ export const VoteButton = React.createClass({
     },
 
     ifNoActor (v) {
-        return this.props.actor === null ? v : undefined;
+        return !this.props.actor || this.props.actor.actor_type === 'GuestUser' ? v : undefined;
     },
 
     ifActor (v) {
-        return this.props.actor === null ? undefined : v;
+        return !this.props.actor || this.props.actor.actor_type === 'GuestUser' === null ? undefined : v;
     },
 
     render () {

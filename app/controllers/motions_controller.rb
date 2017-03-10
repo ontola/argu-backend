@@ -35,7 +35,7 @@ class MotionsController < AuthorizedController
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]
     )
-    unless current_user.blank?
+    unless current_user.guest?
       @vote = Vote.where(
         voteable_id: authenticated_resource.id,
         voteable_type: 'Motion',

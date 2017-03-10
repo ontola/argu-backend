@@ -15,6 +15,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def correct_mail
-    current_user.present? ? params[:user][:email] == current_user.email : true
+    current_user.guest? ? true : params[:user][:email] == current_user.email
   end
 end

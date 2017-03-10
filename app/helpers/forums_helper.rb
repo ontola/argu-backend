@@ -9,7 +9,7 @@ module ForumsHelper
   def forum_selector_items(_guest = false)
     sections = []
 
-    sections << forum_membership_section if current_user.present?
+    sections << forum_membership_section unless current_user.guest?
     sections << forum_discover_section
 
     {
@@ -48,9 +48,9 @@ module ForumsHelper
   def forum_title_dropdown_items(resource)
     sections = []
 
-    sections << forum_membership_section if current_user.present?
+    sections << forum_membership_section unless current_user.guest?
     sections << forum_discover_section
-    sections << forum_current_section if current_user.present? && current_user.has_favorite?(@forum.edge)
+    sections << forum_current_section if current_user.has_favorite?(@forum.edge)
 
     {
       title: resource.name,

@@ -45,8 +45,7 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    user && (is_creator? &&
-             (record.arguments.length < 2 || 15.minutes.ago < record.created_at)) ||
+    (is_creator? && (record.arguments.length < 2 || 15.minutes.ago < record.created_at)) ||
       is_manager? ||
       is_owner? ||
       super

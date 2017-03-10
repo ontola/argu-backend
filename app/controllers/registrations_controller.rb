@@ -18,12 +18,12 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def cancel
-    if current_user.present?
-      @user = current_user
-      render 'cancel'
-    else
+    if current_user.guest?
       flash[:error] = 'Not signed in'
       redirect_to root_path
+    else
+      @user = current_user
+      render 'cancel'
     end
   end
 

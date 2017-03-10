@@ -23,7 +23,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
     .cover-buttons.cover-buttons--top
       .cover-buttons-container
         ul.btns-horizontal
-          - if current_user.present? && !current_user.has_favorite?(@forum.edge) && policy(@forum).join?
+          - if !current_user.has_favorite?(@forum.edge) && policy(@forum).join?
             li= link_to forum_favorites_path(@forum), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
               span.fa.fa-plus
               span.icon-left= t('forums.join.title')
@@ -34,7 +34,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li.float-right= link_to settings_forum_path(@forum.url), class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
-          - if current_user.present?
+          - unless current_user.guest?
             li.float-right
               ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@forum, trigger_class: 'btn--transparant')
   - if policy(@forum).show?

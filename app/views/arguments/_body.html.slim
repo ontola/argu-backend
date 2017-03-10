@@ -8,7 +8,7 @@
   section.section--footer
     =render partial: argument.creator, locals: {resource: argument} if argument.creator.present?
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
-      - if current_user.present?
+      - unless current_user.guest?
         li
           ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(argument, follow_types: [:reactions, :never])
       =crud_menu_item(argument)

@@ -151,6 +151,10 @@ class User < ApplicationRecord
     first_name.presence || url.presence || email.split('@').first
   end
 
+  def guest?
+    false
+  end
+
   def forum_management?
     page_management? || profile.grants.manager.presence
   end

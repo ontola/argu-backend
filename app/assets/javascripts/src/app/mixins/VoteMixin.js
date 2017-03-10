@@ -34,19 +34,19 @@ const VoteMixin = {
     },
 
     proHandler (e) {
-        if (this.props.actor !== null) {
+        if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
             this.vote('pro');
         }
     },
     neutralHandler (e) {
-        if (this.props.actor !== null) {
+        if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
             this.vote('neutral');
         }
     },
     conHandler (e) {
-        if (this.props.actor !== null) {
+        if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
             this.vote('con');
         }

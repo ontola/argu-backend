@@ -62,7 +62,7 @@ module Guest
     end
 
     def current_user
-      GuestUser.new(session: session)
+      GuestUser.new(session: session, cookies: cookies, headers: request.headers)
     end
 
     def current_vote

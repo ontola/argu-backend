@@ -10,7 +10,7 @@
   section.section--footer
     =render partial: motion.creator, locals: {resource: motion}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
-      - if current_user.present?
+      - unless current_user.guest?
         li
           ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(motion, follow_types: [:news, :reactions, :never])
       =crud_menu_item(motion)

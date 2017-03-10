@@ -21,7 +21,7 @@ class QuestionsController < AuthorizedController
                         creator: {default_profile_photo: []})
               .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
 
-    if current_user.present?
+    unless current_user.guest?
       @user_votes = Vote.where(voteable_id: scope.ids,
                                voteable_type: 'Motion',
                                creator: current_profile).eager_load!

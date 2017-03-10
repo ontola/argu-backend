@@ -15,7 +15,7 @@ class ForumPolicy < EdgeTreePolicy
       t = Forum.arel_table
 
       cond = t[:visibility].eq_any([Page.visibilities[:open], Page.visibilities[:closed]])
-      cond = cond.or(t[:id].in(user.profile.forum_ids)) if user.present?
+      cond = cond.or(t[:id].in(user.profile.forum_ids))
       scope.where(cond)
     end
   end

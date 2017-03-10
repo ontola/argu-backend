@@ -17,7 +17,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
       section.section--footer
         =render partial: project.creator, locals: {resource: project}
         ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
-          -if current_user.present?
+          - unless current_user.guest?
             li
               ul = react_component_store 'HyperDropdown', props: follow_dropdown_items(project)
           =crud_menu_item(project)

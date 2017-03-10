@@ -15,7 +15,7 @@ class VotePolicy < EdgeTreePolicy
       if staff?
         scope
       else
-        voter_ids = user&.managed_pages&.pluck(:id)&.append(user&.profile&.id) || []
+        voter_ids = user.managed_pages.pluck(:id).append(user.profile.id)
         scope
           .joins(:creator)
           .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
@@ -24,18 +24,18 @@ class VotePolicy < EdgeTreePolicy
           .joins('LEFT JOIN forums ON votes.forum_id = forums.id')
           .where('forums.id IS NULL OR forums.visibility = ? OR "forums"."id" IN (?)',
                  Forum.visibilities[:open],
-                 user&.profile&.forum_ids)
+                 user.profile.forum_ids)
       end
     end
   end
 
   module Roles
     def is_creator?
-      creator if user && actor == record.creator
+      creator if actor == record.creator
     end
 
     def is_group_member?
-      group_grant if is_member? && user&.profile&.group_ids.include?(record.parent_model.group.id)
+      group_grant if is_member? && user.profile.group_ids.include?(record.parent_model.group.id)
     end
   end
   include Roles

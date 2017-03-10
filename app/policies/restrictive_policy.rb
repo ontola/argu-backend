@@ -25,7 +25,7 @@ class RestrictivePolicy
     end
 
     def staff?
-      user && user.profile.has_role?(:staff)
+      user.profile.has_role?(:staff)
     end
   end
 
@@ -39,7 +39,7 @@ class RestrictivePolicy
     end
 
     def staff?
-      staff if user && user.profile.has_role?(:staff)
+      staff if user.profile.has_role?(:staff)
     end
   end
   include Roles
@@ -86,7 +86,7 @@ class RestrictivePolicy
   end
 
   def logged_in?
-    user.present?
+    !user.guest?
   end
 
   def new?

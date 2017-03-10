@@ -38,7 +38,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def show?
-    (record.profile.is_public? || user.present?) && record.finished_intro? || super
+    (record.profile.is_public? || !user.guest?) && record.finished_intro? || super
   end
 
   def index_votes?
@@ -60,7 +60,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def max_pages_reached?
-    user && user.profile.pages.length >= max_allowed_pages
+    user.profile.pages.length >= max_allowed_pages
   end
 
   def settings?
@@ -68,7 +68,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def update?
-    (user && record.id == user.id) || super
+    (record.id == user.id) || super
   end
 
   def setup?

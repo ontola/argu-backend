@@ -15,10 +15,8 @@ class PagePolicy < EdgeTreePolicy
       t = Page.arel_table
 
       cond = t[:visibility].eq_any([Page.visibilities[:open], Page.visibilities[:closed]])
-      if user.present?
-        cond = cond.or(t[:id].in(user.profile.granted_record_ids('Page')
-                                   .concat(user.profile.pages.pluck(:id))))
-      end
+      cond = cond.or(t[:id].in(user.profile.granted_record_ids('Page')
+                                 .concat(user.profile.pages.pluck(:id))))
       scope.where(cond)
     end
   end
@@ -106,7 +104,8 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def pages_left?
-    member if user && user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
+    return if user.guest?
+    member if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
   end
 
   def statistics?

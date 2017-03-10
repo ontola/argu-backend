@@ -47,7 +47,7 @@ class FavoritesController < ApplicationController
   private
 
   def check_if_registered
-    return if current_profile.present?
+    return unless current_user.guest?
     raise Argu::NotAUserError.new(forum: get_parent_edge.owner,
                                   r: url_for(get_parent_edge.owner))
   end

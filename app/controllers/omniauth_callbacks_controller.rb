@@ -62,9 +62,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       process_user(email)
     elsif (user_with_email = User.where(email: email).first).present?
       connect_user(provider, user_with_email)
-    elsif current_user.blank? && email.present?
+    elsif current_user.guest? && email.present?
       create_new_user(provider, connector)
-    elsif current_user.blank?
+    elsif current_user.guest?
       # No connection, no current_user and no email..
       session["devise.#{provider}_data"] = request.env['omniauth.auth']
       redirect_to new_user_registration_url(r: r_param(env))
@@ -75,7 +75,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # so render connect accounts form
   # No identity created for this oauth connection
   def connect_user(provider, user_with_email)
-    if current_user.blank? || current_user == user_with_email
+    if current_user.guest? || current_user == user_with_email
       # TODO: Store in Redis when not found to prevent stale records
       identity = Identity.find_or_initialize_by uid: request.env['omniauth.auth']['uid'], provider: provider
       set_identity_fields_for provider, identity, request.env['omniauth.auth']
@@ -110,7 +110,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def process_user(email)
-    if current_user.blank?
+    if current_user.guest?
       @user.update r: r_param(request.env) if r_param(request.env).present?
       sign_in_and_redirect_with_r @user, event: :authentication
     elsif current_user.email != email

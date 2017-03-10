@@ -56,7 +56,7 @@ class AuthorizedController < ApplicationController
   end
 
   def check_if_registered
-    return if current_profile.present?
+    return unless current_user.guest?
     raise Argu::NotAUserError.new(r: redirect_url)
   end
 

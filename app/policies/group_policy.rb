@@ -15,7 +15,7 @@ class GroupPolicy < EdgeTreePolicy
       # Don't show closed, unless the user has a membership
       scope.where('visibility IN (?) OR groups.id IN (?)',
                   [Group.visibilities[:open], Group.visibilities[:discussion]],
-                  user && user.profile.group_memberships.pluck(:group_id))
+                  user.profile.group_memberships.pluck(:group_id))
     end
   end
 

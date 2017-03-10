@@ -69,7 +69,7 @@ export const BigVoteContainer = React.createClass({
 
     render () {
         let voteButtonsComponent, voteResultsComponent;
-        if (!this.state.actor || this.state.actor.actor_type === 'User') {
+        if (!this.state.actor || this.state.actor.actor_type === 'User' || this.state.actor.actor_type === 'GuestUser') {
             voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
             voteResultsComponent = <VoteResults {...this.state} showResults={this.props.closed || this.state.currentVote !== 'abstain'}/>;
         } else if (this.state.actor.actor_type === 'Page') {

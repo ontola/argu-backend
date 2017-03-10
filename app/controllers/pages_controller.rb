@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class PagesController < ApplicationController
+  before_action :check_if_registered, except: %i(index show)
+
   def index
     @user = User.find_via_shortname params[:id]
     authorize @user, :update?
@@ -156,8 +158,13 @@ class PagesController < ApplicationController
 
   private
 
+  def check_if_registered
+    return unless current_user.guest?
+    raise Argu::NotAUserError.new(r: new_page_path)
+  end
+
   def handle_not_authorized_error(exception)
-    us_po = current_user && policy(current_user)
+    us_po = policy(current_user) unless current_user.guest?
     if us_po&.max_pages_reached?
       errors = {}
       errors[:max_allowed_pages] = {

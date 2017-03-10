@@ -3,7 +3,7 @@
   .box
     section
       h1= t('status.s_403.header')
-      - if current_user.nil?
+      - if current_user.guest?
         p= t('status.s_403.sign_in')
         =semantic_form_for(resource, as: :user, url: oauth_token_path(host_url: params[:host_url].presence)) do |f|
           .inspectlet-sensitive= f.inputs do

@@ -3,7 +3,7 @@ class ProfilesController < ApplicationController
   include SettingsHelper
 
   def index
-    return if current_user.nil? || params[:q].nil?
+    return if current_user.guest? || !params[:q].present?
     # This is a working mess.
     q = params[:q].tr(' ', '|')
     @profiles = policy_scope(Profile)
@@ -118,7 +118,7 @@ class ProfilesController < ApplicationController
   end
 
   def user_or_redirect(redirect = nil)
-    raise Argu::NotAUserError.new(r: redirect) if current_user.blank?
+    raise Argu::NotAUserError.new(r: redirect) if current_user.guest?
     current_user
   end
 end

@@ -59,7 +59,7 @@ class Activity < PublicActivity::Activity
   end
 
   def self.published_for_user(user)
-    if user.present?
+    unless user.guest?
       owner_ids = user.managed_pages.joins(:profile).pluck(:'profiles.id').append(user.profile.id)
       forum_ids = user.profile.forum_ids(:manager)
     end

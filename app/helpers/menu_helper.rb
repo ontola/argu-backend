@@ -5,7 +5,7 @@ module MenuHelper
   # @param resource [Model] The model the actions should be done upon
   # @param additional_items [Array] Additionals `dropdown items` to be merged at the top of the menu.
   def crud_menu_item(resource, additional_items = [])
-    return if current_user.nil? || !policy(resource).update?
+    return if current_user.guest? || !policy(resource).update?
     content_tag :li do
       content_tag :ul do
         react_component 'HyperDropdown',

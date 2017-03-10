@@ -37,7 +37,7 @@ class BannerDismissal
   end
 
   def stubborn_identifier
-    user&.id
+    user.id
   end
 
   def stubborn_params
