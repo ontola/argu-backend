@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :vote_matches, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :uploaded_media_objects, class_name: 'MediaObject', inverse_of: :publisher, foreign_key: 'publisher_id'
@@ -260,7 +261,7 @@ class User < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w(comments motions arguments questions blog_posts projects vote_events vote_matches).each do |association|
+    %w(comments motions arguments questions blog_posts projects votes vote_events vote_matches).each do |association|
       association
         .classify
         .constantize
