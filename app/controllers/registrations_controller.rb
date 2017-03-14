@@ -64,7 +64,12 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
-    @registration_without_password ? resource.send_set_password_instructions : resource.send_confirmation_instructions
+    if @registration_without_password
+      resource.send_set_password_instructions
+      resource.primary_email_record.update!(confirmation_token: nil)
+    else
+      resource.primary_email_record.send_confirmation_instructions
+    end
     transfer_guest_votes(resource)
     setup_favorites(resource)
     send_event user: resource,

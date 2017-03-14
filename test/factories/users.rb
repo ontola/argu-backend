@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 FactoryGirl.define do
-  sequence :email do |n|
-    "user#{n}@example.com"
-  end
-
   factory :user do
     association :profile, strategy: :build
     association :shortname, strategy: :build
 
-    confirmed_at Time.current
-    email
+    sequence :email do |n|
+      "user#{n}@example.com"
+    end
     encrypted_password { Devise::Encryptor.digest(User, 'password') }
     password 'password'
     password_confirmation 'password'
@@ -20,14 +17,14 @@ FactoryGirl.define do
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
 
+    after(:create) do |user|
+      user.primary_email_record.update(confirmed_at: DateTime.current)
+    end
+
     trait :staff do
       after(:create) do |user|
         user.profile.add_role :staff
       end
-    end
-
-    trait :unconfirmed do
-      confirmed_at nil
     end
 
     trait :viewed_notifications_hour_ago do

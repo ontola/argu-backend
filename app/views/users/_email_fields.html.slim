@@ -1,0 +1,18 @@
+table.nested-fields
+  tr
+    =f.inputs do |nested|
+      td
+        =f.inputs disabled: f.object.confirmed?
+          =f.input :email, label: false, input_html: {class: 'input--full'}
+      td
+        label.formtastic--radio-label
+          input[type='radio' name='user[primary_email]' value="[#{f.index}]" checked=f.object.primary?]
+          = t('users.emails.primary')
+      td[style='width: 200px;']
+        -if f.object.confirmed_at.present?
+          span= t('users.registrations.confirmed')
+        -elsif f.object.persisted?
+          =link_to t('devise.confirmations.send'), user_confirmation_path(user: {email: f.object.email}), rel: :nofollow, data: {method: :post}
+      td[style='width: 50px;']
+        -unless f.object.primary?
+          =link_to_remove_association 'X', f, class: 'btn btn--light'

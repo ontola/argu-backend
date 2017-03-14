@@ -102,6 +102,7 @@ gem 'redcarpet', '~> 3.3.4'
 
 ################## User management ########################
 gem 'devise', '~> 4.2.0'
+gem 'devise-multi_email', '~> 1.0.5'
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-facebook', '~> 4.0.0', git: 'https://github.com/ArthurWD/omniauth-facebook', ref: '23019'

@@ -10,16 +10,14 @@
         = render partial: 'authentications/login_providers', locals: {providers: login_providers_left(@user)}
     - elsif !@user.password_required? && @user.identities.length == 1
       p= t('users.authentications.cant_decouple_note_provider', provider: @user.identities.first.provider)
-    =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
-    li.form-helper
-      - if @user.confirmed_at.present?
-        span= t('users.registrations.confirmed')
-        - if @user.unconfirmed_email.present?
-          div= t('users.registrations.unconfirmed_email', email: @user.unconfirmed_email)
-      - else
-        span
-          =t('users.registrations.unconfirmed')
-          =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
+    label= 'emails'
+    .formtastic--full-width
+      =f.fields_for :emails do |email|
+        =render 'email_fields', f: email
+      .links
+        =link_to_add_association f, :emails, class: 'btn-subtle' do
+          span.fa.fa-plus
+          span.icon-left= t('users.emails.add')
     -if @user.has_password?
       =f.input :password, label: t('users_password_edit'), required: @user.new_record?
       =f.input :password_confirmation, label: t('users_password_confirmation')

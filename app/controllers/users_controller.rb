@@ -182,7 +182,13 @@ class UsersController < ApplicationController
   private
 
   def email_changed?
-    @email_changed ||= permit_params[:email].present? && @user.email != permit_params[:email]
+    return unless permit_params[:emails_attributes].present?
+    @email_changed ||= permit_params[:emails_attributes].any? do |email|
+      email.second['id'].nil? ||
+        email.second['_destroy'] == '1' ||
+        email.second['_destroy'] == 'true' ||
+        @user.emails.find(email.second['id']).email != email.second['email']
+    end
   end
 
   def get_user_or_redirect(redirect = nil)
@@ -200,7 +206,10 @@ class UsersController < ApplicationController
     pp = params.require(:user).permit(*policy(@user || User).permitted_attributes(true)).to_h
     merge_photo_params(pp, @user.class)
     merge_placement_params(pp, User)
-    pp
+    if pp[:primary_email].present?
+      pp['emails_attributes'][pp[:primary_email][1..-2]][:primary] = true
+    end
+    pp.except(:primary_email)
   end
 
   def passwordless_permit_params
@@ -219,7 +228,7 @@ class UsersController < ApplicationController
   end
 
   def update_user
-    if email_changed? || permit_params[:password].present?
+    if email_changed? || params[:user][:primary_email].present? || permit_params[:password].present?
       bypass_sign_in(@user) if @user.update_with_password(permit_params)
     else
       @user.update_without_password(passwordless_permit_params)

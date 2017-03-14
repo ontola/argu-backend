@@ -331,6 +331,10 @@ p.inline-hints {
   }
 }
 
+.formtastic--radio-label {
+  padding: 0;
+}
+
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
   width: 70%;

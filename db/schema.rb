@@ -213,6 +213,17 @@ ActiveRecord::Schema.define(version: 20170315101345) do
     t.index ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
   end
 
+  create_table "emails", force: :cascade do |t|
+    t.integer  "user_id",                              null: false
+    t.string   "email"
+    t.boolean  "primary",              default: false, null: false
+    t.string   "unconfirmed_email"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["email"], name: "index_emails_on_email", unique: true, using: :btree
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "edge_id",    null: false
@@ -748,7 +759,6 @@ ActiveRecord::Schema.define(version: 20170315101345) do
     t.integer  "reactions_email",                     default: 3,     null: false
     t.boolean  "has_drafts",                          default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -810,6 +820,7 @@ ActiveRecord::Schema.define(version: 20170315101345) do
   add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
+  add_foreign_key "emails", "users"
   add_foreign_key "favorites", "edges"
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id"

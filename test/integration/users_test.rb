@@ -6,6 +6,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
+  let(:second_email) { create(:email, user: user, email: 'second@argu.co', confirmed_at: DateTime.current) }
+  let(:unconfirmed_email) { create(:email, user: user, email: 'unconfirmed@argu.co') }
   let(:super_admin) { create_super_admin(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
@@ -159,6 +161,168 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     get destroy_user_session_path(r: 'https://evil_website.com')
     assert_redirected_to '/'
+  end
+
+  ####################################
+  # Emails
+  ####################################
+  test 'user should add second email' do
+    sign_in user
+    assert_differences([['Email.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
+                '1490174149635': {email: 'secondary@argu.co'}
+              },
+              current_password: user.password
+            }
+          }
+    end
+    user.reload
+    assert_equal user.emails.count, 2
+    assert_equal user.emails.last.email, 'secondary@argu.co'
+    assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
+
+    assert_redirected_to settings_path(tab: :general)
+  end
+
+  test 'user should add second email as primary' do
+    sign_in user
+    assert_differences([['Email.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
+                '12345678': {email: 'secondary@argu.co'}
+              },
+              primary_email: '[12345678]',
+              current_password: user.password
+            }
+          }
+    end
+    user.reload
+    assert_equal user.emails.count, 2
+    assert_not_equal user.emails.last.email, 'secondary@argu.co'
+    assert_equal user.primary_email_record.email, 'secondary@argu.co'
+
+    assert_redirected_to settings_path(tab: :general)
+  end
+
+  test 'user should switch primary email' do
+    sign_in user
+    second_email
+
+    assert_not_equal user.primary_email_record.email, second_email.email
+
+    assert_differences([['Email.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
+                '1': {email: second_email.email, id: second_email.id}
+              },
+              primary_email: '[1]',
+              current_password: user.password
+            }
+          }
+    end
+    user.reload
+    assert_equal user.emails.where(primary: true).count, 1
+    assert_not_equal user.emails.last.email, second_email.email
+    assert_equal user.primary_email_record.email, second_email.email
+
+    assert_redirected_to settings_path(tab: :general)
+  end
+
+  test 'user should delete secondary email' do
+    sign_in user
+    second_email
+
+    assert_differences([['Email.count', -1],
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id, _destroy: 'false'},
+                '1': {email: second_email.email, id: second_email.id, _destroy: '1'}
+              },
+              current_password: user.password
+            }
+          }
+    end
+
+    assert_redirected_to settings_path(tab: :general)
+  end
+
+  test 'user should not delete primary email' do
+    sign_in user
+    second_email
+
+    assert_raises(ActiveRecord::RecordNotDestroyed) do
+      assert_differences([['Email.count', 0],
+                          ['Sidekiq::Worker.jobs.count', 0]]) do
+        put user_path(user),
+            params: {
+              user: {
+                emails_attributes: {
+                  '0': {email: user.primary_email_record.email, id: user.primary_email_record.id, _destroy: '1'},
+                  '1': {email: second_email.email, id: second_email.id, _destroy: '0'}
+                },
+                current_password: user.password
+              }
+            }
+      end
+    end
+  end
+
+  test 'user should change unconfirmed email' do
+    sign_in user
+    unconfirmed_email
+    assert_differences([['Email.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
+                '1': {email: 'changed@argu.co', id: unconfirmed_email.id}
+              },
+              current_password: user.password
+            }
+          }
+    end
+    unconfirmed_email.reload
+    assert_equal unconfirmed_email.email, 'changed@argu.co'
+
+    assert_redirected_to settings_path(tab: :general)
+  end
+
+  test 'user should not change confirmed email' do
+    sign_in user
+    second_email
+    assert_differences([['Email.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
+                '1': {email: 'changed@argu.co', id: second_email.id}
+              },
+              current_password: user.password
+            }
+          }
+    end
+    second_email.reload
+    assert_equal second_email.email, 'second@argu.co'
   end
 
   ####################################

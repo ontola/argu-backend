@@ -17,7 +17,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_sign_in_path_for(resource)
-    if resource.email_verified?
+    if resource.primary_email_record.email_verified?
       if resource.shortname.present?
         super resource
       else
@@ -60,7 +60,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.present?
       process_user(email)
-    elsif (user_with_email = User.where(email: email).first).present?
+    elsif (user_with_email = Email.where(email: email).first&.user).present?
       connect_user(provider, user_with_email)
     elsif current_user.guest? && email.present?
       create_new_user(provider, connector)

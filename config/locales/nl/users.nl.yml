@@ -69,3 +69,7 @@ nl:
       empty:
         self: "Je hebt momenteel geen concepten"
         other: "%{user} heeft momenteel geen concepten"
+    emails:
+      primary: "primary"
+      add: "Voeg email toe"
+

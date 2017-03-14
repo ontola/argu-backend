@@ -2,6 +2,7 @@
 class User < ApplicationRecord
   include Shortnameable, Flowable, Placeable, Ldable, RedirectHelper
 
+  before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,
           -> { where title: 'home' },
@@ -10,6 +11,7 @@ class User < ApplicationRecord
           inverse_of: :placeable
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
   has_many :edges
+  has_many :emails, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
   has_many :identities, dependent: :destroy
   has_many :notifications
@@ -29,12 +31,13 @@ class User < ApplicationRecord
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank
+  accepts_nested_attributes_for :emails, reject_if: :all_blank, allow_destroy: true
 
   # Include default devise modules. Others available are:
   # :token_authenticatable,
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable, :timeoutable,
+  devise :multi_email_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :multi_email_validatable,
+         :multi_email_confirmable, :lockable, :timeoutable,
          :omniauthable, omniauth_providers: [:facebook].freeze
   acts_as_follower
   with_collection :vote_matches,
@@ -46,9 +49,8 @@ class User < ApplicationRecord
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  before_destroy :expropriate_dependencies
   before_save :adjust_birthday, if: :birthday_changed?
-  before_save { |user| user.email = email.downcase unless email.blank? }
+  before_create :skip_confirmation_notification!
   after_commit :publish_data_event
 
   attr_accessor :current_password, :confirmation_string, :tab
@@ -74,9 +76,6 @@ class User < ApplicationRecord
   contextualize :display_name, as: 'schema:name'
   contextualize :about, as: 'schema:description'
 
-  validates :email,
-            allow_blank: false,
-            format: {with: RFC822::EMAIL}
   validates :profile, presence: true
   validates :language,
             inclusion: {
@@ -108,10 +107,6 @@ class User < ApplicationRecord
 
   def draft_count
     Edge.where(user_id: id, is_published: false, owner_type: %w(Motion Question Project BlogPost)).count
-  end
-
-  def email_verified?
-    email && email !~ TEMP_EMAIL_REGEX
   end
 
   # Since we're the ones creating activities, we should select them based on us being the owner
@@ -200,14 +195,6 @@ class User < ApplicationRecord
     (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
   end
 
-  # Postpone email change only when email_was is present
-  def postpone_email_change?
-    postpone = self.class.reconfirmable && email_changed? && !@bypass_confirmation_postpone && email.present? &&
-      email_was.present?
-    @bypass_confirmation_postpone = false
-    postpone
-  end
-
   def publish_data_event
     DataEvent.publish(self)
   end
@@ -251,12 +238,6 @@ class User < ApplicationRecord
     errors.add(:r, "Redirecting to #{r} is not allowed")
   end
 
-  protected
-
-  def confirmation_required?
-    false
-  end
-
   private
 
   # Sets the dependent foreign relations to the Community profile
@@ -267,6 +248,7 @@ class User < ApplicationRecord
         .constantize
         .expropriate(send(association))
     end
+    emails.update_all(primary: false)
     MediaObject.expropriate(uploaded_media_objects)
     edges.update_all user_id: User::COMMUNITY_ID
   end

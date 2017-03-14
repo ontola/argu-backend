@@ -239,6 +239,8 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    devise-multi_email (1.0.5)
+      devise
     diff-lcs (1.3)
     docile (1.1.5)
     domain_name (0.5.20170223)
@@ -688,6 +690,7 @@ DEPENDENCIES
   country_select
   database_cleaner (~> 1.5.3)
   devise (~> 4.2.0)
+  devise-multi_email (~> 1.0.5)
   doorkeeper (~> 4.2.0)
   doorkeeper-jwt (~> 0.1.6)
   dotenv-rails

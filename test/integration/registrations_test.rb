@@ -81,6 +81,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     clear_emails
 
     assert_differences([['User.count', 1],
+                        ['Email.where(confirmed_at: nil).count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post user_registration_path,
            params: {
@@ -107,7 +108,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     current_email.click_link 'Set my password'
 
     # Set password
-    assert_difference('User.where(confirmed_at: nil).count', -1) do
+    assert_difference('Email.where(confirmed_at: nil).count', -1) do
       fill_in('user_password', with: 'password')
       fill_in('user_password_confirmation', with: 'password')
       click_button('Edit')

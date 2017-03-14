@@ -69,3 +69,6 @@ en:
       empty:
         self: "You currently have no drafts"
         other: "%{user} currently has no drafts"
+    emails:
+      primary: "primair"
+      add: "Add email"
