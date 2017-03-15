@@ -34,6 +34,10 @@ class GuestUser < User
     true
   end
 
+  def has_favorite?(_edge)
+    false
+  end
+
   def profile
     @profile ||= Profile.new(profileable: self)
   end
