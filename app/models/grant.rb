@@ -13,6 +13,17 @@ class Grant < ApplicationRecord
 
   enum role: {member: 1, manager: 2, super_admin: 10}
 
+  def display_name
+    case edge.owner_type
+    when 'Forum'
+      edge.owner.display_name
+    when 'Page'
+      I18n.t('grants.all_forums')
+    else
+      I18n.t('grants.other')
+    end
+  end
+
   def page
     edge.root.owner
   end

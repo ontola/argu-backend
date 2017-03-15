@@ -9,20 +9,19 @@ en:
     new: "Assign new grants"
     inherited: "This role is inherited from the %{type}"
     all_forums: "All forums"
+    other: "Other"
     labels:
       role: "Which role you want to grant?"
       group: "To which group you want tot provide this role?"
       edge: "For which forum should this role be granted?"
   roles:
-    type: "role"
-    plural: "roles"
-    description: "Roles grants certain rights to a group. A role will also apply to the underlying content."
+    type: "grant"
+    plural: "grants"
+    description: "Grants also apply to the underlying content."
     empty: "none"
     types:
       manager: "Managers can post new content and can edit and remove all existing content."
       member: "Members can post new content and can edit and remove their own content."
       super_admin: "Admins can edit everything."
     list:
-      role_html: "<span data-title='%{description}'>%{role}</span>"
-      inherited_html: "<a href='%{url}' data-title='%{inherited}'><span class='fa fa-info'></span></a>"
-      remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Are you sure to revoke this role?'><span class='fa fa-close'></span></a>"
+      remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"

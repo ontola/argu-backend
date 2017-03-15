@@ -6,7 +6,7 @@ nl:
     plural: "Groepen"
     new: "Groep toevoegen"
     public: "Publiek"
-    description: "Je kan rollen verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
+    description: "Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
     destroy:
       body: "%{group_memberships_count} groepsleden zullen worden verwijderd."
     settings:
