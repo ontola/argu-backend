@@ -19,7 +19,12 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-  config.force_ssl = true
+  config.force_ssl = false
+  config.ssl_options = {
+    redirect: {
+      exclude: ->(request) { request.path == '/d/health' }
+    }
+  }
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join('tmp/caching-dev.txt').exist?
