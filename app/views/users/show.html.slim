@@ -9,7 +9,7 @@
   - if policy(@profile).index_votes?
     - if @profile.votes.count > 0
       .col-1
-        - unless current_user == @user && !@profile.are_votes_public?
+        - if current_user == @user && !@profile.are_votes_public?
           span.fa.fa-lock
           span.icon-left= t('profiles.votes_are_private')
         .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
