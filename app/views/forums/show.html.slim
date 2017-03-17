@@ -23,7 +23,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
     .cover-buttons.cover-buttons--top
       .cover-buttons-container
         ul.btns-horizontal
-          - if !current_user.has_favorite?(@forum.edge) && policy(@forum).join?
+          - if !current_user.has_favorite?(@forum.edge) && policy(@forum).create_child?(:favorites, edge: @forum.edge)
             li= link_to forum_favorites_path(@forum), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
               span.fa.fa-plus
               span.icon-left= t('forums.join.title')

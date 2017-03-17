@@ -3,6 +3,10 @@ class Favorite < ApplicationRecord
   belongs_to :user
   belongs_to :edge
 
+  cattr_accessor :parent_classes do
+    %i(forum)
+  end
+
   after_create :follow_edge
 
   def follow_edge

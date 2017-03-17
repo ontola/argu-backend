@@ -5,9 +5,10 @@ class FavoritesController < ApplicationController
   skip_after_action :verify_authorized, only: :destroy
 
   def create
-    authorize get_parent_edge.owner, :show?
+    @favorite = current_user.favorites.find_or_initialize_by(edge: get_parent_edge)
+    authorize @favorite, :create?
 
-    if (@favorite = current_user.favorites.find_or_create_by(edge: get_parent_edge))
+    if @favorite.save
       respond_to do |format|
         format.html do
           flash[:success] = t('type_create_success', type: t('group_memberships.type'))
@@ -26,6 +27,7 @@ class FavoritesController < ApplicationController
 
   def destroy
     @favorite = current_user.favorites.find_by!(edge: get_parent_edge)
+    authorize @favorite, :destroy?
 
     if @favorite.destroy
       respond_to do |format|

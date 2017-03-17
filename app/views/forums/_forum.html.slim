@@ -5,7 +5,7 @@
         =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
-    - if !current_user.has_favorite?(forum.edge) && policy(forum).join?
+    - if !current_user.has_favorite?(forum.edge) && policy(forum).create_child?(:favorites, edge: forum.edge)
       .sticky--top-left
         =link_to forum_favorites_path(forum), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
           span.fa.fa-plus

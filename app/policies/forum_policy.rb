@@ -50,10 +50,6 @@ class ForumPolicy < EdgeTreePolicy
     rule is_manager?, staff?
   end
 
-  def join?
-    rule is_manager?, staff?
-  end
-
   def list?
     level =
       if @record.hidden?
