@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 class UserSerializer < RecordSerializer
+  def service_or_self?
+    service_scope? || object == scope&.user
+  end
+
   attributes :display_name, :about, :url
   attribute :language, if: :service_scope?
-  attribute :email, if: :service_scope?
+  attribute :email, if: :service_or_self?
 
   has_one :profile_photo do
     obj = object.profile.default_profile_photo
