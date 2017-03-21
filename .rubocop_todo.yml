@@ -18,7 +18,7 @@ Lint/Eval:
   Exclude:
     - 'app/models/user.rb'
     - 'lib/argu/test_helpers/automated_tests.rb'
-    - 'test/test_helper.rb'
+    - 'lib/argu/test_helpers/test_assertions.rb'
 
 # Offense count: 1
 Lint/UselessAssignment:
