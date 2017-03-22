@@ -39,7 +39,7 @@ class VotesController < AuthorizedController
     method = create_service.resource.persisted? ? :update? : :create?
     authorize create_service.resource, method
 
-    if create_service.resource.persisted? && !create_service.resource.for_changed?
+    if unmodified?
       respond_to do |format|
         format.json do
           render status: 304,
@@ -152,6 +152,12 @@ class VotesController < AuthorizedController
 
   def get_parent_resource
     @parent_resource ||= super.try(:default_vote_event) || super
+  end
+
+  def unmodified?
+    create_service.resource.persisted? &&
+      !create_service.resource.for_changed? &&
+      !create_service.resource.explanation_changed?
   end
 
   def deserialize_params_options

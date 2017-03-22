@@ -483,7 +483,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.valid?
   end
 
-  test 'creator should post update json' do
+  test 'creator should post update side json' do
     sign_in creator
 
     assert_differences([['Vote.count', 0],
@@ -503,6 +503,27 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'update', 'con')
+  end
+
+  test 'creator should post update explanation json' do
+    sign_in creator
+    assert_differences([['Vote.count', 0],
+                        ['motion.default_vote_event.reload.total_vote_count', 0],
+                        ['motion.default_vote_event.children_count(:votes_pro)', 0],
+                        ['motion.default_vote_event.children_count(:votes_con)', 0]]) do
+      post motion_votes_path(motion),
+           params: {
+             vote: {
+               for: 'pro',
+               explanation: 'This is my opinion'
+             },
+             format: :json
+           }
+    end
+
+    assert_response 200
+    assert assigns(:model)
+    assert assigns(:create_service).resource.valid?
   end
 
   test 'creator should post update json_api' do

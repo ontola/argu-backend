@@ -25,7 +25,7 @@ class Vote < ApplicationRecord
 
   # #########methods###########
   def decrement_previous_counter_cache
-    return unless for_changed?
+    return unless for_changed? || explanation_changed?
     edge.decrement_counter_cache("votes_#{for_was}")
   end
 
