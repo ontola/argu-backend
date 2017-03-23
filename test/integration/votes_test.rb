@@ -10,6 +10,8 @@ class VotesTest < ActionDispatch::IntegrationTest
   let(:closed_question_argument) { create(:argument, parent: closed_question_motion.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
+  let(:argument2) { create(:argument, parent: motion.edge) }
+  let(:argument3) { create(:argument, parent: motion.edge) }
   let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, creator: creator.profile, publisher: creator) }
   let(:hidden_vote) do
     create(:vote,
@@ -136,6 +138,32 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert assigns(:model)
     assert assigns(:create_service).resource.valid?
+    assert_analytics_collected('votes', 'create', 'pro')
+  end
+
+  test 'user should post create for motion with upvoted arguments json' do
+    sign_in user
+    create(:vote, parent: argument.edge, creator: user.profile, publisher: user)
+    vote_to_remove = create(:vote, parent: argument3.edge, creator: user.profile, publisher: user)
+    argument2
+
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
+      post motion_votes_path(motion),
+           params: {
+             format: :json,
+             vote: {
+               for: :pro,
+               argument_ids: [argument.id, argument2.id]
+             }
+           }
+    end
+
+    assert Vote.find_by(id: vote_to_remove.id).nil?
+    assert Vote.find_by(voteable_id: argument.id, voteable_type: 'Argument').present?
+    assert Vote.find_by(voteable_id: argument2.id, voteable_type: 'Argument').present?
+    assert_response 200
     assert_analytics_collected('votes', 'create', 'pro')
   end
 

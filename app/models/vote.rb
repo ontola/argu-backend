@@ -8,7 +8,9 @@ class Vote < ApplicationRecord
   belongs_to :forum
   before_save :decrement_previous_counter_cache, unless: :new_record?
   before_save :set_explained_at, if: :explanation_changed?
+  before_save :up_and_downvote_arguments
 
+  attr_writer :argument_ids
   parentable :argument, :vote_event
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
@@ -24,6 +26,16 @@ class Vote < ApplicationRecord
   contextualize :option, as: 'schema:option'
 
   # #########methods###########
+  def argument_ids
+    @argument_ids ||= upvoted_arguments.pluck(:id)
+  end
+
+  def upvoted_arguments
+    @upvoted_arguments ||= Argument
+                             .joins(:votes, :edge)
+                             .where(votes: {creator: creator}, edges: {parent_id: parent_model.edge.parent_id})
+  end
+
   def decrement_previous_counter_cache
     return unless for_changed? || explanation_changed?
     edge.decrement_counter_cache("votes_#{for_was}")
@@ -58,7 +70,18 @@ class Vote < ApplicationRecord
     )
   end
 
+  private
+
   def set_explained_at
     self.explained_at = DateTime.current
+  end
+
+  def up_and_downvote_arguments
+    (upvoted_arguments.pluck(:id) - argument_ids).each do |argument_id|
+      Argument.find(argument_id).remove_upvote(publisher, creator)
+    end
+    (argument_ids - upvoted_arguments.pluck(:id)).each do |argument_id|
+      Argument.find(argument_id).upvote(publisher, creator)
+    end
   end
 end

@@ -5,19 +5,6 @@ class CreateArgument < PublishedCreateService
 
   def after_save
     super
-    return unless @options[:auto_vote]
-    ::CreateVote
-      .new(
-        resource.edge,
-        attributes: {
-          for: :pro,
-          creator: resource.creator
-        },
-        options: {
-          creator: resource.creator,
-          publisher: resource.creator.profileable
-        }
-      )
-      .commit
+    resource.upvote(resource.creator.profileable, resource.creator) if @options[:auto_vote]
   end
 end

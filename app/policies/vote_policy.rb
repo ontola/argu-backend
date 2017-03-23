@@ -50,7 +50,7 @@ class VotePolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.append(:explanation)
+    attributes.concat [:explanation, argument_ids: []]
     attributes
   end
 

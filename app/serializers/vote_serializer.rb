@@ -54,8 +54,6 @@ class VoteSerializer < BaseEdgeSerializer
         }
       }
     end
-    Argument
-      .joins(:votes, :edge)
-      .where(votes: {creator: object.creator}, edges: {parent_id: object.parent_model.edge.parent_id})
+    object.upvoted_arguments
   end
 end

@@ -102,24 +102,23 @@ class VotesController < AuthorizedController
   end
 
   def destroy
-    vote = Vote.find params[:id]
-    authorize vote, :destroy?
-    respond_to do |format|
-      if vote.destroy
-        send_event category: 'votes',
-                   action: 'destroy',
-                   label: vote.for
+    destroy_service.on(:destroy_vote_successful) do |vote|
+      respond_to do |format|
         format.js do
           render locals: {
             vote: vote
           }
         end
         format.json { head 204 }
-      else
-        format.js { head :bad_request }
-        format.json { head :bad_request }
       end
     end
+    destroy_service.on(:destroy_vote_failed) do |vote|
+      respond_to do |format|
+        format.js { head :bad_request }
+        format.json { render json: vote.errors, status: :unprocessable_entity }
+      end
+    end
+    destroy_service.commit
   end
 
   def forum_for(url_options)
@@ -157,7 +156,8 @@ class VotesController < AuthorizedController
   def unmodified?
     create_service.resource.persisted? &&
       !create_service.resource.for_changed? &&
-      !create_service.resource.explanation_changed?
+      !create_service.resource.explanation_changed? &&
+      create_service.resource.argument_ids == create_service.resource.upvoted_arguments.pluck(:id)
   end
 
   def deserialize_params_options

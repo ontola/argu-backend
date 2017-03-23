@@ -57,6 +57,38 @@ class Argument < ApplicationRecord
     parent_model.arguments.find_by(id: p_id)
   end
 
+  def upvote(user, profile)
+    service = CreateVote.new(
+      edge,
+      attributes: {
+        for: :pro,
+        creator: profile
+      },
+      options: {
+        creator: profile,
+        publisher: user
+      }
+    )
+    service.on(:create_vote_failed) do
+      raise 'Failed to upvote'
+    end
+    service.commit
+  end
+
+  def remove_upvote(user, profile)
+    service = DestroyVote.new(
+      votes.find_by(publisher: user, creator: profile),
+      options: {
+        creator: profile,
+        publisher: user
+      }
+    )
+    service.on(:destroy_vote_failed) do
+      raise 'Failed to remove upvote'
+    end
+    service.commit
+  end
+
   def voteable
     self
   end
