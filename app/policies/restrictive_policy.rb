@@ -46,7 +46,7 @@ class RestrictivePolicy
     end
 
     def service?
-      service if context.doorkeeper_scopes.include? 'service'
+      service if context.doorkeeper_scopes&.include? 'service'
     end
   end
   include Roles
@@ -106,7 +106,7 @@ class RestrictivePolicy
 
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
-    staff?
+    staff? || service?
   end
 
   def statistics?

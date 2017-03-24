@@ -44,7 +44,7 @@ class VotePolicy < EdgeTreePolicy
     if record.creator.are_votes_public
       Pundit.policy(context, record.parent_model).show?
     else
-      rule is_creator?, staff?
+      rule is_creator?, super
     end
   end
 

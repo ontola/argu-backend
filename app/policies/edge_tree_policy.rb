@@ -180,7 +180,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def show_unpublished?
-    rule is_creator?, is_moderator?, is_manager?, is_super_admin?, staff?
+    rule is_creator?, is_moderator?, is_manager?, is_super_admin?, staff?, service?
   end
 
   def create_expired?
