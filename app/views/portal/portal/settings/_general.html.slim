@@ -55,4 +55,4 @@ h2= t('portal.forums')
           td= f.children_count(:questions) || '-'
           td= f.children_count(:motions) || '-'
           td= link_to t('portal.settings.title'), settings_forum_path(f)
-  =paginate @pages, param_name: :forums_page
+  =paginate @forums, param_name: :forums_page
