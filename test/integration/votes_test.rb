@@ -515,6 +515,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_differences([['Vote.count', 0],
+                        ['Activity.count', 0],
                         ['motion.default_vote_event.reload.total_vote_count', 0],
                         ['motion.default_vote_event.children_count(:votes_pro)', -1],
                         ['motion.default_vote_event.children_count(:votes_con)', 1]]) do

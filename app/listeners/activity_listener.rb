@@ -98,9 +98,9 @@ class ActivityListener
   end
 
   # Deletes all other activities created within 6 hours of the new activity.
-  def destroy_recent_similar_activities(resource, trackable, action)
+  def destroy_recent_similar_activities(resource, recipient, action)
     ids = Activity.where('created_at >= :date', date: 6.hours.ago)
-                  .where(trackable_id: trackable.id,
+                  .where(recipient_id: recipient.id,
                          owner_id: @creator.id,
                          key: "#{resource.class.name.downcase}.#{action}")
                   .pluck(:id)
