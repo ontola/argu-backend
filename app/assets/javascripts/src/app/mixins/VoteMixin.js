@@ -64,7 +64,7 @@ const VoteMixin = {
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
-                    this.setState(data.vote);
+                    this.setState(Object.assign({}, data.vote, { opinionForm: true }));
                 }
             }).catch(e => {
                 if (e.status === 403) {

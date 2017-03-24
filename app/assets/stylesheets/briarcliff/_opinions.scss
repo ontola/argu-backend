@@ -1,0 +1,60 @@
+.opinion-form, .opinion-body {
+  position: relative;
+  text-align: left;
+}
+.col--motion .opinion-container-pro:after, .col--motion .opinion-container-neutral:after, .col--motion .opinion-container-con:after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  border-width: 0 15px 15px;
+  border-style: solid;
+  border-color: #fff transparent;
+  display: block;
+  width: 0;
+}
+.col--motion .opinion-container-pro:after {
+  left: 15%;
+}
+.col--motion .opinion-container-neutral:after {
+  left: 50%;
+}
+.col--motion .opinion-container-con:after {
+  right: 15%;
+}
+.opinion-form__arguments-selector, .opinion-body__arguments-list {
+  list-style-type: none;
+  width: 50%;
+  width: calc(50% + 0.5em);
+  margin-left: -0.5em;
+  padding: 0 0.5em;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: .8em;
+  line-height: 1.2em;
+
+  label {
+    text-transform: initial;
+    letter-spacing: 0;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: 1.2em;
+    top: .2em;
+    width: 100%;
+
+    span {
+      display: block;
+      margin-left: 1.2em;
+      margin-bottom: 1em;
+    }
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    margin: 0;
+  }
+}
+.opinion-body__arguments-list {
+  label {
+    margin-bottom: .5em;
+  }
+}

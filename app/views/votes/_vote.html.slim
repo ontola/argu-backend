@@ -7,3 +7,5 @@
     .opinion-body__arguments-list
       -model.upvoted_arguments.where(pro: false).each do |argument|
         label.con-t= argument.display_name
+  section.section--footer
+    =render partial: model.creator, locals: {resource: model}

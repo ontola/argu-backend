@@ -41,7 +41,7 @@ module Edgeable
     end
 
     def parent_edge(type = nil)
-      type.nil? ? edge.parent : edge.get_parent(type)
+      type.nil? ? edge&.parent : edge&.get_parent(type)
     end
 
     def save_linked_record

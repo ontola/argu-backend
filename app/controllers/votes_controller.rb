@@ -46,7 +46,7 @@ class VotesController < AuthorizedController
                  locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
         end
         format.json_api { head 304 }
-        format.js { head :not_modified }
+        format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
         format.html do
           if params[:vote].try(:[], :r).present?
             redirect_to redirect_param
@@ -151,6 +151,13 @@ class VotesController < AuthorizedController
 
   def get_parent_resource
     @parent_resource ||= super.try(:default_vote_event) || super
+  end
+
+  def handle_record_not_found(exception)
+    return super unless action_name == 'destroy' && request.format.js?
+    render 'destroy', locals: {
+      vote: Edge.new(owner: Vote.new, parent: Activity.find_by(trackable_id: params[:id]).recipient.edge).owner
+    }
   end
 
   def unmodified?

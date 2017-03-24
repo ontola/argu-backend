@@ -30,11 +30,6 @@ class MotionsController < AuthorizedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @arguments = Argument.ordered(
-      policy_scope(authenticated_resource.arguments.show_trashed(show_trashed?).includes(:votes)),
-      pro: show_params[:page_arg_pro],
-      con: show_params[:page_arg_con]
-    )
     unless current_user.guest?
       @vote = Vote.where(
         voteable_id: authenticated_resource.id,
@@ -50,7 +45,17 @@ class MotionsController < AuthorizedController
     authenticated_resource.current_vote = @vote
 
     respond_to do |format|
-      format.html { render locals: {motion: authenticated_resource} }
+      format.html do
+        @arguments = Argument.ordered(
+          policy_scope(authenticated_resource.arguments.show_trashed(show_trashed?).includes(:votes)),
+          pro: show_params[:page_arg_pro],
+          con: show_params[:page_arg_con]
+        )
+        @votes = policy_scope(authenticated_resource.votes.where('explanation IS NOT NULL AND explanation != \'\''))
+                   .order(created_at: :desc)
+                   .page(params[:page_opinions])
+        render locals: {motion: authenticated_resource}
+      end
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
       format.json_api do

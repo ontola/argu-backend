@@ -1,7 +1,9 @@
 import React from 'react';
 import { VoteButtons } from '../components/Vote';
+import OpinionMixin from '../mixins/OpinionMixin';
 import VoteMixin from '../mixins/VoteMixin';
 import { IntlMixin } from 'react-intl';
+import { OpinionContainer } from '../components/Opinions';
 
 /**
  * Component that displays current vote options.
@@ -13,32 +15,61 @@ import { IntlMixin } from 'react-intl';
 export const SmallVoteContainer = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
+        arguments: React.PropTypes.array,
         buttonsType: React.PropTypes.string,
         closed: React.PropTypes.bool,
+        currentExplanation: React.PropTypes.object,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
         r: React.PropTypes.string,
+        selectedArguments: React.PropTypes.array,
         vote_url: React.PropTypes.string
     },
 
-    mixins: [IntlMixin, VoteMixin],
+    mixins: [IntlMixin, OpinionMixin, VoteMixin],
 
     getInitialState () {
         return {
             actor: this.props.actor || null,
             objectType: this.props.objectType,
             objectId: this.props.objectId,
+            currentExplanation: this.props.currentExplanation,
             currentVote: this.props.currentVote,
             distribution: this.props.distribution,
-            percent: this.props.percent
+            newExplanation: this.props.currentExplanation.explanation,
+            newSelectedArguments: this.props.selectedArguments,
+            opinionForm: false,
+            percent: this.props.percent,
+            selectedArguments: this.props.selectedArguments
         };
     },
 
     render () {
-        return (<VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler} />);
+        let opinionContainer;
+        if (this.state.currentVote !== 'abstain') {
+            opinionContainer = <OpinionContainer actor={this.props.actor}
+                                                 arguments={this.props.arguments}
+                                                 currentExplanation={this.state.currentExplanation}
+                                                 currentVote={this.state.currentVote}
+                                                 newExplanation={this.state.newExplanation}
+                                                 newSelectedArguments={this.state.newSelectedArguments}
+                                                 onArgumentChange={this.argumentChangeHandler}
+                                                 onCloseOpinionForm={this.closeOpinionFormHandler}
+                                                 onExplanationChange={this.explanationChangeHandler}
+                                                 onOpenOpinionForm={this.openOpinionFormHandler}
+                                                 onSubmit={this.opinionHandler}
+                                                 opinionForm={this.state.opinionForm}
+                                                 selectedArguments={this.state.selectedArguments}/>;
+        }
+        return (
+            <div>
+                <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler} />
+                {opinionContainer}
+            </div>
+        );
     }
 });
 

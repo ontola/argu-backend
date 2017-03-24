@@ -31,4 +31,4 @@
 export_i18n_js: false
 translations:
 - file: "translations.js"
-  only: ['*.intro', '*.votes', '*.tokens']
+  only: ['*.intro', '*.votes', '*.tokens', '*.opinions']

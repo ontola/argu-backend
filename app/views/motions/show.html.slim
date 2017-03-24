@@ -31,3 +31,10 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                                   buttons_text: {pro: t('add_type', type: argument_type).capitalize, con: t('add_type', type: argument_type).capitalize},
                                   header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize},
                                   show_new_buttons: policy(motion).create_child?(:arguments).present?)
+.opinion-columns
+  div.col-1
+    header
+        h2= t('opinions.plural')
+    - @votes.each do |vote|
+      =render 'votes/vote', model: vote
+    =paginate @votes, param_name: :page_opinions

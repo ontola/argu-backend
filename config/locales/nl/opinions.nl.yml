@@ -1,0 +1,8 @@
+nl:
+  opinions:
+    plural: "Meningen"
+    form:
+      header: "Bedankt voor je stem. Wil je jouw mening toelichten?"
+      arguments: "Welke argumenten vind jij belangrijk?"
+      edit: "Aanpassen"
+      submit: "Opslaan"

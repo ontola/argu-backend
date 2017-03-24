@@ -1,11 +1,10 @@
-/*globals Bugsnag*/
-import Alert from '../components/Alert';
 import React from 'react';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
 import { VoteButtons, VoteResults } from '../components/Vote';
+import OpinionMixin from '../mixins/OpinionMixin';
 import VoteMixin from '../mixins/VoteMixin';
 import { IntlMixin } from 'react-intl';
+import { OpinionContainer } from '../components/Opinions';
 
 /**
  * Component that displays current vote options based on whether the user is member of a group.
@@ -19,27 +18,33 @@ import { IntlMixin } from 'react-intl';
 export const BigVoteContainer = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
+        arguments: React.PropTypes.array,
         closed: React.PropTypes.bool,
+        currentExplanation: React.PropTypes.object,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
-        groups: React.PropTypes.array,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
+        selectedArguments: React.PropTypes.array,
         vote_url: React.PropTypes.string
     },
 
-    mixins: [IntlMixin, VoteMixin],
+    mixins: [IntlMixin, OpinionMixin, VoteMixin],
 
     getInitialState () {
         return {
             actor: this.props.actor || null,
-            groups: this.props.groups,
             objectType: this.props.objectType,
             objectId: this.props.objectId,
+            currentExplanation: this.props.currentExplanation,
             currentVote: this.props.currentVote,
             distribution: this.props.distribution,
-            percent: this.props.percent
+            newExplanation: this.props.currentExplanation.explanation,
+            newSelectedArguments: this.props.selectedArguments,
+            opinionForm: false,
+            percent: this.props.percent,
+            selectedArguments: this.props.selectedArguments
         };
     },
 
@@ -51,34 +56,33 @@ export const BigVoteContainer = React.createClass({
         this.unsubscribe();
     },
 
-    refreshGroups () {
-        fetch(`${this.state.objectId}.json`, safeCredentials())
-                .then(statusSuccess)
-                .then(json)
-                .then(data => {
-                    this.setState({ groups: data.groups });
-                }).catch(e => {
-                    Alert('Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
-                    Bugsnag.notifyException(e);
-                });
-    },
-
-    setVote (vote) {
-        this.setState(vote);
-    },
-
     render () {
-        let voteButtonsComponent, voteResultsComponent;
+        let voteButtonsComponent, voteResultsComponent, opinionContainer;
         if (!this.state.actor || this.state.actor.actor_type === 'User' || this.state.actor.actor_type === 'GuestUser') {
             voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
             voteResultsComponent = <VoteResults {...this.state} showResults={this.props.closed || this.state.currentVote !== 'abstain'}/>;
         } else if (this.state.actor.actor_type === 'Page') {
             voteResultsComponent = <VoteResults {...this.state} {...this.props} showResults={true}/>;
         }
-
+        if (this.state.currentVote !== 'abstain') {
+            opinionContainer = <OpinionContainer actor={this.props.actor}
+                                                 arguments={this.props.arguments}
+                                                 currentExplanation={this.state.currentExplanation}
+                                                 currentVote={this.state.currentVote}
+                                                 newExplanation={this.state.newExplanation}
+                                                 newSelectedArguments={this.state.newSelectedArguments}
+                                                 onArgumentChange={this.argumentChangeHandler}
+                                                 onCloseOpinionForm={this.closeOpinionFormHandler}
+                                                 onExplanationChange={this.explanationChangeHandler}
+                                                 onOpenOpinionForm={this.openOpinionFormHandler}
+                                                 onSubmit={this.opinionHandler}
+                                                 opinionForm={this.state.opinionForm}
+                                                 selectedArguments={this.state.selectedArguments}/>;
+        }
         return (
                 <div className="center motion-shr">
                     {voteButtonsComponent}
+                    {opinionContainer}
                     {voteResultsComponent}
                 </div>
         );
