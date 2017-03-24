@@ -33,6 +33,7 @@ class StaticPagesController < ApplicationController
     if current_user.profile.has_role?(:staff)
       @activities = policy_scope(Activity)
                       .loggings
+                      .where('activities.forum_id IN (?)', current_user.favorite_forum_ids)
                       .where('trackable_type != ?', 'Banner')
                       .order(created_at: :desc)
                       .limit(10)
