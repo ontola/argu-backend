@@ -384,7 +384,7 @@ GEM
       connection_pool (~> 2.2)
     netrc (0.11.0)
     nio4r (2.0.0)
-    nokogiri (1.7.0.1)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     oauth (0.5.1)
     oauth2 (1.2.0)
@@ -723,7 +723,7 @@ DEPENDENCIES
   minitest-reporters (~> 1.1.8)
   mocha
   multimap!
-  nokogiri (~> 1.7.0.1)
+  nokogiri (~> 1.7.1)
   oauth2 (~> 1.2.0)
   omniauth (~> 1.6.1)
   omniauth-facebook (~> 4.0.0)!
