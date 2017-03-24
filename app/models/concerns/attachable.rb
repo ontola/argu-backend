@@ -3,6 +3,7 @@ module Attachable
   extend ActiveSupport::Concern
 
   included do
+    has_many :media_objects, as: :about, inverse_of: :about, dependent: :destroy
     has_many :attachments,
              -> { where(used_as: MediaObject.used_as[:attachment]) },
              class_name: 'MediaObject',

@@ -21,11 +21,15 @@ class CreateBlogPost < PublishedCreateService
   end
 
   def object_attributes=(obj)
-    return unless obj.is_a? Activity
-    obj.created_at || DateTime.current
     obj.forum ||= resource.forum
-    obj.owner ||= resource.creator
-    obj.key ||= 'blog_post.happened'
-    obj.recipient ||= resource.parent_model
+    if obj.is_a?(Activity)
+      obj.created_at || DateTime.current
+      obj.owner ||= resource.creator
+      obj.key ||= 'blog_post.happened'
+      obj.recipient ||= resource.parent_model
+    else
+      obj.creator ||= resource.creator
+      obj.publisher ||= resource.publisher if obj.respond_to?(:publisher)
+    end
   end
 end
