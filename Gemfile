@@ -81,7 +81,7 @@ gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'carrierwave-vips', '~> 1.0.5'
+gem 'carrierwave-vips', '~> 1.1.3'
 # gem 'rmagick', '2.14.0'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
