@@ -10,8 +10,10 @@ module Oauth
     def create
       return super unless argu_request?
       r = r_with_authenticity_token(params.dig(:user, :r) || '')
+      remember_me = params[:user].try(:[], :remember_me) || params[:remember_me]
       response = authorize_response
       cookies.encrypted['argu_client_token'] = {
+        expires: %w(1 true).include?(remember_me) ? response.token.created_at + response.token.expires_in : nil,
         value: response.token.token,
         secure: Rails.env.production?,
         httponly: true,

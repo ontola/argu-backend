@@ -57,6 +57,31 @@ class OauthTest < ActionDispatch::IntegrationTest
            }
     end
 
+    assert_nil parsed_cookies['expires']
+    at = Doorkeeper::AccessToken.last
+    assert_equal %w(user), at.scopes.to_a
+    assert_equal user.id, at.resource_owner_id.to_i
+    assert response.cookies['argu_client_token'].present?
+
+    assert_redirected_to root_path
+  end
+
+  test 'user should login with password grant with remember me' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           params: {
+             username: user.email,
+             password: user.password,
+             grant_type: 'password',
+             remember_me: 'true',
+             scope: 'user'
+           },
+           headers: {
+             HTTP_HOST: 'argu.co'
+           }
+    end
+
+    assert_not_nil parsed_cookies['expires']
     at = Doorkeeper::AccessToken.last
     assert_equal %w(user), at.scopes.to_a
     assert_equal user.id, at.resource_owner_id.to_i
@@ -116,5 +141,17 @@ class OauthTest < ActionDispatch::IntegrationTest
     assert_equal 1_209_600, parsed_body['expires_in']
     assert_equal 'user', parsed_body['scope']
     assert_equal 'bearer', parsed_body['token_type']
+  end
+
+  private
+
+  def parsed_cookies
+    return @parsed_cookies if @parsed_cookies.present?
+    kv_pairs = response.header['Set-Cookie'].split(/\s*;\s*/).map do |attr|
+      k, v = attr.split '='
+      [k, v || nil]
+    end
+
+    @parsed_cookies = Hash[kv_pairs]
   end
 end
