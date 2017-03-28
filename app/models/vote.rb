@@ -32,6 +32,7 @@ class Vote < ApplicationRecord
 
   def upvoted_arguments
     @upvoted_arguments ||= Argument
+                             .untrashed
                              .joins(:votes, :edge)
                              .where(votes: {creator: creator}, edges: {parent_id: parent_model&.edge&.parent_id})
   end

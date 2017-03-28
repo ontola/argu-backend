@@ -248,11 +248,18 @@
   }
 }
 
-.box-list-item--subtle a {
+.box-list-item--subtle a, .box-list-item a {
   color: $g3;
   margin-bottom: 1em;
   display: block;
   @include transition(.2s color);
+}
+
+.no-touch .box-list-item a{
+  color: $g2;
+  &:hover {
+    color: $g4;
+  }
 }
 
 .no-touch .box-list-item--subtle a {

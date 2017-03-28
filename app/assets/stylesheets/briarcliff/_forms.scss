@@ -207,17 +207,17 @@ li.form-helper {
   label.checked {
     text-decoration: underline;
   }
-  label[for="argument_pro_con"]{
+  label[for="argument_pro_con"], label.argument-con{
     color: $red;
   }
-  label[for="argument_pro_con"].checked{
+  label[for="argument_pro_con"].checked, label.argument-con.checked{
     background-color: $red;
     color: white;
   }
-  label[for="argument_pro_pro"]{
+  label[for="argument_pro_pro"], label.argument-pro{
     color: $gre;
   }
-  label[for="argument_pro_pro"].checked{
+  label[for="argument_pro_pro"].checked, label.argument-pro.checked{
     background-color: $gre;
     color: white;
   }
@@ -361,6 +361,7 @@ p.inline-hints {
 
   li {
     margin: 0;
+    display: inline-block;
   }
 }
 

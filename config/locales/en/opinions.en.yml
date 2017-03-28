@@ -5,4 +5,5 @@ en:
       header: "Thanks for your vote. Would you like to comment on your opinion?"
       arguments: "Which arguments are important to you?"
       edit: "Edit"
+      cancel: "Cancel"
       submit: "Save"

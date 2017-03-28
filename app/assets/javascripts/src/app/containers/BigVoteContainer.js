@@ -18,11 +18,13 @@ import { OpinionContainer } from '../components/Opinions';
 export const BigVoteContainer = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
+        argumentUrl: React.PropTypes.string,
         arguments: React.PropTypes.array,
         closed: React.PropTypes.bool,
         currentExplanation: React.PropTypes.object,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
+        newArgumentButtons: React.PropTypes.bool,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
@@ -35,6 +37,13 @@ export const BigVoteContainer = React.createClass({
     getInitialState () {
         return {
             actor: this.props.actor || null,
+            argumentForm: false,
+            arguments: this.props.arguments,
+            createArgument: {
+                side: undefined,
+                title: '',
+                body: ''
+            },
             objectType: this.props.objectType,
             objectId: this.props.objectId,
             currentExplanation: this.props.currentExplanation,
@@ -66,16 +75,24 @@ export const BigVoteContainer = React.createClass({
         }
         if (this.state.currentVote !== 'abstain') {
             opinionContainer = <OpinionContainer actor={this.props.actor}
-                                                 arguments={this.props.arguments}
+                                                 argumentUrl={this.props.argumentUrl}
+                                                 argumentForm={this.state.argumentForm}
+                                                 arguments={this.state.arguments}
+                                                 createArgument={this.state.createArgument}
                                                  currentExplanation={this.state.currentExplanation}
                                                  currentVote={this.state.currentVote}
+                                                 newArgumentButtons={this.props.newArgumentButtons}
                                                  newExplanation={this.state.newExplanation}
                                                  newSelectedArguments={this.state.newSelectedArguments}
                                                  onArgumentChange={this.argumentChangeHandler}
+                                                 onArgumentSelectionChange={this.argumentSelectionChangeHandler}
+                                                 onCloseArgumentForm={this.closeArgumentFormHandler}
                                                  onCloseOpinionForm={this.closeOpinionFormHandler}
                                                  onExplanationChange={this.explanationChangeHandler}
+                                                 onOpenArgumentForm={this.openArgumentFormHandler}
                                                  onOpenOpinionForm={this.openOpinionFormHandler}
-                                                 onSubmit={this.opinionHandler}
+                                                 onSubmitArgument={this.argumentHandler}
+                                                 onSubmitOpinion={this.opinionHandler}
                                                  opinionForm={this.state.opinionForm}
                                                  selectedArguments={this.state.selectedArguments}/>;
         }

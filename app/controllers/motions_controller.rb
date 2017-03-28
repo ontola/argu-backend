@@ -51,7 +51,7 @@ class MotionsController < AuthorizedController
           pro: show_params[:page_arg_pro],
           con: show_params[:page_arg_con]
         )
-        @votes = policy_scope(authenticated_resource.votes.where('explanation IS NOT NULL AND explanation != \'\''))
+        @votes = authenticated_resource.votes.where('explanation IS NOT NULL AND explanation != \'\'')
                    .order(created_at: :desc)
                    .page(params[:page_opinions])
         render locals: {motion: authenticated_resource}

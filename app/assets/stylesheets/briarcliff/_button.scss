@@ -102,6 +102,19 @@
   }
 }
 
+.formtastic button.btn--transparant {
+  background-color: rgba(0,0,0,0);
+  color: $g3;
+  border-top: none;
+  border-bottom: none;
+  &:hover, &:focus, &:active {
+    font-weight: bold;
+    background-color: rgba(0,0,0,0);
+    border-top: none;
+    border-bottom: none;
+  }
+}
+
 .btn--g4 {
   @include button($g4);
 }

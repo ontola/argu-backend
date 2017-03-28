@@ -25,12 +25,14 @@ module MotionsHelper
     end
     localized_react_component({
       actor: actor_props(actor),
+      argumentUrl: motion_arguments_path(motion),
       arguments: arguments,
       buttonsType: opts.fetch(:buttons_type, 'big'),
       currentVote: vote.try(:for) || 'abstain',
       currentExplanation: {explanation: vote&.explanation, explained_at: vote&.explained_at},
       closed: motion.edge.has_expired_ancestors?,
       distribution: motion_vote_counts(motion),
+      newArgumentButtons: policy(motion).create_child?(:arguments).present?,
       objectId: motion.id,
       objectType: 'motion',
       percent: {
