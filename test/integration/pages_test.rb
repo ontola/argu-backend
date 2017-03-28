@@ -90,16 +90,12 @@ class PagesTest < ActionDispatch::IntegrationTest
     get page_path(page)
 
     assert_response 200
-
-    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } },
-           'Votes of closed fora are visible to non-members'
   end
 
   test 'guest should not get show when not public' do
     get page_path(page_non_public)
 
     assert_response 403
-    assert_nil assigns(:collection)
   end
 
   ####################################
@@ -166,32 +162,11 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_not_nil assigns(:profile)
-    assert_not_nil assigns(:collection)
-
-    memberships = assigns(:current_profile).granted_record_ids('Forums')
-    assert assigns(:collection)
-      .values
-      .all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
-           'Votes of closed fora are visible to non-members'
   end
 
   define_freetown('amsterdam')
   define_freetown('utrecht')
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }
-
-  test 'user should not show all votes' do
-    initialize_user2_votes
-    sign_in user2
-
-    get page_path(utrecht.page)
-    assert_response 200
-    assert assigns(:collection)
-
-    assert_not assigns(:collection)[:con][:collection].any?, 'all votes are shown'
-    assert_equal utrecht.page.profile.votes_questions_motions.length,
-                 assigns(:collection).values.map { |i| i[:collection].length }.inject(&:+),
-                 'Not all/too many votes are shown'
-  end
 
   test 'user should not get settings when not page owner' do
     sign_in user
@@ -366,16 +341,5 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
     assert_equal 2, assigns(:page).profile.media_objects.count
-  end
-
-  private
-
-  def initialize_user2_votes
-    motion1 = create(:motion, parent: utrecht.edge)
-    motion3 = create(:motion, parent: amsterdam.edge, creator: user2.profile)
-    argument1 = create(:argument, parent: motion1.edge)
-    create(:vote, parent: motion1.default_vote_event.edge, for: :neutral)
-    create(:vote, parent: motion3.default_vote_event.edge, for: :pro)
-    create(:vote, parent: argument1.edge, for: :neutral)
   end
 end

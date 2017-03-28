@@ -24,7 +24,6 @@ RSpec.feature 'Login', type: :feature do
 
   scenario 'User logs in from a profile' do
     visit(user_path(user))
-    expect(page).to have_content('Neutral')
     click_link('sign_in')
     expect do
       within('#new_user') do

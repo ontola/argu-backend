@@ -7,8 +7,6 @@ class UsersController < ApplicationController
     @profile = @user.profile
     authorize @user, :show?
 
-    @collection = Vote.ordered(policy_scope(@profile.votes.order(created_at: :desc)))
-
     respond_to do |format|
       format.html do
         if (/[a-zA-Z]/i =~ params[:id]).nil?

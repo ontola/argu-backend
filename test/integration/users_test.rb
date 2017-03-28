@@ -23,24 +23,15 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not get show non public' do
-    get user_path(initialize_votes(user_non_public))
+    get user_path(user_non_public)
 
     assert_response 403
-    assert_show_no_votes(user_non_public)
   end
 
   test 'guest should get show public' do
-    get user_path(initialize_votes(user_public))
+    get user_path(user_public)
 
     assert_response 200
-
-    assert_show_visible_votes(user_public)
-  end
-
-  test 'guest should get show hidden' do
-    get user_path(initialize_votes(user_hidden_votes))
-    assert_response 200
-    assert_show_no_votes(user_hidden_votes)
   end
 
   ####################################
@@ -57,48 +48,25 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should get show non public' do
     sign_in user
 
-    get user_path(initialize_votes(user_non_public))
+    get user_path(user_non_public)
 
-    assert_show_visible_votes(user_non_public)
+    assert_response 200
   end
 
   test 'user should get show public' do
     sign_in user
 
-    get user_path(initialize_votes(user_public))
+    get user_path(user_public)
 
     assert_response 200
-    assert_show_visible_votes(user_public)
-  end
-
-  test 'user should get show hidden' do
-    sign_in user
-
-    get user_path(initialize_votes(user_hidden_votes))
-    assert_response 200
-    assert_show_no_votes(user_hidden_votes)
   end
 
   test 'user should show votes own profile' do
     sign_in user_hidden_votes
 
-    get user_path(initialize_votes(user_hidden_votes))
-    assert_response 200
-    assert_show_all_untrashed_votes(user_hidden_votes)
-  end
-
-  ####################################
-  # Show as Member
-  ####################################
-  let(:member) { create_member(cairo) }
-
-  test 'member should get show public' do
-    sign_in member
-
-    get user_path(initialize_votes(user_public))
+    get user_path(user_hidden_votes)
 
     assert_response 200
-    assert_show_all_untrashed_votes(user_public)
   end
 
   ####################################
@@ -509,41 +477,6 @@ class UsersTest < ActionDispatch::IntegrationTest
 
   private
 
-  def assert_show_no_votes(user)
-    assert user.profile.votes.any? { |v| !v.forum.open? }
-    assert user.profile.votes.any? { |v| v.parent_model.voteable.is_trashed? }
-    %i(pro neutral con).each do |side|
-      assert assigns(:collection)[side][:collection].empty? if assigns(:collection).try(:[], side).present?
-    end
-  end
-
-  def assert_show_all_untrashed_votes(user)
-    assert user.profile.votes.any? { |v| !v.forum.open? }
-    assert user.profile.votes.any? { |v| v.parent_model.voteable.is_trashed? }
-    %i(pro neutral con).each do |side|
-      assert assigns(:collection)[side][:collection].all? { |v| !v.parent_model.voteable.is_trashed? }
-    end
-
-    expected_votes = user_public
-                       .profile
-                       .votes
-                       .select { |v| !v.parent_model.voteable.is_trashed? && v.voteable_type == 'Motion' }
-                       .pluck(:id)
-    selected_votes = %i(pro neutral con).map { |side| assigns(:collection)[side][:collection].map(&:id) }.flatten
-    assert_empty expected_votes - selected_votes
-  end
-
-  def assert_show_visible_votes(user)
-    assert user.profile.votes.any? { |v| !v.forum.open? }
-    assert user.profile.votes.any? { |v| v.parent_model.voteable.is_trashed? }
-    %i(pro neutral con).each do |side|
-      assert assigns(:collection)[side][:collection].all? do |v|
-        v.forum.open? && !v.parent_model.voteable.is_trashed?
-      end
-    end
-    %i(pro neutral con).map { |side| assigns(:collection)[side][:collection].map(&:id) }.flatten.present?
-  end
-
   # Asserts that the user settings are shown on a specific tab
   # @param [Symbol] tab The tab to be shown (defaults to :general)
   def assert_user_settings_shown(tab = :general)
@@ -551,22 +484,5 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body,
                     '.settings-tabs .tab--current .icon-left',
                     tab.to_s.capitalize
-  end
-
-  def initialize_votes(user)
-    public_motion = create(:motion, parent: freetown.edge)
-    create(:vote, for: :neutral, parent: public_motion.default_vote_event.edge, creator: user.profile, publisher: user)
-    argument = create(:argument, parent: public_motion.edge)
-    create(:vote, for: :neutral, parent: argument.edge, creator: user.profile, publisher: user)
-
-    closed_motion = create(:motion, parent: cairo.edge, creator: user.profile)
-    create(:vote, for: :pro, parent: closed_motion.default_vote_event.edge, creator: user.profile, publisher: user)
-
-    trashed_motion = create(:motion,
-                            parent: freetown.edge,
-                            creator: user.profile,
-                            edge_attributes: {trashed_at: DateTime.current})
-    create(:vote, for: :pro, parent: trashed_motion.default_vote_event.edge, creator: user.profile, publisher: user)
-    user
   end
 end

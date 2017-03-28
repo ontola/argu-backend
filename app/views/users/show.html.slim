@@ -5,14 +5,3 @@
                image: @profile.default_profile_photo
 =render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
 =render partial: 'profiles/show', locals: {resource: @profile}
-.boxes-list[data-intro= t('intro.profile.votes') data-position="top"]
-  - if policy(@profile).index_votes?
-    - if @profile.votes.count > 0
-      .col-1
-        - if current_user == @user && !@profile.are_votes_public?
-          span.fa.fa-lock
-          span.icon-left= t('profiles.votes_are_private')
-        .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
-      =render_columns(@collection, collection_model: Vote)
-    - else
-      h2.center= t('profiles.didnt_vote_name', name: @profile.display_name)
