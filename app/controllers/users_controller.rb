@@ -53,10 +53,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(current_user.id)
     authorize @user
-
+    email_changed = email_changed?
     respond_to do |format|
       if update_user
-        notice = if email_changed?
+        notice = if email_changed
                    t('users.registrations.confirm_mail_change_notice')
                  else
                    t('type_save_success', type: t('type_changes'))
@@ -183,11 +183,9 @@ class UsersController < ApplicationController
 
   def email_changed?
     return unless permit_params[:emails_attributes].present?
-    @email_changed ||= permit_params[:emails_attributes].any? do |email|
+    permit_params[:emails_attributes].any? do |email|
       email.second['id'].nil? ||
-        email.second['_destroy'] == '1' ||
-        email.second['_destroy'] == 'true' ||
-        @user.emails.find(email.second['id']).email != email.second['email']
+        email.second['email'].present? && @user.emails.find(email.second['id']).email != email.second['email']
     end
   end
 
@@ -228,7 +226,9 @@ class UsersController < ApplicationController
   end
 
   def update_user
-    if email_changed? || params[:user][:primary_email].present? || permit_params[:password].present?
+    if permit_params[:emails_attributes].present? ||
+        params[:user][:primary_email].present? ||
+        permit_params[:password].present?
       bypass_sign_in(@user) if @user.update_with_password(permit_params)
     else
       @user.update_without_password(passwordless_permit_params)
