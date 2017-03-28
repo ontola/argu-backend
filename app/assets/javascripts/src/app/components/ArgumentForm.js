@@ -3,7 +3,7 @@ import I18n from 'i18n-js';
 
 export const ArgumentForm = props => {
     return (
-        <form className="formtastic formtastic--full-width" onSubmit={props.onSubmitArgument}>
+        <form className="formtastic formtastic--full-width argument-form" onSubmit={props.onSubmitArgument}>
             <div className="box">
                 <section>
                     <div className="box form-toggle">
@@ -31,12 +31,14 @@ export const ArgumentForm = props => {
                         autoFocus
                         className="form-input-content"
                         data-field="title"
+                        name="argument-title"
                         onChange={props.onArgumentChange}
                         value={props.createArgument.title}/>
                     <label>{I18n.t('arguments.form.content_heading')}</label>
                     <textarea
                         className="form-input-content"
                         data-field="body"
+                        name="argument-body"
                         onChange={props.onArgumentChange}
                         value={props.createArgument.body}/>
                 </section>

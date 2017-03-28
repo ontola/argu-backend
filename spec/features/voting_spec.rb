@@ -58,6 +58,7 @@ RSpec.feature 'Voting', type: :feature do
     sign_in(user)
 
     visit motion_path(motion)
+    expect(page).not_to have_content('Opinions')
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
@@ -65,29 +66,43 @@ RSpec.feature 'Voting', type: :feature do
     click_link('Info')
     find('span span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
+    expect(page).to have_css('.opinion-form')
+
+    within('.opinion-form') do
+      fill_in 'opinion-body', with: 'This is my opinion'
+
+      find('.opinion-form__arguments-selector .box-list-item span', text: 'Add pro').click
+
+      within('.argument-form') do
+        fill_in 'argument-title', with: 'New argument'
+        fill_in 'argument-body', with: 'Argument body'
+        click_button 'Save'
+      end
+      expect(page).to have_content('Thanks for your vote')
+      click_button 'Save'
+    end
+    expect(page).not_to have_content('Thanks for your vote')
 
     visit motion_path(motion)
-    expect(page).to have_css('.btn-con[data-voted-on=true]')
-  end
+    expect(page).to have_content('Opinions')
+    within('.opinion-columns') do
+      expect(page).to have_content('This is my opinion')
+      expect(page).to have_content('New argument')
+    end
 
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(freetown) }
-
-  scenario 'Member should vote on a motion' do
-    sign_in(member)
-
-    visit motion_path(motion)
-    expect(page).to have_content(motion.content)
-
-    expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    # Click a random dropdown to prevent the follow dropdown from interfering
-    click_link('Info')
-    find('span span', text: 'Disagree').click
-    expect(page).to have_css('.btn-con[data-voted-on=true]')
+    within('.opinion-form') do
+      find('span.icon-left', text: 'Edit').click
+      expect(page).to have_content('Thanks for your vote')
+      find('label.pro-t').click
+      click_button 'Save'
+    end
+    expect(page).not_to have_content('Thanks for your vote')
 
     visit motion_path(motion)
-    expect(page).to have_css('.btn-con[data-voted-on=true]')
+    expect(page).to have_content('Opinions')
+    within('.opinion-columns') do
+      expect(page).to have_content('This is my opinion')
+      expect(page).not_to have_content('New argument')
+    end
   end
 end

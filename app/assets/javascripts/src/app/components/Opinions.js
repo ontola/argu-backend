@@ -61,6 +61,7 @@ const OpinionAdd = props => {
                         <label>{I18n.t('opinions.form.header')}</label>
                         <div>
                                 <textarea
+                                    name="opinion-body"
                                     className="form-input-content"
                                     onClick={onOpenOpinionForm}
                                     value={newExplanation}/>
@@ -158,6 +159,7 @@ export const OpinionForm = React.createClass({
                             <label>{I18n.t('opinions.form.header')}</label>
                             <div>
                                 <textarea
+                                    name="opinion-body"
                                     autoFocus
                                     className="form-input-content"
                                     onChange={onExplanationChange}
