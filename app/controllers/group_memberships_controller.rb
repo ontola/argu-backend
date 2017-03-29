@@ -21,7 +21,7 @@ class GroupMembershipsController < AuthorizedController
         .references(:groups, :users)
     )
 
-    render json: @results, include: %i(group user)
+    render json: @results, include: [:group, user: :profile_photo]
   end
 
   def new

@@ -150,7 +150,7 @@ export const ActorSelect = React.createClass({
                                 const pAttrs = data
                                     .included
                                     .find(obj => {
-                                        return obj.type === 'photos' &&
+                                        return obj.type === 'schema:ImageObject' &&
                                             obj.id === user.relationships.profilePhoto.data.id;
                                     })
                                     .attributes;
