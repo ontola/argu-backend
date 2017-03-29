@@ -1,3 +1,24 @@
+@import "variables";
+
+.opinion-icon {
+  position: absolute;
+  top: -.6em;
+  left: -.6em;
+  z-index: 1;
+  border-radius: 100%;
+  padding: .5em;
+  width: 2em;
+  color: white;
+}
+.opinion-icon-pro {
+  background-color: $gre;
+}
+.opinion-icon-neutral {
+  background-color: $g3;
+}
+.opinion-icon-con {
+  background-color: $red;
+}
 .opinion-form, .opinion-body {
   position: relative;
   text-align: left;

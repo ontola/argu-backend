@@ -13,4 +13,15 @@ module VotesHelper
       yield
     end
   end
+
+  def icon_for_side(side)
+    case side
+    when 'pro'
+      'thumbs-up'
+    when 'neutral'
+      'pause'
+    when 'con'
+      'thumbs-down'
+    end
+  end
 end

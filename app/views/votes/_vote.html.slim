@@ -1,11 +1,13 @@
-.box.opinion-body
-  section
-    =render partial: 'application/markdown_collapsible', locals: {content: model.explanation, identifier: model.identifier, character_length: 350}
-    .opinion-body__arguments-list
-      -model.upvoted_arguments.where(pro: true).each do |argument|
-        label.pro-t= argument.display_name
-    .opinion-body__arguments-list
-      -model.upvoted_arguments.where(pro: false).each do |argument|
-        label.con-t= argument.display_name
-  section.section--footer
-    =render partial: model.creator, locals: {resource: model}
+.opinion-body
+  span[class="fa fa-#{icon_for_side(model.for)} opinion-icon opinion-icon-#{model.for}"]
+  .box
+    section
+      =render partial: 'application/markdown_collapsible', locals: {content: model.explanation, identifier: model.identifier, character_length: 350}
+      .opinion-body__arguments-list
+        -model.upvoted_arguments.where(pro: true).each do |argument|
+          label.pro-t= argument.display_name
+      .opinion-body__arguments-list
+        -model.upvoted_arguments.where(pro: false).each do |argument|
+          label.con-t= argument.display_name
+    section.section--footer
+      =render partial: model.creator, locals: {resource: model}
