@@ -47,6 +47,13 @@ class Activity < PublicActivity::Activity
     "#{self.class.name.tableize}_#{id}"
   end
 
+  def self.feed_for(user)
+    Activity
+      .loggings
+      .where('activities.forum_id IN (?)', user.favorite_forum_ids)
+      .where('trackable_type != ?', 'Banner')
+  end
+
   # Used to find followers for the notifications generated for this activity and to set the type of these notifications
   # @note See Follow.follow_types, Publication.follow_types and Notification.notification_types
   # @return [String] The follow type

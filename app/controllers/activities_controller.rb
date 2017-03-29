@@ -10,8 +10,7 @@ class ActivitiesController < ApplicationController
     end
 
     activities = Activity.arel_table
-    @activities = policy_scope(Activity)
-                    .where('activities.forum_id IN (?)', current_user.profile.forum_ids)
+    @activities = policy_scope(Activity.feed_for(current_user))
                     .where(activities[:created_at].lt(from_time))
                     .order(activities[:created_at].desc)
                     .limit(10)

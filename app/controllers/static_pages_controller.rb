@@ -31,10 +31,7 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_page
     if current_user.profile.has_role?(:staff)
-      @activities = policy_scope(Activity)
-                      .loggings
-                      .where('activities.forum_id IN (?)', current_user.favorite_forum_ids)
-                      .where('trackable_type != ?', 'Banner')
+      @activities = policy_scope(Activity.feed_for(current_user))
                       .order(created_at: :desc)
                       .limit(10)
       @user_votes = Vote.where(voteable_id: @activities.where(trackable_type: 'Motion').pluck(:trackable_id),
