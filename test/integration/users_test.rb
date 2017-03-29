@@ -293,6 +293,68 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal second_email.email, 'second@argu.co'
   end
 
+  ##########################################
+  # Wrong email after following email token
+  ##########################################
+  test 'user with correct email should redirect to r on wrong_email' do
+    sign_in user
+
+    assert_no_difference('Email.count') do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '99999' => {email: user.email}
+              },
+              form: 'wrong_email',
+              r: argu_url('/tokens/email/xxx')
+            }
+          }
+    end
+
+    assert_redirected_to argu_url('/tokens/email/xxx')
+  end
+
+  test 'user with other email should redirect to r on wrong_email' do
+    sign_in user
+
+    assert_difference('Email.count') do
+      put user_path(user),
+          params: {
+            user: {
+              emails_attributes: {
+                '99999' => {email: 'new@email.com'}
+              },
+              form: 'wrong_email',
+              r: argu_url('/tokens/email/xxx')
+            }
+          }
+    end
+
+    assert_redirected_to argu_url('/tokens/email/xxx')
+  end
+
+  test 'user should not add email of other account on wrong_email' do
+    sign_in user_public
+    user
+
+    assert_no_difference('Email.count') do
+      put user_path(user_public),
+          params: {
+            user: {
+              emails_attributes: {
+                '99999' => {email: user.email}
+              },
+              form: 'wrong_email',
+              r: argu_url('/tokens/email/xxx')
+            }
+          }
+    end
+
+    assert_select '.account-exists', "An account for #{user.email} already exists. "\
+                                     'Log out and log in with this other account to accept the invitation.'
+  end
+
   ####################################
   # Settings and Update
   ####################################

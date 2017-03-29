@@ -3,5 +3,23 @@ header
 .col-1
   .box
     section
-      p= t('users.wrong_email.description')
-      p=link_to t('users.wrong_email.switch'), destroy_user_session_path(r: argu_url('/users/sign_in', r: params[:r]).to_param)
+      p= t('users.wrong_email.description', email: email)
+      - if Email.find_by(email: email).present?
+        p.account-exists= t('users.wrong_email.account_exists', email: email)
+        ul
+          li.inline-button-form.btn--lineheight= link_to t('users.wrong_email.switch'), destroy_user_session_path(r: argu_url('/users/sign_in', r: r).to_param), class: 'btn'
+      - else
+        p= t('users.wrong_email.email_list')
+        ul.bullets
+          - current_user.emails.each do |email|
+            li= email.email
+        p.link-or-logout-link_or_logout= t('users.wrong_email.link_or_logout', email: email)
+        p
+          =semantic_form_for current_user, url: settings_path, method: :put do |f|
+              =f.hidden_field :form, value: 'wrong_email'
+              =f.hidden_field :r, value: r
+              =f.hidden_field 'emails_attributes[99999][email]', value: email
+              =f.action :submit, as: :button, label: t('users.wrong_email.add', email: email), wrapper_html: {class: 'inline-button-form'}
+              li.inline-button-form.btn--lineheight= link_to t('users.wrong_email.switch'), destroy_user_session_path(r: argu_url('/users/sign_in', r: r).to_param), class: 'btn'
+        - if @user&.errors.present?
+          p.inline-errors.full-width= @user.errors.full_messages[0]

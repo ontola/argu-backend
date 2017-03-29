@@ -25,11 +25,7 @@ class UsersController < ApplicationController
 
   def current_actor
     skip_authorization
-
-    actor = CurrentActor.new(
-      user: current_user,
-      actor: current_profile
-    )
+    actor = CurrentActor.new(user: current_user, actor: current_profile)
     respond_to do |format|
       format.json { render json: actor }
       format.json_api { render json: actor, include: [:profile_photo, :user, :actor] }
@@ -39,11 +35,7 @@ class UsersController < ApplicationController
   def settings
     get_user_or_redirect(settings_path)
     authorize @user
-
     @user.build_home_placement if @user.home_placement.nil?
-
-    prepend_view_path 'app/views/users'
-
     render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
   end
 
@@ -59,12 +51,20 @@ class UsersController < ApplicationController
                  else
                    t('type_save_success', type: t('type_changes'))
                  end
-        format.html { redirect_to settings_path(tab: tab), notice: notice }
+        format.html { redirect_to r_param || settings_path(tab: tab), notice: notice }
         format.json { head :no_content }
       else
         format.html do
-          prepend_view_path 'app/views/users'
-          render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
+          if params[:user][:form] == 'wrong_email'
+            email = params[:user][:emails_attributes]['99999'][:email]
+            if current_user.emails.any? { |e| e.email == email }
+              redirect_to r_param
+            else
+              render 'wrong_email', locals: {email: email, r: r_param}
+            end
+          else
+            render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
+          end
         end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
 
   def connect!
     user = User.find_via_shortname! params[:id].presence || params[:user][:id]
-    user.r = params[:user][:r]
+    user.r = r_param
     setup_favorites(user)
 
     payload = decode_token params[:token]
@@ -152,20 +152,14 @@ class UsersController < ApplicationController
 
   def wrong_email
     skip_authorization
-    render
+    render locals: {email: params[:email], r: r_param}
   end
 
   def language
     authorize :static_page, :home?
     locale = permit_locale_params
     if I18n.available_locales.include?(locale.to_sym)
-      success =
-        if current_user.guest?
-          cookies['locale'] = locale
-        else
-          current_user.update(language: locale)
-        end
-
+      success = current_user.guest? ? cookies['locale'] = locale : current_user.update(language: locale)
       respond_to do |format|
         flash[:error] = t('errors.general') unless success.present?
         format.html { redirect_back(fallback_location: root_path) }
@@ -215,6 +209,11 @@ class UsersController < ApplicationController
     pp
   end
 
+  def r_param
+    r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
+    r if valid_redirect?(r)
+  end
+
   def redirect_with_r(user)
     if user.r.present? && user.finished_intro?
       r = URI.decode(user.r)
@@ -224,9 +223,7 @@ class UsersController < ApplicationController
   end
 
   def update_user
-    if permit_params[:emails_attributes].present? ||
-        params[:user][:primary_email].present? ||
-        permit_params[:password].present?
+    if params[:user][:primary_email].present? || permit_params[:password].present?
       bypass_sign_in(@user) if @user.update_with_password(permit_params)
     else
       @user.update_without_password(passwordless_permit_params)

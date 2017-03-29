@@ -61,8 +61,12 @@ nl:
       text_html: "Er bestaat al een gebruiker op Argu genaamd <b>%{to_name}</b> met hetzelfde email adres als jouw %{from_type} account. Om het %{from_type} account van <b>%{from_name}</b> te koppelen aan dit Argu account, moet je het wachtwoord van het Argu account invoeren."
     wrong_email:
       title: "Ander email adres"
-      description: "De uitnodiging die je volgt is bedoeld voor een ander email adres dan die waarmee je bent ingelogd."
-      switch: "Inloggen met een ander account"
+      description: "De uitnodiging die je volgt is bedoeld voor %{email}. Dit adres is niet gekoppeld aan het account waarmee je nu bent ingelogd."
+      email_list: "Email adressen die nu gekoppeld zijn aan jouw account:"
+      account_exists: "Er bestaat een ander account voor %{email}. Log uit en log in met dit andere account om de uitnodiging te accepteren."
+      link_or_logout: "Je kan ervoor kiezen om %{email} toe te voegen aan jouw account, of om uit te loggen en daarna in te loggen met %{email}."
+      add: "Voeg %{email} TOE"
+      switch: "Uitloggen"
     shortname_helper_html: "https://argu.co/u/<b>jouw_gebruikersnaam</b>"
     drafts:
       title: "Mijn concepten"

@@ -5,6 +5,10 @@
   @include button();
 }
 
+.btn--lineheight {
+  line-height: normal;
+}
+
 .actions .btn, .form-actions .btn {
   position: absolute;
   margin: 0;
