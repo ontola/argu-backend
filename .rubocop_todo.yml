@@ -115,6 +115,7 @@ Rails/OutputSafety:
     - 'app/inputs/extended_radio_input.rb'
     - 'app/inputs/partial_check_boxes_input.rb'
     - 'lib/argu/activity_string.rb'
+    - 'lib/argu/render/html.rb'
 
 # Offense count: 4
 Style/AccessorMethodName:

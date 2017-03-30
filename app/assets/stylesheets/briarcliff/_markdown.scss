@@ -43,7 +43,7 @@
       color: $blu;
     }
   }
-  
+
   ul, ol{
     list-style: initial;
     padding-left: 1.5em;
@@ -70,6 +70,26 @@
   strong {
     font-weight: bold;
   }
+}
+
+.markdown--profile {
+  color: #737373;
+}
+.markdown--motion {
+  color: $blu;
+  font-weight: bold;
+}
+.markdown--question {
+  color: $bro;
+  font-weight: bold;
+}
+.markdown--argument-con {
+  color: $red;
+  font-weight: bold;
+}
+.markdown--argument-pro {
+  color: $gre;
+  font-weight: bold;
 }
 
 .collapsible-label {
