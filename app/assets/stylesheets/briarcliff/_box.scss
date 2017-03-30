@@ -382,3 +382,11 @@
     margin-bottom: -0.3em;
   }
 }
+
+.section--opinion {
+  overflow: visible !important;
+
+  .box {
+    border-radius: 0 0 4px 4px;
+  }
+}

@@ -46,6 +46,6 @@
         li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
           span= t('arguments.new.con')
   =yield
-  section.unpadded
+  section.unpadded.section--opinion
     - unless local_assigns[:hide_vote_buttons] || current_profile.profileable.is_a?(Page)
       .motion-votes= react_component_store 'SmallVoteContainer', props: motion_vote_props(current_profile, model, user_vote_for(model), buttonsType: 'bottom', r: request.env['PATH_INFO']), **prerender_options
