@@ -15,7 +15,7 @@ class VotePolicy < EdgeTreePolicy
       if staff?
         scope
       else
-        voter_ids = user.managed_pages.pluck(:id).append(user.profile.id)
+        voter_ids = user.managed_profile_ids
         scope
           .joins(:creator)
           .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)

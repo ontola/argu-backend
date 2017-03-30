@@ -67,7 +67,7 @@ class Activity < PublicActivity::Activity
 
   def self.published_for_user(user)
     unless user.guest?
-      owner_ids = user.managed_pages.joins(:profile).pluck(:'profiles.id').append(user.profile.id)
+      owner_ids = user.managed_profile_ids
       forum_ids = user.profile.forum_ids(:manager)
     end
     where('activities.is_published = true OR activities.owner_id IN (?) OR activities.forum_id IN (?)',

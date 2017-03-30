@@ -195,6 +195,10 @@ class User < ApplicationRecord
                  .or(t[:owner_id].eq(profile.id)))
   end
 
+  def managed_profile_ids
+    managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
+  end
+
   def password_required?
     (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
   end
