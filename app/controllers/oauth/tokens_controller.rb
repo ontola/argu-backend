@@ -3,12 +3,14 @@ require 'argu/invalid_credentials_error'
 
 module Oauth
   class TokensController < Doorkeeper::TokensController
-    include ActionController::Cookies, ActionController::Redirecting, ActionController::RequestForgeryProtection
+    include ActionController::Redirecting, ActionController::MimeResponds, ActionController::Cookies,
+            ActionController::RequestForgeryProtection
     include Rails.application.routes.url_helpers
     ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
+    FRONTEND_HOST = URI(Rails.configuration.frontend_url).host.freeze
 
     def create
-      return super unless argu_request?
+      return super unless argu_classic_frontend_request?
       r = r_with_authenticity_token(params.dig(:user, :r) || '')
       remember_me = params[:user].try(:[], :remember_me) || params[:remember_me]
       response = authorize_response
@@ -22,14 +24,21 @@ module Oauth
       User.find(response.token.resource_owner_id).update r: ''
       redirect_to r.presence || root_path
     rescue Argu::InvalidCredentialsError
-      redirect_to new_user_session_path(r: r, show_error: true)
+      respond_to do |format|
+        format.html { redirect_to new_user_session_path(r: r, show_error: true) }
+        format.json do
+          render status: 422,
+                 json: {error: {code: 'WRONG_CREDENTIALS', message: 'wrong username or password'}}
+        end
+      end
     end
 
     private
 
-    def argu_request?
+    def argu_classic_frontend_request?
+      return false if params['client_id'].present?
       match = request.env['HTTP_HOST'] =~ ARGU_HOST_MATCH
-      (!match.nil? && match >= 0) || request.env['HTTP_HOST'] == 'backend'
+      !match.nil? && match >= 0 || request.env['HTTP_HOST'] == 'backend'
     end
 
     def is_post?(r)
