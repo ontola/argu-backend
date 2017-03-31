@@ -111,7 +111,8 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    if is_manager? && record.is_publishable? && !record.is_published? && !record.is_a?(Decision)
+    if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
+        (!record.is_published? || record.argu_publication&.reactions?)
       attributes.append(:mark_as_important)
     end
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)

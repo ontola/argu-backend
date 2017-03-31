@@ -11,7 +11,7 @@ class ApplicationService
     @attributes = attributes
     @actions = {}
     @options = options
-    prepare_argu_publication_attributes if resource.is_publishable? && !resource.is_published?
+    prepare_argu_publication_attributes if resource.is_publishable?
     assign_attributes
     set_nested_associations
     unless resource.is_a?(Activity) || resource.is_a?(Grant)
@@ -52,6 +52,29 @@ class ApplicationService
   # @note This doesn't work when {commit} is overridden.
   def after_save
     # Stub
+  end
+
+  def argu_publication_attributes
+    pub_attrs = @attributes[:edge_attributes][:argu_publication_attributes] || {}
+    pub_attrs[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
+    unless resource.is_published?
+      pub_attrs[:publish_type] ||= resource.argu_publication&.published_at.present? ? 'schedule' : 'direct'
+      pub_attrs[:published_at] = 10.seconds.from_now if pub_attrs[:publish_type] == 'direct'
+      pub_attrs[:published_at] = nil if pub_attrs[:publish_type] == 'draft'
+      if resource.new_record? ||
+          (pub_attrs[:published_at] != resource.edge.argu_publication.published_at ||
+          pub_attrs[:publish_type] != resource.edge.argu_publication.publish_type)
+        pub_attrs[:publisher] ||= @options[:publisher]
+        pub_attrs[:creator] ||= @options[:creator]
+      end
+    end
+    pub_attrs[:follow_type] = argu_publication_follow_type
+    pub_attrs
+  end
+
+  def argu_publication_follow_type
+    mark_as_important = @attributes.delete(:mark_as_important)
+    (mark_as_important == true || mark_as_important == '1' ? :news : :reactions)
   end
 
   def assign_attributes
@@ -104,22 +127,9 @@ class ApplicationService
 
   def prepare_argu_publication_attributes
     @attributes[:edge_attributes] ||= {}
-    attributes = @attributes[:edge_attributes][:argu_publication_attributes] || {}
-    attributes[:publish_type] ||= resource.argu_publication&.published_at.present? ? 'schedule' : 'direct'
-
-    attributes[:published_at] = 10.seconds.from_now if attributes[:publish_type] == 'direct'
-    attributes[:published_at] = nil if attributes[:publish_type] == 'draft'
-    if resource.new_record? ||
-        (attributes[:published_at] != resource.edge.argu_publication.published_at ||
-          attributes[:publish_type] != resource.edge.argu_publication.publish_type)
-      attributes[:publisher] ||= @options[:publisher]
-      attributes[:creator] ||= @options[:creator]
-    end
-    attributes[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
-    mark_as_important = @attributes.delete(:mark_as_important)
-    attributes[:follow_type] = (mark_as_important == true || mark_as_important == '1' ? :news : :reactions)
-    @attributes[:edge_attributes][:id] = resource.edge.id
-    @attributes[:edge_attributes][:argu_publication_attributes] = attributes
+    @attributes[:edge_attributes][:id] ||= resource.edge.id
+    @attributes[:edge_attributes][:argu_publication_attributes] = argu_publication_attributes
+    @attributes.permit! if @attributes.is_a?(ActionController::Parameters)
   end
 
   def signal_base
