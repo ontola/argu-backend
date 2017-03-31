@@ -9,6 +9,8 @@ class Activity < PublicActivity::Activity
   #   Moderator updates Alice's argument
   #   activity.owner # => Moderator
   belongs_to :owner, class_name: 'Profile'
+  belongs_to :trackable_edge, class_name: 'Edge'
+  belongs_to :recipient_edge, class_name: 'Edge'
   belongs_to :forum
 
   attr_accessor :potential_action
@@ -16,7 +18,9 @@ class Activity < PublicActivity::Activity
   alias_attribute :happened_at, :created_at
   alias context_id id
 
-  validates :key, :trackable, :owner, :recipient, presence: true
+  validates :key, presence: true
+  validates :trackable, :trackable_edge, :recipient, :recipient_edge, :owner,
+            presence: {on: :create, if: proc { |a| a.trackable_type != 'Banner' && a.action != 'destroy' }}
   validate :validate_happening_within_project_scope
 
   # Represents the physical event of the trackable.
@@ -70,9 +74,10 @@ class Activity < PublicActivity::Activity
       owner_ids = user.managed_profile_ids
       forum_ids = user.profile.forum_ids(:manager)
     end
-    where('activities.is_published = true OR activities.owner_id IN (?) OR activities.forum_id IN (?)',
-          owner_ids || [],
-          forum_ids || [])
+    joins(:trackable_edge)
+      .where('edges.is_published = true OR activities.owner_id IN (?) OR activities.forum_id IN (?)',
+             owner_ids || [],
+             forum_ids || [])
   end
 
   def touch_edges

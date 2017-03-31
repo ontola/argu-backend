@@ -10,6 +10,8 @@ class Edge < ApplicationRecord
              inverse_of: :children
   belongs_to :user,
              required: true
+  has_many :activities, foreign_key: :trackable_edge_id, inverse_of: :trackable_edge, dependent: :nullify
+  has_many :recipient_activities, class_name: 'Activity', foreign_key: :recipient_edge_id, dependent: :nullify
   has_many :children,
            class_name: 'Edge',
            inverse_of: :parent,

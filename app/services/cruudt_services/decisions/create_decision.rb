@@ -20,6 +20,8 @@ class CreateDecision < PublishedCreateService
       obj.key ||= "#{resource.state}.happened"
       obj.recipient ||= resource.parent_model
       obj.is_published ||= false
+      obj.recipient_edge = obj.recipient.edge
+      obj.trackable_edge = obj.trackable.edge
     when Decision
       obj.forum ||= resource.forum
       obj.edge ||= obj.build_edge(

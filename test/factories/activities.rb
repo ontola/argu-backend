@@ -10,6 +10,11 @@ FactoryGirl.define do
     recipient { passed_in?(:recipient) ? recipient : tenant }
     key :create
 
+    before(:create) do |activity|
+      activity.recipient_edge = activity.recipient.edge
+      activity.trackable_edge = activity.trackable.edge
+    end
+
     trait :t_question do
       trackable { create(:question, creator: owner, parent: tenant.edge) }
     end

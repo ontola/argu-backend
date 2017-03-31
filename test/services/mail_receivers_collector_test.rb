@@ -13,7 +13,7 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
   let(:blog_post) do
     create(:blog_post,
            publisher: publisher,
-           happened_at: DateTime.current,
+           happening_attributes: {happened_at: DateTime.current},
            parent: project.edge)
   end
 

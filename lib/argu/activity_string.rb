@@ -73,7 +73,7 @@ module Argu
         url =
           if @activity.object == 'decision'
             if @activity.trackable.present? && @activity.recipient.present?
-              motion_decision_path(@activity.recipient.edge, id: @activity.trackable.step)
+              motion_decision_path(@activity.recipient_edge, id: @activity.trackable.step)
             end
           else
             url_for(@activity.trackable)

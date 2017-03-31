@@ -47,7 +47,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       parent: :freetown,
       analytics: stats_opt('projects', 'create_success'),
       attributes: {
-        happened_at: DateTime.current,
+        happening_attributes: {happened_at: DateTime.current},
         edge_attributes: {argu_publication_attributes: {publish_type: :draft}}
       },
       differences: [['Project.unpublished', 1],

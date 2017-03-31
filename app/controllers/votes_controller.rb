@@ -160,7 +160,10 @@ class VotesController < AuthorizedController
   def handle_record_not_found(exception)
     return super unless action_name == 'destroy' && request.format.js?
     render 'destroy', locals: {
-      vote: Edge.new(owner: Vote.new, parent: Activity.find_by(trackable_id: params[:id]).recipient.edge).owner
+      vote: Edge.new(
+        owner: Vote.new,
+        parent_id: Activity.where(trackable_type: 'Vote', trackable_id: params[:id]).pluck(:recipient_edge_id).first
+      ).owner
     }
   end
 

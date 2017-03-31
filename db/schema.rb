@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170407141654) do
     t.string   "trackable_type"
     t.integer  "forum_id"
     t.integer  "owner_id"
-    t.string   "owner_type",     default: "Profile"
+    t.string   "owner_type",        default: "Profile"
     t.ltree    "key"
     t.text     "parameters"
     t.integer  "recipient_id"
@@ -44,7 +44,9 @@ ActiveRecord::Schema.define(version: 20170407141654) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json     "audit_data"
-    t.boolean  "is_published",   default: false,     null: false
+    t.boolean  "is_published",      default: false,     null: false
+    t.integer  "trackable_edge_id"
+    t.integer  "recipient_edge_id"
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
     t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable", using: :btree
     t.index ["forum_id"], name: "index_activities_on_forum_id", using: :btree
@@ -791,6 +793,8 @@ ActiveRecord::Schema.define(version: 20170407141654) do
   end
 
   add_foreign_key "access_tokens", "profiles"
+  add_foreign_key "activities", "edges", column: "recipient_edge_id"
+  add_foreign_key "activities", "edges", column: "trackable_edge_id"
   add_foreign_key "arguments", "profiles", column: "creator_id"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade

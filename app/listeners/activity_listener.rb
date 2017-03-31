@@ -84,10 +84,12 @@ class ActivityListener
       Activity.new,
       attributes: {
         trackable: resource,
+        trackable_edge: resource.try(:edge)&.persisted? ? resource.try(:edge) : nil,
         key: "#{resource.model_name.singular}.#{action}",
         owner: @creator,
         forum: resource.forum,
         recipient: recipient,
+        recipient_edge: recipient.edge,
         audit_data: audit_data(resource, recipient),
         is_published: true,
         parameters: parameters
