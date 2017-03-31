@@ -4,6 +4,9 @@ class RegistrationsController < Devise::RegistrationsController
   include NestedResourceHelper, OauthHelper
   respond_to :json
 
+  skip_before_action :verify_authenticity_token,
+                     if: -> { headers['Authorization'].blank? && cookies[Rails.configuration.cookie_name].blank? }
+
   def create
     @registration_without_password = !devise_parameter_sanitizer.sanitize(:sign_up).include?(:password)
     super do |resource|

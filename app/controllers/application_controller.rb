@@ -11,7 +11,9 @@ class ApplicationController < ActionController::Base
 
   INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
 
-  protect_from_forgery with: :exception, prepend: true
+  protect_from_forgery with: :exception, prepend: true, unless: (lambda do
+    headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
+  end)
   skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?
   prepend_before_action :write_client_access_token
   before_action :set_layout
