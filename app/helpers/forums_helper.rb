@@ -50,7 +50,7 @@ module ForumsHelper
 
     sections << forum_membership_section unless current_user.guest?
     sections << forum_discover_section
-    sections << forum_current_section if current_user.has_favorite?(@forum.edge)
+    sections << forum_current_section(resource) if current_user.has_favorite?(resource.edge)
 
     {
       title: resource.name,
@@ -60,18 +60,18 @@ module ForumsHelper
     }
   end
 
-  def forum_current_section
+  def forum_current_section(resource)
     {
       title: t('forums.current'),
-      items: forum_membership_controls_items
+      items: forum_membership_controls_items(resource)
     }
   end
 
-  def forum_membership_controls_items
-    return unless current_user.has_favorite?(@forum.edge)
+  def forum_membership_controls_items(resource)
+    return unless current_user.has_favorite?(resource.edge)
     items = []
     items << link_item(t('forums.leave'),
-                       forum_favorites_path(@forum),
+                       forum_favorites_path(resource),
                        fa: 'sign-out',
                        data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
   end
