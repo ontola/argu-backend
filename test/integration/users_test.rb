@@ -28,6 +28,14 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
+  test 'guest should get show without feed' do
+    get user_path(user_hidden_votes)
+
+    assert_response 200
+
+    assert_select '.activity-feed', 0
+  end
+
   test 'guest should get show public' do
     get user_path(user_public)
 
@@ -53,12 +61,24 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
+  test 'user should get show without feed' do
+    sign_in user
+
+    get user_path(user_hidden_votes)
+
+    assert_response 200
+
+    assert_select '.activity-feed', 0
+  end
+
   test 'user should get show public' do
     sign_in user
 
     get user_path(user_public)
 
     assert_response 200
+
+    assert_select '.activity-feed'
   end
 
   test 'user should show votes own profile' do
