@@ -137,7 +137,7 @@ en:
         destroy:
           notice: 'Applicatie verwijderd.'
         update:
-          notice: 'Applicatie geüpdatet.'
+          notice: 'Applicatie gewijzigd.'
       authorized_applications:
         destroy:
           notice: 'Applicatie ingetrokken.'

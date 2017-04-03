@@ -14,7 +14,7 @@ nl:
         to_you: "%{owner} heeft het besluit over %{parent} doorgestuurd naar jou"
       rejected: "%{owner} heeft %{parent} verworpen"
       create: "%{owner} heeft een concept besluit geplaatst in %{parent}"
-      update: "%{owner} heeft een besluit over %{parent} geüpdatet"
+      update: "%{owner} heeft een besluit over %{parent} gewijzigd"
     default:
       convert: "%{owner} heeft %{subject} omgezet in een %{type}"
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"
@@ -22,7 +22,7 @@ nl:
       destroy: "%{owner} heeft %{subject} permanent verwijderd"
       trash: "%{owner} heeft %{subject} verwijderd"
       untrash: "%{owner} heeft %{subject} teruggeplaatst"
-      update: "%{owner} heeft %{subject} geüpdatet"
+      update: "%{owner} heeft %{subject} gewijzigd"
     arguments:
       create: "%{owner} heeft een %{type} geplaatst %{side} %{parent}"
       pro: "vóór"
@@ -34,7 +34,7 @@ nl:
       destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
       trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
       untrash: "%{owner} heeft een %{subject} op %{parent} teruggeplaatst"
-      update: "%{owner} heeft een %{subject} op %{parent} geüpdatet"
+      update: "%{owner} heeft een %{subject} op %{parent} gewijzigd"
     group_responses:
       create: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
     projects:
