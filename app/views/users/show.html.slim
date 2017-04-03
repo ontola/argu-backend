@@ -5,3 +5,9 @@
                image: authenticated_resource.profile.default_profile_photo
 =render partial: 'profiles/profile_bar', locals: {resource: authenticated_resource.profile, active: :show} if policy(authenticated_resource.profile).update?
 =render partial: 'profiles/show', locals: {resource: authenticated_resource.profile}
+- if policy(authenticated_resource).feed?
+  .col-1
+    - if current_user == authenticated_resource && !authenticated_resource.profile.are_votes_public?
+      span.fa.fa-lock
+      span.icon-left= t('profiles.votes_are_private')
+    =render partial: 'activities/index', locals: {activities: @activities}

@@ -87,10 +87,6 @@ class PagePolicy < EdgeTreePolicy
     rule is_manager?, super
   end
 
-  def index_votes?
-    Pundit.policy(context, record.profile).index_votes?
-  end
-
   def update?
     rule is_manager?, is_super_admin?, super
   end

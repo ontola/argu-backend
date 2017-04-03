@@ -14,7 +14,7 @@ en:
       question: "Question"
     labels:
       about: "About"
-      are_votes_public: "Show what I vote"
+      are_votes_public: "Show my activity and my votes on my profile"
       audience: "Audience"
       birthday: "Year of birth"
       content: "Content"
@@ -57,7 +57,7 @@ en:
         created: "My items"
       profile:
         name: "Full name"
-        are_votes_public: "Show votes in profile"
+        are_votes_public: "Show my activity and my votes on my profile"
       page:
         name: "Page name"
         shortname: "Argu URL"

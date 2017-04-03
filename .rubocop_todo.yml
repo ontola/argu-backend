@@ -46,6 +46,7 @@ Metrics/ClassLength:
     - 'app/controllers/authorized_controller.rb'
     - 'app/controllers/comments_controller.rb'
     - 'app/controllers/motions_controller.rb'
+    - 'app/controllers/users_controller.rb'
     - 'app/helpers/motions_helper.rb'
     - 'app/models/user.rb'
     - 'test/controllers/phases_controller_test.rb'

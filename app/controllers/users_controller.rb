@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
   include NestedResourceHelper, UrlHelper, VotesHelper
+  helper_method :authenticated_resource
 
   def show
     @profile = authenticated_resource.profile
@@ -8,6 +9,11 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
+        @activities = policy_scope(Activity.feed_for_profile(authenticated_resource.profile))
+                        .order(created_at: :desc)
+                        .limit(10)
+        preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
+
         if (/[a-zA-Z]/i =~ params[:id]).nil?
           redirect_to url_for(authenticated_resource), status: 307
         else
@@ -190,10 +196,6 @@ class UsersController < ApplicationController
         email.second['email'].present? &&
           authenticated_resource.emails.find(email.second['id']).email != email.second['email']
     end
-  end
-
-  def flow_filters
-    {profile_id: authenticated_resource.profile.id}
   end
 
   def permit_locale_params

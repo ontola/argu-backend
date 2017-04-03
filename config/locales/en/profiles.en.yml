@@ -6,7 +6,7 @@ en:
     switch: "Use Argu as:"
     about_me: "About me"
     heads_up: "Your profile is visible to other Argu users."
-    votes_are_private: "Your votes are private"
+    votes_are_private: "Your activity is only visible for you"
     show:
       title: "Profile"
       btn:

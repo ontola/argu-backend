@@ -42,12 +42,12 @@ class UserPolicy < RestrictivePolicy
     (record.profile.is_public? || !user.guest?) && record.finished_intro? || super
   end
 
-  def index_votes?
-    Pundit.policy(context, record.profile).index_votes?
-  end
-
   def create?
     true
+  end
+
+  def feed?
+    record.profile.are_votes_public? || Pundit.policy(context, record).update?
   end
 
   def max_allowed_pages
@@ -65,20 +65,20 @@ class UserPolicy < RestrictivePolicy
   end
 
   def settings?
-    record.id == user.id
+    current_user?
   end
 
   def update?
-    (record.id == user.id) || super
+    current_user? || super
   end
 
   def setup?
-    record.id == user.id && user.url.blank?
+    current_user? && user.url.blank?
   end
 
   def destroy?
     return if record.profile.grants.super_admin.count.positive?
-    record.id == user.id
+    current_user?
   end
 
   # Make sure that a tab param is actually accounted for
@@ -87,5 +87,9 @@ class UserPolicy < RestrictivePolicy
     tab ||= 'general'
     assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
+  end
+
+  def current_user?
+    record.id == user.id
   end
 end

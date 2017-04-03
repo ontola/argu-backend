@@ -14,7 +14,7 @@ nl:
       question: "Uitdaging"
     labels:
       about: "Over"
-      are_votes_public: "Laat zien wat ik stem"
+      are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       audience: "Publiek"
       birthday: "Geboortejaar"
       content: "Inhoud"
@@ -57,7 +57,7 @@ nl:
         created: "Mijn items"
       profile:
         name: "Volledige naam"
-        are_votes_public: "Stemmen weergeven in profiel"
+        are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
       page:
         name: "Naam van pagina"
         shortname: "Argu URL"
