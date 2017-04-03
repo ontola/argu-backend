@@ -17,8 +17,8 @@ module Timelineable
   # @return [Activity] The latest published happening
   def latest_happening(user)
     happenings.published_for_user(user)
-              .where('created_at < ?', DateTime.current)
-              .order('created_at DESC')
+              .where('activities.created_at < ?', DateTime.current)
+              .order('activities.created_at DESC')
               .last
   end
 end

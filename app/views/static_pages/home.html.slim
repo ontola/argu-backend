@@ -7,7 +7,7 @@
           h2= t('forums.my')
           .group
             ul.box-list-links
-              - current_user.favorite_forums.each do |o|
+              - current_user.favorite_forums.includes(:shortname, :default_profile_photo).each do |o|
                 li
                   =link_to forum_path(o)
                     =image_tag o.default_profile_photo.url(:icon), size: '16x16'
@@ -16,9 +16,6 @@
             =link_to discover_forums_url, class: 'btn--argu' do
               span.fa.fa-compass
               span.icon-left=t('forums.show_open')
-  .col-3-2.activity-feed
+  .col-3-2
     h2= t('activities.news_feed.title')
-    .activities
-      =render_activities(@activities, layout: 'activity')
-    .center
-      p.btn.load-more= t('activities.ui.load_more')
+    =render partial: 'activities/index', locals: {activities: @activities}

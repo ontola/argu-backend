@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
-  include NestedResourceHelper, UrlHelper
+  include NestedResourceHelper, UrlHelper, VotesHelper
 
   def show
     @user = User.preload(:profile).find_via_shortname!(params[:id])

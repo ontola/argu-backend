@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
-  include Edgeable, Shortnameable, Flowable, Ldable
+  include Edgeable, Shortnameable, Ldable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
@@ -41,11 +41,6 @@ class Page < ApplicationRecord
     else
       url
     end
-  end
-
-  # Since we're the ones creating activities, we should select them based on us being the owner
-  def flow
-    Activity.where(owner: profile)
   end
 
   def finished_intro?

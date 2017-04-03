@@ -45,4 +45,8 @@ class DecisionPolicy < EdgeTreePolicy
   def update?
     rule decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super
   end
+
+  def feed?
+    false
+  end
 end

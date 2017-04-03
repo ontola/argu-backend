@@ -171,7 +171,11 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def log?
-    rule is_moderator?, is_super_admin?, staff?
+    rule is_moderator?, is_manager?, is_super_admin?, staff?
+  end
+
+  def feed?
+    rule show?
   end
 
   # Move items between forums or converting items

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Argument < ApplicationRecord
-  include Loggable, ProCon, Flowable, Ldable
+  include Loggable, ProCon, Ldable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 

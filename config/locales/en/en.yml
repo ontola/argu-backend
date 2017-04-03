@@ -75,6 +75,8 @@ en:
   search: "Search"
   log: "Log"
   statistics: "Statistics"
+  feed: "Feed"
+  overview: "Overview"
   edited: "Edited"
   deleted: "Deleted"
   delete_type: "Delete %{type}"

@@ -46,4 +46,8 @@ class BlogPostPolicy < EdgeTreePolicy
   def update?
     rule is_creator?, is_manager?, is_super_admin?, super
   end
+
+  def feed?
+    false
+  end
 end

@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 module VotesHelper
+  def preload_user_votes(voteable_ids)
+    @user_votes = Vote.where(voteable_id: voteable_ids,
+                             voteable_type: 'Motion',
+                             creator: current_profile).eager_load!
+  end
+
   def toggle_vote_link(model, vote)
     url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :votes], for: :pro)
     data = {remote: true, method: :post, title: t('tooltips.argument.vote_up')}

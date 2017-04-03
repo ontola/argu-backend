@@ -1,0 +1,5 @@
+.activity-feed
+  .activities[data-feed-url=url_for([try(:authenticated_resource), :feed, format: :js])]
+    =render_activities(activities, layout: 'activity')
+  .center
+    p.btn.load-more= t('activities.ui.load_more')

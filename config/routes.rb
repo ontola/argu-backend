@@ -65,8 +65,8 @@ Rails.application.routes.draw do
     resources :favorites, only: [:create]
     delete 'favorites', to: 'favorites#destroy'
   end
-  concern :flowable do
-    get :flow, controller: :flow, action: :show
+  concern :feedable do
+    get :feed, controller: :feed, action: :show
   end
   concern :moveable do
     get :move, action: :move
@@ -125,10 +125,10 @@ Rails.application.routes.draw do
 
   resources :users,
             path: 'u',
-            only: [:show, :update],
-            concerns: [:flowable] do
+            only: [:show, :update] do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
+    get :feed, controller: 'users/feed', action: :show
 
     get :connect, to: 'users#connect', on: :member
     post :connect, to: 'users#connect!', on: :member
@@ -144,6 +144,8 @@ Rails.application.routes.draw do
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
 
+  get :feed, controller: :favorites_feed, action: :show
+
   resources :votes, only: [:destroy, :update, :show], path: :v, as: :vote
   resources :vote_events, only: [:show], concerns: [:votable] do
     resources :votes, only: :index
@@ -156,7 +158,7 @@ Rails.application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :flowable, :trashable] do
+            concerns: [:blog_postable, :moveable, :feedable, :trashable] do
     resources :media_objects, only: :index
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
@@ -173,7 +175,7 @@ Rails.application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :votable, :flowable, :trashable, :decisionable] do
+            concerns: [:blog_postable, :moveable, :votable, :feedable, :trashable, :decisionable] do
     resources :tags, path: 't', only: [:index]
     resources :arguments, only: [:new, :create, :index]
     resources :media_objects, only: :index
@@ -184,7 +186,7 @@ Rails.application.routes.draw do
   resources :arguments,
             path: 'a',
             except: [:index, :new, :create, :destroy],
-            concerns: [:votable, :flowable, :trashable, :commentable]
+            concerns: [:votable, :feedable, :trashable, :commentable]
 
   resources :groups,
             path: 'g',
@@ -198,7 +200,7 @@ Rails.application.routes.draw do
   resources :pages,
             path: 'o',
             only: [:new, :create, :show, :update, :destroy],
-            concerns: [:flowable, :destroyable] do
+            concerns: [:feedable, :destroyable] do
     resources :grants, path: 'grants', only: [:new, :create]
     resources :groups, path: 'g', only: [:create, :new]
     resources :group_memberships, only: :index do
@@ -220,7 +222,7 @@ Rails.application.routes.draw do
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update],
-            concerns: [:blog_postable, :flowable, :discussable, :trashable]
+            concerns: [:blog_postable, :feedable, :discussable, :trashable]
 
   resources :phases,
             only: [:show, :edit, :update] do
@@ -280,8 +282,6 @@ Rails.application.routes.draw do
   get '/privacy', to: 'documents#show', name: 'privacy'
   get '/cookies', to: 'documents#show', name: 'cookies'
 
-  get '/activities', to: 'activities#index'
-
   resources :info, path: 'i', only: [:show]
 
   get '/quawonen_feedback', to: redirect('/quawonen')
@@ -307,7 +307,7 @@ Rails.application.routes.draw do
     resources :forums,
               only: [:show, :update],
               path: '',
-              concerns: [:flowable, :discussable, :favorable] do
+              concerns: [:feedable, :discussable, :favorable] do
       resources :motions, path: :m, only: [] do
         get :search, to: 'motions#search', on: :collection
       end

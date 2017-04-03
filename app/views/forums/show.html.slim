@@ -4,39 +4,7 @@
                description: seolized_description(@forum),
                image: @forum.default_cover_photo&.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
-  .cover.cover--forum
-    -if @forum.default_cover_photo&.url.present?
-      .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.default_cover_photo&.url(:cover)}')"]
-      - if @forum.cover_photo_attribution.present?
-        span.header-attribution= @forum.cover_photo_attribution
-    -else
-      .cover-image.cover-image-empty
-    .cover-overlay
-      .cover-switcher-wrapper
-        -if @forum.default_profile_photo.url.present?
-          .profile-picture[style="background-image: url('#{@forum.default_profile_photo.url(:avatar)}')"]
-        .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component_store 'HyperDropdown', props: forum_title_dropdown_items(@forum)
-        -if @forum.bio.present?
-          h2.cover-hero-text= @forum.bio
-        -if @forum.bio_long.present?
-          a.smoothscroll.cover-hero-link[href="#forum-info"]= t('forums.more_info')
-    .cover-buttons.cover-buttons--top
-      .cover-buttons-container
-        ul.btns-horizontal
-          - if !current_user.has_favorite?(@forum.edge) && policy(@forum).create_child?(:favorites, edge: @forum.edge)
-            li= link_to forum_favorites_path(@forum), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
-              span.fa.fa-plus
-              span.icon-left= t('forums.join.title')
-    .cover-buttons
-      .cover-buttons-container
-        ul.btns-horizontal
-          - if policy(@forum).update?
-            li.float-right= link_to settings_forum_path(@forum.url), class: 'btn--transparant'
-              span.fa.fa-gear
-              span.icon-left= t('forums.settings.title')
-          - unless current_user.guest?
-            li.float-right
-              ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@forum, trigger_class: 'btn--transparant')
+  =render partial: 'cover', locals: {resource: @forum}
   - if policy(@forum).show?
     .btns-center-container
       -if can_start_discussion?(@forum)

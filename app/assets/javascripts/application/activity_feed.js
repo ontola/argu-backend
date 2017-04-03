@@ -20,10 +20,11 @@ const activityFeed = {
             feedDOM = $('.activity-feed .activities');
         _this.text(I18n.t('activities.ui.loading'));
         loading = true;
-        $.ajax("/activities.html", {
+        $.ajax(feedDOM.attr('data-feed-url'), {
             data: {
                 'from_time': feedDOM.find('.activity:last time').attr('datetime')
             },
+            dataType: 'html',
             cache: false,
             success: (d, s, xhr) => {
                 if (xhr.status == 200 || xhr.status == 304) {

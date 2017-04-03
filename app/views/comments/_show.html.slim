@@ -1,6 +1,7 @@
 .comment[id=model.identifier class=status_classes_for(model) itemscope="itemscope" itemtype="http://schema.org/Comment"]
   .box
     section
-      p[id=model.id itemprop="text"]
-        span.fa.fa-comment-o
-        =model.is_trashed? ? I18n.t('deleted') : model.body
+      - if model.is_trashed?
+        p[itemprop="text"]= I18n.t('deleted')
+      - else
+        =render partial: 'application/markdown_collapsible', locals: {content: model.body, identifier: model.identifier, character_length: 350}

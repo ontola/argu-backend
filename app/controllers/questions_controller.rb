@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class QuestionsController < AuthorizedController
-  include NestedResourceHelper, MenuHelper
+  include NestedResourceHelper, MenuHelper, VotesHelper
   skip_before_action :check_if_registered, only: :index
 
   def index
@@ -14,21 +14,13 @@ class QuestionsController < AuthorizedController
   end
 
   def show
-    scope = authenticated_resource
-              .motions
-              .joins(:edge, :default_vote_event_edge)
-              .includes(:default_cover_photo, :edge, :votes,
-                        creator: {default_profile_photo: []})
-              .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-
-    unless current_user.guest?
-      @user_votes = Vote.where(voteable_id: scope.ids,
-                               voteable_type: 'Motion',
-                               creator: current_profile).eager_load!
-    end
-
-    @motions = policy_scope(scope)
-               .page(show_params[:page])
+    @motions = policy_scope(authenticated_resource.motions)
+                 .joins(:edge, :default_vote_event_edge)
+                 .includes(:default_cover_photo, :edge, :votes,
+                           creator: {default_profile_photo: []})
+                 .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+                 .page(show_params[:page])
+    preload_user_votes(@motions.ids) unless current_user.guest?
 
     init_resource_actions(authenticated_resource)
 

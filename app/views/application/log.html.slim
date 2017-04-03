@@ -4,6 +4,13 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent(resource)
   .col-1
+    - if authenticated_resource.is_loggable? && policy(authenticated_resource).log?
+      div.align-right
+        span.btn.btn-subtle
+          =link_to url_for([authenticated_resource, :feed]) do
+            span.fa.fa-feed
+            span.icon-left
+              =t('feed')
     =header(header: 'Log')
     .col--motion
       .box[class=status_classes_for(resource)]

@@ -92,6 +92,10 @@ class RestrictivePolicy
     update?
   end
 
+  def feed?
+    rule staff?
+  end
+
   def logged_in?
     !user.guest?
   end

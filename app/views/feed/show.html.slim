@@ -1,0 +1,17 @@
+div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
+  - if authenticated_resource.is_a?(Page)
+    =render partial: 'profiles/show', locals: {resource: authenticated_resource.profile}
+  - elsif authenticated_resource.is_a?(Forum)
+    =render partial: 'forums/cover', locals: {resource: authenticated_resource}
+  - elsif authenticated_resource.present?
+    .col-1
+      =to_parent(authenticated_resource)
+  .col-1
+    - if authenticated_resource&.is_loggable? && policy(authenticated_resource).log?
+      div.align-right
+        span.btn.btn-subtle
+          =link_to url_for([:log, edge_id: authenticated_resource.edge.id]) do
+            span.fa.fa-history
+            span.icon-left
+              =t('log')
+    =render partial: 'activities/index', locals: {activities: @activities}

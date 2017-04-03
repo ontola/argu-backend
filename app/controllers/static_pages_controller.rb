@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class StaticPagesController < ApplicationController
+  include VotesHelper
+
   # geocode_ip_address
   VOCABULARIES = {
     hydra: 'http://www.w3.org/ns/hydra/core#',
@@ -31,12 +33,10 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_page
     if current_user.profile.has_role?(:staff)
-      @activities = policy_scope(Activity.feed_for(current_user))
+      @activities = policy_scope(Activity.feed_for_favorites(current_user.favorites))
                       .order(created_at: :desc)
                       .limit(10)
-      @user_votes = Vote.where(voteable_id: @activities.where(trackable_type: 'Motion').pluck(:trackable_id),
-                               voteable_type: 'Motion',
-                               creator: current_profile).eager_load!
+      preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
       render # stream: true
     else
       redirect_to(preferred_forum.presence || info_url('about'))

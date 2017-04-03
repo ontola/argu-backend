@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Question < ApplicationRecord
   include Trashable, Attachable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible, Loggable,
-          BlogPostable, Timelineable, PublicActivity::Common, Flowable, Placeable, Photoable,
+          BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
           ActivePublishable, Motionable, Ldable
 
   belongs_to :forum, inverse_of: :questions

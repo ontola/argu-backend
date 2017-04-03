@@ -78,8 +78,8 @@ class Edge < ApplicationRecord
     if type == :page
       root
     elsif type == :forum
-      tenant = Edge.find(ancestor_ids[1])
-      tenant.owner_type == 'Forum' ? tenant : nil
+      tenant = Edge.find_by(id: ancestor_ids[1])
+      tenant&.owner_type == 'Forum' ? tenant : nil
     else
       ancestors.find_by(owner_type: type.to_s.classify)
     end

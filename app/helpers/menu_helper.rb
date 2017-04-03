@@ -28,10 +28,10 @@ module MenuHelper
         target: url_for([resource, action: :edit])
       }
     end
-    if resource_policy.log?
+    if resource_policy.feed?
       resource.potential_action << {
-        '@type': :log,
-        target: url_for([:log, edge_id: resource.edge.id])
+        '@type': :feed,
+        target: url_for([resource, :feed])
       }
     end
     if resource_policy.trash?
@@ -61,6 +61,7 @@ module MenuHelper
   def crud_menu_options(resource, additional_items = [])
     link_items = [].concat(additional_items).compact
     resource_policy = policy(resource)
+    link_items << link_item(t('feed'), url_for([resource, :feed]), fa: 'feed') if resource_policy.feed?
     if policy(resource).create_child?(:blog_posts)
       link_items << link_item(t('blog_posts.type_new'),
                               polymorphic_url([:new, resource, :blog_post]),
@@ -70,7 +71,6 @@ module MenuHelper
     if resource.is_a?(Motion) && resource_policy.statistics?
       link_items << link_item(t('statistics'), vote_event_url(resource.default_vote_event), fa: 'bar-chart-o')
     end
-    link_items << link_item(t('log'), log_url(resource.edge), fa: 'history') if resource_policy.log?
     if resource.is_trashable?
       if resource.is_trashed?
         if resource_policy.trash?

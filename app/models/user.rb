@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class User < ApplicationRecord
-  include Shortnameable, Flowable, Placeable, Ldable, RedirectHelper
+  include Shortnameable, Placeable, Ldable, RedirectHelper
 
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
@@ -111,11 +111,6 @@ class User < ApplicationRecord
 
   def draft_count
     Edge.where(user_id: id, is_published: false, owner_type: %w(Motion Question Project BlogPost)).count
-  end
-
-  # Since we're the ones creating activities, we should select them based on us being the owner
-  def flow
-    Activity.where(owner: profile)
   end
 
   # Creates a new follow record for this instance to follow the passed object.

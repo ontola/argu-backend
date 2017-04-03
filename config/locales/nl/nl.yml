@@ -75,6 +75,8 @@ nl:
   search: "Zoeken"
   log: "Log"
   statistics: "Statistieken"
+  feed: "Activiteit"
+  overview: "Overzicht"
   edited: "Bewerkt"
   deleted: "Verwijderd"
   delete_type: "Verwijder %{type}"

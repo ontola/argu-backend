@@ -51,11 +51,28 @@ class Activity < PublicActivity::Activity
     "#{self.class.name.tableize}_#{id}"
   end
 
-  def self.feed_for(user)
+  def self.feed
     Activity
       .loggings
-      .where('activities.forum_id IN (?)', user.favorite_forum_ids)
       .where('trackable_type != ?', 'Banner')
+      .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
+  end
+
+  def self.feed_for_edge(edge)
+    feed
+      .joins(:trackable_edge)
+      .where('edges.path <@ ?', edge.path)
+  end
+
+  def self.feed_for_favorites(favorites)
+    return Activity.none if favorites.empty?
+    feed
+      .joins(:trackable_edge)
+      .where('edges.path ~ ?', "*{1}.#{favorites.pluck(:edge_id).join('|')}.*")
+  end
+
+  def self.feed_for_profile(profile)
+    feed.where(owner_id: profile.id)
   end
 
   # Used to find followers for the notifications generated for this activity and to set the type of these notifications
@@ -82,9 +99,8 @@ class Activity < PublicActivity::Activity
 
   def touch_edges
     return if %w(destroy trash untrash).include?(action)
-    trackable.edge.touch(:last_activity_at) if trackable.respond_to?(:edge) && trackable.edge.persisted?
-    return unless recipient.respond_to?(:edge) && recipient.edge.persisted? && !%w(Vote).include?(trackable_type)
-    recipient.edge.touch(:last_activity_at)
+    trackable_edge.touch(:last_activity_at) if trackable_edge&.persisted?
+    recipient_edge.touch(:last_activity_at) if recipient_edge&.persisted? && !%w(Vote).include?(trackable_type)
   end
 
   private
