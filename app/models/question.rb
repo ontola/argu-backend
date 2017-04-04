@@ -57,7 +57,7 @@ class Question < ApplicationRecord
       edge.parent = forum.edge
       save!
       votes.lock(true).update_all forum_id: forum.id
-      activities.lock(true).update_all forum_id: forum.id
+      activities.lock(true).update_all(forum_id: forum.id, recipient_id: forum.id, recipient_type: 'Forum')
       if include_motions
         motions.lock(true).each do |m|
           m.move_to forum, false

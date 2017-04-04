@@ -84,8 +84,9 @@ class Motion < ApplicationRecord
       edge.descendants.lock(true).includes(:owner).find_each do |descendant|
         descendant.owner.update_column(:forum_id, forum.id)
       end
-      activities.lock(true).update_all forum_id: forum.id
-      taggings.lock(true).update_all forum_id: forum.id
+      activities.lock(true).update_all(forum_id: forum.id)
+      activities.lock(true).update_all(recipient_id: forum.id, recipient_type: 'Forum') if question_id.nil?
+      taggings.lock(true).update_all(forum_id: forum.id)
       true
     end
   end
