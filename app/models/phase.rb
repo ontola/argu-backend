@@ -48,22 +48,19 @@ class Phase < ApplicationRecord
   end
 
   # Activities with *.happened key that happened during this phase
-  # @param [Boolean] show_unpublished Set to true to include unpublished happenings
   # @return [ActiveRecord::Relation] Activities with *.happened key
-  def happenings(show_unpublished = false)
+  def happenings
     return Activity.none if start_date.nil?
     if end_date.present?
       parent_model
         .happenings
-        .published(show_unpublished)
-        .where(created_at: start_date..end_date)
-        .order(created_at: :asc)
+        .where(activities: {created_at: start_date..end_date})
+        .order('activities.created_at ASC')
     else
       parent_model
         .happenings
-        .published(show_unpublished)
-        .where('created_at > ?', start_date)
-        .order(created_at: :asc)
+        .where('activities.created_at > ?', start_date)
+        .order('activities.created_at ASC')
     end
   end
 end

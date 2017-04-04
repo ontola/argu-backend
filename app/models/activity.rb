@@ -34,7 +34,6 @@ class Activity < PublicActivity::Activity
   #     User updated an {Argument}: key == 'argument.update'
   scope :loggings, -> { where("key ~ '*.!happened'") }
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
-  scope :published, ->(show_unpublished = false) { show_unpublished ? all : where(is_published: true) }
 
   before_create :touch_edges
 
@@ -84,17 +83,6 @@ class Activity < PublicActivity::Activity
 
   def object
     trackable_type.underscore
-  end
-
-  def self.published_for_user(user)
-    unless user.guest?
-      owner_ids = user.managed_profile_ids
-      forum_ids = user.profile.forum_ids(:manager)
-    end
-    joins(:trackable_edge)
-      .where('edges.is_published = true OR activities.owner_id IN (?) OR activities.forum_id IN (?)',
-             owner_ids || [],
-             forum_ids || [])
   end
 
   def touch_edges

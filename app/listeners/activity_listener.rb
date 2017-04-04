@@ -91,7 +91,6 @@ class ActivityListener
         recipient: recipient,
         recipient_edge: recipient.edge,
         audit_data: audit_data(resource, recipient),
-        is_published: true,
         parameters: parameters
       }
     )

@@ -42,6 +42,10 @@ class GuestUser < User
     @profile ||= Profile.new(profileable: self)
   end
 
+  def managed_profile_ids
+    []
+  end
+
   def time_zone
     'Amsterdam'
   end

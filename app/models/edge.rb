@@ -153,7 +153,6 @@ class Edge < ApplicationRecord
   def publish!
     self.class.transaction do
       update!(is_published: true)
-      owner.happening.update!(is_published: true) if owner.respond_to?(:happening)
       increment_counter_cache unless is_trashed?
     end
   end

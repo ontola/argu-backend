@@ -4,7 +4,7 @@ module TimelineHelper
     if params[:happening_id].present?
       policy_scope(Activity).find(params[:happening_id])
     else
-      resource.latest_happening(current_user)
+      policy_scope(resource.happenings).last
     end
   end
 
@@ -23,8 +23,8 @@ module TimelineHelper
     class_string
   end
 
-  def render_timeline?(resource, show_unpublished)
-    resource.happenings.published(show_unpublished).count > 1 ||
+  def render_timeline?(resource)
+    policy_scope(resource.happenings).count > 1 ||
       resource.respond_to?(:phases) && resource.phases.present?
   end
 

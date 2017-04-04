@@ -19,7 +19,6 @@ class CreateDecision < PublishedCreateService
       obj.owner ||= resource.creator
       obj.key ||= "#{resource.state}.happened"
       obj.recipient ||= resource.parent_model
-      obj.is_published ||= false
       obj.recipient_edge = obj.recipient.edge
       obj.trackable_edge = obj.trackable.edge
     when Decision

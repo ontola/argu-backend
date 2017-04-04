@@ -1,4 +1,4 @@
-- if render_timeline?(resource, show_unpublished)
+- if render_timeline?(resource)
   header
     h2= t('resources.timeline')
   .timeline-component
@@ -11,11 +11,11 @@
             =link_to phase_path(phase), data: {remote: true}, class: generate_phase_link_class(resource, phase) do
               span= phase.display_name
             .timeline-points
-              -phase.happenings(show_unpublished).each do |happening|
+              -policy_scope(phase.happenings).each do |happening|
                 =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(resource)}
     -else
       .timeline-points
-        -resource.happenings.published(show_unpublished).each do |happening|
+        -policy_scope(resource.happenings).each do |happening|
           =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(resource)}
 #current-blog-post
   - if current_happening(resource).present?

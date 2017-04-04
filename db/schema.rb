@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20170407141654) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json     "audit_data"
-    t.boolean  "is_published",      default: false,     null: false
     t.integer  "trackable_edge_id"
     t.integer  "recipient_edge_id"
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
