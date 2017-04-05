@@ -3,21 +3,20 @@ class UsersController < ApplicationController
   include NestedResourceHelper, UrlHelper, VotesHelper
 
   def show
-    @user = User.preload(:profile).find_via_shortname!(params[:id])
-    @profile = @user.profile
-    authorize @user, :show?
+    @profile = authenticated_resource.profile
+    authorize authenticated_resource, :show?
 
     respond_to do |format|
       format.html do
         if (/[a-zA-Z]/i =~ params[:id]).nil?
-          redirect_to url_for(@user), status: 307
+          redirect_to url_for(authenticated_resource), status: 307
         else
           render 'show'
         end
       end
-      format.json { render json: @user }
+      format.json { render json: authenticated_resource }
       format.json_api do
-        render json: @user,
+        render json: authenticated_resource,
                include: [:profile_photo, vote_match_collection: INC_NESTED_COLLECTION]
       end
     end
@@ -33,16 +32,14 @@ class UsersController < ApplicationController
   end
 
   def settings
-    get_user_or_redirect(settings_path)
-    authorize @user
-    @user.build_home_placement if @user.home_placement.nil?
-    render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
+    authorize authenticated_resource
+    authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
+    render 'settings', locals: {tab: tab, active: tab, profile: authenticated_resource.profile}
   end
 
   # PUT /settings
   def update
-    @user = User.find(current_user.id)
-    authorize @user
+    authorize authenticated_resource
     email_changed = email_changed?
     respond_to do |format|
       if update_user
@@ -63,10 +60,10 @@ class UsersController < ApplicationController
               render 'wrong_email', locals: {email: email, r: r_param}
             end
           else
-            render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
+            render 'settings', locals: {tab: tab, active: tab, profile: authenticated_resource.profile}
           end
         end
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: authenticated_resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -121,16 +118,14 @@ class UsersController < ApplicationController
 
   # When shortname isn't set yet
   def setup
-    get_user_or_redirect
-    authorize @user, :setup?
-    @user.build_shortname if @user.shortname.blank?
+    authorize authenticated_resource, :setup?
+    authenticated_resource.build_shortname if authenticated_resource.shortname.blank?
 
     render 'setup_shortname', layout: 'closed'
   end
 
   def setup!
-    get_user_or_redirect
-    authorize @user, :setup?
+    authorize authenticated_resource, :setup?
     if current_user.url.blank?
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
@@ -147,7 +142,7 @@ class UsersController < ApplicationController
   end
 
   def tab
-    policy(@user || User).verify_tab(params[:tab] || params[:user].try(:[], :tab))
+    policy(authenticated_resource || User).verify_tab(params[:tab] || params[:user].try(:[], :tab))
   end
 
   def wrong_email
@@ -173,19 +168,32 @@ class UsersController < ApplicationController
 
   private
 
+  def authenticated_resource
+    @user ||= case action_name
+              when 'show'
+                User.preload(:profile).find_via_shortname!(params[:id])
+              when 'update'
+                User.find(current_user.id)
+              else
+                if current_user.guest?
+                  flash[:error] = t('devise.failure.unauthenticated')
+                  raise Argu::NotAUserError.new(r: redirect)
+                end
+                current_user
+              end
+  end
+
   def email_changed?
     return unless permit_params[:emails_attributes].present?
     permit_params[:emails_attributes].any? do |email|
       email.second['id'].nil? ||
-        email.second['email'].present? && @user.emails.find(email.second['id']).email != email.second['email']
+        email.second['email'].present? &&
+          authenticated_resource.emails.find(email.second['id']).email != email.second['email']
     end
   end
 
-  def get_user_or_redirect(redirect = nil)
-    @user = current_user
-    return unless current_user.guest?
-    flash[:error] = t('devise.failure.unauthenticated')
-    raise Argu::NotAUserError.new(r: redirect)
+  def flow_filters
+    {profile_id: authenticated_resource.profile.id}
   end
 
   def permit_locale_params
@@ -193,8 +201,8 @@ class UsersController < ApplicationController
   end
 
   def permit_params
-    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes(true)).to_h
-    merge_photo_params(pp, @user.class)
+    pp = params.require(:user).permit(*policy(authenticated_resource || User).permitted_attributes(true)).to_h
+    merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
     if pp[:primary_email].present?
       pp['emails_attributes'][pp[:primary_email][1..-2]][:primary] = true
@@ -203,8 +211,8 @@ class UsersController < ApplicationController
   end
 
   def passwordless_permit_params
-    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes).to_h
-    merge_photo_params(pp, @user.class)
+    pp = params.require(:user).permit(*policy(authenticated_resource || User).permitted_attributes).to_h
+    merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
     pp
   end
@@ -224,9 +232,9 @@ class UsersController < ApplicationController
 
   def update_user
     if params[:user][:primary_email].present? || permit_params[:password].present?
-      bypass_sign_in(@user) if @user.update_with_password(permit_params)
+      bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params)
     else
-      @user.update_without_password(passwordless_permit_params)
+      authenticated_resource.update_without_password(passwordless_permit_params)
     end
   end
 end

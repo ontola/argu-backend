@@ -1,7 +1,7 @@
-=set_title @user || @profile
-=connected_web url: @profile.profileable.context_id,
-               name: seolized_title(@user || @profile),
-               description: seolized_description(@user || @profile),
-               image: @profile.default_profile_photo
-=render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
-=render partial: 'profiles/show', locals: {resource: @profile}
+=set_title authenticated_resource
+=connected_web url: authenticated_resource.context_id,
+               name: seolized_title(authenticated_resource),
+               description: seolized_description(authenticated_resource),
+               image: authenticated_resource.profile.default_profile_photo
+=render partial: 'profiles/profile_bar', locals: {resource: authenticated_resource.profile, active: :show} if policy(authenticated_resource.profile).update?
+=render partial: 'profiles/show', locals: {resource: authenticated_resource.profile}

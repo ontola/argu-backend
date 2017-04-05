@@ -21,5 +21,5 @@ header
               =f.hidden_field 'emails_attributes[99999][email]', value: email
               =f.action :submit, as: :button, label: t('users.wrong_email.add', email: email), wrapper_html: {class: 'inline-button-form'}
               li.inline-button-form.btn--lineheight= link_to t('users.wrong_email.switch'), destroy_user_session_path(r: argu_url('/users/sign_in', r: r).to_param), class: 'btn'
-        - if @user&.errors.present?
-          p.inline-errors.full-width= @user.errors.full_messages[0]
+        - if authenticated_resource&.errors.present?
+          p.inline-errors.full-width= authenticated_resource.errors.full_messages[0]

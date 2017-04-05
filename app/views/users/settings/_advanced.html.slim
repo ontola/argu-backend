@@ -1,4 +1,4 @@
-=semantic_form_for @user, url: settings_path, method: :put do |f|
+=semantic_form_for authenticated_resource, url: settings_path, method: :put do |f|
   =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
     .form-item
       =link_to t('users_cancel_title'), cancel_user_registration_path(current_user)

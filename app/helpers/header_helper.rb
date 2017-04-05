@@ -7,7 +7,6 @@ module HeaderHelper
   end
 
   def profile_dropdown_items
-    @profile = current_profile
     page_index =
       if current_user.page_management?
         link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building')

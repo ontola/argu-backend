@@ -6,15 +6,15 @@
       p= t('intro.initial.body.shortname')
   .box
     section.form-validate
-      =semantic_form_for @user, url: setup_users_path, method: :put do |f|
+      =semantic_form_for authenticated_resource, url: setup_users_path, method: :put do |f|
         =f.inputs do
           =f.inputs :shortname, for: :shortname do |s|
-            - if @user.email
+            - if authenticated_resource.email
               =s.input :shortname,
                        input_html: {autofocus: true,
                                     title: t('formtastic.hints.user.shortname'),
                                     pattern: '[a-zA-Z]+[_a-zA-Z0-9]*',
-                                    value: @user.email[/[^@]+/].gsub('.', '_')}
+                                    value: authenticated_resource.email[/[^@]+/].gsub('.', '_')}
               li.form-helper
                 span=t('users.shortname_helper_html')
             - else
