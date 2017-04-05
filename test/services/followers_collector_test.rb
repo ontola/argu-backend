@@ -3,20 +3,21 @@ require 'test_helper'
 
 class FollowersCollectorTest < ActiveSupport::TestCase
   define_freetown
-  let(:project) { create(:project, parent: freetown.edge) }
-  let!(:follow) { create(:follow, followable: project.edge) }
-  let!(:news_follow) { create(:news_follow, followable: project.edge) }
+  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:important_motion) { create(:motion, parent: freetown.edge, mark_as_important: '1') }
+  let(:activity) { project.activities.first }
+  let!(:news_follow) { create(:news_follow, followable: freetown.edge) }
 
-  test 'should collect 0 for unfollowed project' do
+  test 'should collect 0 for motion in unfollowed forum' do
     Follow.destroy_all
-    assert_equal 0, FollowersCollector.new(project, :reactions).call.count
+    assert_equal 0, FollowersCollector.new(activity: motion.activities.first).count
   end
 
-  test 'should collect reaction followers for project' do
-    assert_equal 2, FollowersCollector.new(project, :reactions).call.count
+  test 'should collect reaction followers for motion' do
+    assert_equal 1, FollowersCollector.new(activity: motion.activities.first).count
   end
 
-  test 'should collect news followers for project' do
-    assert_equal 3, FollowersCollector.new(project, :news).call.count
+  test 'should collect news followers for motion with marked_as_important' do
+    assert_equal 2, FollowersCollector.new(activity: important_motion.activities.first).count
   end
 end

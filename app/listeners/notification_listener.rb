@@ -17,15 +17,13 @@ class NotificationListener
 
   def create_notifications_for(activity)
     recipients = FollowersCollector
-                 .new(activity.recipient, activity.follow_type)
-                 .call
-                 .reject { |u| u.profile == activity.owner }
+                   .new(activity: activity)
+                   .call
+                   .to_a
     if activity.trackable_type == 'Decision'
-      forwarded_to_user = activity.trackable.forwarded_user
-      if forwarded_to_user.present? &&
-          !recipients.include?(forwarded_to_user) &&
-          !(forwarded_to_user == activity.owner.profileable)
-        recipients << forwarded_to_user
+      forwarded_to = activity.trackable.forwarded_user
+      if forwarded_to.present? && !recipients.include?(forwarded_to) && forwarded_to != activity.owner.profileable
+        recipients << forwarded_to
       end
     end
     Notification.create!(prepare_recipients(activity, recipients))

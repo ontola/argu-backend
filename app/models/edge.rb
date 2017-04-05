@@ -147,7 +147,7 @@ class Edge < ApplicationRecord
   # @param [Symbol] level The lowest type of follower to include
   # @return [Integer] The number of followers
   def potential_audience(level = :reactions)
-    follows.where('follow_type >= ?', Follow.follow_types[level]).distinct.count
+    FollowersCollector.new(resource: owner, follow_type: level).count
   end
 
   def publish!

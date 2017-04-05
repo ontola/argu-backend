@@ -19,13 +19,23 @@ class NotificationListenerTest < ActiveSupport::TestCase
   end
 
   test 'should create notification on motion activity' do
+    Notification.destroy_all
     assert_difference('Notification.count', 1) do
       subject.create_activity_successful(motion_activity)
     end
     assert_equal 'reaction', Notification.last.notification_type
+
+    motion.argu_publication.update(follow_type: 'news')
+    motion_activity.reload
+
+    assert_difference('Notification.count', 2) do
+      subject.create_activity_successful(motion_activity)
+    end
+    assert_equal 'news', Notification.last.notification_type
   end
 
   test 'should create notification on news motion activity' do
+    Notification.destroy_all
     # Create notifications for the follower and the creators of the vote and the motion
     assert_difference('Notification.count', 3) do
       subject.create_activity_successful(news_motion_activity)
@@ -34,6 +44,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
   end
 
   test 'should not create notifications for votes' do
+    Notification.destroy_all
     assert_difference('Notification.count', 0) do
       subject.create_activity_successful(vote_activity)
     end
