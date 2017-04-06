@@ -12,7 +12,7 @@ class AuthorizedController < ApplicationController
   before_action :check_if_registered,
                 except: %i(show shift move convert convert!)
   before_action :authorize_action, except: :index
-  helper_method :authenticated_resource, :collect_banners
+  helper_method :authenticated_edge, :authenticated_resource, :collect_banners
 
   # @private
   def user_context
@@ -20,7 +20,7 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       doorkeeper_scopes,
-      authenticated_resource!.edge,
+      authenticated_tree,
       session[:a_tokens]
     )
   end
@@ -29,6 +29,14 @@ class AuthorizedController < ApplicationController
 
   def authorize_action
     authorize authenticated_resource, "#{params[:action].chomp('!')}?"
+  end
+
+  def authenticated_tree
+    @_tree ||= authenticated_edge.self_and_ancestors
+  end
+
+  def authenticated_edge
+    @resource_edge ||= authenticated_resource!.edge
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found

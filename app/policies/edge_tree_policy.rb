@@ -116,7 +116,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def cache_level(level, val, groups)
-    fdsa
+
     user_context.cache_key(record.identifier, level, val)
   end
 
