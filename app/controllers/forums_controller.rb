@@ -100,6 +100,11 @@ class ForumsController < EdgeTreeController
 
   private
 
+  def authenticated_tree
+    return if action_name == 'index'
+    super
+  end
+
   def authorize_action
     return super unless action_name == 'show'
     authorize resource_by_id, :list?

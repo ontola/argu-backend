@@ -45,6 +45,10 @@ class ConversionsController < ServiceController
     )
   end
 
+  def get_parent_edge
+    convertible_edge.parent
+  end
+
   def permit_params
     params
       .require(:conversion)

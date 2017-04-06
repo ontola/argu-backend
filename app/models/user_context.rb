@@ -4,7 +4,7 @@
 class UserContext
   attr_reader :user, :actor, :doorkeeper_scopes, :opts
 
-  def initialize(user, profile, doorkeeper_scopes, opts = {})
+  def initialize(user, profile, doorkeeper_scopes, tree_relation = nil, opts = {})
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes

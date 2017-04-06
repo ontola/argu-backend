@@ -58,6 +58,8 @@ class Users::IdentitiesController < AuthorizedController
 
   private
 
+  def authenticated_tree; end
+
   def resource_id
     return super unless %w(connect connect!).include?(action_name)
     payload = decode_token params[:token]

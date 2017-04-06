@@ -117,6 +117,8 @@ class UsersController < AuthorizedController
               end
   end
 
+  def authenticated_tree; end
+
   def complete_feed_param; end
 
   def email_changed?

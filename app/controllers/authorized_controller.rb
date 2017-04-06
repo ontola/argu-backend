@@ -16,10 +16,11 @@ class AuthorizedController < ApplicationController
 
   # @private
   def user_context
-    UserContext.new(
+    @_uc ||= UserContext.new(
       current_user,
       current_profile,
       doorkeeper_scopes,
+      @_error_mode ? nil : authenticated_tree,
       session[:a_tokens]
     )
   end
@@ -53,6 +54,19 @@ class AuthorizedController < ApplicationController
         new_resource_from_params
       else
         resource_by_id
+      end
+  end
+
+  # The scope of the item used for authorization
+  def authenticated_tree
+    @_tree ||=
+      case action_name
+      when 'new', 'create', 'index'
+        get_parent_edge.self_and_ancestors
+      when 'update'
+        resource_by_id&.edge&.self_and_ancestors
+      else
+        authenticated_edge&.self_and_ancestors
       end
   end
 

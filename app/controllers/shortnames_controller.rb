@@ -15,6 +15,22 @@ class ShortnamesController < AuthorizedController
 
   private
 
+  def authenticated_edge
+    authenticated_resource.owner.edge
+  end
+
+  def authenticated_tree
+    @_tree ||=
+      case action_name
+      when 'new', 'create', 'index'
+        get_parent_edge.self_and_ancestors
+      when 'update'
+        resource_by_id&.owner&.edge&.self_and_ancestors
+      else
+        authenticated_edge&.self_and_ancestors
+      end
+  end
+
   def get_parent_resource
     @parent_resource ||=
       if %w(new create).include?(params[:action])

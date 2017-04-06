@@ -4,6 +4,8 @@ class BannerDismissalsController < AuthorizedController
 
   private
 
+  def authenticated_tree; end
+
   def authenticated_resource!
     if params[:action] == 'new' || params[:action] == 'create'
       @resource ||= BannerDismissal.new banner_dismissal_params

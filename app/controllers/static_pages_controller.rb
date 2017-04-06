@@ -93,6 +93,16 @@ class StaticPagesController < ApplicationController
     end
   end
 
+  def user_context
+    @_uc ||= UserContext.new(
+      current_user,
+      current_profile,
+      doorkeeper_scopes,
+      nil,
+      session[:a_tokens]
+    )
+  end
+
   private
 
   def complete_feed_param; end

@@ -26,6 +26,12 @@ module Argu
       Argu::ERROR_TYPES[e.class].try(:[], :id) || 'BAD_REQUEST'
     end
 
+    def error_mode(exception)
+      @_error_mode = true
+      Rails.logger.error exception
+      @_uc = nil
+    end
+
     def error_response_html(e, view: nil, opts: {})
       @quote = (Setting.get(:quotes) || '').split(';').sample
       view ||= "status/#{error_status(e)}"
@@ -37,6 +43,7 @@ module Argu
     end
 
     def handle_error(e)
+      error_mode(e)
       respond_to do |format|
         format.html { error_response_html(e) }
         format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
@@ -48,6 +55,7 @@ module Argu
     def handle_not_authorized_error(e)
       @_not_authorized_caught = true
       return handle_error(e) unless request.format.html?
+      error_mode(e)
       respond_to do |format|
         format.html do
           flash[:alert] = e.message
@@ -59,6 +67,7 @@ module Argu
     def handle_not_a_user_error(e)
       @_not_a_user_caught = true
       return handle_error(e) unless %i(html js).include?(request.format.symbol)
+      error_mode(e)
       respond_to do |format|
         format.js do
           @resource = user_with_r(e.r)
@@ -85,6 +94,7 @@ module Argu
 
     def handle_record_not_unique(e)
       return handle_error(e) unless request.format.html?
+      error_mode(e)
       respond_to do |format|
         format.html do
           flash[:warning] = t(:twice_warning)
@@ -95,6 +105,7 @@ module Argu
 
     def handle_stale_object_error
       return handle_error(e) unless request.format.html?
+      error_mode(e)
       respond_to do |format|
         format.html do
           correct_stale_record_version
