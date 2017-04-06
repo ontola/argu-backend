@@ -9,8 +9,8 @@ class Activity < PublicActivity::Activity
   #   Moderator updates Alice's argument
   #   activity.owner # => Moderator
   belongs_to :owner, class_name: 'Profile'
-  belongs_to :trackable_edge, class_name: 'Edge'
-  belongs_to :recipient_edge, class_name: 'Edge'
+  belongs_to :trackable_edge, class_name: 'Edge', inverse_of: :activities
+  belongs_to :recipient_edge, class_name: 'Edge', inverse_of: :recipient_activities
   belongs_to :forum
 
   attr_accessor :potential_action
@@ -78,7 +78,7 @@ class Activity < PublicActivity::Activity
   # @note See Follow.follow_types, Publication.follow_types and Notification.notification_types
   # @return [String] The follow type
   def follow_type
-    trackable.try(:argu_publication)&.follow_type || 'reactions'
+    trackable_edge.try(:argu_publication)&.follow_type || 'reactions'
   end
 
   def object

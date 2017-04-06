@@ -18,6 +18,9 @@ class ApplicationService
       subscribe(ActivityListener
                   .new(creator: options.fetch(:creator),
                        publisher: options.fetch(:publisher)))
+      subscribe(NotificationListener.new,
+                on: "update_#{resource.model_name.singular}_successful",
+                with: :update_successful)
     end
     return unless options[:uuid].present?
     subscribe(AnalyticsListener.new(

@@ -13,6 +13,16 @@ class NotificationListener
     end
   end
 
+  def update_successful(resource)
+    if resource.is_publishable? &&
+        resource.is_published? &&
+        resource.edge.argu_publication.previous_changes.include?('follow_type') &&
+        resource.edge.argu_publication.news?
+      activity = resource.edge.activities.find_by("key ~ '*.publish'")
+      create_notifications_for(activity) if activity
+    end
+  end
+
   private
 
   def create_notifications_for(activity)

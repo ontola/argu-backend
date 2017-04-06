@@ -25,11 +25,8 @@ class NotificationListenerTest < ActiveSupport::TestCase
     end
     assert_equal 'reaction', Notification.last.notification_type
 
-    motion.argu_publication.update(follow_type: 'news')
-    motion_activity.reload
-
     assert_difference('Notification.count', 2) do
-      subject.create_activity_successful(motion_activity)
+      update_resource(motion, mark_as_important: '1')
     end
     assert_equal 'news', Notification.last.notification_type
   end
