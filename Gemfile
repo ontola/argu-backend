@@ -78,7 +78,7 @@ gem 'slim', '~> 3.0.6'
 gem 'jquery-rails', '~> 4.2.1'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'carrierwave-vips', '~> 1.0.5'
+gem 'carrierwave-vips', '~> 1.1.3'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
 gem 'carrierwave-aws', '~> 1.1.0'

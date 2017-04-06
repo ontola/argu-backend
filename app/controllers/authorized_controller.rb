@@ -16,10 +16,11 @@ class AuthorizedController < ApplicationController
 
   # @private
   def user_context
-    UserContext.new(
+    @_uc ||= UserContext.new(
       current_user,
       current_profile,
       doorkeeper_scopes,
+      authenticated_resource!.edge,
       session[:a_tokens]
     )
   end
