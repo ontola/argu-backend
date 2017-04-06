@@ -47,7 +47,8 @@ const OpinionContainerProps = {
     onSubmitArgument: React.PropTypes.func.isRequired,
     onSubmitOpinion: React.PropTypes.func.isRequired,
     opinionForm: React.PropTypes.bool.isRequired,
-    selectedArguments: React.PropTypes.array.isRequired
+    selectedArguments: React.PropTypes.array.isRequired,
+    submitting: React.PropTypes.bool.isRequired
 };
 OpinionContainer.propTypes = OpinionContainerProps;
 
@@ -98,7 +99,8 @@ export const OpinionForm = React.createClass({
         onOpenArgumentForm: React.PropTypes.func.isRequired,
         onOpenOpinionForm: React.PropTypes.func.isRequired,
         onSubmitOpinion: React.PropTypes.func.isRequired,
-        selectedArguments: React.PropTypes.array.isRequired
+        selectedArguments: React.PropTypes.array.isRequired,
+        submitting: React.PropTypes.bool.isRequired
     },
 
     mixins: [
@@ -110,7 +112,7 @@ export const OpinionForm = React.createClass({
     },
 
     render () {
-        const { newExplanation, newSelectedArguments, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion } = this.props;
+        const { newExplanation, newSelectedArguments, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion, submitting } = this.props;
         const argumentFields = {};
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
@@ -173,7 +175,7 @@ export const OpinionForm = React.createClass({
                             <ol>
                                 <div className="sticky-submit">
                                     <li className="action button_action">
-                                        <button type="submit">
+                                        <button type="submit" disabled={submitting}>
                                             {I18n.t('opinions.form.submit')}
                                         </button>
                                     </li>

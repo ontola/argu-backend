@@ -37,6 +37,7 @@ const OpinionMixin = {
     argumentHandler (e) {
         e.preventDefault();
         const { createArgument: { side, title, body } } = this.state;
+        this.setState({ submitting: true });
         fetch(`${this.props.argumentUrl}.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
@@ -72,6 +73,7 @@ const OpinionMixin = {
                             body: ''
                         },
                         selectedArguments,
+                        submitting: false,
                         newSelectedArguments
                     });
                 }
@@ -112,6 +114,7 @@ const OpinionMixin = {
     opinionHandler (e) {
         e.preventDefault();
         const { currentVote, newExplanation, newSelectedArguments } = this.state;
+        this.setState({ submitting: true });
         fetch(`${this.props.vote_url}.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
@@ -125,7 +128,12 @@ const OpinionMixin = {
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
-                    this.setState(Object.assign({}, data.vote, { opinionForm: false, currentExplanation: { explanation: this.state.newExplanation }, selectedArguments: this.state.newSelectedArguments }));
+                    this.setState(Object.assign({}, data.vote, {
+                        opinionForm: false,
+                        currentExplanation: { explanation: this.state.newExplanation },
+                        selectedArguments: this.state.newSelectedArguments,
+                        submitting: false
+                    }));
                 }
             }).catch(er => {
                 if (er.status === 403) {

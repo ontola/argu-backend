@@ -52,7 +52,7 @@ export const ArgumentForm = props => {
                                     </button>
                                 </li>
                                 <li className="action button_action">
-                                    <button type="submit">
+                                    <button type="submit" disabled={props.submitting}>
                                         {I18n.t('opinions.form.submit')}
                                     </button>
                                 </li>
@@ -68,7 +68,8 @@ const ArgumentFormProps = {
     createArgument: React.PropTypes.object,
     onArgumentChange: React.PropTypes.func,
     onCloseArgumentForm: React.PropTypes.func,
-    onSubmitArgument: React.PropTypes.func
+    onSubmitArgument: React.PropTypes.func,
+    submitting: React.PropTypes.bool
 };
 ArgumentForm.propTypes = ArgumentFormProps;
 

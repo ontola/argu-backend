@@ -52,7 +52,8 @@ export const SmallVoteContainer = React.createClass({
             newSelectedArguments: this.props.selectedArguments,
             opinionForm: false,
             percent: this.props.percent,
-            selectedArguments: this.props.selectedArguments
+            selectedArguments: this.props.selectedArguments,
+            submitting: false
         };
     },
 
@@ -79,7 +80,8 @@ export const SmallVoteContainer = React.createClass({
                                                  onSubmitArgument={this.argumentHandler}
                                                  onSubmitOpinion={this.opinionHandler}
                                                  opinionForm={this.state.opinionForm}
-                                                 selectedArguments={this.state.selectedArguments}/>;
+                                                 selectedArguments={this.state.selectedArguments}
+                                                 submitting={this.state.submitting}/>;
         }
         return (
             <div>
