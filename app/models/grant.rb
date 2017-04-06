@@ -4,9 +4,11 @@ class Grant < ApplicationRecord
   belongs_to :edge
   belongs_to :group
 
-  scope :forum_manager, -> { manager.joins(:edge).where(edges: {owner_type: 'Forum'}) }
+  scope :forum_manager, lambda {
+    where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Forum'})
+  }
   scope :forum_member, -> { member.joins(:edge).where(edges: {owner_type: 'Forum'}) }
-  scope :page_manager, -> { manager.joins(:edge).where(edges: {owner_type: 'Page'}) }
+  scope :page_manager, -> { where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
 
   validates :group, :role, :edge, presence: true
