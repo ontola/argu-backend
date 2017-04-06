@@ -93,7 +93,9 @@ class GroupMembershipsController < AuthorizedController
   def redirect_url
     return redirect_param if redirect_param.present?
     return root_path if authenticated_resource!.grants.empty?
-    polymorphic_url(authenticated_resource!.grants.first.edge.owner)
+    forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
+    return polymorphic_url(forum_grants.first.edge.owner) if forum_grants.count == 1
+    page_url(authenticated_resource!.page)
   end
 
   def granted_resource

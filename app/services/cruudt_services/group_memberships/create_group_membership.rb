@@ -15,6 +15,19 @@ class CreateGroupMembership < EdgeableCreateService
 
   private
 
+  def after_save
+    if resource.member.profileable.is_a?(User)
+      forum_edge_ids = resource.grants.joins(:edge).where(edges: {owner_type: 'Forum'}).pluck('edges.id').uniq
+      if forum_edge_ids.empty? && resource.grants.joins(:edge).where(edges: {owner: resource.page}).present?
+        forum_edge_ids = resource.page.edge.children.where(owner_type: 'Forum').pluck(:id)
+      end
+      forum_edge_ids.each do |forum_edge_id|
+        Favorite.create(user: resource.member.profileable, edge_id: forum_edge_id)
+      end
+    end
+    super
+  end
+
   def object_attributes=(obj)
   end
 

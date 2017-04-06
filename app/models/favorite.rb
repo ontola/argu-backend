@@ -2,6 +2,7 @@
 class Favorite < ApplicationRecord
   belongs_to :user
   belongs_to :edge
+  validates :edge, presence: true, uniqueness: {scope: :user}
 
   cattr_accessor :parent_classes do
     %i(forum)

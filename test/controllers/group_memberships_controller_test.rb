@@ -3,8 +3,15 @@ require 'test_helper'
 
 class GroupMembershipsControllerTest < ActionController::TestCase
   define_freetown
-  define_cairo
+  define_freetown('freetown2')
   let!(:group) { create(:group, parent: freetown.page.edge) }
+  let!(:forum_group) { create(:group, parent: freetown.page.edge) }
+  let!(:single_forum_group) { create(:group, parent: freetown.page.edge) }
+  let!(:page_group) { create(:group, parent: freetown.page.edge) }
+  let!(:grant) { create(:grant, edge: freetown.edge, group: single_forum_group) }
+  let!(:freetown_grant) { create(:grant, edge: freetown.edge, group: forum_group) }
+  let!(:freetown2_grant) { create(:grant, edge: freetown2.edge, group: forum_group) }
+  let!(:page_grant) { create(:grant, edge: argu.edge, group: page_group) }
   let!(:member) { create(:group_membership, parent: group.edge).member.profileable }
 
   ####################################
@@ -41,15 +48,37 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'user should post create with valid token' do
+  test 'user should post create with valid token for single_forum_group' do
     validate_valid_bearer_token
     sign_in user
 
-    assert_difference 'GroupMembership.count', 1 do
-      post :create, params: {group_id: group, token: '1234567890'}
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1]] do
+      post :create, params: {group_id: single_forum_group, token: '1234567890'}
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'user should post create with valid token for forum_group' do
+    validate_valid_bearer_token
+    sign_in user
+
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+      post :create, params: {group_id: forum_group, token: '1234567890'}
+    end
+
+    assert_redirected_to page_url(argu)
+  end
+
+  test 'user should post create with valid token for page_group' do
+    validate_valid_bearer_token
+    sign_in user
+
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+      post :create, params: {group_id: page_group, token: '1234567890'}
+    end
+
+    assert_redirected_to page_url(argu)
   end
 
   test 'user should not delete destroy other membership' do
