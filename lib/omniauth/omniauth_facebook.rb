@@ -13,7 +13,6 @@ module Omniauth
         last_name = name_arr[-1] if name_arr.length > 1
         user = User.new(
           email: auth.info.email,
-          confirmed_at: Time.current,
           first_name: first_name,
           middle_name: middle_name,
           last_name: last_name,
@@ -28,6 +27,7 @@ module Omniauth
         )
         user.identities << identity
         user.shortname = nil
+        user.primary_email_record.confirmed_at = DateTime.current
         identity.save!
         user.save!
       end

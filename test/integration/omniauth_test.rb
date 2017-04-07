@@ -41,11 +41,13 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     get user_facebook_omniauth_authorize_path
     assert_redirected_to user_facebook_omniauth_callback_path
 
-    assert_difference 'Favorite.count' do
+    assert_differences [['User.count', 1], ['Favorite.count', 1]] do
       follow_redirect!
       assert_redirected_to setup_users_path
       assert_analytics_collected('registrations', 'create', 'facebook')
     end
+
+    assert User.last.confirmed?
 
     follow_redirect!
     assert_response 200
