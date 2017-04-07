@@ -65,6 +65,11 @@ class Forum < Edgeable::Base
   contextualize_with_id { |f| Rails.application.routes.url_helpers.canonical_forum_url(f.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
 
+  def children_count(association)
+    return edge.children_count(association) unless association == :motions
+    edge.descendants.published.untrashed.where(owner_type: 'Motion').count
+  end
+
   def creator
     page.owner
   end
