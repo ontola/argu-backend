@@ -75,7 +75,7 @@ class AuthorizedController < ApplicationController
   def authenticated_tree
     @_tree ||=
       case action_name
-      when 'new', 'create','edit', 'update', 'index'
+      when 'new', 'create', 'edit', 'update', 'index'
         get_parent_edge.self_and_ancestors
       else
         authenticated_edge.self_and_ancestors
