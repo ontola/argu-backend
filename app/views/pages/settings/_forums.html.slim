@@ -11,7 +11,7 @@ h3= t('forums.plural')
       tr
         td
           span[class="fa fa-#{visibility_icon_for(forum)}"]
-          =link_to forum.display_name, settings_forum_path(forum)
+          =link_to forum.display_name, settings_forum_path(forum), data: {turbolinks: 'false'}
         td
           =forum.url
         td
@@ -19,7 +19,7 @@ h3= t('forums.plural')
         td
           =forum.edge.groups.count
 - if policy(resource).create_child?(:forums)
-  =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom' do
+  =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom', data: {turbolinks: 'false'} do
       span.fa.fa-plus
       span.icon-left= t('forums.type_new')
 - else

@@ -47,12 +47,12 @@ h2= t('portal.forums')
     tbody
       - @forums.each do |f|
         tr[id=f.identifier]
-          td= link_to f.name, forum_path(f)
+          td= link_to f.name, forum_path(f), data: {turbolinks: 'false'}
           td= f.url
           td= l f.created_at, format: :short
           /td= l f.updated_at, format: :short
           td= f.follows_count || '-'
           td= f.children_count(:questions) || '-'
           td= f.children_count(:motions) || '-'
-          td= link_to t('portal.settings.title'), settings_forum_path(f)
+          td= link_to t('portal.settings.title'), settings_forum_path(f), data: {turbolinks: 'false'}
   =paginate @forums, param_name: :forums_page

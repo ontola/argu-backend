@@ -2,6 +2,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User email' do
+  define_freetown
   let(:user) { create(:user) }
 
   background do
@@ -41,7 +42,7 @@ RSpec.feature 'User email' do
                                             'e-mail address by pressing the link below.'
 
     current_email.click_link 'Confirm your e-mail'
-    expect(page).to have_current_path(info_path(:about))
+    expect(page).to have_current_path(forum_path(freetown))
     visit settings_path(tab: :authentication)
     expect(page).not_to have_link('Send confirmation mail')
     expect(page).to have_selector("input[value='#{new_email}']")

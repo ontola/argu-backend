@@ -2,6 +2,8 @@
 require 'test_helper'
 
 class InfoControllerTest < ActionController::TestCase
+  define_freetown
+
   let(:team) do
     create(:setting,
            key: 'team',

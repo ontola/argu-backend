@@ -6,8 +6,9 @@ nav#navbar.navbar role="navigation"
         =image_tag('logo-white.svg')
     ul.navbar-links
       li
-        a.navbar-item[href="/"]
-          span.fa.fa-home
+        =link_to(preferred_forum, class: 'navbar-item', alt: 'home')
+          =image_tag(preferred_forum.default_profile_photo.url(:avatar), class: 'profile-picture--navbar')
+          span= preferred_forum.display_name
     ul.navbar-links.navbar-links-right
       - unless current_user.guest?
         =link_to(destroy_user_session_url, class: 'navbar-item', data: {method: 'delete', turbolinks: 'false'})

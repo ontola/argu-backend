@@ -4,6 +4,7 @@ require 'test_helper'
 class ProfilesControllerTest < ActionController::TestCase
   include ProfilesHelper
 
+  define_freetown
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
 

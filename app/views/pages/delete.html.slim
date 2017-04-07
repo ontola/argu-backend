@@ -9,7 +9,7 @@
           p.danger= t('pages.settings.advanced.delete.forum_owner')
           ul
             - resource.forums.each do |forum|
-              li= link_to forum.display_name, forum_path(forum)
+              li= link_to forum.display_name, forum_path(forum), data: {turbolinks: 'false'}
         -else
           .form
             p= t('pages.settings.advanced.delete.confirm.body_html')

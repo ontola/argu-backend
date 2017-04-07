@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
           PublicActivity::StoreController, NamesHelper, UsersHelper, NestedAttributesHelper,
           JsonApiHelper, Common::Responses, RedirectHelper
-  helper_method :current_profile, :show_trashed?, :collect_announcements
+  helper_method :current_profile, :show_trashed?, :collect_announcements, :preferred_forum
 
   ::INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
 

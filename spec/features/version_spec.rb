@@ -10,14 +10,14 @@ RSpec.feature 'Version', type: :feature do
     page.execute_script('window.arguVersion = "0.0.1";')
 
     page.dismiss_confirm 'A new version of Argu has been released. Would you like to reload this page? (recommended)' do
-      click_link(freetown.display_name)
+      click_link('Show open forums')
     end
 
     page.accept_confirm 'A new version of Argu has been released. Would you like to reload this page? (recommended)' do
-      click_link('New discussion')
+      click_link('Show open forums')
     end
 
-    click_link('New idea')
-    expect(page).to have_content('Sign up')
+    click_link('Show open forums')
+    expect(page).to have_current_path discover_forums_path
   end
 end

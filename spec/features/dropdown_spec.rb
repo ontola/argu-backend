@@ -11,7 +11,7 @@ RSpec.feature 'Dropdown', type: :feature do
     visit forum_path(nederland)
 
     within('.navbar-forum-selector') do
-      click_on 'Forums'
+      find('.navbar-forums').click
       click_link houten.name
     end
 

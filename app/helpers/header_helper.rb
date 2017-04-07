@@ -95,9 +95,12 @@ module HeaderHelper
       .shortname_owners_for_klass('Forum', ids)
       .includes(owner: :default_profile_photo)
       .map do |shortname|
-        link_item(shortname.owner.display_name,
-                  forum_path(shortname.shortname),
-                  image: shortname.owner.default_profile_photo.url(:icon))
+        link_item(
+          shortname.owner.display_name,
+          forum_path(shortname.shortname),
+          data: {turbolinks: 'false'},
+          image: shortname.owner.default_profile_photo.url(:icon)
+        )
       end
   end
 

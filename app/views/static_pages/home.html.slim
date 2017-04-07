@@ -9,7 +9,7 @@
             ul.box-list-links
               - current_user.favorite_forums.includes(:shortname, :default_profile_photo).each do |o|
                 li
-                  =link_to forum_path(o)
+                  =link_to forum_path(o), data: {turbolinks: 'false'}
                     =image_tag o.default_profile_photo.url(:icon), size: '16x16'
                     =o.name
           .group

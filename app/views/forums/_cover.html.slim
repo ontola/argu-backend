@@ -25,7 +25,7 @@
     .cover-buttons-container
       ul.btns-horizontal
         - if policy(resource).update?
-          li.float-right= link_to settings_forum_path(resource.url), class: 'btn--transparant'
+          li.float-right= link_to settings_forum_path(resource.url), class: 'btn--transparant', data: {turbolinks: 'false'}
             span.fa.fa-gear
             span.icon-left= t('forums.settings.title')
         - if controller_name == 'feed'

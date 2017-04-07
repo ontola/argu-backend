@@ -344,10 +344,11 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
-    click_link freetown.display_name
+    within('.wrapper') do
+      click_link freetown.display_name
+    end
     expect(page).to have_current_path forum_path(freetown)
     expect(page).to have_content(freetown.display_name)
-    expect(page).to have_content(freetown.bio)
     expect(page).to have_content(question.display_name)
   end
 end

@@ -4,8 +4,8 @@ footer
       h3.footer-heading= t('forums.plural')
     /li= link_to "Een eigen forum?", "/product"
     li= link_to t('forums.show_open'), discover_forums_path
-    li= link_to 'Nederland', forum_path('nederland')
-    li= link_to 'Argu Feedback', forum_path('feedback')
+    li= link_to 'Nederland', forum_path('nederland'), data: {turbolinks: 'false'}
+    li= link_to 'Argu Feedback', forum_path('feedback'), data: {turbolinks: 'false'}
     li
       h4.footer-heading.footer-heading--language= t('language_language')
     .footer-language-dropdown

@@ -4,6 +4,7 @@ require 'test_helper'
 class SourcesTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
+  define_freetown
   let(:page) { create(:page) }
   let(:source) { create(:source, parent: page.edge, shortname: 'source') }
 

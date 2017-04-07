@@ -18,15 +18,6 @@ class CurrentActor
     end
   end
 
-  def current_forum
-    return {} unless actor.present?
-    {
-      display_name: actor.preferred_forum.display_name,
-      shortname: actor.preferred_forum.url,
-      cover_photo: actor.preferred_forum.default_cover_photo
-    }
-  end
-
   def potential_action; end
 
   def shortname

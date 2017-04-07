@@ -2,6 +2,7 @@
 require 'test_helper'
 
 class DocumentsTest < ActionDispatch::IntegrationTest
+  define_freetown
   let!(:policy) do
     create(:document,
            name: 'policy',

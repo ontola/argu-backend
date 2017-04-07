@@ -114,7 +114,7 @@ class PagesController < EdgeTreeController
       case action_name
       when 'create', 'new'
         new_resource_from_params
-      when 'trash', 'untrash'
+      when 'trash', 'untrash', 'index'
         nil
       else
         resource_by_id

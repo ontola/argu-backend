@@ -2,6 +2,7 @@
 require 'test_helper'
 
 class Portal::PortalControllerTest < ActionController::TestCase
+  define_freetown
   let(:user) { create(:user) }
   let(:staff) { create(:user, :staff) }
 

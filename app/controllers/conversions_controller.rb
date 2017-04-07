@@ -54,7 +54,7 @@ class ConversionsController < ServiceController
   def new_resource_from_params
     Conversion.new(
       edge: convertible_edge,
-      klass: convertible_class_names(convertible_edge.owner).first
+      klass: convertible_class_names(convertible_edge.owner)&.first
     )
   end
 
