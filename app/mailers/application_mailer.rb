@@ -2,7 +2,7 @@
 class ApplicationMailer < ActionMailer::Base
   include Roadie::Rails::Automatic, NamesHelper
 
-  default from: 'noreply@argu.co',
+  default from: '"Argu" <noreply@argu.co>',
           charset: 'UTF-8',
           content_type: 'text/html'
   layout 'email'
