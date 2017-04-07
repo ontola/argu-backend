@@ -14,6 +14,16 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action, except: :index
   helper_method :authenticated_edge, :authenticated_resource, :collect_banners
 
+  class AuthenticatedPolicy
+    attr_reader :context, :tree
+    def initialize(context, tree)
+      @context = context
+      @tree = tree
+    end
+
+    def policy_for(ident_or_edge_id); end
+  end
+
   # @private
   def user_context
     @_uc ||= UserContext.new(
@@ -31,12 +41,13 @@ class AuthorizedController < ApplicationController
     authorize authenticated_resource, "#{params[:action].chomp('!')}?"
   end
 
-  def authenticated_tree
-    @_tree ||= authenticated_edge.self_and_ancestors
-  end
-
   def authenticated_edge
     @resource_edge ||= authenticated_resource!.edge
+  end
+
+  def authenticated_policy(location)
+    @_auth_pol ||= AuthenticatedPolicy.new(user_context, authenticated_tree)
+    @_auth_pol.policy_for(location)
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found
@@ -59,6 +70,10 @@ class AuthorizedController < ApplicationController
       else
         resource_by_id
       end
+  end
+
+  def authenticated_tree
+    @_tree ||= authenticated_edge.self_and_ancestors
   end
 
   def check_if_registered

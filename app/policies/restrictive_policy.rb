@@ -56,14 +56,9 @@ class RestrictivePolicy
     @record = record
   end
 
-
-
-
-
   def user_context
     @context
   end
-
 
   def cache_level(level, val)
     user_context.cache_key(record.identifier, level, val)
@@ -72,7 +67,7 @@ class RestrictivePolicy
   def check_level(level)
     return nil if record.try(:id).blank?
     l = user_context.check_key(record.identifier, level)
-    puts "============LEVEL HIT #{l}=====================" unless l.nil?
+    # puts "============LEVEL HIT #{l}=====================" unless l.nil?
     l
   end
 
@@ -84,9 +79,6 @@ class RestrictivePolicy
     return nil if record.try(:id).blank?
     user_context.check_key(record.identifier, action)
   end
-
-
-
 
   delegate :user, to: :context
   delegate :actor, to: :context

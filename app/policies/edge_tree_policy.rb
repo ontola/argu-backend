@@ -80,7 +80,8 @@ class EdgeTreePolicy < RestrictivePolicy
       # Get the tuples of the entire parent chain
       cc = persisted_edge.self_and_ancestors.map(&:polymorphic_tuple).compact
       # Match them against the set of stepups within the forum
-      cache_level(:moderator, moderator) if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
+      do_cache = cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
+      cache_level(:moderator, moderator) if do_cache
     end
 
     def is_manager?
@@ -108,29 +109,42 @@ class EdgeTreePolicy < RestrictivePolicy
   end
   include Roles
   delegate :edge, to: :record
-  delegate :persisted_edge, :has_expired_ancestors?, :has_unpublished_ancestors?, to: :edge
+  delegate :persisted_edge, :has_unpublished_ancestors?, to: :edge
+
+  def has_expired_ancestors?
+    e = record.is_a?(Edge) ? record : record.edge
+    if context.in_tree?(e)
+      context.expired?(e)
+    else
+      record.has_expired_ancestors?
+    end
+  end
+
+  def has_unpublished_ancestors?
+    e = record.is_a?(Edge) ? record : record.edge
+    if context.in_tree?(e)
+      context.unpublished?(e)
+    else
+      record.has_expired_ancestors?
+    end
+  end
 
   def initialize(context, record)
     super
     raise('No edge avaliable in policy') unless edge
   end
 
-  def cache_level(level, val, groups)
-
+  def cache_level(level, val, _groups)
     user_context.cache_key(record.identifier, level, val)
   end
 
   def check_level(level)
-
-    # The context has the tree of the current resource to make use of
-
-
     if persisted_edge.parent.present?
       p_level = Pundit.policy(context, persisted_edge.parent).check_level(level)
       return p_level unless p_level.nil?
     end
     l = context.check_key(persisted_edge.id, level)
-    puts "============EDGE LEVEL HIT #{l}=====================" unless l.nil?
+    # puts "============EDGE LEVEL HIT #{l}=====================" unless l.nil?
     l
   end
 
@@ -141,7 +155,6 @@ class EdgeTreePolicy < RestrictivePolicy
   def check_action(action)
     user_context.check_key(persisted_edge.id, action)
   end
-
 
   def assert_publish_type
     return if record.edge.argu_publication&.publish_type.nil?
@@ -182,7 +195,7 @@ class EdgeTreePolicy < RestrictivePolicy
   # @return [Integer, false] The user's clearance level
   def create_child?(raw_klass, attrs = {})
     klass = raw_klass.to_s.classify.constantize
-    cache_key = "create_child_for_#{klass.to_s}?".to_sym
+    cache_key = "create_child_for_#{klass}?".to_sym
     c = check_action(cache_key)
     return c unless c.nil?
 
@@ -208,7 +221,7 @@ class EdgeTreePolicy < RestrictivePolicy
   # @return [Integer, false] The user's clearance level
   def index_children?(raw_klass, attrs = {})
     klass = raw_klass.to_s.classify.constantize
-    cache_key = "create_child_for_#{klass.to_s}?".to_sym
+    cache_key = "create_child_for_#{klass}?".to_sym
     c = check_action(cache_key)
     return c unless c.nil?
 
