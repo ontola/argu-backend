@@ -227,7 +227,7 @@ export const OpinionShow = React.createClass({
             .filter(argument => {
                 return (selectedArguments.indexOf(argument.id) > -1);
             }).forEach(argument => {
-                argumentFields[argument.side].push({ label: argument.displayName, value: argument.id });
+                argumentFields[argument.side].push({ label: argument.displayName, url: argument.url, value: argument.id });
             });
         return (
             <div>
@@ -238,10 +238,10 @@ export const OpinionShow = React.createClass({
                             <p>{explanation}</p>
                         </div>
                         <div className="opinion-body__arguments-list">
-                            {argumentFields['pro'].map(result => { return <label className="pro-t" key={result.value}>{result.label}</label>; })}
+                            {argumentFields['pro'].map(result => { return <a href={result.url} key={result.value}><label className="pro-t">{result.label}</label></a>; })}
                         </div>
                         <div className="opinion-body__arguments-list">
-                            {argumentFields['con'].map(result => { return <label className="con-t" key={result.value}>{result.label}</label>; })}
+                            {argumentFields['con'].map(result => { return <a href={result.url} key={result.value}><label className="con-t">{result.label}</label></a>; })}
                         </div>
                     </section>
                     <section className="section--footer">

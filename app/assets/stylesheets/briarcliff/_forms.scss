@@ -98,6 +98,10 @@ label {
   }
 }
 
+a label:hover {
+  cursor: pointer;
+}
+
 legend {
   width: 100%;
   margin-bottom: .4em;

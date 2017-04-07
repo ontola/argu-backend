@@ -20,7 +20,8 @@ module MotionsHelper
         id: argument.id,
         displayName: argument.display_name,
         key: argument.identifier,
-        side: argument.key.to_s
+        side: argument.key.to_s,
+        url: argument.context_id
       }
     end
     localized_react_component({

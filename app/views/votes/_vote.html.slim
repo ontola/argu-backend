@@ -5,9 +5,11 @@
       =render partial: 'application/markdown_collapsible', locals: {content: model.explanation, identifier: model.identifier, character_length: 350}
       .opinion-body__arguments-list
         -model.upvoted_arguments.where(pro: true).each do |argument|
-          label.pro-t= argument.display_name
+          =link_to argument do
+            label.pro-t= argument.display_name
       .opinion-body__arguments-list
         -model.upvoted_arguments.where(pro: false).each do |argument|
-          label.con-t= argument.display_name
+          =link_to argument do
+            label.con-t= argument.display_name
     section.section--footer
       =render partial: model.creator, locals: {resource: model}
