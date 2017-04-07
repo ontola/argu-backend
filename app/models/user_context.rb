@@ -2,7 +2,7 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_reader :user, :actor, :doorkeeper_scopes, :opts
+  attr_reader :authenticated_ancestors, :user, :actor, :doorkeeper_scopes, :opts
 
   class Node
     attr_accessor :id, :record, :expired, :unpublished, :children
@@ -44,14 +44,18 @@ class UserContext
       cur = path.shift
       raise 'Out of scope' if cur != id
       return expired if expired
-      @children[path]
+      return false if path.empty?
+      n_child = children[path[0]]
+      n_child.expired?(path)
     end
 
     def unpublished?(path)
       cur = path.shift
       raise 'Out of scope' if cur != id
       return unpublished if unpublished
-      @children[path]
+      return false if path.empty?
+      n_child = children[path[0]]
+      n_child.unpublished?(path)
     end
   end
 

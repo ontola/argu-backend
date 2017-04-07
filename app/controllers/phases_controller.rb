@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class PhasesController < EdgeTreeController
+
   def show
     respond_to do |format|
       format.html { render locals: {phase: authenticated_resource!} }
