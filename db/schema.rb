@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315101345) do
+ActiveRecord::Schema.define(version: 20170407141654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -584,18 +584,6 @@ ActiveRecord::Schema.define(version: 20170315101345) do
     t.integer  "follow_type",      default: 3,      null: false
   end
 
-  create_table "question_answers", force: :cascade do |t|
-    t.integer  "question_id"
-    t.integer  "motion_id"
-    t.integer  "votes_pro_count", default: 0
-    t.integer  "votes_con_count", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-    t.boolean  "migrated",        default: false, null: false
-    t.index ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
-  end
-
   create_table "questions", force: :cascade do |t|
     t.string   "title",                   limit: 255, default: ""
     t.text     "content",                             default: ""
@@ -862,7 +850,6 @@ ActiveRecord::Schema.define(version: 20170315101345) do
   add_foreign_key "projects", "groups"
   add_foreign_key "projects", "profiles", column: "creator_id"
   add_foreign_key "projects", "users", column: "publisher_id"
-  add_foreign_key "question_answers", "profiles", column: "creator_id"
   add_foreign_key "questions", "places"
   add_foreign_key "questions", "profiles", column: "creator_id"
   add_foreign_key "questions", "projects"
