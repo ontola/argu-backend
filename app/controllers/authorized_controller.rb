@@ -72,11 +72,14 @@ class AuthorizedController < ApplicationController
       end
   end
 
+  # The scope of the item used for authorization
   def authenticated_tree
     @_tree ||=
       case action_name
-      when 'new', 'create', 'edit', 'update', 'index'
+      when 'new', 'create', 'index'
         get_parent_edge.self_and_ancestors
+      when 'update'
+        resource_by_id.edge.self_and_ancestors
       else
         authenticated_edge&.self_and_ancestors
       end

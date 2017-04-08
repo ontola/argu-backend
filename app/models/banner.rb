@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 class Banner < NewsBoy
-  include Photoable, ProfilePhotoable, Loggable
+  include Photoable, ProfilePhotoable, Loggable, Edgeable::Shallow
+
+  def initialize(*opts)
+    super
+    @edge = Edge.new(parent: forum.edge, owner: self)
+  end
 
   belongs_to :forum
   belongs_to :publisher, class_name: 'User'
