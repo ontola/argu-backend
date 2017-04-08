@@ -64,6 +64,11 @@ class Edge < ApplicationRecord
   # Refers to the parent edge
   # attribute :parent_id, :integer
 
+  # Only returns the ids of (persisted) ancestors, so excluding self
+  def real_persisted_ancestor_ids
+    parent && parent.persisted_edge.path.split('.').map(&:to_i)
+  end
+
   def ancestor_ids
     persisted_edge.path.split('.').map(&:to_i)
   end

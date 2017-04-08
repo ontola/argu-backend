@@ -51,10 +51,11 @@ class EdgeTreePolicy < RestrictivePolicy
     def is_member?
       return if persisted_edge.nil?
 
-      c = check_level(:member)
-      return c unless c.nil?
+      # c = check_level(:member)
+      # return c unless c.nil?
       groups = context.granted_group_ids(persisted_edge, 'member')
-      cache_level(:member, member, groups) if groups.any?
+      # cache_level(:member, member, groups) if groups.any?
+      member if groups.any?
     end
 
     def is_creator?
@@ -86,19 +87,21 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_manager?
       return if persisted_edge.nil?
-      c = check_level(:manager)
-      return c unless c.nil?
+      # c = check_level(:manager)
+      # return c unless c.nil?
       groups = context.granted_group_ids(persisted_edge, :manager)
-      return cache_level(:manager, manager, groups) if groups.any?
+      # return cache_level(:manager, manager, groups) if groups.any?
+      return manager if groups.any?
       is_super_admin?
     end
 
     def is_super_admin?
       return if persisted_edge.nil?
-      c = check_level(:manager)
-      return c unless c.nil?
+      # c = check_level(:manager)
+      # return c unless c.nil?
       groups = context.granted_group_ids(persisted_edge, :super_admin)
-      cache_level(:super_admin, super_admin, groups) if groups.any?
+      # cache_level(:super_admin, super_admin, groups) if groups.any?
+      super_admin if groups.any?
     end
 
     def is_manager_up?
@@ -116,7 +119,8 @@ class EdgeTreePolicy < RestrictivePolicy
     if context.in_tree?(e)
       context.expired?(e)
     else
-      record.has_expired_ancestors?
+      # TODO: efficiently handle out-of-scope items. fds
+      e.has_expired_ancestors?
     end
   end
 
@@ -125,7 +129,8 @@ class EdgeTreePolicy < RestrictivePolicy
     if context.in_tree?(e)
       context.unpublished?(e)
     else
-      record.has_expired_ancestors?
+      # TODO: efficiently handle out-of-scope items. fsda
+      e.has_unpublished_ancestors?
     end
   end
 
@@ -134,7 +139,7 @@ class EdgeTreePolicy < RestrictivePolicy
     raise('No edge avaliable in policy') unless edge
   end
 
-  def cache_level(level, val, _groups)
+  def cache_level(level, val, _groups = nil)
     user_context.cache_key(record.identifier, level, val)
   end
 
@@ -194,20 +199,7 @@ class EdgeTreePolicy < RestrictivePolicy
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def create_child?(raw_klass, attrs = {})
-    klass = raw_klass.to_s.classify.constantize
-    cache_key = "create_child_for_#{klass}?".to_sym
-    c = check_action(cache_key)
-    return c unless c.nil?
-
-    r =
-      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
-        child = klass.new(attrs)
-        child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        Pundit.policy(context, child).create? || false
-      else
-        false
-      end
-    cache_action(cache_key, r)
+    child_operation(:create?, raw_klass, attrs)
   end
 
   def follow?
@@ -220,20 +212,7 @@ class EdgeTreePolicy < RestrictivePolicy
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def index_children?(raw_klass, attrs = {})
-    klass = raw_klass.to_s.classify.constantize
-    cache_key = "create_child_for_#{klass}?".to_sym
-    c = check_action(cache_key)
-    return c unless c.nil?
-
-    r =
-      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
-        child = klass.new(attrs)
-        child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        Pundit.policy(context, child).show? || false
-      else
-        false
-      end
-    cache_action(cache_key, r)
+    child_operation(:index?, raw_klass, attrs)
   end
 
   def log?
@@ -274,6 +253,26 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   private
+
+  def child_operation(method, raw_klass, attrs = {})
+    klass = raw_klass.to_s.classify.constantize
+    cache_key = "#{method}_child_for_#{klass}?".to_sym
+    c = check_action(cache_key)
+    return c unless c.nil?
+
+    r =
+      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
+        child = klass.new(attrs)
+        if child.is_fertile?
+          child = record.edge.children.new(owner: child).owner
+          context.graft(child.edge.parent)
+        end
+        Pundit.policy(context, child).send(method) || false
+      else
+        false
+      end
+    cache_action(cache_key, r)
+  end
 
   def parent_policy
     Pundit.policy(context, record.parent_model)

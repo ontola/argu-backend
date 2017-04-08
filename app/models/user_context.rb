@@ -66,12 +66,11 @@ class UserContext
     @opts = opts
     @lookup_map = {}
 
-    return unless tree.present?
-    # Collect all grants per ancestor
-    @authenticated_ancestors = tree
+    @authenticated_ancestors = tree.present? ? tree.to_a : []
+    @authenticated_ancestor_ids = tree.present? ? tree.ids : []
+    return unless @authenticated_ancestors.present?
 
-    @tree = Node.build_from_tree(tree.to_a)
-    # tree.map { |edge| @tree.add(edge) unless edge.id == @tree.id }
+    @tree = Node.build_from_tree(@authenticated_ancestors)
 
     @all_granted_groups = Group
       .joins(grants: :edge)
@@ -90,26 +89,51 @@ class UserContext
   end
 
   def granted_group_ids(record, role)
-    return record.granted_group_ids(role) unless record.ancestor_ids & @authenticated_ancestors
+    granted_group_ids =
+      if @authenticated_ancestors.blank? || (record.ancestor_ids & @authenticated_ancestor_ids).blank?
+        record.granted_group_ids(role)
+      else
+        granted_groups = @all_granted_groups.select do |group|
+          group.grants.select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
+        end
+        granted_groups.map(&:id)
+      end
 
-    role_groups = @all_granted_groups.select do |group|
-      group.grants.select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
-    end
-    user.profile.group_ids & role_groups.map(&:id)
+    user.profile.group_ids & granted_group_ids
   end
 
+  # @param [Edge] node The node to check membership for
   def in_tree?(node)
     r = node
-    r = r.parent while r.parent_id && !@authenticated_ancestors.ids.include?(r.parent_id)
+    r = r.parent while r.parent_id && !@authenticated_ancestor_ids.include?(r.parent_id)
 
-    @authenticated_ancestors.ids.include?(r.parent_id) ? true : false
+    @authenticated_ancestor_ids.include?(r.parent_id) ? true : false
+  end
+
+  # Adds an edge and its ancestors to the loaded tree.
+  # Raises when the edge has a different root than the loaded tree.
+  # @param [Edge] edge The node to add to the tree
+  def graft(edge)
+    ancestors = edge.real_persisted_ancestor_ids
+    raise 'unpersisted edge' unless edge.id
+    raise 'inconsistent root' unless @tree.id == ancestors.shift
+    lowest_node = @tree
+    while ancestors.present?
+      n_id = ancestors.shift
+      n_node = lowest_node.children[n_id]
+      lowest_node.add(edge.self_and_ancestors.find(n_node)) if !n_node && ancestors.present?
+      lowest_node = n_node
+    end
+    lowest_node.add(edge)
   end
 
   def expired?(node)
-    @tree.expired?(node.ancestor_ids)
+    return true if node.expires_at?
+    @tree.expired?(node.real_persisted_ancestor_ids)
   end
 
   def unpublished?(node)
-    @tree.unpublished?(node.ancestor_ids)
+    return false unless node.is_published?
+    @tree.unpublished?(node.real_persisted_ancestor_ids)
   end
 end

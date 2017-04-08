@@ -30,7 +30,7 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       doorkeeper_scopes,
-      authenticated_tree,
+      authenticated_resource! && authenticated_tree,
       session[:a_tokens]
     )
   end
@@ -42,7 +42,7 @@ class AuthorizedController < ApplicationController
   end
 
   def authenticated_edge
-    @resource_edge ||= authenticated_resource!.edge
+    @resource_edge ||= authenticated_resource!&.edge
   end
 
   def authenticated_policy(location)
