@@ -107,4 +107,12 @@ class PagePolicy < EdgeTreePolicy
   def is_group_member?
     user.profile.group_memberships.joins(:group).where(groups: {page: record})
   end
+
+  def check_action(_a)
+    nil
+  end
+
+  def cache_action(_a, v)
+    v
+  end
 end

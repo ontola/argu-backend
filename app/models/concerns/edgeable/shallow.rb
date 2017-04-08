@@ -15,6 +15,10 @@ module Edgeable
 
       before_validation :remove_edge
 
+      def edge
+        @edge ||= Edge.new(parent: shallow_parent, owner: self)
+      end
+
       def root_object?
         false
       end
@@ -27,7 +31,7 @@ module Edgeable
       private
 
       def remove_edge
-        @edge = nil
+        self.edge = nil
       end
     end
 

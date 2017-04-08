@@ -5,7 +5,7 @@ class UserContext
   attr_reader :authenticated_ancestors, :user, :actor, :doorkeeper_scopes, :opts
 
   class Node
-    attr_accessor :id, :record, :expired, :unpublished, :children
+    attr_accessor :id, :owner_id, :expired, :unpublished, :children
 
     def initialize
       @children = {}
@@ -27,6 +27,7 @@ class UserContext
     def self.build(edge)
       n = Node.new
       n.id = edge.id
+      n.owner_id = edge.owner_id
       n.expired = edge.expires_at && edge.expires_at < DateTime.current
       n.unpublished = !edge.is_published
       n
@@ -59,28 +60,30 @@ class UserContext
     end
   end
 
-  def initialize(user, profile, doorkeeper_scopes, tree = nil, opts = {})
+  def initialize(user, profile, doorkeeper_scopes, tree_relation = nil, opts = {})
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
     @opts = opts
     @lookup_map = {}
 
-    if tree == false
+    if tree_relation == false
       @tree = false
       return
     end
 
-    @authenticated_ancestors = tree.present? ? tree.to_a : []
-    @authenticated_ancestor_ids = tree.present? ? tree.ids : []
-    return unless @authenticated_ancestors.present?
+    tree = tree_relation.to_a
 
-    @tree = Node.build_from_tree(@authenticated_ancestors)
+    @authenticated_ancestor_ids = tree.present? ? tree.map(&:id) : []
+    return unless tree.present?
 
-    @all_granted_groups = Group
-      .joins(grants: :edge)
-      .where(edges: {id: tree})
-      .order('groups.name ASC')
+    @tree = Node.build_from_tree(tree)
+
+    @grants_in_scope =
+      Grant
+        .joins(:edge)
+        .where("edges.path ~ '?.*'", @tree.id)
+        .to_a
   end
 
   def cache_key(ident, key, val)
@@ -109,7 +112,10 @@ class UserContext
     while ancestors.present?
       n_id = ancestors.shift
       n_node = lowest_node.children[n_id]
-      lowest_node.add(edge.self_and_ancestors.find(n_node)) if !n_node && ancestors.present?
+      unless n_node
+        n_node = lowest_node.add(edge.self_and_ancestors.find(n_id))
+        @authenticated_ancestor_ids += n_id
+      end
       lowest_node = n_node
     end
     lowest_node.add(edge)
@@ -117,13 +123,12 @@ class UserContext
 
   def granted_group_ids(record, role)
     granted_group_ids =
-      if @authenticated_ancestors.blank? || (record.ancestor_ids & @authenticated_ancestor_ids).blank?
+      if @authenticated_ancestor_ids.blank? || (record.ancestor_ids & @authenticated_ancestor_ids).blank?
         record.granted_group_ids(role)
       else
-        granted_groups = @all_granted_groups.select do |group|
-          group.grants.select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
-        end
-        granted_groups.map(&:id)
+        @grants_in_scope
+          .select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
+          .map(&:group_id)
       end
 
     user.profile.group_ids & granted_group_ids
@@ -131,6 +136,7 @@ class UserContext
 
   # @param [Edge] node The node to check membership for
   def in_tree?(node)
+    return true if @authenticated_ancestor_ids.include?(node.id)
     r = node
     r = r.parent while r.parent_id && !@authenticated_ancestor_ids.include?(r.parent_id)
 

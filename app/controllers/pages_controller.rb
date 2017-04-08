@@ -121,6 +121,18 @@ class PagesController < EdgeTreeController
       end
   end
 
+  def authenticated_tree
+    @_tree ||=
+      case action_name
+      when 'new', 'create', 'index'
+        false
+      when 'update'
+        resource_by_id.edge.self_and_ancestors
+      else
+        authenticated_edge&.self_and_ancestors
+      end
+  end
+
   def resource_by_id
     @page ||= Page.find_via_shortname! params[:id]
   end
