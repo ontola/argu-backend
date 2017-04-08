@@ -142,7 +142,7 @@ class UserContext
   end
 
   def unpublished?(node)
-    return false unless node.is_published?
+    return true unless node.is_published?
     @tree.unpublished?(node.real_persisted_ancestor_ids)
   end
 end

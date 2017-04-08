@@ -10,6 +10,12 @@ class VoteMatchesController < ServiceController
     end
   end
 
+  protected
+
+  def authenticated_tree
+    false
+  end
+
   private
 
   def get_parent_resource
