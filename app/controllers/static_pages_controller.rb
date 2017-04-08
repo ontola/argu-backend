@@ -86,6 +86,16 @@ class StaticPagesController < ApplicationController
     end
   end
 
+  def user_context
+    @_uc ||= UserContext.new(
+      current_user,
+      current_profile,
+      doorkeeper_scopes,
+      false,
+      session[:a_tokens]
+    )
+  end
+
   private
 
   def default_forum_path

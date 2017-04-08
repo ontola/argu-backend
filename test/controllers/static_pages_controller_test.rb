@@ -3,7 +3,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion,
-                      :dismiss_announcement, :context, :developers].freeze
+                      :dismiss_announcement, :context, :user_context, :developers].freeze
 
   let(:user) { create(:user) }
   define_freetown

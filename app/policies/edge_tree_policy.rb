@@ -116,7 +116,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def has_expired_ancestors?
     e = record.is_a?(Edge) ? record : record.edge
-    if context.in_tree?(e)
+    if context.tree_enabled? && context.in_tree?(e)
       context.expired?(e)
     else
       # TODO: efficiently handle out-of-scope items. fds
@@ -126,7 +126,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def has_unpublished_ancestors?
     e = record.is_a?(Edge) ? record : record.edge
-    if context.in_tree?(e)
+    if context.tree_enabled? && context.in_tree?(e)
       context.unpublished?(e)
     else
       # TODO: efficiently handle out-of-scope items. fsda
@@ -212,7 +212,7 @@ class EdgeTreePolicy < RestrictivePolicy
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
   def index_children?(raw_klass, attrs = {})
-    child_operation(:index?, raw_klass, attrs)
+    child_operation(:show?, raw_klass, attrs)
   end
 
   def log?
@@ -265,7 +265,7 @@ class EdgeTreePolicy < RestrictivePolicy
         child = klass.new(attrs)
         if child.is_fertile?
           child = record.edge.children.new(owner: child).owner
-          context.graft(child.edge.parent)
+          context.graft(child.edge.parent) if context.tree_enabled?
         end
         Pundit.policy(context, child).send(method) || false
       else

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implements the basic edgeable interface without actually persisting any data.
 module Edgeable::Shallow
   extend ActiveSupport::Concern

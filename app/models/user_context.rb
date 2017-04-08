@@ -66,6 +66,11 @@ class UserContext
     @opts = opts
     @lookup_map = {}
 
+    if tree == false
+      @tree = false
+      return
+    end
+
     @authenticated_ancestors = tree.present? ? tree.to_a : []
     @authenticated_ancestor_ids = tree.present? ? tree.ids : []
     return unless @authenticated_ancestors.present?
@@ -86,6 +91,28 @@ class UserContext
 
   def check_key(ident, key)
     @lookup_map.dig(ident, key)
+  end
+
+  def expired?(node)
+    return true if node.expires_at?
+    @tree.expired?(node.real_persisted_ancestor_ids)
+  end
+
+  # Adds an edge and its ancestors to the loaded tree.
+  # Raises when the edge has a different root than the loaded tree.
+  # @param [Edge] edge The node to add to the tree
+  def graft(edge)
+    ancestors = edge.real_persisted_ancestor_ids
+    raise 'unpersisted edge' unless edge.id
+    raise 'inconsistent root' unless @tree.id == ancestors.shift
+    lowest_node = @tree
+    while ancestors.present?
+      n_id = ancestors.shift
+      n_node = lowest_node.children[n_id]
+      lowest_node.add(edge.self_and_ancestors.find(n_node)) if !n_node && ancestors.present?
+      lowest_node = n_node
+    end
+    lowest_node.add(edge)
   end
 
   def granted_group_ids(record, role)
@@ -110,26 +137,8 @@ class UserContext
     @authenticated_ancestor_ids.include?(r.parent_id) ? true : false
   end
 
-  # Adds an edge and its ancestors to the loaded tree.
-  # Raises when the edge has a different root than the loaded tree.
-  # @param [Edge] edge The node to add to the tree
-  def graft(edge)
-    ancestors = edge.real_persisted_ancestor_ids
-    raise 'unpersisted edge' unless edge.id
-    raise 'inconsistent root' unless @tree.id == ancestors.shift
-    lowest_node = @tree
-    while ancestors.present?
-      n_id = ancestors.shift
-      n_node = lowest_node.children[n_id]
-      lowest_node.add(edge.self_and_ancestors.find(n_node)) if !n_node && ancestors.present?
-      lowest_node = n_node
-    end
-    lowest_node.add(edge)
-  end
-
-  def expired?(node)
-    return true if node.expires_at?
-    @tree.expired?(node.real_persisted_ancestor_ids)
+  def tree_enabled?
+    @tree != false
   end
 
   def unpublished?(node)
