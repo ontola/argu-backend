@@ -30,7 +30,7 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       doorkeeper_scopes,
-      authenticated_resource! && authenticated_tree,
+      authenticated_tree,
       session[:a_tokens]
     )
   end
@@ -78,7 +78,7 @@ class AuthorizedController < ApplicationController
       when 'new', 'create', 'edit', 'update', 'index'
         get_parent_edge.self_and_ancestors
       else
-        authenticated_edge.self_and_ancestors
+        authenticated_edge&.self_and_ancestors
       end
   end
 
