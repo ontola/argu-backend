@@ -264,7 +264,7 @@ class EdgeTreePolicy < RestrictivePolicy
       if klass.parent_classes.include?(record.class.name.underscore.to_sym)
         child = klass.new(attrs)
         if child.is_fertile?
-          child = record.edge.children.new(owner: child).owner
+          child = record.edge.children.new(owner: child, is_published: true).owner
           context.graft(child.edge.parent) if context.tree_enabled?
         end
         Pundit.policy(context, child).send(method) || false
