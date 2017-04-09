@@ -107,7 +107,8 @@ class UserContext
   def graft(edge)
     ancestors = edge.real_persisted_ancestor_ids
     raise 'unpersisted edge' unless edge.id
-    raise 'inconsistent root' unless @tree.id == ancestors.shift
+    return if ancestors.blank? && @tree.id == edge.id
+    raise 'inconsistent root' unless @tree.id == ancestors&.shift
     lowest_node = @tree
     while ancestors.present?
       n_id = ancestors.shift

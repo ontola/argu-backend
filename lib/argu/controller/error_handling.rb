@@ -27,7 +27,14 @@ module Argu
 
     private
 
+    def error_mode(exception)
+      @_error_mode = true
+      Rails.logger.error exception
+      @_uc = nil
+    end
+
     def handle_error(e)
+      error_mode(e)
       err_id = 'BAD_REQUEST'
       status = 400
       html, js = false

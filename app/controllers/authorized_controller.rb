@@ -30,7 +30,7 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       doorkeeper_scopes,
-      authenticated_tree,
+      @_error_mode ? false : authenticated_tree,
       session[:a_tokens]
     )
   end

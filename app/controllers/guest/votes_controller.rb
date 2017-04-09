@@ -47,6 +47,10 @@ module Guest
         end
     end
 
+    def authenticated_tree
+      @_tree ||= authenticated_resource.edge.parent.self_and_ancestors
+    end
+
     def new_resource_from_params
       Vote.new(
         id: ActiveRecord::Base.connection.execute("SELECT nextval('votes_id_seq'::regclass)").first['nextval'],
@@ -133,6 +137,7 @@ module Guest
         current_user,
         current_user.profile,
         'guest',
+        authenticated_tree,
         session[:a_tokens]
       )
     end
