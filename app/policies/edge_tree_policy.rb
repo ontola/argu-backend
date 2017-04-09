@@ -129,7 +129,7 @@ class EdgeTreePolicy < RestrictivePolicy
     if context.tree_enabled? && context.in_tree?(e)
       context.unpublished?(e)
     else
-      # TODO: efficiently handle out-of-scope items. fsda
+      # TODO: efficiently handle out-of-scope items.
       e.has_unpublished_ancestors?
     end
   end

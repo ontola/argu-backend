@@ -15,4 +15,10 @@ class MediaObjectsController < AuthorizedController
   def index_collection_association
     'attachment_collection'
   end
+
+  protected
+
+  def authenticated_tree
+    false
+  end
 end

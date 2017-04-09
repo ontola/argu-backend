@@ -31,4 +31,10 @@ class MediaObjectPolicy < EdgeTreePolicy
                          content_original_h content_original_w _destroy description)
     attributes
   end
+
+  protected
+
+  def has_unpublished_ancestors?
+    edge.has_unpublished_ancestors?
+  end
 end
