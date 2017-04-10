@@ -12,12 +12,12 @@ class Email < ApplicationRecord
             format: {with: RFC822::EMAIL}
   delegate :greeting, to: :user
 
-  def email_verified?
-    email && email !~ TEMP_EMAIL_REGEX
-  end
-
   def destroy
     super unless primary?
+  end
+
+  def email_verified?
+    email && email !~ TEMP_EMAIL_REGEX
   end
 
   def reconfirmation_required?

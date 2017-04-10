@@ -93,6 +93,10 @@ class User < ApplicationRecord
     active_at(redis).to_i >= datetime.to_i
   end
 
+  def active_for_authentication?
+    true
+  end
+
   def apply_omniauth(omniauth)
     authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
   end

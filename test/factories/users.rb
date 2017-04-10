@@ -27,6 +27,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :unconfirmed do
+      after(:create) do |user|
+        user.primary_email_record.update(confirmed_at: nil, confirmation_sent_at: 1.year.ago)
+      end
+    end
+
     trait :viewed_notifications_hour_ago do
       notifications_viewed_at 1.hour.ago
     end

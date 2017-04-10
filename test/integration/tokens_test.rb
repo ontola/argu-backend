@@ -98,4 +98,24 @@ class TokensTest < ActionDispatch::IntegrationTest
 
     assert_response 401
   end
+
+  ####################################
+  # As Unconfirmed User
+  ####################################
+  let(:unconfirmed_user) { create(:user, :unconfirmed) }
+
+  test 'Unconfirmed user should post create token' do
+    post oauth_token_path,
+         headers: {
+           HTTP_HOST: 'other.example'
+         },
+         params: {
+           username: unconfirmed_user.email,
+           password: unconfirmed_user.password,
+           grant_type: 'password',
+           scope: 'user'
+         }
+
+    assert_response 200
+  end
 end
