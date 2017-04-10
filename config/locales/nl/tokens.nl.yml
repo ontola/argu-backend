@@ -22,4 +22,4 @@ nl:
       input_placeholder: "Voer een of meer emailadressen in"
       success: "De uitnodigingen zijn verstuurd"
     errors:
-      parsing: "Kon niet alle emails goed lezen"
+      parsing: "%{email} is geen valide emailadres"

@@ -8,9 +8,8 @@
     span= t('tokens.bearer.title')
   p= t('tokens.bearer.description')
   =react_component_store 'BearerTokens', props: {groupId: resource.id, createTokenUrl: '/tokens', indexTokenUrl: '/tokens/bearer'}
-- if active_for_user?(:email_token_management, current_user)
-  .email-token-management
-    legend
-      span= t('tokens.email.title')
-    p= t('tokens.email.description')
-    =react_component_store 'EmailTokenInvite', props: {groupId: resource.id, createTokenUrl: '/tokens', indexTokenUrl: '/tokens/email'}
+.email-token-management
+  legend
+    span= t('tokens.email.title')
+  p= t('tokens.email.description')
+  =react_component_store 'EmailTokenInvite', props: {groupId: resource.id, createTokenUrl: '/tokens', indexTokenUrl: '/tokens/email'}

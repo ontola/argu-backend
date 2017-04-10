@@ -33,10 +33,11 @@ export const EmailTokenInvite = React.createClass({
 
     handleSubmit () {
         const emails = this.stringToEmails(this.state.value);
-        if (emails.every(this.validateEmail)) {
+        const invalid = emails.filter(this.invalidEmail);
+        if (invalid.length === 0) {
             this.createTokens();
         } else {
-            new Alert(I18n.t('tokens.errors.parsing'), 'alert', true);
+            new Alert(I18n.t('tokens.errors.parsing', { email: invalid[0] }), 'alert', true);
         }
     },
 
@@ -72,9 +73,9 @@ export const EmailTokenInvite = React.createClass({
         return string.split(/[\s,;]+/);
     },
 
-    validateEmail (email) {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+    invalidEmail (email) {
+        const re = /^\w+([\.-]?\w+)*(\+\w+)?@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return !re.test(email);
     },
 
     onRetract (token) {
