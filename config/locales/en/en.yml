@@ -74,6 +74,7 @@ en:
   con: "con"
   search: "Search"
   log: "Log"
+  statistics: "Statistics"
   edited: "Edited"
   deleted: "Deleted"
   delete_type: "Delete %{type}"

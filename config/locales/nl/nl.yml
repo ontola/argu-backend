@@ -74,6 +74,7 @@ nl:
   con: "tegen"
   search: "Zoeken"
   log: "Log"
+  statistics: "Statistieken"
   edited: "Bewerkt"
   deleted: "Verwijderd"
   delete_type: "Verwijder %{type}"

@@ -15,6 +15,9 @@ class VoteEventsController < AuthorizedController
 
   def show
     respond_to do |format|
+      format.html do
+        render 'show', locals: {resource: authenticated_resource}
+      end
       format.json_api do
         render json: authenticated_resource, include: [vote_collection: INC_NESTED_COLLECTION]
       end

@@ -1,0 +1,12 @@
+nl:
+  vote_events:
+    statistics:
+      count:
+        header: "Count"
+        tooltip: "Total votes"
+      confirmed:
+        header: "Confirmed"
+        tooltip: "Votes by confirmed accounts. Confirmed accounts either have a confirmed email address or a connected Facebook account. About 78% of the total accounts on Argu is confirmed."
+      facebook:
+        header: "Facebook"
+        tooltip: "Votes by accounts with a connected Facebook account. About 54% of the total accounts on Argu has a connected Facebook account."

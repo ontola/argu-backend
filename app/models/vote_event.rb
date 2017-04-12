@@ -35,6 +35,39 @@ class VoteEvent < ApplicationRecord
     errors.add(:ends_at, "can't be before start date")
   end
 
+  def stats
+    return @stats if @stats.present?
+    totals = Vote
+               .joins(:edge)
+               .where(edges: {parent_id: edge.id})
+               .select('votes.for, count(*) as count')
+               .group(:for)
+               .to_a
+    totals_confirmed = Vote
+                        .joins(:edge, publisher: :emails)
+                        .where('emails.confirmed_at IS NOT NULL')
+                        .where(edges: {parent_id: edge.id})
+                        .select('votes.for, count(*) as count')
+                        .group(:for)
+                        .to_a
+    totals_facebook = Vote
+                        .joins(:edge, publisher: :identities)
+                        .where(identities: {provider: 'facebook'})
+                        .where(edges: {parent_id: edge.id})
+                        .select('votes.for, count(*) as count')
+                        .group(:for)
+                        .to_a
+    @stats = %w(pro neutral con).map do |side|
+      total = totals.find { |s| s.for == side }&.count || 0
+      {
+        confirmed: total.positive? ? (totals_confirmed.find { |s| s.for == side }&.count&.to_f || 0) / total : nil,
+        facebook: total.positive? ? (totals_facebook.find { |s| s.for == side }&.count&.to_f || 0) / total : nil,
+        side: side,
+        total: total
+      }
+    end
+  end
+
   def total_vote_count
     children_count(:votes_pro).abs + children_count(:votes_con).abs + children_count(:votes_neutral).abs
   end

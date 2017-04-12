@@ -1,0 +1,12 @@
+nl:
+  vote_events:
+    statistics:
+      count:
+        header: "Aantal"
+        tooltip: "Totaal aantal uitgebracht stemmen"
+      confirmed:
+        header: "Bevestigd"
+        tooltip: "Stemmen van bevestigde accounts. Bevestigde accounts hebben een bevestigd emailadres of een gekoppeld Facebook account. Op Argu is ongeveer 78% van de accounts bevestigd."
+      facebook:
+        header: "Facebook"
+        tooltip: "Stemmen van accounts met een gekoppeld Facebook account. Op Argu heeft ongeveer 54% van de accounts een gekoppeld Facebook account."

@@ -75,4 +75,8 @@ class MotionPolicy < EdgeTreePolicy
   def vote?
     rule is_member?, super
   end
+
+  def statistics?
+    rule is_manager?, is_super_admin?, super
+  end
 end

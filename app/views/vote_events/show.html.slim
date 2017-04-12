@@ -1,0 +1,23 @@
+.col-1
+  div[data-intro= t('intro.argument.back')]= to_parent(resource.voteable)
+.col-1
+  =header(header: t('statistics'))
+  .col--motion
+    .box[class=status_classes_for(resource)]
+      section
+        .markdown[itemprop="text"]
+          h3=t('votes.plural')
+          table
+            thead
+              tr
+                td
+                  td[data-title=t('vote_events.statistics.count.tooltip')]= t('vote_events.statistics.count.header')
+                  td[data-title=t('vote_events.statistics.confirmed.tooltip')]= t('vote_events.statistics.confirmed.header')
+                  td[data-title=t('vote_events.statistics.facebook.tooltip')]= t('vote_events.statistics.facebook.header')
+            tbody
+              - resource.stats.each do |stat|
+                tr
+                  td= t("votes.header.#{stat[:side]}")
+                  td= stat[:total]
+                  td= "#{(stat[:confirmed] * 100).round}%" if stat[:confirmed].present?
+                  td= "#{(stat[:facebook] * 100).round}%" if stat[:facebook].present?
