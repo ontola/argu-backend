@@ -82,6 +82,18 @@ class UsersTest < ActionDispatch::IntegrationTest
                  'id' => "https://127.0.0.1:42000/sessions/#{session.id}", 'type' => 'guestUsers'
   end
 
+  test 'guest should get show current actor with actor' do
+    cookies['a_a'] = argu.profile.id
+
+    get c_a_path, params: {format: :json_api}
+
+    assert_response 200
+    assert_equal JSON.parse(response.body)['data']['relationships']['user']['data'],
+                 'id' => "https://127.0.0.1:42000/sessions/#{session.id}", 'type' => 'guestUsers'
+    assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data'],
+                 'id' => "https://127.0.0.1:42000/sessions/#{session.id}", 'type' => 'guestUsers'
+  end
+
   test 'user should get show current actor' do
     sign_in user
 

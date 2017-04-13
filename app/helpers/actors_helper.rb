@@ -20,6 +20,7 @@ module ActorsHelper
   private
 
   def actor_token
+    reset_current_actor if current_user.guest?
     cookies[:a_a] || request.headers['X-Argu-Actor']
   end
 end
