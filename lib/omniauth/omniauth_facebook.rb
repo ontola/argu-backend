@@ -42,7 +42,7 @@ module Omniauth
       image_url = nil
       begin
         image_url = URI.parse(image)
-        image_url.query = 'redirect=false'
+        image_url.query = 'redirect=false&type=large'
 
         response = Net::HTTP.get_response(image_url)
         if response.code == '200'

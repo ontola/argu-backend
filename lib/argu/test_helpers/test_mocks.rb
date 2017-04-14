@@ -9,7 +9,7 @@ module Argu
 
       def facebook_picture(opts = {})
         uid = opts[:uid] || '102555400181774'
-        stub_request(:get, "https://graph.facebook.com/v2.8/#{uid}/picture?redirect=false")
+        stub_request(:get, "https://graph.facebook.com/v2.8/#{uid}/picture?redirect=false&type=large")
           .to_return(
             status: 200,
             body: File.new(File.expand_path('./test/fixtures/fb_image_silhouette.jpg'))
