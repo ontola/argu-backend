@@ -53,7 +53,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [600, 300]
   end
 
-  version :avatar, if: :profile_photo? do
+  version :avatar, if: :is_image? do
     process convert: 'jpeg'
     process resize_to_fill: [256, 256]
   end
