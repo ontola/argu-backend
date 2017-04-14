@@ -18,7 +18,7 @@ en:
     default:
       convert: "%{owner} converted %{subject} into a %{type}"
       create: "%{owner} posted a %{type} in %{parent}"
-      publish: "%{owner} published a %{type} in %{parent}"
+      publish: "%{owner} posted a %{type} in %{parent}"
       destroy: "%{owner} deleted %{subject}"
       trash: "%{owner} trashed %{subject}"
       untrash: "%{owner} untrashed %{subject}"
@@ -28,6 +28,10 @@ en:
       pro: "in favour of"
       con: "against"
     blog_posts:
+      create: "%{owner} posted a draft %{type} in %{parent}"
+    motions:
+      create: "%{owner} posted a draft %{type} in %{parent}"
+    questions:
       create: "%{owner} posted a draft %{type} in %{parent}"
     comments:
       create: "%{owner} replied to %{parent}"

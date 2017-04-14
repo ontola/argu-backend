@@ -18,7 +18,7 @@ nl:
     default:
       convert: "%{owner} heeft %{subject} omgezet in een %{type}"
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"
-      publish: "%{owner} heeft een %{type} gepubliceerd in %{parent}"
+      publish: "%{owner} heeft een %{type} geplaatst in %{parent}"
       destroy: "%{owner} heeft %{subject} permanent verwijderd"
       trash: "%{owner} heeft %{subject} verwijderd"
       untrash: "%{owner} heeft %{subject} teruggeplaatst"
@@ -28,6 +28,10 @@ nl:
       pro: "vóór"
       con: "tegen"
     blog_posts:
+      create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
+    motions:
+      create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
+    questions:
       create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
     comments:
       create: "%{owner} heeft gereageerd op %{parent}"
