@@ -5,8 +5,8 @@ RSpec.feature 'Feed', type: :feature do
   define_freetown
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
   let(:user) { create(:user) }
-  let(:user_motion) { create(:motion, parent: freetown.edge, publisher: user) }
-  let(:user_question) { create(:question, parent: freetown.edge, publisher: user) }
+  let(:user_motions) { 8.times { create(:motion, parent: freetown.edge, publisher: user) } }
+  let(:user_questions) { 8.times { create(:question, parent: freetown.edge, publisher: user) } }
 
   scenario 'Guest views feed of forum' do
     motion
@@ -22,14 +22,16 @@ RSpec.feature 'Feed', type: :feature do
   end
 
   scenario 'Guest views feed of user' do
-    user_motion
-    user_question
-    # 1x Motion#create, 1x Motion#publish, 1x Question#create, 1x Question#publish,
-    expect(Activity.count).to eq(4)
+    user_motions
+    user_questions
+    # 8x Motion#publish, 8x Question#publish,
+    expect(Activity.count).to eq(32)
     Activity.order(:created_at).each_with_index do |activity, i|
       activity.update(created_at: i.minutes.ago)
     end
     visit(user_path(user))
-    expect(page).to have_selector('.activity-feed .activity', count: 4)
+    expect(page).to have_selector('.activity-feed .activity', count: 10)
+    page.find('.btn.load-more').click
+    expect(page).to have_selector('.activity-feed .activity', count: 16)
   end
 end

@@ -71,7 +71,7 @@ class Activity < PublicActivity::Activity
   end
 
   def self.feed_for_profile(profile)
-    feed.where(owner_id: profile.id)
+    feed.where(owner_id: profile.id).where('key IN (?)', %w(vote.create question.publish motion.publish))
   end
 
   # Used to find followers for the notifications generated for this activity and to set the type of these notifications
