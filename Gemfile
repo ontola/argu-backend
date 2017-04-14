@@ -85,7 +85,7 @@ gem 'carrierwave-vips', '~> 1.0.5'
 # gem 'rmagick', '2.14.0'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
-gem 'carrierwave-aws', '~> 1.0.1'
+gem 'carrierwave-aws', '~> 1.1.0'
 gem 'sidekiq', '~> 4.2.2'
 gem 'sidetiq', '~> 0.7.2'
 gem 'sidekiq-logging-json',
