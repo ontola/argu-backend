@@ -40,7 +40,7 @@ module Publishable
       def fetch_picture
         response = cached_response_for('fetch_picture/me')
         if response.blank?
-          response = @_client.get_picture('me')
+          response = @_client.get_picture('me', type: :large)
           cache_response('fetch_picture/me', response)
         end
         response
