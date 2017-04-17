@@ -34,13 +34,6 @@ class ArgumentsController < EdgeTreeController
     end
   end
 
-  # GET /arguments/1/edit
-  def edit
-    respond_to do |format|
-      format.html { render :form }
-    end
-  end
-
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update

@@ -11,13 +11,6 @@ class BlogPostsController < EdgeTreeController
     end
   end
 
-  def edit
-    respond_to do |format|
-      format.html { render locals: {blog_post: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
-    end
-  end
-
   def update
     update_service.on(:update_blog_post_successful) do |blog_post|
       respond_to do |format|

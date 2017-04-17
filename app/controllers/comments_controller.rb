@@ -19,25 +19,6 @@ class CommentsController < EdgeTreeController
     end
   end
 
-  def edit
-    respond_to do |format|
-      format.html do
-        render locals: {
-          resource: authenticated_resource.parent_model,
-          comment: authenticated_resource
-        }
-      end
-      format.js do
-        render locals: {
-          resource: authenticated_resource.parent_model,
-          comment: authenticated_resource,
-          parent_id: nil,
-          visible: true
-        }
-      end
-    end
-  end
-
   def update
     update_service.on(:update_comment_successful) do |comment|
       respond_to do |format|
@@ -170,6 +151,23 @@ class CommentsController < EdgeTreeController
   def create_handler_success(c)
     redirect_to polymorphic_url(c.parent_model, anchor: c.identifier),
                 notice: t('type_create_success', type: t('comments.type'))
+  end
+
+  def edit_respond_blocks_success(resource, format)
+    format.html do
+      render locals: {
+        resource: resource.parent_model,
+        comment: resource
+      }
+    end
+    format.js do
+      render locals: {
+        resource: resource.parent_model,
+        comment: resource,
+        parent_id: nil,
+        visible: true
+      }
+    end
   end
 
   def new_resource_from_params

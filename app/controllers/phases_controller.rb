@@ -8,13 +8,6 @@ class PhasesController < EdgeTreeController
     end
   end
 
-  def edit
-    respond_to do |format|
-      format.html { render locals: {phase: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
-    end
-  end
-
   # Set virtual attribute finish_phase to true to update end_date to Time.current
   def update
     update_service.on(:update_phase_successful) do |phase|
@@ -25,7 +18,7 @@ class PhasesController < EdgeTreeController
     end
     update_service.on(:update_phase_failed) do |phase|
       respond_to do |format|
-        format.html { render :edit, locals: {phase: phase} }
+        format.html { render :form, locals: {phase: phase} }
         format.json { render json: phase.errors, status: :unprocessable_entity }
       end
     end

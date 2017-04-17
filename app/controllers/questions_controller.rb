@@ -28,13 +28,6 @@ class QuestionsController < EdgeTreeController
     end
   end
 
-  # GET /questions/1/edit
-  def edit
-    respond_to do |format|
-      format.html { render 'form', locals: {question: authenticated_resource} }
-    end
-  end
-
   # PUT /questions/1
   # PUT /questions/1.json
   def update

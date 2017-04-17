@@ -11,6 +11,7 @@ class EdgeTreeController < ServiceController
   include EdgeTree::Setup
   include NestedResourceHelper,
           EdgeTree::Create,
+          EdgeTree::Edit,
           EdgeTree::Index,
           EdgeTree::New
 

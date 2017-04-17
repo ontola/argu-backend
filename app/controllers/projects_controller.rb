@@ -26,13 +26,6 @@ class ProjectsController < EdgeTreeController
     end
   end
 
-  def edit
-    respond_to do |format|
-      format.html { render locals: {project: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
-    end
-  end
-
   def update
     update_service.on(:update_project_successful) do |project|
       respond_to do |format|
@@ -42,7 +35,7 @@ class ProjectsController < EdgeTreeController
     end
     update_service.on(:update_project_failed) do |project|
       respond_to do |format|
-        format.html { render :new, locals: {project: project} }
+        format.html { render :form, locals: {project: project} }
         format.json { render json: project.errors, status: 422 }
       end
     end

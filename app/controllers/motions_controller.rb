@@ -60,15 +60,6 @@ class MotionsController < EdgeTreeController
     end
   end
 
-  # GET /motions/1/edit
-  def edit
-    @motion = authenticated_resource
-    authorize @motion
-    respond_to do |format|
-      format.html { render 'form', locals: {motion: @motion} }
-    end
-  end
-
   # PUT /motions/1
   # PUT /motions/1.json
   def update

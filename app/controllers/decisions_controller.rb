@@ -23,20 +23,6 @@ class DecisionsController < EdgeTreeController
     end
   end
 
-  def edit
-    authenticated_resource!.edge.argu_publication.draft! unless authenticated_resource!.edge.argu_publication.present?
-
-    respond_to do |format|
-      format.html do
-        render action: 'index',
-               locals: {
-                 decisionable: get_parent_resource,
-                 edit_decision: authenticated_resource
-               }
-      end
-    end
-  end
-
   def update
     update_service.on(:update_decision_successful) do |decision|
       respond_to do |format|
@@ -89,6 +75,16 @@ class DecisionsController < EdgeTreeController
       redirect_to resource.parent_model, notice: notice
     end
     format.json { render json: resource, status: 201, location: resource }
+  end
+
+  def edit_respond_blocks_success(resource, _)
+    resource.edge.argu_publication.draft! unless resource.edge.argu_publication.present?
+
+    render action: 'index',
+           locals: {
+             decisionable: get_parent_resource,
+             edit_decision: resource
+           }
   end
 
   def get_parent_resource(_opts = {})
