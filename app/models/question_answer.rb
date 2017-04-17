@@ -60,4 +60,16 @@ class QuestionAnswer
   def to_model
     self
   end
+
+  def class_name
+    self.class.name.tableize
+  end
+
+  def self.class_name
+    name.tableize
+  end
+
+  def identifier
+    "#{class_name}_#{question_id}_#{motion.try(:id)}"
+  end
 end

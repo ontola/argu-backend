@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Edge < ActiveRecord::Base
+class Edge < ApplicationRecord
   belongs_to :owner,
              inverse_of: :edge,
              polymorphic: true,
