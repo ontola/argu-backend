@@ -63,26 +63,6 @@ class VotesController < EdgeTreeController
     update_service.commit
   end
 
-  def destroy
-    destroy_service.on(:destroy_vote_successful) do |vote|
-      respond_to do |format|
-        format.js do
-          render locals: {
-            vote: vote
-          }
-        end
-        format.json { head 204 }
-      end
-    end
-    destroy_service.on(:destroy_vote_failed) do |vote|
-      respond_to do |format|
-        format.js { head :bad_request }
-        format.json { render json: vote.errors, status: :unprocessable_entity }
-      end
-    end
-    destroy_service.commit
-  end
-
   def forum_for(url_options)
     voteable = parent_resource_klass(url_options).find_by(id: url_options[parent_resource_key(url_options)])
     voteable.try :forum if voteable.present?
@@ -112,6 +92,15 @@ class VotesController < EdgeTreeController
                     notice: t('votes.alerts.success')
       end
     end
+  end
+
+  def destroy_respond_blocks_success(resource, format)
+    format.js do
+      render locals: {
+        vote: resource
+      }
+    end
+    format.json { head 204 }
   end
 
   def resource_by_id

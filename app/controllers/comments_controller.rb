@@ -53,26 +53,6 @@ class CommentsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /arguments/1/comments/1?destroy=true
-  def destroy
-    destroy_service.on(:destroy_comment_successful) do |comment|
-      respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.parent_model], anchor: comment.id) }
-        format.js # destroy_comment.js
-      end
-    end
-    destroy_service.on(:destroy_comment_failed) do |comment|
-      respond_to do |format|
-        format.html do
-          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
-                      notice: t('errors.general')
-        end
-        format.js # destroy_comment.js
-      end
-    end
-    destroy_service.commit
-  end
-
   # DELETE /arguments/1/comments/1
   def trash
     trash_service.on(:trash_comment_successful) do |comment|
@@ -151,6 +131,20 @@ class CommentsController < EdgeTreeController
   def create_handler_success(c)
     redirect_to polymorphic_url(c.parent_model, anchor: c.identifier),
                 notice: t('type_create_success', type: t('comments.type'))
+  end
+
+  def destroy_respond_blocks_failure(resource, format)
+    format.html do
+      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
+                  notice: t('errors.general')
+    end
+    format.js # destroy_comment.js
+  end
+
+  # DELETE /arguments/1/comments/1?destroy=true
+  def destroy_respond_blocks_success(resource, format)
+    format.html { redirect_to polymorphic_url([resource.parent_model], anchor: resource.id) }
+    format.js # destroy_comment.js
   end
 
   def edit_respond_blocks_success(resource, format)

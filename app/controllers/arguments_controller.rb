@@ -54,27 +54,6 @@ class ArgumentsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /arguments/1?destroy=true
-  # DELETE /arguments/1.json?destroy=true
-  def destroy
-    destroy_service.on(:destroy_argument_successful) do |argument|
-      respond_to do |format|
-        format.html do
-          redirect_to argument.parent_model,
-                      notice: t('type_destroy_success', type: t('arguments.type'))
-        end
-        format.json { head :no_content }
-      end
-    end
-    destroy_service.on(:destroy_argument_failed) do |argument|
-      respond_to do |format|
-        format.html { redirect_to argument, notice: t('errors.general') }
-        format.json { render json: argument.errors, status: :unprocessable_entity }
-      end
-    end
-    destroy_service.commit
-  end
-
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def trash

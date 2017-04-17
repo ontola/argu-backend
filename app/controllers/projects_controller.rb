@@ -42,24 +42,6 @@ class ProjectsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /projects/1?destroy=true
-  # DELETE /projects/1.json?destroy=true
-  def destroy
-    destroy_service.on(:destroy_project_successful) do |project|
-      respond_to do |format|
-        format.html { redirect_to project.forum, notice: t('type_destroy_success', type: t('projects.type')) }
-        format.json { head :no_content }
-      end
-    end
-    destroy_service.on(:destroy_project_failed) do |project|
-      respond_to do |format|
-        format.html { redirect_to project, notice: t('errors.general') }
-        format.json { render json: project.errors, status: :unprocessable_entity }
-      end
-    end
-    destroy_service.commit
-  end
-
   # DELETE /projects/1
   # DELETE /projects/1.json
   def trash

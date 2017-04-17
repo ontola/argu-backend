@@ -27,27 +27,6 @@ class BlogPostsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /blog_posts/1?destroy=true
-  # DELETE /blog_posts/1.json?destroy=true
-  def destroy
-    destroy_service.on(:destroy_blog_post_successful) do |blog_post|
-      respond_to do |format|
-        format.html do
-          redirect_to blog_post.parent_model,
-                      notice: t('type_destroy_success', type: t('blog_posts.type'))
-        end
-        format.json { head :no_content }
-      end
-    end
-    destroy_service.on(:destroy_blog_post_failed) do |blog_post|
-      respond_to do |format|
-        format.html { redirect_to blog_post, notice: t('errors.general') }
-        format.json { render json: blog_post.errors, status: :unprocessable_entity }
-      end
-    end
-    destroy_service.commit
-  end
-
   # DELETE /blog_posts/1
   # DELETE /blog_posts/1.json
   def trash

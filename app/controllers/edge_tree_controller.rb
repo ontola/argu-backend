@@ -11,6 +11,7 @@ class EdgeTreeController < ServiceController
   include EdgeTree::Setup
   include NestedResourceHelper,
           EdgeTree::Create,
+          EdgeTree::Destroy,
           EdgeTree::Edit,
           EdgeTree::Index,
           EdgeTree::New
@@ -30,6 +31,11 @@ class EdgeTreeController < ServiceController
   # Method to determine where the action should redirect to after it succeeds.
   # @param [Class] resource The resource from the result of the action
   def success_redirect_model(resource)
-    resource
+    case action_name
+    when 'destroy'
+      resource.parent_model
+    else
+      resource
+    end
   end
 end

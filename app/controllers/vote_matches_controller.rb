@@ -27,22 +27,6 @@ class VoteMatchesController < ServiceController
     update_service.commit
   end
 
-  def destroy
-    destroy_service.on(:destroy_vote_match_successful) do
-      respond_to do |format|
-        format.json { head :no_content }
-        format.json_api { head :no_content }
-      end
-    end
-    destroy_service.on(:destroy_vote_match_failed) do
-      respond_to do |format|
-        format.json { head :no_content }
-        format.json_api { head :no_content }
-      end
-    end
-    destroy_service.commit
-  end
-
   private
 
   def get_parent_resource

@@ -48,24 +48,6 @@ class QuestionsController < EdgeTreeController
 
   # DELETE /questions/1
   # DELETE /questions/1.json
-  def destroy
-    destroy_service.on(:destroy_question_successful) do |question|
-      respond_to do |format|
-        format.html { redirect_to question.forum, notice: t('type_destroy_success', type: t('questions.type')) }
-        format.json { head :no_content }
-      end
-    end
-    destroy_service.on(:destroy_question_failed) do |question|
-      respond_to do |format|
-        format.html { redirect_to question, notice: t('errors.general') }
-        format.json { render json: question.errors, status: :unprocessable_entity }
-      end
-    end
-    destroy_service.commit
-  end
-
-  # DELETE /questions/1
-  # DELETE /questions/1.json
   def trash
     trash_service.on(:trash_question_successful) do |question|
       respond_to do |format|

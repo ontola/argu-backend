@@ -86,25 +86,6 @@ class MotionsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /motions/1?destroy=true
-  # DELETE /motions/1.json?destroy=true
-  def destroy
-    destroy_service.on(:destroy_motion_successful) do |motion|
-      parent = motion.edge.parent.owner
-      respond_to do |format|
-        format.html { redirect_to parent, notice: t('type_destroy_success', type: t('motions.type')) }
-        format.json { head :no_content }
-      end
-    end
-    destroy_service.on(:destroy_motion_failed) do |motion|
-      respond_to do |format|
-        format.html { redirect_to motion, notice: t('errors.general') }
-        format.json { render json: motion.errors, status: :unprocessable_entity }
-      end
-    end
-    destroy_service.commit
-  end
-
   # DELETE /motions/1
   # DELETE /motions/1.json
   def trash
