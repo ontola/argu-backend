@@ -120,6 +120,7 @@ Rails/OutputSafety:
 Style/AccessorMethodName:
   Exclude:
     - 'app/controllers/application_controller.rb'
+    - 'app/controllers/forums_controller.rb'
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/portal/sources_controller.rb'
     - 'app/controllers/vote_matches_controller.rb'

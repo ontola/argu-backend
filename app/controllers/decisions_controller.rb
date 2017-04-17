@@ -114,6 +114,15 @@ class DecisionsController < AuthorizedController
     get_parent_edge.owner
   end
 
+  def get_parent_edge(opts = params)
+    @parent_edge ||=
+      if parent_resource_class(opts).try(:shortnameable?)
+        parent_resource_class(opts).find_via_shortname!(parent_id_from_params(opts)).edge
+      else
+        Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))
+      end
+  end
+
   def new_resource_from_params
     decision = get_parent_resource.decisions.unpublished.where(publisher: current_user).first
     if decision.nil?

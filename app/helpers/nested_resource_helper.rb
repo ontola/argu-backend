@@ -18,11 +18,11 @@ module NestedResourceHelper
   #   docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_edge(opts = params)
-    @parent_resource ||=
+    @parent_edge ||=
       if parent_resource_class(opts).try(:shortnameable?)
         parent_resource_class(opts).find_via_shortname!(parent_id_from_params(opts)).edge
       else
-        Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))
+        Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, owner_id: parent_id_from_params(opts))
       end
   end
 

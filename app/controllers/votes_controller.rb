@@ -149,6 +149,10 @@ class VotesController < AuthorizedController
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
+  def get_parent_edge
+    @parent_edge ||= get_parent_resource.try(:edge) || super
+  end
+
   def get_parent_resource
     @parent_resource ||= super.try(:default_vote_event) || super
   end

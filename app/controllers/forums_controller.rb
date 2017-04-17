@@ -96,6 +96,11 @@ class ForumsController < AuthorizedController
     end
   end
 
+  def get_parent_edge
+    # TODO: handle actions where `authenticated_resource!` is not present
+    @parent_edge ||= authenticated_resource!.page.edge
+  end
+
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
     render 'settings', locals: {
