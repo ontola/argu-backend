@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class PagesController < ApplicationController
-  before_action :check_if_registered, except: %i(index show)
+class PagesController < AuthorizedController
+  skip_before_action :authorize_action, only: :settings
 
   def index
     @user = User.find_via_shortname params[:id]
@@ -17,8 +17,7 @@ class PagesController < ApplicationController
   end
 
   def show
-    @page = Page.find_via_shortname!(params[:id])
-    @forums = policy_scope(@page.forums).joins(:edge).order('edges.follows_count DESC')
+    @forums = policy_scope(authenticated_resource.forums).joins(:edge).order('edges.follows_count DESC')
     @profile = @page.profile
     authorize @page, :show?
 
@@ -41,19 +40,16 @@ class PagesController < ApplicationController
   end
 
   def new
-    authorize new_resource_from_params, :create?
-
-    new_resource_from_params.build_shortname
-    new_resource_from_params.build_profile
+    authenticated_resource.build_shortname
+    authenticated_resource.build_profile
 
     render locals: {
-      page: new_resource_from_params,
+      page: authenticated_resource,
       errors: {}
     }
   end
 
   def create
-    authorize(new_resource_from_params, :create?)
     @page.assign_attributes(permit_params)
 
     if @page.save
@@ -71,8 +67,7 @@ class PagesController < ApplicationController
   end
 
   def settings
-    @page = Page.find_via_shortname params[:id]
-    authorize @page, :update?
+    authorize authenticated_resource, :update?
 
     render locals: {
       tab: tab,
@@ -82,9 +77,6 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page = Page.find_via_shortname params[:id]
-    authorize @page, :update?
-
     if @page.update permit_params
       redirect_to settings_page_path(@page, tab: tab)
     else
@@ -97,9 +89,6 @@ class PagesController < ApplicationController
   end
 
   def delete
-    @page = Page.find_via_shortname params[:id]
-    authorize @page, :delete?
-
     respond_to do |format|
       format.html { render 'delete', locals: {resource: @page} }
       format.js { render layout: false }
@@ -107,8 +96,6 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    @page = Page.find_via_shortname params[:id]
-    authorize @page, :destroy?
     unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
       @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
     end
@@ -118,6 +105,24 @@ class PagesController < ApplicationController
       flash[:error] = t('errors.general')
       redirect_to(delete_page_path)
     end
+  end
+
+  protected
+
+  def authenticated_resource!
+    @resource ||=
+      case action_name
+      when 'create', 'new'
+        new_resource_from_params
+      when 'trash', 'untrash'
+        nil
+      else
+        resource_by_id
+      end
+  end
+
+  def resource_by_id
+    @page ||= Page.find_via_shortname params[:id]
   end
 
   private

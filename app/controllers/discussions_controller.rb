@@ -1,13 +1,26 @@
 # frozen_string_literal: true
-class DiscussionsController < ApplicationController
+class DiscussionsController < AuthorizedController
   include NestedResourceHelper
+  skip_before_action :check_if_registered
 
   def new
     @forum = get_parent_resource
-    authorize get_parent_resource, :list?
   end
 
   private
+
+  def authorize_action
+    raise 'Internal server error' unless action_name == 'new'
+    authorize get_parent_resource, :list?
+  end
+
+  def new_resource_from_params
+    get_parent_resource
+      .edge
+      .children
+      .new(owner: nil,
+           parent: get_parent_resource.edge)
+  end
 
   def resource_by_id
     get_parent_resource
