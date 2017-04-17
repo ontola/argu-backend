@@ -54,45 +54,6 @@ class ArgumentsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /arguments/1
-  # DELETE /arguments/1.json
-  def trash
-    trash_service.on(:trash_argument_successful) do |argument|
-      respond_to do |format|
-        format.html do
-          redirect_to argument.parent_model,
-                      notice: t('type_trash_success', type: t('arguments.type'))
-        end
-        format.json { head :no_content }
-      end
-    end
-    trash_service.on(:trash_argument_failed) do |argument|
-      respond_to do |format|
-        format.html { redirect_to argument, notice: t('errors.general') }
-        format.json { render json: argument.errors, status: :unprocessable_entity }
-      end
-    end
-    trash_service.commit
-  end
-
-  # PUT /arguments/1/untrash
-  # PUT /arguments/1/untrash.json
-  def untrash
-    untrash_service.on(:untrash_argument_successful) do |argument|
-      respond_to do |format|
-        format.html { redirect_to argument, notice: t('type_untrash_success', type: t('arguments.type')) }
-        format.json { head :no_content }
-      end
-    end
-    untrash_service.on(:untrash_argument_failed) do |argument|
-      respond_to do |format|
-        format.html { redirect_to argument, notice: t('errors.general') }
-        format.json { render json: argument.errors, status: :unprocessable_entity }
-      end
-    end
-    untrash_service.commit
-  end
-
   def forum_for(url_options)
     argument_id = url_options[:argument_id] || url_options[:id]
     if argument_id.presence

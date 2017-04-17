@@ -46,42 +46,6 @@ class QuestionsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /questions/1
-  # DELETE /questions/1.json
-  def trash
-    trash_service.on(:trash_question_successful) do |question|
-      respond_to do |format|
-        format.html { redirect_to question.forum, notice: t('type_trash_success', type: t('questions.type')) }
-        format.json { head :no_content }
-      end
-    end
-    trash_service.on(:trash_question_failed) do |question|
-      respond_to do |format|
-        format.html { redirect_to question, notice: t('errors.general') }
-        format.json { render json: question.errors, status: :unprocessable_entity }
-      end
-    end
-    trash_service.commit
-  end
-
-  # PUT /arguments/1/untrash
-  # PUT /arguments/1/untrash.json
-  def untrash
-    untrash_service.on(:untrash_question_successful) do |question|
-      respond_to do |format|
-        format.html { redirect_to question, notice: t('type_untrash_success', type: t('questions.type')) }
-        format.json { head :no_content }
-      end
-    end
-    untrash_service.on(:untrash_question_failed) do |question|
-      respond_to do |format|
-        format.html { redirect_to question, notice: t('errors.general') }
-        format.json { render json: question.errors, status: :unprocessable_entity }
-      end
-    end
-    untrash_service.commit
-  end
-
   # GET /motions/1/move
   def move
     respond_to do |format|

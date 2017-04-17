@@ -53,53 +53,6 @@ class CommentsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /arguments/1/comments/1
-  def trash
-    trash_service.on(:trash_comment_successful) do |comment|
-      respond_to do |format|
-        format.html do
-          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
-                      notice: t('type_trash_success', type: t('comments.type'))
-        end
-        format.js # destroy_comment.js
-      end
-    end
-    trash_service.on(:trash_comment_failed) do |comment|
-      respond_to do |format|
-        format.html do
-          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
-                      notice: t('errors.general')
-        end
-        format.js # destroy_comment.js
-      end
-    end
-    trash_service.commit
-  end
-
-  # PUT /arguments/1/comments/1/untrash
-  # PUT /arguments/1/comments/1/untrash.json
-  def untrash
-    untrash_service.on(:untrash_comment_successful) do |comment|
-      respond_to do |format|
-        format.html do
-          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
-                      notice: t('type_untrash_success', type: t('comments.type'))
-        end
-        format.js # destroy_comment.js
-      end
-    end
-    untrash_service.on(:untrash_comment_failed) do |comment|
-      respond_to do |format|
-        format.html do
-          redirect_to polymorphic_url([comment.parent_model], anchor: comment.id),
-                      notice: t('errors.general')
-        end
-        format.js # destroy_comment.js
-      end
-    end
-    untrash_service.commit
-  end
-
   def forum_for(url_options)
     comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
     if comment.present?
@@ -203,5 +156,37 @@ class CommentsController < EdgeTreeController
       when 'posts' then BlogPost
       end
     resource&.find(id)&.forum
+  end
+
+  def trash_respond_blocks_failure(resource, format)
+    format.html do
+      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
+                  notice: t('errors.general')
+    end
+    format.js # destroy_comment.js
+  end
+
+  def trash_respond_blocks_success(resource, format)
+    format.html do
+      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
+                  notice: t('type_trash_success', type: t('comments.type'))
+    end
+    format.js # destroy_comment.js
+  end
+
+  def untrash_respond_blocks_failure
+    format.html do
+      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
+                  notice: t('errors.general')
+    end
+    format.js # destroy_comment.js
+  end
+
+  def untrash_respond_blocks_success
+    format.html do
+      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
+                  notice: t('type_untrash_success', type: t('comments.type'))
+    end
+    format.js # destroy_comment.js
   end
 end

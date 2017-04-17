@@ -86,43 +86,6 @@ class MotionsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /motions/1
-  # DELETE /motions/1.json
-  def trash
-    trash_service.on(:trash_motion_successful) do |motion|
-      parent = motion.edge.parent.owner
-      respond_to do |format|
-        format.html { redirect_to parent, notice: t('type_trash_success', type: t('motions.type')) }
-        format.json { head :no_content }
-      end
-    end
-    trash_service.on(:trash_motion_failed) do |motion|
-      respond_to do |format|
-        format.html { redirect_to motion, notice: t('errors.general') }
-        format.json { render json: motion.errors, status: :unprocessable_entity }
-      end
-    end
-    trash_service.commit
-  end
-
-  # PUT /motions/1/untrash
-  # PUT /motions/1/untrash.json
-  def untrash
-    untrash_service.on(:untrash_motion_successful) do |motion|
-      respond_to do |format|
-        format.html { redirect_to motion, notice: t('type_untrash_success', type: t('motions.type')) }
-        format.json { head :no_content }
-      end
-    end
-    untrash_service.on(:untrash_motion_failed) do |motion|
-      respond_to do |format|
-        format.html { redirect_to motion, notice: t('errors.general') }
-        format.json { render json: motion.errors, status: :unprocessable_entity }
-      end
-    end
-    untrash_service.commit
-  end
-
   # GET /motions/1/move
   def move
     authorize authenticated_resource, :move?

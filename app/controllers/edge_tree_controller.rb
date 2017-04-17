@@ -14,7 +14,8 @@ class EdgeTreeController < ServiceController
           EdgeTree::Destroy,
           EdgeTree::Edit,
           EdgeTree::Index,
-          EdgeTree::New
+          EdgeTree::New,
+          EdgeTree::Trashing
 
   private
 
@@ -32,7 +33,7 @@ class EdgeTreeController < ServiceController
   # @param [Class] resource The resource from the result of the action
   def success_redirect_model(resource)
     case action_name
-    when 'destroy'
+    when 'destroy', 'trash'
       resource.parent_model
     else
       resource

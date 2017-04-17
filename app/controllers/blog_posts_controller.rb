@@ -27,45 +27,6 @@ class BlogPostsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /blog_posts/1
-  # DELETE /blog_posts/1.json
-  def trash
-    trash_service.on(:trash_blog_post_successful) do |blog_post|
-      respond_to do |format|
-        format.html do
-          redirect_to blog_post.parent_model,
-                      notice: t('type_trash_success', type: t('blog_posts.type'))
-        end
-        format.json { head :no_content }
-      end
-    end
-    trash_service.on(:trash_blog_post_failed) do |blog_post|
-      respond_to do |format|
-        format.html { redirect_to blog_post, notice: t('errors.general') }
-        format.json { render json: blog_post.errors, status: :unprocessable_entity }
-      end
-    end
-    trash_service.commit
-  end
-
-  # PUT /blog_posts/1/untrash
-  # PUT /blog_posts/1/untrash.json
-  def untrash
-    untrash_service.on(:untrash_blog_post_successful) do |blog_post|
-      respond_to do |format|
-        format.html { redirect_to blog_post, notice: t('type_untrash_success', type: t('blog_posts.type')) }
-        format.json { head :no_content }
-      end
-    end
-    untrash_service.on(:untrash_blog_post_failed) do |blog_post|
-      respond_to do |format|
-        format.html { redirect_to blog_post, notice: t('errors.general') }
-        format.json { render json: blog_post.errors, status: :unprocessable_entity }
-      end
-    end
-    untrash_service.commit
-  end
-
   private
 
   def resource_tenant

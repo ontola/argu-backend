@@ -42,42 +42,6 @@ class ProjectsController < EdgeTreeController
     update_service.commit
   end
 
-  # DELETE /projects/1
-  # DELETE /projects/1.json
-  def trash
-    trash_service.on(:trash_project_successful) do |project|
-      respond_to do |format|
-        format.html { redirect_to project.forum, notice: t('type_trash_success', type: t('projects.type')) }
-        format.json { head :no_content }
-      end
-    end
-    trash_service.on(:trash_project_failed) do |project|
-      respond_to do |format|
-        format.html { redirect_to project, notice: t('errors.general') }
-        format.json { render json: project.errors, status: :unprocessable_entity }
-      end
-    end
-    trash_service.commit
-  end
-
-  # PUT /projects/1/untrash
-  # PUT /projects/1/untrash.json
-  def untrash
-    untrash_service.on(:untrash_project_successful) do |project|
-      respond_to do |format|
-        format.html { redirect_to project, notice: t('type_untrash_success', type: t('projects.type')) }
-        format.json { head :no_content }
-      end
-    end
-    untrash_service.on(:untrash_project_failed) do |project|
-      respond_to do |format|
-        format.html { redirect_to project, notice: t('errors.general') }
-        format.json { render json: project.errors, status: :unprocessable_entity }
-      end
-    end
-    untrash_service.commit
-  end
-
   private
 
   def redirect_pages
