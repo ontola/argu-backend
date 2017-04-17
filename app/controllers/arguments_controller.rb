@@ -34,23 +34,6 @@ class ArgumentsController < EdgeTreeController
     end
   end
 
-  # GET /arguments/new
-  # GET /arguments/new.json
-  def new
-    authenticated_resource!.assign_attributes(pro: %w(con pro).index(params[:pro]))
-
-    respond_to do |format|
-      if params[:motion_id].present?
-        format.js { render js: "window.location = #{request.url.to_json}" }
-        format.html { render :form, locals: {argument: authenticated_resource!} }
-        format.json { render json: authenticated_resource! }
-      else
-        format.html { render text: 'Bad request', status: 400 }
-        format.json { head 400 }
-      end
-    end
-  end
-
   # GET /arguments/1/edit
   def edit
     respond_to do |format|
@@ -176,6 +159,13 @@ class ArgumentsController < EdgeTreeController
 
   def deserialize_params_options
     {keys: {name: :title, text: :content}}
+  end
+
+  def new_respond_blocks_success(resource, format)
+    resource.assign_attributes(pro: %w(con pro).index(params[:pro]))
+    return super if params[:motion_id].present?
+    format.html { render text: 'Bad request', status: 400 }
+    format.json { head 400 }
   end
 
   def service_options(opts = {})

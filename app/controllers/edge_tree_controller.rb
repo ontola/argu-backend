@@ -7,5 +7,6 @@
 # are assumed to have `Edgeable` included.
 class EdgeTreeController < ServiceController
   include NestedResourceHelper,
-          EdgeTree::Index
+          EdgeTree::Index,
+          EdgeTree::New
 end

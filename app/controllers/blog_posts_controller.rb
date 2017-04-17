@@ -2,13 +2,6 @@
 class BlogPostsController < EdgeTreeController
   include BlogPostsHelper
 
-  def new
-    respond_to do |format|
-      format.html { render locals: {blog_post: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
-    end
-  end
-
   def create
     create_service.on(:create_blog_post_successful) do |blog_post|
       respond_to do |format|
@@ -18,7 +11,7 @@ class BlogPostsController < EdgeTreeController
     end
     create_service.on(:create_blog_post_failed) do |blog_post|
       respond_to do |format|
-        format.html { render :new, locals: {blog_post: blog_post} }
+        format.html { render :form, locals: {blog_post: blog_post} }
         format.json { render json: blog_post.errors, status: 422 }
       end
     end
@@ -50,7 +43,7 @@ class BlogPostsController < EdgeTreeController
     end
     update_service.on(:update_blog_post_failed) do |blog_post|
       respond_to do |format|
-        format.html { render :new, locals: {blog_post: blog_post} }
+        format.html { render :form, locals: {blog_post: blog_post} }
         format.json { render json: blog_post.errors, status: 422 }
       end
     end

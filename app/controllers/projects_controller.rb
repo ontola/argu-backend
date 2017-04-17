@@ -2,13 +2,6 @@
 class ProjectsController < EdgeTreeController
   prepend_before_action :redirect_pages, only: :show
 
-  def new
-    respond_to do |format|
-      format.html { render locals: {project: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
-    end
-  end
-
   def create
     create_service.on(:create_project_successful) do |project|
       respond_to do |format|

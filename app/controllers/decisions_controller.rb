@@ -37,19 +37,6 @@ class DecisionsController < EdgeTreeController
     end
   end
 
-  def new
-    respond_to do |format|
-      format.html do
-        render action: 'index',
-               locals: {
-                 decisionable: get_parent_resource,
-                 new_decision: authenticated_resource!
-               }
-      end
-      format.json { render json: authenticated_resource! }
-    end
-  end
-
   def create
     create_service.on(:create_decision_successful) do |decision|
       respond_to do |format|
@@ -133,6 +120,17 @@ class DecisionsController < EdgeTreeController
       decision.edge.build_argu_publication(publish_type: :direct)
     end
     decision
+  end
+
+  def new_respond_blocks_success(resource, format)
+    format.html do
+      render action: 'index',
+             locals: {
+               decisionable: get_parent_resource,
+               new_decision: resource
+             }
+    end
+    format.json { render json: resource }
   end
 
   def resource_by_id

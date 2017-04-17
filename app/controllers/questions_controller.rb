@@ -28,14 +28,6 @@ class QuestionsController < EdgeTreeController
     end
   end
 
-  def new
-    respond_to do |format|
-      format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {question: authenticated_resource} }
-      format.json { render json: authenticated_resource }
-    end
-  end
-
   # GET /questions/1/edit
   def edit
     respond_to do |format|

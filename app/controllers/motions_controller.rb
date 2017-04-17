@@ -60,17 +60,6 @@ class MotionsController < EdgeTreeController
     end
   end
 
-  # GET /motions/new
-  # GET /motions/new.json
-  def new
-    authorize authenticated_resource, :new?
-    respond_to do |format|
-      format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {motion: authenticated_resource} }
-      format.json { render json: authenticated_resource }
-    end
-  end
-
   # GET /motions/1/edit
   def edit
     @motion = authenticated_resource
