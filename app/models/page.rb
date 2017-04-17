@@ -72,7 +72,7 @@ class Page < ApplicationRecord
         name: role.humanize.pluralize,
         name_singular: role.capitalize,
         page: self,
-        deletable: false
+        deletable: role != :super_admin
       )
       group.grants << Grant.new(role: Grant.roles[role.to_sym], edge: edge)
       group.edge = Edge.new(user: publisher, parent: edge)
