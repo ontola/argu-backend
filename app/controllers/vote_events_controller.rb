@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-class VoteEventsController < AuthorizedController
-  include NestedResourceHelper
+class VoteEventsController < EdgeTreeController
   skip_before_action :check_if_registered, only: :index
 
   def index

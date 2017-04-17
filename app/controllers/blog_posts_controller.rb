@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class BlogPostsController < ServiceController
-  include NestedResourceHelper, BlogPostsHelper
+class BlogPostsController < EdgeTreeController
+  include BlogPostsHelper
 
   def new
     respond_to do |format|

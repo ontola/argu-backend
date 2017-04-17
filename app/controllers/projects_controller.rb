@@ -1,6 +1,5 @@
 # frozen_string_literal: true
-class ProjectsController < ServiceController
-  include NestedResourceHelper
+class ProjectsController < EdgeTreeController
   prepend_before_action :redirect_pages, only: :show
 
   def new

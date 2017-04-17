@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class QuestionsController < ServiceController
-  include NestedResourceHelper, MenuHelper, VotesHelper
+class QuestionsController < EdgeTreeController
+  include MenuHelper, VotesHelper
   skip_before_action :check_if_registered, only: :index
 
   def index
