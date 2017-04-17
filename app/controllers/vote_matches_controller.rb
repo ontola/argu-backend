@@ -3,26 +3,6 @@ class VoteMatchesController < ServiceController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
 
-  def index
-    skip_verify_policy_scoped(true)
-    collection = if get_parent_resource.present?
-                   get_parent_resource.vote_match_collection(collection_options)
-                 else
-                   Collection.new(
-                     association_class: VoteMatch,
-                     user_context: user_context,
-                     page: params[:page],
-                     pagination: true
-                   )
-                 end
-    respond_to do |format|
-      format.json_api do
-        render json: collection,
-               include: INC_NESTED_COLLECTION
-      end
-    end
-  end
-
   def show
     respond_to do |format|
       format.json_api do
@@ -91,6 +71,24 @@ class VoteMatchesController < ServiceController
       attributes: resource_new_params.merge(permit_params.to_h),
       options: service_options
     )
+  end
+
+  def index_respond_blocks_success(_, format)
+    collection =
+      if get_parent_resource.present?
+        get_parent_resource.vote_match_collection(collection_options)
+      else
+        Collection.new(
+          association_class: VoteMatch,
+          user_context: user_context,
+          page: params[:page],
+          pagination: true
+        )
+      end
+    format.json_api do
+      render json: collection,
+             include: INC_NESTED_COLLECTION
+    end
   end
 
   def new_resource_from_params

@@ -3,16 +3,6 @@ class MotionsController < EdgeTreeController
   skip_before_action :check_if_registered, only: :index
   skip_before_action :authorize_action, only: :search
 
-  def index
-    skip_verify_policy_scoped(true)
-    respond_to do |format|
-      format.json_api do
-        render json: get_parent_resource.motion_collection(collection_options),
-               include: INC_NESTED_COLLECTION
-      end
-    end
-  end
-
   def search
     skip_verify_policy_authorized(true)
     if params[:q].present? && params[:thing].present?

@@ -6,5 +6,6 @@
 # Since this controller includes `NestedResourceHelper`, subclassed models
 # are assumed to have `Edgeable` included.
 class EdgeTreeController < ServiceController
-  include NestedResourceHelper
+  include NestedResourceHelper,
+          EdgeTree::Index
 end

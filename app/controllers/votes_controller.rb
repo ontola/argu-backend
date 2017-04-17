@@ -3,16 +3,6 @@ class VotesController < ServiceController
   include NestedResourceHelper, UriTemplateHelper
   skip_before_action :check_if_registered, only: :index
 
-  def index
-    skip_verify_policy_scoped(true)
-    respond_to do |format|
-      format.json_api do
-        render json: get_parent_resource.vote_collection(collection_options),
-               include: INC_NESTED_COLLECTION
-      end
-    end
-  end
-
   # GET /model/:model_id/vote
   def show
     respond_to do |format|

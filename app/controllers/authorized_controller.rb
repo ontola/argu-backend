@@ -73,6 +73,13 @@ class AuthorizedController < ApplicationController
     controller_name.classify.constantize
   end
 
+  # The name of the current model.
+  # This is used primarily to wire data from the generic actions to their
+  # resource-specific view variable names.
+  def model_name
+    controller_name.singularize.to_sym
+  end
+
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
@@ -95,7 +102,7 @@ class AuthorizedController < ApplicationController
 
   def permit_params
     params
-      .require(controller_name.singularize.to_sym)
+      .require(model_name)
       .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
   end
 
@@ -131,7 +138,7 @@ class AuthorizedController < ApplicationController
   end
 
   def resource_id
-    params[:id] || params["#{controller_name.singularize}_id"]
+    params[:id] || params["#{model_name}_id"]
   end
 
   def _route?

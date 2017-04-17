@@ -2,16 +2,6 @@
 class ArgumentsController < EdgeTreeController
   skip_before_action :check_if_registered, only: :index
 
-  def index
-    skip_verify_policy_scoped(true)
-    respond_to do |format|
-      format.json_api do
-        render json: get_parent_resource.argument_collection(collection_options),
-               include: INC_NESTED_COLLECTION
-      end
-    end
-  end
-
   # GET /arguments/1
   # GET /arguments/1.json
   def show
