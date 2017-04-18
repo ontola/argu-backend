@@ -28,24 +28,6 @@ class QuestionsController < EdgeTreeController
     end
   end
 
-  # PUT /questions/1
-  # PUT /questions/1.json
-  def update
-    update_service.on(:update_question_successful) do |question|
-      respond_to do |format|
-        format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
-        format.json { head :no_content }
-      end
-    end
-    update_service.on(:update_question_failed) do |question|
-      respond_to do |format|
-        format.html { render 'form', locals: {question: question} }
-        format.json { render json: question.errors, status: :unprocessable_entity }
-      end
-    end
-    update_service.commit
-  end
-
   # GET /motions/1/move
   def move
     respond_to do |format|

@@ -26,22 +26,6 @@ class ProjectsController < EdgeTreeController
     end
   end
 
-  def update
-    update_service.on(:update_project_successful) do |project|
-      respond_to do |format|
-        format.html { redirect_to project }
-        format.json { render json: project, status: 200, location: project }
-      end
-    end
-    update_service.on(:update_project_failed) do |project|
-      respond_to do |format|
-        format.html { render :form, locals: {project: project} }
-        format.json { render json: project.errors, status: 422 }
-      end
-    end
-    update_service.commit
-  end
-
   private
 
   def redirect_pages

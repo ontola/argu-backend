@@ -8,26 +8,14 @@ class PhasesController < EdgeTreeController
     end
   end
 
-  # Set virtual attribute finish_phase to true to update end_date to Time.current
-  def update
-    update_service.on(:update_phase_successful) do |phase|
-      respond_to do |format|
-        format.html { redirect_to phase.parent_model, notice: t('type_save_success', type: t('projects.phases.type')) }
-        format.json { head :no_content }
-      end
-    end
-    update_service.on(:update_phase_failed) do |phase|
-      respond_to do |format|
-        format.html { render :form, locals: {phase: phase} }
-        format.json { render json: phase.errors, status: :unprocessable_entity }
-      end
-    end
-    update_service.commit
-  end
-
   private
 
   def permit_params
     params.require(:phase).permit(*policy(resource_by_id).permitted_attributes)
+  end
+
+  def success_redirect_model(resource)
+    super unless action_name == 'update'
+    resource.parent_model
   end
 end

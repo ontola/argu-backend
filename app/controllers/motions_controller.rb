@@ -60,32 +60,6 @@ class MotionsController < EdgeTreeController
     end
   end
 
-  # PUT /motions/1
-  # PUT /motions/1.json
-  def update
-    update_service.on(:update_motion_successful) do |motion|
-      respond_to do |format|
-        if params[:motion].present? &&
-            params[:motion][:tag_id].present? &&
-            motion.tags.reject { |a, b| a.motion == b }.first.present?
-          format.html { redirect_to tag_motions_url(Tag.find_by_id(motion.tag_id).name) }
-        else
-          format.html { redirect_to motion, notice: t('type_save_success', type: motion_type) }
-        end
-        format.json { head :no_content }
-        format.json_api { head :no_content }
-      end
-    end
-    update_service.on(:update_motion_failed) do |motion|
-      respond_to do |format|
-        format.html { render 'form', locals: {motion: motion} }
-        format.json { render json: motion.errors, status: :unprocessable_entity }
-        format.json_api { render json_api_error(422, motion.errors) }
-      end
-    end
-    update_service.commit
-  end
-
   # GET /motions/1/move
   def move
     authorize authenticated_resource, :move?
@@ -138,5 +112,17 @@ class MotionsController < EdgeTreeController
     super unless action_name == 'create'
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)
+  end
+
+  def update_respond_blocks_success(resource, format)
+    if params[:motion].present? &&
+        params[:motion][:tag_id].present? &&
+        resource.tags.reject { |a, b| a.motion == b }.first.present?
+      format.html { redirect_to tag_motions_url(Tag.find_by_id(resource.tag_id).name) }
+    else
+      format.html { redirect_to resource, notice: t('type_save_success', type: motion_type) }
+    end
+    format.json { head :no_content }
+    format.json_api { head :no_content }
   end
 end

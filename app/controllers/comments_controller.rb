@@ -19,40 +19,6 @@ class CommentsController < EdgeTreeController
     end
   end
 
-  def update
-    update_service.on(:update_comment_successful) do |comment|
-      respond_to do |format|
-        format.html do
-          redirect_to comment_url(comment),
-                      notice: t('comments.notices.updated')
-        end
-        format.js { render }
-        format.json { head :no_content }
-      end
-    end
-    update_service.on(:update_comment_failed) do |comment|
-      respond_to do |format|
-        format.html do
-          render 'edit',
-                 locals: {
-                   resource: comment.parent_model,
-                   comment: comment,
-                   parent_id: nil
-                 }
-        end
-        format.js do
-          render 'failed',
-                 status: 400
-        end
-        format.json do
-          render json: comment.errors,
-                 status: :unprocessable_entity
-        end
-      end
-    end
-    update_service.commit
-  end
-
   def forum_for(url_options)
     comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
     if comment.present?
@@ -188,5 +154,42 @@ class CommentsController < EdgeTreeController
                   notice: t('type_untrash_success', type: t('comments.type'))
     end
     format.js # destroy_comment.js
+  end
+
+  def update_respond_blocks_failure(resource, format)
+    format.html do
+      render 'edit',
+             locals: {
+               resource: resource.parent_model,
+               comment: resource,
+               parent_id: nil
+             }
+    end
+    format.js do
+      render 'failed',
+             status: 400,
+             locals: {
+               comment: resource,
+               commentable: resource.parent_model
+             }
+    end
+    format.json do
+      render json: resource.errors,
+             status: :unprocessable_entity
+    end
+  end
+
+  def update_respond_blocks_success(resource, format)
+    format.html do
+      redirect_to comment_url(resource),
+                  notice: t('comments.notices.updated')
+    end
+    format.js do
+      render locals: {
+        comment: resource,
+        commentable: resource.parent_model
+      }
+    end
+    format.json { head :no_content }
   end
 end

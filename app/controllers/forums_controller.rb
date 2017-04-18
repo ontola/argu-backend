@@ -70,20 +70,6 @@ class ForumsController < EdgeTreeController
            }
   end
 
-  def update
-    update_service.on(:update_forum_successful) do |forum|
-      redirect_to settings_forum_path(forum, tab: tab), notice: t('type_save_success', type: t('forums.type'))
-    end
-    update_service.on(:update_forum_failed) do
-      render 'settings',
-             locals: {
-               tab: tab,
-               active: tab
-             }
-    end
-    update_service.commit
-  end
-
   def forum_for(url_options)
     Forum.find_via_shortname_nil(url_options[:id])
   end
@@ -206,5 +192,18 @@ class ForumsController < EdgeTreeController
 
   def tab
     policy(resource_by_id || Forum).verify_tab(params[:tab] || params[:forum].try(:[], :tab))
+  end
+
+  def update_handler_failure(_)
+    render 'settings',
+           locals: {
+             tab: tab,
+             active: tab
+           }
+  end
+
+  def update_handler_success(resource)
+    redirect_to settings_forum_path(resource, tab: tab),
+                notice: t('type_save_success', type: t('forums.type'))
   end
 end

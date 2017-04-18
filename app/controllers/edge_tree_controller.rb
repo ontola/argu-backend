@@ -15,7 +15,8 @@ class EdgeTreeController < ServiceController
           EdgeTree::Edit,
           EdgeTree::Index,
           EdgeTree::New,
-          EdgeTree::Trashing
+          EdgeTree::Trashing,
+          EdgeTree::Update
 
   private
 

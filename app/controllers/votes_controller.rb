@@ -49,20 +49,6 @@ class VotesController < EdgeTreeController
     end
   end
 
-  def update
-    update_service.on(:update_vote_successful) do
-      respond_to do |format|
-        format.json_api { head :no_content }
-      end
-    end
-    update_service.on(:update_vote_failed) do |vote|
-      respond_to do |format|
-        format.json_api { render json_api_error(422, vote.errors) }
-      end
-    end
-    update_service.commit
-  end
-
   def forum_for(url_options)
     voteable = parent_resource_klass(url_options).find_by(id: url_options[parent_resource_key(url_options)])
     voteable.try :forum if voteable.present?

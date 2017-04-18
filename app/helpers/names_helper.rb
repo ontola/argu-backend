@@ -168,10 +168,14 @@ module NamesHelper
       blog_post_type
     elsif item.class == Comment
       I18n.t('comments.type')
+    elsif item.class == Decision
+      I18n.t('decisions.type')
     elsif item.class == Forum
       I18n.t('forums.type')
     elsif item.class == Project
       project_type
+    elsif item.class == Phase
+      I18n.t('projects.phases.type')
     elsif item.class == Page
       I18n.t('pages.type')
     end

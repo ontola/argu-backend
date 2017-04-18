@@ -11,26 +11,16 @@ class BlogPostsController < EdgeTreeController
     end
   end
 
-  def update
-    update_service.on(:update_blog_post_successful) do |blog_post|
-      respond_to do |format|
-        format.html { redirect_to url_for(url_for_blog_post(blog_post)) }
-        format.json { render json: blog_post, status: 200, location: blog_post }
-      end
-    end
-    update_service.on(:update_blog_post_failed) do |blog_post|
-      respond_to do |format|
-        format.html { render :form, locals: {blog_post: blog_post} }
-        format.json { render json: blog_post.errors, status: 422 }
-      end
-    end
-    update_service.commit
-  end
-
   private
 
   def resource_tenant
     get_parent_resource.forum if current_resource_is_nested?
+  end
+
+  def update_respond_blocks_success(resource, format)
+    format.html { redirect_to url_for(url_for_blog_post(resource)) }
+    format.json { render json: resource, status: 200, location: resource }
+    format.json_api { head :no_content }
   end
 
   def success_redirect_model(resource)

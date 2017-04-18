@@ -23,31 +23,6 @@ class DecisionsController < EdgeTreeController
     end
   end
 
-  def update
-    update_service.on(:update_decision_successful) do |decision|
-      respond_to do |format|
-        format.html do
-          redirect_to decision.parent_model,
-                      notice: t('type_save_success', type: t('decisions.type').capitalize)
-        end
-        format.json { render json: decision.parent_model, status: :updated, location: decision }
-      end
-    end
-    update_service.on(:update_decision_failed) do |decision|
-      respond_to do |format|
-        format.html do
-          render action: 'index',
-                 locals: {
-                   decisionable: decision.parent_model,
-                   decision: decision
-                 }
-        end
-        format.json { render json: decision.errors, status: :unprocessable_entity }
-      end
-    end
-    update_service.commit
-  end
-
   private
 
   def authenticated_resource!
@@ -133,5 +108,31 @@ class DecisionsController < EdgeTreeController
       forum: get_parent_resource.forum,
       state: params[:state]
     )
+  end
+
+  def success_redirect_model(resource)
+    return super unless action_name == 'update'
+    resource.parent_model
+  end
+
+  def update_respond_blocks_failure(resource, format)
+    format.html do
+      render action: 'index',
+             locals: {
+               decisionable: resource.parent_model,
+               decision: resource
+             }
+    end
+    format.json { render json: resource.errors, status: :unprocessable_entity }
+    format.json_api { render json_api_error(422, resource.errors) }
+  end
+
+  def update_respond_blocks_success(resource, format)
+    format.html do
+      redirect_to success_redirect_model(resource),
+                  notice: t('type_save_success', type: type_for(resource))
+    end
+    format.json { render json: resource.parent_model, status: :updated, location: resource }
+    format.json_api { head :no_content }
   end
 end

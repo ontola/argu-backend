@@ -34,26 +34,6 @@ class ArgumentsController < EdgeTreeController
     end
   end
 
-  # PUT /arguments/1
-  # PUT /arguments/1.json
-  def update
-    update_service.on(:update_argument_successful) do |argument|
-      respond_to do |format|
-        format.html { redirect_to argument, notice: t('arguments.notices.updated') }
-        format.json { head :no_content }
-        format.json_api { head :no_content }
-      end
-    end
-    update_service.on(:update_argument_failed) do |argument|
-      respond_to do |format|
-        format.html { render :form }
-        format.json { render json: argument.errors, status: :unprocessable_entity }
-        format.json_api { render json_api_error(422, argument.errors) }
-      end
-    end
-    update_service.commit
-  end
-
   def forum_for(url_options)
     argument_id = url_options[:argument_id] || url_options[:id]
     if argument_id.presence

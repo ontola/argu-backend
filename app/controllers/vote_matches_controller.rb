@@ -11,22 +11,6 @@ class VoteMatchesController < ServiceController
     end
   end
 
-  def update
-    update_service.on(:update_vote_match_successful) do
-      respond_to do |format|
-        format.json { head :no_content }
-        format.json_api { head :no_content }
-      end
-    end
-    update_service.on(:update_vote_match_failed) do |vote_match|
-      respond_to do |format|
-        format.json { render json: vote_match.errors, status: :unprocessable_entity }
-        format.json_api { render json_api_error(422, vote_match.errors) }
-      end
-    end
-    update_service.commit
-  end
-
   private
 
   def get_parent_resource
