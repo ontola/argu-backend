@@ -9,7 +9,6 @@ section {
 // All this wizardry is to make only the correct borders round.
 // As you can see, .section-info requires some special treatment.
 .box > section:first-child:not(.section-info), .box > a:first-child > section:not(.section-info), .box > a:first-child > .box-image--container {
-  overflow: hidden;
   display: block;
   border-top-left-radius: $border-radius-size;
   border-top-right-radius: $border-radius-size;
@@ -29,7 +28,6 @@ section {
 
 //.box > section:last-child, .box > a:last-child > section{
 .box > section:last-child, .box > a:last-child {
-  overflow: hidden;
   display: block;
   border-bottom-left-radius: $border-radius-size;
   border-bottom-right-radius: $border-radius-size;
