@@ -267,12 +267,12 @@
 }
 
 .Select-item-result-icon {
-    borderRadius: 3;
+    border-radius: 3px;
     display: inline-block;
-    marginRight: 10px;
+    margin-right: 10px;
     position: relative;
     top: -2px;
-    verticalAlign: middle;
+    vertical-align: middle;
 }
 
 @keyframes Select-animation-spin {
