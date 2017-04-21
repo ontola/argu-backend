@@ -104,7 +104,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
       general_create_json(motion)
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.pro?
   end
 
@@ -115,7 +115,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
       general_create_json(motion, false)
     end
 
-    assert_response 200
+    assert_response 201
     assert_not assigns(:create_service).resource.pro?
   end
 
@@ -129,7 +129,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
       general_create_json(linked_record)
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.pro?
   end
 
@@ -143,7 +143,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
       general_create_json(linked_record, false)
     end
 
-    assert_response 200
+    assert_response 201
     assert_not assigns(:create_service).resource.pro?
   end
 

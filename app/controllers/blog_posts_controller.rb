@@ -2,22 +2,6 @@
 class BlogPostsController < EdgeTreeController
   include BlogPostsHelper
 
-  def create
-    create_service.on(:create_blog_post_successful) do |blog_post|
-      respond_to do |format|
-        format.html { redirect_to url_for(url_for_blog_post(blog_post)) }
-        format.json { render json: blog_post, status: 201, location: blog_post }
-      end
-    end
-    create_service.on(:create_blog_post_failed) do |blog_post|
-      respond_to do |format|
-        format.html { render :form, locals: {blog_post: blog_post} }
-        format.json { render json: blog_post.errors, status: 422 }
-      end
-    end
-    create_service.commit
-  end
-
   def show
     @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
     respond_to do |format|
@@ -114,5 +98,10 @@ class BlogPostsController < EdgeTreeController
 
   def resource_tenant
     get_parent_resource.forum if current_resource_is_nested?
+  end
+
+  def success_redirect_model(resource)
+    return super unless action_name == 'create'
+    url_for(url_for_blog_post(resource))
   end
 end

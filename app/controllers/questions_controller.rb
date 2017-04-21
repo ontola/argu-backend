@@ -35,22 +35,6 @@ class QuestionsController < EdgeTreeController
     end
   end
 
-  def create
-    create_service.on(:create_question_successful) do |question|
-      respond_to do |format|
-        format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
-        format.json { render json: question, status: :created, location: question }
-      end
-    end
-    create_service.on(:create_question_failed) do |question|
-      respond_to do |format|
-        format.html { render 'form', locals: {question: question} }
-        format.json { render json: question.errors, status: :unprocessable_entity }
-      end
-    end
-    create_service.commit
-  end
-
   # PUT /questions/1
   # PUT /questions/1.json
   def update

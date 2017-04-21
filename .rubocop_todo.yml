@@ -43,8 +43,6 @@ Metrics/ClassLength:
   Max: 200
   Exclude:
     - 'app/controllers/application_controller.rb'
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/motions_controller.rb'
     - 'app/controllers/users_controller.rb'
     - 'app/helpers/motions_helper.rb'
     - 'app/models/user.rb'
@@ -69,11 +67,8 @@ Metrics/MethodLength:
   Max: 30
   Exclude:
     - 'app/controllers/application_controller.rb'
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/comments_controller.rb'
     - 'app/controllers/motions_controller.rb'
     - 'app/controllers/profiles_controller.rb'
-    - 'app/controllers/votes_controller.rb'
     - 'app/helpers/header_helper.rb'
     - 'app/helpers/menu_helper.rb'
     - 'lib/argu/test_helpers/test_definitions.rb'

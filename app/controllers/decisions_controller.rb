@@ -37,29 +37,6 @@ class DecisionsController < EdgeTreeController
     end
   end
 
-  def create
-    create_service.on(:create_decision_successful) do |decision|
-      respond_to do |format|
-        format.html do
-          notice = if decision.edge.argu_publication.published_at.present?
-                     t("decisions.#{decision.parent_model.model_name.singular}.#{decision.state}")
-                   else
-                     t('type_save_success', type: t('decisions.type').capitalize)
-                   end
-          redirect_to decision.parent_model, notice: notice
-        end
-        format.json { render json: decision, status: 201, location: decision }
-      end
-    end
-    create_service.on(:create_decision_failed) do |decision|
-      respond_to do |format|
-        format.html { render action: 'index', locals: {decision: decision, decisionable: decision.parent_model} }
-        format.json { render json: decision.errors, status: 422 }
-      end
-    end
-    create_service.commit
-  end
-
   def update
     update_service.on(:update_decision_successful) do |decision|
       respond_to do |format|
@@ -94,6 +71,24 @@ class DecisionsController < EdgeTreeController
     else
       super
     end
+  end
+
+  def create_respond_blocks_failure(resource, format)
+    format.html { render action: 'index', locals: {decision: resource, decisionable: resource.parent_model} }
+    format.json { render json: resource.errors, status: :unprocessable_entity }
+    format.json_api { render json_api_error(422, resource.errors) }
+  end
+
+  def create_respond_blocks_success(resource, format)
+    format.html do
+      notice = if resource.edge.argu_publication.published_at.present?
+                 t("decisions.#{resource.parent_model.model_name.singular}.#{resource.state}")
+               else
+                 t('type_save_success', type: t('decisions.type').capitalize)
+               end
+      redirect_to resource.parent_model, notice: notice
+    end
+    format.json { render json: resource, status: 201, location: resource }
   end
 
   def get_parent_resource(_opts = {})

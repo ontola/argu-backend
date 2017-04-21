@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class VotesController < ServiceController
+class VotesController < EdgeTreeController
   include NestedResourceHelper, UriTemplateHelper
   skip_before_action :check_if_registered, only: :index
 
@@ -29,51 +29,23 @@ class VotesController < ServiceController
     method = create_service.resource.persisted? ? :update? : :create?
     authorize create_service.resource, method
 
-    if unmodified?
-      respond_to do |format|
-        format.json do
-          render status: 304,
-                 locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
-        end
-        format.json_api { head 304 }
-        format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
-        format.html do
-          if params[:vote].try(:[], :r).present?
-            redirect_to redirect_param
-          else
-            redirect_to polymorphic_url(create_service.resource.parent_model.voteable),
-                        notice: t('votes.alerts.not_modified')
-          end
+    return super unless unmodified?
+
+    respond_to do |format|
+      format.json do
+        render status: 304,
+               locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
+      end
+      format.json_api { head 304 }
+      format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
+      format.html do
+        if params[:vote].try(:[], :r).present?
+          redirect_to redirect_param
+        else
+          redirect_to polymorphic_url(create_service.resource.parent_model.voteable),
+                      notice: t('votes.alerts.not_modified')
         end
       end
-    else
-      create_service.on(:create_vote_successful) do |vote|
-        respond_to do |format|
-          format.json { render location: vote, locals: {model: vote.parent_model, vote: vote} }
-          format.json_api { render json: vote }
-          format.js { render locals: {model: vote.parent_model, vote: vote} }
-          format.html do
-            if params[:vote].try(:[], :r).present?
-              redirect_to redirect_param
-            else
-              redirect_to polymorphic_url(vote.parent_model.voteable),
-                          notice: t('votes.alerts.success')
-            end
-          end
-        end
-      end
-      create_service.on(:create_vote_failed) do |vote|
-        respond_to do |format|
-          format.json { render json: vote.errors, status: 400 }
-          format.json_api { render json: vote.errors, status: 400 }
-          # format.js { head :bad_request }
-          format.html do
-            redirect_to polymorphic_url(vote.parent_model.voteable),
-                        notice: t('votes.alerts.failed')
-          end
-        end
-      end
-      create_service.commit
     end
   end
 
@@ -117,6 +89,30 @@ class VotesController < ServiceController
   end
 
   private
+
+  def create_respond_blocks_failure(resource, format)
+    format.json { render json: resource.errors, status: 400 }
+    format.json_api { render json: resource.errors, status: 400 }
+    # format.js { head :bad_request }
+    format.html do
+      redirect_to polymorphic_url(resource.parent_model.voteable),
+                  notice: t('votes.alerts.failed')
+    end
+  end
+
+  def create_respond_blocks_success(resource, format)
+    format.json { render location: resource, locals: {model: resource.parent_model, vote: resource} }
+    format.json_api { render json: resource }
+    format.js { render locals: {model: resource.parent_model, vote: resource} }
+    format.html do
+      if params[:vote].try(:[], :r).present?
+        redirect_to redirect_param
+      else
+        redirect_to polymorphic_url(resource.parent_model.voteable),
+                    notice: t('votes.alerts.success')
+      end
+    end
+  end
 
   def resource_by_id
     return super unless params[:action] == 'show' && params[:motion_id].present?

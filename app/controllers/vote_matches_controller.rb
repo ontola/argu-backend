@@ -11,22 +11,6 @@ class VoteMatchesController < ServiceController
     end
   end
 
-  def create
-    create_service.on(:create_vote_match_successful) do |vote_match|
-      respond_to do |format|
-        format.json { render json: vote_match, status: :created, location: vote_match }
-        format.json_api { render json: vote_match, status: :created, location: vote_match }
-      end
-    end
-    create_service.on(:create_vote_match_failed) do |vote_match|
-      respond_to do |format|
-        format.json { render json: vote_match.errors, status: :unprocessable_entity }
-        format.json_api { render json_api_error(422, vote_match.errors) }
-      end
-    end
-    create_service.commit
-  end
-
   def update
     update_service.on(:update_vote_match_successful) do
       respond_to do |format|

@@ -38,23 +38,6 @@ class CommentsController < EdgeTreeController
     end
   end
 
-  # POST /resource/1/comments
-  def create
-    create_service.on(:create_comment_successful) do |c|
-      redirect_to polymorphic_url(c.parent_model, anchor: c.identifier),
-                  notice: t('type_create_success', type: t('comments.type'))
-    end
-    create_service.on(:create_comment_failed) do |c|
-      redirect_to polymorphic_url([c.parent_model],
-                                  comment: {
-                                    body: c.body,
-                                    parent_id: c.parent_id
-                                  }, anchor: c.id),
-                  notice: c.errors.full_messages.first
-    end
-    create_service.commit
-  end
-
   def update
     update_service.on(:update_comment_successful) do |comment|
       respond_to do |format|
@@ -173,6 +156,20 @@ class CommentsController < EdgeTreeController
       raise StandardError('should always be a hash')
     end
     params[:comment].try(:[], :body)
+  end
+
+  def create_handler_failure(c)
+    redirect_to polymorphic_url([c.parent_model],
+                                comment: {
+                                  body: c.body,
+                                  parent_id: c.parent_id
+                                }, anchor: c.id),
+                notice: c.errors.full_messages.first
+  end
+
+  def create_handler_success(c)
+    redirect_to polymorphic_url(c.parent_model, anchor: c.identifier),
+                notice: t('type_create_success', type: t('comments.type'))
   end
 
   def new_resource_from_params

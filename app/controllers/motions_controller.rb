@@ -69,30 +69,6 @@ class MotionsController < EdgeTreeController
     end
   end
 
-  # POST /motions
-  # POST /motions.json
-  def create
-    create_service.on(:create_motion_successful) do |motion|
-      respond_to do |format|
-        first = current_profile.motions.count == 1 || nil
-        format.html do
-          redirect_to motion_path(motion, start_motion_tour: first),
-                      notice: t('type_save_success', type: motion_type)
-        end
-        format.json { render json: motion, status: :created, location: motion }
-        format.json_api { render json: motion, status: :created, location: motion }
-      end
-    end
-    create_service.on(:create_motion_failed) do |motion|
-      respond_to do |format|
-        format.html { render 'form', locals: {motion: motion} }
-        format.json { render json: motion.errors, status: :unprocessable_entity }
-        format.json_api { render json_api_error(422, motion.errors) }
-      end
-    end
-    create_service.commit
-  end
-
   # PUT /motions/1
   # PUT /motions/1.json
   def update
@@ -211,15 +187,21 @@ class MotionsController < EdgeTreeController
 
   private
 
-  def show_params
-    params.permit(:page, :page_arg_pro, :page_arg_con)
-  end
-
   def resource_new_params
     if get_parent_resource.try(:project).present?
       super.merge(project: get_parent_resource.project)
     else
       super
     end
+  end
+
+  def show_params
+    params.permit(:page, :page_arg_pro, :page_arg_con)
+  end
+
+  def success_redirect_model(resource)
+    super unless action_name == 'create'
+    first = current_profile.motions.count == 1 || nil
+    motion_path(resource, start_motion_tour: first)
   end
 end

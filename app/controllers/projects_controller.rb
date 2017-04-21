@@ -2,22 +2,6 @@
 class ProjectsController < EdgeTreeController
   prepend_before_action :redirect_pages, only: :show
 
-  def create
-    create_service.on(:create_project_successful) do |project|
-      respond_to do |format|
-        format.html { redirect_to project }
-        format.json { render json: project, status: 201, location: project }
-      end
-    end
-    create_service.on(:create_project_failed) do |project|
-      respond_to do |format|
-        format.html { render :new, locals: {project: project} }
-        format.json { render json: project.errors, status: 422 }
-      end
-    end
-    create_service.commit
-  end
-
   def show
     questions = policy_scope(authenticated_resource!.questions
                                .includes(:edge, :default_cover_photo, :motions)

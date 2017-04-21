@@ -41,26 +41,6 @@ class ArgumentsController < EdgeTreeController
     end
   end
 
-  # POST /arguments
-  # POST /arguments.json
-  def create
-    create_service.on(:create_argument_successful) do |argument|
-      respond_to do |format|
-        format.html { redirect_to argument.parent_model, notice: t('arguments.notices.created') }
-        format.json { render json: argument, status: :created, location: argument }
-        format.json_api { render json: argument }
-      end
-    end
-    create_service.on(:create_argument_failed) do |argument|
-      respond_to do |format|
-        format.html { render action: 'form', locals: {argument: argument} }
-        format.json { render json: argument.errors, status: :unprocessable_entity }
-        format.json_api { render json_api_error(422, argument.errors) }
-      end
-    end
-    create_service.commit
-  end
-
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update
@@ -172,5 +152,10 @@ class ArgumentsController < EdgeTreeController
     super(opts.merge(auto_vote:
                        params.dig(:argument, :auto_vote) == 'true' &&
                          current_profile == current_user.profile))
+  end
+
+  def success_redirect_model(resource)
+    return super unless action_name == 'create'
+    resource.parent_model
   end
 end
