@@ -23,8 +23,6 @@ class GroupMembershipsController < AuthorizedController
     @results = policy_scope(
       GroupMembership
         .includes(:group, user: [:shortname, profile: :default_profile_photo])
-        .joins('LEFT JOIN grants ON grants.group_id = groups.id AND grants.role = 1')
-        .where('grants.id IS NULL')
         .where('groups.page_id = ?', get_parent_resource.id)
         .where('shortnames.owner_type = ?', 'User')
         .where('lower(groups.name) SIMILAR TO lower(?) OR ' \
