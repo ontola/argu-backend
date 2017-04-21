@@ -1,8 +1,0 @@
-=set_title t('forums.settings.title')
-=semantic_form_for(@group, url: group_membership_index_path(@group), method: :post) do |f|
-  - @membership.errors.full_messages.each do |message|
-    =message
-  =f.inputs name: t('newe_type', type: t('forums.settings.manager')) do
-    =react_component_store 'NewMembership', props: {things: 'users', forum: @forum.url}
-  =f.actions do
-    =f.action :submit, as: :button, label: :save
