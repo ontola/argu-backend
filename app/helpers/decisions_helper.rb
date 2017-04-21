@@ -85,7 +85,7 @@ module DecisionsHelper
 
   # @return [Array]
   def group_select_options(forum)
-    [{disabled: true, value: 0, groupName: t('decisions.find_user_info')}] +
+    [{disabled: true, value: '0', groupName: t('decisions.find_user_info')}] +
       forum.page.groups.map do |group|
         {
           value: group.id.to_s,
