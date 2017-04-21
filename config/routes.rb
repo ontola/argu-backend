@@ -161,7 +161,6 @@ Rails.application.routes.draw do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
     resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
-    get :search, to: 'motions#search', on: :member
   end
 
   resources :question_answers, path: 'qa', only: [:new, :create]
@@ -309,6 +308,9 @@ Rails.application.routes.draw do
               only: [:show, :update],
               path: '',
               concerns: [:flowable, :discussable, :favorable] do
+      resources :motions, path: :m, only: [] do
+        get :search, to: 'motions#search', on: :collection
+      end
       get :settings, on: :member
       get :statistics, on: :member
       resources :shortnames, only: [:new, :create]

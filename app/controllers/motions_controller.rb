@@ -2,6 +2,7 @@
 class MotionsController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
+  skip_before_action :authorize_action, only: :search
 
   def index
     skip_verify_policy_scoped(true)
@@ -14,8 +15,9 @@ class MotionsController < AuthorizedController
   end
 
   def search
+    skip_verify_policy_authorized(true)
     if params[:q].present? && params[:thing].present?
-      @motions = policy_scope(Motion).search(params[:q])
+      @motions = policy_scope(get_parent_resource.motions).search(params[:q])
       render json: @motions.present? ? @motions : {data: []}
     else
       skip_verify_policy_scoped(true)
