@@ -15,7 +15,8 @@ class GroupMembership < ApplicationRecord
           source_type: :User
   has_many :grants, through: :group
 
-  validates :group_id, :member_id, presence: true
+  validates :group_id, presence: true, uniqueness: {scope: :member_id}
+  validates :member_id, presence: true
 
   paginates_per 30
   parentable :group

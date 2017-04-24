@@ -46,7 +46,13 @@ class GroupMembershipsController < AuthorizedController
     create_service.on(:create_group_membership_failed) do |group_membership|
       respond_to do |format|
         format.html { redirect_to redirect_url, notice: t('errors.general') }
-        format.json { render json: group_membership.errors, status: 422 }
+        format.json do
+          if existing_record
+            render json: group_membership.errors, status: 304, location: existing_record
+          else
+            render json: group_membership.errors, status: 422
+          end
+        end
       end
     end
     create_service.commit
@@ -70,6 +76,17 @@ class GroupMembershipsController < AuthorizedController
   end
 
   private
+
+  def existing_record
+    return @existing_record if @existing_record.present?
+    return if authenticated_resource.valid?
+    duplicate_values = authenticated_resource
+      .errors
+      .details
+      .select { |_key, errors| errors.select { |error| error[:error] == :taken }.any? }
+      .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
+    @existing_record = controller_class.find_by(Hash[duplicate_values])
+  end
 
   def parent_resource_key(opts)
     action_name == 'index' ? super : :group_id
