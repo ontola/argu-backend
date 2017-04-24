@@ -12,8 +12,9 @@ export const EmailTokenInvite = React.createClass({
 
     getInitialState () {
         return {
-            value: '',
-            tokens: undefined
+            invalidEmails: [],
+            tokens: undefined,
+            value: ''
         };
     },
 
@@ -28,16 +29,16 @@ export const EmailTokenInvite = React.createClass({
     },
 
     handleChange (e) {
-        this.setState({ value: e.target.value });
+        const emails = this.stringToEmails(e.target.value);
+        this.setState({
+            invalidEmails: emails.filter(this.invalidEmail),
+            value: e.target.value
+        });
     },
 
     handleSubmit () {
-        const emails = this.stringToEmails(this.state.value);
-        const invalid = emails.filter(this.invalidEmail);
-        if (invalid.length === 0) {
+        if (this.state.invalidEmails.length === 0) {
             this.createTokens();
-        } else {
-            new Alert(I18n.t('tokens.errors.parsing', { email: invalid[0] }), 'alert', true);
         }
     },
 
@@ -70,7 +71,7 @@ export const EmailTokenInvite = React.createClass({
     },
 
     stringToEmails (string) {
-        return string.split(/[\s,;]+/);
+        return string.split(/[\s,;]+/).filter(Boolean);
     },
 
     invalidEmail (email) {
@@ -85,6 +86,12 @@ export const EmailTokenInvite = React.createClass({
     },
 
     render () {
+        let errorMessage;
+        if (this.state.value === '') {
+            errorMessage = I18n.t('tokens.errors.no_emails');
+        } else if (this.state.invalidEmails.length > 0) {
+            errorMessage = I18n.t('tokens.errors.parsing', { emails: this.state.invalidEmails.join(', ') });
+        }
         return (
             <div className="formtastic">
                 <InvitationList
@@ -98,6 +105,8 @@ export const EmailTokenInvite = React.createClass({
                     value={this.state.value}/>
                 <fieldset className="actions">
                     <button
+                        data-title={errorMessage}
+                        disabled={errorMessage !== undefined}
                         onClick={this.handleSubmit}
                         type="submit"
                         value="Submit"> {I18n.t('tokens.email.create')} </button>

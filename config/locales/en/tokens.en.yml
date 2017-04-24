@@ -22,4 +22,5 @@ en:
       input_placeholder: "Enter one or more email addresses"
       success: "The invitations are sent"
     errors:
-      parsing: "%{email} is not a valid email address"
+      parsing: "The following email addresses are invalid: %{emails}"
+      no_emails: "Please enter one or more emailaddresses."
