@@ -12,4 +12,4 @@
   legend
     span= t('tokens.email.title')
   p= t('tokens.email.description')
-  =react_component_store 'EmailTokenInvite', props: {createTokenUrl: '/tokens', groupId: resource.id, indexTokenUrl: '/tokens/email', message: t('tokens.email.default_message', group: resource.display_name)}
+  =react_component_store 'EmailTokenInvite', props: {createTokenUrl: '/tokens', groupId: resource.id, indexTokenUrl: '/tokens/email', managedProfiles: managed_profiles_list, message: t('tokens.email.default_message', group: resource.display_name), currentActor: current_profile.profileable.context_id}

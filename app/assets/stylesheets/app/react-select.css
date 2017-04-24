@@ -275,6 +275,14 @@
     vertical-align: middle;
 }
 
+.Select-profile {
+    display: inline-flex;
+    width: 300px;
+    height: 44px;
+    margin: 0 5px;
+    text-align: left;
+}
+
 @keyframes Select-animation-spin {
     to {
         transform: rotate(1turn);

@@ -184,10 +184,17 @@ class User < ApplicationRecord
   end
 
   def managed_pages
-    t = Page.arel_table
-    Page.where(t[:id]
-                 .in(profile.grants.page_manager.pluck('edges.owner_id'))
-                 .or(t[:owner_id].eq(profile.id)))
+    @managed_pages ||= Page.where(id: profile.grants.page_manager.pluck('edges.owner_id'))
+  end
+
+  def managed_profiles
+    @managed_profiles ||= Profile.where(
+      '(profileable_type = ? AND profileable_id = ?) OR (profileable_type = ? AND profileable_id IN (?))',
+      'User',
+      id,
+      'Page',
+      managed_pages.pluck(:id)
+    )
   end
 
   def managed_profile_ids

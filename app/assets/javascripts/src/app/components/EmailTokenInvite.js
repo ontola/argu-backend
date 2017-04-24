@@ -2,17 +2,21 @@ import Alert from './Alert';
 import React from 'react';
 import I18n from 'i18n-js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import Select from 'react-select';
 
 export const EmailTokenInvite = React.createClass({
     propTypes: {
         createTokenUrl: React.PropTypes.string,
+        currentActor: React.PropTypes.number,
         groupId: React.PropTypes.number,
         indexTokenUrl: React.PropTypes.string,
-        message: React.PropTypes.string,
+        managedProfiles: React.PropTypes.array,
+        message: React.PropTypes.string
     },
 
     getInitialState () {
         return {
+            currentActor: this.props.currentActor,
             invalidEmails: [],
             message: this.props.message,
             tokens: undefined,
@@ -58,8 +62,10 @@ export const EmailTokenInvite = React.createClass({
                     data: {
                         type: 'emailTokenRequest',
                         attributes: {
-                            group_id: groupId,
                             addresses: emails,
+                            group_id: groupId,
+                            message: this.state.message,
+                            profile_iri: this.state.currentActor,
                             send_mail: true
                         }
                     }
@@ -91,6 +97,19 @@ export const EmailTokenInvite = React.createClass({
         });
     },
 
+    valueRenderer (obj) {
+        return (
+            <div>
+                <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
+                {obj.label}
+            </div>
+        );
+    },
+
+    onProfileChange (value) {
+        this.setState({ currentActor: value })
+    },
+
     render () {
         let errorMessage;
         if (this.state.value === '') {
@@ -117,6 +136,18 @@ export const EmailTokenInvite = React.createClass({
                     placeholder={I18n.t('tokens.email.input_placeholder')}
                     value={this.state.message}/>
                 <fieldset className="actions">
+                    <span>{I18n.t('tokens.labels.sender_profile')}</span>
+                    <Select
+                        className="Select-profile"
+                        clearable={false}
+                        matchProp="any"
+                        name='email-profile-id'
+                        onChange={this.onProfileChange}
+                        optionRenderer={this.valueRenderer}
+                        options={this.props.managedProfiles}
+                        placeholder="Select user"
+                        value={this.state.currentActor}
+                        valueRenderer={this.valueRenderer}/>
                     <button
                         data-title={errorMessage}
                         disabled={errorMessage !== undefined}

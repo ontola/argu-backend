@@ -2,6 +2,16 @@
 require 'argu/not_authorized_error'
 
 module ActorsHelper
+  def managed_profiles_list
+    current_user.managed_profiles.includes(:default_profile_photo).map do |profile|
+      {
+        label: profile.display_name,
+        image: profile.default_profile_photo.url(:icon),
+        value: profile.profileable.context_id
+      }
+    end
+  end
+
   # Finds a Profile based on the `a_a` cookie value.
   # @return [Profile] the profile which the current_user is using to do actions with.
   def get_current_actor

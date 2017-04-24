@@ -11,6 +11,7 @@ en:
       email: "Email"
       invited_at: "Invited at"
       message: "Message"
+      sender_profile: "Send as:"
     bearer:
       title: "Invite links"
       description: "Anyone who clicks on this link will be added to this group automatically. These tokens can be used infinitely."

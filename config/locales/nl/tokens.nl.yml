@@ -11,6 +11,7 @@ nl:
       email: "Email"
       invited_at: "Uitgenodigd op"
       message: "Toelichting"
+      sender_profile: "Versturen als:"
     bearer:
       title: "Uitnodigingslinks"
       description: "Als mensen op een uitnodigingslink klikken worden ze automatisch toegevoegd aan deze groep. De links kunnen onbeperkt worden herbruikt."
