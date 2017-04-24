@@ -1,6 +1,6 @@
 =semantic_form_for(resource, url: group_membership_index_path(resource, r: group_redirect_url(resource)), method: :post) do |f|
   =f.inputs name: t('group_memberships.new') do
-    =react_component_store 'NewMembership', props: {things: 'users,pages'}
+    =react_component_store 'SearchUser', props: {things: 'users', fieldName: 'shortname'}
   =f.actions do
     =f.action :submit, as: :button
 .bearer-token-management

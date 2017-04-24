@@ -7,6 +7,6 @@
         h1= t('question_answers.couple_motion')
         =f.inputs
           =f.input :question_id, as: :hidden, value: question.id
-          =f.input :motion, as: :react, component: 'MotionSelect', forum: forum.url
+          =f.input :motion, as: :react, component: 'SearchMotion', forum: forum.url
         =f.actions
           =f.action :submit, as: :button
