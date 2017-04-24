@@ -5,3 +5,4 @@ en:
     new: "Add user"
     empty: "No members"
     welcome: "You are successfully added to the group '%{group}'"
+    already_member: "You're already member of '%{group}'"

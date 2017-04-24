@@ -2,6 +2,20 @@
 class GroupMembershipsController < AuthorizedController
   include NestedResourceHelper
 
+  def show
+    respond_to do |format|
+      format.html do
+        if params[:welcome] == 'true'
+          flash[:notice] = t('group_memberships.welcome', group: authenticated_resource.group.name)
+        elsif params[:welcome] == 'false'
+          flash[:notice] = t('group_memberships.already_member', group: authenticated_resource.group.name)
+        end
+        redirect_to redirect_url
+      end
+      format.json_api { render json: authenticated_resource, include: %i(organization) }
+    end
+  end
+
   def index
     return if params[:q].nil?
     q = params[:q].tr(' ', '|')
@@ -109,7 +123,6 @@ class GroupMembershipsController < AuthorizedController
 
   def redirect_url
     return redirect_param if redirect_param.present?
-    return root_path if authenticated_resource!.grants.empty?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
     return polymorphic_url(forum_grants.first.edge.owner) if forum_grants.count == 1
     page_url(authenticated_resource!.page)

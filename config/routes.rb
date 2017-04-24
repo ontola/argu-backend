@@ -194,7 +194,7 @@ Rails.application.routes.draw do
     get :settings, on: :member
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
   end
-  resources :group_memberships, only: :destroy
+  resources :group_memberships, only: %i(show destroy)
 
   resources :pages,
             path: 'o',

@@ -5,3 +5,4 @@ nl:
     new: "Gebruiker toevoegen"
     empty: "Geen groepsleden"
     welcome: "Je bent toegevoegd aan de groep '%{group}'"
+    already_member: "Je bent al lid van '%{group}'"

@@ -27,6 +27,10 @@ class GroupMembershipPolicy < EdgeTreePolicy
     attributes
   end
 
+  def show?
+    record.member == actor
+  end
+
   def create?
     rule valid_token?, is_manager?, is_super_admin?, super
   end

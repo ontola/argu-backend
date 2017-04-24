@@ -19,6 +19,14 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { create(:user) }
 
+  test 'user should not get show' do
+    sign_in user
+
+    get :show, params: {id: member.profile.group_memberships.first}
+
+    assert_not_authorized
+  end
+
   test 'user should not show new' do
     sign_in user
 
@@ -81,28 +89,48 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_redirected_to page_url(argu)
   end
 
-  test 'user should not delete destroy other membership' do
-    sign_in user
+  ####################################
+  # As Member
+  ####################################
+  test 'member should get show' do
+    sign_in member
 
-    group_membership = create(:group_membership,
-                              parent: group.edge)
+    get :show, params: {id: member.profile.group_memberships.first}
 
-    assert_no_difference 'GroupMembership.count' do
-      delete :destroy, params: {id: group_membership}
-    end
-
-    assert_not_authorized
+    assert_redirected_to page_url(freetown.page)
   end
 
-  test 'user should not delete destroy own membership' do
-    sign_in user
+  test 'member should get show with forum grant' do
+    sign_in member
+    create(:grant, edge: freetown.edge, group: group)
 
-    group_membership = create(:group_membership,
-                              member: user.profile,
-                              parent: group.edge)
+    get :show, params: {id: member.profile.group_memberships.first}
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'member should get show with page grant' do
+    sign_in member
+    create(:grant, edge: freetown.page.edge, group: group)
+
+    get :show, params: {id: member.profile.group_memberships.first}
+
+    assert_redirected_to page_url(freetown.page)
+  end
+
+  test 'member should get show with r' do
+    sign_in member
+
+    get :show, params: {id: member.profile.group_memberships.first, r: forum_url(freetown)}
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'member should not delete destroy own membership' do
+    sign_in member
 
     assert_no_difference 'GroupMembership.count' do
-      delete :destroy, params: {id: group_membership}
+      delete :destroy, params: {id: member.profile.group_memberships.first}
     end
 
     assert_not_authorized
@@ -111,7 +139,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # As Admin
   ####################################
-
   test 'super_admin should show new' do
     sign_in create_super_admin(freetown)
 
@@ -132,7 +159,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
     assert_analytics_not_collected
   end
 
@@ -150,6 +177,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_response 304
+    assert_equal response.headers['Location'], group_membership_url(member.profile.group_memberships.first)
     assert_analytics_not_collected
   end
 
@@ -183,6 +211,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_response 201
+    assert_equal response.headers['Location'], group_membership_url(GroupMembership.last)
     assert_analytics_collected('memberships', 'create')
   end
 
