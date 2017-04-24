@@ -7,12 +7,14 @@ export const EmailTokenInvite = React.createClass({
     propTypes: {
         createTokenUrl: React.PropTypes.string,
         groupId: React.PropTypes.number,
-        indexTokenUrl: React.PropTypes.string
+        indexTokenUrl: React.PropTypes.string,
+        message: React.PropTypes.string,
     },
 
     getInitialState () {
         return {
             invalidEmails: [],
+            message: this.props.message,
             tokens: undefined,
             value: ''
         };
@@ -28,12 +30,16 @@ export const EmailTokenInvite = React.createClass({
             });
     },
 
-    handleChange (e) {
+    handleEmailsChange (e) {
         const emails = this.stringToEmails(e.target.value);
         this.setState({
             invalidEmails: emails.filter(this.invalidEmail),
             value: e.target.value
         });
+    },
+
+    handleMessageChange (e) {
+        this.setState({ message: e.target.value });
     },
 
     handleSubmit () {
@@ -100,9 +106,16 @@ export const EmailTokenInvite = React.createClass({
                 <textarea
                     className="form-input-content"
                     name="emails"
-                    onChange={this.handleChange}
+                    onChange={this.handleEmailsChange}
                     placeholder={I18n.t('tokens.email.input_placeholder')}
                     value={this.state.value}/>
+                <label>{I18n.t('tokens.labels.message')}</label>
+                <textarea
+                    className="form-input-content"
+                    name="emails"
+                    onChange={this.handleMessageChange}
+                    placeholder={I18n.t('tokens.email.input_placeholder')}
+                    value={this.state.message}/>
                 <fieldset className="actions">
                     <button
                         data-title={errorMessage}

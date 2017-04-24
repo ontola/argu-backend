@@ -10,6 +10,7 @@ nl:
       usages: "Aantal keer gebruikt"
       email: "Email"
       invited_at: "Uitgenodigd op"
+      message: "Toelichting"
     bearer:
       title: "Uitnodigingslinks"
       description: "Als mensen op een uitnodigingslink klikken worden ze automatisch toegevoegd aan deze groep. De links kunnen onbeperkt worden herbruikt."
@@ -21,6 +22,7 @@ nl:
       create: "Verstuur uitnodigingen"
       input_placeholder: "Voer een of meer emailadressen in"
       success: "De uitnodigingen zijn verstuurd"
+      default_message: "Ik nodig je uit om lid te worden van de groep '%{group}'."
     errors:
       parsing: "De volgende emailadressen zijn niet correct: %{emails}"
       no_emails: "Geef een of meerdere emailadressen op."
