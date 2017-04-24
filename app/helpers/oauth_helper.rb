@@ -21,6 +21,7 @@ module OauthHelper
       httponly: true,
       domain: :all
     }
+    warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
   end
 
   def write_client_access_token

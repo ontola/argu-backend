@@ -21,21 +21,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
-  test 'should post create nl' do
-    locale = :nl
-    cookies[:locale] = locale.to_s
-
-    assert_differences([['User.count', 1],
-                        ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      post user_registration_path,
-           params: {user: attributes_for(:user)}
-      assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'email')
-    end
-    assert_equal locale, User.last.language.to_sym
-  end
-
   test 'should post create en' do
     clear_emails
     locale = :en
@@ -56,6 +41,10 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
+    assert_not_nil User.last.current_sign_in_ip
+    assert_not_nil User.last.current_sign_in_at
+    assert_not_nil User.last.last_sign_in_ip
+    assert_not_nil User.last.last_sign_in_at
 
     delete destroy_user_session_path
 
@@ -73,6 +62,21 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     click_button('Log in')
 
     assert_equal current_path, setup_users_path
+  end
+
+  test 'should post create nl' do
+    locale = :nl
+    cookies[:locale] = locale.to_s
+
+    assert_differences([['User.count', 1],
+                        ['Favorite.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post user_registration_path,
+           params: {user: attributes_for(:user)}
+      assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'email')
+    end
+    assert_equal locale, User.last.language.to_sym
   end
 
   test 'should post create without password' do
