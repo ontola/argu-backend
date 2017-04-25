@@ -245,4 +245,19 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to motion_path(assigns(:create_service).resource)
   end
+
+  test 'creator should decouple a motion from a question' do
+    sign_in creator
+
+    general_update(
+      attributes: {question_id: ''},
+      results: {
+        should: :true,
+        response: 302
+      }
+    )
+    subject.reload
+    assert_nil subject.question_id
+    assert_equal subject.parent_model, freetown
+  end
 end
