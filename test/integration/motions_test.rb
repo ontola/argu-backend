@@ -213,8 +213,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     end
     define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
     define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
-    define_test(hash, :move)
-    define_test(hash, :move!, options: {attributes: {forum_id: :forum_move_to}})
+    define_test(hash, :shift)
+    define_test(hash, :move, options: {attributes: {forum_id: :forum_move_to}})
   end
 
   test 'member should show tutorial only on first post create' do

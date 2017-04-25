@@ -69,8 +69,8 @@ Rails.application.routes.draw do
     get :feed, controller: :feed, action: :show
   end
   concern :moveable do
-    get :move, action: :move
-    put :move, action: :move!
+    get :move, action: :shift
+    put :move, action: :move
   end
   concern :trashable do
     put :untrash, action: :untrash, on: :member

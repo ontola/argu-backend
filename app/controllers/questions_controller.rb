@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class QuestionsController < EdgeTreeController
-  include MenuHelper, VotesHelper
+  include EdgeTree::Move, MenuHelper, VotesHelper
   skip_before_action :check_if_registered, only: :index
 
   def show
@@ -28,28 +28,6 @@ class QuestionsController < EdgeTreeController
     end
   end
 
-  # GET /motions/1/move
-  def move
-    respond_to do |format|
-      format.html { render locals: {resource: authenticated_resource} }
-      format.js { render locals: {resource: authenticated_resource} }
-    end
-  end
-
-  def move!
-    @forum = Forum.find permit_params[:forum_id]
-    authorize @forum, :update?
-    moved = nil
-    authenticated_resource.with_lock do
-      moved = authenticated_resource.move_to @forum, permit_params[:include_motions] == '1'
-    end
-    if moved
-      redirect_to question_url(authenticated_resource)
-    else
-      redirect_to edit_question_url authenticated_resource
-    end
-  end
-
   def forum_for(url_options)
     question_id = url_options[:question_id] || url_options[:id]
     if question_id.presence
@@ -62,11 +40,15 @@ class QuestionsController < EdgeTreeController
   private
 
   def authenticated_resource
-    if (%w(convert convert! move move!) & [params[:action]]).present?
+    if (%w(convert convert! shift move) & [params[:action]]).present?
       @resource ||= Question.find(params[:question_id])
     else
       super
     end
+  end
+
+  def move_options
+    permit_params[:include_motions] == '1'
   end
 
   def show_params

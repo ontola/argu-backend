@@ -3,7 +3,7 @@ require 'argu/not_a_user_error'
 
 class AuthorizedController < ApplicationController
   before_action :check_if_registered,
-                except: %i(show move move! convert convert!)
+                except: %i(show shift move convert convert!)
   before_action :authorize_action, except: :index
   helper_method :authenticated_resource, :collect_banners
 

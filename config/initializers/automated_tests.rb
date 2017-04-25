@@ -10,8 +10,8 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     update: :put,
     trash: :delete,
     destroy: :delete,
-    move: :get,
-    move!: :put
+    shift: :get,
+    move: :put
   }.freeze
 
   config.user_types = {
@@ -87,7 +87,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       super_admin: exp_res(should: true, response: 302),
       staff: exp_res(should: true, response: 302)
     },
-    move: {
+    shift: {
       guest: exp_res(asserts: [assert_not_authorized]),
       user: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
@@ -97,7 +97,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       super_admin: exp_res(asserts: [assert_not_authorized]),
       staff: exp_res(should: true, response: 200)
     },
-    move!: {
+    move: {
       guest: exp_res(asserts: [assert_not_authorized]),
       user: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),

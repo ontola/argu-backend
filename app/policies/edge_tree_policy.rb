@@ -184,6 +184,10 @@ class EdgeTreePolicy < RestrictivePolicy
     staff?
   end
 
+  def shift?
+    move?
+  end
+
   def show_unpublished?
     rule is_creator?, is_moderator?, is_manager?, is_super_admin?, staff?, service?
   end

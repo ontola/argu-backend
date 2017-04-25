@@ -114,7 +114,7 @@ module Argu
         analytics_collection_check(analytics, results[:analytics])
       end
 
-      def general_move(results: {}, record: subject)
+      def general_shift(results: {}, record: subject)
         record = send(record) if record.is_a?(Symbol)
 
         get move_path(record),
@@ -124,7 +124,7 @@ module Argu
         assert_response results[:response]
       end
 
-      def general_move!(results: {}, record: subject, attributes: {})
+      def general_move(results: {}, record: subject, attributes: {})
         forum_to = send(attributes[:forum_id])
         assert_differences [["record.forum.reload.#{model_name.underscore}s.count",
                              results[:should] ? -1 : 0],

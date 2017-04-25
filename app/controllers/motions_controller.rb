@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class MotionsController < EdgeTreeController
+  include EdgeTree::Move
   skip_before_action :check_if_registered, only: :index
   skip_before_action :authorize_action, only: :search
 
@@ -57,31 +58,6 @@ class MotionsController < EdgeTreeController
                  vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}
                ]
       end
-    end
-  end
-
-  # GET /motions/1/move
-  def move
-    authorize authenticated_resource, :move?
-
-    respond_to do |format|
-      format.html { render locals: {resource: authenticated_resource} }
-      format.js { render locals: {resource: authenticated_resource} }
-    end
-  end
-
-  def move!
-    authorize authenticated_resource, :move?
-    @forum = Forum.find permit_params[:forum_id]
-    authorize @forum, :update?
-    moved = false
-    authenticated_resource.with_lock do
-      moved = authenticated_resource.move_to @forum
-    end
-    if moved
-      redirect_to motion_url(authenticated_resource)
-    else
-      redirect_to edit_motion_url authenticated_resource
     end
   end
 

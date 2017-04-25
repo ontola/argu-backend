@@ -108,9 +108,9 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')})
     define_test(hash, :trash, options: {analytics: stats_opt('questions', 'trash_success')})
-    define_test(hash, :move)
-    define_test(hash, :move!, options: {attributes: {forum_id: :forum_move_to}}) do
-      user_types[:move!].merge(
+    define_test(hash, :shift)
+    define_test(hash, :move, options: {attributes: {forum_id: :forum_move_to}}) do
+      user_types[:move].merge(
         staff: exp_res(response: 302, should: true, asserts: [assert_motions_forum_changed, assert_has_no_motions])
       )
     end
@@ -120,7 +120,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
         include_motions: '1'
       }
     }
-    define_test(hash, :move!, suffix: ' with motions', options: options) do
+    define_test(hash, :move, suffix: ' with motions', options: options) do
       {
         staff: exp_res(response: 302,
                        should: true,
