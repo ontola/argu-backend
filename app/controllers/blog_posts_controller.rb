@@ -14,10 +14,6 @@ class BlogPostsController < EdgeTreeController
 
   private
 
-  def resource_tenant
-    get_parent_resource.forum if current_resource_is_nested?
-  end
-
   def update_respond_blocks_success(resource, format)
     format.html { update_respond_success_html(resource) }
     format.json { respond_with_200(resource, :json) }

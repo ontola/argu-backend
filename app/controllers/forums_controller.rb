@@ -70,10 +70,6 @@ class ForumsController < EdgeTreeController
            }
   end
 
-  def forum_for(url_options)
-    Forum.find_via_shortname_nil(url_options[:id])
-  end
-
   protected
 
   def correct_stale_record_version

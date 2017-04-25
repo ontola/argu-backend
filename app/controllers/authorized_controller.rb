@@ -132,13 +132,9 @@ class AuthorizedController < ApplicationController
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: resource_tenant,
+      forum: get_parent_resource.is_a?(Forum) ? get_parent_resource : get_parent_resource.parent_model(:forum),
       publisher: current_user
     )
-  end
-
-  def resource_tenant
-    Forum.find_via_shortname params[:forum_id] if params[:forum_id].present?
   end
 
   def resource_id

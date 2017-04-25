@@ -116,18 +116,4 @@ module NestedResourceHelper
   def resource_params
     params[controller_name.singularize] || {}
   end
-
-  # @see {get_parent_resource}
-  # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
-  # @return [Forum, nil] The tenant of the found resource by its parent
-  def resource_tenant(opts = params)
-    return unless current_resource_is_nested?(opts)
-    parent = get_parent_resource(opts)
-    case parent
-    when Forum
-      parent
-    else
-      parent.try(:forum)
-    end
-  end
 end

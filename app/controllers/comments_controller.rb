@@ -18,15 +18,6 @@ class CommentsController < EdgeTreeController
     end
   end
 
-  def forum_for(url_options)
-    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
-    if comment.present?
-      comment.parent_model(:forum)
-    elsif url_options[:argument_id].present?
-      Argument.find_by(id: url_options[:argument_id]).try(:forum)
-    end
-  end
-
   private
 
   def comment_body
@@ -98,19 +89,6 @@ class CommentsController < EdgeTreeController
     redirect_url = URI.parse(url_for([:new, get_parent_resource, :comment, only_path: true]))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
-  end
-
-  def resource_tenant
-    return super if params[:forum_id].present?
-
-    resource, id = request.path.split('/')[1, 2]
-    # noinspection RubyCaseWithoutElseBlockInspection
-    resource =
-      case resource
-      when 'a' then Argument
-      when 'posts' then BlogPost
-      end
-    resource&.find(id)&.forum
   end
 
   def update_respond_failure_html(resource)

@@ -49,11 +49,6 @@ class VotesController < EdgeTreeController
     end
   end
 
-  def forum_for(url_options)
-    voteable = parent_resource_klass(url_options).find_by(id: url_options[parent_resource_key(url_options)])
-    voteable.try :forum if voteable.present?
-  end
-
   private
 
   def create_respond_blocks_failure(resource, format)
