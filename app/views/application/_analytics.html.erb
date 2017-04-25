@@ -5,7 +5,7 @@
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-57491906-1', 'auto');
+        ga('create', <%= ENV['GG_ANALYTICS_ID'] %>, 'auto');
         ga('require', 'displayfeatures');
         <% unless current_user.guest? %>
         ga('set', '&uid', '<%= a_uuid %>');
