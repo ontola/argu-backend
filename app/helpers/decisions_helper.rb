@@ -53,7 +53,7 @@ module DecisionsHelper
   end
 
   def decisionable_path(edge)
-    url_for(controller: edge.owner_type.tableize, id: edge.id, action: 'show')
+    url_for(controller: "/#{edge.owner_type.tableize}", id: edge.id, action: :show)
   end
 
   def decision_path(decision)
