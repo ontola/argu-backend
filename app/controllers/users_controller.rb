@@ -183,7 +183,7 @@ class UsersController < ApplicationController
               else
                 if current_user.guest?
                   flash[:error] = t('devise.failure.unauthenticated')
-                  raise Argu::NotAUserError.new(r: redirect)
+                  raise Argu::NotAUserError.new
                 end
                 current_user
               end
