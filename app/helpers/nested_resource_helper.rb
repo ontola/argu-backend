@@ -4,7 +4,7 @@
 # @note Has been designed with a single parent resource in mind (route wise)
 # @author Fletcher91 <thom@argu.co>
 module NestedResourceHelper
-  ARGU_URI_MATCH = /(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)/
+  include IRIHelper
 
   def current_resource_is_nested?(opts = params)
     parent_id_from_params(opts).present?
@@ -129,26 +129,5 @@ module NestedResourceHelper
     else
       parent.try(:forum)
     end
-  end
-
-  # Converts an Argu URI into a hash containing the type and id of the resource
-  # @return [Hash] The id and type of the resource, or nil if the IRI is not found
-  # @example Valid IRI
-  #   iri = 'https://argu.co/m/1'
-  #   id_and_type_from_iri # => {type: 'motions', id: '1'}
-  # @example Invalid IRI
-  #   iri = 'https://example.com/m/1'
-  #   id_and_type_from_iri # => {}
-  # @example Nil IRI
-  #   iri = nil
-  #   id_and_type_from_iri # => {}
-  def id_and_type_from_iri(iri)
-    match = iri =~ ARGU_URI_MATCH unless iri.nil?
-    return {} if iri.nil? || match.nil? || match <= 0
-    parent = Rails.application.routes.recognize_path(iri)
-    return {} unless parent[:action] == 'show' && parent[:id].present? && parent[:controller].present?
-    {id: parent[:id], type: parent[:controller].singularize}
-  rescue ActionController::RoutingError
-    {}
   end
 end

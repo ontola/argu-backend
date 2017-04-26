@@ -29,9 +29,25 @@ module SPI
       assert_response 403
     end
 
+    test 'guest should not show page actor as iri' do
+      get spi_authorize_path(
+        resource_type: 'CurrentActor', resource_id: freetown.page.context_id, authorize_action: 'show'
+      )
+
+      assert_response 403
+    end
+
     test 'guest should not show user actor' do
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: user.profile.id, authorize_action: 'show'
+      )
+
+      assert_response 403
+    end
+
+    test 'guest should not show user actor as iri' do
+      get spi_authorize_path(
+        resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show'
       )
 
       assert_response 403
@@ -68,10 +84,28 @@ module SPI
       assert_response 403
     end
 
+    test 'user should not show page actor as iri' do
+      sign_in user
+
+      get spi_authorize_path(
+        resource_type: 'CurrentActor', resource_id: freetown.page.context_id, authorize_action: 'show'
+      )
+
+      assert_response 403
+    end
+
     test 'user should show user actor' do
       sign_in user
 
       get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.profile.id, authorize_action: 'show')
+
+      assert_response 200
+    end
+
+    test 'user should show user actor as iri' do
+      sign_in user
+
+      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show')
 
       assert_response 200
     end
@@ -112,10 +146,28 @@ module SPI
       assert_response 200
     end
 
+    test 'manager should show page actor as iri' do
+      sign_in manager
+
+      get spi_authorize_path(
+        resource_type: 'CurrentActor', resource_id: freetown.page.context_id, authorize_action: 'show'
+      )
+
+      assert_response 200
+    end
+
     test 'manager should not show user actor' do
       sign_in manager
 
       get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.profile.id, authorize_action: 'show')
+
+      assert_response 403
+    end
+
+    test 'manager should not show user actor as iri' do
+      sign_in manager
+
+      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show')
 
       assert_response 403
     end
