@@ -122,7 +122,7 @@ class PagesController < AuthorizedController
   end
 
   def resource_by_id
-    @page ||= Page.find_via_shortname params[:id]
+    @page ||= Page.find_via_shortname! params[:id]
   end
 
   private
