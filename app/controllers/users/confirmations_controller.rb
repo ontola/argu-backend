@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Users::ConfirmationsController < Devise::ConfirmationsController
+  skip_before_action :check_finished_intro, only: :show
+
   def create
     super
   end
