@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class Users::IdentitiesController < AuthorizedController
+  include RedisResourcesHelper
   skip_before_action :check_if_registered, only: [:connect, :connect!]
 
   def destroy
@@ -26,6 +27,7 @@ class Users::IdentitiesController < AuthorizedController
   def connect!
     user = User.find_via_shortname! params[:id].presence || params[:user][:id]
     user.r = r_param
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), user)
     setup_favorites(user)
 
     if authenticated_resource.email == user.email && user.valid_password?(params[:user][:password])

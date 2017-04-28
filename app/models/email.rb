@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Email < ApplicationRecord
+  include RedisResourcesHelper
+
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   belongs_to :user, inverse_of: :emails
@@ -11,6 +13,10 @@ class Email < ApplicationRecord
             allow_blank: false,
             format: {with: RFC822::EMAIL}
   delegate :greeting, to: :user
+
+  def after_confirmation
+    schedule_redis_resource_worker(user, user)
+  end
 
   def destroy
     super unless primary?

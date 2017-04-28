@@ -2,7 +2,7 @@
 require 'omniauth/omniauth_facebook'
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  include NestedResourceHelper, OauthHelper
+  include NestedResourceHelper, OauthHelper, RedisResourcesHelper
 
   def self.provides_callback_for(provider)
     class_eval %{
@@ -43,6 +43,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_and_redirect_with_r(resource_or_scope, *args)
     sign_in resource_or_scope, *args
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource_or_scope)
     if resource_or_scope.try(:r).present?
       r = URI.decode(resource_or_scope.r)
       redirect_to r.presence || root_path
@@ -101,6 +102,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     identity = Identity.find_or_initialize_by uid: request.env['omniauth.auth']['uid'], provider: provider
     set_identity_fields_for provider, identity, request.env['omniauth.auth']
     user = connector.create_user_without_shortname(request.env['omniauth.auth'], identity, r_param(request.env))
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), user)
     setup_favorites(user)
     set_flash_message(:notice, :success, kind: provider.to_s.capitalize) if is_navigational_format?
     sign_in_and_redirect_with_r user
