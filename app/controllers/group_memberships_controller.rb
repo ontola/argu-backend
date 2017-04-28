@@ -36,58 +36,29 @@ class GroupMembershipsController < ServiceController
     render json: @results, include: [:group, user: :profile_photo]
   end
 
-  def new
-    redirect_to settings_group_path(authenticated_resource!.group, tab: :invite)
-  end
-
-  def create
-    create_service.on(:create_group_membership_successful) do |group_membership|
-      if params[:redirect] == 'false'
-        warn '[DEPRECATED] Using redirect = false in GroupMembership#create is deprecated.'
-        head 201
-      else
-        respond_to do |format|
-          format.html do
-            redirect_to redirect_url,
-                        notice: t('type_create_success', type: t('group_memberships.type'))
-          end
-          format.json { render json: group_membership, status: 201, location: group_membership }
-        end
-      end
-    end
-    create_service.on(:create_group_membership_failed) do |group_membership|
-      respond_to do |format|
-        format.html { redirect_to redirect_url, notice: t('errors.general') }
-        format.json do
-          if existing_record
-            render json: group_membership.errors, status: 304, location: existing_record
-          else
-            render json: group_membership.errors, status: 422
-          end
-        end
-      end
-    end
-    create_service.commit
-  end
-
-  def destroy
-    destroy_service.on(:destroy_group_membership_successful) do
-      respond_to do |format|
-        format.html do
-          redirect_to redirect_url,
-                      notice: t('type_destroy_success', type: t('group_memberships.type'))
-        end
-      end
-    end
-    destroy_service.on(:destroy_group_membership_failed) do
-      respond_to do |format|
-        format.html { redirect_to redirect_url, notice: t('errors.general') }
-      end
-    end
-    destroy_service.commit
-  end
-
   private
+
+  def create_handler_success(resouce)
+    if params[:redirect] == 'false'
+      warn '[DEPRECATED] Using redirect = false in GroupMembership#create is deprecated.'
+      head 201
+    else
+      respond_to do |format|
+        create_respond_blocks_success(resouce, format)
+      end
+    end
+  end
+
+  def create_respond_blocks_failure(resource, format)
+    format.html { redirect_to redirect_url, notice: t('errors.general') }
+    format.json do
+      if existing_record
+        render json: resource.errors, status: 304, location: existing_record
+      else
+        render json: resource.errors, status: 422
+      end
+    end
+  end
 
   def existing_record
     return @existing_record if @existing_record.present?
@@ -98,6 +69,10 @@ class GroupMembershipsController < ServiceController
       .select { |_key, errors| errors.select { |error| error[:error] == :taken }.any? }
       .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
     @existing_record = controller_class.find_by(Hash[duplicate_values])
+  end
+
+  def new_respond_blocks_success(resource, format)
+    format.html { redirect_to settings_group_path(resource.group, tab: :invite) }
   end
 
   def parent_resource_key(opts)
@@ -119,12 +94,14 @@ class GroupMembershipsController < ServiceController
     params.permit(:r)[:r]
   end
 
-  def redirect_url
+  def redirect_url(_ = nil)
     return redirect_param if redirect_param.present?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
     return polymorphic_url(forum_grants.first.edge.owner) if forum_grants.count == 1
     page_url(authenticated_resource!.page)
   end
+  alias redirect_model_failure redirect_url
+  alias redirect_model_success redirect_url
 
   def granted_resource
     authenticated_resource.group.grants.first&.edge&.owner

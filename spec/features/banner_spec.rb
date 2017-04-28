@@ -192,7 +192,7 @@ RSpec.feature 'Banners', type: :feature do
       select 'Everyone', from: :banner_audience
       click_button 'Create Banner'
     end
-    expect(page).to have_content 'Banner created successfully'
+    expect(page).to have_content 'Banner saved successfully'
     within('#banners-drafts') do
       expect(page).to have_content(new_banner[:title])
     end

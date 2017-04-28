@@ -2,57 +2,6 @@
 class GrantsController < ServiceController
   include NestedResourceHelper
 
-  def new
-    render 'pages/settings',
-           locals: {
-             tab: 'grants/new',
-             active: 'groups',
-             resource: authenticated_resource.page,
-             grant: authenticated_resource
-           }
-  end
-
-  def create
-    create_service.on(:create_grant_successful) do
-      respond_to do |format|
-        format.html do
-          redirect_to redirect_path
-        end
-      end
-    end
-    create_service.on(:create_grant_failed) do |grant|
-      respond_to do |format|
-        format.html do
-          render "#{authenticated_resource.edge.owner_type.pluralize.underscore}/settings",
-                 locals: {
-                   tab: 'grants/new',
-                   active: 'grants',
-                   page: grant.group.page,
-                   resource: grant
-                 }
-        end
-      end
-    end
-    create_service.commit
-  end
-
-  def destroy
-    destroy_service.on(:destroy_grant_successful) do
-      respond_to do |format|
-        format.html do
-          redirect_to redirect_path
-        end
-      end
-    end
-    destroy_service.on(:destroy_grant_failed) do
-      respond_to do |format|
-        flash[:error] = t('error')
-        format.html { redirect_to redirect_path }
-      end
-    end
-    destroy_service.commit
-  end
-
   private
 
   def create_service
@@ -63,6 +12,20 @@ class GrantsController < ServiceController
     )
   end
 
+  def create_respond_blocks_failure(resource, format)
+    format.html do
+      render "#{authenticated_resource.edge.owner_type.pluralize.underscore}/settings",
+             locals: {
+               tab: 'grants/new',
+               active: 'grants',
+               page: resource.group.page,
+               resource: resource
+             }
+    end
+    format.json { render json: resource, status: :created, location: resource }
+    format.json_api { render json: resource, status: :created, location: resource }
+  end
+
   def parent_resource_key(_url_params)
     :page_id
   end
@@ -71,13 +34,28 @@ class GrantsController < ServiceController
     @resource ||= Grant.new(resource_new_params)
   end
 
-  def redirect_path
+  def new_respond_blocks_success(resource, format)
+    format.html do
+      render 'pages/settings',
+             locals: {
+               tab: 'grants/new',
+               active: 'groups',
+               resource: authenticated_resource.page,
+               grant: authenticated_resource
+             }
+    end
+    format.json { render json: resource }
+  end
+
+  def redirect_path(_ = nil)
     if authenticated_resource.edge.owner_type == 'Forum'
       settings_forum_path(authenticated_resource.edge.owner, tab: :groups)
     else
       settings_page_path(authenticated_resource.edge.owner, tab: :groups)
     end
   end
+  alias redirect_model_failure redirect_path
+  alias redirect_model_success redirect_path
 
   def resource_new_params
     HashWithIndifferentAccess.new(

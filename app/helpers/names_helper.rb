@@ -157,27 +157,8 @@ module NamesHelper
   end
 
   # @private
-  def type_for(item, _plural = false)
-    if item.class == Motion
-      motion_type
-    elsif item.class == Question
-      question_type
-    elsif item.class == Argument
-      argument_type
-    elsif item.class == BlogPost
-      blog_post_type
-    elsif item.class == Comment
-      I18n.t('comments.type')
-    elsif item.class == Decision
-      I18n.t('decisions.type')
-    elsif item.class == Forum
-      I18n.t('forums.type')
-    elsif item.class == Project
-      project_type
-    elsif item.class == Phase
-      I18n.t('projects.phases.type')
-    elsif item.class == Page
-      I18n.t('pages.type')
-    end
+  def type_for(item)
+    return I18n.t('projects.phases.type') if item.is_a?(Phase)
+    I18n.t("#{item.model_name.collection}.type")
   end
 end

@@ -14,38 +14,6 @@ class GroupsController < ServiceController
     end
   end
 
-  def new
-    render 'pages/settings', locals: {
-      tab: 'groups/new',
-      active: 'groups',
-      group: authenticated_resource!,
-      resource: authenticated_resource!.page
-    }
-  end
-
-  def create
-    create_service.on(:create_group_successful) do |group|
-      respond_to do |format|
-        format.html do
-          redirect_to settings_page_path(group.page, tab: :groups)
-        end
-      end
-    end
-    create_service.on(:create_group_failed) do |group|
-      respond_to do |format|
-        format.html do
-          render 'forums/settings',
-                 locals: {
-                   tab: 'groups/new',
-                   active: 'groups',
-                   group: group
-                 }
-        end
-      end
-    end
-    create_service.commit
-  end
-
   def settings
     if tab == 'members'
       @members = resource
@@ -60,29 +28,6 @@ class GroupsController < ServiceController
     }
   end
 
-  def update
-    update_service.on(:update_group_successful) do |group|
-      respond_to do |format|
-        format.html do
-          redirect_to settings_page_path(group.page, tab: :groups)
-        end
-      end
-    end
-    update_service.on(:update_group_failed) do |group|
-      respond_to do |format|
-        format.html do
-          render 'settings',
-                 locals: {
-                   tab: tab,
-                   active: tab,
-                   resource: group
-                 }
-        end
-      end
-    end
-    update_service.commit
-  end
-
   def delete
     locals = {
       group: authenticated_resource!,
@@ -94,28 +39,38 @@ class GroupsController < ServiceController
     end
   end
 
-  def destroy
-    destroy_service.on(:destroy_group_successful) do |group|
-      respond_to do |format|
-        format.html do
-          redirect_to(
-            settings_page_path(group.page, tab: :groups),
-            status: 303,
-            notice: t('type_destroy_success', type: t('groups.type'))
-          )
-        end
-      end
+  private
+
+  def create_respond_blocks_failure(resource, format)
+    format.html do
+      render 'forums/settings',
+             locals: {
+               tab: 'groups/new',
+               active: 'groups',
+               group: resource
+             }
     end
-    destroy_service.on(:destroy_group_failed) do
-      respond_to do |format|
-        flash[:error] = t('error')
-        format.html { redirect_to settings_page_path(group.page, tab: :groups) }
-      end
-    end
-    destroy_service.commit
+    format.json { render json: resource.errors, status: :unprocessable_entity }
+    format.json_api { json_api_error(422, resource.errors) }
+    format.js { head :bad_request }
   end
 
-  private
+  def new_respond_blocks_success(resource, format)
+    format.js { render js: "window.location = #{request.url.to_json}" }
+    format.html do
+      render 'pages/settings', locals: {
+        tab: 'groups/new',
+        active: 'groups',
+        group: resource,
+        resource: resource.page
+      }
+    end
+    format.json { render json: resource }
+  end
+
+  def redirect_model_success(resource)
+    settings_page_path(resource.page, tab: :groups)
+  end
 
   def resource_new_params
     HashWithIndifferentAccess.new(
@@ -125,5 +80,18 @@ class GroupsController < ServiceController
 
   def tab
     policy(resource_by_id || Group).verify_tab(params[:tab] || params[:group].try(:[], :tab))
+  end
+
+  def update_respond_blocks_failure
+    format.html do
+      render 'settings',
+             locals: {
+               tab: tab,
+               active: tab,
+               resource: group
+             }
+    end
+    format.json { render json: resource.errors, status: :unprocessable_entity }
+    format.json_api { render json_api_error(422, resource.errors) }
   end
 end

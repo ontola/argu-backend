@@ -11,6 +11,7 @@ module Service
       # @!visibility public
       def create_respond_blocks_failure(resource, format)
         format.html { render :form, locals: {model_name => resource} }
+        format.js { render :form, locals: {model_name => resource} }
         format.json { render json: resource.errors, status: :unprocessable_entity }
         format.json_api { render json_api_error(422, resource.errors) }
       end

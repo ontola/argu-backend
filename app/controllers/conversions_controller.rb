@@ -1,45 +1,13 @@
 # frozen_string_literal: true
-class ConversionsController < ApplicationController
+class ConversionsController < ServiceController
   include ConvertibleHelper
   helper_method :collect_banners
 
   before_action :verify_convertible_edge
 
-  # GET /edge/:edge_id/conversion/new
-  def new
-    authorize resource.edge.owner, :convert?
-    authorize resource, :new?
-    render :new, locals: {conversion: resource}
-  end
-
-  # POST /edge/:edge_id/conversion
-  # POST /edge/:edge_id/conversion.json
-  def create
-    authorize resource.edge.owner, :convert?
-    authorize resource, :new?
-
-    create_service.on(:create_conversion_successful) do |conversion|
-      respond_to do |format|
-        format.html do
-          redirect_to conversion.edge.owner,
-                      notice: t('type_convert_success',
-                                type: t("#{conversion.edge.owner_type.underscore}.type"))
-        end
-        format.json { render :show, status: :created, location: conversion }
-      end
-    end
-    create_service.on(:create_conversion_failed) do |conversion|
-      respond_to do |format|
-        format.html { render :new, locals: {conversion: conversion} }
-        format.json { render json: conversion.errors, status: :unprocessable_entity }
-      end
-    end
-    create_service.commit
-  end
-
   private
 
-  def resource
+  def authenticated_resource!
     @resource ||=
       case action_name
       when 'create'
@@ -49,11 +17,24 @@ class ConversionsController < ApplicationController
       end
   end
 
-  def collect_banners
+  def authorize_action
+    authorize convertible_edge.owner, :convert?
+    authorize authenticated_resource, :new?
   end
+
+  def collect_banners; end
 
   def convertible_edge
     @convertible_edge ||= Edge.find(params[:edge_id])
+  end
+
+  def create_handler_success(resource)
+    respond_to do |format|
+      create_respond_blocks_success(
+        resource.edge.owner,
+        format
+      )
+    end
   end
 
   def create_service
@@ -65,11 +46,20 @@ class ConversionsController < ApplicationController
   end
 
   def permit_params
-    params.require(:conversion).permit(*policy(new_resource_from_params).permitted_attributes)
+    params
+      .require(:conversion)
+      .permit(*policy(new_resource_from_params).permitted_attributes)
   end
 
   def new_resource_from_params
-    Conversion.new(edge: convertible_edge, klass: convertible_class_names(convertible_edge.owner).first)
+    Conversion.new(
+      edge: convertible_edge,
+      klass: convertible_class_names(convertible_edge.owner).first
+    )
+  end
+
+  def new_respond_blocks_success(resource, format)
+    format.html { render :form, locals: {conversion: resource} }
   end
 
   def service_options(options = {})
