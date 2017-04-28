@@ -84,7 +84,7 @@ class MotionsController < EdgeTreeController
     params.permit(:page, :page_arg_pro, :page_arg_con)
   end
 
-  def success_redirect_model(resource)
+  def redirect_model_success(resource)
     super unless action_name == 'create'
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)

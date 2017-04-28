@@ -26,27 +26,29 @@ module EdgeTree
 
       private
 
-      def shift_respond_blocks_success(_, format)
-        format.html { render :move, locals: {resource: authenticated_resource} }
-        format.js { render :move, locals: {resource: authenticated_resource} }
-      end
-
       def move_options
         nil
       end
 
       def move_respond_blocks_failure(resource, _)
-        redirect_to(
-          url_for(
-            controller: controller_name,
-            action: :edit,
-            id: resource.id
-          )
-        )
+        redirect_to redirect_model_failure(resource)
       end
 
       def move_respond_blocks_success(resource, _)
         redirect_to resource
+      end
+
+      def redirect_model_failure(resource)
+        url_for(
+          controller: controller_name,
+          action: :edit,
+          id: resource.id
+        )
+      end
+
+      def shift_respond_blocks_success(_, format)
+        format.html { render :move, locals: {resource: authenticated_resource} }
+        format.js { render :move, locals: {resource: authenticated_resource} }
       end
     end
   end

@@ -14,7 +14,7 @@ class PhasesController < EdgeTreeController
     params.require(:phase).permit(*policy(resource_by_id).permitted_attributes)
   end
 
-  def success_redirect_model(resource)
+  def redirect_model_success(resource)
     super unless action_name == 'update'
     resource.parent_model
   end

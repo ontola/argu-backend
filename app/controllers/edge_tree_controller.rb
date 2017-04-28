@@ -27,13 +27,9 @@ class EdgeTreeController < ServiceController
 
   # Method to determine where the action should redirect to after it succeeds.
   # @param [Class] resource The resource from the result of the action
-  def success_redirect_model(resource)
-    case action_name
-    when 'destroy', 'trash'
-      resource.parent_model
-    else
-      resource
-    end
+  def redirect_model_success(resource)
+    return resource.parent_model if action_name == 'trash'
+    super
   end
 
   # Prepares a memoized {TrashService} for the relevant model for use in controller#trash

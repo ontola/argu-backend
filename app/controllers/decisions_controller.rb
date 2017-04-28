@@ -110,7 +110,7 @@ class DecisionsController < EdgeTreeController
     )
   end
 
-  def success_redirect_model(resource)
+  def redirect_model_success(resource)
     return super unless action_name == 'update'
     resource.parent_model
   end
@@ -129,7 +129,7 @@ class DecisionsController < EdgeTreeController
 
   def update_respond_blocks_success(resource, format)
     format.html do
-      redirect_to success_redirect_model(resource),
+      redirect_to redirect_model_success(resource),
                   notice: t('type_save_success', type: type_for(resource))
     end
     format.json { render json: resource.parent_model, status: :updated, location: resource }

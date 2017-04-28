@@ -67,7 +67,7 @@ class ArgumentsController < EdgeTreeController
                          current_profile == current_user.profile))
   end
 
-  def success_redirect_model(resource)
+  def redirect_model_success(resource)
     return super unless action_name == 'create'
     resource.parent_model
   end

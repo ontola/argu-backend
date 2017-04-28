@@ -18,7 +18,7 @@ module Service
       # @!visibility public
       def create_respond_blocks_success(resource, format)
         format.html do
-          redirect_to success_redirect_model(resource),
+          redirect_to redirect_model_success(resource),
                       notice: t('type_save_success', type: type_for(resource))
         end
         format.json { render json: resource, status: :created, location: resource }

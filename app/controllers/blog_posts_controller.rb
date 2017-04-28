@@ -23,7 +23,7 @@ class BlogPostsController < EdgeTreeController
     format.json_api { head :no_content }
   end
 
-  def success_redirect_model(resource)
+  def redirect_model_success(resource)
     return super unless action_name == 'create'
     url_for(url_for_blog_post(resource))
   end

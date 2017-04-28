@@ -83,6 +83,18 @@ class ServiceController < AuthorizedController
     "#{action_name}_#{model_name}_successful".to_sym
   end
 
+  # Method to determine where the action should redirect to after it fails.
+  # @param [Class] resource The resource from the result of the action
+  def redirect_model_failure(resource)
+    resource
+  end
+
+  # Method to determine where the action should redirect to after it succeeds.
+  # @param [Class] resource The resource from the result of the action
+  def redirect_model_success(resource)
+    action_name == 'destroy' ? resource.parent_model : resource
+  end
+
   # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
   # @return [UpdateService] The service, generally initialized with {resource_by_id} and {permit_params}
   # @example
