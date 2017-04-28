@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-module EdgeTree
+module Service
   module Edit
     extend ActiveSupport::Concern
 

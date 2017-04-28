@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-module EdgeTree
-  # Prepares the edge tree controllers to setup their actions briefly.
+module Service
+  # Prepares the controllers to setup their actions briefly.
   #
   # Basic methods for an action are defined as follows:
   # @example Successful motion#create methods
@@ -39,13 +39,12 @@ module EdgeTree
   # This provides the ability to redefine behaviour at the most appropriate
   # level, without having to redeclare that which isn't changed.
   #
-  # @see EdgeTree::Create
-  # @see EdgeTree::Destroy
-  # @see EdgeTree::Edit
-  # @see EdgeTree::Index
-  # @see EdgeTree::New
-  # @see EdgeTree::Trashing
-  # @see EdgeTree::Update
+  # @see Service::Create
+  # @see Service::Destroy
+  # @see Service::Edit
+  # @see Service::Index
+  # @see Service::New
+  # @see Service::Update
   #
   # @note This module has to be loaded with a separate include statement for Ruby
   #   to let the alias statement detect the `exec_action` method correctly.

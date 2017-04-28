@@ -8,26 +8,21 @@
 #
 # @see EdgeTree::Setup The interface for adjusting per-component behaviour.
 class EdgeTreeController < ServiceController
-  include EdgeTree::Setup
   include NestedResourceHelper,
-          EdgeTree::Create,
-          EdgeTree::Destroy,
-          EdgeTree::Edit,
-          EdgeTree::Index,
-          EdgeTree::New,
-          EdgeTree::Trashing,
-          EdgeTree::Update
+          EdgeTree::Trashing
 
   private
 
-  # The name of the failure signal as emitted from `action_service`
-  def signal_failure
-    "#{action_name}_#{model_name}_failed".to_sym
-  end
-
-  # The name of the success signal as emitted from `action_service`
-  def signal_success
-    "#{action_name}_#{model_name}_successful".to_sym
+  def action_service
+    @_action_service ||=
+      case action_name
+      when 'untrash'
+        untrash_service
+      when 'trash'
+        trash_service
+      else
+        super
+      end
   end
 
   # Method to determine where the action should redirect to after it succeeds.
@@ -39,5 +34,29 @@ class EdgeTreeController < ServiceController
     else
       resource
     end
+  end
+
+  # Prepares a memoized {TrashService} for the relevant model for use in controller#trash
+  # @return [TrashService] The service, generally initialized with {resource_id}
+  # @example
+  #   trash_service # => TrashComment<commentable_id: 6, parent_id: 5>
+  #   trash_service.commit # => true (Comment trashed)
+  def trash_service
+    @trash_service ||= service_klass.new(
+      resource_by_id!,
+      options: service_options
+    )
+  end
+
+  # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash
+  # @return [UntrashService] The service, generally initialized with {resource_id}
+  # @example
+  #   untrash_service # => UntrashComment<commentable_id: 6, parent_id: 5>
+  #   untrash_service.commit # => true (Comment untrashed)
+  def untrash_service
+    @untrash_service ||= service_klass.new(
+      resource_by_id!,
+      options: service_options
+    )
   end
 end

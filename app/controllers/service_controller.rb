@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 class ServiceController < AuthorizedController
+  include Service::Setup
+  include Service::Create,
+          Service::Destroy,
+          Service::Edit,
+          Service::Index,
+          Service::New,
+          Service::Update
+
   private
 
   def action_service
@@ -11,10 +19,6 @@ class ServiceController < AuthorizedController
         destroy_service
       when 'update'
         update_service
-      when 'untrash'
-        untrash_service
-      when 'trash'
-        trash_service
       end
   end
 
@@ -69,28 +73,14 @@ class ServiceController < AuthorizedController
     }.merge(options)
   end
 
-  # Prepares a memoized {TrashService} for the relevant model for use in controller#trash
-  # @return [TrashService] The service, generally initialized with {resource_id}
-  # @example
-  #   trash_service # => TrashComment<commentable_id: 6, parent_id: 5>
-  #   trash_service.commit # => true (Comment trashed)
-  def trash_service
-    @trash_service ||= service_klass.new(
-      resource_by_id!,
-      options: service_options
-    )
+  # The name of the failure signal as emitted from `action_service`
+  def signal_failure
+    "#{action_name}_#{model_name}_failed".to_sym
   end
 
-  # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash
-  # @return [UntrashService] The service, generally initialized with {resource_id}
-  # @example
-  #   untrash_service # => UntrashComment<commentable_id: 6, parent_id: 5>
-  #   untrash_service.commit # => true (Comment untrashed)
-  def untrash_service
-    @untrash_service ||= service_klass.new(
-      resource_by_id!,
-      options: service_options
-    )
+  # The name of the success signal as emitted from `action_service`
+  def signal_success
+    "#{action_name}_#{model_name}_successful".to_sym
   end
 
   # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
