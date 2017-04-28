@@ -136,15 +136,10 @@ const OpinionMixin = {
                     }));
                 }
             }).catch(er => {
-                if (er.status === 403) {
-                    return er.json()
-                        .then(this.handleNotAMember)
-                } else {
-                    const message = errorMessageForStatus(er.status).fallback || this.getIntlMessage('errors.general');
-                    new Alert(message, 'alert', true);
-                    Bugsnag.notifyException(er);
-                    throw er;
-                }
+                const message = errorMessageForStatus(er.status).fallback || this.getIntlMessage('errors.general');
+                new Alert(message, 'alert', true);
+                Bugsnag.notifyException(er);
+                throw er;
             });
     }
 };

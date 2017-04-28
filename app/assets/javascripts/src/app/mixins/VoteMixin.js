@@ -15,24 +15,6 @@ const VoteMixin = {
         vote_url: React.PropTypes.string.isRequired
     },
 
-    createMembership (response) {
-        return fetch(response.links.create_membership.href, safeCredentials({
-            method: 'POST'
-        })).then(statusSuccess);
-    },
-
-    handleNotAMember (response) {
-        if (response.type === 'error' &&
-            response.error_id === 'NOT_A_MEMBER') {
-            return this.createMembership(response)
-                .then(() => {
-                    return this.vote(response.original_request.for);
-                });
-        } else {
-            return Promise.resolve();
-        }
-    },
-
     proHandler (e) {
         if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
@@ -73,15 +55,10 @@ const VoteMixin = {
                     this.setState(Object.assign({}, data.vote, { opinionForm: true }));
                 }
             }).catch(e => {
-                if (e.status === 403) {
-                    return e.json()
-                        .then(this.handleNotAMember)
-                } else {
-                    const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
-                    new Alert(message, 'alert', true);
-                    Bugsnag.notifyException(e);
-                    throw e;
-                }
+                const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
+                new Alert(message, 'alert', true);
+                Bugsnag.notifyException(e);
+                throw e;
             });
     }
 };
