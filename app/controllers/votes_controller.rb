@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class VotesController < EdgeTreeController
   include NestedResourceHelper, UriTemplateHelper
-  skip_before_action :check_if_registered, only: :index
+  skip_before_action :check_if_registered, only: %i(index show create)
 
   # GET /model/:model_id/vote
   def show

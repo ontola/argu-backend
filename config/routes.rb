@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'argu/destroy_constraint'
-require 'argu/guest_constraint'
 require 'argu/staff_constraint'
 require 'argu/forums_constraint'
 require 'argu/whitelist_constraint'
@@ -79,10 +78,6 @@ Rails.application.routes.draw do
     match '/', action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
-    constraints(Argu::GuestConstraint) do
-      get :vote, to: 'guest/votes#show'
-      post :votes, to: 'guest/votes#create'
-    end
     resources :votes, only: [:new, :create]
     get 'vote' => 'votes#show', as: :show_vote
   end
