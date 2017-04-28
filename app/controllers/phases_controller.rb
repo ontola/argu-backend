@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PhasesController < AuthorizedController
+class PhasesController < ServiceController
   include NestedResourceHelper
 
   def show

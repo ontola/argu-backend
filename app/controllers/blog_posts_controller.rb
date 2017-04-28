@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class BlogPostsController < AuthorizedController
+class BlogPostsController < ServiceController
   include NestedResourceHelper, BlogPostsHelper
 
   def new

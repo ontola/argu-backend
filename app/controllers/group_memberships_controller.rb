@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class GroupMembershipsController < AuthorizedController
+class GroupMembershipsController < ServiceController
   include NestedResourceHelper
 
   def show

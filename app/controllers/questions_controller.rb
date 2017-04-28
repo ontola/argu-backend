@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class QuestionsController < AuthorizedController
+class QuestionsController < ServiceController
   include NestedResourceHelper, MenuHelper, VotesHelper
   skip_before_action :check_if_registered, only: :index
 

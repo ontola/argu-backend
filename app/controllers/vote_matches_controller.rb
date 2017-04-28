@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class VoteMatchesController < AuthorizedController
+class VoteMatchesController < ServiceController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
 

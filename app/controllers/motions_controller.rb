@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class MotionsController < AuthorizedController
+class MotionsController < ServiceController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
   skip_before_action :authorize_action, only: :search

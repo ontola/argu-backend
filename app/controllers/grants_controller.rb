@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class GrantsController < AuthorizedController
+class GrantsController < ServiceController
   include NestedResourceHelper
 
   def new

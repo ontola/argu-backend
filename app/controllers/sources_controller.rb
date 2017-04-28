@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class SourcesController < AuthorizedController
+class SourcesController < ServiceController
   def settings
     prepend_view_path 'app/views/sources'
 
