@@ -36,7 +36,7 @@ class VotesController < EdgeTreeController
         render status: 304,
                locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
       end
-      format.json_api { head 304 }
+      format.json_api { respond_with_304(create_service.resource, :json_api) }
       format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
       format.html do
         if params[:vote].try(:[], :r).present?
@@ -57,8 +57,8 @@ class VotesController < EdgeTreeController
   private
 
   def create_respond_blocks_failure(resource, format)
-    format.json { render json: resource.errors, status: 400 }
-    format.json_api { render json: resource.errors, status: 400 }
+    format.json { respond_with_400(resource, :json) }
+    format.json_api { respond_with_400(resource, :json_api) }
     # format.js { head :bad_request }
     format.html do
       redirect_to polymorphic_url(resource.parent_model.voteable),
@@ -68,7 +68,7 @@ class VotesController < EdgeTreeController
 
   def create_respond_blocks_success(resource, format)
     format.json { render location: resource, locals: {model: resource.parent_model, vote: resource} }
-    format.json_api { render json: resource }
+    format.json_api { respond_with_200(resource, :json_api) }
     format.js { render locals: {model: resource.parent_model, vote: resource} }
     format.html do
       if params[:vote].try(:[], :r).present?
@@ -80,13 +80,10 @@ class VotesController < EdgeTreeController
     end
   end
 
-  def destroy_respond_blocks_success(resource, format)
-    format.js do
-      render locals: {
-        vote: resource
-      }
-    end
-    format.json { head 204 }
+  def destroy_respond_success_js(resource)
+    render locals: {
+      vote: resource
+    }
   end
 
   def resource_by_id

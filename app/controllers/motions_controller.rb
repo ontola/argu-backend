@@ -89,16 +89,4 @@ class MotionsController < EdgeTreeController
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)
   end
-
-  def update_respond_blocks_success(resource, format)
-    if params[:motion].present? &&
-        params[:motion][:tag_id].present? &&
-        resource.tags.reject { |a, b| a.motion == b }.first.present?
-      format.html { redirect_to tag_motions_url(Tag.find_by_id(resource.tag_id).name) }
-    else
-      format.html { redirect_to resource, notice: t('type_save_success', type: motion_type) }
-    end
-    format.json { head :no_content }
-    format.json_api { head :no_content }
-  end
 end

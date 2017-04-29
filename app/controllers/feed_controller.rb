@@ -17,14 +17,14 @@ class FeedController < AuthorizedController
           preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
           render
         else
-          head 204
+          respond_with_204(nil, :json)
         end
       end
       format.json do
         if @activities.present?
           render json: @activities, include: %w(recipient owner)
         else
-          head 204
+          respond_with_204(nil, :json)
         end
       end
     end

@@ -5,9 +5,8 @@ class VoteMatchesController < ServiceController
 
   def show
     respond_to do |format|
-      format.json_api do
-        render json: authenticated_resource
-      end
+      format.json { respond_with_200(authenticated_resource, :json) }
+      format.json_api { respond_with_200(authenticated_resource, :json_api) }
     end
   end
 

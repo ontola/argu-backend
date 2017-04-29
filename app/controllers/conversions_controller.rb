@@ -58,10 +58,6 @@ class ConversionsController < ServiceController
     )
   end
 
-  def new_respond_blocks_success(resource, format)
-    format.html { render :form, locals: {conversion: resource} }
-  end
-
   def service_options(options = {})
     {
       creator: current_profile,

@@ -31,11 +31,11 @@ module EdgeTree
       end
 
       def move_respond_blocks_failure(resource, _)
-        redirect_to redirect_model_failure(resource)
+        respond_with_redirect_failure(resource, :move)
       end
 
       def move_respond_blocks_success(resource, _)
-        redirect_to resource
+        respond_with_redirect_success(resource, :move)
       end
 
       def redirect_model_failure(resource)

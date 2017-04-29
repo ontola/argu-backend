@@ -1,0 +1,15 @@
+=set_title t('question_answers.couple_motion')
+.col-1
+  =to_parent(question_answer.question)
+  .box
+    =semantic_form_for(question_answer, path: question_answers_path(question_answer.question), html: {autocomplete: 'off'}) do |f|
+      section
+        h1= t('question_answers.couple_motion')
+        =f.inputs
+          =f.input :question_id, as: :hidden, value: question_answer.question.id
+          =f.input :motion,
+              as: :react,
+              component: 'SearchMotion',
+              forum: question_answer.question.forum.url
+        =f.actions
+          =f.action :submit, as: :button

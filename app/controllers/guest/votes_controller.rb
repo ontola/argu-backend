@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 module Guest
   class VotesController < ActionController::Base
-    include NestedResourceHelper, Pundit, JsonApiHelper
+    include NestedResourceHelper, Pundit, JsonApiHelper,
+            Common::Responses
     rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
     rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
 
@@ -9,12 +10,8 @@ module Guest
     def show
       authorize authenticated_resource, :show?
       respond_to do |format|
-        format.json do
-          render json: authenticated_resource
-        end
-        format.json_api do
-          render json: authenticated_resource
-        end
+        format.json { respond_with_200(authenticated_resource, :json) }
+        format.json_api { respond_with_200(authenticated_resource, :json_api) }
       end
     end
 

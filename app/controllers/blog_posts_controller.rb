@@ -6,8 +6,9 @@ class BlogPostsController < EdgeTreeController
     @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
     respond_to do |format|
       format.html { render locals: {blog_post: authenticated_resource, comment: Comment.new} }
-      format.json { render json: authenticated_resource }
-      format.js   { render locals: {blog_post: authenticated_resource} }
+      format.json { respond_with_200(authenticated_resource, :json) }
+      format.json_api { respond_with_200(authenticated_resource, :json_api) }
+      format.js { render locals: {blog_post: authenticated_resource} }
     end
   end
 
@@ -18,9 +19,9 @@ class BlogPostsController < EdgeTreeController
   end
 
   def update_respond_blocks_success(resource, format)
-    format.html { redirect_to url_for(url_for_blog_post(resource)) }
-    format.json { render json: resource, status: 200, location: resource }
-    format.json_api { head :no_content }
+    format.html { update_respond_success_html(resource) }
+    format.json { respond_with_200(resource, :json) }
+    format.json_api { respond_with_204(resource, :json_api) }
   end
 
   def redirect_model_success(resource)

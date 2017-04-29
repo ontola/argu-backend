@@ -5,8 +5,12 @@ class LogController < AuthorizedController
   def show
     respond_to do |format|
       format.html { render 'log', locals: {resource: authenticated_resource!} }
-      format.json { render json: authenticated_resource!.activities }
-      format.json_api { render json: authenticated_resource!.activities }
+      format.json do
+        respond_with_200(authenticated_resource!.activities, :json)
+      end
+      format.json_api do
+        respond_with_200(authenticated_resource!.activities, :json_api)
+      end
     end
   end
 

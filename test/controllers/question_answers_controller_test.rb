@@ -17,7 +17,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
             question_id: question
           }
         }
-    assert_response 403
+    assert_not_a_user
   end
 
   test 'guest should not post create' do

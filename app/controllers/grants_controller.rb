@@ -12,18 +12,15 @@ class GrantsController < ServiceController
     )
   end
 
-  def create_respond_blocks_failure(resource, format)
-    format.html do
-      render "#{authenticated_resource.edge.owner_type.pluralize.underscore}/settings",
-             locals: {
-               tab: 'grants/new',
-               active: 'grants',
-               page: resource.group.page,
-               resource: resource
-             }
-    end
-    format.json { render json: resource, status: :created, location: resource }
-    format.json_api { render json: resource, status: :created, location: resource }
+  def create_respond_failure_html(resource)
+    owner_path = authenticated_resource.edge.owner_type.pluralize.underscore
+    render "#{owner_path}/settings",
+           locals: {
+             tab: 'grants/new',
+             active: 'grants',
+             page: resource.group.page,
+             resource: resource
+           }
   end
 
   def parent_resource_key(_url_params)
@@ -34,17 +31,14 @@ class GrantsController < ServiceController
     @resource ||= Grant.new(resource_new_params)
   end
 
-  def new_respond_blocks_success(resource, format)
-    format.html do
-      render 'pages/settings',
-             locals: {
-               tab: 'grants/new',
-               active: 'groups',
-               resource: authenticated_resource.page,
-               grant: authenticated_resource
-             }
-    end
-    format.json { render json: resource }
+  def new_respond_success_html(resource)
+    render 'pages/settings',
+           locals: {
+             tab: 'grants/new',
+             active: 'groups',
+             resource: resource.page,
+             grant: resource
+           }
   end
 
   def redirect_path(_ = nil)

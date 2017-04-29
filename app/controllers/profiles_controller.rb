@@ -68,14 +68,16 @@ class ProfilesController < ApplicationController
         format.html { redirect_to redirect_url }
       elsif updated
         format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
-        format.json { head :no_content }
+        format.json { respond_with_204(resource, :json) }
+        format.json_api { respond_with_204(resource, :json_api) }
       else
         format.html do
           render 'users/profiles/setup',
                  locals: {profile: @profile, resource: @resource},
                  layout: 'closed'
         end
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
+        format.json { respond_with_422(@profile, :json) }
+        format.json_api { respond_with_422(@profile, :json_api) }
       end
     end
   end

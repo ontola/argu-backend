@@ -214,7 +214,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
       )
     end
 
-    assert_redirected_to argument_path(argument, anchor: subject.id)
+    assert_redirected_to argument_path(argument, anchor: subject.identifier)
   end
 
   ####################################
@@ -235,6 +235,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
       )
     end
 
-    assert_redirected_to argument_url(argument, anchor: subject.id)
+    assert_redirected_to argument_url(argument, anchor: subject.identifier)
   end
 end

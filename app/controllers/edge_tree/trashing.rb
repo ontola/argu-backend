@@ -11,32 +11,34 @@ module EdgeTree
 
       # @!visibility public
       def trash_respond_blocks_failure(resource, format)
-        format.html { redirect_to redirect_model_failure(resource), notice: t('errors.general') }
-        format.json { render json: resource.errors, status: :unprocessable_entity }
+        format.html { respond_with_redirect_failure(resource, :trash) }
+        format.json { response_422_json(resource) }
+        format.json_api { respond_with_422(resource, :json_api) }
+        format.js
       end
 
       # @!visibility public
       def trash_respond_blocks_success(resource, format)
-        format.html do
-          redirect_to redirect_model_success(resource),
-                      notice: t('type_trash_success', type: type_for(resource))
-        end
-        format.json { head :no_content }
+        format.html { respond_with_redirect_success(resource, :trash) }
+        format.json { respond_with_204(resource, :json) }
+        format.json_api { respond_with_204(resource, :json_api) }
+        format.js
       end
 
       # @!visibility public
       def untrash_respond_blocks_failure(resource, format)
-        format.html { redirect_to redirect_model_failure(resource), notice: t('errors.general') }
-        format.json { render json: resource.errors, status: :unprocessable_entity }
+        format.html { respond_with_redirect_failure(resource, :untrash) }
+        format.json { response_422_json(resource) }
+        format.json_api { respond_with_422(resource, :json_api) }
+        format.js
       end
 
       # @!visibility public
       def untrash_respond_blocks_success(resource, format)
-        format.html do
-          redirect_to redirect_model_success(resource),
-                      notice: t('type_untrash_success', type: type_for(resource))
-        end
-        format.json { head :no_content }
+        format.html { respond_with_redirect_success(resource, :untrash) }
+        format.json { respond_with_204(resource, :json) }
+        format.json_api { respond_with_204(resource, :json_api) }
+        format.js
       end
     end
   end

@@ -24,7 +24,7 @@ class ArgumentsController < EdgeTreeController
         render authenticated_resource,
                locals: {argument: authenticated_resource}
       end
-      format.json { render json: authenticated_resource }
+      format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api do
         render json: authenticated_resource,
                include: [
@@ -58,7 +58,8 @@ class ArgumentsController < EdgeTreeController
     resource.assign_attributes(pro: %w(con pro).index(params[:pro]))
     return super if params[:motion_id].present?
     format.html { render text: 'Bad request', status: 400 }
-    format.json { head 400 }
+    format.json { respond_with_400(resource, :json) }
+    format.json_api { respond_with_400(resource, :json_api) }
   end
 
   def service_options(opts = {})

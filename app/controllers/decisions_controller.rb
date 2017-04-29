@@ -8,7 +8,7 @@ class DecisionsController < EdgeTreeController
       format.html do
         render locals: {decisionable: get_parent_resource}
       end
-      format.json { render json: get_parent_resource.last_decision }
+      format.json { respond_with_200(get_parent_resource.last_decision, :json) }
       format.js   { render 'show', locals: {decision: get_parent_resource.last_decision} }
     end
   end
@@ -18,7 +18,7 @@ class DecisionsController < EdgeTreeController
       format.html do
         render action: 'index', locals: {decisionable: get_parent_resource}
       end
-      format.json { render json: authenticated_resource }
+      format.json { respond_with_200(authenticated_resource, :json) }
       format.js   { render 'show', locals: {decision: authenticated_resource} }
     end
   end
@@ -34,22 +34,19 @@ class DecisionsController < EdgeTreeController
     end
   end
 
-  def create_respond_blocks_failure(resource, format)
-    format.html { render action: 'index', locals: {decision: resource, decisionable: resource.parent_model} }
-    format.json { render json: resource.errors, status: :unprocessable_entity }
-    format.json_api { render json_api_error(422, resource.errors) }
+  def create_respond_failure_html(resource)
+    render action: 'index',
+           locals: {decision: resource, decisionable: resource.parent_model}
   end
 
-  def create_respond_blocks_success(resource, format)
-    format.html do
-      notice = if resource.edge.argu_publication.published_at.present?
-                 t("decisions.#{resource.parent_model.model_name.singular}.#{resource.state}")
-               else
-                 t('type_save_success', type: t('decisions.type').capitalize)
-               end
-      redirect_to resource.parent_model, notice: notice
-    end
-    format.json { render json: resource, status: 201, location: resource }
+  def create_respond_success_html(resource)
+    notice =
+      if resource.edge.argu_publication.published_at.present?
+        t("decisions.#{resource.parent_model.model_name.singular}.#{resource.state}")
+      else
+        t('type_save_success', type: t('decisions.type').capitalize)
+      end
+    redirect_to resource.parent_model, notice: notice
   end
 
   def edit_respond_blocks_success(resource, _)
@@ -88,15 +85,12 @@ class DecisionsController < EdgeTreeController
     decision
   end
 
-  def new_respond_blocks_success(resource, format)
-    format.html do
-      render action: 'index',
-             locals: {
-               decisionable: get_parent_resource,
-               new_decision: resource
-             }
-    end
-    format.json { render json: resource }
+  def new_respond_success_html(resource)
+    render action: 'index',
+           locals: {
+             decisionable: get_parent_resource,
+             new_decision: resource
+           }
   end
 
   def resource_by_id
@@ -115,24 +109,11 @@ class DecisionsController < EdgeTreeController
     resource.parent_model
   end
 
-  def update_respond_blocks_failure(resource, format)
-    format.html do
-      render action: 'index',
-             locals: {
-               decisionable: resource.parent_model,
-               decision: resource
-             }
-    end
-    format.json { render json: resource.errors, status: :unprocessable_entity }
-    format.json_api { render json_api_error(422, resource.errors) }
-  end
-
-  def update_respond_blocks_success(resource, format)
-    format.html do
-      redirect_to redirect_model_success(resource),
-                  notice: t('type_save_success', type: type_for(resource))
-    end
-    format.json { render json: resource.parent_model, status: :updated, location: resource }
-    format.json_api { head :no_content }
+  def update_respond_failure_html(resource)
+    render action: 'index',
+           locals: {
+             decisionable: resource.parent_model,
+             decision: resource
+           }
   end
 end

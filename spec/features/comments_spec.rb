@@ -23,7 +23,7 @@ RSpec.feature 'Comments', type: :feature do
 
     sign_up_and_confirm_comment
 
-    expect(page).to have_content 'comment created successfully'
+    expect(page).to have_content 'Comment created successfully'
     expect(page).to have_content argument.title
   end
 
@@ -36,7 +36,7 @@ RSpec.feature 'Comments', type: :feature do
 
     sign_up_and_confirm_comment
 
-    expect(page).to have_content 'comment created successfully'
+    expect(page).to have_content 'Comment created successfully'
     expect(page).to have_content blog_post.title
   end
 
@@ -50,7 +50,7 @@ RSpec.feature 'Comments', type: :feature do
     visit argument_path(argument)
 
     fill_in_and_submit_comment
-    expect(page).to have_content 'comment created successfully'
+    expect(page).to have_content 'Comment created successfully'
 
     expect(page).to have_content argument.title
     expect(page).to have_content comment_args[:body]
@@ -64,7 +64,7 @@ RSpec.feature 'Comments', type: :feature do
       fill_in 'comment[body]', with: comment_args[:body]
       click_button 'Reply'
     end
-    expect(page).to have_content 'comment created successfully'
+    expect(page).to have_content 'Comment created successfully'
   end
 
   ####################################
@@ -80,7 +80,7 @@ RSpec.feature 'Comments', type: :feature do
 
     expect(page).to have_content argument.title
     expect(page).to have_content comment_args[:body]
-    expect(page).to have_content 'comment created successfully'
+    expect(page).to have_content 'Comment created successfully'
   end
 
   private

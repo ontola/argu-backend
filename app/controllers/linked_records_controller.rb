@@ -11,6 +11,7 @@ class LinkedRecordsController < AuthorizedController
     else
       respond_to do |format|
         format.html { redirect_to url_for(authenticated_resource!.iri) }
+        format.json { respond_with_200(authenticated_resource!, :json) }
         format.json_api do
           render json: authenticated_resource!,
                  include: [

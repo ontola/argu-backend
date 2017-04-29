@@ -3,8 +3,9 @@ class CommentsController < EdgeTreeController
   skip_before_action :check_if_registered, only: :index
 
   def new
+    comment = params[:comment]
     render locals: {
-      parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
+      parent_id: comment.is_a?(Hash) ? comment[:parent_id] : nil,
       resource: authenticated_resource.parent_model,
       comment: authenticated_resource
     }
@@ -12,10 +13,8 @@ class CommentsController < EdgeTreeController
 
   def show
     respond_to do |format|
-      format.html do
-        redirect_to url_for([authenticated_resource.parent_model, anchor: authenticated_resource.identifier])
-      end
-      format.json_api { render json: authenticated_resource }
+      format.html { redirect_to redirect_model_success(authenticated_resource) }
+      format.json_api { respond_with_200(authenticated_resource, :json_api) }
     end
   end
 
@@ -47,40 +46,28 @@ class CommentsController < EdgeTreeController
                 notice: c.errors.full_messages.first
   end
 
-  def create_handler_success(c)
-    redirect_to polymorphic_url(c.parent_model, anchor: c.identifier),
-                notice: t('type_create_success', type: t('comments.type'))
+  def create_handler_success(resource)
+    respond_with_redirect_success(resource, :create)
   end
 
-  def destroy_respond_blocks_failure(resource, format)
-    format.html do
-      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
-                  notice: t('errors.general')
-    end
-    format.js # destroy_comment.js
+  def destroy_respond_failure_js
+    render
   end
 
-  # DELETE /arguments/1/comments/1?destroy=true
-  def destroy_respond_blocks_success(resource, format)
-    format.html { redirect_to polymorphic_url([resource.parent_model], anchor: resource.id) }
-    format.js # destroy_comment.js
+  def edit_respond_success_html(resource)
+    render locals: {
+      resource: resource.parent_model,
+      comment: resource
+    }
   end
 
-  def edit_respond_blocks_success(resource, format)
-    format.html do
-      render locals: {
-        resource: resource.parent_model,
-        comment: resource
-      }
-    end
-    format.js do
-      render locals: {
-        resource: resource.parent_model,
-        comment: resource,
-        parent_id: nil,
-        visible: true
-      }
-    end
+  def edit_respond_success_js(resource)
+    render locals: {
+      resource: resource.parent_model,
+      comment: resource,
+      parent_id: nil,
+      visible: true
+    }
   end
 
   def new_resource_from_params
@@ -90,6 +77,11 @@ class CommentsController < EdgeTreeController
                     .new(owner: get_parent_resource.comment_threads.new(resource_new_params))
                     .owner
   end
+
+  def redirect_model_success(resource)
+    polymorphic_url([resource.parent_model], anchor: resource.identifier)
+  end
+  alias redirect_model_failure redirect_model_success
 
   def resource_new_params
     super.merge(body: comment_body)
@@ -102,13 +94,10 @@ class CommentsController < EdgeTreeController
   end
 
   def redirect_url
-    if params[:action] == 'create'
-      redirect_url = URI.parse(url_for([:new, get_parent_resource, :comment, only_path: true]))
-      redirect_url.query = query_payload(confirm: true)
-      redirect_url
-    else
-      super
-    end
+    return super unless params[:action] == 'create'
+    redirect_url = URI.parse(url_for([:new, get_parent_resource, :comment, only_path: true]))
+    redirect_url.query = query_payload(confirm: true)
+    redirect_url
   end
 
   def resource_tenant
@@ -124,72 +113,33 @@ class CommentsController < EdgeTreeController
     resource&.find(id)&.forum
   end
 
-  def trash_respond_blocks_failure(resource, format)
-    format.html do
-      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
-                  notice: t('errors.general')
-    end
-    format.js # destroy_comment.js
+  def update_respond_failure_html(resource)
+    render 'edit',
+           locals: {
+             resource: resource.parent_model,
+             comment: resource,
+             parent_id: nil
+           }
   end
 
-  def trash_respond_blocks_success(resource, format)
-    format.html do
-      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
-                  notice: t('type_trash_success', type: t('comments.type'))
-    end
-    format.js # destroy_comment.js
+  def update_respond_failure_js(resource)
+    render 'failed',
+           status: 400,
+           locals: {
+             comment: resource,
+             commentable: resource.parent_model
+           }
   end
 
-  def untrash_respond_blocks_failure
-    format.html do
-      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
-                  notice: t('errors.general')
-    end
-    format.js # destroy_comment.js
+  def update_respond_success_html(resource)
+    redirect_to comment_url(resource),
+                notice: t('comments.notices.updated')
   end
 
-  def untrash_respond_blocks_success
-    format.html do
-      redirect_to polymorphic_url([resource.parent_model], anchor: resource.id),
-                  notice: t('type_untrash_success', type: t('comments.type'))
-    end
-    format.js # destroy_comment.js
-  end
-
-  def update_respond_blocks_failure(resource, format)
-    format.html do
-      render 'edit',
-             locals: {
-               resource: resource.parent_model,
-               comment: resource,
-               parent_id: nil
-             }
-    end
-    format.js do
-      render 'failed',
-             status: 400,
-             locals: {
-               comment: resource,
-               commentable: resource.parent_model
-             }
-    end
-    format.json do
-      render json: resource.errors,
-             status: :unprocessable_entity
-    end
-  end
-
-  def update_respond_blocks_success(resource, format)
-    format.html do
-      redirect_to comment_url(resource),
-                  notice: t('comments.notices.updated')
-    end
-    format.js do
-      render locals: {
-        comment: resource,
-        commentable: resource.parent_model
-      }
-    end
-    format.json { head :no_content }
+  def update_respond_success_js(resource, _)
+    render locals: {
+      comment: resource,
+      commentable: resource.parent_model
+    }
   end
 end

@@ -43,10 +43,12 @@ class RegistrationsController < Devise::RegistrationsController
                    action: 'destroy',
                    label: @user.id
         format.html { redirect_to root_path, notice: t('type_destroy_success', type: 'Account') }
-        format.json { head :no_content }
+        format.json { respond_with_204(@user, :json) }
+        format.json_api { respond_with_204(@user, :json_api) }
       else
         format.html { render action: 'cancel' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { respond_with_422(@user, :json) }
+        format.json_api { respond_with_422(@user, :json_api) }
       end
     end
   end

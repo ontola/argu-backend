@@ -6,7 +6,7 @@ require 'argu/not_a_user_error'
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, AnalyticsHelper, ApplicationHelper, OauthHelper,
           PublicActivity::StoreController, NamesHelper, UsersHelper, NestedAttributesHelper,
-          JsonApiHelper, RedirectHelper
+          JsonApiHelper, Common::Responses, RedirectHelper
   helper_method :current_profile, :show_trashed?, :collect_announcements
 
   ::INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
@@ -379,6 +379,13 @@ class ApplicationController < ActionController::Base
   # @private
   def intro_urls
     [profile_url(current_user), setup_profiles_url]
+  end
+
+  # The name of the current model.
+  # This is used primarily to wire data from the generic actions to their
+  # resource-specific view variable names.
+  def model_name
+    controller_name.singularize.to_sym
   end
 
   # @private

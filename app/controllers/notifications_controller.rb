@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# @note: Common create ready
 class NotificationsController < ApplicationController
   after_action :update_viewed_time
 
@@ -30,7 +31,7 @@ class NotificationsController < ApplicationController
       if @notification.save
         format.json { head 201 }
       else
-        format.json { render json: @notification.errors }
+        format.json { respond_with_422(@notification, :json) }
       end
     end
   end

@@ -1,56 +1,36 @@
 # frozen_string_literal: true
-class FavoritesController < ApplicationController
+class FavoritesController < AuthorizedController
   include NestedResourceHelper
-  before_action :check_if_registered
+  alias force_check_if_registered check_if_registered
+  before_action :force_check_if_registered
   skip_after_action :verify_authorized, only: :destroy
-
-  def create
-    @favorite = current_user.favorites.find_or_initialize_by(edge: get_parent_edge)
-    authorize @favorite, :create?
-
-    if @favorite.save
-      respond_to do |format|
-        format.html do
-          flash[:success] = t('type_create_success', type: t('group_memberships.type'))
-          redirect_back(fallback_location: root_path)
-        end
-      end
-    else
-      respond_to do |format|
-        format.html do
-          flash[:error] = t('errors.general')
-          redirect_back(fallback_location: root_path)
-        end
-      end
-    end
-  end
-
-  def destroy
-    @favorite = current_user.favorites.find_by!(edge: get_parent_edge)
-    authorize @favorite, :destroy?
-
-    if @favorite.destroy
-      respond_to do |format|
-        format.html do
-          flash[:success] = t('type_destroy_success', type: t('group_memberships.type'))
-          redirect_back(fallback_location: root_path)
-        end
-      end
-    else
-      respond_to do |format|
-        format.html do
-          flash[:error] = t('errors.general')
-          redirect_back(fallback_location: root_path)
-        end
-      end
-    end
-  end
 
   private
 
-  def check_if_registered
-    return unless current_user.guest?
-    raise Argu::NotAUserError.new(forum: get_parent_edge.owner,
-                                  r: url_for(get_parent_edge.owner))
+  def new_resource_from_params
+    current_user.favorites.find_or_initialize_by(edge: get_parent_edge)
   end
+
+  def resource_by_id
+    current_user.favorites.find_by!(edge: get_parent_edge)
+  end
+
+  def respond_with_redirect_success(resource, action)
+    redirect_back fallback_location: root_path,
+                  notice: message_success(resource, action).capitalize
+  end
+
+  def message_success(resource, action)
+    if action == :destroy
+      flash[:success] = t('type_destroy_success', type: type_for(resource))
+    elsif action == :save
+      flash[:success] = t('type_create_success', type: type_for(resource))
+    end
+  end
+
+  def create_respond_failure_html
+    flash[:error] = t('errors.general')
+    redirect_back(fallback_location: root_path)
+  end
+  alias destroy_respond_failure_html create_respond_failure_html
 end

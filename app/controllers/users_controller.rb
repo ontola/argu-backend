@@ -20,7 +20,7 @@ class UsersController < ApplicationController
           render 'show'
         end
       end
-      format.json { render json: authenticated_resource }
+      format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api do
         render json: authenticated_resource,
                include: [:profile_photo, vote_match_collection: INC_NESTED_COLLECTION]
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     skip_authorization
     actor = CurrentActor.new(user: current_user, actor: current_profile)
     respond_to do |format|
-      format.json { render json: actor }
+      format.json { respond_with_200(actor, :json) }
       format.json_api { render json: actor, include: [:profile_photo, :user, :actor] }
     end
   end
@@ -55,7 +55,8 @@ class UsersController < ApplicationController
                    t('type_save_success', type: t('type_changes'))
                  end
         format.html { redirect_to r_param || settings_path(tab: tab), notice: notice }
-        format.json { head :no_content }
+        format.json { respond_with_204(authenticated_resource, :json) }
+        format.json_api { respond_with_204(authenticated_resource, :json_api) }
       else
         format.html do
           if params[:user][:form] == 'wrong_email'
@@ -69,7 +70,8 @@ class UsersController < ApplicationController
             render 'settings', locals: {tab: tab, active: tab, profile: authenticated_resource.profile}
           end
         end
-        format.json { render json: authenticated_resource.errors, status: :unprocessable_entity }
+        format.json { respond_with_422(authenticated_resource, :json) }
+        format.json_api { respond_with_422(authenticated_resource, :json_api) }
       end
     end
   end

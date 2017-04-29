@@ -55,9 +55,10 @@ class GroupMembershipsController < ServiceController
       if existing_record
         render json: resource.errors, status: 304, location: existing_record
       else
-        render json: resource.errors, status: 422
+        respond_with_422(resource, :json)
       end
     end
+    format.json_api { respond_with_422(resource, :json_api) }
   end
 
   def existing_record
@@ -71,8 +72,8 @@ class GroupMembershipsController < ServiceController
     @existing_record = controller_class.find_by(Hash[duplicate_values])
   end
 
-  def new_respond_blocks_success(resource, format)
-    format.html { redirect_to settings_group_path(resource.group, tab: :invite) }
+  def new_respond_success_html(resource)
+    redirect_to settings_group_path(resource.group, tab: :invite)
   end
 
   def parent_resource_key(opts)

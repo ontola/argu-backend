@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 module Service
-  # Prepares the controllers to setup their actions briefly.
+  # Implements the {Common::Setup} pattern for controller directed at models
+  # implementing the service pattern.
   #
-  # Basic methods for an action are defined as follows:
+  # @see Common::Setup See the common module for more information
+  #
+  # Service adjusted example methods are as follows:
   # @example Successful motion#create methods
   #   # A basic action is created which calls to register a success and failure
   #   # handler.
@@ -28,26 +31,19 @@ module Service
   #     end
   #   end
   #
-  #   # Each method and signal then also gets its own block handlers which define
-  #   # the behaviour for each content-type.
+  #   # Each method and signal then also gets its own block handlers which
+  #   # define the behaviour for each content-type.
   #   def create_respond_blocks_success(resource, format)
+  #     format.html { create_respond_success_html(resource) }
   #     format.json { render status: :created, json: format }
   #     format.json_api { render status: :created, json: format }
   #   end
   #
-  # So multiple methods are created for each combination of actions and signals.
-  # This provides the ability to redefine behaviour at the most appropriate
-  # level, without having to redeclare that which isn't changed.
-  #
-  # @see Service::Create
-  # @see Service::Destroy
-  # @see Service::Edit
-  # @see Service::Index
-  # @see Service::New
-  # @see Service::Update
-  #
-  # @note This module has to be loaded with a separate include statement for Ruby
-  #   to let the alias statement detect the `exec_action` method correctly.
+  #   # Due to legacy implementations, the html block is separated into a method
+  #   # since html behaviour differs greatly between controllers.
+  #   def create_respond_success_html()
+  #      respond_with_redirect_success(resource, :save)
+  #   end
   module Setup
     extend ActiveSupport::Concern
 
@@ -58,29 +54,6 @@ module Service
         define_action(action)
         define_handlers(action)
         define_registers(action)
-      end
-
-      def self.define_action(action)
-        define_method(action, instance_method(:exec_action))
-      end
-
-      def self.define_handlers(action)
-        define_method(
-          "#{action}_handler_failure",
-          proc do |resource|
-            respond_to do |format|
-              send("#{action_name}_respond_blocks_failure", resource, format)
-            end
-          end
-        )
-        define_method(
-          "#{action}_handler_success",
-          proc do |resource|
-            respond_to do |format|
-              send("#{action_name}_respond_blocks_success", resource, format)
-            end
-          end
-        )
       end
 
       def self.define_registers(action)

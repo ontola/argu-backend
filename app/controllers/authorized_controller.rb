@@ -2,6 +2,13 @@
 require 'argu/not_a_user_error'
 
 class AuthorizedController < ApplicationController
+  include Common::Setup
+  include Common::Create,
+          Common::Destroy,
+          Common::Edit,
+          Common::Index,
+          Common::New,
+          Common::Update
   before_action :check_if_registered,
                 except: %i(show shift move convert convert!)
   before_action :authorize_action, except: :index
@@ -71,13 +78,6 @@ class AuthorizedController < ApplicationController
 
   def controller_class
     controller_name.classify.constantize
-  end
-
-  # The name of the current model.
-  # This is used primarily to wire data from the generic actions to their
-  # resource-specific view variable names.
-  def model_name
-    controller_name.singularize.to_sym
   end
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
