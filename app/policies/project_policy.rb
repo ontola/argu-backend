@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class ProjectPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-  end
+  class Scope < EdgeTreePolicy::Scope; end
   include ApplicationHelper
 
   def permitted_attributes

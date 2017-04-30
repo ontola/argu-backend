@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class DecisionPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-  end
+  class Scope < EdgeTreePolicy::Scope; end
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
   def decision_is_assigned?

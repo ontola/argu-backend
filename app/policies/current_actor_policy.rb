@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class CurrentActorPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-
     def resolve
       scope
     end
@@ -36,7 +26,8 @@ class CurrentActorPolicy < RestrictivePolicy
       owner == user
     else
       owner.owner == user.profile ||
-        (user.profile.page_ids(:manager) + user.profile.page_ids(:super_admin)).include?(owner.id)
+        (user.profile.page_ids(:manager) + user.profile.page_ids(:super_admin))
+          .include?(owner.id)
     end
   end
 end

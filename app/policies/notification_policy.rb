@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class NotificationPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-
     def resolve
       if user
         scope.where(user_id: user.id)

@@ -2,14 +2,6 @@
 # @private
 class AdministrationPolicy < Struct.new(:context, :administration)
   class Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
     def resolve
       scope
     end

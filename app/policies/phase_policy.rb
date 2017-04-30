@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class PhasePolicy < EdgeTreePolicy
-  class Scope < RestrictivePolicy::Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-  end
+  class Scope < RestrictivePolicy::Scope; end
 
   def permitted_attributes(force = false)
     attributes = super()

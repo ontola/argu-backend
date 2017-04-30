@@ -1,20 +1,6 @@
 # frozen_string_literal: true
 class BannerDismissalPolicy < EdgeTreePolicy
-  class Scope < Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-
-    def resolve
-      scope
-    end
-  end
+  class Scope < EdgeTreePolicy::Scope; end
 
   def edge
     record.banner.forum.edge
@@ -22,8 +8,8 @@ class BannerDismissalPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(title forum cited_profile content
-                         profile_photo cited_name cited_function published_at) if create?
+    attributes.concat %i(title forum cited_profile content profile_photo
+                         cited_name cited_function published_at) if create?
     attributes.append :id if staff?
     attributes
   end

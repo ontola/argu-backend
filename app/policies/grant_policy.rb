@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 class GrantPolicy < EdgeTreePolicy
-  class Scope < Scope
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-  end
+  class Scope < EdgeTreePolicy::Scope; end
 
   def permitted_attributes
     attributes = super

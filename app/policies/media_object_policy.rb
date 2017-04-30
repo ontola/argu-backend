@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class MediaObjectPolicy < EdgeTreePolicy
   class Scope < RestrictivePolicy::Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-
     def resolve
       scope
     end

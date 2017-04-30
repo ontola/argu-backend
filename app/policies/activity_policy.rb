@@ -1,16 +1,6 @@
 # frozen_string_literal: true
 class ActivityPolicy < RestrictivePolicy
   class Scope < EdgeTreePolicy::Scope
-    attr_reader :context, :scope
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-
     def resolve
       return @scope if staff?
       s = filter_unpublished_and_unmanaged(@scope)
