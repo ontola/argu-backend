@@ -56,11 +56,9 @@ class GroupPolicy < EdgeTreePolicy
     rule is_manager?
   end
 
-  # Make sure that a tab param is actually accounted for
-  # @return [String] The tab if it is considered valid
-  def verify_tab(tab)
-    tab ||= 'members'
-    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
-    tab
+  private
+
+  def default_tab
+    'members'
   end
 end

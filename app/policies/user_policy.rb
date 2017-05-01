@@ -32,7 +32,8 @@ class UserPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general profile authentication notifications privacy advanced)
+    tabs.concat %i(general profile authentication notifications privacy
+                   advanced)
   end
 
   def show?
@@ -77,14 +78,6 @@ class UserPolicy < RestrictivePolicy
   def destroy?
     return if record.profile.grants.super_admin.count.positive?
     current_user?
-  end
-
-  # Make sure that a tab param is actually accounted for
-  # @return [String] The tab if it is considered valid
-  def verify_tab(tab)
-    tab ||= 'general'
-    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
-    tab
   end
 
   def current_user?

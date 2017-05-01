@@ -98,15 +98,11 @@ class PagePolicy < EdgeTreePolicy
     false
   end
 
-  # Make sure that a tab param is actually accounted for
-  # @return [String] The tab if it is considered valid
-  def verify_tab(tab)
-    tab ||= 'profile'
-    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
-    tab
-  end
-
   private
+
+  def default_tab
+    'profile'
+  end
 
   def is_group_member?
     user.profile.group_memberships.joins(:group).where(groups: {page: record})

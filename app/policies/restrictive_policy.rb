@@ -135,6 +135,14 @@ class RestrictivePolicy
     Pundit.policy_scope!(context, record.class)
   end
 
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= default_tab
+    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
+    tab
+  end
+
   private
 
   def append_default_photo_params(attributes)
@@ -150,5 +158,9 @@ class RestrictivePolicy
     attributes.append(
       attachments_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
     )
+  end
+
+  def default_tab
+    'general'
   end
 end

@@ -31,12 +31,4 @@ class SourcePolicy < EdgeTreePolicy
   def update?
     rule is_manager?, super
   end
-
-  # Make sure that a tab param is actually accounted for
-  # @return [String] The tab if it is considered valid
-  def verify_tab(tab)
-    tab ||= 'general'
-    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
-    tab
-  end
 end

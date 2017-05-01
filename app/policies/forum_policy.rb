@@ -4,7 +4,10 @@ class ForumPolicy < EdgeTreePolicy
     def resolve
       t = Forum.arel_table
 
-      cond = t[:visibility].eq_any([Page.visibilities[:open], Page.visibilities[:closed]])
+      cond = t[:visibility].eq_any([
+                                     Page.visibilities[:open],
+                                     Page.visibilities[:closed]
+                                   ])
       cond = cond.or(t[:id].in(user.profile.forum_ids))
       scope.where(cond)
     end
@@ -85,13 +88,5 @@ class ForumPolicy < EdgeTreePolicy
 
   def add_question?
     rule is_member?, staff?
-  end
-
-  # Make sure that a tab param is actually accounted for
-  # @return [String] The tab if it is considered valid
-  def verify_tab(tab)
-    tab ||= 'general'
-    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
-    tab
   end
 end
