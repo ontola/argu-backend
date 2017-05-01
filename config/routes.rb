@@ -348,6 +348,6 @@ Rails.application.routes.draw do
   end
 
   constraints(-> (req) { req.format == :json_api }) do
-    get '*path', to: 'application#route_not_found'
+    get '*path', to: 'application#handle_route_not_found'
   end
 end

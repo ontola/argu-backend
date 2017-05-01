@@ -92,25 +92,14 @@ class Motion < ApplicationRecord
   end
 
   def next(show_trashed = false)
-    forum
-      .motions
-      .published
-      .show_trashed(show_trashed)
-      .where('motions.updated_at < :date',
-             date: updated_at)
-      .order('motions.updated_at')
+    sister_node(show_trashed)
+      .where('motions.updated_at < :date', date: updated_at)
       .last
   end
 
   def previous(show_trashed = false)
-    forum
-      .motions
-      .published
-      .show_trashed(show_trashed)
-      .where('motions.updated_at > :date',
-             date: updated_at)
-      .order('motions.updated_at')
-      .first
+    sister_node(show_trashed)
+      .find_by('motions.updated_at > :date', date: updated_at)
   end
 
   def raw_score
@@ -127,5 +116,15 @@ class Motion < ApplicationRecord
 
   def tag_list=(value)
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
+  end
+
+  private
+
+  def sister_node(show_trashed)
+    forum
+      .motions
+      .published
+      .show_trashed(show_trashed)
+      .order('motions.updated_at')
   end
 end

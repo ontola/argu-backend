@@ -73,23 +73,14 @@ class Question < ApplicationRecord
   end
 
   def next(show_trashed = false)
-    forum
-      .questions
-      .published
-      .show_trashed(show_trashed)
+    sister_node(show_trashed)
       .where('questions.updated_at < :date', date: updated_at)
-      .order('questions.updated_at')
       .last
   end
 
   def previous(show_trashed = false)
-    forum
-      .questions
-      .published
-      .show_trashed(show_trashed)
-      .where('questions.updated_at > :date', date: updated_at)
-      .order('questions.updated_at')
-      .first
+    sister_node(show_trashed)
+      .find_by('questions.updated_at > :date', date: updated_at)
   end
 
   def question_answers
@@ -101,4 +92,14 @@ class Question < ApplicationRecord
   end
 
   scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }
+
+  private
+
+  def sister_node(show_trashed)
+    forum
+      .questions
+      .published
+      .show_trashed(show_trashed)
+      .order('questions.updated_at')
+  end
 end

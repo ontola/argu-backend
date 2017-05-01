@@ -71,6 +71,7 @@ Metrics/MethodLength:
     - 'app/controllers/profiles_controller.rb'
     - 'app/helpers/header_helper.rb'
     - 'app/helpers/menu_helper.rb'
+    - 'lib/argu/controller/error_handling.rb'
     - 'lib/argu/test_helpers/test_definitions.rb'
     - 'lib/argu/test_helpers/test_helper_methods.rb'
     - 'lib/argu/test_helpers/test_mocks.rb'
