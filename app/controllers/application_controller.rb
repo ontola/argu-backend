@@ -87,6 +87,23 @@ class ApplicationController < ActionController::Base
     @current_profile ||= get_current_actor
   end
 
+  def deserialize_params_options
+    {}
+  end
+
+  def format_html?
+    request.format.html?
+  end
+
+  def forum_by_geocode
+    geo = session[:geo_location]
+    return if geo.nil?
+    forum = Forum.find_via_shortname_nil(geo.city.downcase) if geo.city.present?
+    forum ||= Forum.find_via_shortname_nil(geo.country.downcase) if geo.country.present?
+    forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(geo.country_code)
+    forum
+  end
+
   # The params, deserialized when format is json_api and method is not GET
   # @return [Hash] The params
   # @example Resource params from json_api request
@@ -107,23 +124,6 @@ class ApplicationController < ActionController::Base
           ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
       )
     )
-  end
-
-  def deserialize_params_options
-    {}
-  end
-
-  def format_html?
-    request.format.html?
-  end
-
-  def forum_by_geocode
-    geo = session[:geo_location]
-    return if geo.nil?
-    forum = Forum.find_via_shortname_nil(geo.city.downcase) if geo.city.present?
-    forum ||= Forum.find_via_shortname_nil(geo.country.downcase) if geo.country.present?
-    forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(geo.country_code)
-    forum
   end
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
