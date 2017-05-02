@@ -10,6 +10,27 @@ module Argu
         base.extend(ClassMethods)
       end
 
+      def automated_test_assertions(action, test_case, _user_type, results)
+        ((test_case[:asserts] || []) + (results[:asserts] || []))&.each do |assertion|
+          if %i(update create destroy trash untrash).include?(action)
+            assertion = assertion.gsub('resource', "assigns(:#{action}_service).resource.reload")
+          end
+          assert eval(assertion), assertion
+        end
+      end
+
+      def perform_automated_test(action, test_case, user_type, results, method)
+        freetown.closed! && create_forum if %i(member non_member).include?(user_type)
+
+        sign_in send(user_type) unless user_type == :guest || user_type.nil?
+
+        send("general_#{action}", {results: results}.merge(test_case[:options] || {}))
+
+        automated_test_assertions(action, test_case, user_type, results)
+
+        get root_path if user_type == :staff && method != :get
+      end
+
       module ClassMethods
         def define_tests
           tests = yield
@@ -22,28 +43,12 @@ module Argu
                 should_string = results[:should] ? 'should' : 'should not'
 
                 test "#{user_type} #{should_string} #{method} #{action}#{suffix}" do
-                  Grant.where(group_id: -1).destroy_all if %i(member non_member).include?(user_type)
-
-                  sign_in send(user_type) unless user_type == :guest || user_type.nil?
-
-                  send("general_#{action}", {results: results}.merge(test_case[:options] || {}))
-
-                  ((test_case[:asserts] || []) + (results[:asserts] || []))&.each do |assertion|
-                    if %i(update create destroy trash untrash).include?(action)
-                      assertion = assertion.gsub('resource', "assigns(:#{action}_service).resource.reload")
-                    end
-                    assert eval(assertion), assertion
-                  end
-                  get root_path if user_type == :staff && method != :get
+                  perform_automated_test(action, test_case, user_type, results, method)
                 end
               end
             end
           end
-
-          ((action_methods.keys - tests.keys) &
-            name.sub('Test', '').singularize.constantize.instance_methods).each do |a|
-            warn "No tests for #{a} in #{name}"
-          end
+          warn_untested_methods(tests)
         end
 
         def define_test(hash, action, options = {})
@@ -64,6 +69,13 @@ module Argu
 
         def user_types
           @user_types ||= Argu::TestHelpers::AutomatedTests.config.user_types
+        end
+
+        def warn_untested_methods(tests)
+          ((action_methods.keys - tests.keys) &
+            name.sub('Test', '').singularize.constantize.instance_methods).each do |a|
+            warn "No tests for #{a} in #{name}"
+          end
         end
       end
     end

@@ -151,13 +151,16 @@ class Profile < ApplicationRecord
     add_role :frozen
   end
 
-  # Returns the preffered forum of the user, based on their last forum visit, the first forum with a grant,
+  # Returns the last visted forum
+  def last_forum
+    forum_id = Argu::Redis.get("profile:#{id}:last_forum")
+    Forum.find_by(id: forum_id) if forum_id.present?
+  end
+
+  # Returns the preferred forum, based the first forum grant,
   # the first favorite or the first public forum
   def preferred_forum
-    last_forum = Argu::Redis.get("profile:#{id}:last_forum")
-
-    (Forum.find_by(id: last_forum) if last_forum.present?) ||
-      granted_records('Forum').first ||
+    granted_records('Forum').first ||
       profileable.favorites.first&.edge&.owner ||
       Forum.first_public
   end

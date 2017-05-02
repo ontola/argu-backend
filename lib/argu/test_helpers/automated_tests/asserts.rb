@@ -8,7 +8,7 @@ module Argu
         end
 
         def assert_has_drafts
-          'send(user_type).reload.has_drafts?'
+          'send(_user_type).reload.has_drafts?'
         end
 
         def assert_has_title
@@ -32,7 +32,7 @@ module Argu
         end
 
         def assert_no_drafts
-          '!send(user_type).reload.has_drafts?'
+          '!send(_user_type).reload.has_drafts?'
         end
 
         def assert_not_published

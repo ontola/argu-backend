@@ -39,7 +39,7 @@ class GuestUser < User
   end
 
   def profile
-    @profile ||= Profile.new(profileable: self)
+    @profile ||= GuestProfile.new(profileable: self)
   end
 
   def managed_profile_ids

@@ -80,6 +80,8 @@ class ApplicationController < ActionController::Base
                      .reject { |a| announcements[a.identifier] == 'hidden' }
   end
 
+  def current_forum; end
+
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
   def current_profile
     @current_profile ||= get_current_actor
@@ -126,29 +128,11 @@ class ApplicationController < ActionController::Base
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
   def preferred_forum(profile = nil)
-    if !current_user.guest? || profile.present?
-      profile ||= current_profile
-      @_preferred_forum = profile.preferred_forum
-      if @_preferred_forum && policy(@_preferred_forum).show?
-        @_preferred_forum
-      else
-        mem_forum =
-          profile
-          .granted_records('Forum')
-          .map do |e|
-            @_preferred_forum = e.owner
-            e.owner if policy(e.owner).show?
-          end
-          .compact
-          .presence
-        mem_forum || Forum.first_public
-      end
-    else
-      forum_id = Argu::Redis.get("session:#{session.id}:last_forum")
-      @_preferred_forum = Forum.find_by(id: forum_id) if forum_id.present?
-      @_preferred_forum = nil if @_preferred_forum.present? && !policy(@_preferred_forum).show?
-      @_preferred_forum || Forum.first_public
-    end
+    profile ||= current_profile
+    @_preferred_forum ||= [current_forum, profile.last_forum, profile.preferred_forum, Forum.first_public]
+                            .compact
+                            .uniq
+                            .find { |forum| policy(forum).show? }
   end
 
   # @private
@@ -194,10 +178,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_profile_forum
-    if instance_variable_defined?(:@forum) && @forum.is_a?(Forum) && !current_user.guest?
-      Argu::Redis.set("profile:#{current_profile.id}:last_forum", @forum.id)
-    elsif instance_variable_defined?(:@forum) && @forum.is_a?(Forum)
-      Argu::Redis.setex("session:#{session.id}:last_forum", 1.day.seconds.to_i, @forum.id)
+    return unless current_forum.present?
+    if current_user.guest?
+      Argu::Redis.setex("session:#{session.id}:last_forum", 1.day.seconds.to_i, current_forum.id)
+    else
+      Argu::Redis.set("profile:#{current_profile.id}:last_forum", current_forum.id)
     end
   end
 

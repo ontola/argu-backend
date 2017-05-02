@@ -80,8 +80,8 @@ class AuthorizedController < ApplicationController
     controller_name.classify.constantize
   end
 
-  def preferred_forum
-    authenticated_resource!.try(:parent_model, :forum) || super
+  def current_forum
+    authenticated_resource!.try(:parent_model, :forum)
   end
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}

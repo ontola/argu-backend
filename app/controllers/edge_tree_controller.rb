@@ -25,6 +25,10 @@ class EdgeTreeController < ServiceController
       end
   end
 
+  def current_forum
+    authenticated_resource!&.parent_model(:forum)
+  end
+
   # Method to determine where the action should redirect to after it succeeds.
   # @param [Class] resource The resource from the result of the action
   def redirect_model_success(resource)
