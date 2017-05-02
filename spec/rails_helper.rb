@@ -12,11 +12,9 @@ require 'capybara/rails'
 require 'database_cleaner'
 require 'fakeredis'
 require 'sidekiq/testing'
-require 'capybara/poltergeist'
-require 'testingbot'
-require 'testingbot/capybara'
 require 'webmock/rspec'
 require 'argu/test_helpers'
+require 'argu/test_helpers/fixes'
 require 'argu/test_helpers/rspec_helpers'
 
 # Checks for pending migrations before tests are run.
@@ -26,15 +24,6 @@ ActiveRecord::Migration.maintain_test_schema!
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
 WebMock.disable_net_connect!(allow_localhost: true)
-
-TestingBot.config do |config|
-  config[:desired_capabilities] = {
-    browserName: ENV['BROWSER_NAME'] || 'internet explorer',
-    version: ENV['BROWSER_VERSION'] || '11',
-    platform: ENV['BROWSER_PLATFORM'] || 'WIN8'
-  }
-  config.require_tunnel # uncomment if you want to use our Tunnel
-end
 
 Capybara.server_port = 42_000
 Capybara.always_include_port = true
@@ -48,6 +37,7 @@ end
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
+  config.include Argu::TestHelpers::Fixes
   config.include Argu::TestHelpers::TestHelperMethods
   config.include Argu::TestHelpers::RspecHelpers
   config.include Argu::TestHelpers::TestMocks
@@ -79,28 +69,28 @@ RSpec.configure do |config|
   end
 
   Capybara.register_driver :selenium_firefox do |app|
-    profile = Selenium::WebDriver::Firefox::Profile.new
-    profile.native_events = true
-    profile['intl.accept_languages'] = 'en-US'
     client = Selenium::WebDriver::Remote::Http::Default.new
-    client.timeout = 90
+    client.timeout = 200
     capabilities = Selenium::WebDriver::Remote::Capabilities.firefox('elementScrollBehavior' => 1)
+    options = Selenium::WebDriver::Firefox::Options.new
+    options.add_preference('intl.accept_languages', 'en-US')
+    options.add_preference('webdriver_enable_native_events', true)
     Capybara::Selenium::Driver.new(app,
+                                   options: options,
                                    browser: :firefox,
-                                   profile: profile,
                                    http_client: client,
                                    desired_capabilities: capabilities)
   end
 
   Capybara.register_driver :selenium_chrome do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('elementScrollBehavior' => 1)
-    prefs = Selenium::WebDriver::Chrome::Profile.new
-    prefs['intl.accept_languages'] = 'en-US'
     client = Selenium::WebDriver::Remote::Http::Default.new
     client.timeout = 90
+    options = Selenium::WebDriver::Chrome::Options.new
+    options.add_preference('intl.accept_languages', 'en-US')
     Capybara::Selenium::Driver.new(app,
                                    browser: :chrome,
-                                   prefs: prefs,
+                                   options: options,
                                    http_client: client,
                                    desired_capabilities: capabilities)
   end
@@ -113,22 +103,14 @@ RSpec.configure do |config|
                                    http_client: client)
   end
 
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, timeout: 30)
-  end
-
   Capybara.default_driver =
     case ENV['BROWSER']
     when 'chrome'
       :selenium_chrome
     when 'firefox'
       :selenium_firefox
-    when 'webkit'
-      :webkit
     when 'ie'
       :internet_explorer
-    when 'testingbot'
-      :testingbot
     when 'safari'
       :selenium_safari
     else
@@ -136,14 +118,7 @@ RSpec.configure do |config|
     end
   # Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 10
-
-  Capybara::Webkit.configure do |capybara_config|
-    capybara_config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
-    capybara_config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
-    capybara_config.allow_url '//www.youtube.com/embed/*'
-    capybara_config.allow_url 'http://example.com/embed/*'
-    capybara_config.allow_url '//www.gravatar.com/*'
-  end
+  Capybara.exact = true
 
   config.before(:each) do
     if User.find_by(id: User::COMMUNITY_ID).blank?

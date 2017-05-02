@@ -30,12 +30,11 @@ RSpec.feature 'Signup', type: :feature do
         within('.opinion-form') do
           click_link 'Log in with Facebook'
         end
+        expect(page).to have_current_path motion_path(motion)
+        expect(page).to have_content motion.title
+        expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
       end
     end
-
-    expect(page).to have_current_path motion_path(motion)
-    expect(page).to have_content motion.title
-    expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
   end
 
   scenario 'should register w/ oauth and connect account' do
@@ -55,7 +54,7 @@ RSpec.feature 'Signup', type: :feature do
       end
       expect(page).to have_current_path(connect_user_path(u), only_path: true)
 
-      fill_in 'password', with: 'password'
+      fill_in 'Argu password', with: 'password'
       click_button 'Save'
 
       expect(page).to have_content('Account connected')
@@ -91,7 +90,9 @@ RSpec.feature 'Signup', type: :feature do
     end
 
     expect(page).to have_current_path setup_users_path
-    click_button 'Next'
+    within('.formtastic.user') do
+      click_button 'Next'
+    end
 
     fill_in_select '#user_home_placement_attributes_country_code_input',
                    with: 'Netherlands',
