@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 class GuestUser < User
-  include Ldable
+  include NoPersistence
   attr_accessor :cookies, :headers, :id, :session
-  delegate :member_of?, to: :profile
 
   contextualize_as_type 'schema:Person'
   contextualize_with_id { |r| "https://#{Rails.application.config.host_name}/sessions/#{r.id}" }
@@ -11,6 +10,8 @@ class GuestUser < User
   def access_tokens
     []
   end
+
+  def build_shortname_if; end
 
   def display_name
     I18n.t('users.guest')
@@ -21,9 +22,7 @@ class GuestUser < User
   end
 
   def language
-    @language ||=
-      cookies['locale'] ||
-      HttpAcceptLanguage::Parser.new(headers['HTTP_ACCEPT_LANGUAGE']).compatible_language_from(I18n.available_locales)
+    @language ||= attributes[:language] ||= cookies['locale'] || language_from_header || I18n.locale.to_s
   end
 
   def favorite_forum_ids
@@ -38,15 +37,26 @@ class GuestUser < User
     false
   end
 
-  def profile
-    @profile ||= GuestProfile.new(profileable: self)
+  def initialize(attributes = nil)
+    @cookies ||= {}
+    @headers ||= {}
+    attributes[:time_zone] ||= 'Amsterdam'
+    super
   end
 
   def managed_profile_ids
     []
   end
 
-  def time_zone
-    'Amsterdam'
+  def profile
+    GuestProfile.new(profileable: self)
+  end
+
+  private
+
+  def language_from_header
+    HttpAcceptLanguage::Parser
+      .new(headers['HTTP_ACCEPT_LANGUAGE'])
+      .compatible_language_from(I18n.available_locales)
   end
 end
