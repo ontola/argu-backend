@@ -15,12 +15,7 @@ module OauthHelper
       Doorkeeper.configuration.access_token_expires_in,
       false
     )
-    cookies.encrypted['argu_client_token'] = {
-      value: t.token,
-      secure: Rails.env.production?,
-      httponly: true,
-      domain: :all
-    }
+    set_argu_client_token_cookie(t.token)
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
   end
 
@@ -39,6 +34,16 @@ module OauthHelper
 
   def doorkeeper_oauth_header?
     from_bearer_authorization(request)
+  end
+
+  def set_argu_client_token_cookie(token, expires = nil)
+    cookies.encrypted['argu_client_token'] = {
+      expires: expires,
+      value: token,
+      secure: Rails.env.production?,
+      httponly: true,
+      domain: :all
+    }
   end
 
   private
@@ -76,12 +81,7 @@ module OauthHelper
   def refresh_guest_token
     raw_doorkeeper_token.destroy! if raw_doorkeeper_token&.expired?
     @_raw_doorkeeper_token = generate_guest_token
-    cookies.encrypted['argu_client_token'] = {
-      value: raw_doorkeeper_token.token,
-      secure: Rails.env.production?,
-      httponly: true,
-      domain: :all
-    }
+    set_argu_client_token_cookie(raw_doorkeeper_token.token)
     true
   end
 
@@ -89,12 +89,7 @@ module OauthHelper
   def migrate_token
     return unless cookies['client_token'].present?
     if cookies['argu_client_token'].blank?
-      cookies.encrypted['argu_client_token'] = {
-        value: cookies.encrypted['client_token'],
-        secure: Rails.env.production?,
-        httponly: true,
-        domain: :all
-      }
+      set_argu_client_token_cookie(cookies.encrypted['client_token'])
       request.cookies['argu_client_token'] = cookies['argu_client_token']
     end
     cookies.delete 'client_token'

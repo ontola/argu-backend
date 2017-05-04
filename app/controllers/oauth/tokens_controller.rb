@@ -4,7 +4,7 @@ require 'argu/invalid_credentials_error'
 module Oauth
   class TokensController < Doorkeeper::TokensController
     include ActionController::Redirecting, ActionController::MimeResponds, ActionController::Cookies,
-            ActionController::RequestForgeryProtection
+            ActionController::RequestForgeryProtection, OauthHelper
     include Rails.application.routes.url_helpers
     ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
     FRONTEND_HOST = URI(Rails.configuration.frontend_url).host.freeze
@@ -12,15 +12,12 @@ module Oauth
     def create
       return super unless argu_classic_frontend_request?
       r = r_with_authenticity_token(params.dig(:user, :r) || '')
-      remember_me = params[:user].try(:[], :remember_me) || params[:remember_me]
+      remember_me = %w(1 true).include?(params[:user].try(:[], :remember_me) || params[:remember_me])
       response = authorize_response
-      cookies.encrypted['argu_client_token'] = {
-        expires: %w(1 true).include?(remember_me) ? response.token.created_at + response.token.expires_in : nil,
-        value: response.token.token,
-        secure: Rails.env.production?,
-        httponly: true,
-        domain: :all
-      }
+      set_argu_client_token_cookie(
+        response.token.token,
+        remember_me ? response.token.created_at + response.token.expires_in : nil
+      )
       User.find(response.token.resource_owner_id).update r: ''
       redirect_to r.presence || root_path
     rescue Argu::InvalidCredentialsError

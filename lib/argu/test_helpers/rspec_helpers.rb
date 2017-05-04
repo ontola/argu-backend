@@ -40,12 +40,7 @@ module Argu
           false
         )
         if defined?(cookies) && defined?(cookies.encrypted)
-          cookies.encrypted['argu_client_token'] = {
-            value: t.token,
-            secure: Rails.env.production?,
-            httponly: true,
-            domain: :all
-          }
+          set_argu_client_token_cookie(t.token)
         else
           allow_any_instance_of(Doorkeeper::OAuth::Token::Methods)
             .to receive(:cookie_token_extractor).and_return(t.token)
