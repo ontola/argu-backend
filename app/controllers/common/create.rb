@@ -12,7 +12,7 @@ module Common
       def create_respond_blocks_failure(resource, format)
         format.html { create_respond_failure_html(resource) }
         format.js { respond_with_form(resource) }
-        format.json { response_422_json(resource) }
+        format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
       end
 

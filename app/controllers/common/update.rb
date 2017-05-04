@@ -11,7 +11,7 @@ module Common
       # @!visibility public
       def update_respond_blocks_failure(resource, format)
         format.html { update_respond_failure_html(resource) }
-        format.json { response_422_json(resource) }
+        format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
       end
 

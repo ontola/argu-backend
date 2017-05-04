@@ -12,7 +12,7 @@ module EdgeTree
       # @!visibility public
       def trash_respond_blocks_failure(resource, format)
         format.html { respond_with_redirect_failure(resource, :trash) }
-        format.json { response_422_json(resource) }
+        format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
         format.js
       end
@@ -28,7 +28,7 @@ module EdgeTree
       # @!visibility public
       def untrash_respond_blocks_failure(resource, format)
         format.html { respond_with_redirect_failure(resource, :untrash) }
-        format.json { response_422_json(resource) }
+        format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
         format.js
       end
