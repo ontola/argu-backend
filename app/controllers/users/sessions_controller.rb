@@ -22,25 +22,13 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def create
-    if params[:user][:r].present?
-      self.resource = warden.authenticate!(auth_options)
-      set_flash_message(:notice, :signed_in) if is_flashing_format?
-      sign_in(resource_name, resource)
-      yield resource if block_given?
-      r = r_with_authenticity_token(params[:user][:r] || '')
-      resource.update r: ''
-      redirect_to r
-    else
-      super
-    end
-    send_event category: 'sessions',
-               action: 'sign_in'
+    raise 'sessions#create is replaced with oauth/tokens#create'
   end
 
   def verify
     return if params[:host_url] != 'argu.freshdesk.com'
     if current_user.guest?
-      redirect_to user_session_path(host_url: params[:host_url])
+      redirect_to new_user_session_path(host_url: params[:host_url])
     else
       redirect_to freshdesk_redirect_url
     end
