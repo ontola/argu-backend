@@ -173,7 +173,9 @@ class ApplicationController < ActionController::Base
   # @private
   # Determines what layout the {User} should see.
   def set_layout
-    if current_user.guest?
+    if params[:iframe] == 'true'
+      self.class.layout 'iframe'
+    elsif current_user.guest?
       self.class.layout 'guest'
     elsif !current_user.finished_intro? || current_user.url.blank?
       self.class.layout 'closed'
