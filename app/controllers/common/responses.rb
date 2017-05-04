@@ -107,6 +107,11 @@ module Common
                             message_success(resource, action)
     end
 
+    def respond_with_redirect_success_js(resource, action)
+      flash[:notice] = message_success(resource, action)
+      render 'turbolinks_redirect', locals: {location: url_for(redirect_model_success(resource))}
+    end
+
     private
 
     def raise_unkown_format

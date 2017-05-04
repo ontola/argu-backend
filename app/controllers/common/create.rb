@@ -11,7 +11,7 @@ module Common
       # @!visibility public
       def create_respond_blocks_failure(resource, format)
         format.html { create_respond_failure_html(resource) }
-        format.js { respond_with_form(resource) }
+        format.js { create_respond_failure_js(resource) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
       end
@@ -36,12 +36,12 @@ module Common
 
       # @!visibility public
       def create_respond_failure_js(resource)
-        respond_with_form(resource)
+        respond_with_form_js(resource)
       end
 
       # @!visibility public
       def create_respond_success_js(resource)
-        respond_with_201(resource, :js)
+        respond_with_redirect_success_js(resource, :save)
       end
 
       # @!visibility public

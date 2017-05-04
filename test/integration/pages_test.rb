@@ -132,7 +132,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to page_path(Page.last)
+    assert_redirected_to settings_page_path(Page.last, tab: :profile)
   end
 
   test 'user should not post create invalid' do
@@ -381,7 +381,7 @@ class PagesTest < ActionDispatch::IntegrationTest
          }
 
     assigns(:page).profile.reload
-    assert_response 303
+    assert_response 302
     assert assigns(:page)
     assert assigns(:page).persisted?
     assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier

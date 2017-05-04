@@ -45,15 +45,12 @@ class PagesController < EdgeTreeController
     @page.assign_attributes(permit_params)
 
     if @page.save
-      redirect_to page_url(@page), status: 303
+      respond_to do |format|
+        create_respond_blocks_success(@page, format)
+      end
     else
       respond_to do |format|
-        format.html do
-          render 'new', locals: {
-            page: @page,
-            errors: @page.errors
-          }, notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
-        end
+        create_respond_blocks_failure(@page, format)
       end
     end
   end
@@ -70,13 +67,13 @@ class PagesController < EdgeTreeController
 
   def update
     if @page.update permit_params
-      redirect_to settings_page_path(@page, tab: tab)
+      respond_to do |format|
+        update_respond_blocks_success(@page, format)
+      end
     else
-      render 'settings',
-             locals: {
-               tab: tab,
-               active: tab
-             }
+      respond_to do |format|
+        update_respond_blocks_failure(@page, format)
+      end
     end
   end
 
@@ -124,22 +121,28 @@ class PagesController < EdgeTreeController
     raise Argu::NotAUserError.new(r: new_page_path)
   end
 
+  def create_respond_failure_html(resource)
+    render 'new',
+           locals: {
+             page: resource,
+             errors: resource.errors
+           },
+           notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+  end
+
   def handle_not_authorized_error(exception)
     us_po = policy(current_user) unless current_user.guest?
-    if us_po&.max_pages_reached?
-      errors = {}
-      errors[:max_allowed_pages] = {
-        max: us_po.max_allowed_pages,
-        current: current_user.profile.pages.length,
-        pages_url: pages_user_url(current_user)
-      }
-      render 'new', locals: {
-        page: new_resource_from_params,
-        errors: errors
-      }
-    else
-      super
-    end
+    return super unless us_po&.max_pages_reached?
+    errors = {}
+    errors[:max_allowed_pages] = {
+      max: us_po.max_allowed_pages,
+      current: current_user.profile.pages.length,
+      pages_url: pages_user_url(current_user)
+    }
+    render 'new', locals: {
+      page: new_resource_from_params,
+      errors: errors
+    }
   end
 
   def index_response_association
@@ -170,6 +173,18 @@ class PagesController < EdgeTreeController
     merge_photo_params(@_permit_params, Page)
     @_permit_params[:last_accepted] = DateTime.current if permit_params[:last_accepted] == '1'
     @_permit_params
+  end
+
+  def respond_with_form(_resource)
+    render :settings, locals: {tab: tab, active: tab}
+  end
+
+  def respond_with_form_js(_resource)
+    respond_js(:settings, tab: tab, active: tab)
+  end
+
+  def redirect_model_success(resource)
+    settings_page_path(resource, tab: tab)
   end
 
   def tab
