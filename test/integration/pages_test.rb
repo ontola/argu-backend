@@ -196,6 +196,20 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
+  # As Forum member
+  ####################################
+  let(:forum_member) { create_member(freetown) }
+
+  test 'forum_member should get show' do
+    sign_in forum_member
+
+    get page_path(page_non_public)
+
+    assert_response 200
+    assert_not_nil assigns(:profile)
+  end
+
+  ####################################
   # As Admin
   ####################################
   test 'super_admin should get settings and all tabs' do

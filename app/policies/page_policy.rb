@@ -72,7 +72,7 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def show?
-    rule is_open?, is_manager?, super
+    rule is_open?, is_group_member?, is_manager?, super
   end
 
   def create?
@@ -114,5 +114,11 @@ class PagePolicy < EdgeTreePolicy
     tab ||= 'profile'
     assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
+  end
+
+  private
+
+  def is_group_member?
+    user.profile.group_memberships.joins(:group).where(groups: {page: record})
   end
 end
