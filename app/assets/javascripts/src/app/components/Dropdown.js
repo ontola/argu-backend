@@ -75,6 +75,10 @@ export const HyperDropdown = React.createClass({
             const image_after = image({ fa: this.props.fa_after });
             const triggerClass = `dropdown-trigger ${this.props.triggerClass}`;
             const TriggerContainer = this.props.triggerTag;
+            let title;
+            if (this.props.title !== undefined) {
+                title = <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>;
+            }
             trigger = (<TriggerContainer 
                         className={triggerClass} 
                         data-turbolinks="false"
@@ -83,7 +87,7 @@ export const HyperDropdown = React.createClass({
                         onClick={this.handleClick} 
                         tabIndex="0" >
                           {image(this.props)}
-                          <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
+                          {title}
                           {image_after}
                        </TriggerContainer>);
         }

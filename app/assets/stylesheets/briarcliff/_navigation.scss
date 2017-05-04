@@ -129,6 +129,12 @@ input[type="submit"].nav-search-button {
   }
 }
 
+.profile-picture--navbar--forum {
+  @include bp-medium-large{
+    margin-right: .4em;
+  }
+}
+
 .profile-picture--navbar > a > .icon-left {
   vertical-align: top;
   margin-top: 1em;
@@ -163,7 +169,7 @@ input[type="submit"].nav-search-button {
   }
 }
 
-.navbar-profile span {
+.navbar-profile span, .navbar-current-forum span {
   @include bp-medium-large() {
     display: none;
 

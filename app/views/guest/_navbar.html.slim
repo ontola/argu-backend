@@ -6,8 +6,8 @@ nav#navbar.navbar[role="navigation"]
         =image_tag('logo-white.svg')
     ul.navbar-links
       li
-        =link_to(preferred_forum, class: 'navbar-item', alt: 'home')
-          =image_tag(preferred_forum.default_profile_photo.url(:avatar), class: 'profile-picture--navbar')
+        =link_to(preferred_forum, class: 'navbar-item navbar-current-forum', alt: 'home')
+          =image_tag(preferred_forum.default_profile_photo.url(:avatar), class: 'profile-picture--navbar profile-picture--navbar--forum')
           span= preferred_forum.display_name
       =react_component_store 'HyperDropdown', props: forum_selector_items(true)
     ul.navbar-links.navbar-links-right
