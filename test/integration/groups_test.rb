@@ -4,6 +4,13 @@ require 'test_helper'
 class GroupsTest < ActionDispatch::IntegrationTest
   define_freetown
   let!(:group) { create(:group, parent: freetown.page.edge) }
+  let!(:granted_group) { create(:group, parent: freetown.page.edge) }
+  let!(:gg_grant) do
+    create(:grant,
+           edge: freetown.edge,
+           group: granted_group,
+           role: :member)
+  end
 
   setup do
     @freetown = freetown
@@ -53,6 +60,11 @@ class GroupsTest < ActionDispatch::IntegrationTest
   # As Member
   ####################################
   let(:member) { create(:group_membership, parent: group.edge).member.profileable }
+  let(:granted_member) do
+    create(:group_membership, parent: granted_group.edge)
+      .member
+      .profileable
+  end
 
   test 'member should get show' do
     sign_in member
@@ -78,6 +90,14 @@ class GroupsTest < ActionDispatch::IntegrationTest
                     '.alert-wrapper .alert',
                     '<div class="alert-close"><span class="fa fa-close"></span></div>'\
                     "You are successfully added to the group '#{group.display_name}'"
+  end
+
+  test 'member should get show with grant' do
+    sign_in granted_member
+
+    get group_path(granted_group)
+
+    assert_redirected_to forum_path(freetown)
   end
 
   ####################################

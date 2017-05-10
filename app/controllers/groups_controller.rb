@@ -9,7 +9,12 @@ class GroupsController < ServiceController
           flash[:notice] = t('group_memberships.welcome',
                              group: authenticated_resource.name)
         end
-        redirect_to page_path(authenticated_resource.page)
+
+        if authenticated_resource.grants.length == 1
+          redirect_to url_for(authenticated_resource.grants.first.edge.owner)
+        else
+          redirect_to page_path(authenticated_resource.page)
+        end
       end
       format.json_api do
         render json: authenticated_resource, include: %i(organization)
