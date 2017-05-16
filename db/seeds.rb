@@ -51,14 +51,27 @@ argu = Page
 argu.build_profile(name: 'Argu', profileable: argu)
 argu.edge = Edge.new(owner: argu, user: argu.publisher)
 argu.save!
+argu.edge.publish!
+
+public_group = Group.new(
+  id: Group::PUBLIC_ID,
+  name: 'Public',
+  page: argu
+)
+
+public_group.edge = Edge.create(owner: public_group, parent: argu.edge, user_id: 0)
+public_group.save!
 
 forum = Forum.new(name: 'Nederland',
                   page: argu,
+                  visibility: :open,
                   shortname_attributes: {shortname: 'nederland'})
 forum.edge = Edge.new(owner: forum,
                       user: User.find_via_shortname('staff_account'),
                       parent: argu.edge)
+forum.edge.grants.new(group: public_group, role: :member)
 forum.save!
+forum.edge.publish!
 
 Doorkeeper::Application.create!(
   id: Doorkeeper::Application::ARGU_ID,
