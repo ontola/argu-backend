@@ -161,7 +161,7 @@ class Profile < ApplicationRecord
   # the first favorite or the first public forum
   def preferred_forum
     granted_records('Forum').first ||
-      profileable.favorites.first&.edge&.owner ||
+      profileable.try(:favorites)&.first&.edge&.owner ||
       Forum.first_public
   end
 
