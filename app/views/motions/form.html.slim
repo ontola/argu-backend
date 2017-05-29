@@ -8,7 +8,7 @@
           .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= motion_type
-      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}) do |f|
+      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}, remote: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('motions.form.title_heading')

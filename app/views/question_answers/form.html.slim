@@ -2,7 +2,7 @@
 .col-1
   =to_parent(question_answer.question)
   .box
-    =semantic_form_for(question_answer, path: question_answers_path(question_answer.question), html: {autocomplete: 'off'}) do |f|
+    =semantic_form_for(question_answer, path: question_answers_path(question_answer.question), html: {autocomplete: 'off'}, remote: true) do |f|
       section
         h1= t('question_answers.couple_motion')
         =f.inputs

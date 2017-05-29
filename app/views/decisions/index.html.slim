@@ -34,12 +34,12 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                         class: 'btn btn--smaller btn--neutral')
     - if local_assigns[:new_decision]
       .box
-        =semantic_form_for(new_decision, url: motion_decisions_path(decisionable.edge), class: 'decision_form') do |f|
+        =semantic_form_for(new_decision, url: motion_decisions_path(decisionable.edge), class: 'decision_form', remote: true) do |f|
           =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: new_decision}
     - decisionable.decisions.reverse.each do |d|
       .box
         - if d == local_assigns[:edit_decision]
-          =semantic_form_for(local_assigns[:edit_decision], url: decision_path(local_assigns[:edit_decision]), class: 'decision_form') do |f|
+          =semantic_form_for(local_assigns[:edit_decision], url: decision_path(local_assigns[:edit_decision]), class: 'decision_form', remote: true) do |f|
             =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
         - elsif !d.pending?
           =render partial: d

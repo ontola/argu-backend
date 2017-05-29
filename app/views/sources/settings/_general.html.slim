@@ -1,4 +1,4 @@
-=semantic_form_for [resource.page, resource], multipart: true do |f|
+=semantic_form_for [resource.page, resource], multipart: true, remote: true do |f|
   =f.input :active, value: local_assigns[:active], as: :hidden
   =f.inputs name: t('sources.settings.general') do
     =f.input :name

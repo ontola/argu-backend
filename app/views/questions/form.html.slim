@@ -9,7 +9,7 @@
           .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
             span[class="fa fa-#{question_icon}"]
             span.icon-left= question_type
-      =semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off'}, multipart: true) do |f|
+      =semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off'}, multipart: true, remote: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('questions.form.title_heading')

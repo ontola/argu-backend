@@ -1,4 +1,4 @@
-=semantic_form_for authenticated_resource, url: settings_user_path, method: :put do |f|
+=semantic_form_for authenticated_resource, url: settings_user_path, method: :put, remote: true do |f|
   =f.inputs name: t('users.registrations.categories.privacy') do
     =f.input :has_analytics, as: :reverse_boolean
     li.form-helper

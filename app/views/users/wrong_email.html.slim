@@ -15,7 +15,7 @@ header
             li= email.email
         p.link-or-logout-link_or_logout= t('users.wrong_email.link_or_logout', email: email)
         p
-          =semantic_form_for current_user, url: settings_user_path, method: :put do |f|
+          =semantic_form_for current_user, url: settings_user_path, method: :put, remote: true do |f|
               =f.hidden_field :form, value: 'wrong_email'
               =f.hidden_field :r, value: r
               =f.hidden_field 'emails_attributes[99999][email]', value: email

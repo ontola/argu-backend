@@ -1,4 +1,4 @@
-=semantic_form_for authenticated_resource, url: settings_user_path, method: :put do |f|
+=semantic_form_for authenticated_resource, url: settings_user_path, method: :put, remote: true do |f|
   =f.inputs name: t('users.registrations.categories.general') do
     =f.input :language, as: :react_select, collection: language_select_items, required: false, include_blank: false, clearable: false, searchable: false
     =f.input :time_zone
