@@ -1,18 +1,18 @@
 .box.box-grid
   section.unpadded.cover--small
-    = link_to forum_path(forum), data: {turbolinks: 'false'} do
+    = link_to forum_path(forum) do
       .cover-image[style="background-image: url('#{forum.default_cover_photo&.url(:box)}'); "]
         =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
     - if !current_user.has_favorite?(forum.edge) && policy(forum).create_child?(:favorites, edge: forum.edge)
       .sticky--top-left
-        =link_to forum_favorites_path(forum), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
+        =link_to forum_favorites_path(forum), data: {method: :post}, rel: :nofollow, class: 'btn--transparant'
           span.fa.fa-plus
           span.icon-left= t('forums.join.title')
     - if policy(forum).update?
       .sticky--top-right
-        =link_to settings_forum_path(forum), class: ('btn--transparant'), data: {turbolinks: 'false'}
+        =link_to settings_forum_path(forum), class: ('btn--transparant')
           span.fa.fa-gear
           span.icon-left= t('settings')
   =render partial: 'forums/info_bar', locals: {forum: forum}
@@ -20,6 +20,6 @@
     section.section-description
       //h3= forum.display_name
       p= forum.bio.presence || t('forums.no_bio')
-      =link_to forum_path(forum), data: {turbolinks: 'false'}
+      =link_to forum_path(forum)
         .sticky--bottom-right.btn-subtle.btn--mini
           span= t('forums.visit')
