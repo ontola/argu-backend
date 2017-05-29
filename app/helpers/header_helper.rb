@@ -84,7 +84,12 @@ module HeaderHelper
       .select { |f| suggested_forums.include?(f.shortname.shortname) }
       .first(limit)
       .each do |forum|
-      items << link_item(forum.display_name, forum_path(forum), image: forum.default_profile_photo.url(:icon))
+      items << link_item(
+        forum.display_name,
+        forum_path(forum),
+        data: {turbolinks: 'false'},
+        image: forum.default_profile_photo.url(:icon)
+      )
     end
     items
   end
