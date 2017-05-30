@@ -90,14 +90,11 @@ class ActivityStringTest < ActiveSupport::TestCase
     update_activity = update_resource(question, {content: 'updated content'}, question.publisher).activities.last
     trash_activity = trash_resource(question, question.publisher).activities.last
     question.publisher.destroy
-    assert_equal "#{question.publisher.display_name} "\
-                  "posted a draft challenge in [#{project.display_name}](/p/#{project.id})",
+    assert_equal "community posted a draft challenge in [#{project.display_name}](/p/#{project.id})",
                  Argu::ActivityString.new(create_activity.reload, receiver, true).to_s
-    assert_equal "#{question.publisher.display_name} "\
-                  "updated [#{question.display_name}](/q/#{question.id})",
+    assert_equal "community updated [#{question.display_name}](/q/#{question.id})",
                  Argu::ActivityString.new(update_activity.reload, receiver, true).to_s
-    assert_equal "#{question.publisher.display_name} "\
-                  "trashed [#{question.display_name}](/q/#{question.id})",
+    assert_equal "community trashed [#{question.display_name}](/q/#{question.id})",
                  Argu::ActivityString.new(trash_activity.reload, receiver, true).to_s
   end
 

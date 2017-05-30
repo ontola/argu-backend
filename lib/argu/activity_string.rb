@@ -41,7 +41,7 @@ module Argu
 
     # @return [String] Display name of activity.owner, as link or bold text
     def owner_string
-      string = @activity.owner_id.positive? ? @activity.owner.display_name : @activity.audit_data['user_name']
+      string = @activity.owner.display_name
       @embedded_link && @activity.owner_id.positive? ? "[#{string}](#{dual_profile_url(@activity.owner)})" : string.to_s
     end
 
