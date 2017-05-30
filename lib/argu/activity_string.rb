@@ -47,7 +47,7 @@ module Argu
 
     # @return [String, nil] Display name of activity.trackable.get_parent, as link or bold text
     def parent_string
-      recipient = @activity.trackable_type == 'Vote' ? @activity.recipient&.voteable : @activity.recipient
+      recipient = @activity.recipient_type == 'VoteEvent' ? @activity.recipient&.voteable : @activity.recipient
       return @activity.audit_data['recipient_name'] if recipient.nil?
       @embedded_link ? "[#{recipient.display_name}](#{url_for(recipient)})" : recipient.display_name
     end
