@@ -52,6 +52,7 @@ class Activity < PublicActivity::Activity
 
   def self.feed
     Activity
+      .joins(:trackable_edge)
       .loggings
       .where('trackable_type != ?', 'Banner')
       .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
@@ -59,14 +60,12 @@ class Activity < PublicActivity::Activity
 
   def self.feed_for_edge(edge)
     feed
-      .joins(:trackable_edge)
       .where('edges.path <@ ?', edge.path)
   end
 
   def self.feed_for_favorites(favorites)
     return Activity.none if favorites.empty?
     feed
-      .joins(:trackable_edge)
       .where('edges.path ~ ?', "*{1}.#{favorites.pluck(:edge_id).join('|')}.*")
   end
 
