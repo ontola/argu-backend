@@ -51,8 +51,8 @@ class FeedTest < ActionDispatch::IntegrationTest
 
     assert_select '.activity-feed'
 
-    # Render activity of Motion#create, Motion#publish and Motion#trash
-    assert_select '.activity-feed .activity', 3
+    # Only render activity of Motion#publish
+    assert_select '.activity-feed .activity', 1
   end
 
   test 'user should get motion/feed' do
@@ -106,7 +106,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   # Render activity of Motion#create, Motion#publish, 6 public votes and 2 private votes
   def assert_activity_count(format: :html, staff: false)
-    count = staff ? 10 : 8
+    count = staff ? 10 : 7
     case format
     when :html
       assert_select '.activity-feed .activity', count

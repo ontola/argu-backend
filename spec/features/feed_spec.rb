@@ -18,7 +18,7 @@ RSpec.feature 'Feed', type: :feature do
     visit(forum_feed_path(freetown))
     expect(page).to have_selector('.activity-feed .activity', count: 10)
     page.find('.btn.load-more').click
-    expect(page).to have_selector('.activity-feed .activity', count: 16)
+    expect(page).to have_selector('.activity-feed .activity', count: 13)
   end
 
   scenario 'Guest views feed of user' do

@@ -43,7 +43,10 @@ class FeedController < AuthorizedController
   def collect_banners; end
 
   def feed
-    Activity.feed_for_edge(authenticated_resource.edge)
+    Activity.feed_for_edge(
+      authenticated_resource.edge,
+      (current_user.profile.group_ids & authenticated_resource.edge.granted_group_ids('manager')).empty?
+    )
   end
 
   def from_time

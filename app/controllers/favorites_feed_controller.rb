@@ -8,6 +8,6 @@ class FavoritesFeedController < FeedController
   end
 
   def feed
-    Activity.feed_for_favorites(current_user.favorites)
+    Activity.feed_for_favorites(current_user.favorites, !current_user.profile.has_role?(:staff))
   end
 end

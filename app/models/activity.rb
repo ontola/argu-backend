@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class Activity < PublicActivity::Activity
+  RELEVANT_KEYS = %w(vote.create question.publish motion.publish argument.create).freeze
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action
@@ -50,27 +51,29 @@ class Activity < PublicActivity::Activity
     "#{self.class.name.tableize}_#{id}"
   end
 
-  def self.feed
-    Activity
+  def self.feed(relevant_only)
+    scope = Activity
       .joins(:trackable_edge)
       .loggings
       .where('trackable_type != ?', 'Banner')
       .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
+    relevant_only ? scope.where('key IN (?)', RELEVANT_KEYS) : scope
   end
 
-  def self.feed_for_edge(edge)
-    feed
+  def self.feed_for_edge(edge, filter_relevant = true)
+    feed(filter_relevant)
       .where('edges.path <@ ?', edge.path)
   end
 
-  def self.feed_for_favorites(favorites)
+  def self.feed_for_favorites(favorites, filter_relevant = true)
     return Activity.none if favorites.empty?
-    feed
+    feed(filter_relevant)
       .where('edges.path ~ ?', "*{1}.#{favorites.pluck(:edge_id).join('|')}.*")
   end
 
-  def self.feed_for_profile(profile)
-    feed.where(owner_id: profile.id).where('key IN (?)', %w(vote.create question.publish motion.publish))
+  def self.feed_for_profile(profile, filter_relevant = true)
+    feed(filter_relevant)
+      .where(owner_id: profile.id)
   end
 
   # Used to find followers for the notifications generated for this activity and to set the type of these notifications

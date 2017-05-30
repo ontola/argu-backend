@@ -33,9 +33,10 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_page
     if current_user.profile.has_role?(:staff)
-      @activities = policy_scope(Activity.feed_for_favorites(current_user.favorites))
-                      .order(created_at: :desc)
-                      .limit(10)
+      @activities =
+        policy_scope(Activity.feed_for_favorites(current_user.favorites, !current_user.profile.has_role?(:staff)))
+          .order(created_at: :desc)
+          .limit(10)
       preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
       render # stream: true
     else
