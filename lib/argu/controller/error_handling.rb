@@ -39,7 +39,7 @@ module Argu
           @_not_authorized_caught = true
           err_id = 'NOT_AUTHORIZED'
           status = 403
-          format.js { render status: status, json: payload }
+          format.js { render status: status, json: json_error_hash(err_id, e) }
           format.html do
             flash[:alert] = e.message
             render 'status/403',
@@ -93,19 +93,17 @@ module Argu
         end
         js && format.js { head status }
 
-        error = generate_error_hash(err_id, e)
-        json_api_error = generate_json_api_error_hash(err_id, e)
-        payload = error.merge(notifications: [error])
-        format.json { render status: status, json: payload }
-        format.json_api { render json_api_error(status, json_api_error) }
+        format.json { render status: status, json: json_error_hash(err_id, e) }
+        format.json_api { render json_api_error(status, json_api_error_hash(err_id, e)) }
       end
     end
 
-    def generate_error_hash(id, exception)
-      {type: :error, error_id: id, message: exception.message}
+    def json_error_hash(id, exception)
+      error = {type: :error, error_id: id, message: exception.message}
+      error.merge(notifications: [error])
     end
 
-    def generate_json_api_error_hash(id, exception)
+    def json_api_error_hash(id, exception)
       {code: id, message: exception.message}
     end
 
