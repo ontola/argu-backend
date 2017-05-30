@@ -105,6 +105,6 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def is_group_member?
-    user.profile.group_memberships.joins(:group).where(groups: {page: record})
+    group_grant if user.profile.group_memberships.joins(:group).where(groups: {page: record}).present?
   end
 end

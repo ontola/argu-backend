@@ -4,11 +4,12 @@ require 'test_helper'
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
-  let(:freetown) { create_forum(name: 'freetown', page: page_non_public) }
+  let(:freetown) { create_forum(name: 'freetown', page: page) }
+  let(:cairo) { create_forum(name: 'cairo', page: page_non_public) }
 
   let(:motion) do
     create(:motion,
-           parent: freetown.edge,
+           parent: cairo.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
@@ -28,7 +29,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   let(:project) do
     create(:project,
-           parent: freetown.edge,
+           parent: cairo.edge,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
@@ -47,8 +48,8 @@ class PagesTest < ActionDispatch::IntegrationTest
            publisher: page.owner.profileable)
   end
 
-  def init_content
-    [freetown, motion, argument, comment, project, project_motion, project_argument]
+  def init_cairo_with_content
+    [cairo, motion, argument, comment, project, project_motion, project_argument]
   end
 
   test 'should redirect p to o' do
@@ -155,13 +156,21 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'user should get show' do
+  test 'user should get show when public' do
     sign_in user
 
     get page_path(page)
 
     assert_response 200
     assert_not_nil assigns(:profile)
+  end
+
+  test 'user should not get show when not public' do
+    sign_in user
+
+    get page_path(page_non_public)
+
+    assert_response 403
   end
 
   define_freetown('amsterdam')
@@ -199,9 +208,19 @@ class PagesTest < ActionDispatch::IntegrationTest
   # As Forum member
   ####################################
   let(:forum_member) { create_member(freetown) }
+  let(:non_public_forum_member) { create_member(cairo) }
 
-  test 'forum_member should get show' do
+  test 'forum_member should get show when public' do
     sign_in forum_member
+
+    get page_path(page)
+
+    assert_response 200
+    assert_not_nil assigns(:profile)
+  end
+
+  test 'forum_member should get show when not public' do
+    sign_in non_public_forum_member
 
     get page_path(page_non_public)
 
@@ -288,8 +307,8 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body, 'section.page-limit-reached'
   end
 
-  test 'super_admin should delete destroy when page not owns a forum' do
-    init_content
+  test 'super_admin should delete destroy and anonimize its content' do
+    init_cairo_with_content
     sign_in page.owner.profileable
 
     assert_differences([['Page.count', -1],
@@ -306,12 +325,25 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'super_admin should delete destroy when page not owns a forum' do
+    sign_in page.owner.profileable
+
+    assert_difference('Page.count', -1) do
+      delete page_path(page),
+             params: {
+               page: {
+                 confirmation_string: 'remove'
+               }
+             }
+    end
+  end
+
   test 'super_admin should not delete destroy when page owns a forum' do
-    sign_in page_non_public.owner.profileable
+    sign_in page.owner.profileable
     freetown
 
     assert_raises(ActiveRecord::InvalidForeignKey) do
-      delete page_path(page_non_public),
+      delete page_path(page),
              params: {
                page: {
                  confirmation_string: 'remove'
