@@ -25,7 +25,9 @@ class Users::PasswordsController < Devise::PasswordsController
 
   def update
     super do
-      resource.confirm if resource.persisted? && !resource.confirmed? && resource.confirmation_token.nil?
+      if resource.persisted? && !resource.confirmed? && resource.confirmation_token.nil?
+        resource.primary_email_record.confirm
+      end
     end
   end
 
