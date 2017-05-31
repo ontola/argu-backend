@@ -44,14 +44,6 @@ export const VoteButton = React.createClass({
         }
     },
 
-    ifNoActor (v) {
-        return !this.props.actor || this.props.actor.actor_type === 'GuestUser' ? v : undefined;
-    },
-
-    ifActor (v) {
-        return !this.props.actor || this.props.actor.actor_type === 'GuestUser' === null ? undefined : v;
-    },
-
     render () {
         const { clickHandler, count, current, objectId: id, r, side } = this.props;
         const url = voteURL.expand({ id, side, r });
@@ -65,7 +57,6 @@ export const VoteButton = React.createClass({
             <li data-title={this.props.disabledMessage}>
                 <a
                 className={`btn-${side} ${this.props.disabled ? 'disabled' : 'enabled'}`}
-                data-method={this.ifNoActor('post')}
                 data-voted-on={current}
                 href={url}
                 onClick={clickHandler}

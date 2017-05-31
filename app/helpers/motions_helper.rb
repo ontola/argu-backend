@@ -27,11 +27,7 @@ module MotionsHelper
       newArgumentButtons: policy(motion).create_child?(:arguments).present?,
       objectId: motion.id,
       objectType: 'motion',
-      percent: {
-        pro: motion.default_vote_event.votes_pro_percentage,
-        neutral: motion.default_vote_event.votes_neutral_percentage,
-        con: motion.default_vote_event.votes_con_percentage
-      },
+      percent: motion.default_vote_event.votes_pro_percentages,
       selectedArguments: vote&.argument_ids || [],
       total_votes: motion.default_vote_event.total_vote_count,
       vote_url: motion_votes_path(motion)

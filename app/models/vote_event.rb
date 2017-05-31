@@ -76,6 +76,14 @@ class VoteEvent < ApplicationRecord
     parent_model
   end
 
+  def votes_pro_percentages
+    {
+      pro: votes_pro_percentage,
+      neutral: votes_neutral_percentage,
+      con: votes_con_percentage
+    }
+  end
+
   def votes_pro_percentage
     vote_percentage children_count(:votes_pro)
   end
