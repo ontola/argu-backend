@@ -116,7 +116,7 @@
     "react/require-render-return": "error",
     "react/no-direct-mutation-state": "error",
     "react/no-did-update-set-state": "error",
-    "react/no-did-mount-set-state": "error",
+    "react/no-did-mount-set-state": "warn",
     "react/no-is-mounted": "error",
     "react/no-string-refs": "error",
     "react/jsx-closing-bracket-location": ["error", "after-props"],

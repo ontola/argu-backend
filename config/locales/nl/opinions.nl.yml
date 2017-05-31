@@ -2,8 +2,14 @@ nl:
   opinions:
     plural: "Meningen"
     form:
-      header: "Bedankt voor je stem. Wil je jouw mening toelichten?"
+      confirm: "Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild."
+      header:
+        confirmed: "Bedankt voor je stem. Wil je jouw mening toelichten?"
+        unconfirmed: "Wil je jouw mening toelichten?"
       arguments: "Welke argumenten vind jij belangrijk?"
       edit: "Aanpassen"
       cancel: "Terug"
       submit: "Opslaan"
+      signup: "Bevestig jouw stem met email of Facebook:"
+      email:
+        placeholder: "Vul hier jouw e-mail adres is"

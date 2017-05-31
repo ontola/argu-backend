@@ -4,6 +4,7 @@ module MotionsHelper
     return nil unless actor
     {
       actor_type: actor.profileable.class.name,
+      confirmed: actor.profileable.confirmed?,
       shortname: actor.url,
       display_name: actor.display_name,
       name: actor.name,
@@ -28,6 +29,7 @@ module MotionsHelper
       objectId: motion.id,
       objectType: 'motion',
       percent: motion.default_vote_event.votes_pro_percentages,
+      userRegistrationUrl: user_registration_url(r: request.env['PATH_INFO']),
       selectedArguments: vote&.argument_ids || [],
       total_votes: motion.default_vote_event.total_vote_count,
       vote_url: motion_votes_path(motion)

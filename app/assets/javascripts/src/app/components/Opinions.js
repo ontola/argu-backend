@@ -8,16 +8,19 @@ import I18n from 'i18n-js';
 import { ArgumentForm } from './ArgumentForm';
 import { CheckboxGroup } from './CheckboxGroup';
 import OnClickOutside from 'react-onclickoutside';
+import { getAuthenticityToken } from '../lib/helpers';
 
 export const OpinionContainer = props => {
-    const { argumentForm, opinionForm } = props;
+    const { actor, argumentForm, currentVote, opinionForm } = props;
     let component;
     if (argumentForm) {
         component = <ArgumentForm {...props}/>;
+    } else if (currentVote !== 'abstain' && actor.actor_type === 'GuestUser') {
+        component = <OpinionSignUp {...props}/>;
     } else if (opinionForm) {
         component = <OpinionForm {...props}/>;
     } else if (props.currentExplanation.explanation === null || props.currentExplanation.explanation === '') {
-        component = <OpinionAdd currentVote={props.currentVote} newExplanation={props.newExplanation} onOpenOpinionForm={props.onOpenOpinionForm}/>;
+        component = <OpinionAdd actor={props.actor} currentVote={props.currentVote} newExplanation={props.newExplanation} onOpenOpinionForm={props.onOpenOpinionForm}/>;
     } else {
         component = <OpinionShow {...props}/>;
     }
@@ -36,7 +39,7 @@ const OpinionContainerProps = {
     currentExplanation: React.PropTypes.object.isRequired,
     currentVote: React.PropTypes.string.isRequired,
     newArgumentButtons: React.PropTypes.bool.isRequired,
-    newExplanation: React.PropTypes.string.isRequired,
+    newExplanation: React.PropTypes.string,
     newSelectedArguments: React.PropTypes.array.isRequired,
     onArgumentChange: React.PropTypes.func.isRequired,
     onArgumentSelectionChange: React.PropTypes.func.isRequired,
@@ -53,19 +56,24 @@ const OpinionContainerProps = {
 OpinionContainer.propTypes = OpinionContainerProps;
 
 const OpinionAdd = props => {
-    const { newExplanation, onOpenOpinionForm } = props;
+    const { actor, newExplanation, onOpenOpinionForm } = props;
+    let confirmHeader;
+    if (actor.confirmed === false) {
+        confirmHeader = <p className="block-slogan">{I18n.t('opinions.form.confirm')}</p>;
+    }
     return (
         <form className={"formtastic formtastic--full-width"}>
             <div className="box">
                 <section>
                     <div>
-                        <label>{I18n.t('opinions.form.header')}</label>
+                        {confirmHeader}
+                        <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
                         <div>
-                                <textarea
-                                    name="opinion-body"
-                                    className="form-input-content"
-                                    onClick={onOpenOpinionForm}
-                                    value={newExplanation}/>
+                            <textarea
+                                name="opinion-body"
+                                className="form-input-content"
+                                onClick={onOpenOpinionForm}
+                                value={newExplanation}/>
                         </div>
                     </div>
                 </section>
@@ -74,14 +82,75 @@ const OpinionAdd = props => {
     );
 };
 const opinionAddProps = {
-    newExplanation: React.PropTypes.string.isRequired,
+    actor: React.PropTypes.object,
+    newExplanation: React.PropTypes.string,
     currentVote: React.PropTypes.string.isRequired,
     onOpenOpinionForm: React.PropTypes.func.isRequired
 };
 OpinionAdd.propTypes = opinionAddProps;
 
+export const OpinionSignUp = React.createClass({
+    propTypes: {
+        onSignupEmailChange: React.PropTypes.func.isRequired,
+        signupEmail: React.PropTypes.string.isRequired,
+        userRegistrationUrl: React.PropTypes.string.isRequired
+    },
+
+    getInitialState () {
+        return {
+            authenticityToken: '',
+            currentUrl: ''
+        }
+    },
+
+    componentDidMount () {
+        this.setState({ authenticityToken: getAuthenticityToken(), currentUrl: window.location.href });
+    },
+
+    render () {
+        const { onSignupEmailChange, signupEmail, userRegistrationUrl } = this.props;
+        return (
+            <form action={userRegistrationUrl} className={"formtastic formtastic--full-width"} method="post">
+                <input type="hidden" name="authenticity_token" value={this.state.authenticityToken}/>
+                <input type="hidden" name="user[r]" value={this.state.currentUrl}/>
+                <div className="box">
+                    <section>
+                        <div>
+                            <label>{I18n.t('opinions.form.signup')}</label>
+                            <div>
+                                <input
+                                    name="user[email]"
+                                    className="form-input-content"
+                                    onChange={onSignupEmailChange}
+                                    placeholder={I18n.t('opinions.form.email.placeholder')}
+                                    type="email"
+                                    value={signupEmail}/>
+                            </div>
+                        </div>
+                    </section>
+                    <section className="section--footer">
+                        <fieldset className="actions">
+                            <ol>
+                                <div className="sticky-submit">
+                                    <li className="action button_action">
+                                        <button type="submit">
+                                            {I18n.t('opinions.form.submit')}
+                                        </button>
+                                    </li>
+                                </div>
+                            </ol>
+                        </fieldset>
+                    </section>
+                </div>
+            </form>
+        )
+    }
+});
+window.OpinionSignUp = OpinionSignUp;
+
 export const OpinionForm = React.createClass({
     propTypes: {
+        actor: React.PropTypes.object,
         arguments: React.PropTypes.arrayOf(React.PropTypes.shape({
             id: React.PropTypes.number,
             displayName: React.PropTypes.string,
@@ -90,7 +159,7 @@ export const OpinionForm = React.createClass({
         currentExplanation: React.PropTypes.object.isRequired,
         currentVote: React.PropTypes.string.isRequired,
         newArgumentButtons: React.PropTypes.bool.isRequired,
-        newExplanation: React.PropTypes.string.isRequired,
+        newExplanation: React.PropTypes.string,
         newSelectedArguments: React.PropTypes.array.isRequired,
         onArgumentChange: React.PropTypes.func.isRequired,
         onArgumentSelectionChange: React.PropTypes.func.isRequired,
@@ -112,14 +181,14 @@ export const OpinionForm = React.createClass({
     },
 
     render () {
-        const { newExplanation, newSelectedArguments, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion, submitting } = this.props;
+        const { actor, newExplanation, newSelectedArguments, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion, submitting } = this.props;
         const argumentFields = {};
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
         this.props.arguments.forEach(argument => {
             argumentFields[argument.side].push({ label: argument.displayName, value: argument.id });
         });
-        let argumentSelection, addArgumentProButton, addArgumentConButton;
+        let argumentSelection, addArgumentProButton, addArgumentConButton, confirmHeader;
         if (this.props.newArgumentButtons) {
             addArgumentProButton = <span className="box-list-item">
                 <a href="#">
@@ -151,14 +220,17 @@ export const OpinionForm = React.createClass({
                 {addArgumentConButton}
             </div>
         </div>;
-
+        if (actor.confirmed === false) {
+            confirmHeader = <p className="block-slogan">{I18n.t('opinions.form.confirm')}</p>;
+        }
         return (
             <form className="formtastic formtastic--full-width"
                   onSubmit={onSubmitOpinion}>
                 <div className="box">
                     <section>
                         <div>
-                            <label>{I18n.t('opinions.form.header')}</label>
+                            {confirmHeader}
+                            <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
                             <div>
                                 <textarea
                                     name="opinion-body"
@@ -219,7 +291,7 @@ export const OpinionShow = React.createClass({
     },
 
     render () {
-        const { currentExplanation: { explanation, explained_at }, onOpenOpinionForm, selectedArguments } = this.props;
+        const { actor, currentExplanation: { explanation, explained_at }, onOpenOpinionForm, selectedArguments } = this.props;
         const argumentFields = {};
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
@@ -229,11 +301,16 @@ export const OpinionShow = React.createClass({
             }).forEach(argument => {
                 argumentFields[argument.side].push({ label: argument.displayName, url: argument.url, value: argument.id });
             });
+        let confirmHeader;
+        if (actor.confirmed === false) {
+            confirmHeader = <p className="block-slogan">{I18n.t('opinions.form.confirm')}</p>;
+        }
         return (
             <div>
                 <span className={`fa fa-${this.iconForSide()} opinion-icon opinion-icon-${this.props.currentVote}`} />
                 <div className="box">
                     <section>
+                        {confirmHeader}
                         <div className="markdown" itemProp="text">
                             <p>{explanation}</p>
                         </div>

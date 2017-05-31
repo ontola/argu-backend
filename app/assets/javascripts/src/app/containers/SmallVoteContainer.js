@@ -29,6 +29,7 @@ export const SmallVoteContainer = React.createClass({
         percent: React.PropTypes.object,
         r: React.PropTypes.string,
         selectedArguments: React.PropTypes.array,
+        userRegistrationUrl: React.PropTypes.string,
         vote_url: React.PropTypes.string
     },
 
@@ -54,6 +55,7 @@ export const SmallVoteContainer = React.createClass({
             opinionForm: false,
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
+            signupEmail: '',
             submitting: false
         };
     },
@@ -78,11 +80,14 @@ export const SmallVoteContainer = React.createClass({
                                                  onExplanationChange={this.explanationChangeHandler}
                                                  onOpenArgumentForm={this.openArgumentFormHandler}
                                                  onOpenOpinionForm={this.openOpinionFormHandler}
+                                                 onSignupEmailChange={this.signupEmailChangeHandler}
                                                  onSubmitArgument={this.argumentHandler}
                                                  onSubmitOpinion={this.opinionHandler}
                                                  opinionForm={this.state.opinionForm}
                                                  selectedArguments={this.state.selectedArguments}
-                                                 submitting={this.state.submitting}/>;
+                                                 signupEmail={this.state.signupEmail}
+                                                 submitting={this.state.submitting}
+                                                 userRegistrationUrl={this.props.userRegistrationUrl}/>;
         }
         return (
             <div>

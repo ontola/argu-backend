@@ -2,8 +2,14 @@ en:
   opinions:
     plural: "Opinions"
     form:
-      header: "Thanks for your vote. Would you like to comment on your opinion?"
+      confirm: "Please confirm your vote by clicking the link we've send to your mail."
+      header:
+        confirmed: "Thanks for your vote. Would you like to comment on your opinion?"
+        unconfirmed: "Would you like to comment on your opinion?"
       arguments: "Which arguments are important to you?"
       edit: "Edit"
       cancel: "Cancel"
       submit: "Save"
+      signup: "Confirm your vote with email or Facebook:"
+      email:
+        placeholder: "Enter your email address here"

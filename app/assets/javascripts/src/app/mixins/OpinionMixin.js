@@ -143,6 +143,10 @@ const OpinionMixin = {
                 Bugsnag.notifyException(er);
                 throw er;
             });
+    },
+
+    signupEmailChangeHandler (e) {
+        this.setState({ signupEmail: e.target.value });
     }
 };
 
