@@ -79,7 +79,8 @@ nl:
         confirm_link: 'Wijzig mijn wachtwoord'
       set_password_instructions:
         subject: 'Welkom bij Argu'
-        body: 'Je hebt nu een account bij Argu. Als je dit account in de toekomst nog wilt gebruiken, stel dan een wachtwoord in door op de volgende link te klikken.'
+        header: 'Welkom bij Argu!'
+        body: 'Klik op onderstaande link om je stemmen te bevestigen en ervoor te zorgen dat je in de toekomst gebruik kan blijven maken van Argu.'
         set_password_link: 'Stel mijn wachtwoord in'
       unlock_instructions:
         subject: 'Ontgrendel instructies'

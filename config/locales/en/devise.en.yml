@@ -79,7 +79,8 @@ en:
         confirm_link: 'Change my password'
       set_password_instructions:
         subject: 'Welcome to Argu'
-        body: 'You are now registered at Argu. If you wish to use your account again in the future, please set a password by clicking the link below.'
+        header: 'Welcome to Argu!'
+        body: 'Please click the link below to confirm your votes and to make sure you can keep using Argu in the future.'
         set_password_link: 'Set my password'
       unlock_instructions:
         subject: 'Unlock instructions'
