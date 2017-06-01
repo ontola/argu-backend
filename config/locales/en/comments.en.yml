@@ -3,6 +3,10 @@ en:
     type: "comment"
     type_new: "new comment"
     plural: "Comments"
+    menu:
+      zero: "Comments"
+      one: "Comments (%{count})"
+      other: "Comments (%{count})"
     placeholder: "Place your comments here. Please keep your comments substantial and friendly :)"
     empty:
       name: "Place your comment"

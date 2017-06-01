@@ -40,6 +40,19 @@ RSpec.feature 'Comments', type: :feature do
     expect(page).to have_content blog_post.title
   end
 
+  scenario 'Guest places a comment for a motion and signs up' do
+    nominatim_netherlands
+
+    visit motion_comments_path(motion)
+
+    fill_in_and_submit_comment
+
+    sign_up_and_confirm_comment
+
+    expect(page).to have_content 'Comment created successfully'
+    expect(page).to have_content motion.title
+  end
+
   ####################################
   # As user
   ####################################
@@ -110,6 +123,8 @@ RSpec.feature 'Comments', type: :feature do
     within('#user_submit_action') do
       click_button 'Next'
     end
+
+    expect(page).to have_content 'Fill in profile'
 
     within('.formtastic.user') do
       click_button 'Next'

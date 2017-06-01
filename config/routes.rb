@@ -158,7 +158,7 @@ Rails.application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :feedable, :trashable] do
+            concerns: [:commentable, :blog_postable, :moveable, :feedable, :trashable] do
     resources :media_objects, only: :index
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
@@ -175,7 +175,7 @@ Rails.application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:blog_postable, :moveable, :votable, :feedable, :trashable, :decisionable] do
+            concerns: [:commentable, :blog_postable, :moveable, :votable, :feedable, :trashable, :decisionable] do
     resources :tags, path: 't', only: [:index]
     resources :arguments, only: [:new, :create, :index]
     resources :media_objects, only: :index

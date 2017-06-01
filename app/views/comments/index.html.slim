@@ -1,0 +1,6 @@
+div
+  .col-1
+    =to_parent(get_parent_resource)
+  - if policy(get_parent_resource).index_children?(:comments)
+    .col-1
+      =render template: 'comments/show', locals: {resource: get_parent_resource, comment: comment}

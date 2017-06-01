@@ -6,6 +6,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
   let(:cairo_member) { create_member(cairo) }
   let(:member) { create_member(freetown) }
+  let(:question) { create(:question, parent: freetown.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) do
     create(:argument,
@@ -26,11 +27,9 @@ class CommentsTest < ActionDispatch::IntegrationTest
            happening_attributes: {happened_at: DateTime.current},
            creator: create(:profile_direct_email))
   end
-  let(:blog_post_subject) do
-    create(:comment,
-           publisher: creator,
-           parent: blog_post.edge)
-  end
+  let(:blog_post_subject) { create(:comment, publisher: creator, parent: blog_post.edge) }
+  let(:motion_subject) { create(:comment, publisher: creator, parent: motion.edge) }
+  let(:question_subject) { create(:comment, publisher: creator, parent: question.edge) }
 
   define_cairo
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
@@ -72,6 +71,16 @@ class CommentsTest < ActionDispatch::IntegrationTest
     "blog_post.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
   end
 
+  def self.assert_redirect_new_user_motion
+    'assert_redirected_to new_user_session_path(r: new_motion_comment_path(motion_id: '\
+    "motion.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
+  end
+
+  def self.assert_redirect_new_user_question
+    'assert_redirected_to new_user_session_path(r: new_question_comment_path(question_id: '\
+    "question.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
+  end
+
   def self.assert_redirect_argument
     'assert_redirected_to argument_path(send(test_case[:options]&.try(:[], :record) || :subject).parent_model, '\
     'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
@@ -80,6 +89,14 @@ class CommentsTest < ActionDispatch::IntegrationTest
   def self.assert_redirect_blog_post
     'assert_redirected_to blog_post_path(send(test_case[:options]&.try(:[], :record) || :subject).parent_model, '\
     'anchor: send(test_case[:options]&.try(:[], :record) || :subject).identifier)'
+  end
+
+  def self.assert_redirect_motion
+    'assert_redirected_to motion_comments_path(send(test_case[:options]&.try(:[], :record) || :subject).parent_model)'
+  end
+
+  def self.assert_redirect_question
+    'assert_redirected_to question_comments_path(send(test_case[:options]&.try(:[], :record) || :subject).parent_model)'
   end
 
   def self.assert_has_content
@@ -98,6 +115,26 @@ class CommentsTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' for argument', options: options) do
       user_types[:create].merge(
         guest: exp_res(response: 302, asserts: [assert_not_a_user, assert_redirect_new_user_argument], analytics: false)
+      )
+    end
+    options = {
+      parent: :motion,
+      analytics: stats_opt('comments', 'create_success'),
+      attributes: {body: 'Just å UTF-8 comment.'}
+    }
+    define_test(hash, :create, suffix: ' for motion', options: options) do
+      user_types[:create].merge(
+        guest: exp_res(response: 302, asserts: [assert_not_a_user, assert_redirect_new_user_motion], analytics: false)
+      )
+    end
+    options = {
+      parent: :question,
+      analytics: stats_opt('comments', 'create_success'),
+      attributes: {body: 'Just å UTF-8 comment.'}
+    }
+    define_test(hash, :create, suffix: ' for question', options: options) do
+      user_types[:create].merge(
+        guest: exp_res(response: 302, asserts: [assert_not_a_user, assert_redirect_new_user_question], analytics: false)
       )
     end
     options = {
@@ -133,15 +170,13 @@ class CommentsTest < ActionDispatch::IntegrationTest
       }
     end
     define_test(hash, :show, suffix: ' for blog_post', options: {record: :blog_post_subject}) do
-      {
-        guest: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        user: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        member: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        moderator: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        manager: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        super_admin: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post]),
-        staff: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post])
-      }
+      {user: exp_res(response: 302, should: true, asserts: [assert_redirect_blog_post])}
+    end
+    define_test(hash, :show, suffix: ' for motion', options: {record: :motion_subject}) do
+      {user: exp_res(response: 302, should: true, asserts: [assert_redirect_motion])}
+    end
+    define_test(hash, :show, suffix: ' for question', options: {record: :question_subject}) do
+      {user: exp_res(response: 302, should: true, asserts: [assert_redirect_question])}
     end
     define_test(hash, :show, suffix: ' cairo', options: {record: :cairo_subject}) do
       {

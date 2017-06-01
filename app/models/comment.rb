@@ -10,7 +10,7 @@ class Comment < ApplicationRecord
   acts_as_nested_set scope: [:commentable_id, :commentable_type]
   counter_cache true
   paginates_per 30
-  parentable :argument, :blog_post
+  parentable :argument, :blog_post, :motion, :question
 
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true

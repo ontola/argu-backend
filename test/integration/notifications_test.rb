@@ -120,6 +120,22 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'member should create and destroy comment for motion with notifications' do
+    sign_in member
+    motion
+
+    # Notification for creator and follower of Motion
+    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
+      post motion_comments_path(motion),
+           params: {comment: attributes_for(:comment)}
+    end
+    assert_equal Notification.last.notification_type, 'reaction'
+
+    assert_differences([['Comment.trashed.count', 1], ['Notification.count', -2]]) do
+      delete destroy_motion_comment_path(motion, Comment.last)
+    end
+  end
+
   ####################################
   # As Manager
   ####################################

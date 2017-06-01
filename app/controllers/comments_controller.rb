@@ -20,6 +20,8 @@ class CommentsController < EdgeTreeController
 
   private
 
+  def collect_banners; end
+
   def comment_body
     if params[:comment].is_a?(String)
       Bugsnag.notify('comment_body should always be a hash')
@@ -61,6 +63,17 @@ class CommentsController < EdgeTreeController
     }
   end
 
+  def index_respond_blocks_success(_, format)
+    format.json_api do
+      render json: index_response_association,
+             include: include_index
+    end
+    format.html do
+      @comments = get_parent_resource.filtered_threads(show_trashed?, params[:page])
+      render locals: {comment: Comment.new}
+    end
+  end
+
   def new_resource_from_params
     @resource ||= get_parent_resource
                     .edge
@@ -70,7 +83,11 @@ class CommentsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    polymorphic_url([resource.parent_model], anchor: resource.identifier)
+    if [Motion, Question].include?(resource.parent_model.class)
+      polymorphic_url([resource.parent_model, :comments])
+    else
+      polymorphic_url([resource.parent_model], anchor: resource.identifier)
+    end
   end
   alias redirect_model_failure redirect_model_success
 
