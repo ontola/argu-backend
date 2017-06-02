@@ -62,7 +62,13 @@ module Argu
                      r: e.r
                    }
           end
-          format.html { redirect_to new_user_session_path(r: e.r), alert: e.message }
+          format.html do
+            if params[:iframe] == 'true'
+              render "status/403", status: status, locals: {resource: user, message: e.message}
+            else
+              redirect_to new_user_session_path(r: e.r), alert: e.message
+            end
+          end
           html, js = true
         when ActiveRecord::RecordNotFound, ActionController::RoutingError
           err_id = 'NOT_FOUND'
