@@ -14,6 +14,8 @@ nl:
       role: "Welke rol wil je verlenen?"
       group: "Aan welke groep wil je deze rol verlenen?"
       edge: "Voor welk forum geldt deze rol?"
+    errors:
+      taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
   roles:
     type: "recht"
     plural: "rechten"

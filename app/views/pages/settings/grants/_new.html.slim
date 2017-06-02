@@ -1,9 +1,12 @@
 =semantic_form_for(authenticated_resource, url: page_grants_path(authenticated_resource.page), html: {class: 'formtastic--full-width'}) do |f|
-  - authenticated_resource.errors.full_messages.each do |message|
-    =message
   =f.inputs name: t('new_type', type: t('grants.type')) do
     =f.input :role, as: :react_select, label: t('grants.labels.role')
     =f.input :group_id, as: :react_select, collection: Group.where('id = ? OR page_id = ?', Group::PUBLIC_ID, authenticated_resource.page.id), required: false, include_blank: false, label: t('grants.labels.group')
     =f.input :edge_id, as: :react_select, collection: grant_edge_items(authenticated_resource.page), required: false, include_blank: false, label: t('grants.labels.edge')
+    - if authenticated_resource.errors.details[:edge].any? { |error| error[:error] == :taken }
+      =t('grants.errors.taken')
+    - else
+      - authenticated_resource.errors.full_messages.each do |message|
+        =message
     =f.actions do
       =f.action :submit, as: :button

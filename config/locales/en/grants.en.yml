@@ -14,6 +14,8 @@ en:
       role: "Which role you want to grant?"
       group: "To which group you want tot provide this role?"
       edge: "For which forum should this role be granted?"
+    errors:
+      taken: "This group already has a grant on this forum. Please remove this grant before creating a new one."
   roles:
     type: "grant"
     plural: "grants"

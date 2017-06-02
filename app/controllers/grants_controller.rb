@@ -19,7 +19,7 @@ class GrantsController < ServiceController
              tab: 'grants/new',
              active: 'grants',
              page: resource.group.page,
-             resource: resource
+             resource: authenticated_resource.edge.owner
            }
   end
 

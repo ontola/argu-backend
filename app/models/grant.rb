@@ -11,7 +11,8 @@ class Grant < ApplicationRecord
   scope :page_manager, -> { where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
 
-  validates :group, :role, :edge, presence: true
+  validates :group, :role, presence: true
+  validates :edge, presence: true, uniqueness: {scope: :group}
 
   enum role: {member: 1, manager: 2, super_admin: 10}
 
