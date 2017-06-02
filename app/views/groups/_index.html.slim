@@ -7,7 +7,6 @@ table.styled
       td[colspan='2' style="min-width: 90px;"]= t('portal.members')
       td[colspan='2']= t('roles.plural').capitalize
   - page.groups.custom.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|
-    - next unless resource.is_a?(Page) || (resource.edge.path.split('.').map(&:to_i) & group.grants.pluck(:edge_id).uniq).present?
     tr
       td
         =link_to group.display_name, settings_group_path(group)
@@ -25,17 +24,16 @@ table.styled
             - group.grants.each do |grant|
               li
                 =>"#{grant.display_name}:"
-                =grant.role.humanize
+                =t("roles.types.#{grant.role}")
                 = t('roles.list.remove_html', url: grant_path(grant))
       td
         - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
           =link_to new_page_grant_path(page, edge_id: resource.edge, group_id: group.id), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
-- if resource == page
-  - if policy(page).create_child?(:groups)
-    =link_to new_page_group_path(page), class: 'btn margin-bottom margin-right' do
-      span.fa.fa-plus
-      span.icon-left= t('groups.new')
+- if policy(page).create_child?(:groups)
+  =link_to new_page_group_path(page), class: 'btn margin-bottom margin-right' do
+    span.fa.fa-plus
+    span.icon-left= t('groups.new')
 - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
   =link_to new_page_grant_path(page, edge_id: resource.edge), class: 'btn margin-bottom' do
     span.fa.fa-plus

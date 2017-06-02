@@ -11,7 +11,7 @@ class SourcePolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general privacy groups) if is_manager? || staff?
+    tabs.concat %i(general privacy) if is_manager? || staff?
     tabs
   end
 

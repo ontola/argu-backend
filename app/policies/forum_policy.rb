@@ -26,7 +26,6 @@ class ForumPolicy < EdgeTreePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i(general advanced shortnames banners) if is_manager? || staff?
-    tabs.concat %i(groups) if is_super_admin? || staff?
     tabs
   end
 

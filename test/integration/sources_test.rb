@@ -39,7 +39,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
     get settings_page_source_path(page, source)
     assert_source_settings_shown source
 
-    %i(general privacy groups).each do |tab|
+    %i(general privacy).each do |tab|
       get settings_page_source_path(source), params: {tab: tab}
       assert_source_settings_shown source, tab
     end
@@ -96,7 +96,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
     get settings_page_source_path(page, source)
     assert_source_settings_shown source
 
-    %i(general privacy groups).each do |tab|
+    %i(general privacy).each do |tab|
       get settings_page_source_path(source), params: {tab: tab}
       assert_source_settings_shown source, tab
     end

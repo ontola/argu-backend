@@ -9,7 +9,7 @@ RSpec.feature 'Manager', type: :feature do
   scenario 'Admin adds a manager' do
     sign_in(super_admin)
 
-    visit(settings_forum_path(nederland, tab: :groups))
+    visit(settings_page_path(argu, tab: :groups))
 
     click_link('Managers')
 
