@@ -20,9 +20,10 @@ export const BigVoteContainer = React.createClass({
         actor: React.PropTypes.object,
         argumentUrl: React.PropTypes.string,
         arguments: React.PropTypes.array,
-        closed: React.PropTypes.bool,
         currentExplanation: React.PropTypes.object,
         currentVote: React.PropTypes.string,
+        disabled: React.PropTypes.bool,
+        disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
         newArgumentButtons: React.PropTypes.bool,
         objectId: React.PropTypes.number,
@@ -70,7 +71,7 @@ export const BigVoteContainer = React.createClass({
         let voteButtonsComponent, voteResultsComponent, opinionContainer;
         if (!this.state.actor || this.state.actor.actor_type === 'User' || this.state.actor.actor_type === 'GuestUser') {
             voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
-            voteResultsComponent = <VoteResults {...this.state} showResults={this.props.closed || this.state.currentVote !== 'abstain'}/>;
+            voteResultsComponent = <VoteResults {...this.state} showResults={this.props.disabled || this.state.currentVote !== 'abstain'}/>;
         } else if (this.state.actor.actor_type === 'Page') {
             voteResultsComponent = <VoteResults {...this.state} {...this.props} showResults={true}/>;
         }

@@ -24,6 +24,8 @@ export const VoteButton = React.createClass({
         clickHandler: React.PropTypes.func,
         count: React.PropTypes.number,
         current: React.PropTypes.bool,
+        disabled: React.PropTypes.bool,
+        disabledMessage: React.PropTypes.string,
         objectId: React.PropTypes.number,
         r: React.PropTypes.string,
         side: React.PropTypes.string
@@ -60,13 +62,14 @@ export const VoteButton = React.createClass({
         }
 
         return (
-            <li>
+            <li data-title={this.props.disabledMessage}>
                 <a
-                className={`btn-${side}`}
+                className={`btn-${side} ${this.props.disabled ? 'disabled' : 'enabled'}`}
                 data-method={this.ifNoActor('post')}
                 data-voted-on={current}
                 href={url}
-                onClick={clickHandler} rel="nofollow">
+                onClick={clickHandler}
+                rel="nofollow">
                     <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
                         <FormattedMessage message={this.getIntlMessage(side)} />
@@ -82,8 +85,9 @@ export const VoteButtons = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
-        closed: React.PropTypes.bool,
         currentVote: React.PropTypes.string,
+        disabled: React.PropTypes.bool,
+        disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
@@ -114,15 +118,14 @@ export const VoteButtons = React.createClass({
     },
 
     render () {
-        if (this.props.closed) {
-            return <div></div>;
-        }
         const voteButtons = ['pro', 'neutral' , 'con']
             .map((side, i) => {
                 return <VoteButton actor={this.props.actor}
                                    clickHandler={this.props[`${side}Handler`]}
                                    count={this.props.distribution[side]}
                                    current={this.props.currentVote === side}
+                                   disabled={this.props.disabled}
+                                   disabledMessage={this.props.disabledMessage}
                                    key={i}
                                    objectId={this.props.objectId}
                                    r={this.props.r}

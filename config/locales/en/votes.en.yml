@@ -20,3 +20,6 @@ en:
     confirm:
       headline: "Confirm vote"
       skip: "Not now, skip voting"
+    disabled:
+      expired: 'Voting is no longer possible'
+      unauthorized: 'You are not allowed to vote on this item'

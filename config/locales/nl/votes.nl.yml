@@ -20,3 +20,6 @@ nl:
     confirm:
       headline: "Bevestig stem"
       skip: "Niet nu, stemmen overslaan"
+    disabled:
+      expired: 'Stemmen is niet langer mogelijk'
+      unauthorized: 'Je hebt niet voldoende rechten om te stemmen'

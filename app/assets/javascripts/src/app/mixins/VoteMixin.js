@@ -36,19 +36,25 @@ const VoteMixin = {
     proHandler (e) {
         if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
-            this.vote('pro');
+            if (!this.props.disabled) {
+                this.vote('pro');
+            }
         }
     },
     neutralHandler (e) {
         if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
-            this.vote('neutral');
+            if (!this.props.disabled) {
+                this.vote('neutral');
+            }
         }
     },
     conHandler (e) {
         if (this.props.actor !== null && this.props.actor.actor_type !== 'GuestUser') {
             e.preventDefault();
-            this.vote('con');
+            if (!this.props.disabled) {
+                this.vote('con');
+            }
         }
     },
 

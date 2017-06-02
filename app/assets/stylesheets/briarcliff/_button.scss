@@ -475,6 +475,12 @@
   }
   a, button {
     width: 100% !important;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: .6
+    }
+
     .fa {
       font-size: 1.2em;
       vertical-align: center;
@@ -524,6 +530,11 @@
     box-sizing: border-box;
     font-size: .8em;
     text-transform: uppercase;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: .6
+    }
 
     .fa {
       font-size: 1.2em;
@@ -773,6 +784,13 @@ h1 + .btn {
 }
 
 .btns-opinion--bottom {
+  a, button {
+    &.disabled {
+      cursor: not-allowed;
+      opacity: .6
+    }
+  }
+
   .btn-pro {
     color: $pro;
     &:hover {

@@ -15,23 +15,16 @@ module MotionsHelper
   end
 
   def motion_vote_props(actor, motion, vote, opts = {})
-    arguments = policy_scope(motion.arguments).collect do |argument|
-      {
-        id: argument.id,
-        displayName: argument.display_name,
-        key: argument.identifier,
-        side: argument.key.to_s,
-        url: argument.context_id
-      }
-    end
+    disabled_message = motion_vote_disabled_message(motion, vote)
     localized_react_component({
       actor: actor_props(actor),
       argumentUrl: motion_arguments_path(motion),
-      arguments: arguments,
+      arguments: motion_vote_arguments(motion),
       buttonsType: opts.fetch(:buttons_type, 'big'),
       currentVote: vote.try(:for) || 'abstain',
       currentExplanation: {explanation: vote&.explanation, explained_at: vote&.explained_at},
-      closed: motion.edge.has_expired_ancestors?,
+      disabled: disabled_message.present?,
+      disabledMessage: disabled_message,
       distribution: motion_vote_counts(motion),
       newArgumentButtons: policy(motion).create_child?(:arguments).present?,
       objectId: motion.id,
@@ -47,12 +40,33 @@ module MotionsHelper
     }.merge(opts))
   end
 
+  def motion_vote_arguments(motion)
+    policy_scope(motion.arguments).collect do |argument|
+      {
+        id: argument.id,
+        displayName: argument.display_name,
+        key: argument.identifier,
+        side: argument.key.to_s,
+        url: argument.context_id
+      }
+    end
+  end
+
   def motion_vote_counts(motion, opts = {})
     opts.merge(
       pro: motion.default_vote_event.children_count(:votes_pro),
       neutral: motion.default_vote_event.children_count(:votes_neutral),
       con: motion.default_vote_event.children_count(:votes_con)
     )
+  end
+
+  def motion_vote_disabled_message(motion, vote)
+    return if policy(motion.default_vote_event).create_child?(:votes)
+    if policy(vote || Vote.new(edge: Edge.new(parent: motion.default_vote_event.edge))).has_expired_ancestors?
+      t('votes.disabled.expired')
+    else
+      t('votes.disabled.unauthorized')
+    end
   end
 
   def user_vote_for(motion)
