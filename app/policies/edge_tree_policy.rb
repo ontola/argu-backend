@@ -202,7 +202,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def create_expired?
-    rule staff?
+    false
   end
 
   def trash?
