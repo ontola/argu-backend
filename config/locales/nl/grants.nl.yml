@@ -22,8 +22,10 @@ nl:
     description: "Rechten gelden voor ook voor onderliggen items."
     empty: "geen"
     types:
-      manager: "Managers kunnen nieuwe content plaatsen en alle content aanpassen en verwijderen."
-      member: "Members kunnen nieuwe content plaatsen en hun eigen content bewerken en verwijderen."
-      super_admin: "Admins kunnen alles aanpassen."
+      none: "niets zien"
+      spectator: "alles bekijken"
+      member: "meedoen"
+      manager: "modereren"
+      super_admin: "beheren"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Weet je zeker dat je dit recht wilt intrekken?'><span class='fa fa-close'></span></a>"

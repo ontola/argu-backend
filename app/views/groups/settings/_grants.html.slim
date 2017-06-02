@@ -17,7 +17,7 @@ h3= t('grants.plural').capitalize
             - else
               =grant.display_name
           td
-            span[data-title=t("roles.types.#{grant.role}")]= grant.role.humanize
+            =t("roles.types.#{grant.role}").capitalize
           td= t('roles.list.remove_html', url: grant_path(grant))
 =link_to new_page_grant_path(resource.page, group_id: resource.id), class: 'btn--light btn--smaller' do
   span.fa.fa-plus

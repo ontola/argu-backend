@@ -22,8 +22,10 @@ en:
     description: "Grants also apply to the underlying content."
     empty: "none"
     types:
-      manager: "Managers can post new content and can edit and remove all existing content."
-      member: "Members can post new content and can edit and remove their own content."
-      super_admin: "Admins can edit everything."
+      none: "see nothing"
+      spectator: "see everything"
+      member: "participate"
+      manager: "moderate"
+      super_admin: "Admin"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"
