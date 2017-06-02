@@ -47,6 +47,7 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
     define_test(hash, :show, suffix: ' unpublished', options: {record: :scheduled}) do
       user_types[:show].merge(
         guest: exp_res(asserts: [assert_not_authorized]),
+        spectator: exp_res(asserts: [assert_not_authorized]),
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized])
       )

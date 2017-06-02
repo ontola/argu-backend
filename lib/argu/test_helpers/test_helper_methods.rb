@@ -219,12 +219,13 @@ module Argu
         include Argu::TestHelpers::AutomatedTests::Asserts
 
         def define_automated_tests_objects
-          define_common_objects(:freetown, :user, :member, :non_member, :creator, :moderator,
+          define_common_objects(:freetown, :spectator, :user, :member, :non_member, :creator, :moderator,
                                 :manager, :owner, :staff, :page)
         end
 
         def define_common_objects(*let, **opts)
           define_freetown if mdig?(:freetown, let, opts)
+          let(:spectator) { user } if mdig?(:spectator, let, opts)
           let(:user) { create(:user, opts.dig(:user)) } if mdig?(:user, let, opts)
           let(:member) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
           let(:non_member) { user } if mdig?(:non_member, let, opts)

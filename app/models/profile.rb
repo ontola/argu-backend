@@ -170,7 +170,7 @@ class Profile < ApplicationRecord
   end
 
   def member_of?(tenant)
-    tenant.present? && granted_edges.include?(tenant.edge)
+    tenant.present? && granted_edges(nil, 'member').include?(tenant.edge)
   end
 
   def owner_of(tenant)

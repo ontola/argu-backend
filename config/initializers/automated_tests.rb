@@ -18,6 +18,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     new: {
       guest: exp_res(response: 302, asserts: [assert_not_a_user]),
       user: exp_res(should: true, response: 200),
+      spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(should: true, response: 200),
       non_member: exp_res(asserts: [assert_not_authorized]),
       moderator: exp_res(should: true, response: 200),
@@ -28,6 +29,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     create: {
       guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
       user: exp_res(should: true, response: 302),
+      spectator: exp_res(asserts: [assert_not_authorized], analytics: false),
       member: exp_res(should: true, response: 302),
       non_member: exp_res(asserts: [assert_not_authorized], analytics: false),
       moderator: exp_res(should: true, response: 302),
@@ -38,6 +40,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     show: {
       guest: exp_res(should: true, response: 200),
       user: exp_res(should: true, response: 200),
+      spectator: exp_res(should: true, response: 200),
       member: exp_res(should: true, response: 200),
       non_member: exp_res(asserts: [assert_not_authorized]),
       moderator: exp_res(should: true, response: 200),
@@ -48,6 +51,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     edit: {
       guest: exp_res(response: 302, asserts: [assert_not_a_user]),
       user: exp_res(asserts: [assert_not_authorized]),
+      spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
       creator: exp_res(should: true, response: 200),
@@ -59,6 +63,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     update: {
       guest: exp_res(response: 302, asserts: [assert_not_a_user]),
       user: exp_res(asserts: [assert_not_authorized]),
+      spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
       creator: exp_res(should: true, response: 302),
@@ -70,6 +75,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     trash: {
       guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
       user: exp_res(analytics: false, asserts: [assert_not_authorized]),
+      spectator: exp_res(analytics: false, asserts: [assert_not_authorized]),
       member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       non_member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       moderator: exp_res(analytics: false, asserts: [assert_not_authorized]),
@@ -80,6 +86,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     destroy: {
       guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
       user: exp_res(analytics: false, asserts: [assert_not_authorized]),
+      spectator: exp_res(analytics: false, asserts: [assert_not_authorized]),
       member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       non_member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       moderator: exp_res(analytics: false, asserts: [assert_not_authorized]),
@@ -90,6 +97,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     shift: {
       guest: exp_res(asserts: [assert_not_authorized]),
       user: exp_res(asserts: [assert_not_authorized]),
+      spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
       moderator: exp_res(asserts: [assert_not_authorized]),
@@ -100,6 +108,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
     move: {
       guest: exp_res(asserts: [assert_not_authorized]),
       user: exp_res(asserts: [assert_not_authorized]),
+      spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
       moderator: exp_res(asserts: [assert_not_authorized]),

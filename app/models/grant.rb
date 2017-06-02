@@ -14,7 +14,7 @@ class Grant < ApplicationRecord
   validates :group, :role, presence: true
   validates :edge, presence: true, uniqueness: {scope: :group}
 
-  enum role: {member: 1, manager: 2, super_admin: 10}
+  enum role: {spectator: 0, member: 1, manager: 2, super_admin: 10}
 
   def display_name
     case edge.owner_type

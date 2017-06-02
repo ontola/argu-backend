@@ -2,11 +2,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Banners', type: :feature do
-  define_holland
+  define_spain
   let!(:unpublished_banner) do
     create(:banner,
            audience: Banner.audiences[:everyone],
-           forum: holland,
+           forum: spain,
            title: 'unpublished_banner')
   end
 
@@ -15,7 +15,7 @@ RSpec.feature 'Banners', type: :feature do
            ends_at: 1.hour.ago,
            audience: Banner.audiences[:everyone],
            published_at: 1.hour.ago,
-           forum: holland,
+           forum: spain,
            title: 'ended_banner')
   end
 
@@ -24,7 +24,7 @@ RSpec.feature 'Banners', type: :feature do
       create(:banner,
              published_at: 1.hour.ago,
              audience: Banner.audiences[audience],
-             forum: holland,
+             forum: spain,
              title: "Banner_#{audience}")
     end
   end
@@ -33,7 +33,7 @@ RSpec.feature 'Banners', type: :feature do
   # As Guest
   ####################################
   scenario 'All objects show banners' do
-    question = holland.questions.first
+    question = spain.questions.first
     visit question_path question
     expect(page).to have_content(question.title)
     expect(page).to have_content(banner_everyone.title),
@@ -43,13 +43,13 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).not_to have_content(ended_banner.title),
                         'Ended visible on question pages'
 
-    motion = holland.motions.first
+    motion = spain.motions.first
     visit motion_path motion
     expect(page).to have_content(motion.title)
     expect(page).to have_content(banner_everyone.title),
                     'Banners not visible on motion pages'
 
-    argument = holland.motions.first.arguments.first
+    argument = spain.motions.first.arguments.first
     visit argument_path(argument)
     expect(page).to have_content(argument.title)
     expect(page).to have_content(banner_everyone.title),
@@ -57,7 +57,7 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   scenario 'Guest sees correct banners' do
-    question = holland.questions.first
+    question = spain.questions.first
 
     visit question_path question
     expect(page).to have_content(question.title)
@@ -77,7 +77,7 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   scenario 'Guest dismisses a banner' do
-    question = holland.questions.first
+    question = spain.questions.first
     visit question_path(question)
 
     expect(page).to have_content(question.title)
@@ -96,9 +96,11 @@ RSpec.feature 'Banners', type: :feature do
   ####################################
   # As User
   ####################################
+  let(:user) { create(:user) }
+
   scenario 'User sees correct banners' do
-    sign_in(FactoryGirl.create(:user))
-    question = holland.questions.first
+    sign_in_manually(user)
+    question = spain.questions.first
     visit question_path question
     expect(page).to have_content(question.title),
                     'page not loaded correctly to run expectations'
@@ -118,9 +120,8 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   scenario 'banner dismissal is persisted across logins' do
-    user = FactoryGirl.create(:user)
     sign_in_manually(user)
-    question = holland.questions.first
+    question = spain.questions.first
     visit question_path(question)
 
     expect(page).to have_content(question.title)
@@ -150,10 +151,11 @@ RSpec.feature 'Banners', type: :feature do
   ####################################
   # As Member
   ####################################
+  let(:member) { create_member(spain) }
+
   scenario 'Member sees everyone banners' do
-    user = create_member(holland)
-    sign_in(user)
-    question = holland.questions.first
+    sign_in(member)
+    question = spain.questions.first
     visit question_path question
     expect(page).to have_content(question.title),
                     'page not loaded correctly to run expectations'
@@ -175,14 +177,14 @@ RSpec.feature 'Banners', type: :feature do
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_super_admin(holland) }
+  let(:manager) { create_super_admin(spain) }
 
   scenario 'Manager creates a banner' do
     sign_in(manager)
 
     new_banner = attributes_for(:banner, :everyone)
 
-    visit settings_forum_path(holland, tab: :banners)
+    visit settings_forum_path(spain, tab: :banners)
     click_link 'New banner'
 
     expect(page).to have_content('New Banner')
@@ -201,7 +203,7 @@ RSpec.feature 'Banners', type: :feature do
   scenario 'Manager views banner settings' do
     sign_in(manager)
 
-    visit settings_forum_path(holland, tab: :banners)
+    visit settings_forum_path(spain, tab: :banners)
     within('#banners-published') do
       %i(guests users members everyone).each do |level|
         expect(page).to have_content(send("banner_#{level}").title)

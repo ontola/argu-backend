@@ -23,6 +23,10 @@ class EdgeTreePolicy < RestrictivePolicy
       1
     end
 
+    def spectator
+      2
+    end
+
     def member
       3
     end
@@ -48,9 +52,17 @@ class EdgeTreePolicy < RestrictivePolicy
       10
     end
 
-    def is_member?
+    def is_role?(role)
       return if persisted_edge.nil?
-      member if (user.profile.group_ids & persisted_edge.granted_group_ids('member')).any?
+      send(role) if (user.profile.group_ids & persisted_edge.granted_group_ids(role.to_s)).any?
+    end
+
+    def is_spectator?
+      is_role?(:spectator)
+    end
+
+    def is_member?
+      is_role?(:member)
     end
 
     def is_creator?
@@ -76,14 +88,11 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_manager?
-      return if persisted_edge.nil?
-      return manager if (user.profile.group_ids & persisted_edge.granted_group_ids('manager')).any?
-      is_super_admin?
+      is_role?(:manager) || is_role?(:super_admin)
     end
 
     def is_super_admin?
-      return if persisted_edge.nil?
-      return super_admin if (user.profile.group_ids & persisted_edge.granted_group_ids('super_admin')).any?
+      is_role?(:super_admin)
     end
 
     def is_manager_up?
@@ -210,7 +219,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_moderator?, is_manager?, is_super_admin?, super
+    rule is_spectator?, is_member?, is_moderator?, is_manager?, is_super_admin?, super
   end
 
   private

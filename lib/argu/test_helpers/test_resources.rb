@@ -112,6 +112,18 @@ module Argu
         end
       end
 
+      def define_spain(name = 'spain', attributes: {})
+        let!(name) do
+          create_forum(
+            :populated_forum,
+            {
+              shortname_attributes: {shortname: name},
+              public_grant: 'spectator'
+            }.merge(attributes)
+          )
+        end
+      end
+
       def define_public_source
         define_page
         let!(:public_source) do

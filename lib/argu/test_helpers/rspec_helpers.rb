@@ -64,7 +64,7 @@ module Argu
             fill_in 'user_password', with: user.password
             click_button 'Log in'
           end
-          expect(page).to have_content 'New discussion'
+          expect(page).to have_content 'Sort'
         end.to change { Doorkeeper::AccessToken.last.id }.by(1)
       end
     end
