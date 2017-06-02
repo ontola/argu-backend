@@ -69,11 +69,6 @@ class ForumPolicy < EdgeTreePolicy
     update?
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_manager?, super
-  end
-
   def statistics?
     super
   end

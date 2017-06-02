@@ -15,11 +15,6 @@ class DecisionPolicy < EdgeTreePolicy
     attributes
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule parent_policy.show?
-  end
-
   # Creating a Decision when a draft is present is not allowed
   # Managers and the Owner are allowed to forward a Decision when not assigned to him
   def create?

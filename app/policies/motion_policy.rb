@@ -45,11 +45,6 @@ class MotionPolicy < EdgeTreePolicy
     create_without_question?
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_manager?, is_super_admin?, super
-  end
-
   def trash?
     rule is_creator?, is_manager?, is_super_admin?, super
   end

@@ -16,12 +16,8 @@ class MediaObjectPolicy < EdgeTreePolicy
   end
 
   def show?
-    if edge.present?
-      return show_unpublished? if has_unpublished_ancestors?
-      rule is_creator?, is_member?, is_manager?, is_super_admin?, super
-    else
-      Pundit.policy(context, record.about).show?
-    end
+    return super if edge.present?
+    Pundit.policy(context, record.about).show?
   end
 
   def permitted_attributes

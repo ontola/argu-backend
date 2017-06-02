@@ -22,11 +22,6 @@ class CommentPolicy < EdgeTreePolicy
     rule is_member?, is_manager?, staff?
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule parent_policy.show?, super
-  end
-
   def trash?
     rule is_creator?, is_manager?, is_super_admin?, super
   end

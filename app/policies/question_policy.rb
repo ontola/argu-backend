@@ -41,11 +41,6 @@ class QuestionPolicy < EdgeTreePolicy
       super
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_manager?, is_super_admin?, super
-  end
-
   def trash?
     record.creator_id == user.profile.id || is_manager? || super
   end

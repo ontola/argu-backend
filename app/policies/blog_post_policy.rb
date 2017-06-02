@@ -20,11 +20,6 @@ class BlogPostPolicy < EdgeTreePolicy
     rule is_manager?, is_super_admin?, super
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule parent_policy.show?
-  end
-
   def trash?
     rule is_moderator?, is_manager?, is_super_admin?, super
   end

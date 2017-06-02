@@ -13,11 +13,6 @@ class PhasePolicy < EdgeTreePolicy
     rule is_moderator?, is_manager?, is_super_admin?, super
   end
 
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_member?, is_moderator?, is_manager?, is_super_admin?, super
-  end
-
   def update?
     rule is_moderator?, is_manager?, is_super_admin?, super
   end
