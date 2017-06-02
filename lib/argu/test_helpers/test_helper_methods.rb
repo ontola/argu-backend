@@ -223,30 +223,25 @@ module Argu
                                 :manager, :owner, :staff, :page)
         end
 
-        def define_common_objects(*let, **opts)
-          define_freetown if mdig?(:freetown, let, opts)
-          let(:spectator) { user } if mdig?(:spectator, let, opts)
-          let(:user) { create(:user, opts.dig(:user)) } if mdig?(:user, let, opts)
-          let(:member) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
-          let(:non_member) { user } if mdig?(:non_member, let, opts)
-          let(:creator) { create_member(cascaded_forum(:member, opts)) } if mdig?(:member, let, opts)
-          let(:manager) { create_manager(cascaded_forum(:manager, opts)) } if mdig?(:manager, let, opts)
-          let(:moderator) { create_moderator(cascaded_forum(:moderator, opts)) } if mdig?(:moderator, let, opts)
-          let(:super_admin) { create_super_admin(cascaded_forum(:owner, opts)) } if mdig?(:owner, let, opts)
-          let(:staff) { create(:user, :staff) } if mdig?(:staff, let, opts)
-          let(:page) { argu } if mdig?(:page, let, opts)
-        end
-
-        def cascaded_forum(key, opts)
-          key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
+        def define_common_objects(*let)
+          define_freetown
+          let(:spectator) { user } if mdig?(:spectator, let)
+          let(:user) { create(:user) } if mdig?(:user, let)
+          let(:member) { create_member(freetown) } if mdig?(:member, let)
+          let(:non_member) { user } if mdig?(:non_member, let)
+          let(:creator) { create_member(freetown) } if mdig?(:creator, let)
+          let(:manager) { create_manager(freetown) } if mdig?(:manager, let)
+          let(:moderator) { create_moderator(freetown) } if mdig?(:moderator, let)
+          let(:super_admin) { create_super_admin(freetown) } if mdig?(:owner, let)
+          let(:staff) { create(:user, :staff) } if mdig?(:staff, let)
+          let(:page) { argu } if mdig?(:page, let)
         end
 
         # @param [Symbol] key The key to search for.
         # @param [Array] arr Array of options to search in.
-        # @param [Hash] opts Options hash to search in.
-        # @return [Boolean] Whether `key` is present in arr or hash.
-        def mdig?(key, arr, opts)
-          arr.include?(key) || opts.include?(key)
+        # @return [Boolean] Whether `key` is present in arr.
+        def mdig?(key, arr)
+          arr.include?(key)
         end
 
         def stats_opt(category, action)
