@@ -5,13 +5,13 @@ class SourcePolicy < EdgeTreePolicy
   def permitted_attributes
     attributes = super
     attributes.concat %i(name iri_base shortname)
-    attributes.concat %i(visibility) if change_owner?
+    attributes.concat %i(public_grant) if staff?
     attributes
   end
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general privacy) if is_manager? || staff?
+    tabs.concat %i(general) if is_manager? || staff?
     tabs
   end
 

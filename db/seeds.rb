@@ -63,7 +63,7 @@ User
 
 forum = Forum.new(name: 'Nederland',
                   page: argu,
-                  visibility: :open,
+                  public_grant: 'member',
                   shortname_attributes: {shortname: 'nederland'})
 forum.edge = Edge.new(owner: forum,
                       user: User.find_via_shortname('staff_account'),

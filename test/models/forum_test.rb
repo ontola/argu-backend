@@ -17,11 +17,11 @@ class ForumTest < ActiveSupport::TestCase
 
   test 'should reset public grant' do
     assert_equal subject.grants.where(group_id: -1).count, 1
-    subject.closed!
+    subject.update(public_grant: 'none')
     assert_equal subject.grants.where(group_id: -1).count, 0
 
     assert_equal cairo.grants.where(group_id: -1).count, 0
-    cairo.open!
+    cairo.update(public_grant: 'member')
     assert_equal cairo.grants.where(group_id: -1).count, 1
   end
 
@@ -43,11 +43,6 @@ class ForumTest < ActiveSupport::TestCase
     assert p2.id != subject.page.id
     subject.page = p2.url
     assert_equal p2.id, subject.page.id
-  end
-
-  test 'first_public should return a public forum' do
-    forum = Forum.first_public
-    assert forum.open?
   end
 
   define_holland('shortname_forum', attributes: {max_shortname_count: 0})

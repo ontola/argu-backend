@@ -18,7 +18,6 @@ module Argu
           *args,
           attributes
         )
-        forum.reset_public_grant
         forum
       end
 
@@ -45,7 +44,7 @@ module Argu
               shortname_attributes: {shortname: name},
               page: argu,
               parent: argu.edge,
-              visibility: Forum.visibilities[:open]
+              public_grant: 'member'
             }.merge(attributes)
           )
         end
@@ -55,8 +54,7 @@ module Argu
         let!(name) do
           forum = create_forum(
             {
-              shortname_attributes: {shortname: name},
-              visibility: Forum.visibilities[:closed]
+              shortname_attributes: {shortname: name}
             }.merge(attributes)
           )
           create(:grant,
@@ -72,8 +70,7 @@ module Argu
           forum = create_forum(
             :populated_forum,
             {
-              shortname_attributes: {shortname: name},
-              visibility: Forum.visibilities[:closed]
+              shortname_attributes: {shortname: name}
             }.merge(attributes)
           )
           create(:grant,
@@ -106,7 +103,7 @@ module Argu
             :populated_forum,
             {
               shortname_attributes: {shortname: name},
-              visibility: Forum.visibilities[:open]
+              public_grant: 'member'
             }.merge(attributes)
           )
         end
@@ -127,13 +124,11 @@ module Argu
       def define_public_source
         define_page
         let!(:public_source) do
-          source = create(:source,
-                          parent: argu.edge,
-                          iri_base: 'https://iri.test',
-                          visibility: Source.visibilities[:open],
-                          shortname: 'public_source')
-          source.reset_public_grant
-          source
+          create(:source,
+                 parent: argu.edge,
+                 iri_base: 'https://iri.test',
+                 public_grant: 'member',
+                 shortname: 'public_source')
         end
       end
     end

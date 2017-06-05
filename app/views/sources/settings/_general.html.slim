@@ -3,6 +3,7 @@
   =f.inputs name: t('sources.settings.general') do
     =f.input :name
     =f.input :iri_base
+  =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, as: :button

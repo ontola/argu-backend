@@ -66,6 +66,7 @@ nl:
         bio_long: "Meer informatie"
         scope: "Vorm"
         naam: "Naam van forum"
+        public_grant: "Iedereen mag"
       group:
         name: "Naam"
       shortname:

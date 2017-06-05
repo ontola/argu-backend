@@ -20,8 +20,12 @@ module Argu
       end
 
       def perform_automated_test(action, test_case, user_type, results, method)
-        freetown.closed! && create_forum if %i(member non_member).include?(user_type)
+        if %i(member non_member).include?(user_type)
+          freetown.grants.where(group_id: Group::PUBLIC_ID).destroy_all
+          create_forum(public_grant: 'member')
+        end
         freetown.grants.find_by(group_id: Group::PUBLIC_ID).spectator! if user_type == :spectator
+
         sign_in send(user_type) unless user_type == :guest || user_type.nil?
 
         send("general_#{action}", {results: results}.merge(test_case[:options] || {}))

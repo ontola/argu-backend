@@ -17,7 +17,7 @@ class Source < ApplicationRecord
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :page, presence: true
 
-  before_update :reset_public_grant, if: :visibility_changed?
+  after_save :reset_public_grant
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Source}
@@ -27,6 +27,7 @@ class Source < ApplicationRecord
 
   # @private
   attr_accessor :tab, :active
+  attr_writer :public_grant
 
   def self.find_by_iri(iri)
     find_by("? LIKE iri_base || '%'", iri)
@@ -40,7 +41,24 @@ class Source < ApplicationRecord
     super value.is_a?(Page) ? value : Page.find_via_shortname(value)
   end
 
+  def public_grant
+    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.role || 'none'
+  end
+
   def to_param
     shortname
+  end
+
+  private
+
+  def reset_public_grant
+    if public_grant == 'none'
+      grants.where(group_id: Group::PUBLIC_ID).destroy_all
+    else
+      grants.where(group_id: Group::PUBLIC_ID).where('role != ?', Grant.roles[public_grant]).destroy_all
+      unless grants.find_by(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
+        edge.grants.create!(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
+      end
+    end
   end
 end

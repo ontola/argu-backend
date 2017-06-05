@@ -20,6 +20,7 @@ class Forum < ApplicationRecord
 
   # @private
   attr_accessor :tab, :active
+  attr_writer :public_grant
 
   acts_as_ordered_taggable_on :tags
   paginates_per 30
@@ -41,7 +42,7 @@ class Forum < ApplicationRecord
   auto_strip_attributes :bio, nullify: false
 
   before_update :transfer_page, if: :page_id_changed?
-  before_update :reset_public_grant, if: :visibility_changed?
+  after_save :reset_public_grant
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}
@@ -113,6 +114,10 @@ class Forum < ApplicationRecord
     super(value.downcase.strip)
   end
 
+  def public_grant
+    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.role || 'none'
+  end
+
   # Is the forum out of its shortname limit
   # @see {max_shortname_count}
   # @return [Boolean] True if the forum has reached its maximum shortname count.
@@ -122,9 +127,21 @@ class Forum < ApplicationRecord
 
   def transfer_page
     Forum.transaction do
-      edge.grants.destroy_all
-      reset_public_grant
+      edge.grants.where('group_id != ?', Group::PUBLIC_ID).destroy_all
       edge.update(parent: page.edge)
+    end
+  end
+
+  private
+
+  def reset_public_grant
+    if public_grant == 'none'
+      grants.where(group_id: Group::PUBLIC_ID).destroy_all
+    else
+      grants.where(group_id: Group::PUBLIC_ID).where('role != ?', Grant.roles[public_grant]).destroy_all
+      unless grants.find_by(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
+        edge.grants.create!(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
+      end
     end
   end
 end

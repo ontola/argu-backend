@@ -75,8 +75,8 @@ module ForumsHelper
                        data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
   end
 
-  def options_for_forum_visibility
-    Forum.visibilities.keys.map { |n| [n, n] }
+  def options_for_public_grant
+    ['none', *Grant.roles.keys].map { |n| [t("roles.types.#{n}").capitalize, n] }
   end
 
   def public_form_member_label(value)
