@@ -110,12 +110,12 @@ module SPI
       assert_response 200
     end
 
-    test 'user should not is_member managers group' do
+    test 'user should not is_member super_admins group' do
       sign_in user
 
       get spi_authorize_path(
         resource_type: 'Group',
-        resource_id: freetown.page.grants.manager.first.group,
+        resource_id: freetown.page.grants.super_admin.first.group,
         authorize_action: 'is_member'
       )
 

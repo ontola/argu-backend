@@ -62,17 +62,16 @@ class Page < ApplicationRecord
   private
 
   def create_default_groups
-    %w(super_admin manager).each do |role|
-      group = Group.new(
-        name: role.humanize.pluralize,
-        name_singular: role.capitalize,
-        page: self,
-        deletable: role != :super_admin
-      )
-      group.grants << Grant.new(role: Grant.roles[role.to_sym], edge: edge)
-      group.edge = Edge.new(user: publisher, parent: edge)
-      group.save!
-    end
+    group = Group.new(
+      name: 'Admins',
+      name_singular: 'Admin',
+      page: self,
+      deletable: false
+    )
+    group.grants << Grant.new(role: Grant.roles[:super_admin], edge: edge)
+    group.edge = Edge.new(user: publisher, parent: edge)
+    group.save!
+
     service = CreateGroupMembership.new(
       edge.groups.first.edge,
       attributes: {member: owner, profile: owner},

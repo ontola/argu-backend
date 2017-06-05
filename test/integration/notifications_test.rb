@@ -141,43 +141,6 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:manager) { create_manager(freetown) }
 
-  test 'manager should forward to self and approve with notifications' do
-    sign_in manager
-    motion
-
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion.edge),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'forwarded',
-                                      forwarded_user_id: manager.id,
-                                      forwarded_group_id: freetown.edge.granted_groups('manager').first.id,
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
-           }
-    end
-    # Notification for creator and follower of Motion
-    assert_differences([['Notification.count', 2]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion.edge),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'approved',
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
-           }
-    end
-    # Notification for creator, follower and news_follower of Motion
-    assert_differences([['Notification.count', 3]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'news'
-  end
-
   test 'manager should forward to other with notification' do
     sign_in manager
     motion
@@ -205,6 +168,43 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   # As Admin
   ####################################
   let(:super_admin) { create_super_admin(freetown) }
+
+  test 'super_admin should forward to self and approve with notifications' do
+    sign_in super_admin
+    motion
+
+    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
+      post motion_decisions_path(motion.edge),
+           params: {
+             decision: attributes_for(:decision,
+                                      state: 'forwarded',
+                                      forwarded_user_id: super_admin.id,
+                                      forwarded_group_id: freetown.edge.granted_groups('super_admin').first.id,
+                                      content: 'Content',
+                                      happening_attributes: {happened_at: Time.current})
+           }
+    end
+    # Notification for creator and follower of Motion
+    assert_differences([['Notification.count', 2]]) do
+      reset_publication(Publication.last)
+    end
+    assert_equal Notification.last.notification_type, 'reaction'
+
+    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
+      post motion_decisions_path(motion.edge),
+           params: {
+             decision: attributes_for(:decision,
+                                      state: 'approved',
+                                      content: 'Content',
+                                      happening_attributes: {happened_at: Time.current})
+           }
+    end
+    # Notification for creator, follower and news_follower of Motion
+    assert_differences([['Notification.count', 3]]) do
+      reset_publication(Publication.last)
+    end
+    assert_equal Notification.last.notification_type, 'news'
+  end
 
   test 'super_admin should create and destroy project with notifications' do
     sign_in super_admin

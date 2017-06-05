@@ -78,11 +78,14 @@ module Argu
           resource
         end
 
-        def create_manager(item, user = nil)
+        def create_manager(record, user = nil)
           user ||= create(:user)
+          page = record.is_a?(Page) ? record : record.page
+          group = create(:group, parent: page.edge)
           create(:group_membership,
-                 parent: item.edge.granted_groups('manager').first.edge,
+                 parent: group.edge,
                  shortname: user.url)
+          create(:grant, edge: record.edge, group: group, role: Grant.roles['manager'])
           user
         end
 

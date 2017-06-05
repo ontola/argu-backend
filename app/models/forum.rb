@@ -66,7 +66,7 @@ class Forum < ApplicationRecord
   end
 
   def default_decision_group
-    edge.granted_groups('manager').first
+    edge.granted_groups('super_admin').first
   end
 
   def default_decision_user
