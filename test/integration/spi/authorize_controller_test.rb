@@ -110,6 +110,18 @@ module SPI
       assert_response 200
     end
 
+    test 'user should not is_member managers group' do
+      sign_in user
+
+      get spi_authorize_path(
+        resource_type: 'Group',
+        resource_id: freetown.page.grants.manager.first.group,
+        authorize_action: 'is_member'
+      )
+
+      assert_response 403
+    end
+
     ####################################
     # As Creator
     ####################################
@@ -170,6 +182,18 @@ module SPI
       get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show')
 
       assert_response 403
+    end
+
+    test 'manager should is_member managers group' do
+      sign_in manager
+
+      get spi_authorize_path(
+        resource_type: 'Group',
+        resource_id: freetown.page.grants.manager.first.group,
+        authorize_action: 'is_member'
+      )
+
+      assert_response 200
     end
   end
 end
