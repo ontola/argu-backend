@@ -56,6 +56,10 @@ module TestHelper
     group.page = Page.find(0)
   end
 
+  community_user = User.community
+  community_user.build_public_group_membership
+  community_user.profile.save
+
   if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
     Doorkeeper::Application.create!(
       id: Doorkeeper::Application::ARGU_ID,

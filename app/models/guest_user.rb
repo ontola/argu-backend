@@ -49,7 +49,9 @@ class GuestUser < User
   end
 
   def profile
-    GuestProfile.new(profileable: self)
+    @profile ||= GuestProfile.find(0)
+    @profile.profileable = self
+    @profile
   end
 
   private

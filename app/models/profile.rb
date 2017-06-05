@@ -108,10 +108,6 @@ class Profile < ApplicationRecord
     granted_edges(owner_type, role).pluck(:owner_id)
   end
 
-  def group_ids
-    super.append(Group::PUBLIC_ID)
-  end
-
   def owner
     profileable
   end

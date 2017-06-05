@@ -51,6 +51,7 @@ class User < ApplicationRecord
 
   before_save :adjust_birthday, if: :birthday_changed?
   before_create :skip_confirmation_notification!
+  before_create :build_public_group_membership
   after_commit :publish_data_event
 
   attr_accessor :current_password, :confirmation_string, :tab
@@ -83,6 +84,8 @@ class User < ApplicationRecord
               message: '%{value} is not a valid locale'
             }
   validate :r, :validate_r
+  validate :validate_public_group_membership
+
   auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
 
   def active_at(redis = nil)
@@ -99,6 +102,16 @@ class User < ApplicationRecord
 
   def apply_omniauth(omniauth)
     authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
+  end
+
+  def build_public_group_membership
+    return if Group.public.nil?
+    profile.group_memberships.build(
+      member: profile,
+      profile_id: Profile::COMMUNITY_ID,
+      group_id: Group::PUBLIC_ID,
+      edge: Edge.new(user_id: User::COMMUNITY_ID, parent: Group.public.edge)
+    )
   end
 
   def self.community
@@ -246,6 +259,10 @@ class User < ApplicationRecord
   def validate_r
     return if valid_redirect?(r)
     errors.add(:r, "Redirecting to #{r} is not allowed")
+  end
+
+  def validate_public_group_membership
+    profile.group_memberships.where(group_id: Group::PUBLIC_ID).present?
   end
 
   private

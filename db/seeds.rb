@@ -3,18 +3,37 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 u1 = User
-     .new(
-       id: User::COMMUNITY_ID,
-       shortname: Shortname.new(shortname: 'community'),
-       email: 'community@argu.co',
-       password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
-       finished_intro: true
-     )
+       .new(
+         id: User::COMMUNITY_ID,
+         shortname: Shortname.new(shortname: 'community'),
+         email: 'community@argu.co',
+         password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
+         finished_intro: true
+       )
 u1.build_profile(id: Profile::COMMUNITY_ID, profileable: u1)
 u1.save!
 u1.update(encrypted_password: '')
 
-User
+argu = Page
+         .new(
+           owner: User.find_via_shortname('community').profile,
+           shortname_attributes: {shortname: 'argu'},
+           last_accepted: Time.current
+         )
+argu.build_profile(name: 'Argu', profileable: argu)
+argu.edge = Edge.new(owner: argu, user: argu.publisher)
+argu.save!
+argu.edge.publish!
+
+public_group = Group.new(
+  id: Group::PUBLIC_ID,
+  name: 'Public',
+  page: argu
+)
+public_group.edge = Edge.create(owner: public_group, parent: argu.edge, user_id: 0)
+public_group.save!
+
+staff = User
   .create!(
     email: 'staff@argu.co',
     shortname_attributes: {shortname: 'staff_account'},
@@ -25,8 +44,8 @@ User
     finished_intro: true,
     profile: Profile.new
   )
-  .profile
-  .add_role :staff
+staff.profile.add_role :staff
+argu.update(owner: staff.profile)
 
 User
   .new(
@@ -41,26 +60,6 @@ User
   )
   .profile
   .add_role :user
-
-argu = Page
-       .new(
-         owner: User.find_via_shortname('staff_account').profile,
-         shortname_attributes: {shortname: 'argu'},
-         last_accepted: Time.current
-       )
-argu.build_profile(name: 'Argu', profileable: argu)
-argu.edge = Edge.new(owner: argu, user: argu.publisher)
-argu.save!
-argu.edge.publish!
-
-public_group = Group.new(
-  id: Group::PUBLIC_ID,
-  name: 'Public',
-  page: argu
-)
-
-public_group.edge = Edge.create(owner: public_group, parent: argu.edge, user_id: 0)
-public_group.save!
 
 forum = Forum.new(name: 'Nederland',
                   page: argu,

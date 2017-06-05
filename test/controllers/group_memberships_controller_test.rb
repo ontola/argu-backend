@@ -22,7 +22,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'user should not get show' do
     sign_in user
 
-    get :show, params: {id: member.profile.group_memberships.first}
+    get :show, params: {id: member.profile.group_memberships.second}
 
     assert_not_authorized
   end
@@ -95,7 +95,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should get show' do
     sign_in member
 
-    get :show, params: {id: member.profile.group_memberships.first}
+    get :show, params: {id: member.profile.group_memberships.second}
 
     assert_redirected_to page_url(freetown.page)
   end
@@ -104,7 +104,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
     create(:grant, edge: freetown.edge, group: group)
 
-    get :show, params: {id: member.profile.group_memberships.first}
+    get :show, params: {id: member.profile.group_memberships.second}
 
     assert_redirected_to forum_url(freetown)
   end
@@ -113,7 +113,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
     create(:grant, edge: freetown.page.edge, group: group)
 
-    get :show, params: {id: member.profile.group_memberships.first}
+    get :show, params: {id: member.profile.group_memberships.second}
 
     assert_redirected_to page_url(freetown.page)
   end
@@ -121,7 +121,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should get show with r' do
     sign_in member
 
-    get :show, params: {id: member.profile.group_memberships.first, r: forum_url(freetown)}
+    get :show, params: {id: member.profile.group_memberships.second, r: forum_url(freetown)}
 
     assert_redirected_to forum_url(freetown)
   end
@@ -130,7 +130,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_no_difference 'GroupMembership.count' do
-      delete :destroy, params: {id: member.profile.group_memberships.first}
+      delete :destroy, params: {id: member.profile.group_memberships.second}
     end
 
     assert_not_authorized
@@ -177,13 +177,13 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_response 304
-    assert_equal response.headers['Location'], group_membership_url(member.profile.group_memberships.first)
+    assert_equal response.headers['Location'], group_membership_url(member.profile.group_memberships.second)
     assert_analytics_not_collected
   end
 
   test 'super_admin should post create other' do
     sign_in create_super_admin(freetown)
-
+    user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
            params: {
@@ -199,7 +199,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
   test 'super_admin should post create other json' do
     sign_in create_super_admin(freetown)
-
+    user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
            format: :json,
@@ -239,7 +239,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'page should post create other' do
     sign_in create_super_admin(freetown)
     change_actor freetown.page
-
+    user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
            params: {

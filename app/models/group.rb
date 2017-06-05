@@ -42,6 +42,6 @@ class Group < ApplicationRecord
   end
 
   def self.public
-    Group.find(Group::PUBLIC_ID)
+    Group.find_by(id: Group::PUBLIC_ID)
   end
 end
