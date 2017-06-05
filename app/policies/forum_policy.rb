@@ -2,14 +2,7 @@
 class ForumPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
-      t = Forum.arel_table
-
-      cond = t[:visibility].eq_any([
-                                     Page.visibilities[:open],
-                                     Page.visibilities[:closed]
-                                   ])
-      cond = cond.or(t[:id].in(user.profile.forum_ids))
-      scope.where(cond)
+      scope.where('discoverable = true OR forums.id in (?)', user.profile.forum_ids)
     end
   end
 
@@ -19,6 +12,7 @@ class ForumPolicy < EdgeTreePolicy
     attributes.concat %i(public_grant page_id) if change_owner?
     attributes.append(memberships_attributes: %i(role id profile_id forum_id))
     attributes.append(:max_shortname_count) if max_shortname_count?
+    attributes.concat %i(discoverable) if staff?
     append_default_photo_params(attributes)
     attributes
   end
@@ -43,13 +37,8 @@ class ForumPolicy < EdgeTreePolicy
   end
 
   def list?
-    level =
-      if @record.hidden?
-        show?.presence || raise(ActiveRecord::RecordNotFound)
-      else
-        [(1 if @record.closed?), show?, is_manager?, is_super_admin?]
-      end
-    rule level
+    raise(ActiveRecord::RecordNotFound) unless @record.discoverable? || show?
+    true
   end
 
   def list_members?

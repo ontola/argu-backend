@@ -12,9 +12,7 @@ class VotePolicy < EdgeTreePolicy
           .joins(edge: {parent: :parent})
           .where(voteable_type: %w(Question Motion LinkedRecord), parents_edges_2: {trashed_at: nil})
           .joins('LEFT JOIN forums ON votes.forum_id = forums.id')
-          .where('forums.id IS NULL OR forums.visibility = ? OR "forums"."id" IN (?)',
-                 Forum.visibilities[:open],
-                 user.profile.forum_ids)
+          .where('forums.id IS NULL OR "forums"."id" IN (?)', user.profile.forum_ids)
       end
     end
   end

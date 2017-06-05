@@ -86,7 +86,7 @@ module Argu
           forum = create_forum(
             {
               shortname_attributes: {shortname: name},
-              visibility: Forum.visibilities[:hidden]
+              discoverable: false
             }.merge(attributes)
           )
           create(:grant,

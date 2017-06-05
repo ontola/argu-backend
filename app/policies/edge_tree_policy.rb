@@ -11,10 +11,8 @@ class EdgeTreePolicy < RestrictivePolicy
         .published
         .untrashed
         .joins("LEFT JOIN forums ON #{class_name.tableize}.forum_id = forums.id")
-        .where("#{class_name.tableize}.forum_id IS NULL OR #{class_name.tableize}.forum_id IN (?) "\
-               'OR forums.visibility = ?',
-               user.profile.forum_ids,
-               Forum.visibilities[:open])
+        .where("#{class_name.tableize}.forum_id IS NULL OR #{class_name.tableize}.forum_id IN (?) ",
+               user.profile.forum_ids)
     end
   end
 

@@ -10,13 +10,11 @@ class ActivityPolicy < RestrictivePolicy
 
     private
 
-    # Trackable should be placed in a public forum OR a forum with a group membership for the current user
+    # Trackable should be placed in one of the forums available to the current user
     def filter_inaccessible_forums(scope)
       scope
         .joins(:forum)
-        .where("#{class_name.tableize}.forum_id IN (?) OR forums.visibility = ?",
-               user.profile.forum_ids,
-               Forum.visibilities[:open])
+        .where(class_name.tableize => {forum_id: user.profile.forum_ids})
     end
 
     # If trackable is a vote, its profile should have public votes

@@ -67,6 +67,7 @@ nl:
         scope: "Vorm"
         naam: "Naam van forum"
         public_grant: "Iedereen mag"
+        discoverable: "Toon in overzichten"
       group:
         name: "Naam"
       shortname:

@@ -15,7 +15,7 @@
           label Forums:
           ul.icon-list.margin-bottom
             - resource.profileable.favorites.joins(:edge).where(edges: {owner_type: 'Forum'}).each do |favorite|
-              -next if favorite.edge.owner.hidden?
+              -next unless favorite.edge.owner.discoverable?
               li
                 =link_to forum_path(favorite.edge.owner), data: {turbolinks: 'false'} do
                   span= favorite.edge.owner.name

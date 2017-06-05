@@ -94,11 +94,8 @@ class ForumsController < EdgeTreeController
   private
 
   def authorize_action
-    if action_name == 'show'
-      authorize resource_by_id, :list?
-    else
-      authorize authenticated_resource! || Forum, "#{params[:action].chomp('!')}?"
-    end
+    return super unless action_name == 'show'
+    authorize resource_by_id, :list?
   end
 
   def city_count(forum)

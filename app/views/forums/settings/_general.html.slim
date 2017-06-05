@@ -8,6 +8,7 @@
     =f.input :bio, input_html: { rows: 2, maxlength: 80}
     =f.input :bio_long, input_html: { rows: 4}
     =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false
+    =f.input :discoverable, as: :boolean
   =render partial: 'photos/form',
           locals: {form: f,
                    type: :profile_photo,
