@@ -26,17 +26,23 @@ class GrantsTest < ActionDispatch::IntegrationTest
       user_types[:new].merge(
         user: exp_res,
         member: exp_res,
-        moderator: exp_res
+        moderator: exp_res,
+        manager: exp_res
       )
     end
     define_test(hash, :create, options: {parent: :freetown, differences: [['Grant', 1]]}) do
       user_types[:create].merge(
         user: exp_res,
         member: exp_res,
-        moderator: exp_res
+        moderator: exp_res,
+        manager: exp_res
       )
     end
-    define_test(hash, :destroy, options: {differences: [['Grant', -1]]})
+    define_test(hash, :destroy, options: {differences: [['Grant', -1]]}) do
+      user_types[:destroy].merge(
+        manager: exp_res
+      )
+    end
     define_test(hash, :destroy, options: {record: :super_admin_grant}) do
       {staff: exp_res}
     end

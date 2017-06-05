@@ -70,26 +70,48 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:manager) { create_manager(freetown) }
 
-  test 'manager should post create' do
+  test 'manager should not post create' do
     sign_in manager
+    general_create(403, [['Shortname.count', 0]])
+    assert_not_authorized
+  end
+
+  test 'manager should not put update' do
+    sign_in manager
+    general_update(403)
+  end
+
+  test 'manager should not delete destroy' do
+    subject
+    sign_in manager
+    general_destroy(403)
+  end
+
+  ####################################
+  # As Super admin
+  ####################################
+  let(:super_admin) { create_super_admin(freetown) }
+
+  test 'super_admin should post create' do
+    sign_in super_admin
     general_create
   end
 
-  test 'manager post create should not overflow limit' do
+  test 'super_admin post create should not overflow limit' do
     create(:discussion_shortname, forum: freetown, owner: motion)
     assert freetown.max_shortname_count, freetown.shortnames.count
-    sign_in manager
+    sign_in super_admin
     general_create 403, [['Shortname.count', 0]]
   end
 
-  test 'manager should put update' do
-    sign_in manager
+  test 'super_admin should put update' do
+    sign_in super_admin
     general_update 302, true
   end
 
-  test 'manager should delete destroy' do
+  test 'super_admin should delete destroy' do
     subject
-    sign_in manager
+    sign_in super_admin
     general_destroy 302, -1
   end
 

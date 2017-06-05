@@ -9,11 +9,11 @@ class GrantPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule is_manager?, super
+    rule is_super_admin?, super
   end
 
   def destroy?
     return if record.group_id == Group::PUBLIC_ID || record.super_admin?
-    rule is_manager?, is_super_admin?, super
+    rule is_super_admin?, super
   end
 end

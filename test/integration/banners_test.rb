@@ -30,18 +30,26 @@ class BannersTest < ActionDispatch::IntegrationTest
       user_types[:new].merge(
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
-        moderator: exp_res(asserts: [assert_not_authorized])
+        moderator: exp_res(asserts: [assert_not_authorized]),
+        manager: exp_res(asserts: [assert_not_authorized])
       )
     end
     define_test(hash, :create, options: {parent: :freetown}) do
       user_types[:create].merge(
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
-        moderator: exp_res(asserts: [assert_not_authorized])
+        moderator: exp_res(asserts: [assert_not_authorized]),
+        manager: exp_res(asserts: [assert_not_authorized])
       )
     end
-    define_test(hash, :edit, user_types: user_types[:edit].except(:creator))
-    define_test(hash, :update, user_types: user_types[:update].except(:creator))
-    define_test(hash, :destroy)
+    define_test(hash, :edit) do
+      user_types[:edit].merge(manager: exp_res(asserts: [assert_not_authorized])).except(:creator)
+    end
+    define_test(hash, :update) do
+      user_types[:update].merge(manager: exp_res(asserts: [assert_not_authorized])).except(:creator)
+    end
+    define_test(hash, :destroy) do
+      user_types[:destroy].merge(manager: exp_res(asserts: [assert_not_authorized])).except(:creator)
+    end
   end
 end

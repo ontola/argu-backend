@@ -105,10 +105,10 @@ class GroupsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:manager) { create_manager(@freetown.page) }
 
-  test 'manager should post create visible group' do
+  test 'manager should not post create visible group' do
     sign_in manager
 
-    assert_difference('Group.count', 1) do
+    assert_difference('Group.count', 0) do
       post page_groups_path(freetown.page),
            params: {
              group: {
@@ -118,27 +118,22 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_page_path(freetown.page, tab: :groups)
+    assert_not_authorized
   end
 
-  test 'manager should get new' do
+  test 'manager should not get new' do
     sign_in manager
 
     get new_page_group_path(@freetown.page)
 
-    assert_response 200
+    assert_not_authorized
   end
 
-  test 'manager should get settings and some tabs' do
+  test 'manager should not get settings and some tabs' do
     sign_in manager
 
     get settings_group_path(@group)
-    assert_response 200
-
-    %i(general members invite).each do |tab|
-      get settings_group_path(@group, tab: tab)
-      assert_group_settings_shown(@group, tab)
-    end
+    assert_not_authorized
   end
 
   test 'manager should not delete destroy' do

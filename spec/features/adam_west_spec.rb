@@ -245,9 +245,7 @@ RSpec.feature 'Adam west', type: :feature do
     sign_in(manager)
 
     walk_up_to_forum manager
-    expect(page).to have_content('Forum settings')
     expect(page).to have_content('New discussion')
-    expect(page.body).to have_css('.fa-gear')
   end
 
   scenario 'manager should visit forum show' do

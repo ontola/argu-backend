@@ -23,7 +23,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = [:lock_version, :token]
-    attributes.append(:shortname) if rule(is_manager?, is_super_admin?, staff?)
+    attributes.append(:shortname) if rule(is_super_admin?, staff?)
     attributes
   end
 
@@ -32,7 +32,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule valid_token?, is_manager?, is_super_admin?, super
+    rule valid_token?, is_super_admin?, super
   end
 
   def destroy?

@@ -11,7 +11,7 @@ class SourcePolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general) if is_manager? || staff?
+    tabs.concat %i(general) if is_super_admin? || staff?
     tabs
   end
 
@@ -29,6 +29,6 @@ class SourcePolicy < EdgeTreePolicy
   end
 
   def update?
-    rule is_manager?, super
+    rule is_super_admin?, super
   end
 end

@@ -7,13 +7,13 @@ RSpec.feature 'Decisions', type: :feature do
   let!(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################
-  # As manager
+  # As super admin
   ####################################
-  let(:manager) { create_manager(freetown) }
+  let(:super_admin) { create_super_admin(freetown) }
 
-  scenario 'manager should approve' do
+  scenario 'super_admin should approve' do
     skip if ENV['BROWSER'] == 'chrome'
-    sign_in(manager)
+    sign_in(super_admin)
 
     visit motion_path(motion)
     click_link 'Take decision'
@@ -29,10 +29,10 @@ RSpec.feature 'Decisions', type: :feature do
     expect(page).to have_content('Reason to take decision')
   end
 
-  scenario 'manager should forward' do
+  scenario 'super_admin should forward' do
     skip if ENV['BROWSER'] == 'chrome'
     forwarded_to
-    sign_in(manager)
+    sign_in(super_admin)
 
     visit motion_path(motion)
     click_link 'Take decision'
@@ -49,9 +49,9 @@ RSpec.feature 'Decisions', type: :feature do
     expect(page).to have_content('Reason to forward decision')
   end
 
-  scenario 'manager should reject' do
+  scenario 'super_admin should reject' do
     skip if ENV['BROWSER'] == 'chrome'
-    sign_in(manager)
+    sign_in(super_admin)
 
     visit motion_path(motion)
     click_link 'Take decision'
