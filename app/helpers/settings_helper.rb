@@ -23,19 +23,6 @@ module SettingsHelper
     settings_group_path(group, tab: :members)
   end
 
-  def visibility_icon_for(item)
-    case item.visibility
-    when 'closed'
-      'close'
-    when 'hidden'
-      'lock'
-    when 'open'
-      'globe'
-    when 'discussion'
-      'commenting'
-    end
-  end
-
   def render_settings_items_for(resource, active, return_button: false)
     content_tag :ul, class: 'tabs tabs--vertical' do
       concat render partial: 'application/settings_return', locals: {resource: resource} if return_button
