@@ -30,7 +30,6 @@ class BannersTest < ActionDispatch::IntegrationTest
       user_types[:new].merge(
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
-        moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized])
       )
     end
@@ -38,7 +37,6 @@ class BannersTest < ActionDispatch::IntegrationTest
       user_types[:create].merge(
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
-        moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized])
       )
     end

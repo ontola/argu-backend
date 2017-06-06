@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170605120038) do
+ActiveRecord::Schema.define(version: 20170606145730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -672,17 +672,6 @@ ActiveRecord::Schema.define(version: 20170605120038) do
     t.index ["page_id", "shortname"], name: "index_sources_on_page_id_and_shortname", unique: true, using: :btree
   end
 
-  create_table "stepups", force: :cascade do |t|
-    t.integer "forum_id",    null: false
-    t.integer "record_id",   null: false
-    t.string  "record_type", null: false
-    t.integer "group_id"
-    t.integer "user_id"
-    t.integer "creator_id",  null: false
-    t.string  "title"
-    t.text    "description"
-  end
-
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -863,10 +852,6 @@ ActiveRecord::Schema.define(version: 20170605120038) do
   add_foreign_key "sources", "pages"
   add_foreign_key "sources", "profiles", column: "creator_id"
   add_foreign_key "sources", "users", column: "publisher_id"
-  add_foreign_key "stepups", "forums"
-  add_foreign_key "stepups", "groups"
-  add_foreign_key "stepups", "profiles", column: "creator_id"
-  add_foreign_key "stepups", "users"
   add_foreign_key "vote_events", "forums"
   add_foreign_key "vote_events", "groups"
   add_foreign_key "vote_events", "profiles", column: "creator_id"

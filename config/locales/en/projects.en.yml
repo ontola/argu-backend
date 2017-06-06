@@ -7,12 +7,6 @@ en:
     back_to: 'Go back to project'
     go_to_parent: "Go to parent project."
     start_date_info: 'The start date is the same as the start date of the first phase.'
-    stepups:
-      type: 'Manager'
-      title: 'Managers'
-      title_singular: 'Manager'
-      info: 'Project managers can edit and delete the project and its discussions.'
-      add: 'Add manager'
     phases:
       type: 'Phase'
       title: 'Phases'

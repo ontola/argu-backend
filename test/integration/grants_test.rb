@@ -26,7 +26,6 @@ class GrantsTest < ActionDispatch::IntegrationTest
       user_types[:new].merge(
         user: exp_res,
         member: exp_res,
-        moderator: exp_res,
         manager: exp_res
       )
     end
@@ -34,7 +33,6 @@ class GrantsTest < ActionDispatch::IntegrationTest
       user_types[:create].merge(
         user: exp_res,
         member: exp_res,
-        moderator: exp_res,
         manager: exp_res
       )
     end

@@ -37,7 +37,6 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
         user: exp_res(should: true, response: 200),
         member: exp_res(should: true, response: 200),
         non_member: exp_res(should: true, response: 200),
-        moderator: exp_res(should: true, response: 200),
         manager: exp_res(should: true, response: 200),
         super_admin: exp_res(should: true, response: 200),
         staff: exp_res(should: true, response: 200)
@@ -49,7 +48,6 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
         user: exp_res(should: true, response: 200),
         member: exp_res(should: true, response: 200),
         non_member: exp_res(should: true, response: 200),
-        moderator: exp_res(should: true, response: 200),
         manager: exp_res(should: true, response: 200),
         super_admin: exp_res(should: true, response: 200),
         staff: exp_res(should: true, response: 200)
@@ -61,7 +59,6 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
         user: exp_res(should: true, response: 200),
         member: exp_res(should: true, response: 200),
         non_member: exp_res(should: true, response: 200),
-        moderator: exp_res(should: true, response: 200),
         manager: exp_res(should: true, response: 200),
         super_admin: exp_res(should: true, response: 200),
         staff: exp_res(should: true, response: 200)

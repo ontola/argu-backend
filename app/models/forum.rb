@@ -6,7 +6,6 @@ class Forum < ApplicationRecord
   belongs_to :page, inverse_of: :forums
   has_many :banners, inverse_of: :forum
   has_many :shortnames, inverse_of: :forum
-  has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum
   # User content

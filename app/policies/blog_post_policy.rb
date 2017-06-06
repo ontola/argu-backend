@@ -13,7 +13,7 @@ class BlogPostPolicy < EdgeTreePolicy
 
   def create?
     assert_publish_type
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def destroy?
@@ -21,11 +21,11 @@ class BlogPostPolicy < EdgeTreePolicy
   end
 
   def trash?
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def untrash?
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def update?

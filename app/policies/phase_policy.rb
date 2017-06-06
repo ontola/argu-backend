@@ -10,10 +10,10 @@ class PhasePolicy < EdgeTreePolicy
   end
 
   def create?
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def update?
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 end

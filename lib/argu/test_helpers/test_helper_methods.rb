@@ -100,13 +100,6 @@ module Argu
           user
         end
 
-        def create_moderator(record, user = nil)
-          user ||= create(:user)
-          forum = record.is_a?(Forum) ? record : record.forum
-          create(:stepup, forum: forum, record: record, moderator: user)
-          user
-        end
-
         def create_super_admin(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
@@ -222,7 +215,7 @@ module Argu
         include Argu::TestHelpers::AutomatedTests::Asserts
 
         def define_automated_tests_objects
-          define_common_objects(:freetown, :spectator, :user, :member, :non_member, :creator, :moderator,
+          define_common_objects(:freetown, :spectator, :user, :member, :non_member, :creator,
                                 :manager, :owner, :staff, :page)
         end
 
@@ -234,7 +227,6 @@ module Argu
           let(:non_member) { user } if mdig?(:non_member, let)
           let(:creator) { create_member(freetown) } if mdig?(:creator, let)
           let(:manager) { create_manager(freetown) } if mdig?(:manager, let)
-          let(:moderator) { create_moderator(freetown) } if mdig?(:moderator, let)
           let(:super_admin) { create_super_admin(freetown) } if mdig?(:owner, let)
           let(:staff) { create(:user, :staff) } if mdig?(:staff, let)
           let(:page) { argu } if mdig?(:page, let)

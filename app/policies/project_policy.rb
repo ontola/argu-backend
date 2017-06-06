@@ -10,10 +10,6 @@ class ProjectPolicy < EdgeTreePolicy
     attributes.concat %i(pinned) if is_manager? || staff?
     phase = record.is_a?(Project) && Edge.new(owner: Phase.new, parent: record.edge).owner
     attributes.append(phases_attributes: Pundit.policy(context, phase).permitted_attributes(true)) if phase && create?
-    stepup = record.is_a?(Project) && Stepup.new(record: record, forum: record.forum)
-    if stepup && (record.try(:new_record?) || is_manager_up?)
-      attributes.append(stepups_attributes: Pundit.policy(context, stepup).permitted_attributes(true))
-    end
     append_default_photo_params(attributes)
     attributes
   end
@@ -22,7 +18,7 @@ class ProjectPolicy < EdgeTreePolicy
     assert_publish_type
     return unless active_for_user?(:projects, user)
     return create_expired? if has_expired_ancestors?
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 
   def destroy?
@@ -36,19 +32,19 @@ class ProjectPolicy < EdgeTreePolicy
     if record.is_published? && !record.is_trashed?
       rule is_member?, is_manager?, is_super_admin?, super
     else
-      rule is_moderator?, is_manager?, is_super_admin?, super
+      rule is_manager?, is_super_admin?, super
     end
   end
 
   def trash?
-    rule is_moderator?, is_creator?, is_manager?, is_super_admin?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def untrash?
-    rule is_moderator?, is_creator?, is_manager?, is_super_admin?, super
+    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def update?
-    rule is_moderator?, is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, super
   end
 end

@@ -17,6 +17,6 @@ class CreateProject < PublishedCreateService
     end
     obj.forum ||= resource.forum
     obj.creator ||= resource.creator
-    obj.publisher ||= resource.publisher unless obj.is_a?(Stepup)
+    obj.publisher ||= resource.publisher
   end
 end

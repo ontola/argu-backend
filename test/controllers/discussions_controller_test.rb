@@ -105,43 +105,4 @@ class DiscussionsControllerTest < ActionController::TestCase
 
     assert_response 403
   end
-
-  ####################################
-  # As Moderator
-  ####################################
-  let(:freetown_moderator) { create_moderator(freetown) }
-  let(:project_moderator) { create_moderator(project) }
-  let(:unpublished_moderator) { create_moderator(unpublished_project) }
-
-  test 'moderator should get new' do
-    sign_in freetown_moderator
-
-    get :new, params: {forum_id: freetown}
-
-    assert_response 200
-  end
-
-  test 'moderator should get new on project' do
-    sign_in project_moderator
-
-    get :new, params: {project_id: project}
-
-    assert_response 200
-  end
-
-  test 'moderator should get new on unpublished project' do
-    sign_in unpublished_moderator
-
-    get :new, params: {project_id: unpublished_project}
-
-    assert_response 200
-  end
-
-  test 'moderator should get new on nested unpublished project' do
-    sign_in freetown_moderator
-
-    get :new, params: {project_id: unpublished_project}
-
-    assert_response 200
-  end
 end

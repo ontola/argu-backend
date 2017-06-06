@@ -68,7 +68,6 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
         guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
         user: exp_res(analytics: false, asserts: [assert_not_authorized]),
         member: exp_res(analytics: false, asserts: [assert_not_authorized]),
-        moderator: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
         manager: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
         super_admin: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
         staff: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published])
@@ -81,7 +80,6 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {
-        moderator: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
         manager: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
         super_admin: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
         staff: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published])
@@ -108,8 +106,6 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
       {manager: exp_res(response: 302, should: true, asserts: [assert_job_canceled])}
     end
     define_test(hash, :destroy, options: {analytics: stats_opt('blog_posts', 'destroy_success')})
-    define_test(hash, :trash, options: {analytics: stats_opt('blog_posts', 'trash_success')}) do
-      user_types[:trash].merge(moderator: exp_res(response: 302, should: true))
-    end
+    define_test(hash, :trash, options: {analytics: stats_opt('blog_posts', 'trash_success')})
   end
 end

@@ -21,7 +21,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(should: true, response: 200),
       non_member: exp_res(asserts: [assert_not_authorized]),
-      moderator: exp_res(should: true, response: 200),
       manager: exp_res(should: true, response: 200),
       super_admin: exp_res(should: true, response: 200),
       staff: exp_res(should: true, response: 200)
@@ -32,7 +31,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(asserts: [assert_not_authorized], analytics: false),
       member: exp_res(should: true, response: 302),
       non_member: exp_res(asserts: [assert_not_authorized], analytics: false),
-      moderator: exp_res(should: true, response: 302),
       manager: exp_res(should: true, response: 302),
       super_admin: exp_res(should: true, response: 302),
       staff: exp_res(should: true, response: 302)
@@ -43,7 +41,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(should: true, response: 200),
       member: exp_res(should: true, response: 200),
       non_member: exp_res(asserts: [assert_not_authorized]),
-      moderator: exp_res(should: true, response: 200),
       manager: exp_res(should: true, response: 200),
       super_admin: exp_res(should: true, response: 200),
       staff: exp_res(should: true, response: 200)
@@ -55,7 +52,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
       creator: exp_res(should: true, response: 200),
-      moderator: exp_res(asserts: [assert_not_authorized]),
       manager: exp_res(should: true, response: 200),
       super_admin: exp_res(should: true, response: 200),
       staff: exp_res(should: true, response: 200)
@@ -67,7 +63,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
       creator: exp_res(should: true, response: 302),
-      moderator: exp_res(asserts: [assert_not_authorized]),
       manager: exp_res(should: true, response: 302),
       super_admin: exp_res(should: true, response: 302),
       staff: exp_res(should: true, response: 302)
@@ -78,7 +73,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(analytics: false, asserts: [assert_not_authorized]),
       member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       non_member: exp_res(analytics: false, asserts: [assert_not_authorized]),
-      moderator: exp_res(analytics: false, asserts: [assert_not_authorized]),
       manager: exp_res(should: true, response: 302),
       super_admin: exp_res(should: true, response: 302),
       staff: exp_res(should: true, response: 302)
@@ -89,7 +83,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(analytics: false, asserts: [assert_not_authorized]),
       member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       non_member: exp_res(analytics: false, asserts: [assert_not_authorized]),
-      moderator: exp_res(analytics: false, asserts: [assert_not_authorized]),
       manager: exp_res(should: true, response: 302),
       super_admin: exp_res(should: true, response: 302),
       staff: exp_res(should: true, response: 302)
@@ -100,7 +93,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
-      moderator: exp_res(asserts: [assert_not_authorized]),
       manager: exp_res(asserts: [assert_not_authorized]),
       super_admin: exp_res(asserts: [assert_not_authorized]),
       staff: exp_res(should: true, response: 200)
@@ -111,7 +103,6 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       spectator: exp_res(asserts: [assert_not_authorized]),
       member: exp_res(asserts: [assert_not_authorized]),
       non_member: exp_res(asserts: [assert_not_authorized]),
-      moderator: exp_res(asserts: [assert_not_authorized]),
       manager: exp_res(asserts: [assert_not_authorized]),
       super_admin: exp_res(asserts: [assert_not_authorized]),
       staff: exp_res(should: true, response: 302)

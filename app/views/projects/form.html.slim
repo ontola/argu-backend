@@ -27,14 +27,6 @@
               span= t('edges.form.helper.pinned')
           =f.inputs
             hr
-            p= t('projects.stepups.info')
-            =f.semantic_fields_for :stepups do |stepup|
-              =render 'stepup_fields', f: stepup
-            .links
-              =link_to_add_association f, :stepups, class: 'btn-subtle' do
-                span.fa.fa-plus
-                span.icon-left= t('projects.stepups.add')
-            hr
             p= t('projects.phases.info')
             - unless project.new_record?
               ul

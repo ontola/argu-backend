@@ -116,57 +116,6 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As NetDem member
-  ####################################
-  let(:netdem) { create(:group, name: 'Netwerk Democratie', parent: freetown.page.edge) }
-  let(:netdem_member) { create_member(freetown) }
-  let!(:netdem_membership) do
-    create(:group_membership,
-           member: netdem_member.profile,
-           parent: netdem.edge)
-  end
-  let(:netdem_stepup) do
-    create(:stepup,
-           record: project,
-           forum: freetown,
-           moderator: netdem_member)
-  end
-  let(:netdem_stepup_unpublished) do
-    create(:stepup,
-           record: unpublished_project,
-           forum: freetown,
-           moderator: netdem_member)
-  end
-  test 'netdem member should get show published' do
-    sign_in netdem_member
-    general_show
-  end
-
-  test 'netdem member should get show unpublished' do
-    netdem_stepup_unpublished
-    sign_in netdem_member
-    general_show_unpublished 200
-  end
-
-  test 'netdem member should get edit' do
-    netdem_stepup
-    sign_in netdem_member
-    general_edit 200
-  end
-
-  test 'netdem member should patch update' do
-    netdem_stepup
-    sign_in netdem_member
-    general_update 302, true
-  end
-
-  test 'netdem should patch update finish' do
-    netdem_stepup
-    sign_in netdem_member
-    general_finish 302, true
-  end
-
-  ####################################
   # As Manager
   ####################################
   let(:manager) { create_manager freetown }

@@ -34,10 +34,6 @@ class EdgeTreePolicy < RestrictivePolicy
       5
     end
 
-    def moderator
-      6
-    end
-
     def manager
       7
     end
@@ -65,24 +61,6 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_creator?
       creator if record.creator.present? && record.creator == actor
-    end
-
-    def is_moderator?
-      c_model = context_forum
-      return if user.guest? || c_model.nil?
-      # Stepups within the forum based if they apply to the user or one of its group memberships
-      forum_stepups = c_model.stepups.where('user_id=? OR group_id IN (?)',
-                                            user.id,
-                                            user
-                                              .profile
-                                              .groups
-                                              .joins(:page)
-                                              .where(page: c_model.page_id)
-                                              .pluck(:id))
-      # Get the tuples of the entire parent chain
-      cc = persisted_edge.self_and_ancestors.map(&:polymorphic_tuple).compact
-      # Match them against the set of stepups within the forum
-      moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
     end
 
     def is_manager?
@@ -157,7 +135,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def follow?
-    rule is_member?, is_moderator?, is_super_admin?, staff?
+    rule is_member?, is_super_admin?, staff?
   end
 
   # Checks whether indexing children of a has_many relation is allowed
@@ -179,7 +157,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def log?
-    rule is_moderator?, is_manager?, is_super_admin?, staff?
+    rule is_manager?, is_super_admin?, staff?
   end
 
   def feed?
@@ -196,7 +174,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def show_unpublished?
-    rule is_creator?, is_moderator?, is_manager?, is_super_admin?, staff?, service?
+    rule is_creator?, is_manager?, is_super_admin?, staff?, service?
   end
 
   def create_expired?
@@ -217,7 +195,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_spectator?, is_member?, is_moderator?, is_manager?, is_super_admin?, super
+    rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
   end
 
   private

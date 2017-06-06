@@ -71,7 +71,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
         guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
         user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
-        moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
         super_admin: exp_res(asserts: [assert_not_authorized], analytics: false),
         staff: exp_res(asserts: [assert_not_authorized], analytics: false)
@@ -118,7 +117,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
         guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
         user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
-        moderator: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
         super_admin: exp_res(asserts: [assert_not_authorized], analytics: false),
         staff: exp_res(asserts: [assert_not_authorized], analytics: false)

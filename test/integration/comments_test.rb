@@ -163,7 +163,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
         guest: exp_res(response: 302, should: true),
         user: exp_res(response: 302, should: true),
         member: exp_res(response: 302, should: true),
-        moderator: exp_res(response: 302, should: true),
         manager: exp_res(response: 302, should: true),
         super_admin: exp_res(response: 302, should: true),
         staff: exp_res(response: 302, should: true)
@@ -183,7 +182,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
         guest: exp_res(response: 403),
         user: exp_res(response: 403),
         member: exp_res(response: 403),
-        moderator: exp_res(response: 403),
         manager: exp_res(response: 403),
         super_admin: exp_res(response: 403),
         cairo_member: exp_res(response: 302, should: true, asserts: [assert_redirect_argument]),
@@ -202,7 +200,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
         creator: exp_res(should: true, response: 200),
-        moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized]),
         super_admin: exp_res(asserts: [assert_not_authorized]),
         staff: exp_res(asserts: [assert_not_authorized])
@@ -214,7 +211,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
         user: exp_res(asserts: [assert_not_authorized]),
         member: exp_res(asserts: [assert_not_authorized]),
         creator: exp_res(response: 302, should: true),
-        moderator: exp_res(asserts: [assert_not_authorized]),
         manager: exp_res(asserts: [assert_not_authorized]),
         super_admin: exp_res(asserts: [assert_not_authorized]),
         staff: exp_res(asserts: [assert_not_authorized])

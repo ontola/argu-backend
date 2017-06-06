@@ -16,10 +16,6 @@ class PagePolicy < EdgeTreePolicy
       super if persisted_edge
     end
 
-    def is_moderator?
-      super if persisted_edge
-    end
-
     def is_manager?
       super if persisted_edge
     end

@@ -25,13 +25,11 @@ class Project < ApplicationRecord
            -> { where(question_id: nil).published.untrashed.order(updated_at: :desc) },
            class_name: 'Motion'
   has_many :phases, -> { order(:id) }, dependent: :destroy
-  has_many :stepups, as: :record, dependent: :destroy
   has_many :questions, dependent: :nullify
   has_many :top_questions, -> { published.untrashed.order(updated_at: :desc) }, class_name: 'Question'
   has_many :activities, -> { order(:created_at) }, as: :trackable
 
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :stepups, reject_if: :all_blank, allow_destroy: true
 
   before_save :update_start_date_of_first_phase
 
