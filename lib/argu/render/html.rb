@@ -7,7 +7,7 @@ module Argu
 
       def link(link, title, content)
         safe_content = content.html_safe
-        content_tag :a, href: link, title: title, target: '_blank' do
+        content =
           case link_get_type(link)
           when 'u'
             content_tag :span, safe_content, class: 'markdown--profile'
@@ -16,14 +16,14 @@ module Argu
           when 'q'
             content_with_detail_icon(safe_content, 'question', 'question')
           when 'a'
-            pro = Argument.where(id: link.split('/').last).pluck(:pro).first
+            pro, title = Argument.where(id: link.split('/').last).pluck(:pro, :title).first
             content_tag :span, class: "markdown--argument-#{pro ? 'pro' : 'con'}" do
               safe_join([content_tag(:span, '', class: "argument-bg fa fa-#{pro ? 'plus' : 'minus'}"), safe_content])
             end
           else
             content
           end
-        end
+        content_tag :a, content, title: title, href: link, target: '_blank'
       end
 
       private
