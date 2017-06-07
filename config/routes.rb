@@ -136,7 +136,7 @@ Rails.application.routes.draw do
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
 
-    get :pages, to: 'pages#index', on: :member
+    get :pages, to: 'users/pages#index', on: :member
     get :forums, to: 'forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
     resources :vote_matches, only: [:index, :show]
@@ -199,7 +199,7 @@ Rails.application.routes.draw do
 
   resources :pages,
             path: 'o',
-            only: [:new, :create, :show, :update, :destroy],
+            only: [:new, :create, :show, :update, :destroy, :index],
             concerns: [:feedable, :destroyable] do
     resources :grants, path: 'grants', only: [:new, :create]
     resources :groups, path: 'g', only: [:create, :new]

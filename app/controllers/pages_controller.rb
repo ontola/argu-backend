@@ -1,20 +1,9 @@
 # frozen_string_literal: true
 class PagesController < EdgeTreeController
   skip_before_action :authorize_action, only: :settings
-
-  def index
-    @user = User.find_via_shortname params[:id]
-    authorize @user, :update?
-    @pages = policy_scope(Page)
-               .where(id: @user.profile.granted_record_ids('Page')
-                            .concat(@user.profile.pages.pluck(:id)))
-               .distinct
-
-    render locals: {
-      current: current_user.profile.pages.length,
-      max: policy(current_user).max_allowed_pages
-    }
-  end
+  skip_before_action :check_if_registered, only: :index
+  ::INC_NESTED_COLLECTION =
+    [members: :profile_photo, views: [members: :profile_photo, views: [members: :profile_photo].freeze].freeze].freeze
 
   def show
     @forums = policy_scope(authenticated_resource.forums).joins(:edge).order('edges.follows_count DESC')
@@ -148,6 +137,16 @@ class PagesController < EdgeTreeController
     else
       super
     end
+  end
+
+  def index_response_association
+    Collection.new(
+      association_class: Page,
+      user_context: user_context,
+      association_scope: :open,
+      page: params[:page],
+      pagination: true
+    )
   end
 
   def new_resource_from_params
