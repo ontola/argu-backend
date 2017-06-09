@@ -32,7 +32,7 @@ module Commentable
     end
   end
 
-  module Serlializer
+  module Serializer
     extend ActiveSupport::Concern
     included do
       has_one :comment_collection do

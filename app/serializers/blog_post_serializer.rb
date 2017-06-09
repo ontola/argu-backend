@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BlogPostSerializer < BaseSerializer
-  include Commentable::Serlializer
+  include Commentable::Serializer
   attributes :title, :content
 
   belongs_to :creator

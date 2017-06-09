@@ -2,7 +2,7 @@
 module Motionable
   extend ActiveSupport::Concern
 
-  module Serlializer
+  module Serializer
     extend ActiveSupport::Concern
     included do
       has_one :motion_collection do
