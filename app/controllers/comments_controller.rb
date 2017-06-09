@@ -30,7 +30,7 @@ class CommentsController < EdgeTreeController
     params[:comment].try(:[], :body)
   end
 
-  def create_handler_failure(c)
+  def create_respond_failure_html(c)
     redirect_to polymorphic_url([c.parent_model],
                                 comment: {
                                   body: c.body,
@@ -39,7 +39,7 @@ class CommentsController < EdgeTreeController
                 notice: c.errors.full_messages.first
   end
 
-  def create_handler_success(resource)
+  def create_respond_success_html(resource)
     respond_with_redirect_success(resource, :create)
   end
 
