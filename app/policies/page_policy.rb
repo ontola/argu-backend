@@ -36,7 +36,7 @@ class PagePolicy < EdgeTreePolicy
       attributes.append :visibility
       attributes.append(shortname_attributes: %i(shortname))
     end
-    attributes.append :visibility if is_super_admin?
+    attributes.append :visibility if is_super_admin? || staff?
     attributes.concat %i(page_id confirmation_string) if change_owner?
     attributes.append(profile_attributes: ProfilePolicy
                                             .new(context,
