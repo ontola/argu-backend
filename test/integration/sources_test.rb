@@ -6,7 +6,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
 
   define_freetown
   let(:page) { create(:page) }
-  let(:source) { create(:source, parent: page.edge, shortname: 'source') }
+  let(:source) { create(:source, parent: page.edge, shortname: 'source', public_grant: 'member') }
 
   ####################################
   # As Quest
@@ -14,6 +14,16 @@ class SourcesTest < ActionDispatch::IntegrationTest
   test 'guest should not show settings and all tabs' do
     get settings_page_source_path(page, source)
     assert_not_a_user
+  end
+
+  test 'guest should get show JSON API with ids' do
+    get page_source_path(page_id: page.id, id: source.id, format: :json_api)
+    assert_response 200
+  end
+
+  test 'guest should get show JSON API with shortnames' do
+    get page_source_path(page_id: page.url, id: source.url, format: :json_api)
+    assert_response 200
   end
 
   ####################################
@@ -28,8 +38,20 @@ class SourcesTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
+  test 'member should get show JSON API with ids' do
+    sign_in member
+    get page_source_path(page_id: page.id, id: source.id, format: :json_api)
+    assert_response 200
+  end
+
+  test 'member should get show JSON API with shortnames' do
+    sign_in member
+    get page_source_path(page_id: page.url, id: source.url, format: :json_api)
+    assert_response 200
+  end
+
   ####################################
-  # As Owner
+  # As super admin
   ####################################
   let(:super_admin) { create_super_admin(page) }
 
@@ -40,7 +62,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
     assert_source_settings_shown source
 
     %i(general).each do |tab|
-      get settings_page_source_path(source), params: {tab: tab}
+      get settings_page_source_path(page, source), params: {tab: tab}
       assert_source_settings_shown source, tab
     end
   end
@@ -90,6 +112,18 @@ class SourcesTest < ActionDispatch::IntegrationTest
     assert_redirected_to portal_path
   end
 
+  test 'staff should get show JSON API with ids' do
+    sign_in staff
+    get page_source_path(page_id: page.id, id: source.id, format: :json_api)
+    assert_response 200
+  end
+
+  test 'staff should get show JSON API with shortnames' do
+    sign_in staff
+    get page_source_path(page_id: page.url, id: source.url, format: :json_api)
+    assert_response 200
+  end
+
   test 'staff should show settings and some tabs' do
     sign_in staff
 
@@ -97,7 +131,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
     assert_source_settings_shown source
 
     %i(general).each do |tab|
-      get settings_page_source_path(source), params: {tab: tab}
+      get settings_page_source_path(page, source), params: {tab: tab}
       assert_source_settings_shown source, tab
     end
   end

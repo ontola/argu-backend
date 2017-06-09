@@ -207,7 +207,7 @@ Rails.application.routes.draw do
       post :index, action: :index, on: :collection
     end
     resources :vote_matches, only: [:index, :show]
-    resources :sources, only: [:update], path: 's' do
+    resources :sources, only: [:update, :show], path: 's' do
       get :settings, on: :member
     end
     get :settings, on: :member
