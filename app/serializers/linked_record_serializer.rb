@@ -2,6 +2,7 @@
 class LinkedRecordSerializer < RecordSerializer
   include Argumentable::Serializer
   include Voteable::Serializer
+  include Commentable::Serializer
 
   link(:self) { object.context_id if object.persisted? }
   link(:related) do

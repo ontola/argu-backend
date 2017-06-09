@@ -255,7 +255,7 @@ Rails.application.routes.draw do
 
   resources :shortnames, only: %i(edit update destroy)
 
-  resources :linked_records, only: %i(show), path: :lr, concerns: [:votable] do
+  resources :linked_records, only: %i(show), path: :lr, concerns: [:votable, :commentable] do
     get '/', action: :show, on: :collection
     resources :arguments, only: [:new, :create, :index]
     resources :votes, only: :index

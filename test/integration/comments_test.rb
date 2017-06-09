@@ -3,6 +3,7 @@ require 'test_helper'
 
 class CommentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
+  define_public_source
 
   let(:cairo_member) { create_member(cairo) }
   let(:member) { create_member(freetown) }
@@ -30,6 +31,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:blog_post_subject) { create(:comment, publisher: creator, parent: blog_post.edge) }
   let(:motion_subject) { create(:comment, publisher: creator, parent: motion.edge) }
   let(:question_subject) { create(:comment, publisher: creator, parent: question.edge) }
+  let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
 
   define_cairo
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
@@ -76,6 +78,11 @@ class CommentsTest < ActionDispatch::IntegrationTest
     "motion.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
   end
 
+  def self.assert_redirect_new_user_linked_record
+    'assert_redirected_to new_user_session_path(r: new_linked_record_comment_path(linked_record_id: '\
+    "linked_record.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
+  end
+
   def self.assert_redirect_new_user_question
     'assert_redirected_to new_user_session_path(r: new_question_comment_path(question_id: '\
     "question.id, comment: {body: 'Just å UTF-8 comment.'}, confirm: true))"
@@ -115,6 +122,20 @@ class CommentsTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' for argument', options: options) do
       user_types[:create].merge(
         guest: exp_res(response: 302, asserts: [assert_not_a_user, assert_redirect_new_user_argument], analytics: false)
+      )
+    end
+    options = {
+      parent: :linked_record,
+      analytics: stats_opt('comments', 'create_success'),
+      attributes: {body: 'Just å UTF-8 comment.'}
+    }
+    define_test(hash, :create, suffix: ' for linked_record', options: options) do
+      user_types[:create].except(:member).merge(
+        guest: exp_res(
+          response: 302,
+          asserts: [assert_not_a_user, assert_redirect_new_user_linked_record],
+          analytics: false
+        )
       )
     end
     options = {
