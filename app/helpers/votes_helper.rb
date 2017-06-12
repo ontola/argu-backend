@@ -46,4 +46,8 @@ module VotesHelper
       'thumbs-down'
     end
   end
+
+  def upvote_for(model, profile)
+    model.votes.find_by(creator: profile)
+  end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Argument < ApplicationRecord
-  include Loggable, ProCon, Ldable
+  include Loggable, ProCon, Ldable, VotesHelper
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 
@@ -78,7 +78,7 @@ class Argument < ApplicationRecord
 
   def remove_upvote(user, profile)
     service = DestroyVote.new(
-      votes.find_by(publisher: user, creator: profile),
+      upvote_for(self, profile),
       options: {
         creator: profile,
         publisher: user
