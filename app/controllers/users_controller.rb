@@ -12,7 +12,7 @@ class UsersController < ApplicationController
         @activities = policy_scope(Activity.feed_for_profile(authenticated_resource.profile))
                         .order(created_at: :desc)
                         .limit(10)
-        preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
+        preload_user_votes(vote_event_ids_from_activities(@activities))
 
         if (/[a-zA-Z]/i =~ params[:id]).nil?
           redirect_to url_for(authenticated_resource), status: 307

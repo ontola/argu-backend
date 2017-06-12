@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 module VotesHelper
   def preload_user_votes(voteable_ids)
-    @user_votes = Vote.where(voteable_id: voteable_ids,
-                             voteable_type: 'Motion',
-                             creator: current_profile).eager_load!
+    @user_votes = Edge
+                    .where_owner('Vote', creator_id: current_profile.id)
+                    .where(parent: voteable_ids)
+                    .eager_load!
   end
 
   def toggle_vote_link(model, vote)
@@ -48,6 +49,14 @@ module VotesHelper
   end
 
   def upvote_for(model, profile)
-    model.votes.find_by(creator: profile)
+    Edge.where_owner('Vote', creator: profile).find_by(parent: model.edge)&.owner
+  end
+
+  def vote_event_ids_from_activities(activities)
+    activities
+      .where(trackable_type: 'Motion')
+      .joins(trackable_edge: :children)
+      .where(children_edges: {owner_type: 'VoteEvent'})
+      .pluck('children_edges.id')
   end
 end

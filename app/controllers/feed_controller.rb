@@ -11,11 +11,11 @@ class FeedController < AuthorizedController
                     .limit(10)
     respond_to do |format|
       format.html do
-        preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
+        preload_user_votes(vote_event_ids_from_activities(@activities))
       end
       format.js do
         if @activities.present?
-          preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
+          preload_user_votes(vote_event_ids_from_activities(@activities))
           render
         else
           respond_with_204(nil, :json)

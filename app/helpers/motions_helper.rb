@@ -70,6 +70,6 @@ module MotionsHelper
   end
 
   def user_vote_for(motion)
-    @user_votes&.find { |v| v.voteable_id == motion.id && v.voteable_type == 'Motion' }
+    @user_votes&.find { |v| v.parent_id == motion.default_vote_event.edge.id }&.owner
   end
 end

@@ -68,6 +68,15 @@ class Edge < ApplicationRecord
     persisted_edge.path.split('.').map(&:to_i)
   end
 
+  def self.where_owner(type, where_clause = nil)
+    where_clause[:creator_id] ||= where_clause.delete(:creator).id if where_clause[:creator].present?
+    where_clause[:publisher_id] ||= where_clause.delete(:publisher).id if where_clause[:publisher].present?
+    table = ActiveRecord::Base.connection.quote_string(type.tableize)
+    owner_type = ActiveRecord::Base.sanitize(type)
+    scope = joins("INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = #{owner_type}")
+    where_clause.present? ? scope.where(type.tableize => where_clause) : scope
+  end
+
   def children_count(association)
     children_counts[association.to_s].to_i || 0
   end

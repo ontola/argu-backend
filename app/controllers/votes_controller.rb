@@ -83,12 +83,10 @@ class VotesController < EdgeTreeController
 
   def resource_by_id
     return super unless params[:action] == 'show' && params[:motion_id].present?
-    @_resource_by_id ||= Vote.find_by(
-      voteable_id: get_parent_resource.voteable.id,
-      voteable_type: get_parent_resource.voteable.class.name,
-      creator: current_profile,
-      forum: get_parent_resource.forum
-    )
+    @_resource_by_id ||= Edge
+                           .where_owner('Vote', creator: current_profile)
+                           .find_by(parent: get_parent_resource.edge)
+                           &.owner
   end
 
   def for_param

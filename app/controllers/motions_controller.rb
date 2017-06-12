@@ -22,13 +22,10 @@ class MotionsController < EdgeTreeController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    unless current_user.guest?
-      @vote = Vote.where(
-        voteable_id: authenticated_resource.id,
-        voteable_type: 'Motion',
-        creator: current_profile
-      ).last
-    end
+    @vote = Edge
+              .where_owner('Vote', creator_id: current_profile)
+              .find_by(parent: authenticated_resource.default_vote_event.edge)
+              &.owner
     @vote ||= Vote.new(
       voteable_id: authenticated_resource.id,
       voteable_type: authenticated_resource.class.name,
