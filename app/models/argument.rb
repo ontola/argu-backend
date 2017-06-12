@@ -15,6 +15,7 @@ class Argument < ApplicationRecord
       .joins(:edge)
       .order("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int) DESC, edges.last_activity_at DESC")
   }
+  delegate :page, to: :forum
 
   contextualize_as_type 'argu:Argument'
   contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m, protocol: :https) }

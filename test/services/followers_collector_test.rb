@@ -2,11 +2,16 @@
 require 'test_helper'
 
 class FollowersCollectorTest < ActiveSupport::TestCase
-  define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:important_motion) { create(:motion, parent: freetown.edge, mark_as_important: '1') }
+  define_cairo
+  let(:creator) { create_member(cairo) }
+  let(:motion) { create(:motion, parent: cairo.edge, publisher: creator) }
+  let(:important_motion) { create(:motion, parent: cairo.edge, publisher: creator, mark_as_important: '1') }
+  let(:argument) { create(:argument, parent: motion.edge, publisher: creator) }
   let(:activity) { project.activities.first }
-  let!(:news_follow) { create(:news_follow, followable: freetown.edge) }
+  let!(:news_follow) { create(:news_follow, followable: cairo.edge, follower: create_member(cairo)) }
+  let!(:granted_follower) { create(:follow, followable: cairo.edge, follower: create_member(cairo)) }
+  let!(:non_granted_follower) { create(:follow, followable: cairo.edge, follower: create(:user)) }
+  let!(:lower_granted_follower) { create(:follow, followable: cairo.edge, follower: create_member(argument)) }
 
   test 'should collect 0 for motion in unfollowed forum' do
     Follow.destroy_all
@@ -17,7 +22,7 @@ class FollowersCollectorTest < ActiveSupport::TestCase
     assert_equal 1, FollowersCollector.new(activity: motion.activities.first).count
   end
 
-  test 'should collect news followers for motion with marked_as_important' do
+  test 'should collect reaction and news followers for motion with marked_as_important' do
     assert_equal 2, FollowersCollector.new(activity: important_motion.activities.first).count
   end
 end
