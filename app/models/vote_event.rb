@@ -47,14 +47,14 @@ class VoteEvent < ApplicationRecord
                         .joins(:edge, publisher: :emails)
                         .where('emails.confirmed_at IS NOT NULL')
                         .where(edges: {parent_id: edge.id})
-                        .select('votes.for, count(*) as count')
+                        .select('votes.for, count(DISTINCT votes.id) as count')
                         .group(:for)
                         .to_a
     totals_facebook = Vote
                         .joins(:edge, publisher: :identities)
                         .where(identities: {provider: 'facebook'})
                         .where(edges: {parent_id: edge.id})
-                        .select('votes.for, count(*) as count')
+                        .select('votes.for, count(DISTINCT votes.id) as count')
                         .group(:for)
                         .to_a
     @stats = %w(pro neutral con).map do |side|
