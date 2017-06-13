@@ -58,6 +58,10 @@ module Parentable
     def is_fertile?
       false
     end
+
+    def store_in_redis?(_opts = {})
+      false
+    end
   end
   ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end

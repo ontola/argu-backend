@@ -58,6 +58,18 @@ module Edgeable
       parent_model.save!
     end
 
+    def save(opts = {})
+      store_in_redis?(opts) ? store_in_redis : super
+    end
+
+    def save!(opts = {})
+      store_in_redis?(opts) ? store_in_redis : super
+    end
+
+    def destroy
+      store_in_redis? ? remove_from_redis : super
+    end
+
     def parent_model(type = nil)
       parent_edge(type)&.owner
     end
@@ -69,6 +81,14 @@ module Edgeable
 
     def pinned=(value)
       edge.pinned_at = value == '1' ? DateTime.current : nil
+    end
+
+    def store_in_redis
+      RedisResource::Resource.new(resource: self).save
+    end
+
+    def remove_from_redis
+      RedisResource::Resource.new(resource: self).destroy
     end
   end
 

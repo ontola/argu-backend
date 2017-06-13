@@ -9,6 +9,9 @@ class Vote < ApplicationRecord
   before_save :decrement_previous_counter_cache, unless: :new_record?
   before_save :set_explained_at, if: :explanation_changed?
   before_save :up_and_downvote_arguments
+  define_model_callbacks :redis_save, only: :before
+  before_redis_save :set_explained_at, if: :explanation_changed?
+  before_redis_save :up_and_downvote_arguments
 
   attr_writer :argument_ids
   parentable :argument, :vote_event
@@ -75,6 +78,10 @@ class Vote < ApplicationRecord
 
   def key
     self.for.to_sym
+  end
+
+  def store_in_redis?(opts = {})
+    !publisher.confirmed? && !opts[:skip_redis]
   end
 
   delegate :is_trashed?, to: :parent_model
