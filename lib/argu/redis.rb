@@ -32,6 +32,24 @@ module Argu
       rescue_redis_connection_error(e)
     end
 
+    def self.keys(pattern = '*', redis = redis_instance)
+      redis.keys(pattern)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+    end
+
+    def self.persist(key, redis = redis_instance)
+      redis.persist(key)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+    end
+
+    def self.rename(old_key, new_key, redis = redis_instance)
+      redis.rename(old_key, new_key)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+    end
+
     def self.set(key, value, redis = redis_instance)
       redis.set(key, value)
     rescue ::Redis::CannotConnectError => e
