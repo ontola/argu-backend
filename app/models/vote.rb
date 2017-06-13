@@ -31,10 +31,28 @@ class Vote < ApplicationRecord
   end
 
   def upvoted_arguments
-    @upvoted_arguments ||= Argument
-                             .untrashed
-                             .joins(:votes, :edge)
-                             .where(votes: {creator: creator}, edges: {parent_id: parent_model&.edge&.parent_id})
+    @upvoted_arguments ||=
+      if creator.confirmed?
+        Argument
+          .untrashed
+          .joins(:votes, :edge)
+          .where(votes: {creator: creator}, edges: {parent_id: parent_model&.edge&.parent_id})
+      else
+        Argument
+          .untrashed
+          .joins(:edge)
+          .where(
+            edges: {
+              id:
+                Edge.where_owner(
+                  'Vote',
+                  creator: creator,
+                  path: "#{parent_model&.edge&.parent&.path}.*",
+                  voteable_type: 'Argument'
+                ).pluck(:parent_id)
+            }
+          )
+      end
   end
 
   def decrement_previous_counter_cache

@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 module VotesHelper
   def preload_user_votes(voteable_ids)
-    @user_votes = Edge
-                    .where_owner('Vote', creator_id: current_profile.id)
-                    .where(parent: voteable_ids)
-                    .eager_load!
+    @user_votes = if current_user.confirmed?
+                    Edge
+                      .where_owner('Vote', creator: current_profile)
+                      .where(parent_id: voteable_ids)
+                      .eager_load!
+                  else
+                    Edge.where_owner('Vote', creator: current_profile)
+                  end
   end
 
   def toggle_vote_link(model, vote)

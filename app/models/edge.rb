@@ -68,13 +68,24 @@ class Edge < ApplicationRecord
     persisted_edge.path.split('.').map(&:to_i)
   end
 
-  def self.where_owner(type, where_clause = nil)
-    where_clause[:creator_id] ||= where_clause.delete(:creator).id if where_clause[:creator].present?
-    where_clause[:publisher_id] ||= where_clause.delete(:publisher).id if where_clause[:publisher].present?
-    table = ActiveRecord::Base.connection.quote_string(type.tableize)
-    owner_type = ActiveRecord::Base.sanitize(type)
-    scope = joins("INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = #{owner_type}")
-    where_clause.present? ? scope.where(type.tableize => where_clause) : scope
+  # Selects edges of a certain type over persisted and transient models.
+  # @param [String] type The (child) edges' #owner_type value
+  # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.
+  # @option where_clause [Integer, #confirmed?] :creator :publisher If the object is not `#confirmed?`,
+  #         the system will use transient resources.
+  # @return [ActiveRecord::Relation, RedisResource::Relation]
+  def self.where_owner(type, where_clause = {})
+    if (where_clause[:creator].present? && !where_clause[:creator].confirmed?) ||
+        (where_clause[:publisher].present? && !where_clause[:publisher].confirmed?)
+      RedisResource::EdgeRelation.where(where_clause.merge(owner_type: type))
+    else
+      where_clause[:creator_id] ||= where_clause.delete(:creator).id if where_clause[:creator].present?
+      where_clause[:publisher_id] ||= where_clause.delete(:publisher).id if where_clause[:publisher].present?
+      table = ActiveRecord::Base.connection.quote_string(type.tableize)
+      owner_type = ActiveRecord::Base.sanitize(type)
+      scope = joins("INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = #{owner_type}")
+      where_clause.present? ? scope.where(type.tableize => where_clause) : scope
+    end
   end
 
   def children_count(association)
