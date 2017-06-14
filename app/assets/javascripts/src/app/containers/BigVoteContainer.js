@@ -25,6 +25,7 @@ export const BigVoteContainer = React.createClass({
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
+        facebookUrl: React.PropTypes.string,
         newArgumentButtons: React.PropTypes.bool,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
@@ -85,6 +86,7 @@ export const BigVoteContainer = React.createClass({
                                                  createArgument={this.state.createArgument}
                                                  currentExplanation={this.state.currentExplanation}
                                                  currentVote={this.state.currentVote}
+                                                 facebookUrl={this.props.facebookUrl}
                                                  newArgumentButtons={this.props.newArgumentButtons}
                                                  newExplanation={this.state.newExplanation}
                                                  newSelectedArguments={this.state.newSelectedArguments}

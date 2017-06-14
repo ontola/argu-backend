@@ -25,6 +25,7 @@ module MotionsHelper
       disabled: disabled_message.present?,
       disabledMessage: disabled_message,
       distribution: motion_vote_counts(motion),
+      facebookUrl: omniauth_authorize_path(:user, :facebook, r: request.env['PATH_INFO']),
       newArgumentButtons: policy(motion).create_child?(:arguments).present?,
       objectId: motion.id,
       objectType: 'motion',

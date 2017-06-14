@@ -13,3 +13,5 @@ nl:
       signup: "Bevestig jouw stem met email of Facebook:"
       email:
         placeholder: "Vul hier jouw e-mail adres is"
+      facebook_login: "Inloggen met Facebook"
+      facebook_notice: "We plaatsen nooit iets op jouw Facebook pagina."

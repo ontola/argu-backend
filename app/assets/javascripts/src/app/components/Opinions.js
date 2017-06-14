@@ -38,6 +38,7 @@ const OpinionContainerProps = {
     createArgument: React.PropTypes.object.isRequired,
     currentExplanation: React.PropTypes.object.isRequired,
     currentVote: React.PropTypes.string.isRequired,
+    facebookUrl: React.PropTypes.string.isRequired,
     newArgumentButtons: React.PropTypes.bool.isRequired,
     newExplanation: React.PropTypes.string,
     newSelectedArguments: React.PropTypes.array.isRequired,
@@ -91,6 +92,7 @@ OpinionAdd.propTypes = opinionAddProps;
 
 export const OpinionSignUp = React.createClass({
     propTypes: {
+        facebookUrl: React.PropTypes.string.isRequired,
         onSignupEmailChange: React.PropTypes.func.isRequired,
         signupEmail: React.PropTypes.string.isRequired,
         userRegistrationUrl: React.PropTypes.string.isRequired
@@ -108,7 +110,7 @@ export const OpinionSignUp = React.createClass({
     },
 
     render () {
-        const { onSignupEmailChange, signupEmail, userRegistrationUrl } = this.props;
+        const { facebookUrl, onSignupEmailChange, signupEmail, userRegistrationUrl } = this.props;
         return (
             <form action={userRegistrationUrl} className={"formtastic formtastic--full-width"} method="post">
                 <input type="hidden" name="authenticity_token" value={this.state.authenticityToken}/>
@@ -126,6 +128,13 @@ export const OpinionSignUp = React.createClass({
                                     type="email"
                                     value={signupEmail}/>
                             </div>
+                            <div>
+                                <a className="btn btn--facebook" data-turbolinks="false" href={facebookUrl}>
+                                    <span className="fa fa-facebook" />
+                                    <span className="icon-left">{I18n.t('opinions.form.facebook_login')}</span>
+                                </a>
+                            </div>
+                            <div className="info">{I18n.t('opinions.form.facebook_notice')}</div>
                         </div>
                     </section>
                     <section className="section--footer">

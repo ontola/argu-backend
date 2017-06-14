@@ -13,3 +13,5 @@ en:
       signup: "Confirm your vote with email or Facebook:"
       email:
         placeholder: "Enter your email address here"
+      facebook_login: "Log in with Facebook"
+      facebook_notice: "We never post to your Facebook wall."
