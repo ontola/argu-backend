@@ -63,7 +63,7 @@ gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
-gem 'roadie', '~> 3.2.1'
+gem 'roadie', '~> 3.2.2'
 gem 'roadie-rails', '~> 1.1.1'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
@@ -152,7 +152,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'nokogiri', '~> 1.7.1'
+  gem 'nokogiri', '~> 1.8.0'
   gem 'pry'
   # gem 'byebug'
   # gem 'pry-byebug'
