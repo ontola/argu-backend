@@ -43,13 +43,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_and_redirect_with_r(resource_or_scope, *args)
     sign_in resource_or_scope, *args
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource_or_scope)
-    if resource_or_scope.try(:r).present?
-      r = URI.decode(resource_or_scope.r)
-      redirect_to r.presence || root_path
-    else
-      redirect_to after_sign_in_path_for(resource_or_scope)
-    end
+    redirect = if resource_or_scope.try(:r).present?
+                 URI.decode(resource_or_scope.r) || root_path
+               else
+                 after_sign_in_path_for(resource_or_scope)
+               end
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource_or_scope, redirect)
+    redirect_to redirect
   end
 
   private
@@ -102,7 +102,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     identity = Identity.find_or_initialize_by uid: request.env['omniauth.auth']['uid'], provider: provider
     set_identity_fields_for provider, identity, request.env['omniauth.auth']
     user = connector.create_user_without_shortname(request.env['omniauth.auth'], identity, r_param(request.env))
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), user)
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), user, r_param(request.env))
     setup_favorites(user)
     set_flash_message(:notice, :success, kind: provider.to_s.capitalize) if is_navigational_format?
     sign_in_and_redirect_with_r user

@@ -75,7 +75,7 @@ class RegistrationsController < Devise::RegistrationsController
     else
       resource.primary_email_record.send_confirmation_instructions
     end
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource)
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r)
     setup_favorites(resource)
     send_event user: resource,
                category: 'registrations',

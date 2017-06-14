@@ -15,7 +15,7 @@ module IRIHelper
   #   id_and_type_from_iri # => {}
   def id_and_type_from_iri(iri)
     match = iri =~ ARGU_URI_MATCH unless iri.nil?
-    return {} if iri.nil? || match.nil? || match <= 0
+    return {} if iri.nil? || (match.nil? || match <= 0) && URI.parse(iri).hostname.present?
     parent = Rails.application.routes.recognize_path(iri)
     return {} unless parent[:action] == 'show' && parent[:id].present? && parent[:controller].present?
     {id: parent[:id], type: parent[:controller].singularize}

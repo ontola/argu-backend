@@ -24,7 +24,7 @@ module Oauth
       )
       resource = User.find(response.token.resource_owner_id)
       resource.update r: ''
-      schedule_redis_resource_worker(GuestUser.new(id: guest_session_id), resource) if guest_session_id.present?
+      schedule_redis_resource_worker(GuestUser.new(id: guest_session_id), resource, r) if guest_session_id.present?
       redirect_to r.presence || root_path
     rescue Argu::InvalidCredentialsError
       handle_invalid_credentials(r)
