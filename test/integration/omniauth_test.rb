@@ -5,6 +5,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   define_freetown
+  let(:guest_user) { GuestUser.new(session: session) }
+  let(:other_guest_user) { GuestUser.new(id: 'other_id') }
   let!(:user3) do
     create(:user,
            email: 'user3@argu.co',
@@ -31,6 +33,16 @@ class OmniauthTest < ActionDispatch::IntegrationTest
            uid: 111_903_726_898_977,
            user: user_fb_only)
   end
+  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:guest_vote) do
+    create(:vote, parent: motion.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+  end
+  let(:other_guest_vote) do
+    create(:vote,
+           parent: motion.default_vote_event.edge,
+           creator: other_guest_user.profile,
+           publisher: other_guest_user)
+  end
 
   test 'should sign up with facebook' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
@@ -41,10 +53,15 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     get user_facebook_omniauth_authorize_path
     assert_redirected_to user_facebook_omniauth_callback_path
 
-    assert_differences [['User.count', 1], ['Favorite.count', 1]] do
-      follow_redirect!
-      assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'facebook')
+    guest_vote
+    other_guest_vote
+
+    assert_differences [['User.count', 1], ['Vote.count', 1], ['Favorite.count', 1]] do
+      Sidekiq::Testing.inline! do
+        follow_redirect!
+        assert_redirected_to setup_users_path
+        assert_analytics_collected('registrations', 'create', 'facebook')
+      end
     end
 
     assert User.last.confirmed?
@@ -75,8 +92,15 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     get user_facebook_omniauth_authorize_path
     assert_redirected_to user_facebook_omniauth_callback_path
-    follow_redirect!
-    assert_redirected_to root_path
+    guest_vote
+    other_guest_vote
+
+    assert_differences [['User.count', 0], ['Vote.count', 1], ['Favorite.count', 1]] do
+      Sidekiq::Testing.inline! do
+        follow_redirect!
+        assert_redirected_to root_path
+      end
+    end
   end
 
   test 'should sign in with facebook with r' do
@@ -104,23 +128,30 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     get user_facebook_omniauth_authorize_path
     assert_redirected_to user_facebook_omniauth_callback_path
+    guest_vote
+    other_guest_vote
 
-    follow_redirect!
-    assert_redirected_to connect_user_path(
-      user3,
-      token: identity_token(Identity.find_by(uid: 1_119_134_323_213))
-    )
+    assert_differences [['User.count', 0], ['Vote.count', 1], ['Favorite.count', 1], ['Identity.count', 1]] do
+      Sidekiq::Testing.inline! do
+        follow_redirect!
+        assert_redirected_to connect_user_path(
+          user3,
+          token: identity_token(Identity.find_by(uid: 1_119_134_323_213))
+        )
 
-    follow_redirect!
-    assert_response 200
+        follow_redirect!
+        assert_response 200
 
-    post connect_user_path(user3, token: identity_token(Identity.find_by(uid: 1_119_134_323_213))),
-         params: {
-           user: {
-             password: 'useruser'
-           }
-         }
-    assert_redirected_to root_path
+        post connect_user_path(user3, token: identity_token(Identity.find_by(uid: 1_119_134_323_213))),
+             params: {
+               user: {
+                 password: 'useruser'
+               }
+             }
+        assert_redirected_to root_path
+      end
+    end
+
     assert_equal user3.reload.identities.first.access_token,
                  'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
                  'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\

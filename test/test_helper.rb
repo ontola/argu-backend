@@ -83,6 +83,11 @@ module ActiveSupport
     include UrlHelper
     ActiveRecord::Migration.check_pending!
 
+    teardown do
+      keys = Argu::Redis.keys('temporary*')
+      Argu::Redis.redis_instance.del(*keys) if keys.present?
+    end
+
     # FactoryGirl.lint
     # Add more helper methods to be used by all tests here...
 

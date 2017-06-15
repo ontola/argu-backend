@@ -11,11 +11,37 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   define_freetown
   let(:user) { create(:user) }
+  let(:guest_user) { GuestUser.new(session: session) }
+  let(:other_guest_user) { GuestUser.new(id: 'other_id') }
   let(:place) { create(:place) }
   let(:argu) { create(:page) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:motion2) { create(:motion, parent: freetown.edge) }
   let(:motion3) { create(:motion, parent: freetown.edge) }
+  let(:guest_vote) do
+    create(:vote,
+           parent: motion.default_vote_event.edge,
+           creator: guest_user.profile,
+           publisher: guest_user)
+  end
+  let(:guest_vote2) do
+    create(:vote,
+           parent: motion2.default_vote_event.edge,
+           creator: guest_user.profile,
+           publisher: guest_user)
+  end
+  let(:other_guest_vote) do
+    create(:vote,
+           parent: motion.default_vote_event.edge,
+           creator: other_guest_user.profile,
+           publisher: other_guest_user)
+  end
+  let(:other_guest_vote3) do
+    create(:vote,
+           parent: motion3.default_vote_event.edge,
+           creator: other_guest_user.profile,
+           publisher: other_guest_user)
+  end
 
   ####################################
   # As Guest
@@ -26,19 +52,20 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     locale = :en
     cookies[:locale] = locale.to_s
 
-    assert_differences([['User.count', 1],
-                        ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      post user_registration_path,
-           params: {
-             user: {
-               email: 'test@example.com',
-               password: 'password',
-               password_confirmation: 'password'
+    Sidekiq::Testing.inline! do
+      assert_differences([['User.count', 1],
+                          ['Favorite.count', 1]]) do
+        post user_registration_path,
+             params: {
+               user: {
+                 email: 'test@example.com',
+                 password: 'password',
+                 password_confirmation: 'password'
+               }
              }
-           }
-      assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'email')
+        assert_redirected_to setup_users_path
+        assert_analytics_collected('registrations', 'create', 'email')
+      end
     end
     assert_equal locale, User.last.language.to_sym
     assert_not_nil User.last.current_sign_in_ip
@@ -47,9 +74,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not_nil User.last.last_sign_in_at
 
     delete destroy_user_session_path
-
-    # Send mail
-    Sidekiq::Extensions::DelayedMailer.process_job(Sidekiq::Worker.jobs.last)
 
     open_email('test@example.com')
     assert_equal current_email.subject, 'Confirm your e-mail address'
@@ -70,7 +94,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
+                        ['Sidekiq::Worker.jobs.count', 2]]) do
       post user_registration_path,
            params: {user: attributes_for(:user)}
       assert_redirected_to setup_users_path
@@ -79,24 +103,34 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_equal locale, User.last.language.to_sym
   end
 
-  test 'should post create without password' do
+  test 'should post create without password and transfer and persist guest votes' do
+    other_guest_vote
+    get root_path
+    guest_vote
+    guest_vote2
+    other_guest_vote3
+
     locale = :en
     cookies[:locale] = locale.to_s
     clear_emails
 
-    assert_differences([['User.count', 1],
-                        ['Email.where(confirmed_at: nil).count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      post user_registration_path,
-           params: {
-             format: :json,
-             user: {
-               email: 'test@example.com'
+    Sidekiq::Testing.inline! do
+      assert_differences([['User.count', 1],
+                          ['Email.where(confirmed_at: nil).count', 1]]) do
+        post user_registration_path,
+             params: {
+               format: :json,
+               user: {
+                 email: 'test@example.com'
+               }
              }
-           }
-      assert_response 201
-      assert_analytics_collected('registrations', 'create', 'email')
+        assert_response 201
+        assert_analytics_collected('registrations', 'create', 'email')
+      end
     end
+    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
+    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
+
     get forum_path(freetown), params: {format: :json_api}
     assert_response 200
     get forum_path(freetown)
@@ -104,18 +138,17 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    # Send mail
-    Sidekiq::Extensions::DelayedMailer.process_job(Sidekiq::Worker.jobs.last)
-
     open_email('test@example.com')
     assert_equal current_email.subject, 'Welcome to Argu'
     current_email.click_link 'Set my password'
 
     # Set password
-    assert_difference('Email.where(confirmed_at: nil).count', -1) do
-      fill_in('user_password', with: 'password')
-      fill_in('user_password_confirmation', with: 'password')
-      click_button('Edit')
+    assert_differences([['Vote.count', 2], ['Email.where(confirmed_at: nil).count', -1]]) do
+      Sidekiq::Testing.inline! do
+        fill_in('user_password', with: 'password')
+        fill_in('user_password_confirmation', with: 'password')
+        click_button('Edit')
+      end
     end
 
     assert_equal current_path, setup_users_path
@@ -123,20 +156,23 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'should post create transfer guest votes' do
     get root_path
-    create_guest_vote(motion.default_vote_event.id, session.id)
-    create_guest_vote(motion2.default_vote_event.id, session.id)
-    create_guest_vote(motion.default_vote_event.id, 'other_session')
-    create_guest_vote(motion3.default_vote_event.id, 'other_session')
+    guest_vote
+    guest_vote2
+    other_guest_vote
+    other_guest_vote3
 
-    assert_differences([['User.count', 1],
-                        ['Vote.count', 2],
-                        ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      post user_registration_path,
-           params: {user: attributes_for(:user)}
-      assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'email')
+    Sidekiq::Testing.inline! do
+      assert_differences([['User.count', 1],
+                          ['Vote.count', 0],
+                          ['Favorite.count', 1]]) do
+        post user_registration_path,
+             params: {user: attributes_for(:user)}
+      end
     end
+    assert_redirected_to setup_users_path
+    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
+    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
+    assert_analytics_collected('registrations', 'create', 'email')
   end
 
   test "guest should not post create when passwords don't match" do

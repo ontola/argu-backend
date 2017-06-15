@@ -22,15 +22,17 @@ RSpec.feature 'Signup', type: :feature do
     expect(page).to have_content(motion.content)
 
     click_link 'Neutral'
-    expect(page).to have_content 'Sign up'
 
-    click_link 'Log in with Facebook'
+    assert_differences [['User.count', 1], ['Vote.count', 1], ['Favorite.count', 1]] do
+      Sidekiq::Testing.inline! do
+        within('.opinion-form') do
+          click_link 'Log in with Facebook'
+        end
+        expect(page).to have_current_path setup_users_path
+      end
+    end
 
-    expect(page).to have_current_path setup_users_path
     click_button 'Volgende'
-
-    click_button 'Geen van beide'
-
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
   end
@@ -46,18 +48,20 @@ RSpec.feature 'Signup', type: :feature do
     expect(page).to have_content(motion.content)
 
     click_link 'Neutral'
-    expect(page).to have_content 'Sign up'
+    Sidekiq::Testing.inline! do
+      within('.opinion-form') do
+        click_link 'Log in with Facebook'
+      end
+      expect(page).to have_current_path(connect_user_path(u), only_path: true)
 
-    click_link 'Log in with Facebook'
-    expect(page).to have_current_path(connect_user_path(u), only_path: true)
+      fill_in 'password', with: 'password'
+      click_button 'Save'
 
-    fill_in 'password', with: 'password'
-    click_button 'Save'
+      expect(page).to have_content('Account connected')
+      expect(u.reload.identities.count).to eq(1)
+    end
 
-    expect(page).to have_content('Account connected')
-    expect(u.reload.identities.count).to eq(1)
-
-    click_button 'Neutral'
+    visit motion_path(motion)
 
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'

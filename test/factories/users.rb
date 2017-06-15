@@ -29,7 +29,11 @@ FactoryGirl.define do
 
     trait :unconfirmed do
       after(:create) do |user|
-        user.primary_email_record.update(confirmed_at: nil, confirmation_sent_at: 1.year.ago)
+        user.primary_email_record.update(
+          confirmed_at: nil,
+          confirmation_sent_at: 1.year.ago,
+          unconfirmed_email: user.email
+        )
       end
     end
 

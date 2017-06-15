@@ -162,10 +162,10 @@ module Argu
       private
 
       def service_options(opts = {})
-        profile = create(:profile, opts)
+        user = create(:user, profile: build(:profile, opts))
         {
-          creator: profile,
-          publisher: profile.profileable
+          creator: user.profile,
+          publisher: user
         }
       end
 

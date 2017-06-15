@@ -133,7 +133,7 @@ module Argu
           service = service_class.new(parent_edge, attributes: attributes, options: options)
           service.commit
           raise service.resource.errors.full_messages.first unless service.resource.valid?
-          service.resource.reload
+          service.resource.store_in_redis? ? service.resource : service.resource.reload
         end
 
         def destroy_resource(resource, user = nil, profile = nil)

@@ -62,7 +62,7 @@ class VotesController < EdgeTreeController
   end
 
   def create_respond_blocks_success(resource, format)
-    format.json { render location: resource, locals: {model: resource.parent_model, vote: resource} }
+    format.json { render location: vote_url(resource), locals: {model: resource.parent_model, vote: resource} }
     format.json_api { respond_with_200(resource, :json_api) }
     format.js { render locals: {model: resource.parent_model, vote: resource} }
     format.html do

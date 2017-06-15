@@ -81,11 +81,16 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).not_to have_css('.btn-neutral[data-voted-on=true]')
     find('a', text: 'Neutral').click
 
-    redirect_url = new_motion_vote_path(motion_id: motion,
-                                        confirm: 'true')
-    sign_up_and_setup(redirect_url)
+    user_attr = attributes_for(:user)
 
-    click_button 'btn-neutral'
+    Sidekiq::Testing.inline! do
+      within('.opinion-form') do
+        fill_in 'user[email]', with: user_attr[:email]
+        click_button 'Save'
+      end
+
+      setup_profile(user_attr)
+    end
 
     expect(page).to have_css('.btn-neutral[data-voted-on=true]')
   end
@@ -93,7 +98,20 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'guest should post a new motion' do
     redirect_url = new_question_motion_path(question_id: question)
     create_motion_for_question do
-      sign_up_and_setup(redirect_url)
+      expect(page).to have_content 'Sign up'
+
+      click_link 'Sign up with email'
+      expect(page).to have_current_path new_user_registration_path(r: redirect_url)
+
+      user_attr = attributes_for(:user)
+      within('#new_user') do
+        fill_in 'user_email', with: user_attr[:email]
+        fill_in 'user_password', with: user_attr[:password]
+        fill_in 'user_password_confirmation', with: user_attr[:password]
+        click_button 'Sign up'
+      end
+
+      setup_profile(user_attr)
     end
   end
 
@@ -298,21 +316,8 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(question.content)
   end
 
-  def sign_up_and_setup(redirect_url)
+  def setup_profile(user_attr)
     nominatim_netherlands
-
-    expect(page).to have_content 'Sign up'
-
-    click_link 'Sign up with email'
-    expect(page).to have_current_path new_user_registration_path(r: redirect_url)
-
-    user_attr = attributes_for(:user)
-    within('#new_user') do
-      fill_in 'user_email', with: user_attr[:email]
-      fill_in 'user_password', with: user_attr[:password]
-      fill_in 'user_password_confirmation', with: user_attr[:password]
-      click_button 'Sign up'
-    end
 
     expect(page).to have_current_path setup_users_path
     click_button 'Next'

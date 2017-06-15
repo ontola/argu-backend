@@ -18,36 +18,29 @@ RSpec.feature 'Partial Voting', type: :feature do
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     find('a', text: 'Disagree').click
-    expect(page).to have_content 'Sign up'
-
-    click_link 'Sign up with email'
-    expect(page).to have_current_path new_user_registration_path(r: new_motion_vote_path(subject,
-                                                                                         confirm: true,
-                                                                                         r: "/q/#{question.id}"))
 
     user_attr = attributes_for(:user)
-    within('#new_user') do
-      fill_in 'user_email', with: user_attr[:email]
-      fill_in 'user_password', with: user_attr[:password]
-      fill_in 'user_password_confirmation', with: user_attr[:password]
-      click_button 'Sign up'
-    end
+    Sidekiq::Testing.inline! do
+      within('.opinion-form') do
+        fill_in 'user[email]', with: user_attr[:email]
+        click_button 'Save'
+      end
 
-    expect(page).to have_current_path setup_users_path
-    click_button 'Next'
-
-    profile_attr = attributes_for(:profile)
-    within('form') do
-      fill_in 'user_first_name', with: user_attr[:first_name]
-      fill_in 'user_last_name', with: user_attr[:last_name]
-      fill_in 'user_profile_attributes_about', with: profile_attr[:about]
+      expect(page).to have_current_path setup_users_path
       click_button 'Next'
-    end
 
-    click_button 'Disagree'
+      profile_attr = attributes_for(:profile)
+      within('form') do
+        fill_in 'user_first_name', with: user_attr[:first_name]
+        fill_in 'user_last_name', with: user_attr[:last_name]
+        fill_in 'user_profile_attributes_about', with: profile_attr[:about]
+        click_button 'Next'
+      end
+    end
 
     expect(page).to have_current_path(question_path(question))
     expect(page).to have_css('.btn-con[data-voted-on=true]')
+    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
   end
 
   ####################################
