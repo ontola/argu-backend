@@ -23,7 +23,7 @@
       ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
         - unless current_user.guest?
           li
-            ul=react_component_store 'HyperDropdown', props: follow_dropdown_items(question)
+            ul= dropdown_menu(question, :follow)
         =crud_menu_item(question, question_items(question))
         - if question.edge.is_public? || policy(question.parent_model(:page)).invite?
           li

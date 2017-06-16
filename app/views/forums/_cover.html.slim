@@ -43,4 +43,4 @@
               span.icon-left= t('feed')
         - unless current_user.guest?
           li.float-right
-            ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(resource, trigger_class: 'btn--transparant')
+            ul= dropdown_menu(resource, :follow)

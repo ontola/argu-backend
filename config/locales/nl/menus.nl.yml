@@ -1,0 +1,7 @@
+nl:
+  menus:
+    default:
+      follow: "Meldingen"
+      never: 'Nooit meldingen ontvangen'
+      reactions: 'Alle items'
+      news: 'Belangrijke items'

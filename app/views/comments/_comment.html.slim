@@ -8,7 +8,7 @@
       ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
         - unless current_user.guest?
           li
-            ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(c, follow_types: [:reactions, :never])
+            ul= dropdown_menu(c, :follow)
         - if policy(c).update? || policy(c).trash?
           li
             ul= react_component_store 'HyperDropdown', props: comment_items(c)

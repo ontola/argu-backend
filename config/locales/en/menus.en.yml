@@ -1,0 +1,7 @@
+en:
+  menus:
+    default:
+      follow: "Notifications"
+      never: 'Never receive notifications'
+      reactions: 'All items'
+      news: 'Important items'

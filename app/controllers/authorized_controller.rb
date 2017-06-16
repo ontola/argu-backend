@@ -14,7 +14,7 @@ class AuthorizedController < ApplicationController
                 except: %i[show shift move convert convert!]
   before_action :authorize_action
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_edge, :authenticated_resource, :collect_banners
+  helper_method :authenticated_edge, :authenticated_resource, :collect_banners, :user_context
 
   # @private
   def user_context

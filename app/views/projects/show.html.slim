@@ -18,7 +18,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
         ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
           - unless current_user.guest?
             li
-              ul = react_component_store 'HyperDropdown', props: follow_dropdown_items(project)
+              ul= dropdown_menu(project, :follow)
           =crud_menu_item(project)
           - if project.edge.is_public? || policy(project.parent_model(:page)).invite?
             li.share-menu

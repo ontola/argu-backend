@@ -18,6 +18,10 @@ class GuestUser < User
     I18n.t('users.guest')
   end
 
+  def follow_for(_followable)
+    nil
+  end
+
   def id
     @id ||= session.id
   end

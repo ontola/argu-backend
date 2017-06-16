@@ -165,7 +165,7 @@ class User < ApplicationRecord
   # @param [Edge] followable The Edge to check the follow_type for
   # @return [String] the follow_type of the Follow for the followable by this User. 'never' if not following at all
   def following_type(followable)
-    follow_for(followable).present? ? follow_for(followable).follow_type : 'never'
+    follow_for(followable)&.follow_type || 'never'
   end
 
   def favorite_forums

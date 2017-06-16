@@ -10,7 +10,7 @@
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
       - unless current_user.guest?
         li
-          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(argument, follow_types: [:reactions, :never])
+          ul= dropdown_menu(argument, :follow)
       =crud_menu_item(argument)
       - if argument.edge.is_public?
         li

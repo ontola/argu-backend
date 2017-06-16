@@ -12,7 +12,7 @@
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       - unless current_user.guest?
         li
-          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(motion, follow_types: [:news, :reactions, :never])
+          ul= dropdown_menu(motion, :follow)
       =crud_menu_item(motion)
       - if motion.edge.is_public? || policy(motion.parent_model(:page)).invite?
         li.share-menu
