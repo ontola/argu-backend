@@ -4,7 +4,7 @@ class ActorsController < ApplicationController
     @profile = Profile.find params[:na]
 
     if @profile.present?
-      authorize @profile.profileable, :update?
+      authorize CurrentActor.new(user: current_user, actor: Profile.find(params[:na])), :show?
       cookies[:a_a] = @profile.id
       status = 200
     else

@@ -7,11 +7,11 @@ class CurrentActorPolicy < RestrictivePolicy
   end
 
   def show?
-    current_user && is_manager?
+    current_user && is_manager? && user.confirmed?
   end
 
   def update?
-    current_user && is_manager?
+    current_user && is_manager? && user.confirmed?
   end
 
   private
