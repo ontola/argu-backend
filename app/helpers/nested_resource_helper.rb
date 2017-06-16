@@ -53,7 +53,7 @@ module NestedResourceHelper
   #   params = {motion_id: 1}
   #   parent_resource_key # => :motion_id
   def parent_resource_key(hash)
-    hash.keys.find { |k| /_id/ =~ k }
+    hash.keys.reverse.find { |k| /_id/ =~ k }
   end
 
   # Constantizes a class string from the params hash
@@ -61,7 +61,7 @@ module NestedResourceHelper
   # @return [ApplicationRecord] The parent resource class object
   # @note Whether the given parent is allowed for the requested resource is not validated here.
   def parent_resource_klass(opts = params)
-    ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts).classify }
+    ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts).gsub('canonical_', '').classify }
   end
 
   # Extracts the parent resource param from the url to get to its value

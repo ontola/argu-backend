@@ -16,6 +16,7 @@ module Argu
     config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || 'beta.argu.co'}"
 
     config.autoload_paths += %W[#{config.root}/app/models/banners]
+    config.autoload_paths += %W[#{config.root}/app/models/menus]
     config.autoload_paths += %W[#{config.root}/app/services]
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
     config.autoload_paths += %W[#{config.root}/app/listeners]
