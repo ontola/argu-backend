@@ -12,6 +12,5 @@
         li
           ul= dropdown_menu(argument, :follow)
       =crud_menu_item(argument)
-      - if argument.edge.is_public?
-        li
-          ul= react_component_store 'ShareDropdown', props: share_items(argument)
+      li
+        ul= dropdown_menu(argument, :share, item_opts: {isMobile: browser.device.mobile?})

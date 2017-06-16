@@ -2,7 +2,7 @@ import React from 'react';
 
 import { image } from './lib/helpers';
 
-export const FBShareItem = React.createClass({
+export const TwitterShareItem = React.createClass({
     propTypes: {
         count: React.PropTypes.number,
         done: React.PropTypes.func,
@@ -18,27 +18,24 @@ export const FBShareItem = React.createClass({
         this.fetchCount();
     },
 
-    handleClick (e) {
-        if (typeof FB !== 'undefined') {
-            e.preventDefault();
-            FB.ui({
-                method: 'share',
-                href: this.props.url,
-                caption: this.props.title
-            }, () => {
-                this.props.done();
-            });
-        }
-    },
-
     countInParentheses () {
         return this.props.count > 0 ? `(${this.props.count})` : '';
     },
 
     fetchCount () {
-        $.getJSON(`https://graph.facebook.com/?id=${this.props.iri}`, data => {
-            this.props.updateCount('facebook', data.share.share_count);
+        $.getJSON(`http://opensharecount.com/count.json?url=${this.props.iri}`, data => {
+            this.updateCount('twitter', data.count);
         });
+    },
+
+    handleMouseDown () {
+        // Fixes an issue where firefox bubbles events instead of capturing them
+        // See: https://github.com/facebook/react/issues/2011
+        const dataMethod = ReactDOM.findDOMNode(this).getAttribute('data-method');
+        if (dataMethod !== 'post' && dataMethod !== 'put' && dataMethod !== 'patch' && dataMethod !== 'delete') {
+            ReactDOM.findDOMNode(this).getElementsByTagName('a')[0].click();
+            this.props.done();
+        }
     },
 
     render () {
@@ -50,5 +47,4 @@ export const FBShareItem = React.createClass({
         </div>);
     }
 });
-
-export default FBShareItem;
+export default TwitterShareItem;

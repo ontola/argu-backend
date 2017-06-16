@@ -25,9 +25,8 @@
           li
             ul= dropdown_menu(question, :follow)
         =crud_menu_item(question, question_items(question))
-        - if question.edge.is_public? || policy(question.parent_model(:page)).invite?
-          li
-            ul= react_component_store 'ShareDropdown', props: share_items(question)
+        li
+          ul= dropdown_menu(question, :share, item_opts: {isMobile: browser.device.mobile?})
   - unless question.is_published?
     =render partial: 'application/publish', locals: {resource: question}
   =render partial: 'happenings/timeline', locals: {resource: question, happenings: policy_scope(resource.happenings).includes(trackable: [creator: Profile.includes_for_profileable, edge: :published_publications]), show_unpublished: policy(question).update?}

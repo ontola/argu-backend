@@ -1,7 +1,15 @@
 nl:
   menus:
     default:
+      facebook: "Facebook"
+      twitter: "Twitter"
+      linked_in: "LinkedIn"
+      google_plus: "Google+"
+      email: "E-Mail"
+      whatsapp: "Whatsapp"
+      share: "Delen"
       follow: "Meldingen"
       never: 'Nooit meldingen ontvangen'
       reactions: 'Alle items'
       news: 'Belangrijke items'
+      invite: "Uitnodigen"

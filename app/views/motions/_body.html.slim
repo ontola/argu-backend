@@ -14,6 +14,5 @@
         li
           ul= dropdown_menu(motion, :follow)
       =crud_menu_item(motion)
-      - if motion.edge.is_public? || policy(motion.parent_model(:page)).invite?
-        li.share-menu
-          ul= react_component_store 'ShareDropdown', props: share_items(motion)
+      li.share-menu
+        ul= dropdown_menu(motion, :share, item_opts: {isMobile: browser.device.mobile?})

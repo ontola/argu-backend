@@ -1,7 +1,15 @@
 en:
   menus:
     default:
+      facebook: "Facebook"
+      twitter: "Twitter"
+      linked_in: "LinkedIn"
+      google_plus: "Google+"
+      email: "E-Mail"
+      whatsapp: "Whatsapp"
+      share: "Share"
       follow: "Notifications"
       never: 'Never receive notifications'
       reactions: 'All items'
       news: 'Important items'
+      invite: "Invite"

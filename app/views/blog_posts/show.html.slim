@@ -12,9 +12,8 @@
       =render partial: blog_post.creator, locals: {resource: blog_post}
       ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
         =crud_menu_item(blog_post)
-        - if blog_post.edge.is_public? || policy(blog_post.parent_model(:page)).invite?
-          li.share-menu
-            ul= react_component_store 'ShareDropdown', props: share_items(blog_post)
+        li.share-menu
+          ul= dropdown_menu(blog_post, :share, item_opts: {isMobile: browser.device.mobile?})
   - unless blog_post.is_published?
     =render partial: 'application/publish', locals: {resource: blog_post}
   - if policy(blog_post).index_children?(:comments)

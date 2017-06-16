@@ -27,9 +27,8 @@
   .cover-buttons
     .cover-buttons-container
       ul.btns-horizontal
-        - if resource.edge.is_public? || policy(resource.page).invite?
-          li.float-right.share-menu
-            ul= react_component_store 'ShareDropdown', props: share_items(resource, trigger_class: 'btn--transparant')
+        li.float-right.share-menu
+          ul= dropdown_menu(resource, :share, item_opts: {isMobile: browser.device.mobile?})
         - if policy(resource).update?
           =forum_menu_item(resource)
         - else

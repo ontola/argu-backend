@@ -4,6 +4,8 @@ import Notifications from './Notifications';
 import LinkItem from './LinkItem';
 import ActorItem from './ActorItem';
 import FBShareItem from './FBShareItem';
+import LinkedInShareItem from './LinkedInShareItem';
+import TwitterShareItem from './TwitterShareItem';
 
 const ANIMATION_DURATION = 10;
 
@@ -16,8 +18,12 @@ export const DropdownContent = React.createClass({
         close: React.PropTypes.func,
         contentClassName: React.PropTypes.string,
         currentActor: React.PropTypes.object,
+        iri: React.PropTypes.string,
+        isMobile: React.PropTypes.bool,
         renderLeft: React.PropTypes.bool,
-        sections: React.PropTypes.array
+        sections: React.PropTypes.array,
+        socialCounts: React.PropTypes.object,
+        updateCount: React.PropTypes.func
     },
 
     getInitialState () {
@@ -78,7 +84,28 @@ export const DropdownContent = React.createClass({
                         } else if (item.type === 'actor') {
                             return <ActorItem done={close} key={childI} {...item} />;
                         } else if (item.type === 'fb_share') {
-                            return <FBShareItem done={close} key={childI} {...item} />;
+                            return <FBShareItem
+                                count={this.props.socialCounts['facebook']}
+                                done={close} iri={this.props.iri}
+                                key={childI}
+                                updateCount={this.props.updateCount}
+                                {...item} />;
+                        } else if (item.type === 'twitter_share') {
+                            return <TwitterShareItem
+                                count={this.props.socialCounts['twitter']}
+                                done={close} iri={this.props.iri}
+                                key={childI}
+                                updateCount={this.props.updateCount}
+                                {...item} />;
+                        } else if (item.type === 'linked_in_share') {
+                            return <LinkedInShareItem
+                                count={this.props.socialCounts['linkedIn']}
+                                done={close} iri={this.props.iri}
+                                key={childI}
+                                updateCount={this.props.updateCount}
+                                {...item} />;
+                        } else if (this.props.isMobile && item.type === 'mobile_link') {
+                            return <LinkItem current_actor={currentActor} done={close} key={childI} {...item} />;
                         }
                         return <div key={childI} />
                     });
