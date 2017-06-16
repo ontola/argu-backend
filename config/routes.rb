@@ -232,6 +232,8 @@ Rails.application.routes.draw do
     put :finish, to: 'phases#finish'
   end
 
+  resources :menus, only: [:show, :index]
+
   resources :media_objects, only: :show
 
   resources :announcements, only: [] do
