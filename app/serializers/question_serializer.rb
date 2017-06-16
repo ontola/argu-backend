@@ -5,4 +5,5 @@ class QuestionSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   include Motionable::Serializer
   attributes :display_name, :content
+  include_menus
 end

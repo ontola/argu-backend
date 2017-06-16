@@ -5,4 +5,5 @@ class ArgumentSerializer < ContentEdgeSerializer
   attribute :content, key: :text
   attribute :display_name, key: :name
   attributes :pro
+  include_menus
 end

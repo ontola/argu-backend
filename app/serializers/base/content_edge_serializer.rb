@@ -2,4 +2,5 @@
 
 class ContentEdgeSerializer < BaseEdgeSerializer
   include Loggable::Serializer
+  include Menuable::Serializer
 end

@@ -7,6 +7,7 @@ class Forum < Edgeable::Base
   include Photoable
   include Shortnameable
   include Attribution
+  include Menuable
 
   belongs_to :page, inverse_of: :forums
   has_many :banners, inverse_of: :forum

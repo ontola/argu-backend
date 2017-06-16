@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class PageSerializer < RecordSerializer
+  include Menuable::Serializer
   attributes :display_name, :about
+  include_menus
+
   has_one :profile_photo do
     obj = object.profile.default_profile_photo
     link(:self) do

@@ -5,6 +5,7 @@ class Decision < Edgeable::Base
   include Happenable
   include HasLinks
   include ActivePublishable
+  include Menuable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum

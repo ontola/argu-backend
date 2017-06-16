@@ -6,5 +6,6 @@ module Edgeable
 
     include Loggable
     include Trashable
+    include Menuable
   end
 end

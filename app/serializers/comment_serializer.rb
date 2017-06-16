@@ -2,4 +2,5 @@
 
 class CommentSerializer < ContentEdgeSerializer
   attribute :body, key: :text
+  include_menus
 end

@@ -6,6 +6,7 @@ class MotionSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   include Voteable::Serializer
   attributes :content, :current_vote
+  include_menus
 
   def current_vote
     object.current_vote&.for
