@@ -3,7 +3,6 @@ class BaseSerializer < ActiveModel::Serializer
   link(:self) { object.context_id }
   attribute :ld_context, key: '@context'
   attribute :ld_type, key: '@type'
-  attribute :potential_action
 
   def ld_context
     return unless object.respond_to?(:jsonld_context)

@@ -14,8 +14,6 @@ class Activity < PublicActivity::Activity
   belongs_to :recipient_edge, class_name: 'Edge', inverse_of: :recipient_activities
   belongs_to :forum
 
-  attr_accessor :potential_action
-
   alias_attribute :happened_at, :created_at
   alias context_id id
 

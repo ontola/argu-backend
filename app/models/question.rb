@@ -29,7 +29,6 @@ class Question < ApplicationRecord
   contextualize_with_id { |m| Rails.application.routes.url_helpers.question_url(m, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'
-  contextualize :potential_action, as: 'schema:potentialAction'
 
   attr_accessor :include_motions
 

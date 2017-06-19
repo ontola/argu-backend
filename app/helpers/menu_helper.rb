@@ -16,44 +16,6 @@ module MenuHelper
     end
   end
 
-  def init_resource_actions(resource)
-    resource_policy = policy(resource)
-    resource.potential_action ||= []
-    if resource_policy.update?
-      resource.potential_action << {
-        '@type': 'http://schema.org/UpdateAction',
-        '@context': {
-          target: 'schema:target',
-          schema: 'http://schema.org/'
-        },
-        target: url_for([resource, action: :edit])
-      }
-    end
-    if resource_policy.feed?
-      resource.potential_action << {
-        '@type': :feed,
-        target: url_for([resource, :feed])
-      }
-    end
-    if resource_policy.trash?
-      resource.potential_action << {
-        '@type': :trash,
-        target: url_for([resource, action: :trash])
-      }
-    end
-    if resource_policy.destroy?
-      resource.potential_action << {
-        '@type': :destroy,
-        target: url_for([resource, action: :destroy])
-      }
-    elsif resource_policy.trash?
-      resource.potential_action << {
-        '@type': :trash,
-        target: url_for([resource, action: :trash])
-      }
-    end
-  end
-
   private
 
   # Generates the dropdown via {dropdown_options}.

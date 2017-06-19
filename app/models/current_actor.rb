@@ -3,7 +3,7 @@ class CurrentActor
   include ActiveModel::Model, ActiveModel::Serialization, Ldable, ProfilesHelper
   include Rails.application.routes.url_helpers
 
-  attr_accessor :actor, :potential_action, :user
+  attr_accessor :actor, :user
   delegate :display_name, to: :actor, allow_nil: true
   delegate :finished_intro, :context_id, :id, to: :user
 
@@ -17,8 +17,6 @@ class CurrentActor
       'Guest'
     end
   end
-
-  def potential_action; end
 
   def shortname
     actor&.url

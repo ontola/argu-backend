@@ -12,8 +12,6 @@ class QuestionsController < EdgeTreeController
                  .page(show_params[:page])
     preload_user_votes(@motions.ids) unless current_user.guest?
 
-    init_resource_actions(authenticated_resource)
-
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource} } # show.html.erb
       format.widget { render authenticated_resource }
