@@ -24,7 +24,7 @@
         - unless current_user.guest?
           li
             ul= dropdown_menu(question, :follow)
-        =crud_menu_item(question, question_items(question))
+        =dropdown_menu(question, :actions)
         li
           ul= dropdown_menu(question, :share, item_opts: {isMobile: browser.device.mobile?})
   - unless question.is_published?

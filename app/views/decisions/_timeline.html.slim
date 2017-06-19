@@ -8,6 +8,6 @@
     - unless resource.pending?
       =render partial: resource.creator, locals: {resource: resource}
     ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-      =crud_menu_item(resource)
+      =dropdown_menu(resource, :actions)
 - unless resource.is_published?
   =render partial: 'application/publish', locals: {resource: resource}

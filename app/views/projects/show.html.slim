@@ -19,7 +19,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
           - unless current_user.guest?
             li
               ul= dropdown_menu(project, :follow)
-          =crud_menu_item(project)
+          =dropdown_menu(project, :actions)
           li.share-menu
             ul= dropdown_menu(project, :share, item_opts: {isMobile: browser.device.mobile?})
           - if policy(project).create_child?(:blog_posts)

@@ -2,7 +2,6 @@
 
 class QuestionsController < EdgeTreeController
   include VotesHelper
-  include MenuHelper
   include EdgeTree::Move
   skip_before_action :check_if_registered, only: :index
 

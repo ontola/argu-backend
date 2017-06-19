@@ -9,7 +9,7 @@
   section.section--footer
     =render partial: resource.creator, locals: {resource: resource}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
-      =crud_menu_item(resource)
+      =dropdown_menu(resource, :actions)
       li.share-menu
         ul= dropdown_menu(resource, :share, item_opts: {isMobile: browser.device.mobile?})
       - if resource.top_comment.present? && policy(resource).index_children?(:comments)

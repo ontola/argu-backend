@@ -13,3 +13,20 @@ nl:
       reactions: 'Alle items'
       news: 'Belangrijke items'
       invite: "Uitnodigen"
+      meetings: "Vergaderingen"
+      questions: "Vraagstukken"
+      motions: "Ideeën"
+      settings: "Instellingen"
+      actions: "Menu"
+      comments:
+        zero: "Reacties"
+        one: "Reacties (%{count})"
+        other: "Reacties (%{count})"
+      activity: "Activiteit"
+      new_update: "Nieuwe update"
+      edit: "Bewerken"
+      statistics: "Statistieken"
+      trash: "Verwijderen"
+      destroy: "Permanent verwijderen"
+      couple_motion: "Voorstel koppelen"
+      take_decision: "Besluit nemen"

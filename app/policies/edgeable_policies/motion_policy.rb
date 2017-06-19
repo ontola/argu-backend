@@ -30,6 +30,10 @@ class MotionPolicy < EdgeablePolicy
     rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
+  def decide?
+    Pundit.policy(context, record.last_or_new_decision(true)).update?
+  end
+
   def invite?
     parent_policy(:page).update?
   end

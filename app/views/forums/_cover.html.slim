@@ -30,7 +30,8 @@
         li.float-right.share-menu
           ul= dropdown_menu(resource, :share, item_opts: {isMobile: browser.device.mobile?})
         - if policy(resource).update?
-          =forum_menu_item(resource)
+          li.float-right
+            ul= dropdown_menu(resource, :actions)
         - else
           - if controller_name == 'feed'
             li.float-right= link_to url_for(resource), class: 'btn--transparant'

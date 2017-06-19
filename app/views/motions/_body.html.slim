@@ -13,6 +13,6 @@
       - unless current_user.guest?
         li
           ul= dropdown_menu(motion, :follow)
-      =crud_menu_item(motion)
+      =dropdown_menu(motion, :actions)
       li.share-menu
         ul= dropdown_menu(motion, :share, item_opts: {isMobile: browser.device.mobile?})

@@ -13,3 +13,20 @@ en:
       reactions: 'All items'
       news: 'Important items'
       invite: "Invite"
+      meetings: "Meetings"
+      questions: "Questions"
+      motions: "Motions"
+      settings: "Settings"
+      actions: "Menu"
+      comments:
+        zero: "Comments"
+        one: "Comments (%{count})"
+        other: "Comments (%{count})"
+      activity: "Feed"
+      new_update: "New update"
+      edit: "Edit"
+      statistics: "Statistics"
+      trash: "Delete"
+      destroy: "Delete permanently"
+      couple_motion: "Couple idea"
+      take_decision: "Take decision"

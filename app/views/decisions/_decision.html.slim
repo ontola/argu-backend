@@ -8,4 +8,4 @@
     - unless decision.pending?
       =render partial: decision.creator, locals: {resource: decision}
     ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-      =crud_menu_item(decision)
+      =dropdown_menu(decision, :actions)
