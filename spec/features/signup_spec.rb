@@ -13,7 +13,7 @@ RSpec.feature 'Signup', type: :feature do
 
     visit root_path
     expect(page).to have_content 'default'
-    expect(page).to have_current_path forum_path(default)
+    expect(page).to have_current_path root_path
 
     visit forum_path(freetown)
     expect(page).to have_content 'freetown'

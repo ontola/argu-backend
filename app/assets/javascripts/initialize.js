@@ -3,6 +3,7 @@ import mine from './windowize';
 mine();
 
 import 'whatwg-fetch';
+import 'scroll-triggers';
 import './application/meta';
 import './application/briarcliff/introjs-briarcliff';
 import activityFeed from './application/activity_feed';

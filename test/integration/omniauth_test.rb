@@ -64,10 +64,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     follow_redirect!
-
-    assert_redirected_to forum_path('freetown')
-    follow_redirect!
-    assert_response 200
   end
 
   test 'should sign in with facebook' do
@@ -81,8 +77,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_facebook_omniauth_callback_path
     follow_redirect!
     assert_redirected_to root_path
-    follow_redirect!
-    assert_redirected_to forum_path('freetown')
   end
 
   test 'should sign in with facebook with r' do

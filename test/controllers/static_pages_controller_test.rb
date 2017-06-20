@@ -3,7 +3,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion,
-                      :dismiss_announcement, :context, :developers].freeze
+                      :dismiss_announcement, :context, :developers, :home].freeze
 
   let(:user) { create(:user) }
   define_freetown
@@ -15,9 +15,27 @@ class StaticPagesControllerTest < ActionController::TestCase
   let(:comment) { create(:comment, parent: argument.edge) }
 
   ####################################
+  # As Guest
+  ####################################
+  test 'guest should get home' do
+    get :home
+    assert_response 200
+    assert_select '.activity-feed', 0
+    assert_select '.landing__wrapper', 1
+  end
+
+  ####################################
   # As User
   ####################################
-  test 'should get redirect' do
+  test 'user should get home' do
+    get :home
+    sign_in user
+    assert_response 200
+    assert_select '.activity-feed', 0
+    assert_select '.landing__wrapper', 1
+  end
+
+  test 'user should get redirect' do
     sign_in user
 
     StaticPagesController.public_instance_methods(false).-(EXCLUDED_METHODS).each do |action|
@@ -29,7 +47,7 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 403, "developers doesn't 403"
   end
 
-  test 'should get how_argu_works' do
+  test 'user should get how_argu_works' do
     sign_in user
 
     get :how_argu_works
@@ -50,6 +68,8 @@ class StaticPagesControllerTest < ActionController::TestCase
     get :home
 
     assert_response 200
+    assert_select '.activity-feed', 1
+    assert_select '.landing__wrapper', 0
     assert_equal activities, activities & assigns(:activities)
   end
 

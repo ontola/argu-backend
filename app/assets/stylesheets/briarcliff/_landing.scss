@@ -1,66 +1,298 @@
 @import "variables";
 @import "mixins";
 
-#top {
-  margin-top: -5em;
+.landing__wrapper {
+  background-color: white;
+  margin-bottom: -3em;
 }
 
-#ss-submit {
-  position: relative;
+.landing__hero__list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5em;
+  margin-top: 5vh;
 }
 
-.landing-buttons {
-  font-size: 90%;
-  max-width: 28em;
-  margin: auto;
-  margin-top: 3em;
-}
+.landing__hero__item {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 0.6em;
 
-.landing-logo {
-  text-align: center;
-  margin-top: 2em;
-  img {
-    width: 30%;
-    margin-bottom: 3em;
-    min-width: 8em;
+  a {
+    opacity: .8;
+    color: white;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
-.landing-section {
-  padding-top: 2em;
-  padding-bottom: 1em;
-  font-size: 120%;
+.landing__hero {
+  align-items: center;
+  background-image: image-url("landing/TweedeKamer.jpg");
+  background-position: center;
+  background-size: cover;
+  display: block;
+  display: flex;
+  height: 100%;
+  height: 80vh;
+  margin-top: -2em;
+  min-height: 20em;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.landing__hero__overlay {
+  background-color: rgba(71,86,104,.5);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.landing__hero__content {
+  z-index: 1;
+  flex: 1;
+  padding-top: 20vh;
+}
+
+.landing__button-wrapper {
+  justify-content: center;
+  display: flex;
+}
+
+.landing__button {
+  background-color: #d61f7c;
+  border-radius: 5px;
+  color: white;
+  padding: .5em 1em;
+
+  &:hover {
+    background-color: #e2398f;
+  }
+}
+
+.landing__hero__header {
+  color: white;
+  margin-bottom: 5vh;
+}
+
+.landing__block {
+}
+
+.landing__block--grey {
+  background-color: #e9e9e9;
+}
+
+.landing__block__container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  max-width: 60em;
+}
+
+.landing__block__image-bg {
+  background-image: image-url("landing/Motion.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 50vh;
+  width: 100%;
+}
+
+.landing__block__image {
+  width: 100%;
+}
+
+.landing__block--green {
+  background-color: #527e7e;
+}
+
+.landing__block--green {
+  h1, h2, h3, ul, li, a, p {
+    color: white
+  }
+}
+
+.landing__block__just-text {
+  max-width: 40em;
+  margin: auto;
+
   p {
-    margin: auto;
     margin-bottom: 1em;
   }
-  h1 {
-    margin-top: 0;
+
+  h3 {
+    font-size: 1em;
   }
 }
 
-.landing-filled {
-  padding-top: 2.5em;
+.landing__column {
+  flex: 1;
+  flex-basis: 23em;
+  padding-bottom: 4em;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 4em;
 }
 
-.landing-filled * {
-  color: white;
+.landing__column--fixed-height {
+  height: 490px;
 }
 
-.landing-white {
+.landing__feature-list {
+  margin-top: 1.5em;
+}
+
+.landing__feature {
+  margin-left: 1.4em;
+  margin-top: 1em;
+  position: relative;
+
+  h3 {
+    font-size: 1em;
+    line-height: 1em;
+  }
+
+  .fa {
+    position: absolute;
+    right: 100%;
+    margin-right: .5em;
+  }
+}
+
+.landing__feature__two-icons {
+  font-size: .8em;
+
+  .fa:first-child {
+    margin-right: 1.5em;
+  }
+
+  .fa:last-child {
+    margin-left: 1.5em;
+  }
+}
+
+.landing__header {
+  margin-bottom: 2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.landing__projects {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.landing__project {
+  @include box-shadow();
   background-color: white;
-  h1 {
-    color: $g4;
-    text-shadow: none !important;
+  border-radius: 5px;
+  flex: 1;
+  flex-basis: 20em;
+  margin: 1em;
+  max-width: 27em;
+}
+
+.landing__project__picture {
+  width: 100%;
+}
+
+.landing__project__content {
+  padding: 1em;
+}
+
+@keyframes appear {
+    0% {
+      height: 0;
+      opacity: 0;
+    }
+    100% {
+      height: 1.6em;
+      opacity: 1;
+    }
+}
+
+.landing__visible .animate{
+  animation: appear .8s ease-out 0s 1 forwards;
+}
+
+.landing-box {
+  @include box-shadow-intense;
+  max-width: 25em;
+
+  .fa {
+    line-height: 1em !important;
+  }
+
+  .animate {
+    height: 0;
+    opacity: 0;
+  }
+
+  .animate.li-question-1 {
+    animation-delay: .6s;
+  }
+
+  .animate.li-question-2 {
+    animation-delay: 2s;
+  }
+
+  .animate.li-question-3 {
+    animation-delay: 5.2s;
+  }
+
+  .animate.li-motion-1 {
+    animation-delay: 1s;
+  }
+
+  .animate.li-motion-2 {
+    animation-delay: 3.3s;
+  }
+
+  .animate.li-motion-3 {
+    animation-delay: 2.3s;
+  }
+
+  .animate.li-motion-4 {
+    animation-delay: 5s;
+  }
+
+  .li-show {
+    height: 1.6em;
+    opacity: 1;
+  }
+
+  .box-list--icons {
+    margin-top: 1.3em;
   }
 }
 
-.landing-bg {
-  padding: 4em 0 7em;
-  font-size: 120%;
-  min-height: 100vh;
-  padding-top: 20vh;
-  header h1 {
-    color: white;
-  }
+.landing-filler-bar {
+  background-color: #b6b6b6;
+  border-radius: 6px;
+  display: block;
+  height: .6em;
+  margin-bottom: 0.7em;
+  width: 90%;
+}
+
+.landing__detail-decision {
+  position: relative;
+  bottom: 0.3em;
+  left: -0.1em;
+}
+
+// FAQ
+.landing__question {
+  font-size: 1em;
+  margin-top: 1.3em;
 }

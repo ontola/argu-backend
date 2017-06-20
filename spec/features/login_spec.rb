@@ -49,8 +49,7 @@ RSpec.feature 'Login', type: :feature do
       click_link 'Sign out'
     end
 
-    expect(page).to have_current_path forum_path(holland)
-    expect(page).not_to have_content(truncate(holland_member.display_name, length: 20))
+    expect(page).to have_current_path root_path
     expect(Doorkeeper::AccessToken.find_by(id: t.id)).to be_falsey
   end
 end

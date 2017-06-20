@@ -40,7 +40,7 @@ class StaticPagesController < ApplicationController
       preload_user_votes(@activities.where(trackable_type: 'Motion').pluck(:trackable_id))
       render # stream: true
     else
-      redirect_to(preferred_forum.presence || info_url('about'))
+      render 'landing'
     end
   end
 

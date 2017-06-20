@@ -54,7 +54,7 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_password', with: new_password
         click_button 'Log in'
       end
-      expect(page).to have_current_path forum_path(freetown)
+      expect(page).to have_current_path root_path
     end.to change { Doorkeeper::AccessToken.count }.by(1)
   end
 

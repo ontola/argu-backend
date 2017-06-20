@@ -8,8 +8,8 @@
     "fastclick": "^1.0.6",
     "grunt": "^1.0.1",
     "history": "^1.17.0",
-    "immutable": "^3.7.5",
     "i18n-js": "http://github.com/fnando/i18n-js/archive/v3.0.0.rc8.tar.gz",
+    "immutable": "^3.7.5",
     "install": "^0.2.6",
     "intl": "^1.0.0",
     "intro.js": "^2.1.0",
@@ -31,6 +31,7 @@
     "redux": "^3.0.4",
     "redux-api-middleware": "^1.0.0-beta3",
     "reflux": "^0.2.12",
+    "scroll-triggers": "^3.6.0",
     "url": "^0.11.0",
     "url-template": "^2.0.8",
     "whatwg-fetch": "^0.10.1"
