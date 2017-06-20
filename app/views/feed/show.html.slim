@@ -7,11 +7,22 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     .col-1
       =to_parent(authenticated_resource)
   .col-1
-    - if authenticated_resource&.is_loggable? && policy(authenticated_resource).log?
+    - if policy(authenticated_resource).log?
       div.align-right
-        span.btn.btn-subtle
-          =link_to url_for([:log, edge_id: authenticated_edge.id]) do
-            span.fa.fa-history
+        span.btn.btn-subtle[class="#{params[:complete] != 'true' ? 'btn--border' : ''}"]
+          =link_to url_for([authenticated_resource, :feed]) do
+            span.fa.fa-bars
             span.icon-left
-              =t('log')
+              =t('feed_filter.relevant')
+        span.btn.btn-subtle[class="#{params[:complete] == 'true' ? 'btn--border' : ''}"]
+          =link_to url_for([authenticated_resource, :feed, complete: true]) do
+            span.fa.fa-align-justify
+            span.icon-left
+              =t('feed_filter.complete')
+        - if authenticated_resource&.is_loggable?
+            span.btn.btn-subtle
+              =link_to url_for([:log, edge_id: authenticated_edge.id]) do
+                span.fa.fa-history
+                span.icon-left
+                  =t('log')
     =render partial: 'activities/index', locals: {activities: @activities}

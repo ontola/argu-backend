@@ -22,7 +22,8 @@ const activityFeed = {
         loading = true;
         $.ajax(feedDOM.attr('data-feed-url'), {
             data: {
-                'from_time': feedDOM.find('.activity:last time').attr('datetime')
+                'from_time': feedDOM.find('.activity:last time').attr('datetime'),
+                'complete': feedDOM.attr('data-feed-complete')
             },
             dataType: 'html',
             cache: false,

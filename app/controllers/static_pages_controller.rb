@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class StaticPagesController < ApplicationController
   include VotesHelper
+  helper_method :complete_feed_param
 
   # geocode_ip_address
   VOCABULARIES = {
@@ -88,6 +89,8 @@ class StaticPagesController < ApplicationController
   end
 
   private
+
+  def complete_feed_param; end
 
   def default_forum_path
     preferred_forum

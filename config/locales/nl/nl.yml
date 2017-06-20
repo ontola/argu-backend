@@ -76,6 +76,9 @@ nl:
   log: "Log"
   statistics: "Statistieken"
   feed: "Activiteit"
+  feed_filter:
+    relevant: "Relevant"
+    complete: "Compleet"
   overview: "Overzicht"
   edited: "Bewerkt"
   deleted: "Verwijderd"

@@ -2,6 +2,7 @@
 class FeedController < AuthorizedController
   include NestedResourceHelper, VotesHelper
   alias resource_by_id get_parent_resource
+  helper_method :complete_feed_param
 
   def show
     @activities = policy_scope(feed)
@@ -42,10 +43,14 @@ class FeedController < AuthorizedController
 
   def collect_banners; end
 
+  def complete_feed_param
+    params[:complete] == 'true' && policy(authenticated_resource).log?
+  end
+
   def feed
     Activity.feed_for_edge(
       authenticated_edge,
-      (current_user.profile.group_ids & authenticated_edge.granted_group_ids('manager')).empty?
+      !complete_feed_param
     )
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
   include NestedResourceHelper, UrlHelper, VotesHelper
-  helper_method :authenticated_resource
+  helper_method :authenticated_resource, :complete_feed_param
 
   def show
     @profile = authenticated_resource.profile
@@ -190,6 +190,8 @@ class UsersController < ApplicationController
                 current_user
               end
   end
+
+  def complete_feed_param; end
 
   def email_changed?
     return unless permit_params[:emails_attributes].present?
