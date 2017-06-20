@@ -183,6 +183,10 @@ class Edge < ApplicationRecord
     end
   end
 
+  def root_id
+    @root_id ||= path.split('.').first.to_i
+  end
+
   def trash
     return if trashed_at.present?
     self.class.transaction do
