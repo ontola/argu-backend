@@ -5,7 +5,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def new
     request.flash[:notice] = I18n.t('devise.failure.invalid') if params[:show_error]
-    self.resource = resource_class.new({r: r_from_url_or_header}.merge(sign_in_params))
+    self.resource = resource_class.new({remember_me: true, r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
     respond_to do |format|
       format.html do
