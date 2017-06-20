@@ -4,10 +4,10 @@ module ContextHelper
   def  to_parent(parent = nil)
     if parent.blank?
       parent =
-        if authenticated_resource.edge.owner_type == 'Forum'
-          authenticated_resource.edge
+        if authenticated_edge.owner_type == 'Forum'
+          authenticated_edge
         else
-          authenticated_resource.edge.parent.owner
+          authenticated_edge.parent.owner
         end
     end
     return unless policy(parent).show?

@@ -44,8 +44,8 @@ class FeedController < AuthorizedController
 
   def feed
     Activity.feed_for_edge(
-      authenticated_resource.edge,
-      (current_user.profile.group_ids & authenticated_resource.edge.granted_group_ids('manager')).empty?
+      authenticated_edge,
+      (current_user.profile.group_ids & authenticated_edge.granted_group_ids('manager')).empty?
     )
   end
 

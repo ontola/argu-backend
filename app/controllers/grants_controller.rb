@@ -13,13 +13,13 @@ class GrantsController < ServiceController
   end
 
   def create_respond_failure_html(resource)
-    owner_path = authenticated_resource.edge.owner_type.pluralize.underscore
+    owner_path = authenticated_edge.owner_type.pluralize.underscore
     render "#{owner_path}/settings",
            locals: {
              tab: 'grants/new',
              active: 'grants',
              page: resource.group.page,
-             resource: authenticated_resource.edge.owner
+             resource: authenticated_edge.owner
            }
   end
 
@@ -42,10 +42,10 @@ class GrantsController < ServiceController
   end
 
   def redirect_path(_ = nil)
-    if authenticated_resource.edge.owner_type == 'Forum'
-      settings_forum_path(authenticated_resource.edge.owner, tab: :groups)
+    if authenticated_edge.owner_type == 'Forum'
+      settings_forum_path(authenticated_edge.owner, tab: :groups)
     else
-      settings_page_path(authenticated_resource.edge.owner, tab: :groups)
+      settings_page_path(authenticated_edge.owner, tab: :groups)
     end
   end
   alias redirect_model_failure redirect_path

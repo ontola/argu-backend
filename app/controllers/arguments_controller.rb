@@ -17,7 +17,7 @@ class ArgumentsController < EdgeTreeController
       format.html do
         render locals: {
           argument: authenticated_resource,
-          comment: Edge.new(owner: Comment.new, parent: authenticated_resource.edge).owner
+          comment: Edge.new(owner: Comment.new, parent: authenticated_edge).owner
         }
       end
       format.widget do

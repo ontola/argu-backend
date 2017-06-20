@@ -119,6 +119,7 @@ Style/AccessorMethodName:
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/portal/sources_controller.rb'
     - 'app/controllers/vote_matches_controller.rb'
+    - 'app/controllers/question_answers_controller.rb'
     - 'app/controllers/votes_controller.rb'
     - 'app/controllers/guest/votes_controller.rb'
     - 'app/helpers/actors_helper.rb'
