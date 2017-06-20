@@ -38,7 +38,7 @@ class Group < ApplicationRecord
   def inherited_grants(edge)
     grants
       .joins(:edge)
-      .where(edges: {id: edge.ancestor_ids})
+      .where(edges: {id: edge.self_and_ancestor_ids})
   end
 
   def self.public

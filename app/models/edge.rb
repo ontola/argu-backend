@@ -64,7 +64,13 @@ class Edge < ApplicationRecord
   # Refers to the parent edge
   # attribute :parent_id, :integer
 
-  def ancestor_ids
+  # @return [Array] The ids of (persisted) ancestors, excluding self
+  def persisted_ancestor_ids
+    parent && parent.persisted_edge.path.split('.').map(&:to_i)
+  end
+
+  # @return [Array] The ids of (persisted) ancestors, including self if persisted
+  def self_and_ancestor_ids
     persisted_edge.path.split('.').map(&:to_i)
   end
 
@@ -98,7 +104,7 @@ class Edge < ApplicationRecord
     if type == :page
       root
     elsif type == :forum
-      tenant = Edge.find_by(id: ancestor_ids[1])
+      tenant = Edge.find_by(id: self_and_ancestor_ids[1])
       tenant&.owner_type == 'Forum' ? tenant : nil
     else
       ancestors.find_by(owner_type: type.to_s.classify)
@@ -108,7 +114,7 @@ class Edge < ApplicationRecord
   def granted_groups(role)
     Group
       .joins(grants: :edge)
-      .where(edges: {id: ancestor_ids})
+      .where(edges: {id: self_and_ancestor_ids})
       .where('grants.role >= ?', Grant.roles[role])
       .order('groups.name ASC')
       .select('groups.*, grants.role as role, grants.id as grant_id, grants.edge_id as granted_edge_id')

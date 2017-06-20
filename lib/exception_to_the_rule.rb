@@ -90,7 +90,7 @@ module ExceptionToTheRule
                    .and(t_rules[:model_id].eq(@record.try(:id))
                           .or(t_rules[:model_id].eq(nil))
                           .and(t_rules[:action].eq(action.to_s))
-                          .and(t_rules[:branch_id].in(persisted_edge.ancestor_ids)))
+                          .and(t_rules[:branch_id].in(persisted_edge.self_and_ancestor_ids)))
     Rule.where(rule_query)
   end
 
