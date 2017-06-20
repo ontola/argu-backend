@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 # app/controllers/oauth/applications_controller.rb
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
+  include OauthHelper, Argu::ErrorHandling
+  respond_to :html
+
   def index
-    @applications = current_resource_owner.oauth_applications
+    @applications = Doorkeeper::Application.all
   end
 
   # only needed if each application must have some owner
@@ -20,10 +23,6 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   private
 
   def authenticate_admin!
-    current_user.profile.has_role?(:staff)
-  end
-
-  def current_resource_owner
-    User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+    raise Argu::NotAuthorizedError.new(query: "#{params[:action]}?") unless current_user&.profile&.has_role?(:staff)
   end
 end
