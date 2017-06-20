@@ -173,6 +173,7 @@ module Argu
         {
           voteable_id: @resource.id,
           voteable_type: @resource.class.name,
+          explanation: 'explanation',
           for: side
         }
       end

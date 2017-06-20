@@ -55,7 +55,11 @@ class Activity < PublicActivity::Activity
       .loggings
       .where('trackable_type != ?', 'Banner')
       .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
-    relevant_only ? scope.where('key IN (?)', RELEVANT_KEYS) : scope
+    return scope unless relevant_only
+    scope
+      .where('key IN (?)', RELEVANT_KEYS)
+      .joins('LEFT JOIN votes ON votes.id = edges.owner_id AND edges.owner_type = \'Vote\'')
+      .where('votes.id IS NULL OR (votes.explanation IS NOT NULL AND votes.explanation != \'\')')
   end
 
   def self.feed_for_edge(edge, filter_relevant = true)
