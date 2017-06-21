@@ -39,6 +39,17 @@ class CollectionSerializer < BaseSerializer
     obj
   end
 
+  has_one :create_action do
+    link(:self) do
+      {
+        href: object.create_action.id,
+        meta: {
+          '@type': 'argu:createAction'
+        }
+      }
+    end
+  end
+
   has_many :views do
     link(:self) do
       {

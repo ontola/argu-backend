@@ -46,7 +46,7 @@ class ArgumentsController < EdgeTreeController
   end
 
   def new_respond_blocks_success(resource, format)
-    resource.assign_attributes(pro: %w(con pro).index(params[:pro]))
+    resource.assign_attributes(pro: %w(pro yes).include?(params[:pro] || params[:filter].try(:[], :option)))
     return super if params[:motion_id].present?
     format.html { render text: 'Bad request', status: 400 }
     format.json { respond_with_400(resource, :json) }

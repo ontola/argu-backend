@@ -67,6 +67,9 @@ en:
     collection:
       'yes': "Advantages"
       'no': "Problems"
+      new:
+        'yes': "Add advantage"
+        'no': "Add problem"
   activerecord:
     errors:
       models:

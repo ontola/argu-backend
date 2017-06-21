@@ -2,8 +2,11 @@
 class PagesController < EdgeTreeController
   skip_before_action :authorize_action, only: :settings
   skip_before_action :check_if_registered, only: :index
-  ::INC_NESTED_COLLECTION =
-    [members: :profile_photo, views: [members: :profile_photo, views: [members: :profile_photo].freeze].freeze].freeze
+  ::INC_NESTED_COLLECTION = [
+    :create_action, members: :profile_photo, views: [
+      :create_action, members: :profile_photo, views: [:create_action, members: :profile_photo].freeze
+    ].freeze
+  ].freeze
 
   def show
     @forums = policy_scope(authenticated_resource.forums).joins(:edge).order('edges.follows_count DESC')

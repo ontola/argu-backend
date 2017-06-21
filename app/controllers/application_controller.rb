@@ -13,7 +13,9 @@ class ApplicationController < ActionController::Base
           RedirectHelper
   helper_method :current_profile, :show_trashed?, :preferred_forum
 
-  ::INC_NESTED_COLLECTION = [:members, views: [:members, views: :members].freeze].freeze
+  ::INC_NESTED_COLLECTION = [
+    :members, :create_action, views: [:members, :create_action, views: [:members, :create_action].freeze].freeze
+  ].freeze
 
   protect_from_forgery with: :exception, prepend: true, unless: (lambda do
     headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
