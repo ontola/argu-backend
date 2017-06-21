@@ -2,10 +2,10 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes
+  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope
 
   class Node
-    attr_accessor :id, :expired, :unpublished, :children, :user_context
+    attr_accessor :id, :expired, :unpublished, :children, :user_context, :grants_in_scope
     alias expired? expired
     alias unpublished? unpublished
 
@@ -26,6 +26,7 @@ class UserContext
       n.expired = parent&.expired || edge.expires_at && edge.expires_at < DateTime.current
       n.unpublished = parent&.unpublished || !edge.is_published
       n.user_context = user_context
+      n.grants_in_scope = user_context.grants_in_scope.select { |grant| grant.edge.path == edge.path }
       user_context.cached_nodes[n.id] = n
       n
     end
@@ -36,6 +37,7 @@ class UserContext
     def add_child(edge)
       raise 'Inconsistent node' unless edge.parent_id == id
       c = Node.build(edge, self, user_context)
+      c.grants_in_scope.concat(grants_in_scope)
       c
     end
   end
@@ -60,6 +62,18 @@ class UserContext
   def expired?(node)
     return true if node.expires_at? && node.expires_at < DateTime.current
     find_or_cache_node(node).expired?
+  end
+
+  # Find all groups with a grant of the specified role on this record or any of its ancestors
+  # @param [Edge] record The node to check
+  # @param [String] role The role to check
+  # @return [Array<Integer>] A list of group_ids with a grant of the specified role
+  def granted_group_ids(record, role)
+    granted_group_ids = find_or_cache_node(record)
+                          .grants_in_scope
+                          .select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
+                          .map(&:group_id)
+    user.profile.group_ids & granted_group_ids
   end
 
   # Checks whether the edge or any of its ancestors is unpublished
@@ -88,7 +102,8 @@ class UserContext
       Grant
         .joins(:edge)
         .includes(:edge)
-        .where("edges.path ~ '?.*'", tree.find { |e| e.parent_id.blank? }.id)
+        .where("edges.path ~ '?.*'", root.id)
+        .to_a
         .to_a
     Node.build_from_tree(tree, root, self)
   end

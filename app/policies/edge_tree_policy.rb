@@ -48,7 +48,11 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_role?(role)
       return if persisted_edge.nil?
-      send(role) if (user.profile.group_ids & persisted_edge.granted_group_ids(role.to_s)).any?
+      if context.within_tree?(persisted_edge)
+        send(role) if context.granted_group_ids(persisted_edge, role.to_s).any?
+      elsif (user.profile.group_ids & persisted_edge.granted_group_ids(role.to_s)).any?
+        send(role)
+      end
     end
 
     def is_spectator?
