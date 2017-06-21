@@ -109,7 +109,15 @@ module Common
 
     def respond_with_redirect_success_js(resource, action)
       flash[:notice] = message_success(resource, action)
-      render 'turbolinks_redirect', locals: {location: url_for(redirect_model_success(resource))}
+      url = url_for(redirect_model_success(resource))
+
+      if iframe?
+        url = URI.parse(url)
+        params = URI.decode_www_form(url.query || '') << ['trigger', Random.rand(10_000)]
+        url.query = URI.encode_www_form(params)
+      end
+
+      render 'turbolinks_redirect', locals: {location: url}
     end
 
     private
@@ -129,7 +137,7 @@ module Common
     # @param resource [ActiveRecord::Base] The resource to display the type for.
     # @param action [Symbol] The action to render the message for.
     def message_success(resource, action)
-      t("type_#{action}_success", type: type_for(resource))
+      t("type_#{action}_success", type: type_for(resource)).capitalize
     end
   end
 end

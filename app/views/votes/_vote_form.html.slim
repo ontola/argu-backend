@@ -1,5 +1,5 @@
 li
-  =semantic_form_for([resource, Vote.new(for: Vote.fors[stance])], remote: true) do |f|
+  =semantic_form_for([resource, Vote.new(for: Vote.fors[stance])]) do |f|
     =f.hidden_field :for
     =f.hidden_field :r, value: params[:r]
     =button_tag :submit, id: "btn-#{stance}", class: "btn-#{stance}"

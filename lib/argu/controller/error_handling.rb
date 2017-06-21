@@ -63,8 +63,8 @@ module Argu
                    }
           end
           format.html do
-            if params[:iframe] == 'true'
-              render "status/403", status: status, locals: {resource: user, message: e.message}
+            if iframe?
+              render 'status/403', status: status, locals: {resource: user, message: e.message}
             else
               redirect_to new_user_session_path(r: e.r), alert: e.message
             end

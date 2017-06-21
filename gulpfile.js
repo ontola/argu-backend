@@ -53,6 +53,9 @@ var lint = function (paths) {
 
 function browserifyBundle(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
+    b.transform(envify({
+        FRONTEND_URL: 'https://beta.argu.dev'
+    }));
 
     return b.bundle()
         .pipe(source(bundleName))
@@ -86,6 +89,7 @@ function browserifyBundleProduction(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
     b.transform(envify({
         _: 'purge',
+        FRONTEND_URL: 'https://beta.argu.co',
         NODE_ENV: 'production'
     }), {
         global: true

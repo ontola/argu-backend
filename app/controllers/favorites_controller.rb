@@ -22,9 +22,9 @@ class FavoritesController < AuthorizedController
 
   def message_success(resource, action)
     if action == :destroy
-      flash[:success] = t('type_destroy_success', type: type_for(resource))
+      t('type_destroy_success', type: type_for(resource)).capitalize
     elsif action == :save
-      flash[:success] = t('type_create_success', type: type_for(resource))
+      t('type_create_success', type: type_for(resource)).capitalize
     end
   end
 

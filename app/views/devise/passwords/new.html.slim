@@ -3,7 +3,7 @@
     h2= t('devise.passwords.new.header')
   .box
     section
-      =semantic_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, remote: true) do |f|
+      =semantic_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
         p= t('devise.passwords.new.helper')
         =f.inputs
           =f.input :email

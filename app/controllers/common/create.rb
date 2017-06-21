@@ -41,7 +41,7 @@ module Common
 
       # @!visibility public
       def create_respond_success_js(resource)
-        respond_with_redirect_success_js(resource, :save)
+        respond_with_redirect_success_js(resource, :create)
       end
 
       # @!visibility public

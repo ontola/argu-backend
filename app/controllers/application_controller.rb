@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include ActorsHelper, AnalyticsHelper, ApplicationHelper,
           PublicActivity::StoreController, NamesHelper, UsersHelper,
           NestedAttributesHelper, JsonApiHelper, Common::Responses,
-          RedirectHelper
+          RedirectHelper, FrontendTransitionHelper
   helper_method :current_profile, :show_trashed?, :preferred_forum
 
   ::INC_NESTED_COLLECTION = [
@@ -173,7 +173,7 @@ class ApplicationController < ActionController::Base
   # @private
   # Determines what layout the {User} should see.
   def set_layout
-    if params[:iframe] == 'true'
+    if iframe?
       self.class.layout 'iframe'
     elsif current_user.guest?
       self.class.layout 'guest'

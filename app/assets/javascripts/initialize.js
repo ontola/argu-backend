@@ -11,11 +11,13 @@ import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';
 import m from './application/motions';
+import transition from './application/transition';
 import iso from './application/briarcliff/isotope-briarcliff';
 
 function init () {
     // All init functions can rest assured that the document is ready.
     try {
+        transition.init();
         alert.init();
         ui.init();
         n.init();

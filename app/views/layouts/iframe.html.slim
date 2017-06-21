@@ -9,13 +9,14 @@ html[class="no-js"]
     =yield :connected_web
     =render 'layouts/meta'
     meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
+    meta[name="iframe-csrf-token" content="#{iframe_csrf_token}"]
 
     =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
     =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
     =stylesheet_link_tag 'application', media: 'all'
     - if request.original_url.include? developers_path
-      =stylesheet_link_tag 'developers/dlaevelopers', media: 'all'
+      =stylesheet_link_tag 'developers/developers', media: 'all'
 
   body.iframe
     =render partial: 'alerts'

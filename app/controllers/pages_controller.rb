@@ -180,7 +180,7 @@ class PagesController < EdgeTreeController
   end
 
   def respond_with_form_js(_resource)
-    respond_js(:settings, tab: tab, active: tab)
+    respond_js('pages/settings', tab: tab, active: tab)
   end
 
   def redirect_model_success(resource)

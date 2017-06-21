@@ -87,7 +87,7 @@ module HeaderHelper
       items << link_item(
         forum.display_name,
         forum_path(forum),
-        data: {turbolinks: 'false'},
+        data: {turbolinks: false_unless_iframe},
         image: forum.default_profile_photo.url(:icon)
       )
     end
@@ -103,7 +103,7 @@ module HeaderHelper
         link_item(
           shortname.owner.display_name,
           forum_path(shortname.shortname),
-          data: {turbolinks: 'false'},
+          data: {turbolinks: false_unless_iframe},
           image: shortname.owner.default_profile_photo.url(:icon)
         )
       end
@@ -143,12 +143,12 @@ module HeaderHelper
       items << actor_item(current_user.display_name,
                           actors_path(na: current_user.profile.id, format: :json),
                           image: current_user.profile.default_profile_photo.url(:icon),
-                          data: {method: 'put', turbolinks: 'false'})
+                          data: {method: 'put', turbolinks: false_unless_iframe})
       managed_pages.each do |p|
         items << actor_item(p.profile.name,
                             actors_path(na: p.profile.id, format: :json),
                             image: p.profile.default_profile_photo.url(:icon),
-                            data: {method: 'put', turbolinks: 'false'})
+                            data: {method: 'put', turbolinks: false_unless_iframe})
       end
     end
     items
