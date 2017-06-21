@@ -24,10 +24,12 @@ module ExceptionToTheRule
   private
 
   def apply_rules(action, level)
+    c = check_action(action)
+    return c unless c.nil?
     if persisted_edge.present? && (rules = find_rules_for_action(action)).present?
-      filter_rules(rules, level)
+      cache_action action, filter_rules(rules, level)
     else
-      level
+      cache_action action, level
     end
   end
 

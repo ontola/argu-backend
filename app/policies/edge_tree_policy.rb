@@ -96,6 +96,14 @@ class EdgeTreePolicy < RestrictivePolicy
     raise('No edge avaliable in policy') unless edge
   end
 
+  def cache_action(action, val)
+    user_context.cache_key(edge.id, action, val)
+  end
+
+  def check_action(action)
+    user_context.check_key(edge.id, action)
+  end
+
   def assert_publish_type
     return if record.edge.argu_publication&.publish_type.nil?
     assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
@@ -130,20 +138,11 @@ class EdgeTreePolicy < RestrictivePolicy
 
   # Checks whether creating a child of a given class is allowed
   # Initialises a child with the given attributes and checks its policy for new?
-  # @param klass [Symbol] the class of the child
+  # @param raw_klass [Symbol] the class of the child
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
-  def create_child?(klass, attrs = {})
-    klass = klass.to_s.classify.constantize
-    @create_child ||= {}
-    @create_child[klass] ||=
-      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
-        child = klass.new(attrs)
-        child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        Pundit.policy(context, child).create? || false
-      else
-        false
-      end
+  def create_child?(raw_klass, attrs = {})
+    child_operation(:create?, raw_klass, attrs)
   end
 
   def follow?
@@ -152,20 +151,11 @@ class EdgeTreePolicy < RestrictivePolicy
 
   # Checks whether indexing children of a has_many relation is allowed
   # Initialises a child with the given attributes and checks its policy for show?
-  # @param klass [Symbol] the class of the child
+  # @param raw_klass [Symbol] the class of the child
   # @param attrs [Hash] attributes used for initialising the child
   # @return [Integer, false] The user's clearance level
-  def index_children?(klass, attrs = {})
-    klass = klass.to_s.classify.constantize
-    @index_children ||= {}
-    @index_children[klass] ||=
-      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
-        child = klass.new(attrs)
-        child = record.edge.children.new(owner: child).owner if child.is_fertile?
-        Pundit.policy(context, child).show? || false
-      else
-        false
-      end
+  def index_children?(raw_klass, attrs = {})
+    child_operation(:show?, raw_klass, attrs)
   end
 
   def log?
@@ -211,6 +201,33 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   private
+
+  # Initialises a child of the type {raw_klass} with the given {attrs} and checks
+  #   its policy for `{method}?`
+  # @return [Boolean] Whether the action is allowed. Returns a cached value when
+  #   the combination {method} {klass} is already evaluated.
+  def child_operation(method, raw_klass, attrs = {})
+    klass = raw_klass.to_s.classify.constantize
+    if attrs.empty?
+      cache_key = "#{method}_child_for_#{klass}?".to_sym
+      c = check_action(cache_key)
+      return c unless c.nil?
+    end
+
+    r =
+      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
+        child = klass.new(attrs)
+        if child.is_fertile?
+          child = record.edge.children.new(owner: child, is_published: true).owner
+          context.cache_node(persisted_edge) if context.within_tree?(persisted_edge)
+        end
+        Pundit.policy(context, child).send(method) || false
+      else
+        false
+      end
+    cache_action(cache_key, r) if attrs.empty?
+    r
+  end
 
   def parent_policy
     Pundit.policy(context, record.parent_model)

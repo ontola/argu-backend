@@ -36,12 +36,16 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    if record.group.grants.member.present?
-      actor && (record.member == actor || (page_policy.update? || staff?))
-    else
-      return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
-      rule Pundit.policy(context, record.group).remove_member?(record), super
-    end
+    c = check_action(:destroy?)
+    return c unless c.nil?
+    r =
+      if record.group.grants.member.present?
+        actor && (record.member == actor || (page_policy.update? || staff?))
+      else
+        return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
+        rule Pundit.policy(context, record.group).remove_member?(record), super
+      end
+    cache_action(:destroy?, r)
   end
 
   private

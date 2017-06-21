@@ -47,13 +47,26 @@ class UserContext
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
     @opts = opts
+    @lookup_map = {}
     @tree_root = build_tree(tree_relation&.to_a)
+  end
+
+  def cache_key(ident, key, val)
+    return val if ident.nil?
+    @lookup_map[ident] ||= {}
+    @lookup_map[ident][key] = val
+    val
   end
 
   def cache_node(edge)
     return false if cached?(edge)
     e = edge.is_a?(Edge) ? edge : Edge.find(edge)
     find_or_cache_node(e.parent_id).add_child(e) if e.persisted?
+  end
+
+  def check_key(ident, key)
+    return if ident.nil?
+    @lookup_map.dig(ident, key)
   end
 
   # Checks whether the edge or any of its ancestors is expired
