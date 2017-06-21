@@ -54,6 +54,22 @@ class UserContext
     find_or_cache_node(e.parent_id).add_child(e) if e.persisted?
   end
 
+  # Checks whether the edge or any of its ancestors is expired
+  # @param [Edge] node The node to check
+  # @return [Bool] Whether the edge or any of its ancestors is expired
+  def expired?(node)
+    return true if node.expires_at? && node.expires_at < DateTime.current
+    find_or_cache_node(node).expired?
+  end
+
+  # Checks whether the edge or any of its ancestors is unpublished
+  # @param [Edge] node The node to check
+  # @return [Bool] Whether the edge or any of its ancestors is unpublished
+  def unpublished?(node)
+    return true unless node.is_published?
+    find_or_cache_node(node).unpublished?
+  end
+
   # @param [Edge] node The node to check
   # @return [Bool] Whether the Edge falls within the current tree
   def within_tree?(edge)

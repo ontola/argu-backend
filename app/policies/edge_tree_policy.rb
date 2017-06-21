@@ -77,7 +77,15 @@ class EdgeTreePolicy < RestrictivePolicy
   end
   include Roles
   delegate :edge, to: :record
-  delegate :persisted_edge, :has_expired_ancestors?, :has_unpublished_ancestors?, to: :edge
+  delegate :persisted_edge, to: :edge
+
+  def has_expired_ancestors?
+    context.within_tree?(persisted_edge) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
+  end
+
+  def has_unpublished_ancestors?
+    context.within_tree?(persisted_edge) ? context.unpublished?(persisted_edge) : edge.has_unpublished_ancestors?
+  end
 
   def initialize(context, record)
     super
