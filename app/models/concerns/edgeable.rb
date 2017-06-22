@@ -71,7 +71,13 @@ module Edgeable
     end
 
     def parent_model(type = nil)
-      parent_edge(type)&.owner
+      @parent_model ||= {}
+      @parent_model[type] ||= parent_edge(type)&.owner
+    end
+
+    def parent_model=(record, type = nil)
+      @parent_model ||= {}
+      @parent_model[type] ||= record
     end
 
     def pinned
@@ -85,6 +91,12 @@ module Edgeable
 
     def store_in_redis
       RedisResource::Resource.new(resource: self).save
+    end
+
+    def reload(_opts = {})
+      @parent_model = {}
+      edge&.persisted_edge = nil
+      super
     end
 
     def remove_from_redis

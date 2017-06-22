@@ -219,6 +219,8 @@ class EdgeTreePolicy < RestrictivePolicy
         child = klass.new(attrs)
         if child.is_fertile?
           child = record.edge.children.new(owner: child, is_published: true).owner
+          child.edge.persisted_edge = persisted_edge
+          child.parent_model = record
           context.cache_node(persisted_edge) if context.within_tree?(persisted_edge)
         end
         Pundit.policy(context, child).send(method) || false

@@ -160,8 +160,13 @@ class Edge < ApplicationRecord
   def persisted_edge
     return @persisted_edge if @persisted_edge.present?
     persisted = self
-    persisted = persisted.parent until persisted.parent.nil? || persisted.persisted?
+    persisted = persisted.parent until persisted.persisted? || persisted.parent.nil?
     @persisted_edge = persisted if persisted.persisted?
+  end
+
+  def persisted_edge=(edge)
+    raise "#{edge.class} is not an Edge" unless edge.is_a?(Edge) || edge.nil?
+    @persisted_edge = edge
   end
 
   # Only returns a value when the model has been saved
