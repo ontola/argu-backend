@@ -1,5 +1,5 @@
 FROM fletcher91/ruby-vips-qt-unicorn:2.4.1
-ARG C66=true
+ARG ASSET_HOST
 
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get update && apt-get install -y nodejs
@@ -49,7 +49,7 @@ ENV FRESHDESK_SECRET ''
 RUN npm install
 RUN npm run build:production
 
-RUN bundle exec rake RAILS_ENV=production C66=$C66 DEVISE_SECRET=dummy assets:precompile
+RUN bundle exec rake RAILS_ENV=production ASSET_HOST=$ASSET_HOST DEVISE_SECRET=dummy assets:precompile
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
