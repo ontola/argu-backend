@@ -24,6 +24,7 @@ class UserContext
       n = Node.new
       n.id = edge.id
       n.expired = parent&.expired || edge.expires_at && edge.expires_at < DateTime.current
+      n.expired = edge.owner.starts_at > DateTime.current if !n.expired && edge.owner_type == 'VoteEvent'
       n.unpublished = parent&.unpublished || !edge.is_published
       n.user_context = user_context
       n.grants_in_scope = user_context.grants_in_scope.select { |grant| grant.edge.path == edge.path }

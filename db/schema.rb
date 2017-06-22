@@ -724,7 +724,6 @@ ActiveRecord::Schema.define(version: 20170706093850) do
   create_table "vote_events", force: :cascade do |t|
     t.integer  "group_id",     default: -1, null: false
     t.datetime "starts_at"
-    t.datetime "ends_at"
     t.integer  "result",       default: 0,  null: false
     t.integer  "creator_id",                null: false
     t.integer  "publisher_id",              null: false

@@ -63,13 +63,16 @@ class VotesTest < ActionDispatch::IntegrationTest
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event.edge) }
   let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
   let(:vote_event) do
-    create(:vote_event, parent: motion.edge, group: create(:group, parent: freetown.page.edge), ends_at: 1.day.from_now)
+    create(:vote_event,
+           parent: motion.edge,
+           group: create(:group, parent: freetown.page.edge),
+           edge_attributes: {expires_at: 1.day.from_now})
   end
   let(:closed_vote_event) do
     create(:vote_event,
            parent: motion.edge,
            group: create(:group, parent: freetown.page.edge),
-           ends_at: DateTime.current)
+           edge_attributes: {expires_at: DateTime.current})
   end
   let(:creator) { create(:user) }
   let(:profile_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)).profile }

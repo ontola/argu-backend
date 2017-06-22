@@ -23,7 +23,7 @@ class VotePolicy < EdgeTreePolicy
     end
 
     def is_group_member?
-      group_grant if is_member? && user.profile.group_ids.include?(record.parent_model.group.id)
+      group_grant if is_member? && user.profile.group_ids.include?(record.parent_model.group_id)
     end
   end
   include Roles
@@ -57,9 +57,5 @@ class VotePolicy < EdgeTreePolicy
 
   def destroy?
     rule is_creator?, super
-  end
-
-  def has_expired_ancestors?
-    record.parent_model.try(:closed?) || super
   end
 end

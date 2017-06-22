@@ -9,8 +9,6 @@ class VoteEvent < ApplicationRecord
 
   with_collection :votes, pagination: true
 
-  validate :ends_at_after_starts_at
-
   contextualize_as_type 'argu:VoteEvent'
   contextualize_with_id { |r| Rails.application.routes.url_helpers.vote_event_url(r, protocol: :https) }
   contextualize :starts_at, as: 'http://schema.org/startDate'
@@ -22,17 +20,8 @@ class VoteEvent < ApplicationRecord
 
   delegate :is_trashed?, to: :parent_model
 
-  def closed?
-    starts_at.nil? || ends_at.present? && !DateTime.current.between?(starts_at, ends_at) || parent_model.try(:closed?)
-  end
-
   def display_name
     group_id == -1 ? 'Argu voting' : "Voting by #{group.name}"
-  end
-
-  def ends_at_after_starts_at
-    return unless starts_at.present? && ends_at.present? && ends_at < starts_at
-    errors.add(:ends_at, "can't be before start date")
   end
 
   def stats
