@@ -2,10 +2,10 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope
+  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope, :rules_in_scope
 
   class Node
-    attr_accessor :id, :expired, :unpublished, :children, :user_context, :grants_in_scope
+    attr_accessor :id, :expired, :unpublished, :children, :user_context, :grants_in_scope, :rules_in_scope
     alias expired? expired
     alias unpublished? unpublished
 
@@ -27,6 +27,7 @@ class UserContext
       n.unpublished = parent&.unpublished || !edge.is_published
       n.user_context = user_context
       n.grants_in_scope = user_context.grants_in_scope.select { |grant| grant.edge.path == edge.path }
+      n.rules_in_scope = user_context.rules_in_scope.select { |rule| rule.branch_id == n.id }
       user_context.cached_nodes[n.id] = n
       n
     end
@@ -38,6 +39,7 @@ class UserContext
       raise 'Inconsistent node' unless edge.parent_id == id
       c = Node.build(edge, self, user_context)
       c.grants_in_scope.concat(grants_in_scope)
+      c.rules_in_scope.concat(rules_in_scope)
       c
     end
   end
@@ -89,6 +91,21 @@ class UserContext
     user.profile.group_ids & granted_group_ids
   end
 
+  # Find all rules active for the action on the record on the edge
+  # @param [Edge] edge The position in the edge tree
+  # @param [ActiveRecord] record The record to find rules for
+  # @param [String] action The action to find rules for
+  # @return [Array<Rule>]
+  def rules(edge, record, action)
+    model_type = record.class.to_s
+    model_id = record.try(:id)
+    find_or_cache_node(edge.persisted_edge)
+      .rules_in_scope
+      .select do |rule|
+      rule.action == action.to_s && rule.model_type == model_type && [model_id, nil].include?(rule.model_id)
+    end
+  end
+
   # Checks whether the edge or any of its ancestors is unpublished
   # @param [Edge] node The node to check
   # @return [Bool] Whether the edge or any of its ancestors is unpublished
@@ -117,6 +134,10 @@ class UserContext
         .includes(:edge)
         .where("edges.path ~ '?.*'", root.id)
         .to_a
+    @rules_in_scope =
+      Rule
+        .joins(:branch)
+        .where("edges.path ~ '?.*'", root.id)
         .to_a
     Node.build_from_tree(tree, root, self)
   end

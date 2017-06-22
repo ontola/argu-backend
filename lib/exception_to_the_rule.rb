@@ -86,14 +86,18 @@ module ExceptionToTheRule
   # @return [ActiveRecord::CollectionProxy] All {Rule}s that match the current action for the
   #   current {RestrictivePolicy#record} anywhere in the current edge tree
   def find_rules_for_action(action)
-    t_rules = Rule.arel_table
-    rule_query = t_rules[:model_type]
-                   .eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
-                   .and(t_rules[:model_id].eq(@record.try(:id))
-                          .or(t_rules[:model_id].eq(nil))
-                          .and(t_rules[:action].eq(action.to_s))
-                          .and(t_rules[:branch_id].in(persisted_edge.self_and_ancestor_ids)))
-    Rule.where(rule_query)
+    if context.within_tree?(persisted_edge)
+      context.rules(persisted_edge, record, action)
+    else
+      t_rules = Rule.arel_table
+      rule_query = t_rules[:model_type]
+                     .eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
+                     .and(t_rules[:model_id].eq(@record.try(:id))
+                            .or(t_rules[:model_id].eq(nil))
+                            .and(t_rules[:action].eq(action.to_s))
+                            .and(t_rules[:branch_id].in(persisted_edge.self_and_ancestor_ids)))
+      Rule.where(rule_query)
+    end
   end
 
   def max_clearance(*array)
