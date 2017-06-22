@@ -5,14 +5,17 @@ module ActivePublishable
   included do
     has_many :publications,
              through: :edge
-
+    has_many :published_publications,
+             -> { where('publications.published_at IS NOT NULL') },
+             through: :edge,
+             source: :publications
     has_one :argu_publication,
             -> { where(channel: 'argu') },
             class_name: 'Publication',
             through: :edge
 
     def is_draft?
-      publications.where('published_at IS NOT NULL').empty?
+      published_publications.empty?
     end
 
     def is_publishable?

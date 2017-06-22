@@ -6,7 +6,7 @@ class QuestionsController < EdgeTreeController
   def show
     @motions = policy_scope(authenticated_resource.motions)
                  .joins(:edge, :default_vote_event_edge)
-                 .includes(:default_cover_photo, :edge, :votes,
+                 .includes(:default_cover_photo, :edge, :votes, :published_publications,
                            creator: {default_profile_photo: []})
                  .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
                  .page(show_params[:page])

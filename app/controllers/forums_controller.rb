@@ -124,15 +124,15 @@ class ForumsController < EdgeTreeController
   def collect_items
     projects = policy_scope(resource_by_id
                               .projects
-                              .includes(:edge, :default_cover_photo))
+                              .includes(:edge, :default_cover_photo, :published_publications))
     questions = policy_scope(resource_by_id
                                .questions
                                .where(project_id: nil)
-                               .includes(:edge, :default_cover_photo))
+                               .includes(:edge, :default_cover_photo, :published_publications))
     motions = policy_scope(resource_by_id
                              .motions
                              .where(project_id: nil, question_id: nil)
-                             .includes(:edge, :default_cover_photo, :votes))
+                             .includes(:edge, :default_cover_photo, :votes, :published_publications))
 
     Kaminari
       .paginate_array((projects + questions + motions)
