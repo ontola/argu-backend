@@ -5,7 +5,7 @@ class LinkInput < Formtastic::Inputs::StringInput
   def to_html
     input_wrapping do
       label_html <<
-        link_to(input_name, input_options[:url].to_s, input_html_options)
+        link_to(localized_string(method, method, :label), input_options[:url].to_s, input_html_options)
     end
   end
 end

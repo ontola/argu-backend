@@ -129,6 +129,7 @@ nl:
         key_tags: "Sleuteltags"
         scope: "Vorm"
         visibility: "Zichtbaarheid"
+        page: "Verplaatsen"
   votes:
     alerts:
       not_modified: ""

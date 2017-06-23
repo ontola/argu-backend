@@ -130,6 +130,7 @@ en:
         key_tags: "Key tags"
         scope: "Scope"
         visibility: "Visibility"
+        page: "Transfer"
   votes:
     alerts:
       not_modified: ""
