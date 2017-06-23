@@ -25,8 +25,8 @@ class SendNotificationsWorker
         if notifications.length.positive? &&
             (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
           logger.info "Sending #{notifications.length} notification(s) to #{user.email}"
+          user.update!(notifications_viewed_at: Time.current)
           NotificationsMailer.notifications_email(user, notifications).deliver
-          user.update(notifications_viewed_at: Time.current)
         end
       rescue ActiveRecord::StatementInvalid => e
         logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
