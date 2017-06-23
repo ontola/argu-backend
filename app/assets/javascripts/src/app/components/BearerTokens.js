@@ -131,7 +131,7 @@ export const Token = React.createClass({
         const { attributes, links } = this.props.token;
         return (<tr>
             <td>
-                <input disabled='true' value={links.self}/>
+                <input readOnly='true' value={links.self}/>
             </td>
             <td>
                 {attributes.usages}
