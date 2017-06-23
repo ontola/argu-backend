@@ -31,8 +31,11 @@ export const ArgumentForm = props => {
                         autoFocus
                         className="form-input-content"
                         data-field="title"
+                        maxLength="75"
+                        minLength="5"
                         name="argument-title"
                         onChange={props.onArgumentChange}
+                        required={true}
                         value={props.createArgument.title}/>
                     <label>{I18n.t('arguments.form.content_heading')}</label>
                     <textarea

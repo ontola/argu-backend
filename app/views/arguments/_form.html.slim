@@ -7,7 +7,7 @@
       =f.inputs
         h3= t('arguments.form.title_heading')
         =t('arguments.form.title_body_html')
-        =f.input :title, as: :text, input_html: {size: '2', maxlength: '75', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false
+        =f.input :title, as: :text, input_html: {size: '2', maxlength: '75', minlength: '5', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false
         h3= t('arguments.form.content_heading')
         =t('arguments.form.content_body_html')
         =f.input :content, input_html: {class: 'form-input-content', rows: '6'}, label: false, hint: false
