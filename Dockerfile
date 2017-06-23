@@ -46,8 +46,9 @@ ENV AWS_ID ''
 ENV AWS_KEY ''
 ENV FRESHDESK_SECRET ''
 
-RUN npm install
-RUN npm run build:production
+RUN npm install -g yarnpkg
+RUN yarn
+RUN yarn run build:production
 
 RUN bundle exec rake RAILS_ENV=production ASSET_HOST=$ASSET_HOST DEVISE_SECRET=dummy assets:precompile
 
