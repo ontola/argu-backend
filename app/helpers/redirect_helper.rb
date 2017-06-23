@@ -5,7 +5,7 @@ module RedirectHelper
   def valid_redirect?(r)
     uri = r && URI.parse(r)
     return true if uri.nil? || uri.hostname.nil?
-    uri.path = ''
-    VALID_HOSTNAMES.include?(uri.to_s)
+    port = [nil, 80, 443].include?(uri.port) ? '' : ":#{uri.port}"
+    VALID_HOSTNAMES.include?("#{uri.scheme}://#{uri.hostname}#{port}")
   end
 end
