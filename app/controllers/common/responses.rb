@@ -4,6 +4,18 @@ module Common
   # Methods are named using their numbered counterpart for brevity
   #   and consistency.
   module Responses
+    # Method to determine where the action should redirect to after it fails.
+    # @param [Class] resource The resource from the result of the action
+    def redirect_model_failure(resource)
+      resource
+    end
+
+    # Method to determine where the action should redirect to after it succeeds.
+    # @param [Class] resource The resource from the result of the action
+    def redirect_model_success(resource)
+      action_name == 'destroy' ? resource.parent_model : resource
+    end
+
     def respond_with_200(resource, format)
       case format
       when :json, :json_api
