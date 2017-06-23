@@ -78,6 +78,7 @@ const OpinionMixin = {
                     });
                 }
             }).catch(er => {
+                this.setState({ submitting: false });
                 const message = errorMessageForStatus(er.status).fallback || this.getIntlMessage('errors.general');
                 new Alert(message, 'alert', true);
                 Bugsnag.notifyException(er);
@@ -136,6 +137,7 @@ const OpinionMixin = {
                     }));
                 }
             }).catch(er => {
+                this.setState({ submitting: false });
                 const message = errorMessageForStatus(er.status).fallback || this.getIntlMessage('errors.general');
                 new Alert(message, 'alert', true);
                 Bugsnag.notifyException(er);
