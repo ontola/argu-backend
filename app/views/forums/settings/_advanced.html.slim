@@ -13,6 +13,8 @@
           span= t('forums.shortname.warning')
       -if policy(resource).change_owner?
         =f.input :page
+      - if policy(resource).delete?
+        =f.input :f_delete, as: :link, url: delete_forum_url(resource), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, :as => :button

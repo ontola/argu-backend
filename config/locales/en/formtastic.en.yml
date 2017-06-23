@@ -27,6 +27,7 @@ en:
       happened_at: "Happened at"
       f_move: "Move"
       f_convert: "Convert"
+      f_delete: "Delete"
       featured_tags: "Featured themes"
       is_public: "Show profile to non-members"
       is_trashed: "Is hidden"

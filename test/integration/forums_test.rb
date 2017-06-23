@@ -54,6 +54,18 @@ class ForumsTest < ActionDispatch::IntegrationTest
     general_show(holland)
   end
 
+  test 'guest should not get delete' do
+    get delete_forum_path(holland)
+    assert_redirected_to new_user_session_path(r: '/holland/delete')
+  end
+
+  test 'guest should not delete destroy' do
+    assert_no_difference('Forum.count') do
+      delete forum_path(holland)
+    end
+    assert_redirected_to new_user_session_path(r: '/holland')
+  end
+
   ####################################
   # As User
   ####################################
@@ -133,6 +145,20 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
+  test 'user should not get delete' do
+    sign_in
+    get delete_forum_path(holland)
+    assert_not_authorized
+  end
+
+  test 'user should not delete destroy' do
+    sign_in
+    assert_no_difference('Forum.count') do
+      delete forum_path(holland)
+    end
+    assert_not_authorized
+  end
+
   ####################################
   # As Member
   ####################################
@@ -195,6 +221,64 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
     end
 
+    assert_not_authorized
+  end
+
+  test 'member should not get delete' do
+    sign_in holland_member
+    get delete_forum_path(holland)
+    assert_not_authorized
+  end
+
+  test 'member should not delete destroy' do
+    sign_in holland_member
+    assert_no_difference('Forum.count') do
+      delete forum_path(holland)
+    end
+    assert_not_authorized
+  end
+
+  ####################################
+  # As Manager
+  ####################################
+  let(:holland_manager) { create_manager(holland) }
+
+  test 'manager should get discover' do
+    sign_in holland_manager
+    get discover_forums_path
+    assert_response 200
+    assert_select '.box.box-grid', 4
+  end
+
+  test 'manager should not show settings' do
+    sign_in holland_manager
+
+    get settings_forum_path(holland),
+        params: {tab: :general}
+    assert_response 403
+  end
+
+  test 'manager should get index' do
+    sign_in holland_manager
+    get forums_user_path(holland_manager)
+    assert_response 200
+
+    assert_have_tag response.body,
+                    '.box-grid h3',
+                    holland.display_name
+  end
+
+  test 'manager should not get delete' do
+    sign_in holland_manager
+    get delete_forum_path(holland)
+    assert_not_authorized
+  end
+
+  test 'manager should not delete destroy' do
+    sign_in holland_manager
+    assert_no_difference('Forum.count') do
+      delete forum_path(holland)
+    end
     assert_not_authorized
   end
 
@@ -270,34 +354,18 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
-  ####################################
-  # As Manager
-  ####################################
-  let(:holland_manager) { create_manager(holland) }
-
-  test 'manager should get discover' do
-    sign_in holland_manager
-    get discover_forums_path
+  test 'super_admin should get delete' do
+    sign_in create_super_admin(holland)
+    get delete_forum_path(holland)
     assert_response 200
-    assert_select '.box.box-grid', 4
   end
 
-  test 'manager should not show settings' do
-    sign_in holland_manager
-
-    get settings_forum_path(holland),
-        params: {tab: :general}
-    assert_response 403
-  end
-
-  test 'manager should get index' do
-    sign_in holland_manager
-    get forums_user_path(holland_manager)
-    assert_response 200
-
-    assert_have_tag response.body,
-                    '.box-grid h3',
-                    holland.display_name
+  test 'super_admin should not delete destroy' do
+    sign_in create_super_admin(holland)
+    assert_difference('Forum.count', -1) do
+      delete forum_path(holland)
+    end
+    assert_redirected_to holland.page
   end
 
   ####################################
@@ -360,6 +428,20 @@ class ForumsTest < ActionDispatch::IntegrationTest
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
     assert_equal holland.edge.grants.size, 1
+  end
+
+  test 'staff should get delete' do
+    sign_in staff
+    get delete_forum_path(holland)
+    assert_response 200
+  end
+
+  test 'staff should not delete destroy' do
+    sign_in staff
+    assert_difference('Forum.count', -1) do
+      delete forum_path(holland)
+    end
+    assert_redirected_to holland.page
   end
 
   private

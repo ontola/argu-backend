@@ -1,0 +1,4 @@
+$('.container').append("<%= escape_javascript render(template: 'forums/delete.html', layout: false, locals: {resource: resource}) %>");
+window.setTimeout(function () {
+    $('body').addClass('modal-opened');
+}, 300);

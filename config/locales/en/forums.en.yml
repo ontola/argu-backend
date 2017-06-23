@@ -29,7 +29,14 @@ en:
         grants: 'Grants'
         shortnames: 'Argu URLs'
         banners: 'Banners'
-      advanced: "Advanced"
+      advanced:
+        delete:
+          confirm:
+            header: "Are you absolutely sure?"
+            body_html: "<b>NOT READING THIS MESSAGE MIGHT LEAD TO UNWANTED LOSS OF CONTENT</b><br>Deleting this forum will delete <b>all content</b> of this forum! This action can <b>NOT</b> be undone!"
+            howto: "Please enter 'remove' below to confirm the deletion."
+            string: "remove"
+            understand: "I understand the consequences, delete this forum."
       privacy: "Privacy"
       manager: "Manager"
       shortnames: 'Argu URLs'

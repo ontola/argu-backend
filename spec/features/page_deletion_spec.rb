@@ -53,7 +53,7 @@ RSpec.feature 'Page deletion', type: :feature do
     visit pages_user_path(user)
     click_link 'Settings'
     click_link 'Advanced'
-    click_link 'f_delete'
+    click_link 'Delete'
     expect do
       within(".confirm.page#edit_page_#{forum_page.id}") do
         fill_in 'page_confirmation_string', with: 'remove'
@@ -77,7 +77,7 @@ RSpec.feature 'Page deletion', type: :feature do
     visit pages_user_path(user)
     click_link 'Settings'
     click_link 'Advanced'
-    click_link 'f_delete'
+    click_link 'Delete'
 
     expect(page).to have_content 'This page owns one or multiple forums. '\
                                  'Transfer these forum to another page or contact Argu before proceeding.'

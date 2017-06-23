@@ -28,6 +28,14 @@ class ForumPolicy < EdgeTreePolicy
     super
   end
 
+  def delete?
+    destroy?
+  end
+
+  def destroy?
+    rule is_super_admin?, super
+  end
+
   def follow?
     rule is_member?, is_manager?, staff?
   end

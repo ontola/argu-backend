@@ -18,7 +18,7 @@ class Forum < ApplicationRecord
   with_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
 
   # @private
-  attr_accessor :tab, :active
+  attr_accessor :tab, :active, :confirmation_string
   attr_writer :public_grant
 
   acts_as_ordered_taggable_on :tags

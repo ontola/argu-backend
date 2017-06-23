@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     patch 'comments' => 'comments#create'
   end
   concern :destroyable do
+    delete action: :destroy, on: :member
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
   concern :decisionable do
@@ -190,7 +191,7 @@ Rails.application.routes.draw do
 
   resources :groups,
             path: 'g',
-            only: [:show, :update, :destroy],
+            only: [:show, :update],
             concerns: [:destroyable] do
     get :settings, on: :member
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
@@ -199,7 +200,7 @@ Rails.application.routes.draw do
 
   resources :pages,
             path: 'o',
-            only: [:new, :create, :show, :update, :destroy, :index],
+            only: [:new, :create, :show, :update, :index],
             concerns: [:feedable, :destroyable] do
     resources :grants, path: 'grants', only: [:new, :create]
     resources :groups, path: 'g', only: [:create, :new]
@@ -307,7 +308,7 @@ Rails.application.routes.draw do
     resources :forums,
               only: [:show, :update],
               path: '',
-              concerns: [:feedable, :discussable, :favorable] do
+              concerns: [:feedable, :discussable, :destroyable, :favorable] do
       resources :motions, path: :m, only: [] do
         get :search, to: 'motions#search', on: :collection
       end
