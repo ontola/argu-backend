@@ -1,8 +1,4 @@
--if resource.is_published?
-  -if policy(resource).trash?
-    =f.semantic_fields_for :edge do |ef|
-      =ef.input :is_trashed, as: :reverse_boolean
--elsif !resource.is_trashed?
+-if !resource.is_published? && !resource.is_trashed?
   =f.semantic_fields_for :edge do |ef|
     =ef.semantic_fields_for :argu_publication do |pf|
       - if policy(resource).permitted_publish_types.present?

@@ -11,9 +11,6 @@
         h3= t('arguments.form.content_heading')
         =t('arguments.form.content_body_html')
         =f.input :content, input_html: {class: 'form-input-content', rows: '6'}, label: false, hint: false
-        - if policy(argument).trash? && !argument.new_record?
-          =f.semantic_fields_for :edge do |ef|
-            =ef.input :is_trashed, as: :reverse_boolean
         .row
           .span8
             fieldset.control-group

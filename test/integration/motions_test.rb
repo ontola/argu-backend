@@ -193,16 +193,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
     end
     options = {
       attributes: {
-        edge_attributes: {
-          is_trashed: '1'
-        }
-      }
-    }
-    define_test(hash, :update, suffix: ' trash', options: options) do
-      {creator: exp_res(response: 302, should: true, asserts: [assert_is_trashed])}
-    end
-    options = {
-      attributes: {
         default_cover_photo_attributes: {
           content: fixture_file_upload('cover_photo.jpg', 'image/jpg')
         }
