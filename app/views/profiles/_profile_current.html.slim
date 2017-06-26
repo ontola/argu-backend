@@ -1,2 +1,2 @@
-- if current_profile.persisted?
+- unless current_user.guest?
   =react_component_store 'CurrentProfile', props: {display_name: current_profile.display_name, profile_photo: {url: current_profile.default_profile_photo.url(:icon), title: 'profile picture' }}
