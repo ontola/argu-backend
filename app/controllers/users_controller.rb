@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 class UsersController < ApplicationController
-  include NestedResourceHelper, UrlHelper, VotesHelper
+  include Common::Setup
+  include Common::Update,
+          NestedResourceHelper,
+          UrlHelper,
+          VotesHelper
   helper_method :authenticated_resource, :complete_feed_param
 
   def show
@@ -23,7 +27,10 @@ class UsersController < ApplicationController
       format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api do
         render json: authenticated_resource,
-               include: [:profile_photo, vote_match_collection: INC_NESTED_COLLECTION]
+               include: [
+                 :profile_photo,
+                 vote_match_collection: INC_NESTED_COLLECTION
+               ]
       end
     end
   end
@@ -40,40 +47,18 @@ class UsersController < ApplicationController
   def settings
     authorize authenticated_resource
     authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
-    render 'settings', locals: {tab: tab, active: tab, profile: authenticated_resource.profile}
+    render 'settings', locals: {
+      tab: tab,
+      active: tab,
+      profile: authenticated_resource.profile
+    }
   end
 
   # PUT /settings
   def update
     authorize authenticated_resource
-    email_changed = email_changed?
-    respond_to do |format|
-      if update_user
-        notice = if email_changed
-                   t('users.registrations.confirm_mail_change_notice')
-                 else
-                   t('type_save_success', type: t('type_changes'))
-                 end
-        format.html { redirect_to r_param || settings_path(tab: tab), notice: notice }
-        format.json { respond_with_204(authenticated_resource, :json) }
-        format.json_api { respond_with_204(authenticated_resource, :json_api) }
-      else
-        format.html do
-          if params[:user][:form] == 'wrong_email'
-            email = params[:user][:emails_attributes]['99999'][:email]
-            if current_user.emails.any? { |e| e.email == email }
-              redirect_to r_param
-            else
-              render 'wrong_email', locals: {email: email, r: r_param}
-            end
-          else
-            render 'settings', locals: {tab: tab, active: tab, profile: authenticated_resource.profile}
-          end
-        end
-        format.json { respond_with_422(authenticated_resource, :json) }
-        format.json_api { respond_with_422(authenticated_resource, :json_api) }
-      end
-    end
+    @email_changed = email_changed?
+    exec_action
   end
 
   def connect
@@ -150,7 +135,8 @@ class UsersController < ApplicationController
   end
 
   def tab
-    policy(authenticated_resource || User).verify_tab(params[:tab] || params[:user].try(:[], :tab))
+    t = params[:tab] || params[:user].try(:[], :tab)
+    policy(authenticated_resource || User).verify_tab(t)
   end
 
   def wrong_email
@@ -207,7 +193,8 @@ class UsersController < ApplicationController
   end
 
   def permit_params
-    pp = params.require(:user).permit(*policy(authenticated_resource || User).permitted_attributes(true)).to_h
+    attrs = policy(authenticated_resource || User).permitted_attributes(true)
+    pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
     if pp[:primary_email].present?
@@ -217,7 +204,8 @@ class UsersController < ApplicationController
   end
 
   def passwordless_permit_params
-    pp = params.require(:user).permit(*policy(authenticated_resource || User).permitted_attributes).to_h
+    attrs = policy(authenticated_resource || User).permitted_attributes
+    pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
     pp
@@ -236,9 +224,37 @@ class UsersController < ApplicationController
     redirect_to r.presence || root_path
   end
 
-  def update_user
+  def update_respond_failure_html(resource)
+    if params[:user][:form] == 'wrong_email'
+      email = params[:user][:emails_attributes]['99999'][:email]
+      if current_user.emails.any? { |e| e.email == email }
+        redirect_to r_param
+      else
+        render 'wrong_email', locals: {email: email, r: r_param}
+      end
+    else
+      render 'settings',
+             locals: {tab: tab, active: tab, profile: resource.profile}
+    end
+  end
+
+  def redirect_model_success(_resource)
+    r_param || settings_path(tab: tab)
+  end
+
+  def message_success(_resource, _action)
+    if @email_changed
+      t('users.registrations.confirm_mail_change_notice')
+    else
+      t('type_save_success', type: t('type_changes'))
+    end
+  end
+
+  def execute_update
     if params[:user][:primary_email].present? || permit_params[:password].present?
-      bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params)
+      if authenticated_resource.update_with_password(permit_params)
+        bypass_sign_in(authenticated_resource)
+      end
     else
       authenticated_resource.update_without_password(passwordless_permit_params)
     end
