@@ -20,7 +20,6 @@ module OauthHelper
   end
 
   def write_client_access_token
-    migrate_token
     refresh_guest_token if needs_new_guest_token
   end
 
@@ -83,16 +82,5 @@ module OauthHelper
     @_raw_doorkeeper_token = generate_guest_token
     set_argu_client_token_cookie(raw_doorkeeper_token.token)
     true
-  end
-
-  # @todo remove when enough people had the chance to migrate to the new token
-  def migrate_token
-    return unless cookies['client_token'].present?
-    if cookies['argu_client_token'].blank?
-      set_argu_client_token_cookie(cookies.encrypted['client_token'])
-      request.cookies['argu_client_token'] = cookies['argu_client_token']
-    end
-    cookies.delete 'client_token'
-    cookies.delete 'client_token', domain: :all
   end
 end
