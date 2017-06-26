@@ -15,7 +15,7 @@ class ForumsController < EdgeTreeController
                 .joins(:edge)
                 .where('forums.page_id IN(?) OR edges.path ~ ?',
                        current_user.profile.pages.pluck(:id),
-                       mangager_edges_sql)
+                       manager_edges_sql)
     @_pundit_policy_scoped = true
   end
 
@@ -147,14 +147,15 @@ class ForumsController < EdgeTreeController
       .sort { |x, y| y[1] <=> x[1] }
   end
 
-  def mangager_edges_sql
+  def manager_edges_sql
     ids = current_user.profile.granted_edge_ids(nil, :manager) +
       current_user.profile.granted_edge_ids(nil, :super_admin)
     "*.#{ids.compact.uniq.join('|').presence || 'NULL'}.*"
   end
 
   def permit_params
-    pm = params.require(:forum).permit(*policy(resource_by_id).permitted_attributes).to_h
+    attrs = policy(resource_by_id).permitted_attributes
+    pm = params.require(:forum).permit(*attrs).to_h
     merge_photo_params(pm, @resource.class)
     pm
   end
@@ -181,9 +182,22 @@ class ForumsController < EdgeTreeController
     redirect_to url_for(resource)
   end
 
+  def redirect_model_success(resource)
+    return super if action_name == 'destroy'
+    settings_forum_path(resource, tab: tab)
+  end
+
   def resource_by_id
     return if action_name == 'index' || action_name == 'discover'
     @forum ||= Forum.find_via_shortname!(params[:id])
+  end
+
+  def respond_with_form(_)
+    render :settings, locals: {tab: tab, active: tab}
+  end
+
+  def respond_with_form_js(_)
+    respond_js('forums/settings', tab: tab, active: tab)
   end
 
   def show_params
@@ -191,19 +205,7 @@ class ForumsController < EdgeTreeController
   end
 
   def tab
-    policy(resource_by_id || Forum).verify_tab(params[:tab] || params[:forum].try(:[], :tab))
-  end
-
-  def update_handler_failure(_)
-    render 'settings',
-           locals: {
-             tab: tab,
-             active: tab
-           }
-  end
-
-  def update_handler_success(resource)
-    redirect_to settings_forum_path(resource, tab: tab),
-                notice: t('type_save_success', type: t('forums.type'))
+    t = params[:tab] || params[:forum].try(:[], :tab)
+    policy(resource_by_id || Forum).verify_tab(t)
   end
 end

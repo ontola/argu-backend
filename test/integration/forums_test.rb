@@ -360,7 +360,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'super_admin should not delete destroy' do
+  test 'super_admin should delete destroy' do
     sign_in create_super_admin(holland)
     assert_difference('Forum.count', -1) do
       delete forum_path(holland)
@@ -436,7 +436,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'staff should not delete destroy' do
+  test 'staff should delete destroy' do
     sign_in staff
     assert_difference('Forum.count', -1) do
       delete forum_path(holland)
