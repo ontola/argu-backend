@@ -258,7 +258,8 @@ export default ui;
 export const modal = {
     init: function () {
         $(document)
-            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
+            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal)
+            .on('click', '.modal-container .close-trigger', this.closeModal);
 
         // Close modal when pressing escape button
         // @TODO: Just listen to escape, not all the time all the buttons
@@ -273,8 +274,9 @@ export const modal = {
         });
     },
 
-    closeModal: function () {
-        let container = $(this).parent('.modal-container');
+    closeModal: function (e) {
+        e.preventDefault();
+        let container = $(this).parents('.modal-container');
 
         container.addClass('modal-hide');
         window.setTimeout(() => {

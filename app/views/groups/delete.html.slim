@@ -6,7 +6,7 @@
     .box
       section
         .form
-          =semantic_form_for group, url: group_path(group), method: :delete do |f|
-            p= t('groups.destroy.body', group_memberships_count: group_memberships_count)
+          =semantic_form_for resource, url: group_path(resource), method: :delete do |f|
+            p= t('groups.destroy.body', group_memberships_count: resource.group_memberships.count)
             =f.actions do
               =f.action :submit, as: :button, label: t('destroy'), button_html: {class: 'btn--warning'}

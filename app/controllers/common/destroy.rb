@@ -5,8 +5,34 @@ module Common
 
     included do
       define_action_methods(:destroy)
+      define_handlers(:delete)
+
+      def delete
+        delete_handler_success(authenticated_resource)
+      end
 
       private
+
+      # @!visibility public
+      def delete_respond_blocks_success(resource, format)
+        format.html { delete_respond_success_html(resource) }
+        format.js { delete_respond_success_js(resource) }
+      end
+
+      # @!visibility public
+      def delete_respond_success_html(resource)
+        render 'delete', locals: {resource: resource}
+      end
+
+      # @!visibility public
+      def delete_respond_success_js(resource)
+        template = if lookup_context.exists?("#{controller_name}/delete.html")
+                     "#{controller_name}/delete.html"
+                   else
+                     'application/delete.html'
+                   end
+        render 'delete.js', layout: false, locals: {template: template, resource: resource}
+      end
 
       # @!visibility public
       def destroy_respond_blocks_failure(resource, format)

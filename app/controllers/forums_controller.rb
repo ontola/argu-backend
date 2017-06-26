@@ -19,13 +19,6 @@ class ForumsController < EdgeTreeController
     @_pundit_policy_scoped = true
   end
 
-  def delete
-    respond_to do |format|
-      format.html { render 'delete', locals: {resource: authenticated_resource} }
-      format.js { render layout: false, locals: {resource: authenticated_resource} }
-    end
-  end
-
   def discover
     @forums = policy_scope(Forum)
               .public_forums

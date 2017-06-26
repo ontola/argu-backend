@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     put :move, action: :move
   end
   concern :trashable do
+    get :delete, action: :delete, path: :delete, as: :delete, on: :member
     put :untrash, action: :untrash, on: :member
     match '/', action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
     match '/', action: :trash, on: :member, as: :trash, via: :delete
@@ -153,7 +154,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions,
-            path: 'q', except: [:index, :new, :create, :destroy],
+            path: 'q', except: [:index, :new, :create],
             concerns: [:commentable, :blog_postable, :moveable, :feedable, :trashable] do
     resources :media_objects, only: :index
     resources :motions, path: 'm', only: [:index, :new, :create]
@@ -169,7 +170,7 @@ Rails.application.routes.draw do
 
   resources :motions,
             path: 'm',
-            except: [:index, :new, :create, :destroy],
+            except: [:index, :new, :create],
             concerns: [:commentable, :blog_postable, :moveable, :votable, :feedable, :trashable, :decisionable] do
     resources :arguments, only: [:new, :create, :index]
     resources :media_objects, only: :index
@@ -179,7 +180,7 @@ Rails.application.routes.draw do
 
   resources :arguments,
             path: 'a',
-            except: [:index, :new, :create, :destroy],
+            except: [:index, :new, :create],
             concerns: [:votable, :feedable, :trashable, :commentable]
 
   resources :groups,

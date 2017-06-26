@@ -36,17 +36,6 @@ class GroupsController < ServiceController
     }
   end
 
-  def delete
-    locals = {
-      group: authenticated_resource!,
-      group_memberships_count: authenticated_resource!.group_memberships.count
-    }
-    respond_to do |format|
-      format.html { render locals: locals }
-      format.js { render locals: locals }
-    end
-  end
-
   private
 
   def create_respond_failure_html(resource)

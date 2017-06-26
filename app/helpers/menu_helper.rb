@@ -80,8 +80,8 @@ module MenuHelper
       end
     elsif resource_policy.trash?
       link_items << link_item(t('trash'),
-                              polymorphic_url(resource),
-                              data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
+                              polymorphic_url([:delete, resource]),
+                              data: {remote: true},
                               fa: 'trash')
     end
     link_items

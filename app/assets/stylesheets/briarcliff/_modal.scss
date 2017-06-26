@@ -31,6 +31,12 @@
   &.col-1{
     margin-bottom: 0;
   }
+  .modal-section {
+    padding: 1.1em 1.4em 0.1em 1.4em;
+  }
+  .formtastic button {
+    padding: .6em 2.5em .6em;
+  }
 }
 
 .modal h1 {
@@ -88,4 +94,3 @@
     @include animation(fade-out .3s linear both);
   }
 }
-

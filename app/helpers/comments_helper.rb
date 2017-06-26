@@ -25,8 +25,8 @@ module CommentsHelper
       end
     elsif policy(comment).trash?
       link_items << link_item(t('trash'),
-                              polymorphic_url([resource, comment]),
-                              data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
+                              polymorphic_url([:delete, resource, comment]),
+                              data: {remote: true},
                               fa: 'trash')
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-ellipsis-v')

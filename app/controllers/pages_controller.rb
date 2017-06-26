@@ -77,13 +77,6 @@ class PagesController < EdgeTreeController
     end
   end
 
-  def delete
-    respond_to do |format|
-      format.html { render 'delete', locals: {resource: @page} }
-      format.js { render layout: false }
-    end
-  end
-
   def destroy
     unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
       @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
