@@ -29,10 +29,6 @@ class ForumPolicy < EdgeTreePolicy
     super
   end
 
-  def delete?
-    destroy?
-  end
-
   def destroy?
     rule is_super_admin?, super
   end

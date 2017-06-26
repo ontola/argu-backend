@@ -64,10 +64,6 @@ class PagePolicy < EdgeTreePolicy
     rule pages_left?, super
   end
 
-  def delete?
-    destroy?
-  end
-
   def destroy?
     rule is_manager?, super
   end

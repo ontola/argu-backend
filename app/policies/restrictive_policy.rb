@@ -101,6 +101,10 @@ class RestrictivePolicy
     staff?
   end
 
+  def delete?
+    destroy?
+  end
+
   def edit?
     update?
   end

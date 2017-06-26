@@ -34,10 +34,6 @@ class GroupPolicy < EdgeTreePolicy
     rule is_super_admin?, super()
   end
 
-  def delete?
-    destroy?
-  end
-
   def destroy?
     return false unless record.deletable
     rule is_super_admin?, super
