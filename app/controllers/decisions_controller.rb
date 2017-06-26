@@ -39,16 +39,6 @@ class DecisionsController < EdgeTreeController
            locals: {decision: resource, decisionable: resource.parent_model}
   end
 
-  def create_respond_success_html(resource)
-    notice =
-      if resource.edge.argu_publication.published_at.present?
-        t("decisions.#{resource.parent_model.model_name.singular}.#{resource.state}")
-      else
-        t('type_save_success', type: t('decisions.type').capitalize)
-      end
-    redirect_to resource.parent_model, notice: notice
-  end
-
   def edit_respond_blocks_success(resource, _)
     resource.edge.argu_publication.draft! unless resource.edge.argu_publication.present?
 
@@ -70,6 +60,15 @@ class DecisionsController < EdgeTreeController
       else
         Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))
       end
+  end
+
+  def message_success(resource, _)
+    if resource.edge.argu_publication.published_at.present?
+      parent_key = resource.parent_model.model_name.singular
+      t("decisions.#{parent_key}.#{resource.state}")
+    else
+      t('type_save_success', type: t('decisions.type').capitalize)
+    end
   end
 
   def new_resource_from_params
@@ -105,7 +104,7 @@ class DecisionsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super unless action_name == 'update'
+    return super if %w(destroy trash).include?(action_name)
     resource.parent_model
   end
 
