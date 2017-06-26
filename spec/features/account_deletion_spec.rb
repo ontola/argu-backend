@@ -48,7 +48,7 @@ RSpec.feature 'Account deletion', type: :feature do
     end
 
     sign_in(user)
-    visit settings_path(tab: :advanced)
+    visit settings_user_path(tab: :advanced)
     click_link 'Delete Argu account'
     expect do
       within("#edit_user_#{user.id}") do
@@ -68,7 +68,7 @@ RSpec.feature 'Account deletion', type: :feature do
 
   scenario 'super_admin should not delete destroy' do
     sign_in(create_super_admin(freetown))
-    visit settings_path(tab: :advanced)
+    visit settings_user_path(tab: :advanced)
     click_link 'Delete Argu account'
 
     expect(page).to have_content 'You are the super admin in one or more places. '\

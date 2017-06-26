@@ -186,7 +186,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal user.emails.last.email, 'secondary@argu.co'
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should add second email as primary' do
@@ -210,7 +210,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.emails.last.email, 'secondary@argu.co'
     assert_equal user.primary_email_record.email, 'secondary@argu.co'
 
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should switch primary email' do
@@ -238,7 +238,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.emails.last.email, second_email.email
     assert_equal user.primary_email_record.email, second_email.email
 
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should delete secondary email' do
@@ -259,7 +259,7 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should not delete primary email' do
@@ -302,7 +302,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     unconfirmed_email.reload
     assert_equal unconfirmed_email.email, 'changed@argu.co'
 
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should not change confirmed email' do
@@ -393,11 +393,11 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should show settings and all tabs' do
     sign_in user
 
-    get settings_path
+    get settings_user_path
     assert_user_settings_shown
 
     %i(general profile authentication notifications privacy advanced).each do |tab|
-      get settings_path(tab: tab)
+      get settings_user_path(tab: tab)
       assert_user_settings_shown tab
     end
   end
@@ -443,7 +443,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal('profile_photo.png', user.profile.default_profile_photo.content_identifier)
     assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
 
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   let(:place) { create(:place) }
@@ -464,7 +464,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should create place and placement on update with only country code' do
@@ -484,7 +484,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should not create place and placement on update with only postal code' do
@@ -543,7 +543,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   test 'user should destroy placement on update with blank postal code and country code' do
@@ -566,7 +566,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_path(tab: :general)
+    assert_redirected_to settings_user_path(tab: :general)
   end
 
   private

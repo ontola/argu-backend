@@ -265,7 +265,7 @@ Rails.application.routes.draw do
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
-  get '/settings', to: 'users#settings'
+  get '/settings', to: 'users#settings', as: 'settings_user'
   put '/settings', to: 'users#update'
   get '/c_a', to: 'users#current_actor'
   put 'persist_cookie', to: 'static_pages#persist_cookie'

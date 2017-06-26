@@ -1,4 +1,4 @@
-.inspectlet-sensitive= semantic_form_for resource, url: resource.finished_intro? ? settings_path : setup_profiles_path, method: :put  do |f|
+.inspectlet-sensitive= semantic_form_for resource, url: resource.finished_intro? ? settings_user_path : setup_profiles_path, method: :put  do |f|
   =f.inputs name: t('profiles.edit.general') do
     p= t('profiles.heads_up')
     =f.input :first_name, input_html: {autofocus: true}

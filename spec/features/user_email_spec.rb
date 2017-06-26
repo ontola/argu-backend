@@ -13,7 +13,7 @@ RSpec.feature 'User email' do
     sign_in user
     new_email = 'new_email@example.com'
 
-    visit settings_path(tab: :authentication)
+    visit settings_user_path(tab: :authentication)
     expect(page).to have_content('Email confirmed')
     expect(page).not_to have_link('Send confirmation mail')
 
@@ -28,8 +28,13 @@ RSpec.feature 'User email' do
     assert_differences([['Email.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       click_button 'Save'
+      confirm_msg = 'We have send you a mail to the new address. Please '\
+        'confirm the change by clicking the link in this mail.'
+
+      expect(page).to have_content(confirm_msg)
     end
 
+    expect(page).to have_current_path(settings_user_path(tab: :authentication))
     expect(page).to have_link('Send confirmation mail')
 
     # Send mail
@@ -43,7 +48,7 @@ RSpec.feature 'User email' do
 
     current_email.click_link 'Confirm your e-mail'
     expect(page).to have_current_path(root_path)
-    visit settings_path(tab: :authentication)
+    visit settings_user_path(tab: :authentication)
     expect(page).not_to have_link('Send confirmation mail')
     expect(page).to have_selector("input[value='#{new_email}']")
   end

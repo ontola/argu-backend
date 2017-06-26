@@ -216,6 +216,10 @@ class UsersController < ApplicationController
     r if valid_redirect?(r)
   end
 
+  def redirect_model_success(_)
+    r_param || settings_user_path(tab: tab)
+  end
+
   def redirect_with_r(user)
     if user.r.present? && user.finished_intro?
       r = URI.decode(user.r)
@@ -236,10 +240,6 @@ class UsersController < ApplicationController
       render 'settings',
              locals: {tab: tab, active: tab, profile: resource.profile}
     end
-  end
-
-  def redirect_model_success(_resource)
-    r_param || settings_path(tab: tab)
   end
 
   def message_success(_resource, _action)

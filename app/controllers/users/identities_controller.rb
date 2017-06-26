@@ -10,7 +10,7 @@ class Users::IdentitiesController < ApplicationController
       else
         flash[:error] = t('devise.authentications.destroyed_failed')
       end
-      format.html { redirect_to settings_path }
+      format.html { redirect_to settings_user_path }
     end
   end
 end

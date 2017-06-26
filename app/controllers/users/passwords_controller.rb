@@ -10,7 +10,7 @@ class Users::PasswordsController < Devise::PasswordsController
       self.resource = resource_class.send_reset_password_instructions(resource_params)
 
       if successfully_sent?(resource)
-        respond_with({}, location: settings_path)
+        respond_with({}, location: settings_user_path)
       else
         respond_with(resource)
       end

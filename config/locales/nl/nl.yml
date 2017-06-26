@@ -222,6 +222,7 @@ nl:
       next: "volgende &rsaquo;"
       truncate: "..."
   type_save_success: "%{type} succesvol opgeslagen"
+  type_update_success: "%{type} succesvol opgeslagen"
   type_create_success: "%{type} succesvol aangemaakt"
   type_convert_success: "Succesvol geconverteerd naar {type}"
   type_destroy_success: "%{type} succesvol verwijderd"

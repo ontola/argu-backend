@@ -221,6 +221,7 @@ en:
       next: "next &rsaquo;"
       truncate: "..."
   type_save_success: "%{type} saved successfully"
+  type_update_success: "%{type} saved successfully"
   type_create_success: "%{type} created successfully"
   type_convert_success: "Successfully converted to %{type}"
   type_destroy_success: "%{type} deleted successfully"

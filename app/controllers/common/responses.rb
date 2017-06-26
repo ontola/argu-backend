@@ -80,6 +80,19 @@ module Common
       render :form, locals: {model_name => resource}
     end
 
+    def respond_with_form_js(resource)
+      respond_js(
+        "#{controller_name}/settings",
+        resource: resource,
+        tab: tab,
+        active: tab
+      )
+    end
+
+    def respond_js(view, locals)
+      render 'container_replace', locals: {view: view, locals: locals}
+    end
+
     # @param resource [ActiveRecord::Base] The resource to redirect to.
     # @param _ [Symbol] The action to render the message for.
     def respond_with_redirect_failure(resource, _)
