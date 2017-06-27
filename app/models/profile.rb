@@ -153,11 +153,9 @@ class Profile < ApplicationRecord
     Forum.find_by(id: forum_id) if forum_id.present?
   end
 
-  # Returns the preferred forum, based the first forum grant,
-  # the first favorite or the first public forum
+  # Returns the preferred forum, based the first favorite or the first public forum
   def preferred_forum
-    granted_records('Forum').first ||
-      profileable.try(:favorites)&.first&.edge&.owner ||
+    profileable.try(:favorites)&.first&.edge&.owner ||
       Forum.first_public
   end
 
