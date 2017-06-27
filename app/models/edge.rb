@@ -53,7 +53,7 @@ class Edge < ApplicationRecord
   has_ltree_hierarchy
 
   attr_writer :is_trashed
-  delegate :display_name, :root_object?, :is_trashable?, to: :owner
+  delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
 
   # For Rails 5 attributes
   # The user that has created the edge's owner.
@@ -210,7 +210,7 @@ class Edge < ApplicationRecord
   end
 
   def decrement_counter_cache(counter_cache_name = nil)
-    return unless owner.class.counter_cache_options
+    return unless owner&.class&.counter_cache_options
     counter_cache_name ||= owner.counter_cache_name
     parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) - 1
     parent.save
