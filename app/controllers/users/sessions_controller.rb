@@ -38,12 +38,11 @@ class Users::SessionsController < Devise::SessionsController
   def destroy
     send_event category: 'sessions',
                action: 'sign_out'
-    super do
-      if @current_user.nil?
-        doorkeeper_token.update(expires_in: 0.seconds)
-        cookies[:a_a] = {value: '-1', expires: 1.year.ago} if cookies[:a_a].present?
-      end
-    end
+    doorkeeper_token.update!(expires_in: 0.seconds)
+    sign_out
+    cookies[:a_a] = {value: '-1', expires: 1.year.ago} if cookies[:a_a].present?
+    set_flash_message! :notice, :signed_out
+    respond_to_on_destroy
   end
 
   private
