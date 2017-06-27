@@ -5,13 +5,16 @@ import { OrderedMap } from 'immutable';
 
 const NOTIFICATION_PAGE_LENGTH = 10;
 
-window.NotificationActions = Reflux.createActions({
+export const NotificationActions = Reflux.createActions({
     'notificationUpdate': {},
     'markAllAsRead': { asyncResult: true },
     'fetchNextPage': { asyncResult: true },
     'checkForNew': { asyncResult: true },
     'fetchNew': { asyncResult: true }
 });
+if (typeof window !== 'undefined') {
+  window.NotificationActions = NotificationActions;
+}
 
 const notificationStore = Reflux.createStore({
     state: {
@@ -29,18 +32,17 @@ const notificationStore = Reflux.createStore({
         this.listenTo(NotificationActions.notificationUpdate, this.output);
         this.listenTo(NotificationActions.markAllAsRead, this.onMarkAllAsRead);
         this.listenTo(NotificationActions.fetchNextPage, this.fetchNextPage);
-        this.listenTo(NotificationActions.checkForNew, this.checkForNew);
         this.listenTo(NotificationActions.fetchNew, this.fetchNew);
 
-        Promise
-            .resolve()
-            .then(NotificationActions.checkForNew)
-            .then(count => {
-                if (count >= 0) {
-                    return NotificationActions.fetchNew();
-                }
-
-            });
+        window.setTimeout(() => {
+          this.listenTo(NotificationActions.checkForNew, this.checkForNew);
+          NotificationActions.checkForNew()
+          .then(count => {
+            if (count >= 0) {
+              return NotificationActions.fetchNew();
+            }
+          });
+        }, 0);
     },
 
     fetchNextPage () {

@@ -1,11 +1,11 @@
-/* globals fetch, NotificationActions */
+/* globals fetch */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import OnClickOutside from 'react-onclickoutside';
 import { image } from '../lib/helpers';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
-import notificationStore from '../stores/notification_store';
+import notificationStore, { NotificationActions } from '../stores/notification_store';
 import HyperDropdownMixin from '../mixins/HyperDropdownMixin';
 import { DropdownContent } from './Dropdown';
 window.notification_hyper_mixin = HyperDropdownMixin;

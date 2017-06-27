@@ -24,7 +24,7 @@ gem 'active_record-postgres-constraints',
     git: 'https://github.com/ArthurWD/active_record-postgres-constraints',
     ref: '2781f5e'
 gem 'jbuilder', '~> 2.6.0'
-gem 'bcrypt-ruby', '>= 3.1.5'
+gem 'bcrypt', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.1'
 gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 5.0.0'
@@ -80,7 +80,7 @@ gem 'slim', '~> 3.0.6'
 gem 'jquery-rails', '~> 4.2.1'
 gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'carrierwave-vips', '~> 1.0.5'
+gem 'carrierwave-vips', '~> 1.1.3'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
 gem 'carrierwave-aws', '~> 1.1.0'
@@ -111,11 +111,7 @@ gem 'bugsnag', '~> 5.3.3'
 gem 'rolify', '~> 3.4.1'
 
 ################## Front-end ########################
-# gem 'react-rails', '~> 1.6.0'
-gem 'react-rails',
-    git: 'https://github.com/reactjs/react-rails',
-    branch: 'master',
-    ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
+gem 'react-rails', '~> 1.11.0'
 
 group :test do
   gem 'minitest-rails', '~> 3.0.0'
@@ -171,8 +167,6 @@ group :development do
 end
 
 group :production, :staging do
-  gem 'libv8', '~> 3.16.14.13'
-  gem 'therubyracer', '~> 0.12.3'
   gem 'unicorn', '5.0.1'
   gem 'rack-test', '~> 0.6.2'
 end

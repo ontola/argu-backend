@@ -5,7 +5,7 @@ module Argu
   class StatefulServerRenderer < React::ServerRendering::ExecJSRenderer
     def initialize(options = {})
       @replay_console = options.fetch(:replay_console, true)
-      filenames = options.fetch(:files, ['production/react-server.js', 'components.js'])
+      filenames = options.fetch(:files, ['server_rendering.js', 'components.js'])
       js_code = CONSOLE_POLYFILL.dup
 
       # filenames.each do |filename|
@@ -25,6 +25,11 @@ module Argu
 
     # Reimplement console methods for replaying on the client
     CONSOLE_POLYFILL = <<-JS
+      if (typeof window === 'undefined') {
+        var window = {};
+        var setTimeout = function () {};
+        var clearTimeout = function () {};
+      }
       var console = { history: [] };
       ['error', 'log', 'info', 'warn'].forEach(function (fn) {
         console[fn] = function () {

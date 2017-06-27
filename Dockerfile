@@ -1,8 +1,12 @@
-FROM fletcher91/ruby-vips-qt-unicorn:2.4.1
+FROM felixbuenemann/vips-alpine as vips-alpine
+
+# Build env
+FROM artwishlist/alpine-3.6-ruby-2.4.1 as build-env
 ARG ASSET_HOST
 
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
-RUN apt-get update && apt-get install -y nodejs
+RUN apk --update add linux-headers git openssh-client build-base nodejs nodejs-npm \
+  postgresql-dev libffi-dev libxml2 libxml2-dev libxslt libxslt-dev libwebp-dev qt-dev gobject-introspection-dev
+RUN apk add vips-dev --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
@@ -13,44 +17,54 @@ WORKDIR /usr/src/app
 
 ADD Gemfile /usr/src/app/
 ADD Gemfile.lock /usr/src/app/
-RUN RAILS_ENV=production bundle install --deployment --frozen --clean --without development --path vendor/bundle
+RUN RAILS_ENV=production bundle install --deployment --frozen --clean --without development test --path vendor/bundle
 
+ENV POSTGRESQL_ADDRESS='192.168.99.100' \
+  POSTGRESQL_PORT='5432' \
+  POSTGRESQL_USERNAME='argu' \
+  POSTGRESQL_PASSWORD='' \
+  POSTGRESQL_DATABASE='argu_production' \
+  EREDIS_ADDRESS='192.168.99.100' \
+  REDIS_PORT='6379' \
+  SECRET_KEY_BASE='' \
+  SECRET_KEY='' \
+  DEVISE_SECRET='' \
+  DEVISE_PEPPER='' \
+  JWT_ENCRYPTION_TOKEN='' \
+  FACEBOOK_KEY='' \
+  FACEBOOK_SECRET='' \
+  FRESHDESK_SECRET='' \
+  FRESHDESK_URL='' \
+  MAILGUN_API_TOKEN='' \
+  MAILGUN_DOMAIN='' \
+  MAILGUN_SENDER='' \
+  OPENCAGE_GEOCODER_KEY='' \
+  AWS_ID='' \
+  AWS_KEY='' \
+  FRESHDESK_SECRET=''
+
+COPY ./package.json .
+RUN npm install -g yarn
+RUN yarn
+
+COPY --from=vips-alpine /usr/lib/girepository-1.0/Vips-8.0.typelib /usr/lib/girepository-1.0/Vips-8.0.typelib
+
+RUN mkdir -p /usr/src/app/log
 COPY . /usr/src/app
-RUN rm -f /usr/src/app/config/database.yml
-RUN rm -f /usr/src/app/config/secrets.yml
+RUN rm -f /usr/src/app/config/database.yml /usr/src/app/config/secrets.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml
 COPY ./config/secrets.docker.yml /usr/src/app/config/secrets.yml
 
-ENV POSTGRESQL_ADDRESS '192.168.99.100'
-ENV POSTGRESQL_PORT '5432'
-ENV POSTGRESQL_USERNAME 'argu'
-ENV POSTGRESQL_PASSWORD ''
-ENV POSTGRESQL_DATABASE 'argu_production'
-ENV RAILS_ENV 'production'
-ENV REDIS_ADDRESS '192.168.99.100'
-ENV REDIS_PORT '6379'
-ENV SECRET_KEY_BASE ''
-ENV SECRET_KEY ''
-ENV DEVISE_SECRET ''
-ENV DEVISE_PEPPER ''
-ENV JWT_ENCRYPTION_TOKEN ''
-ENV FACEBOOK_KEY ''
-ENV FACEBOOK_SECRET ''
-ENV FRESHDESK_SECRET ''
-ENV FRESHDESK_URL ''
-ENV MAILGUN_API_TOKEN ''
-ENV MAILGUN_DOMAIN ''
-ENV MAILGUN_SENDER ''
-ENV OPENCAGE_GEOCODER_KEY ''
-ENV AWS_ID ''
-ENV AWS_KEY ''
-ENV FRESHDESK_SECRET ''
-
-RUN npm install -g yarnpkg
-RUN yarn
 RUN yarn run build:production
-
 RUN bundle exec rake RAILS_ENV=production ASSET_HOST=$ASSET_HOST DEVISE_SECRET=dummy assets:precompile
 
+RUN apk del linux-headers git openssh-client build-base nodejs-npm llvm4-libs qt-dev
+RUN find ./node_modules -not -name 'turbolinks.js' -delete
+RUN rm -rf /var/cache/apk/* /tmp/* /usr/lib/python2.7 /usr/lib/node_modules /root/.bundle /root/.npm /root/.gem /usr/local/share/.cache
+
+# Final image
+FROM artwishlist/alpine-3.6-ruby-2.4.1
+COPY --from=build-env / /
 EXPOSE 3000
+WORKDIR /usr/src/app
 CMD ["rails", "server", "-b", "0.0.0.0"]
