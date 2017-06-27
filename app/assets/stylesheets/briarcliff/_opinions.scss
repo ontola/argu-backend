@@ -79,3 +79,8 @@
     margin-bottom: .5em;
   }
 }
+.unconfirmed-vote-warning {
+  padding: 0.4em;
+  border: solid 1px $red ;
+  color: $red ;
+}

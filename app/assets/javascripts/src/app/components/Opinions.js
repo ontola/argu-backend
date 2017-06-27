@@ -60,7 +60,7 @@ const OpinionAdd = props => {
     const { actor, newExplanation, onOpenOpinionForm } = props;
     let confirmHeader;
     if (actor.confirmed === false) {
-        confirmHeader = <p className="block-slogan">{I18n.t('opinions.form.confirm')}</p>;
+        confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')}</p>;
     }
     return (
         <form className={"formtastic formtastic--full-width"}>
@@ -230,7 +230,7 @@ export const OpinionForm = React.createClass({
             </div>
         </div>;
         if (actor.confirmed === false) {
-            confirmHeader = <p className="block-slogan">{I18n.t('opinions.form.confirm')}</p>;
+            confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')}</p>;
         }
         return (
             <form className="formtastic formtastic--full-width"
@@ -312,7 +312,7 @@ export const OpinionShow = React.createClass({
             });
         let confirmHeader;
         if (actor.confirmed === false) {
-            confirmHeader = <p className="block-slogan">{I18n.t('opinions.form.confirm')}</p>;
+            confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')}</p>;
         }
         return (
             <div>
