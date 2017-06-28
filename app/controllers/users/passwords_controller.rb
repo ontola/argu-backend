@@ -23,14 +23,6 @@ class Users::PasswordsController < Devise::PasswordsController
     super(resource, scope)
   end
 
-  def update
-    super do
-      if resource.persisted? && !resource.confirmed? && resource.confirmation_token.nil?
-        resource.primary_email_record.confirm
-      end
-    end
-  end
-
   private
 
   def no_password_required?
