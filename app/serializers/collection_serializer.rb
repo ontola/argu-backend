@@ -2,10 +2,25 @@
 class CollectionSerializer < BaseSerializer
   attributes :title, :total_count
 
-  link(:first) { object.first }
-  link(:previous) { object.previous }
-  link(:next) { object.next }
-  link(:last) { object.last }
+  %i(first previous next last).each do |attr|
+    link(attr) do
+      {
+        href: object.send(attr),
+        meta: {
+          '@type': "argu:#{attr}"
+        }
+      }
+    end
+  end
+
+  link(:parent_view) do
+    {
+      href: object.parent_view_iri,
+      meta: {
+        '@type': 'argu:parentView'
+      }
+    }
+  end
 
   has_one :parent do
     obj = object.parent
