@@ -45,6 +45,7 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_current_path settings_user_path(tab: :authentication)
 
     visit destroy_user_session_path
+    expect(page).to have_current_path(root_path)
     expect(page).to have_content 'You have signed out successfully.'
 
     visit new_user_session_path
