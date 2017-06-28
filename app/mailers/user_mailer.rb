@@ -6,11 +6,4 @@ class UserMailer < ApplicationMailer
     mail to: @user.email,
          subject: t('devise.registrations.password_confirmation.header')
   end
-
-  def set_password_instructions(user, token)
-    @user = user
-    @token = token
-    mail to: @user.email,
-         subject: t('devise.mailer.set_password_instructions.subject')
-  end
 end

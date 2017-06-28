@@ -8,7 +8,6 @@ class RegistrationsController < Devise::RegistrationsController
                      if: -> { headers['Authorization'].blank? && cookies[Rails.configuration.cookie_name].blank? }
 
   def create
-    @registration_without_password = !devise_parameter_sanitizer.sanitize(:sign_up).include?(:password)
     super do |resource|
       unless resource.persisted?
         send_event user: resource,
@@ -69,12 +68,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
-    if @registration_without_password
-      resource.send_set_password_instructions
-      resource.primary_email_record.update!(confirmation_token: nil)
-    else
-      resource.primary_email_record.send_confirmation_instructions
-    end
     schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r)
     setup_favorites(resource)
     send_event user: resource,

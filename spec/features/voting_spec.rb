@@ -72,23 +72,18 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
     expect(page).not_to have_content('Opinions')
 
-    # Send mail
-    open_email(user_attr[:email])
-    expect(current_email.subject).to eq 'Welcome to Argu'
-    expect(current_email).to have_content 'Please click the link below to confirm your votes '\
-                                          'and to make sure you can keep using Argu in the future.'
-    current_email.click_link 'Set my password'
+    visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
 
     assert_differences([['Vote.count', 1]]) do
       Sidekiq::Testing.inline! do
-        expect(page).to have_content('Change password')
-        within('#new_user') do
+        expect(page).to have_content('Choose a password')
+        within('form') do
           fill_in 'user_password', with: 'new_password'
           fill_in 'user_password_confirmation', with: 'new_password'
-          click_button 'Edit'
+          click_button 'Confirm account'
         end
 
-        expect(page).to have_content('Your password has been updated successfully. You are now logged in.')
+        expect(page).to have_content('Your account has been confirmed. You are now logged in.')
       end
     end
     visit motion_path(motion)

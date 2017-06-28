@@ -52,20 +52,19 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     locale = :en
     cookies[:locale] = locale.to_s
 
-    Sidekiq::Testing.inline! do
-      assert_differences([['User.count', 1],
-                          ['Favorite.count', 1]]) do
-        post user_registration_path,
-             params: {
-               user: {
-                 email: 'test@example.com',
-                 password: 'password',
-                 password_confirmation: 'password'
-               }
+    assert_differences([['User.count', 1],
+                        ['Favorite.count', 1],
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
+      post user_registration_path,
+           params: {
+             user: {
+               email: 'test@example.com',
+               password: 'password',
+               password_confirmation: 'password'
              }
-        assert_redirected_to setup_users_path
-        assert_analytics_collected('registrations', 'create', 'email')
-      end
+           }
+      assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
     assert_not_nil User.last.current_sign_in_ip
@@ -75,17 +74,14 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    open_email('test@example.com')
-    assert_equal current_email.subject, 'Confirm your e-mail address'
-    current_email.click_link 'Confirm your e-mail'
+    assert_difference('Email.where(confirmed_at: nil).count', -1) do
+      get user_confirmation_path(confirmation_token: User.last.confirmation_token)
+    end
+    assert_redirected_to new_user_session_path
 
-    assert_equal current_path, new_user_session_path
-
-    fill_in('user_email', with: 'test@example.com')
-    fill_in('user_password', with: 'password')
-    click_button('Log in')
-
-    assert_equal current_path, setup_users_path
+    sign_in User.last
+    get root_path
+    assert_redirected_to setup_users_path
   end
 
   test 'should post create nl' do
@@ -94,7 +90,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 2]]) do
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
       post user_registration_path,
            params: {user: attributes_for(:user)}
       assert_redirected_to setup_users_path
@@ -138,20 +134,28 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    open_email('test@example.com')
-    assert_equal current_email.subject, 'Welcome to Argu'
-    current_email.click_link 'Set my password'
-
-    # Set password
-    assert_differences([['Vote.count', 2], ['Email.where(confirmed_at: nil).count', -1]]) do
-      Sidekiq::Testing.inline! do
-        fill_in('user_password', with: 'password')
-        fill_in('user_password_confirmation', with: 'password')
-        click_button('Edit')
-      end
+    assert_difference('Email.where(confirmed_at: nil).count', 0) do
+      get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
+    assert_response 200
+    assert User.last.encrypted_password == ''
 
-    assert_equal current_path, setup_users_path
+    assert_difference('Email.where(confirmed_at: nil).count', -1) do
+      put users_confirm_path,
+          params: {
+            user: {
+              confirmation_token: User.last.confirmation_token,
+              password: 'password',
+              password_confirmation: 'password'
+            }
+          }
+      assert_redirected_to root_path
+    end
+    assert_not User.last.encrypted_password == ''
+
+    sign_in User.last
+    get root_path
+    assert_redirected_to setup_users_path
   end
 
   test 'should post create transfer guest votes' do

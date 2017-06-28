@@ -169,7 +169,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should add second email' do
     sign_in user
     assert_differences([['Email.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {
@@ -263,7 +263,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     unconfirmed_email
     assert_differences([['Email.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {

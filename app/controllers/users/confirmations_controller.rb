@@ -4,7 +4,9 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   skip_before_action :check_finished_intro, only: [:show, :confirm]
 
   def create
-    super
+    email = current_user.emails.find_by!(email: resource_params[:email])
+    set_flash_message :notice, :send_instructions if email.send_confirmation_instructions
+    redirect_back(fallback_location: settings_path(tab: :authentication))
   end
 
   def show

@@ -257,11 +257,6 @@ class User < ApplicationRecord
     end
   end
 
-  # Resets reset password token and send set password instructions by email.
-  def send_set_password_instructions
-    UserMailer.delay.set_password_instructions(self, set_reset_password_token)
-  end
-
   def sync_notification_count
     Argu::Redis.set("user:#{id}:notification.count", notifications.count)
   end
