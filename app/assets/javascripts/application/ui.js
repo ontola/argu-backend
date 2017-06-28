@@ -94,7 +94,7 @@ const ui = {
         _this.addClass("is-loading");
         setTimeout(function () {
             _this.removeClass("is-loading");
-        }, 2500);
+        }, 10000);
     },
 
     handleAjaxCalls: function (e, xhr, options) {
