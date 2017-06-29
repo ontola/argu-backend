@@ -189,30 +189,6 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_user_path(tab: :general)
   end
 
-  test 'user should add second email as primary' do
-    sign_in user
-    assert_differences([['Email.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      put user_path(user),
-          params: {
-            user: {
-              emails_attributes: {
-                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
-                '12345678': {email: 'secondary@argu.co'}
-              },
-              primary_email: '[12345678]',
-              current_password: user.password
-            }
-          }
-    end
-    user.reload
-    assert_equal user.emails.count, 2
-    assert_not_equal user.emails.last.email, 'secondary@argu.co'
-    assert_equal user.primary_email_record.email, 'secondary@argu.co'
-
-    assert_redirected_to settings_user_path(tab: :general)
-  end
-
   test 'user should switch primary email' do
     sign_in user
     second_email

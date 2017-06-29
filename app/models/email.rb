@@ -12,6 +12,7 @@ class Email < ApplicationRecord
   validates :email,
             allow_blank: false,
             format: {with: RFC822::EMAIL}
+  validate :newly_secondary_email_not_primary, on: :create
   delegate :greeting, to: :user
 
   contextualize_as_type 'argu:Email'
@@ -43,6 +44,11 @@ class Email < ApplicationRecord
   def dont_update_confirmed_email
     return unless persisted? && confirmed? && email_changed?
     errors.add(:email, 'You cannot change a confirmed email')
+  end
+
+  def newly_secondary_email_not_primary
+    return if !primary? || user.emails.count.zero?
+    errors.add(:email, 'You cannot set a new email to primary on creation')
   end
 
   def postpone_email_change?

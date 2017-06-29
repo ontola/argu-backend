@@ -5,9 +5,10 @@ table.nested-fields
         =f.inputs disabled: f.object.confirmed?
           =f.input :email, label: false, input_html: {class: 'input--full'}
       td
-        label.formtastic--radio-label
-          input[type='radio' name='user[primary_email]' value="[#{f.index}]" checked=f.object.primary?]
-          = t('users.emails.primary')
+        -if f.object.persisted?
+          label.formtastic--radio-label
+            input[type='radio' name='user[primary_email]' value="[#{f.index}]" checked=f.object.primary?]
+            = t('users.emails.primary')
       td[style='width: 200px;']
         -if f.object.confirmed_at.present?
           span= t('users.registrations.confirmed')
