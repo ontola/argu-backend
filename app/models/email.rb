@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 class Email < ApplicationRecord
-  include RedisResourcesHelper
-
+  include Ldable, RedisResourcesHelper
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   belongs_to :user, inverse_of: :emails
   before_save :remove_other_primaries
   before_save { |user| user.email = email.downcase unless email.blank? }
+  after_commit :publish_data_event
 
   validate :dont_update_confirmed_email
   validates :email,
             allow_blank: false,
             format: {with: RFC822::EMAIL}
   delegate :greeting, to: :user
+
+  contextualize_as_type 'argu:Email'
+  contextualize_with_id { |e| "#{e.user.context_id}/email/#{e.id}" }
 
   def after_confirmation
     schedule_redis_resource_worker(user, user)
@@ -44,6 +47,10 @@ class Email < ApplicationRecord
 
   def postpone_email_change?
     false
+  end
+
+  def publish_data_event
+    DataEvent.publish(self)
   end
 
   def remove_other_primaries
