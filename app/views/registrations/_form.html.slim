@@ -5,9 +5,8 @@
     p= m
   .inspectlet-sensitive.form-validate=f.inputs do
     =f.input :email, input_html: {autofocus: :autofocus, value: resource.email}
-    - if resource.password_required?
-      =f.input :password, input_html: {minlength: 8}
-      =f.input :password_confirmation, input_html: {minlength: 8 }, hint: false
+    =f.input :password, input_html: {minlength: 8}
+    =f.input :password_confirmation, input_html: {minlength: 8 }, hint: false
     =f.input :r, as: :hidden, input_html: {value: resource.r || local_assigns[:r] || params[:r]}
   =f.actions do
     =f.action :submit, :as => :button, label: t('sign_up')

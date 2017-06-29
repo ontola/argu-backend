@@ -45,6 +45,9 @@ en:
       send_instructions: "You'll receive a mail containing instructions to confirm your account within a few minutes."
       send_paranoid_instructions: "If your email address is already present in our database, you'll receive a link to confirm your account."
       confirmed: 'Your account has been confirmed. You are now logged in.'
+      set_password:
+        header: "Choose a password"
+        button: "Confirm account"
       edit:
         header: 'Send confirmation link again'
         submit: 'Send confirmation link'

@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     get 'users/wrong_email', to: 'users#wrong_email'
     post 'users', to: 'registrations#create', as: :user_registration
     delete 'users', to: 'registrations#destroy', as: nil
+    put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
   resources :users,

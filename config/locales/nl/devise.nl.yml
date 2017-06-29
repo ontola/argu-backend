@@ -45,6 +45,9 @@ nl:
       send_instructions: 'Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.'
       send_paranoid_instructions: 'Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw account te bevestigen.'
       confirmed: 'Jouw account is bevestigd. Je bent nu ingelogd.'
+      set_password:
+        header: "Kies een wachtwoord"
+        button: "Bevestig account"
       edit:
         header: 'Bevestigingslink opnieuw versturen'
         submit: 'Verzend bevestigingslink opnieuw'

@@ -118,6 +118,10 @@ class User < ApplicationRecord
     User.find(User::COMMUNITY_ID)
   end
 
+  def confirmed?
+    emails.where('confirmed_at IS NOT NULL').any?
+  end
+
   def create_confirmation_reminder_notification
     return if guest? || confirmed? || notifications.confirmation_reminder.any?
     Notification.confirmation_reminder.create(
@@ -225,7 +229,7 @@ class User < ApplicationRecord
   end
 
   def password_required?
-    (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
+    password.present? || password_confirmation.present?
   end
 
   def publish_data_event

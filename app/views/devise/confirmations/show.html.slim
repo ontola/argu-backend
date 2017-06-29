@@ -1,0 +1,12 @@
+.col-1
+  header
+    h2= t('devise.confirmations.set_password.header')
+  .box
+    section
+      =semantic_form_for(resource, as: resource_name, url: users_confirm_path, method: :put) do |form|
+        =form.inputs do
+          =form.input :password, input_html: {autofocus: true}
+          =form.input :password_confirmation
+          =form.input :confirmation_token, as: :hidden, input_html: { value: @original_token }
+        =form.actions do
+          =form.action :submit, as: :button, label: t('devise.confirmations.set_password.button')

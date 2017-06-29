@@ -94,8 +94,4 @@ class RegistrationsController < Devise::RegistrationsController
     @user.apply_omniauth(session[:omniauth])
     @user.valid?
   end
-
-  def sign_up_params
-    {password: SecureRandom.hex}.merge(super)
-  end
 end

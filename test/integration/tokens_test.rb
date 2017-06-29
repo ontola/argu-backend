@@ -34,6 +34,11 @@ class TokensTest < ActionDispatch::IntegrationTest
   # As User
   ####################################
   let!(:user) { create(:user) }
+  let!(:user_without_password) do
+    user = create(:user)
+    user.update(encrypted_password: '')
+    user
+  end
 
   test 'User should post create token with credentials for other domain not storing temp votes' do
     get root_path
@@ -91,6 +96,34 @@ class TokensTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to forum_path(freetown)
+  end
+
+  test 'User should not post create token with credentials and empty password for other domain' do
+    post oauth_token_path,
+         headers: {
+           HTTP_HOST: 'other.example'
+         },
+         params: {
+           email: user_without_password.email,
+           password: '',
+           grant_type: 'password',
+           scope: 'user'
+         }
+    assert_response 302
+  end
+
+  test 'User should not post create token with credentials and empty password for Argu domain' do
+    post oauth_token_path,
+         headers: {
+           HTTP_HOST: Rails.application.config.host_name
+         },
+         params: {
+           email: user_without_password.email,
+           password: '',
+           grant_type: 'password',
+           scope: 'user'
+         }
+    assert_redirected_to new_user_session_path(r: '', show_error: true)
   end
 
   test 'User should post create token with username for other domain' do
