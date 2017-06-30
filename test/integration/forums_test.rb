@@ -304,15 +304,15 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     holland.display_name
   end
 
-  test 'super_admin should show settings and all tabs' do
+  test 'super_admin should only show general settings' do
     sign_in create_super_admin(holland)
 
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
 
-    %i(general advanced shortnames banners).each do |tab|
+    %i(shortnames banners).each do |tab|
       get settings_forum_path(holland), params: {tab: tab}
-      assert_forum_settings_shown holland, tab
+      assert_not_authorized
     end
   end
 
@@ -394,6 +394,18 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_select '.box.box-grid', 4
   end
 
+  test 'staff should show settings and all tabs' do
+    sign_in staff
+
+    get settings_forum_path(holland)
+    assert_forum_settings_shown holland
+
+    %i(general shortnames banners).each do |tab|
+      get settings_forum_path(holland), params: {tab: tab}
+      assert_forum_settings_shown holland
+    end
+  end
+
   test 'staff should show statistics' do
     sign_in staff
 
@@ -452,8 +464,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   # Asserts that the forum is shown on a specific tab
   # @param [Forum] forum The forum to be shown
-  # @param [Symbol] tab The tab to be shown (defaults to :general)
-  def assert_forum_settings_shown(forum, tab = :general)
+  def assert_forum_settings_shown(forum)
     assert_response 200
     assert_have_tag response.body,
                     '.tabs-container li:first-child span.icon-left',
@@ -462,8 +473,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     '.tabs-container li:nth-child(2) span.icon-left',
                     I18n.t('pages.settings.title')
     assert_have_tag response.body,
-                    '.settings-tabs .tab--current .icon-left',
-                    I18n.t("forums.settings.menu.#{tab}")
+                    'header h1',
+                    forum.display_name
   end
 
   def assert_forum_shown(forum)

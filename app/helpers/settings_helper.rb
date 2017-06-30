@@ -25,9 +25,8 @@ module SettingsHelper
     settings_group_path(group, tab: :members)
   end
 
-  def render_settings_items_for(resource, active, return_button: false)
+  def render_settings_items_for(resource, active)
     content_tag :ul, class: 'tabs tabs--vertical' do
-      concat render partial: 'application/settings_return', locals: {resource: resource} if return_button
       policy(resource).permitted_tabs.each do |tab|
         concat render partial: 'application/settings_item',
                       locals: {

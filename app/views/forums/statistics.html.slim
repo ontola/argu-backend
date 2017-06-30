@@ -1,19 +1,24 @@
 =set_title t('forums.statistics.title')
-=render partial: 'manage_bar', locals: {resource: @forum, active: :statistics} if policy(@forum).update?
-.col-1
-  .box
-    section
-      - if content_counts.present?
-        table.styled.content-table
-          - content_counts.each do |content|
-            tr.content-row
-              td.content= t("#{content[0].pluralize.downcase}.plural")
-              td.content-count= content[1]
-      h2= t('forums.statistics.cities.title')
-      p= t('forums.statistics.cities.info')
-      - if city_counts.present?
-        table.styled.city-table
-          - city_counts.each do |city|
-            tr.city-row
-              td.city= city[0] || t('forums.statistics.cities.unknown')
-              td.city-count= city[1]
+=render partial: 'pages/manage_bar', locals: {resource: @forum, active: :settings} if policy(@forum).update?
+.col-3
+  header
+    h1= resource.display_name
+  .settings-tabs.col-3-1
+    = render_settings_items_for(resource.page, 'forums')
+  .col-3-2
+    .box
+      section
+        - if content_counts.present?
+          table.styled.content-table
+            - content_counts.each do |content|
+              tr.content-row
+                td.content= t("#{content[0].pluralize.downcase}.plural")
+                td.content-count= content[1]
+        h2= t('forums.statistics.cities.title')
+        p= t('forums.statistics.cities.info')
+        - if city_counts.present?
+          table.styled.city-table
+            - city_counts.each do |city|
+              tr.city-row
+                td.city= city[0] || t('forums.statistics.cities.unknown')
+                td.city-count= city[1]

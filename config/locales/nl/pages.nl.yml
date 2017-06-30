@@ -8,6 +8,7 @@ nl:
       menu:
         return: "Bekijk %{resource}"
         general: 'Algemeen'
+        profile: 'Algemeen'
         advanced: 'Geavanceerd'
         groups: 'Groepen'
         grants: 'Rechten'

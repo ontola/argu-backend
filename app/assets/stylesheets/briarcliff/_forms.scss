@@ -352,6 +352,10 @@ p.inline-hints {
   }
 }
 
+.form-col-2 .label, .form-col-2.react_select > div {
+  width: 50%;
+}
+
 .Select-input > div {
   word-break: normal; //Fixes a bug in chrome where the content in an input glitches between two lines.
 }

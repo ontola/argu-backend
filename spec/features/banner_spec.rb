@@ -175,12 +175,12 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   ####################################
-  # As Manager
+  # As Staff
   ####################################
-  let(:manager) { create_super_admin(spain) }
+  let(:staff) { create(:user, :staff) }
 
-  scenario 'Manager creates a banner' do
-    sign_in(manager)
+  scenario 'Staff creates a banner' do
+    sign_in(staff)
 
     new_banner = attributes_for(:banner, :everyone)
 
@@ -200,8 +200,8 @@ RSpec.feature 'Banners', type: :feature do
     end
   end
 
-  scenario 'Manager views banner settings' do
-    sign_in(manager)
+  scenario 'Staff views banner settings' do
+    sign_in(staff)
 
     visit settings_forum_path(spain, tab: :banners)
     within('#banners-published') do

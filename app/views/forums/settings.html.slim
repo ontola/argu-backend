@@ -1,11 +1,11 @@
 =set_title t('forums.settings.title')
 .tabs-to-top
-  =render partial: 'forums/manage_bar', locals: {resource: resource, active: :settings}
+  =render partial: 'pages/manage_bar', locals: {resource: resource.page, active: :settings}
 .col-3
   header
     h1= resource.display_name
   .settings-tabs.col-3-1
-    =render_settings_items_for(resource, active, return_button: true)
+    =render_settings_items_for(resource.page, 'forums')
   .col-3-2
     .box
       section

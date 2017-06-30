@@ -3,12 +3,10 @@
   =f.input :active, value: local_assigns[:active], as: :hidden
   - resource.errors.full_messages.each do |message|
     =message
-  =f.inputs name: t('forums.settings.profile') do
+  =f.inputs name: t('forums.settings.title') do
     =f.input :name
     =f.input :bio, input_html: { rows: 2, maxlength: 80}
     =f.input :bio_long, input_html: { rows: 4}
-    =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false
-    =f.input :discoverable, as: :boolean
   =render partial: 'photos/form',
           locals: {form: f,
                    type: :profile_photo,
@@ -19,6 +17,49 @@
                    type: :cover_photo,
                    relation: :default_cover_photo,
                    preview_style: 'max-height: 256px;'}
+  =f.inputs name: t('grants.plural').capitalize do
+    p= t('groups.description')
+    - if resource.grants.custom.any?
+      table.styled
+        thead
+          tr
+            td= t('groups.type')
+            td[colspan='2' style="min-width: 90px;"]= t('portal.members')
+            td= t('roles.plural').capitalize
+        - resource.grants.custom.includes(group: {group_memberships: {member: {profileable: :shortname}}}).each do |grant|
+          tr
+            td
+              =link_to grant.group.display_name, settings_group_path(grant.group)
+            td
+              =link_to grant.group.group_memberships.count, settings_group_path(grant.group)
+            td
+              - if policy(grant.group).create_child?(:group_memberships)
+                =link_to new_group_membership_path(grant.group), class: 'btn--light btn--smaller' do
+                  span.fa.fa-plus
+            td
+              =t("roles.types.#{grant.role}")
+              = t('roles.list.remove_html', url: grant_path(grant))
+    - if policy(resource.page).create_child?(:groups)
+      =link_to new_page_group_path(resource.page), class: 'btn btn--mini btn--light margin-bottom margin-right' do
+        span.fa.fa-plus
+        span.icon-left= t('groups.new')
+    - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
+      =link_to new_page_grant_path(resource.page, edge_id: resource.edge), class: 'btn btn--mini btn--light margin-bottom' do
+        span.fa.fa-plus
+        span.icon-left= t('grants.new')
+    =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false, wrapper_html: {class: 'form-col-2'}
+  -if current_user.profile.has_role?(:staff)
+    =f.inputs name: t('forms.staff_only'), class: 'danger-zone' do
+      =f.input :discoverable, as: :boolean
+      -if policy(resource).shortname?
+        =f.inputs :shortname, for: :shortname
+        li.form-helper
+          span= t('forums.shortname.warning')
+      =f.input :page, collection: Page.includes(:profile)
+      =link_to t('forums.settings.shortnames'), settings_forum_path(tab: :shortnames), class: 'btn btn--light'
+      =link_to t('forums.settings.banners.title'), settings_forum_path(tab: :banners), class: 'btn btn--light'
+      =link_to t('forums.statistics.title'), statistics_forum_path(resource), class: 'btn btn--light'
+      =link_to t('formtastic.labels.f_delete'), delete_forum_url(resource), class: 'btn btn--warning', remote: true
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
-    =f.action :submit, :as => :button
+    =f.action :submit, as: :button

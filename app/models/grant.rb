@@ -10,6 +10,7 @@ class Grant < ApplicationRecord
   scope :forum_member, -> { member.joins(:edge).where(edges: {owner_type: 'Forum'}) }
   scope :page_manager, -> { where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
+  scope :custom, -> { where('group_id != ?', Group::PUBLIC_ID) }
 
   validates :group, :role, presence: true
   validates :edge, presence: true, uniqueness: {scope: :group}

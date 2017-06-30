@@ -51,7 +51,7 @@ class PagePolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(profile groups forums advanced) if is_super_admin? || staff?
+    tabs.concat %i(profile forums groups advanced) if is_super_admin? || staff?
     tabs.concat %i(sources) if staff?
     tabs
   end

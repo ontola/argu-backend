@@ -109,7 +109,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def change_owner?
-    rule is_super_admin?, staff?
+    rule staff?
   end
 
   def convert?

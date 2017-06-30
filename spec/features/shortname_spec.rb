@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.feature 'Shortname', type: :feature do
   define_freetown(attributes: {name: 'freetown', max_shortname_count: 3})
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:staff) { create(:user, :staff) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:upcase_page) do
     create(:page,
@@ -17,14 +17,14 @@ RSpec.feature 'Shortname', type: :feature do
     expect(page).to have_content(upcase_page.display_name)
   end
 
-  scenario 'super_admin creates a shortname' do
-    sign_in super_admin
+  scenario 'staff creates a shortname' do
+    sign_in staff
     general_create
   end
 
-  scenario 'super_admin destroys a shortname' do
+  scenario 'staff destroys a shortname' do
     create(:discussion_shortname, forum: freetown, owner: create(:motion, parent: freetown.edge))
-    sign_in super_admin
+    sign_in staff
     general_destroy
   end
 

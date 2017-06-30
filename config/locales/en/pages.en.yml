@@ -8,6 +8,7 @@ en:
       menu:
         return: "View %{resource}"
         general: 'General'
+        profile: 'General'
         advanced: 'Advanced'
         groups: 'Groups'
         grants: 'Grants'

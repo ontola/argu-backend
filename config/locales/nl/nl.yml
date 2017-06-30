@@ -242,6 +242,7 @@ nl:
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
+    staff_only: "Staff only"
     advanced: "Geavanceerd"
     admin: "Administratieve functies"
     legal_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
