@@ -285,6 +285,9 @@ en:
   unfollow: 'Unfollow'
   unfollowed: 'Item unfollowed'
   seo:
+    application:
+      title: "Argu - Involve people in decision making"
+      description: "Argu is a platform that helps you make better decisions by structuring discussions."
     argument:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Join the debate.'

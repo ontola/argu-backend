@@ -287,6 +287,9 @@ nl:
   unfollow: 'Ontvolgen'
   unfollowed: 'Item ontvolgt'
   seo:
+    application:
+      title: "Argu - Betrek mensen bij het nemen van beslissingen"
+      description: "Argu is een platform dat helpt bij het maken van betere beslissingen door het structureren van discussies."
     argument:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Discussieer mee.'
