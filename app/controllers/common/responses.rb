@@ -82,10 +82,9 @@ module Common
 
     def respond_with_form_js(resource)
       respond_js(
-        "#{controller_name}/settings",
+        "#{controller_name}/form",
         resource: resource,
-        tab: tab,
-        active: tab
+        controller_name.singularize.to_sym => resource
       )
     end
 

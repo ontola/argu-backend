@@ -228,6 +228,16 @@ class UsersController < ApplicationController
     redirect_to r.presence || root_path
   end
 
+  def respond_with_form_js(resource)
+    respond_js(
+      'users/settings',
+      resource: resource,
+      profile: resource.profile,
+      tab: tab,
+      active: tab
+    )
+  end
+
   def update_respond_failure_html(resource)
     if params[:user][:form] == 'wrong_email'
       email = params[:user][:emails_attributes]['99999'][:email]
