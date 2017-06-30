@@ -71,7 +71,7 @@ RSpec.feature 'Authentication', type: :feature do
         expect do
           click_link 'Log in with Facebook'
         end.to change { Doorkeeper::AccessToken.count }.by(1)
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(forum_path(holland))
       end
     end
   end
@@ -101,7 +101,7 @@ RSpec.feature 'Authentication', type: :feature do
       scenario 'directly' do
         visit(new_user_session_path)
         click_link 'Log in with Facebook'
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(forum_path(holland))
         t = Doorkeeper::AccessToken.last
 
         visit(destroy_user_session_path)

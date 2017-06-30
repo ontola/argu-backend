@@ -117,7 +117,7 @@ module HeaderHelper
       sections: [
         {
           items: [
-            link_item(t('about.vision'), info_path(:about)),
+            link_item(t('about.about'), i_about_path),
             link_item(t('about.how_argu_works'), how_argu_works_path),
             link_item(t('about.team'), info_path(:team)),
             link_item(t('about.governments'), info_path(:governments)),

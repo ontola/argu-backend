@@ -47,7 +47,7 @@ RSpec.feature 'User email' do
                                             'e-mail address by pressing the link below.'
 
     current_email.click_link 'Confirm your e-mail'
-    expect(page).to have_current_path(root_path)
+    expect(page).to have_current_path(forum_path(freetown))
     visit settings_user_path(tab: :authentication)
     expect(page).not_to have_link('Send confirmation mail')
     expect(page).to have_selector("input[value='#{new_email}']")

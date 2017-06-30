@@ -283,6 +283,7 @@ Rails.application.routes.draw do
   get '/privacy', to: 'documents#show', name: 'privacy'
   get '/cookies', to: 'documents#show', name: 'cookies'
 
+  get '/i/about', to: 'static_pages#about'
   resources :info, path: 'i', only: [:show]
 
   get '/quawonen_feedback', to: redirect('/quawonen')

@@ -20,6 +20,11 @@ class StaticPagesController < ApplicationController
     user: User
   ).freeze
 
+  def about
+    authorize :static_page
+    render('landing')
+  end
+
   def context
     skip_authorization
     model_context = C_MODELS[params['model']]
@@ -41,7 +46,7 @@ class StaticPagesController < ApplicationController
       preload_user_votes(vote_event_ids_from_activities(@activities))
       render # stream: true
     else
-      render 'landing'
+      current_user.guest? ? about : redirect_to(preferred_forum)
     end
   end
 
