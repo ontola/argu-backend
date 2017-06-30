@@ -64,7 +64,7 @@ const ui = {
     },
 
     bindRemoteLinks: function () {
-        $('.remote-link')
+        $('.remote-link, form[data-remote=true]')
             .bind("ajax:beforeSend", function () {
                 $(this).addClass("is-loading");
             })
@@ -87,14 +87,6 @@ const ui = {
     confirmInputHandler: function () {
         var _this = $(this);
         _this.closest('.confirm').find('.confirm-action').attr('disabled', _this.val() != _this.attr('confirm-text'));
-    },
-
-    disableSubmitButton: function () {
-        var _this = $(this);
-        _this.addClass("is-loading");
-        setTimeout(function () {
-            _this.removeClass("is-loading");
-        }, 10000);
     },
 
     handleAjaxCalls: function (e, xhr, options) {
@@ -125,7 +117,6 @@ const ui = {
     handleDOMChangedFinished: function () {
         ui.handleEditableSettings();
         ui.bg = $(".background");
-        $('button:submit').click(ui.disableSubmitButton);
         $("a[href*='#']:not([href='#'])[class~=smoothscroll]").click(ui.handleClickSmoothly);
         ui.bindRemoteLinks();
         new Blazy({
