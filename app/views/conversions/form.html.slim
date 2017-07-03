@@ -7,7 +7,7 @@
       section
         .form
           p= t('motions.convert.body')
-          =semantic_form_for conversion, url: edge_conversions_path(conversion.edge), method: :post, remote: true do |f|
+          =semantic_form_for conversion, url: edge_conversions_path(conversion.edge), method: :post, remote: true, authenticity_token: true do |f|
             p= "#{t('conversions.current_class')} #{conversion.edge.owner_type}"
             =f.inputs do
               =f.input :klass, as: :select, collection: convertible_class_names(conversion.edge.owner), required: false, include_blank: false

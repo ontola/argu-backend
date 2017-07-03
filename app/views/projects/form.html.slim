@@ -8,7 +8,7 @@
           .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
             span.fa.fa-rocket
             span.icon-left= t('projects.type')
-      =semantic_form_for(project.new_record? ? [project.forum, project] : project, html: {autocomplete: 'off'}, remote: true) do |f|
+      =semantic_form_for(project.new_record? ? [project.forum, project] : project, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type.downcase)

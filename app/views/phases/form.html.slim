@@ -8,7 +8,7 @@
           .details-part.details-part--type.neutral-bg[data-title=t('projects.phases.info')]
             span.fa.fa-arrows-h
             span.icon-left= t('projects.phases.type')
-      =semantic_form_for(phase, html: {autocomplete: 'off'}, remote: true) do |f|
+      =semantic_form_for(phase, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             =f.input :name

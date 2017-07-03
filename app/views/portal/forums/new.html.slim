@@ -3,7 +3,7 @@
   .box
     section
       h1= "_Create forum for #{forum.page.profile.name}_"
-      = semantic_form_for [:portal, forum], remote: true do |f|
+      = semantic_form_for [:portal, forum], remote: true, authenticity_token: true do |f|
         = f.inputs do
           = f.input :name
           = f.inputs :shortname, for: :shortname

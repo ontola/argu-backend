@@ -1,4 +1,4 @@
-=semantic_form_for(resource, url: group_membership_index_path(resource, r: group_redirect_url(resource)), method: :post, remote: true) do |f|
+=semantic_form_for(resource, url: group_membership_index_path(resource, r: group_redirect_url(resource)), method: :post, remote: true, authenticity_token: true) do |f|
   =f.inputs name: t('group_memberships.new') do
     =react_component_store 'SearchUser', props: {things: 'users', fieldName: 'shortname'}
   =f.actions do

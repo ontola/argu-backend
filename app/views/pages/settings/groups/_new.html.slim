@@ -1,4 +1,4 @@
-=semantic_form_for(group, url: page_groups_path(group.page), remote: true) do |f|
+=semantic_form_for(group, url: page_groups_path(group.page), remote: true, authenticity_token: true) do |f|
   - group.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('groups.type')) do

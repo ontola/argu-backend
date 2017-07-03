@@ -3,7 +3,7 @@
   .box
     section
       h1= t('sources.form.title_heading', page: source.page.profile.name)
-      =semantic_form_for [:portal, source], remote: true do |f|
+      =semantic_form_for [:portal, source], remote: true, authenticity_token: true do |f|
         =f.inputs do
           =f.input :name
           =f.input :shortname

@@ -1,4 +1,4 @@
-=semantic_form_for([:portal, announcement], remote: true) do |f|
+=semantic_form_for([:portal, announcement], remote: true, authenticity_token: true) do |f|
   -announcement.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('announcements.type')) do

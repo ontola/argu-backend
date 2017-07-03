@@ -1,4 +1,4 @@
-=semantic_form_for @page, remote: true do |p|
+=semantic_form_for @page, remote: true, authenticity_token: true do |p|
   - @page.errors.full_messages.each do |message|
     =message
   =p.inputs for: :profile do |f|

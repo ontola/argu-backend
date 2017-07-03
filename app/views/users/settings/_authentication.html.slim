@@ -1,4 +1,4 @@
-=semantic_form_for authenticated_resource, url: settings_user_path, method: :put, remote: true do |f|
+=semantic_form_for authenticated_resource, url: settings_user_path, method: :put, remote: true, authenticity_token: true do |f|
   =f.inputs name: t('users.registrations.categories.authentication') do
     =f.inputs :shortname, for: :shortname, disabled: true
     li.form-helper

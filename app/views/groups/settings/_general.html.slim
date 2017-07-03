@@ -1,4 +1,4 @@
-=semantic_form_for(resource, url: group_url, method: :patch, remote: true) do |f|
+=semantic_form_for(resource, url: group_url, method: :patch, remote: true, authenticity_token: true) do |f|
   - resource.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('update_type', type: t('groups.type')) do

@@ -3,7 +3,7 @@
   .col-3-2
     =to_parent
     .box
-      =semantic_form_for(blog_post.new_record? ? [get_parent_resource, blog_post] : blog_post, html: {autocomplete: 'off'}, remote: true) do |f|
+      =semantic_form_for(blog_post.new_record? ? [get_parent_resource, blog_post] : blog_post, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'blog-post-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(blog_post, :title, motion_type.downcase)

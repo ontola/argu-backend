@@ -15,7 +15,7 @@
     .col-3-2
       .box
         section
-          =semantic_form_for page, remote: true do |f|
+          =semantic_form_for page, remote: true, authenticity_token: true do |f|
             =f.inputs do
               =f.inputs :name, for: :profile
               -if policy(page).shortname?
