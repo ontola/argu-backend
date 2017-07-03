@@ -4,10 +4,8 @@ class NotificationsController < ApplicationController
   after_action :update_viewed_time
 
   def index
-    # This must be performed to prevent pundit errors
-    policy_scope(Notification)
     if current_user.guest?
-      policy_scope(Notification)
+      skip_verify_policy_scoped(true)
       head 204
     elsif params[:from_time].present?
       fetch_more
