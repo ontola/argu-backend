@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module HeaderHelper
-  include DropdownHelper
+  include DropdownHelper, NotificationsHelper
 
   def suggested_forums
     @suggested_forums ||= Setting.get('suggested_forums')&.split(',')&.map(&:strip) || []
@@ -64,9 +64,7 @@ module HeaderHelper
     dropdown_options('',
                      [{
                        type: 'notifications',
-                       unread: policy_scope(Notification)
-                                   .where('read_at is NULL')
-                                   .order(created_at: :desc).count,
+                       unread: unread_notification_count,
                        lastNotification: nil,
                        notifications: [],
                        loadMore: true

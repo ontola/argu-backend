@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 # @note: Common create ready
 class NotificationsController < ApplicationController
+  include NotificationsHelper
   after_action :update_viewed_time
 
   def index
@@ -56,7 +57,7 @@ class NotificationsController < ApplicationController
 
     if read_before || notification.update(read_at: Time.current)
       @notifications = get_notifications
-      @unread = get_unread
+      @unread = unread_notification_count
       render 'index'
       send_event category: 'notifications',
                  action: 'read',
@@ -79,7 +80,7 @@ class NotificationsController < ApplicationController
                      .order(created_at: :desc)
                      .since(from_time)
                      .page params[:page]
-    @unread = get_unread
+    @unread = unread_notification_count
   rescue ArgumentError
     head 400
   end
@@ -90,13 +91,6 @@ class NotificationsController < ApplicationController
       .order(created_at: :desc)
       .where(since ? ['created_at > ?', since] : nil)
       .page params[:page]
-  end
-
-  def get_unread
-    policy_scope(Notification)
-      .where('read_at is NULL')
-      .order(created_at: :desc)
-      .count
   end
 
   def permit_params
@@ -114,7 +108,7 @@ class NotificationsController < ApplicationController
     end
     @notifications = get_notifications(since) if new_available
     if @notifications.present?
-      @unread = get_unread
+      @unread = unread_notification_count
       render
     else
       head 204
