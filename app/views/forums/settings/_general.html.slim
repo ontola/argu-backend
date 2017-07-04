@@ -26,7 +26,7 @@
             td= t('groups.type')
             td[colspan='2' style="min-width: 90px;"]= t('portal.members')
             td= t('roles.plural').capitalize
-        - resource.grants.custom.includes(group: {group_memberships: {member: {profileable: :shortname}}}).each do |grant|
+        - Grant.custom.where(edge_id: [resource.edge.id, resource.edge.parent_id]).includes(group: {group_memberships: {member: {profileable: :shortname}}}).each do |grant|
           tr
             td
               =link_to grant.group.display_name, settings_group_path(grant.group)
@@ -38,7 +38,10 @@
                   span.fa.fa-plus
             td
               =t("roles.types.#{grant.role}")
-              = t('roles.list.remove_html', url: grant_path(grant))
+              - if grant.edge_id == resource.edge.id
+                =t('roles.list.remove_html', url: grant_path(grant))
+              - else
+                =<"(#{t('grants.all_forums')})"
     - if policy(resource.page).create_child?(:groups)
       =link_to new_page_group_path(resource.page), class: 'btn btn--mini btn--light margin-bottom margin-right' do
         span.fa.fa-plus
