@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class SendNotificationsWorker
+class SendBatchNotificationsWorker
   include Sidekiq::Worker
 
   COOLDOWN_PERIOD = 4.minutes
@@ -34,6 +34,8 @@ class SendNotificationsWorker
       end
     end
   end
+
+  private
 
   def collect_notifications(user, lock = nil)
     t_notifications = Notification.arel_table

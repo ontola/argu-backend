@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class SendNotificationsWorkerTest < ActiveSupport::TestCase
+class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
   define_freetown
   let!(:motion) { create(:motion, parent: freetown.edge) }
   let!(:argument) { create(:argument, parent: motion.edge) }
@@ -31,13 +31,13 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
   test 'should send mail to direct follower' do
     create_notification_pair_for follower
 
-    snw = SendNotificationsWorker.new
+    snw = SendBatchNotificationsWorker.new
     assert_equal 1, snw.collect_notifications(follower).length
 
     email_type = User.reactions_emails[:direct_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1 do
       Sidekiq::Testing.inline! do
-        SendNotificationsWorker.perform_async(follower.id, email_type)
+        SendBatchNotificationsWorker.perform_async(follower.id, email_type)
       end
     end
 
@@ -48,13 +48,13 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
   test 'should send mail to daily follower' do
     create_notification_pair_for follower_daily
 
-    snw = SendNotificationsWorker.new
+    snw = SendBatchNotificationsWorker.new
     assert_equal 1, snw.collect_notifications(follower_daily).length
 
     email_type = User.reactions_emails[:daily_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1 do
       Sidekiq::Testing.inline! do
-        SendNotificationsWorker.perform_async(follower_daily.id, email_type)
+        SendBatchNotificationsWorker.perform_async(follower_daily.id, email_type)
       end
     end
 
@@ -65,13 +65,13 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
   test 'should send mail to weekly follower' do
     create_notification_pair_for follower_weekly
 
-    snw = SendNotificationsWorker.new
+    snw = SendBatchNotificationsWorker.new
     assert_equal 1, snw.collect_notifications(follower_weekly).length
 
     email_type = User.reactions_emails[:weekly_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1 do
       Sidekiq::Testing.inline! do
-        SendNotificationsWorker.perform_async(follower_weekly.id, email_type)
+        SendBatchNotificationsWorker.perform_async(follower_weekly.id, email_type)
       end
     end
 
@@ -88,13 +88,13 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
                 user: follower,
                 created_at: Time.current - 1.day
 
-    snw = SendNotificationsWorker.new
+    snw = SendBatchNotificationsWorker.new
     assert_equal 10, snw.collect_notifications(follower).length
 
     email_type = User.reactions_emails[:direct_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1, "ActionMailer doesn't send in bulk" do
       Sidekiq::Testing.inline! do
-        SendNotificationsWorker.perform_async(follower.id, email_type)
+        SendBatchNotificationsWorker.perform_async(follower.id, email_type)
       end
     end
 
@@ -108,7 +108,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     email_type = User.reactions_emails[:direct_reactions_email]
     assert_no_difference 'ActionMailer::Base.deliveries.count' do
       Sidekiq::Testing.inline! do
-        SendNotificationsWorker.perform_async(follower_weekly.id, email_type)
+        SendBatchNotificationsWorker.perform_async(follower_weekly.id, email_type)
       end
     end
   end
@@ -119,7 +119,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     email_type = User.reactions_emails[:weekly_reactions_email]
     assert_no_difference 'ActionMailer::Base.deliveries.count' do
       Sidekiq::Testing.inline! do
-        SendNotificationsWorker.perform_async(follower.id, email_type)
+        SendBatchNotificationsWorker.perform_async(follower.id, email_type)
       end
     end
   end

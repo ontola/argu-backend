@@ -38,7 +38,7 @@ RSpec.feature 'Notification mailer' do
     argument_notification
 
     Sidekiq::Testing.inline! do
-      SendNotificationsWorker.perform_async(follower.id, email_type)
+      SendBatchNotificationsWorker.perform_async(follower.id, email_type)
     end
     open_email(follower.email)
 
@@ -55,7 +55,7 @@ RSpec.feature 'Notification mailer' do
     comment_notification
 
     Sidekiq::Testing.inline! do
-      SendNotificationsWorker.perform_async(follower.id, email_type)
+      SendBatchNotificationsWorker.perform_async(follower.id, email_type)
     end
     open_email(follower.email)
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class MailReceiversCollectorTest < ActiveSupport::TestCase
+class BatchNotificationsReceiversCollectorTest < ActiveSupport::TestCase
   define_freetown
   let(:publisher) { create(:user, :follows_reactions_never, :follows_news_never) }
   let(:project) { create(:project, parent: freetown.edge, publisher: publisher) }
@@ -30,9 +30,9 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
     create_follow_and_notification_pair(blog_post, :follows_reactions_directly, :follows_news_weekly)
     create_follow_and_notification_pair(argument, :follows_reactions_weekly, :follows_news_directly)
 
-    direct_user_ids = MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call
+    direct_user_ids = BatchNotificationsReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call
     assert_equal 4, direct_user_ids.count
-    weekly_user_ids = MailReceiversCollector.new(User.reactions_emails[:weekly_reactions_email]).call
+    weekly_user_ids = BatchNotificationsReceiversCollector.new(User.reactions_emails[:weekly_reactions_email]).call
     assert_equal 4, weekly_user_ids.count
     assert_equal [], direct_user_ids & weekly_user_ids
   end
@@ -51,7 +51,7 @@ class MailReceiversCollectorTest < ActiveSupport::TestCase
       :viewed_notifications_now
     )
 
-    user_ids = MailReceiversCollector.new(User.reactions_emails[:weekly_reactions_email]).call
+    user_ids = BatchNotificationsReceiversCollector.new(User.reactions_emails[:weekly_reactions_email]).call
     assert_equal 0, user_ids.count
   end
 
