@@ -117,7 +117,11 @@ const notificationStore = Reflux.createStore({
                             return mutMap.set(n.id, n);
                         });
                     }).sort((a, b) => {
-                        return new Date(b.created_at) - new Date(a.created_at);
+                        if (a.permanent === b.permanent) {
+                            return new Date(b.created_at) - new Date(a.created_at);
+                        } else {
+                            return a.permanent ? -1 : 1;
+                        }
                     });
                 this.setLastNotification(notifications.lastNotification);
                 this.state.notifications.unread = notifications.unread;

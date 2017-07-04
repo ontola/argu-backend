@@ -413,7 +413,9 @@ ActiveRecord::Schema.define(version: 20170706093850) do
     t.datetime "updated_at"
     t.string   "title"
     t.string   "url"
-    t.integer  "notification_type", null: false
+    t.integer  "notification_type",                 null: false
+    t.boolean  "permanent",         default: false, null: false
+    t.datetime "send_mail_after"
     t.index ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
     t.index ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at", using: :btree
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree

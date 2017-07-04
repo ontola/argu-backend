@@ -202,7 +202,11 @@ export const Notifications = React.createClass({
             .notifications
             .toArray()
             .sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at);
+                if (a.permanent === b.permanent) {
+                    return new Date(b.created_at) - new Date(a.created_at);
+                } else {
+                    return a.permanent ? -1 : 1;
+                }
             }).map((item, i) => {
                 return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
             });

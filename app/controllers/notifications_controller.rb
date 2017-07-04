@@ -38,9 +38,11 @@ class NotificationsController < ApplicationController
   def read
     authorize Notification, :read?
 
-    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.current
-
+    if policy_scope(Notification)
+         .where(read_at: nil, permanent: false)
+         .update_all(read_at: Time.current)
       @notifications = get_notifications
+      @unread = unread_notification_count
       render 'notifications/index'
       send_event category: 'notifications',
                  action: 'read_all'
@@ -55,7 +57,7 @@ class NotificationsController < ApplicationController
 
     read_before = notification.read_at.present?
 
-    if read_before || notification.update(read_at: Time.current)
+    if read_before || notification.permanent? || notification.update(read_at: Time.current)
       @notifications = get_notifications
       @unread = unread_notification_count
       render 'index'
@@ -88,7 +90,7 @@ class NotificationsController < ApplicationController
   def get_notifications(since = nil)
     policy_scope(Notification)
       .includes(activity: :trackable)
-      .order(created_at: :desc)
+      .order(permanent: :desc, created_at: :desc)
       .where(since ? ['created_at > ?', since] : nil)
       .page params[:page]
   end
@@ -102,9 +104,9 @@ class NotificationsController < ApplicationController
     new_available = true
     if since.present?
       new_available = policy_scope(Notification)
-                        .order(created_at: :desc)
                         .where('created_at > ?', since)
-                        .count.positive?
+                        .count
+                        .positive?
     end
     @notifications = get_notifications(since) if new_available
     if @notifications.present?
