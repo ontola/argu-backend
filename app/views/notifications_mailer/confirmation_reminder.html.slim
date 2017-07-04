@@ -1,0 +1,13 @@
+table
+  tr
+    td.mail-box
+      table
+        tr
+          td.mail-p= t('mailer.notifications_mailer.confirmation_reminder.subject')
+        tr
+          td.mail-p= t('mailer.notifications_mailer.confirmation_reminder.body_html')
+  tr
+    td.mail-button--alt
+      table
+        tr
+          td= link_to I18n.t('mailer.notifications_mailer.confirmation_reminder.confirm_link'), user_confirmation_url(confirmation_token: @user.primary_email_record.confirmation_token)

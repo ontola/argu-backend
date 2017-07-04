@@ -32,7 +32,7 @@ class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
     create_notification_pair_for follower
 
     snw = SendBatchNotificationsWorker.new
-    assert_equal 1, snw.collect_notifications(follower).length
+    assert_equal 1, snw.send(:collect_notifications, follower).length
 
     email_type = User.reactions_emails[:direct_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1 do
@@ -42,14 +42,14 @@ class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
     end
 
     follower.reload
-    assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
+    assert_equal 0, snw.send(:collect_notifications, follower).length, 'Notifications will be send twice'
   end
 
   test 'should send mail to daily follower' do
     create_notification_pair_for follower_daily
 
     snw = SendBatchNotificationsWorker.new
-    assert_equal 1, snw.collect_notifications(follower_daily).length
+    assert_equal 1, snw.send(:collect_notifications, follower_daily).length
 
     email_type = User.reactions_emails[:daily_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1 do
@@ -59,14 +59,14 @@ class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
     end
 
     follower_daily.reload
-    assert_equal 0, snw.collect_notifications(follower_daily).length, 'Notifications will be send twice'
+    assert_equal 0, snw.send(:collect_notifications, follower_daily).length, 'Notifications will be send twice'
   end
 
   test 'should send mail to weekly follower' do
     create_notification_pair_for follower_weekly
 
     snw = SendBatchNotificationsWorker.new
-    assert_equal 1, snw.collect_notifications(follower_weekly).length
+    assert_equal 1, snw.send(:collect_notifications, follower_weekly).length
 
     email_type = User.reactions_emails[:weekly_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1 do
@@ -76,7 +76,7 @@ class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
     end
 
     follower_weekly.reload
-    assert_equal 0, snw.collect_notifications(follower_weekly).length, 'Notifications will be send twice'
+    assert_equal 0, snw.send(:collect_notifications, follower_weekly).length, 'Notifications will be send twice'
   end
 
   test 'should send multiple notifications as a digest' do
@@ -89,7 +89,7 @@ class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
                 created_at: Time.current - 1.day
 
     snw = SendBatchNotificationsWorker.new
-    assert_equal 10, snw.collect_notifications(follower).length
+    assert_equal 10, snw.send(:collect_notifications, follower).length
 
     email_type = User.reactions_emails[:direct_reactions_email]
     assert_difference 'ActionMailer::Base.deliveries.count', 1, "ActionMailer doesn't send in bulk" do
@@ -99,7 +99,7 @@ class SendBatchNotificationsWorkerTest < ActiveSupport::TestCase
     end
 
     follower.reload
-    assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
+    assert_equal 0, snw.send(:collect_notifications, follower).length, 'Notifications will be send twice'
   end
 
   test 'should not send direct mail to weekly follower' do

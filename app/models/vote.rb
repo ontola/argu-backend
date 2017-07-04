@@ -12,6 +12,7 @@ class Vote < ApplicationRecord
   define_model_callbacks :redis_save, only: :before
   before_redis_save :set_explained_at, if: :explanation_changed?
   before_redis_save :up_and_downvote_arguments
+  before_redis_save :create_confirmation_reminder_notification
 
   attr_writer :argument_ids
   parentable :argument, :vote_event
@@ -21,6 +22,7 @@ class Vote < ApplicationRecord
   counter_cache votes_pro: {for: Vote.fors[:pro]},
                 votes_con: {for: Vote.fors[:con]},
                 votes_neutral: {for: Vote.fors[:neutral]}
+  delegate :create_confirmation_reminder_notification, to: :publisher
 
   validates :creator, :for, presence: true
 

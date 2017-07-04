@@ -13,3 +13,7 @@ en:
       news: 'Important items'
       decisions: 'Only official decisions'
       title: 'Receive notifications for:'
+    permanent:
+      confirm_account:
+        one: "Confirm your account to finalize your vote"
+        other: "Confirm your account to finalize your %{count} votes"

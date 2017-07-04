@@ -118,6 +118,16 @@ class User < ApplicationRecord
     User.find(User::COMMUNITY_ID)
   end
 
+  def create_confirmation_reminder_notification
+    return if guest? || confirmed? || notifications.confirmation_reminder.any?
+    Notification.confirmation_reminder.create(
+      user: self,
+      url: Rails.application.routes.url_helpers.settings_user_path(tab: :authentication),
+      permanent: true,
+      send_mail_after: 24.hours.from_now
+    )
+  end
+
   def display_name
     [first_name, middle_name, last_name].compact.join(' ').presence || url || I18n.t('users.no_shortname', id: id)
   end

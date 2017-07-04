@@ -14,7 +14,7 @@ class Notification < ApplicationRecord
 
   scope :renderable, -> { where.not(activity_id: nil) }
 
-  enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3}
+  enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4}
 
   def sync_notification_count
     user.try :sync_notification_count
@@ -23,6 +23,9 @@ class Notification < ApplicationRecord
   def title
     if activity.present?
       activity_string_for(activity, user)
+    elsif confirmation_reminder?
+      vote_count = RedisResource::Key.new(user: user).matched_keys.count
+      t('notifications.permanent.confirm_account', count: vote_count)
     else
       super
     end
@@ -54,6 +57,7 @@ class Notification < ApplicationRecord
   end
 
   def set_notification_type
+    return if activity.nil?
     self.notification_type = activity.follow_type.singularize.to_sym
   end
 

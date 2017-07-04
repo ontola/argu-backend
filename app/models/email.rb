@@ -18,6 +18,11 @@ class Email < ApplicationRecord
     schedule_redis_resource_worker(user, user)
   end
 
+  def confirm
+    user.notifications.confirmation_reminder.destroy_all
+    super
+  end
+
   def destroy
     super unless primary?
   end

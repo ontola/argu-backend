@@ -42,6 +42,10 @@ nl:
       subject: 'Nieuwe Argu notificaties'
       header: 'Nieuwe notificaties'
       view: 'Bekijk item'
+      confirmation_reminder:
+        subject: "Vergeet je stemmen niet te bevestigen!"
+        body_html: "Je hebt een of meerdere stemmen uitgebracht op Argu. Deze zullen pas definitief gemaakt worden na het bevestigen van je e-mailadres."
+        confirm_link: 'Bevestig jouw e-mailadres'
     password:
       changed:
         subject: "Wachtwoord is gewijzigd"

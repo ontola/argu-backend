@@ -42,6 +42,10 @@ en:
       subject: 'New Argu notifications'
       header: 'New notifications'
       view: 'View item'
+      confirmation_reminder:
+        subject: "Don't forget to confirm your votes!"
+        body_html: "You have casted one or multiple votes on Argu. These votes will only be valid after you have confirmed your e-mail."
+        confirm_link: 'Confirm your e-mail'
     password:
       changed:
         subject: "Password has been changed"

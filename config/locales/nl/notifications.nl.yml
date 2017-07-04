@@ -13,3 +13,7 @@ nl:
       news: 'Belangrijke items'
       decisions: 'Alleen officiele besluiten'
       title: 'Ontvang meldingen bij:'
+    permanent:
+      confirm_account:
+        one: "Bevestig je account om je stem definitief te maken"
+        other: "Bevestig je account om je %{count} stemmen definitief te maken"
