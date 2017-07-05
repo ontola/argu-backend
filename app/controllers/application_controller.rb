@@ -50,9 +50,9 @@ class ApplicationController < ActionController::Base
 
   def current_forum; end
 
-  # @return [Profile, nil] The {Profile} the {User} is using to do actions
+  # @return [Profile] The {Profile} of the {User}
   def current_profile
-    @current_profile ||= get_current_actor
+    current_user.profile
   end
 
   def deserialize_params_options

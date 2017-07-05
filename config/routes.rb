@@ -94,7 +94,6 @@ Rails.application.routes.draw do
   resources :notifications, only: [:index, :show, :update], path: 'n' do
     patch :read, on: :collection
   end
-  put 'actors', to: 'actors#update'
 
   require 'sidekiq/web'
 

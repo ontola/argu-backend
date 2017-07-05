@@ -40,7 +40,6 @@ class Users::SessionsController < Devise::SessionsController
                action: 'sign_out'
     doorkeeper_token.update!(expires_in: 0.seconds)
     sign_out
-    cookies[:a_a] = {value: '-1', expires: 1.year.ago} if cookies[:a_a].present?
     set_flash_message! :notice, :signed_out
     respond_to_on_destroy
   end

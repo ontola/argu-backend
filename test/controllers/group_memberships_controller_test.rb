@@ -238,11 +238,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   test 'page should post create other' do
     sign_in create_super_admin(freetown)
-    change_actor freetown.page
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
            params: {
+             profile_iri: freetown.page.context_id,
              group_id: group,
              shortname: user.url,
              r: settings_forum_path(freetown.url, tab: :groups)

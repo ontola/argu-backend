@@ -1,7 +1,6 @@
 .tabs-to-top
   .tabs-container
     ul.tabs
-      / These use current_user so that this menu is still functional when :a_a is a Page
       li[class=('tab--current' if local_assigns[:active] == :show)]= link_to user_url(current_user) do
         span.fa.fa-user
         span.icon-left= t('show_type', type: t('profiles.type'))

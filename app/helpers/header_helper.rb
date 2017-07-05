@@ -51,10 +51,6 @@ module HeaderHelper
                       data: {method: 'delete', turbolinks: 'false'}),
             nil # NotABug Make sure compact! actually returns the array and not nil
           ].compact!
-        },
-        {
-          title: t('profiles.switch'),
-          items: managed_pages_items
         }
       ]
     }
@@ -132,23 +128,5 @@ module HeaderHelper
 
   def actor_item(title, url, opts = {})
     item('actor', title, url, opts)
-  end
-
-  def managed_pages_items
-    items = []
-    managed_pages = current_user.managed_pages.includes(profile: :default_profile_photo)
-    if managed_pages.present?
-      items << actor_item(current_user.display_name,
-                          actors_path(na: current_user.profile.id, format: :json),
-                          image: current_user.profile.default_profile_photo.url(:icon),
-                          data: {method: 'put', turbolinks: false_unless_iframe})
-      managed_pages.each do |p|
-        items << actor_item(p.profile.name,
-                            actors_path(na: p.profile.id, format: :json),
-                            image: p.profile.default_profile_photo.url(:icon),
-                            data: {method: 'put', turbolinks: false_unless_iframe})
-      end
-    end
-    items
   end
 end
