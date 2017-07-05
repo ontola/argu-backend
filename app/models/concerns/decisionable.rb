@@ -7,6 +7,11 @@ module Decisionable
              -> { order(step: :asc) },
              through: :edge
     has_one :last_decision,
+            -> { order(step: :desc) },
+            through: :edge,
+            source: :decisions,
+            class_name: 'Decision'
+    has_one :last_published_decision,
             -> { published.order(step: :desc) },
             through: :edge,
             source: :decisions,
@@ -19,19 +24,20 @@ module Decisionable
     end
 
     def assigned_user
-      last_decision.present? ? last_decision.forwarded_user : forum.default_decision_user
+      last_published_decision.present? ? last_published_decision.forwarded_user : forum.default_decision_user
     end
 
     def assigned_group
-      last_decision.present? ? last_decision.forwarded_group : forum.default_decision_group
+      last_published_decision.present? ? last_published_decision.forwarded_group : forum.default_decision_group
     end
 
     def state
       last_or_new_decision.forwarded? ? 'pending' : last_or_new_decision.state
     end
 
-    def last_or_new_decision
-      @last_or_new_decision ||= last_decision || new_decision
+    def last_or_new_decision(drafts = false)
+      @last_or_new_decision ||= {}
+      @last_or_new_decision[drafts] ||= (drafts ? last_decision : last_published_decision) || new_decision
     end
 
     def new_decision(state = :pending)
