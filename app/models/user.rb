@@ -211,22 +211,39 @@ class User < ApplicationRecord
     Argu::Redis.get("user:#{id}:email.sent.at", redis)
   end
 
+  # @return [ActiveRecord::Relation] The pages managed by the user
   def managed_pages
-    @managed_pages ||= Page.where(id: profile.grants.page_manager.pluck('edges.owner_id'))
+    return @managed_pages if @managed_pages.present?
+    page_ids = profile.grants.page_manager.pluck('edges.owner_id')
+    @managed_pages = page_ids.present? ? Page.where(id: page_ids) : Page.none
   end
 
+  # Find profiles managed by the user, both its own profile as profiles of pages it manages
+  # @return [ActiveRecord::Relation] The profiles managed by the user
   def managed_profiles
-    @managed_profiles ||= Profile.where(
-      '(profileable_type = ? AND profileable_id = ?) OR (profileable_type = ? AND profileable_id IN (?))',
-      'User',
-      id,
-      'Page',
-      managed_pages.pluck(:id)
-    )
+    @managed_profiles ||=
+      if !confirmed? || managed_pages.empty?
+        Profile.where(profileable_type: 'User', profileable_id: id)
+      else
+        Profile.where(
+          '(profileable_type = ? AND profileable_id = ?) OR (profileable_type = ? AND profileable_id IN (?))',
+          'User',
+          id,
+          'Page',
+          managed_pages.pluck(:id)
+        )
+      end
   end
 
+  # Find the ids of profiles managed by the user, both its own profile as profiles of pages it manages
+  # @return [Array] The ids of the profiles managed by the user
   def managed_profile_ids
-    managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
+    @managed_profile_ids ||=
+      if !confirmed? || managed_pages.empty?
+        [profile.id]
+      else
+        managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
+      end
   end
 
   def password_required?

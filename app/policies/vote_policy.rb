@@ -18,10 +18,6 @@ class VotePolicy < EdgeTreePolicy
   end
 
   module Roles
-    def is_creator?
-      creator if actor == record.creator
-    end
-
     def is_group_member?
       group_grant if is_member? && user.profile.group_ids.include?(record.parent_model.group_id)
     end

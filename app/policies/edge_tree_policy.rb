@@ -64,7 +64,8 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_creator?
-      creator if record.creator.present? && record.creator == actor
+      return if record.creator.blank?
+      creator if record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
     end
 
     def is_manager?
