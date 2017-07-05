@@ -9,9 +9,14 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def create?
-    return create_expired? if has_expired_ancestors?
     assert_siblings! if record.try(:parent_id).present?
-    rule is_member?, super
+    return create_expired? if has_expired_ancestors?
+    rule is_member?, is_manager?, is_super_admin?, super
+  end
+
+  def create_expired?
+    return unless record.parent_model.is_a?(BlogPost)
+    rule is_member?, is_manager?, is_super_admin?, super
   end
 
   def destroy?

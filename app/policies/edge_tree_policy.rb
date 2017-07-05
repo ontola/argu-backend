@@ -178,7 +178,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def create_expired?
-    false
+    nil
   end
 
   def trash?
