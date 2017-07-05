@@ -88,7 +88,7 @@ module Portal
           format.html do
             flash[:success] = t('type_destroyed',
                                 type: t('announcements.type'))
-            redirect_to announcements_settings_path
+            redirect_to announcements_settings_path, status: 303
           end
         else
           format.html do

@@ -25,7 +25,7 @@ class FavoritesTest < ActionDispatch::IntegrationTest
     define_test(hash, :destroy, options: {differences: [['Favorite', -1]]}) do
       {
         guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
-        user: exp_res(response: 302, should: true)
+        user: exp_res(response: 303, should: true)
       }
     end
   end

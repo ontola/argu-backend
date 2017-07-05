@@ -151,7 +151,7 @@ module Portal
     test 'staff should delete destroy' do
       sign_in staff
 
-      general_destroy 302, [['Announcement.count', -1]]
+      general_destroy 303, [['Announcement.count', -1]]
     end
   end
 end

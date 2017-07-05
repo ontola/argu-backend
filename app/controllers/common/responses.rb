@@ -101,9 +101,10 @@ module Common
 
     # @param resource [ActiveRecord::Base] The resource to redirect to.
     # @param action [Symbol] The action to render the message for.
-    def respond_with_redirect_success(resource, action)
+    def respond_with_redirect_success(resource, action, opts = {})
       redirect_with_message redirect_model_success(resource),
-                            message_success(resource, action)
+                            message_success(resource, action),
+                            opts
     end
 
     def respond_with_redirect_success_js(resource, action)
@@ -125,8 +126,8 @@ module Common
       raise Error('Unknown format')
     end
 
-    def redirect_with_message(location, message)
-      redirect_to location, notice: message.capitalize
+    def redirect_with_message(location, message, opts = {})
+      redirect_to location, opts.merge(notice: message.capitalize)
     end
 
     def message_failure

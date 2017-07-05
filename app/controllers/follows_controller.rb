@@ -31,7 +31,7 @@ class FollowsController < ApplicationController
                label: @thing.model_name.collection
     if resp.nil? || resp
       respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, notification: t('unfollowed')) }
+        format.html { redirect_back(fallback_location: root_path, status: 303, notification: t('unfollowed')) }
         format.json { head 204 }
       end
     else

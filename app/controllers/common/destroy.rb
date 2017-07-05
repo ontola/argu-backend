@@ -31,7 +31,7 @@ module Common
 
       # @!visibility public
       def destroy_respond_success_html(resource)
-        respond_with_redirect_success(resource, :destroy)
+        respond_with_redirect_success(resource, :destroy, status: 303)
       end
 
       # @!visibility public

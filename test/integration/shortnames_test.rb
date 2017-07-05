@@ -112,7 +112,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   test 'super_admin should delete destroy' do
     subject
     sign_in super_admin
-    general_destroy 302, -1
+    general_destroy 303, -1
   end
 
   private

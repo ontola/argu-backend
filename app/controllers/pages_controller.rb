@@ -89,7 +89,7 @@ class PagesController < EdgeTreeController
       @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
     end
     if @page.errors.empty? && @page.destroy
-      redirect_to root_path, notice: t('type_destroy_success', type: t('pages.type'))
+      redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
     else
       flash[:error] = t('errors.general')
       redirect_to(delete_page_path)

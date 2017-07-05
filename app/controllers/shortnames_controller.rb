@@ -59,8 +59,8 @@ class ShortnamesController < AuthorizedController
            }
   end
 
-  def respond_with_redirect_success(_resource = nil, _action = nil)
-    redirect_to redirect_model_success
+  def respond_with_redirect_success(_resource = nil, _action = nil, opts = {})
+    redirect_to redirect_model_success, opts
   end
 
   def resource_by_id

@@ -15,9 +15,9 @@ class FavoritesController < AuthorizedController
     current_user.favorites.find_by!(edge: get_parent_edge)
   end
 
-  def respond_with_redirect_success(resource, action)
+  def respond_with_redirect_success(resource, action, opts = {})
     redirect_back fallback_location: root_path,
-                  notice: message_success(resource, action).capitalize
+                  **opts.merge(notice: message_success(resource, action).capitalize)
   end
 
   def message_success(resource, action)

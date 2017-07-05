@@ -194,7 +194,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
       delete group_path(@group)
     end
 
-    assert_response 302
+    assert_response 303
   end
 
   private
