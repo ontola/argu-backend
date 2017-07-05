@@ -49,7 +49,7 @@ module Portal
 
     def service_options(options = {})
       {
-        creator: current_profile,
+        creator: current_actor.actor,
         publisher: current_user,
         uuid: a_uuid,
         client_id: request.session.id

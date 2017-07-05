@@ -64,7 +64,7 @@ class ConversionsController < ServiceController
 
   def service_options(options = {})
     {
-      creator: current_profile,
+      creator: current_actor.actor,
       publisher: current_user
     }.merge(options)
   end

@@ -23,12 +23,12 @@ module Argu
                          **opts)
         parent = send(parent) if parent.is_a?(Symbol)
         attributes = default_create_attributes(parent: parent).merge(attributes)
-        profile_iri = send(opts[:actor])&.context_id if opts[:actor].present?
+        actor_iri = send(opts[:actor])&.context_id if opts[:actor].present?
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           post create_path(parent),
                headers: @_argu_headers,
-               params: {format: request_format, profile_iri: profile_iri, model_sym => attributes}
+               params: {format: request_format, actor_iri: actor_iri, model_sym => attributes}
 
           reset_publication(Publication.last)
         end

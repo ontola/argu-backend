@@ -41,7 +41,9 @@ RSpec.feature 'Decisions', type: :feature do
     expect do
       within('form.decision') do
         fill_in 'decision_content', with: 'Reason to forward decision'
-        fill_in_select with: forwarded_to.display_name
+        within('section') do
+          fill_in_select with: forwarded_to.display_name
+        end
         click_button 'Save'
       end
       expect(page).to have_content('Motion is forwarded')

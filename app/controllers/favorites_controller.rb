@@ -12,7 +12,7 @@ class FavoritesController < AuthorizedController
   end
 
   def resource_by_id
-    current_user.favorites.find_by!(edge: get_parent_edge)
+    current_user.favorites.find_by(edge: get_parent_edge)
   end
 
   def respond_with_redirect_success(resource, action, opts = {})

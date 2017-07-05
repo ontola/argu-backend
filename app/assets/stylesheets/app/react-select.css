@@ -278,11 +278,11 @@
 .Select-profile {
     display: inline-flex;
     width: 300px;
-    height: 44px;
-    margin: 0 5px;
     text-align: left;
 }
-
+.section--footer .Select-profile .Select-control {
+    background-color: rgb(249, 249, 249);
+}
 @keyframes Select-animation-spin {
     to {
         transform: rotate(1turn);

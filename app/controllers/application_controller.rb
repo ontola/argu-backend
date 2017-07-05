@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
   before_action :check_finished_intro, if: :format_html?
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
+  before_action :authorize_current_actor
   after_action :set_profile_forum
   around_action :set_time_zone
   after_action :set_version_header
@@ -36,6 +37,30 @@ class ApplicationController < ActionController::Base
 
   serialization_scope :user_context
 
+  # The params, deserialized when format is json_api and method is not GET
+  # @return [Hash] The params
+  # @example Resource params from json_api request
+  #   params = {
+  #     data: {type: 'motions', attributes: {body: 'body'}},
+  #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
+  #   }
+  #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
+  def params
+    return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
+    if super['data']['type'].present? && super['data']['type'] != controller_name.camelcase(:lower)
+      raise ActionController::UnpermittedParameters.new(%w(type))
+    end
+    raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?
+    ActionController::Parameters.new(
+      super.to_unsafe_h.merge(
+        super.require(:data).require(:type).singularize.underscore =>
+          ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
+      )
+    )
+  end
+
+  private
+
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
       freshdesk_redirect_url
@@ -46,6 +71,10 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(_resource_or_scope)
     params[:r].present? && valid_redirect?(params[:r]) ? params[:r] : super
+  end
+
+  def authorize_current_actor
+    authorize current_actor, :show?
   end
 
   def current_forum; end
@@ -70,28 +99,6 @@ class ApplicationController < ActionController::Base
     forum ||= Forum.find_via_shortname_nil(geo.country.downcase) if geo.country.present?
     forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(geo.country_code)
     forum
-  end
-
-  # The params, deserialized when format is json_api and method is not GET
-  # @return [Hash] The params
-  # @example Resource params from json_api request
-  #   params = {
-  #     data: {type: 'motions', attributes: {body: 'body'}},
-  #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
-  #   }
-  #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
-  def params
-    return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
-    if super['data']['type'].present? && super['data']['type'] != controller_name.camelcase(:lower)
-      raise ActionController::UnpermittedParameters.new(%w(type))
-    end
-    raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?
-    ActionController::Parameters.new(
-      super.to_unsafe_h.merge(
-        super.require(:data).require(:type).singularize.underscore =>
-          ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
-      )
-    )
   end
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses

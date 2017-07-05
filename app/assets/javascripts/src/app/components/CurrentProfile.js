@@ -1,40 +1,61 @@
 import React from 'react';
-import { image } from '../lib/helpers';
-import actorStore from '../stores/actor_store';
+import Select from 'react-select';
 
 export const CurrentProfile = React.createClass({
     propTypes: {
-        display_name: React.PropTypes.string,
-        profile_photo: React.PropTypes.object
+        currentActor: React.PropTypes.number,
+        managedProfiles: React.PropTypes.array
     },
 
     getInitialState () {
         return {
-            display_name: this.props.display_name,
-            profile_photo: this.props.profile_photo
+            currentActor: this.props.currentActor
         };
     },
 
-    componentDidMount () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
+    onProfileChange (value) {
+        this.setState({ currentActor: value })
     },
 
-    componentWillUnmount () {
-        this.unsubscribe();
-    },
-
-    onActorChange (data) {
-        this.setState(data);
+    valueRenderer (obj) {
+        return (
+            <div>
+                <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
+                {obj.label}
+            </div>
+        );
     },
 
     render () {
-        return (<div className="profile-small inspectlet-sensitive">
-            {image({ image: this.state.profile_photo })}
-            <div className="info-block">
-                <div className="info">plaatsen als:</div>
-                <div className="profile-name">{this.state.display_name}</div>
+        if (this.props.managedProfiles.length === 1) {
+            const obj = this.props.managedProfiles[0];
+            return (
+                <div className="Select Select-profile has-value">
+                    <div className="Select-control">
+                        <div className="Select-value">
+                            <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
+                            {obj.label}
+                        </div>
+                        <div className="Select-input" style={{ display: 'inline-block' }}/>
+                    </div>
+                </div>
+            );
+        }
+        return (
+            <div>
+                <Select
+                    className="Select-profile"
+                    clearable={false}
+                    matchProp="any"
+                    name='actor_iri'
+                    onChange={this.onProfileChange}
+                    optionRenderer={this.valueRenderer}
+                    options={this.props.managedProfiles}
+                    placeholder="Select user"
+                    value={this.state.currentActor}
+                    valueRenderer={this.valueRenderer}/>
             </div>
-        </div>);
+        );
     }
 });
 

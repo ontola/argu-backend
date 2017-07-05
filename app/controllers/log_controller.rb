@@ -21,6 +21,6 @@ class LogController < AuthorizedController
   end
 
   def resource_by_id
-    Edge.find(params[:edge_id]).owner
+    Edge.find_by(id: params[:edge_id]).owner
   end
 end

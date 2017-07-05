@@ -80,7 +80,7 @@ class ShortnamesController < AuthorizedController
   end
 
   def resource_by_id
-    @resource ||= Shortname.find(params[:id])
+    @resource ||= Shortname.find_by(id: params[:id])
   end
 
   def tab

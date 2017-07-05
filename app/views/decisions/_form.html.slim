@@ -22,7 +22,7 @@ section
       =ef.semantic_fields_for :argu_publication do |pf|
         =pf.input(:publish_type, as: :radio, collection: {direct: 0, draft: 1}.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
 .section.section--footer
-  =render partial: 'profiles/profile_current'
+  =render partial: 'profiles/creator', locals: {resource: decision}
   ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
     - if decision.new_record?
       =f.action :submit, as: :button, label: t('save')

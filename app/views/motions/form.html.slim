@@ -8,7 +8,7 @@
           .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= motion_type
-      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}, remote: false, authenticity_token: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('motions.form.title_heading')
@@ -50,11 +50,7 @@
                   =f.input :f_convert, as: :link, url: new_edge_conversion_url(motion.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =render partial: 'publications/form', locals: {f: f, resource: motion}
         section.section--footer
-          - if motion.new_record?
-            =render partial: 'profiles/profile_current'
-          - else
-            =render partial: motion.creator, locals: {resource: motion}
-
+          =render partial: 'profiles/creator', locals: {resource: motion}
           =f.actions
             .sticky-submit
               =f.action :submit, as: :button

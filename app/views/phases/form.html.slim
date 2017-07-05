@@ -21,10 +21,8 @@
             =f.input :end_date, as: :date_picker
             =f.input :end_time, as: :time_picker, label: '&nbsp;', input_html: {step: 1}
         section.section--footer
-          - if phase.new_record?
-            =render partial: 'profiles/profile_current'
-          - else
-            =render partial: phase.creator, locals: {resource: phase}
+          =render partial: 'profiles/creator', locals: {resource: phase}
+          - unless phase.new_record?
             =f.actions
               .sticky-submit
                 =f.action :submit, as: :button

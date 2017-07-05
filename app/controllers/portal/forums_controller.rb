@@ -44,7 +44,7 @@ class Portal::ForumsController < ApplicationController
 
   def service_options
     {
-      creator: current_profile,
+      creator: current_actor.actor,
       publisher: current_user
     }
   end

@@ -65,7 +65,7 @@ class ServiceController < AuthorizedController
   # @return [Hash] Defaults with the creator and publisher set to the current profile/user
   def service_options(options = {})
     {
-      creator: current_profile,
+      creator: current_actor.actor,
       publisher: current_user,
       uuid: a_uuid,
       client_id: request.session.id

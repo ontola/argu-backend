@@ -65,7 +65,7 @@ export const EmailTokenInvite = React.createClass({
                             addresses: emails,
                             group_id: groupId,
                             message: this.state.message,
-                            profile_iri: this.state.currentActor,
+                            actor_iri: this.state.currentActor,
                             send_mail: true
                         }
                     }
@@ -136,7 +136,7 @@ export const EmailTokenInvite = React.createClass({
                     placeholder={I18n.t('tokens.email.input_placeholder')}
                     value={this.state.message}/>
                 <fieldset className="actions">
-                    <span>{I18n.t('tokens.labels.sender_profile')}</span>
+                    <span>{I18n.t('tokens.labels.sender_profile')}&nbsp;</span>
                     <Select
                         className="Select-profile"
                         clearable={false}

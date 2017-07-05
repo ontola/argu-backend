@@ -3,8 +3,22 @@ module OauthHelper
   include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers, Doorkeeper::OAuth::Token::Methods
 
   def current_user
-    @_current_user ||=
-      current_resource_owner || GuestUser.new(cookies: request.cookie_jar, headers: request.headers, session: session)
+    current_actor.user
+  end
+
+  def current_actor
+    return @current_actor if @current_actor.present?
+    user = current_resource_owner || GuestUser.new(
+      cookies: request.cookie_jar,
+      headers: request.headers,
+      session: session
+    )
+    actor = if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
+              resource_from_iri(request.parameters[:actor_iri]).profile
+            else
+              user.profile
+            end
+    @current_actor = CurrentActor.new(user: user, actor: actor)
   end
 
   def sign_in(resource, *_args)

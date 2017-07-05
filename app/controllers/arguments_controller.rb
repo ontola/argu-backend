@@ -56,7 +56,7 @@ class ArgumentsController < EdgeTreeController
   def service_options(opts = {})
     super(opts.merge(auto_vote:
                        params.dig(:argument, :auto_vote) == 'true' &&
-                         current_profile == current_user.profile))
+                         current_actor.actor == current_user.profile))
   end
 
   def redirect_model_success(resource)

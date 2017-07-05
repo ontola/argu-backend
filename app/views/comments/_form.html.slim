@@ -6,10 +6,7 @@
     -if parent_id.present? || comment.parent_id.present?
       input[type="hidden" class= "btn" name="comment[parent_id]" value ="#{parent_id.presence || comment.parent_id}"]
   section.section--footer
-    - if comment.blank? || comment.new_record?
-      =render partial: 'profiles/profile_current'
-    - else
-      =render partial: comment.creator, locals: {resource: comment}
+    =render partial: 'profiles/creator', locals: {resource: comment}
     ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
       - if comment.persisted? && (local_assigns[:remote].nil? || local_assigns[:remote] == true)
         li

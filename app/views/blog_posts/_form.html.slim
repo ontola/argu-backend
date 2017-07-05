@@ -27,10 +27,7 @@
                     =hf.input(:happened_at, as: :datetime_picker)
                   =render partial: 'publications/form', locals: {f: f, resource: blog_post}
         section.section--footer
-          - if blog_post.new_record?
-            =render partial: 'profiles/profile_current'
-          - else
-            =render partial: blog_post.creator, locals: {resource: blog_post}
+          =render partial: 'profiles/creator', locals: {resource: blog_post}
           =f.actions
             .sticky-submit
               =f.action :submit, as: :button

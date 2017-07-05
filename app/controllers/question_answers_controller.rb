@@ -29,7 +29,7 @@ class QuestionAnswersController < AuthorizedController
 
   def service_options(options = {})
     {
-      creator: current_profile,
+      creator: current_actor.actor,
       publisher: current_user
     }.merge(options)
   end

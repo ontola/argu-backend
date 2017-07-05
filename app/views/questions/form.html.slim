@@ -53,10 +53,7 @@
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
               =render partial: 'publications/form', locals: {f: f, resource: question}
         section.section--footer
-          - if question.new_record?
-            =render partial: 'profiles/profile_current'
-          - else
-            =render partial: question.creator, locals: {resource: question}
+          =render partial: 'profiles/creator', locals: {resource: question}
           =f.actions
             .sticky-submit
               =f.action :submit, as: :button
