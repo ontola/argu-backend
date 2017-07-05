@@ -126,14 +126,14 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_redirected_to forum_url(freetown)
   end
 
-  test 'member should not delete destroy own membership' do
+  test 'member should delete destroy own membership' do
     sign_in member
 
-    assert_no_difference 'GroupMembership.count' do
+    assert_differences([['GroupMembership.count', 0], ['GroupMembership.active.count', -1]]) do
       delete :destroy, params: {id: member.profile.group_memberships.second}
     end
 
-    assert_not_authorized
+    assert_redirected_to page_path(freetown.page)
   end
 
   ####################################

@@ -51,10 +51,6 @@ class GroupPolicy < EdgeTreePolicy
     rule is_super_admin?, super
   end
 
-  def remove_member?(_member)
-    rule is_super_admin?
-  end
-
   private
 
   def default_tab
