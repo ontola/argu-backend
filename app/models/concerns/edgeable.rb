@@ -11,11 +11,11 @@ module Edgeable
             required: true
     has_many :edge_children, through: :edge, source: :children
     has_many :grants, through: :edge
-    scope :published, -> { joins(:edge).where('edges.is_published = true') }
-    scope :unpublished, -> { joins(:edge).where('edges.is_published = false') }
-    scope :trashed, -> { joins(:edge).where('edges.trashed_at IS NOT NULL') }
-    scope :untrashed, -> { joins(:edge).where('edges.trashed_at IS NULL') }
-    scope :expired, -> { joins(:edge).where('edges.expires_at <= ?', DateTime.current) }
+    scope :published, -> { joins(edge_join_string).where("#{edge_join_alias}.is_published = true") }
+    scope :unpublished, -> { joins(edge_join_string).where("#{edge_join_alias}.is_published = false") }
+    scope :trashed, -> { joins(edge_join_string).where("#{edge_join_alias}.trashed_at IS NOT NULL") }
+    scope :untrashed, -> { joins(edge_join_string).where("#{edge_join_alias}.trashed_at IS NULL") }
+    scope :expired, -> { joins(edge_join_string).where("#{edge_join_alias}.expires_at <= ?", DateTime.current) }
 
     before_save :save_linked_record
 
@@ -23,6 +23,15 @@ module Edgeable
     delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, :expires_at, to: :edge
     delegate :potential_audience, to: :parent_edge
     counter_cache false
+
+    def self.edge_join_alias
+      "\"edges_#{class_name}\""
+    end
+
+    def self.edge_join_string
+      "INNER JOIN \"edges\" #{edge_join_alias} ON #{edge_join_alias}.\"owner_id\" = \"#{class_name}\".\"id\" "\
+      "AND #{edge_join_alias}.\"owner_type\" = '#{class_name.classify}'"
+    end
 
     def counter_cache_name
       return class_name if self.class.counter_cache_options == true
