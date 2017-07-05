@@ -81,7 +81,7 @@ module NestedResourceHelper
   # @return [ApplicationRecord] The parent resource class object
   # @note Whether the given parent is allowed for the requested resource is not validated here.
   def parent_resource_klass(opts = params)
-    parent_resource_type(opts).classify.constantize
+    ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts).classify }
   end
 
   # Extracts the parent resource param from the url to get to its value
