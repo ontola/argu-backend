@@ -131,7 +131,7 @@ const OpinionMixin = {
                 if (typeof data !== 'undefined') {
                     this.setState(Object.assign({}, data.vote, {
                         opinionForm: false,
-                        currentExplanation: { explanation: this.state.newExplanation },
+                        currentExplanation: { explanation: this.state.newExplanation, explained_at: new Date },
                         selectedArguments: this.state.newSelectedArguments,
                         submitting: false
                     }));
