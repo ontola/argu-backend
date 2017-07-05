@@ -4,16 +4,6 @@
       h3[itemprop="headline" class="blog-post-t"]= resource.title
     .markdown[itemprop="text"]
       =markdown_to_html(resource.content)
-      - if resource.top_comment.present? && policy(resource).index_children?(:comments)
-        =link_to blog_post_path(resource) + '#comments'
-          .comments-counter
-            span.icon-right= resource.children_count(:comments).to_s
-            span.fa.fa-comments
-      - elsif policy(resource).create_child?(:comments)
-        =link_to blog_post_path(resource) + '#comments'
-          .comments-counter
-            span.icon-right= t('reply')
-            span.fa.fa-comments
   section.section--attachments
     =react_component_store 'Gallery', props: {files: resource.attachments.map { |a| {src: a.url, caption: a.description.presence, thumbnail: a.thumbnail, is_image: a.is_image?} }}
   section.section--footer
@@ -23,5 +13,17 @@
       - if resource.edge.is_public?
         li.share-menu
           ul= react_component_store 'ShareDropdown', props: share_items(resource)
+      - if resource.top_comment.present? && policy(resource).index_children?(:comments)
+        li
+          =link_to blog_post_path(resource) + '#comments'
+            .dropdown
+              span.fa.fa-comments
+              span.icon-left= t('reply_count', comment_count: resource.children_count(:comments))
+      - elsif policy(resource).create_child?(:comments)
+        li
+          =link_to blog_post_path(resource) + '#comments'
+            .dropdown
+              span.fa.fa-comments
+              span.icon-left= t('reply')
 - unless resource.is_published?
   =render partial: 'application/publish', locals: {resource: resource}

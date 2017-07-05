@@ -85,6 +85,7 @@ nl:
   delete_type: "Verwijder %{type}"
   trashed: "Verborgen"
   reply: "Reageer"
+  reply_count: "Reageer (%{comment_count})"
   report: "Rapporteer"
   clearance: "Bevoegdheid"
   access_denied: "Je bent niet bevoegd om deze actie uit te voeren.  (%{action})"

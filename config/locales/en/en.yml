@@ -85,6 +85,7 @@ en:
   delete_type: "Delete %{type}"
   trashed: "Hidden"
   reply: "Reply"
+  reply_count: "Reply (%{comment_count})"
   report: "Report"
   clearance: "Clearance"
   access_denied: "You're not authorized for that action. (%{action})"
