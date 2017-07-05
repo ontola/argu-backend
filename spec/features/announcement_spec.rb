@@ -93,7 +93,7 @@ RSpec.feature 'Announcements', type: :feature do
 
   scenario 'announcement dismissal is persisted across logins' do
     user = FactoryGirl.create(:user)
-    sign_in_manually(user)
+    sign_in_manually(user, redirect_to: forum_path(holland))
     question = holland.questions.first
     visit question_path(question)
 
@@ -114,7 +114,7 @@ RSpec.feature 'Announcements', type: :feature do
     expect(page).to have_content(announcement_guests.content)
     expect(page).to have_content(announcement_everyone.content)
 
-    sign_in_manually(user)
+    sign_in_manually(user, redirect_to: forum_path(holland))
     visit question_path(question)
     expect(page).to_not have_content('Log in')
     expect(page).to_not have_content(announcement_users.content)

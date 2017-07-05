@@ -79,7 +79,7 @@ RSpec.feature 'Authentication', type: :feature do
   describe 'logout' do
     scenario 'with credentials' do
       visit(forum_path(holland))
-      sign_in_manually(user, false)
+      sign_in_manually(user, false, redirect_to: forum_path(holland))
       t = Doorkeeper::AccessToken.last
 
       expect(page).to have_selector('.dropdown-trigger.navbar-profile')

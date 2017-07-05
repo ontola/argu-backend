@@ -42,6 +42,7 @@ RSpec.feature 'User Password', type: :feature do
       fill_in 'user_current_password', with: user.password
       click_button 'Save'
     end
+    expect(page).to have_content('Changes saved successfully')
     expect(page).to have_current_path settings_user_path(tab: :authentication)
 
     visit destroy_user_session_path

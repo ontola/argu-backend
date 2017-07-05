@@ -99,7 +99,7 @@ RSpec.feature 'Banners', type: :feature do
   let(:user) { create(:user) }
 
   scenario 'User sees correct banners' do
-    sign_in_manually(user)
+    sign_in_manually(user, redirect_to: forum_path(spain))
     question = spain.questions.first
     visit question_path question
     expect(page).to have_content(question.title),
@@ -120,7 +120,7 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   scenario 'banner dismissal is persisted across logins' do
-    sign_in_manually(user)
+    sign_in_manually(user, redirect_to: forum_path(spain))
     question = spain.questions.first
     visit question_path(question)
 
@@ -141,7 +141,7 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to have_content(banner_guests.title)
     expect(page).to have_content(banner_everyone.title)
 
-    sign_in_manually(user)
+    sign_in_manually(user, redirect_to: forum_path(spain))
     visit question_path(question)
     expect(page).to_not have_content('Log in')
     expect(page).to_not have_content(banner_users.title)

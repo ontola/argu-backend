@@ -47,7 +47,7 @@ module Argu
         end
       end
 
-      def sign_in_manually(user = create(:user), navigate = true)
+      def sign_in_manually(user = create(:user), navigate = true, redirect_to: forum_path(freetown))
         if navigate
           visit new_user_session_path
         else
@@ -59,6 +59,7 @@ module Argu
             fill_in 'user_password', with: user.password
             click_button 'Log in'
           end
+          expect(page).to have_current_path redirect_to
         end.to change { Doorkeeper::AccessToken.last.id }.by(1)
       end
     end
