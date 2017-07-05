@@ -18,10 +18,7 @@ module Portal
       @cb = CreateAnnouncement
             .new(current_user.profile,
                  attributes: announcement_params,
-                 options: {
-                   creator: current_profile,
-                   publisher: current_user
-                 })
+                 options: service_options)
       authorize @cb.resource, :create?
       @cb.on(:create_announcement_successful) do
         respond_to do |format|
@@ -121,6 +118,13 @@ module Portal
 
     def announcements_settings_path
       portal_settings_path(tab: :announcements)
+    end
+
+    def service_options
+      {
+        creator: current_profile,
+        publisher: current_user
+      }
     end
 
     def set_settings_view_path

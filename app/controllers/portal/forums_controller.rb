@@ -24,10 +24,7 @@ class Portal::ForumsController < ApplicationController
     @create_service ||= CreateForum.new(
       Page.find(permit_params[:page_id]).edge,
       attributes: permit_params,
-      options: {
-        creator: current_profile,
-        publisher: current_user
-      }
+      options: service_options
     )
   end
 
@@ -43,5 +40,12 @@ class Portal::ForumsController < ApplicationController
     params.require(:forum).permit :name, :shortname,
                                   :profile_photo, :cover_photo, :page_id,
                                   shortname_attributes: [:shortname]
+  end
+
+  def service_options
+    {
+      creator: current_profile,
+      publisher: current_user
+    }
   end
 end
