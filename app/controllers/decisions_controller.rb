@@ -39,7 +39,7 @@ class DecisionsController < EdgeTreeController
            locals: {decision: resource, decisionable: resource.parent_model}
   end
 
-  def edit_respond_blocks_success(resource, _)
+  def edit_respond_success_html(resource)
     resource.edge.argu_publication.draft! unless resource.edge.argu_publication.present?
 
     render action: 'index',
