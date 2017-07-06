@@ -77,12 +77,6 @@ FactoryGirl.define do
       reactions_email User.news_emails[:never_news_email]
     end
 
-    trait :forum_manager do
-      after(:create) do
-        create(:profile_with_memberships)
-      end
-    end
-
     factory :user_with_votes do
       after(:create) do |user|
         motion = Motion.untrashed.first

@@ -10,6 +10,7 @@ class CreateGroupMembership < EdgeableCreateService
                             options.fetch(:creator)
                           end
     attributes[:profile] = options.fetch(:creator)
+    attributes[:start_date] ||= DateTime.current
     super
   end
 
