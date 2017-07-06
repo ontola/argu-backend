@@ -328,6 +328,15 @@ class UsersTest < ActionDispatch::IntegrationTest
   ##########################################
   # Wrong email after following email token
   ##########################################
+  test 'guest should not get wrong_email' do
+    get users_wrong_email_path(email: 'wrong@email.com')
+  end
+
+  test 'user should get wrong_email' do
+    sign_in user
+    get users_wrong_email_path(email: 'wrong@email.com')
+  end
+
   test 'user with correct email should redirect to r on wrong_email' do
     sign_in user
 

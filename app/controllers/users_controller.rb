@@ -1,16 +1,13 @@
 # frozen_string_literal: true
-class UsersController < ApplicationController
-  include Common::Setup
-  include Common::Update,
-          NestedResourceHelper,
+class UsersController < AuthorizedController
+  include NestedResourceHelper,
           UrlHelper,
           VotesHelper
   helper_method :authenticated_resource, :complete_feed_param
+  skip_before_action :authorize_action, only: :current_actor
+  skip_before_action :check_if_registered, only: :current_actor
 
   def show
-    @profile = authenticated_resource.profile
-    authorize authenticated_resource, :show?
-
     respond_to do |format|
       format.html do
         @activities = policy_scope(Activity.feed_for_profile(authenticated_resource.profile))
@@ -45,7 +42,6 @@ class UsersController < ApplicationController
   end
 
   def settings
-    authorize authenticated_resource
     authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
     render 'settings', locals: {
       tab: tab,
@@ -56,21 +52,18 @@ class UsersController < ApplicationController
 
   # PUT /settings
   def update
-    authorize authenticated_resource
     @email_changed = email_changed?
     exec_action
   end
 
   # When shortname isn't set yet
   def setup
-    authorize authenticated_resource, :setup?
     authenticated_resource.build_shortname if authenticated_resource.shortname.blank?
 
     render 'setup_shortname', layout: 'closed'
   end
 
   def setup!
-    authorize authenticated_resource, :setup?
     if current_user.url.blank?
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
@@ -87,12 +80,10 @@ class UsersController < ApplicationController
   end
 
   def wrong_email
-    skip_authorization
     render locals: {email: params[:email], r: r_param}
   end
 
   def language
-    authorize :static_page, :home?
     locale = permit_locale_params
     if I18n.available_locales.include?(locale.to_sym)
       success = current_user.guest? ? cookies['locale'] = locale : current_user.update(language: locale)
@@ -109,12 +100,14 @@ class UsersController < ApplicationController
 
   private
 
-  def authenticated_resource
+  def authenticated_resource!
     @user ||= case action_name
               when 'show'
                 User.preload(:profile).find_via_shortname!(params[:id])
               when 'update'
                 User.find(current_user.id)
+              when 'current_actor'
+                current_user
               else
                 if current_user.guest?
                   flash[:error] = t('devise.failure.unauthenticated')
