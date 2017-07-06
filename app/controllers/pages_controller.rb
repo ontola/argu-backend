@@ -132,7 +132,7 @@ class PagesController < EdgeTreeController
 
   def handle_not_authorized_error(exception)
     us_po = policy(current_user) unless current_user.guest?
-    return super unless us_po&.max_pages_reached?
+    return super unless us_po&.max_pages_reached? && request.format.html?
     errors = {}
     errors[:max_allowed_pages] = {
       max: us_po.max_allowed_pages,
