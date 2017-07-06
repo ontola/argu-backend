@@ -10,19 +10,14 @@ module Argu
       rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
       rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
       rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
-      rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
+      rescue_from ActiveRecord::StaleObjectError, with: :handle_stale_object_error
       rescue_from ActionController::BadRequest, with: :handle_bad_request
       rescue_from ActionController::ParameterMissing, with: :handle_bad_request
       rescue_from ActionController::RoutingError, with: :handle_route_not_found
       rescue_from ActionController::UnpermittedParameters, with: :handle_bad_request
       rescue_from ::Redis::ConnectionError, with: :handle_redis_connection_error
-      alias_method :handle_not_a_user_error, :handle_error
-      alias_method :handle_not_authorized_error, :handle_error
-      alias_method :handle_record_not_found, :handle_error
-      alias_method :handle_record_not_unique, :handle_error
-      alias_method :rescue_stale, :handle_error
       alias_method :handle_bad_request, :handle_error
-      alias_method :handle_route_not_found, :handle_error
+      alias_method :handle_record_not_found, :handle_error
     end
 
     private
@@ -42,53 +37,69 @@ module Argu
     end
 
     def handle_error(e)
-      view_opts = {}
       respond_to do |format|
-        case e
-        when Argu::NotAuthorizedError
-          @_not_authorized_caught = true
-          format.html do
-            flash[:alert] = e.message
-            error_response_html(e, opts: {locals: {resource: user_with_r(request.original_url)}})
-          end
-        when Argu::NotAUserError
-          @_not_a_user_caught = true
-          format.js do
-            @resource = user_with_r(e.r)
-            view_opts = {
-              layout: false,
-              locals: {
-                resource: @resource,
-                resource_name: :user,
-                devise_mapping: Devise.mappings[:user],
-                r: e.r
-              }
-            }
-            error_response_html(e, view: 'devise/sessions/new', opts: view_opts)
-          end
-          format.html do
-            if iframe?
-              error_response_html(e, opts: {resource: user_with_r(request.original_url)})
-            else
-              redirect_to new_user_session_path(r: e.r), alert: e.message
-            end
-          end
-        when ActiveRecord::RecordNotUnique
-          format.html do
-            flash[:warning] = t(:twice_warning)
-            redirect_back(fallback_location: root_path)
-          end
-        when ActiveRecord::StaleObjectError
-          format.html do
-            correct_stale_record_version
-            stale_record_recovery_action
-          end
-        end
-
-        format.html { error_response_html(e, opts: view_opts) }
+        format.html { error_response_html(e) }
         format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json_api { render json_api_error(error_status(e), json_api_error_hash(error_id(e), e)) }
+      end
+    end
+
+    def handle_not_authorized_error(e)
+      @_not_authorized_caught = true
+      return handle_error(e) unless request.format.html?
+      respond_to do |format|
+        format.html do
+          flash[:alert] = e.message
+          error_response_html(e, opts: {locals: {resource: user_with_r(request.original_url)}})
+        end
+      end
+    end
+
+    def handle_not_a_user_error(e)
+      @_not_a_user_caught = true
+      return handle_error(e) unless %i(html js).include?(request.format.symbol)
+      respond_to do |format|
+        format.js do
+          @resource = user_with_r(e.r)
+          view_opts = {
+            layout: false,
+            locals: {
+              resource: @resource,
+              resource_name: :user,
+              devise_mapping: Devise.mappings[:user],
+              r: e.r
+            }
+          }
+          error_response_html(e, view: 'devise/sessions/new', opts: view_opts)
+        end
+        format.html do
+          if iframe?
+            error_response_html(e, opts: {resource: user_with_r(request.original_url)})
+          else
+            redirect_to new_user_session_path(r: e.r), alert: e.message
+          end
+        end
+      end
+    end
+
+    def handle_record_not_unique(e)
+      return handle_error(e) unless request.format.html?
+      respond_to do |format|
+        format.html do
+          flash[:warning] = t(:twice_warning)
+          redirect_back(fallback_location: root_path)
+        end
+      end
+    end
+
+    def handle_stale_object_error
+      return handle_error(e) unless request.format.html?
+      respond_to do |format|
+        format.html do
+          correct_stale_record_version
+          stale_record_recovery_action
+        end
       end
     end
 
