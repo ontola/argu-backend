@@ -31,7 +31,6 @@ module Argu
       err_id = 'BAD_REQUEST'
       status = 400
       html, js = false
-      user = User.new(r: request.original_url, shortname: Shortname.new) if @resource.class != User
 
       respond_to do |format|
         case e
@@ -44,7 +43,7 @@ module Argu
             flash[:alert] = e.message
             render 'status/403',
                    status: 403,
-                   locals: {resource: user, message: e.message}
+                   locals: {resource: user_with_r(request.original_url), message: e.message}
           end
           html, js = true
         when Argu::NotAUserError
@@ -52,7 +51,7 @@ module Argu
           err_id = 'NOT_A_USER'
           status = 401
           format.js do
-            @resource = User.new(r: e.r, shortname: Shortname.new) if @resource.class != User
+            @resource = user_with_r(e.r)
             render 'devise/sessions/new',
                    layout: false,
                    locals: {
@@ -64,7 +63,7 @@ module Argu
           end
           format.html do
             if iframe?
-              render 'status/403', status: status, locals: {resource: user, message: e.message}
+              render 'status/403', status: status, locals: {resource: user_with_r(request.original_url)}
             else
               redirect_to new_user_session_path(r: e.r), alert: e.message
             end
@@ -121,6 +120,10 @@ module Argu
     def stale_record_recovery_action
       flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
       render :edit, status: :conflict
+    end
+
+    def user_with_r(r)
+      User.new(r: r, shortname: Shortname.new)
     end
   end
 end
