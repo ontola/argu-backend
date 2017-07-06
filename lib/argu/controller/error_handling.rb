@@ -30,7 +30,6 @@ module Argu
     def handle_error(e)
       err_id = 'BAD_REQUEST'
       status = 400
-      html, js = false
 
       respond_to do |format|
         case e
@@ -45,7 +44,6 @@ module Argu
                    status: 403,
                    locals: {resource: user_with_r(request.original_url), message: e.message}
           end
-          html, js = true
         when Argu::NotAUserError
           @_not_a_user_caught = true
           err_id = 'NOT_A_USER'
@@ -68,7 +66,6 @@ module Argu
               redirect_to new_user_session_path(r: e.r), alert: e.message
             end
           end
-          html, js = true
         when ActiveRecord::RecordNotFound, ActionController::RoutingError
           err_id = 'NOT_FOUND'
           status = 404
@@ -79,7 +76,6 @@ module Argu
             flash[:warning] = t(:twice_warning)
             redirect_back(fallback_location: root_path)
           end
-          html = true
         when ActiveRecord::StaleObjectError
           err_id = 'STALE_OBJECT'
           status = 409
@@ -87,16 +83,13 @@ module Argu
             correct_stale_record_version
             stale_record_recovery_action
           end
-          html = true
         end
 
-        unless html
-          format.html do
-            @quote = (Setting.get(:quotes) || '').split(';').sample
-            render "status/#{status}", status: status
-          end
+        format.html do
+          @quote = (Setting.get(:quotes) || '').split(';').sample
+          render "status/#{status}", status: status
         end
-        js && format.js { head status }
+        format.js { head status }
 
         format.json { render status: status, json: json_error_hash(err_id, e) }
         format.json_api { render json_api_error(status, json_api_error_hash(err_id, e)) }
