@@ -155,7 +155,7 @@ class Profile < ApplicationRecord
 
   # Returns the preferred forum, based the first favorite or the first public forum
   def preferred_forum
-    profileable.try(:favorites)&.first&.edge&.owner ||
+    profileable.try(:favorites)&.joins(:edge)&.where(edges: {owner_type: 'Forum'})&.first&.edge&.owner ||
       Forum.first_public
   end
 
