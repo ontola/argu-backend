@@ -61,54 +61,6 @@ class UsersController < ApplicationController
     exec_action
   end
 
-  def connect
-    payload = decode_token params[:token]
-    identity = Identity.find payload['identity']
-    user = User.find_via_shortname! params[:id]
-
-    skip_authorization
-    render locals: {
-      identity: identity,
-      user: user,
-      token: params[:token]
-    }
-  end
-
-  def connect!
-    user = User.find_via_shortname! params[:id].presence || params[:user][:id]
-    user.r = r_param
-    setup_favorites(user)
-
-    payload = decode_token params[:token]
-    @identity = Identity.find payload['identity']
-
-    skip_authorization
-    if @identity.email == user.email && user.valid_password?(params[:user][:password])
-      # Connect user to identity
-      @identity.user = user
-      if @identity.save
-        flash[:success] = 'Account connected'
-        sign_in user
-        redirect_with_r(user)
-      else
-        render 'users/connect',
-               locals: {
-                 identity: @identity,
-                 user: user,
-                 token: params[:token]
-               }
-      end
-    else
-      user.errors.add(:password, t('errors.messages.invalid'))
-      render 'users/connect',
-             locals: {
-               identity: @identity,
-               user: user,
-               token: params[:token]
-             }
-    end
-  end
-
   # When shortname isn't set yet
   def setup
     authorize authenticated_resource, :setup?
@@ -211,21 +163,8 @@ class UsersController < ApplicationController
     pp
   end
 
-  def r_param
-    r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
-    r if valid_redirect?(r)
-  end
-
   def redirect_model_success(_)
     r_param || settings_user_path(tab: tab)
-  end
-
-  def redirect_with_r(user)
-    if user.r.present? && user.finished_intro?
-      r = URI.decode(user.r)
-      user.update r: ''
-    end
-    redirect_to r.presence || root_path
   end
 
   def respond_with_form_js(resource)

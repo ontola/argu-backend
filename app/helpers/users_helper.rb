@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 module UsersHelper
+  include IRIHelper
+
   def forum_from_r_action(user)
     return if user.r.nil?
     resource = resource_from_iri(user.r)
@@ -34,6 +36,19 @@ module UsersHelper
 
   def options_for_created_email
     User.created_emails.keys.map { |n| [I18n.t("users.created_email.#{n}"), n] }
+  end
+
+  def r_param
+    r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
+    r if valid_redirect?(r)
+  end
+
+  def redirect_with_r(user)
+    if user.r.present? && user.finished_intro?
+      r = URI.decode(user.r)
+      user.update r: ''
+    end
+    redirect_to r.presence || root_path
   end
 
   # Assigns certain favorites based on

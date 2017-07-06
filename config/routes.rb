@@ -131,8 +131,8 @@ Rails.application.routes.draw do
     get :edit, to: 'profiles#edit', on: :member
     get :feed, controller: 'users/feed', action: :show
 
-    get :connect, to: 'users#connect', on: :member
-    post :connect, to: 'users#connect!', on: :member
+    get :connect, to: 'users/identities#connect', on: :member
+    post :connect, to: 'users/identities#connect!', on: :member
 
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
