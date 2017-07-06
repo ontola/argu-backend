@@ -27,17 +27,20 @@ module Argu
 
     private
 
-    def handle_error(e)
-      err_id = 'BAD_REQUEST'
-      status = 400
+    def error_id(e)
+      Argu::ERROR_TYPES[e.class].try(:[], :id) || 'BAD_REQUEST'
+    end
 
+    def error_status(e)
+      Argu::ERROR_TYPES[e.class].try(:[], :status) || 400
+    end
+
+    def handle_error(e)
       respond_to do |format|
         case e
         when Argu::NotAuthorizedError
           @_not_authorized_caught = true
-          err_id = 'NOT_AUTHORIZED'
-          status = 403
-          format.js { render status: status, json: json_error_hash(err_id, e) }
+          format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
           format.html do
             flash[:alert] = e.message
             render 'status/403',
@@ -46,8 +49,6 @@ module Argu
           end
         when Argu::NotAUserError
           @_not_a_user_caught = true
-          err_id = 'NOT_A_USER'
-          status = 401
           format.js do
             @resource = user_with_r(e.r)
             render 'devise/sessions/new',
@@ -61,24 +62,17 @@ module Argu
           end
           format.html do
             if iframe?
-              render 'status/403', status: status, locals: {resource: user_with_r(request.original_url)}
+              render 'status/403', status: error_status(e), locals: {resource: user_with_r(request.original_url)}
             else
               redirect_to new_user_session_path(r: e.r), alert: e.message
             end
           end
-        when ActiveRecord::RecordNotFound, ActionController::RoutingError
-          err_id = 'NOT_FOUND'
-          status = 404
         when ActiveRecord::RecordNotUnique
-          err_id = 'NOT_UNIQUE'
-          status = 304
           format.html do
             flash[:warning] = t(:twice_warning)
             redirect_back(fallback_location: root_path)
           end
         when ActiveRecord::StaleObjectError
-          err_id = 'STALE_OBJECT'
-          status = 409
           format.html do
             correct_stale_record_version
             stale_record_recovery_action
@@ -87,12 +81,11 @@ module Argu
 
         format.html do
           @quote = (Setting.get(:quotes) || '').split(';').sample
-          render "status/#{status}", status: status
+          render "status/#{error_status(e)}", status: error_status(e)
         end
-        format.js { head status }
-
-        format.json { render status: status, json: json_error_hash(err_id, e) }
-        format.json_api { render json_api_error(status, json_api_error_hash(err_id, e)) }
+        format.js { head error_status(e) }
+        format.json { render status: error_status(e), json: json_error_hash(error_id(e), e) }
+        format.json_api { render json_api_error(error_status(e), json_api_error_hash(error_id(e), e)) }
       end
     end
 
