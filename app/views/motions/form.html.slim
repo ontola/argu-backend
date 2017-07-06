@@ -17,7 +17,6 @@
             h3= t('motions.form.content_heading')
             p= t('motions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(motion, :content, motion_type.downcase)
-            /=f.input :tag_list, input_html: {class: 'tag-list'}, label: true
           =render partial: 'photos/form',
                   locals: {form: f,
                           type: :cover_photo,

@@ -65,8 +65,6 @@ en:
         invited: 'Invited'
         is_mod: 'is already a mod'
       show_moderation_panel: 'moderator'
-    titles:
-      tags: "Find challenges and motions with the theme "
     call_to_action:
       title: "Do you have a good idea?"
       body: "Do you have a good idea and do you want to convince others?"

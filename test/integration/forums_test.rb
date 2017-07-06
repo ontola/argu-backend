@@ -350,7 +350,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
     get statistics_forum_path(holland)
     assert assigns(:forum)
-    assert_nil assigns(:tags), "Doesn't assign tags"
     assert_response 403
   end
 

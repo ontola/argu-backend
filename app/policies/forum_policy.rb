@@ -8,7 +8,7 @@ class ForumPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(name bio bio_long tags featured_tags profile_id) if update?
+    attributes.concat %i(name bio bio_long profile_id) if update?
     attributes.concat %i(public_grant page_id) if change_owner?
     attributes.append(memberships_attributes: %i(role id profile_id forum_id))
     attributes.append(:max_shortname_count) if max_shortname_count?

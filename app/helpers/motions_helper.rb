@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-include ActsAsTaggableOn::TagsHelper
-
 module MotionsHelper
   def actor_props(actor)
     return nil unless actor

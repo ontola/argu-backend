@@ -161,7 +161,6 @@ Rails.application.routes.draw do
             path: 'q', except: [:index, :new, :create, :destroy],
             concerns: [:commentable, :blog_postable, :moveable, :feedable, :trashable] do
     resources :media_objects, only: :index
-    resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
     resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
   end
@@ -177,7 +176,6 @@ Rails.application.routes.draw do
             path: 'm',
             except: [:index, :new, :create, :destroy],
             concerns: [:commentable, :blog_postable, :moveable, :votable, :feedable, :trashable, :decisionable] do
-    resources :tags, path: 't', only: [:index]
     resources :arguments, only: [:new, :create, :index]
     resources :media_objects, only: :index
     resources :votes, only: :index
@@ -317,7 +315,6 @@ Rails.application.routes.draw do
       get :statistics, on: :member
       resources :shortnames, only: [:new, :create]
       resources :projects, path: 'p', only: [:new, :create]
-      resources :tags, path: 't', only: [:show, :index]
       resources :banners, except: [:index, :show]
     end
   end

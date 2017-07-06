@@ -65,8 +65,6 @@ nl:
         invited: 'Uitnodigd'
         is_mod: 'is al een mod'
       show_moderation_panel: 'moderator'
-    titles:
-      tags: "Zoek uitdagingen en ideeën met het thema "
     call_to_action:
       title: "Heb jij een goed idee?"
       body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"

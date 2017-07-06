@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170606145730) do
+ActiveRecord::Schema.define(version: 20170706093850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,7 +257,6 @@ ActiveRecord::Schema.define(version: 20170606145730) do
     t.datetime "updated_at",                              null: false
     t.string   "slug"
     t.text     "bio",                     default: "",    null: false
-    t.text     "featured_tags",           default: "",    null: false
     t.integer  "visibility",              default: 2
     t.string   "cover_photo_attribution", default: ""
     t.boolean  "visible_with_a_link",     default: false
@@ -392,7 +391,6 @@ ActiveRecord::Schema.define(version: 20170606145730) do
     t.datetime "updated_at",                                          null: false
     t.integer  "pro_count",                           default: 0
     t.integer  "con_count",                           default: 0
-    t.integer  "tag_id"
     t.boolean  "is_trashed",                          default: false
     t.integer  "forum_id"
     t.integer  "creator_id",                                          null: false
@@ -405,7 +403,6 @@ ActiveRecord::Schema.define(version: 20170606145730) do
     t.index ["forum_id"], name: "index_motions_on_forum_id", using: :btree
     t.index ["id"], name: "index_motions_on_id", using: :btree
     t.index ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
-    t.index ["tag_id"], name: "index_motions_on_tag_id", using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -670,25 +667,6 @@ ActiveRecord::Schema.define(version: 20170606145730) do
     t.datetime "updated_at",               null: false
     t.index ["iri_base"], name: "index_sources_on_iri_base", unique: true, using: :btree
     t.index ["page_id", "shortname"], name: "index_sources_on_page_id_and_shortname", unique: true, using: :btree
-  end
-
-  create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type", limit: 255
-    t.integer  "tagger_id"
-    t.string   "tagger_type",   limit: 255
-    t.string   "context",       limit: 128
-    t.datetime "created_at"
-    t.integer  "forum_id"
-    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
-    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string  "name",           limit: 255
-    t.integer "taggings_count",             default: 0
-    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade do |t|

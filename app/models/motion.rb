@@ -2,7 +2,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
-  include Trashable, Argumentable, Attachable, Commentable, Voteable, Parentable, ForumTaggable, Attribution, HasLinks,
+  include Trashable, Argumentable, Attachable, Commentable, Voteable, Parentable, Attribution, HasLinks,
           Convertible, Loggable, BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
           Decisionable, Ldable, ActivePublishable
 
@@ -22,7 +22,7 @@ class Motion < ApplicationRecord
   contextualize :content, as: 'schema:text'
   contextualize :current_vote, as: 'argu:currentVote'
 
-  convertible questions: %i(taggings activities blog_posts)
+  convertible questions: %i(activities blog_posts)
   counter_cache true
   paginates_per 30
   parentable :question, :project, :forum
@@ -86,7 +86,6 @@ class Motion < ApplicationRecord
       end
       activities.lock(true).update_all(forum_id: forum.id)
       activities.lock(true).update_all(recipient_id: forum.id, recipient_type: 'Forum') if question_id.nil?
-      taggings.lock(true).update_all(forum_id: forum.id)
       true
     end
   end

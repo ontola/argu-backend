@@ -28,7 +28,6 @@ nl:
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
       f_delete: "Verwijderen"
-      featured_tags: "Uitgelichte thema's"
       is_public: "Profiel zichtbaar voor niet-leden"
       is_trashed: "Is verborgen"
       invert_arguments: "Argumenten omdraaien"

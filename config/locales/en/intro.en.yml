@@ -32,7 +32,6 @@ en:
         advanced: ''
         statistics: 'Browse diverse statistics about the usage of the page.'
         managers: 'Decide who can represent this page in votes as well as placing or modifying items.'
-    tags: 'Click a theme to search for relevant discussions.'
     header:
       logo: 'Argu is an online discussion platform where everyone can participate in discussing societal problems in a content oriented fashion. Read more about <a href="/about">our vision</a> and <a href="/how_argu_works">how Argu works</a>.'
       forums: 'On Argu, discussions are sorted into <b>forums</b>. There are forums for various municipalities, companies, organisations, education facilities and diverse projects.'

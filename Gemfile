@@ -40,7 +40,6 @@ gem 'squirm_rails', require: 'squirm/rails'
 gem 'ltree_hierarchy'
 
 ################## Features ########################
-gem 'acts-as-taggable-on', '~> 4.0.0'
 gem 'awesome_nested_set', '~> 3.1.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'whodunnit', '0.0.5'

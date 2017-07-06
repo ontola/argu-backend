@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Question < ApplicationRecord
-  include Trashable, Attachable, Commentable, Parentable, ForumTaggable, HasLinks, Attribution, Convertible, Loggable,
+  include Trashable, Attachable, Commentable, Parentable, HasLinks, Attribution, Convertible, Loggable,
           BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
           ActivePublishable, Motionable, Ldable
 
@@ -14,7 +14,7 @@ class Question < ApplicationRecord
 
   with_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
 
-  convertible motions: %i(taggings activities blog_posts)
+  convertible motions: %i(activities blog_posts)
   counter_cache true
   parentable :project, :forum
 

@@ -10,7 +10,6 @@ import activityFeed from './application/activity_feed';
 import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';
-import m from './application/motions';
 import transition from './application/transition';
 import iso from './application/briarcliff/isotope-briarcliff';
 
@@ -23,7 +22,6 @@ function init () {
         n.init();
 
         activityFeed.init();
-        m.init();
         iso();
         if (typeof ga === 'function') {
             let first = true;

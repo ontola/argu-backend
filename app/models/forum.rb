@@ -21,7 +21,6 @@ class Forum < ApplicationRecord
   attr_accessor :tab, :active, :confirmation_string
   attr_writer :public_grant
 
-  acts_as_ordered_taggable_on :tags
   paginates_per 30
   parentable :page
 
@@ -37,7 +36,6 @@ class Forum < ApplicationRecord
   end
 
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
-  auto_strip_attributes :featured_tags, squish: true, nullify: false
   auto_strip_attributes :bio, nullify: false
 
   before_update :transfer_page, if: :page_id_changed?
@@ -105,14 +103,6 @@ class Forum < ApplicationRecord
       forum = Forum.find_via_shortname(setting)
     end
     forum || Forum.public_forums.first
-  end
-
-  def featured_tags
-    super.split(',')
-  end
-
-  def featured_tags=(value)
-    super(value.downcase.strip)
   end
 
   def public_grant

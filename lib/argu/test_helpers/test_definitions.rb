@@ -166,9 +166,6 @@ module Argu
         assigns(:resource).activities.pluck(:recipient_type).each do |type|
           assert_equal 'Forum', type
         end
-        assigns(:resource).taggings.pluck(:forum_id).each do |id|
-          assert_equal forum_id, id
-        end
       end
 
       # Model names
