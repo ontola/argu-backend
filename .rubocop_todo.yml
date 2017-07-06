@@ -60,9 +60,6 @@ Metrics/ClassLength:
 # Offense count: 30
 Metrics/CyclomaticComplexity:
   Max: 11
-  Exclude:
-    - 'lib/argu/controller/error_handling.rb'
-
 # Offense count: 208
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
@@ -73,7 +70,6 @@ Metrics/MethodLength:
     - 'app/controllers/profiles_controller.rb'
     - 'app/helpers/header_helper.rb'
     - 'app/helpers/menu_helper.rb'
-    - 'lib/argu/controller/error_handling.rb'
     - 'lib/argu/test_helpers/test_definitions.rb'
     - 'lib/argu/test_helpers/test_helper_methods.rb'
     - 'lib/argu/test_helpers/test_mocks.rb'
