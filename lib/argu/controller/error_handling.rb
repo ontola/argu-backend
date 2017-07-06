@@ -31,11 +31,18 @@ module Argu
       Argu::ERROR_TYPES[e.class].try(:[], :id) || 'BAD_REQUEST'
     end
 
+    def error_response_html(e, view: nil, opts: {})
+      @quote = (Setting.get(:quotes) || '').split(';').sample
+      view ||= "status/#{error_status(e)}"
+      render view, {status: error_status(e)}.merge(opts)
+    end
+
     def error_status(e)
       Argu::ERROR_TYPES[e.class].try(:[], :status) || 400
     end
 
     def handle_error(e)
+      view_opts = {}
       respond_to do |format|
         case e
         when Argu::NotAuthorizedError
@@ -43,26 +50,26 @@ module Argu
           format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
           format.html do
             flash[:alert] = e.message
-            render 'status/403',
-                   status: 403,
-                   locals: {resource: user_with_r(request.original_url), message: e.message}
+            error_response_html(e, opts: {locals: {resource: user_with_r(request.original_url)}})
           end
         when Argu::NotAUserError
           @_not_a_user_caught = true
           format.js do
             @resource = user_with_r(e.r)
-            render 'devise/sessions/new',
-                   layout: false,
-                   locals: {
-                     resource: @resource,
-                     resource_name: :user,
-                     devise_mapping: Devise.mappings[:user],
-                     r: e.r
-                   }
+            view_opts = {
+              layout: false,
+              locals: {
+                resource: @resource,
+                resource_name: :user,
+                devise_mapping: Devise.mappings[:user],
+                r: e.r
+              }
+            }
+            error_response_html(e, view: 'devise/sessions/new', opts: view_opts)
           end
           format.html do
             if iframe?
-              render 'status/403', status: error_status(e), locals: {resource: user_with_r(request.original_url)}
+              error_response_html(e, opts: {resource: user_with_r(request.original_url)})
             else
               redirect_to new_user_session_path(r: e.r), alert: e.message
             end
@@ -79,10 +86,7 @@ module Argu
           end
         end
 
-        format.html do
-          @quote = (Setting.get(:quotes) || '').split(';').sample
-          render "status/#{error_status(e)}", status: error_status(e)
-        end
+        format.html { error_response_html(e, opts: view_opts) }
         format.js { head error_status(e) }
         format.json { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json_api { render json_api_error(error_status(e), json_api_error_hash(error_id(e), e)) }
