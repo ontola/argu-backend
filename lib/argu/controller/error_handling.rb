@@ -47,7 +47,6 @@ module Argu
         case e
         when Argu::NotAuthorizedError
           @_not_authorized_caught = true
-          format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
           format.html do
             flash[:alert] = e.message
             error_response_html(e, opts: {locals: {resource: user_with_r(request.original_url)}})
@@ -87,7 +86,7 @@ module Argu
         end
 
         format.html { error_response_html(e, opts: view_opts) }
-        format.js { head error_status(e) }
+        format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json_api { render json_api_error(error_status(e), json_api_error_hash(error_id(e), e)) }
       end
