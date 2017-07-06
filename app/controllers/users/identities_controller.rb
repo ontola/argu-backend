@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-class Users::IdentitiesController < ApplicationController
-  def destroy
-    @identity = Identity.find params[:id]
-    authorize @identity, :destroy?
+class Users::IdentitiesController < AuthorizedController
+  skip_before_action :check_if_registered, only: [:connect, :connect!]
 
+  def destroy
     respond_to do |format|
-      if @identity.destroy
+      if authenticated_resource.destroy
         flash[:success] = t('devise.authentications.destroyed')
       else
         flash[:error] = t('devise.authentications.destroyed_failed')
@@ -15,13 +14,10 @@ class Users::IdentitiesController < ApplicationController
   end
 
   def connect
-    payload = decode_token params[:token]
-    identity = Identity.find payload['identity']
     user = User.find_via_shortname! params[:id]
 
-    skip_authorization
     render locals: {
-      identity: identity,
+      identity: authenticated_resource,
       user: user,
       token: params[:token]
     }
@@ -32,21 +28,17 @@ class Users::IdentitiesController < ApplicationController
     user.r = r_param
     setup_favorites(user)
 
-    payload = decode_token params[:token]
-    @identity = Identity.find payload['identity']
-
-    skip_authorization
-    if @identity.email == user.email && user.valid_password?(params[:user][:password])
+    if authenticated_resource.email == user.email && user.valid_password?(params[:user][:password])
       # Connect user to identity
-      @identity.user = user
-      if @identity.save
+      authenticated_resource.user = user
+      if authenticated_resource.save
         flash[:success] = 'Account connected'
         sign_in user
         redirect_with_r(user)
       else
         render 'users/identities/connect',
                locals: {
-                 identity: @identity,
+                 identity: authenticated_resource,
                  user: user,
                  token: params[:token]
                }
@@ -55,10 +47,18 @@ class Users::IdentitiesController < ApplicationController
       user.errors.add(:password, t('errors.messages.invalid'))
       render 'users/identities/connect',
              locals: {
-               identity: @identity,
+               identity: authenticated_resource,
                user: user,
                token: params[:token]
              }
     end
+  end
+
+  private
+
+  def resource_id
+    return super unless %w(connect connect!).include?(action_name)
+    payload = decode_token params[:token]
+    @identity = Identity.find payload['identity']
   end
 end

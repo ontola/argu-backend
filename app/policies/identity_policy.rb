@@ -13,4 +13,8 @@ class IdentityPolicy < RestrictivePolicy
   def destroy?
     record.user_id == user.id
   end
+
+  def connect?
+    true
+  end
 end
