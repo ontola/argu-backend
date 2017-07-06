@@ -48,7 +48,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_role?(role)
       return if persisted_edge.nil?
-      if context.within_tree?(persisted_edge)
+      if context.within_tree?(persisted_edge, outside_tree)
         send(role) if context.granted_group_ids(persisted_edge, role.to_s).any?
       elsif (user.profile.group_ids & persisted_edge.granted_group_ids(role.to_s)).any?
         send(role)
@@ -82,13 +82,18 @@ class EdgeTreePolicy < RestrictivePolicy
   include Roles
   delegate :edge, to: :record
   delegate :persisted_edge, to: :edge
+  attr_accessor :outside_tree
 
   def has_expired_ancestors?
-    context.within_tree?(persisted_edge) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
+    context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
   end
 
   def has_unpublished_ancestors?
-    context.within_tree?(persisted_edge) ? context.unpublished?(persisted_edge) : edge.has_unpublished_ancestors?
+    if context.within_tree?(persisted_edge, outside_tree)
+      context.unpublished?(persisted_edge)
+    else
+      edge.has_unpublished_ancestors?
+    end
   end
 
   def initialize(context, record)
@@ -221,7 +226,7 @@ class EdgeTreePolicy < RestrictivePolicy
           child = record.edge.children.new(owner: child, is_published: true).owner
           child.edge.persisted_edge = persisted_edge
           child.parent_model = record
-          context.cache_node(persisted_edge) if context.within_tree?(persisted_edge)
+          context.cache_node(persisted_edge) if context.within_tree?(persisted_edge, outside_tree)
         end
         Pundit.policy(context, child).send(method) || false
       else

@@ -116,11 +116,13 @@ class UserContext
   end
 
   # @param [Edge] node The node to check
+  # @param [Bool] allow_outside_tree Whether to raise on a node outside the current tree or not.
   # @return [Bool] Whether the Edge falls within the current tree
-  def within_tree?(edge)
+  def within_tree?(edge, allow_outside_tree)
     return false if @tree_root.nil?
-    raise "#{edge.owner_type} lies outside the current tree" if @tree_root.id != edge.root_id
-    true
+    within_tree = @tree_root.id == edge.root_id
+    raise "#{edge.owner_type} lies outside the current tree" unless within_tree || allow_outside_tree
+    within_tree
   end
 
   private

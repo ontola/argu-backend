@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
     @_preferred_forum ||= [current_forum, profile.last_forum, profile.preferred_forum, Forum.first_public]
                             .compact
                             .uniq
-                            .find { |forum| policy(forum).show? }
+                            .find { |forum| policy(forum, outside_tree: true).show? }
   end
 
   # @private

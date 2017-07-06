@@ -38,5 +38,11 @@ module Argu
         doorkeeper_scopes
       )
     end
+
+    def policy(record, outside_tree: false)
+      p = super record
+      p.outside_tree = true if outside_tree
+      p
+    end
   end
 end

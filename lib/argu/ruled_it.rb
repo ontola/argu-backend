@@ -24,12 +24,14 @@ module Argu
       end
     end
 
-    def authorize(record, query = nil)
+    def authorize(record, query = nil, outside_tree: false)
       query ||= params[:action].to_s + '?'
 
       @_pundit_policy_authorized = true
 
       policy = policy(record)
+      policy.outside_tree = true if outside_tree
+
       unless policy.public_send(query)
         raise NotAuthorizedError.new(
           query: query,
