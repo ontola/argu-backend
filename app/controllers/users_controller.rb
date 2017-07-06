@@ -86,11 +86,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def tab
-    t = params[:tab] || params[:user].try(:[], :tab)
-    policy(authenticated_resource || User).verify_tab(t)
-  end
-
   def wrong_email
     skip_authorization
     render locals: {email: params[:email], r: r_param}
@@ -175,6 +170,11 @@ class UsersController < ApplicationController
       tab: tab,
       active: tab
     )
+  end
+
+  def tab
+    t = params[:tab] || params[:user].try(:[], :tab)
+    policy(authenticated_resource || User).verify_tab(t)
   end
 
   def update_respond_failure_html(resource)
