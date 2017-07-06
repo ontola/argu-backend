@@ -94,7 +94,7 @@ module Argu
         unless html
           format.html do
             @quote = (Setting.get(:quotes) || '').split(';').sample
-            render "status/#{status}", status: status, locals: {resource: user}
+            render "status/#{status}", status: status
           end
         end
         js && format.js { head status }
