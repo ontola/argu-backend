@@ -132,8 +132,8 @@ class UsersController < AuthorizedController
     params.require(:locale)
   end
 
-  def permit_params
-    attrs = policy(authenticated_resource || User).permitted_attributes(true)
+  def permit_params(password = false)
+    attrs = policy(authenticated_resource || User).permitted_attributes(password)
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
@@ -141,14 +141,6 @@ class UsersController < AuthorizedController
       pp['emails_attributes'][pp[:primary_email][1..-2]][:primary] = true
     end
     pp.except(:primary_email)
-  end
-
-  def passwordless_permit_params
-    attrs = policy(authenticated_resource || User).permitted_attributes
-    pp = params.require(:user).permit(*attrs).to_h
-    merge_photo_params(pp, authenticated_resource.class)
-    merge_placement_params(pp, User)
-    pp
   end
 
   def redirect_model_success(_)
@@ -193,12 +185,17 @@ class UsersController < AuthorizedController
   end
 
   def execute_update
-    if params[:user][:primary_email].present? || permit_params[:password].present?
-      if authenticated_resource.update_with_password(permit_params)
+    if password_required
+      if authenticated_resource.update_with_password(permit_params(true))
         bypass_sign_in(authenticated_resource)
       end
     else
-      authenticated_resource.update_without_password(passwordless_permit_params)
+      authenticated_resource.update_without_password(permit_params)
     end
+  end
+
+  def password_required
+    permit_params[:password].present? ||
+      params[:user][:primary_email].present? && params[:user][:primary_email] != '[0]'
   end
 end
