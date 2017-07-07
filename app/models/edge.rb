@@ -25,7 +25,7 @@ class Edge < ApplicationRecord
            dependent: :destroy
   has_many :grants, dependent: :destroy
   has_many :groups, through: :grants
-  has_many :group_memberships, through: :groups
+  has_many :group_memberships, -> { active }, through: :groups
   has_many :publications,
            foreign_key: :publishable_id,
            dependent: :destroy

@@ -14,7 +14,7 @@ class GroupMembership < ApplicationRecord
           source: :profileable,
           source_type: :User
   has_many :grants, through: :group
-
+  scope :active, -> { where('end_date IS NULL OR end_date > ?', DateTime.current) }
   validates :group_id, presence: true, uniqueness: {scope: :member_id}
   validates :member_id, presence: true
   validates :start_date, presence: true

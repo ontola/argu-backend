@@ -24,4 +24,17 @@ class GroupMembershipTest < ActiveSupport::TestCase
         .destroy
     end
   end
+
+  test 'manager expire managership' do
+    manager
+    assert_difference('manager.reload.profile.grants.count', -1) do
+      manager
+        .profile
+        .group_memberships
+        .joins(:grants)
+        .where(grants: {role: Grant.roles[:manager]})
+        .first
+        .update(end_date: DateTime.current)
+    end
+  end
 end

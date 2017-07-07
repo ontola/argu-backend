@@ -3,7 +3,7 @@ class Group < ApplicationRecord
   include Parentable, Ldable
 
   has_many :grants, dependent: :destroy
-  has_many :group_memberships, dependent: :destroy
+  has_many :group_memberships, -> { active }, dependent: :destroy
   has_many :members, through: :group_memberships, class_name: 'Profile'
   belongs_to :page, required: true, inverse_of: :groups
   belongs_to :forum
