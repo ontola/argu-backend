@@ -23,7 +23,7 @@
       =f.input :password_confirmation, label: t('users_password_confirmation')
       =f.inputs name: t('formtastic.labels.current_password')
         =f.input :current_password, required: true
-    -else
+    -elsif authenticated_resource.identities.any?
       / TODO: Only show this if user does not have a password.
       p
         =t('users.registrations.no_password')
