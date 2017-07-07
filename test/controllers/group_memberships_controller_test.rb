@@ -215,13 +215,13 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'create')
   end
 
-  test 'super_admin should delete destroy' do
+  test 'super_admin should delete expire' do
     sign_in create_super_admin(freetown)
 
     group_membership = create(:group_membership,
                               parent: group.edge)
 
-    assert_difference 'GroupMembership.count', -1 do
+    assert_differences([['GroupMembership.count', 0], ['GroupMembership.active.count', -1]]) do
       delete :destroy,
              params: {
                id: group_membership,
