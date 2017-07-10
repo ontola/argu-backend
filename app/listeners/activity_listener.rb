@@ -3,9 +3,11 @@ class ActivityListener
   # @param [Hash] opts
   # @option opts [User] publisher The person that made the action
   # @option opts [Profile] creator The Profile under whose name it was published
+  # @option opts [String] comment An optional Comment to explain the action
   def initialize(opts = {})
     @publisher = opts[:publisher]
     @creator = opts[:creator]
+    @comment = opts[:comment]
   end
 
   # Dynamically declare the listener publication methods
@@ -83,6 +85,7 @@ class ActivityListener
     a = CreateActivity.new(
       Activity.new,
       attributes: {
+        comment: @comment,
         trackable: resource,
         trackable_edge: resource.try(:edge)&.persisted? ? resource.try(:edge) : nil,
         key: "#{resource.model_name.singular}.#{action}",

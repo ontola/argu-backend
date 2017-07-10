@@ -7,6 +7,10 @@ module Loggable
     has_many :activities,
              -> { where("key ~ '*.!happened'") },
              as: :trackable
+    has_one :trash_activity,
+            -> { where("key ~ '*.trash'").order(created_at: :desc) },
+            class_name: 'Activity',
+            as: :trackable
 
     def destroy_notifications
       activities.each do |activity|

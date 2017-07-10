@@ -67,6 +67,7 @@ class ServiceController < AuthorizedController
     {
       creator: current_actor.actor,
       publisher: current_user,
+      comment: params[:activity]&.permit(:comment).try(:[], :comment),
       uuid: a_uuid,
       client_id: request.session.id
     }.merge(options)

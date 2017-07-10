@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20170727100956) do
     t.json     "audit_data"
     t.integer  "trackable_edge_id"
     t.integer  "recipient_edge_id"
+    t.string   "comment"
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
     t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable", using: :btree
     t.index ["forum_id"], name: "index_activities_on_forum_id", using: :btree

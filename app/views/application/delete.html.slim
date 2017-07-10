@@ -7,7 +7,8 @@
         section.unpadded
           =semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
             .modal-section
-              p= t('trash_confirmation')
+              p= t('activities.ui.comment')
+              div= text_area_tag 'activity[comment]', nil, class: 'form-input-content'
             section.section--footer
               =render partial: 'profiles/creator', locals: {resource: resource}
               =f.actions

@@ -20,11 +20,6 @@ module Argu
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
         end
 
-        def change_actor(actor)
-          a = actor.respond_to?(:profile) ? actor.profile : actor
-          @_argu_headers = (@_argu_headers || {}).merge('X-Argu-Actor': a.id)
-        end
-
         def create(model_type, *args)
           attributes = HashWithIndifferentAccess.new
           attributes.merge!(args.pop) if args.last.is_a?(Hash)

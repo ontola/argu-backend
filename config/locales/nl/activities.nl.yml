@@ -47,5 +47,6 @@ nl:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"
       loading: "Bezig.."
+      comment: "Toelichting voor deze actie: (optioneel)"
     news_feed:
       title: "Nieuwsoverzicht"

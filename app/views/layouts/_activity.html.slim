@@ -11,3 +11,7 @@
   -if render_body_on_feed?(activity)
     .activity-body
       =render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}
+  - elsif activity.comment.present?
+    .activity-body
+      section
+        p= activity.comment

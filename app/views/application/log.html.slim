@@ -27,7 +27,11 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
           .markdown[itemprop="text"]
             table
               - resource.activities.each do |activity|
-                tr
+                tr[id="activity-#{activity.id}"]
                   td= t(activity.action)
                   td= link_to activity.owner.display_name, user_url(activity.owner.profileable)
                   td= activity.created_at
+                - if activity.comment.present?
+                  tr
+                    td
+                    td[colspan=2]= "\"#{activity.comment}\""

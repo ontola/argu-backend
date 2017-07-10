@@ -47,5 +47,6 @@ en:
       load_more: "Load more"
       no_more_artivities: "No more activities"
       loading: "Loading.."
+      comment: "Explanation for this action: (optional)"
     news_feed:
       title: "News feed"
