@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706123814) do
+ActiveRecord::Schema.define(version: 20170710095404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,17 +74,15 @@ ActiveRecord::Schema.define(version: 20170706123814) do
     t.text     "content"
     t.integer  "motion_id"
     t.boolean  "pro",                      default: true
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "title",        limit: 255
-    t.boolean  "is_trashed",               default: false
-    t.integer  "creator_id",                               null: false
+    t.integer  "creator_id",                              null: false
     t.integer  "forum_id"
-    t.integer  "publisher_id",                             null: false
+    t.integer  "publisher_id",                            null: false
     t.index ["id"], name: "index_arguments_on_id", using: :btree
     t.index ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro", using: :btree
     t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id", using: :btree
-    t.index ["motion_id", "is_trashed"], name: "index_arguments_on_motion_id_and_is_trashed", using: :btree
     t.index ["motion_id"], name: "statement_id", using: :btree
   end
 
@@ -129,12 +127,10 @@ ActiveRecord::Schema.define(version: 20170706123814) do
     t.integer  "state",              default: 0,     null: false
     t.string   "title",                              null: false
     t.text     "content"
-    t.datetime "trashed_at"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.boolean  "is_published",       default: false, null: false
     t.index ["forum_id", "is_published"], name: "index_blog_posts_on_forum_id_and_is_published", using: :btree
-    t.index ["forum_id", "trashed_at"], name: "index_blog_posts_on_forum_id_and_trashed_at", using: :btree
     t.index ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id", using: :btree
   end
 
@@ -144,16 +140,14 @@ ActiveRecord::Schema.define(version: 20170706123814) do
     t.string   "title",            limit: 255, default: ""
     t.text     "body",                         default: ""
     t.string   "subject",          limit: 255, default: ""
-    t.integer  "creator_id",                   default: 0,     null: false
+    t.integer  "creator_id",                   default: 0,  null: false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.boolean  "is_trashed",                   default: false
-    t.integer  "publisher_id",                                 null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.integer  "publisher_id",                              null: false
     t.integer  "forum_id"
-    t.index ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
     t.index ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
     t.index ["creator_id"], name: "index_comments_on_creator_id", using: :btree
   end
@@ -385,24 +379,22 @@ ActiveRecord::Schema.define(version: 20170706123814) do
   end
 
   create_table "motions", force: :cascade do |t|
-    t.string   "title",                   limit: 255,                 null: false
-    t.text     "content",                                             null: false
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.string   "title",                   limit: 255,              null: false
+    t.text     "content",                                          null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "pro_count",                           default: 0
     t.integer  "con_count",                           default: 0
-    t.boolean  "is_trashed",                          default: false
     t.integer  "forum_id"
-    t.integer  "creator_id",                                          null: false
+    t.integer  "creator_id",                                       null: false
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
-    t.integer  "publisher_id",                                        null: false
+    t.integer  "publisher_id",                                     null: false
     t.integer  "question_id"
     t.bigint   "place_id"
     t.integer  "project_id"
     t.index ["forum_id"], name: "index_motions_on_forum_id", using: :btree
     t.index ["id"], name: "index_motions_on_id", using: :btree
-    t.index ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -563,14 +555,12 @@ ActiveRecord::Schema.define(version: 20170706123814) do
     t.string   "email"
     t.datetime "end_date"
     t.datetime "achieved_end_date"
-    t.datetime "trashed_at"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.string   "cover_photo",             default: ""
     t.string   "cover_photo_attribution", default: ""
     t.boolean  "is_published",            default: false, null: false
     t.index ["forum_id", "is_published"], name: "index_projects_on_forum_id_and_is_published", using: :btree
-    t.index ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
     t.index ["forum_id"], name: "index_projects_on_forum_id", using: :btree
   end
 
@@ -589,17 +579,15 @@ ActiveRecord::Schema.define(version: 20170706123814) do
     t.string   "title",                   limit: 255, default: ""
     t.text     "content",                             default: ""
     t.integer  "forum_id"
-    t.integer  "creator_id",                                          null: false
-    t.boolean  "is_trashed",                          default: false
+    t.integer  "creator_id",                                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
     t.datetime "expires_at"
-    t.integer  "publisher_id",                                        null: false
+    t.integer  "publisher_id",                                     null: false
     t.bigint   "place_id"
     t.integer  "project_id"
-    t.index ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree
     t.index ["forum_id"], name: "index_questions_on_forum_id", using: :btree
   end
 
