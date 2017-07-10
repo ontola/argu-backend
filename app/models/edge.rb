@@ -131,6 +131,13 @@ class Edge < ApplicationRecord
       .present?
   end
 
+  def has_trashed_ancestors?
+    persisted_edge
+      .self_and_ancestors
+      .trashed
+      .present?
+  end
+
   def has_unpublished_ancestors?
     persisted_edge
       .self_and_ancestors

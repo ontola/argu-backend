@@ -18,6 +18,7 @@ class ProjectPolicy < EdgeTreePolicy
     assert_publish_type
     return unless active_for_user?(:projects, user)
     return create_expired? if has_expired_ancestors?
+    return create_trashed? if has_trashed_ancestors?
     rule is_manager?, is_super_admin?, super
   end
 

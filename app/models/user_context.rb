@@ -5,8 +5,9 @@ class UserContext
   attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope, :rules_in_scope
 
   class Node
-    attr_accessor :id, :expired, :unpublished, :children, :user_context, :grants_in_scope, :rules_in_scope
+    attr_accessor :id, :expired, :trashed, :unpublished, :children, :user_context, :grants_in_scope, :rules_in_scope
     alias expired? expired
+    alias trashed? trashed
     alias unpublished? unpublished
 
     def self.build_from_tree(tree, root, user_context)
@@ -25,6 +26,7 @@ class UserContext
       n.id = edge.id
       n.expired = parent&.expired || edge.expires_at && edge.expires_at < DateTime.current
       n.expired = edge.owner.starts_at > DateTime.current if !n.expired && edge.owner_type == 'VoteEvent'
+      n.trashed = parent&.trashed || edge.is_trashed?
       n.unpublished = parent&.unpublished || !edge.is_published
       n.user_context = user_context
       n.grants_in_scope = user_context.grants_in_scope.select { |grant| grant.edge.path == edge.path }
@@ -105,6 +107,14 @@ class UserContext
       .select do |rule|
       rule.action == action.to_s && rule.model_type == model_type && [model_id, nil].include?(rule.model_id)
     end
+  end
+
+  # Checks whether the edge or any of its ancestors is trashed
+  # @param [Edge] node The node to check
+  # @return [Bool] Whether the edge or any of its ancestors is trashed
+  def trashed?(node)
+    return true if node.trashed_at && node.trashed_at < DateTime.current
+    find_or_cache_node(node).trashed?
   end
 
   # Checks whether the edge or any of its ancestors is unpublished

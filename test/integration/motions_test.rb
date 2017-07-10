@@ -19,6 +19,13 @@ class MotionsTest < ActionDispatch::IntegrationTest
            parent: freetown.edge,
            creator: create(:profile_direct_email))
   end
+  let(:trashed_question) do
+    create(:question,
+           :with_follower,
+           edge_attributes: {trashed_at: 1.day.ago},
+           parent: freetown.edge,
+           creator: create(:profile_direct_email))
+  end
   let(:project) { create(:project, :with_follower, parent: freetown.edge) }
   let(:subject) do
     create(:motion,
@@ -76,6 +83,11 @@ class MotionsTest < ActionDispatch::IntegrationTest
         staff: exp_res(asserts: [assert_not_authorized], analytics: false)
       }
     end
+    define_test(hash, :new, suffix: ' for trashed question', options: {parent: :trashed_question}) do
+      {
+        staff: exp_res(asserts: [assert_not_authorized], analytics: false)
+      }
+    end
     options = {
       analytics: stats_opt('motions', 'create_success'),
       actor: :page,
@@ -108,17 +120,18 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_success')
     }
     define_test(hash, :create, suffix: ' for project', options: options)
-    options = {
-      analytics: stats_opt('motions', 'create_success'),
-      parent: :closed_question
-    }
-    define_test(hash, :create, suffix: ' for closed question', options: options) do
+    define_test(hash, :create, suffix: ' for closed question', options: {parent: :closed_question}) do
       {
         guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
         user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
         manager: exp_res(asserts: [assert_not_authorized], analytics: false),
         super_admin: exp_res(asserts: [assert_not_authorized], analytics: false),
+        staff: exp_res(asserts: [assert_not_authorized], analytics: false)
+      }
+    end
+    define_test(hash, :create, suffix: ' for trashed question', options: {parent: :trashed_question}) do
+      {
         staff: exp_res(asserts: [assert_not_authorized], analytics: false)
       }
     end

@@ -40,6 +40,7 @@ class VotePolicy < EdgeTreePolicy
 
   def create?
     return create_expired? if has_expired_ancestors?
+    return create_trashed? if has_trashed_ancestors?
     if record.parent_model.is_a?(VoteEvent)
       rule is_group_member?
     else

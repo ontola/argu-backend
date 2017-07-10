@@ -89,6 +89,10 @@ class EdgeTreePolicy < RestrictivePolicy
     context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
   end
 
+  def has_trashed_ancestors?
+    context.within_tree?(persisted_edge, outside_tree) ? context.trashed?(persisted_edge) : edge.has_trashed_ancestors?
+  end
+
   def has_unpublished_ancestors?
     if context.within_tree?(persisted_edge, outside_tree)
       context.unpublished?(persisted_edge)
@@ -187,6 +191,10 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def create_expired?
     nil
+  end
+
+  def create_trashed?
+    false
   end
 
   def trash?

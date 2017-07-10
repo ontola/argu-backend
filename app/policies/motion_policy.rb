@@ -25,8 +25,9 @@ class MotionPolicy < EdgeTreePolicy
 
   def create?
     assert_publish_type
-    return create_without_question? unless record.parent_model.is_a?(Question)
     return create_expired? if has_expired_ancestors?
+    return create_trashed? if has_trashed_ancestors?
+    return create_without_question? unless record.parent_model.is_a?(Question)
     rule is_member?, is_manager?, is_super_admin?, super
   end
 

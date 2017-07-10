@@ -5,7 +5,7 @@ class VotesControllerTest < ActionController::TestCase
   define_freetown
   define_public_source
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
-  let(:argument) { motion.arguments.first }
+  let(:argument) { motion.arguments.untrashed.first }
   let(:vote_event) { motion.default_vote_event }
   let(:vote) { motion.votes.first }
   let(:linked_record) { create(:linked_record, :with_arguments, :with_votes, source: public_source) }
