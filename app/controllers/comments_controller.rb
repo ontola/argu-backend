@@ -140,7 +140,7 @@ class CommentsController < EdgeTreeController
                 notice: t('comments.notices.updated')
   end
 
-  def update_respond_success_js(resource, _)
+  def update_respond_success_js(resource)
     render locals: {
       comment: resource,
       commentable: resource.parent_model
