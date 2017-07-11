@@ -4,8 +4,6 @@ class UsersController < AuthorizedController
           UrlHelper,
           VotesHelper
   helper_method :authenticated_resource, :complete_feed_param
-  skip_before_action :authorize_action, only: :current_actor
-  skip_before_action :check_if_registered, only: :current_actor
 
   def show
     respond_to do |format|
@@ -29,15 +27,6 @@ class UsersController < AuthorizedController
                  vote_match_collection: INC_NESTED_COLLECTION
                ]
       end
-    end
-  end
-
-  def current_actor
-    skip_authorization
-    actor = CurrentActor.new(user: current_user, actor: current_profile)
-    respond_to do |format|
-      format.json { respond_with_200(actor, :json) }
-      format.json_api { render json: actor, include: [:profile_photo, :user, :actor] }
     end
   end
 
@@ -106,8 +95,6 @@ class UsersController < AuthorizedController
                 User.preload(:profile).find_via_shortname!(params[:id])
               when 'update'
                 User.find(current_user.id)
-              when 'current_actor'
-                current_user
               else
                 if current_user.guest?
                   flash[:error] = t('devise.failure.unauthenticated')

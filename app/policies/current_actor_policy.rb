@@ -7,11 +7,11 @@ class CurrentActorPolicy < RestrictivePolicy
   end
 
   def show?
-    current_user && is_manager? && user.confirmed?
+    current_user && is_manager?
   end
 
   def update?
-    current_user && is_manager? && user.confirmed?
+    current_user && is_manager?
   end
 
   private
@@ -22,9 +22,10 @@ class CurrentActorPolicy < RestrictivePolicy
 
   def is_manager?
     owner = record.actor.profileable
-    if owner.class == User
+    if owner.class == User || owner.class == GuestUser
       owner == user
     else
+      return unless user.confirmed?
       owner.owner == user.profile ||
         (user.profile.page_ids(:manager) + user.profile.page_ids(:super_admin))
           .include?(owner.id)
