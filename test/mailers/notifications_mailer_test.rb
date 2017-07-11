@@ -2,7 +2,11 @@
 require 'test_helper'
 
 class NotificationsMailerTest < ActionMailer::TestCase
-  include MailerHelper
+  include MailerHelper, ActivityHelper
+  include ActionDispatch::Routing
+  include Rails.application.routes.url_helpers
+  include ActionView::Helpers::UrlHelper
+
   define_freetown
   let!(:follower) { create(:user) }
   let!(:creator) { create(:profile) }
@@ -68,9 +72,21 @@ class NotificationsMailerTest < ActionMailer::TestCase
     assert_email email, "New challenge: '#{question.display_name}' by #{publisher.first_name} #{publisher.last_name}"
   end
 
+  test 'should send email for trashing question' do
+    trash_resource(question)
+    email = assert_deliver question.trash_activity.notifications.where(user: follower)
+    assert_email email, "'#{question.display_name}' is trashed"
+  end
+
   test 'should send email for new motion' do
     email = assert_deliver motion.activities.second.notifications.where(user: follower)
     assert_email email, "New idea: '#{motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+  end
+
+  test 'should send email for trashing motion' do
+    trash_resource(motion)
+    email = assert_deliver motion.trash_activity.notifications.where(user: follower)
+    assert_email email, "'#{motion.display_name}' is trashed"
   end
 
   test 'should send email for new question_motion' do
@@ -90,10 +106,22 @@ class NotificationsMailerTest < ActionMailer::TestCase
                         " by #{publisher.first_name} #{publisher.last_name}"
   end
 
+  test 'should send email for trashing argument' do
+    trash_resource(argument_pro)
+    email = assert_deliver argument_pro.trash_activity.notifications.where(user: follower)
+    assert_email email, "'#{argument_pro.display_name}' is trashed"
+  end
+
   test 'should send email for new comment' do
     email = assert_deliver comment.activities.first.notifications.where(user: follower)
     assert_email email, "New comment on '#{comment.parent_model.display_name}'"\
                         " by #{publisher.first_name} #{publisher.last_name}"
+  end
+
+  test 'should send email for trashing comment' do
+    trash_resource(comment)
+    email = assert_deliver comment.trash_activity.notifications.where(user: follower)
+    assert_email email, 'Comment is trashed'
   end
 
   test 'should send email for new comment_comment' do
@@ -122,6 +150,12 @@ class NotificationsMailerTest < ActionMailer::TestCase
     assert_email email, "New update: '#{blog_post.display_name}'"
   end
 
+  test 'should send email for trashing blog_post' do
+    trash_resource(blog_post)
+    email = assert_deliver blog_post.trash_activity.notifications.where(user: blog_post.publisher)
+    assert_email email, "'#{blog_post.display_name}' is trashed"
+  end
+
   test 'should send email for new project' do
     email = assert_deliver project.activities.second.notifications.where(user: follower)
     assert_email email, "New project: '#{project.display_name}'"\
@@ -142,5 +176,12 @@ class NotificationsMailerTest < ActionMailer::TestCase
     assert_equal ['noreply@argu.co'], email.from
     assert_equal [follower.email], email.to
     assert_equal subject, email.subject
+  end
+
+  def trash_resource(resource)
+    user = create(:user)
+    TrashService
+      .new(resource, options: {creator: user.profile, publisher: user})
+      .commit
   end
 end

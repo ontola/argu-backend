@@ -83,7 +83,20 @@ class Activity < PublicActivity::Activity
   # @note See Follow.follow_types, Publication.follow_types and Notification.notification_types
   # @return [String] The follow type
   def follow_type
-    trackable_edge.try(:argu_publication)&.follow_type || 'reactions'
+    new_content? && trackable_edge.try(:argu_publication)&.follow_type || 'reactions'
+  end
+
+  def new_content?
+    case action
+    when 'create'
+      %w(argument comment).include?(object)
+    when 'publish'
+      %w(blog_post project motion question).include?(object)
+    when 'approved', 'rejected', 'forwarded'
+      true
+    else
+      false
+    end
   end
 
   def object

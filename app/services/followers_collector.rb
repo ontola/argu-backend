@@ -8,7 +8,7 @@ class FollowersCollector
   def initialize(activity: nil, follow_type: nil, resource: nil)
     @activity = activity
     @follow_type = follow_type || activity.follow_type
-    @resource = resource || activity.recipient
+    @resource = resource || (activity.new_content? ? activity.recipient : activity.trackable)
   end
 
   delegate :count, to: :followers

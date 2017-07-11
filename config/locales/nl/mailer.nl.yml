@@ -16,6 +16,8 @@ nl:
       go_to_discussion: "Bekijk discussie"
       user_create_comment:
         subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
+      user_trash_comment:
+        subject: "Reactie is verwijderd"
       user_approved_decision:
         subject: "'%{parent_title}' is aangenomen"
       user_rejected_decision:
@@ -24,14 +26,24 @@ nl:
         subject: "'%{parent_title}' is doorgestuurd"
       user_create_argument:
         subject: "Nieuw argument: '%{parent_title}' door %{poster}"
+      user_trash_argument:
+        subject: "'%{title}' is verwijderd"
       user_publish_motion:
         subject: "Nieuw idee: '%{title}' door %{poster}"
+      user_trash_motion:
+        subject: "'%{title}' is verwijderd"
       user_publish_blog_post:
         subject: "Nieuwe update: '%{title}'"
+      user_trash_blog_post:
+        subject: "'%{title}' is verwijderd"
       user_publish_question:
         subject: "Nieuwe uitdaging: '%{title}' door %{poster}"
+      user_trash_question:
+        subject: "'%{title}' is verwijderd"
       user_publish_project:
         subject: "Nieuw project: '%{title}' door %{poster}"
+      user_trash_project:
+        subject: "'%{title}' is verwijderd"
       subject: 'Nieuwe Argu notificaties'
       header: 'Nieuwe notificaties'
       view: 'Bekijk item'

@@ -15,14 +15,30 @@ class FollowersCollectorTest < ActiveSupport::TestCase
 
   test 'should collect 0 for motion in unfollowed forum' do
     Follow.destroy_all
-    assert_equal 0, FollowersCollector.new(activity: motion.activities.first).count
+    motion
+    Notification.destroy_all
+    assert_equal 0, FollowersCollector.new(activity: motion.activities.second).count
+  end
+
+  test 'should not collect notified followers for motion' do
+    motion
+    assert_equal 0, FollowersCollector.new(activity: motion.activities.second).count
   end
 
   test 'should collect reaction followers for motion' do
-    assert_equal 1, FollowersCollector.new(activity: motion.activities.first).count
+    motion
+    Notification.destroy_all
+    assert_equal 1, FollowersCollector.new(activity: motion.activities.second).count
+  end
+
+  test 'should not collect notified followers for motion with marked_as_important' do
+    important_motion
+    assert_equal 0, FollowersCollector.new(activity: important_motion.activities.second).count
   end
 
   test 'should collect reaction and news followers for motion with marked_as_important' do
-    assert_equal 2, FollowersCollector.new(activity: important_motion.activities.first).count
+    important_motion
+    Notification.destroy_all
+    assert_equal 2, FollowersCollector.new(activity: important_motion.activities.second).count
   end
 end

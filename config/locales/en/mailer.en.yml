@@ -16,6 +16,8 @@ en:
       go_to_discussion: "Go to discussion"
       user_create_comment:
         subject: "New comment on '%{parent_title}' by %{poster}"
+      user_trash_comment:
+        subject: "Comment is trashed"
       user_approved_decision:
         subject: "'%{parent_title}' is approved"
       user_rejected_decision:
@@ -24,14 +26,24 @@ en:
         subject: "'%{parent_title}' is forwarded"
       user_create_argument:
         subject: "New argument: '%{parent_title}' by %{poster}"
+      user_trash_argument:
+        subject: "'%{title}' is trashed"
       user_publish_motion:
         subject: "New idea: '%{title}' by %{poster}"
+      user_trash_motion:
+        subject: "'%{title}' is trashed"
       user_publish_blog_post:
         subject: "New update: '%{title}'"
+      user_trash_blog_post:
+        subject: "'%{title}' is trashed"
       user_publish_question:
         subject: "New challenge: '%{title}' by %{poster}"
+      user_trash_question:
+        subject: "'%{title}' is trashed"
       user_publish_project:
         subject: "New project: '%{title}' by %{poster}"
+      user_trash_project:
+        subject: "'%{title}' is trashed"
       subject: 'New Argu notifications'
       header: 'New notifications'
       view: 'View item'

@@ -1,16 +1,7 @@
 # frozen_string_literal: true
 class NotificationListener
   def create_activity_successful(activity)
-    case activity.object
-    when 'vote', 'banner'
-      nil
-    when 'blog_post', 'project', 'motion', 'question'
-      create_notifications_for(activity) if activity.action == 'publish'
-    when 'decision'
-      create_notifications_for(activity) unless %w(update create).include?(activity.action)
-    else
-      create_notifications_for(activity) if activity.action == 'create'
-    end
+    create_notifications_for(activity) if create_notifications_for_activity?(activity)
   end
 
   def update_successful(resource)
@@ -24,6 +15,10 @@ class NotificationListener
   end
 
   private
+
+  def create_notifications_for_activity?(activity)
+    activity.new_content? || activity.action == 'trash'
+  end
 
   def create_notifications_for(activity)
     recipients = FollowersCollector

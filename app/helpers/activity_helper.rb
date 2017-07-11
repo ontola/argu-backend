@@ -14,15 +14,6 @@ module ActivityHelper
 
   # Decide whether to include the body when rendering this Activity on the feed
   def render_body_on_feed?(activity)
-    case activity.object
-    when 'decision'
-      %w(update create).exclude?(activity.action)
-    when 'vote'
-      return activity.trackable&.explanation.present?
-    when 'project', 'blog_post', 'motion', 'question'
-      activity.action == 'publish'
-    else
-      activity.action == 'create'
-    end
+    activity.object == 'vote' ? activity.trackable&.explanation.present? : activity.new_content?
   end
 end

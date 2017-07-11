@@ -1,5 +1,12 @@
 tr
   td.mail-p
     =markdown_to_html(activity_string_for(notification.activity, @user, true), no_paragraph: true)
-=render template: "notifications_mailer/preview/#{notification.resource.model_name.singular}",
-        locals: {notification: notification, item: item, parent: parent}
+- if notification.activity.comment.present?
+  tr
+    td.mail-box
+      table
+        tr
+          td.mail-p= notification.activity.comment
+- else
+  =render template: "notifications_mailer/preview/#{notification.resource.model_name.singular}",
+          locals: {notification: notification, item: item, parent: parent}
