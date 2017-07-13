@@ -69,7 +69,8 @@ class GroupMembershipsController < ServiceController
       .details
       .select { |_key, errors| errors.select { |error| error[:error] == :taken }.any? }
       .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
-    @existing_record = controller_class.find_by(Hash[duplicate_values])
+    @existing_record = controller_class
+                         .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
   end
 
   def new_respond_success_html(resource)

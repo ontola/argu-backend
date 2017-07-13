@@ -20,6 +20,9 @@ gem 'health_check'
 ################## DB ########################
 gem 'pg', '0.18.2'
 
+gem 'active_record-postgres-constraints',
+    git: 'https://github.com/ArthurWD/active_record-postgres-constraints',
+    ref: '2781f5e'
 gem 'jbuilder', '~> 2.6.0'
 gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.1'

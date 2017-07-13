@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710095404) do
+ActiveRecord::Schema.define(version: 20170711115606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "ltree"
   enable_extension "uuid-ossp"
+  enable_extension "btree_gist"
 
   create_table "access_tokens", force: :cascade do |t|
     t.integer  "item_id"
@@ -283,7 +284,7 @@ ActiveRecord::Schema.define(version: 20170710095404) do
     t.text     "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.index ["group_id", "member_id"], name: "index_group_memberships_on_group_id_and_member_id", unique: true, using: :btree
+    t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps
   end
 
   create_table "group_responses", force: :cascade do |t|

@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/ArthurWD/active_record-postgres-constraints
+  revision: 2781f5e5d886a4cd73bddce4fd439de5b34d14d6
+  ref: 2781f5e
+  specs:
+    active_record-postgres-constraints (0.1.2)
+      pg
+      rails (~> 5.0)
+
+GIT
   remote: https://github.com/ArthurWD/omniauth-facebook
   revision: 23019ecc28ae291849053793ac80139f3b755bb2
   ref: 23019
@@ -651,6 +660,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.4)
+  active_record-postgres-constraints!
   active_record_query_trace
   acts_as_commentable_with_threading (~> 2.0.0)
   acts_as_follower!
