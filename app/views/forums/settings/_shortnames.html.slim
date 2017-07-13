@@ -1,7 +1,7 @@
 h3= t('shortnames.type').capitalize.pluralize
 p= t('shortnames.info')
 - if policy(resource).max_shortname_count?
-  =semantic_form_for resource, multipart: true, remote: true do |f|
+  =semantic_form_for resource, multipart: true, remote: true, authenticity_token: true do |f|
     =f.input :max_shortname_count
     =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
     =f.actions do
