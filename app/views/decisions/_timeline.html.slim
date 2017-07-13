@@ -1,6 +1,6 @@
 .box[class=status_classes_for(resource)]
   section
-    h3
+    h3[class="header--decision--#{resource.state}" itemprop="headline"]
       span[class="fa fa-#{decision_icon(resource)}"]
       span.icon-left= decision_state(resource)
     .markdown[itemprop="text"]= markdown_to_html(resource.content)

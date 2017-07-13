@@ -7,6 +7,8 @@ class NotificationsMailerTest < ActionMailer::TestCase
   let!(:follower) { create(:user) }
   let!(:creator) { create(:profile) }
   let!(:publisher) { create(:user, profile: creator) }
+  let(:group_member) { create(:group_membership, parent: group.edge, member: create(:user).profile).member.profileable }
+  let(:group) { create(:group, parent: freetown.page.edge) }
 
   let!(:follow_forum) { create(:follow, followable: freetown.edge, follower: follower) }
   let(:question) { create(:question, :with_follower, creator: creator, parent: freetown.edge) }
@@ -32,6 +34,21 @@ class NotificationsMailerTest < ActionMailer::TestCase
            state: 'approved',
            happening_attributes: {happened_at: DateTime.current})
   end
+  let(:rejection) do
+    create(:decision,
+           creator: creator,
+           parent: motion.edge,
+           state: 'rejected',
+           happening_attributes: {happened_at: DateTime.current})
+  end
+  let(:forward) do
+    create(:decision,
+           parent: motion.edge,
+           state: 'forwarded',
+           forwarded_user_id: group_member.id,
+           forwarded_group_id: group.id,
+           happening_attributes: {happened_at: DateTime.current})
+  end
   let(:project) do
     create(:project,
            creator: creator,
@@ -47,176 +64,83 @@ class NotificationsMailerTest < ActionMailer::TestCase
   end
 
   test 'should send email for new question' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              question.activities.second.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New challenge: '#{question.display_name}' by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver question.activities.second.notifications.where(user: follower)
+    assert_email email, "New challenge: '#{question.display_name}' by #{publisher.first_name} #{publisher.last_name}"
   end
 
   test 'should send email for new motion' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              motion.activities.second.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New idea: '#{motion.display_name}' by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver motion.activities.second.notifications.where(user: follower)
+    assert_email email, "New idea: '#{motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
   end
 
   test 'should send email for new question_motion' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              question_motion.activities.second.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New idea: '#{question_motion.display_name}' by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver question_motion.activities.second.notifications.where(user: follower)
+    assert_email email, "New idea: '#{question_motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
   end
 
   test 'should send email for new argument_pro' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              argument_pro.activities.first.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New argument: '#{argument_pro.parent_model.display_name}'"\
-                   " by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver argument_pro.activities.first.notifications.where(user: follower)
+    assert_email email, "New argument: '#{argument_pro.parent_model.display_name}'"\
+                        " by #{publisher.first_name} #{publisher.last_name}"
   end
 
   test 'should send email for new argument_con' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              argument_con.activities.first.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New argument: '#{argument_con.parent_model.display_name}'"\
-                   " by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver argument_con.activities.first.notifications.where(user: follower)
+    assert_email email, "New argument: '#{argument_con.parent_model.display_name}'"\
+                        " by #{publisher.first_name} #{publisher.last_name}"
   end
 
   test 'should send email for new comment' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              comment.activities.first.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New comment on '#{comment.parent_model.display_name}'"\
-                   " by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver comment.activities.first.notifications.where(user: follower)
+    assert_email email, "New comment on '#{comment.parent_model.display_name}'"\
+                        " by #{publisher.first_name} #{publisher.last_name}"
   end
 
   test 'should send email for new comment_comment' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              comment_comment.activities.first.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New comment on '#{comment_comment.parent_model.display_name}'"\
-                   " by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email = assert_deliver comment_comment.activities.first.notifications.where(user: follower)
+    assert_email email, "New comment on '#{comment_comment.parent_model.display_name}'"\
+                        " by #{publisher.first_name} #{publisher.last_name}"
   end
 
-  test 'should send email for new decision' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              decision.activities.second.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
+  test 'should send email for new approval' do
+    email = assert_deliver decision.activities.second.notifications.where(user: follower)
+    assert_email email, "'#{motion.display_name}' is approved"
+  end
 
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "A decision was made on '#{motion.display_name}'",
-                 email.subject
+  test 'should send email for new rejection' do
+    email = assert_deliver rejection.activities.second.notifications.where(user: follower)
+    assert_email email, "'#{motion.display_name}' is rejected"
+  end
+
+  test 'should send email for new forward' do
+    email = assert_deliver forward.activities.second.notifications.where(user: follower)
+    assert_email email, "'#{motion.display_name}' is forwarded"
   end
 
   test 'should send email for new blog_post' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              blog_post.activities.second.notifications.where(user: follower)
-            )
-    assert_emails 1 do
-      email.deliver_now
-    end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New update: '#{blog_post.display_name}'",
-                 email.subject
+    email = assert_deliver blog_post.activities.second.notifications.where(user: follower)
+    assert_email email, "New update: '#{blog_post.display_name}'"
   end
 
   test 'should send email for new project' do
-    email = NotificationsMailer
-            .notifications_email(
-              follower,
-              project.activities.second.notifications.where(user: follower)
-            )
+    email = assert_deliver project.activities.second.notifications.where(user: follower)
+    assert_email email, "New project: '#{project.display_name}'"\
+                        " by #{publisher.first_name} #{publisher.last_name}"
+  end
+
+  private
+
+  def assert_deliver(notifications)
+    email = NotificationsMailer.notifications_email(follower, notifications)
     assert_emails 1 do
       email.deliver_now
     end
-
-    assert_equal ['noreply@argu.co'], email.from
-    assert_equal [follower.email], email.to
-    assert_equal "New project: '#{project.display_name}'"\
-                   " by #{publisher.first_name} #{publisher.last_name}",
-                 email.subject
+    email
   end
 
-  test 'action_path should return paths' do
-    [argument_pro, comment].each do |item|
-      assert action_path(item.activities.first.notifications.first).length > 13
-    end
-    [motion, question, blog_post, project, decision].each do |item|
-      assert action_path(item.activities.second.notifications.first).length > 13
-    end
+  def assert_email(email, subject)
+    assert_equal ['noreply@argu.co'], email.from
+    assert_equal [follower.email], email.to
+    assert_equal subject, email.subject
   end
 end

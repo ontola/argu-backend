@@ -17,14 +17,14 @@ RSpec.feature 'Decisions', type: :feature do
 
     visit motion_path(motion)
     click_link 'Take decision'
-    click_link 'Pass'
+    click_link 'Approve'
     expect(page).to have_content('Explain this decision')
     expect do
       within('form.decision') do
         fill_in 'decision_content', with: 'Reason to take decision'
         click_button 'Save'
       end
-      expect(page).to have_content('Motion is passed')
+      expect(page).to have_content('Idea is approved')
     end.to change { Decision.count }.by(1)
     expect(page).to have_content('Reason to take decision')
   end
@@ -46,7 +46,7 @@ RSpec.feature 'Decisions', type: :feature do
         end
         click_button 'Save'
       end
-      expect(page).to have_content('Motion is forwarded')
+      expect(page).to have_content('Decision is forwarded')
     end.to change { Decision.count }.by(1)
     expect(page).to have_content('Reason to forward decision')
   end
@@ -64,7 +64,7 @@ RSpec.feature 'Decisions', type: :feature do
         fill_in 'decision_content', with: 'Reason to take decision'
         click_button 'Save'
       end
-      expect(page).to have_content('Motion is rejected')
+      expect(page).to have_content('Idea is rejected')
     end.to change { Decision.count }.by(1)
     expect(page).to have_content('Reason to take decision')
   end

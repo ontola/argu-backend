@@ -64,9 +64,10 @@ table, td{
 
 a {
   color: $blus;
-  text-decoration: underline;
+  text-decoration: none;
   &:hover {
     color: $blu !important;
+    text-decoration: underline !important;;
   }
 }
 
@@ -237,4 +238,35 @@ table {
   * {
     color: $bro !important;
   };
+}
+
+.decision-t {
+  color: $g4;
+  * {
+    color: $g4;
+  }
+}
+
+.blog_post-t {
+  color: $g4;
+  * {
+    color: $g4;
+  }
+}
+
+.markdown--motion {
+  color: $blu;
+  font-weight: bold;
+}
+.markdown--question {
+  color: $bro;
+  font-weight: bold;
+}
+.markdown--argument-con {
+  color: $red;
+  font-weight: bold;
+}
+.markdown--argument-pro {
+  color: $gre;
+  font-weight: bold;
 }

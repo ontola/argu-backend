@@ -1,7 +1,8 @@
 table
   tr
     td.mail-p= t('mailer.direct_mail.header', first_name: @user.greeting)
-
   -@notifications.each do |notification|
-    =render template: "notifications_mailer/user_created_#{notification.resource.model_name.singular}",
+    =render template: 'notifications_mailer/activity',
             locals: {item: notification.resource, parent: notification.activity.recipient, notification: notification}
+    tr
+      td.mail-p

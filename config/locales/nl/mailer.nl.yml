@@ -7,38 +7,31 @@ nl:
     view_type_on_argu: "Bekijk %{type} op Argu"
     sent_at_date: 'Verzonden op %{date}'
     settings: 'Notificatie instellingen wijzigen.'
+    adjust_settings: "Wijzig jouw instellingen."
+    too_many_notifications: "Te veel meldingen?"
     direct_mail:
       header: "Beste %{first_name},"
       first_paragraph: "Iemand heeft een bericht voor je achtergelaten"
-    user_mailer:
-      go_to_discussion: "Bekijk discussie"
-      adjust_settings: "Wijzig jouw instellingen."
-      too_many_notifications: "Te veel meldingen?"
-      user_created_comment:
-        subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
-        responded_to: "%{poster} heeft gereageerd op een %{parent_type}: '%{parent_title}'"
-      user_created_decision:
-        subject: "Er is een besluit genomen over '%{parent_title}'"
-        responded_to: "%{poster} heeft een besluit genomen over '%{parent_title}'"
-      user_created_argument:
-        subject: "Nieuw argument: '%{parent_title}' door %{poster}"
-        responded_to:
-          pro: "%{poster} heeft een argument geplaatst voor '%{parent_title}'"
-          con: "%{poster} heeft een argument geplaatst tegen '%{parent_title}'"
-      user_created_motion:
-        subject: "Nieuw idee: '%{title}' door %{poster}"
-        responded_to: "%{poster} heeft een %{type} geplaatst in '%{parent_title}'"
-      user_created_blog_post:
-        subject: "Nieuwe update: '%{title}'"
-        responded_to: "%{poster} heeft een update geplaatst in '%{parent_title}'"
-      user_created_question:
-        subject: "Nieuwe uitdaging: '%{title}' door %{poster}"
-        responded_to: "%{poster} heeft een %{type} geplaatst in forum '%{parent_title}':"
-        view_reply: "Bekijk uitdaging"
-      user_created_project:
-        subject: "Nieuw project: '%{title}' door %{poster}"
-        responded_to: "%{poster} heeft een %{type} geplaatst in forum '%{parent_title}':"
     notifications_mailer:
+      go_to_discussion: "Bekijk discussie"
+      user_create_comment:
+        subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
+      user_approved_decision:
+        subject: "'%{parent_title}' is aangenomen"
+      user_rejected_decision:
+        subject: "'%{parent_title}' is verworpen"
+      user_forwarded_decision:
+        subject: "'%{parent_title}' is doorgestuurd"
+      user_create_argument:
+        subject: "Nieuw argument: '%{parent_title}' door %{poster}"
+      user_publish_motion:
+        subject: "Nieuw idee: '%{title}' door %{poster}"
+      user_publish_blog_post:
+        subject: "Nieuwe update: '%{title}'"
+      user_publish_question:
+        subject: "Nieuwe uitdaging: '%{title}' door %{poster}"
+      user_publish_project:
+        subject: "Nieuw project: '%{title}' door %{poster}"
       subject: 'Nieuwe Argu notificaties'
       header: 'Nieuwe notificaties'
       view: 'Bekijk item'

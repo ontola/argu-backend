@@ -2,13 +2,13 @@ en:
   decisions:
     type: "decision"
     take_decision: "Take decision"
-    approved: "Passed"
+    approved: "Approved"
     rejected: "Rejected"
     forwarded: "Forwarded"
     forwarded_to: "Forwarded to %{to}"
     edit_draft: "Edit draft"
     action:
-      approved: "Pass"
+      approved: "Approve"
       rejected: "Reject"
       forwarded: "Forward"
     explanation: "Explain this decision"
@@ -16,9 +16,9 @@ en:
     forward_failed: "Can't create forward"
     happened_at: "Decision taken at"
     motion:
-      approved: "Motion is passed"
-      rejected: "Motion is rejected"
-      forwarded: "Motion is forwarded"
+      approved: "Idea is approved"
+      rejected: "Idea is rejected"
+      forwarded: "Decision is forwarded"
     assigned:
       to_user: "The decision is currently assigned to"
       to_group: "The decision is currently assigned to the group"

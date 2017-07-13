@@ -1,0 +1,6 @@
+tr
+  td.mail-box
+    table
+      tr
+        td.mail-p.mail-grey-link
+          =link_to HTML_Truncator.truncate(markdown_to_plaintext(item.body), 250, {length_in_chars: true, ellipsis: (' ...')}), url_for(item)

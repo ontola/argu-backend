@@ -14,10 +14,6 @@ module MailerHelper
             title: object.display_name)
   end
 
-  def action_path(item)
-    "user_created_#{item.resource.model_name.singular}"
-  end
-
   def notification_subject(notification)
     if notification.renderable?
       opts = {
@@ -26,7 +22,8 @@ module MailerHelper
         parent_title: notification.activity.recipient.display_name
       }
       opts[:pro] = I18n.t(notification.resource.pro ? 'pro' : 'con') if notification.resource.respond_to?(:pro)
-      I18n.t("mailer.user_mailer.#{action_path(notification)}.subject", opts)
+      translation_key = "user_#{notification.activity.action}_#{notification.resource.model_name.singular}"
+      I18n.t("mailer.notifications_mailer.#{translation_key}.subject", opts)
     else
       I18n.t('mailer.notifications_mailer.subject')
     end

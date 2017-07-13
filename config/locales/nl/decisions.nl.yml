@@ -16,8 +16,8 @@ nl:
     forward_failed: "Doorsturen mislukt"
     happened_at: "Besluit genomen op"
     motion:
-      approved: "Motie is aangenomen"
-      rejected: "Motie is verworpen"
+      approved: "Idee is aangenomen"
+      rejected: "Idee is verworpen"
       forwarded: "Besluit is doorgestuurd"
     assigned:
       to_user: "Het besluit ligt momenteel bij"

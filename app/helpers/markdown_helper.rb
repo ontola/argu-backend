@@ -2,10 +2,10 @@
 require 'argu/render/html'
 
 module MarkdownHelper
-  def markdown_to_html(markdown)
+  def markdown_to_html(markdown, no_paragraph: false)
     return '' if markdown.blank?
     Redcarpet::Markdown.new(
-      Argu::Render::HTML.new(filter_html: false, escape_html: true, hard_wrap: true),
+      Argu::Render::HTML.new(filter_html: false, escape_html: true, hard_wrap: true, no_paragraph: no_paragraph),
       tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: true, lax_spacing: true
     ).render(markdown).html_safe
   end

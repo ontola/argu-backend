@@ -5,6 +5,11 @@ module Argu
       include ActionView::Helpers::TagHelper
       include ActionView::Context
 
+      def initialize(options = {})
+        @options = options
+        super
+      end
+
       def link(link, title, content)
         safe_content = content&.html_safe
         content =
@@ -24,6 +29,10 @@ module Argu
             content
           end
         content_tag :a, content, title: title, href: link, target: '_blank'
+      end
+
+      def paragraph(text)
+        @options[:no_paragraph] ? text : content_tag(:p, text.html_safe)
       end
 
       private

@@ -1,0 +1,8 @@
+tr
+  td.mail-box
+    table
+      tr
+        td.mail-h3.question-t
+          = link_to item.display_name, url_for(item)
+      tr
+        td.mail-p= safe_truncated_text(item.content)

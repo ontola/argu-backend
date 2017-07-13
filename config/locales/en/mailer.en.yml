@@ -7,38 +7,31 @@ en:
     view_type_on_argu: "View %{type} on Argu"
     sent_at_date: 'Sent at %{date}'
     settings: 'Change notification settings.'
+    adjust_settings: "Adjust your settings."
+    too_many_notifications: "Too many notifications?"
     direct_mail:
       header: "Hello %{first_name}"
       first_paragraph: "Someone left you a message"
-    user_mailer:
-      go_to_discussion: "Go to discussion"
-      adjust_settings: "Adjust your settings."
-      too_many_notifications: "Too many notifications?"
-      user_created_comment:
-        subject: "New comment on '%{parent_title}' by %{poster}"
-        responded_to: "%{poster} replied to %{parent_type}: '%{parent_title}'"
-      user_created_decision:
-        subject: "A decision was made on '%{parent_title}'"
-        responded_to: "%{poster} made a decision on '%{parent_title}'"
-      user_created_argument:
-        subject: "New argument: '%{parent_title}' by %{poster}"
-        responded_to:
-          pro: "%{poster} submitted a pro argument for '%{parent_title}'"
-          con: "%{poster} submitted a con argument for '%{parent_title}'"
-      user_created_motion:
-        subject: "New idea: '%{title}' by %{poster}"
-        responded_to: "%{poster} submitted %{type} in '%{parent_title}'"
-      user_created_blog_post:
-        subject: "New update: '%{title}'"
-        responded_to: "%{poster} submitted an update in '%{parent_title}'"
-      user_created_question:
-        subject: "New challenge: '%{title}' by %{poster}"
-        responded_to: "%{poster} submitted %{type} in forum '%{parent_title}':"
-        view_reply: "View challenge"
-      user_created_project:
-        subject: "New project: '%{title}' by %{poster}"
-        responded_to: "%{poster} submitted a %{type} in forum '%{parent_title}':"
     notifications_mailer:
+      go_to_discussion: "Go to discussion"
+      user_create_comment:
+        subject: "New comment on '%{parent_title}' by %{poster}"
+      user_approved_decision:
+        subject: "'%{parent_title}' is approved"
+      user_rejected_decision:
+        subject: "'%{parent_title}' is rejected"
+      user_forwarded_decision:
+        subject: "'%{parent_title}' is forwarded"
+      user_create_argument:
+        subject: "New argument: '%{parent_title}' by %{poster}"
+      user_publish_motion:
+        subject: "New idea: '%{title}' by %{poster}"
+      user_publish_blog_post:
+        subject: "New update: '%{title}'"
+      user_publish_question:
+        subject: "New challenge: '%{title}' by %{poster}"
+      user_publish_project:
+        subject: "New project: '%{title}' by %{poster}"
       subject: 'New Argu notifications'
       header: 'New notifications'
       view: 'View item'

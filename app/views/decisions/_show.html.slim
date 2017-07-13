@@ -1,6 +1,6 @@
 .box[class=status_classes_for(model) itemscope="itemscope" itemtype="Decision"]
   section
-    h3[itemprop="headline"]
+    h3[class="header--decision--#{model.state}" itemprop="headline"]
       span[class="fa fa-#{decision_icon(model)}"]
       span.icon-left= link_to model.display_name, motion_decisions_path(model.parent_model), class: 'decision-t'
     p[itemprop="text"]= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
