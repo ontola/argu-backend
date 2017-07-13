@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
     headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
   end)
   setup_authorization
+  before_bugsnag_notify :add_user_info_to_bugsnag
   before_action :set_layout
   before_action :check_finished_intro, if: :format_html?
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -60,6 +61,17 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def add_user_info_to_bugsnag(notification)
+    notification.user = {
+      confirmed: current_user.confirmed?,
+      finished_intro: current_user.finished_intro,
+      id: current_user.id,
+      ip: notification.user_id,
+      scopes: doorkeeper_scopes,
+      shortname: current_user.url
+    }
+  end
 
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
