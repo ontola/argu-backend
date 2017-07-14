@@ -42,10 +42,6 @@
                 =t('roles.list.remove_html', url: grant_path(grant))
               - else
                 =<"(#{t('grants.all_forums')})"
-    - if policy(resource.page).create_child?(:groups)
-      =link_to new_page_group_path(resource.page), class: 'btn btn--mini btn--light margin-bottom margin-right' do
-        span.fa.fa-plus
-        span.icon-left= t('groups.new')
     - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
       =link_to new_page_grant_path(resource.page, edge_id: resource.edge), class: 'btn btn--mini btn--light margin-bottom' do
         span.fa.fa-plus
