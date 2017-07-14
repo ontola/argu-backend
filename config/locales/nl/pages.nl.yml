@@ -33,7 +33,6 @@ nl:
     management:
       title: "Organisatiebeheer"
       managed_current_out_of_max: "%{current} van maximaal %{max} organisatie(s) beheerd."
-      members: "%{members} leden"
       owner: "Eigenaar"
     display: "Organisatie bekijken"
     create: "Start een organisatie"

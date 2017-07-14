@@ -5,7 +5,7 @@ h3= t('forums.plural')
       tr
         td= t('portal.name')
         td= t('portal.shortname')
-        td= t('portal.members')
+        td= t('portal.followers')
         td= t('groups.plural')
     - resource.forums.joins(:edge).order('edges.follows_count ASC').each do |forum|
       tr

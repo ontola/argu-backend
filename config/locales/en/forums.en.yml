@@ -62,7 +62,6 @@ en:
       new_helper: "You're about to create a new forum for the organization '%{page}'.  "
     statistics:
       title: "Statistics"
-      memberships: "Members"
       questions: "Challenges"
       motions: "Ideas"
       cities:

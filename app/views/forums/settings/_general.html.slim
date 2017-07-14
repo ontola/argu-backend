@@ -24,7 +24,7 @@
         thead
           tr
             td= t('groups.type')
-            td[colspan='2' style="min-width: 90px;"]= t('portal.members')
+            td[colspan='2' style="min-width: 90px;"]= t('groups.members')
             td= t('roles.plural').capitalize
         - Grant.custom.where(edge_id: [resource.edge.id, resource.edge.parent_id]).includes(group: {group_memberships: {member: {profileable: :shortname}}}).each do |grant|
           tr

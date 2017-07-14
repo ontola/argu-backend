@@ -4,7 +4,7 @@ table.styled
   thead
     tr
       td= t('groups.type')
-      td[colspan='2' style="min-width: 90px;"]= t('portal.members')
+      td[colspan='2' style="min-width: 90px;"]= t('groups.members')
       td[colspan='2']= t('roles.plural').capitalize
   - page.groups.custom.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|
     tr

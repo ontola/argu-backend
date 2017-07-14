@@ -33,7 +33,6 @@ en:
     management:
       title: "Organization management"
       managed_current_out_of_max: "%{current} of max %{max} organization(s) managed."
-      members: "%{members} members"
       owner: "Owner"
     display: "Display organization"
     create: "Create an organization"

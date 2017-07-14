@@ -61,7 +61,6 @@ nl:
         remove_admin: "Dit trekt slechts administratieve rechten in"
     statistics:
       title: "Statistiek"
-      memberships: "Leden"
       questions: "Uitdagingen"
       motions: "Ideeën"
       cities:
