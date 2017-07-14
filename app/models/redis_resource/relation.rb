@@ -3,7 +3,7 @@ module RedisResource
   class Relation
     include ActiveModel::Model, Enumerable
     attr_accessor :where_clause, :user, :owner_type, :edge_id, :path
-    delegate :count, to: :filtered_keys
+    delegate :count, :empty?, to: :filtered_keys
 
     # Clears the caches
     def clear

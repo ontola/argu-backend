@@ -52,19 +52,21 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     locale = :en
     cookies[:locale] = locale.to_s
 
-    assert_differences([['User.count', 1],
-                        ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      post user_registration_path,
-           params: {
-             user: {
-               email: 'test@example.com',
-               password: 'password',
-               password_confirmation: 'password'
+    Sidekiq::Testing.inline! do
+      assert_differences([['User.count', 1],
+                          ['Favorite.count', 1],
+                          ['Notification.confirmation_reminder.count', 0]]) do
+        post user_registration_path,
+             params: {
+               user: {
+                 email: 'test@example.com',
+                 password: 'password',
+                 password_confirmation: 'password'
+               }
              }
-           }
-      assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'email')
+        assert_redirected_to setup_users_path
+        assert_analytics_collected('registrations', 'create', 'email')
+      end
     end
     assert_equal locale, User.last.language.to_sym
     assert_not_nil User.last.current_sign_in_ip
@@ -168,7 +170,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
                           ['Vote.count', 0],
-                          ['Favorite.count', 1]]) do
+                          ['Favorite.count', 1],
+                          ['Notification.confirmation_reminder.count', 1]]) do
         post user_registration_path,
              params: {user: attributes_for(:user)}
       end

@@ -6,13 +6,11 @@ class RedisResourceWorker
     old_user = get_user(old_user_class.constantize, old_user_id)
     new_user = get_user(new_user_class.constantize, new_user_id)
 
-    new_user.create_confirmation_reminder_notification
+    redis_relation = RedisResource::Relation.where(publisher: old_user)
+    return if redis_relation.empty?
 
-    if new_user.confirmed?
-      RedisResource::Relation.where(publisher: old_user).persist(new_user)
-    else
-      RedisResource::Relation.where(publisher: old_user).transfer(new_user)
-    end
+    new_user.create_confirmation_reminder_notification
+    new_user.confirmed? ? redis_relation.persist(new_user) : redis_relation.transfer(new_user)
   end
 
   private
