@@ -1,0 +1,11 @@
+-if resource.edge.has_trashed_ancestors?
+  .box
+    section.section-trashed
+      .activity-string
+        - if resource.first_trashed_activity.owner.present?
+          =link_to dual_profile_url(resource.first_trashed_activity.owner) do
+            =image_tag resource.first_trashed_activity.owner.default_profile_photo.url(:icon), class: 'profile-picture profile-picture--small'
+        span= markdown_to_html(activity_string_for(resource.first_trashed_activity, current_user, true))
+      - if resource.first_trashed_activity.comment.present?
+        .comment
+          p= resource.first_trashed_activity.comment

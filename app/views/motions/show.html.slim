@@ -8,6 +8,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   =render partial: 'application/cover_behind', locals: {media_object: motion.default_cover_photo}
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent
+    =render partial: 'application/trashed', locals: {resource: motion}
     =render partial: 'contextualize/context_horizontal', locals: {item: motion, type: 'motion'}
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: motion }

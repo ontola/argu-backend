@@ -1,5 +1,6 @@
 .col-1
   =to_parent
+  =render partial: 'application/trashed', locals: {resource: blog_post}
   .box.blog_post[id=blog_post.identifier class="#{'trashed' if blog_post.is_trashed?}" data-created-at=blog_post.created_at data-updated-at=blog_post.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
     section
       h3[itemprop="headline"]= blog_post.title

@@ -25,6 +25,12 @@ module Loggable
     def self.is_loggable?
       true
     end
+
+    # Returns the first found trashed_activity of self and ancestors
+    # @return [Activity, nil]
+    def first_trashed_activity
+      edge.trashed_ancestors.first&.owner&.trash_activity
+    end
   end
 
   module Serializer

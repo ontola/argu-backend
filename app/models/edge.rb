@@ -132,10 +132,7 @@ class Edge < ApplicationRecord
   end
 
   def has_trashed_ancestors?
-    persisted_edge
-      .self_and_ancestors
-      .trashed
-      .present?
+    trashed_ancestors.present?
   end
 
   def has_unpublished_ancestors?
@@ -204,6 +201,12 @@ class Edge < ApplicationRecord
       owner.destroy_notifications if owner.is_loggable?
       decrement_counter_cache if is_published?
     end
+  end
+
+  def trashed_ancestors
+    persisted_edge
+      .self_and_ancestors
+      .trashed
   end
 
   def untrash

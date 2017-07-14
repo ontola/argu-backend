@@ -6,6 +6,7 @@
 .col-1[itemscope itemtype="http://schema.org/CreativeWork/Argument"]
   div[data-intro= t('intro.argument.back')]
     =to_parent
+  =render partial: 'application/trashed', locals: {resource: argument}
   =render partial: 'contextualize/context_horizontal', locals: {item: argument, type: 'argument'}
   .intro-filler[data-intro= t('intro.argument.body')]
   =render partial: 'body', locals: {argument: argument}

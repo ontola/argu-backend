@@ -235,6 +235,13 @@ section.smallpadded {
 .section-draft {
 }
 
+.section-trashed {
+  border: 2px solid $red;
+  .activity-string {
+    display: inline-flex;
+  }
+}
+
 .section--footer {
   background-color: $g00;
   padding: 0;
