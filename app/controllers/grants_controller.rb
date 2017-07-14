@@ -43,7 +43,7 @@ class GrantsController < ServiceController
 
   def redirect_path(_ = nil)
     if authenticated_edge.owner_type == 'Forum'
-      settings_forum_path(authenticated_edge.owner, tab: :groups)
+      settings_forum_path(authenticated_edge.owner)
     else
       settings_page_path(authenticated_edge.owner, tab: :groups)
     end
