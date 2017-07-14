@@ -270,10 +270,10 @@ class CommentsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As super_admin
+  # As staff
   ####################################
-  test 'super_admin should not delete wipe other comment twice affecting counter caches' do
-    sign_in create_super_admin(freetown)
+  test 'staff should not delete wipe other comment twice affecting counter caches' do
+    sign_in staff
 
     assert_equal 1, subject.parent_model.children_count(:comments)
 

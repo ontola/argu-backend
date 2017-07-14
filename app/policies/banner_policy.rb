@@ -33,7 +33,7 @@ class BannerPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    rule is_super_admin?, super
+    rule is_super_admin?, staff?
   end
 
   def update?

@@ -16,18 +16,6 @@ class BlogPostPolicy < EdgeTreePolicy
     rule is_manager?, is_super_admin?, super
   end
 
-  def destroy?
-    rule is_manager?, is_super_admin?, super
-  end
-
-  def trash?
-    rule is_manager?, is_super_admin?, super
-  end
-
-  def untrash?
-    rule is_manager?, is_super_admin?, super
-  end
-
   def update?
     rule is_creator?, is_manager?, is_super_admin?, super
   end
