@@ -65,7 +65,7 @@ class PagePolicy < EdgeTreePolicy
   end
 
   def destroy?
-    rule is_manager?, super
+    rule is_super_admin?, super
   end
 
   def update?

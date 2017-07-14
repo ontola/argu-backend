@@ -21,22 +21,15 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    return false if record.deleted?
-    rule is_creator?, is_manager?, is_super_admin?, super
-  end
-
-  def report?
-    rule is_member?, is_manager?, staff?
+    super unless record.deleted?
   end
 
   def trash?
-    return false if record.deleted?
-    rule is_creator?, is_manager?, is_super_admin?, super
+    super unless record.deleted?
   end
 
   def untrash?
-    return false if record.deleted?
-    rule is_creator?, is_manager?, is_super_admin?, super
+    super unless record.deleted?
   end
 
   def update?

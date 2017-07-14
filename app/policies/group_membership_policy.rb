@@ -37,12 +37,12 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def destroy?
     return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
-    rule creator?, is_super_admin?, super
+    rule is_creator?, is_super_admin?, staff?
   end
 
   private
 
-  def creator?
+  def is_creator?
     creator if record.member == user.profile
   end
 

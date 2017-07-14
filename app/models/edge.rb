@@ -43,7 +43,7 @@ class Edge < ApplicationRecord
 
   validates :parent, presence: true, unless: :root_object?
 
-  before_destroy :decrement_counter_cache, unless: :is_trashable?
+  before_destroy :decrement_counter_cache, unless: :is_trashed?
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
   before_save :set_user_id

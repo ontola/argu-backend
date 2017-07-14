@@ -38,7 +38,7 @@ class GrantsTest < ActionDispatch::IntegrationTest
     end
     define_test(hash, :destroy, options: {differences: [['Grant', -1]]}) do
       user_types[:destroy].merge(
-        manager: exp_res
+        super_admin: exp_res(should: true, response: 303)
       )
     end
     define_test(hash, :destroy, options: {record: :super_admin_grant}) do

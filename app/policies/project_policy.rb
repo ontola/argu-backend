@@ -22,27 +22,12 @@ class ProjectPolicy < EdgeTreePolicy
     rule is_manager?, is_super_admin?, super
   end
 
-  def destroy?
-    (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
-      is_manager? ||
-      is_super_admin? ||
-      super
-  end
-
   def list?
     if record.is_published? && !record.is_trashed?
       rule is_member?, is_manager?, is_super_admin?, super
     else
       rule is_manager?, is_super_admin?, super
     end
-  end
-
-  def trash?
-    rule is_creator?, is_manager?, is_super_admin?, super
-  end
-
-  def untrash?
-    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def update?
