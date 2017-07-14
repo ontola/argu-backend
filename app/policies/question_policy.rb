@@ -33,23 +33,6 @@ class QuestionPolicy < EdgeTreePolicy
     rule is_member?, is_manager?, super
   end
 
-  def destroy?
-    (record.creator_id == user.profile.id &&
-      15.minutes.ago < record.created_at ||
-      record.motions.count.zero?) ||
-      is_manager? ||
-      is_super_admin? ||
-      super
-  end
-
-  def trash?
-    record.creator_id == user.profile.id || is_manager? || super
-  end
-
-  def untrash?
-    record.creator_id == user.profile.id || is_manager? || super
-  end
-
   def update?
     rule (is_member? && is_creator?), is_manager?, super
   end

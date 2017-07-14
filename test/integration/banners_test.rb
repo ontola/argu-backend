@@ -47,7 +47,9 @@ class BannersTest < ActionDispatch::IntegrationTest
       user_types[:update].merge(manager: exp_res(asserts: [assert_not_authorized])).except(:creator)
     end
     define_test(hash, :destroy) do
-      user_types[:destroy].merge(manager: exp_res(asserts: [assert_not_authorized])).except(:creator)
+      user_types[:destroy]
+        .merge(manager: exp_res(asserts: [assert_not_authorized]), super_admin: exp_res(should: true, response: 303))
+        .except(:creator)
     end
   end
 end

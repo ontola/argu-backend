@@ -27,6 +27,10 @@ class DecisionPolicy < EdgeTreePolicy
     end
   end
 
+  def destroy?
+    false
+  end
+
   def update?
     rule decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super
   end

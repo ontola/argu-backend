@@ -159,6 +159,11 @@ class EdgeTreePolicy < RestrictivePolicy
     child_operation(:create?, raw_klass, attrs)
   end
 
+  def destroy?
+    return super if edge.children.any?
+    rule is_creator?, staff?
+  end
+
   def follow?
     rule is_member?, is_super_admin?, staff?
   end
@@ -202,11 +207,11 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def trash?
-    staff?
+    rule is_manager?, is_super_admin?, staff?
   end
 
   def untrash?
-    staff?
+    rule is_manager?, is_super_admin?, staff?
   end
 
   def vote?

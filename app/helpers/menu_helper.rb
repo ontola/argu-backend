@@ -64,21 +64,19 @@ module MenuHelper
 
   def crud_menu_trash_options(resource, resource_policy)
     link_items = []
-    return link_items unless resource.is_trashable?
+    if resource_policy.destroy?
+      link_items << link_item(t('destroy'),
+                              polymorphic_url(resource, destroy: true),
+                              data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'},
+                              fa: 'close')
+    end
+    return link_items unless resource.is_trashable? && resource_policy.trash?
     if resource.is_trashed?
-      if resource_policy.trash?
-        link_items << link_item(t('untrash'),
-                                polymorphic_url([:untrash, resource]),
-                                data: {confirm: t('untrash_confirmation'), method: 'put', turbolinks: 'false'},
-                                fa: 'eye')
-      end
-      if resource_policy.destroy?
-        link_items << link_item(t('destroy'),
-                                polymorphic_url(resource, destroy: true),
-                                data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'},
-                                fa: 'close')
-      end
-    elsif resource_policy.trash?
+      link_items << link_item(t('untrash'),
+                              polymorphic_url([:untrash, resource]),
+                              data: {confirm: t('untrash_confirmation'), method: 'put', turbolinks: 'false'},
+                              fa: 'eye')
+    else
       link_items << link_item(t('trash'),
                               polymorphic_url([:delete, resource]),
                               data: {remote: true},

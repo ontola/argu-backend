@@ -35,23 +35,8 @@ class MotionPolicy < EdgeTreePolicy
     rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
-  def destroy?
-    (is_creator? && (record.arguments.length < 2 || 15.minutes.ago < record.created_at)) ||
-      is_manager? ||
-      is_super_admin? ||
-      super
-  end
-
   def new_without_question?
     create_without_question?
-  end
-
-  def trash?
-    rule is_creator?, is_manager?, is_super_admin?, super
-  end
-
-  def untrash?
-    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def update?
