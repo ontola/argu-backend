@@ -2,6 +2,8 @@
 
 # Helper methods for decisions
 module DecisionsHelper
+  include UrlHelper
+
   # @param [User, nil] user The User the Decision is assigned to. Nil if the Decision is assigned to a group
   # @param [Group] group The Group the Decision is assigned to.
   # @param [Boolean] create_link Set to true to link the name to the user's Profile
@@ -27,19 +29,19 @@ module DecisionsHelper
       if resource.decisions.unpublished.present?
         [
           link_item(t('decisions.edit_draft'),
-                    edit_decision_path(resource.decisions.last),
+                    edit_motion_decision_path(resource, resource.decisions.last),
                     fa: 'pencil')
         ]
       elsif resource.assigned_to_user?(current_user)
         Decision.actioned_keys.map do |state|
           link_item(t("decisions.action.#{state}"),
-                    new_decision_path(resource.edge, state: state),
+                    new_motion_decision_path(resource, state: state),
                     fa: decision_icon(Decision.new(state: state)))
         end
       else
         [
           link_item(t('decisions.action.forwarded'),
-                    new_decision_path(resource.edge, state: 'forwarded'),
+                    new_motion_decision_path(resource, state: 'forwarded'),
                     fa: decision_icon(Decision.new(state: 'forwarded')))
         ]
       end
@@ -48,29 +50,25 @@ module DecisionsHelper
       title: t('decisions.take_decision'),
       fa: 'fa-gavel',
       sections: [items: items],
-      defaultAction: motion_decisions_path(resource.edge)
+      defaultAction: motion_decisions_path(resource)
     }
   end
 
-  def decisionable_path(edge)
-    url_for(controller: "/#{edge.owner_type.tableize}", id: edge.id, action: :show)
+  def decision_url(decision, opts = {})
+    polymorphic_url([decision.parent_model, decision], opts)
   end
 
-  def decision_path(decision)
-    "#{decisionable_path(decision.edge.parent)}/decision/#{decision.step}"
+  def decision_path(decision, opts = {})
+    decision_url(decision, opts.merge(only_path: true))
   end
-  alias decision_url decision_path
 
-  def edit_decision_path(decision)
-    "#{decisionable_path(decision.edge.parent)}/decision/#{decision.step}/edit"
+  def edit_decision_url(decision, opts = {})
+    polymorphic_url([:edit, decision.parent_model, decision], opts)
   end
-  alias edit_decision_url edit_decision_path
 
-  def new_decision_path(edge, opts = {})
-    path = "#{decisionable_path(edge)}/decision/new"
-    opts.present? ? [path, opts.to_param].join('?') : path
+  def edit_decision_path(decision, opts = {})
+    edit_decision_url(decision, opts.merge(only_path: true))
   end
-  alias new_decision_url new_decision_path
 
   # @return [String]
   def decision_state(decision)

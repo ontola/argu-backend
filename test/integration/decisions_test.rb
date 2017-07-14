@@ -248,14 +248,18 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   def general_show(response = 200, record = motion)
     approval
-    get motion_decisions_path(record.edge)
 
+    get motion_decisions_path(record)
+    assert_response response
+
+    # Temporary check to see if old urls still work
+    get motion_decisions_path(record.edge)
     assert_response response
   end
 
   def general_decide(response = 302, changed = false, state = 'approved')
     assert_differences([['Activity.count', changed ? 2 : 0]]) do
-      post  motion_decisions_path(motion.edge),
+      post  motion_decisions_path(motion),
             params: {
               decision: attributes_for(:decision,
                                        state: state,
@@ -279,7 +283,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   def general_forward(response = 302, changed = false, group_id = nil, user_id = nil)
     assert_differences([['Activity.count', changed ? 2 : 0],
                         ['Decision.count', changed ? 1 : 0]]) do
-      post motion_decisions_path(motion.edge),
+      post motion_decisions_path(motion),
            params: {
              decision: attributes_for(:decision,
                                       decisionable: motion,

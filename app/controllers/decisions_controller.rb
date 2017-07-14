@@ -49,17 +49,19 @@ class DecisionsController < EdgeTreeController
            }
   end
 
-  def get_parent_resource(_opts = {})
-    get_parent_edge.owner
+  def get_parent_resource(opts = params)
+    super
+  rescue ActiveRecord::RecordNotFound
+    # Temporary rescue for paths using the old urls
+    @get_parent_resource ||=
+      Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts)).owner
   end
 
   def get_parent_edge(opts = params)
-    @parent_edge ||=
-      if parent_resource_class(opts).try(:shortnameable?)
-        parent_resource_class(opts).find_via_shortname_or_id!(parent_id_from_params(opts)).edge
-      else
-        Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))
-      end
+    super
+  rescue ActiveRecord::RecordNotFound
+    # Temporary rescue for paths using the old urls
+    @parent_edge ||= Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))
   end
 
   def message_success(resource, _)
@@ -74,7 +76,7 @@ class DecisionsController < EdgeTreeController
   def new_resource_from_params
     decision = get_parent_resource.decisions.unpublished.where(publisher: current_user).first
     if decision.nil?
-      decision = Edge.find(params[:motion_id])
+      decision = get_parent_edge
                      .children
                      .new(owner: Decision.new(resource_new_params.merge(decisionable_id: get_parent_edge.id)))
                      .owner

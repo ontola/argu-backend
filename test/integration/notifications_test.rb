@@ -147,7 +147,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     group_membership
 
     assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion.edge),
+      post motion_decisions_path(motion),
            params: {
              decision: attributes_for(:decision,
                                       state: 'forwarded',
@@ -174,7 +174,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     motion
 
     assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion.edge),
+      post motion_decisions_path(motion),
            params: {
              decision: attributes_for(:decision,
                                       state: 'forwarded',
@@ -191,7 +191,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_equal Notification.last.notification_type, 'reaction'
 
     assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion.edge),
+      post motion_decisions_path(motion),
            params: {
              decision: attributes_for(:decision,
                                       state: 'approved',

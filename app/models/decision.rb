@@ -28,6 +28,10 @@ class Decision < ApplicationRecord
     I18n.t("decisions.#{parent_model.model_name.i18n_key}.#{state}")
   end
 
+  def to_param
+    step.to_s
+  end
+
   private
 
   def correctly_forwarded
