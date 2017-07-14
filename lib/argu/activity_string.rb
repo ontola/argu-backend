@@ -42,14 +42,18 @@ module Argu
     # @return [String] Display name of activity.owner, as link or bold text
     def owner_string
       string = @activity.owner.display_name
-      @embedded_link && @activity.owner_id.positive? ? "[#{string}](#{dual_profile_url(@activity.owner)})" : string.to_s
+      if @embedded_link && @activity.owner_id.positive?
+        "[#{string}](#{dual_profile_url(@activity.owner, only_path: false)})"
+      else
+        string.to_s
+      end
     end
 
     # @return [String, nil] Display name of activity.trackable.get_parent, as link or bold text
     def parent_string
       recipient = @activity.recipient_type == 'VoteEvent' ? @activity.recipient&.voteable : @activity.recipient
       return @activity.audit_data.try(:[], 'recipient_name') if recipient.nil?
-      @embedded_link ? "[#{recipient.display_name}](#{url_for(recipient)})" : recipient.display_name
+      @embedded_link ? "[#{recipient.display_name}](#{polymorphic_url(recipient)})" : recipient.display_name
     end
 
     # @return [String, nil] Translation of pro, neutral or con
@@ -73,10 +77,10 @@ module Argu
         url =
           if @activity.object == 'decision'
             if @activity.trackable.present? && @activity.recipient.present?
-              motion_decision_path(@activity.recipient_edge, id: @activity.trackable.step)
+              motion_decision_url(@activity.recipient_edge, id: @activity.trackable.step)
             end
           else
-            url_for(@activity.trackable)
+            polymorphic_url(@activity.trackable)
           end
         "[#{string}](#{url})"
       else

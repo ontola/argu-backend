@@ -38,14 +38,14 @@ class ActivityStringTest < ActiveSupport::TestCase
     create_activity = question.activities.first
     update_activity = update_resource(question, {content: 'updated content'}, updater).activities.last
     trash_activity = trash_resource(question, updater).activities.last
-    assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
-                  "posted a draft challenge in [#{project.display_name}](/p/#{project.id})",
+    assert_equal "[#{question.publisher.display_name}](#{url("/u/#{question.publisher.url}")}) "\
+                  "posted a draft challenge in [#{project.display_name}](#{url("/p/#{project.id}")})",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
-                  "updated [#{question.display_name}](/q/#{question.id})",
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
+                  "updated [#{question.display_name}](#{url("/q/#{question.id}")})",
                  Argu::ActivityString.new(update_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
-                  "trashed [#{question.display_name}](/q/#{question.id})",
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
+                  "trashed [#{question.display_name}](#{url("/q/#{question.id}")})",
                  Argu::ActivityString.new(trash_activity, receiver, true).to_s
   end
 
@@ -55,16 +55,16 @@ class ActivityStringTest < ActiveSupport::TestCase
     trash_activity = trash_resource(question, updater).activities.last
     destroy_resource(question, updater)
     destroy_activity = Activity.last
-    assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
-                  "posted a draft challenge in [#{project.display_name}](/p/#{project.id})",
+    assert_equal "[#{question.publisher.display_name}](#{url("/u/#{question.publisher.url}")}) "\
+                  "posted a draft challenge in [#{project.display_name}](#{url("/p/#{project.id}")})",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "updated #{question.display_name}",
                  Argu::ActivityString.new(update_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "trashed #{question.display_name}",
                  Argu::ActivityString.new(trash_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "deleted #{question.display_name}",
                  Argu::ActivityString.new(destroy_activity, receiver, true).to_s
   end
@@ -74,13 +74,13 @@ class ActivityStringTest < ActiveSupport::TestCase
     update_activity = update_resource(question, {content: 'updated content'}, updater).activities.last
     trash_activity = trash_resource(question, updater).activities.last
     destroy_resource(project)
-    assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
+    assert_equal "[#{question.publisher.display_name}](#{url("/u/#{question.publisher.url}")}) "\
                   "posted a draft challenge in #{project.display_name}",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "updated #{question.display_name}",
                  Argu::ActivityString.new(update_activity, receiver, true).to_s
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "trashed #{question.display_name}",
                  Argu::ActivityString.new(trash_activity, receiver, true).to_s
   end
@@ -90,46 +90,52 @@ class ActivityStringTest < ActiveSupport::TestCase
     update_activity = update_resource(question, {content: 'updated content'}, question.publisher).activities.last
     trash_activity = trash_resource(question, question.publisher).activities.last
     question.publisher.destroy
-    assert_equal "community posted a draft challenge in [#{project.display_name}](/p/#{project.id})",
+    assert_equal "community posted a draft challenge in [#{project.display_name}](#{url("/p/#{project.id}")})",
                  Argu::ActivityString.new(create_activity.reload, receiver, true).to_s
-    assert_equal "community updated [#{question.display_name}](/q/#{question.id})",
+    assert_equal "community updated [#{question.display_name}](#{url("/q/#{question.id}")})",
                  Argu::ActivityString.new(update_activity.reload, receiver, true).to_s
-    assert_equal "community trashed [#{question.display_name}](/q/#{question.id})",
+    assert_equal "community trashed [#{question.display_name}](#{url("/q/#{question.id}")})",
                  Argu::ActivityString.new(trash_activity.reload, receiver, true).to_s
   end
 
   test 'string for approved decision' do
     approved_activity = approved_decision.activities.second
-    assert_equal "[#{approved_decision.publisher.display_name}](/u/#{approved_decision.publisher.url}) "\
-                  "passed [#{motion.display_name}](/m/#{motion.id})",
+    assert_equal "[#{approved_decision.publisher.display_name}](#{url("/u/#{approved_decision.publisher.url}")}) "\
+                  "passed [#{motion.display_name}](#{url("/m/#{motion.id}")})",
                  Argu::ActivityString.new(approved_activity, receiver, true).to_s
   end
 
   test 'string for rejected decision' do
     rejected_activity = rejected_decision.activities.second
-    assert_equal "[#{rejected_decision.publisher.display_name}](/u/#{rejected_decision.publisher.url}) "\
-                  "rejected [#{motion.display_name}](/m/#{motion.id})",
+    assert_equal "[#{rejected_decision.publisher.display_name}](#{url("/u/#{rejected_decision.publisher.url}")}) "\
+                  "rejected [#{motion.display_name}](#{url("/m/#{motion.id}")})",
                  Argu::ActivityString.new(rejected_activity, receiver, true).to_s
   end
 
   test 'string for forwarded decision' do
     forwarded_activity = forwarded_decision.activities.second
-    assert_equal "[#{forwarded_decision.publisher.display_name}](/u/#{forwarded_decision.publisher.url}) "\
-                  "forwarded the decision on [#{motion.display_name}](/m/#{motion.id})",
+    assert_equal "[#{forwarded_decision.publisher.display_name}](#{url("/u/#{forwarded_decision.publisher.url}")}) "\
+                  "forwarded the decision on [#{motion.display_name}](#{url("/m/#{motion.id}")})",
                  Argu::ActivityString.new(forwarded_activity, receiver, true).to_s
   end
 
   test 'string for forwarded decision to you' do
     forwarded_activity = forwarded_decision.activities.second
-    assert_equal "[#{forwarded_decision.publisher.display_name}](/u/#{forwarded_decision.publisher.url}) "\
-                  "forwarded the decision on [#{motion.display_name}](/m/#{motion.id}) to you",
+    assert_equal "[#{forwarded_decision.publisher.display_name}](#{url("/u/#{forwarded_decision.publisher.url}")}) "\
+                  "forwarded the decision on [#{motion.display_name}](#{url("/m/#{motion.id}")}) to you",
                  Argu::ActivityString.new(forwarded_activity, motion.assigned_user, true).to_s
   end
 
   test 'string for updated decision' do
     update_activity = update_resource(approved_decision, {content: 'updated content'}, updater).activities.last
-    assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
-                  "updated a decision on [#{motion.display_name}](/m/#{motion.id})",
+    assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
+                  "updated a decision on [#{motion.display_name}](#{url("/m/#{motion.id}")})",
                  Argu::ActivityString.new(update_activity, receiver, true).to_s
+  end
+
+  private
+
+  def url(u)
+    "http://#{Rails.application.config.host_name}#{u}"
   end
 end
