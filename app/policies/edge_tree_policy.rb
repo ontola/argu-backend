@@ -8,11 +8,15 @@ class EdgeTreePolicy < RestrictivePolicy
     def resolve
       return scope.published.untrashed if staff?
       scope
+        .joins(:edge)
+        .where("edges.path ? #{Edge.path_array(granted_edges_within_tree || user.profile.granted_edges)}")
         .published
         .untrashed
-        .joins("LEFT JOIN forums ON #{class_name.tableize}.forum_id = forums.id")
-        .where("#{class_name.tableize}.forum_id IS NULL OR #{class_name.tableize}.forum_id IN (?) ",
-               user.profile.forum_ids)
+    end
+
+    def granted_edges_within_tree
+      return unless context.has_tree?
+      user.profile.granted_edges.where('path <@ ?', context.tree_root.id.to_s)
     end
   end
 

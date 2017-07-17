@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 class VotePolicy < EdgeTreePolicy
-  class Scope < Scope
+  class Scope < EdgeTreePolicy::Scope
     def resolve
       if staff?
         scope
       else
         voter_ids = user.managed_profile_ids
         scope
-          .joins(:creator)
+          .joins(:creator, edge: {parent: :parent})
+          .where("edges.path ? #{Edge.path_array(granted_edges_within_tree)}")
           .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
-          .joins(edge: {parent: :parent})
-          .where(voteable_type: %w(Question Motion LinkedRecord), parents_edges_2: {trashed_at: nil})
-          .joins('LEFT JOIN forums ON votes.forum_id = forums.id')
-          .where('forums.id IS NULL OR "forums"."id" IN (?)', user.profile.forum_ids)
+          .where(voteable_type: %w(Question Motion LinkedRecord),
+                 parents_edges_2: {is_published: true, trashed_at: nil})
       end
     end
   end

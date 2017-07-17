@@ -2,7 +2,7 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope, :rules_in_scope
+  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope, :rules_in_scope, :tree_root
 
   class Node
     attr_accessor :id, :expired, :trashed, :unpublished, :children, :user_context, :grants_in_scope, :rules_in_scope

@@ -2,7 +2,9 @@
 class ForumPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
-      scope.where('discoverable = true OR forums.id in (?)', user.profile.forum_ids)
+      scope
+        .joins(:edge)
+        .where("discoverable = true OR edges.path ? #{Edge.path_array(user.profile.granted_edges)}")
     end
   end
 
