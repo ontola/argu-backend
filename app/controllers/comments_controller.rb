@@ -108,6 +108,15 @@ class CommentsController < EdgeTreeController
     redirect_url
   end
 
+  def respond_with_form_js(resource)
+    respond_js(
+      'comments/new',
+      parent_id: params[:comment][:parent_id],
+      resource: resource.parent_model,
+      comment: resource
+    )
+  end
+
   def update_respond_failure_html(resource)
     render 'edit',
            locals: {
