@@ -54,7 +54,7 @@ module Argu
 
     def handle_not_authorized_error(e)
       @_not_authorized_caught = true
-      return handle_error(e) unless request.format.html?
+      return handle_error(e) unless [:html, nil].include?(request.format.symbol)
       error_mode(e)
       respond_to do |format|
         format.html do
@@ -66,7 +66,7 @@ module Argu
 
     def handle_not_a_user_error(e)
       @_not_a_user_caught = true
-      return handle_error(e) unless %i(html js).include?(request.format.symbol)
+      return handle_error(e) unless [:html, :js, nil].include?(request.format.symbol)
       error_mode(e)
       respond_to do |format|
         format.js do
@@ -93,7 +93,7 @@ module Argu
     end
 
     def handle_record_not_unique(e)
-      return handle_error(e) unless request.format.html?
+      return handle_error(e) unless [:html, nil].include?(request.format.symbol)
       error_mode(e)
       respond_to do |format|
         format.html do
@@ -104,7 +104,7 @@ module Argu
     end
 
     def handle_stale_object_error
-      return handle_error(e) unless request.format.html?
+      return handle_error(e) unless [:html, nil].include?(request.format.symbol)
       error_mode(e)
       respond_to do |format|
         format.html do
