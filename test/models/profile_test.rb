@@ -26,11 +26,13 @@ class ProfileTest < ActiveSupport::TestCase
     assert_not subject.member_of?(capetown), 'false positive when forum is passed'
   end
 
-  test 'forum_ids' do
+  test 'granted_edges' do
     capetown
 
-    assert_equal Profile.find(subject.id).forum_ids, [freetown.id]
+    assert_equal subject.reload.granted_edges.pluck(:id).uniq, [freetown.edge.id]
+    assert_equal subject.granted_edges(nil, :manager).pluck(:id), []
     managership
-    assert_equal Profile.find(subject.id).forum_ids, [freetown.id, capetown.id]
+    assert_equal subject.reload.granted_edges.pluck(:id).uniq, [freetown.edge.id, capetown.page.edge.id]
+    assert_equal subject.granted_edges(nil, :manager).pluck(:id).uniq, [capetown.page.edge.id]
   end
 end

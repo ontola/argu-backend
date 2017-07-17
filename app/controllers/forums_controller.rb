@@ -11,11 +11,13 @@ class ForumsController < EdgeTreeController
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
   def index
-    @forums = Forum
-                .joins(:edge)
-                .where('forums.page_id IN(?) OR edges.path ~ ?',
-                       current_user.profile.pages.pluck(:id),
-                       manager_edges_sql)
+    @forums =
+      Forum
+        .joins(:edge)
+        .where(
+          'edges.path ? '\
+          "#{Edge.path_array(current_user.profile.granted_edges.where('grants.role >= ?', Grant.roles[:manager]))}"
+        )
     @_pundit_policy_scoped = true
   end
 
@@ -150,12 +152,6 @@ class ForumsController < EdgeTreeController
 
   def parent_resource
     @parent_resource ||= authenticated_resource!&.page
-  end
-
-  def manager_edges_sql
-    ids = current_user.profile.granted_edge_ids(nil, :manager) +
-      current_user.profile.granted_edge_ids(nil, :super_admin)
-    "*.#{ids.compact.uniq.join('|').presence || 'NULL'}.*"
   end
 
   def permit_params

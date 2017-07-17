@@ -82,22 +82,11 @@ class Profile < ApplicationRecord
     granted_records('Forum')
   end
 
-  def forum_ids(role = nil)
-    @forum_ids ||= {}
-    @forum_ids[role] ||= granted_record_ids('Forum', role)
-                           .concat(Forum.where(page: granted_record_ids('Page', role)).ids)
-                           .uniq
-  end
-
   def granted_edges(owner_type = nil, role = nil)
     scope = granted_edges_scope
     scope = scope.where(owner_type: owner_type) if owner_type.present?
     scope = scope.where(grants: {role: Grant.roles[role]}) if role.present?
     scope
-  end
-
-  def granted_edge_ids(owner_type = nil, role = nil)
-    granted_edges(owner_type, role).pluck(:id)
   end
 
   def granted_records(owner_type, role = nil)

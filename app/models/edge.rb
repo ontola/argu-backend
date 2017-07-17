@@ -231,6 +231,20 @@ class Edge < ApplicationRecord
     parent.save
   end
 
+  def self.path_array(paths)
+    return 'NULL' if paths.empty?
+    paths = case paths
+            when String
+              [paths]
+            when ActiveRecord::Associations::CollectionProxy, ActiveRecord::Relation
+              paths.map(&:path)
+            else
+              paths
+            end
+    paths.each { |path| paths.delete_if { |p| p.match(/^#{path}\./) } }
+    "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}]"
+  end
+
   private
 
   def destroy_children
