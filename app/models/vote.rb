@@ -83,7 +83,7 @@ class Vote < ApplicationRecord
   end
 
   def store_in_redis?(opts = {})
-    !publisher.confirmed? && !opts[:skip_redis]
+    !opts[:skip_redis] && !publisher.confirmed? && !creator.confirmed?
   end
 
   delegate :is_trashed?, to: :parent_model

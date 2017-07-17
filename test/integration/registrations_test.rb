@@ -243,7 +243,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should delete destroy with content' do
-    create :motion, publisher: user, creator: user.profile, parent: freetown.edge
+    motion = create :motion, publisher: user, creator: user.profile, parent: freetown.edge
+    create :vote, publisher: user, creator: user.profile, parent: motion.default_vote_event.edge
     create :question, publisher: user, creator: user.profile, parent: freetown.edge
     create :argument, parent: Motion.last.edge, publisher: user, creator: user.profile
 
