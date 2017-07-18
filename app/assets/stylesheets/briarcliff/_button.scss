@@ -150,6 +150,9 @@
 
 .sticky, .sticky--bottom-right, .sticky--center, .sticky--top-left, .sticky--top-right {
   position: absolute !important;
+}
+
+.sticky--on-top {
   z-index: 1;
 }
 

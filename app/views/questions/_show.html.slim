@@ -8,9 +8,9 @@
   =render partial: 'questions/info_bar', locals: {question: model}
   section
     .markdown[itemprop="text"]
-      =markdown_to_html(model.content)
+      =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
     - if model.children_count(:motions) > 0
       =render partial: 'questions/motions_list', locals: {question: model}
-    =link_to question_path(model), class: 'btn-subtle sticky--bottom-right' do
+    =link_to question_path(model), class: 'btn-subtle sticky--bottom-right sticky--on-top' do
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right

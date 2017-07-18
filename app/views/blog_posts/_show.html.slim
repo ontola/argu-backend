@@ -4,7 +4,7 @@
       h3.blog-post-t[itemprop="headline"]= model.title
       =render partial: 'blog_posts/info_bar', locals: {blog_post: model}
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
-  =link_to url_for_blog_post(model), class: 'btn-subtle sticky--bottom-right'
+  =link_to url_for_blog_post(model), class: 'btn-subtle sticky--bottom-right sticky--on-top'
     span.icon-right= t('read_more')
     span.fa.fa-arrow-right
   =yield

@@ -6,7 +6,7 @@
     -if model.content.present?
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if policy(model).create_child?(:comments)
-      =link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini'
+      =link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini sticky--on-top'
         span.icon-right= t('reply')
         span.fa.fa-comments
 - if model.top_comment.present? && policy(model).index_children?(:comments)

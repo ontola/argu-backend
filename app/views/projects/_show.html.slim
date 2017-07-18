@@ -9,7 +9,7 @@
     =render partial: 'projects/info_bar', locals: {project: model}
   section
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
-  =link_to project_path(model), class: 'btn-subtle sticky--bottom-right'
+  =link_to project_path(model), class: 'btn-subtle sticky--bottom-right sticky--on-top'
     span.icon-right= t('read_more')
     span.fa.fa-arrow-right
   =yield
