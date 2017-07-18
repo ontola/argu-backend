@@ -83,6 +83,22 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     follow_redirect!
   end
 
+  test 'should sign up with facebook with wrong r' do
+    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
+    Identity.any_instance.stubs(:email).returns('testuser@example.com')
+    Identity.any_instance.stubs(:name).returns('First Last')
+    Identity.any_instance.stubs(:image_url).returns('')
+
+    get user_facebook_omniauth_authorize_path(r: 'https://evil.co')
+    assert_redirected_to user_facebook_omniauth_callback_path(r: 'https://evil.co')
+
+    assert_difference 'User.count', 1 do
+      follow_redirect!
+      assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'facebook')
+    end
+  end
+
   test 'should sign in with facebook' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: 'user_fb_only@argu.co',
                                                               uid: '111903726898977')

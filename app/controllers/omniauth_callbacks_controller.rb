@@ -29,7 +29,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def r_param(env)
-    env['omniauth.params']['r'] || params[:r]
+    r = env['omniauth.params']['r'] || params[:r]
+    valid_redirect?(r) ? r : nil
   end
 
   def set_facebook_fields(identity, auth)
