@@ -23,6 +23,16 @@ RSpec.feature 'User Password', type: :feature do
   end
 
   ####################################
+  # As Guest
+  ####################################
+  scenario 'guest should request a password reset email' do
+    visit new_user_password_path
+    fill_in 'user_email', with: user.email
+    click_button 'Send reset instructions'
+    expect(page).to have_content('You will receive an email shortly with instructions to reset your password.')
+  end
+
+  ####################################
   # As User
   ####################################
   scenario 'user no omni should change their password' do
