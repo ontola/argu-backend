@@ -2,6 +2,10 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
+  %w(comment page forum question motion argument project blog_post group).each do |model|
+    require_dependency model
+  end
+
   def class_name
     self.class.name.tableize
   end
