@@ -104,8 +104,4 @@ class GroupMembershipsController < ServiceController
   end
   alias redirect_model_failure redirect_url
   alias redirect_model_success redirect_url
-
-  def granted_resource
-    authenticated_resource.group.grants.first&.edge&.owner
-  end
 end

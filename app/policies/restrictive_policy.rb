@@ -113,10 +113,6 @@ class RestrictivePolicy
     rule staff?
   end
 
-  def logged_in?
-    !user.guest?
-  end
-
   def new?
     create?
   end

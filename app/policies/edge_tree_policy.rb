@@ -120,10 +120,6 @@ class EdgeTreePolicy < RestrictivePolicy
             "#{record.edge.argu_publication.publish_type}?"
   end
 
-  def context_forum
-    @context_forum ||= persisted_edge.get_parent(:forum)&.owner
-  end
-
   def permitted_attributes
     attributes = super
     if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
@@ -210,10 +206,6 @@ class EdgeTreePolicy < RestrictivePolicy
     rule is_manager?, is_super_admin?, staff?
   end
 
-  def vote?
-    staff?
-  end
-
   def show?
     return show_unpublished? if has_unpublished_ancestors?
     rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
@@ -250,7 +242,4 @@ class EdgeTreePolicy < RestrictivePolicy
     r
   end
 
-  def parent_policy
-    Pundit.policy(context, record.parent_model)
-  end
 end

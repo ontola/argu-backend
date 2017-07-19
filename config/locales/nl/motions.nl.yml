@@ -96,7 +96,6 @@ nl:
       tooltip: "Dit voorstel is afgewezen op %{date}."
   pundit:
     motion_policy:
-      vote?: "Je mag nog niet op items stemmen. Zorg ervoor dat je lid van het forum bent."
       create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een uitdaging."
   activerecord:
     errors:

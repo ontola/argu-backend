@@ -22,4 +22,10 @@ class BannerDismissalPolicy < EdgeTreePolicy
     when :everyone then true
     end
   end
+
+  private
+
+  def context_forum
+    @context_forum ||= persisted_edge.get_parent(:forum)&.owner
+  end
 end

@@ -35,16 +35,8 @@ class MotionPolicy < EdgeTreePolicy
     rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
-  def new_without_question?
-    create_without_question?
-  end
-
   def update?
     rule is_creator?, is_manager?, is_super_admin?, super
-  end
-
-  def vote?
-    rule is_member?, super
   end
 
   def statistics?

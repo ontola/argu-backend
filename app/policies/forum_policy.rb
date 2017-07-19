@@ -24,11 +24,6 @@ class ForumPolicy < EdgeTreePolicy
     tabs
   end
 
-  # #####Actions######
-  def create?
-    super
-  end
-
   def destroy?
     rule is_super_admin?, super
   end
@@ -42,14 +37,6 @@ class ForumPolicy < EdgeTreePolicy
     true
   end
 
-  def list_members?
-    rule is_super_admin?, staff?
-  end
-
-  def managers?
-    rule is_super_admin?, staff?
-  end
-
   def max_shortname_count?
     rule staff?
   end
@@ -58,19 +45,9 @@ class ForumPolicy < EdgeTreePolicy
     update?
   end
 
-  def statistics?
-    super
-  end
 
   def update?
     rule is_super_admin?, super
   end
 
-  def add_motion?
-    rule is_member?, staff?
-  end
-
-  def add_question?
-    rule is_member?, staff?
-  end
 end
