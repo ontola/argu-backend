@@ -6,7 +6,7 @@ module Argu
       include ActionView::Context
 
       def link(link, title, content)
-        safe_content = content.html_safe
+        safe_content = content&.html_safe
         content =
           case link_get_type(link)
           when 'u'
