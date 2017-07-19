@@ -125,6 +125,7 @@ class Edge < ApplicationRecord
   end
 
   def has_expired_ancestors?
+    return persisted? && expired? if root?
     persisted_edge
       .self_and_ancestors
       .expired
@@ -132,6 +133,7 @@ class Edge < ApplicationRecord
   end
 
   def has_trashed_ancestors?
+    return persisted? && is_trashed? if root?
     persisted_edge
       .self_and_ancestors
       .trashed
@@ -139,6 +141,7 @@ class Edge < ApplicationRecord
   end
 
   def has_unpublished_ancestors?
+    return persisted? && !is_published? if root?
     persisted_edge
       .self_and_ancestors
       .unpublished

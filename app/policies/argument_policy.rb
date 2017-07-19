@@ -8,13 +8,11 @@ class ArgumentPolicy < EdgeTreePolicy
     attributes
   end
 
-  def create?
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    rule is_member?, is_manager?, is_super_admin?, super
-  end
-
-  def update?
-    rule (is_member? && is_creator?), is_manager?, is_super_admin?, super
-  end
+  alias create_roles default_create_roles
+  alias destroy_roles default_destroy_roles
+  alias trash_roles default_trash_roles
+  alias untrash_roles default_untrash_roles
+  alias update_roles default_update_roles
+  alias show_roles default_show_roles
+  alias show_unpublished_roles default_show_unpublished_roles
 end

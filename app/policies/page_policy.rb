@@ -56,29 +56,8 @@ class PagePolicy < EdgeTreePolicy
     tabs
   end
 
-  def show?
-    rule is_open?, is_group_member?, is_manager?, super
-  end
-
-  def create?
-    rule pages_left?, super
-  end
-
-  def destroy?
-    rule is_super_admin?, super
-  end
-
-  def update?
-    rule is_manager?, is_super_admin?, super
-  end
-
   def list?
     rule record.closed?, show?
-  end
-
-  def pages_left?
-    return if user.guest?
-    member if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
   end
 
   def statistics?
@@ -86,6 +65,14 @@ class PagePolicy < EdgeTreePolicy
   end
 
   private
+
+  def check_action(_a)
+    nil
+  end
+
+  def cache_action(_a, v)
+    v
+  end
 
   def default_tab
     'profile'
@@ -95,11 +82,23 @@ class PagePolicy < EdgeTreePolicy
     group_grant if user.profile.group_memberships.joins(:group).where(groups: {page: record}).present?
   end
 
-  def check_action(_a)
-    nil
+  def show_roles
+    [is_open?, is_group_member?, is_manager?, super]
   end
 
-  def cache_action(_a, v)
-    v
+  def create_roles
+    [pages_left? ? member : nil, super]
+  end
+
+  def destroy_roles
+    [is_super_admin?, super]
+  end
+
+  def update_roles
+    [is_manager?, is_super_admin?, super]
+  end
+
+  def pages_left?
+    user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
   end
 end

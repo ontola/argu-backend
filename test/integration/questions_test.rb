@@ -11,6 +11,11 @@ class QuestionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: freetown.edge)
   end
+  let(:subject_without_motions) do
+    create(:question,
+           publisher: creator,
+           parent: freetown.edge)
+  end
   let!(:trashed_motion) { create(:motion, edge_attributes: {trashed_at: DateTime.current}, parent: subject.edge) }
   let(:forum_move_to) { create_forum }
 
@@ -106,7 +111,13 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     define_test(hash, :update, suffix: ' with attachment', options: options) do
       {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
-    define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')})
+    define_test(hash, :destroy, options: {analytics: stats_opt('questions', 'destroy_success')}) do
+      user_types[:destroy].merge(creator: exp_res(analytics: false))
+    end
+    options = {analytics: stats_opt('questions', 'destroy_success'), record: :subject_without_motions}
+    define_test(hash, :destroy, suffix: ' without motions', options: options) do
+      user_types[:destroy].slice(:creator)
+    end
     define_test(hash, :trash, options: {analytics: stats_opt('questions', 'trash_success')})
     define_test(hash, :shift)
     define_test(hash, :move, options: {attributes: {forum_id: :forum_move_to}}) do

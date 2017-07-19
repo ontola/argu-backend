@@ -8,12 +8,14 @@ class GrantPolicy < EdgeTreePolicy
     attributes
   end
 
-  def create?
-    rule is_super_admin?, super
+  private
+
+  def create_roles
+    [is_super_admin?, super]
   end
 
-  def destroy?
-    return if record.group_id == Group::PUBLIC_ID || record.super_admin?
-    rule is_super_admin?, staff?
+  def destroy_roles
+    return [] if record.group_id == Group::PUBLIC_ID || record.super_admin?
+    [is_super_admin?, super]
   end
 end

@@ -23,7 +23,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = [:lock_version, :token]
-    attributes.append(:shortname) if rule(is_super_admin?, staff?)
+    attributes.append(:shortname) if is_super_admin? || staff?
     attributes
   end
 
@@ -31,16 +31,16 @@ class GroupMembershipPolicy < EdgeTreePolicy
     record.member == actor
   end
 
-  def create?
-    rule valid_token?, is_super_admin?, super
-  end
-
-  def destroy?
-    return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
-    rule is_creator?, is_super_admin?, staff?
-  end
-
   private
+
+  def create_roles
+    [valid_token?, is_super_admin?, super]
+  end
+
+  def destroy_roles
+    return [] if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
+    [is_creator?, is_super_admin?, super]
+  end
 
   def is_creator?
     creator if record.member == user.profile

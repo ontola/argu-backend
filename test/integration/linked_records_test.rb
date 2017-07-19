@@ -5,7 +5,9 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
   define_public_source
   let!(:linked_record) do
     linked_record_mock(1)
-    create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1')
+    lr = create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1')
+    lr.edge.update(is_published: true)
+    lr
   end
 
   ####################################

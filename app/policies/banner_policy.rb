@@ -15,10 +15,6 @@ class BannerPolicy < EdgeTreePolicy
     end
   end
 
-  def edge
-    record.forum.edge
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i(title forum cited_profile content cited_name audience
@@ -28,15 +24,21 @@ class BannerPolicy < EdgeTreePolicy
     attributes
   end
 
-  def create?
-    rule is_super_admin?, super
+  private
+
+  def edge
+    record.forum.edge
   end
 
-  def destroy?
-    rule is_super_admin?, staff?
+  def create_roles
+    [is_super_admin?, super]
   end
 
-  def update?
-    rule is_super_admin?, super
+  def destroy_roles
+    [is_super_admin?, super]
+  end
+
+  def update_roles
+    [is_super_admin?, super]
   end
 end

@@ -23,15 +23,17 @@ class AnnouncementPolicy < RestrictivePolicy
     attributes
   end
 
-  def create?
-    staff?
+  private
+
+  def create_roles
+    [staff?]
   end
 
-  def destroy?
-    staff?
+  def destroy_roles
+    [staff?]
   end
 
-  def update?
-    staff?
+  def update_roles
+    [staff?]
   end
 end

@@ -20,15 +20,17 @@ class VoteMatchPolicy < RestrictivePolicy
     true
   end
 
-  def destroy?
-    is_creator? || super
-  end
-
-  def update?
-    is_creator? || super
-  end
-
   def is_creator?
     creator if record.creator.present? && record.creator == actor
+  end
+
+  private
+
+  def destroy_roles
+    [is_creator? || super]
+  end
+
+  def update_roles
+    [is_creator? || super]
   end
 end

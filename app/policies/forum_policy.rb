@@ -24,10 +24,6 @@ class ForumPolicy < EdgeTreePolicy
     tabs
   end
 
-  def destroy?
-    rule is_super_admin?, super
-  end
-
   def follow?
     rule is_member?, is_manager?, staff?
   end
@@ -45,9 +41,20 @@ class ForumPolicy < EdgeTreePolicy
     update?
   end
 
+  private
 
-  def update?
-    rule is_super_admin?, super
+  def create_roles
+    [staff?]
   end
 
+  alias show_roles default_show_roles
+  alias show_unpublished_roles default_show_unpublished_roles
+
+  def destroy_roles
+    [is_super_admin?, super]
+  end
+
+  def update_roles
+    [is_super_admin?, super]
+  end
 end

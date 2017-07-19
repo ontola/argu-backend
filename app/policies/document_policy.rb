@@ -10,12 +10,4 @@ class DocumentPolicy < RestrictivePolicy
   def show?
     true
   end
-
-  def create?
-    staff?
-  end
-
-  def update?
-    staff?
-  end
 end

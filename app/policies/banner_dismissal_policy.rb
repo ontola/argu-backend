@@ -2,10 +2,6 @@
 class BannerDismissalPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 
-  def edge
-    record.banner.forum.edge
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i(title forum cited_profile content profile_photo
@@ -24,6 +20,10 @@ class BannerDismissalPolicy < EdgeTreePolicy
   end
 
   private
+
+  def edge
+    record.banner.forum.edge
+  end
 
   def context_forum
     @context_forum ||= persisted_edge.get_parent(:forum)&.owner

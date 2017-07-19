@@ -9,11 +9,16 @@ class PhasePolicy < EdgeTreePolicy
     attributes
   end
 
-  def create?
-    rule is_manager?, is_super_admin?, super
+  private
+
+  def create_roles
+    [is_manager?, is_super_admin?, super]
   end
 
-  def update?
-    rule is_manager?, is_super_admin?, super
+  def update_roles
+    [is_manager?, is_super_admin?, super]
   end
+
+  alias show_roles default_show_roles
+  alias show_unpublished_roles default_show_unpublished_roles
 end

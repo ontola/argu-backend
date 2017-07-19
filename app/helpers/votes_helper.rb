@@ -30,7 +30,7 @@ module VotesHelper
         yield
       end
     else
-      data[:title] = if policy(vote || Vote.new(edge: Edge.new(parent: model.edge))).has_expired_ancestors?
+      data[:title] = if (vote || Vote.new(edge: Edge.new(parent: model.edge))).edge.has_expired_ancestors?
                        t('votes.disabled.expired')
                      else
                        t('votes.disabled.unauthorized')

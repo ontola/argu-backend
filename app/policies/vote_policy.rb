@@ -24,35 +24,39 @@ class VotePolicy < EdgeTreePolicy
   end
   include Roles
 
-  def show?
-    if record.creator.are_votes_public
-      Pundit.policy(context, record.parent_model).show?
-    else
-      rule is_creator?, staff?, service?
-    end
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat [:explanation, argument_ids: []]
     attributes
   end
 
-  def create?
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    if record.parent_model.is_a?(VoteEvent)
-      rule is_group_member?
+  def show?
+    if record.creator.are_votes_public
+      Pundit.policy(context, record.parent_model).show?
     else
-      rule is_member?, is_manager?, is_super_admin?, super
+      super
     end
   end
 
-  def update?
-    rule is_creator?, super
+  private
+
+  def create_roles
+    if record.parent_model.is_a?(VoteEvent)
+      [is_group_member?]
+    else
+      [is_member?, is_manager?, is_super_admin?, super]
+    end
   end
 
-  def destroy?
-    rule is_creator?, super
+  def show_roles
+    [is_creator?, super]
+  end
+
+  def update_roles
+    [is_creator?]
+  end
+
+  def destroy_roles
+    [is_creator?]
   end
 end

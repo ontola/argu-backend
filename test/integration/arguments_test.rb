@@ -21,6 +21,11 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
            parent: motion.edge,
            publisher: creator)
   end
+  let(:subject_without_comments) do
+    create(:argument,
+           parent: motion.edge,
+           publisher: creator)
+  end
   let!(:comment) do
     create(:comment,
            parent: subject.edge)
@@ -94,7 +99,13 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     end
     define_test(hash, :edit)
     define_test(hash, :update)
-    define_test(hash, :destroy, options: {analytics: stats_opt('arguments', 'destroy_success')})
+    define_test(hash, :destroy, options: {analytics: stats_opt('arguments', 'destroy_success')}) do
+      user_types[:destroy].merge(creator: exp_res(analytics: false))
+    end
+    options = {analytics: stats_opt('arguments', 'destroy_success'), record: :subject_without_comments}
+    define_test(hash, :destroy, suffix: ' without comments', options: options) do
+      user_types[:destroy].slice(:creator)
+    end
     define_test(hash, :trash, options: {analytics: stats_opt('arguments', 'trash_success')})
   end
 

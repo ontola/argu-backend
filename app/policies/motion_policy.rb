@@ -24,22 +24,31 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def create?
-    assert_publish_type
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
     return create_without_question? unless record.parent_model.is_a?(Question)
-    rule is_member?, is_manager?, is_super_admin?, super
+    super
   end
 
   def create_without_question?
+    create_asserts
     rule is_member?, is_manager?, is_super_admin?, staff?
-  end
-
-  def update?
-    rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def statistics?
     rule is_manager?, is_super_admin?, super
   end
+
+  private
+
+  def create_asserts
+    assert_publish_type
+    super
+  end
+
+  alias create_roles default_create_roles
+  alias destroy_roles default_destroy_roles
+  alias trash_roles default_trash_roles
+  alias untrash_roles default_untrash_roles
+  alias update_roles default_update_roles
+  alias show_roles default_show_roles
+  alias show_unpublished_roles default_show_unpublished_roles
 end

@@ -85,6 +85,7 @@ Argu::TestHelpers::AutomatedTests.configure do |config|
       non_member: exp_res(analytics: false, asserts: [assert_not_authorized]),
       manager: exp_res(analytics: false, asserts: [assert_not_authorized]),
       super_admin: exp_res(analytics: false, asserts: [assert_not_authorized]),
+      creator: exp_res(should: true, response: 303),
       staff: exp_res(should: true, response: 303)
     },
     shift: {

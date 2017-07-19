@@ -38,12 +38,12 @@ class ActivityPolicy < RestrictivePolicy
     end
   end
 
-  def show?
-    Pundit.policy(context, record.trackable)
-  end
-
   def permitted_attributes
     attributes = super
     attributes
+  end
+
+  def show?
+    Pundit.policy(context, record.trackable)
   end
 end

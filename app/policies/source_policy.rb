@@ -20,11 +20,13 @@ class SourcePolicy < EdgeTreePolicy
     update?
   end
 
-  def show?
-    rule is_member?, is_manager?, super
+  private
+
+  def show_roles
+    [is_member?, is_manager?, super]
   end
 
-  def update?
-    rule is_super_admin?, super
+  def update_roles
+    [is_super_admin?, super]
   end
 end

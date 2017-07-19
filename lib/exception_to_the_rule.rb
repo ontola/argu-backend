@@ -26,7 +26,7 @@ module ExceptionToTheRule
   def apply_rules(action, level)
     c = check_action(action)
     return c unless c.nil?
-    if persisted_edge.present? && (rules = find_rules_for_action(action)).present?
+    if try(:persisted_edge).present? && (rules = find_rules_for_action(action)).present?
       cache_action action, filter_rules(rules, level)
     else
       cache_action action, level

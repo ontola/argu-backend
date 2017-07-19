@@ -4,7 +4,7 @@ FactoryGirl.define do
     sequence(:iri) { |n| "https://iri.test/m/#{n}" }
 
     before :create do |record|
-      record.edge = Edge.new(parent: record.source.edge, user_id: User::COMMUNITY_ID)
+      record.edge = Edge.new(parent: record.source.edge, user_id: User::COMMUNITY_ID, is_published: true)
       record.page = record.source.page
     end
 

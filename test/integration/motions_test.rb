@@ -33,6 +33,11 @@ class MotionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: question.edge)
   end
+  let(:subject_without_arguments) do
+    create(:motion,
+           publisher: creator,
+           parent: question.edge)
+  end
   let(:member_motion) { create(:motion, parent: freetown.edge, creator: member.profile) }
 
   let(:forum_move_to) { create_forum }
@@ -223,7 +228,13 @@ class MotionsTest < ActionDispatch::IntegrationTest
       {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
     define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
-    define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
+    define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')}) do
+      user_types[:destroy].merge(creator: exp_res(analytics: false))
+    end
+    options = {analytics: stats_opt('motions', 'destroy_success'), record: :subject_without_arguments}
+    define_test(hash, :destroy, suffix: ' without arguments', options: options) do
+      user_types[:destroy].slice(:creator)
+    end
     define_test(hash, :shift)
     define_test(hash, :move, options: {attributes: {forum_id: :forum_move_to}})
   end

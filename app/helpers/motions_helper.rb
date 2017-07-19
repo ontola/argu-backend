@@ -60,7 +60,7 @@ module MotionsHelper
 
   def motion_vote_disabled_message(motion, vote)
     return if policy(motion.default_vote_event).create_child?(:votes)
-    if policy(vote || Vote.new(edge: Edge.new(parent: motion.default_vote_event.edge))).has_expired_ancestors?
+    if (vote || Vote.new(edge: Edge.new(parent: motion.default_vote_event.edge))).edge.has_expired_ancestors?
       t('votes.disabled.expired')
     else
       t('votes.disabled.unauthorized')

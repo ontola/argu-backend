@@ -64,7 +64,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_creator?
-      return if record.creator.blank?
+      return if record.creator.blank? || !is_member?
       creator if record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
     end
 
@@ -85,39 +85,9 @@ class EdgeTreePolicy < RestrictivePolicy
   delegate :persisted_edge, to: :edge
   attr_accessor :outside_tree
 
-  def has_expired_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
-  end
-
-  def has_trashed_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.trashed?(persisted_edge) : edge.has_trashed_ancestors?
-  end
-
-  def has_unpublished_ancestors?
-    if context.within_tree?(persisted_edge, outside_tree)
-      context.unpublished?(persisted_edge)
-    else
-      edge.has_unpublished_ancestors?
-    end
-  end
-
   def initialize(context, record)
     super
     raise('No edge avaliable in policy') unless edge
-  end
-
-  def cache_action(action, val)
-    user_context.cache_key(edge.id, action, val)
-  end
-
-  def check_action(action)
-    user_context.check_key(edge.id, action)
-  end
-
-  def assert_publish_type
-    return if record.edge.argu_publication&.publish_type.nil?
-    assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
-            "#{record.edge.argu_publication.publish_type}?"
   end
 
   def permitted_attributes
@@ -151,11 +121,6 @@ class EdgeTreePolicy < RestrictivePolicy
     child_operation(:create?, raw_klass, attrs)
   end
 
-  def destroy?
-    return super if edge.children.any?
-    rule is_creator?, staff?
-  end
-
   def follow?
     rule is_member?, is_super_admin?, staff?
   end
@@ -179,39 +144,60 @@ class EdgeTreePolicy < RestrictivePolicy
 
   # Move items between forums or converting items
   def move?
-    staff?
+    rule staff?
   end
 
   def shift?
     move?
   end
 
+  def show?
+    return show_unpublished? if has_unpublished_ancestors?
+    rule show_roles
+  end
+
   def show_unpublished?
-    rule is_creator?, is_manager?, is_super_admin?, staff?, service?
+    rule show_unpublished_roles
+  end
+
+  def create?
+    create_asserts
+    return create_expired? if has_expired_ancestors?
+    return create_trashed? if has_trashed_ancestors?
+    super
   end
 
   def create_expired?
-    nil
+    rule create_expired_roles
   end
 
   def create_trashed?
-    false
+    rule create_trashed_roles
   end
 
   def trash?
-    rule is_manager?, is_super_admin?, staff?
+    rule trash_roles
   end
 
   def untrash?
-    rule is_manager?, is_super_admin?, staff?
-  end
-
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
+    rule untrash_roles
   end
 
   private
+
+  def assert_publish_type
+    return if record.edge.argu_publication&.publish_type.nil?
+    assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
+            "#{record.edge.argu_publication.publish_type}?"
+  end
+
+  def cache_action(action, val)
+    user_context.cache_key(edge.id, action, val)
+  end
+
+  def check_action(action)
+    user_context.check_key(edge.id, action)
+  end
 
   # Initialises a child of the type {raw_klass} with the given {attrs} and checks
   #   its policy for `{method}?`
@@ -242,4 +228,72 @@ class EdgeTreePolicy < RestrictivePolicy
     r
   end
 
+  def create_asserts; end
+
+  def has_expired_ancestors?
+    context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
+  end
+
+  def has_trashed_ancestors?
+    context.within_tree?(persisted_edge, outside_tree) ? context.trashed?(persisted_edge) : edge.has_trashed_ancestors?
+  end
+
+  def has_unpublished_ancestors?
+    if context.within_tree?(persisted_edge, outside_tree)
+      context.unpublished?(persisted_edge)
+    else
+      edge.has_unpublished_ancestors?
+    end
+  end
+
+  # #### roles
+  def create_expired_roles
+    []
+  end
+
+  def create_trashed_roles
+    []
+  end
+
+  def trash_roles
+    [staff?]
+  end
+
+  def untrash_roles
+    [staff?]
+  end
+
+  def show_unpublished_roles
+    [staff?]
+  end
+
+  # #### default roles
+  def default_create_roles
+    [is_member?, is_manager?, is_super_admin?, staff?]
+  end
+
+  def default_destroy_roles
+    return [staff?] if !user.guest? && edge.children.where('user_id != ?', user.id).any?
+    [is_creator?, staff?]
+  end
+
+  def default_trash_roles
+    [is_manager?, is_super_admin?, staff?]
+  end
+
+  def default_untrash_roles
+    [is_manager?, is_super_admin?, staff?]
+  end
+
+  def default_update_roles
+    [(is_member? && is_creator?), is_manager?, is_super_admin?, staff?]
+  end
+
+  def default_show_roles
+    [is_spectator?, is_member?, is_manager?, is_super_admin?, staff?]
+  end
+
+  def default_show_unpublished_roles
+    [is_creator?, is_manager?, is_super_admin?, staff?, service?]
+  end
 end

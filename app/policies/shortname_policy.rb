@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 class ShortnamePolicy < EdgeTreePolicy
-  def edge
-    record.forum.edge
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i(shortname owner_id owner_type) if is_manager_up?
@@ -15,11 +11,17 @@ class ShortnamePolicy < EdgeTreePolicy
     return r, m if r && !record.forum.shortnames_depleted?
   end
 
-  def update?
-    rule is_super_admin?, super
+  private
+
+  def edge
+    record.forum.edge
   end
 
-  def destroy?
-    rule is_super_admin?, super
+  def update_roles
+    [is_super_admin?, super]
+  end
+
+  def destroy_roles
+    [is_super_admin?, super]
   end
 end

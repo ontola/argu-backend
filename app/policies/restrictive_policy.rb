@@ -55,20 +55,6 @@ class RestrictivePolicy
     @context = context
     @record = record
   end
-
-  def user_context
-    @context
-  end
-
-  def cache_action(action, val)
-    user_context.cache_key(record.identifier, action, val)
-  end
-
-  def check_action(action)
-    return nil if record.try(:id).blank?
-    user_context.check_key(record.identifier, action)
-  end
-
   delegate :user, to: :context
   delegate :actor, to: :context
 
@@ -89,16 +75,12 @@ class RestrictivePolicy
     attributes
   end
 
-  def assert!(assertion, query = nil)
-    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
-  end
-
   def create?
-    staff?
+    rule create_roles
   end
 
   def destroy?
-    staff?
+    rule destroy_roles
   end
 
   def delete?
@@ -117,13 +99,13 @@ class RestrictivePolicy
     create?
   end
 
-  def new_record?
-    record.is_a?(Class) || record.new_record?
+  def update?
+    rule update_roles
   end
 
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
-    staff? || service?
+    rule show_roles
   end
 
   def statistics?
@@ -135,17 +117,9 @@ class RestrictivePolicy
     staff?
   end
 
-  def update?
-    staff?
-  end
-
   # Can the current user change the item shortname?
   def shortname?
     new_record?
-  end
-
-  def scope
-    Pundit.policy_scope!(context, record.class)
   end
 
   # Make sure that a tab param is actually accounted for
@@ -173,7 +147,49 @@ class RestrictivePolicy
     )
   end
 
+  def assert!(assertion, query = nil)
+    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
+  end
+
+  def cache_action(action, val)
+    user_context.cache_key(record.identifier, action, val)
+  end
+
+  def check_action(action)
+    return nil if record.try(:id).blank?
+    user_context.check_key(record.identifier, action)
+  end
+
   def default_tab
     'general'
+  end
+
+  def new_record?
+    record.is_a?(Class) || record.new_record?
+  end
+
+  def scope
+    Pundit.policy_scope!(context, record.class)
+  end
+
+  def user_context
+    @context
+  end
+
+  # #### Roles
+  def create_roles
+    [staff?]
+  end
+
+  def destroy_roles
+    [staff?]
+  end
+
+  def show_roles
+    [staff?, service?]
+  end
+
+  def update_roles
+    [staff?]
   end
 end

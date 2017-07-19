@@ -36,11 +36,6 @@ class UserPolicy < RestrictivePolicy
                    advanced)
   end
 
-  def show?
-    (record.profile.is_public? || !user.guest?) && record.finished_intro? ||
-      super
-  end
-
   def create?
     true
   end
@@ -52,10 +47,10 @@ class UserPolicy < RestrictivePolicy
   def max_allowed_pages
     if staff?
       Float::INFINITY
-    elsif user
-      1
-    else
+    elsif user.guest?
       0
+    else
+      1
     end
   end
 
@@ -80,6 +75,17 @@ class UserPolicy < RestrictivePolicy
   def destroy?
     return if record.profile.grants.super_admin.count.positive?
     current_user?
+  end
+
+  private
+
+  def member
+    3
+  end
+
+  def show_roles
+    return super unless (record.profile.is_public? || !user.guest?) && record.finished_intro?
+    [member, super]
   end
 
   def current_user?

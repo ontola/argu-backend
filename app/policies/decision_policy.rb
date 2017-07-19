@@ -2,11 +2,6 @@
 class DecisionPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 
-  # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
-  def decision_is_assigned?
-    group_grant if record.parent_model.assigned_to_user?(user)
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i(content)
@@ -15,27 +10,41 @@ class DecisionPolicy < EdgeTreePolicy
     attributes
   end
 
-  # Creating a Decision when a draft is present is not allowed
-  # Managers and the Owner are allowed to forward a Decision when not assigned to him
-  def create?
-    assert_publish_type
-    return nil if record.edge.parent.decisions.unpublished.present?
-    if record.forwarded?
-      rule decision_is_assigned?, is_manager?, is_super_admin?, super
-    else
-      rule decision_is_assigned?
-    end
-  end
-
   def destroy?
     false
-  end
-
-  def update?
-    rule decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super
   end
 
   def feed?
     false
   end
+
+  private
+
+  def create_asserts
+    assert_publish_type
+    super
+  end
+
+  # Creating a Decision when a draft is present is not allowed
+  # Managers and the Owner are allowed to forward a Decision when not assigned to him
+  def create_roles
+    return [] if record.edge.parent.decisions.unpublished.present?
+    if record.forwarded?
+      [decision_is_assigned?, is_manager?, is_super_admin?, super]
+    else
+      [decision_is_assigned?]
+    end
+  end
+
+  # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
+  def decision_is_assigned?
+    group_grant if record.parent_model.assigned_to_user?(user)
+  end
+
+  def update_roles
+    [decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super]
+  end
+
+  alias show_roles default_show_roles
+  alias show_unpublished_roles default_show_unpublished_roles
 end

@@ -26,12 +26,12 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Member
+  # As Staff
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:staff) { create(:user, :staff) }
 
-  test 'member should create and destroy motion with notifications' do
-    sign_in member
+  test 'staff should create and destroy motion with notifications' do
+    sign_in staff
 
     # Notification for follower of Forum
     assert_differences([['Motion.count', 1], ['Notification.count', 0]]) do
@@ -50,8 +50,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'member should create and destroy question with notifications' do
-    sign_in member
+  test 'staff should create and destroy question with notifications' do
+    sign_in staff
 
     # Notification for follower of Forum
     assert_differences([['Question.count', 1], ['Notification.count', 0]]) do
@@ -70,8 +70,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'member should create and destroy argument with notifications' do
-    sign_in member
+  test 'staff should create and destroy argument with notifications' do
+    sign_in staff
     motion
 
     # Notification for creator and follower of Motion
@@ -88,8 +88,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'member should create and destroy comment with notifications' do
-    sign_in member
+  test 'staff should create and destroy comment with notifications' do
+    sign_in staff
     argument
 
     # Notification for creator and follower of Argument
@@ -104,8 +104,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'member should create and destroy comment for blog_post with notifications' do
-    sign_in member
+  test 'staff should create and destroy comment for blog_post with notifications' do
+    sign_in staff
     blog_post
 
     # Notification for creator and follower of BlogPost
@@ -120,8 +120,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'member should create and destroy comment for motion with notifications' do
-    sign_in member
+  test 'staff should create and destroy comment for motion with notifications' do
+    sign_in staff
     motion
 
     # Notification for creator and follower of Motion
@@ -136,13 +136,29 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  ####################################
-  # As Manager
-  ####################################
-  let(:manager) { create_manager(freetown) }
+  test 'staff should create and destroy blog_post with notifications' do
+    sign_in staff
 
-  test 'manager should forward to other with notification' do
-    sign_in manager
+    assert_differences([['BlogPost.count', 1]]) do
+      post project_blog_posts_path(project),
+           params: {
+             blog_post: attributes_for(:blog_post, happening_attributes: {happened_at: Time.current})
+           }
+    end
+
+    # Notification for creator, follower and news_follower of Project
+    assert_differences([['Notification.count', 3]]) do
+      reset_publication(Publication.last)
+    end
+    assert_equal Notification.last.notification_type, 'news'
+
+    assert_differences([['BlogPost.trashed.count', 1], ['Notification.count', -3]]) do
+      delete blog_post_path(BlogPost.last)
+    end
+  end
+
+  test 'staff should forward to other with notification' do
+    sign_in staff
     motion
     group_membership
 
@@ -164,22 +180,18 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_equal Notification.last.notification_type, 'reaction'
   end
 
-  ####################################
-  # As Admin
-  ####################################
-  let(:super_admin) { create_super_admin(freetown) }
-
-  test 'super_admin should forward to self and approve with notifications' do
-    sign_in super_admin
+  test 'staff should forward to self and approve with notifications' do
+    sign_in staff
     motion
+    create(:group_membership, parent: group.edge, member: staff.profile)
 
     assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
       post motion_decisions_path(motion.edge),
            params: {
              decision: attributes_for(:decision,
                                       state: 'forwarded',
-                                      forwarded_user_id: super_admin.id,
-                                      forwarded_group_id: freetown.edge.granted_groups('super_admin').first.id,
+                                      forwarded_user_id: staff.id,
+                                      forwarded_group_id: group.id,
                                       content: 'Content',
                                       happening_attributes: {happened_at: Time.current})
            }
@@ -204,44 +216,5 @@ class NotificationsTest < ActionDispatch::IntegrationTest
       reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, 'news'
-  end
-
-  test 'super_admin should create and destroy project with notifications' do
-    sign_in super_admin
-
-    assert_differences([['Project.count', 1]]) do
-      post forum_projects_path(freetown), params: {project: attributes_for(:project)}
-    end
-
-    # Notification for follower of Forum
-    assert_differences([['Notification.count', 1]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['Project.trashed.count', 1], ['Notification.count', -1]]) do
-      delete project_path(Project.last)
-    end
-  end
-
-  test 'super_admin should create and destroy blog_post with notifications' do
-    sign_in super_admin
-
-    assert_differences([['BlogPost.count', 1]]) do
-      post project_blog_posts_path(project),
-           params: {
-             blog_post: attributes_for(:blog_post, happening_attributes: {happened_at: Time.current})
-           }
-    end
-
-    # Notification for creator, follower and news_follower of Project
-    assert_differences([['Notification.count', 3]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'news'
-
-    assert_differences([['BlogPost.trashed.count', 1], ['Notification.count', -3]]) do
-      delete blog_post_path(BlogPost.last)
-    end
   end
 end

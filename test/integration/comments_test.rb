@@ -258,7 +258,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(subject.parent_model, subject)
       delete destroy_argument_comment_path(
         subject.parent_model,
         subject,
@@ -279,7 +278,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(subject.parent_model, subject)
       delete destroy_argument_comment_path(
         subject.parent_model,
         subject,
