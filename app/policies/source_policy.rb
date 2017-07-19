@@ -16,10 +16,6 @@ class SourcePolicy < EdgeTreePolicy
   end
 
   # #####Actions######
-  def create?
-    super
-  end
-
   def settings?
     update?
   end

@@ -113,10 +113,6 @@ class RestrictivePolicy
     rule staff?
   end
 
-  def logged_in?
-    !user.guest?
-  end
-
   def new?
     create?
   end
@@ -128,10 +124,6 @@ class RestrictivePolicy
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
     staff? || service?
-  end
-
-  def statistics?
-    staff?
   end
 
   # Used when items won't include nested content, this is a less restrictive version of show?

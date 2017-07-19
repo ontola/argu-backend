@@ -76,17 +76,9 @@ class PagePolicy < EdgeTreePolicy
     rule record.closed?, show?
   end
 
-  def list_members?
-    rule is_super_admin?, staff?
-  end
-
   def pages_left?
     return if user.guest?
     member if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
-  end
-
-  def statistics?
-    false
   end
 
   private

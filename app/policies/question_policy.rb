@@ -18,10 +18,6 @@ class QuestionPolicy < EdgeTreePolicy
     is_manager? || is_super_admin? || staff? ? publish_types : publish_types.except('schedule')
   end
 
-  def convert
-    rule move?
-  end
-
   def convert?
     rule move?
   end
