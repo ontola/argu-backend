@@ -110,7 +110,7 @@ en:
       </ul>"
   pundit:
     motion_policy:
-      vote?: "You can't vote on items yet. Make sure to become a member of the forum."
+      create_without_question?: "You can post an idea here without a challenge."
   activerecord:
     errors:
       models:

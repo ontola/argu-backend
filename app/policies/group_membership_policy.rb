@@ -46,14 +46,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
     creator if record.member == user.profile
   end
 
-  def granted_resource
-    record.group.grants.member.first.edge.owner
-  end
-
-  def page_policy
-    Pundit.policy(context, record.group.parent_model(:page).owner)
-  end
-
   def token
     2
   end

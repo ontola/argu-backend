@@ -107,8 +107,4 @@ class GroupMembershipsController < ServiceController
     return super unless %i(json json_api).include?(format)
     render json: resource, status: :created, location: resource, include: :group
   end
-
-  def granted_resource
-    authenticated_resource.group.grants.first&.edge&.owner
-  end
 end
