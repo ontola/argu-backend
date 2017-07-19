@@ -49,7 +49,7 @@ class Argument < ApplicationRecord
   def adjacent(direction, _show_trashed = nil)
     ids = parent_model
             .arguments_plain
-            .joins(:edge)
+            .untrashed
             .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
             .ids
     index = ids.index(self[:id])
