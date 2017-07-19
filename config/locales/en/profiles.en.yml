@@ -6,6 +6,9 @@ en:
     about_me: "About me"
     heads_up: "Your profile is visible to other Argu users."
     votes_are_private: "Your activity is only visible for you"
+    actor:
+      create: "Post as:"
+      update: "Update as:"
     show:
       title: "Profile"
       btn:

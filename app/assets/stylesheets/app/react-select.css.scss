@@ -5,6 +5,8 @@
  * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs
  * MIT License: https://github.com/keystonejs/react-select
 */
+@import "variables";
+
 .Select {
     position: relative;
 }
@@ -279,6 +281,11 @@
     display: inline-flex;
     width: 300px;
     text-align: left;
+    .post-as {
+      font-size: small;
+      color: $g3;
+      padding-right: 4px;
+    }
 }
 .section--footer .Select-profile .Select-control {
     background-color: rgb(249, 249, 249);

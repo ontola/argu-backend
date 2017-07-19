@@ -1,2 +1,2 @@
 - unless current_user.guest?
-  =react_component_store 'CurrentProfile', props: {currentActor: current_user.context_id, managedProfiles: managed_profiles_list}
+  =react_component_store 'CurrentProfile', props: {action: resource.new_record? ? :create : :update, currentActor: current_user.context_id, managedProfiles: managed_profiles_list}

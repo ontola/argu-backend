@@ -1,8 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
+import I18n from 'i18n-js';
 
 export const CurrentProfile = React.createClass({
     propTypes: {
+        action: React.PropTypes.string,
         currentActor: React.PropTypes.number,
         managedProfiles: React.PropTypes.array
     },
@@ -17,9 +19,19 @@ export const CurrentProfile = React.createClass({
         this.setState({ currentActor: value })
     },
 
+    optionRenderer (obj) {
+        return (
+            <div>
+                <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
+                {obj.label}
+            </div>
+        );
+    },
+
     valueRenderer (obj) {
         return (
             <div>
+                <span className="post-as">{I18n.t(`profiles.actor.${this.props.action}`)}</span>
                 <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
                 {obj.label}
             </div>
@@ -49,7 +61,7 @@ export const CurrentProfile = React.createClass({
                     matchProp="any"
                     name='actor_iri'
                     onChange={this.onProfileChange}
-                    optionRenderer={this.valueRenderer}
+                    optionRenderer={this.optionRenderer}
                     options={this.props.managedProfiles}
                     placeholder="Select user"
                     value={this.state.currentActor}
