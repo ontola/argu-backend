@@ -35,7 +35,11 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
       .box
         =semantic_form_for(new_decision, url: motion_decisions_path(decisionable), class: 'decision_form', remote: true, authenticity_token: true) do |f|
           =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: new_decision}
-    - decisionable.decisions.reverse.each do |d|
+    - if local_assigns[:edit_decision].present? && !local_assigns[:edit_decision].is_published?
+      .box
+        =semantic_form_for(local_assigns[:edit_decision], url: motion_decision_path(local_assigns[:edit_decision].parent_model, local_assigns[:edit_decision]), class: 'decision_form', remote: true, authenticity_token: true) do |f|
+          =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
+    - decisionable.decisions.published.reverse.each do |d|
       .box
         - if d == local_assigns[:edit_decision]
           =semantic_form_for(local_assigns[:edit_decision], url: motion_decision_path(local_assigns[:edit_decision].parent_model, local_assigns[:edit_decision]), class: 'decision_form', remote: true, authenticity_token: true) do |f|
