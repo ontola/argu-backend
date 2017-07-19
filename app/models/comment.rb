@@ -54,6 +54,10 @@ class Comment < ApplicationRecord
     c
   end
 
+  def deleted?
+    body.blank? || body == '[DELETED]'
+  end
+
   def display_name
     safe_truncated_text(body, 40)
   end

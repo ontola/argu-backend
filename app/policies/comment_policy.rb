@@ -21,6 +21,7 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def destroy?
+    return false if record.deleted?
     rule is_creator?, is_manager?, is_super_admin?, super
   end
 
@@ -29,10 +30,12 @@ class CommentPolicy < EdgeTreePolicy
   end
 
   def trash?
+    return false if record.deleted?
     rule is_creator?, is_manager?, is_super_admin?, super
   end
 
   def untrash?
+    return false if record.deleted?
     rule is_creator?, is_manager?, is_super_admin?, super
   end
 
