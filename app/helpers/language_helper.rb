@@ -28,4 +28,13 @@ module LanguageHelper
       [I18n.t(:language, locale: language_code), language_code]
     end
   end
+
+  def locale_select_items
+    ISO3166::Country.codes
+      .flat_map do |code|
+        ISO3166::Country.new(code).languages_official.map do |language|
+          ["#{ISO3166::Country.translations(I18n.locale)[code]} (#{language.upcase})", "#{language}-#{code}"]
+        end
+      end
+  end
 end

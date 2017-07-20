@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724100236) do
+ActiveRecord::Schema.define(version: 20170727100956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -259,8 +259,9 @@ ActiveRecord::Schema.define(version: 20170724100236) do
     t.text     "bio_long",                default: ""
     t.integer  "lock_version",            default: 0
     t.bigint   "place_id"
-    t.integer  "max_shortname_count",     default: 0,     null: false
-    t.boolean  "discoverable",            default: true,  null: false
+    t.integer  "max_shortname_count",     default: 0,       null: false
+    t.boolean  "discoverable",            default: true,    null: false
+    t.string   "locale",                  default: "nl-NL"
     t.index ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
     t.index ["visibility"], name: "index_forums_on_visibility", using: :btree
   end
