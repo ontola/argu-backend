@@ -367,6 +367,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_redirected_to holland.page
   end
 
+  test 'super_admin should not get new' do
+    sign_in create_super_admin(argu)
+    assert_raise ActionController::RoutingError do
+      get new_portal_forum_path(page: argu)
+    end
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -453,6 +460,26 @@ class ForumsTest < ActionDispatch::IntegrationTest
       delete forum_path(holland)
     end
     assert_redirected_to holland.page
+  end
+
+  test 'staff should get new' do
+    sign_in staff
+    get new_portal_forum_path(page: argu)
+    assert_response 200
+  end
+
+  test 'staff should post create' do
+    sign_in staff
+    assert_difference('Forum.count', 1) do
+      post portal_forums_path params: {
+        forum: {
+          name: 'New forum',
+          shortname_attributes: {shortname: 'new_forum'},
+          page_id: argu.id
+        }
+      }
+    end
+    assert_redirected_to Forum.last
   end
 
   private

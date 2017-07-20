@@ -124,6 +124,7 @@ Style/AccessorMethodName:
     - 'app/controllers/shortnames_controller.rb'
     - 'app/controllers/votes_controller.rb'
     - 'app/controllers/guest/votes_controller.rb'
+    - 'app/controllers/portal/forums_controller.rb'
     - 'app/helpers/actors_helper.rb'
 
 # Offense count: 13
