@@ -4,6 +4,7 @@ class UsersController < AuthorizedController
           UrlHelper,
           VotesHelper
   helper_method :authenticated_resource, :complete_feed_param
+  skip_before_action :check_if_registered, only: :language
 
   def show
     respond_to do |format|
@@ -95,6 +96,8 @@ class UsersController < AuthorizedController
                 User.preload(:profile).find_via_shortname!(params[:id])
               when 'update'
                 User.find(current_user.id)
+              when 'language'
+                current_user
               else
                 if current_user.guest?
                   flash[:error] = t('devise.failure.unauthenticated')

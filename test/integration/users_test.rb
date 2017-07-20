@@ -337,6 +337,13 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'guest should put language' do
+    assert_equal 'en', user.language
+    put language_users_path(:nl)
+    assert_equal 'nl', cookies['locale']
+    assert_nil flash[:error]
+  end
+
   test 'user should put language' do
     sign_in user
     assert_equal 'en', user.language
