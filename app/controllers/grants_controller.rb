@@ -58,6 +58,10 @@ class GrantsController < ServiceController
     )
   end
 
+  def respond_with_form_js(resource)
+    respond_js('pages/settings', tab: 'grants/new', active: 'groups', resource: resource.page, grant: resource)
+  end
+
   def service_options
     super.except(:publisher, :creator)
   end
