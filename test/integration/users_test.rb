@@ -12,6 +12,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
+  let(:dutch_forum) { create_forum(public_grant: 'member', locale: 'nl-NL') }
 
   ####################################
   # Show as Guest
@@ -323,22 +324,23 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # Settings and Update
+  # Language
   ####################################
-  test 'user should show settings and all tabs' do
-    sign_in user
+  test 'guest should get language cookie' do
+    get forum_path(freetown)
+    assert_equal 'en', cookies['locale']
+    assert_nil flash[:error]
+  end
 
-    get settings_user_path
-    assert_user_settings_shown
-
-    %i(general profile authentication notifications privacy advanced).each do |tab|
-      get settings_user_path(tab: tab)
-      assert_user_settings_shown tab
-    end
+  test 'guest should get language cookie when visiting dutch forum' do
+    get forum_path(dutch_forum)
+    assert_equal 'nl', cookies['locale']
+    assert_nil flash[:error]
   end
 
   test 'guest should put language' do
-    assert_equal 'en', user.language
+    get forum_path(freetown)
+    assert_equal 'en', cookies['locale']
     put language_users_path(:nl)
     assert_equal 'nl', cookies['locale']
     assert_nil flash[:error]
@@ -358,6 +360,21 @@ class UsersTest < ActionDispatch::IntegrationTest
     put language_users_path(:fake_language)
     assert_equal 'en', user.reload.language
     assert flash[:error].present?
+  end
+
+  ####################################
+  # Settings and Update
+  ####################################
+  test 'user should show settings and all tabs' do
+    sign_in user
+
+    get settings_user_path
+    assert_user_settings_shown
+
+    %i(general profile authentication notifications privacy advanced).each do |tab|
+      get settings_user_path(tab: tab)
+      assert_user_settings_shown tab
+    end
   end
 
   test 'user should update profile_photo and cover_photo' do

@@ -85,11 +85,6 @@ class ForumsController < EdgeTreeController
     end
   end
 
-  def get_parent_edge
-    # TODO: handle actions where `authenticated_resource!` is not present
-    @parent_edge ||= authenticated_resource!.page.edge
-  end
-
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
     render 'settings', locals: {
@@ -150,6 +145,18 @@ class ForumsController < EdgeTreeController
       .group(:owner_type)
       .count
       .sort { |x, y| y[1] <=> x[1] }
+  end
+
+  def current_forum
+    resource_by_id
+  end
+
+  def get_parent_edge
+    @parent_edge ||= get_parent_resource&.edge
+  end
+
+  def get_parent_resource
+    @parent_resource ||= authenticated_resource!&.page
   end
 
   def manager_edges_sql

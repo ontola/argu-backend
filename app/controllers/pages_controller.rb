@@ -142,6 +142,8 @@ class PagesController < EdgeTreeController
            notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
   end
 
+  def current_forum; end
+
   def handle_not_authorized_error(exception)
     us_po = policy(current_user) unless current_user.guest?
     return super unless us_po&.max_pages_reached? && request.format.html?

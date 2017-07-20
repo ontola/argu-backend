@@ -31,7 +31,7 @@ class ShortnamesController < AuthorizedController
       end
   end
 
-  def get_parent_resource
+  def get_parent_resource(_opts = {})
     @parent_resource ||=
       if %w(new create).include?(params[:action])
         super

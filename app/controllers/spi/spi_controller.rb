@@ -26,5 +26,7 @@ module SPI
       }
       render json_api_error(403, error_hash)
     end
+
+    def set_guest_language; end
   end
 end

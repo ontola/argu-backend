@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module OauthHelper
-  include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers, Doorkeeper::OAuth::Token::Methods
+  include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers, Doorkeeper::OAuth::Token::Methods, LanguageHelper
 
   def current_user
     current_actor.user
@@ -11,6 +11,7 @@ module OauthHelper
     user = current_resource_owner || GuestUser.new(
       cookies: request.cookie_jar,
       headers: request.headers,
+      language: set_guest_language,
       session: session
     )
     actor = if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'

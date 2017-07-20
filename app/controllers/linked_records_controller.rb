@@ -25,6 +25,8 @@ class LinkedRecordsController < AuthorizedController
 
   private
 
+  def current_forum; end
+
   def resource_by_id
     @_resource_by_id ||= params[:id].present? ? super : LinkedRecord.find_or_fetch_by_iri(params.fetch(:iri))
   end

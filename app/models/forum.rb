@@ -88,6 +88,10 @@ class Forum < ApplicationRecord
     end
   end
 
+  def language
+    locale.split('-').first.to_sym
+  end
+
   def page=(value)
     super value.is_a?(Page) ? value : Page.find_via_shortname!(value)
   end

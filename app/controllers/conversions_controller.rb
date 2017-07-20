@@ -45,6 +45,10 @@ class ConversionsController < ServiceController
     )
   end
 
+  def current_forum
+    convertible_edge.get_parent(:forum)&.owner
+  end
+
   def get_parent_edge
     convertible_edge.parent
   end
@@ -61,6 +65,8 @@ class ConversionsController < ServiceController
       klass: convertible_class_names(convertible_edge.owner)&.first
     )
   end
+
+  def resource_by_id; end
 
   def service_options(options = {})
     {

@@ -4,6 +4,10 @@ class QuestionAnswersController < AuthorizedController
 
   private
 
+  def current_forum
+    question.forum
+  end
+
   def collect_banners; end
 
   def get_parent_edge
@@ -15,12 +19,20 @@ class QuestionAnswersController < AuthorizedController
     'Motion was successfully coupled.'
   end
 
+  def motion
+    Motion.find_by(id: params.require(:question_answer)[:motion_id])
+  end
+
   def new_resource_from_params
     @resource ||= QuestionAnswer.new(
-      question: Question.find(params.require(:question_answer)[:question_id]),
-      motion: Motion.find_by(id: params.require(:question_answer)[:motion_id]),
+      question: question,
+      motion: motion,
       options: service_options
     )
+  end
+
+  def question
+    Question.find(params.require(:question_answer)[:question_id])
   end
 
   def redirect_model_success(resource)

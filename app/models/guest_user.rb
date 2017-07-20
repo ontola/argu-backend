@@ -21,10 +21,6 @@ class GuestUser < User
     @id ||= session.id
   end
 
-  def language
-    @language ||= attributes[:language] ||= cookies['locale'] || language_from_header || I18n.locale.to_s
-  end
-
   def favorite_forum_ids
     []
   end
@@ -52,13 +48,5 @@ class GuestUser < User
     @profile ||= GuestProfile.find(0)
     @profile.profileable = self
     @profile
-  end
-
-  private
-
-  def language_from_header
-    HttpAcceptLanguage::Parser
-      .new(headers['HTTP_ACCEPT_LANGUAGE'])
-      .compatible_language_from(I18n.available_locales)
   end
 end

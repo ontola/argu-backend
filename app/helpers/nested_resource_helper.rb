@@ -18,12 +18,7 @@ module NestedResourceHelper
   #   docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_edge(opts = params)
-    @parent_edge ||=
-      if parent_resource_class(opts).try(:shortnameable?)
-        parent_resource_class(opts).find_via_shortname_or_id!(parent_id_from_params(opts)).edge
-      else
-        Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, owner_id: parent_id_from_params(opts))
-      end
+    @parent_edge ||= get_parent_resource(opts).edge
   end
 
   # Finds the parent resource based on the URL's :foo_id param

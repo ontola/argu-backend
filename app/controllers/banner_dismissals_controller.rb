@@ -27,4 +27,6 @@ class BannerDismissalsController < AuthorizedController
       format.json { head 204 }
     end
   end
+
+  def current_forum; end
 end

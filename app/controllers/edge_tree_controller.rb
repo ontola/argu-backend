@@ -26,7 +26,9 @@ class EdgeTreeController < ServiceController
   end
 
   def current_forum
-    authenticated_resource!&.parent_model(:forum)
+    (resource_by_id || current_resource_is_nested? && get_parent_resource)
+      .try(:parent_model, :forum)
+      &.parent_model(:forum)
   end
 
   # Method to determine where the action should redirect to after it succeeds.

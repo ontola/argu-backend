@@ -7,6 +7,10 @@ class FavoritesController < AuthorizedController
 
   private
 
+  def current_forum
+    get_parent_resource.try(:parent_model, :forum)
+  end
+
   def new_resource_from_params
     current_user.favorites.find_or_initialize_by(edge: get_parent_edge)
   end

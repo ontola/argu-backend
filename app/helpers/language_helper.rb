@@ -23,6 +23,14 @@ module LanguageHelper
     }
   end
 
+  def language_from_edge_tree; end
+
+  def language_from_header
+    HttpAcceptLanguage::Parser
+      .new(request.headers['HTTP_ACCEPT_LANGUAGE'])
+      .compatible_language_from(I18n.available_locales)
+  end
+
   def language_select_items
     I18n.available_locales.collect do |language_code|
       [I18n.t(:language, locale: language_code), language_code]
@@ -36,5 +44,9 @@ module LanguageHelper
           ["#{ISO3166::Country.translations(I18n.locale)[code]} (#{language.upcase})", "#{language}-#{code}"]
         end
       end
+  end
+
+  def set_guest_language
+    cookies['locale'] ||= language_from_edge_tree || language_from_header || I18n.locale.to_s
   end
 end

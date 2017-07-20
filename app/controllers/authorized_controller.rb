@@ -105,7 +105,12 @@ class AuthorizedController < ApplicationController
   end
 
   def current_forum
-    authenticated_resource!.try(:parent_model, :forum)
+    (resource_by_id || current_resource_is_nested? && get_parent_resource).try(:parent_model, :forum)
+  end
+
+  def language_from_edge_tree
+    return unless current_forum.present?
+    I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
   end
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
