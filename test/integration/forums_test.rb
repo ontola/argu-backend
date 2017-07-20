@@ -36,6 +36,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'guest should get discover' do
+    secondary_forums
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
@@ -60,6 +61,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not delete destroy' do
+    holland
     assert_no_difference('Forum.count') do
       delete forum_path(holland)
     end
@@ -71,6 +73,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'user should get discover' do
+    secondary_forums
     sign_in
     get discover_forums_path
     assert_response 200
@@ -152,6 +155,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should not delete destroy' do
+    holland
     sign_in
     assert_no_difference('Forum.count') do
       delete forum_path(holland)
@@ -167,6 +171,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   let(:helsinki_member) { create_member(helsinki) }
 
   test 'member should get discover' do
+    secondary_forums
     sign_in holland_member
     get discover_forums_path
     assert_response 200
@@ -244,6 +249,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   let(:holland_manager) { create_manager(holland) }
 
   test 'manager should get discover' do
+    secondary_forums
     sign_in holland_manager
     get discover_forums_path
     assert_response 200
@@ -288,6 +294,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   let(:forum_pair) { create_forum_super_admin_pair(type: :populated_forum) }
 
   test 'super_admin should get discover' do
+    secondary_forums
     sign_in create_super_admin(holland)
     get discover_forums_path
     assert_response 200
@@ -394,6 +401,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'staff should get discover' do
+    secondary_forums
     sign_in staff
     get discover_forums_path
     assert_response 200
@@ -455,6 +463,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'staff should delete destroy' do
+    holland
     sign_in staff
     assert_difference('Forum.count', -1) do
       delete forum_path(holland)
@@ -548,5 +557,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
                "Unpublished projects' nested motions are visible"
     assert_not included_in_items?(m1),
                "Unpublished projects' motions are visible"
+  end
+
+  def secondary_forums
+    holland
+    cologne
+    helsinki
   end
 end

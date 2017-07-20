@@ -43,7 +43,7 @@ module Argu
       end
 
       def define_cairo(name = 'cairo', attributes: {})
-        let!(name) do
+        let(name) do
           forum = create_forum(
             {
               shortname_attributes: {shortname: name}
@@ -58,7 +58,7 @@ module Argu
       end
 
       def define_cologne(name = 'cologne', attributes: {})
-        let!(name) do
+        let(name) do
           forum = create_forum(
             :populated_forum,
             {
@@ -74,7 +74,7 @@ module Argu
       end
 
       def define_helsinki(name = 'helsinki', attributes: {})
-        let!(name) do
+        let(name) do
           forum = create_forum(
             {
               shortname_attributes: {shortname: name},
@@ -90,7 +90,7 @@ module Argu
       end
 
       def define_holland(name = 'holland', attributes: {})
-        let!(name) do
+        let(name) do
           create_forum(
             :populated_forum,
             {
@@ -102,7 +102,7 @@ module Argu
       end
 
       def define_spain(name = 'spain', attributes: {})
-        let!(name) do
+        let(name) do
           create_forum(
             :populated_forum,
             {
