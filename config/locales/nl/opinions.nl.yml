@@ -2,7 +2,7 @@ nl:
   opinions:
     plural: "Meningen"
     form:
-      confirm: "Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild."
+      confirm: "Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild naar"
       header:
         confirmed: "Bedankt voor je stem. Wil je jouw mening toelichten?"
         unconfirmed: "Wil je jouw mening toelichten?"

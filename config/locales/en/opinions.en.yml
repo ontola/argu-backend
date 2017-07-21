@@ -2,7 +2,7 @@ en:
   opinions:
     plural: "Opinions"
     form:
-      confirm: "Please confirm your vote by clicking the link we've send to your mail."
+      confirm: "Please confirm your vote by clicking the link we've send to"
       header:
         confirmed: "Thanks for your vote. Would you like to comment on your opinion?"
         unconfirmed: "Would you like to comment on your opinion?"

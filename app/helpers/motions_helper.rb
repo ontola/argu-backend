@@ -5,6 +5,7 @@ module MotionsHelper
     {
       actor_type: actor.profileable.class.name,
       confirmed: actor.profileable.confirmed?,
+      confirmationEmail: actor.profileable.email,
       shortname: actor.url,
       display_name: actor.display_name,
       name: actor.name,

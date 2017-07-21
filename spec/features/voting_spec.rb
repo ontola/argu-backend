@@ -54,22 +54,22 @@ RSpec.feature 'Voting', type: :feature do
     visit motion_path(motion)
     expect(page).not_to have_content('Opinions')
     within('.opinion-form') do
-      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
+      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
       expect(page).to have_content('This is my opinion')
       expect(page).to have_content('Argument title')
     end
 
     within('.opinion-form') do
       find('span.icon-left', text: 'Edit').click
-      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
+      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
       fill_in 'opinion-body', with: 'This is my new opinion'
       find('label.pro-t').click
       click_button 'Save'
     end
-    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
+    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
 
     visit motion_path(motion)
-    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
+    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     expect(page).not_to have_content('Opinions')
 
     visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
@@ -88,7 +88,7 @@ RSpec.feature 'Voting', type: :feature do
     end
     visit motion_path(motion)
 
-    expect(page).not_to have_content('Please confirm your vote by clicking the link we\'ve send to your mail.')
+    expect(page).not_to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     expect(page).to have_content('Opinions')
     within('.opinion-columns') do
       expect(page).to have_content('This is my new opinion')

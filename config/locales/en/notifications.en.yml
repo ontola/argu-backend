@@ -15,5 +15,5 @@ en:
       title: 'Receive notifications for:'
     permanent:
       confirm_account:
-        one: "Confirm your account to finalize your vote"
-        other: "Confirm your account to finalize your %{count} votes"
+        one: "Please confirm your vote by clicking the link we've send to %{email}"
+        other: "Please confirm your %{count} votes by clicking the link we've send to %{email}"
