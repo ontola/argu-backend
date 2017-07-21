@@ -105,7 +105,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:manager) { create_manager(@freetown.page) }
 
-  test 'manager should not post create visible group' do
+  test 'manager should not post create group' do
     sign_in manager
 
     assert_difference('Group.count', 0) do
@@ -113,8 +113,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
            params: {
              group: {
                group_id: group.id,
-               name: 'Test group visible',
-               visibilitiy: 'visible'
+               name: 'Test group'
              }
            }
     end
@@ -151,7 +150,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:super_admin) { create_super_admin(freetown) }
 
-  test 'super_admin should post create visible group' do
+  test 'super_admin should post create group' do
     sign_in super_admin
 
     assert_difference('Group.count', 1) do
@@ -159,8 +158,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
            params: {
              group: {
                group_id: group.id,
-               name: 'Test group visible',
-               visibilitiy: 'visible'
+               name: 'Test group'
              }
            }
     end

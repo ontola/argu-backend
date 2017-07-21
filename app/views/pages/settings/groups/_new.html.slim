@@ -2,7 +2,6 @@
   - group.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('groups.type')) do
-    =f.inputs :name, :name_singular, :icon
-    =f.input :visibility, as: :select, collection: Group.visibilities.keys, required: false, include_blank: false
+    =f.inputs :name, :name_singular
   =f.actions do
     =f.action :submit, :as => :button

@@ -303,19 +303,12 @@ ActiveRecord::Schema.define(version: 20170727100956) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.integer  "forum_id"
-    t.string   "name",                     default: ""
+    t.string   "name",          default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name_singular"
-    t.integer  "max_responses_per_member", default: 1
-    t.string   "icon"
-    t.integer  "visibility",               default: 0
-    t.boolean  "deletable",                default: true
-    t.text     "description"
-    t.integer  "page_id",                                 null: false
-    t.index ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
-    t.index ["forum_id"], name: "index_groups_on_forum_id", using: :btree
+    t.boolean  "deletable",     default: true
+    t.integer  "page_id",                      null: false
   end
 
   create_table "identities", force: :cascade do |t|
@@ -785,7 +778,6 @@ ActiveRecord::Schema.define(version: 20170727100956) do
   add_foreign_key "group_memberships", "profiles"
   add_foreign_key "group_memberships", "profiles", column: "member_id"
   add_foreign_key "group_responses", "users", column: "publisher_id"
-  add_foreign_key "groups", "forums"
   add_foreign_key "groups", "pages"
   add_foreign_key "identities", "users"
   add_foreign_key "linked_records", "pages"

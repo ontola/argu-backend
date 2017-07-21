@@ -14,10 +14,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
     def resolve
       scope
-        .joins(:group)
-        .where('groups.visibility != ? OR group_memberships.group_id IN (?)',
-               Group.visibilities[:hidden],
-               @profile.group_ids)
     end
   end
 

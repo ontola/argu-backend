@@ -2,10 +2,7 @@
 class GroupPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
-      # Don't show closed, unless the user has a membership
-      scope.where('visibility IN (?) OR groups.id IN (?)',
-                  [Group.visibilities[:open], Group.visibilities[:discussion]],
-                  user.profile.group_memberships.pluck(:group_id))
+      scope
     end
   end
 
@@ -15,7 +12,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(name name_singular icon visibility) if create?
+    attributes.concat %i(name name_singular) if create?
     attributes.append :id if staff?
     attributes
   end

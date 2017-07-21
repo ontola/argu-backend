@@ -10,7 +10,6 @@ class Group < ApplicationRecord
   has_many :decisions
 
   validates :name, length: {maximum: 75}
-  validates :visibility, presence: true
 
   scope :custom, -> { where('groups.id != ?', Group::PUBLIC_ID) }
 
@@ -20,7 +19,6 @@ class Group < ApplicationRecord
   contextualize_as_type 'argu:Group'
   contextualize_with_id { |r| Rails.application.routes.url_helpers.group_url(r, protocol: :https) }
 
-  enum visibility: {hidden: 0, visible: 1, discussion: 2}
   parentable :page
 
   PUBLIC_ID = -1
