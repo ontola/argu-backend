@@ -52,6 +52,7 @@ class Edge < ApplicationRecord
   acts_as_followable
   has_ltree_hierarchy
 
+  attr_writer :root
   delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
 
   # For Rails 5 attributes
@@ -186,6 +187,10 @@ class Edge < ApplicationRecord
       update!(is_published: true)
       increment_counter_cache unless is_trashed?
     end
+  end
+
+  def root
+    @root ||= super
   end
 
   def root_id

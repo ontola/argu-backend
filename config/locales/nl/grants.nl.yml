@@ -22,6 +22,7 @@ nl:
     description: "Rechten gelden voor ook voor onderliggen items."
     empty: "geen"
     types:
+      empty: "geen aanvullende rol"
       none: "niets zien"
       spectator: "alles bekijken"
       member: "meedoen"

@@ -3,5 +3,8 @@
     =message
   =f.inputs name: t('newe_type', type: t('groups.type')) do
     =f.inputs :name, :name_singular
+  =f.semantic_fields_for(:grants, group.grants) do |f|
+    =f.input :role, as: :react_select, collection: ({empty: -1}.merge(Grant.roles.except('manager'))).map {|role, _| [t("roles.types.#{role}").capitalize, role]}, label: t('grants.labels.role')
+    =f.input :edge_id, as: :react_select, collection: grant_edge_items(authenticated_resource.page), required: false, include_blank: false, label: t('grants.labels.edge')
   =f.actions do
-    =f.action :submit, :as => :button
+    =f.action :submit, as: :button

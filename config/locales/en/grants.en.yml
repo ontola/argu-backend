@@ -22,6 +22,7 @@ en:
     description: "Grants also apply to the underlying content."
     empty: "none"
     types:
+      empty: "no additional role"
       none: "see nothing"
       spectator: "see everything"
       member: "participate"

@@ -2,7 +2,7 @@
 class Grant < ApplicationRecord
   # The Edge this Grant is providing rules for
   belongs_to :edge
-  belongs_to :group
+  belongs_to :group, inverse_of: :grants
 
   scope :forum_manager, lambda {
     where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Forum'})

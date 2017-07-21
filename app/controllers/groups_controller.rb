@@ -50,16 +50,22 @@ class GroupsController < ServiceController
   private
 
   def create_respond_failure_html(resource)
-    render 'forums/settings',
+    render 'pages/settings',
            locals: {
              tab: 'groups/new',
              active: 'groups',
-             group: resource
+             group: resource,
+             resource: resource.page
            }
   end
 
-  def create_respond_failure_js(_)
-    head :bad_request
+  def new_resource_from_params
+    resource = super
+    resource.grants.build(
+      edge: get_parent_edge,
+      role: :member
+    )
+    resource
   end
 
   def new_respond_success_html(resource)
@@ -78,6 +84,16 @@ class GroupsController < ServiceController
   def resource_new_params
     HashWithIndifferentAccess.new(
       page: get_parent_resource
+    )
+  end
+
+  def respond_with_form_js(_)
+    respond_js(
+      'pages/settings',
+      tab: 'groups/new',
+      active: 'groups',
+      group: resource,
+      resource: resource.page
     )
   end
 

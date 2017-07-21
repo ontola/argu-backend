@@ -2,12 +2,13 @@
 class Group < ApplicationRecord
   include Parentable, Ldable
 
-  has_many :grants, dependent: :destroy
+  has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :group_memberships, -> { active }, dependent: :destroy
   has_many :members, through: :group_memberships, class_name: 'Profile'
   belongs_to :page, required: true, inverse_of: :groups
   belongs_to :forum
   has_many :decisions
+  accepts_nested_attributes_for :grants, reject_if: :all_blank
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
