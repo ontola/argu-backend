@@ -30,8 +30,8 @@ class SourcesController < ServiceController
     @_resource_by_id ||= if (/[a-zA-Z]/i =~ params[:id]).nil?
                            Source.find_by(page_id: params[:page_id], id: params[:id])
                          else
-                           Source.find_by!(
-                             page_id: Page.find_via_shortname!(params[:page_id]).id,
+                           Source.find_by(
+                             page_id: Page.find_via_shortname(params[:page_id]).id,
                              shortname: params[:id]
                            )
                          end

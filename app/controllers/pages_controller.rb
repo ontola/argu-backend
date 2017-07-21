@@ -123,7 +123,7 @@ class PagesController < EdgeTreeController
   end
 
   def resource_by_id
-    @page ||= Page.find_via_shortname! params[:id]
+    @page ||= Page.find_via_shortname_or_id params[:id]
   end
 
   private

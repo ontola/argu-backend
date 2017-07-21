@@ -56,7 +56,7 @@ class DecisionsController < EdgeTreeController
   def get_parent_edge(opts = params)
     @parent_edge ||=
       if parent_resource_class(opts).try(:shortnameable?)
-        parent_resource_class(opts).find_via_shortname!(parent_id_from_params(opts)).edge
+        parent_resource_class(opts).find_via_shortname_or_id!(parent_id_from_params(opts)).edge
       else
         Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))
       end

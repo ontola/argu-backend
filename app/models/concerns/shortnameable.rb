@@ -45,14 +45,19 @@ module Shortnameable
       joins(:shortname).find_by('lower(shortname) = lower(?)', url)
     end
 
+    # Finds an object via its shortname or id
+    def find_via_shortname_or_id(url)
+      if (/[a-zA-Z]/i =~ url).nil?
+        find_by(id: url)
+      else
+        find_via_shortname_nil(url)
+      end
+    end
+
     # Finds an object via its shortname or id, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname!(url)
-      if (/[a-zA-Z]/i =~ url).nil?
-        find(url)
-      else
-        find_via_shortname(url)
-      end
+    def find_via_shortname_or_id!(url)
+      find_via_shortname_or_id(url) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Useful to test whether a model is shortnameable

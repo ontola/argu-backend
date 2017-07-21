@@ -20,7 +20,7 @@ module NestedResourceHelper
   def get_parent_edge(opts = params)
     @parent_edge ||=
       if parent_resource_class(opts).try(:shortnameable?)
-        parent_resource_class(opts).find_via_shortname!(parent_id_from_params(opts)).edge
+        parent_resource_class(opts).find_via_shortname_or_id!(parent_id_from_params(opts)).edge
       else
         Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, owner_id: parent_id_from_params(opts))
       end
@@ -37,7 +37,7 @@ module NestedResourceHelper
   def get_parent_resource(opts = params)
     @parent_resource ||=
       if parent_resource_class(opts).try(:shortnameable?)
-        parent_resource_class(opts).find_via_shortname! parent_id_from_params(opts)
+        parent_resource_class(opts).find_via_shortname_or_id! parent_id_from_params(opts)
       else
         parent_resource_class(opts).find parent_id_from_params(opts)
       end

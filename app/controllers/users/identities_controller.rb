@@ -15,7 +15,7 @@ class Users::IdentitiesController < AuthorizedController
   end
 
   def connect
-    user = User.find_via_shortname! params[:id]
+    user = User.find_via_shortname_or_id! params[:id]
 
     render locals: {
       identity: authenticated_resource,
@@ -25,7 +25,7 @@ class Users::IdentitiesController < AuthorizedController
   end
 
   def connect!
-    user = User.find_via_shortname! params[:id].presence || params[:user][:id]
+    user = User.find_via_shortname_or_id! params[:id].presence || params[:user][:id]
     user.r = r_param
     schedule_redis_resource_worker(GuestUser.new(id: session.id), user, r_param)
     setup_favorites(user)

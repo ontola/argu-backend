@@ -194,7 +194,7 @@ class ForumsController < EdgeTreeController
 
   def resource_by_id
     return if action_name == 'index' || action_name == 'discover'
-    @forum ||= Forum.find_via_shortname!(params[:id])
+    @forum ||= Forum.find_via_shortname_or_id(params[:id])
   end
 
   def respond_with_form(_)

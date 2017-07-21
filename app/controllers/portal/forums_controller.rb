@@ -9,7 +9,7 @@ class Portal::ForumsController < EdgeTreeController
   end
 
   def get_parent_resource
-    Page.find_via_shortname!(params[:page] || params[:forum][:page_id])
+    Page.find_via_shortname_or_id!(params[:page] || params[:forum][:page_id])
   end
 
   def resource_new_params

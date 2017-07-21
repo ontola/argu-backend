@@ -93,9 +93,9 @@ class UsersController < AuthorizedController
   def authenticated_resource!
     @user ||= case action_name
               when 'show'
-                User.preload(:profile).find_via_shortname!(params[:id])
+                User.preload(:profile).find_via_shortname_or_id(params[:id])
               when 'update'
-                User.find(current_user.id)
+                User.find_by(id: current_user.id)
               when 'language'
                 current_user
               else
