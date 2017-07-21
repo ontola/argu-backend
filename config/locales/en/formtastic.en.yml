@@ -72,6 +72,7 @@ en:
         discoverable: "List in overviews"
       group:
         name: "Name"
+        name_singular: "Name singular"
       shortname:
         owner_type: "Resource type"
         owner_id: "Resource id"
