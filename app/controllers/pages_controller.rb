@@ -142,6 +142,10 @@ class PagesController < EdgeTreeController
            notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
   end
 
+  def create_respond_failure_js(resource)
+    respond_js('pages/new', page: resource, errors: resource.errors)
+  end
+
   def current_forum; end
 
   def handle_not_authorized_error(exception)
