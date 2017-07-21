@@ -36,6 +36,12 @@ module Users
       assert user.reload.confirmed?
     end
 
+    test 'guest should get show wrong confirmation' do
+      get user_confirmation_path(confirmation_token: 'wrong_token')
+      assert_response 200
+      assert_select 'header h2', 'Send confirmation link again'
+    end
+
     ####################################
     # As user
     ####################################

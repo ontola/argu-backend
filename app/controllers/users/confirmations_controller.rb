@@ -11,8 +11,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   def show
     @original_token = params[:confirmation_token]
-    self.resource = email_by_token.user
-    return super if resource.encrypted_password.present?
+    self.resource = email_by_token&.user
+    return super if resource.nil? || resource.encrypted_password.present?
     render 'show'
   end
 
