@@ -89,7 +89,7 @@ class Forum < ApplicationRecord
   end
 
   def page=(value)
-    super value.is_a?(Page) ? value : Page.find_via_shortname(value)
+    super value.is_a?(Page) ? value : Page.find_via_shortname!(value)
   end
 
   def publisher
@@ -100,7 +100,7 @@ class Forum < ApplicationRecord
   # the first Forum where {Forum#discoverable} is true and a {Grant} for the public {Group} is present
   def self.first_public
     if (setting = Setting.get(:default_forum))
-      forum = Forum.find_via_shortname(setting)
+      forum = Forum.find_via_shortname!(setting)
     end
     forum || Forum.public_forums.first
   end

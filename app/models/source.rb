@@ -41,7 +41,7 @@ class Source < ApplicationRecord
   end
 
   def page=(value)
-    super value.is_a?(Page) ? value : Page.find_via_shortname(value)
+    super value.is_a?(Page) ? value : Page.find_via_shortname!(value)
   end
 
   def public_grant

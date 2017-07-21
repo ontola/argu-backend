@@ -2,7 +2,7 @@
 module Users
   class PagesController < AuthorizedController
     def index
-      @user = User.find_via_shortname params[:id]
+      @user = User.find_via_shortname! params[:id]
       authorize @user, :update?
       @pages = policy_scope(Page)
                  .where(id: @user.profile.granted_record_ids('Page')

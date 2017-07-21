@@ -31,7 +31,7 @@ class SourcesController < ServiceController
                            Source.find_by(page_id: params[:page_id], id: params[:id])
                          else
                            Source.find_by(
-                             page_id: Page.find_via_shortname(params[:page_id]).id,
+                             page_id: Page.find_via_shortname!(params[:page_id]).id,
                              shortname: params[:id]
                            )
                          end

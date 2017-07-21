@@ -16,7 +16,7 @@ u1.update(encrypted_password: '')
 
 argu = Page
          .new(
-           owner: User.find_via_shortname('community').profile,
+           owner: User.find_via_shortname!('community').profile,
            shortname_attributes: {shortname: 'argu'},
            last_accepted: Time.current
          )
@@ -66,7 +66,7 @@ forum = Forum.new(name: 'Nederland',
                   public_grant: 'member',
                   shortname_attributes: {shortname: 'nederland'})
 forum.edge = Edge.new(owner: forum,
-                      user: User.find_via_shortname('staff_account'),
+                      user: User.find_via_shortname!('staff_account'),
                       parent: argu.edge)
 forum.edge.grants.new(group: public_group, role: :member)
 forum.save!

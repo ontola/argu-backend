@@ -36,12 +36,12 @@ module Shortnameable
   module ClassMethods
     # Finds an object via its shortname, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname(url)
-      find_via_shortname_nil(url) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname!(url)
+      find_via_shortname(url) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Finds an object via its shortname, returns nil when not found
-    def find_via_shortname_nil(url)
+    def find_via_shortname(url)
       joins(:shortname).find_by('lower(shortname) = lower(?)', url)
     end
 
@@ -50,7 +50,7 @@ module Shortnameable
       if (/[a-zA-Z]/i =~ url).nil?
         find_by(id: url)
       else
-        find_via_shortname_nil(url)
+        find_via_shortname(url)
       end
     end
 
