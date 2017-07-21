@@ -9,7 +9,7 @@ class Group < ApplicationRecord
   belongs_to :forum
   has_many :decisions
 
-  validates :name, length: {maximum: 75}
+  validates :name, presence: true, length: {minimum: 3, maximum: 75}
 
   scope :custom, -> { where('groups.id != ?', Group::PUBLIC_ID) }
 

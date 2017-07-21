@@ -169,7 +169,7 @@ RSpec.configure do |config|
              shortname: Shortname.new(shortname: 'public_page'))
     end
     if Group.find_by(id: Group::PUBLIC_ID).blank?
-      create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge)
+      create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group')
       community_user = User.community
       community_user.build_public_group_membership
       community_user.profile.save

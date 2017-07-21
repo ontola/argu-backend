@@ -1,5 +1,6 @@
 class DropUsedColumnsFromGroups < ActiveRecord::Migration[5.0]
   def up
+    Group.public.update!(name: 'Public')
     remove_column :groups, :forum_id
     remove_column :groups, :max_responses_per_member
     remove_column :groups, :icon
