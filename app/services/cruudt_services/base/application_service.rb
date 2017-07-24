@@ -129,7 +129,6 @@ class ApplicationService
   end
 
   def prepare_argu_publication_attributes
-    return if resource.persisted? && resource.edge.argu_publication.nil?
     @attributes[:edge_attributes] ||= {}
     @attributes[:edge_attributes][:id] ||= resource.edge.id
     @attributes[:edge_attributes][:argu_publication_attributes] = argu_publication_attributes

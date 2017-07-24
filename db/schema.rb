@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711115606) do
+ActiveRecord::Schema.define(version: 20170724100236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "btree_gist"
   enable_extension "hstore"
   enable_extension "ltree"
   enable_extension "uuid-ossp"
-  enable_extension "btree_gist"
 
   create_table "access_tokens", force: :cascade do |t|
     t.integer  "item_id"
