@@ -47,6 +47,7 @@ class Argument < ApplicationRecord
   end
 
   def adjacent(direction, _show_trashed = nil)
+    return if is_trashed?
     ids = parent_model
             .arguments_plain
             .untrashed
