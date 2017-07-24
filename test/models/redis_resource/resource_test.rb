@@ -66,6 +66,43 @@ module RedisResource
       end
     end
 
+    test 'destroy when record already exists in postgres' do
+      vote = create_vote(user, for: :con)
+      key = RedisResource::Key.new(
+        path: vote.parent_edge.path,
+        owner_type: 'Vote',
+        user: vote.publisher,
+        edge_id: vote.edge.id
+      ).key
+      Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
+      user.primary_email_record.update(confirmed_at: nil)
+      assert_differences([['Vote.count', -1], ['Argu::Redis.keys("temporary*").count', -1]]) do
+        vote.destroy
+      end
+    end
+
+    test 'destroy parent' do
+      unconfirmed_vote = create_vote(unconfirmed)
+      assert_differences([['Motion.count', -1], ['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', -1]]) do
+        unconfirmed_vote.parent_model.parent_model.destroy
+      end
+    end
+
+    test 'destroy parent when record already exists in postgres' do
+      vote = create_vote(user, for: :con)
+      key = RedisResource::Key.new(
+        path: vote.parent_edge.path,
+        owner_type: 'Vote',
+        user: vote.publisher,
+        edge_id: vote.edge.id
+      ).key
+      Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
+      user.primary_email_record.update(confirmed_at: nil)
+      assert_differences([['Motion.count', -1], ['Vote.count', -1], ['Argu::Redis.keys("temporary*").count', -1]]) do
+        vote.parent_model.parent_model.destroy
+      end
+    end
+
     test 'persist' do
       redis_resource = RedisResource::Resource
                          .find("temporary.user.#{unconfirmed.id}.vote.#{vote.edge.id}.#{vote.edge.parent.path}")

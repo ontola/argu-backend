@@ -30,6 +30,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   let(:subject) do
     create(:motion,
            :with_arguments,
+           :with_votes,
            publisher: creator,
            parent: question.edge)
   end
@@ -223,7 +224,14 @@ class MotionsTest < ActionDispatch::IntegrationTest
       {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
     define_test(hash, :trash, options: {analytics: stats_opt('motions', 'trash_success')})
-    define_test(hash, :destroy, options: {analytics: stats_opt('motions', 'destroy_success')})
+    define_test(
+      hash,
+      :destroy,
+      options: {
+        analytics: stats_opt('motions', 'destroy_success'),
+        differences: [['Motion', -1], ['Vote', -9], ['Argu::Redis.keys(\'temporary.*\')', -6], ['Activity.loggings', 1]]
+      }
+    )
     define_test(hash, :shift)
     define_test(hash, :move, options: {attributes: {forum_id: :forum_move_to}})
   end

@@ -65,6 +65,7 @@ module Argu
                    options: service_options)
               .commit
           end
+          create_redis_vote(Argument.last.edge, :pro)
           TrashService.new(Argument.last, options: service_options).commit
         end
       end
@@ -140,26 +141,63 @@ module Argu
       # Adds 2 public and 1 hidden votes to the resource for pro, neutral and con
       def with_votes
         %i(pro neutral con).each do |side|
-          2.times do
-            CreateVote
-              .new(
-                @resource.default_vote_event.edge,
-                attributes: vote_attrs(side),
-                options: service_options
-              )
-              .commit
-          end
-          CreateVote
-            .new(
-              @resource.default_vote_event.edge,
-              attributes: vote_attrs(side),
-              options: service_options(are_votes_public: false)
-            )
-            .commit
+          create_normal_vote(@resource.default_vote_event.edge, side)
+          create_hidden_vote(@resource.default_vote_event.edge, side)
+          create_redis_vote(@resource.default_vote_event.edge, side)
+          create_redis_postgres_vote(@resource.default_vote_event.edge, side)
         end
       end
 
       private
+
+      def create_normal_vote(edge, side)
+        CreateVote
+          .new(
+            edge,
+            attributes: vote_attrs(side),
+            options: service_options
+          )
+          .commit
+      end
+
+      def create_redis_vote(edge, side)
+        CreateVote
+          .new(edge, attributes: vote_attrs(side), options: guest_service_options)
+          .commit
+      end
+
+      def create_redis_postgres_vote(edge, side)
+        guest_vote_postgres =
+          CreateVote
+            .new(edge, attributes: vote_attrs(side), options: service_options)
+        guest_vote_postgres.commit
+        key = RedisResource::Key.new(
+          path: guest_vote_postgres.resource.parent_edge.path,
+          owner_type: 'Vote',
+          user: guest_vote_postgres.resource.publisher,
+          edge_id: guest_vote_postgres.resource.edge.id
+        ).key
+        Argu::Redis.set(key, guest_vote_postgres.resource.attributes.merge(persisted: true).to_json)
+        guest_vote_postgres.resource.publisher.primary_email_record.update(confirmed_at: nil)
+      end
+
+      def create_hidden_vote(edge, side)
+        CreateVote
+          .new(
+            edge,
+            attributes: vote_attrs(side),
+            options: service_options(are_votes_public: false)
+          )
+          .commit
+      end
+
+      def guest_service_options(id: 'guest_id')
+        guest_user = GuestUser.new(id: id)
+        {
+          creator: guest_user.profile,
+          publisher: guest_user
+        }
+      end
 
       def service_options(opts = {})
         user = create(:user, profile: build(:profile, opts))
