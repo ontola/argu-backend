@@ -12,6 +12,7 @@ class AuthorizedController < ApplicationController
   before_action :check_if_registered,
                 except: %i(show shift move convert convert!)
   before_action :authorize_action, except: :index
+  before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_edge, :authenticated_resource, :collect_banners
 
   # @private
@@ -26,6 +27,11 @@ class AuthorizedController < ApplicationController
   end
 
   private
+
+  def add_errors_tab(notification)
+    return unless authenticated_resource&.errors.present?
+    notification.add_tab(:errors, authenticated_resource.errors.to_h)
+  end
 
   def authorize_action
     authorize authenticated_resource, "#{params[:action].chomp('!')}?"
