@@ -1,4 +1,4 @@
-.box.box-grid.profile-box[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
+.box.box-grid.profile-box[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Organization"]
   =link_to dual_profile_url(profile) do
     section.unpadded.cover--small.cover--light
       .cover-image[style="background-image: url('#{profile.default_cover_photo&.url(:box)}'); "]
@@ -11,8 +11,17 @@
           =link_to url_for([:settings, profile.owner]), class: ('btn-subtle') do
             span.fa.fa-gear
             span.icon-left= t('settings')
-  section.section-info.motion-bg
+  section.section-info
     .details
-      .details-part.details-part--type.neutral-bg
+      .details-part
         span[class="fa fa-building"]
         span.icon-left= t('pages.type')
+      .details-part[data-title=t('groups.plural')]
+        span[class="fa fa-group"]
+        span.icon-left= profile.profileable.groups.count
+      .details-part[data-title=t('users.plural')]
+        span[class="fa fa-user"]
+        span.icon-left= GroupMembership.joins(group: :page).where('pages.id = ? AND groups.id != ?', profile.profileable_id, Group::PUBLIC_ID).count
+      .details-part[data-title=t('forums.plural')]
+        span[class="fa fa-comments"]
+        span.icon-left= profile.profileable.forums.count

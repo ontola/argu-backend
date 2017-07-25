@@ -35,7 +35,7 @@ nl:
       managed_current_out_of_max: "%{current} van maximaal %{max} organisatie(s) beheerd."
       owner: "Eigenaar"
     display: "Organisatie bekijken"
-    create: "Start een organisatie"
+    create: "Maak een organisatie"
     legal: "Door deze organisatie aan te maken verklaar je toestemming te hebben om de organisatie officieel op Argu te vertegenwoordigen, en dat je akkoord gaat met de Algemene Voorwaarden."
     limit_reached_amount: "Je kunt maximaal %{amount} organisatie(s) aanmaken."
     page_management_html: "Ga naar %{href} om je organisaties te beheren."
