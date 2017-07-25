@@ -75,13 +75,19 @@
 }
 
 .cover-behind {
-  position: relative;
-  height: 0;
+  position: absolute;
+  height: 16em;
   width: 100%;
   opacity: .5;
   z-index: -1;
   margin-bottom: 2em;
+  overflow: hidden;
+
+  .cover-image {
+    height: 100%;
+  }
 }
+
 
 .cover-hero-text {
   color: white;
@@ -116,7 +122,6 @@
   width: 100%;
   background-size: cover;
   background-position: center;
-  height: 100%;
   height: 19em;
 }
 
@@ -276,6 +281,11 @@
 .cover--forum {
   margin-bottom: 1em;
   background-color: $blu;
+}
+
+.cover--blur {
+  filter: blur(5px);
+  transform: scale(1.1);
 }
 
 .bg-img, .b-lazy {
