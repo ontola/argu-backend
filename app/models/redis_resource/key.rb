@@ -24,7 +24,11 @@ module RedisResource
       opts.compact!
       self.user_type ||= opts[:user]&.class&.to_s&.underscore || opts.fetch(:user_type, '*')
       self.user_id ||= opts[:user]&.id || opts.fetch(:user_id, '*')
-      self.user = opts[:user] || (user_type == 'user' ? User.find(user_id) : GuestUser.new(id: user_id))
+      self.user =
+        opts[:user] ||
+        (user_type == 'user' && User.find(user_id)) ||
+        (user_type == 'guest_user' && GuestUser.new(id: user_id)) ||
+        nil
       self.owner_type ||= opts.fetch(:owner_type, '*')
       self.edge_id ||= opts.fetch(:edge_id, '*')
       self.path ||= opts.fetch(:path, '*')
@@ -36,11 +40,16 @@ module RedisResource
       redis_resource.resource.edge
     end
 
+    # @return [Bool] Whether the key contains wildcards
+    def has_wildcards?
+      key.include?('*')
+    end
+
     def matched_keys
       @matched_keys ||=
         if has_wildcards?
           keys = Argu::Redis.keys(key).map { |key| RedisResource::Key.parse(key, user) }
-          parent_edges = Edge.find(keys.map(&:parent_id))
+          parent_edges = Edge.where(id: keys.map(&:parent_id))
           keys.each { |key| key.parent = parent_edges.find { |edge| edge.id == key.parent_id.to_i } }
         else
           [self]
@@ -68,13 +77,6 @@ module RedisResource
         user: user
       )
       Argu::Redis.rename(key, new_key.key)
-    end
-
-    private
-
-    # @return [Bool] Whether the key contains wildcards
-    def has_wildcards?
-      key.include?('*')
     end
 
     class << self

@@ -46,6 +46,7 @@ class Edge < ApplicationRecord
   before_destroy :decrement_counter_cache, unless: :is_trashable?
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
+  before_destroy :destroy_redis_children
   before_save :set_user_id
   before_save :trash_or_untrash, if: :is_trashed_changed?
 
@@ -232,6 +233,16 @@ class Edge < ApplicationRecord
 
   private
 
+  def destroy_children
+    return if owner_type == 'Page'
+    children.destroy_all
+  end
+
+  def destroy_redis_children
+    keys = RedisResource::Key.new(path: "#{path}.*").matched_keys.map(&:key)
+    Argu::Redis.redis_instance.del(*keys) if keys.present?
+  end
+
   def reset_persisted_edge
     @persisted_edge = nil
   end
@@ -246,10 +257,5 @@ class Edge < ApplicationRecord
 
   def is_trashed_changed?
     changed.include?('is_trashed')
-  end
-
-  def destroy_children
-    return if owner_type == 'Page'
-    children.destroy_all
   end
 end
