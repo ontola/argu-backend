@@ -3,11 +3,10 @@
 .col-1
   .profile-top-container
     =image_tag resource.default_profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
-    .profile-header
-      h1= resource.display_name
   .profile[data-intro= t('intro.profile.show', name: resource.display_name)]
     .box
       section
+        h1= resource.display_name
         - if resource.roles.pluck(:name).include?('staff')
           span.role Staff
         p= resource.about
