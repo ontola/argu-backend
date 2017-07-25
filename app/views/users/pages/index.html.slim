@@ -6,4 +6,4 @@
     - if current < max
       =link_to t('pages.create'), new_page_path, fa: 'building', class: 'btn margin-bottom'
   - @pages.each do |page|
-    =render partial: 'profiles/preview', locals: {profile: page.profile}
+    =render partial: 'pages/page', locals: {profile: page.profile}
