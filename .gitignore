@@ -35,6 +35,8 @@ secrets.yml
 /public/forums
 /public/motions
 /public/organisations
+/public/o
+/public/photos
 /public/profiles
 /public/questions
 /public/system
