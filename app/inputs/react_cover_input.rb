@@ -12,6 +12,7 @@ class ReactCoverInput < ReactInput
     props[:cache] = photo&.image_cache
     props[:photoId] = photo&.id
     props[:imageUrl] = photo&.url(:box)
+    props[:positionY] = photo&.content_attributes.try(:[], 'position_y') || 50
     props[:name] = "#{object.model_name.singular}[#{method}_attributes]"
     props[:type] = :cover_photo
     InputReactComponent.new.render_react_component('CoverUploader', props, opts)

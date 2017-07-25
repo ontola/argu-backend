@@ -4199,6 +4199,13 @@ react-onclickoutside@^4.1.0:
   dependencies:
     object-assign "^4.0.1"
 
+react-rangeslider@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-rangeslider/-/react-rangeslider-2.1.0.tgz#7473bcccf354fba7017047827d06e2ab2fd0c77b"
+  dependencies:
+    classnames "^2.2.3"
+    resize-observer-polyfill "^1.4.2"
+
 react-redux@^4.0.0:
   version "4.4.8"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-4.4.8.tgz#e7bc1dd100e8b64e96ac8212db113239b9e2e08f"
@@ -4518,6 +4525,10 @@ requizzle@~0.2.1:
   resolved "https://registry.yarnpkg.com/requizzle/-/requizzle-0.2.1.tgz#6943c3530c4d9a7e46f1cddd51c158fc670cdbde"
   dependencies:
     underscore "~1.6.0"
+
+resize-observer-polyfill@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.4.2.tgz#a37198e6209e888acb1532a9968e06d38b6788e5"
 
 resolve-dir@^0.1.0:
   version "0.1.1"

@@ -6,12 +6,10 @@
 $dropzone-color: white;
 
 .dropzone--cover--container {
+  position: relative;
 
-  &:hover, &.dropzone--cover--hovering {
-
-    .dropzone--cover-delete-image {
-      background-color: $darken3;
-    }
+  &:hover,
+  &.dropzone--cover--hovering {
 
     .dropzone--cover {
       background-color: $g2a;
@@ -77,8 +75,43 @@ $dropzone-color: white;
   cursor: pointer;
   color: white;
   padding: 0.3em;
+  background-color: $darken3 !important;
 
   &:hover {
     background-color: $darken4 !important;
+  }
+}
+
+.rangeslider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -15px;
+
+  .value {
+    display: none;
+  }
+}
+
+.rangeslider__handle{
+  width: 30px;
+  height: 30px;
+  left: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  border: solid 2px $blu;
+  color: $blu;
+  @include box-shadow;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include animation(enlarge-twist 1s ease-out);
+
+  &:before {
+    content: "\f07d";
+    font: normal normal normal 14px/1 FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
   }
 }
