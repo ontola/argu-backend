@@ -40,17 +40,12 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :box, if: :is_image? do
     process convert: 'jpeg'
-    process resize_to_fill: [568, 400]
+    process resize_to_limit: [568, 400]
   end
 
   version :cover, if: :cover_photo? do
     process convert: 'jpeg'
-    process resize_to_fill: [1500, 600]
-  end
-
-  version :cover_small, if: :cover_photo? do
-    process convert: 'jpeg'
-    process resize_to_fill: [600, 300]
+    process resize_to_limit: [1500, 600]
   end
 
   version :avatar, if: :is_image? do
