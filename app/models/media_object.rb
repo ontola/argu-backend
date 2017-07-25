@@ -23,6 +23,7 @@ class MediaObject < ApplicationRecord
   end
   contextualize :display_name, as: 'schema:name'
   contextualize :thumbnail, as: 'schema:thumbnail'
+  store_accessor :content_attributes
 
   before_save :set_file_name_and_type
   before_save :set_publisher_and_creator

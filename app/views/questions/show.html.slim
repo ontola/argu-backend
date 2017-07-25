@@ -3,8 +3,7 @@
                name: seolized_title(question),
                description: seolized_description(question),
                image: question.default_cover_photo&.url || image_url('logo-social.png')
-.cover-behind
-  .cover-image.bg-img[style="background-image: url('#{question.default_cover_photo&.url}'); "]
+=render partial: 'application/cover_behind', locals: {media_object: question.default_cover_photo}
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: question, type: 'question'}

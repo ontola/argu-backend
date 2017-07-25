@@ -25,6 +25,7 @@ class MediaObjectPolicy < EdgeTreePolicy
     attributes.concat %i(id used_as content remote_content remove_content content_cache content_aspect
                          content_attribution content_box_w content_crop_h content_crop_w content_crop_x content_crop_y
                          content_original_h content_original_w _destroy description)
+    attributes.append(content_attributes: %i(position_y))
     attributes
   end
 end

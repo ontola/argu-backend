@@ -1,7 +1,7 @@
 .box.box--extra-margin.project[class=status_classes_for(model)]
   - if model.default_cover_photo.present?
     =link_to motion_path(model)
-      =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'project'}
+      =render partial: 'application/box_image', locals: {media_object: model.default_cover_photo}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Thing"]
     =link_to project_path(model)
       h3.blog-post-t[itemprop="headline"]= model.title

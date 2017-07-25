@@ -1,7 +1,7 @@
 .box.box--extra-margin.motion[class=status_classes_for(model)]
   - if model.default_cover_photo.present?
     =link_to motion_path(model), 'aria-hidden': true, tabindex: '-1'
-      =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'motion'}
+      =render partial: 'application/box_image', locals: {media_object: model.default_cover_photo}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title

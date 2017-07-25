@@ -354,20 +354,22 @@ ActiveRecord::Schema.define(version: 20170727100956) do
 
   create_table "media_objects", force: :cascade do |t|
     t.integer  "forum_id"
-    t.integer  "about_id",                 null: false
-    t.string   "about_type",               null: false
-    t.integer  "used_as",      default: 0, null: false
-    t.integer  "creator_id",               null: false
-    t.integer  "publisher_id",             null: false
+    t.integer  "about_id",                       null: false
+    t.string   "about_type",                     null: false
+    t.integer  "used_as",            default: 0, null: false
+    t.integer  "creator_id",                     null: false
+    t.integer  "publisher_id",                   null: false
     t.string   "content_uid"
     t.string   "title"
     t.text     "description"
     t.datetime "date_created"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "content_type"
     t.string   "filename"
+    t.hstore   "content_attributes"
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type", using: :btree
+    t.index ["content_attributes"], name: "index_media_objects_on_content_attributes", using: :gin
     t.index ["forum_id"], name: "index_media_objects_on_forum_id", using: :btree
   end
 

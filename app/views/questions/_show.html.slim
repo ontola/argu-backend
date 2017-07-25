@@ -1,7 +1,7 @@
 .box[class=status_classes_for(model) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
   - if model.default_cover_photo.present?
     =link_to question_path(model) do
-      =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'question'}
+      =render partial: 'application/box_image', locals: {media_object: model.default_cover_photo}
   section
     =link_to question_path(model) do
       h3.question-t[itemprop="headline"]= model.title

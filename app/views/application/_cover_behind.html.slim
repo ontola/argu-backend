@@ -1,0 +1,2 @@
+.cover-behind
+  .cover-image.bg-img[style="background-image: url('#{media_object&.url(:cover)}'); background-position-y: #{media_object&.content_attributes.try(:[], 'position_y') || 50}%"]

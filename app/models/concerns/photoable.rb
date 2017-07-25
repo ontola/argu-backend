@@ -17,7 +17,8 @@ module Photoable
                                     attrs['content'].blank? &&
                                       attrs['content_cache'].blank? &&
                                       attrs['remove_content'] != '1' &&
-                                      attrs['remote_content_url'].blank?
+                                      attrs['remote_content_url'].blank? &&
+                                      attrs['content_attributes'].blank?
                                   }
   end
 end

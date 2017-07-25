@@ -3,8 +3,7 @@
     name: seolized_title(project),
     description: seolized_description(project)
 div[itemscope itemtype="http://www.schema.org/Thing"]
-  .cover-behind
-    .cover-image.bg-img[style="background-image: url('#{project.default_cover_photo&.url(:cover)}'); "]
+  =render partial: 'application/cover_behind', locals: {media_object: project.default_cover_photo}
   .col-1
     div[data-intro= t('intro.projects.back')]= to_parent
     .box[class=status_classes_for(project)]
