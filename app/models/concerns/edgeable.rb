@@ -67,7 +67,8 @@ module Edgeable
     end
 
     def destroy
-      store_in_redis? ? remove_from_redis : super
+      remove_from_redis if store_in_redis?
+      super if persisted?
     end
 
     def parent_model(type = nil)
