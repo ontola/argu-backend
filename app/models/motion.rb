@@ -124,6 +124,7 @@ class Motion < ApplicationRecord
       .motions
       .published
       .show_trashed(show_trashed)
+      .where(question_id: question_id)
       .order('motions.updated_at')
   end
 end
