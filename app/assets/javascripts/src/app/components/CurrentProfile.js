@@ -16,7 +16,7 @@ export const CurrentProfile = React.createClass({
     },
 
     onProfileChange (value) {
-        this.setState({ currentActor: value })
+        this.setState({ currentActor: value.value })
     },
 
     optionRenderer (obj) {

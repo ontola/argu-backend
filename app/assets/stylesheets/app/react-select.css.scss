@@ -36,7 +36,7 @@
     background: #ffffff;
     border-color: #b3b3b3 #cccccc #d9d9d9;
 }
-.is-open > .Select-control > .Select-arrow {
+.is-open > .Select-control .Select-arrow {
     border-color: transparent transparent #999999;
     border-width: 0 5px 5px;
 }
@@ -59,7 +59,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.has-value > .Select-control > .Select-placeholder {
+.has-value > .Select-control .Select-placeholder {
     color: #333333;
 }
 .Select-value {
@@ -74,7 +74,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.has-value > .Select-control > .Select-value {
+.has-value > .Select-control .Select-value {
     color: #333333;
 }
 .Select-input > input {
@@ -114,7 +114,7 @@
     right: 30px;
     top: 50%;
 }
-.has-value > .Select-control > .Select-loading {
+.has-value > .Select-control .Select-loading {
     right: 46px;
 }
 .Select-clear {

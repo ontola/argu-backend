@@ -11,22 +11,22 @@ export const SearchActor = React.createClass({
             value: React.PropTypes.string
         })),
         thing: React.PropTypes.string,
-        values: React.PropTypes.array
+        value: React.PropTypes.string
     },
 
     getInitialState () {
         return {
-            values: this.props.values
+            value: this.props.value
         }
     },
 
     handleChange (val) {
-        this.setState({ val });
-        document.getElementById('decision_forwarded_group_id').value = val.split('.')[0];
-        if (val.split('.')[1] === undefined) {
+        this.setState({ value: val.value });
+        document.getElementById('decision_forwarded_group_id').value = val.value.split('.')[0];
+        if (val.value.split('.')[1] === undefined) {
             document.getElementById('decision_forwarded_user_id').value = '';
         } else {
-            document.getElementById('decision_forwarded_user_id').value = val.split('.')[1];
+            document.getElementById('decision_forwarded_user_id').value = val.value.split('.')[1];
         }
     },
 
@@ -87,7 +87,7 @@ export const SearchActor = React.createClass({
             onChange={this.handleChange}
             options={this.props.groups}
             placeholder="Select group or user"
-            values={this.state.values}/>);
+            value={this.state.value}/>);
     }
 
 });

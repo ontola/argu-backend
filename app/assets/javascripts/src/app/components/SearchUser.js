@@ -7,17 +7,17 @@ export const SearchUser = React.createClass({
         fieldName: React.PropTypes.string.isRequired,
         multi: React.PropTypes.bool,
         things: React.PropTypes.string,
-        values: React.PropTypes.array
+        value: React.PropTypes.string
     },
 
     getInitialState () {
         return {
-            values: this.props.values
+            value: this.props.value
         }
     },
 
-    handleChange (_, values) {
-        this.setState({ values });
+    handleChange (value) {
+        this.setState({ value });
     },
 
     fetchResults (input) {
@@ -49,7 +49,7 @@ export const SearchUser = React.createClass({
             onChange={this.handleChange}
             placeholder="Select user"
             things={this.props.things}
-            values={this.state.values}/>);
+            value={this.state.value}/>);
     }
 });
 window.SearchUser = SearchUser;

@@ -16,7 +16,7 @@ const SearchSelect = React.createClass({
         options: React.PropTypes.array,
         placeholder: React.PropTypes.string,
         things: React.PropTypes.string,
-        values: React.PropTypes.array
+        value: React.PropTypes.string
     },
 
     componentWillUnmount () {
@@ -64,21 +64,18 @@ const SearchSelect = React.createClass({
     },
 
     render () {
-        return (<Select
-                  asyncOptions={this.loadOptions}
+        return (<Select.Async
+                  clearable={false}
                   filterOptions={this.filterOptions}
-                  ignoreCase={true}
-                  matchProp="any"
+                  loadOptions={this.loadOptions}
                   multi={this.props.multi}
                   name={this.props.fieldName}
                   onChange={this.props.onChange}
                   optionRenderer={this.valueRenderer}
                   options={this.props.options}
                   placeholder={this.props.placeholder}
-                  singleValueRenderer={this.valueRenderer}
-                  value={this.props.values}
-                  valueRenderer={this.valueRenderer}
-                  values={this.props.values}/>);
+                  value={this.props.value}
+                  valueRenderer={this.valueRenderer}/>);
     }
 });
 export default SearchSelect
