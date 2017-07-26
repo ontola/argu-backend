@@ -310,14 +310,18 @@
   }
 }
 
+.parent-visibility-icon {
+  float: right;
+  font-size: .8em;
+}
+
 .back-to-forum {
   background-color: $blu !important;
 
   h3 {
     color: white;
-    display: inline-block;
     position: relative;
-    left: 1.8em;
+    margin-left: 1.8em;
   }
 
   .profile-picture {

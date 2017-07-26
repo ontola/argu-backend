@@ -8,9 +8,14 @@
           section.back-to-forum
             -if parent.default_profile_photo.url.present?
               .profile-picture[style="background-image: url('#{parent.default_profile_photo.url(:avatar)}')"]
-            h3= parent.display_name
+            h3
+              .parent-visibility[data-title=visible_for_string(parent)]
+                span[class="fa fa-#{visibility_icon(parent)}"]
+              =parent.display_name
         - else
           section
             h3[class="#{parent.model_name.singular}-t"]
+              .parent-visibility-icon[data-title=visible_for_string(parent)]
+                span[class="fa fa-#{visibility_icon(parent)}"]
               span.fa.fa-level-up
               span.icon-left[itemprop="name"]= parent.display_name

@@ -236,7 +236,9 @@
 
 .cover-switcher {
   display: inline-block;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .dropdown-trigger:hover, .dropdown-active h1{
     background-color: $lighten2;
@@ -260,6 +262,10 @@
     &:active{
       background-color: $lighten3 !important;
     }
+  }
+
+  .fa {
+    color: white;
   }
 }
 

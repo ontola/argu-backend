@@ -162,6 +162,26 @@ module ApplicationHelper
     classes.compact.join(' ')
   end
 
+  def visible_for_group_ids(resource)
+    @visible_for_group_ids ||= {}
+    @visible_for_group_ids[resource] ||=
+      if user_context.has_tree?
+        user_context.granted_group_ids(resource.edge, :spectator)
+      else
+        resource.edge.granted_group_ids(:spectator)
+      end
+  end
+
+  def visible_for_string(resource)
+    groups = visible_for_group_ids(resource)
+    return t('groups.visible_for_everybody') if groups.include?(-1)
+    t('groups.visible_for', groups: Group.find(groups).pluck(:name).to_sentence)
+  end
+
+  def visibility_icon(resource)
+    visible_for_group_ids(resource).include?(-1) ? 'globe' : 'group'
+  end
+
   def display_settings_items
     link_items = [
       link_item(t('info_bar'), nil, fa: 'info', data: {'display-setting' => 'info_bar'}),

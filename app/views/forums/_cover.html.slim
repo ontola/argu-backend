@@ -7,9 +7,12 @@
     .cover-image.cover-image-empty
   .cover-overlay
     .cover-switcher-wrapper
-      -if resource.default_profile_photo.url.present?
-        .profile-picture[style="background-image: url('#{resource.default_profile_photo.url(:avatar)}')"]
-      .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component_store 'HyperDropdown', props: forum_title_dropdown_items(resource)
+      .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]
+        -if resource.default_profile_photo.url.present?
+          .profile-picture[style="background-image: url('#{resource.default_profile_photo.url(:avatar)}')"]
+        =react_component_store 'HyperDropdown', props: forum_title_dropdown_items(resource)
+        span[data-title=visible_for_string(resource)]
+          span[class="fa fa-#{visibility_icon(resource)}"]
       -if resource.bio.present?
         h2.cover-hero-text= resource.bio
       -if resource.bio_long.present?

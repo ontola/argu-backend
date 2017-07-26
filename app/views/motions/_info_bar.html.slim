@@ -41,6 +41,10 @@ section.section--details
           .fa.fa-clock-o
         .detail__text
           time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
+    - if motion.pinned?
+      .detail[data-title=t('edges.pinned_at', datetime: motion.edge.pinned_at.to_formatted_s(:short))]
+        .detail__icon
+          span.fa.fa-map-pin
     - if local_assigns[:show_decision]
       - if (motion.state == 'pending') && policy(motion.last_or_new_decision(true)).update?
         div class="detail detail--decision detail--interactive detail--decision--#{motion.state}"
@@ -51,7 +55,3 @@ section.section--details
             div class="fa fa-#{decision_icon(motion)}"
           .detail__text
             =t("decisions.#{motion.state}")
-    - if motion.pinned?
-      .detail[data-title=t('edges.pinned_at', datetime: motion.edge.pinned_at.to_formatted_s(:short))]
-        .detail__icon
-          span.fa.fa-map-pin

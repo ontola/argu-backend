@@ -22,3 +22,5 @@ en:
       info: "Are you sure you wish to delete the group '%{group}'?"
       howto: "Please enter '%{cancel_string}' below to confirm the deletion of this group."
       cancel_string: "remove"
+    visible_for: "Visible for %{groups}"
+    visible_for_everybody: "Visible for everybody"

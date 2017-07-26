@@ -22,3 +22,5 @@ nl:
       info: "Weet je zeker dat je de groep '%{group}' wil verwijderen?"
       howto: "Voer hieronder '%{cancel_string}' in om het verwijderen van de groep te bevestigen."
       cancel_string: "verwijder"
+    visible_for: "Zichtbaar voor %{groups}"
+    visible_for_everybody: "Zichtbaar voor iedereen"

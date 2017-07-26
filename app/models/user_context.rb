@@ -94,6 +94,10 @@ class UserContext
     user.profile.group_ids & granted_group_ids
   end
 
+  def has_tree?
+    @tree_root.present?
+  end
+
   # Find all rules active for the action on the record on the edge
   # @param [Edge] edge The position in the edge tree
   # @param [ActiveRecord] record The record to find rules for
@@ -129,7 +133,7 @@ class UserContext
   # @param [Bool] allow_outside_tree Whether to raise on a node outside the current tree or not.
   # @return [Bool] Whether the Edge falls within the current tree
   def within_tree?(edge, allow_outside_tree)
-    return false if @tree_root.nil?
+    return false unless has_tree?
     within_tree = @tree_root.id == edge.root_id
     raise "#{edge.owner_type} lies outside the current tree" unless within_tree || allow_outside_tree
     within_tree

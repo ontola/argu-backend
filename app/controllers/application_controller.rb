@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
           PublicActivity::StoreController, NamesHelper, UsersHelper,
           NestedAttributesHelper, JsonApiHelper, Common::Responses,
           RedirectHelper, FrontendTransitionHelper
-  helper_method :current_profile, :show_trashed?, :preferred_forum
+  helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
 
   ::INC_NESTED_COLLECTION = [
     :members, :create_action, views: [:members, :create_action, views: [:members, :create_action].freeze].freeze
