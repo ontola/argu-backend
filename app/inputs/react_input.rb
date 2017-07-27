@@ -27,7 +27,7 @@ class ReactInput < Formtastic::Inputs::SelectInput
     input_options.merge(
       name: react_name,
       options: react_options,
-      value: react_value
+      defaultValue: react_value
     )
   end
 

@@ -8,6 +8,6 @@ class ReactSelectInput < ReactInput
   end
 
   def render_react_component(props = {}, opts = {})
-    InputReactComponent.new.render_react_component('Select', props, opts)
+    InputReactComponent.new.render_react_component('SelectComponent', props, opts)
   end
 end
