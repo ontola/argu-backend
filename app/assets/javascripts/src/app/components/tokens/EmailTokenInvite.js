@@ -1,8 +1,9 @@
-import Alert from './Alert';
+import Alert from '../Alert';
 import React from 'react';
 import I18n from 'i18n-js';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { safeCredentials, statusSuccess, json } from '../../lib/helpers';
 import Select from 'react-select';
+import TokenList from './TokenList';
 
 export const EmailTokenInvite = React.createClass({
     propTypes: {
@@ -119,9 +120,6 @@ export const EmailTokenInvite = React.createClass({
         }
         return (
             <div className="formtastic">
-                <InvitationList
-                    retractHandler={this.onRetract}
-                    tokens={this.state.tokens}/>
                 <textarea
                     className="form-input-content"
                     name="emails"
@@ -155,76 +153,14 @@ export const EmailTokenInvite = React.createClass({
                         type="submit"
                         value="Submit"> {I18n.t('tokens.email.create')} </button>
                 </fieldset>
-
+                <legend><span>{I18n.t('tokens.email.pending')}</span></legend>
+                <TokenList
+                    columns={['email', 'createdAt']}
+                    emptyString={I18n.t('tokens.email.empty')}
+                    retractHandler={this.onRetract}
+                    tokens={this.state.tokens}/>
             </div>
         );
     }
 });
 window.EmailTokenInvite = EmailTokenInvite;
-
-export const InvitationList = React.createClass({
-    propTypes: {
-        retractHandler: React.PropTypes.func,
-        tokens: React.PropTypes.array
-    },
-
-    render () {
-        const { retractHandler, tokens } = this.props;
-        if (tokens === undefined) {
-            return <p>{I18n.t('tokens.loading')}</p>;
-        } else if (tokens.length === 0) {
-            return <p>{I18n.t('tokens.email.empty')}</p>;
-        }
-        const rows = tokens.map(token => {
-            return <Invitation key={token.id} retractHandler={retractHandler} token={token}/>;
-        });
-        return (
-            <table>
-                <thead className="subtle">
-                <tr>
-                    <td>{I18n.t('tokens.labels.email')}</td>
-                    <td>{I18n.t('tokens.labels.invited_at')}</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                {rows}
-                </tbody>
-            </table>
-        );
-    }
-});
-window.InvitationList = InvitationList;
-
-export const Invitation = React.createClass({
-    propTypes: {
-        retractHandler: React.PropTypes.func,
-        token: React.PropTypes.object
-    },
-
-    handleRetract () {
-        if (window.confirm(I18n.t('tokens.retract.confirm')) === true) {
-            fetch(this.props.token.links.self,
-                safeCredentials({
-                    method: 'DELETE'
-                }))
-                .then(statusSuccess)
-                .then(this.props.retractHandler(this.props.token));
-        }
-    },
-
-    render () {
-        const { attributes } = this.props.token;
-        return (<tr>
-            <td>
-                {attributes.email}
-                </td>
-            <td>
-                {attributes.createdAt}
-                </td>
-            <td>
-                <a href='#' onClick={this.handleRetract}>{I18n.t('tokens.retract.button')}</a>
-            </td>
-        </tr>)
-    }
-});

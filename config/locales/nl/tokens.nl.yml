@@ -9,7 +9,7 @@ nl:
       link: "Link"
       usages: "Aantal keer gebruikt"
       email: "Email"
-      invited_at: "Uitgenodigd op"
+      createdAt: "Uitgenodigd op"
       message: "Toelichting"
       sender_profile: "Versturen als:"
     bearer:
@@ -20,6 +20,7 @@ nl:
       title: "Nodig uit via email"
       description: "Stuur emails met daarin persoonlijke links waarmee mensen lid kunnen worden van deze groep."
       empty: "Geen openstaande uitnodigingen"
+      pending: "Openstaande uitnodigingen"
       create: "Verstuur uitnodigingen"
       input_placeholder: "Voer een of meer emailadressen in"
       success: "De uitnodigingen zijn verstuurd"

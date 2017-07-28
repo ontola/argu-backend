@@ -9,7 +9,7 @@ en:
       link: "Link"
       usages: "Usages"
       email: "Email"
-      invited_at: "Invited at"
+      createdAt: "Invited at"
       message: "Message"
       sender_profile: "Send as:"
     bearer:
@@ -20,6 +20,7 @@ en:
       title: "Invite by email"
       description: "Send mails with a personal link for joining this group."
       empty: "No pending invites"
+      pending: "Pending invites"
       create: "Send invites"
       input_placeholder: "Enter one or more email addresses"
       success: "The invitations are sent"

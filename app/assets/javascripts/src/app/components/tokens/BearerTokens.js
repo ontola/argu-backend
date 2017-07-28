@@ -1,6 +1,7 @@
 import React from 'react';
 import I18n from 'i18n-js';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { safeCredentials, statusSuccess, json } from '../../lib/helpers';
+import TokenList from './TokenList';
 
 export const BearerTokens = React.createClass({
     propTypes: {
@@ -58,6 +59,8 @@ export const BearerTokens = React.createClass({
         return (
             <div className="formtastic">
                 <TokenList
+                    columns={['link', 'usages']}
+                    emptyString={I18n.t('tokens.bearer.empty')}
                     retractHandler={this.onRetract}
                     tokens={this.state.tokens}/>
                 <fieldset className="actions">
@@ -71,70 +74,3 @@ export const BearerTokens = React.createClass({
     }
 });
 window.BearerTokens = BearerTokens;
-
-export const TokenList = React.createClass({
-    propTypes: {
-        retractHandler: React.PropTypes.func,
-        tokens: React.PropTypes.array
-    },
-
-    render () {
-        const { retractHandler, tokens } = this.props;
-        if (tokens === undefined) {
-            return <p>{I18n.t('tokens.loading')}</p>;
-        } else if (tokens.length === 0) {
-            return <p>{I18n.t('tokens.bearer.empty')}</p>;
-        }
-        const rows = tokens.map(token => {
-            return <Token key={token.id} retractHandler={retractHandler} token={token}/>;
-        });
-        return (
-            <table>
-                <thead className="subtle">
-                <tr>
-                    <td>{I18n.t('tokens.labels.link')}</td>
-                    <td>{I18n.t('tokens.labels.usages')}</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
-        );
-    }
-});
-window.TokenList = TokenList;
-
-export const Token = React.createClass({
-    propTypes: {
-        retractHandler: React.PropTypes.func,
-        token: React.PropTypes.object
-    },
-
-    handleRetract () {
-        if (window.confirm(I18n.t('tokens.retract.confirm')) === true) {
-            fetch(this.props.token.links.self,
-                  safeCredentials({
-                      method: 'DELETE'
-                  }))
-                .then(statusSuccess)
-                .then(this.props.retractHandler(this.props.token));
-        }
-    },
-
-    render () {
-        const { attributes, links } = this.props.token;
-        return (<tr>
-            <td>
-                <input readOnly='true' value={links.self}/>
-            </td>
-            <td>
-                {attributes.usages}
-            </td>
-            <td>
-                <a href='#' onClick={this.handleRetract}>{I18n.t('tokens.retract.button')}</a>
-            </td>
-        </tr>)
-    }
-});
