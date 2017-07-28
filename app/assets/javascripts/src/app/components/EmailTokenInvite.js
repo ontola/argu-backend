@@ -168,20 +168,16 @@ export const InvitationList = React.createClass({
         tokens: React.PropTypes.array
     },
 
-    tbody () {
+    render () {
         const { retractHandler, tokens } = this.props;
         if (tokens === undefined) {
-            return <tr><td>{I18n.t('tokens.loading')}</td></tr>;
+            return <p>{I18n.t('tokens.loading')}</p>;
         } else if (tokens.length === 0) {
-            return <tr><td>{I18n.t('tokens.email.empty')}</td></tr>;
-        } else {
-            return tokens.map(token => {
-                return <Invitation key={token.id} retractHandler={retractHandler} token={token}/>;
-            });
+            return <p>{I18n.t('tokens.email.empty')}</p>;
         }
-    },
-
-    render () {
+        const rows = tokens.map(token => {
+            return <Invitation key={token.id} retractHandler={retractHandler} token={token}/>;
+        });
         return (
             <table>
                 <thead className="subtle">
@@ -192,7 +188,7 @@ export const InvitationList = React.createClass({
                 </tr>
                 </thead>
                 <tbody>
-                {this.tbody()}
+                {rows}
                 </tbody>
             </table>
         );

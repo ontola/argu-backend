@@ -78,20 +78,16 @@ export const TokenList = React.createClass({
         tokens: React.PropTypes.array
     },
 
-    tbody () {
+    render () {
         const { retractHandler, tokens } = this.props;
         if (tokens === undefined) {
-            return <tr><td>{I18n.t('tokens.loading')}</td></tr>;
+            return <p>{I18n.t('tokens.loading')}</p>;
         } else if (tokens.length === 0) {
-            return <tr><td>{I18n.t('tokens.bearer.empty')}</td></tr>;
-        } else {
-            return tokens.map(token => {
-                return <Token key={token.id} retractHandler={retractHandler} token={token}/>;
-            });
+            return <p>{I18n.t('tokens.bearer.empty')}</p>;
         }
-    },
-
-    render () {
+        const rows = tokens.map(token => {
+            return <Token key={token.id} retractHandler={retractHandler} token={token}/>;
+        });
         return (
             <table>
                 <thead className="subtle">
@@ -102,7 +98,7 @@ export const TokenList = React.createClass({
                 </tr>
                 </thead>
                 <tbody>
-                    {this.tbody()}
+                    {rows}
                 </tbody>
             </table>
         );
