@@ -5,6 +5,8 @@ module Users
 
     def authenticated_tree; end
 
+    def current_forum; end
+
     def feed
       Activity.feed_for_profile(authenticated_resource.profile)
     end
