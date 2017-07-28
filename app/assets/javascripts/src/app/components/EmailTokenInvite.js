@@ -184,7 +184,7 @@ export const InvitationList = React.createClass({
     render () {
         return (
             <table>
-                <thead>
+                <thead className="subtle">
                 <tr>
                     <td>{I18n.t('tokens.labels.email')}</td>
                     <td>{I18n.t('tokens.labels.invited_at')}</td>

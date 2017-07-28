@@ -11,6 +11,10 @@ table {
   thead {
     background-color: $g3;
     color: white;
+
+    &.subtle {
+      background-color: $g2;
+    }
   }
   tbody {
     tr {

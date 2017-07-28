@@ -94,7 +94,7 @@ export const TokenList = React.createClass({
     render () {
         return (
             <table>
-                <thead>
+                <thead className="subtle">
                 <tr>
                     <td>{I18n.t('tokens.labels.link')}</td>
                     <td>{I18n.t('tokens.labels.usages')}</td>
