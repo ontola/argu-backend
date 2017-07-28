@@ -20,10 +20,6 @@ section.section--details
           span[class="fa fa-#{motion_icon}"]
         .detail__text
           span= question.children_count(:motions)
-    - if local_assigns[:show_visibility]
-      .detail[data-title=visible_for_string(authenticated_resource)]
-        .detail__icon
-          span[class="fa fa-#{visibility_icon(authenticated_resource)}"]
     =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
     - if question.pinned?
       .detail[data-title=t('edges.pinned_at', datetime: question.edge.pinned_at.to_formatted_s(:short))]

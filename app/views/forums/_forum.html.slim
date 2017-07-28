@@ -3,8 +3,7 @@
     = link_to forum_path(forum), data: {turbolinks: false_unless_iframe} do
       .cover-image[style="background-image: url('#{forum.default_cover_photo&.url(:box)}'); "]
         =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
-        h3
-          =forum.display_name
+        h3= forum.display_name
       .cover-overlay
     - if !current_user.has_favorite?(forum.edge) && policy(forum).create_child?(:favorites, edge: forum.edge)
       .sticky--top-left
