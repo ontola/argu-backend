@@ -43,16 +43,6 @@ export const EmailTokenInvite = React.createClass({
         });
     },
 
-    handleMessageChange (e) {
-        this.setState({ message: e.target.value });
-    },
-
-    handleSubmit () {
-        if (this.state.invalidEmails.length === 0) {
-            this.createTokens();
-        }
-    },
-
     createTokens () {
         const emails = this.stringToEmails(this.state.value);
         const { createTokenUrl, groupId } = this.props;
@@ -87,9 +77,23 @@ export const EmailTokenInvite = React.createClass({
         return string.split(/[\s,;]+/).filter(Boolean);
     },
 
+    handleMessageChange (e) {
+        this.setState({ message: e.target.value });
+    },
+
+    handleSubmit () {
+        if (this.state.invalidEmails.length === 0) {
+            this.createTokens();
+        }
+    },
+
     invalidEmail (email) {
         const re = /^\w+([\.-]?\w+)*(\+\w+)?@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return !re.test(email);
+    },
+
+    onProfileChange (value) {
+        this.setState({ currentActor: value.value })
     },
 
     onRetract (token) {
@@ -105,10 +109,6 @@ export const EmailTokenInvite = React.createClass({
                 {obj.label}
             </div>
         );
-    },
-
-    onProfileChange (value) {
-        this.setState({ currentActor: value.value })
     },
 
     render () {
