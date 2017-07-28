@@ -4,6 +4,7 @@ import I18n from 'i18n-js';
 import { safeCredentials, statusSuccess, json } from '../../lib/helpers';
 import Select from 'react-select';
 import TokenList from './TokenList';
+import InvitedSelection from './InvitedSelection';
 
 export const EmailTokenInvite = React.createClass({
     propTypes: {
@@ -18,10 +19,9 @@ export const EmailTokenInvite = React.createClass({
     getInitialState () {
         return {
             currentActor: this.props.currentActor,
-            invalidEmails: [],
             message: this.props.message,
             tokens: undefined,
-            value: ''
+            values: []
         };
     },
 
@@ -35,17 +35,9 @@ export const EmailTokenInvite = React.createClass({
             });
     },
 
-    handleEmailsChange (e) {
-        const emails = this.stringToEmails(e.target.value);
-        this.setState({
-            invalidEmails: emails.filter(this.invalidEmail),
-            value: e.target.value
-        });
-    },
-
     createTokens () {
-        const emails = this.stringToEmails(this.state.value);
         const { createTokenUrl, groupId } = this.props;
+        const emails = this.state.values.map(email => { return email.value; });
         fetch(createTokenUrl,
             safeCredentials({
                 method: 'POST',
@@ -68,28 +60,28 @@ export const EmailTokenInvite = React.createClass({
                 new Alert(I18n.t('tokens.email.success'), 'success', true);
                 this.setState({
                     tokens: this.state.tokens.concat(data.data),
-                    value: ''
+                    values: []
                 });
             });
     },
 
-    stringToEmails (string) {
-        return string.split(/[\s,;]+/).filter(Boolean);
+    handleInvitedChange (values) {
+        this.setState({ values: this.state.values.concat(values) })
     },
 
     handleMessageChange (e) {
         this.setState({ message: e.target.value });
     },
 
-    handleSubmit () {
-        if (this.state.invalidEmails.length === 0) {
-            this.createTokens();
-        }
+    handleRemoveInvited (e) {
+        e.preventDefault();
+        this.setState({
+            values: this.state.values.filter(i => { return i.value !== e.target.dataset.value })
+        });
     },
 
-    invalidEmail (email) {
-        const re = /^\w+([\.-]?\w+)*(\+\w+)?@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return !re.test(email);
+    handleSubmit () {
+        this.createTokens();
     },
 
     onProfileChange (value) {
@@ -113,19 +105,15 @@ export const EmailTokenInvite = React.createClass({
 
     render () {
         let errorMessage;
-        if (this.state.value === '') {
-            errorMessage = I18n.t('tokens.errors.no_emails');
-        } else if (this.state.invalidEmails.length > 0) {
-            errorMessage = I18n.t('tokens.errors.parsing', { emails: this.state.invalidEmails.join(', ') });
+        if (this.state.values.length === 0) {
+            errorMessage = I18n.t('tokens.errors.no_receivers');
         }
         return (
             <div className="formtastic">
-                <textarea
-                    className="form-input-content"
-                    name="emails"
-                    onChange={this.handleEmailsChange}
-                    placeholder={I18n.t('tokens.email.input_placeholder')}
-                    value={this.state.value}/>
+                <InvitedSelection
+                    handleInvitedChange={this.handleInvitedChange}
+                    handleRemoveInvited={this.handleRemoveInvited}
+                    values={this.state.values}/>
                 <label>{I18n.t('tokens.labels.message')}</label>
                 <textarea
                     className="form-input-content"
@@ -153,10 +141,9 @@ export const EmailTokenInvite = React.createClass({
                         type="submit"
                         value="Submit"> {I18n.t('tokens.email.create')} </button>
                 </fieldset>
-                <legend><span>{I18n.t('tokens.email.pending')}</span></legend>
                 <TokenList
-                    columns={['email', 'createdAt']}
-                    emptyString={I18n.t('tokens.email.empty')}
+                    columns={['invitee', 'createdAt']}
+                    header={I18n.t('tokens.email.pending')}
                     retractHandler={this.onRetract}
                     tokens={this.state.tokens}/>
             </div>

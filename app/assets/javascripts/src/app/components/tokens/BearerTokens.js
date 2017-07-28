@@ -60,7 +60,6 @@ export const BearerTokens = React.createClass({
             <div className="formtastic">
                 <TokenList
                     columns={['link', 'usages']}
-                    emptyString={I18n.t('tokens.bearer.empty')}
                     retractHandler={this.onRetract}
                     tokens={this.state.tokens}/>
                 <fieldset className="actions">

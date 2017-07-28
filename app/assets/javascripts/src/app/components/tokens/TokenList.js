@@ -7,7 +7,7 @@ export const TokenList = props => {
     if (tokens === undefined) {
         return <p>{I18n.t('tokens.loading')}</p>;
     } else if (tokens.length === 0) {
-        return <p>{props.emptyString}</p>;
+        return <div/>;
     }
     const headCols = columns.map(column => {
         return <td key={column}>{I18n.t(`tokens.labels.${column}`)}</td>;
@@ -15,24 +15,28 @@ export const TokenList = props => {
     const rows = tokens.map(token => {
         return <Token columns={columns} key={token.id} retractHandler={retractHandler} token={token}/>;
     });
+    const header = (props.header === undefined) ? <div/> : <legend><span>{props.header}</span></legend>;
     return (
-        <table>
-            <thead className="subtle">
-                <tr>
-                    {headCols}
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
+        <div>
+            {header}
+            <table>
+                <thead className="subtle">
+                    <tr>
+                        {headCols}
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        </div>
     );
 };
 
 const TokenListProps = {
     columns: React.PropTypes.array,
-    emptyString: React.PropTypes.string,
+    header: React.PropTypes.string,
     retractHandler: React.PropTypes.func,
     tokens: React.PropTypes.array
 };
