@@ -98,7 +98,7 @@ export const CoverUploader = React.createClass({
                     <Dropzone accept={this.props.supportedFileTypes}
                               className="dropzone--cover"
                               multiple={false}
-                              name={`${this.props.name}[image]`}
+                              name={`${this.props.name}[content]`}
                               onDragEnter={this.handleDragEnter}
                               onDragLeave={this.handleDragLeave}
                               onDragOver={this.handleDragOver}
@@ -123,7 +123,7 @@ export const CoverUploader = React.createClass({
                     value={this.state.positionY} />
                 }
                 <input name={`${this.props.name}[id]`} type="hidden" value={this.props.photoId}/>
-                <input name={`${this.props.name}[image_cache]`} type="hidden" value={this.props.cache}/>
+                <input name={`${this.props.name}[content_cache]`} type="hidden" value={this.props.cache}/>
                 <input name={`${this.props.name}[used_as]`} type="hidden" value={this.props.type}/>
                 <input name={`${this.props.name}[_destroy]`} type="hidden" value={this.state.removeImage}/>
                 <input name={`${this.props.name}[content_attributes][position_y]`} type="hidden" value={this.state.positionY}/>
@@ -133,7 +133,7 @@ export const CoverUploader = React.createClass({
                         {I18n.t('formtastic.labels.cover_photo_add')}
                         <input
                           accept={this.props.supportedFileTypes}
-                          name={`${this.props.name}[image]`}
+                          name={`${this.props.name}[content]`}
                           type="file" />
                     </label>
                     <label>
