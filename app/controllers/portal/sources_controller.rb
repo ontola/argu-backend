@@ -23,21 +23,21 @@ module Portal
 
     def create_service
       @create_service ||= CreateSource.new(
-        get_parent_resource.edge,
+        parent_resource.edge,
         attributes: permit_params,
         options: service_options
       )
     end
 
-    def get_parent_resource
-      @get_parent_resource ||= Shortname.find_resource(params[:page]) || Page.find(params.require(:source)[:page_id])
+    def parent_resource
+      @parent_resource ||= Shortname.find_resource(params[:page]) || Page.find(params.require(:source)[:page_id])
     end
 
     def new_resource_from_params
-      @resource ||= get_parent_resource
+      @resource ||= parent_resource
                       .edge
                       .children
-                      .new(owner: Source.new(page: get_parent_resource))
+                      .new(owner: Source.new(page: parent_resource))
                       .owner
     end
 

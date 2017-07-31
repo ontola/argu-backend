@@ -1,4 +1,4 @@
 =render partial: 'forums/settings/shortnames/form',
         locals: {shortname: shortname,
-                 url: forum_shortnames_path(forum_id: get_parent_resource),
+                 url: forum_shortnames_path(forum_id: parent_resource),
                  input_name: t('newe_type', type: t('shortnames.type'))}

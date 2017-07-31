@@ -53,7 +53,7 @@ class GrantsController < ServiceController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      edge_id: params[:edge_id] || get_parent_resource.edge.id,
+      edge_id: params[:edge_id] || parent_resource.edge.id,
       group_id: params[:group_id]
     )
   end

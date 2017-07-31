@@ -17,8 +17,8 @@ module NestedResourceHelper
   # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails
   #   docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
-  def get_parent_edge(opts = params)
-    @parent_edge ||= get_parent_resource(opts).edge
+  def parent_edge(opts = params)
+    @parent_edge ||= parent_resource(opts).edge
   end
 
   # Finds the parent resource based on the URL's :foo_id param
@@ -29,7 +29,7 @@ module NestedResourceHelper
   # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails
   #   docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
-  def get_parent_resource(opts = params)
+  def parent_resource(opts = params)
     @parent_resource ||=
       if parent_resource_class(opts).try(:shortnameable?)
         parent_resource_class(opts).find_via_shortname_or_id! parent_id_from_params(opts)

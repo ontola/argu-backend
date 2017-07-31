@@ -26,7 +26,7 @@ class EdgeTreeController < ServiceController
   end
 
   def current_forum
-    (resource_by_id || current_resource_is_nested? && get_parent_resource)
+    (resource_by_id || current_resource_is_nested? && parent_resource)
       .try(:parent_model, :forum)
       &.parent_model(:forum)
   end

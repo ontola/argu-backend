@@ -3,20 +3,20 @@ class DecisionsController < EdgeTreeController
   skip_before_action :check_if_registered, only: :index
 
   def index
-    authorize get_parent_resource, :show?
+    authorize parent_resource, :show?
     respond_to do |format|
       format.html do
-        render locals: {decisionable: get_parent_resource}
+        render locals: {decisionable: parent_resource}
       end
-      format.json { respond_with_200(get_parent_resource.last_decision, :json) }
-      format.js   { render 'show', locals: {decision: get_parent_resource.last_decision} }
+      format.json { respond_with_200(parent_resource.last_decision, :json) }
+      format.js   { render 'show', locals: {decision: parent_resource.last_decision} }
     end
   end
 
   def show
     respond_to do |format|
       format.html do
-        render action: 'index', locals: {decisionable: get_parent_resource}
+        render action: 'index', locals: {decisionable: parent_resource}
       end
       format.json { respond_with_200(authenticated_resource, :json) }
       format.js   { render 'show', locals: {decision: authenticated_resource} }
@@ -28,7 +28,7 @@ class DecisionsController < EdgeTreeController
   def authenticated_resource!
     case action_name
     when 'index'
-      get_parent_resource.last_or_new_decision
+      parent_resource.last_or_new_decision
     else
       super
     end
@@ -44,20 +44,20 @@ class DecisionsController < EdgeTreeController
 
     render action: 'index',
            locals: {
-             decisionable: get_parent_resource,
+             decisionable: parent_resource,
              edit_decision: resource
            }
   end
 
-  def get_parent_resource(opts = params)
+  def parent_resource(opts = params)
     super
   rescue ActiveRecord::RecordNotFound
     # Temporary rescue for paths using the old urls
-    @get_parent_resource ||=
+    @parent_resource ||=
       Edge.find_by!(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts)).owner
   end
 
-  def get_parent_edge(opts = params)
+  def parent_edge(opts = params)
     super
   rescue ActiveRecord::RecordNotFound
     # Temporary rescue for paths using the old urls
@@ -74,11 +74,11 @@ class DecisionsController < EdgeTreeController
   end
 
   def new_resource_from_params
-    decision = get_parent_resource.decisions.unpublished.where(publisher: current_user).first
+    decision = parent_resource.decisions.unpublished.where(publisher: current_user).first
     if decision.nil?
-      decision = get_parent_edge
+      decision = parent_edge
                      .children
-                     .new(owner: Decision.new(resource_new_params.merge(decisionable_id: get_parent_edge.id)))
+                     .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)))
                      .owner
       decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
       decision.edge.build_argu_publication(publish_type: :direct)
@@ -89,18 +89,18 @@ class DecisionsController < EdgeTreeController
   def new_respond_success_html(resource)
     render action: 'index',
            locals: {
-             decisionable: get_parent_resource,
+             decisionable: parent_resource,
              new_decision: resource
            }
   end
 
   def resource_by_id
-    get_parent_resource.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
+    parent_resource.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
   end
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: get_parent_resource.forum,
+      forum: parent_resource.forum,
       state: params[:state]
     )
   end

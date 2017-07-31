@@ -8,15 +8,15 @@ class FavoritesController < AuthorizedController
   private
 
   def current_forum
-    get_parent_resource.try(:parent_model, :forum)
+    parent_resource.try(:parent_model, :forum)
   end
 
   def new_resource_from_params
-    current_user.favorites.find_or_initialize_by(edge: get_parent_edge)
+    current_user.favorites.find_or_initialize_by(edge: parent_edge)
   end
 
   def resource_by_id
-    current_user.favorites.find_by(edge: get_parent_edge)
+    current_user.favorites.find_by(edge: parent_edge)
   end
 
   def respond_with_redirect_success(resource, action, opts = {})

@@ -68,7 +68,7 @@ class AuthorizedController < ApplicationController
     @_tree ||=
       case action_name
       when 'new', 'create', 'index'
-        get_parent_edge.self_and_ancestors
+        parent_edge.self_and_ancestors
       when 'update'
         resource_by_id&.edge&.self_and_ancestors
       else
@@ -105,7 +105,7 @@ class AuthorizedController < ApplicationController
   end
 
   def current_forum
-    (resource_by_id || current_resource_is_nested? && get_parent_resource).try(:parent_model, :forum)
+    (resource_by_id || current_resource_is_nested? && parent_resource).try(:parent_model, :forum)
   end
 
   # Override by including {NestedResourceHelper}
@@ -121,11 +121,11 @@ class AuthorizedController < ApplicationController
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    resource = get_parent_resource
+    resource = parent_resource
       .edge
       .children
       .new(owner: controller_class.new(resource_new_params),
-           parent: get_parent_resource.edge)
+           parent: parent_resource.edge)
       .owner
     if resource.is_publishable?
       resource.edge.build_argu_publication(
@@ -166,7 +166,7 @@ class AuthorizedController < ApplicationController
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: get_parent_resource.is_a?(Forum) ? get_parent_resource : get_parent_resource.parent_model(:forum),
+      forum: parent_resource.is_a?(Forum) ? parent_resource : parent_resource.parent_model(:forum),
       publisher: current_user
     )
   end

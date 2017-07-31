@@ -69,16 +69,16 @@ class CommentsController < EdgeTreeController
              include: include_index
     end
     format.html do
-      @comments = get_parent_resource.filtered_threads(show_trashed?, params[:page])
+      @comments = parent_resource.filtered_threads(show_trashed?, params[:page])
       render locals: {comment: Comment.new}
     end
   end
 
   def new_resource_from_params
-    @resource ||= get_parent_resource
+    @resource ||= parent_resource
                     .edge
                     .children
-                    .new(owner: get_parent_resource.comment_threads.new(resource_new_params))
+                    .new(owner: parent_resource.comment_threads.new(resource_new_params))
                     .owner
   end
 
@@ -103,7 +103,7 @@ class CommentsController < EdgeTreeController
 
   def redirect_url
     return super unless params[:action] == 'create'
-    redirect_url = URI.parse(url_for([:new, get_parent_resource, :comment, only_path: true]))
+    redirect_url = URI.parse(url_for([:new, parent_resource, :comment, only_path: true]))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
   end

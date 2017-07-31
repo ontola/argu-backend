@@ -7,9 +7,9 @@
       section
         p
           span= t('questions.call_to_action.body') + ' '
-          =link_to polymorphic_url([:new, get_parent_resource, :question])
+          =link_to polymorphic_url([:new, parent_resource, :question])
             b.question-t= t('questions.call_to_action.action')
-    =link_to polymorphic_path([:new, get_parent_resource, :question])
+    =link_to polymorphic_path([:new, parent_resource, :question])
       .box.question
         .box-image--container
           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
@@ -33,7 +33,7 @@
                 span.fa.fa-lightbulb-o
                 span.icon-left= t('discussions.new.question_motion2')
     .btn--question.btn--huge[collection_model="Question"]
-      =link_to polymorphic_path([:new, get_parent_resource, :question])
+      =link_to polymorphic_path([:new, parent_resource, :question])
         h3
           span[class="fa fa-#{question_icon}"]
           span.icon-left= t('questions.type_new')
@@ -42,9 +42,9 @@
       section
         p
           span= t('motions.call_to_action.body') + ' '
-          =link_to polymorphic_url([:new, get_parent_resource, :motion])
+          =link_to polymorphic_url([:new, parent_resource, :motion])
             b.motion-t= t('motions.call_to_action.action')
-    =link_to polymorphic_path([:new, get_parent_resource, :motion])
+    =link_to polymorphic_path([:new, parent_resource, :motion])
       .box.motion
         .box-image--container
           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
@@ -76,11 +76,11 @@
                 span.fa.fa-minus
                 span.icon-left= t('discussions.new.motion_argument3')
     .btn--motion.btn--huge[collection_model="Motion"]
-      =link_to polymorphic_path([:new, get_parent_resource, :motion])
+      =link_to polymorphic_path([:new, parent_resource, :motion])
         h3
           span[class="fa fa-#{motion_icon}"]
           span.icon-left= t('motions.type_new')
--if get_parent_resource.respond_to?(:projects) && policy(get_parent_resource).create_child?(:projects)
+-if parent_resource.respond_to?(:projects) && policy(parent_resource).create_child?(:projects)
   .col-1.col-1--small
     header
       h2=t('discussions.new.or_start_a_project')
@@ -88,9 +88,9 @@
       section
         p
           span= t('projects.call_to_action.body') + ' '
-          =link_to polymorphic_path([:new, get_parent_resource, :project])
+          =link_to polymorphic_path([:new, parent_resource, :project])
             b.motion-t= t('projects.call_to_action.action')
-    =link_to polymorphic_path([:new, get_parent_resource, :project])
+    =link_to polymorphic_path([:new, parent_resource, :project])
       .box.motion
         .box-image--container
           /.box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
@@ -111,7 +111,7 @@
         section
           h3.project-t= t('discussions.new.project_title')
     .btn--project.btn--huge[collection_model="Project"]
-      =link_to polymorphic_path([:new, get_parent_resource, :project])
+      =link_to polymorphic_path([:new, parent_resource, :project])
         h3
           span[class="fa fa-rocket"]
           span.icon-left= t('projects.type_new')

@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :authorize_current_actor
   after_action :set_profile_forum
-  around_action :set_time_zone
+  around_action :time_zone
   after_action :set_version_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_time_zone(&block)
+  def time_zone(&block)
     time_zone = current_user.time_zone
     Time.use_zone(time_zone, &block)
   end

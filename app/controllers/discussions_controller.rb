@@ -4,25 +4,25 @@ class DiscussionsController < AuthorizedController
   skip_before_action :check_if_registered
 
   def new
-    @forum = get_parent_resource
+    @forum = parent_resource
   end
 
   private
 
   def authorize_action
     raise 'Internal server error' unless action_name == 'new'
-    authorize get_parent_resource, :list?
+    authorize parent_resource, :list?
   end
 
   def new_resource_from_params
-    get_parent_resource
+    parent_resource
       .edge
       .children
       .new(owner: nil,
-           parent: get_parent_resource.edge)
+           parent: parent_resource.edge)
   end
 
   def resource_by_id
-    get_parent_resource
+    parent_resource
   end
 end

@@ -10,7 +10,7 @@ class QuestionAnswersController < AuthorizedController
 
   def collect_banners; end
 
-  def get_parent_edge
+  def parent_edge
     @parent_edge ||= authenticated_resource.question.edge
   end
 

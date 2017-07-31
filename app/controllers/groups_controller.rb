@@ -62,7 +62,7 @@ class GroupsController < ServiceController
   def new_resource_from_params
     resource = super
     resource.grants.build(
-      edge: get_parent_edge,
+      edge: parent_edge,
       role: :member
     )
     resource
@@ -83,7 +83,7 @@ class GroupsController < ServiceController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      page: get_parent_resource
+      page: parent_resource
     )
   end
 

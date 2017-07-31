@@ -4,17 +4,17 @@ class Portal::ForumsController < EdgeTreeController
 
   def current_forum; end
 
-  def get_parent_edge
-    get_parent_resource.edge
+  def parent_edge
+    parent_resource.edge
   end
 
-  def get_parent_resource
+  def parent_resource
     Page.find_via_shortname_or_id!(params[:page] || params[:forum][:page_id])
   end
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      page: get_parent_resource
+      page: parent_resource
     )
   end
 end

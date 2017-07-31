@@ -112,22 +112,6 @@ Rails/OutputSafety:
     - 'lib/argu/activity_string.rb'
     - 'lib/argu/render/html.rb'
 
-# Offense count: 4
-Style/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/conversions_controller.rb'
-    - 'app/controllers/forums_controller.rb'
-    - 'app/controllers/notifications_controller.rb'
-    - 'app/controllers/portal/sources_controller.rb'
-    - 'app/controllers/vote_matches_controller.rb'
-    - 'app/controllers/question_answers_controller.rb'
-    - 'app/controllers/shortnames_controller.rb'
-    - 'app/controllers/votes_controller.rb'
-    - 'app/controllers/guest/votes_controller.rb'
-    - 'app/controllers/portal/forums_controller.rb'
-    - 'app/helpers/actors_helper.rb'
-
 # Offense count: 13
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact

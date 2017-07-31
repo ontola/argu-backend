@@ -23,7 +23,7 @@ class ShortnamesController < AuthorizedController
     @_tree ||=
       case action_name
       when 'new', 'create', 'index'
-        get_parent_edge.self_and_ancestors
+        parent_edge.self_and_ancestors
       when 'update'
         resource_by_id&.owner&.edge&.self_and_ancestors
       else
@@ -31,7 +31,7 @@ class ShortnamesController < AuthorizedController
       end
   end
 
-  def get_parent_resource(_opts = {})
+  def parent_resource(_opts = {})
     @parent_resource ||=
       if %w(new create).include?(params[:action])
         super
@@ -48,7 +48,7 @@ class ShortnamesController < AuthorizedController
   end
 
   def new_resource_from_params
-    @resource ||= Shortname.new(forum: get_parent_resource)
+    @resource ||= Shortname.new(forum: parent_resource)
   end
 
   def permit_params
@@ -62,7 +62,7 @@ class ShortnamesController < AuthorizedController
   end
 
   def redirect_model_success(_resource = nil)
-    settings_forum_path(get_parent_resource, tab: 'shortnames')
+    settings_forum_path(parent_resource, tab: 'shortnames')
   end
 
   def respond_with_form(resource)

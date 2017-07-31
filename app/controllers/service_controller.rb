@@ -38,7 +38,7 @@ class ServiceController < AuthorizedController
   #   create_service.commit # => true (Comment created)
   def create_service
     @create_service ||= service_klass.new(
-      get_parent_resource.edge,
+      parent_resource.edge,
       attributes: resource_new_params.merge(permit_params.to_h),
       options: service_options
     )

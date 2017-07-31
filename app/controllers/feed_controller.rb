@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class FeedController < AuthorizedController
   include NestedResourceHelper, VotesHelper
-  alias resource_by_id get_parent_resource
+  alias resource_by_id parent_resource
   helper_method :complete_feed_param
 
   def show
@@ -38,7 +38,7 @@ class FeedController < AuthorizedController
   end
 
   def authenticated_resource!
-    @resource ||= get_parent_resource
+    @resource ||= parent_resource
   end
 
   def collect_banners; end
@@ -63,7 +63,7 @@ class FeedController < AuthorizedController
     end
   end
 
-  def get_parent_resource(opts = params)
+  def parent_resource(opts = params)
     super if parent_resource_key(opts).present?
   end
 end

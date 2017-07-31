@@ -3,7 +3,7 @@
   .col-3-2
     =to_parent
     .box
-      =semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for((question.new_record? ? [parent_resource, question] : question), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
         =f.input :default_cover_photo, as: :react_cover, label: false
         section.section-info
           =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}

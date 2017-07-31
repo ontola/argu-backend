@@ -13,7 +13,7 @@ class VotesController < EdgeTreeController
   end
 
   def new
-    @model = get_parent_resource.voteable
+    @model = parent_resource.voteable
     authorize @model, :show?
 
     render locals: {
@@ -24,7 +24,7 @@ class VotesController < EdgeTreeController
 
   # POST /model/:model_id/v/:for
   def create
-    @model = get_parent_resource
+    @model = parent_resource
 
     method = create_service.resource.persisted? ? :update? : :create?
     authorize create_service.resource, method
@@ -85,7 +85,7 @@ class VotesController < EdgeTreeController
     return super unless params[:action] == 'show' && params[:motion_id].present?
     @_resource_by_id ||= Edge
                            .where_owner('Vote', creator: current_profile)
-                           .find_by(parent: get_parent_resource.edge)
+                           .find_by(parent: parent_resource.edge)
                            &.owner
   end
 
@@ -100,11 +100,11 @@ class VotesController < EdgeTreeController
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
-  def get_parent_edge
-    @parent_edge ||= get_parent_resource.try(:edge) || super
+  def parent_edge
+    @parent_edge ||= parent_resource.try(:edge) || super
   end
 
-  def get_parent_resource
+  def parent_resource
     @parent_resource ||= super.try(:default_vote_event) || super
   end
 
@@ -141,7 +141,7 @@ class VotesController < EdgeTreeController
   def redirect_url
     expand_uri_template(
       :new_vote,
-      voteable_path: url_for([get_parent_resource.voteable, only_path: true]).split('/').select(&:present?),
+      voteable_path: url_for([parent_resource.voteable, only_path: true]).split('/').select(&:present?),
       confirm: true,
       r: params[:r],
       'vote%5Bfor%5D' => for_param,

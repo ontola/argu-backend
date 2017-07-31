@@ -38,7 +38,7 @@ class ArgumentsController < EdgeTreeController
 
   def authenticated_resource!
     return super unless params[:action] == 'index'
-    get_parent_resource
+    parent_resource
   end
 
   def deserialize_params_options

@@ -151,11 +151,11 @@ class ForumsController < EdgeTreeController
     resource_by_id
   end
 
-  def get_parent_edge
-    @parent_edge ||= get_parent_resource&.edge
+  def parent_edge
+    @parent_edge ||= parent_resource&.edge
   end
 
-  def get_parent_resource
+  def parent_resource
     @parent_resource ||= authenticated_resource!&.page
   end
 

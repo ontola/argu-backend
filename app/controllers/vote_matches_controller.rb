@@ -16,7 +16,7 @@ class VoteMatchesController < ServiceController
 
   private
 
-  def get_parent_resource
+  def parent_resource
     super if current_resource_is_nested?
   end
 
@@ -30,8 +30,8 @@ class VoteMatchesController < ServiceController
 
   def index_respond_blocks_success(_, format)
     collection =
-      if get_parent_resource.present?
-        get_parent_resource.vote_match_collection(collection_options)
+      if parent_resource.present?
+        parent_resource.vote_match_collection(collection_options)
       else
         Collection.new(
           association_class: VoteMatch,
@@ -52,7 +52,7 @@ class VoteMatchesController < ServiceController
 
   def resource_by_id
     return super if params[:page_id].nil? && params[:user_id].nil? || @_resource_by_id.present?
-    @_resource_by_id ||= VoteMatch.find_by(creator: get_parent_resource.profile, shortname: params[:id])
+    @_resource_by_id ||= VoteMatch.find_by(creator: parent_resource.profile, shortname: params[:id])
   end
 
   def resource_new_params
