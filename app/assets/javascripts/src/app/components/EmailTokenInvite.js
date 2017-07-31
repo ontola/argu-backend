@@ -107,7 +107,7 @@ export const EmailTokenInvite = React.createClass({
     },
 
     onProfileChange (value) {
-        this.setState({ currentActor: value })
+        this.setState({ currentActor: value.value })
     },
 
     render () {
