@@ -5,11 +5,7 @@ class GroupMembershipsController < ServiceController
   def show
     respond_to do |format|
       format.html do
-        if params[:welcome] == 'true'
-          flash[:notice] = t('group_memberships.welcome', group: authenticated_resource.group.name)
-        elsif params[:welcome] == 'false'
-          flash[:notice] = t('group_memberships.already_member', group: authenticated_resource.group.name)
-        end
+        flash.keep
         redirect_to redirect_url
       end
       format.json_api { render json: authenticated_resource, include: %i(organization) }
