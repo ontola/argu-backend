@@ -108,6 +108,11 @@ class AuthorizedController < ApplicationController
     (resource_by_id || current_resource_is_nested? && get_parent_resource).try(:parent_model, :forum)
   end
 
+  # Override by including {NestedResourceHelper}
+  def current_resource_is_nested?(_opts = false)
+    false
+  end
+
   def language_from_edge_tree
     return unless current_forum.present?
     I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
