@@ -211,6 +211,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_response 201
+    expect_included(argu_url("/g/#{group.id}"))
     assert_equal response.headers['Location'], group_membership_url(GroupMembership.last)
     assert_analytics_collected('memberships', 'create')
   end
