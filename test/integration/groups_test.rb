@@ -30,14 +30,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
-  test 'user should not get show' do
-    sign_in user
-
-    get group_path(group)
-
-    assert_not_authorized
-  end
-
   test 'user should not get settings' do
     sign_in user
 
@@ -54,50 +46,6 @@ class GroupsTest < ActionDispatch::IntegrationTest
     end
 
     assert_not_authorized
-  end
-
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create(:group_membership, parent: group.edge).member.profileable }
-  let(:granted_member) do
-    create(:group_membership, parent: granted_group.edge)
-      .member
-      .profileable
-  end
-
-  test 'member should get show' do
-    sign_in member
-
-    get group_path(group)
-
-    assert_redirected_to page_path(group.page)
-    follow_redirect!
-    refute_have_tag response.body,
-                    '.alert-wrapper .alert',
-                    '<div class="alert-close"><span class="fa fa-close"></span></div>'\
-                    "You are successfully added to the group '#{group.display_name}'"
-  end
-
-  test 'member should get show with welcome message' do
-    sign_in member
-
-    get group_path(group, welcome: 'true')
-
-    assert_redirected_to page_path(group.page)
-    follow_redirect!
-    assert_have_tag response.body,
-                    '.alert-wrapper .alert',
-                    '<div class="alert-close"><span class="fa fa-close"></span></div>'\
-                    "You are successfully added to the group '#{group.display_name}'"
-  end
-
-  test 'member should get show with grant' do
-    sign_in granted_member
-
-    get group_path(granted_group)
-
-    assert_redirected_to forum_path(freetown)
   end
 
   ####################################
