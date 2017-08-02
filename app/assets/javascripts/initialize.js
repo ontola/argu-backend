@@ -1,7 +1,4 @@
 /*globals $, Bugsnag, ga */
-import mine from './windowize';
-mine();
-
 import 'whatwg-fetch';
 import 'scroll-triggers';
 import './application/meta';

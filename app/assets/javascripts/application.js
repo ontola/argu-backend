@@ -24,6 +24,3 @@
 //= require i18n
 //= require i18n/translations
 //= require _bundle
-//= require react_ujs_mount
-//= require react_ujs_turbolinks
-//= require react_ujs_event_setup

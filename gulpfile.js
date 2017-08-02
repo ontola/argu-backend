@@ -108,28 +108,13 @@ gulp.task('build', function () {
     return browserifyBundle('_bundle.js', 'App.js');
 });
 
-gulp.task('build-components', function () {
-    return browserifyBundle('_globbed_components.js', 'globbed_components.js');
-});
-
 // Envified but not minified
 gulp.task('build:staging', function () {
     browserifyBundleStaging('_bundle.js', 'App.js');
 });
 
-
-// Envified but not minified
-gulp.task('build-components:staging', function () {
-    browserifyBundleStaging('_globbed_components.js', 'globbed_components.js');
-});
-
 gulp.task('build:production', function () {
     browserifyBundleProduction('_bundle.js', 'App.js');
-});
-
-
-gulp.task('build-components:production', function () {
-    browserifyBundleProduction('_globbed_components.js', 'globbed_components.js');
 });
 
 gulp.task('lint-src', function () {
