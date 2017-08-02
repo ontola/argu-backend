@@ -2,7 +2,7 @@
 import Alert, {
   ALERT_FADE_TIMEOUT,
   ALERT_QUICKFADE_TIMEOUT
-} from '../src/app/components/Alert';
+} from '../../../javascript/components/Alert';
 
 let AlertIntegration = {};
 

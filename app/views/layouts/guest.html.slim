@@ -10,6 +10,7 @@ html[class="no-js"]
     =render 'layouts/meta'
 
     =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
+    =javascript_pack_tag 'application', data: {:'turbolinks-permanent' => true}
     =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
     / unless current_user.blank?
     =stylesheet_link_tag 'application', :media => 'all'

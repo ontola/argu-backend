@@ -12,6 +12,7 @@ html[class="no-js"]
     meta[name="iframe-csrf-token" content="#{iframe_csrf_token}"]
 
     =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
+    =javascript_pack_tag 'application', data: {:'turbolinks-permanent' => true}
     =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
     =stylesheet_link_tag 'application', media: 'all'
