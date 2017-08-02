@@ -41,3 +41,5 @@ secrets.yml
 /public/questions
 /public/system
 /public/uploads
+/public/packs
+/node_modules

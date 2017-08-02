@@ -449,9 +449,9 @@ GEM
       actionpack (~> 5.x)
       actionview (~> 5.x)
       activesupport (~> 5.x)
-    rails-dom-testing (2.0.2)
-      activesupport (>= 4.2.0, < 6.0)
-      nokogiri (~> 1.6)
+    rails-dom-testing (2.0.3)
+      activesupport (>= 4.2.0)
+      nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     rails-i18n (5.0.3)
@@ -466,7 +466,7 @@ GEM
     rainbow (2.2.1)
     raindrops (0.17.0)
     rake (12.0.0)
-    react-rails (1.11.0)
+    react-rails (2.2.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -630,6 +630,10 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    webpacker (2.0)
+      activesupport (>= 4.2)
+      multi_json (~> 1.2)
+      railties (>= 4.2)
     websocket (1.2.4)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
@@ -735,7 +739,7 @@ DEPENDENCIES
   rails (~> 5.0.2)
   rails-controller-testing
   rails-i18n (~> 5.0.0)
-  react-rails (~> 1.11.0)
+  react-rails (~> 2.2.1)
   redcarpet (~> 3.3.4)
   redis (~> 3.3.3)
   render_anywhere
@@ -773,6 +777,7 @@ DEPENDENCIES
   uri_template
   web-console (~> 3.1.1)
   webmock (~> 2.3.2)
+  webpacker (~> 2.0)
   whodunnit (= 0.0.5)
   wisper (~> 1.6.1)
   wisper-minitest (~> 0.0.3)

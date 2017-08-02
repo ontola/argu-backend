@@ -80,9 +80,7 @@ module Argu
     # Assets
     ############################
 
-    require 'argu/stateful_server_renderer'
     config.react.addons = false
-    config.react.server_renderer = StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
 

@@ -111,7 +111,8 @@ gem 'bugsnag', '~> 5.3.3'
 gem 'rolify', '~> 3.4.1'
 
 ################## Front-end ########################
-gem 'react-rails', '~> 1.11.0'
+gem 'react-rails', '~> 2.2.1'
+gem 'webpacker', '~> 2.0'
 
 group :test do
   gem 'minitest-rails', '~> 3.0.0'
