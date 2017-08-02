@@ -21,7 +21,7 @@
     .cover-buttons-container
       ul.btns-horizontal
         - if !current_user.has_favorite?(resource.edge) && policy(resource).create_child?(:favorites, edge: resource.edge)
-          li= link_to forum_favorites_path(resource), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
+          li= link_to forum_favorites_path(resource), data: {method: :post, turbolinks: 'false'}, rel: :nofollow, class: 'btn--transparant'
             span.fa.fa-plus
             span.icon-left= t('forums.join.title')
   .cover-buttons

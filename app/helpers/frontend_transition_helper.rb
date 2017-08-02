@@ -4,7 +4,7 @@
 # This module should be removed when it is completely independent.
 module FrontendTransitionHelper
   def false_unless_iframe
-    false unless iframe?
+    'false' unless iframe?
   end
 
   def iframe_csrf_token
