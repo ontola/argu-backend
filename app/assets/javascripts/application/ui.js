@@ -1,7 +1,7 @@
-import Alert from '../src/app/components/Alert';
+import Alert from '../../../javascript/components/Alert';
 import { FastClick } from 'fastclick';
 import Blazy from 'blazy';
-import { safeCredentials, errorMessageForStatus } from '../src/app/lib/helpers';
+import { safeCredentials, errorMessageForStatus } from '../../../javascript/components/lib/helpers';
 import twReplace from '../../../../lib/assets/javascripts/twreplace';
 
 const ui = {
