@@ -111,11 +111,8 @@ gem 'bugsnag', '~> 5.3.3'
 gem 'rolify', '~> 3.4.1'
 
 ################## Front-end ########################
-# gem 'react-rails', '~> 1.6.0'
-gem 'react-rails',
-    git: 'https://github.com/reactjs/react-rails',
-    branch: 'master',
-    ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
+gem 'react-rails', '~> 2.2.1'
+gem 'webpacker', '~> 2.0'
 
 group :test do
   gem 'minitest-rails', '~> 3.0.0'
