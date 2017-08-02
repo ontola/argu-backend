@@ -164,12 +164,7 @@ module ApplicationHelper
 
   def visible_for_group_ids(resource)
     @visible_for_group_ids ||= {}
-    @visible_for_group_ids[resource] ||=
-      if user_context.has_tree?
-        user_context.granted_group_ids(resource.edge, :spectator)
-      else
-        resource.edge.granted_group_ids(:spectator)
-      end
+    @visible_for_group_ids[resource] ||= resource.edge.granted_group_ids(:spectator)
   end
 
   def visible_for_string(resource)
