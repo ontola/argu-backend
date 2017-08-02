@@ -27,7 +27,7 @@
       / TODO: Only show this if user does not have a password.
       p
         =t('users.registrations.no_password')
-        =link_to " #{t('devise.passwords.new.submit')}.", password_path(authenticated_resource), data: {method: :post, turbolinks: false}, id: 'send-instructions', rel: :nofollow
+        =link_to " #{t('devise.passwords.new.submit')}.", password_path(authenticated_resource), data: {method: :post, turbolinks: 'false'}, id: 'send-instructions', rel: :nofollow
       - if authenticated_resource.identities.present?
         label= t('users_oauth_coupled')
         =render partial: 'authentications/login_providers_connected', locals: { identities: authenticated_resource.identities, show_decouple: (authenticated_resource.password_required? || authenticated_resource.identities.length > 1) }
