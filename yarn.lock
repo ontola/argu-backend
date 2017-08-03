@@ -3664,9 +3664,9 @@ hyphenate-style-name@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
 
-"i18n-js@http://github.com/fnando/i18n-js/archive/v3.0.0.rc8.tar.gz":
-  version "0.0.0"
-  resolved "http://github.com/fnando/i18n-js/archive/v3.0.0.rc8.tar.gz#ec616dd56fe3bfc35c6e6030d1502210cd7c29b3"
+i18n-js@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.0.1.tgz#a7d88b6c6796ab8a1d6c24aa860844022877afab"
 
 iconv-lite@^0.4.5, iconv-lite@~0.4.13:
   version "0.4.18"

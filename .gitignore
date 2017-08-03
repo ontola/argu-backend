@@ -14,6 +14,7 @@
 /tmp/*
 /.idea
 app/assets/javascripts/dist
+app/assets/javascripts/i18n
 client-bundle.js
 client-bundle.js.map
 _bundle.js
@@ -41,5 +42,5 @@ secrets.yml
 /public/questions
 /public/system
 /public/uploads
-/public/packs
+/public/packs*
 /node_modules
