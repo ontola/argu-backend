@@ -115,7 +115,7 @@ module ApplicationHelper
   end
 
   # Generates social media links for any resource for HyperDropdown
-  def share_items(resource)
+  def share_items(resource, opts = {})
     url = polymorphic_url(resource, only_path: false)
     share_urls = {
       facebook: ShareHelper.facebook_share_url(url),
@@ -129,7 +129,8 @@ module ApplicationHelper
     {
       title: t('share'),
       url: url,
-      shareUrls: share_urls
+      shareUrls: share_urls,
+      triggerClass: opts[:trigger_class]
     }
   end
 

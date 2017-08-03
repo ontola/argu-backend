@@ -27,18 +27,20 @@
   .cover-buttons
     .cover-buttons-container
       ul.btns-horizontal
+        - if resource.edge.is_public?
+          li.float-right.share-menu
+            ul= react_component_store 'ShareDropdown', props: share_items(resource, trigger_class: 'btn--transparant')
         - if policy(resource).update?
-          li.float-right= link_to settings_forum_path(resource.url), class: 'btn--transparant', data: {turbolinks: false_unless_iframe}
-            span.fa.fa-gear
-            span.icon-left= t('forums.settings.title')
-        - if controller_name == 'feed'
-          li.float-right= link_to url_for(resource), class: 'btn--transparant'
-            span.fa.fa-th-large
-            span.icon-left= t('overview')
-        - elsif policy(resource).feed?
-          li.float-right= link_to url_for([resource, :feed]), class: 'btn--transparant'
-            span.fa.fa-feed
-            span.icon-left= t('feed')
+          =forum_menu_item(resource)
+        - else
+          - if controller_name == 'feed'
+            li.float-right= link_to url_for(resource), class: 'btn--transparant'
+              span.fa.fa-th-large
+              span.icon-left= t('overview')
+          - elsif policy(resource).feed?
+            li.float-right= link_to url_for([resource, :feed]), class: 'btn--transparant'
+              span.fa.fa-feed
+              span.icon-left= t('feed')
         - unless current_user.guest?
           li.float-right
             ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(resource, trigger_class: 'btn--transparant')

@@ -13,6 +13,7 @@ export const ShareDropdown = React.createClass({
         dropdownClass: React.PropTypes.string,
         shareUrls: React.PropTypes.object,
         title: React.PropTypes.string,
+        triggerClass: React.PropTypes.string,
         url: React.PropTypes.string
     },
 
@@ -92,10 +93,11 @@ export const ShareDropdown = React.createClass({
         const { openState, renderLeft, counts } = this.state;
         const { title, url, shareUrls } = this.props;
         const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass}`;
+        const triggerClass = `dropdown-trigger ${this.props.triggerClass}`;
 
         const totalSharesCounter = <div className="notification-counter share-counter">{this.totalShares()}</div>;
 
-        const trigger = (<a className="dropdown-trigger"
+        const trigger = (<a className={triggerClass}
                             data-turbolinks="false"
                             done={this.close}
                             href={this.props.defaultAction}

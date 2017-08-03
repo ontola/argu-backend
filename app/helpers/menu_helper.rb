@@ -16,6 +16,36 @@ module MenuHelper
     end
   end
 
+  def forum_menu_item(resource)
+    feed_item =
+      if controller_name == 'feed'
+        link_item(t('overview'), url_for(resource), fa: 'th-large')
+      elsif policy(resource).feed?
+        link_item(t('feed'), url_for([resource, :feed]), fa: 'feed')
+      end
+    settings_item = link_item(
+      t('forums.settings.title'),
+      settings_forum_path(resource),
+      fa: 'gear',
+      data: {turbolinks: false_unless_iframe}
+    )
+    options = dropdown_options(
+      t('menu'),
+      [{items: [settings_item, feed_item]}],
+      fa: 'fa-ellipsis-v',
+      triggerClass: 'btn--transparant'
+    )
+
+    return if options.empty?
+    content_tag :li, class: 'float-right' do
+      content_tag :ul do
+        react_component 'HyperDropdown',
+                        options,
+                        prerender: true
+      end
+    end
+  end
+
   private
 
   # Generates the dropdown via {dropdown_options}.
