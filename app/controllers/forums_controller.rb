@@ -56,6 +56,10 @@ class ForumsController < EdgeTreeController
 
   def settings
     prepend_view_path 'app/views/forums'
+    @grants = Grant
+                .custom
+                .where(edge_id: [resource_by_id.edge.id, resource_by_id.edge.parent_id])
+                .includes(group: {group_memberships: {member: {profileable: :shortname}}})
 
     render locals: {
       tab: tab,

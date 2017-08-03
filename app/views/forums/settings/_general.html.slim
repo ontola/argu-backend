@@ -20,14 +20,14 @@
                    preview_style: 'max-height: 256px;'}
   =f.inputs name: t('grants.plural').capitalize do
     p= t('groups.description')
-    - if resource.grants.custom.any?
+    - if @grants.any?
       table.styled
         thead
           tr
             td= t('groups.type')
             td[colspan='2' style="min-width: 90px;"]= t('groups.members')
             td= t('roles.plural').capitalize
-        - Grant.custom.where(edge_id: [resource.edge.id, resource.edge.parent_id]).includes(group: {group_memberships: {member: {profileable: :shortname}}}).each do |grant|
+        - @grants.each do |grant|
           tr
             td
               =link_to grant.group.display_name, settings_group_path(grant.group)
