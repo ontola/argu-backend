@@ -7,8 +7,10 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-console.log('Hello World from Webpacker')
 // Support component names relative to this directory:
-var componentRequireContext = require.context("../components", true)
-var ReactRailsUJS = require("react_ujs")
-ReactRailsUJS.useContext(componentRequireContext)
+self.I18n = require('i18n-js');
+require('../../assets/javascripts/i18n/translations');
+I18n.locale = document.head.querySelector("[name=language]").content;
+var componentRequireContext = require.context("../components", true);
+var ReactRailsUJS = require("react_ujs");
+ReactRailsUJS.useContext(componentRequireContext);

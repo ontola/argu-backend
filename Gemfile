@@ -28,7 +28,7 @@ gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.1'
 gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 5.0.4'
-gem 'i18n-js', '>= 3.0.0.rc12'
+gem 'i18n-js', '~> 3.0.1'
 gem 'tzinfo-data'
 
 gem 'rack-cors', require: 'rack/cors'

@@ -20,7 +20,7 @@
     "glob": "^7.1.2",
     "grunt": "^1.0.1",
     "history": "^1.17.0",
-    "i18n-js": "http://github.com/fnando/i18n-js/archive/v3.0.0.rc8.tar.gz",
+    "i18n-js": "^3.0.1",
     "immutable": "^3.7.5",
     "install": "^0.2.6",
     "intl": "^1.0.0",

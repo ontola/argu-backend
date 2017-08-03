@@ -15,10 +15,6 @@ const introJsOptions = {
 };
 
 $(function() {
-    if(typeof I18n !== 'undefined') {
-        I18n.locale = document.head.querySelector("[name=language]").content;
-    }
-
     //start introJs after posting an idea
     if (window.location.search.indexOf('start_motion_tour=true') > -1) {
         // For some weird reason, IntroJS does not listen to default tooltipPosition, so I added the position manually to all steps.
