@@ -1,4 +1,6 @@
-$('.container').append("<%= escape_javascript render(template: 'questions/move.html', layout: false, locals: {resource: resource}) %>");
-window.setTimeout(function () {
-    $('body').addClass('modal-opened');
-}, 300);
+if ($('.modal-container').length === 0) {
+    $('.container').append("<%= escape_javascript render(template: 'questions/move.html', layout: false, locals: {resource: resource}) %>");
+    window.setTimeout(function () {
+        $('body').addClass('modal-opened');
+    }, 300);
+}

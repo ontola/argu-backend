@@ -35,6 +35,10 @@ class MotionPolicy < EdgeablePolicy
     rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
+  def invite?
+    parent_policy(:page).update?
+  end
+
   def update?
     rule is_creator?, is_manager?, is_super_admin?, super
   end

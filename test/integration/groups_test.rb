@@ -101,12 +101,31 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'super_admin should post create group' do
     sign_in super_admin
 
-    assert_difference('Group.count', 1) do
+    assert_differences([['Group.count', 1], ['Grant.count', 0]]) do
       post page_groups_path(freetown.page),
            params: {
              group: {
-               group_id: group.id,
                name: 'Test group'
+             }
+           }
+    end
+    assert_redirected_to settings_page_path(freetown.page, tab: :groups)
+  end
+
+  test 'super_admin should post create group with grant' do
+    sign_in super_admin
+
+    assert_differences([['Group.count', 1], ['Grant.count', 1]]) do
+      post page_groups_path(freetown.page),
+           params: {
+             group: {
+               name: 'Test group',
+               grants_attributes: {
+                 '0': {
+                   role: 'member',
+                   edge_id: freetown.page.edge.id
+                 }
+               }
              }
            }
     end

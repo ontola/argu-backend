@@ -34,6 +34,10 @@ class ForumPolicy < EdgeablePolicy
     rule is_member?, is_manager?, staff?
   end
 
+  def invite?
+    parent_policy(:page).update?
+  end
+
   def list?
     raise(ActiveRecord::RecordNotFound) unless @record.discoverable? || show?
     true

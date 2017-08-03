@@ -1,5 +1,6 @@
 en:
   tokens:
+    invite: "Invite"
     generate: "Generate link"
     loading: "Loading..."
     retract:
@@ -25,6 +26,14 @@ en:
       default_message: "I invite you to join the group '%{group}'."
       has_invalid: "Has invalid email(s)"
       placeholder: "Search user(s) or enter email addres(ses)"
+    discussion:
+      title: "Invite people"
+      description: "Invite people to join the discussion."
+      default_message: "Join the discussion about '%{resource}'."
+      group:
+        label: "To which group do you want to add these people?"
+        placeholder: "Select a group"
+        create: "Create"
     errors:
       no_receivers: "Please enter one or more users or emailaddresses."
       not_found: "This token is invalid"

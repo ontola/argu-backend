@@ -12,7 +12,7 @@
   z-index: 20;
   overflow-y: auto;
   text-align: center;
-  pointer-events: none; // Makes the overflow clickable, so it can close. However, it also prevents scrolling in the modal.
+  pointer-events: bounding-box; // Makes the overflow clickable, so it can close.
 
   .box {
     pointer-events: auto;

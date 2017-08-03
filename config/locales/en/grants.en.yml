@@ -20,13 +20,17 @@ en:
     type: "grant"
     plural: "grants"
     description: "Grants also apply to the underlying content."
+    label: "Leden van deze groep mogen:"
+    in_current_forum: "In forum %{forum}"
+    in_all_forums: "In all forums"
     empty: "none"
+    may: "may"
     types:
       empty: "no additional role"
       none: "see nothing"
       spectator: "see everything"
       member: "participate"
       manager: "moderate"
-      super_admin: "Admin"
+      super_admin: "manage"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"

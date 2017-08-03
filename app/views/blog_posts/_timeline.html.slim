@@ -10,7 +10,7 @@
     =render partial: resource.creator, locals: {resource: resource}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       =crud_menu_item(resource)
-      - if resource.edge.is_public?
+      - if resource.edge.is_public? || policy(resource.parent_model(:page)).invite?
         li.share-menu
           ul= react_component_store 'ShareDropdown', props: share_items(resource)
       - if resource.top_comment.present? && policy(resource).index_children?(:comments)

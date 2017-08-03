@@ -67,6 +67,9 @@ Rails.application.routes.draw do
   concern :feedable do
     get :feed, controller: :feed, action: :show
   end
+  concern :invitable do
+    get :invite, controller: :invites, action: :new
+  end
   concern :moveable do
     get :move, action: :shift
     put :move, action: :move
@@ -155,7 +158,7 @@ Rails.application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create],
-            concerns: [:commentable, :blog_postable, :moveable, :feedable, :trashable] do
+            concerns: [:commentable, :blog_postable, :moveable, :feedable, :trashable, :invitable] do
     resources :media_objects, only: :index
     resources :motions, path: 'm', only: [:index, :new, :create]
     resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
@@ -170,8 +173,9 @@ Rails.application.routes.draw do
 
   resources :motions,
             path: 'm',
-            except: [:index, :new, :create],
-            concerns: [:commentable, :blog_postable, :moveable, :votable, :feedable, :trashable, :decisionable] do
+            except: [:index, :new, :create, :destroy],
+            concerns: [:commentable, :blog_postable, :moveable, :votable,
+                       :feedable, :trashable, :decisionable, :invitable] do
     resources :arguments, only: [:new, :create, :index]
     resources :media_objects, only: :index
     resources :votes, only: :index
@@ -303,7 +307,7 @@ Rails.application.routes.draw do
     resources :forums,
               only: [:show, :update],
               path: '',
-              concerns: [:feedable, :discussable, :destroyable, :favorable] do
+              concerns: [:feedable, :discussable, :destroyable, :favorable, :invitable] do
       resources :motions, path: :m, only: [] do
         get :search, to: 'motions#search', on: :collection
       end

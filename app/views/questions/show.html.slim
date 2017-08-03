@@ -25,7 +25,7 @@
           li
             ul=react_component_store 'HyperDropdown', props: follow_dropdown_items(question)
         =crud_menu_item(question, question_items(question))
-        - if question.edge.is_public?
+        - if question.edge.is_public? || policy(question.parent_model(:page)).invite?
           li
             ul= react_component_store 'ShareDropdown', props: share_items(question)
   - unless question.is_published?

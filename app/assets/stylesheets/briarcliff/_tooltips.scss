@@ -33,6 +33,8 @@
   opacity:0;
   max-width: none;
   @include border-radius();
+  max-height: 15em;
+  overflow: hidden;
 
   // Hides tooltips on IE8,9,10, since they ignore pointer events.
   @media screen\0 {

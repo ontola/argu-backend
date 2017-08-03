@@ -1,3 +1,4 @@
+import I18n from 'i18n-js';
 import OnClickOutside from 'react-onclickoutside';
 import React from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
@@ -89,6 +90,22 @@ export const ShareDropdown = React.createClass({
                           url={whatsapp} />)
     },
 
+    inviteButton () {
+        const { invite } = this.props.shareUrls;
+        if (invite === undefined) {
+            return undefined;
+        }
+        return (
+            <LinkItem
+                done={this.close}
+                data={{ remote: true }}
+                fa="fa-share"
+                title={I18n.t('tokens.invite')}
+                type="link"
+                url={invite} />
+        )
+    },
+
     render () {
         const { openState, renderLeft, counts } = this.state;
         const { title, url, shareUrls } = this.props;
@@ -111,6 +128,7 @@ export const ShareDropdown = React.createClass({
                                                  key='required'
                                                  renderLeft={renderLeft}
                                                  {...this.props}>
+            {this.inviteButton()}
             <FBShareItem
               count={counts.facebook}
               shareUrl={url}

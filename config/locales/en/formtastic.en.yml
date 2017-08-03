@@ -129,6 +129,9 @@ en:
         content: "Enter details and background information on your %{type} here."
       user:
         email: "email@example.com"
+      group:
+        name: "e.g. 'Civilians'"
+        name_singular: "e.g. 'Civilian'"
     map:
       add_marker: "Add location"
       remove_marker: "Remove location"

@@ -163,6 +163,10 @@ class EdgeTreePolicy < RestrictivePolicy
     rule show?
   end
 
+  def invite?
+    false
+  end
+
   # Move items between forums or converting items
   def move?
     staff?
@@ -244,5 +248,9 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def show_unpublished?
     rule is_creator?, is_manager?, is_super_admin?, staff?, service?
+  end
+
+  def parent_policy(type = nil)
+    Pundit.policy(context, record.parent_model(type))
   end
 end

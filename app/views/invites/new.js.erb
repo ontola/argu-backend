@@ -1,5 +1,5 @@
 if ($('.modal-container').length === 0) {
-    $('.container').append("<%= escape_javascript render(template: template, layout: false, locals: local_assigns) %>");
+    $('.container').append("<%= escape_javascript render(template: 'invites/new_modal', layout: false, locals: local_assigns) %>");
     window.setTimeout(function () {
         $('body').addClass('modal-opened');
     }, 300);

@@ -1,5 +1,6 @@
 nl:
   tokens:
+    invite: "Uitnodigen"
     generate: "Genereer link"
     loading: "Laden..."
     retract:
@@ -25,6 +26,14 @@ nl:
       default_message: "Ik nodig je uit om lid te worden van de groep '%{group}'."
       has_invalid: "Bevat incorrecte email(s)"
       placeholder: "Zoek gebruiker(s) of voer email-adres(sen) in"
+    discussion:
+      title: "Mensen uitnodigen"
+      description: "Nodig mensen uit om mee te denken."
+      default_message: "Denk mee over '%{resource}'."
+      group:
+        label: "Aan welke groep wil je deze mensen toevoegen?"
+        placeholder: "Selecteer een groep"
+        create: "Aanmaken"
     errors:
       no_receivers: "Geef een of meerdere gebruikers of email-adressen op."
       not_found: "Dit token is niet gevonden"

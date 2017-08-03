@@ -1,0 +1,9 @@
+.col-1
+  =to_parent(authenticated_resource)
+.col-1
+  .box
+    section
+      legend
+        span= t('tokens.discussion.title')
+      p= t('tokens.discussion.description')
+      =react_component_store 'tokens/DiscussionInvite', props: discussion_invite_props(authenticated_resource), prerender: false

@@ -20,7 +20,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
             li
               ul = react_component_store 'HyperDropdown', props: follow_dropdown_items(project)
           =crud_menu_item(project)
-          - if project.edge.is_public?
+          - if project.edge.is_public? || policy(project.parent_model(:page)).invite?
             li.share-menu
               ul= react_component_store 'ShareDropdown', props: share_items(project)
           - if policy(project).create_child?(:blog_posts)

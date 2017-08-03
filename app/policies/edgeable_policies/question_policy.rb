@@ -29,6 +29,10 @@ class QuestionPolicy < EdgeablePolicy
     rule is_member?, is_manager?, super
   end
 
+  def invite?
+    parent_policy(:page).update?
+  end
+
   def update?
     rule (is_member? && is_creator?), is_manager?, super
   end

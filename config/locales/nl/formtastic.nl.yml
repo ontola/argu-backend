@@ -130,6 +130,9 @@ nl:
         content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       user:
         email: "email@example.com"
+      group:
+        name: "bv Burgers"
+        name_singular: "bv Burger"
     map:
       add_marker: "Voeg locatie toe"
       remove_marker: "Verwijder locatie"
