@@ -1,5 +1,6 @@
 import Alert from '../../../javascript/components/Alert';
 import { FastClick } from 'fastclick';
+import { modal } from './modal';
 import Blazy from 'blazy';
 import { safeCredentials, errorMessageForStatus } from '../../../javascript/components/lib/helpers';
 import twReplace from '../../../../lib/assets/javascripts/twreplace';
@@ -254,34 +255,3 @@ const ui = {
 };
 
 export default ui;
-
-export const modal = {
-    init: function () {
-        $(document)
-            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal)
-            .on('click', '.modal-container .close-trigger', this.closeModal);
-
-        // Close modal when pressing escape button
-        // @TODO: Just listen to escape, not all the time all the buttons
-        document.addEventListener('keyup', function(e) {
-            if (e.keyCode == 27 && !$(".no-close")[0]) {
-                $('.modal-container').addClass('modal-hide');
-                window.setTimeout(function () {
-                    $('.modal-container').remove();
-                    $('body').removeClass('modal-opened');
-                }, 500);
-            }
-        });
-    },
-
-    closeModal: function (e) {
-        e.preventDefault();
-        let container = $(this).parents('.modal-container');
-
-        container.addClass('modal-hide');
-        window.setTimeout(() => {
-            container.remove();
-            $('body').removeClass('modal-opened');
-        }, 500);
-    }
-};
