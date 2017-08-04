@@ -38,6 +38,22 @@ class ProfilesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(user)
   end
 
+  test 'user should put setup and redirect to token from cookie' do
+    sign_in user
+    cookies[:token] = argu_url('/tokens/1234')
+
+    put :setup!,
+        params: {
+          id: user.url,
+          user: attributes_for(:user).merge(
+            profile_attributes: {
+              id: user.profile.id
+            }
+          )
+        }
+    assert_redirected_to argu_url('/tokens/1234')
+  end
+
   test 'user should get edit profile with own profile' do
     sign_in user
 

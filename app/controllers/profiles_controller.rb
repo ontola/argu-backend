@@ -64,10 +64,10 @@ class ProfilesController < ApplicationController
     @resource.update_column(:finished_intro, true) if updated
 
     respond_to do |format|
-      if updated && @resource.try(:r).present?
-        format.html { redirect_to redirect_url }
-      elsif updated
-        format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
+      if updated
+        format.html do
+          redirect_to redirect_url || dual_profile_url(@profile), notice: 'Profile was successfully updated.'
+        end
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
       else
@@ -91,6 +91,8 @@ class ProfilesController < ApplicationController
   end
 
   def redirect_url
+    return cookies.delete(:token) if cookies[:token].present?
+    return unless @resource.try(:r).present?
     r = URI.decode(@resource.r)
     @resource.update r: ''
     r_opts = r_to_url_options(r)[0]
