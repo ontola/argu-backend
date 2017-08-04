@@ -11,6 +11,7 @@ module SPI
     private
 
     def resource
+      return resource_from_iri(params[:resource_iri]) if params[:resource_iri].present?
       case params[:resource_type]
       when 'CurrentActor'
         profile = if (/[a-zA-Z]/i =~ params[:resource_id].to_s).present?

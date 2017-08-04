@@ -15,6 +15,12 @@ module SPI
       assert_response 200
     end
 
+    test 'guest should show motion as iri' do
+      get spi_authorize_path(resource_iri: url_for(motion), authorize_action: 'show')
+
+      assert_response 200
+    end
+
     test 'guest should not update motion' do
       get spi_authorize_path(resource_type: 'Motion', resource_id: motion.id, authorize_action: 'update')
 
