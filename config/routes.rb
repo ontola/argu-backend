@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     patch 'comments' => 'comments#create'
   end
   concern :destroyable do
-    delete action: :destroy, on: :member
+    delete '', action: :destroy, on: :member
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
   concern :decisionable do
