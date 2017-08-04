@@ -4,16 +4,18 @@ class QuestionsController < EdgeTreeController
   skip_before_action :check_if_registered, only: :index
 
   def show
-    @motions = policy_scope(authenticated_resource.motions)
-                 .joins(:edge, :default_vote_event_edge)
-                 .includes(:default_cover_photo, :edge, :votes, :published_publications,
-                           creator: {default_profile_photo: []})
-                 .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-                 .page(show_params[:page])
-    preload_user_votes(@motions.map { |m| m.default_vote_event_edge.id })
-
     respond_to do |format|
-      format.html { render locals: {question: authenticated_resource} } # show.html.erb
+      format.html do
+        @motions =
+          policy_scope(authenticated_resource.motions)
+            .joins(:edge, :default_vote_event_edge)
+            .includes(:default_cover_photo, :edge, :votes, :published_publications,
+                      creator: {default_profile_photo: []})
+            .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+            .page(show_params[:page])
+        preload_user_votes(@motions.map { |m| m.default_vote_event_edge.id })
+        render locals: {question: authenticated_resource}
+      end
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
       format.json_api do

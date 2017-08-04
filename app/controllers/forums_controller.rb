@@ -32,13 +32,12 @@ class ForumsController < EdgeTreeController
   def show
     return unless policy(resource_by_id).show?
 
-    @items = collect_items
-
     respond_to do |format|
       format.html do
         if (/[a-zA-Z]/i =~ params[:id]).nil?
           redirect_to url_for(@forum), status: 307
         else
+          @items = collect_items
           render
         end
       end
