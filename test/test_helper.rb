@@ -180,7 +180,7 @@ module ActionDispatch
   module Integration
     module RequestHelpers
       def options(path, *args)
-        process_with_kwargs(:options, path, *args)
+        process(:options, path, **args)
       end
     end
   end
