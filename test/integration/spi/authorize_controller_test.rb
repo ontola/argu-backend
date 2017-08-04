@@ -21,6 +21,18 @@ module SPI
       assert_response 200
     end
 
+    test 'guest should not show non-existing motion' do
+      get spi_authorize_path(resource_type: 'Motion', resource_id: 'non-existing', authorize_action: 'show')
+
+      assert_response 404
+    end
+
+    test 'guest should not show non-existing motion as iri' do
+      get spi_authorize_path(resource_iri: motion_url('non-existing'), authorize_action: 'show')
+
+      assert_response 404
+    end
+
     test 'guest should not update motion' do
       get spi_authorize_path(resource_type: 'Motion', resource_id: motion.id, authorize_action: 'update')
 

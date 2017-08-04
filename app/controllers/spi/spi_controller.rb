@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 module SPI
   class SPIController < ActionController::API
-    include OauthHelper, Argu::RuledIt, JsonApiHelper
+    include OauthHelper, Argu::RuledIt, JsonApiHelper, Argu::ErrorHandling
     alias_attribute :pundit_user, :user_context
-
-    rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
 
     serialization_scope :user_context
 
@@ -19,13 +17,13 @@ module SPI
 
     private
 
-    def handle_not_authorized_error(exception)
-      error_hash = {
-        message: exception.message,
-        code: 'NOT_AUTHORIZED'
-      }
-      render json_api_error(403, error_hash)
+    def handle_error(e)
+      error_mode(e)
+      render json_api_error(error_status(e), json_api_error_hash(error_id(e), e))
     end
+    alias handle_not_authorized_error handle_error
+    alias handle_bad_request handle_error
+    alias handle_record_not_found handle_error
 
     def set_guest_language; end
   end
