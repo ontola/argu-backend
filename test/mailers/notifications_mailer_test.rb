@@ -11,7 +11,7 @@ class NotificationsMailerTest < ActionMailer::TestCase
   let!(:follower) { create(:user) }
   let!(:creator) { create(:profile) }
   let!(:publisher) { create(:user, profile: creator) }
-  let(:group_member) { create(:group_membership, parent: group.edge, member: create(:user).profile).member.profileable }
+  let(:group_member) { create(:group_membership, parent: group, member: create(:user).profile).member.profileable }
   let(:group) { create(:group, parent: freetown.page.edge) }
 
   let!(:follow_forum) { create(:follow, followable: freetown.edge, follower: follower) }

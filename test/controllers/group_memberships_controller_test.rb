@@ -12,7 +12,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   let!(:freetown_grant) { create(:grant, edge: freetown.edge, group: forum_group) }
   let!(:freetown2_grant) { create(:grant, edge: freetown2.edge, group: forum_group) }
   let!(:page_grant) { create(:grant, edge: argu.edge, group: page_group) }
-  let!(:member) { create(:group_membership, parent: group.edge).member.profileable }
+  let!(:member) { create(:group_membership, parent: group).member.profileable }
 
   ####################################
   # As User
@@ -219,8 +219,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'super_admin should delete expire' do
     sign_in create_super_admin(freetown)
 
-    group_membership = create(:group_membership,
-                              parent: group.edge)
+    group_membership = create(:group_membership, parent: group)
 
     assert_differences([['GroupMembership.count', 0], ['GroupMembership.active.count', -1]]) do
       delete :destroy,

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-class CreateGroupMembership < EdgeableCreateService
+class CreateGroupMembership < CreateService
   def initialize(group, attributes: {}, options: {})
+    @resource = GroupMembership.new(group: group)
     attributes = HashWithIndifferentAccess.new(attributes)
     attributes[:member] = if attributes['shortname'].present?
                             Shortname.find_resource(attributes.delete('shortname')).profile
@@ -30,9 +31,5 @@ class CreateGroupMembership < EdgeableCreateService
   end
 
   def object_attributes=(obj)
-  end
-
-  def parent_columns
-    %i(group_id)
   end
 end

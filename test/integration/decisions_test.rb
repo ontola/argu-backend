@@ -6,11 +6,11 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   let!(:super_admin) { create_super_admin(freetown) }
   let(:group_membership) do
     create(:group_membership,
-           parent: create(:group, parent: freetown.page.edge).edge)
+           parent: create(:group, parent: freetown.page.edge))
   end
   let(:actor_membership) do
     create(:group_membership,
-           parent: create(:group, parent: freetown.page.edge).edge,
+           parent: create(:group, parent: freetown.page.edge),
            member: actor.profile)
   end
   let!(:motion) do
@@ -166,7 +166,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   test 'group_member should post approve' do
     sign_in member
     create(:group_membership,
-           parent: create(:group, parent: motion.forum.page.edge).edge,
+           group_id: create(:group, parent: motion.forum.page.edge).id,
            member: member.profile)
     create(:decision,
            parent: motion.edge,

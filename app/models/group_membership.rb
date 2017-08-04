@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class GroupMembership < ApplicationRecord
-  include Edgeable
+  include Parentable
 
   belongs_to :group
   belongs_to :member,
@@ -32,7 +32,7 @@ class GroupMembership < ApplicationRecord
   attr_accessor :token
 
   def publisher
-    edge.user
+    profile.profileable
   end
 
   private

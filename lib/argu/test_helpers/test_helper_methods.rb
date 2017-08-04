@@ -78,7 +78,7 @@ module Argu
           page = record.is_a?(Page) ? record : record.page
           group = create(:group, parent: page.edge)
           create(:group_membership,
-                 parent: group.edge,
+                 parent: group,
                  shortname: user.url)
           create(:grant, edge: record.edge, group: group, role: Grant.roles['manager'])
           user
@@ -89,7 +89,7 @@ module Argu
           page = record.is_a?(Page) ? record : record.page
           group = create(:group, parent: page.edge)
           create(:group_membership,
-                 parent: group.edge,
+                 parent: group,
                  shortname: user.url)
           create(:grant, edge: record.edge, group: group, role: Grant.roles['member'])
           user
@@ -98,7 +98,7 @@ module Argu
         def create_super_admin(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
-          create(:group_membership, parent: page.edge.groups.first.edge, member: user.profile)
+          create(:group_membership, parent: page.edge.groups.first, member: user.profile)
           user
         end
 

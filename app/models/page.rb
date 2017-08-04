@@ -75,7 +75,7 @@ class Page < ApplicationRecord
     group.save!
 
     service = CreateGroupMembership.new(
-      edge.groups.first.edge,
+      edge.groups.first,
       attributes: {member: owner, profile: owner},
       options: {publisher: owner.profileable, creator: owner}
     )

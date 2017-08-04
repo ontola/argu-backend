@@ -13,7 +13,7 @@ table.styled
       td
         =link_to group.group_memberships.count, settings_group_path(group)
       td
-        - if policy(group).create_child?(:group_memberships)
+        - if policy(group).create_child?(:group_memberships, group_id: group.id)
           =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
       td

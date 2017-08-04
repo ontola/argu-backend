@@ -3,8 +3,8 @@ require 'test_helper'
 
 class GroupMembershipTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:group_membership, parent: custom_group.edge, member: user.profile) }
-  let(:second_record) { create(:group_membership, parent: custom_group.edge, member: manager.profile) }
+  subject { create(:group_membership, parent: custom_group, member: user.profile) }
+  let(:second_record) { create(:group_membership, parent: custom_group, member: manager.profile) }
   let(:custom_group) { create(:group, parent: freetown.page.edge) }
   let(:user) { create(:user) }
   let(:manager) { create_manager(freetown) }
@@ -83,7 +83,6 @@ class GroupMembershipTest < ActiveSupport::TestCase
   def create_group_membership(member: user.profile, group: custom_group, start_date: DateTime.current, end_date: nil)
     gm = GroupMembership
       .create(
-        edge: Edge.new(user: user, parent: group.edge),
         group_id: group.id,
         member_id: member.id,
         profile_id: member.id,

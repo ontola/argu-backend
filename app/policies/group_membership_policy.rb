@@ -17,6 +17,10 @@ class GroupMembershipPolicy < EdgeTreePolicy
     end
   end
 
+  def edge
+    record.group.parent_edge(:page)
+  end
+
   def permitted_attributes
     attributes = [:lock_version, :token]
     attributes.append(:shortname) if rule(is_super_admin?, staff?)
@@ -43,11 +47,11 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def granted_resource
-    record.parent_model.grants.member.first.edge.owner
+    record.group.grants.member.first.edge.owner
   end
 
   def page_policy
-    Pundit.policy(context, persisted_edge.parent_model(:page))
+    Pundit.policy(context, record.group.parent_model(:page).owner)
   end
 
   def token

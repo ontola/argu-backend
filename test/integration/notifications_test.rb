@@ -15,7 +15,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
   let(:group) { create(:group, parent: freetown.page.edge) }
-  let(:group_membership) { create(:group_membership, parent: group.edge, member: user.profile) }
+  let(:group_membership) { create(:group_membership, parent: group, member: user.profile) }
   let!(:random_follow) { create(:follow, followable: create_forum.edge) }
   let(:blog_post) do
     create(:blog_post,
@@ -201,7 +201,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'staff should forward to self and approve with notifications' do
     sign_in staff
     motion
-    create(:group_membership, parent: group.edge, member: staff.profile)
+    create(:group_membership, parent: group, member: staff.profile)
     assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
       post motion_decisions_path(motion),
            params: {

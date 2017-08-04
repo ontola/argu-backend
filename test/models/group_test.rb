@@ -11,8 +11,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test 'associated memberships should be destroyed' do
-    create(:group_membership,
-           parent: subject.edge)
+    create(:group_membership, parent: subject)
 
     assert_difference ['GroupMembership.count'], -1 do
       subject.destroy

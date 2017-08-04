@@ -110,7 +110,6 @@ class User < ApplicationRecord
       member: profile,
       profile_id: Profile::COMMUNITY_ID,
       group_id: Group::PUBLIC_ID,
-      edge: Edge.new(user_id: User::COMMUNITY_ID, parent: Group.public.edge),
       start_date: DateTime.current
     )
   end

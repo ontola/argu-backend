@@ -34,7 +34,7 @@
             td
               =link_to grant.group.group_memberships.count, settings_group_path(grant.group)
             td
-              - if policy(grant.group).create_child?(:group_memberships)
+              - if policy(grant.group).create_child?(:group_memberships, group_id: grant.group.id)
                 =link_to new_group_membership_path(grant.group), class: 'btn--light btn--smaller' do
                   span.fa.fa-plus
             td

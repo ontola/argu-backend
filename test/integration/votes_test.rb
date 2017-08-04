@@ -535,7 +535,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'user should post create json_api on vote_event' do
     sign_in user
-    create(:group_membership, parent: vote_event.group.edge, member: user.profile)
+    create(:group_membership, parent: vote_event.group, member: user.profile)
 
     assert_differences([['Vote.count', 1],
                         ['Edge.count', 1],
@@ -583,7 +583,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'user should not post create json_api on closed vote_event' do
     sign_in user
-    create(:group_membership, parent: closed_vote_event.group.edge, member: user.profile)
+    create(:group_membership, parent: closed_vote_event.group, member: user.profile)
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],

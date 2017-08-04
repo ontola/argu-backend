@@ -30,7 +30,7 @@ class ActivityStringTest < ActiveSupport::TestCase
            parent: motion.edge,
            state: 'forwarded',
            happening_attributes: {happened_at: DateTime.current},
-           forwarded_user_id: create(:group_membership, parent: group.edge).member.profileable,
+           forwarded_user_id: create(:group_membership, parent: group).member.profileable,
            forwarded_group_id: group.id)
   end
 
