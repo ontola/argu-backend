@@ -10,6 +10,10 @@ class GroupPolicy < EdgeTreePolicy
     member if user&.profile&.group_memberships&.pluck(:group_id)&.include? record.id
   end
 
+  def edge
+    record.parent_edge
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(name name_singular) if create?

@@ -71,7 +71,6 @@ class Page < ApplicationRecord
       deletable: false
     )
     group.grants << Grant.new(role: Grant.roles[:super_admin], edge: edge)
-    group.edge = Edge.new(user: publisher, parent: edge)
     group.save!
 
     service = CreateGroupMembership.new(

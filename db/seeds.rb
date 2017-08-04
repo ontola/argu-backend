@@ -30,7 +30,6 @@ public_group = Group.new(
   name: 'Public',
   page: argu
 )
-public_group.edge = Edge.create(owner: public_group, parent: argu.edge, user_id: 0)
 public_group.save!
 
 staff = User
