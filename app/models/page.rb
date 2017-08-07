@@ -31,6 +31,8 @@ class Page < ApplicationRecord
   contextualize :display_name, as: 'schema:name'
   contextualize :about, as: 'schema:description'
 
+  parentable
+
   def build_profile(*options)
     super(*options) if profile.nil?
   end

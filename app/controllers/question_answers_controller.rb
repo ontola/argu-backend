@@ -24,11 +24,11 @@ class QuestionAnswersController < AuthorizedController
   end
 
   def resource_new_params
-    HashWithIndifferentAccess.new(
+    {
       question: question,
       motion: motion,
       options: service_options
-    )
+    }
   end
 
   def question

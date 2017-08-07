@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class GroupMembership < ApplicationRecord
-  include Parentable
+  include Edgeable
 
   belongs_to :group
   belongs_to :member,

@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 class Favorite < ApplicationRecord
+  include Parentable
   belongs_to :user
   belongs_to :edge
   validates :edge, presence: true, uniqueness: {scope: :user}
 
-  cattr_accessor :parent_classes do
-    %i(forum)
-  end
+  parentable :forum
 
   after_create :follow_edge
 

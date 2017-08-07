@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class BlogPost < ApplicationRecord
   include Trashable, Attachable, Placeable, HasLinks, Loggable, PublicActivity::Common,
-          ActivePublishable, Parentable, Happenable, Commentable, Ldable
+          ActivePublishable, Edgeable, Happenable, Commentable, Ldable
 
   # For Rails 5 attributes
   # attribute :state, :enum

@@ -2,10 +2,13 @@
 class QuestionAnswer
   extend ActiveModel::Naming
   include ActiveModel::Validations
+  include Parentable
 
   validates :question, :motion, presence: true
 
   attr_accessor :question, :motion, :options
+
+  parentable :motion, :question
 
   def initialize(question: nil, motion: nil, options: {})
     @question = question
@@ -17,12 +20,12 @@ class QuestionAnswer
     false
   end
 
-  def persisted?
+  def is_edgeable?
     false
   end
 
-  def self.parent_classes
-    %i(motion question)
+  def persisted?
+    false
   end
 
   def question_id

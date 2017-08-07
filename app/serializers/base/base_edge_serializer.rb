@@ -34,7 +34,7 @@ class BaseEdgeSerializer < RecordSerializer
   end
 
   has_one :organization do
-    obj = object.get_parent(:page).owner
+    obj = object.parent_model(:page)
     link(:self) do
       {
         meta: {

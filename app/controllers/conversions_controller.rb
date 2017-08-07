@@ -42,7 +42,7 @@ class ConversionsController < ServiceController
   end
 
   def current_forum
-    convertible_edge.get_parent(:forum)&.owner
+    @current_forum ||= convertible_edge&.parent_model(:forum)
   end
 
   def parent_edge

@@ -54,6 +54,10 @@ class GroupsController < ServiceController
     }
   end
 
+  def parent_edge
+    parent_resource&.edge
+  end
+
   def redirect_model_success(resource)
     settings_page_path(resource.page, tab: :groups)
   end

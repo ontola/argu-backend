@@ -47,7 +47,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def page_policy
-    Pundit.policy(context, persisted_edge.get_parent(:page).owner)
+    Pundit.policy(context, persisted_edge.parent_model(:page))
   end
 
   def token

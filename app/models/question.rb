@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Question < ApplicationRecord
-  include Trashable, Attachable, Commentable, Parentable, HasLinks, Attribution, Convertible, Loggable,
+  include Trashable, Attachable, Commentable, Edgeable, HasLinks, Attribution, Convertible, Loggable,
           BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
           ActivePublishable, Motionable, Ldable
 

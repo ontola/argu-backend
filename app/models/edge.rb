@@ -98,9 +98,9 @@ class Edge < ApplicationRecord
     children_counts[association.to_s].to_i || 0
   end
 
-  def get_parent(type)
+  def parent_edge(type)
     return self if owner_type == type.to_s.classify
-    return persisted_edge&.get_parent(type) unless persisted?
+    return persisted_edge&.parent_edge(type) unless persisted?
     if type == :page
       root
     elsif type == :forum
@@ -109,6 +109,10 @@ class Edge < ApplicationRecord
     else
       ancestors.find_by(owner_type: type.to_s.classify)
     end
+  end
+
+  def parent_model(type)
+    parent_edge(type)&.owner
   end
 
   def granted_groups(role)
@@ -232,7 +236,7 @@ class Edge < ApplicationRecord
   end
 
   def self.path_array(paths)
-    return 'NULL' if paths.empty?
+    return 'NULL' if paths.blank?
     paths = case paths
             when String
               [paths]

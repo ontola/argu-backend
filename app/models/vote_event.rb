@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class VoteEvent < ApplicationRecord
-  include Parentable, Ldable
+  include Edgeable, Ldable
   belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events
   belongs_to :forum
   belongs_to :group

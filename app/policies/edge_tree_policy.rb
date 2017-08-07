@@ -125,7 +125,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def context_forum
-    @context_forum ||= persisted_edge.get_parent(:forum)&.owner
+    @context_forum ||= persisted_edge.parent_model(:forum)
   end
 
   def permitted_attributes
@@ -235,7 +235,7 @@ class EdgeTreePolicy < RestrictivePolicy
     r =
       if klass.parent_classes.include?(record.class.name.underscore.to_sym)
         child = klass.new(attrs)
-        if child.is_fertile?
+        if child.is_edgeable?
           child = record.edge.children.new(owner: child, is_published: true).owner
           child.edge.persisted_edge = persisted_edge
           child.parent_model = record

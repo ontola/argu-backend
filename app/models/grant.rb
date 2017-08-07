@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Grant < ApplicationRecord
+  include Parentable
+
   # The Edge this Grant is providing rules for
   belongs_to :edge
   belongs_to :group, inverse_of: :grants
@@ -16,6 +18,7 @@ class Grant < ApplicationRecord
   validates :edge, presence: true, uniqueness: {scope: :group}
 
   enum role: {spectator: 0, member: 1, manager: 2, super_admin: 10}
+  parentable :edge
 
   def display_name
     case edge.owner_type
@@ -30,9 +33,5 @@ class Grant < ApplicationRecord
 
   def page
     edge.root.owner
-  end
-
-  def self.parent_classes
-    %i(edge)
   end
 end

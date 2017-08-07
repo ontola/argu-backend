@@ -40,6 +40,10 @@ class ShortnamesController < AuthorizedController
       end
   end
 
+  def parent_edge
+    parent_resource&.edge
+  end
+
   def handle_record_not_unique
     authenticated_resource
       .errors

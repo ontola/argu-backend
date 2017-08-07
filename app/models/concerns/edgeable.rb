@@ -4,6 +4,8 @@ module Edgeable
   extend ActiveSupport::Concern
 
   included do
+    include Parentable
+
     has_one :edge,
             as: :owner,
             inverse_of: :owner,
@@ -18,9 +20,10 @@ module Edgeable
     scope :expired, -> { joins(edge_join_string).where("#{edge_join_alias}.expires_at <= ?", DateTime.current) }
 
     before_save :save_linked_record
+    validate :validate_parent_type
 
     accepts_nested_attributes_for :edge
-    delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :get_parent, :expires_at, to: :edge
+    delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :expires_at, to: :edge
     delegate :potential_audience, to: :parent_edge
     counter_cache false
 
@@ -41,6 +44,14 @@ module Edgeable
       match[0].to_s
     end
 
+    def is_edgeable?
+      true
+    end
+
+    def self.is_edgeable?
+      true
+    end
+
     def is_published?
       persisted? && edge.is_published?
     end
@@ -50,7 +61,7 @@ module Edgeable
     end
 
     def parent_edge(type = nil)
-      type.nil? ? edge&.parent : edge&.get_parent(type)
+      type.nil? ? edge&.parent : edge&.parent_edge(type)
     end
 
     def save_linked_record
@@ -64,6 +75,11 @@ module Edgeable
 
     def save!(opts = {})
       store_in_redis?(opts) ? store_in_redis : super
+    end
+
+    def validate_parent_type
+      return if edge&.parent.nil? || self.class.parent_classes.include?(edge.parent.owner_type.underscore.to_sym)
+      errors.add(:parent, "#{edge.parent.owner_type} is not permitted as parent for #{class_name}")
     end
 
     def destroy
@@ -196,4 +212,19 @@ module Edgeable
       conditions.reduce(query) { |a, e| a.where("#{name.tableize}.#{e[0]} = ?", e[1]) }
     end
   end
+
+  module ActiveRecordExtension
+    def self.included(base)
+      base.class_eval do
+        def self.is_edgeable?
+          false
+        end
+      end
+    end
+
+    def is_edgeable?
+      false
+    end
+  end
+  ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end

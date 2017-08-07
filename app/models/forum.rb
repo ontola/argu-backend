@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Forum < ApplicationRecord
-  include Attribution, Shortnameable, Photoable, ProfilePhotoable, Parentable,
+  include Attribution, Shortnameable, Photoable, ProfilePhotoable, Edgeable,
           Motionable, Questionable, Ldable
 
   belongs_to :page, inverse_of: :forums

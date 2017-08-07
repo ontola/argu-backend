@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class LinkedRecord < ApplicationRecord
-  include Argumentable, Voteable, Parentable, Commentable, Ldable
+  include Argumentable, Voteable, Edgeable, Commentable, Ldable
 
   belongs_to :page
   belongs_to :source

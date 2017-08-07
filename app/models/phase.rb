@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Phase < ApplicationRecord
-  include Placeable, Parentable
+  include Placeable, Edgeable
   attr_accessor :finish_phase
 
   belongs_to :forum

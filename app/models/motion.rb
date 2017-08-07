@@ -2,7 +2,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
-  include Trashable, Argumentable, Attachable, Commentable, Voteable, Parentable, Attribution, HasLinks,
+  include Trashable, Argumentable, Attachable, Commentable, Voteable, Edgeable, Attribution, HasLinks,
           Convertible, Loggable, BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
           Decisionable, Ldable, ActivePublishable
 

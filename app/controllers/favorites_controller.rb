@@ -15,6 +15,10 @@ class FavoritesController < AuthorizedController
     current_user.favorites.find_or_initialize_by(edge: parent_edge)
   end
 
+  def parent_edge
+    parent_resource&.edge
+  end
+
   def resource_by_id
     current_user.favorites.find_by(edge: parent_edge)
   end
