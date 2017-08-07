@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Portal
-  class SourcesController < PortalBaseController
+  class SourcesController < EdgeTreeController
     def new
       authorize new_resource_from_params, :new?
       render 'new', locals: {source: new_resource_from_params}
@@ -21,39 +21,12 @@ module Portal
 
     private
 
-    def create_service
-      @create_service ||= CreateSource.new(
-        parent_resource.edge,
-        attributes: permit_params,
-        options: service_options
-      )
-    end
-
-    def parent_resource
+    def parent_resource(_opts = {})
       @parent_resource ||= Shortname.find_resource(params[:page]) || Page.find(params.require(:source)[:page_id])
     end
 
-    def new_resource_from_params
-      @resource ||= parent_resource
-                      .edge
-                      .children
-                      .new(owner: Source.new(page: parent_resource))
-                      .owner
-    end
-
-    def permit_params
-      params
-        .require(:source)
-        .permit(*policy(new_resource_from_params).permitted_attributes)
-    end
-
-    def service_options(options = {})
-      {
-        creator: current_actor.actor,
-        publisher: current_user,
-        uuid: a_uuid,
-        client_id: request.session.id
-      }.merge(options)
+    def resource_new_params
+      HashWithIndifferentAccess.new(page: parent_resource, publisher: current_user)
     end
   end
 end
