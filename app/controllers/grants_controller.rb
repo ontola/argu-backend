@@ -4,12 +4,8 @@ class GrantsController < ServiceController
 
   private
 
-  def create_service
-    @create_service ||= service_klass.new(
-      nil,
-      attributes: resource_new_params.merge(permit_params.to_h),
-      options: service_options
-    )
+  def create_service_parent
+    nil
   end
 
   def create_respond_failure_html(resource)

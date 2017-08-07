@@ -38,10 +38,14 @@ class ServiceController < AuthorizedController
   #   create_service.commit # => true (Comment created)
   def create_service
     @create_service ||= service_klass.new(
-      parent_resource.edge,
+      create_service_parent,
       attributes: resource_new_params.merge(permit_params.to_h),
       options: service_options
     )
+  end
+
+  def create_service_parent
+    parent_resource.edge
   end
 
   # Prepares a memoized {DestroyService} for the relevant model for use in controller#destroy

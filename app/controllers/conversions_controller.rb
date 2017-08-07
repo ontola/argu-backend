@@ -37,12 +37,8 @@ class ConversionsController < ServiceController
     end
   end
 
-  def create_service
-    @create_service ||= CreateConversion.new(
-      Conversion.new(edge: convertible_edge),
-      attributes: permit_params,
-      options: service_options
-    )
+  def create_service_parent
+    Conversion.new(edge: convertible_edge)
   end
 
   def current_forum
@@ -67,6 +63,10 @@ class ConversionsController < ServiceController
   end
 
   def resource_by_id; end
+
+  def resource_new_params
+    HashWithIndifferentAccess.new
+  end
 
   def service_options(options = {})
     {

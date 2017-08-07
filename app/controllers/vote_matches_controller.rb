@@ -20,12 +20,8 @@ class VoteMatchesController < ServiceController
     super if current_resource_is_nested?
   end
 
-  def create_service
-    @create_service ||= CreateVoteMatch.new(
-      nil,
-      attributes: resource_new_params.merge(permit_params.to_h),
-      options: service_options
-    )
+  def create_service_parent
+    nil
   end
 
   def index_respond_blocks_success(_, format)
