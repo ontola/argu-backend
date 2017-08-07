@@ -49,12 +49,6 @@ class ConversionsController < ServiceController
     convertible_edge.parent
   end
 
-  def permit_params
-    params
-      .require(:conversion)
-      .permit(*policy(new_resource_from_params).permitted_attributes)
-  end
-
   def resource_by_id; end
 
   def resource_new_params
