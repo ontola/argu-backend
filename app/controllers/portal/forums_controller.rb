@@ -4,11 +4,7 @@ class Portal::ForumsController < EdgeTreeController
 
   def current_forum; end
 
-  def parent_edge
-    parent_resource.edge
-  end
-
-  def parent_resource
+  def parent_resource(_opts = {})
     Page.find_via_shortname_or_id!(params[:page] || params[:forum][:page_id])
   end
 

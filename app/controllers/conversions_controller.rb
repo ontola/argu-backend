@@ -49,6 +49,10 @@ class ConversionsController < ServiceController
     convertible_edge.parent
   end
 
+  def parent_resource(_opts = {})
+    parent_edge&.owner
+  end
+
   def resource_by_id; end
 
   def resource_new_params

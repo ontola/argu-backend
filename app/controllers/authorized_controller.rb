@@ -114,6 +114,8 @@ class AuthorizedController < ApplicationController
     controller_class.new(resource_new_params)
   end
 
+  def parent_resource(_opts = {}); end
+
   def permit_params
     params
       .require(model_name)

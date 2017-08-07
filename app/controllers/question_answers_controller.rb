@@ -14,6 +14,10 @@ class QuestionAnswersController < AuthorizedController
     @parent_edge ||= authenticated_resource.question.edge
   end
 
+  def parent_resource(_opts = {})
+    parent_edge&.owner
+  end
+
   def message_success(resource, action)
     return super unless action == :create
     'Motion was successfully coupled.'

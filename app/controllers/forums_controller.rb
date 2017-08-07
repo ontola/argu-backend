@@ -146,11 +146,7 @@ class ForumsController < EdgeTreeController
     resource_by_id
   end
 
-  def parent_edge
-    @parent_edge ||= parent_resource&.edge
-  end
-
-  def parent_resource
+  def parent_resource(_opts = {})
     @parent_resource ||= authenticated_resource!&.page
   end
 

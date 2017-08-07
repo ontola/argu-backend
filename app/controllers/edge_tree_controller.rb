@@ -51,7 +51,7 @@ class EdgeTreeController < ServiceController
                  .edge
                  .children
                  .new(owner: controller_class.new(resource_new_params),
-                      parent: parent_resource.edge)
+                      parent: parent_edge)
                  .owner
     if resource.is_publishable?
       resource.edge.build_argu_publication(
@@ -62,6 +62,10 @@ class EdgeTreeController < ServiceController
     end
     resource.build_happening(created_at: DateTime.current) if resource.is_happenable?
     resource
+  end
+
+  def parent_edge
+    @parent_edge ||= parent_resource&.edge
   end
 
   # Method to determine where the action should redirect to after it succeeds.

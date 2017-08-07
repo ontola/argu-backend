@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class VotesController < EdgeTreeController
-  include NestedResourceHelper, UriTemplateHelper
+  include UriTemplateHelper
   skip_before_action :check_if_registered, only: %i(index show create)
 
   # GET /model/:model_id/vote
@@ -100,11 +100,7 @@ class VotesController < EdgeTreeController
     param.present? && param !~ /\D/ ? Vote.fors.key(param.to_i) : param
   end
 
-  def parent_edge
-    @parent_edge ||= parent_resource.try(:edge) || super
-  end
-
-  def parent_resource
+  def parent_resource(opts = {})
     @parent_resource ||= super.try(:default_vote_event) || super
   end
 

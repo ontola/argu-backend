@@ -79,8 +79,6 @@ class GroupMembershipsController < ServiceController
     action_name == 'index' ? super : :group_id
   end
 
-  def parent_edge(_opts = nil); end
-
   def permit_params
     params.permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
   end
