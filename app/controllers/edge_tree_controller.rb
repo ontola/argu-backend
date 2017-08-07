@@ -39,9 +39,7 @@ class EdgeTreeController < ServiceController
   end
 
   def current_forum
-    (resource_by_id || current_resource_is_nested? && parent_resource)
-      .try(:parent_model, :forum)
-      &.parent_model(:forum)
+    @current_forum ||= parent_resource&.parent_model(:forum)
   end
 
   # Instantiates a new record of the current controller type initialized with {resource_new_params}

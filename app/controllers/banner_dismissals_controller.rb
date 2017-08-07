@@ -26,5 +26,5 @@ class BannerDismissalsController < AuthorizedController
     end
   end
 
-  def current_forum; end
+  def resource_by_id; end
 end

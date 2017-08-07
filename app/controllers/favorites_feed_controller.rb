@@ -2,8 +2,6 @@
 class FavoritesFeedController < FeedController
   private
 
-  def current_forum; end
-
   def authorize_action
     skip_verify_policy_authorized true
     raise Argu::NotAuthorizedError.new(query: :feed?) unless current_user.profile.has_role?(:staff)

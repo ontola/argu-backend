@@ -139,8 +139,6 @@ class PagesController < EdgeTreeController
     respond_js('pages/new', page: resource, errors: resource.errors)
   end
 
-  def current_forum; end
-
   def handle_not_authorized_error(exception)
     us_po = policy(current_user) unless current_user.guest?
     return super unless us_po&.max_pages_reached? && request.format.html?
