@@ -3,8 +3,6 @@ module Users
   class FeedController < ::FeedController
     private
 
-    def authenticated_tree; end
-
     def current_forum; end
 
     def feed

@@ -39,7 +39,7 @@ class ServiceController < AuthorizedController
   def create_service
     @create_service ||= service_klass.new(
       create_service_parent,
-      attributes: resource_new_params.merge(permit_params.to_h),
+      attributes: resource_new_params.merge(permit_params.to_h).with_indifferent_access,
       options: service_options
     )
   end

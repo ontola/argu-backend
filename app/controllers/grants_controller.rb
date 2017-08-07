@@ -23,10 +23,6 @@ class GrantsController < ServiceController
     :page_id
   end
 
-  def new_resource_from_params
-    @resource ||= Grant.new(resource_new_params)
-  end
-
   def new_respond_success_html(resource)
     render 'pages/settings',
            locals: {

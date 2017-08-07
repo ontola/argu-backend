@@ -47,8 +47,8 @@ class ShortnamesController < AuthorizedController
     respond_with_form(authenticated_resource)
   end
 
-  def new_resource_from_params
-    @resource ||= Shortname.new(forum: parent_resource)
+  def resource_new_params
+    HashWithIndifferentAccess.new(forum: parent_resource)
   end
 
   def permit_params

@@ -25,10 +25,43 @@ class EdgeTreeController < ServiceController
       end
   end
 
+  # The scope of the item used for authorization
+  def authenticated_tree
+    @_tree ||=
+      case action_name
+      when 'new', 'create', 'index'
+        parent_edge&.self_and_ancestors
+      when 'update'
+        resource_by_id&.edge&.self_and_ancestors
+      else
+        authenticated_edge&.self_and_ancestors
+      end
+  end
+
   def current_forum
     (resource_by_id || current_resource_is_nested? && parent_resource)
       .try(:parent_model, :forum)
       &.parent_model(:forum)
+  end
+
+  # Instantiates a new record of the current controller type initialized with {resource_new_params}
+  # @return [ActiveRecord::Base] A fresh model instance
+  def new_resource_from_params
+    resource = parent_resource
+                 .edge
+                 .children
+                 .new(owner: controller_class.new(resource_new_params),
+                      parent: parent_resource.edge)
+                 .owner
+    if resource.is_publishable?
+      resource.edge.build_argu_publication(
+        publish_type: 'direct',
+        published_at: DateTime.current,
+        follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
+      )
+    end
+    resource.build_happening(created_at: DateTime.current) if resource.is_happenable?
+    resource
   end
 
   # Method to determine where the action should redirect to after it succeeds.

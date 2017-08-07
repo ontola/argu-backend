@@ -10,10 +10,6 @@ class VoteMatchesController < ServiceController
     end
   end
 
-  protected
-
-  def authenticated_tree; end
-
   private
 
   def parent_resource
@@ -40,10 +36,6 @@ class VoteMatchesController < ServiceController
       render json: collection,
              include: INC_NESTED_COLLECTION
     end
-  end
-
-  def new_resource_from_params
-    VoteMatch.new(publisher: current_user, creator: current_profile)
   end
 
   def resource_by_id

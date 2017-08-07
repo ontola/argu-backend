@@ -23,8 +23,8 @@ class QuestionAnswersController < AuthorizedController
     Motion.find_by(id: params.require(:question_answer)[:motion_id])
   end
 
-  def new_resource_from_params
-    @resource ||= QuestionAnswer.new(
+  def resource_new_params
+    HashWithIndifferentAccess.new(
       question: question,
       motion: motion,
       options: service_options

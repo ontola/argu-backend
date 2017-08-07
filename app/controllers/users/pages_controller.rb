@@ -14,9 +14,5 @@ module Users
         max: policy(current_user).max_allowed_pages
       }
     end
-
-    private
-
-    def authenticated_tree; end
   end
 end

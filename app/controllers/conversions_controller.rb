@@ -55,17 +55,13 @@ class ConversionsController < ServiceController
       .permit(*policy(new_resource_from_params).permitted_attributes)
   end
 
-  def new_resource_from_params
-    Conversion.new(
-      edge: convertible_edge,
-      klass: convertible_class_names(convertible_edge.owner)&.first
-    )
-  end
-
   def resource_by_id; end
 
   def resource_new_params
-    HashWithIndifferentAccess.new
+    {
+      edge: convertible_edge,
+      klass: convertible_class_names(convertible_edge.owner)&.first
+    }
   end
 
   def service_options(options = {})

@@ -12,10 +12,6 @@ class BannersController < ServiceController
     render_settings(:edit, resource, resource.forum)
   end
 
-  def new_resource_from_params
-    controller_class.new resource_new_params
-  end
-
   def new_respond_success_html(resource)
     render_settings(:new, resource, parent_resource)
   end
