@@ -7,7 +7,7 @@ class MotionsController < EdgeTreeController
   def search
     skip_verify_policy_authorized(true)
     if params[:q].present? && params[:thing].present?
-      @motions = policy_scope(parent_resource.motions).search(params[:q])
+      @motions = policy_scope(parent_resource!.motions).search(params[:q])
       render json: @motions.present? ? @motions : {data: []}
     else
       skip_verify_policy_scoped(true)
@@ -62,8 +62,8 @@ class MotionsController < EdgeTreeController
   private
 
   def resource_new_params
-    if parent_resource.try(:project).present?
-      super.merge(project: parent_resource.project)
+    if parent_resource!.try(:project).present?
+      super.merge(project: parent_resource!.project)
     else
       super
     end

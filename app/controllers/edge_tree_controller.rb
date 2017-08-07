@@ -47,7 +47,7 @@ class EdgeTreeController < ServiceController
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    resource = parent_resource
+    resource = parent_resource!
                  .edge
                  .children
                  .new(owner: controller_class.new(resource_new_params),
@@ -66,6 +66,10 @@ class EdgeTreeController < ServiceController
 
   def parent_edge
     @parent_edge ||= parent_resource&.edge
+  end
+
+  def parent_edge!
+    parent_edge || raise(ActiveRecord::RecordNotFound)
   end
 
   # Method to determine where the action should redirect to after it succeeds.

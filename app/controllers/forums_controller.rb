@@ -146,10 +146,6 @@ class ForumsController < EdgeTreeController
     resource_by_id
   end
 
-  def parent_resource(_opts = {})
-    @parent_resource ||= authenticated_resource!&.page
-  end
-
   def permit_params
     attrs = policy(resource_by_id).permitted_attributes
     pm = params.require(:forum).permit(*attrs).to_h

@@ -31,12 +31,12 @@ class ShortnamesController < AuthorizedController
       end
   end
 
-  def parent_resource(_opts = {})
+  def parent_resource
     @parent_resource ||=
       if %w(new create).include?(params[:action])
         super
       else
-        resource_by_id.forum
+        resource_by_id&.forum
       end
   end
 
@@ -52,7 +52,7 @@ class ShortnamesController < AuthorizedController
   end
 
   def resource_new_params
-    HashWithIndifferentAccess.new(forum: parent_resource)
+    HashWithIndifferentAccess.new(forum: parent_resource!)
   end
 
   def permit_params
@@ -66,7 +66,7 @@ class ShortnamesController < AuthorizedController
   end
 
   def redirect_model_success(_resource = nil)
-    settings_forum_path(parent_resource, tab: 'shortnames')
+    settings_forum_path(parent_resource!, tab: 'shortnames')
   end
 
   def respond_with_form(resource)

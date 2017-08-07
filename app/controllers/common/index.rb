@@ -31,7 +31,7 @@ module Common
       end
 
       def index_response_association
-        parent_resource.send(
+        parent_resource!.send(
           index_collection_association,
           collection_options
         )

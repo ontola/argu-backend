@@ -45,7 +45,7 @@ class ServiceController < AuthorizedController
   end
 
   def create_service_parent
-    parent_resource.edge
+    parent_resource!.edge
   end
 
   # Prepares a memoized {DestroyService} for the relevant model for use in controller#destroy

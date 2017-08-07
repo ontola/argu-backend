@@ -98,11 +98,6 @@ class AuthorizedController < ApplicationController
     (resource_by_id || current_resource_is_nested? && parent_resource).try(:parent_model, :forum)
   end
 
-  # Override by including {NestedResourceHelper}
-  def current_resource_is_nested?(_opts = false)
-    false
-  end
-
   def language_from_edge_tree
     return unless current_forum.present?
     I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
@@ -114,7 +109,13 @@ class AuthorizedController < ApplicationController
     controller_class.new(resource_new_params)
   end
 
-  def parent_resource(_opts = {}); end
+  def parent_resource
+    resource_by_id.try(:parent_model)
+  end
+
+  def parent_resource!
+    parent_resource || raise(ActiveRecord::RecordNotFound)
+  end
 
   def permit_params
     params
@@ -144,7 +145,7 @@ class AuthorizedController < ApplicationController
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: parent_resource.is_a?(Forum) ? parent_resource : parent_resource.parent_model(:forum),
+      forum: parent_resource!.is_a?(Forum) ? parent_resource! : parent_resource!.parent_model(:forum),
       publisher: current_user
     )
   end

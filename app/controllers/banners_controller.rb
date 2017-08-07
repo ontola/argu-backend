@@ -13,7 +13,7 @@ class BannersController < ServiceController
   end
 
   def new_respond_success_html(resource)
-    render_settings(:new, resource, parent_resource)
+    render_settings(:new, resource, parent_resource!)
   end
 
   def redirect_model_failure(resource)

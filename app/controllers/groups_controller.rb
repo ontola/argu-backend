@@ -64,7 +64,7 @@ class GroupsController < ServiceController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      page: parent_resource
+      page: parent_resource!
     )
   end
 

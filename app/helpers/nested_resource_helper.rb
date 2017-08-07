@@ -6,36 +6,20 @@
 module NestedResourceHelper
   include IRIHelper
 
-  def current_resource_is_nested?(opts = params)
-    parent_id_from_params(opts).present?
-  end
-
-  # Finds the parent edge based on the URL's :foo_id param
-  # @note This method knows {Shortnameable}
-  # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
-  # @return [Edge] An Edge if found
-  # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails
-  #   docs}
-  # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
-  def parent_edge(opts = params)
-    @parent_edge ||= parent_resource(opts).edge
+  def parent_resource
+    @parent_resource ||= parent_id_from_params(params).present? ? parent_from_params(params) : super
   end
 
   # Finds the parent resource based on the URL's :foo_id param
-  # If the controller is an {AuthorizedController}, it'll check for a persited {authenticated_resource!!}
   # @note This method knows {Shortnameable}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord] A resource model if found
-  # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails
-  #   docs}
-  # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
-  def parent_resource(opts = params)
-    @parent_resource ||=
-      if parent_resource_class(opts).try(:shortnameable?)
-        parent_resource_class(opts).find_via_shortname_or_id! parent_id_from_params(opts)
-      else
-        parent_resource_class(opts).find parent_id_from_params(opts)
-      end
+  def parent_from_params(opts = params)
+    if parent_resource_class(opts).try(:shortnameable?)
+      parent_resource_class(opts).find_via_shortname_or_id(parent_id_from_params(opts))
+    else
+      parent_resource_class(opts).find_by(id: parent_id_from_params(opts))
+    end
   end
 
   # Extracts the resource id from a params hash
@@ -109,6 +93,6 @@ module NestedResourceHelper
   #   params = {motion: {id: 1}}
   #   resource_params # => {id: 1}
   def resource_params
-    params[controller_name.singularize] || {}
+    params[controller_name.singularize].is_a?(Hash) ? params[controller_name.singularize] : {}
   end
 end

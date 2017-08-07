@@ -21,12 +21,12 @@ module Portal
 
     private
 
-    def parent_resource(_opts = {})
-      @parent_resource ||= Shortname.find_resource(params[:page]) || Page.find(params.require(:source)[:page_id])
+    def parent_resource
+      @parent_resource ||= Shortname.find_resource(params[:page]) || Page.find_by(id: params.require(:source)[:page_id])
     end
 
     def resource_new_params
-      HashWithIndifferentAccess.new(page: parent_resource, publisher: current_user)
+      HashWithIndifferentAccess.new(page: parent_resource!, publisher: current_user)
     end
   end
 end

@@ -62,8 +62,4 @@ class FeedController < AuthorizedController
       DateTime.current
     end
   end
-
-  def parent_resource(opts = params)
-    super if parent_resource_key(opts).present?
-  end
 end
