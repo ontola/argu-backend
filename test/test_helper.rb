@@ -179,7 +179,7 @@ end
 module ActionDispatch
   module Integration
     module RequestHelpers
-      def options(path, *args)
+      def options(path, args = {})
         process(:options, path, **args)
       end
     end
