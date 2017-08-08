@@ -135,7 +135,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    'Bad Request',
-                   'found unpermitted parameter: type',
+                   'found unpermitted parameter: :type',
                    'BAD_REQUEST'
                  )
   end
