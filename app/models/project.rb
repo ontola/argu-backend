@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class Project < ApplicationRecord
-  include Placeable, Trashable, HasLinks, BlogPostable, ActivePublishable,
+  include Trashable, HasLinks, BlogPostable, ActivePublishable,
           Edgeable, Photoable, Loggable, Timelineable, PublicActivity::Common
 
   # For Rails 5 attributes

@@ -14,7 +14,6 @@ class Question < ApplicationRecord
   include Convertible
   include BlogPostable
   include Timelineable
-  include Placeable
   include Photoable
   include Motionable
 

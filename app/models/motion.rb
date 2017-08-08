@@ -18,7 +18,6 @@ class Motion < ApplicationRecord
   include Convertible
   include BlogPostable
   include Timelineable
-  include Placeable
   include Photoable
 
   include Decisionable

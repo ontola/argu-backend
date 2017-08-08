@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 class Edge < ApplicationRecord
+  include Placeable
+
   belongs_to :owner,
              inverse_of: :edge,
              polymorphic: true,

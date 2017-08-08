@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class BlogPost < ApplicationRecord
-  include Trashable, Attachable, Placeable, HasLinks, Loggable, PublicActivity::Common,
+  include Trashable, Attachable, HasLinks, Loggable, PublicActivity::Common,
           ActivePublishable, Edgeable, Happenable, Commentable, Ldable
 
   # For Rails 5 attributes
