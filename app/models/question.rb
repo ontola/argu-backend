@@ -1,8 +1,22 @@
 # frozen_string_literal: true
 class Question < ApplicationRecord
-  include Trashable, Attachable, Commentable, Edgeable, HasLinks, Attribution, Convertible, Loggable,
-          BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
-          ActivePublishable, Motionable, Ldable
+  include Edgeable
+  include PublicActivity::Common
+  include ActivePublishable
+  include Loggable
+  include Ldable
+
+  include Trashable
+  include Attachable
+  include Commentable
+  include HasLinks
+  include Attribution
+  include Convertible
+  include BlogPostable
+  include Timelineable
+  include Placeable
+  include Photoable
+  include Motionable
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'

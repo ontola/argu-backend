@@ -2,7 +2,7 @@
 module ProCon
   extend ActiveSupport::Concern
 
-  VOTE_OPTIONS = [:pro].freeze
+  VOTE_OPTIONS = [:pro].freeze unless defined?(VOTE_OPTIONS)
 
   included do
     include Trashable, Edgeable, HasLinks, PublicActivity::Common, Commentable

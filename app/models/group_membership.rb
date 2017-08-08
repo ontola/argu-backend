@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class GroupMembership < ApplicationRecord
+  belongs_to :group
   include Parentable
 
-  belongs_to :group
   belongs_to :member,
              inverse_of: :group_memberships,
              class_name: 'Profile'
@@ -14,6 +14,7 @@ class GroupMembership < ApplicationRecord
           source: :profileable,
           source_type: :User
   has_many :grants, through: :group
+
   scope :active, lambda {
     where(
       'start_date < ? AND (end_date IS NULL OR end_date > ?)',
@@ -21,6 +22,7 @@ class GroupMembership < ApplicationRecord
       DateTime.current
     )
   }
+
   validates :member_id, presence: true
   validates :start_date, presence: true
   validate :end_date_after_start_date

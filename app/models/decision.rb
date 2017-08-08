@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 class Decision < ApplicationRecord
-  include Loggable, Happenable, HasLinks, Edgeable, ActivePublishable
+  include Loggable
+  include Happenable
+  include HasLinks
+  include Edgeable
+  include ActivePublishable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum
