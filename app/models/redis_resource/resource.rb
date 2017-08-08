@@ -67,9 +67,10 @@ module RedisResource
     end
 
     def reserved_resource_id
+      resource_seq = ActiveRecord::Base.connection.quote_string("#{resource.class.name.tableize}_id_seq")
       ActiveRecord::Base
         .connection
-        .execute("SELECT nextval(#{ActiveRecord::Base.sanitize("#{resource.class.name.tableize}_id_seq")}::regclass)")
+        .execute("SELECT nextval('#{resource_seq}'::regclass)")
         .first['nextval']
     end
 
