@@ -7,7 +7,7 @@ module Commentable
 
     with_collection :comments, association: :filtered_threads, pagination: true
 
-    def filtered_threads(show_trashed = nil, page = nil, order = 'created_at ASC')
+    def filtered_threads(show_trashed = nil, page = nil, order = 'comments.created_at ASC')
       i = comment_threads.where(parent_id: nil).order(order).page(page)
       i.each(&shallow_wipe) unless show_trashed
       i
@@ -28,7 +28,7 @@ module Commentable
       @top_comment ||= comment_threads
                          .joins(:edge)
                          .untrashed
-                         .order('created_at ASC').first
+                         .order('comments.created_at ASC').first
     end
   end
 
