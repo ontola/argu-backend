@@ -2,9 +2,26 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ApplicationRecord
-  include Trashable, Argumentable, Attachable, Commentable, Voteable, Edgeable, Attribution, HasLinks,
-          Convertible, Loggable, BlogPostable, Timelineable, PublicActivity::Common, Placeable, Photoable,
-          Decisionable, Ldable, ActivePublishable
+  include Edgeable
+  include PublicActivity::Common
+  include ActivePublishable
+  include Loggable
+  include Ldable
+  include Trashable
+  include Argumentable
+  include Attachable
+  include Commentable
+  include Voteable
+  include Attribution
+  include HasLinks
+
+  include Convertible
+  include BlogPostable
+  include Timelineable
+  include Placeable
+  include Photoable
+
+  include Decisionable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions
@@ -35,7 +52,7 @@ class Motion < ApplicationRecord
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
 
-  VOTE_OPTIONS = [:pro, :neutral, :con].freeze
+  VOTE_OPTIONS = [:pro, :neutral, :con].freeze unless defined?(VOTE_OPTIONS)
 
   # @return [ActiveRecord::Relation]
   def self.search(q)
