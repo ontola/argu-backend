@@ -162,7 +162,7 @@ group :development do
   gem 'coffee-rails', '~> 4.2.2'
   gem 'yard'
   gem 'yard-activesupport-concern'
-  gem 'web-console', '~> 3.1.1'
+  gem 'web-console', '~> 3.5.1'
   gem 'active_record_query_trace'
   gem 'puma', platform: :ruby
 end
