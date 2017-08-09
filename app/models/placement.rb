@@ -10,25 +10,14 @@ class Placement < ApplicationRecord
 
   enum placement_type: {home: 0, country: 1}
 
-  # @return [String] country_code from variable or from associated place
-  def country_code
-    @country_code || place.try(:country_code)
-  end
+  attribute :country_code, :string
+  attribute :postal_code, :string
 
-  def country_code=(val)
-    attribute_will_change!('country_code') unless val == country_code
-    @country_code = val
-  end
-
-  # @return [String] postal_code from variable or from associated place
-  def postal_code
-    @postal_code || place.try(:postal_code)
-  end
-
-  def postal_code=(val)
-    val = val.try(:upcase).try(:delete, ' ')
-    attribute_will_change!('postal_code') unless val == postal_code
-    @postal_code = val
+  # delegate these attributes to place when the attribute is not set
+  %i(country_code postal_code).each do |attr|
+    define_method attr do
+      attributes[attr.to_s] || place&.send(attr)
+    end
   end
 
   private
