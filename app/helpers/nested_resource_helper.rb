@@ -13,12 +13,12 @@ module NestedResourceHelper
   # Finds the parent resource based on the URL's :foo_id param
   # @note This method knows {Shortnameable}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
-  # @return [ApplicationRecord] A resource model if found
+  # @return [ApplicationRecord, nil] A resource model if found
   def parent_from_params(opts = params)
     if parent_resource_class(opts).try(:shortnameable?)
-      parent_resource_class(opts).find_via_shortname_or_id(parent_id_from_params(opts))
+      parent_resource_class(opts)&.find_via_shortname_or_id(parent_id_from_params(opts))
     else
-      parent_resource_class(opts).find_by(id: parent_id_from_params(opts))
+      parent_resource_class(opts)&.find_by(id: parent_id_from_params(opts))
     end
   end
 
