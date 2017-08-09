@@ -13,7 +13,10 @@ class Argument < ApplicationRecord
   scope :argument_comments, lambda {
     includes(:comment_threads)
       .joins(:edge)
-      .order("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int) DESC, edges.last_activity_at DESC")
+      .order(
+        Arel.sql("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int)") => :desc,
+        Arel.sql('edges.last_activity_at') => :desc
+      )
   }
   delegate :page, to: :forum
 
