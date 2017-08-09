@@ -1,5 +1,4 @@
 import React from 'react';
-import { IntlMixin } from 'react-intl';
 
 import { VoteButtons } from './Vote';
 import OpinionMixin from './mixins/OpinionMixin';
@@ -35,7 +34,7 @@ export const SmallVoteContainer = React.createClass({
         vote_url: React.PropTypes.string
     },
 
-    mixins: [IntlMixin, OpinionMixin, VoteMixin],
+    mixins: [OpinionMixin, VoteMixin],
 
     getInitialState () {
         return {

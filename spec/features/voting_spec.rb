@@ -17,7 +17,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'Disagree').click
+    find('span', text: 'I\'m against').click
 
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
@@ -104,7 +104,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     # Click a random dropdown to prevent the follow dropdown from interfering
     click_link('Info')
-    find('span span', text: 'Disagree').click
+    find('span', text: 'I\'m against').click
 
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
@@ -144,7 +144,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     # Click a random dropdown to prevent the follow dropdown from interfering
     click_link('Info')
-    find('span span', text: 'Disagree').click
+    find('span', text: 'I\'m against').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
     expect(page).to have_css('.opinion-form')
 

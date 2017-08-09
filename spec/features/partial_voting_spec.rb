@@ -17,7 +17,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('a', text: 'Disagree').click
+    find('a', text: 'I\'m against').click
 
     user_attr = attributes_for(:user)
     Sidekiq::Testing.inline! do
@@ -55,7 +55,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'Disagree').click
+    find('span', text: 'I\'m against').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit question_path(question)
@@ -74,7 +74,7 @@ RSpec.feature 'Partial Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'Disagree').click
+    find('span', text: 'I\'m against').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit question_path(question)

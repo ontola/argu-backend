@@ -5,7 +5,7 @@
 
 import React from 'react';
 import urltemplate from 'url-template';
-import { IntlMixin, FormattedMessage } from 'react-intl';
+import I18n from 'i18n-js';
 
 import VoteMixin from './mixins/VoteMixin';
 
@@ -31,8 +31,6 @@ export const VoteButton = React.createClass({
         r: React.PropTypes.string,
         side: React.PropTypes.string
     },
-
-    mixins: [IntlMixin],
 
     iconForSide () {
         switch (this.props.side) {
@@ -64,7 +62,7 @@ export const VoteButton = React.createClass({
                 rel="nofollow">
                     <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
-                        <FormattedMessage message={this.getIntlMessage(side)} />
+                        {I18n.t(`votes.type.${side}`)}
                     </span>
                     {voteCountElem}
                 </a>
@@ -88,7 +86,7 @@ export const VoteButtons = React.createClass({
         vote_url: React.PropTypes.string
     },
 
-    mixins: [IntlMixin, VoteMixin],
+    mixins: [VoteMixin],
 
     getInitialState () {
         return {

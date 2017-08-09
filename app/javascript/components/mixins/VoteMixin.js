@@ -51,7 +51,7 @@ const VoteMixin = {
                     this.setState(Object.assign({}, data.vote, { opinionForm: true }));
                 }
             }).catch(e => {
-                const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
+                const message = errorMessageForStatus(e.status).fallback || I18n.t('errors.general');
                 new Alert(message, 'alert', true);
                 Bugsnag.notifyException(e);
                 throw e;

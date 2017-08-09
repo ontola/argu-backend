@@ -1,5 +1,4 @@
 import React from 'react';
-import { IntlMixin } from 'react-intl';
 
 import actorStore from './stores/actor_store';
 import { VoteButtons, VoteResults } from './Vote';
@@ -36,7 +35,7 @@ export const BigVoteContainer = React.createClass({
         vote_url: React.PropTypes.string
     },
 
-    mixins: [IntlMixin, OpinionMixin, VoteMixin],
+    mixins: [OpinionMixin, VoteMixin],
 
     getInitialState () {
         return {

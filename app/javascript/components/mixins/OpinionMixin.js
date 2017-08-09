@@ -1,6 +1,7 @@
 /* global Bugsnag, fetch */
 import Alert from '../Alert';
 import React from 'react';
+import I18n from 'i18n-js';
 import {
     safeCredentials,
     json,
@@ -79,7 +80,7 @@ const OpinionMixin = {
                 }
             }).catch(er => {
                 this.setState({ submitting: false });
-                const message = errorMessageForStatus(er.status).fallback || this.getIntlMessage('errors.general');
+                const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
                 new Alert(message, 'alert', true);
                 Bugsnag.notifyException(er);
                 throw er;
@@ -138,7 +139,7 @@ const OpinionMixin = {
                 }
             }).catch(er => {
                 this.setState({ submitting: false });
-                const message = errorMessageForStatus(er.status).fallback || this.getIntlMessage('errors.general');
+                const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
                 new Alert(message, 'alert', true);
                 Bugsnag.notifyException(er);
                 throw er;
