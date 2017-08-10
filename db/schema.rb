@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815135921) do
+ActiveRecord::Schema.define(version: 20170815165135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -515,6 +515,7 @@ ActiveRecord::Schema.define(version: 20170815135921) do
     t.json "address"
     t.json "extratags"
     t.json "namedetails"
+    t.integer "nominatim_id"
   end
 
   create_table "profiles", id: :serial, force: :cascade do |t|

@@ -43,9 +43,9 @@ class Place < ApplicationRecord
   def self.fetch(url)
     result = JSON.parse(HTTParty.get(url).body).first
     return nil if result.nil?
-    return Place.find(result['place_id']) if Place.exists?(result['place_id'])
-    Place.create(
-      id: result['place_id'],
+    return Place.find_by(nominatim_id: result['place_id']) if Place.exists?(nominatim_id: result['place_id'])
+    Place.create!(
+      nominatim_id: result['place_id'],
       licence: result['licence'],
       osm_type: result['osm_type'],
       osm_id: result['osm_id'],
