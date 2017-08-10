@@ -1,7 +1,7 @@
 FROM fletcher91/ruby-vips-qt-unicorn:2.4.1
 ARG ASSET_HOST
 
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get update && apt-get install -y nodejs
 
 # throw errors if Gemfile has been modified since Gemfile.lock
@@ -20,6 +20,8 @@ RUN rm -f /usr/src/app/config/database.yml
 RUN rm -f /usr/src/app/config/secrets.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml
 COPY ./config/secrets.docker.yml /usr/src/app/config/secrets.yml
+
+RUN RAILS_ENV=production DEVISE_SECRET=dummy bundle exec rake i18n:js:export
 
 ENV POSTGRESQL_ADDRESS '192.168.99.100'
 ENV POSTGRESQL_PORT '5432'
@@ -46,7 +48,7 @@ ENV AWS_ID ''
 ENV AWS_KEY ''
 ENV FRESHDESK_SECRET ''
 
-RUN npm install -g yarnpkg
+RUN npm install -g yarn
 RUN yarn
 RUN yarn run build:production
 
