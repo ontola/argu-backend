@@ -39,6 +39,7 @@ en:
       password: "Password"
       pinned: "Pin"
       postal_code: "Postal code"
+      require_location: "Location is required"
       current_password: "Current password"
       profile_photo: "Profile photo"
       remember_me: "Remember data"

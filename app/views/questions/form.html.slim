@@ -34,6 +34,8 @@
             label.collapsible-label.collapsible-label--form[for="collapse-advanced"]
             .collapsible-content
               =f.inputs name: t('forms.advanced')
+                - if policy(question).permitted_attributes.include?(:require_location)
+                  =f.input :require_location, as: :reverse_boolean
                 - if policy(question).permitted_attributes.include?(:pinned)
                   =f.input :pinned, as: :reverse_boolean
                   li.form-helper

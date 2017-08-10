@@ -565,6 +565,7 @@ ActiveRecord::Schema.define(version: 20170818065356) do
     t.integer "publisher_id", null: false
     t.bigint "place_id"
     t.integer "project_id"
+    t.boolean "require_location", default: false, null: false
     t.index ["forum_id"], name: "index_questions_on_forum_id"
   end
 

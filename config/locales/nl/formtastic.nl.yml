@@ -39,6 +39,7 @@ nl:
       password: "Wachtwoord"
       pinned: "Vastzetten"
       postal_code: "Postcode"
+      require_location: "Locatie is verplicht"
       current_password: "Huidig wachtwoord"
       profile_photo: "Profielfoto"
       remember_me: "Gegevens onthouden"
