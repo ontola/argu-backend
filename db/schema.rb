@@ -493,6 +493,7 @@ ActiveRecord::Schema.define(version: 20170818065356) do
     t.json "extratags"
     t.json "namedetails"
     t.integer "nominatim_id"
+    t.integer "zoom_level", default: 13, null: false
   end
 
   create_table "profiles", id: :serial, force: :cascade do |t|

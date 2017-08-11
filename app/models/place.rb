@@ -3,6 +3,7 @@ class Place < ApplicationRecord
   has_many :placements
   has_many :placeables,
            through: :placements
+  DEFAULT_ZOOM_LEVEL = 13
 
   def country_code
     address['country_code'].try(:upcase)
@@ -73,7 +74,8 @@ class Place < ApplicationRecord
         icon: result['icon'],
         address: result['address'],
         extratags: result['extratags'],
-        namedetails: result['namedetails']
+        namedetails: result['namedetails'],
+        zoom_level: (result['importance'].to_f * 10 + 3).round || DEFAULT_ZOOM_LEVEL
       )
     rescue OpenURI::HTTPError => error
       raise StandardError.new(error_message(error))
