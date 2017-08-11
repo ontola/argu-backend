@@ -18,6 +18,7 @@
             h3= t('motions.form.content_heading')
             p= t('motions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(motion, :content, motion_type.downcase)
+            =react_component_store 'MapPicker', props: map_picker_props(motion)
           - if policy(resource).permitted_attributes.include?(:mark_as_important)
             =f.input :mark_as_important, as: :reverse_boolean
             li.form-helper

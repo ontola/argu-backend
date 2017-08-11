@@ -34,6 +34,20 @@ class MotionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: question.edge)
   end
+  let(:motion_with_placement) do
+    create(:motion,
+           edge_attributes: {
+             placements_attributes: {
+               '0' => {
+                 lat: 1.0,
+                 lon: 1.0,
+                 placement_type: 'custom'
+               }
+             }
+           },
+           publisher: creator,
+           parent: question.edge)
+  end
   let(:member_motion) { create(:motion, parent: freetown.edge, creator: member.profile) }
 
   let(:forum_move_to) { create_forum }
@@ -268,5 +282,77 @@ class MotionsTest < ActionDispatch::IntegrationTest
     subject.reload
     assert_nil subject.question_id
     assert_equal subject.parent_model, freetown
+  end
+
+  test 'member should post create motion with latlon' do
+    sign_in member
+
+    general_create(
+      analytics: stats_opt('motions', 'create_success'),
+      results: {should: :true, response: 302},
+      parent: :freetown,
+      attributes: {
+        edge_attributes: {
+          placements_attributes: {
+            '0' => {
+              lat: 1.0,
+              lon: 1.0,
+              zoom_level: 1,
+              placement_type: 'custom'
+            }
+          }
+        }
+      },
+      differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity.loggings', 2]]
+    )
+
+    assert_equal 1, Motion.last.edge.placements.first.lat
+    assert_equal 1, Motion.last.edge.placements.first.lon
+    assert_equal 1, Motion.last.edge.placements.first.zoom_level
+  end
+
+  test 'creator should put update motion change latlon' do
+    sign_in creator
+
+    general_update(
+      results: {should: :true, response: 302},
+      record: :motion_with_placement,
+      attributes: {
+        edge_attributes: {
+          placements_attributes: {
+            '0' => {
+              id: motion_with_placement.edge.placements.first.id,
+              lat: 2.0,
+              lon: 2.0
+            }
+          }
+        }
+      },
+      differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity.loggings', 1]]
+    )
+
+    motion_with_placement.edge.reload
+    assert_equal 2, motion_with_placement.edge.placements.first.lat
+    assert_equal 2, motion_with_placement.edge.placements.first.lon
+  end
+
+  test 'creator should put update motion remove latlon' do
+    sign_in creator
+
+    general_update(
+      results: {should: :true, response: 302},
+      record: :motion_with_placement,
+      attributes: {
+        edge_attributes: {
+          placements_attributes: {
+            '0' => {
+              id: motion_with_placement.edge.placements.first.id,
+              _destroy: 'true'
+            }
+          }
+        }
+      },
+      differences: [['Motion', 0], ['Placement', -1], ['Place', 0], ['Activity.loggings', 1]]
+    )
   end
 end

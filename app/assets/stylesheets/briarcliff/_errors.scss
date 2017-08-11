@@ -13,3 +13,12 @@
     margin-left: 1.1em;
   }
 }
+
+.warning-box {
+  padding: 0.4em;
+  border: solid 1px $red ;
+  color: $red ;
+  strong {
+    font-weight: bold;
+  }
+}

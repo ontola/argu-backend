@@ -59,6 +59,13 @@ module Argu
           )
       end
 
+      def mapbox_mock
+        stub_request(
+          :post,
+          "https://api.mapbox.com/tokens/v2/#{ENV['MAPBOX_USERNAME']}?access_token=#{ENV['MAPBOX_KEY']}"
+        ).to_return(status: 200, body: {token: 'token'}.to_json)
+      end
+
       def nominatim_netherlands
         stub_request(:get,
                      'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&'\

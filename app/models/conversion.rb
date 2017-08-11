@@ -18,6 +18,10 @@ class Conversion
     "conversion_#{edge.id}_#{klass}"
   end
 
+  def is_edgeable?
+    false
+  end
+
   def is_publishable?
     false
   end

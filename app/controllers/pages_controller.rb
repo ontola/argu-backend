@@ -65,18 +65,6 @@ class PagesController < EdgeTreeController
     }
   end
 
-  def update
-    if @page.update permit_params
-      respond_to do |format|
-        update_respond_blocks_success(@page, format)
-      end
-    else
-      respond_to do |format|
-        update_respond_blocks_failure(@page, format)
-      end
-    end
-  end
-
   def destroy
     unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
       @page.errors.add(:confirmation_string, t('errors.messages.should_match'))

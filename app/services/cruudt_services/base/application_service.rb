@@ -11,7 +11,7 @@ class ApplicationService
     @attributes = attributes
     @actions = {}
     @options = options
-    prepare_argu_publication_attributes if resource.is_publishable?
+    prepare_attributes
     assign_attributes
     set_nested_associations
     unless resource.is_a?(Activity) || resource.is_a?(Grant)
@@ -89,6 +89,13 @@ class ApplicationService
     DataEvent.publish(resource)
   end
 
+  def placements_attributes
+    attrs = @attributes[:edge_attributes][:placements_attributes]
+    attrs.each do |_key, hash|
+      hash.merge!(creator: @options[:creator], publisher: @options[:publisher])
+    end
+  end
+
   # The action that called this service.
   #
   # Used to determine the correct signal name in {signal_base} since controller
@@ -129,11 +136,27 @@ class ApplicationService
   def object_attributes=(obj)
   end
 
+  def prepare_attributes
+    return unless resource.is_edgeable?
+    prepare_edge_attributes
+    prepare_argu_publication_attributes
+    prepare_placement_attributes
+    @attributes.permit! if @attributes.is_a?(ActionController::Parameters)
+  end
+
   def prepare_argu_publication_attributes
+    return unless resource.is_publishable?
+    @attributes[:edge_attributes][:argu_publication_attributes] = argu_publication_attributes
+  end
+
+  def prepare_edge_attributes
     @attributes[:edge_attributes] ||= {}
     @attributes[:edge_attributes][:id] ||= resource.edge.id
-    @attributes[:edge_attributes][:argu_publication_attributes] = argu_publication_attributes
-    @attributes.permit! if @attributes.is_a?(ActionController::Parameters)
+  end
+
+  def prepare_placement_attributes
+    return unless @attributes[:edge_attributes][:placements_attributes].present?
+    @attributes[:edge_attributes][:placements_attributes] = placements_attributes
   end
 
   def signal_base

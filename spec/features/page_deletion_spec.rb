@@ -43,8 +43,10 @@ RSpec.feature 'Page deletion', type: :feature do
            publisher: user)
   end
   let!(:forum_page) { create(:page, owner: user.profile) }
+  let(:nederland) { create(:place, address: {'country_code' => 'nl'}) }
 
   scenario 'user should delete destroy' do
+    nederland
     [argument, motion, question, project, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
@@ -68,6 +70,7 @@ RSpec.feature 'Page deletion', type: :feature do
   end
 
   scenario 'owner should not delete destroy' do
+    nederland
     [argument, motion, question, project, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end

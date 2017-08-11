@@ -129,6 +129,10 @@ en:
         content: "Enter details and background information on your %{type} here."
       user:
         email: "email@example.com"
+    map:
+      add_marker: "Add location"
+      remove_marker: "Remove location"
+      required: "A location is required for this challenge"
     actions:
       create: "Save"
       update: "Save"

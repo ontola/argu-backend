@@ -6,11 +6,11 @@ class Place < ApplicationRecord
   DEFAULT_ZOOM_LEVEL = 13
 
   def country_code
-    address['country_code'].try(:upcase)
+    address.try(:[], 'country_code').try(:upcase)
   end
 
   def postal_code
-    address['postcode']
+    address.try(:[], 'postcode')
   end
 
   class << self
@@ -23,10 +23,10 @@ class Place < ApplicationRecord
     # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
     # @raise [StandardError] when a HTTP error occurs
     # @return [Place, nil] {Place} or nil if it couldn't be found in OSM
-    def find_or_fetch_by(opts = {})
+    def find_or_fetch_by(opts = {}, &block)
       opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
       opts[:postcode] = opts.delete(:postal_code)&.upcase&.delete(' ')
-      find_by_opts(opts) || fetch(url_for_osm_query(opts))
+      find_by_opts(opts) || create_or_fetch(opts, &block)
     end
 
     def find_or_fetch_country(country_code)
@@ -35,6 +35,18 @@ class Place < ApplicationRecord
 
     private
 
+    def create_or_fetch(opts)
+      place =
+        if opts[:country_code].present? || opts[:postcode].present?
+          fetch(url_for_osm_query(opts))
+        else
+          new(opts.slice(:lat, :lon))
+        end
+      yield place if block_given?
+      place&.save!
+      place
+    end
+
     # Find {Place} by provided opts.
     # @param [Hash] opts the options to find a {Place}.
     # @option opts [String] :postcode
@@ -42,6 +54,7 @@ class Place < ApplicationRecord
     # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
     # @return [Place, nil] {Place} or nil if it doesn't exist yet
     def find_by_opts(opts = {})
+      return if opts[:lat] || opts[:lon]
       scope = all
       opts.each do |key, value|
         scope = if value.present?
@@ -59,7 +72,7 @@ class Place < ApplicationRecord
       result = JSON.parse(HTTParty.get(url).body).first
       return nil if result.nil?
       return find_by(nominatim_id: result['place_id']) if exists?(nominatim_id: result['place_id'])
-      create!(
+      new(
         nominatim_id: result['place_id'],
         licence: result['licence'],
         osm_type: result['osm_type'],

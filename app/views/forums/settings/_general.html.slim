@@ -8,6 +8,7 @@
     =f.input :bio, input_html: { rows: 2, maxlength: 80}
     =f.input :bio_long, input_html: { rows: 4}
     =f.input :locale, as: :react_select, collection: locale_select_items, required: false, include_blank: false, clearable: false, searchable: true
+    =react_component_store 'MapPicker', props: map_picker_props(resource)
   =render partial: 'photos/form',
           locals: {form: f,
                    type: :profile_photo,

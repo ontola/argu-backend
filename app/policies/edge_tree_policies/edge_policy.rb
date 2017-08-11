@@ -8,6 +8,7 @@ class EdgePolicy < EdgeTreePolicy
       attributes.concat %i(id expires_at)
     end
     attributes.append(argu_publication_attributes: %i(id publish_type published_at)) if record.owner.is_publishable?
+    attributes.append(placements_attributes: %i(id lat lon placement_type zoom_level _destroy))
     attributes
   end
 end

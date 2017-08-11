@@ -117,10 +117,8 @@ module Argu
         end
 
         def create_resource(klass, attributes = {}, options = {})
-          if klass != Forum
-            options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?
-            options[:creator] = options[:publisher].profile if options[:creator].nil?
-          end
+          options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?
+          options[:creator] = options[:publisher].profile if options[:creator].nil?
 
           parent_edge = attributes.delete(:parent)
 

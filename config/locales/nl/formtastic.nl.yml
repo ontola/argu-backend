@@ -130,6 +130,10 @@ nl:
         content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       user:
         email: "email@example.com"
+    map:
+      add_marker: "Voeg locatie toe"
+      remove_marker: "Verwijder locatie"
+      required: "Een locatie is verplicht in deze uitdaging"
     actions:
       create: "Opslaan"
       update: "Opslaan"

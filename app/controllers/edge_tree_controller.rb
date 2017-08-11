@@ -58,6 +58,13 @@ class EdgeTreeController < ServiceController
         follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
       )
     end
+    if params[:lat] && params[:lon]
+      resource
+        .edge
+        .placements
+        .custom
+        .new(params.permit(:lat, :lon, :zoom_level))
+    end
     resource.build_happening(created_at: DateTime.current) if resource.is_happenable?
     resource
   end

@@ -232,6 +232,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   # As Admin
   ####################################
   test 'super_admin should get settings and all tabs' do
+    create(:place, address: {country_code: 'nl'})
     sign_in page.owner.profileable
 
     get settings_page_path(page)
@@ -274,6 +275,33 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_page_path(page, tab: :profile)
     assert_equal page, assigns(:page)
     assert_equal 'new_about', assigns(:page).profile.about
+  end
+
+  test 'super_admin should put update page add latlon' do
+    create(:place, address: {country_code: 'nl'})
+    sign_in page.owner.profileable
+
+    assert_differences([['Placement.count', 1], ['Place.count', 1]]) do
+      put page_path(page),
+          params: {
+            id: page.url,
+            page: {
+              edge_attributes: {
+                placements_attributes: {
+                  '0' => {
+                    lat: 2.0,
+                    lon: 2.0,
+                    placement_type: 'custom'
+                  }
+                }
+              }
+            }
+          }
+    end
+
+    page.edge.reload
+    assert_equal 2, page.edge.placements.custom.first.lat
+    assert_equal 2, page.edge.placements.custom.first.lon
   end
 
   test 'super_admin should get new' do

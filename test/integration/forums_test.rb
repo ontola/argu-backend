@@ -6,6 +6,20 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   define_freetown
   define_holland
+  define_cairo(
+    'forum_with_placement',
+    attributes: {
+      edge_attributes: {
+        placements_attributes: {
+          '0' => {
+            lat: 1.0,
+            lon: 1.0,
+            placement_type: 'custom'
+          }
+        }
+      }
+    }
+  )
   define_cologne
   define_helsinki
 
@@ -506,6 +520,80 @@ class ForumsTest < ActionDispatch::IntegrationTest
       }
     end
     assert_redirected_to Forum.last
+  end
+
+  test 'staff should post create forum with latlon' do
+    sign_in staff
+
+    assert_differences([['Forum.count', 1], ['Placement.count', 2], ['Place.count', 1]]) do
+      post portal_forums_path params: {
+        forum: {
+          name: 'New forum',
+          locale: 'en-GB',
+          shortname_attributes: {shortname: 'new_forum'},
+          edge_attributes: {
+            placements_attributes: {
+              '0' => {
+                lat: 1.0,
+                lon: 1.0,
+                placement_type: 'custom'
+              }
+            }
+          },
+          page_id: argu.id
+        }
+      }
+    end
+
+    assert_equal 1, Forum.last.edge.placements.first.lat
+    assert_equal 1, Forum.last.edge.placements.first.lon
+  end
+
+  test 'creator should put update forum change latlon' do
+    sign_in staff
+    forum_with_placement
+
+    assert_differences([['Placement.count', 0], ['Place.count', 1]]) do
+      put forum_path(forum_with_placement),
+          params: {
+            forum: {
+              edge_attributes: {
+                placements_attributes: {
+                  '0' => {
+                    id: forum_with_placement.edge.placements.custom.first.id,
+                    lat: 2.0,
+                    lon: 2.0
+                  }
+                }
+              }
+            }
+          }
+    end
+
+    forum_with_placement.edge.reload
+    assert_equal 2, forum_with_placement.edge.placements.custom.first.lat
+    assert_equal 2, forum_with_placement.edge.placements.custom.first.lon
+  end
+
+  test 'staff should put update motion remove latlon' do
+    sign_in staff
+    forum_with_placement
+
+    assert_differences([['Motion.count', 0], ['Placement.count', -1], ['Place.count', 0]]) do
+      put forum_path(forum_with_placement),
+          params: {
+            forum: {
+              edge_attributes: {
+                placements_attributes: {
+                  '0' => {
+                    id: forum_with_placement.edge.placements.custom.first.id,
+                    _destroy: 'true'
+                  }
+                }
+              }
+            }
+          }
+    end
   end
 
   private

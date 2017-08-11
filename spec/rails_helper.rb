@@ -74,6 +74,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     analytics_collect
+    mapbox_mock
   end
 
   Capybara.register_driver :selenium_firefox do |app|

@@ -5,6 +5,7 @@
     =f.inputs name: t('forums.settings.profile') do
       =f.input :name
       =f.input :about
+      =react_component_store 'MapPicker', props: map_picker_props(@page)
     =render partial: 'photos/form',
             locals: {form: f,
                     relation: :default_profile_photo,
