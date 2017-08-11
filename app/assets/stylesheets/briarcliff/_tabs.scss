@@ -152,4 +152,8 @@ $triangle-size: .5em;
 .tabs-to-top {
   margin-top: -2em;
   margin-bottom: 2em;
+
+  .iframe & {
+    margin-top: 0;
+  }
 }
