@@ -37,6 +37,10 @@
   .formtastic button {
     padding: .6em 2.5em .6em;
   }
+
+  .leaflet-container {
+    height: 400px;
+  }
 }
 
 .modal h1 {
@@ -58,7 +62,7 @@
   @include transition(.2s);
 }
 
-.modal-container:not(.no-close){
+.modal-container:not(.no-close), .react-modal-container:not(.no-close){
   .overlay{
     cursor: pointer;
     &:hover{

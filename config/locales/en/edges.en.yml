@@ -1,6 +1,7 @@
 en:
   edges:
     pinned_at: "Pinned at %{datetime}"
+    show_placement: "Show location"
     form:
       helper:
         pinned: "This item will be shown at the top of the page"

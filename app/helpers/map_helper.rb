@@ -15,6 +15,17 @@ module MapHelper
     )['token']
   end
 
+  def map_marker_props(placement)
+    {
+      lat: placement.lat,
+      lon: placement.lon,
+      icon: {
+        iconUrl: image_url('marker-icon.png'),
+        iconAnchor: [13, 44]
+      }
+    }
+  end
+
   def map_picker_props(resource)
     marker = resource.edge.placements.custom.first
     if marker.nil?
@@ -36,6 +47,19 @@ module MapHelper
       markerType: 'custom',
       required: resource.is_a?(Motion) && resource.parent_model.try(:require_location?),
       resourceType: resource.class_name.singularize
+    }
+  end
+
+  def map_viewer_props(markers)
+    markers = [markers] unless markers.is_a?(Array)
+    center_lat = markers.map { |marker| marker[:lat] }.sum / markers.size.to_f
+    center_lon = markers.map { |marker| marker[:lon] }.sum / markers.size.to_f
+    {
+      accessToken: map_access_token,
+      centerLat: center_lat,
+      centerLon: center_lon,
+      initialZoom: 13,
+      markers: markers
     }
   end
 end
