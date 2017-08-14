@@ -3,7 +3,7 @@ require 'test_helper'
 
 class FeedTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:subject) { create(:motion, :with_votes, parent: freetown.edge) }
+  let(:subject) { create(:motion, :with_votes, parent: freetown.edge, creator: publisher.profile) }
   let(:unpublished_motion) do
     create(:motion, parent: freetown.edge, edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
   end
@@ -100,6 +100,33 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     assert_activity_count(staff: true)
+  end
+
+  test 'staff should get additional activities for motion/feed' do
+    sign_in staff
+
+    get motion_feed_path(subject), params: {format: :js, from_time: 1.hour.from_now, complete: false}
+
+    assert_response 200
+  end
+
+  test 'staff should get additional activities for user/feed' do
+    sign_in staff
+    subject
+
+    get user_feed_path(publisher), params: {format: :js, from_time: 1.hour.from_now, complete: false}
+
+    assert_response 200
+  end
+
+  test 'staff should get additional activities for favorites/feed' do
+    sign_in staff
+    create(:favorite, edge: freetown.edge, user: staff)
+    subject
+
+    get feed_path, params: {format: :js, from_time: 1.hour.from_now, complete: false}
+
+    assert_response 200
   end
 
   private

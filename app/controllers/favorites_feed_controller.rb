@@ -10,4 +10,8 @@ class FavoritesFeedController < FeedController
   def feed
     Activity.feed_for_favorites(current_user.favorites, !current_user.profile.has_role?(:staff))
   end
+
+  def resource_by_id; end
+
+  def parent_resource; end
 end
