@@ -5,10 +5,11 @@ FactoryGirl.define do
     association :placeable, factory: :motion
     association :creator, factory: :profile
     association :publisher, factory: :user
+    placement_type :home
 
     factory :home_placement do
       association :placeable, factory: :user
-      title 'home'
+      placement_type :home
     end
   end
 end

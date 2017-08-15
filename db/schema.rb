@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170804070959) do
+ActiveRecord::Schema.define(version: 20170815092259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -495,8 +495,9 @@ ActiveRecord::Schema.define(version: 20170804070959) do
     t.integer "publisher_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "placement_type", null: false
     t.index ["forum_id"], name: "index_placements_on_forum_id"
-    t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "(((title)::text = 'home'::text) AND ((placeable_type)::text = 'User'::text))"
+    t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "((placement_type = 0) AND ((placeable_type)::text = 'User'::text))"
   end
 
   create_table "places", force: :cascade do |t|

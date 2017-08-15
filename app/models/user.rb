@@ -5,7 +5,7 @@ class User < ApplicationRecord
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,
-          -> { where title: 'home' },
+          -> { home },
           class_name: 'Placement',
           as: :placeable,
           inverse_of: :placeable

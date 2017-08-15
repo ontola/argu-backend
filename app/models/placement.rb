@@ -8,6 +8,8 @@ class Placement < ApplicationRecord
   before_validation :destruct_if_unneeded
   validate :validate_place, unless: :destroyed?
 
+  enum placement_type: {home: 0}
+
   # @return [String] country_code from variable or from associated place
   def country_code
     @country_code || place.try(:country_code)
