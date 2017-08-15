@@ -352,6 +352,22 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal 2, assigns(:forum).media_objects.count
   end
 
+  test 'super_admin should update locale affecting placement' do
+    nominatim_netherlands
+    sign_in create_super_admin(holland)
+    assert_equal holland.edge.reload.places.first.country_code, 'GB'
+    assert_differences([['holland.reload.lock_version', 1], ['Placement.count', 0]]) do
+      put forum_path(holland),
+          params: {
+            forum: {
+              locale: 'nl-NL'
+            }
+          }
+    end
+    assert_equal holland.reload.locale, 'nl-NL'
+    assert_equal holland.edge.reload.places.first.country_code, 'NL'
+  end
+
   test 'super_admin should not show statistics yet' do
     sign_in create_super_admin(holland)
 
@@ -483,6 +499,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
       post portal_forums_path params: {
         forum: {
           name: 'New forum',
+          locale: 'en-GB',
           shortname_attributes: {shortname: 'new_forum'},
           page_id: argu.id
         }

@@ -61,8 +61,8 @@ module Argu
 
       def nominatim_netherlands
         stub_request(:get,
-                     'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl'\
-                     '&extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=')
+                     'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&'\
+                     'extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=&state=&street=&town=&city=')
           .to_return(body: [
             {
               place_id: '144005013',

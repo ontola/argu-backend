@@ -39,6 +39,7 @@ class Forum < ApplicationRecord
   auto_strip_attributes :bio, nullify: false
 
   before_update :transfer_page, if: :page_id_changed?
+  after_save :reset_country
   after_save :reset_public_grant
 
   # @!attribute visibility
@@ -128,6 +129,22 @@ class Forum < ApplicationRecord
   end
 
   private
+
+  def reset_country
+    country_code = locale.split('-').second
+    return if edge.placements.country.first&.country_code == country_code
+    place = Place.find_or_fetch_country(country_code)
+    placement =
+      edge
+        .placements
+        .country
+        .first_or_create do |p|
+        p.creator = creator
+        p.publisher = publisher
+        p.place = place
+      end
+    placement.update!(place: place) unless placement.place == place
+  end
 
   def reset_public_grant
     if public_grant == 'none'

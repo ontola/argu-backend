@@ -8,7 +8,7 @@ class Placement < ApplicationRecord
   before_validation :destruct_if_unneeded
   validate :validate_place, unless: :destroyed?
 
-  enum placement_type: {home: 0}
+  enum placement_type: {home: 0, country: 1}
 
   # @return [String] country_code from variable or from associated place
   def country_code
@@ -45,7 +45,7 @@ class Placement < ApplicationRecord
     if country_code.blank? && postal_code.present?
       errors.add(:country_code, I18n.t('placements.blank_country'))
     else
-      self.place = Place.find_or_fetch_by(postcode: postal_code, country_code: country_code)
+      self.place = Place.find_or_fetch_by(postal_code: postal_code, country_code: country_code)
       errors.add(:postal_code, I18n.t('placements.postal_with_county_not_found')) if place.nil?
     end
   end

@@ -14,15 +14,15 @@ class Place < ApplicationRecord
 
   # Find {Place} by provided opts. If {Place} is not found, try to {#fetch} from OSM
   # @param [Hash] opts the options to find a {Place}.
-  # @option opts [String] :postcode
+  # @option opts [String] :postal_code
   # @option opts [String] :country_code
-  # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
+  # @example Place.find_or_fetch_by(postal_code: "3583GP", country_code: "nl")
   # @raise [StandardError] when a HTTP error occurs
   # @return [Place, nil] {Place} or nil if it couldn't be found in OSM
   def self.find_or_fetch_by(opts = {})
     scope = Place.all
     opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
-    opts[:postcode] = opts[:postcode].upcase.delete(' ') if opts[:postcode].present?
+    opts[:postcode] = opts.delete(:postal_code)&.upcase&.delete(' ')
     opts.each do |key, value|
       scope = if value.present?
                 scope.where('address->>? = ?', key, value)
@@ -32,6 +32,10 @@ class Place < ApplicationRecord
     end
     return scope.first if scope.present?
     Place.fetch url_for_osm_query(opts)
+  end
+
+  def self.find_or_fetch_country(country_code)
+    find_or_fetch_by(country_code: country_code, postal_code: nil, street: nil, city: nil, town: nil, state: nil)
   end
 
   # Fetches Nominatim data from OSM and saves it as a {Place}

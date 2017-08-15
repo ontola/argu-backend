@@ -13,6 +13,10 @@ module Argu
             publisher: page.owner.profileable
           }
         }.merge(attributes)
+        country_code = attributes[:locale]&.split('-')&.second&.downcase || 'gb'
+        unless Place.where("address->>'country_code' = ?", country_code).any?
+          Place.create!(address: {country_code: country_code})
+        end
         forum = create(
           :forum,
           *args,

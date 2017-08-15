@@ -7,6 +7,7 @@ RSpec.feature 'Signup', type: :feature do
   define_freetown('default', attributes: {name: 'default'})
   define_freetown(attributes: {name: 'freetown'})
   let!(:motion) { create(:motion, parent: freetown.edge) }
+  let(:netherlands) { create(:place, address: {'country_code' => 'nl'}) }
 
   scenario 'should register w/ oauth and preserve vote on non-default forum' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
@@ -68,7 +69,7 @@ RSpec.feature 'Signup', type: :feature do
   end
 
   scenario 'should register with country only' do
-    nominatim_netherlands
+    netherlands
 
     visit new_user_session_path
 
