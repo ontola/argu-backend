@@ -58,7 +58,27 @@ module MapHelper
     }
   end
 
-  def map_viewer_props(markers)
+  def map_question_props(resource)
+    popup_link = URI(url_for([:new, resource, :motion]))
+    popup_link.query = 'lat={lat}&lon={lon}&zoom_level={zoom}'
+    map_viewer_props(
+      Placement
+        .custom
+        .joins('INNER JOIN edges ON edges.id = placements.placeable_id AND placements.placeable_type = \'Edge\'')
+        .where(edges: {owner_id: @all_motions.pluck(:id)})
+        .includes(:placeable)
+        .map { |placement| map_marker_props(placement) },
+      popup: {
+        header: {
+          href: popup_link.to_s,
+          fa: 'lightbulb-o',
+          text: t('add_type', type: motion_type)
+        }
+      }
+    )
+  end
+
+  def map_viewer_props(markers, opts = {})
     markers = [markers] unless markers.is_a?(Array)
     center_lat = markers.map { |marker| marker[:lat] }.sum / markers.size.to_f
     center_lon = markers.map { |marker| marker[:lon] }.sum / markers.size.to_f
@@ -68,6 +88,6 @@ module MapHelper
       centerLon: center_lon,
       initialZoom: 13,
       markers: markers
-    }
+    }.merge(opts)
   end
 end

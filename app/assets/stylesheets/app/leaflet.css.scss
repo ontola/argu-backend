@@ -620,4 +620,10 @@
 .leaflet-container {
     height: 200px;
 }
+.large-map {
+  .leaflet-container {
+    height: 400px;
+    max-height: 50vh;
+  }
+}
 

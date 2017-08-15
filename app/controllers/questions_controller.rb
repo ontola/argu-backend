@@ -6,8 +6,9 @@ class QuestionsController < EdgeTreeController
   def show
     respond_to do |format|
       format.html do
+        @all_motions = policy_scope(authenticated_resource.motions)
         @motions =
-          policy_scope(authenticated_resource.motions)
+          @all_motions
             .joins(:edge, :default_vote_event_edge)
             .includes(
               :default_cover_photo, :votes, :published_publications,
