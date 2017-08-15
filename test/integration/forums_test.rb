@@ -560,7 +560,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
               edge_attributes: {
                 placements_attributes: {
                   '0' => {
-                    id: forum_with_placement.edge.placements.custom.first.id,
+                    id: forum_with_placement.edge.custom_placements.first.id,
                     lat: 2.0,
                     lon: 2.0
                   }
@@ -571,8 +571,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
 
     forum_with_placement.edge.reload
-    assert_equal 2, forum_with_placement.edge.placements.custom.first.lat
-    assert_equal 2, forum_with_placement.edge.placements.custom.first.lon
+    assert_equal 2, forum_with_placement.edge.custom_placements.first.lat
+    assert_equal 2, forum_with_placement.edge.custom_placements.first.lon
   end
 
   test 'staff should put update motion remove latlon' do
@@ -586,7 +586,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
               edge_attributes: {
                 placements_attributes: {
                   '0' => {
-                    id: forum_with_placement.edge.placements.custom.first.id,
+                    id: forum_with_placement.edge.custom_placements.first.id,
                     _destroy: 'true'
                   }
                 }

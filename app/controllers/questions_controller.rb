@@ -9,8 +9,10 @@ class QuestionsController < EdgeTreeController
         @motions =
           policy_scope(authenticated_resource.motions)
             .joins(:edge, :default_vote_event_edge)
-            .includes(:default_cover_photo, :edge, :votes, :published_publications,
-                      creator: {default_profile_photo: []})
+            .includes(
+              :default_cover_photo, :votes, :published_publications,
+              edge: :custom_placements, creator: :default_profile_photo
+            )
             .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
             .page(show_params[:page])
         preload_user_votes(@motions.map { |m| m.default_vote_event_edge.id })

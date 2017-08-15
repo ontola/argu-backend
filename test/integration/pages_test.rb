@@ -300,8 +300,8 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
 
     page.edge.reload
-    assert_equal 2, page.edge.placements.custom.first.lat
-    assert_equal 2, page.edge.placements.custom.first.lon
+    assert_equal 2, page.edge.custom_placements.first.lat
+    assert_equal 2, page.edge.custom_placements.first.lon
   end
 
   test 'super_admin should get new' do

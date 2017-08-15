@@ -132,7 +132,7 @@ class Forum < ApplicationRecord
 
   def reset_country
     country_code = locale.split('-').second
-    return if edge.placements.country.first&.country_code == country_code
+    return if edge.country_placement&.country_code == country_code
     place = Place.find_or_fetch_country(country_code)
     placement =
       edge
