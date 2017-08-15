@@ -24,7 +24,19 @@ class Placement < ApplicationRecord
 
   # Destroys placement when no country_code and no postal_code is provided
   def destruct_if_unneeded
-    destroy if country_code.blank? && postal_code.blank?
+    destroy unless location_attributes.present?
+  end
+
+  def location_attributes
+    Hash[
+      %i(country_code postal_code)
+        .map { |attr| [attr, send(attr)] }
+        .select { |_k, v| v.present? }
+    ]
+  end
+
+  def location_attributes_changed?
+    %i(country_code postal_code).any? { |attr| send("#{attr}_changed?") }
   end
 
   # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}
@@ -34,7 +46,7 @@ class Placement < ApplicationRecord
     if country_code.blank? && postal_code.present?
       errors.add(:country_code, I18n.t('placements.blank_country'))
     else
-      self.place = Place.find_or_fetch_by(postal_code: postal_code, country_code: country_code)
+      self.place = Place.find_or_fetch_by(location_attributes) if location_attributes_changed?
       errors.add(:postal_code, I18n.t('placements.postal_with_county_not_found')) if place.nil?
     end
   end
