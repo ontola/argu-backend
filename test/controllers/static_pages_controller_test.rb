@@ -3,7 +3,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   EXCLUDED_METHODS = [:about, :modern, :how_argu_works, :persist_cookie, :new_discussion,
-                      :dismiss_announcement, :context, :user_context, :developers, :home].freeze
+                      :dismiss_announcement, :context, :user_context, :developers, :home, :token].freeze
 
   let(:user) { create(:user) }
   define_freetown
@@ -22,6 +22,11 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 200
     assert_select '.activity-feed', 0
     assert_select '.landing__wrapper', 1
+  end
+
+  test 'guest should get token' do
+    get :token
+    assert_response 200
   end
 
   ####################################

@@ -383,3 +383,17 @@ p.inline-hints {
   display: inline-block;
   margin-right: 5px;
 }
+
+.token-form form{
+  display: flex;
+  .input-wrapper {
+    flex-grow: 1;
+  }
+  .btn {
+    height: 3em;
+  }
+  input[type="text"] {
+    font-family: monospace;
+    font-size: 1.2em;
+  }
+}

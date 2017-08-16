@@ -27,3 +27,7 @@ nl:
       placeholder: "Zoek gebruiker(s) of voer email-adres(sen) in"
     errors:
       no_receivers: "Geef een of meerdere gebruikers of email-adressen op."
+      not_found: "Dit token is niet gevonden"
+      inactive: "Dit token is al gebruikt of is ingetrokken"
+    form:
+      header: "Token invoeren"

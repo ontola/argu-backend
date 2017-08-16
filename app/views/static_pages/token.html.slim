@@ -1,0 +1,12 @@
+.col-1
+  header
+    h1= t('tokens.form.header')
+  .box
+    section.token-form
+      =semantic_form_for('', url: '/tokens', method: :get) do |f|
+        .input-wrapper
+          =f.input :secret, as: :react_formatted, label: false, value: @token, auto_focus: true, className: 'input--full', options: {blocks: [4, 4, 4, 4], delimiter: ' - ', uppercase: true}
+          - if params[:error]
+            .inline-errors.full-width
+              =t("tokens.errors.#{params[:error]}")
+        =submit_tag '>', class: 'btn'

@@ -27,3 +27,7 @@ en:
       placeholder: "Search user(s) or enter email addres(ses)"
     errors:
       no_receivers: "Please enter one or more users or emailaddresses."
+      not_found: "This token is invalid"
+      inactive: "This token is already used or is retracted"
+    form:
+      header: "Please enter a token"

@@ -93,6 +93,11 @@ class StaticPagesController < ApplicationController
     end
   end
 
+  def token
+    @token = params[:token] && params[:token].length <= 24 ? params[:token] : ''
+    render :token
+  end
+
   def user_context
     @_uc ||= UserContext.new(
       current_user,

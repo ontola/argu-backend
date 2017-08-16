@@ -99,6 +99,7 @@ Rails.application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: {subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
+  get '/token', to: 'static_pages#token'
 
   devise_for :users,
              controllers: {
