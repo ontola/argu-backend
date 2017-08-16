@@ -22,6 +22,14 @@ module MapHelper
       icon: {
         iconUrl: image_url('marker-icon.png'),
         iconAnchor: [13, 44]
+      },
+      popup: {
+        header: {
+          class: 'motion-t',
+          href: url_for(placement.placeable.owner),
+          fa: 'lightbulb-o',
+          text: placement.placeable.owner.display_name
+        }
       }
     }
   end

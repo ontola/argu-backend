@@ -1,4 +1,5 @@
 import React from 'react'
+import { LeafletPopup } from './LeafletPopup';
 
 export const LeafletMap = React.createClass({
     propTypes: {
@@ -7,7 +8,9 @@ export const LeafletMap = React.createClass({
         centerLon: React.PropTypes.string,
         markers: React.PropTypes.array,
         onClick: React.PropTypes.func,
+        onPopupClose: React.PropTypes.func,
         onZoom: React.PropTypes.func,
+        popup: React.PropTypes.object,
         zoom: React.PropTypes.number
     },
 
@@ -27,8 +30,20 @@ export const LeafletMap = React.createClass({
             return <div className="leaflet-placeholder"/>;
         }
         const markers = this.props.markers.map((marker, index) => {
-            return <this.Marker key={`marker-${index}`} icon={new this.Icon(marker.icon)} position={[marker.lat, marker.lon]}/>;
+            let markerPopup;
+            if (marker.popup) {
+                markerPopup = <LeafletPopup {...marker.popup}/>;
+            }
+            return (
+                <this.Marker key={`marker-${index}`} icon={new this.Icon(marker.icon)} position={[marker.lat, marker.lon]}>
+                    {markerPopup}
+                </this.Marker>
+            );
         });
+        let popup;
+        if (this.props.popup) {
+            popup = <LeafletPopup onClose={this.props.onPopupClose} {...this.props.popup}/>;
+        }
         return (
             <this.Map center={[this.props.centerLat, this.props.centerLon]} onZoom={this.props.onZoom} onClick={this.props.onClick} zoom={this.props.zoom}>
                 <this.TileLayer
@@ -37,6 +52,7 @@ export const LeafletMap = React.createClass({
                     id="mapbox.streets"
                     url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"/>
                 {markers}
+                {popup}
             </this.Map>
         );
     }
