@@ -96,6 +96,8 @@ gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails', '~> 4.7.0.2'
 gem 'babel-transpiler'
 gem 'redcarpet', '~> 3.3.4'
+gem 'libv8', '5.9.211.38.1'
+gem 'mini_racer', '~> 0.1.12'
 
 ################## User management ########################
 gem 'devise', '~> 4.3.0'
