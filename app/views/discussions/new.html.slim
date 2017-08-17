@@ -2,84 +2,86 @@
 .col-2.col-2--small
   header
     h2= t('discussions.new.what_kind')
-  .col-2-1
-    .box
-      section
-        p
-          span= t('questions.call_to_action.body') + ' '
-          =link_to polymorphic_url([:new, parent_resource, :question])
-            b.question-t= t('questions.call_to_action.action')
-    =link_to polymorphic_path([:new, parent_resource, :question])
-      .box.question
-        .box-image--container
-          .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
-        section.section-info
-          .details
-            .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
-              span[class="fa fa-#{question_icon}"]
-              span.icon-left= question_type
-            .details-part[data-title=t('motions.tooltips.count', count: 2)]
-              span.fa.fa-lightbulb-o
-              span.icon-left 2
+  -if policy(parent_resource).create_child?(:questions)
+    .col-2-1
+      .box
         section
-          h3.question-t= t('discussions.new.question_title')
-          ul.box-list.box-list--icons
-            li
-              h3.motion-t
-                span.fa.fa-lightbulb-o
-                span.icon-left= t('discussions.new.question_motion1')
-            li
-              h3.motion-t
-                span.fa.fa-lightbulb-o
-                span.icon-left= t('discussions.new.question_motion2')
-    .btn--question.btn--huge[collection_model="Question"]
+          p
+            span= t('questions.call_to_action.body') + ' '
+            =link_to polymorphic_url([:new, parent_resource, :question])
+              b.question-t= t('questions.call_to_action.action')
       =link_to polymorphic_path([:new, parent_resource, :question])
-        h3
-          span[class="fa fa-#{question_icon}"]
-          span.icon-left= t('questions.type_new')
-  .col-2-1
-    .box
-      section
-        p
-          span= t('motions.call_to_action.body') + ' '
-          =link_to polymorphic_url([:new, parent_resource, :motion])
-            b.motion-t= t('motions.call_to_action.action')
-    =link_to polymorphic_path([:new, parent_resource, :motion])
-      .box.motion
-        .box-image--container
-          .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-        section.section-info
-          .details
-            .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
-              span[class="fa fa-#{motion_icon}"]
-              span.icon-left= motion_type
-            .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
-              span.fa.fa-thumbs-up
-              span.icon-left 13
-            .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
-              span.fa.fa-thumbs-down
-              span.icon-left 5
+        .box.question
+          .box-image--container
+            .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
+          section.section-info
+            .details
+              .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
+                span[class="fa fa-#{question_icon}"]
+                span.icon-left= question_type
+              .details-part[data-title=t('motions.tooltips.count', count: 2)]
+                span.fa.fa-lightbulb-o
+                span.icon-left 2
+          section
+            h3.question-t= t('discussions.new.question_title')
+            ul.box-list.box-list--icons
+              li
+                h3.motion-t
+                  span.fa.fa-lightbulb-o
+                  span.icon-left= t('discussions.new.question_motion1')
+              li
+                h3.motion-t
+                  span.fa.fa-lightbulb-o
+                  span.icon-left= t('discussions.new.question_motion2')
+      .btn--question.btn--huge[collection_model="Question"]
+        =link_to polymorphic_path([:new, parent_resource, :question])
+          h3
+            span[class="fa fa-#{question_icon}"]
+            span.icon-left= t('questions.type_new')
+  -if policy(parent_resource).create_child?(:motions)
+    .col-2-1
+      .box
         section
-          h3.motion-t= t('discussions.new.motion_title')
-          ul.box-list.box-list--arguments.box-list--icons
-            li
-              h3[class="pro-t tooltip--wider"]
-                span.fa.fa-plus
-                span.icon-left= t('discussions.new.motion_argument1')
-            li
-              h3[class="pro-t tooltip--wider"]
-                span.fa.fa-plus
-                span.icon-left= t('discussions.new.motion_argument2')
-          ul.box-list.box-list--arguments.box-list--icons
-            li
-              h3[class="con-t tooltip--wider"]
-                span.fa.fa-minus
-                span.icon-left= t('discussions.new.motion_argument3')
-    .btn--motion.btn--huge[collection_model="Motion"]
+          p
+            span= t('motions.call_to_action.body') + ' '
+            =link_to polymorphic_url([:new, parent_resource, :motion])
+              b.motion-t= t('motions.call_to_action.action')
       =link_to polymorphic_path([:new, parent_resource, :motion])
-        h3
-          span[class="fa fa-#{motion_icon}"]
-          span.icon-left= t('motions.type_new')
+        .box.motion
+          .box-image--container
+            .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
+          section.section-info
+            .details
+              .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
+                span[class="fa fa-#{motion_icon}"]
+                span.icon-left= motion_type
+              .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
+                span.fa.fa-thumbs-up
+                span.icon-left 13
+              .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
+                span.fa.fa-thumbs-down
+                span.icon-left 5
+          section
+            h3.motion-t= t('discussions.new.motion_title')
+            ul.box-list.box-list--arguments.box-list--icons
+              li
+                h3[class="pro-t tooltip--wider"]
+                  span.fa.fa-plus
+                  span.icon-left= t('discussions.new.motion_argument1')
+              li
+                h3[class="pro-t tooltip--wider"]
+                  span.fa.fa-plus
+                  span.icon-left= t('discussions.new.motion_argument2')
+            ul.box-list.box-list--arguments.box-list--icons
+              li
+                h3[class="con-t tooltip--wider"]
+                  span.fa.fa-minus
+                  span.icon-left= t('discussions.new.motion_argument3')
+      .btn--motion.btn--huge[collection_model="Motion"]
+        =link_to polymorphic_path([:new, parent_resource, :motion])
+          h3
+            span[class="fa fa-#{motion_icon}"]
+            span.icon-left= t('motions.type_new')
 -if parent_resource.respond_to?(:projects) && policy(parent_resource).create_child?(:projects)
   .col-1.col-1--small
     header
