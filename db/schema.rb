@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815165135) do
+ActiveRecord::Schema.define(version: 20170818065356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,20 +289,6 @@ ActiveRecord::Schema.define(version: 20170815165135) do
     t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps
   end
 
-  create_table "group_responses", id: :serial, force: :cascade do |t|
-    t.integer "forum_id"
-    t.integer "group_id"
-    t.integer "creator_id", null: false
-    t.integer "motion_id"
-    t.text "text", default: ""
-    t.integer "publisher_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "side", default: 0
-    t.index ["group_id", "forum_id"], name: "index_group_responses_on_group_id_and_forum_id"
-    t.index ["group_id", "motion_id"], name: "index_group_responses_on_group_id_and_motion_id"
-  end
-
   create_table "groups", id: :serial, force: :cascade do |t|
     t.string "name", default: ""
     t.datetime "created_at"
@@ -365,15 +351,6 @@ ActiveRecord::Schema.define(version: 20170815165135) do
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type"
     t.index ["content_attributes"], name: "index_media_objects_on_content_attributes", using: :gin
     t.index ["forum_id"], name: "index_media_objects_on_forum_id"
-  end
-
-  create_table "memberships", id: :serial, force: :cascade do |t|
-    t.integer "profile_id", null: false
-    t.integer "forum_id", null: false
-    t.integer "role", default: 0, null: false
-    t.index ["forum_id", "role"], name: "index_memberships_on_forum_id_and_role"
-    t.index ["forum_id"], name: "index_memberships_on_forum_id"
-    t.index ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true
   end
 
   create_table "motions", id: :serial, force: :cascade do |t|
@@ -780,7 +757,6 @@ ActiveRecord::Schema.define(version: 20170815165135) do
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "profiles"
   add_foreign_key "group_memberships", "profiles", column: "member_id"
-  add_foreign_key "group_responses", "users", column: "publisher_id"
   add_foreign_key "groups", "pages"
   add_foreign_key "identities", "users"
   add_foreign_key "linked_records", "pages"
