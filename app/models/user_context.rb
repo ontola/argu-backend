@@ -2,10 +2,10 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope, :rules_in_scope, :tree_root
+  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :tree_root
 
   class Node
-    attr_accessor :id, :expired, :trashed, :unpublished, :children, :user_context, :grants_in_scope, :rules_in_scope
+    attr_accessor :id, :expired, :trashed, :unpublished, :children, :user_context
     alias expired? expired
     alias trashed? trashed
     alias unpublished? unpublished
@@ -29,8 +29,6 @@ class UserContext
       n.trashed = parent&.trashed || edge.is_trashed?
       n.unpublished = parent&.unpublished || !edge.is_published
       n.user_context = user_context
-      n.grants_in_scope = user_context.grants_in_scope.select { |grant| grant.edge.path == edge.path }
-      n.rules_in_scope = user_context.rules_in_scope.select { |rule| rule.branch_id == n.id }
       user_context.cached_nodes[n.id] = n
       n
     end
@@ -40,10 +38,7 @@ class UserContext
     # @return [Edge] The child that was added
     def add_child(edge)
       raise 'Inconsistent node' unless edge.parent_id == id
-      c = Node.build(edge, self, user_context)
-      c.grants_in_scope.concat(grants_in_scope)
-      c.rules_in_scope.concat(rules_in_scope)
-      c
+      Node.build(edge, self, user_context)
     end
   end
 
@@ -82,35 +77,8 @@ class UserContext
     find_or_cache_node(node).expired?
   end
 
-  # Find all groups with a grant of the specified role on this record or any of its ancestors
-  # @param [Edge] record The node to check
-  # @param [String] role The role to check
-  # @return [Array<Integer>] A list of group_ids with a grant of the specified role
-  def granted_group_ids(record, role)
-    granted_group_ids = find_or_cache_node(record)
-                          .grants_in_scope
-                          .select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
-                          .map(&:group_id)
-    user.profile.group_ids & granted_group_ids
-  end
-
   def has_tree?
     @tree_root.present?
-  end
-
-  # Find all rules active for the action on the record on the edge
-  # @param [Edge] edge The position in the edge tree
-  # @param [ActiveRecord] record The record to find rules for
-  # @param [String] action The action to find rules for
-  # @return [Array<Rule>]
-  def rules(edge, record, action)
-    model_type = record.class.to_s
-    model_id = record.try(:id)
-    find_or_cache_node(edge.persisted_edge)
-      .rules_in_scope
-      .select do |rule|
-      rule.action == action.to_s && rule.model_type == model_type && [model_id, nil].include?(rule.model_id)
-    end
   end
 
   # Checks whether the edge or any of its ancestors is trashed
@@ -145,17 +113,6 @@ class UserContext
     return unless tree.present?
     @cached_nodes = {}
     root = tree.find { |e| e.parent_id.blank? }
-    @grants_in_scope =
-      Grant
-        .joins(:edge)
-        .includes(:edge)
-        .where("edges.path ~ '?.*'", root.id)
-        .to_a
-    @rules_in_scope =
-      Rule
-        .joins(:branch)
-        .where("edges.path ~ '?.*'", root.id)
-        .to_a
     Node.build_from_tree(tree, root, self)
   end
 

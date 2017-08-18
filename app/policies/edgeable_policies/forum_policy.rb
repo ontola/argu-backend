@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ForumPolicy < EdgeTreePolicy
+class ForumPolicy < EdgeablePolicy
   class Scope < Scope
     def resolve
       scope
@@ -21,17 +21,13 @@ class ForumPolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general) if is_super_admin? || staff?
+    tabs.concat %i(general)
     tabs.concat %i(shortnames banners) if staff?
     tabs
   end
 
   def destroy?
-    rule is_super_admin?, super
-  end
-
-  def follow?
-    rule is_member?, is_manager?, staff?
+    update?
   end
 
   def list?
@@ -49,9 +45,5 @@ class ForumPolicy < EdgeTreePolicy
 
   def statistics?
     staff?
-  end
-
-  def update?
-    rule is_super_admin?, super
   end
 end

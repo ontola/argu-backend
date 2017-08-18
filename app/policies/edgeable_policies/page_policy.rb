@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PagePolicy < EdgeTreePolicy
+class PagePolicy < EdgeablePolicy
   class Scope < Scope
     def resolve
       t = Page.arel_table
@@ -11,21 +11,6 @@ class PagePolicy < EdgeTreePolicy
     end
   end
 
-  module Roles
-    def is_creator?
-      super if persisted_edge
-    end
-
-    def is_manager?
-      super if persisted_edge
-    end
-
-    def is_super_admin?
-      super if persisted_edge
-    end
-  end
-  include Roles
-
   def permitted_attributes
     attributes = super
     if create?
@@ -36,7 +21,7 @@ class PagePolicy < EdgeTreePolicy
       attributes.append :visibility
       attributes.append(shortname_attributes: %i(shortname))
     end
-    attributes.append :visibility if is_super_admin? || staff?
+    attributes.append :visibility
     attributes.concat %i(page_id confirmation_string) if change_owner?
     attributes.append(profile_attributes: ProfilePolicy
                                             .new(context,
@@ -51,29 +36,25 @@ class PagePolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(profile forums groups advanced) if is_super_admin? || staff?
+    tabs.concat %i(profile forums groups advanced)
     tabs.concat %i(sources) if staff?
     tabs
   end
 
   def show?
-    rule is_open?, is_group_member?, is_manager?, super
+    is_open? || is_group_member? || super
   end
 
   def create?
-    rule pages_left?, super
+    pages_left? || staff?
   end
 
   def destroy?
-    rule is_super_admin?, staff?
-  end
-
-  def update?
-    rule is_manager?, is_super_admin?, super
+    update? || staff?
   end
 
   def list?
-    rule record.closed?, show?
+    record.closed? || show?
   end
 
   def pages_left?

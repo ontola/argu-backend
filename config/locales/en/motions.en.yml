@@ -108,9 +108,6 @@ en:
           <p>Do you want to describe a problem which requires a solution? Try submitting a <b>%{question}.</b></p>
         </li>
       </ul>"
-  pundit:
-    motion_policy:
-      create_without_question?: "You can post an idea here without a challenge."
   activerecord:
     errors:
       models:

@@ -14,6 +14,10 @@ class GroupPolicy < EdgeTreePolicy
     record.parent_edge
   end
 
+  def edgeable_record
+    record.parent_model
+  end
+
   def permitted_attributes
     attributes = super
     attributes.concat %i(name name_singular) if create?

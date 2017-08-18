@@ -191,7 +191,7 @@ class User < ApplicationRecord
   end
 
   def forum_management?
-    page_management? || profile.grants.manager.presence
+    profile.grants.where(model_type: %w(Page Forum), action: 'update')
   end
 
   def page_management?

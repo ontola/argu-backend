@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class QuestionPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class QuestionPolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
 
   def permitted_attributes
     attributes = super
@@ -19,17 +19,6 @@ class QuestionPolicy < EdgeTreePolicy
   end
 
   def convert?
-    rule move?
-  end
-
-  def create?
-    assert_publish_type
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    rule is_member?, is_manager?, super
-  end
-
-  def update?
-    rule (is_member? && is_creator?), is_manager?, super
+    move?
   end
 end

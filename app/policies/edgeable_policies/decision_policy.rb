@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class DecisionPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class DecisionPolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
   def decision_is_assigned?
@@ -21,9 +21,9 @@ class DecisionPolicy < EdgeTreePolicy
     assert_publish_type
     return nil if record.edge.parent.decisions.unpublished.present?
     if record.forwarded?
-      rule decision_is_assigned?, is_manager?, is_super_admin?, super
+      decision_is_assigned? || grant_available?(:manage)
     else
-      rule decision_is_assigned?
+      decision_is_assigned?
     end
   end
 
@@ -32,7 +32,7 @@ class DecisionPolicy < EdgeTreePolicy
   end
 
   def update?
-    rule decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super
+    decision_is_assigned? || is_creator? || grant_available?(:manage) || staff?
   end
 
   def feed?

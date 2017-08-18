@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class SourcePolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class SourcePolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
 
   def permitted_attributes
     attributes = super
@@ -15,16 +15,7 @@ class SourcePolicy < EdgeTreePolicy
     tabs
   end
 
-  # #####Actions######
   def settings?
     update?
-  end
-
-  def show?
-    rule is_member?, is_manager?, super
-  end
-
-  def update?
-    rule is_super_admin?, super
   end
 end

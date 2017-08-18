@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-class MotionPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class MotionPolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
 
   def permitted_attributes
     attributes = super
     attributes.concat %i(title content votes tag_list question_id) if create?
     attributes.concat %i(invert_arguments tag_id forum_id f_convert) if staff?
-    attributes.concat %i(pinned) if is_manager? || staff?
+    attributes.concat %i(pinned) if grant_available?(:manage) || staff?
     attributes.append :id if record.is_a?(Motion) && edit?
     attributes.append(question_answers_attributes: %i(id question_id motion_id)) if create?
     append_default_photo_params(attributes)
@@ -20,26 +20,10 @@ class MotionPolicy < EdgeTreePolicy
   end
 
   def convert?
-    rule is_manager?, is_super_admin?, staff?
-  end
-
-  def create?
-    assert_publish_type
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    return create_without_question? unless record.parent_model.is_a?(Question)
-    rule is_member?, is_manager?, is_super_admin?, super
-  end
-
-  def create_without_question?
-    rule is_member?, is_manager?, is_super_admin?, staff?
-  end
-
-  def update?
-    rule is_creator?, is_manager?, is_super_admin?, super
+    grant_available?(:manage)
   end
 
   def statistics?
-    rule is_manager?, is_super_admin?, staff?
+    grant_available?(:manage)
   end
 end
