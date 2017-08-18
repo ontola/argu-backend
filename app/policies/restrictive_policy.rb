@@ -5,8 +5,6 @@ class RestrictivePolicy
   include TuplesHelper
   prepend ExceptionToTheRule
 
-  attr_reader :context, :record
-
   class Scope
     attr_reader :context, :user, :scope
 
@@ -51,26 +49,14 @@ class RestrictivePolicy
   end
   include Roles
 
+  delegate :user, to: :context
+  delegate :actor, to: :context
+  attr_reader :context, :record
+
   def initialize(context, record)
     @context = context
     @record = record
   end
-
-  def user_context
-    @context
-  end
-
-  def cache_action(action, val)
-    user_context.cache_key(record.identifier, action, val)
-  end
-
-  def check_action(action)
-    return nil if record.try(:id).blank?
-    user_context.check_key(record.identifier, action)
-  end
-
-  delegate :user, to: :context
-  delegate :actor, to: :context
 
   def permitted_attributes
     attributes = [:lock_version]
@@ -89,12 +75,12 @@ class RestrictivePolicy
     attributes
   end
 
-  def assert!(assertion, query = nil)
-    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
-  end
-
   def create?
     staff?
+  end
+
+  def new?
+    create?
   end
 
   def destroy?
@@ -105,20 +91,8 @@ class RestrictivePolicy
     destroy?
   end
 
-  def edit?
-    update?
-  end
-
   def feed?
     rule staff?
-  end
-
-  def new?
-    create?
-  end
-
-  def new_record?
-    record.is_a?(Class) || record.new_record?
   end
 
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
@@ -133,6 +107,10 @@ class RestrictivePolicy
 
   def update?
     staff?
+  end
+
+  def edit?
+    update?
   end
 
   # Can the current user change the item shortname?
@@ -154,6 +132,10 @@ class RestrictivePolicy
 
   private
 
+  def assert!(assertion, query = nil)
+    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
+  end
+
   def append_default_photo_params(attributes)
     attributes.append(
       default_cover_photo_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
@@ -169,7 +151,24 @@ class RestrictivePolicy
     )
   end
 
+  def cache_action(action, val)
+    user_context.cache_key(record.identifier, action, val)
+  end
+
+  def check_action(action)
+    return nil if record.try(:id).blank?
+    user_context.check_key(record.identifier, action)
+  end
+
   def default_tab
     'general'
+  end
+
+  def new_record?
+    record.is_a?(Class) || record.new_record?
+  end
+
+  def user_context
+    @context
   end
 end

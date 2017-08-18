@@ -89,6 +89,11 @@ class EdgeTreePolicy < RestrictivePolicy
   delegate :persisted_edge, to: :edge
   attr_accessor :outside_tree
 
+  def initialize(context, record)
+    super
+    raise('No edge avaliable in policy') unless edge
+  end
+
   def has_expired_ancestors?
     context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
   end
@@ -105,25 +110,6 @@ class EdgeTreePolicy < RestrictivePolicy
     end
   end
 
-  def initialize(context, record)
-    super
-    raise('No edge avaliable in policy') unless edge
-  end
-
-  def cache_action(action, val)
-    user_context.cache_key(edge.id, action, val)
-  end
-
-  def check_action(action)
-    user_context.check_key(edge.id, action)
-  end
-
-  def assert_publish_type
-    return if record.edge.argu_publication&.publish_type.nil?
-    assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
-            "#{record.edge.argu_publication.publish_type}?"
-  end
-
   def permitted_attributes
     attributes = super
     if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
@@ -136,10 +122,6 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def permitted_publish_types
     Publication.publish_types
-  end
-
-  def change_owner?
-    rule staff?
   end
 
   def convert?
@@ -190,18 +172,6 @@ class EdgeTreePolicy < RestrictivePolicy
     move?
   end
 
-  def show_unpublished?
-    rule is_creator?, is_manager?, is_super_admin?, staff?, service?
-  end
-
-  def create_expired?
-    nil
-  end
-
-  def create_trashed?
-    false
-  end
-
   def trash?
     rule is_manager?, is_super_admin?, staff?
   end
@@ -216,6 +186,24 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   private
+
+  def assert_publish_type
+    return if record.edge.argu_publication&.publish_type.nil?
+    assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
+            "#{record.edge.argu_publication.publish_type}?"
+  end
+
+  def cache_action(action, val)
+    user_context.cache_key(edge.id, action, val)
+  end
+
+  def change_owner?
+    staff?
+  end
+
+  def check_action(action)
+    user_context.check_key(edge.id, action)
+  end
 
   # Initialises a child of the type {raw_klass} with the given {attrs} and checks
   #   its policy for `{method}?`
@@ -244,5 +232,17 @@ class EdgeTreePolicy < RestrictivePolicy
       end
     cache_action(cache_key, r) if attrs.empty?
     r
+  end
+
+  def create_expired?
+    nil
+  end
+
+  def create_trashed?
+    false
+  end
+
+  def show_unpublished?
+    rule is_creator?, is_manager?, is_super_admin?, staff?, service?
   end
 end
