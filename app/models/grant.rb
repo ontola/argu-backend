@@ -14,10 +14,10 @@ class Grant < ApplicationRecord
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :custom, -> { where('group_id != ?', Group::PUBLIC_ID) }
 
-  validates :group, :role, presence: true
-  validates :edge, presence: true, uniqueness: {scope: :group}
+  validates :group, :edge, presence: true
 
-  enum role: {spectator: 0, member: 1, manager: 2, super_admin: 10}
+  deprecate :role
+  enum role: {spectate: 0, participate: 1, moderate: 2, administrate: 10}
   parentable :edge
 
   def display_name

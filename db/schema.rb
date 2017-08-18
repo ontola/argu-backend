@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818065356) do
+ActiveRecord::Schema.define(version: 20170818071233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170818065356) do
   enable_extension "hstore"
   enable_extension "ltree"
   enable_extension "uuid-ossp"
+  enable_extension "intarray"
 
   create_table "access_tokens", id: :serial, force: :cascade do |t|
     t.integer "item_id"
@@ -270,10 +271,13 @@ ActiveRecord::Schema.define(version: 20170818065356) do
   create_table "grants", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "edge_id", null: false
-    t.integer "role", default: 0, null: false
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
+    t.string "model_type"
+    t.string "parent_type"
+    t.string "action"
+    t.boolean "permit"
   end
 
   create_table "group_memberships", id: :serial, force: :cascade do |t|
