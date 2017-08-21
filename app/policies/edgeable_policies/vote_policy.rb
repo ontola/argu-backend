@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class VotePolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope
+class VotePolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope
     def resolve
       if staff?
         scope

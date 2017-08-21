@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class PhasePolicy < EdgeTreePolicy
+class PhasePolicy < EdgeablePolicy
   class Scope < RestrictivePolicy::Scope; end
 
   def permitted_attributes(force = false)

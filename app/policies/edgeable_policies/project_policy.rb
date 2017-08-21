@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class ProjectPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class ProjectPolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
   include ApplicationHelper
 
   def permitted_attributes

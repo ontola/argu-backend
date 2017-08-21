@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class DecisionPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class DecisionPolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
 
   # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
   def decision_is_assigned?

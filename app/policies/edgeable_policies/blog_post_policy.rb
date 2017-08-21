@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class BlogPostPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class BlogPostPolicy < EdgeablePolicy
+  class Scope < EdgeablePolicy::Scope; end
 
   def permitted_attributes
     attributes = super

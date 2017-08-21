@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class ForumPolicy < EdgeTreePolicy
+class ForumPolicy < EdgeablePolicy
   class Scope < Scope
     def resolve
       scope
