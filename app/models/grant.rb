@@ -5,6 +5,7 @@ class Grant < ApplicationRecord
   # The Edge this Grant is providing rules for
   belongs_to :edge
   belongs_to :group, inverse_of: :grants
+  belongs_to :grant_set
 
   scope :forum_manager, lambda {
     where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Forum'})
@@ -14,10 +15,11 @@ class Grant < ApplicationRecord
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :custom, -> { where('group_id != ?', Group::PUBLIC_ID) }
 
-  validates :group, :role, presence: true
+  validates :group, presence: true
   validates :edge, presence: true, uniqueness: {scope: :group}
 
-  enum role: {spectator: 0, member: 1, manager: 2, super_admin: 10}
+  deprecate :role
+  enum role: {spectate: 0, participate: 1, moderate: 2, administrate: 10}
   parentable :edge
 
   def display_name

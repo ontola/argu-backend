@@ -9,6 +9,7 @@ class CreateDecision < PublishedCreateService
   private
 
   def after_save
+    super
     notify
   end
 

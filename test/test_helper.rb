@@ -68,6 +68,12 @@ module TestHelper
       redirect_uri: 'http://example.com/'
     )
   end
+
+  if GrantSet.count.zero?
+    load File.expand_path('../../lib/tasks/seed_single.rake', __FILE__)
+    ENV['SEED'] = 'grant_sets'
+    Rake::Task['db:seed:single'].invoke
+  end
 end
 
 module ActiveSupport

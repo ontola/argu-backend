@@ -1,0 +1,307 @@
+page:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+forum:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  attributes:
+    spectate:
+    moderate:
+      =few
+      -ewfew
+      few=ewf
+source:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+question:
+  create:
+    spectate: false
+    participate: false
+    initiate: true
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+motion:
+  create:
+    spectate: false
+    participate:
+      question: true
+    initiate: true
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true  
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+linked_record:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+argument:
+  create:
+    spectate: false
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true  
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+comment:
+  create:
+    spectate: false
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+vote_event:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+vote:
+  create:
+    spectate: false
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+blog_post:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+decision:
+  create:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false
+  show:
+    spectate: true
+    participate: true
+    initiate: true
+    moderate: true
+    administrate: true
+  update:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: true
+    administrate: true
+  trash:
+    spectate: false
+    participate: false
+    initiate: false
+    moderate: false
+    administrate: false

@@ -55,7 +55,7 @@ class ApplicationService
   # the transaction but after the model was saved.
   # @note This doesn't work when {commit} is overridden.
   def after_save
-    # Stub
+    sync_grants
   end
 
   def argu_publication_attributes
@@ -129,6 +129,41 @@ class ApplicationService
     end
   end
 
+  def sync_grants
+    @grants_to_sync&.each do |key, value|
+      granted_group_ids = value.select(&:present?).map(&:to_i)
+      resource_type = key.chomp('_group_ids')
+      current_granted_group_ids = resource.send(key)
+      (current_granted_group_ids - granted_group_ids).each do |group_id|
+        remove_grant_for("#{resource_type}_create", group_id)
+        create_grant_for("#{resource_type}_no_create", group_id)
+      end
+      (granted_group_ids - current_granted_group_ids).each do |group_id|
+        remove_grant_for("#{resource_type}_no_create", group_id)
+        create_grant_for("#{resource_type}_create", group_id)
+      end
+    end
+  end
+
+  def create_grant_for(action, group_id)
+    Grant.create!(
+      edge: resource.edge,
+      group_id: group_id,
+      grant_set: GrantSet.find_or_create_by(title: action) do |grant_set|
+        grant_set.permitted_actions << PermittedAction.find_by(title: action)
+      end
+    )
+  end
+
+  def remove_grant_for(action, group_id)
+    resource
+      .edge
+      .grants
+      .joins(:grant_set)
+      .where(group_id: group_id, grant_sets: {title: action})
+      .destroy_all
+  end
+
   # Method to set attributes on a nested model.
   # @note This should be used for attributes that are consistent across all the associations.
   # @see {set_nested_associations}
@@ -138,6 +173,9 @@ class ApplicationService
 
   def prepare_attributes
     return unless resource.is_edgeable?
+    @grants_to_sync = @attributes.select { |k, _v| k.to_s.include?('_group_ids') }
+    @attributes.delete(*@grants_to_sync.keys) if @grants_to_sync.present?
+
     prepare_edge_attributes
     prepare_argu_publication_attributes
     prepare_placement_attributes

@@ -45,6 +45,10 @@ class Question < ApplicationRecord
 
   attr_accessor :include_motions
 
+  def motion_group_ids
+    edge.granted_group_ids('Motion', 'create')
+  end
+
   # Might not be a good idea
   def creator
     super || Profile.community

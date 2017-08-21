@@ -16,42 +16,17 @@ class VotePolicy < EdgeablePolicy
     end
   end
 
-  module Roles
-    def is_group_member?
-      group_grant if is_member? && user.profile.group_ids.include?(record.parent_model.group_id)
-    end
-  end
-  include Roles
-
   def show?
     if record.creator.are_votes_public
-      Pundit.policy(context, record.parent_model).show?
+      super
     else
-      rule is_creator?, staff?, service?
+      is_creator? || has_grant_set?('staff') || service?
     end
   end
 
-  def permitted_attributes
-    attributes = super
-    attributes.concat [:explanation, argument_ids: []]
-    attributes
-  end
+  private
 
-  def create?
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    if record.parent_model.is_a?(VoteEvent)
-      rule is_group_member?
-    else
-      rule is_member?, is_manager?, is_super_admin?, super
-    end
-  end
-
-  def update?
-    rule is_creator?, super
-  end
-
-  def destroy?
-    rule is_creator?, super
+  def is_creator?
+    record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
   end
 end

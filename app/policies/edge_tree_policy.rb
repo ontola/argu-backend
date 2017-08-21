@@ -20,112 +20,21 @@ class EdgeTreePolicy < RestrictivePolicy
     end
   end
 
-  module Roles
-    def open
-      1
-    end
-
-    def spectator
-      2
-    end
-
-    def member
-      3
-    end
-
-    # Not an actual role, but reserved nevertheless
-    def group_grant
-      5
-    end
-
-    def manager
-      7
-    end
-
-    def owner
-      8
-    end
-
-    def super_admin
-      10
-    end
-
-    def is_role?(role)
-      return if persisted_edge.nil?
-      if context.within_tree?(persisted_edge, outside_tree)
-        send(role) if context.granted_group_ids(persisted_edge, role.to_s).any?
-      elsif (user.profile.group_ids & persisted_edge.granted_group_ids(role.to_s)).any?
-        send(role)
-      end
-    end
-
-    def is_spectator?
-      is_role?(:spectator)
-    end
-
-    def is_member?
-      is_role?(:member)
-    end
-
-    def is_creator?
-      return if record.creator.blank?
-      creator if record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
-    end
-
-    def is_manager?
-      is_role?(:manager) || is_role?(:super_admin)
-    end
-
-    def is_super_admin?
-      is_role?(:super_admin)
-    end
-
-    def is_manager_up?
-      is_manager? || is_super_admin? || staff?
-    end
-  end
-  include Roles
-  delegate :edge, to: :record
-  delegate :persisted_edge, to: :edge
-  attr_accessor :outside_tree
+  delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?, to: :edgeable_policy
 
   def initialize(context, record)
     super
-    raise('No edge avaliable in policy') unless edge
-  end
-
-  def has_expired_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
-  end
-
-  def has_trashed_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.trashed?(persisted_edge) : edge.has_trashed_ancestors?
-  end
-
-  def has_unpublished_ancestors?
-    if context.within_tree?(persisted_edge, outside_tree)
-      context.unpublished?(persisted_edge)
-    else
-      edge.has_unpublished_ancestors?
-    end
+    raise('No edgeable record avaliable in policy') unless edgeable_record
   end
 
   def permitted_attributes
     attributes = super
-    if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
-        (!record.is_published? || record.argu_publication&.reactions?)
+    #if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
+    #    (!record.is_published? || record.argu_publication&.reactions?)
       attributes.append(:mark_as_important)
-    end
+    #end
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
     attributes
-  end
-
-  def permitted_publish_types
-    Publication.publish_types
-  end
-
-  def convert?
-    false
   end
 
   # Checks whether creating a child of a given class is allowed
@@ -137,15 +46,6 @@ class EdgeTreePolicy < RestrictivePolicy
     child_operation(:create?, raw_klass, attrs)
   end
 
-  def destroy?
-    return super if edge.children.any?
-    rule is_creator?, staff?
-  end
-
-  def follow?
-    rule is_member?, is_super_admin?, staff?
-  end
-
   # Checks whether indexing children of a has_many relation is allowed
   # Initialises a child with the given attributes and checks its policy for show?
   # @param raw_klass [Symbol] the class of the child
@@ -153,36 +53,6 @@ class EdgeTreePolicy < RestrictivePolicy
   # @return [Integer, false] The user's clearance level
   def index_children?(raw_klass, attrs = {})
     child_operation(:show?, raw_klass, attrs)
-  end
-
-  def log?
-    rule is_manager?, is_super_admin?, staff?
-  end
-
-  def feed?
-    rule show?
-  end
-
-  # Move items between forums or converting items
-  def move?
-    staff?
-  end
-
-  def shift?
-    move?
-  end
-
-  def trash?
-    rule is_manager?, is_super_admin?, staff?
-  end
-
-  def untrash?
-    rule is_manager?, is_super_admin?, staff?
-  end
-
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
   end
 
   private
@@ -195,10 +65,6 @@ class EdgeTreePolicy < RestrictivePolicy
 
   def cache_action(action, val)
     user_context.cache_key(edge.id, action, val)
-  end
-
-  def change_owner?
-    staff?
   end
 
   def check_action(action)
@@ -245,4 +111,10 @@ class EdgeTreePolicy < RestrictivePolicy
   def show_unpublished?
     rule is_creator?, is_manager?, is_super_admin?, staff?, service?
   end
+
+  def edgeable_policy
+    @edgeable_policy ||= Pundit.policy(context, edgeable_record)
+  end
+
+  def edgeable_record; end
 end

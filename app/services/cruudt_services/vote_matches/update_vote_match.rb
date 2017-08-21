@@ -10,6 +10,7 @@ class UpdateVoteMatch < CreateService
   private
 
   def after_save
+    super
     resource.replace_voteables(@voteables) if @voteables.present?
     resource.replace_vote_comparables(@vote_comparables) if @vote_comparables.present?
   end

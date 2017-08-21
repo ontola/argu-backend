@@ -178,6 +178,11 @@ RSpec.configure do |config|
         redirect_uri: 'http://example.com/'
       )
     end
+    unless GrantSet.count > 0
+      load File.expand_path('../../lib/tasks/seed_single.rake', __FILE__)
+      ENV['SEED'] = 'grant_sets'
+      Rake::Task['db:seed:single'].invoke
+    end
   end
 
   OmniAuth.config.test_mode = true

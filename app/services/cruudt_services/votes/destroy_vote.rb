@@ -5,6 +5,7 @@ class DestroyVote < DestroyService
   private
 
   def after_save
+    super
     send_event category: 'votes',
                action: 'destroy',
                label: resource.for,

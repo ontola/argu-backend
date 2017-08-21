@@ -133,17 +133,59 @@ class Edge < ApplicationRecord
     parent_edge(type)&.owner
   end
 
-  def granted_groups(role)
-    Group
-      .joins(grants: :edge)
-      .where(edges: {id: self_and_ancestor_ids})
-      .where('grants.role >= ?', Grant.roles[role])
-      .order('groups.name ASC')
-      .select('groups.*, grants.role as role, grants.id as grant_id, grants.edge_id as granted_edge_id')
+  def active_grants
+    return @active_grants if @active_grants.present?
+    @active_grants = {}
+    path_ids = path.split('.')
+    results =
+      ActiveRecord::Base
+        .connection
+        .execute(
+          'WITH attr_set AS ('\
+            'SELECT group_id, resource_type, parent_type, action, edge_id, trickles, permit, '\
+              'string_agg(permitted_attributes.name, \'&\') AS attribute_list, '\
+              'ROW_NUMBER() OVER (PARTITION BY group_id, resource_type, parent_type, action '\
+              "ORDER BY idx(array[#{path_ids.join(',')}], edge_id) DESC) AS row "\
+            'FROM grants '\
+            'INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id '\
+            'INNER JOIN grant_sets_permitted_actions ON grant_sets_permitted_actions.grant_set_id = grant_sets.id '\
+            'INNER JOIN permitted_actions ON permitted_actions.id = grant_sets_permitted_actions.permitted_action_id '\
+            'LEFT JOIN permitted_attributes ON permitted_actions.id = permitted_attributes.permitted_action_id '\
+            'GROUP BY group_id, resource_type, parent_type, action, edge_id, trickles, permit'\
+          ') SELECT group_id, resource_type, parent_type, action, attribute_list FROM ('\
+            "SELECT * FROM attr_set WHERE row = 1 AND permit = true AND trickles = false AND edge_id = #{id}"\
+            'UNION '\
+            'SELECT * FROM attr_set WHERE row = 1 AND permit = true AND trickles = true AND edge_id IN '\
+              "(#{path_ids.join(',')}) "\
+          ') AS sets'
+        )
+    results.each do |hash|
+      @active_grants[hash['resource_type']] ||= {}
+      @active_grants[hash['resource_type']][hash['parent_type']] ||= {}
+      @active_grants[hash['resource_type']][hash['parent_type']][hash['action']] ||= {}
+      @active_grants[hash['resource_type']][hash['parent_type']][hash['action']][hash['group_id']] =
+        Rack::Utils.default_query_parser.parse_nested_query(hash['attribute_list'])
+    end
+    @active_grants
   end
 
-  def granted_group_ids(role)
-    granted_groups(role).pluck(:id)
+  def granted_groups(resource_type, action, parent_type = '*')
+    @granted_groups ||= {}
+    @granted_groups[[action, resource_type].join] ||=
+      Group.where(id: granted_group_ids(resource_type, action, parent_type))
+  end
+
+  def granted_group_ids(resource_type, action, parent_type = '*')
+    active_grants[resource_type][parent_type][action.to_s]&.keys || []
+  end
+
+  def permitted_attributes(resource_type, action, group_ids, parent_type = '*')
+    active_grants[resource_type][parent_type][action.to_s]
+      &.slice(*group_ids)
+      &.values
+      &.reduce({}, :deep_merge)
+      &.with_indifferent_access
+      &.freeze || {}
   end
 
   def has_expired_ancestors?
@@ -169,7 +211,7 @@ class Edge < ApplicationRecord
   end
 
   def is_public?
-    granted_groups(:member).pluck(:id).include?(-1)
+    granted_group_ids(owner_type, 'show').include?(-1)
   end
 
   def is_trashed?

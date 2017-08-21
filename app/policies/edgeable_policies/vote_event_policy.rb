@@ -5,8 +5,4 @@ class VoteEventPolicy < EdgeablePolicy
       scope
     end
   end
-
-  def show?
-    Pundit.policy(context, record.parent_model).show?
-  end
 end

@@ -164,7 +164,7 @@ module ApplicationHelper
 
   def visible_for_group_ids(resource)
     @visible_for_group_ids ||= {}
-    @visible_for_group_ids[resource] ||= resource.edge.granted_group_ids(:spectator)
+    @visible_for_group_ids[resource] ||= resource.edge.granted_group_ids(resource.class.name, 'show')
   end
 
   def visible_for_string(resource)

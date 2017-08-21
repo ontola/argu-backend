@@ -68,6 +68,7 @@ class RestrictivePolicy
   # @param second_key [String, Symbol] Key for further digging
   # @return [Array] Allowed attributes, nested under a parent key
   def permitted_nested_attributes(parent_key, second_key = nil)
+    return permitted_attributes[parent_key] || []
     attributes = (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key]
     unless second_key.nil?
       attributes = attributes.detect { |value| value.is_a?(Hash) && value.keys == [second_key] }[second_key]
@@ -92,17 +93,12 @@ class RestrictivePolicy
   end
 
   def feed?
-    rule staff?
+    staff?
   end
 
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
     staff? || service?
-  end
-
-  # Used when items won't include nested content, this is a less restrictive version of show?
-  def list?
-    staff?
   end
 
   def update?

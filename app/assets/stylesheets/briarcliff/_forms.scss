@@ -397,3 +397,15 @@ p.inline-hints {
     font-size: 1.2em;
   }
 }
+
+.inline_check_boxes {
+  padding-bottom: 1em;
+  ol {
+    width: 70%;
+    display: inline-block;
+  }
+  .choice label {
+    width: 100%;
+    padding: 0;
+  }
+}

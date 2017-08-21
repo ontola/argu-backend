@@ -6,8 +6,8 @@ class QuestionAnswerPolicy < EdgeTreePolicy
     end
   end
 
-  def edge
-    record.question.edge
+  def edgeable_record
+    record.question
   end
 
   def permitted_attributes
@@ -17,18 +17,15 @@ class QuestionAnswerPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule is_manager?, is_super_admin?, super
+    edgeable_policy.update?
   end
 
   def destroy?
-    (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
-      is_manager? ||
-      is_super_admin? ||
-      super
+    edgeable_policy.update?
   end
 
   def update?
-    rule is_manager?, is_super_admin?, super
+    edgeable_policy.update?
   end
 
   def shortname?

@@ -53,6 +53,7 @@ en:
       time_zone: "Time zone"
       username: "Username"
       visibility: "Visibility"
+      motion_group_ids: "Who may add ideas?"
       notifications:
         follows: "Items I follow"
         memberships: "My forums"

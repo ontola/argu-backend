@@ -13,8 +13,4 @@ class AdministrationPolicy < Struct.new(:context, :administration)
   def show?
     user.profile.has_role? :staff
   end
-
-  def list?
-    user.profile.has_role? :staff
-  end
 end

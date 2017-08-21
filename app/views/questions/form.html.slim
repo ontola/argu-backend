@@ -3,7 +3,7 @@
   .col-3-2
     =to_parent
     .box
-      =semantic_form_for((question.new_record? ? [parent_resource, question] : question), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for((question.new_record? ? [parent_resource, question] : question), html: {autocomplete: 'off', multipart: true}, remote: false, authenticity_token: true) do |f|
         =f.input :default_cover_photo, as: :react_cover, label: false
         section.section-info
           =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
@@ -41,6 +41,7 @@
                   =f.input :pinned, as: :reverse_boolean
                   li.form-helper
                     span= t('edges.form.helper.pinned')
+                =f.input :motion_group_ids, as: :inline_check_boxes, collection: question.edge.granted_groups('Question', 'show')
               /TODO Add Checkbox for using expires_at.
               /TODO Hide expires_at input unless checkbox is checked.
               /TODO Use current datetime as default input.
