@@ -41,6 +41,11 @@ module.exports = {
     new ManifestPlugin({
       publicPath: output.publicPath,
       writeToFileEmit: true
+    }),
+    new ManifestPlugin({
+      fileName: 'pre-render/manifest.json',
+      publicPath: `${output.path}/`,
+      writeToFileEmit: true
     })
   ],
 
