@@ -6,7 +6,7 @@ class QuestionPolicy < EdgeablePolicy
   def permitted_attributes
     attributes = super
     if create?
-      attributes.concat %i[id title content tag_list forum_id project_id cover_photo
+      attributes.concat %i[id title content forum_id project_id cover_photo
                            remove_cover_photo cover_photo_attribution]
     end
     attributes.concat %i[include_motions f_convert] if staff?

@@ -93,10 +93,6 @@ class Question < Edgeable::Content
     QuestionAnswer
   end
 
-  def tag_list
-    super.join(',')
-  end
-
   scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }
 
   private

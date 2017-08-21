@@ -51,7 +51,6 @@ en:
       remove_image: "Remove photo"
       confirmation_string: "Confirmation"
       shortname: "Argu URL"
-      tag_list: "Themes"
       title: "Title"
       time_zone: "Time zone"
       username: "Username"
@@ -89,7 +88,6 @@ en:
         news_email: "For important items"
         decisions_email: "For official decisions"
     hints:
-      tag_list: "Choose themes related to your subject."
       username: "At least 4 characters. Numbers, letters and '_'. only."
       cover_photo_attribution: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"
       password: "At least 8 characters."
@@ -111,7 +109,6 @@ en:
     placeholders:
       email: "email@example.com"
       login: "email or username"
-      tag_list: "theme1, theme2 ..."
       argument:
         title: "Enter the core of your argument here"
         content: "Enter details and background information on your argument here."
