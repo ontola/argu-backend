@@ -8,11 +8,12 @@ const transition = {
                 this.initIframeListeners();
             }
         }, false);
-        parent.postMessage(
-            'hello',
-            process.env.FRONTEND_URL
-        );
-
+        if (parent.location.origin === process.env.FRONTEND_URL) {
+            parent.postMessage(
+              'hello',
+              process.env.FRONTEND_URL
+            );
+        }
     },
 
     initIframeListeners: function() {
@@ -38,14 +39,16 @@ const transition = {
                   process.env.FRONTEND_URL
               );
           });
-      window.postMessage(
-        {
-            meta: {
-                title: document.title
-            }
-        },
-        process.env.FRONTEND_URL
-      );
+        if (parent.location.origin === process.env.FRONTEND_URL) {
+            window.postMessage(
+              {
+                  meta: {
+                      title: document.title
+                  }
+              },
+              process.env.FRONTEND_URL
+            );
+        }
     }
 };
 
