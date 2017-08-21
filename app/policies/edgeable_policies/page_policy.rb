@@ -29,7 +29,7 @@ class PagePolicy < EdgeablePolicy
   def permitted_attributes
     attributes = super
     if create?
-      attributes.concat %i(bio tag_list last_accepted)
+      attributes.concat %i(bio last_accepted)
       attributes.append(profile_attributes: %i(id name profile_photo))
     end
     if new_record?

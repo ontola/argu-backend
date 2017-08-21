@@ -125,14 +125,6 @@ class Motion < ApplicationRecord
     number_to_human(raw_score, format: '%n%u', units: {thousand: 'K'})
   end
 
-  def tag_list
-    super.join(',')
-  end
-
-  def tag_list=(value)
-    super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
-  end
-
   private
 
   def sister_node(show_trashed)

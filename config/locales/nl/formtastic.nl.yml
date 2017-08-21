@@ -49,7 +49,6 @@ nl:
       remove_image: "Foto verwijderen"
       confirmation_string: "Bevestiging"
       shortname: "Argu URL"
-      tag_list: "Thema's"
       title: "Titel"
       time_zone: "Tijdzone"
       username: "Gebruikersnaam"
@@ -90,7 +89,6 @@ nl:
         publish_type: "Publicatie:"
         target: 'Breng op de hoogte'
     hints:
-      tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
       cover_photo_attribution: "Als jij niet de auteursrechten van de afbeelding bezit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
       password: "Minimaal 8 karakters."
@@ -112,7 +110,6 @@ nl:
     placeholders:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
-      tag_list: "thema1, thema2 ..."
       argument:
         title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
