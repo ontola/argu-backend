@@ -43,7 +43,6 @@ Rails.application.routes.draw do
   concern :commentable do
     resources :comments,
               path: 'c',
-              concerns: [:trashable],
               only: [:new, :index, :show, :create, :update, :edit]
     patch 'comments' => 'comments#create'
   end
@@ -242,7 +241,7 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-  resources :comments, only: :show
+  resources :comments, concerns: [:trashable], only: :show
 
   resources :follows, only: :create do
     delete :destroy, on: :collection

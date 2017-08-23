@@ -90,7 +90,7 @@ module Argu
         difference = results[:should] ? 1 : 0
         assert_differences([["#{model_class}.trashed.count", difference],
                             ['Activity.count', difference.abs]]) do
-          delete update_path(record),
+          delete trash_path(record),
                  params: {format: request_format},
                  headers: @_argu_headers
         end
@@ -199,6 +199,10 @@ module Argu
       end
 
       def update_path(record)
+        record_path(record)
+      end
+
+      def trash_path(record)
         record_path(record)
       end
 

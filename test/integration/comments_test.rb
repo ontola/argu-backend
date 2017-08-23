@@ -60,7 +60,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   end
 
   def destroy_path(record)
-    url_for([record.parent_model, record, destroy: true])
+    url_for([record, destroy: true])
   end
 
   def self.assert_redirect_new_user_argument
@@ -258,9 +258,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(subject.parent_model, subject)
-      delete destroy_argument_comment_path(
-        subject.parent_model,
+      delete trash_comment_path(subject)
+      delete destroy_comment_path(
         subject,
         destroy: 'true'
       )
@@ -279,9 +278,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
-      delete trash_argument_comment_path(subject.parent_model, subject)
-      delete destroy_argument_comment_path(
-        subject.parent_model,
+      delete trash_comment_path(subject)
+      delete destroy_comment_path(
         subject,
         destroy: 'true'
       )

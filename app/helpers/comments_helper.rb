@@ -13,20 +13,20 @@ module CommentsHelper
     end
     if resource_policy.destroy?
       link_items << link_item(t('destroy'),
-                              polymorphic_url([resource, comment], destroy: true),
+                              polymorphic_url(comment, destroy: true),
                               data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'},
                               fa: 'close')
     end
     if resource.is_trashable? && resource_policy.trash?
       if comment.is_trashed?
         link_items << link_item(t('untrash'),
-                                polymorphic_url([:untrash, resource, comment]),
+                                polymorphic_url([:untrash, comment]),
                                 data: {confirm: t('untrash_confirmation'), method: 'put', turbolinks: 'false'},
                                 fa: 'eye')
       else
         link_items << link_item(t('trash'),
-                                polymorphic_url([resource, comment]),
-                                data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'},
+                                polymorphic_url([:delete, comment]),
+                                data: {remote: true},
                                 fa: 'trash')
       end
     end
