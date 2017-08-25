@@ -25,9 +25,8 @@ module MapHelper
       },
       popup: {
         header: {
-          class: 'motion-t',
+          class: "#{placement.placeable.try(:owner_type).underscore}-t",
           href: url_for(placement.placeable.owner),
-          fa: 'lightbulb-o',
           text: placement.placeable.owner.display_name
         }
       }
@@ -74,19 +73,22 @@ module MapHelper
           fa: 'lightbulb-o',
           text: t('add_type', type: motion_type)
         }
-      }
+      },
+      center_lat: resource.edge.custom_placements.first&.lat,
+      center_lon: resource.edge.custom_placements.first&.lon,
+      zoom: resource.edge.custom_placements.first&.zoom_level
     )
   end
 
   def map_viewer_props(markers, opts = {})
     markers = [markers] unless markers.is_a?(Array)
-    center_lat = markers.map { |marker| marker[:lat] }.sum / markers.size.to_f
-    center_lon = markers.map { |marker| marker[:lon] }.sum / markers.size.to_f
+    center_lat = opts[:center_lat] || markers.map { |marker| marker[:lat] }.sum / markers.size.to_f
+    center_lon = opts[:center_lon] || markers.map { |marker| marker[:lon] }.sum / markers.size.to_f
     {
       accessToken: map_access_token,
       centerLat: center_lat,
       centerLon: center_lon,
-      initialZoom: 13,
+      initialZoom: opts[:zoom] || 13,
       markers: markers
     }.merge(opts)
   end

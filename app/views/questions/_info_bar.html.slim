@@ -21,7 +21,7 @@ section.section--details
         .detail__text
           span= question.children_count(:motions)
     - if question.edge.custom_placements.present?
-      =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_viewer_props(map_marker_props(question.edge.custom_placements.first)))
+      =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_viewer_props(map_marker_props(question.edge.custom_placements.first), zoom: question.edge.custom_placements.first.zoom_level))
     =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
     - if question.pinned?
       .detail[data-title=t('edges.pinned_at', datetime: question.edge.pinned_at.to_formatted_s(:short))]
