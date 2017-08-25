@@ -44,6 +44,7 @@ class Edge < ApplicationRecord
   accepts_nested_attributes_for :argu_publication
 
   validates :parent, presence: true, unless: :root_object?
+  validates :placements, presence: true, if: :requires_location?
 
   before_destroy :decrement_counter_cache, unless: :is_trashed?
   before_destroy :reset_persisted_edge
@@ -276,6 +277,10 @@ class Edge < ApplicationRecord
   def destroy_redis_children
     keys = RedisResource::Key.new(path: "#{path}.*").matched_keys.map(&:key)
     Argu::Redis.redis_instance.del(*keys) if keys.present?
+  end
+
+  def requires_location?
+    owner_type == 'Motion' && parent.owner_type == 'Question' && parent.owner.require_location
   end
 
   def reset_persisted_edge

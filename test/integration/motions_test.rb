@@ -19,6 +19,15 @@ class MotionsTest < ActionDispatch::IntegrationTest
            parent: freetown.edge,
            creator: create(:profile_direct_email))
   end
+  let(:question_requires_location) do
+    create(:question,
+           :with_follower,
+           parent: freetown.edge,
+           require_location: true,
+           options: {
+             creator: create(:profile_direct_email)
+           })
+  end
   let(:trashed_question) do
     create(:question,
            :with_follower,
@@ -309,6 +318,17 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_equal 1, Motion.last.edge.placements.first.lat
     assert_equal 1, Motion.last.edge.placements.first.lon
     assert_equal 1, Motion.last.edge.placements.first.zoom_level
+  end
+
+  test 'member should not post create motion with latlon in question requiring location' do
+    sign_in member
+
+    general_create(
+      analytics: stats_opt('motions', 'create_failed'),
+      results: {should: false, response: 200},
+      parent: :question_requires_location,
+      differences: [['Motion', 0], ['Activity.loggings', 0]]
+    )
   end
 
   test 'creator should put update motion change latlon' do
