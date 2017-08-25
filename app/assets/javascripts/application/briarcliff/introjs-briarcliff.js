@@ -1,5 +1,5 @@
+/* global I18n */
 import { introJs } from 'intro.js';
-import I18n from 'i18n-js';
 
 const introJsOptions = {
     'skipLabel': I18n.t('intro.skip'),

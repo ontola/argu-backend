@@ -1,5 +1,5 @@
+/* global I18n */
 import Blazy from 'blazy';
-import I18n from 'i18n-js';
 
 let loading = false;
 let reachedEnd = false;
