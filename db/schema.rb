@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818065356) do
+ActiveRecord::Schema.define(version: 20170828092700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -279,7 +279,6 @@ ActiveRecord::Schema.define(version: 20170818065356) do
   create_table "group_memberships", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "member_id", null: false
-    t.integer "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "title"
@@ -757,7 +756,6 @@ ActiveRecord::Schema.define(version: 20170818065356) do
   add_foreign_key "grants", "edges"
   add_foreign_key "grants", "groups"
   add_foreign_key "group_memberships", "groups"
-  add_foreign_key "group_memberships", "profiles"
   add_foreign_key "group_memberships", "profiles", column: "member_id"
   add_foreign_key "groups", "pages"
   add_foreign_key "identities", "users"

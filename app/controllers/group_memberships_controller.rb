@@ -85,8 +85,7 @@ class GroupMembershipsController < ServiceController
 
   def resource_new_params
     {
-      group: parent_resource!,
-      profile: current_profile
+      group: parent_resource!
     }
   end
 

@@ -103,7 +103,6 @@ class User < ApplicationRecord
     return if Group.public.nil?
     profile.group_memberships.build(
       member: profile,
-      profile_id: Profile::COMMUNITY_ID,
       group_id: Group::PUBLIC_ID,
       start_date: DateTime.current
     )

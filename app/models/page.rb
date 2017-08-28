@@ -75,7 +75,7 @@ class Page < ApplicationRecord
 
     service = CreateGroupMembership.new(
       edge.groups.first,
-      attributes: {member: owner, profile: owner},
+      attributes: {member: owner},
       options: {publisher: owner.profileable, creator: owner}
     )
     service.on(:create_group_membership_failed) do |gm|

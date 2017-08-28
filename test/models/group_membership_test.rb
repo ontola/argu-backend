@@ -85,7 +85,6 @@ class GroupMembershipTest < ActiveSupport::TestCase
       .create(
         group_id: group.id,
         member_id: member.id,
-        profile_id: member.id,
         start_date: start_date,
         end_date: end_date
       )

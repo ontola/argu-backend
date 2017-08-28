@@ -10,7 +10,6 @@ class CreateGroupMembership < CreateService
                           else
                             options.fetch(:creator)
                           end
-    attributes[:profile] = options.fetch(:creator)
     attributes[:start_date] ||= DateTime.current
     super
   end
