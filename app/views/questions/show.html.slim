@@ -33,7 +33,7 @@
 - if question.blog_posts.untrashed.present?
   .col-1
     =render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?}
-- if question.edge.children_with_location?
+- if question.edge.custom_placements.present?
   .col-1.large-map
     =react_component_store 'MapViewer', props: map_question_props(question)
 .col-1

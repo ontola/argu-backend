@@ -104,18 +104,6 @@ class Edge < ApplicationRecord
     children_counts[association.to_s].to_i || 0
   end
 
-  def children_with_location(type = nil)
-    if type
-      children.published.joins(:placements).where(placements: {title: type})
-    else
-      children.published.joins(:placements)
-    end
-  end
-
-  def children_with_location?(type = nil)
-    children_with_location(type).any?
-  end
-
   def parent_edge(type)
     return self if owner_type == type.to_s.classify
     return persisted_edge&.parent_edge(type) unless persisted?
