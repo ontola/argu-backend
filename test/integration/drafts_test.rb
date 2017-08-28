@@ -4,6 +4,18 @@ require 'test_helper'
 class DraftsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
+  let!(:motion) do
+    create(:motion,
+           parent: freetown.edge,
+           publisher: user,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+  end
+  let!(:page_motion) do
+    create(:motion,
+           parent: freetown.edge,
+           creator: freetown.page.profile,
+           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+  end
 
   ####################################
   # As Guest
@@ -12,6 +24,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
     get drafts_user_path(user)
     assert_not_authorized
     assert_response 403
+    assert_select '.draft', 0
   end
 
   ####################################
@@ -24,12 +37,32 @@ class DraftsTest < ActionDispatch::IntegrationTest
     get drafts_user_path(user)
     assert_not_authorized
     assert_response 403
+    assert_select '.draft', 0
   end
 
   test 'user should get index' do
     sign_in user
     get drafts_user_path(user)
     assert 200
+    assert_select '.draft', 1
+  end
+
+  ####################################
+  # As manager
+  ####################################
+  test 'manager should get index' do
+    create(:group_membership,
+           parent: create(
+             :grant,
+             edge: freetown.page.edge,
+             group: create(:group, parent: freetown.page.edge),
+             role: Grant.roles['manager']
+           ).group,
+           shortname: user.url)
+    sign_in user
+    get drafts_user_path(user)
+    assert 200
+    assert_select '.draft', 2
   end
 
   ####################################
@@ -41,5 +74,6 @@ class DraftsTest < ActionDispatch::IntegrationTest
     sign_in staff
     get drafts_user_path(user)
     assert 200
+    assert_select '.draft', 1
   end
 end

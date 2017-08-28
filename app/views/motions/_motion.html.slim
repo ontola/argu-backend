@@ -1,4 +1,4 @@
-.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.default_vote_event.total_vote_count itemscope="itemscope" itemtype="http://schema.org/Answer" id=motion.identifier]
+.box.box-grid.motion[class=status_classes_for(motion) data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.default_vote_event.total_vote_count itemscope="itemscope" itemtype="http://schema.org/Answer" id=motion.identifier]
   -if motion.default_cover_photo&.url.present?
     =link_to motion_path(motion), 'aria-hidden': true, tabindex: '-1'  do
       =render partial: 'application/box_image', locals: {media_object: motion.default_cover_photo}

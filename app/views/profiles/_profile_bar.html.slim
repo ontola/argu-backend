@@ -7,10 +7,9 @@
       li[class=('tab--current' if local_assigns[:active] == :settings)]= link_to settings_user_url do
         span.fa.fa-gear
         span.icon-left= t('users.settings.title')
-      -if current_user.has_drafts?
-        li[class=('tab--current' if local_assigns[:active] == :drafts)]= link_to url_for([:drafts, current_user]) do
-          span.fa.fa-pencil-square-o
-          span.icon-left= t('users.drafts.title')
+      li[class=('tab--current' if local_assigns[:active] == :drafts)]= link_to url_for([:drafts, current_user]) do
+        span.fa.fa-pencil-square-o
+        span.icon-left= t('users.drafts.title')
       -if current_user.page_management?
         li[class=('tab--current' if local_assigns[:active] == :page_management)]=link_to pages_user_url(current_user) do
           span.fa.fa-building

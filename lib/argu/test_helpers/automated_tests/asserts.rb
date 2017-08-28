@@ -7,10 +7,6 @@ module Argu
           "assert_select '##{name.split('sTest')[0].underscore}_content', 'C'"
         end
 
-        def assert_has_drafts
-          'send(_user_type).reload.has_drafts?'
-        end
-
         def assert_has_title
           "assert_select '##{name.split('sTest')[0].underscore}_title', '#{name.split('sTest')[0]}'"
         end
@@ -29,10 +25,6 @@ module Argu
 
         def assert_not_authorized
           'assigns(:_not_authorized_caught)'
-        end
-
-        def assert_no_drafts
-          '!send(_user_type).reload.has_drafts?'
         end
 
         def assert_not_published

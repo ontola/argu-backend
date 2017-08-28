@@ -130,10 +130,6 @@ class User < ApplicationRecord
     [first_name, middle_name, last_name].compact.join(' ').presence || url || I18n.t('users.no_shortname', id: id)
   end
 
-  def draft_count
-    Edge.where(user_id: id, is_published: false, owner_type: %w(Motion Question Project BlogPost)).count
-  end
-
   # Creates a new follow record for this instance to follow the passed object.
   # Does not allow duplicate records to be created.
   def follow(followable, type = :reactions, ancestor_type = nil)

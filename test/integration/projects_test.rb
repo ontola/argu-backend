@@ -48,9 +48,9 @@ class ProjectsTest < ActionDispatch::IntegrationTest
         guest: exp_res(response: 302, asserts: [assert_not_a_user], analytics: false),
         user: exp_res(asserts: [assert_not_authorized], analytics: false),
         member: exp_res(asserts: [assert_not_authorized], analytics: false),
-        manager: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
-        super_admin: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published]),
-        staff: exp_res(response: 302, should: true, asserts: [assert_has_drafts, assert_not_published])
+        manager: exp_res(response: 302, should: true, asserts: [assert_not_published]),
+        super_admin: exp_res(response: 302, should: true, asserts: [assert_not_published]),
+        staff: exp_res(response: 302, should: true, asserts: [assert_not_published])
       }
     end
     options = {
@@ -60,9 +60,9 @@ class ProjectsTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' published', options: options) do
       {
-        manager: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
-        super_admin: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published]),
-        staff: exp_res(response: 302, should: true, asserts: [assert_no_drafts, assert_is_published])
+        manager: exp_res(response: 302, should: true, asserts: [assert_is_published]),
+        super_admin: exp_res(response: 302, should: true, asserts: [assert_is_published]),
+        staff: exp_res(response: 302, should: true, asserts: [assert_is_published])
       }
     end
     options = {

@@ -12,9 +12,6 @@ class PublishedCreateService < EdgeableCreateService
   def after_save
     super
     return if resource.store_in_redis?
-    if resource.respond_to?(:is_published?) && resource.edge.argu_publication&.published_at.nil?
-      resource.publisher.update(has_drafts: true)
-    end
     resource.publisher.follow(resource.edge, :reactions, :news)
 
     return if resource.try(:forum).nil? || resource.publisher.has_favorite?(resource.forum.edge)

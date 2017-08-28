@@ -13,10 +13,11 @@ module HeaderHelper
       else
         link_item(t('pages.create'), new_page_path, fa: 'building')
       end
-    drafts_index = current_user.has_drafts? &&
-      link_item("#{t('users.drafts.title')} (#{current_user.draft_count})",
-                drafts_user_url(current_user),
-                fa: 'pencil-square-o')
+    drafts_index = link_item(
+      t('users.drafts.title'),
+      drafts_user_url(current_user),
+      fa: 'pencil-square-o'
+    )
     forum_management = current_user.forum_management? &&
       link_item(t('forums.management.title'),
                 forums_user_url(current_user),
