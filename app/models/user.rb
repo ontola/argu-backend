@@ -289,14 +289,13 @@ class User < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w(comments motions arguments questions blog_posts projects votes vote_events vote_matches).each do |association|
-      association
-        .classify
-        .constantize
+    %w(comments motions arguments questions blog_posts projects votes vote_events vote_matches uploaded_media_objects)
+      .each do |association|
+      send(association)
+        .model
         .expropriate(send(association))
     end
     emails.update_all(primary: false)
-    MediaObject.expropriate(uploaded_media_objects)
     edges.update_all user_id: User::COMMUNITY_ID
   end
 

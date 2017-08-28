@@ -12,7 +12,8 @@ class Profile < ApplicationRecord
 
   before_destroy :anonymize_dependencies
   has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception
-  has_many :group_memberships, -> { active }, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
+  has_many :group_memberships, -> { active }, foreign_key: :member_id, inverse_of: :member
+  has_many :unscoped_group_memberships, class_name: 'GroupMembership', foreign_key: :member_id
   has_many :groups, through: :group_memberships
   has_many :edges, through: :groups
   has_many :grants, through: :groups
@@ -174,14 +175,13 @@ class Profile < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
-    %w(comments motions arguments questions blog_posts projects vote_events vote_matches activities)
+    %w(comments motions arguments questions blog_posts projects vote_events vote_matches activities
+       uploaded_media_objects unscoped_group_memberships)
       .each do |association|
-      association
-        .classify
-        .constantize
+      send(association)
+        .model
         .anonymize(send(association))
     end
-    MediaObject.anonymize(uploaded_media_objects)
   end
 
   def role_added(role)

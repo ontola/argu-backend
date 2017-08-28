@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828092700) do
+ActiveRecord::Schema.define(version: 20170828113302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -285,7 +285,7 @@ ActiveRecord::Schema.define(version: 20170828092700) do
     t.text "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps
+    t.exclude_constraint :group_memberships_exclude_overlapping, using: :gist, group_id: :equals, member_id: :equals, 'tsrange(start_date, end_date)' => :overlaps, where: '(member_id <> 0)'
   end
 
   create_table "groups", id: :serial, force: :cascade do |t|

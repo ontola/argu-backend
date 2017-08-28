@@ -33,6 +33,10 @@ class GroupMembership < ApplicationRecord
 
   attr_accessor :token
 
+  def self.anonymize(collection)
+    collection.update_all(member_id: Profile::COMMUNITY_ID)
+  end
+
   def publisher
     profile.profileable
   end
