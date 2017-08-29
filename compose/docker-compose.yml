@@ -51,6 +51,10 @@ services:
     hostname: argu-rabbit
     ports:
       - "5672:5672"
+  marmotta:
+    image: apache/marmotta
+    ports:
+      - "8898:8080"
 volumes:
   data:
     external: true

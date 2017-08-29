@@ -4,6 +4,7 @@ require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
 require 'argu/forums_constraint'
 require 'argu/whitelist_constraint'
+
 ####
 # Routes
 # a: arguments
@@ -107,6 +108,19 @@ Rails.application.routes.draw do
   get '/', to: 'static_pages#developers', constraints: {subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
   get '/token', to: 'static_pages#token'
+
+  # namespace 'argu_rdf', path: 'local' do
+  scope 'local', module: :argu_rdf do
+    resources :events, controller: :rdf_resource, only: :show do
+      resources :agenda_items,
+                only: :index,
+                as: :argu_rdf_agenda_items,
+                controller: :rdf_resource,
+                defaults: {
+                  collection_name: 'agenda_items'
+                }
+    end
+  end
 
   devise_for :users,
              controllers: {

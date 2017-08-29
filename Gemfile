@@ -117,6 +117,18 @@ gem 'rolify', '~> 3.4.1'
 gem 'react-rails', '~> 2.2.1'
 gem 'webpacker', '~> 2.0'
 
+################## Linked data ########################
+gem 'rdf', '~> 2.2.7'
+gem 'rdf-marmotta', '~> 0.1.1'
+gem 'rdf-n3'
+gem 'rdf-reasoner'
+gem 'rdf-trig'
+gem 'rdf-trix'
+gem 'rdf-turtle'
+gem 'rdf-vocab'
+gem 'sparql'
+gem 'sparql-client'
+
 group :test do
   gem 'minitest-rails', '~> 3.0.0'
   gem 'minitest-reporters', '~> 1.1.8'
@@ -129,7 +141,7 @@ group :test do
   gem 'selenium-webdriver', '~> 2.53.4'
   gem 'poltergeist'
   gem 'chromedriver-helper'
-  gem 'testingbot'
+  # gem 'testingbot'                                                          #!
   gem 'mocha'
   gem 'factory_girl'
   gem 'factory_girl_rails'
