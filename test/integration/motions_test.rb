@@ -126,13 +126,20 @@ class MotionsTest < ActionDispatch::IntegrationTest
     }
     define_test(hash, :create, suffix: ' for forum', options: options)
     options = {
+      analytics: stats_opt('motions', 'create_success'),
       parent: :freetown,
       attributes: {
-        edge_attributes: {argu_publication_attributes: {publish_type: :schedule}}
-      }
+        edge_attributes: {argu_publication_attributes: {published_at: 1.day.from_now}}
+      },
+      differences: [['Motion', 1], ['Activity.loggings', 2]]
     }
+    define_test(hash, :create, suffix: ' scheduled without scheduling', options: options) do
+      {user: exp_res(should: true, response: 302)}
+    end
+    options = options.dup
+    options[:differences] = [['Motion', 1], ['Activity.loggings', 1]]
     define_test(hash, :create, suffix: ' scheduled', options: options) do
-      {user: exp_res(should: false)}
+      {super_admin: exp_res(should: true, response: 302)}
     end
     options = {
       parent: :question,

@@ -7,7 +7,6 @@ class ActivityStringTest < ActiveSupport::TestCase
   let(:receiver) { create_member(freetown) }
   let!(:project) do
     create(:project,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            parent: freetown.edge)
   end
   let!(:question) { create(:question, parent: project.edge) }

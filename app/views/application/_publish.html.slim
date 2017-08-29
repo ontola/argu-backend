@@ -8,7 +8,7 @@
             =semantic_form_for(resource, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
               =f.semantic_fields_for :edge do |ef|
                 =ef.semantic_fields_for :argu_publication do |pf|
-                  =pf.input :publish_type, as: :hidden, input_html: {value: :draft}
+                  =pf.input :draft, as: :hidden, input_html: {value: true}
                   =pf.action :submit, as: :button, button_html: {class: 'btn--warning'}, label: t('cancel')
         -else
           - if resource.argu_publication.try(:published_at).present?
@@ -21,12 +21,13 @@
               =semantic_form_for(resource, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
                 =f.semantic_fields_for :edge do |ef|
                   =ef.semantic_fields_for :argu_publication do |pf|
-                    =pf.input :publish_type, as: :hidden, input_html: {value: :draft}
+                    =pf.input :draft, as: :hidden, input_html: {value: true}
                     =pf.action :submit, as: :button, button_html: {class: 'btn--warning'}, label: t('cancel')
           - if resource.argu_publication.try(:published_at).nil? || resource.argu_publication.published_at > 1.minute.from_now
             .inline-button-form
               =semantic_form_for(resource, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
                 =f.semantic_fields_for :edge do |ef|
                   =ef.semantic_fields_for :argu_publication do |pf|
-                    =pf.input :publish_type, as: :hidden, input_html: {value: :direct}
+                    =pf.input :draft, as: :hidden, input_html: {value: false}
+                    =pf.input :published_at, as: :hidden, input_html: {value: DateTime.current}
                     =pf.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication')}}, label: t('publish')

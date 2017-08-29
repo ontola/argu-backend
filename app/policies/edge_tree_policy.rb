@@ -120,10 +120,6 @@ class EdgeTreePolicy < RestrictivePolicy
     attributes
   end
 
-  def permitted_publish_types
-    Publication.publish_types
-  end
-
   def convert?
     false
   end
@@ -190,12 +186,6 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   private
-
-  def assert_publish_type
-    return if record.edge.argu_publication&.publish_type.nil?
-    assert! permitted_publish_types.include?(record.edge.argu_publication.publish_type),
-            "#{record.edge.argu_publication.publish_type}?"
-  end
 
   def cache_action(action, val)
     user_context.cache_key(edge.id, action, val)

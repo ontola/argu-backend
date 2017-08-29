@@ -14,17 +14,11 @@ class MotionPolicy < EdgeablePolicy
     attributes
   end
 
-  def permitted_publish_types
-    publish_types = Publication.publish_types
-    is_manager? || is_super_admin? || staff? ? publish_types : publish_types.except('schedule')
-  end
-
   def convert?
     rule is_manager?, is_super_admin?, staff?
   end
 
   def create?
-    assert_publish_type
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
     return create_without_question? unless record.parent_model.is_a?(Question)

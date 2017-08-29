@@ -128,7 +128,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
            },
            edge_attributes: {
              argu_publication_attributes: {
-               publish_type: :draft
+               draft: true
              }
            },
            publisher: creator,

@@ -8,7 +8,7 @@ class DiscussionsControllerTest < ActionController::TestCase
   let(:unpublished_project) do
     create(:project,
            parent: freetown.edge,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+           edge_attributes: {argu_publication_attributes: {draft: true}})
   end
   let(:helsinki_project) { create(:project, parent: helsinki.edge) }
 

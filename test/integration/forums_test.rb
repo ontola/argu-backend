@@ -24,7 +24,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   define_helsinki
 
   let(:project) do
-    create(:project, parent: holland.edge, edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+    create(:project, parent: holland.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
   end
   let(:q1) { create(:question, parent: project.edge) }
   let(:m0) { create(:motion, parent: q1.edge) }

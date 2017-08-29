@@ -70,7 +70,7 @@ class DecisionsController < EdgeTreeController
                      .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)))
                      .owner
       decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
-      decision.edge.build_argu_publication(publish_type: :direct)
+      decision.edge.build_argu_publication
     end
     decision
   end

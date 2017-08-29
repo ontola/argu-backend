@@ -9,7 +9,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
     create(:project,
            publisher: creator,
            parent: freetown.edge,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+           edge_attributes: {argu_publication_attributes: {draft: true}})
   end
 
   define_tests do
@@ -37,7 +37,7 @@ class ProjectsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('projects', 'create_success'),
       attributes: {
         happening_attributes: {happened_at: DateTime.current},
-        edge_attributes: {argu_publication_attributes: {publish_type: :draft}}
+        edge_attributes: {argu_publication_attributes: {draft: true}}
       },
       differences: [['Project.unpublished', 1],
                     ['Activity.loggings', 1],

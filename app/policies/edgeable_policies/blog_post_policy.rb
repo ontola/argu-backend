@@ -12,7 +12,6 @@ class BlogPostPolicy < EdgeablePolicy
   end
 
   def create?
-    assert_publish_type
     rule is_manager?, is_super_admin?, super
   end
 

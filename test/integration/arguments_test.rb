@@ -34,7 +34,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   let(:project) do
     create(:project,
            parent: freetown.edge,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+           edge_attributes: {argu_publication_attributes: {draft: true}})
   end
   let(:project_motion) { create(:motion, parent: project.edge) }
   let(:project_argument) do

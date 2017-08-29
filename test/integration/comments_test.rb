@@ -24,7 +24,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            parent: motion.edge,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'direct'}},
            happening_attributes: {happened_at: DateTime.current},
            creator: create(:profile_direct_email))
   end

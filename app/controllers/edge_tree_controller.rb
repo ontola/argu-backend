@@ -53,7 +53,6 @@ class EdgeTreeController < ServiceController
                  .owner
     if resource.is_publishable?
       resource.edge.build_argu_publication(
-        publish_type: 'direct',
         published_at: DateTime.current,
         follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
       )

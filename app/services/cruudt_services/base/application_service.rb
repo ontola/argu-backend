@@ -62,12 +62,8 @@ class ApplicationService
     pub_attrs = @attributes[:edge_attributes][:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
     unless resource.is_published?
-      pub_attrs[:publish_type] ||= resource.argu_publication&.published_at.present? ? 'schedule' : 'direct'
-      pub_attrs[:published_at] = 10.seconds.from_now if pub_attrs[:publish_type] == 'direct'
-      pub_attrs[:published_at] = nil if pub_attrs[:publish_type] == 'draft'
-      if resource.new_record? ||
-          (pub_attrs[:published_at] != resource.edge.argu_publication.published_at ||
-          pub_attrs[:publish_type] != resource.edge.argu_publication.publish_type)
+      pub_attrs[:published_at] ||= pub_attrs[:draft] == true || pub_attrs[:draft] == 'true' ? nil : 10.seconds.from_now
+      if resource.new_record?
         pub_attrs[:publisher] ||= @options[:publisher]
         pub_attrs[:creator] ||= @options[:creator]
       end

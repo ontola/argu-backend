@@ -23,7 +23,7 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
   end
   let(:scheduled) do
     create(:blog_post,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'schedule', published_at: 1.day.from_now}},
+           edge_attributes: {argu_publication_attributes: {published_at: 1.day.from_now}},
            happening_attributes: {happened_at: DateTime.current},
            parent: project.edge)
   end
@@ -57,7 +57,7 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('blog_posts', 'create_success'),
       attributes: {
         happening_attributes: {happened_at: DateTime.current},
-        edge_attributes: {argu_publication_attributes: {publish_type: :draft}}
+        edge_attributes: {argu_publication_attributes: {draft: true}}
       },
       differences: [['BlogPost.unpublished', 1],
                     ['Activity.loggings', 1],
@@ -100,7 +100,7 @@ class BlogPostsTest < ActionDispatch::IntegrationTest
     end
     options = {
       record: :scheduled,
-      attributes: {edge_attributes: {argu_publication_attributes: {publish_type: :draft}}}
+      attributes: {edge_attributes: {argu_publication_attributes: {draft: true}}}
     }
     define_test(hash, :update, suffix: ' cancel schedule', options: options) do
       {manager: exp_res(response: 302, should: true, asserts: [assert_job_canceled])}

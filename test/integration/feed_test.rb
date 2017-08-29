@@ -5,7 +5,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:subject) { create(:motion, :with_votes, parent: freetown.edge, creator: publisher.profile) }
   let(:unpublished_motion) do
-    create(:motion, parent: freetown.edge, edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+    create(:motion, parent: freetown.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
   end
   let(:publisher) { create(:user) }
   let(:trashed_motion) do

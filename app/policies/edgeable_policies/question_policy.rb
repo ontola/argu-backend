@@ -13,17 +13,11 @@ class QuestionPolicy < EdgeablePolicy
     attributes
   end
 
-  def permitted_publish_types
-    publish_types = Publication.publish_types
-    is_manager? || is_super_admin? || staff? ? publish_types : publish_types.except('schedule')
-  end
-
   def convert?
     rule move?
   end
 
   def create?
-    assert_publish_type
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
     rule is_member?, is_manager?, super

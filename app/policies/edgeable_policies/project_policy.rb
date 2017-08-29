@@ -15,7 +15,6 @@ class ProjectPolicy < EdgeablePolicy
   end
 
   def create?
-    assert_publish_type
     return unless active_for_user?(:projects, user)
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
