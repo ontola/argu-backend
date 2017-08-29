@@ -1,7 +1,7 @@
 en:
   decisions:
     type: "decision"
-    take_decision: "Take decision"
+    menu: "Take decision"
     approved: "Approved"
     rejected: "Rejected"
     forwarded: "Forwarded"

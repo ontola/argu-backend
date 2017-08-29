@@ -15,8 +15,7 @@ RSpec.feature 'Decisions', type: :feature do
     skip if ENV['BROWSER'] == 'chrome'
     sign_in(super_admin)
 
-    visit motion_path(motion)
-    click_link 'Take decision'
+    visit motion_decisions_path(motion)
     click_link 'Approve'
     expect(page).to have_content('Explain this decision')
     expect do
@@ -34,8 +33,7 @@ RSpec.feature 'Decisions', type: :feature do
     forwarded_to
     sign_in(super_admin)
 
-    visit motion_path(motion)
-    click_link 'Take decision'
+    visit motion_decisions_path(motion)
     click_link 'Forward'
     expect(page).to have_content('Group or user')
     expect do
@@ -55,8 +53,7 @@ RSpec.feature 'Decisions', type: :feature do
     skip if ENV['BROWSER'] == 'chrome'
     sign_in(super_admin)
 
-    visit motion_path(motion)
-    click_link 'Take decision'
+    visit motion_decisions_path(motion)
     click_link 'Reject'
     expect(page).to have_content('Explain this decision')
     expect do

@@ -47,13 +47,9 @@ section.section--details
           span.fa.fa-map-pin
     - if motion.edge.custom_placements.present?
       =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_viewer_props(map_marker_props(motion.edge.custom_placements.first), zoom: motion.edge.custom_placements.first.zoom_level))
-    - if local_assigns[:show_decision]
-      - if (motion.state == 'pending') && policy(motion.last_or_new_decision(true)).update?
-        div class="detail detail--decision detail--interactive detail--decision--#{motion.state}"
-          =react_component('HyperDropdown', decision_items(motion), {prerender: true}) if decision_items(motion)[:sections].first[:items].present?
-      - elsif motion.state != 'pending'
-        div class="detail detail--decision--#{motion.state}"
-          .detail__icon
-            div class="fa fa-#{decision_icon(motion)}"
-          .detail__text
-            =t("decisions.#{motion.state}")
+    - if local_assigns[:show_decision] && !motion.state == 'pending'
+      div class="detail detail--decision--#{motion.state}"
+        .detail__icon
+          div class="fa fa-#{decision_icon(motion)}"
+        .detail__text
+          =t("decisions.#{motion.state}")

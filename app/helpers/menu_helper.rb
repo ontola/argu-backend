@@ -24,6 +24,7 @@ module MenuHelper
   def crud_menu_options(resource, additional_items = [])
     link_items = [].concat(additional_items).compact
     resource_policy = policy(resource)
+    link_items.append(crud_menu_decision_option(resource))
     link_items.append(crud_menu_comments_option(resource))
     link_items.append(crud_menu_feed_option(resource, resource_policy))
     link_items.append(crud_menu_new_blog_post_option(resource, resource_policy))
@@ -39,6 +40,15 @@ module MenuHelper
       t('comments.menu', count: resource.children_count(:comments)),
       polymorphic_url([resource, :comments]),
       fa: 'comments-o'
+    )
+  end
+
+  def crud_menu_decision_option(resource)
+    return unless resource.is_a?(Motion) && policy(resource.last_or_new_decision(true)).update?
+    link_item(
+      t('decisions.menu'),
+      motion_decisions_path(resource),
+      fa: 'gavel'
     )
   end
 

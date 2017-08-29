@@ -1,7 +1,7 @@
 nl:
   decisions:
     type: "besluit"
-    take_decision: "Besluit nemen"
+    menu: "Besluit nemen"
     approved: "Aangenomen"
     rejected: "Verworpen"
     forwarded: "Doorgestuurd"

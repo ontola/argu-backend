@@ -22,38 +22,6 @@ module DecisionsHelper
     end
   end
 
-  # @param [ActiveRecord::Base] resource An ActiveRecord with `has_many :decisions`
-  # @return [Hash]
-  def decision_items(resource)
-    items =
-      if resource.decisions.unpublished.present?
-        [
-          link_item(t('decisions.edit_draft'),
-                    edit_motion_decision_path(resource, resource.decisions.last),
-                    fa: 'pencil')
-        ]
-      elsif resource.assigned_to_user?(current_user)
-        Decision.actioned_keys.map do |state|
-          link_item(t("decisions.action.#{state}"),
-                    new_motion_decision_path(resource, state: state),
-                    fa: decision_icon(Decision.new(state: state)))
-        end
-      else
-        [
-          link_item(t('decisions.action.forwarded'),
-                    new_motion_decision_path(resource, state: 'forwarded'),
-                    fa: decision_icon(Decision.new(state: 'forwarded')))
-        ]
-      end
-
-    {
-      title: t('decisions.take_decision'),
-      fa: 'fa-gavel',
-      sections: [items: items],
-      defaultAction: motion_decisions_path(resource)
-    }
-  end
-
   def decision_url(decision, opts = {})
     polymorphic_url([decision.parent_model, decision], opts)
   end
