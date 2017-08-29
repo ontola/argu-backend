@@ -17,6 +17,18 @@ module ApplicationHelper
     nil
   end
 
+  def allowed_publish_types(resource)
+    types =
+      if policy(resource)
+           .permitted_nested_attributes(:edge_attributes, :argu_publication_attributes)
+           .include?(:published_at)
+        %i(direct draft schedule)
+      else
+        %i(direct draft)
+      end
+    types.map { |type| {label: t("publications.type.#{type}"), value: type} }
+  end
+
   def awesome_time_ago_in_words(date)
     return unless date.present?
     if 1.day.ago < date

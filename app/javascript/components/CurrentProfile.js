@@ -31,9 +31,11 @@ export const CurrentProfile = React.createClass({
     valueRenderer (obj) {
         return (
             <div>
-                <span className="post-as">{I18n.t(`profiles.actor.${this.props.action}`)}</span>
-                <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
-                {obj.label}
+                <span className="post-as-label">{I18n.t(`profiles.actor.${this.props.action}`)}</span>
+                <span className="post-as-value">
+                    <img className="Select-item-result-icon" height='25em' src={obj.image} width='25em'/>
+                    {obj.label}
+                </span>
             </div>
         );
     },

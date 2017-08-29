@@ -4,8 +4,8 @@ nl:
   publications:
     type:
       direct: 'Publiceer direct'
-      draft: 'Bewaar als concept'
-      schedule: 'Plan publicatie op:'
+      draft: 'Bewaar concept'
+      schedule: 'Inplannen'
     follow_type:
       helper: 'Stuur een melding naar %{news_audience} in plaats van %{reactions_audience} gebruiker(s)'
     publish_in_one_minute: "Wordt binnen een minuut gepubliceerd."

@@ -281,14 +281,11 @@
     display: inline-flex;
     width: 300px;
     text-align: left;
-    .post-as {
+    .post-as-label {
       font-size: small;
       color: $g3;
       padding-right: 4px;
     }
-}
-.section--footer .Select-profile .Select-control {
-    background-color: rgb(249, 249, 249);
 }
 @keyframes Select-animation-spin {
     to {

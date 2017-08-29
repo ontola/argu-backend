@@ -1,10 +1,2 @@
--if !resource.is_published? && !resource.is_trashed?
-  =f.semantic_fields_for :edge do |ef|
-    =ef.semantic_fields_for :argu_publication do |pf|
-      - if policy(resource).permitted_publish_types.present?
-        label= t('formtastic.labels.publication.publish_type')
-        =pf.input(:publish_type, label: false, as: :radio, collection: policy(resource).permitted_publish_types.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
-        - if policy(resource).permitted_publish_types.include? 'schedule'
-          =pf.input(:published_at, as: :datetime_picker, label: false)
-      - else
-        =pf.input :publish_type, as: :hidden, input_html: {value: pf.object.publish_type}
+-if !resource.is_published? && !resource.try(:is_trashed?)
+  =react_component_store 'PublishSelect', props: {publicationId: resource&.argu_publication&.id, publishAt: resource&.argu_publication&.published_at || DateTime.current, publishType: resource&.argu_publication&.publish_type || 'direct', publishTypes: allowed_publish_types(resource), resourceType: resource.class_name.singularize}

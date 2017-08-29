@@ -7,8 +7,8 @@ nl:
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
     votes_are_private: "Je activiteit is alleen voor jou zichtbaar"
     actor:
-      create: "Plaatsen als:"
-      update: "Wijzigen als:"
+      create: "Plaatsen als"
+      update: "Wijzigen als"
     show:
       title: "Profiel"
       btn:

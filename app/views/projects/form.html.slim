@@ -37,12 +37,13 @@
               =link_to_add_association f, :phases, class: 'btn-subtle' do
                 span.fa.fa-plus
                 span.icon-left=t('projects.phases.add')
-          =render partial: 'publications/form', locals: {f: f, resource: project}
-        section.section--footer
-          =render partial: 'profiles/creator', locals: {resource: project}
-          =f.actions
-            .sticky-submit
-              =f.action :submit, as: :button
+        section.section--footer.footer-flex
+          .footer-flex-element.footer-creator
+            =render partial: 'profiles/creator', locals: {resource: project}
+          .footer-flex-element.footer-publication
+            =render partial: 'publications/form', locals: {f: f, resource: project}
+          .footer-action
+            =f.action :submit, as: :button
   /TODO make translations, make content dependent on focus field
   .col-3-1
     =render partial: 'markdown_helper'

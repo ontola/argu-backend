@@ -828,3 +828,11 @@ h1 + .btn {
     }
   }
 }
+
+.btn-datetime {
+  z-index: 1;
+  position: relative;
+  width: 250px;
+  border-radius: 0 0 .4em .4em;
+  text-align: center;
+}

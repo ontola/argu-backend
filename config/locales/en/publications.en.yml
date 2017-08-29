@@ -4,8 +4,8 @@ en:
   publications:
     type:
       direct: 'Publish directly'
-      draft: 'Save as draft'
-      schedule: 'Schedule publication:'
+      draft: 'Save draft'
+      schedule: 'Schedule'
     follow_type:
       helper: 'Notify %{news_audience} instead of %{reactions_audience} user(s)'
     publish_in_one_minute: "Will be published within a minute."

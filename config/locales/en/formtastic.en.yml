@@ -86,9 +86,6 @@ en:
         reactions_email: "For new items"
         news_email: "For important items"
         decisions_email: "For official decisions"
-      publication:
-        publish_type: "Publication:"
-        target: 'Notify'
     hints:
       tag_list: "Choose themes related to your subject."
       username: "At least 4 characters. Numbers, letters and '_'. only."

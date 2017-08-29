@@ -4,12 +4,13 @@ section
     span.icon-left= decision_state(decision)
   =f.input :state, as: :hidden
   - if decision.forwarded? && decision.state_was == 'pending'
-    =f.label t('decisions.forward_to')
-    =react_component 'SearchActor', thing: "o/#{decision.parent_model(:forum).page.url}", groups: group_select_options(decision.parent_model(:forum))
-    - if decision.errors.present?
-      p.inline-errors.full-width=decision.errors.full_messages[0]
-    =f.input :forwarded_group_id, as: :hidden
-    =f.input :forwarded_user_id, as: :hidden
+    .forward
+      =f.label t('decisions.forward_to')
+      =react_component 'SearchActor', thing: "o/#{decision.parent_model(:forum).page.url}", groups: group_select_options(decision.parent_model(:forum))
+      - if decision.errors.present?
+        p.inline-errors.full-width=decision.errors.full_messages[0]
+      =f.input :forwarded_group_id, as: :hidden
+      =f.input :forwarded_user_id, as: :hidden
   =f.label t('decisions.explanation')
   =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
   =f.semantic_fields_for :happening do |hf|
@@ -17,14 +18,10 @@ section
       =hf.input :happened_at, as: :datetime_picker, label: t('decisions.happened_at')
     - else
       =hf.input :happened_at, as: :hidden
-  - if !decision.is_published?
-    =f.semantic_fields_for :edge do |ef|
-      =ef.semantic_fields_for :argu_publication do |pf|
-        =pf.input(:publish_type, as: :radio, collection: {direct: 0, draft: 1}.map { |type| [t("publications.type.#{type.first.to_s}"), type.first] })
-.section.section--footer
-  =render partial: 'profiles/creator', locals: {resource: decision}
-  ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-    - if decision.new_record?
-      =f.action :submit, as: :button, label: t('save')
-    - else
-      =f.action :submit, as: :button, label: t('update')
+section.section--footer.footer-flex
+  .footer-flex-element.footer-creator
+    =render partial: 'profiles/creator', locals: {resource: decision}
+  .footer-flex-element.footer-publication
+    =render partial: 'publications/form', locals: {f: f, resource: decision}
+  .footer-action
+    =f.action :submit, as: :button

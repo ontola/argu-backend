@@ -115,3 +115,20 @@ footer {
     border-radius: 999px;
   }
 }
+
+.section--footer.footer-flex {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.footer-flex-element {
+  flex-grow: 1;
+  .Select-profile {
+    display: block;
+    width: 100%;
+  }
+}
+.section--footer .schedule-select .Select-control,
+.section--footer .Select-profile .Select-control {
+  background-color: rgb(249, 249, 249);
+}

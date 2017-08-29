@@ -39,7 +39,7 @@ RSpec.feature 'Decisions', type: :feature do
     expect do
       within('form.decision') do
         fill_in 'decision_content', with: 'Reason to forward decision'
-        within('section') do
+        within('section .forward') do
           fill_in_select with: forwarded_to.display_name
         end
         click_button 'Save'

@@ -50,12 +50,13 @@
               - if question.persisted? && policy(question).move?
                 =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
-              =render partial: 'publications/form', locals: {f: f, resource: question}
-        section.section--footer
-          =render partial: 'profiles/creator', locals: {resource: question}
-          =f.actions
-            .sticky-submit
-              =f.action :submit, as: :button
+        section.section--footer.footer-flex
+          .footer-flex-element.footer-creator
+            =render partial: 'profiles/creator', locals: {resource: question}
+          .footer-flex-element.footer-publication
+            =render partial: 'publications/form', locals: {f: f, resource: question}
+          .footer-action
+            =f.action :submit, as: :button
   .col-3-1
     .box#question-title-helper
       section
