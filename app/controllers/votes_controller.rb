@@ -13,24 +13,15 @@ class VotesController < EdgeTreeController
   end
 
   def new
-    @model = parent_resource!.voteable
-    authorize @model, :show?
-
     render locals: {
-      resource: @model,
+      resource: parent_resource!.voteable,
       vote: Vote.new
     }
   end
 
   # POST /model/:model_id/v/:for
   def create
-    @model = parent_resource!
-
-    method = create_service.resource.persisted? ? :update? : :create?
-    authorize create_service.resource, method
-
     return super unless unmodified?
-
     respond_to do |format|
       format.json do
         render status: 304,
@@ -50,6 +41,12 @@ class VotesController < EdgeTreeController
   end
 
   private
+
+  def authorize_action
+    return super unless action_name == 'create'
+    method = authenticated_resource.persisted? ? :update? : :create?
+    authorize authenticated_resource, method
+  end
 
   def create_respond_blocks_failure(resource, format)
     format.json { respond_with_400(resource, :json) }

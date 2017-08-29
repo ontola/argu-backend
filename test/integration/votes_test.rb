@@ -347,7 +347,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     get new_motion_vote_path(motion)
 
     assert_response 200
-    assert assigns(:model)
   end
 
   test 'user should get show json_api' do
@@ -390,7 +389,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
   end
@@ -438,7 +436,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
   end
@@ -498,7 +495,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
     assert assigns(:create_service).resource.pro?
@@ -526,7 +522,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
     assert_equal 'Explanation', assigns(:create_service).resource.explanation
@@ -554,7 +549,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
@@ -623,7 +617,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
@@ -648,7 +641,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.con?
   end
@@ -699,7 +691,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 304
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
   end
 
@@ -718,7 +709,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 304
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
   end
 
@@ -741,7 +731,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 304
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
@@ -761,7 +750,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to motion_path(motion)
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
   end
 
@@ -783,7 +771,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'update', 'con')
   end
@@ -805,7 +792,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
   end
 
@@ -829,7 +815,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.con?
   end
@@ -932,7 +917,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     get new_motion_vote_path(cairo_motion)
 
     assert_response 200
-    assert assigns(:model)
   end
 
   test 'member should post create' do
@@ -951,7 +935,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
   end
@@ -975,7 +958,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert assigns(:model)
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
