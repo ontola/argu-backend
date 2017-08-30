@@ -8,6 +8,8 @@
   =render partial: 'motions/info_bar', locals: {show_type: false, motion: model, show_decision: true, show_vote_pie: true, show_profile: true}
   section
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
+  section.section--attachments
+    =react_component_store 'Gallery', props: {files: model.attachments.map {|a| {src: a.url, caption: a.description.presence, thumbnail: a.thumbnail, is_image: a.is_image?}}}
   section
     - if model.top_arguments_pro.present? || model.top_arguments_con.present?
       ul.box-list.box-list--arguments.box-list--icons

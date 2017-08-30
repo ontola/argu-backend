@@ -11,7 +11,7 @@ class QuestionsController < EdgeTreeController
           @all_motions
             .joins(:edge, :default_vote_event_edge)
             .includes(
-              :default_cover_photo, :votes, :published_publications,
+              :default_cover_photo, :votes, :published_publications, :attachments,
               edge: :custom_placements, creator: :default_profile_photo
             )
             .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")

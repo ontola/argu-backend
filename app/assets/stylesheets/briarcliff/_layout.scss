@@ -13,6 +13,7 @@ html, body {
 
 body {
   background-color: $g1;
+  overflow-y: initial !important;
 
   @include bp-smaller{
     font-size: .9em;
