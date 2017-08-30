@@ -15,7 +15,7 @@ module ActivePublishable
             through: :edge
 
     def is_draft?
-      published_publications.empty?
+      edge.published_publications.empty?
     end
 
     def is_publishable?

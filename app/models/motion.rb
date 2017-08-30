@@ -91,6 +91,10 @@ class Motion < ApplicationRecord
     title
   end
 
+  def self.edge_includes_for_index
+    super.deep_merge(default_vote_event: {}, last_published_decision: {})
+  end
+
   def move_to(forum, unlink_question = true)
     Motion.transaction do
       self.forum = forum.lock!

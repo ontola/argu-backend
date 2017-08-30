@@ -135,7 +135,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     assert cologne.motions.count.positive?
-    assert_nil assigns(:items), 'Closed forums are leaking content'
+    assert_nil assigns(:children), 'Closed forums are leaking content'
   end
 
   test 'user should not show hidden to non-members' do
@@ -217,7 +217,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_forum_shown(cologne)
 
     assert cologne.motions.count.positive?
-    assert assigns(:items), 'Closed forum content is not present'
+    assert assigns(:children), 'Closed forum content is not present'
   end
 
   test 'member should show hidden to members' do
@@ -599,7 +599,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   private
 
   def included_in_items?(item)
-    assigns(:items).map(&:identifier).include?(item.identifier)
+    assigns(:children).map(&:identifier).include?(item.edge.identifier)
   end
 
   # Asserts that the forum is shown on a specific tab
@@ -628,17 +628,15 @@ class ForumsTest < ActionDispatch::IntegrationTest
   def general_show(record = freetown)
     get forum_path(record)
     assert_forum_shown(record)
-    assert_not_nil assigns(:items)
+    assert_not_nil assigns(:children)
 
-    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed items are visible'
+    assert_not assigns(:children).any?(&:is_trashed?), 'Trashed items are visible'
 
     assert_project_children_visible
     assert_unpublished_content_invisible
   end
 
   def assert_project_children_visible
-    assert included_in_items?(published_project),
-           'Published projects are not visible'
     assert included_in_items?(q3),
            'Questions are not visible'
     assert_not included_in_items?(m4),
@@ -652,7 +650,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   def assert_unpublished_content_invisible
-    assert_not assigns(:items).any?(&:is_trashed?),
+    assert_not assigns(:children).any?(&:is_trashed?),
                'Trashed items are visible'
     assert_not included_in_items?(project),
                'Unpublished projects are visible'

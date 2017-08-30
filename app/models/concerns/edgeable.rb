@@ -137,6 +137,14 @@ module Edgeable
       end
     end
 
+    def edge_includes_for_index
+      {
+        published_publications: {},
+        custom_placements: {place: {}},
+        owner: {default_cover_photo: {}}
+      }
+    end
+
     # Adds an association for children through the edge tree
     # Usage is the same as regular has_many
     # @note The official relation name is suffixed with '_from_tree', to prevent join naming conflicts.

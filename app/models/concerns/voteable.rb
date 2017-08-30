@@ -25,9 +25,7 @@ module Voteable
       )
     end
 
-    def default_vote_event
-      @default_vote_event ||= VoteEvent.joins(:edge).where(edges: {parent_id: edge.id}).find_by(group_id: -1)
-    end
+    delegate :default_vote_event, to: :edge
   end
 
   module Serializer

@@ -37,7 +37,7 @@ class ForumsController < EdgeTreeController
         if (/[a-zA-Z]/i =~ params[:id]).nil?
           redirect_to url_for(@forum), status: 307
         else
-          @items = collect_items
+          @children = collect_children
           render
         end
       end
@@ -114,23 +114,15 @@ class ForumsController < EdgeTreeController
     cities.sort { |x, y| y[1] <=> x[1] }
   end
 
-  def collect_items
-    projects = policy_scope(resource_by_id
-                              .projects
-                              .includes(:edge, :default_cover_photo, :published_publications))
-    questions = policy_scope(resource_by_id
-                               .questions
-                               .where(project_id: nil)
-                               .includes(:edge, :default_cover_photo, :published_publications))
-    motions = policy_scope(resource_by_id
-                             .motions
-                             .where(project_id: nil, question_id: nil)
-                             .includes(:edge, :default_cover_photo, :votes, :published_publications))
-
-    Kaminari
-      .paginate_array((projects + questions + motions)
-                        .sort_by { |i| [i.pinned ? 1 : 0, i.last_activity_at] }
-                        .reverse)
+  def collect_children
+    policy_scope(
+      resource_by_id
+        .edge
+        .children
+        .where(owner_type: %w(Motion Question))
+        .order('edges.pinned_at DESC NULLS LAST, edges.last_activity_at DESC')
+    )
+      .includes(Question.edge_includes_for_index.deep_merge(Motion.edge_includes_for_index))
       .page(show_params[:page])
       .per(30)
   end

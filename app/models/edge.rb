@@ -19,6 +19,14 @@ class Edge < ApplicationRecord
            inverse_of: :parent,
            foreign_key: :parent_id
   has_many :decisions, foreign_key: :decisionable_id, source: :decisionable
+  has_one :last_decision,
+          -> { order(step: :desc) },
+          foreign_key: :decisionable_id,
+          class_name: 'Decision'
+  has_one :last_published_decision,
+          -> { published.order(step: :desc) },
+          foreign_key: :decisionable_id,
+          class_name: 'Decision'
   has_many :favorites, dependent: :destroy
   has_many :follows,
            class_name: 'Follow',
@@ -31,10 +39,34 @@ class Edge < ApplicationRecord
   has_many :publications,
            foreign_key: :publishable_id,
            dependent: :destroy
+  has_many :published_publications,
+           -> { where('publications.published_at IS NOT NULL') },
+           class_name: 'Publication',
+           foreign_key: :publishable_id
   has_one :argu_publication,
           -> { where(channel: 'argu') },
           class_name: 'Publication',
           foreign_key: :publishable_id
+  has_one :default_vote_event_edge,
+          -> { where(owner_type: 'VoteEvent') },
+          foreign_key: :parent_id,
+          class_name: 'Edge'
+  has_one :default_vote_event,
+          through: :default_vote_event_edge,
+          source: :owner,
+          source_type: 'VoteEvent',
+          class_name: 'VoteEvent'
+  # Children associations
+  has_many :motions,
+           through: :children,
+           source: :owner,
+           source_type: 'Motion'
+  has_many :active_motions,
+           -> { published.untrashed.order(updated_at: :desc) },
+           through: :children,
+           source: :owner,
+           source_type: 'Motion'
+
   scope :published, -> { where('is_published = true') }
   scope :unpublished, -> { where('is_published = false') }
   scope :trashed, -> { where('trashed_at IS NOT NULL') }

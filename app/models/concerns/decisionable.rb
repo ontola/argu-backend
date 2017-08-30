@@ -37,11 +37,11 @@ module Decisionable
 
     def last_or_new_decision(drafts = false)
       @last_or_new_decision ||= {}
-      @last_or_new_decision[drafts] ||= (drafts ? last_decision : last_published_decision) || new_decision
+      @last_or_new_decision[drafts] ||= (drafts ? edge.last_decision : edge.last_published_decision) || new_decision
     end
 
     def new_decision(state = :pending)
-      Edge.new(owner: Decision.new(forum: forum, state: state), parent: edge).owner
+      Edge.new(owner: Decision.new(forum_id: forum_id, state: state), parent_id: edge.id).owner
     end
   end
 end

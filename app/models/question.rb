@@ -22,7 +22,6 @@ class Question < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify
-  has_many :top_motions, -> { published.untrashed.order(updated_at: :desc) }, class_name: 'Motion'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   with_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
@@ -57,6 +56,10 @@ class Question < ApplicationRecord
   # http://schema.org/description
   def description
     content
+  end
+
+  def self.edge_includes_for_index
+    super.deep_merge(active_motions: {})
   end
 
   def expired?
