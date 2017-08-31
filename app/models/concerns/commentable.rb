@@ -4,6 +4,7 @@ module Commentable
 
   included do
     acts_as_commentable
+    has_one :top_comment, -> { untrashed.order('comments.created_at ASC') }, class_name: 'Comment', as: :commentable
 
     with_collection :comments, association: :filtered_threads, pagination: true
 
@@ -22,13 +23,6 @@ module Commentable
         end
         c.children.each(&shallow_wipe) if c.children.present?
       end
-    end
-
-    def top_comment(_show_trashed = nil)
-      @top_comment ||= comment_threads
-                         .joins(:edge)
-                         .untrashed
-                         .order('comments.created_at ASC').first
     end
   end
 

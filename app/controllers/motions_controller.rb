@@ -37,7 +37,12 @@ class MotionsController < EdgeTreeController
     respond_to do |format|
       format.html do
         @arguments = Argument.ordered(
-          policy_scope(authenticated_resource.arguments.show_trashed(show_trashed?).includes(:votes)),
+          policy_scope(
+            authenticated_resource
+              .arguments
+              .show_trashed(show_trashed?)
+              .includes(edge: :votes, top_comment: :edge)
+          ),
           pro: show_params[:page_arg_pro],
           con: show_params[:page_arg_con]
         )

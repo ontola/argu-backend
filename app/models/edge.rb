@@ -77,6 +77,10 @@ class Edge < ApplicationRecord
            through: :children,
            source: :owner,
            source_type: 'Motion'
+  has_many :votes,
+           through: :children,
+           source: :owner,
+           source_type: 'Vote'
 
   scope :published, -> { where('edges.is_published = true') }
   scope :unpublished, -> { where('edges.is_published = false') }

@@ -53,7 +53,11 @@ module VotesHelper
   end
 
   def upvote_for(model, profile)
-    Edge.where_owner('Vote', creator: profile).find_by(parent: model.edge)&.owner
+    if profile.confirmed?
+      model.edge.votes.detect { |vote| vote.creator_id == profile.id }
+    else
+      Edge.where_owner('Vote', creator: profile).find_by(parent: model.edge)&.owner
+    end
   end
 
   def vote_event_ids_from_activities(activities)
