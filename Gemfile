@@ -164,6 +164,7 @@ group :development do
   gem 'yard-activesupport-concern'
   gem 'web-console', '~> 3.5.1'
   gem 'active_record_query_trace'
+  gem 'bullet'
   gem 'puma', platform: :ruby
 end
 
