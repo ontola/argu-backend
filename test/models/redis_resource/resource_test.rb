@@ -49,6 +49,7 @@ module RedisResource
       vote = create_vote(user, for: :con)
       assert vote.con?
       user.primary_email_record.update(confirmed_at: nil)
+      user.remove_instance_variable('@confirmed')
       assert_differences([['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', 1]]) do
         create_vote(user)
       end
@@ -76,6 +77,7 @@ module RedisResource
       ).key
       Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
       user.primary_email_record.update(confirmed_at: nil)
+      user.remove_instance_variable('@confirmed')
       assert_differences([['Vote.count', -1], ['Argu::Redis.keys("temporary*").count', -1]]) do
         vote.destroy
       end
@@ -98,6 +100,7 @@ module RedisResource
       ).key
       Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
       user.primary_email_record.update(confirmed_at: nil)
+      user.remove_instance_variable('@confirmed')
       assert_differences([['Motion.count', -1], ['Vote.count', -1], ['Argu::Redis.keys("temporary*").count', -1]]) do
         vote.parent_model.parent_model.destroy
       end

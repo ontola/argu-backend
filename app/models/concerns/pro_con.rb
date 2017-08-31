@@ -35,6 +35,10 @@ module ProCon
     title
   end
 
+  def con?
+    !pro?
+  end
+
   def display_name
     title
   end

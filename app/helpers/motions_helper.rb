@@ -39,7 +39,7 @@ module MotionsHelper
   end
 
   def motion_vote_arguments(motion)
-    policy_scope(motion.arguments).collect do |argument|
+    motion.edge.active_arguments.map do |argument|
       {
         id: argument.id,
         displayName: argument.display_name,

@@ -11,9 +11,9 @@
   section.section--attachments
     =react_component_store 'Gallery', props: {files: model.attachments.map {|a| {src: a.url, caption: a.description.presence, thumbnail: a.thumbnail, is_image: a.is_image?}}}
   section
-    - if model.top_arguments_pro.present? || model.top_arguments_con.present?
+    - if model.edge.arguments_pro.present? || model.edge.arguments_con.present?
       ul.box-list.box-list--arguments.box-list--icons
-        - model.top_arguments_pro.first(5).each do |argument|
+        - model.edge.arguments_pro.first(5).each do |argument|
           li= link_to argument_path(argument.id)
             h4[class="pro-t tooltip--wider"]
               span.fa.fa-plus
@@ -27,7 +27,7 @@
           li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
             span= t('arguments.new.pro')
       ul.box-list.box-list--arguments.box-list--icons
-        - model.top_arguments_con.first(5).each do |argument|
+        - model.edge.arguments_con.first(5).each do |argument|
           li= link_to argument_path(argument.id)
             h4[class="con-t tooltip--wider"]
               span.fa.fa-minus

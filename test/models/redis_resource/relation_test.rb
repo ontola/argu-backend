@@ -83,6 +83,7 @@ module RedisResource
       vote = create_vote(user)
       assert vote.persisted?
       user.primary_email_record.update(confirmed_at: nil)
+      user.remove_instance_variable('@confirmed')
 
       redis_vote = create_vote(user)
       assert_not redis_vote.persisted?

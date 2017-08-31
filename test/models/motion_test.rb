@@ -9,18 +9,18 @@ class MotionTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'top_arguments_con should not include trashed motions' do
+  test 'arguments_con should not include trashed motions' do
     trashed_args = subject.arguments.trashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
-    assert_not((subject.top_arguments_con.map(&:id) & trashed_args).present?)
+    assert_not((subject.edge.arguments_con.map(&:id) & trashed_args).present?)
   end
 
-  test 'top_arguments_pro should not include trashed motions' do
+  test 'arguments_pro should not include trashed motions' do
     trashed_args = subject.arguments.trashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
-    assert_not((subject.top_arguments_pro.map(&:id) & trashed_args).present?)
+    assert_not((subject.edge.arguments_pro.map(&:id) & trashed_args).present?)
   end
 
   test 'convert to question' do

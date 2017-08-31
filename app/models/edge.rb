@@ -57,6 +57,17 @@ class Edge < ApplicationRecord
           source_type: 'VoteEvent',
           class_name: 'VoteEvent'
   # Children associations
+  has_many :arguments,
+           through: :children,
+           source: :owner,
+           source_type: 'Argument'
+  has_many :active_arguments,
+           lambda {
+             published.untrashed.order("cast(edges_arguments.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+           },
+           through: :children,
+           source: :owner,
+           source_type: 'Argument'
   has_many :motions,
            through: :children,
            source: :owner,
@@ -67,11 +78,11 @@ class Edge < ApplicationRecord
            source: :owner,
            source_type: 'Motion'
 
-  scope :published, -> { where('is_published = true') }
-  scope :unpublished, -> { where('is_published = false') }
-  scope :trashed, -> { where('trashed_at IS NOT NULL') }
-  scope :untrashed, -> { where('trashed_at IS NULL') }
-  scope :expired, -> { where('expires_at <= ?', DateTime.current) }
+  scope :published, -> { where('edges.is_published = true') }
+  scope :unpublished, -> { where('edges.is_published = false') }
+  scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }
+  scope :untrashed, -> { where('edges.trashed_at IS NULL') }
+  scope :expired, -> { where('edges.expires_at <= ?', DateTime.current) }
 
   accepts_nested_attributes_for :argu_publication
 
@@ -89,6 +100,14 @@ class Edge < ApplicationRecord
 
   attr_writer :root
   delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
+
+  def arguments_pro
+    @arguments_pro ||= active_arguments.select(&:pro?)
+  end
+
+  def arguments_con
+    @arguments_con ||= active_arguments.select(&:con?)
+  end
 
   # @return [Array] The ids of (persisted) ancestors, excluding self
   def persisted_ancestor_ids

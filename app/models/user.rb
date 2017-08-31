@@ -113,7 +113,7 @@ class User < ApplicationRecord
   end
 
   def confirmed?
-    emails.where('confirmed_at IS NOT NULL').any?
+    @confirmed ||= emails.where('confirmed_at IS NOT NULL').any?
   end
 
   def create_confirmation_reminder_notification
@@ -228,7 +228,7 @@ class User < ApplicationRecord
   # @return [Array] The ids of the profiles managed by the user
   def managed_profile_ids
     @managed_profile_ids ||=
-      if !confirmed? || managed_pages.empty?
+      if !confirmed? || !managed_pages.present?
         [profile.id]
       else
         managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)

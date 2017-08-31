@@ -134,7 +134,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def destroy?
-    return super if edge.children.any?
+    return super if edge.children_counts.values.map(&:to_i).sum.positive?
     rule is_creator?, staff?
   end
 

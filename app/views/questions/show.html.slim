@@ -47,8 +47,8 @@
           h3
             span.fa.fa-lightbulb-o
             span.icon-left= t('motions.call_to_action.action', type: motion_type.downcase)
-- if @motions.present?
-  =render_columns({'' => {collection: @motions}},
+- if @motion_edges.present?
+  =render_columns({'' => {collection: @motion_edges}},
                   header: motions_type,
                   header_text: 'test',
                   collection_model: Motion,
@@ -58,5 +58,5 @@
                   buttons_text: t('add_type', type: motion_type),
                   page_param: :page,
                   buttons_icon: 'fa-lightbulb-o',
-                  buttons_header: @motions.present? && t('motions.one_up'),
+                  buttons_header: @motion_edges.present? && t('motions.one_up'),
                   buttons_class: 'box-link--motion')

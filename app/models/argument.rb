@@ -10,14 +10,6 @@ class Argument < ApplicationRecord
 
   validate :assert_tenant
 
-  scope :argument_comments, lambda {
-    includes(:comment_threads)
-      .joins(:edge)
-      .order(
-        Arel.sql("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int)") => :desc,
-        Arel.sql('edges.last_activity_at') => :desc
-      )
-  }
   delegate :page, to: :forum
 
   contextualize_as_type 'argu:Argument'
@@ -52,7 +44,7 @@ class Argument < ApplicationRecord
   def adjacent(direction, _show_trashed = nil)
     return if is_trashed?
     ids = parent_model
-            .arguments_plain
+            .arguments
             .untrashed
             .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
             .ids

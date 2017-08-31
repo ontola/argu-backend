@@ -6,17 +6,19 @@ class QuestionsController < EdgeTreeController
   def show
     respond_to do |format|
       format.html do
-        @all_motions = policy_scope(authenticated_resource.motions)
-        @motions =
-          @all_motions
-            .joins(:edge, :default_vote_event_edge)
-            .includes(
-              :default_cover_photo, :votes, :published_publications, :attachments,
-              edge: :custom_placements, creator: :default_profile_photo
-            )
-            .order("cast(default_vote_event_edges_motions.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+        @all_motion_edges = policy_scope(
+          resource_by_id
+            .edge
+            .children
+            .where(owner_type: 'Motion')
+        )
+        @motion_edges =
+          @all_motion_edges
+            .includes(Motion.edge_includes_for_index(true))
+            .joins(:default_vote_event_edge)
+            .order("cast(default_vote_event_edges_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
             .page(show_params[:page])
-        preload_user_votes(@motions.map { |m| m.default_vote_event_edge.id })
+        preload_user_votes(@motion_edges.map { |edge| edge.default_vote_event_edge.id })
         render locals: {question: authenticated_resource}
       end
       format.widget { render authenticated_resource }

@@ -3,24 +3,12 @@ module Argumentable
   extend ActiveSupport::Concern
 
   included do
-    edge_tree_has_many :arguments, -> { argument_comments }
-    edge_tree_has_many :top_arguments_con, (lambda do
-      argument_comments
-        .joins(:edge)
-        .where(pro: false)
-        .untrashed
-        .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-        .limit(5)
-    end), class_name: 'Argument'
-    edge_tree_has_many :top_arguments_pro, (lambda do
-      argument_comments
-        .joins(:edge)
-        .where(pro: true)
-        .untrashed
-        .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-        .limit(5)
-    end), class_name: 'Argument'
-    edge_tree_has_many :arguments_plain, -> { all }, class_name: 'Argument'
+    edge_tree_has_many :arguments, lambda {
+      order(
+        Arel.sql("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int)") => :desc,
+        Arel.sql('edges.last_activity_at') => :desc
+      )
+    }
 
     with_collection :arguments, pagination: true
 

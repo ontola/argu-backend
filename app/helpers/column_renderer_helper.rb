@@ -22,7 +22,8 @@ module ColumnRendererHelper
       end
     end
 
-    render partial: partial, locals: {model: columns}.merge(options: HashWithIndifferentAccess.new(options))
+    model = columns.is_a?(Edge) ? columns.owner : columns
+    render partial: partial, locals: {model: model}.merge(options: HashWithIndifferentAccess.new(options))
   end
 
   def button_box(params)

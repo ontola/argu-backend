@@ -91,8 +91,14 @@ class Motion < ApplicationRecord
     title
   end
 
-  def self.edge_includes_for_index
-    super.deep_merge(default_vote_event: {}, last_published_decision: {})
+  def self.edge_includes_for_index(full = false)
+    includes = super().deep_merge(default_vote_event: {}, last_published_decision: {})
+    return includes unless full
+    includes.deep_merge(
+      active_arguments: {},
+      default_vote_event_edge: {},
+      owner: {attachments: {}, creator: Profile.includes_for_profileable}
+    )
   end
 
   def move_to(forum, unlink_question = true)

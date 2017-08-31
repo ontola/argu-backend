@@ -98,6 +98,10 @@ class Profile < ApplicationRecord
     granted_edges(owner_type, role).pluck(:owner_id)
   end
 
+  def self.includes_for_profileable
+    {default_profile_photo: {}, profileable: :shortname}
+  end
+
   def owner
     profileable
   end
