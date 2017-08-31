@@ -30,9 +30,7 @@
             ul= react_component_store 'ShareDropdown', props: share_items(question)
   - unless question.is_published?
     =render partial: 'application/publish', locals: {resource: question}
-- if question.blog_posts.untrashed.present?
-  .col-1
-    =render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?}
+  =render partial: 'happenings/timeline', locals: {resource: question, happenings: policy_scope(resource.happenings).includes(trackable: [creator: Profile.includes_for_profileable, edge: :published_publications]), show_unpublished: policy(question).update?}
 - if question.edge.custom_placements.present?
   .col-1.large-map
     =react_component_store 'MapViewer', props: map_question_props(question)

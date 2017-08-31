@@ -1,10 +1,10 @@
 # frozen_string_literal: false
 module TimelineHelper
-  def current_happening(resource)
+  def current_happening(happenings)
     if params[:happening_id].present?
-      policy_scope(Activity).find(params[:happening_id])
+      happenings.select { |happening| happening.id == params[:happening_id] }
     else
-      policy_scope(resource.happenings).last
+      happenings.last
     end
   end
 
@@ -21,11 +21,6 @@ module TimelineHelper
     class_string << ' unpublished' unless happening.trackable.is_published
     class_string << ' active' if active
     class_string
-  end
-
-  def render_timeline?(resource)
-    policy_scope(resource.happenings).count > 1 ||
-      resource.respond_to?(:phases) && resource.phases.present?
   end
 
   # Use this to get a string describing the phase's period.

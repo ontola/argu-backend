@@ -1,22 +1,13 @@
-- if render_timeline?(resource)
-  header
-    h2= t('resources.timeline')
-  .timeline-component
-    .timeline
-      .inner-line[style="{innerStyle}"]
-    -if resource.respond_to?(:phases) && resource.phases.present?
-      .timeline-phases
-        -resource.phases.order(start_date: :asc).each do |phase|
-          .timeline-phase
-            =link_to phase_path(phase), data: {remote: true}, class: generate_phase_link_class(resource, phase) do
-              span= phase.display_name
-            .timeline-points
-              -policy_scope(phase.happenings).each do |happening|
-                =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(resource)}
-    -else
+- if happenings.present?
+  .col
+    header
+      h2= t('resources.timeline')
+    .timeline-component
+      .timeline
+        .inner-line[style="{innerStyle}"]
       .timeline-points
-        -policy_scope(resource.happenings).each do |happening|
-          =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(resource)}
-#current-blog-post
-  - if current_happening(resource).present?
-    =render partial: "#{current_happening(resource).trackable.class_name}/timeline", locals: {resource: current_happening(resource).trackable}
+        -happenings.each do |happening|
+          =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening(happenings)}
+    #current-blog-post
+      - if current_happening(happenings).present?
+        =render partial: "#{current_happening(happenings).trackable.class_name}/timeline", locals: {resource: current_happening(happenings).trackable}
