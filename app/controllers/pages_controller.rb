@@ -9,7 +9,10 @@ class PagesController < EdgeTreeController
   ].freeze
 
   def show
-    @forums = policy_scope(authenticated_resource.forums).joins(:edge).order('edges.follows_count DESC')
+    @forums = policy_scope(authenticated_resource.forums)
+                .includes(:shortname, :default_cover_photo, :default_profile_photo, :edge)
+                .joins(:edge)
+                .order('edges.follows_count DESC')
     @profile = @page.profile
     authorize @page, :show?
 
