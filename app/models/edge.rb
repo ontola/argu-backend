@@ -58,15 +58,6 @@ class Edge < ApplicationRecord
   attr_writer :root
   delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
 
-  # For Rails 5 attributes
-  # The user that has created the edge's owner.
-  # attribute :user, User
-  # The model the edge belongs to
-  # attribute :owner_id, :integer
-  # attribute :owner_type, :string
-  # Refers to the parent edge
-  # attribute :parent_id, :integer
-
   # @return [Array] The ids of (persisted) ancestors, excluding self
   def persisted_ancestor_ids
     parent && parent.persisted_edge.path.split('.').map(&:to_i)

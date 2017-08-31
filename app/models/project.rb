@@ -3,16 +3,6 @@ class Project < ApplicationRecord
   include Trashable, HasLinks, BlogPostable, ActivePublishable,
           Edgeable, Photoable, Loggable, Timelineable, PublicActivity::Common
 
-  # For Rails 5 attributes
-  # attribute :title, :string
-  # attribute :content, :text
-  # attribute :state, :integer, default: 0  # enum
-  # attribute :start_date, :datetime
-  # attribute :end_date, :datetime
-  # attribute :achieved_end_date, :datetime
-  # attribute :email, :string
-  # attribute :trashed_at, :datetime
-
   alias_attribute :display_name, :title
   alias_attribute :description, :content
 

@@ -3,13 +3,6 @@ class BlogPost < ApplicationRecord
   include Trashable, Attachable, HasLinks, Loggable, PublicActivity::Common,
           ActivePublishable, Edgeable, Happenable, Commentable, Ldable
 
-  # For Rails 5 attributes
-  # attribute :state, :enum
-  # attribute :title, :string
-  # attribute :content, :text
-  # attribute :trashed_at, :datetime
-  # attribute :published_at, :datetime
-
   belongs_to :forum
   belongs_to :creator,
              class_name: 'Profile'

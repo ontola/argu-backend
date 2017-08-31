@@ -11,12 +11,6 @@ class Phase < ApplicationRecord
   validates :creator, presence: true
   validate :end_date_after_start_date
 
-  # For Rails 5 attributes
-  # attribute :name, :string
-  # attribute :description, :text
-  # attribute :integer, :position
-  # attribute :start_date, :datetime
-  # attribute :end_date, :datetime
   alias_attribute :display_name, :name
   attr_accessor :end_time
 
