@@ -52,6 +52,7 @@ class Activity < PublicActivity::Activity
 
   def self.feed(relevant_only)
     scope = Activity
+      .includes(:owner)
       .joins(:trackable_edge)
       .loggings
       .where('trackable_type != ?', 'Banner')
