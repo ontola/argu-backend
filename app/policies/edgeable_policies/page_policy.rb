@@ -62,7 +62,7 @@ class PagePolicy < EdgeablePolicy
   end
 
   def create?
-    rule pages_left?, super
+    rule pages_left?, staff?
   end
 
   def destroy?
@@ -70,7 +70,7 @@ class PagePolicy < EdgeablePolicy
   end
 
   def update?
-    rule is_manager?, is_super_admin?, super
+    rule is_super_admin?, super
   end
 
   def list?
@@ -80,6 +80,10 @@ class PagePolicy < EdgeablePolicy
   def pages_left?
     return if user.guest?
     member if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
+  end
+
+  def follow?
+    false
   end
 
   private

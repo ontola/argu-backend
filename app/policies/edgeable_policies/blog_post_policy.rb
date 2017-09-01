@@ -13,7 +13,13 @@ class BlogPostPolicy < EdgeablePolicy
   end
 
   def create?
-    rule is_manager?, is_super_admin?, super
+    return create_expired? if has_expired_ancestors?
+    return create_trashed? if has_trashed_ancestors?
+    rule is_manager?, is_super_admin?, staff?
+  end
+
+  def create_expired?
+    is_manager? || is_super_admin? || staff?
   end
 
   def update?

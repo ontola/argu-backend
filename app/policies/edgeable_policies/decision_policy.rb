@@ -21,7 +21,7 @@ class DecisionPolicy < EdgeablePolicy
   def create?
     return nil if record.edge.parent.decisions.unpublished.present?
     if record.forwarded?
-      rule decision_is_assigned?, is_manager?, is_super_admin?, super
+      rule decision_is_assigned?, is_manager?, is_super_admin?, staff?
     else
       rule decision_is_assigned?
     end

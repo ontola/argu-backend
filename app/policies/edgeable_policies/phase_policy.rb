@@ -11,7 +11,7 @@ class PhasePolicy < EdgeablePolicy
   end
 
   def create?
-    rule is_manager?, is_super_admin?, super
+    rule is_manager?, is_super_admin?, staff?
   end
 
   def update?

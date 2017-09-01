@@ -17,6 +17,10 @@ class SourcePolicy < EdgeablePolicy
   end
 
   # #####Actions######
+  def create?
+    staff?
+  end
+
   def settings?
     update?
   end

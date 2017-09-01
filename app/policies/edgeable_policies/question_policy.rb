@@ -17,13 +17,11 @@ class QuestionPolicy < EdgeablePolicy
   end
 
   def convert?
-    rule move?
+    rule staff?
   end
 
-  def create?
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    rule is_member?, is_manager?, super
+  def move?
+    staff?
   end
 
   def invite?

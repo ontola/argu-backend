@@ -147,7 +147,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
 
   def follow?
-    rule is_member?, is_super_admin?, staff?
+    rule is_spectator?, is_member?, is_super_admin?, staff?
   end
 
   # Checks whether indexing children of a has_many relation is allowed
@@ -171,9 +171,8 @@ class EdgeTreePolicy < RestrictivePolicy
     false
   end
 
-  # Move items between forums or converting items
   def move?
-    staff?
+    false
   end
 
   def shift?

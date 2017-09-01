@@ -16,14 +16,18 @@ class MotionPolicy < EdgeablePolicy
   end
 
   def convert?
-    rule is_manager?, is_super_admin?, staff?
+    rule staff?
+  end
+
+  def move?
+    staff?
   end
 
   def create?
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
     return create_without_question? unless record.parent_model.is_a?(Question)
-    rule is_member?, is_manager?, is_super_admin?, super
+    rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
   def create_without_question?

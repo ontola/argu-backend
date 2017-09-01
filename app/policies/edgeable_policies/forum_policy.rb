@@ -27,12 +27,12 @@ class ForumPolicy < EdgeablePolicy
     tabs
   end
 
-  def destroy?
-    rule is_super_admin?, super
+  def create?
+    staff?
   end
 
-  def follow?
-    rule is_member?, is_manager?, staff?
+  def destroy?
+    rule is_super_admin?, super
   end
 
   def invite?
