@@ -8,13 +8,13 @@ class DraftsTest < ActionDispatch::IntegrationTest
     create(:motion,
            parent: freetown.edge,
            publisher: user,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+           edge_attributes: {argu_publication_attributes: {draft: true}})
   end
   let!(:page_motion) do
     create(:motion,
            parent: freetown.edge,
            creator: freetown.page.profile,
-           edge_attributes: {argu_publication_attributes: {publish_type: 'draft'}})
+           edge_attributes: {argu_publication_attributes: {draft: true}})
   end
 
   ####################################
