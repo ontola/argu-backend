@@ -3,6 +3,5 @@
 module ArguRDF
   class RDFCollectionSerializer < CollectionSerializer
     include RDFSerializer
-
   end
 end

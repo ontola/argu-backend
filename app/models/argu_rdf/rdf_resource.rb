@@ -2,6 +2,9 @@
 
 module ArguRDF
   class RDFResource < Base
+    include Kaminari::ConfigurationMethods
+    include ArguRDF::PaginationMethods
+
     attr_accessor :resource
 
     def initialize(iri, attributes = [], **opts)
@@ -20,9 +23,12 @@ module ArguRDF
       # @return [RDF::RDFResource] The found record
       def find(iri, **opts)
         sparql = SPARQL::Client.new('http://localhost:8898/marmotta/sparql/select')
-        query = sparql.select(:s, :p, :o).where([iri, :p, :o]).limit(1000)
-
-        solutions = query.execute
+        query = sparql.select(:s, :p, :o).where([iri, :p, :o])
+        collections.map do |c|
+          c_predicate = c[:options][:predicate]
+          query = query.where([iri, "!<#{c_predicate}>", :o])
+        end
+        solutions = query.limit(1000).execute
 
         raise ActiveRecord::RecordNotFound.new if solutions.blank?
 
