@@ -14,7 +14,7 @@ Lint/AssignmentInCondition:
     - 'spec/support/wait_for_ajax.rb'
 
 # Offense count: 6
-Lint/Eval:
+Security/Eval:
   Exclude:
     - 'app/models/user.rb'
     - 'lib/argu/test_helpers/automated_tests.rb'
@@ -151,7 +151,7 @@ Style/GlobalVars:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, IndentationWidth.
 # SupportedStyles: aligned, indented, indented_relative_to_receiver
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   Enabled: false
 
 # Offense count: 49
