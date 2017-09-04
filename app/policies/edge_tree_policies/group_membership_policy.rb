@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class GroupMembershipPolicy < EdgeTreePolicy
-  include JWTHelper, UriTemplateHelper
+  include UriTemplateHelper
+  include JWTHelper
   class Scope < Scope
     attr_reader :context, :scope
 

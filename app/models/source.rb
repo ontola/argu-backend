@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Source < ApplicationRecord
-  include Edgeable, Ldable
+  include Ldable
+  include Edgeable
   contextualize_as_type 'argu:Source'
   contextualize_with_id { |s| Rails.application.routes.url_helpers.page_source_url(s.page.id, s.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'

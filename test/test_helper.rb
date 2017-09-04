@@ -27,7 +27,8 @@ Minitest::Reporters.use!
 DatabaseCleaner.strategy = :transaction
 
 module TestHelper
-  include RSpec::Matchers, RSpec::Expectations
+  include RSpec::Expectations
+  include RSpec::Matchers
   Sidekiq::Testing.fake!
   MiniTest::Reporters.use!
 

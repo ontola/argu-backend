@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class VoteMatch < ApplicationRecord
-  include Ldable, Listable
+  include Listable
+  include Ldable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'

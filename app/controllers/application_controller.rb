@@ -3,15 +3,22 @@
 require 'argu'
 
 class ApplicationController < ActionController::Base
-  include Argu::Announcements,
-          Argu::Authorization,
-          Argu::ErrorHandling,
-          Argu::RuledIt
+  include Argu::RuledIt
+  include Argu::ErrorHandling
+  include Argu::Authorization
+  include Argu::Announcements
 
-  include ActorsHelper, AnalyticsHelper, ApplicationHelper,
-          PublicActivity::StoreController, NamesHelper, UsersHelper,
-          NestedAttributesHelper, JsonApiHelper, Common::Responses,
-          RedirectHelper, FrontendTransitionHelper
+  include FrontendTransitionHelper
+  include RedirectHelper
+  include Common::Responses
+  include JsonApiHelper
+  include NestedAttributesHelper
+  include UsersHelper
+  include NamesHelper
+  include PublicActivity::StoreController
+  include ApplicationHelper
+  include AnalyticsHelper
+  include ActorsHelper
   helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
 
   ::INC_NESTED_COLLECTION = [

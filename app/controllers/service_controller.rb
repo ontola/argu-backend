@@ -4,9 +4,9 @@ class ServiceController < AuthorizedController
   include Service::Setup
   # The action creators have to be re-included since they have to be called
   # with the new setup method.
-  include Service::Create,
-          Service::Destroy,
-          Service::Update
+  include Service::Update
+  include Service::Destroy
+  include Service::Create
 
   private
 

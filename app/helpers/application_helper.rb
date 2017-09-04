@@ -5,8 +5,13 @@ require 'bcrypt/engine'
 require 'stubborn_cookie'
 
 module ApplicationHelper
-  include ActivityHelper, NamesHelper, UsersHelper, StubbornCookie,
-          Devise::OmniAuth::UrlHelpers, TruncateHelper, JWTHelper
+  include JWTHelper
+  include TruncateHelper
+  include Devise::OmniAuth::UrlHelpers
+  include StubbornCookie
+  include UsersHelper
+  include NamesHelper
+  include ActivityHelper
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)

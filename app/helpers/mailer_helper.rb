@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 module MailerHelper
-  include NamesHelper, ProfilesHelper, MarkdownHelper, EmailActionsHelper
+  include EmailActionsHelper
+  include MarkdownHelper
+  include ProfilesHelper
+  include NamesHelper
 
   def link_to_creator(object)
     link_to object.creator.display_name,

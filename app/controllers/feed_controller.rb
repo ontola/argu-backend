@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class FeedController < AuthorizedController
-  include NestedResourceHelper, VotesHelper
+  include VotesHelper
+  include NestedResourceHelper
   alias resource_by_id parent_resource
   helper_method :complete_feed_param
 

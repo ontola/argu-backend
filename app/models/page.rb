@@ -2,7 +2,9 @@
 
 class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
-  include Edgeable, Shortnameable, Ldable
+  include Ldable
+  include Shortnameable
+  include Edgeable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile

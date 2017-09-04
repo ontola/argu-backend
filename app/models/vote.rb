@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class Vote < ApplicationRecord
-  include Edgeable, Loggable, PublicActivity::Model, Ldable
+  include Ldable
+  include PublicActivity::Model
+  include Loggable
+  include Edgeable
 
   belongs_to :creator, class_name: 'Profile', inverse_of: :votes
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id'

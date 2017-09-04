@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 module OauthHelper
-  include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers, Doorkeeper::OAuth::Token::Methods, LanguageHelper
+  include LanguageHelper
+  include Doorkeeper::OAuth::Token::Methods
+  include Doorkeeper::Rails::Helpers
+  include Doorkeeper::Helpers::Controller
 
   def current_user
     current_actor.user

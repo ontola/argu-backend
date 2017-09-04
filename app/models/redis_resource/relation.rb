@@ -2,7 +2,8 @@
 
 module RedisResource
   class Relation
-    include ActiveModel::Model, Enumerable
+    include Enumerable
+    include ActiveModel::Model
     attr_accessor :where_clause, :user, :owner_type, :edge_id, :path
     delegate :count, :empty?, to: :filtered_keys
 

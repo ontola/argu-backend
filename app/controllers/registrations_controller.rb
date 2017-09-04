@@ -2,7 +2,9 @@
 
 class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
-  include NestedResourceHelper, OauthHelper, RedisResourcesHelper
+  include RedisResourcesHelper
+  include OauthHelper
+  include NestedResourceHelper
   respond_to :json
 
   skip_before_action :verify_authenticity_token,

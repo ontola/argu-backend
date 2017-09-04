@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module TruncateHelper
-  include MarkdownHelper, ActionView::Helpers::TagHelper
+  include ActionView::Helpers::TagHelper
+  include MarkdownHelper
 
   # @param [String] contents The text to truncate
   # @param [Integer] cutting_point The ammount of chars before cutting

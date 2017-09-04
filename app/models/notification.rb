@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  include ActionView::Helpers, ActivityHelper, BlogPostsHelper
+  include BlogPostsHelper
+  include ActivityHelper
+  include ActionView::Helpers
   include Rails.application.routes.url_helpers
 
   belongs_to :user

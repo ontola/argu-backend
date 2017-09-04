@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
-  include Parentable, Ldable
+  include Ldable
+  include Parentable
 
   has_many :group_memberships, -> { active }, dependent: :destroy
   has_many :grants, dependent: :destroy, inverse_of: :group

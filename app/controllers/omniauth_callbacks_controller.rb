@@ -3,7 +3,9 @@
 require 'omniauth/omniauth_facebook'
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  include NestedResourceHelper, OauthHelper, RedisResourcesHelper
+  include RedisResourcesHelper
+  include OauthHelper
+  include NestedResourceHelper
 
   def self.provides_callback_for(provider)
     class_eval %{

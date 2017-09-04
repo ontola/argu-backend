@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < AuthorizedController
-  include NestedResourceHelper,
-          UrlHelper,
-          VotesHelper
+  include VotesHelper
+  include UrlHelper
+  include NestedResourceHelper
   helper_method :authenticated_resource, :complete_feed_param
   skip_before_action :check_if_registered, only: :language
 

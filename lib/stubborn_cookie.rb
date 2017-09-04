@@ -8,7 +8,8 @@ module StubbornCookie
   ALLOWED_SET_KEYS = %w[hide_video banners].freeze
   MODEL_NAME = 'user'
   STORE_CLASS = Argu::Redis
-  include HashMethods, KVMethods
+  include KVMethods
+  include HashMethods
 
   def stubborn_get(key)
     redis_value = stubborn_redis_get(key) if stubborn_identifier.present?

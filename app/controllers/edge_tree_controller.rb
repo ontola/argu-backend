@@ -8,8 +8,8 @@
 #
 # @see EdgeTree::Setup The interface for adjusting per-component behaviour.
 class EdgeTreeController < ServiceController
-  include NestedResourceHelper,
-          EdgeTree::Trashing
+  include EdgeTree::Trashing
+  include NestedResourceHelper
 
   private
 

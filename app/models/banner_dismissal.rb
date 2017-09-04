@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class BannerDismissal
-  include ActiveModel::Dirty, ActiveModel::Model, ActiveModel::Validations
+  include ActiveModel::Validations
+  include ActiveModel::Model
+  include ActiveModel::Dirty
   include StubbornCookie
 
   attr_accessor :banner, :user, :banner_class, :banner_key

@@ -2,7 +2,8 @@
 
 # app/controllers/oauth/applications_controller.rb
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
-  include OauthHelper, Argu::ErrorHandling
+  include Argu::ErrorHandling
+  include OauthHelper
   respond_to :html
 
   def index

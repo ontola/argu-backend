@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class CurrentActor
-  include ActiveModel::Model, ActiveModel::Serialization, Ldable, ProfilesHelper
+  include ProfilesHelper
+  include Ldable
+  include ActiveModel::Serialization
+  include ActiveModel::Model
   include Rails.application.routes.url_helpers
 
   attr_accessor :actor, :user

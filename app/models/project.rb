@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-  include Trashable, HasLinks, BlogPostable, ActivePublishable,
-          Edgeable, Photoable, Loggable, Timelineable, PublicActivity::Common
+  include PublicActivity::Common
+  include Timelineable
+  include Loggable
+  include Photoable
+  include Edgeable
+  include ActivePublishable
+  include BlogPostable
+  include HasLinks
+  include Trashable
 
   alias_attribute :display_name, :title
   alias_attribute :description, :content

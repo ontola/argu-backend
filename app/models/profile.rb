@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Profile < ApplicationRecord
-  include Photoable, ProfilePhotoable, Ldable
+  include Ldable
+  include ProfilePhotoable
+  include Photoable
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient

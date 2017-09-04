@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module HeaderHelper
-  include DropdownHelper, NotificationsHelper
+  include NotificationsHelper
+  include DropdownHelper
 
   def suggested_forums
     @suggested_forums ||= Setting.get('suggested_forums')&.split(',')&.map(&:strip) || []

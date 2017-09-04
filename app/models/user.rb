@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Shortnameable, Placeable, Ldable, RedirectHelper
+  include RedirectHelper
+  include Ldable
+  include Placeable
+  include Shortnameable
 
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place

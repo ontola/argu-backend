@@ -4,7 +4,8 @@ require 'test_helper'
 require 'capybara/email'
 
 class RegistrationsTest < ActionDispatch::IntegrationTest
-  include TestHelper, Capybara::Email::DSL
+  include Capybara::Email::DSL
+  include TestHelper
 
   setup do
     analytics_collect

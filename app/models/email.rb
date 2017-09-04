@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Email < ApplicationRecord
-  include Ldable, RedisResourcesHelper
+  include RedisResourcesHelper
+  include Ldable
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   belongs_to :user, inverse_of: :emails

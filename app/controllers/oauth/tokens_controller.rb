@@ -4,8 +4,12 @@ require 'argu/invalid_credentials_error'
 
 module Oauth
   class TokensController < Doorkeeper::TokensController
-    include ActionController::Redirecting, ActionController::MimeResponds, ActionController::Cookies,
-            ActionController::RequestForgeryProtection, OauthHelper, RedisResourcesHelper
+    include RedisResourcesHelper
+    include OauthHelper
+    include ActionController::RequestForgeryProtection
+    include ActionController::Cookies
+    include ActionController::MimeResponds
+    include ActionController::Redirecting
     include Rails.application.routes.url_helpers
     ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
     FRONTEND_HOST = URI(Rails.configuration.frontend_url).host.freeze

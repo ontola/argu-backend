@@ -3,7 +3,8 @@
 module Argu
   module TestHelpers
     class TraitListener
-      include FactoryGirl::Syntax::Methods, Argu::TestHelpers::TestHelperMethods
+      include Argu::TestHelpers::TestHelperMethods
+      include FactoryGirl::Syntax::Methods
 
       def initialize(resource)
         @resource = resource

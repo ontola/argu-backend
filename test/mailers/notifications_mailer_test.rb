@@ -3,7 +3,8 @@
 require 'test_helper'
 
 class NotificationsMailerTest < ActionMailer::TestCase
-  include MailerHelper, ActivityHelper
+  include ActivityHelper
+  include MailerHelper
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::UrlHelper

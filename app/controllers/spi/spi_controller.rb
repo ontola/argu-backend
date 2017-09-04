@@ -2,7 +2,10 @@
 
 module SPI
   class SPIController < ActionController::API
-    include OauthHelper, Argu::RuledIt, JsonApiHelper, Argu::ErrorHandling
+    include Argu::ErrorHandling
+    include JsonApiHelper
+    include Argu::RuledIt
+    include OauthHelper
     alias_attribute :pundit_user, :user_context
 
     serialization_scope :user_context
