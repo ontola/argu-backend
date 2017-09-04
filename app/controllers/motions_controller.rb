@@ -37,20 +37,7 @@ class MotionsController < EdgeTreeController
 
     respond_to do |format|
       format.html do
-        @arguments = Argument.ordered(
-          policy_scope(
-            authenticated_resource
-              .arguments
-              .show_trashed(show_trashed?)
-              .includes(edge: :votes, top_comment: :edge)
-          ),
-          pro: show_params[:page_arg_pro],
-          con: show_params[:page_arg_con]
-        )
-        @votes = authenticated_resource.votes.where('explanation IS NOT NULL AND explanation != \'\'')
-                   .order(created_at: :desc)
-                   .page(params[:page_opinions])
-        render locals: {motion: authenticated_resource}
+        show_respond_success_html(authenticated_resource)
       end
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
@@ -73,6 +60,25 @@ class MotionsController < EdgeTreeController
     else
       super
     end
+  end
+
+  def show_respond_success_html(resource)
+    @arguments = Argument.ordered(
+      policy_scope(
+        resource
+          .arguments
+          .show_trashed(show_trashed?)
+          .includes(edge: :votes, top_comment: :edge)
+      ),
+      pro: show_params[:page_arg_pro],
+      con: show_params[:page_arg_con]
+    )
+    @votes = resource
+               .votes
+               .where('explanation IS NOT NULL AND explanation != \'\'')
+               .order(created_at: :desc)
+               .page(params[:page_opinions])
+    render locals: {motion: resource}
   end
 
   def show_params

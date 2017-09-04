@@ -36,3 +36,26 @@ Metrics/LineLength:
   Max: 120
 Metrics/ModuleLength:
   Max: 300
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.jbuilder'
+    - 'spec/rails_helper.rb'
+    - 'config/**/*.rb'
+  ExcludedMethods:
+    - context
+    - define
+    - define_tests
+    - describe
+    - draw
+    - factory
+    - feature
+    - has_one
+    - included
+    - it
+    - let
+    - namespace
+    - scenario
+    - shared_examples
+    - shared_examples_for
+    - test
+    - setup
