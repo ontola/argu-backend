@@ -64,7 +64,7 @@ module MapHelper
       Placement
         .custom
         .joins('INNER JOIN edges ON edges.id = placements.placeable_id AND placements.placeable_type = \'Edge\'')
-        .where(edges: {owner_id: @all_motion_edges.pluck(:id)})
+        .where(edges: {owner_id: @all_motion_edges.pluck(:owner_id)})
         .includes(:placeable)
         .map { |placement| map_marker_props(placement) },
       popup: {
