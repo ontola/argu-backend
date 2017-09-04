@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class QuestionAnswer
   extend ActiveModel::Naming
   include ActiveModel::Validations

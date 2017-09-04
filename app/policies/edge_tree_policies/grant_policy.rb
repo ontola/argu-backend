@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GrantPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 

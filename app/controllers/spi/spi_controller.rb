@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SPI
   class SPIController < ActionController::API
     include OauthHelper, Argu::RuledIt, JsonApiHelper, Argu::ErrorHandling

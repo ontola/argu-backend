@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Service
   # Implements the {Common::Setup} pattern for controller directed at models
   # implementing the service pattern.

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Page < ApplicationRecord
   has_many :groups, dependent: :destroy, inverse_of: :page
   include Edgeable, Shortnameable, Ldable

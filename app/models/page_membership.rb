@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # @todo remove after migration
 class PageMembership < ApplicationRecord
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }

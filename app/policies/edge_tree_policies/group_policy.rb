@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GroupPolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve

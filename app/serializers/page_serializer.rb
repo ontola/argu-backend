@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PageSerializer < RecordSerializer
   attributes :display_name, :about
   has_one :profile_photo do

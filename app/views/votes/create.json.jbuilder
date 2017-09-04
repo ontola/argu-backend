@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.vote do
   json.objectType model.class_name
   json.objectId model.id

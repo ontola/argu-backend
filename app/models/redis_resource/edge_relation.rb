@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RedisResource
   class EdgeRelation < RedisResource::Relation
     # @return [Edge] The first found Edge based on the current filters

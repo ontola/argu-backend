@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VoteEventSerializer < BaseEdgeSerializer
   attributes :group_id, :starts_at, :ends_at, :result, :option_counts
   link(:self) { object.context_id if object.persisted? }

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DiscussionsController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_registered

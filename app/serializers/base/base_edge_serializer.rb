@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BaseEdgeSerializer < RecordSerializer
   attribute :display_name, key: :name
   attributes :created_at, :updated_at

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Service
   module Update
     extend ActiveSupport::Concern

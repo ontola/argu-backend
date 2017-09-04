@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateGroupMembership < CreateService
   def initialize(group, attributes: {}, options: {})
     @resource = GroupMembership.new(group: group)

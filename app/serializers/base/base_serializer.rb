@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BaseSerializer < ActiveModel::Serializer
   link(:self) { object.context_id }
   attribute :ld_context, key: '@context'

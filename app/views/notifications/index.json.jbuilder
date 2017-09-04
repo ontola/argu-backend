@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.notifications do
   json.unread @unread
   json.lastNotification @notifications.first&.created_at

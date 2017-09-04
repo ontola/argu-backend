@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Conversion
   extend ActiveModel::Naming
   include ActiveModel::Validations

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :delete do
   desc 'Delete tokens older than 60 days'
   task old_records: :environment do

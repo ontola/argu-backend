@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Concern for Models that use Activities to keep a log of changes
 module Loggable
   extend ActiveSupport::Concern

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Portal
   class AnnouncementsController < PortalBaseController
     before_action :set_settings_view_path

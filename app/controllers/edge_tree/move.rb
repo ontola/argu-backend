@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module EdgeTree
   module Move
     extend ActiveSupport::Concern

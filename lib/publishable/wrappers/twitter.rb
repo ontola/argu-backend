@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Publishable
   module Wrappers
     class Twitter < Wrapper

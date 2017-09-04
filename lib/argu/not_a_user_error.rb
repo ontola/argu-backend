@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Argu
   class NotAUserError < StandardError
     attr_accessor :redirect

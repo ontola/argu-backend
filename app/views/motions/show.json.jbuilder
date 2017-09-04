@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 json.id authenticated_resource.id
 json.title authenticated_resource.title
 json.content authenticated_resource.content

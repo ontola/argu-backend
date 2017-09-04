@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SourcesController < ServiceController
   def show
     return unless policy(resource_by_id).show?

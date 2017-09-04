@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RedirectHelper
   VALID_HOSTNAMES = [
     'https://argu.co',

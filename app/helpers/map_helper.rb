@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module MapHelper
   def map_access_token
     JSON.parse(

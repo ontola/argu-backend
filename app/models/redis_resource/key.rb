@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RedisResource
   class Key
     attr_accessor :key, :user, :user_type, :user_id, :owner_type, :edge_id, :path, :parent_id, :parent

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module NestedAttributesHelper
   # @param [class] type The type of the photo#about
   # @param [Forum] forum The forum the photo should be tenantanized in

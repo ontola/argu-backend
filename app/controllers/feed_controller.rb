@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FeedController < AuthorizedController
   include NestedResourceHelper, VotesHelper
   alias resource_by_id parent_resource

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :doorkeeper__access_token, class: Doorkeeper::AccessToken do
     application { Doorkeeper::Application.find(0) }

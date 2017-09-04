@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class QuestionsController < EdgeTreeController
   include EdgeTree::Move, MenuHelper, VotesHelper
   skip_before_action :check_if_registered, only: :index

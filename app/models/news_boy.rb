@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # TODO: Write class docs
 class NewsBoy < ApplicationRecord
   self.abstract_class = true

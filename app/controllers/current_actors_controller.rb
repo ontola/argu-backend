@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CurrentActorsController < ApplicationController
   def show
     respond_to do |format|

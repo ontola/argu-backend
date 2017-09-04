@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext

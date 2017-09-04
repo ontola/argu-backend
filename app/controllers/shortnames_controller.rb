@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ShortnamesController < AuthorizedController
   include NestedResourceHelper
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique

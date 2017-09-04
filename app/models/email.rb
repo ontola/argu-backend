@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Email < ApplicationRecord
   include Ldable, RedisResourcesHelper
   TEMP_EMAIL_REGEX = /\Achange@me/

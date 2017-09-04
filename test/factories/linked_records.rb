@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :linked_record do
     sequence(:iri) { |n| "https://iri.test/m/#{n}" }

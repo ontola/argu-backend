@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 class CreateComment < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
     attributes[:commentable_id] = parent.owner_id

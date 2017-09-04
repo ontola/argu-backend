@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Users::IdentitiesController < AuthorizedController
   include RedisResourcesHelper
   skip_before_action :check_if_registered, only: [:connect, :connect!]

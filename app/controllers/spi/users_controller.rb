@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SPI
   class UsersController < SPI::SPIController
     def current

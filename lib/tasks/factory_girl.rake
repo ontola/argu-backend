@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # lib/tasks/factory_girl.rake
 namespace :factory_girl do
   # Models only used in context of other models

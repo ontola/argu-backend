@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Users::PasswordsController < Devise::PasswordsController
   skip_before_action :require_no_authentication, only: :create, if: :no_password_required?
 

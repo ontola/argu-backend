@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Portal::PortalController < Portal::PortalBaseController
   prepend_view_path 'app/views/portal/portal'
 

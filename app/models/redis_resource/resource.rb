@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module RedisResource
   class Resource
     include ActiveModel::Model

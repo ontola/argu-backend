@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ExtendedRadioInput < Formtastic::Inputs::RadioInput
   include ActionView::Helpers::TranslationHelper
 

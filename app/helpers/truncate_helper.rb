@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module TruncateHelper
   include MarkdownHelper, ActionView::Helpers::TagHelper
 

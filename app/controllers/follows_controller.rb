@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FollowsController < ApplicationController
   before_action :check_user
   before_action :set_thing

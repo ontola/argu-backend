@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GroupMembershipPolicy < EdgeTreePolicy
   include JWTHelper, UriTemplateHelper
   class Scope < Scope

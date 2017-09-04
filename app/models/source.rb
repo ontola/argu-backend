@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Source < ApplicationRecord
   include Edgeable, Ldable
   contextualize_as_type 'argu:Source'

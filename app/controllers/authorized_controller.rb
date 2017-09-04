@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/not_a_user_error'
 
 class AuthorizedController < ApplicationController

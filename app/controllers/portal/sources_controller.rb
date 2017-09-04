@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Portal
   class SourcesController < EdgeTreeController
     def new

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class StaticPagesController < ApplicationController
   include VotesHelper
   helper_method :complete_feed_param

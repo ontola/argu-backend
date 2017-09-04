@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ConversionsController < ServiceController
   include ConvertibleHelper
   helper_method :collect_banners

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 ##
 # Renders a collection of models in one or more columns
 module ColumnRendererHelper

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MediaObjectSerializer < RecordSerializer
   delegate :context_type, to: :object
   def self.type(type = nil, &block)

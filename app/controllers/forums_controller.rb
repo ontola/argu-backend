@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ForumsController < EdgeTreeController
   prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout

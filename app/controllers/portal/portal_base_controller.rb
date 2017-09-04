@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Portal::PortalBaseController < ApplicationController
   before_action :authorize_staff
 

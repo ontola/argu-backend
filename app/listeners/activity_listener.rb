@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ActivityListener
   # @param [Hash] opts
   # @option opts [User] publisher The person that made the action

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateDecision < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
     attributes[:decisionable_id] = parent.id

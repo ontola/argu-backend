@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/invalid_credentials_error'
 
 module Doorkeeper

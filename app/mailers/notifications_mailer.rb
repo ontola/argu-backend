@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 class NotificationsMailer < ApplicationMailer
   include MailerHelper
   add_template_helper(ApplicationHelper)

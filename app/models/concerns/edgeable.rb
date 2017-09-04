@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Interface for the edge hierarchy.
 module Edgeable
   extend ActiveSupport::Concern

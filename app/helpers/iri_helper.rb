@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module IRIHelper
   ARGU_URI_MATCH = /(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)/
 

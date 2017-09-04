@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 if ENV['EXECJS_DEBUG']
   ExecJS.runtime = ExecJS::ExternalRuntime.new(
     name: 'Node.js Debug (V8)',

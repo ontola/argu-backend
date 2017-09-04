@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Contains argu-specific implementation details of {Convertible}
 module ConvertibleHelper
   def convertible_class_names(record)

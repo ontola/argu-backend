@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CurrentActor
   include ActiveModel::Model, ActiveModel::Serialization, Ldable, ProfilesHelper
   include Rails.application.routes.url_helpers

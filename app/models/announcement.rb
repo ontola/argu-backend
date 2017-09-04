@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Announcement < NewsBoy
   belongs_to :publisher, class_name: 'Profile'
 

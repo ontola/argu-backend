@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Project < ApplicationRecord
   include Trashable, HasLinks, BlogPostable, ActivePublishable,
           Edgeable, Photoable, Loggable, Timelineable, PublicActivity::Common

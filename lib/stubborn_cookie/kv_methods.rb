@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module StubbornCookie
   module KVMethods
     def stubborn_get(key)

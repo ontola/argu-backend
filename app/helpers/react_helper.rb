@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ReactHelper
   def add_to_state(key, value)
     if initial_js_state[key].is_a?(Hash)

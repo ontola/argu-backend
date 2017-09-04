@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ActivitySerializer < BaseSerializer
   attributes :id
   attribute :action_status

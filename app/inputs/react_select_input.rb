@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ReactSelectInput < ReactInput
   def to_html
     input_wrapping do

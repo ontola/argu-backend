@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MediaObjectPolicy < EdgeTreePolicy
   class Scope < RestrictivePolicy::Scope
     def resolve

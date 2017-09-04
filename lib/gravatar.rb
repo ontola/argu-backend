@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 module Gravatar
   module_function
 

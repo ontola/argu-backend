@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Publication < ApplicationRecord
   include Wisper::Publisher
   belongs_to :publishable, class_name: 'Edge'

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Rails.application.configure do
   config.host_name = '127.0.0.1:42000'
   config.token_url = 'https://127.0.0.1:42000/tokens'

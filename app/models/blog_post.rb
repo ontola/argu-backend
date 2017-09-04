@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BlogPost < ApplicationRecord
   include Trashable, Attachable, HasLinks, Loggable, PublicActivity::Common,
           ActivePublishable, Edgeable, Happenable, Commentable, Ldable

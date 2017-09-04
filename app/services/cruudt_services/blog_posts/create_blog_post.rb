@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 class CreateBlogPost < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
     attributes[:blog_postable_id] = parent.owner_id

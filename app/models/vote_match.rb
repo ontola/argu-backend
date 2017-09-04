@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VoteMatch < ApplicationRecord
   include Ldable, Listable
 

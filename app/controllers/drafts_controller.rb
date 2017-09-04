@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DraftsController < ApplicationController
   def index
     @user = User.find_via_shortname! params[:id]

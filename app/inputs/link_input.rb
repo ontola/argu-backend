@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class LinkInput < Formtastic::Inputs::StringInput
   include ActionView::Helpers::UrlHelper
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CommentPolicy < EdgeablePolicy
   class Scope < EdgeablePolicy::Scope; end
 

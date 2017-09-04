@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Grants people access to resources when used.
 #
 # People can activate an `access_token` with argu.co?at=xxx

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class StaticPagePolicy < Struct.new(:user, :static_pages)
   attr_reader :context, :record, :last_verdict, :last_enacted
 

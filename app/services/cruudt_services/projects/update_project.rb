@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Service for updating projects.
 # @author Fletcher91 <thom@argu.co>
 class UpdateProject < UpdateService

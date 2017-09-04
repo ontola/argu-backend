@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class LinkedRecordSerializer < RecordSerializer
   include Argumentable::Serializer
   include Voteable::Serializer

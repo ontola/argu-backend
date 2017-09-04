@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Common
   # Prepares the controllers to setup their actions briefly.
   #

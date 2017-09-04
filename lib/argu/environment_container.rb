@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Return asset contents by getting them from a Sprockets::Environment instance.
 #
 # This is good for Rails development but bad for production because:

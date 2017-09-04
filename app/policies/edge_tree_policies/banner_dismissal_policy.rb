@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BannerDismissalPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DestroyComment < DestroyService
   def initialize(comment, attributes: {}, options: {})
     super

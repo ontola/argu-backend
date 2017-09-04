@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Additional helpers only for RSpec
 module Argu
   module TestHelpers

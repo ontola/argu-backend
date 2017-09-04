@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Argu
   module Render
     class HTML < Redcarpet::Render::HTML

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Common
   # The most commonly used response handlers per response format
   # Methods are named using their numbered counterpart for brevity

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MediaObject < ApplicationRecord
   include Ldable
   belongs_to :about, polymorphic: true, inverse_of: :media_objects

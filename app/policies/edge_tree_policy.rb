@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EdgeTreePolicy < RestrictivePolicy
   class Scope < RestrictivePolicy::Scope
     def class_name

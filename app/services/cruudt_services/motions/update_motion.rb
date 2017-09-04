@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UpdateMotion < UpdateService
   def initialize(resource, attributes: {}, options: {})
     super

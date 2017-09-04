@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :media_object, traits: [:set_publisher] do
     filename { "mediaobject-#{id}.pdf" }

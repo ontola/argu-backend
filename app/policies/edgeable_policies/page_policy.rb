@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PagePolicy < EdgeablePolicy
   class Scope < Scope
     def resolve

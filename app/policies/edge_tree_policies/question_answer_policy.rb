@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class QuestionAnswerPolicy < EdgeTreePolicy
   class Scope < RestrictivePolicy::Scope
     def resolve

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UserSerializer < RecordSerializer
   def service_or_self?
     service_scope? || object == scope&.user

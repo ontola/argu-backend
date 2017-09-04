@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
 require 'argu/forums_constraint'

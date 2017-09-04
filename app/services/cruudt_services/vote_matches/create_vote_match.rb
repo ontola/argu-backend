@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateVoteMatch < CreateService
   def initialize(resource, attributes: {}, options: {})
     @resource = VoteMatch.new

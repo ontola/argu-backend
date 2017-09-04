@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Forum < ApplicationRecord
   include Attribution, Shortnameable, Photoable, ProfilePhotoable, Edgeable,
           Motionable, Questionable, Ldable

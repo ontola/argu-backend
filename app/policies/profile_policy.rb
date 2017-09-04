@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ProfilePolicy < RestrictivePolicy
   class Scope < Scope
     def resolve

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ServiceController < AuthorizedController
   include Service::Setup
   # The action creators have to be re-included since they have to be called

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class AnnouncementPolicy < RestrictivePolicy
   class Scope < Scope
     def resolve

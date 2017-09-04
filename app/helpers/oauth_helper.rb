@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module OauthHelper
   include Doorkeeper::Helpers::Controller, Doorkeeper::Rails::Helpers, Doorkeeper::OAuth::Token::Methods, LanguageHelper
 

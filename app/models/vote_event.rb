@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VoteEvent < ApplicationRecord
   include Edgeable, Ldable
   belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events

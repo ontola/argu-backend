@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NotificationListener
   def create_activity_successful(activity)
     create_notifications_for(activity) if create_notifications_for_activity?(activity)

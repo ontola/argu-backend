@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class DailyNotificationsSchedulerWorker < NotificationsSchedulerWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable

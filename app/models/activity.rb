@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Activity < PublicActivity::Activity
   RELEVANT_KEYS = %w(vote.create question.publish motion.publish argument.create blog_post.publish
                      decision.approved decision.rejected).freeze

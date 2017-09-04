@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class Rule < ApplicationRecord
   # @todo remove this association and its columns after migration
   belongs_to :context, polymorphic: true

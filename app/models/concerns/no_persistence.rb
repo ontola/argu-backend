@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/no_persistence_error'
 module NoPersistence
   extend ActiveSupport::Concern

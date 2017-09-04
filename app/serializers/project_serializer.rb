@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ProjectSerializer < BaseSerializer
   attributes :display_name, :content
 

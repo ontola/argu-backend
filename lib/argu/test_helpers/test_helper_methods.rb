@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/test_helpers/test_resources'
 require 'argu/test_helpers/automated_tests/asserts'
 

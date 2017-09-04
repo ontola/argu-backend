@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module EmailActionsHelper
   def confirm_action(options)
     helper_data = {

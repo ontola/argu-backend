@@ -1,5 +1,5 @@
-
 # frozen_string_literal: true
+
 class CreateArgument < PublishedCreateService
   private
 

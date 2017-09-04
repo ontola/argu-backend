@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ArgumentsHelper
   # Generates radio array for a model
   # @param model [Model] instance of the item

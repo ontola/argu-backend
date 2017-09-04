@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VoteSerializer < BaseEdgeSerializer
   attributes :option, :explanation, :explained_at
 

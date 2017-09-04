@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class NotificationsSchedulerWorker
   def send_batch_notifications(email_frequency)
     user_ids = BatchNotificationsReceiversCollector.new(email_frequency).call

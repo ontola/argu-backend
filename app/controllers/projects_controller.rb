@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ProjectsController < EdgeTreeController
   prepend_before_action :redirect_pages, only: :show
 

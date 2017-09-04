@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VoteMatchSerializer < RecordSerializer
   attributes :name, :text
 

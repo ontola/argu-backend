@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Argu
   # The generic Argu error handling code. Currently a mess from different error
   # classes with inconsistent attributes.

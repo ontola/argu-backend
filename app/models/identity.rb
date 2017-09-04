@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'publishable'
 
 class Identity < ApplicationRecord

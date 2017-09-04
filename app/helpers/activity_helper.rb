@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/activity_string'
 
 module ActivityHelper

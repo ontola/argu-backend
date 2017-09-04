@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module StubbornCookie
   module HashMethods
     def stubborn_hgetall(key)

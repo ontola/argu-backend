@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Provides helpers for the translations and icons.
 module NamesHelper
   extend ActiveSupport::Concern

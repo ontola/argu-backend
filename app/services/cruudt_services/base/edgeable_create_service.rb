@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class EdgeableCreateService < CreateService
   # @note Call super when overriding.
   # @param [Edge] parent The parent edge or its id

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module VotesHelper
   def preload_user_votes(voteable_ids)
     @user_votes = if current_user.confirmed?

@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 module TimelineHelper
   def current_happening(happenings)
     if params[:happening_id].present?

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FavoritePolicy < EdgeTreePolicy
   def create?
     rule is_member?, is_manager?, is_super_admin?, super

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BlogPostPolicy < EdgeablePolicy
   class Scope < EdgeablePolicy::Scope; end
 

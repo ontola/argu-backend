@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class FavoritesController < AuthorizedController
   include NestedResourceHelper
   alias force_check_if_registered check_if_registered

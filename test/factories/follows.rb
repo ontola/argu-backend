@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :follow do
     association :follower, factory: [:user, :follows_reactions_directly]

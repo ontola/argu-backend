@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PagesController < EdgeTreeController
   skip_before_action :authorize_action, only: :settings
   skip_before_action :check_if_registered, only: :index

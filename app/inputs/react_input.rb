@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ReactInput < Formtastic::Inputs::SelectInput
   class InputReactComponent
     include React::Rails::ViewHelper

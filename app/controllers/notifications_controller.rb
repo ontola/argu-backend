@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # @note: Common create ready
 class NotificationsController < ApplicationController
   include NotificationsHelper

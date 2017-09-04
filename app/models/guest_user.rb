@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class GuestUser < User
   include NoPersistence
   attr_accessor :cookies, :headers, :id, :session

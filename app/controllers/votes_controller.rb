@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VotesController < EdgeTreeController
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: %i(index show create)

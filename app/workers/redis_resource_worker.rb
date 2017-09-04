@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RedisResourceWorker
   include Sidekiq::Worker
 

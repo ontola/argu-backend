@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :phase, traits: [:set_publisher] do
     association :forum, strategy: :create

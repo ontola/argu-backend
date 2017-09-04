@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class PublishedCreateService < EdgeableCreateService
   # @note Call super when overriding.
   def initialize(parent, attributes: {}, options: {})

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class VoteMatchPolicy < RestrictivePolicy
   class Scope < RestrictivePolicy::Scope
     def resolve

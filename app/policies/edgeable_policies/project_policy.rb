@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ProjectPolicy < EdgeablePolicy
   class Scope < EdgeablePolicy::Scope; end
   include ApplicationHelper

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UpdatePhase < UpdateService
   def initialize(phase, attributes: {}, options: {})
     @resource = phase

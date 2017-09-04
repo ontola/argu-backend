@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'argu/test_helpers/test_assertions'
 require 'argu/test_helpers/test_mocks'
 require 'argu/test_helpers/test_helper_methods'

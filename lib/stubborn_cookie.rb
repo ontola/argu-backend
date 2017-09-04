@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'stubborn_cookie/hash_methods'
 require 'stubborn_cookie/kv_methods'
 require 'stubborn_cookie/list_methods'

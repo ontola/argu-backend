@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module EdgeTree
   module Trashing
     extend ActiveSupport::Concern

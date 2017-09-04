@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Common
   module Create
     extend ActiveSupport::Concern
