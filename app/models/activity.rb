@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Activity < PublicActivity::Activity
-  RELEVANT_KEYS = %w(vote.create question.publish motion.publish argument.create blog_post.publish
-                     decision.approved decision.rejected).freeze
+  RELEVANT_KEYS = %w[vote.create question.publish motion.publish argument.create blog_post.publish
+                     decision.approved decision.rejected].freeze
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action
@@ -91,9 +91,9 @@ class Activity < PublicActivity::Activity
   def new_content?
     case action
     when 'create'
-      %w(argument comment).include?(object)
+      %w[argument comment].include?(object)
     when 'publish'
-      %w(blog_post project motion question).include?(object)
+      %w[blog_post project motion question].include?(object)
     when 'approved', 'rejected', 'forwarded'
       true
     else
@@ -106,9 +106,9 @@ class Activity < PublicActivity::Activity
   end
 
   def touch_edges
-    return if %w(destroy trash untrash).include?(action)
+    return if %w[destroy trash untrash].include?(action)
     trackable_edge.touch(:last_activity_at) if trackable_edge&.persisted?
-    recipient_edge.touch(:last_activity_at) if recipient_edge&.persisted? && !%w(Vote).include?(trackable_type)
+    recipient_edge.touch(:last_activity_at) if recipient_edge&.persisted? && !%w[Vote].include?(trackable_type)
   end
 
   private

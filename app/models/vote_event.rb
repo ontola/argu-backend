@@ -47,7 +47,7 @@ class VoteEvent < ApplicationRecord
                         .select('votes.for, count(DISTINCT votes.id) as count')
                         .group(:for)
                         .to_a
-    @stats = %w(pro neutral con).map do |side|
+    @stats = %w[pro neutral con].map do |side|
       total = totals.find { |s| s.for == side }&.count || 0
       {
         confirmed: total.positive? ? (totals_confirmed.find { |s| s.for == side }&.count&.to_f || 0) / total : nil,

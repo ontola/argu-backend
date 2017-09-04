@@ -13,7 +13,7 @@ class QuestionAnswerPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(id motion_id question_id)
+    attributes.concat %i[id motion_id question_id]
     attributes
   end
 

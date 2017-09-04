@@ -10,21 +10,21 @@ class UserPolicy < RestrictivePolicy
   def permitted_attributes(password = false)
     attrs = super()
     if create?
-      attrs.concat %i(password password_confirmation primary_email)
-      attrs.append(profile_attributes: %i(name profile_photo))
+      attrs.concat %i[password password_confirmation primary_email]
+      attrs.append(profile_attributes: %i[name profile_photo])
     end
-    attrs.append(home_placement_attributes: %i(postal_code country_code id))
-    attrs.append(emails_attributes: %i(email _destroy id))
-    attrs.append(shortname_attributes: %i(shortname)) if new_record?
-    attrs.concat %i(first_name middle_name last_name)
+    attrs.append(home_placement_attributes: %i[postal_code country_code id])
+    attrs.append(emails_attributes: %i[email _destroy id])
+    attrs.append(shortname_attributes: %i[shortname]) if new_record?
+    attrs.concat %i[first_name middle_name last_name]
     if update?
       attrs.concat(
-        %i(reactions_email news_email decisions_email memberships_email
+        %i[reactions_email news_email decisions_email memberships_email
            created_email has_analytics has_analytics time_zone language
-           birthday)
+           birthday]
       )
     end
-    attrs.concat %i(current_password password password_confirmation) if password
+    attrs.concat %i[current_password password password_confirmation] if password
     attrs.append(profile_attributes: ProfilePolicy
                                        .new(context, record.profile)
                                        .permitted_attributes)
@@ -33,8 +33,8 @@ class UserPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general profile authentication notifications privacy
-                   advanced)
+    tabs.concat %i[general profile authentication notifications privacy
+                   advanced]
   end
 
   def show?

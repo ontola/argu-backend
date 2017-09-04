@@ -30,15 +30,15 @@ class PagePolicy < EdgeablePolicy
   def permitted_attributes
     attributes = super
     if create?
-      attributes.concat %i(bio tag_list last_accepted)
-      attributes.append(profile_attributes: %i(id name profile_photo))
+      attributes.concat %i[bio tag_list last_accepted]
+      attributes.append(profile_attributes: %i[id name profile_photo])
     end
     if new_record?
       attributes.append :visibility
-      attributes.append(shortname_attributes: %i(shortname))
+      attributes.append(shortname_attributes: %i[shortname])
     end
     attributes.append :visibility if is_super_admin? || staff?
-    attributes.concat %i(page_id confirmation_string) if change_owner?
+    attributes.concat %i[page_id confirmation_string] if change_owner?
     attributes.append(profile_attributes: ProfilePolicy
                                             .new(context,
                                                  record.try(:profile) || Profile)
@@ -52,8 +52,8 @@ class PagePolicy < EdgeablePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(profile forums groups advanced) if is_super_admin? || staff?
-    tabs.concat %i(sources) if staff?
+    tabs.concat %i[profile forums groups advanced] if is_super_admin? || staff?
+    tabs.concat %i[sources] if staff?
     tabs
   end
 

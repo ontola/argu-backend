@@ -19,6 +19,6 @@ class Portal::PagesController < ApplicationController
   private
 
   def permit_params
-    params.require(:page).permit :name, :shortname, profile_attributes: [:name, :about]
+    params.require(:page).permit :name, :shortname, profile_attributes: %i[name about]
   end
 end

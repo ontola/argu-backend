@@ -39,7 +39,7 @@ class Motion < ApplicationRecord
   contextualize :content, as: 'schema:text'
   contextualize :current_vote, as: 'argu:currentVote'
 
-  convertible questions: %i(activities blog_posts)
+  convertible questions: %i[activities blog_posts]
   counter_cache true
   paginates_per 30
   parentable :question, :project, :forum
@@ -52,7 +52,7 @@ class Motion < ApplicationRecord
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
 
-  VOTE_OPTIONS = [:pro, :neutral, :con].freeze unless defined?(VOTE_OPTIONS)
+  VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 
   # @return [ActiveRecord::Relation]
   def self.search(q)
@@ -69,8 +69,8 @@ class Motion < ApplicationRecord
 
   def as_json(options = {})
     super((options || {}).merge(
-      methods: %i(display_name),
-      only: %i(id content forum_id created_at cover_photo updated_at)
+      methods: %i[display_name],
+      only: %i[id content forum_id created_at cover_photo updated_at]
     ))
   end
 

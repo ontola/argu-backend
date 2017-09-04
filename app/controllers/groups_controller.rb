@@ -6,7 +6,7 @@ class GroupsController < ServiceController
   def show
     respond_to do |format|
       format.json_api do
-        render json: authenticated_resource, include: %i(organization)
+        render json: authenticated_resource, include: %i[organization]
       end
     end
   end

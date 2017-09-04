@@ -37,7 +37,7 @@ class QuestionsController < EdgeTreeController
   private
 
   def authenticated_resource
-    if (%w(convert convert! shift move) & [params[:action]]).present?
+    if (%w[convert convert! shift move] & [params[:action]]).present?
       @resource ||= Question.find(params[:question_id])
     else
       super

@@ -4,9 +4,9 @@ class ForumsController < EdgeTreeController
   prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
   prepend_before_action :write_client_access_token
-  skip_before_action :authorize_action, only: %i(discover)
-  skip_before_action :check_if_registered, only: %i(discover)
-  skip_after_action :verify_authorized, only: %i(discover)
+  skip_before_action :authorize_action, only: :discover
+  skip_before_action :check_if_registered, only: :discover
+  skip_after_action :verify_authorized, only: :discover
   before_action :redirect_bearer_token
 
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
@@ -120,7 +120,7 @@ class ForumsController < EdgeTreeController
       resource_by_id
         .edge
         .children
-        .where(owner_type: %w(Motion Question))
+        .where(owner_type: %w[Motion Question])
         .order('edges.pinned_at DESC NULLS LAST, edges.last_activity_at DESC')
     )
       .includes(Question.edge_includes_for_index.deep_merge(Motion.edge_includes_for_index))
@@ -132,7 +132,7 @@ class ForumsController < EdgeTreeController
     forum
       .edge
       .descendants
-      .where(owner_type: %w(Argument Vote Project Question Motion Comment))
+      .where(owner_type: %w[Argument Vote Project Question Motion Comment])
       .group(:owner_type)
       .count
       .sort { |x, y| y[1] <=> x[1] }

@@ -37,7 +37,7 @@ module MapHelper
   def map_picker_props(resource)
     marker = resource.edge.custom_placements.first
     if marker.nil?
-      center = Placement.find_by_path(resource.persisted_edge&.path, %w(custom country)) ||
+      center = Placement.find_by_path(resource.persisted_edge&.path, %w[custom country]) ||
         Place.find_or_fetch_country('nl')
     end
     {

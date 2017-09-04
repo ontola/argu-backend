@@ -43,14 +43,14 @@ class Placement < ApplicationRecord
 
   def location_attributes
     Hash[
-      %i(country_code lat lon postal_code)
+      %i[country_code lat lon postal_code]
         .map { |attr| [attr, send(attr)] }
         .select { |_k, v| v.present? }
     ]
   end
 
   def location_attributes_changed?
-    %i(country_code lat lon postal_code).any? { |attr| send("#{attr}_changed?") }
+    %i[country_code lat lon postal_code].any? { |attr| send("#{attr}_changed?") }
   end
 
   # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}

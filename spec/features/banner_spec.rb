@@ -20,7 +20,7 @@ RSpec.feature 'Banners', type: :feature do
            title: 'ended_banner')
   end
 
-  %i(guests users members everyone).each do |audience|
+  %i[guests users members everyone].each do |audience|
     let!("banner_#{audience}".to_sym) do
       create(:banner,
              published_at: 1.hour.ago,
@@ -206,7 +206,7 @@ RSpec.feature 'Banners', type: :feature do
 
     visit settings_forum_path(spain, tab: :banners)
     within('#banners-published') do
-      %i(guests users members everyone).each do |level|
+      %i[guests users members everyone].each do |level|
         expect(page).to have_content(send("banner_#{level}").title)
       end
     end

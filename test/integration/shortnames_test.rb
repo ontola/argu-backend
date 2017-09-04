@@ -28,7 +28,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'guest should get resources' do
     parent = freetown
-    %i(project question motion argument).each do |klass|
+    %i[project question motion argument].each do |klass|
       resource = create(klass, parent: parent.edge)
       parent = resource
 

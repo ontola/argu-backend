@@ -13,7 +13,7 @@ FactoryGirl.define do
     end
 
     factory :profile_direct_email do
-      association :profileable, factory: [:user, :follows_reactions_directly], strategy: :build
+      association :profileable, factory: %i[user follows_reactions_directly], strategy: :build
     end
   end
 end

@@ -8,16 +8,16 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::Vips
 
-  ARCHIVE_TYPES = %w(application/zip).freeze
-  DOCUMENT_TYPES = %w(application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
-                      application/vnd.oasis.opendocument.text application/epub+zip).freeze
-  IMAGE_TYPES = %w(image/jpeg image/png image/webp).freeze
-  PORTABLE_DOCUMENT_TYPES = %w(application/pdf).freeze
-  PRESENTATION_TYPES = %w(application/vnd.oasis.opendocument.presentation application/powerpoint
+  ARCHIVE_TYPES = %w[application/zip].freeze
+  DOCUMENT_TYPES = %w[application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                      application/vnd.oasis.opendocument.text application/epub+zip].freeze
+  IMAGE_TYPES = %w[image/jpeg image/png image/webp].freeze
+  PORTABLE_DOCUMENT_TYPES = %w[application/pdf].freeze
+  PRESENTATION_TYPES = %w[application/vnd.oasis.opendocument.presentation application/powerpoint
                           application/vnd.openxmlformats-officedocument.presentationml.presentation
-                          application/vnd.openxmlformats-officedocument.presentationml.slideshow).freeze
-  SPREADSHEET_TYPES = %w(text/csv application/excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-                         text/comma-separated-values application/vnd.oasis.opendocument.spreadsheet).freeze
+                          application/vnd.openxmlformats-officedocument.presentationml.slideshow].freeze
+  SPREADSHEET_TYPES = %w[text/csv application/excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                         text/comma-separated-values application/vnd.oasis.opendocument.spreadsheet].freeze
 
   if Rails.env.development? || Rails.env.test?
     storage :file

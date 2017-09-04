@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
                                                   "%#{q}%",
                                                   "%#{q}%")
                                            .pluck(:owner_id))
-                  .includes(:default_profile_photo, profileable: %i(shortname emails))
+                  .includes(:default_profile_photo, profileable: %i[shortname emails])
 
     return unless params[:things] && params[:things].split(',').include?('pages')
     @profiles += policy_scope(Profile)

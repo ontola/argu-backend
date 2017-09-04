@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :question do
     association :forum, strategy: :create
-    association :publisher, factory: [:user, :follows_reactions_directly]
+    association :publisher, factory: %i[user follows_reactions_directly]
     creator do
       if passed_in?(:creator)
         creator

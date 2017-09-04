@@ -40,7 +40,7 @@ class EdgeableCreateService < CreateService
   end
 
   def parent_columns
-    %i(forum_id)
+    %i[forum_id]
   end
 
   def walk_parents

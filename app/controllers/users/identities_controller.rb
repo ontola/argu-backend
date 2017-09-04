@@ -2,7 +2,7 @@
 
 class Users::IdentitiesController < AuthorizedController
   include RedisResourcesHelper
-  skip_before_action :check_if_registered, only: [:connect, :connect!]
+  skip_before_action :check_if_registered, only: %i[connect connect!]
 
   def destroy
     respond_to do |format|
@@ -60,7 +60,7 @@ class Users::IdentitiesController < AuthorizedController
   private
 
   def resource_id
-    return super unless %w(connect connect!).include?(action_name)
+    return super unless %w[connect connect!].include?(action_name)
     payload = decode_token params[:token]
     @identity = Identity.find payload['identity']
   end

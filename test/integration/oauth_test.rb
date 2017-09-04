@@ -13,7 +13,7 @@ class OauthTest < ActionDispatch::IntegrationTest
       get forum_path('freetown')
     end
 
-    assert_equal %w(guest), Doorkeeper::AccessToken.last.scopes.to_a
+    assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
 
     assert_no_difference('Doorkeeper::AccessToken.count',
                          'Guest tokens should only be set when expired') do
@@ -35,7 +35,7 @@ class OauthTest < ActionDispatch::IntegrationTest
           'Authorization': "Bearer #{t.token}"
         }
 
-    assert_equal %w(guest), Doorkeeper::AccessToken.last.scopes.to_a
+    assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
     assert_equal session.id, Doorkeeper::AccessToken.last.resource_owner_id
   end
 
@@ -60,7 +60,7 @@ class OauthTest < ActionDispatch::IntegrationTest
 
     assert_nil parsed_cookies['expires']
     at = Doorkeeper::AccessToken.last
-    assert_equal %w(user), at.scopes.to_a
+    assert_equal %w[user], at.scopes.to_a
     assert_equal user.id, at.resource_owner_id.to_i
     assert response.cookies['argu_client_token'].present?
 
@@ -84,7 +84,7 @@ class OauthTest < ActionDispatch::IntegrationTest
 
     assert_not_nil parsed_cookies['expires']
     at = Doorkeeper::AccessToken.last
-    assert_equal %w(user), at.scopes.to_a
+    assert_equal %w[user], at.scopes.to_a
     assert_equal user.id, at.resource_owner_id.to_i
     assert response.cookies['argu_client_token'].present?
 
@@ -109,7 +109,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     end
 
     at = Doorkeeper::AccessToken.last
-    assert_equal %w(user), at.scopes.to_a
+    assert_equal %w[user], at.scopes.to_a
     assert_equal user.id, at.resource_owner_id.to_i
     assert response.cookies['argu_client_token'].present?
 

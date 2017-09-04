@@ -5,7 +5,7 @@
 # @author Fletcher91 <thom@argu.co>
 module ExceptionToTheRule
   TRICKLE_LOGIC = {'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>=}.freeze
-  ROLE_NAMES = %w(open member manager creator super_admin service staff).freeze
+  ROLE_NAMES = %w[open member manager creator super_admin service staff].freeze
 
   attr_reader :last_enacted, :last_verdict
 

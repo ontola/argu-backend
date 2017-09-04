@@ -48,7 +48,7 @@ class Profile < ApplicationRecord
 
   def as_json(options = {})
     # Hide profileable for the more friendly actor
-    super(options.merge(except: [:profileable, :profileable_type, :profileable_id], methods: [:actor_type, :actor_id]))
+    super(options.merge(except: %i[profileable profileable_type profileable_id], methods: %i[actor_type actor_id]))
   end
 
   def actor_type
@@ -180,8 +180,8 @@ class Profile < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
-    %w(comments motions arguments questions blog_posts projects vote_events vote_matches activities
-       uploaded_media_objects unscoped_group_memberships)
+    %w[comments motions arguments questions blog_posts projects vote_events vote_matches activities
+       uploaded_media_objects unscoped_group_memberships]
       .each do |association|
       send(association)
         .model

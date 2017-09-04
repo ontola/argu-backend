@@ -15,13 +15,13 @@ module Argu
     config.token_url = ENV['TOKEN_SERVICE_URL']
     config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || 'beta.argu.co'}"
 
-    config.autoload_paths += %W(#{config.root}/app/models/banners)
-    config.autoload_paths += %W(#{config.root}/app/services)
+    config.autoload_paths += %W[#{config.root}/app/models/banners]
+    config.autoload_paths += %W[#{config.root}/app/services]
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
-    config.autoload_paths += %W(#{config.root}/app/listeners)
-    config.autoload_paths += %W(#{config.root}/app/serializers/base)
-    config.autoload_paths += %W(#{config.root}/app/policies/edge_tree_policies)
-    config.autoload_paths += %W(#{config.root}/app/policies/edgeable_policies)
+    config.autoload_paths += %W[#{config.root}/app/listeners]
+    config.autoload_paths += %W[#{config.root}/app/serializers/base]
+    config.autoload_paths += %W[#{config.root}/app/policies/edge_tree_policies]
+    config.autoload_paths += %W[#{config.root}/app/policies/edgeable_policies]
 
     config.paths['app/views'].unshift("#{Rails.root}/lib/app/views")
 
@@ -59,20 +59,20 @@ module Argu
         origins Rails.configuration.frontend_url
         resource '*',
                  headers: :any,
-                 methods: %i(get post put patch delete options)
+                 methods: %i[get post put patch delete options]
       end
 
       allow do
         origins Rails.configuration.host_name, 'argu.co', 'd3hv9pr8szmavn.cloudfront.net'
         resource '/assets/*',
                  headers: :any,
-                 methods: %i(get options)
+                 methods: %i[get options]
       end
 
       allow do
         origins '*'
         resource(/\d+.widget/,
-                 headers: ['Origin', 'Accept', 'Content-Type'],
+                 headers: %w[Origin Accept Content-Type],
                  methods: [:get])
       end
     end
@@ -94,8 +94,8 @@ module Argu
     ############################
 
     config.time_zone = 'UTC'
-    I18n.available_locales = [:nl, :en]
-    config.i18n.available_locales = [:nl, :en]
+    I18n.available_locales = %i[nl en]
+    config.i18n.available_locales = %i[nl en]
     config.i18n.load_path += Dir["#{Rails.root}/config/locales/**/*.{rb,yml}"]
     config.i18n.enforce_available_locales = true
     I18n.enforce_available_locales = true

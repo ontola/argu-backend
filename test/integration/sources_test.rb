@@ -62,7 +62,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
     get settings_page_source_path(page, source)
     assert_source_settings_shown source
 
-    %i(general).each do |tab|
+    %i[general].each do |tab|
       get settings_page_source_path(page, source), params: {tab: tab}
       assert_source_settings_shown source, tab
     end
@@ -131,7 +131,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
     get settings_page_source_path(page, source)
     assert_source_settings_shown source
 
-    %i(general).each do |tab|
+    %i[general].each do |tab|
       get settings_page_source_path(page, source), params: {tab: tab}
       assert_source_settings_shown source, tab
     end

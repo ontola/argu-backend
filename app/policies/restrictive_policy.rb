@@ -61,7 +61,7 @@ class RestrictivePolicy
 
   def permitted_attributes
     attributes = [:lock_version]
-    attributes.append(shortname_attributes: %i(shortname id)) if shortname?
+    attributes.append(shortname_attributes: %i[shortname id]) if shortname?
     attributes
   end
 

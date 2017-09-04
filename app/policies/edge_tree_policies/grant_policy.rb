@@ -5,7 +5,7 @@ class GrantPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(group_id edge_id role)
+    attributes.concat %i[group_id edge_id role]
     attributes
   end
 

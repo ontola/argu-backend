@@ -18,7 +18,7 @@ class LinkedRecord < ApplicationRecord
 
   parentable :source
 
-  VOTE_OPTIONS = [:pro, :neutral, :con].freeze unless defined?(VOTE_OPTIONS)
+  VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 
   def self.find_or_fetch_by_iri(iri)
     record = LinkedRecord.find_or_initialize_by(iri: iri) do |linked_record|

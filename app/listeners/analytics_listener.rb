@@ -8,7 +8,7 @@ class AnalyticsListener
     @client_id = opts[:client_id]
   end
 
-  %i(project question motion argument comment blog_post).each do |model|
+  %i[project question motion argument comment blog_post].each do |model|
     define_method "create_#{model}_successful" do |_|
       send_analytics_event 'create_success', model
     end

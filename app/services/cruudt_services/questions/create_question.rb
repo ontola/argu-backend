@@ -10,6 +10,6 @@ class CreateQuestion < PublishedCreateService
   end
 
   def parent_columns
-    %i(forum_id project_id)
+    %i[forum_id project_id]
   end
 end

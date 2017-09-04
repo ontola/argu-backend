@@ -9,7 +9,7 @@ class GroupMembershipsController < ServiceController
         flash.keep
         redirect_to redirect_url
       end
-      format.json_api { render json: authenticated_resource, include: %i(organization) }
+      format.json_api { render json: authenticated_resource, include: %i[organization] }
     end
   end
 
@@ -104,7 +104,7 @@ class GroupMembershipsController < ServiceController
   alias redirect_model_success redirect_url
 
   def respond_with_201(resource, format)
-    return super unless %i(json json_api).include?(format)
+    return super unless %i[json json_api].include?(format)
     render json: resource, status: :created, location: resource, include: :group
   end
 end

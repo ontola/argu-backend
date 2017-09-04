@@ -12,7 +12,7 @@ class ContextTest < ActionDispatch::IntegrationTest
   let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, creator: user.profile, for: :pro) }
 
   test 'major content models should have a context' do
-    %i(question motion argument comment).each do |kind|
+    %i[question motion argument comment].each do |kind|
       @json = nil
 
       get polymorphic_path(send(kind), format: :json_api)

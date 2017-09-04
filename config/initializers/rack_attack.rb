@@ -4,7 +4,7 @@ require 'argu/hacker_error'
 
 unless Rails.env.test?
   ActiveSupport::Notifications.subscribe('rack.attack') do |name, _start, _finish, _request_id, req|
-    if (%w(spam fail2ban) & req.env['rack.attack.matched'].split(' ')).present?
+    if (%w[spam fail2ban] & req.env['rack.attack.matched'].split(' ')).present?
       Bugsnag.notify(Argu::HackerError.new(name), request_data: req)
     end
   end
@@ -48,7 +48,7 @@ module Rack
         if (!Rails.env.test? &&
             req.post? &&
             is_throttled_path(req)) ||
-            %w(/users/auth).any? { |n| req.path.include?(n) }
+            %w[/users/auth].any? { |n| req.path.include?(n) }
           req.ip
         end
       end
@@ -75,7 +75,7 @@ module Rack
     end
 
     def self.is_throttled_path(req)
-      %w(/oauth /actors /users /connect /setup /move /convert /v/ /c/).any? { |n| req.path.include?(n) }
+      %w[/oauth /actors /users /connect /setup /move /convert /v/ /c/].any? { |n| req.path.include?(n) }
     end
   end
 end

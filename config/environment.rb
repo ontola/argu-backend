@@ -6,4 +6,4 @@ require_relative 'application'
 # Initialize the Rails application.
 Rails.application.initialize!
 
-STAGES = [:production, :staging].freeze
+STAGES = %i[production staging].freeze

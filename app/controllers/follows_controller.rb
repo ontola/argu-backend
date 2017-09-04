@@ -51,12 +51,12 @@ class FollowsController < ApplicationController
   end
 
   def set_thing
-    permitted_classes = %w(Forum Question Motion Argument Comment Project BlogPost)
+    permitted_classes = %w[Forum Question Motion Argument Comment Project BlogPost]
     @thing = Edge.where(owner_type: permitted_classes).find(permit_params[:gid]).owner
     @forum = @thing.try :forum
   end
 
   def permit_params
-    params.permit %i(follow_type gid)
+    params.permit %i[follow_type gid]
   end
 end

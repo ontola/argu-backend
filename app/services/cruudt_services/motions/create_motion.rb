@@ -10,6 +10,6 @@ class CreateMotion < PublishedCreateService
   end
 
   def parent_columns
-    %i(question_id project_id forum_id)
+    %i[question_id project_id forum_id]
   end
 end

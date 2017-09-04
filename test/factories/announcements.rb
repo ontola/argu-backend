@@ -17,7 +17,7 @@ FactoryGirl.define do
       published_at { 1.hour.from_now }
     end
 
-    %i(guests users members everyone).each do |aud|
+    %i[guests users members everyone].each do |aud|
       trait aud do
         audience Announcement.audiences[aud]
       end

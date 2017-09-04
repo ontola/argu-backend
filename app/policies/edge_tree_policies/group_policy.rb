@@ -17,15 +17,15 @@ class GroupPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(name name_singular) if create?
-    attributes.append(grants_attributes: %i(id role edge_id group_id))
+    attributes.concat %i[name name_singular] if create?
+    attributes.append(grants_attributes: %i[id role edge_id group_id])
     attributes.append :id if staff?
     attributes
   end
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(members invite general grants advanced) if is_super_admin? || staff?
+    tabs.concat %i[members invite general grants advanced] if is_super_admin? || staff?
     tabs
   end
 

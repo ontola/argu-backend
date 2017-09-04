@@ -13,7 +13,7 @@ module Argu
 
       def automated_test_assertions(action, test_case, _user_type, results)
         ((test_case[:asserts] || []) + (results[:asserts] || []))&.each do |assertion|
-          if %i(update create destroy trash untrash).include?(action)
+          if %i[update create destroy trash untrash].include?(action)
             assertion = assertion.gsub('resource', "assigns(:#{action}_service).resource.reload")
           end
           assert eval(assertion), assertion
@@ -21,7 +21,7 @@ module Argu
       end
 
       def perform_automated_test(action, test_case, user_type, results, method)
-        if %i(member non_member).include?(user_type)
+        if %i[member non_member].include?(user_type)
           freetown.grants.where(group_id: Group::PUBLIC_ID).destroy_all
           public_source.grants.where(group_id: Group::PUBLIC_ID).destroy_all if respond_to?(:public_source)
           create_forum(public_grant: 'member')

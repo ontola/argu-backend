@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CurrentActorSerializer < BaseSerializer
-  attributes %i(actor_type finished_intro display_name shortname url)
+  attributes %i[actor_type finished_intro display_name shortname url]
   has_one :profile_photo do
     obj = object.actor&.default_profile_photo
     if obj

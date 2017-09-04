@@ -23,7 +23,7 @@ class ProjectsController < EdgeTreeController
 
     respond_to do |format|
       format.html { render locals: {project: authenticated_resource!} }
-      format.json { render json: authenticated_resource!, include: %w(phases blog_posts) }
+      format.json { render json: authenticated_resource!, include: %w[phases blog_posts] }
     end
   end
 

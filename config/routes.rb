@@ -38,13 +38,13 @@ require 'argu/whitelist_constraint'
 Rails.application.routes.draw do
   concern :blog_postable do
     resources :blog_posts,
-              only: [:index, :new, :create],
+              only: %i[index new create],
               path: 'posts'
   end
   concern :commentable do
     resources :comments,
               path: 'c',
-              only: [:new, :index, :show, :create, :update, :edit]
+              only: %i[new index show create update edit]
     patch 'comments' => 'comments#create'
   end
   concern :destroyable do
@@ -58,8 +58,8 @@ Rails.application.routes.draw do
   end
   concern :discussable do
     resources :discussions, only: [:new]
-    resources :questions, path: 'q', only: [:index, :new, :create]
-    resources :motions, path: 'm', only: [:index, :new, :create]
+    resources :questions, path: 'q', only: %i[index new create]
+    resources :motions, path: 'm', only: %i[index new create]
   end
   concern :favorable do
     resources :favorites, only: [:create]
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
     match '/', action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
-    resources :votes, only: [:new, :create]
+    resources :votes, only: %i[new create]
     get 'vote' => 'votes#show', as: :show_vote
   end
 
@@ -95,7 +95,7 @@ Rails.application.routes.draw do
                 tokens: 'oauth/tokens'
   end
 
-  resources :notifications, only: [:index, :show, :update], path: 'n' do
+  resources :notifications, only: %i[index show update], path: 'n' do
     patch :read, on: :collection
   end
 
@@ -126,7 +126,7 @@ Rails.application.routes.draw do
 
   resources :users,
             path: 'u',
-            only: [:show, :update] do
+            only: %i[show update] do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
     get :feed, controller: 'users/feed', action: :show
@@ -140,44 +140,44 @@ Rails.application.routes.draw do
     get :pages, to: 'users/pages#index', on: :member
     get :forums, to: 'forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
-    resources :vote_matches, only: [:index, :show]
+    resources :vote_matches, only: %i[index show]
 
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
 
   get :feed, controller: :favorites_feed, action: :show
 
-  resources :votes, only: [:destroy, :update, :show], path: :v, as: :vote
+  resources :votes, only: %i[destroy update show], path: :v, as: :vote
   resources :vote_events, only: [:show], concerns: [:votable] do
     resources :votes, only: :index
   end
 
-  resources :vote_matches, only: [:index, :show, :create, :update, :destroy] do
+  resources :vote_matches, only: %i[index show create update destroy] do
     get :voteables, to: 'list_items#index', relationship: :voteables
     get :vote_comparables, to: 'list_items#index', relationship: :vote_comparables
   end
 
   resources :questions,
-            path: 'q', except: [:index, :new, :create],
-            concerns: [:commentable, :blog_postable, :moveable, :feedable, :trashable, :invitable] do
+            path: 'q', except: %i[index new create],
+            concerns: %i[commentable blog_postable moveable feedable trashable invitable] do
     resources :media_objects, only: :index
-    resources :motions, path: 'm', only: [:index, :new, :create]
-    resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
+    resources :motions, path: 'm', only: %i[index new create]
+    resources :motions, path: 'motions', only: %i[index create], as: :canonical_motions
   end
 
-  resources :question_answers, path: 'qa', only: [:new, :create]
+  resources :question_answers, path: 'qa', only: %i[new create]
   resources :edges, only: [] do
-    resources :conversions, path: 'conversion', only: [:new, :create]
+    resources :conversions, path: 'conversion', only: %i[new create]
   end
   resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log
 
   resources :motions,
             path: 'm',
-            except: [:index, :new, :create, :destroy],
-            concerns: [:commentable, :blog_postable, :moveable, :votable,
-                       :feedable, :trashable, :decisionable, :invitable] do
-    resources :arguments, only: [:new, :create, :index]
+            except: %i[index new create destroy],
+            concerns: %i[commentable blog_postable moveable votable
+                         feedable trashable decisionable invitable] do
+    resources :arguments, only: %i[new create index]
     resources :media_objects, only: :index
     resources :votes, only: :index
     resources :vote_events, only: :index
@@ -185,29 +185,29 @@ Rails.application.routes.draw do
 
   resources :arguments,
             path: 'a',
-            except: [:index, :new, :create],
-            concerns: [:votable, :feedable, :trashable, :commentable]
+            except: %i[index new create],
+            concerns: %i[votable feedable trashable commentable]
 
   resources :groups,
             path: 'g',
-            only: [:show, :update],
+            only: %i[show update],
             concerns: [:destroyable] do
     get :settings, on: :member
-    resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
+    resources :group_memberships, path: 'memberships', only: %i[new create], as: :membership
   end
-  resources :group_memberships, only: %i(show destroy)
+  resources :group_memberships, only: %i[show destroy]
 
   resources :pages,
             path: 'o',
-            only: [:new, :create, :show, :update, :index],
-            concerns: [:feedable, :destroyable] do
-    resources :grants, path: 'grants', only: [:new, :create]
-    resources :groups, path: 'g', only: [:create, :new]
+            only: %i[new create show update index],
+            concerns: %i[feedable destroyable] do
+    resources :grants, path: 'grants', only: %i[new create]
+    resources :groups, path: 'g', only: %i[create new]
     resources :group_memberships, only: :index do
       post :index, action: :index, on: :collection
     end
-    resources :vote_matches, only: [:index, :show]
-    resources :sources, only: [:update, :show], path: 's' do
+    resources :vote_matches, only: %i[index show]
+    resources :sources, only: %i[update show], path: 's' do
       get :settings, on: :member
     end
     get :settings, on: :member
@@ -216,16 +216,16 @@ Rails.application.routes.draw do
 
   resources :blog_posts,
             path: 'posts',
-            only: [:show, :edit, :update],
-            concerns: [:trashable, :commentable]
+            only: %i[show edit update],
+            concerns: %i[trashable commentable]
 
   resources :projects,
             path: 'p',
-            only: [:show, :edit, :update],
-            concerns: [:blog_postable, :feedable, :discussable, :trashable]
+            only: %i[show edit update],
+            concerns: %i[blog_postable feedable discussable trashable]
 
   resources :phases,
-            only: [:show, :edit, :update] do
+            only: %i[show edit update] do
     put :finish, to: 'phases#finish'
   end
 
@@ -238,7 +238,7 @@ Rails.application.routes.draw do
         to: 'static_pages#dismiss_announcement'
   end
 
-  resources :profiles, only: [:index, :update] do
+  resources :profiles, only: %i[index update] do
     post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     get :setup, to: 'profiles#setup', on: :collection
@@ -253,16 +253,16 @@ Rails.application.routes.draw do
     delete :destroy, on: :collection
   end
 
-  resources :shortnames, only: %i(edit update destroy)
+  resources :shortnames, only: %i[edit update destroy]
 
-  resources :linked_records, only: %i(show), path: :lr, concerns: [:votable, :commentable] do
+  resources :linked_records, only: %i[show], path: :lr, concerns: %i[votable commentable] do
     get '/', action: :show, on: :collection
-    resources :arguments, only: [:new, :create, :index]
+    resources :arguments, only: %i[new create index]
     resources :votes, only: :index
     resources :vote_events, only: :index
   end
 
-  match '/search/' => 'search#show', as: 'search', via: [:get, :post]
+  match '/search/' => 'search#show', as: 'search', via: %i[get post]
 
   get '/settings', to: 'users#settings', as: 'settings_user'
   put '/settings', to: 'users#update'
@@ -288,15 +288,15 @@ Rails.application.routes.draw do
   get '/quawonen_feedback', to: redirect('/quawonen')
 
   constraints(Argu::StaffConstraint) do
-    resources :documents, only: [:edit, :update, :index, :new, :create]
+    resources :documents, only: %i[edit update index new create]
     resources :notifications, only: :create
     namespace :portal do
       get '/', to: 'portal#home'
       get :settings, to: 'portal#home'
       post 'setting', to: 'portal#setting!', as: :update_setting
       resources :announcements, except: :index
-      resources :forums, only: [:new, :create]
-      resources :sources, only: [:new, :create]
+      resources :forums, only: %i[new create]
+      resources :sources, only: %i[new create]
       mount Sidekiq::Web => '/sidekiq'
     end
   end
@@ -306,23 +306,23 @@ Rails.application.routes.draw do
   get :discover, to: 'forums#discover', as: :discover_forums
   constraints(Argu::ForumsConstraint) do
     resources :forums,
-              only: [:show, :update],
+              only: %i[show update],
               path: '',
-              concerns: [:feedable, :discussable, :destroyable, :favorable, :invitable] do
+              concerns: %i[feedable discussable destroyable favorable invitable] do
       resources :motions, path: :m, only: [] do
         get :search, to: 'motions#search', on: :collection
       end
       get :settings, on: :member
       get :statistics, on: :member
-      resources :shortnames, only: [:new, :create]
-      resources :projects, path: 'p', only: [:new, :create]
-      resources :banners, except: [:index, :show]
+      resources :shortnames, only: %i[new create]
+      resources :projects, path: 'p', only: %i[new create]
+      resources :banners, except: %i[index show]
     end
   end
-  resources :forums, only: [:show, :update], path: 'f', as: :canonical_forum
+  resources :forums, only: %i[show update], path: 'f', as: :canonical_forum
   resources :forums, only: [], path: 'f' do
-    resources :questions, path: 'questions', only: [:index, :create], as: :canonical_questions
-    resources :motions, path: 'motions', only: [:index, :create], as: :canonical_motions
+    resources :questions, path: 'questions', only: %i[index create], as: :canonical_questions
+    resources :motions, path: 'motions', only: %i[index create], as: :canonical_motions
   end
 
   get '/ns/core/:model', to: 'static_pages#context'

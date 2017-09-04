@@ -74,9 +74,9 @@ class NotificationsControllerTest < ActionController::TestCase
   def followed_content(user)
     parent = freetown
     create(:follow, followable: parent.edge, follower: user)
-    %i(question motion argument comment).each do |type|
+    %i[question motion argument comment].each do |type|
       trackable = create(type, parent: parent.edge)
-      if %i(question motion argument).include?(type)
+      if %i[question motion argument].include?(type)
         parent = trackable
         create(:follow, followable: parent.edge, follower: user)
       end

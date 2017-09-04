@@ -372,7 +372,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     get settings_user_path
     assert_user_settings_shown
 
-    %i(general profile authentication notifications privacy advanced).each do |tab|
+    %i[general profile authentication notifications privacy advanced].each do |tab|
       get settings_user_path(tab: tab)
       assert_user_settings_shown tab
     end

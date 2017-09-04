@@ -8,7 +8,7 @@ class Comment < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  acts_as_nested_set scope: [:commentable_id, :commentable_type]
+  acts_as_nested_set scope: %i[commentable_id commentable_type]
   counter_cache true
   paginates_per 30
   parentable :argument, :blog_post, :motion, :question, :linked_record

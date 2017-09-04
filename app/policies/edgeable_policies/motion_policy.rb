@@ -5,11 +5,11 @@ class MotionPolicy < EdgeablePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(title content votes tag_list question_id) if create?
-    attributes.concat %i(invert_arguments tag_id forum_id f_convert) if staff?
-    attributes.concat %i(pinned) if is_manager? || staff?
+    attributes.concat %i[title content votes tag_list question_id] if create?
+    attributes.concat %i[invert_arguments tag_id forum_id f_convert] if staff?
+    attributes.concat %i[pinned] if is_manager? || staff?
     attributes.append :id if record.is_a?(Motion) && edit?
-    attributes.append(question_answers_attributes: %i(id question_id motion_id)) if create?
+    attributes.append(question_answers_attributes: %i[id question_id motion_id]) if create?
     append_default_photo_params(attributes)
     append_attachment_params(attributes)
     attributes

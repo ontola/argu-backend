@@ -4,7 +4,7 @@ class ShortnamesController < AuthorizedController
   include NestedResourceHelper
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
 
-  SAFE_OWNER_TYPES = %w(Project Question Motion Argument Comment).freeze
+  SAFE_OWNER_TYPES = %w[Project Question Motion Argument Comment].freeze
 
   def create
     if execute_update
@@ -34,7 +34,7 @@ class ShortnamesController < AuthorizedController
 
   def parent_resource
     @parent_resource ||=
-      if %w(new create).include?(params[:action])
+      if %w[new create].include?(params[:action])
         super
       else
         resource_by_id&.forum

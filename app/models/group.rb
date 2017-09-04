@@ -26,7 +26,7 @@ class Group < ApplicationRecord
   PUBLIC_ID = -1
 
   def as_json(options = {})
-    super(options.merge(except: [:created_at, :updated_at]))
+    super(options.merge(except: %i[created_at updated_at]))
   end
 
   def display_name

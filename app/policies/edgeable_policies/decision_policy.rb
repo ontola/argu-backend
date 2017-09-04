@@ -10,9 +10,9 @@ class DecisionPolicy < EdgeablePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(content)
-    attributes.concat %i(state forwarded_user_id forwarded_group_id) if record.new_record?
-    attributes.append(happening_attributes: %i(id happened_at))
+    attributes.concat %i[content]
+    attributes.concat %i[state forwarded_user_id forwarded_group_id] if record.new_record?
+    attributes.append(happening_attributes: %i[id happened_at])
     attributes
   end
 

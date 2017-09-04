@@ -3,7 +3,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  %w(comment page forum question motion argument project blog_post group).each do |model|
+  %w[comment page forum question motion argument project blog_post group].each do |model|
     require_dependency model
   end
 

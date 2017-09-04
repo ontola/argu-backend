@@ -141,7 +141,7 @@ module Argu
 
       # Adds 2 public and 1 hidden votes to the resource for pro, neutral and con
       def with_votes
-        %i(pro neutral con).each do |side|
+        %i[pro neutral con].each do |side|
           create_normal_vote(@resource.default_vote_event.edge, side)
           create_hidden_vote(@resource.default_vote_event.edge, side)
           create_redis_vote(@resource.default_vote_event.edge, side)

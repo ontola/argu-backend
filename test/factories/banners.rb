@@ -31,7 +31,7 @@ FactoryGirl.define do
       ends_at { 15.minutes.from_now }
     end
 
-    %i(guests users members everyone).each do |aud|
+    %i[guests users members everyone].each do |aud|
       trait aud do
         audience Banner.audiences[aud]
       end

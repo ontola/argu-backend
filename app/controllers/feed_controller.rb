@@ -24,7 +24,7 @@ class FeedController < AuthorizedController
       end
       format.json do
         if @activities.present?
-          render json: @activities, include: %w(recipient owner)
+          render json: @activities, include: %w[recipient owner]
         else
           respond_with_204(nil, :json)
         end

@@ -23,9 +23,9 @@ module ApplicationHelper
       if policy(resource)
            .permitted_nested_attributes(:edge_attributes, :argu_publication_attributes)
            .include?(:published_at)
-        %i(direct draft schedule)
+        %i[direct draft schedule]
       else
-        %i(direct draft)
+        %i[direct draft]
       end
     types.map { |type| {label: t("publications.type.#{type}"), value: type} }
   end
@@ -64,7 +64,7 @@ module ApplicationHelper
 
   def follow_dropdown_items(resource, opts = {})
     opts = {
-      follow_types: [:reactions, :news, :never]
+      follow_types: %i[reactions news never]
     }.merge(opts)
     items = []
     follow_type = current_user.following_type(resource.edge)

@@ -84,7 +84,7 @@ module RedisResource
       def parse(key, user = nil)
         values = key.split('.')
         new(
-          Hash[%i(user_type user_id owner_type edge_id).map.with_index { |k, i| [k, values[i + 1]] }]
+          Hash[%i[user_type user_id owner_type edge_id].map.with_index { |k, i| [k, values[i + 1]] }]
             .merge(user: user, path: values[5..values.length].join('.'))
         )
       end

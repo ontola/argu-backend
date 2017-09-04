@@ -7,6 +7,6 @@ class CreateForum < EdgeableCreateService
   end
 
   def parent_columns
-    %i(page_id)
+    %i[page_id]
   end
 end

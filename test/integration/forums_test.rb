@@ -332,7 +332,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
 
-    %i(shortnames banners).each do |tab|
+    %i[shortnames banners].each do |tab|
       get settings_forum_path(holland), params: {tab: tab}
       assert_not_authorized
     end
@@ -445,7 +445,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
 
-    %i(general shortnames banners).each do |tab|
+    %i[general shortnames banners].each do |tab|
       get settings_forum_path(holland), params: {tab: tab}
       assert_forum_settings_shown holland
     end
@@ -458,7 +458,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get statistics_forum_path(inhabited)
     assert_response 200
 
-    counts = [['Den Haag', '2'], %w(Utrecht 1), %w(Unknown 1)]
+    counts = [['Den Haag', '2'], %w[Utrecht 1], %w[Unknown 1]]
     assert_select '.city-table' do |element|
       assert_select element, '.city-row' do |rows|
         assert_equal 3, rows.count

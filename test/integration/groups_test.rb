@@ -147,7 +147,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     get settings_group_path(@group)
     assert_response 200
 
-    %i(general members invite grants).each do |tab|
+    %i[general members invite grants].each do |tab|
       get settings_group_path(@group, tab: tab)
       assert_group_settings_shown @group, tab
     end

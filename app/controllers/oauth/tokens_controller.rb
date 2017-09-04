@@ -13,7 +13,7 @@ module Oauth
     def create
       return super unless argu_classic_frontend_request?
       r = r_with_authenticity_token(params.dig(:user, :r) || '')
-      remember_me = %w(1 true).include?(params[:user].try(:[], :remember_me) || params[:remember_me])
+      remember_me = %w[1 true].include?(params[:user].try(:[], :remember_me) || params[:remember_me])
       guest_session_id = session.id
       response = authorize_response
       if response.is_a?(Doorkeeper::OAuth::ErrorResponse)

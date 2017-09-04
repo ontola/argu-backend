@@ -11,7 +11,7 @@ RSpec.feature 'Announcements', type: :feature do
            title: 'unpublished_announcement')
   end
 
-  %i(guests users everyone).each do |audience|
+  %i[guests users everyone].each do |audience|
     let!("announcement_#{audience}".to_sym) do
       create(:announcement,
              :published,

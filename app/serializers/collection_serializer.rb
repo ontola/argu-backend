@@ -3,7 +3,7 @@
 class CollectionSerializer < BaseSerializer
   attributes :title, :total_count
 
-  %i(first previous next last).each do |attr|
+  %i[first previous next last].each do |attr|
     link(attr) do
       {
         href: object.send(attr),

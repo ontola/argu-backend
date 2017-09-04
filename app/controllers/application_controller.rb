@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
 
   ::INC_NESTED_COLLECTION = [
-    :members, :create_action, views: [:members, :create_action, views: [:members, :create_action].freeze].freeze
+    :members, :create_action, views: [:members, :create_action, views: %i[members create_action].freeze].freeze
   ].freeze
 
   protect_from_forgery with: :exception, prepend: true, unless: (lambda do
@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
   def params
     return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
     if super['data']['type'].present? && super['data']['type'] != controller_name.camelcase(:lower)
-      raise ActionController::UnpermittedParameters.new(%w(type))
+      raise ActionController::UnpermittedParameters.new(%w[type])
     end
     raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?
     ActionController::Parameters.new(

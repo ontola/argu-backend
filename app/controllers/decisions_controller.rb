@@ -96,7 +96,7 @@ class DecisionsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super if %w(destroy trash).include?(action_name)
+    return super if %w[destroy trash].include?(action_name)
     resource.parent_model
   end
 

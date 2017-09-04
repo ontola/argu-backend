@@ -52,10 +52,10 @@ module RedisResource
     private
 
     def apply_filters(opts)
-      clear_key if (opts.keys & %i(publisher creator parent path owner_type edge_id)).any?
+      clear_key if (opts.keys & %i[publisher creator parent path owner_type edge_id]).any?
       self.user = opts.delete(:publisher) if opts[:publisher].present?
       self.user = opts.delete(:creator)&.profileable if opts[:creator].present?
-      %i(parent path owner_type edge_id).each do |attr|
+      %i[parent path owner_type edge_id].each do |attr|
         send("#{attr}=", opts.delete(attr)) if opts[attr].present?
       end
       raise 'It is required to provide a creator or publisher' unless user.present?

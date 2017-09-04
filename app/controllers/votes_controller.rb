@@ -2,7 +2,7 @@
 
 class VotesController < EdgeTreeController
   include UriTemplateHelper
-  skip_before_action :check_if_registered, only: %i(index show create)
+  skip_before_action :check_if_registered, only: %i[index show create]
 
   # GET /model/:model_id/vote
   def show

@@ -5,7 +5,7 @@ module ArgumentsHelper
   # @param model [Model] instance of the item
   def radio_values_for_pro_con(model)
     values = []
-    [:pro, :con].each do |side|
+    %i[pro con].each do |side|
       is_checked = side == (model.pro ? :pro : :con)
       values << [
         t("#{model.class_name}.form.side.#{side}"),

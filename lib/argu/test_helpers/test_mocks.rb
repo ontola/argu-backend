@@ -78,12 +78,12 @@ module Argu
                        'http://www.openstreetmap.org/copyright',
               osm_type: 'relation',
               osm_id: '2323309',
-              boundingbox: %w(
+              boundingbox: %w[
                 11.777
                 53.7253321
                 -70.2695875
                 7.2274985
-              ),
+              ],
               lat: '52.5001698',
               lon: '5.7480821',
               display_name: 'The Netherlands',

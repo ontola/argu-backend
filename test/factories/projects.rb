@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :project do
     association :forum, strategy: :create
     association :creator, factory: :profile
-    association :publisher, factory: [:user, :follows_reactions_directly]
+    association :publisher, factory: %i[user follows_reactions_directly]
     start_date 1.day.ago
     sequence(:title) { |n| "title#{n}" }
     content 'content'

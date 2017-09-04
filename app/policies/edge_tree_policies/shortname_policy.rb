@@ -7,7 +7,7 @@ class ShortnamePolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i(shortname owner_id owner_type) if is_manager_up?
+    attributes.concat %i[shortname owner_id owner_type] if is_manager_up?
     attributes
   end
 

@@ -32,7 +32,7 @@ class CreateDecision < PublishedCreateService
   end
 
   def parent_columns
-    %i(forum_id)
+    %i[forum_id]
   end
 
   def prepare_argu_publication_attributes

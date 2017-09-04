@@ -141,7 +141,7 @@ class User < ApplicationRecord
       follow.update(follow_type: type)
     end
     if ancestor_type.present?
-      followable.ancestors.where(owner_type: %w(Motion Question Project Forum)).find_each do |ancestor|
+      followable.ancestors.where(owner_type: %w[Motion Question Project Forum]).find_each do |ancestor|
         current_follow_type = following_type(ancestor)
         if Follow.follow_types[ancestor_type] > Follow.follow_types[current_follow_type]
           follow(ancestor, ancestor_type)
@@ -286,7 +286,7 @@ class User < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w(comments motions arguments questions blog_posts projects votes vote_events vote_matches uploaded_media_objects)
+    %w[comments motions arguments questions blog_posts projects votes vote_events vote_matches uploaded_media_objects]
       .each do |association|
       send(association)
         .model

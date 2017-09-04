@@ -11,7 +11,7 @@ class AuthorizedController < ApplicationController
           Common::New,
           Common::Update
   before_action :check_if_registered,
-                except: %i(show shift move convert convert!)
+                except: %i[show shift move convert convert!]
   before_action :authorize_action, except: :index
   before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_edge, :authenticated_resource, :collect_banners
@@ -156,6 +156,6 @@ class AuthorizedController < ApplicationController
   end
 
   def _route?
-    ![:new, :create].include? params[:action]
+    !%i[new create].include? params[:action]
   end
 end

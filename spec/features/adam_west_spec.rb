@@ -7,7 +7,7 @@ RSpec.feature 'Adam west', type: :feature do
   define_freetown('default', attributes: {name: 'default'})
   define_freetown
   let!(:f_rule_c) do
-    %w(show? create?).each do |action|
+    %w[show? create?].each do |action|
       create(:rule,
              branch: freetown.edge,
              model_type: 'Comment',

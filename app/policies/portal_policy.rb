@@ -18,7 +18,7 @@ class PortalPolicy < Struct.new(:user, :portal)
 
   def permitted_tabs
     tabs = []
-    tabs.concat(%i(general documents setting announcements)) if staff?
+    tabs.concat(%i[general documents setting announcements]) if staff?
     tabs
   end
 
