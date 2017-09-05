@@ -34,8 +34,8 @@ module AnalyticsHelper
           value: options[:value]
         )
     end
-  rescue Net::ReadTimeout, IOError, EOFError,
-         Errno::ECONNRESET, Errno::ECONNABORTED, Errno::EPIPE => e
+  rescue Net::ReadTimeout, IOError, Errno::ECONNRESET,
+         Errno::ECONNABORTED, Errno::EPIPE => e
     Bugsnag.notify(e)
   end
 

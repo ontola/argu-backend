@@ -25,7 +25,7 @@ module Convertible
     ActiveRecord::Base.transaction do
       shared_attributes = klass.column_names.reject { |n| !attribute_names.include?(n) || n == 'id' }
 
-      edge.children.select { |edge| !edge.owner.parent_classes.include?(klass.name.underscore.to_sym) }.each(&:destroy!)
+      edge.children.reject { |edge| edge.owner.parent_classes.include?(klass.name.underscore.to_sym) }.each(&:destroy!)
 
       new_model = klass.new Hash[shared_attributes.map { |i| [i, attributes[i]] }]
       new_model.edge = edge

@@ -347,7 +347,7 @@ Rails.application.routes.draw do
     post 'tokens', to: 'test/bearer_tokens#create'
   end
 
-  constraints(-> (req) { req.format == :json_api }) do
+  constraints(->(req) { req.format == :json_api }) do
     get '*path', to: 'application#handle_route_not_found'
   end
 end

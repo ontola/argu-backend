@@ -5,7 +5,7 @@ module NestedAttributesHelper
   # @param [Forum] forum The forum the photo should be tenantanized in
   def photo_params(type, forum = nil)
     attrs = {publisher: current_user, creator: current_profile, forum: nil}
-    attrs[:forum] = forum unless type == Page || type == User
+    attrs[:forum] = forum unless [Page, User].include? type
     attrs
   end
 

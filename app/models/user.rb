@@ -80,7 +80,7 @@ class User < ApplicationRecord
   validates :language,
             inclusion: {
               in: I18n.available_locales.map(&:to_s),
-              message: '%{value} is not a valid locale'
+              message: '%<value> is not a valid locale'
             }
   validate :r, :validate_r
   validate :validate_public_group_membership

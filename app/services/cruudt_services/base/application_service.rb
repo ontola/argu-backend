@@ -62,7 +62,7 @@ class ApplicationService
     pub_attrs = @attributes[:edge_attributes][:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
     unless resource.is_published?
-      pub_attrs[:published_at] ||= pub_attrs[:draft] == true || pub_attrs[:draft] == 'true' ? nil : 10.seconds.from_now
+      pub_attrs[:published_at] ||= pub_attrs[:draft].to_s == 'true' ? nil : 10.seconds.from_now
       if resource.new_record?
         pub_attrs[:publisher] ||= @options[:publisher]
         pub_attrs[:creator] ||= @options[:creator]
@@ -74,7 +74,7 @@ class ApplicationService
 
   def argu_publication_follow_type
     mark_as_important = @attributes.delete(:mark_as_important)
-    (mark_as_important == true || mark_as_important == '1' ? :news : :reactions)
+    %w[true 1].include?(mark_as_important.to_s) ? :news : :reactions
   end
 
   def assign_attributes
