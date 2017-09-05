@@ -4,7 +4,7 @@ class ProfilesController < ApplicationController
   include SettingsHelper
 
   def index
-    return if current_user.guest? || !params[:q].present?
+    return if current_user.guest? || params[:q].blank?
     # This is a working mess.
     q = params[:q].tr(' ', '|')
     @profiles = policy_scope(Profile)
@@ -93,7 +93,7 @@ class ProfilesController < ApplicationController
 
   def redirect_url
     return cookies.delete(:token) if cookies[:token].present?
-    return unless @resource.try(:r).present?
+    return if @resource.try(:r).blank?
     r = URI.decode(@resource.r)
     @resource.update r: ''
     r_opts = r_to_url_options(r)[0]

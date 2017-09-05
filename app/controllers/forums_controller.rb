@@ -156,7 +156,7 @@ class ForumsController < EdgeTreeController
   # @todo remove when old links are no longer used
   def redirect_bearer_token
     access_token = AccessToken.find_by(access_token: params[:at])
-    return unless access_token.present?
+    return if access_token.blank?
     access_token.increment!(:usages)
     redirect_to BEARER_TOKEN_TEMPLATE.expand(access_token: access_token.access_token)
   end

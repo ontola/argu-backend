@@ -27,7 +27,7 @@ module ProfilePhotoable
   end
 
   def build_profile_photo
-    build_default_profile_photo(photo_params) unless default_profile_photo.present?
+    build_default_profile_photo(photo_params) if default_profile_photo.blank?
   end
 
   def photo_params

@@ -17,7 +17,7 @@ module Argu
       @verdict = options[:verdict]
       @action = @query.to_s[0..-2]
 
-      raise StandardError unless @query.present?
+      raise StandardError if @query.blank?
 
       message = @verdict || I18n.t("pundit.#{@policy.class.to_s.underscore}.#{@query}",
                                    action: @action,

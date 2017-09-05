@@ -55,7 +55,7 @@ module RedisResource
     end
 
     def remove_from_redis
-      raise ActiveRecord::RecordNotFound unless key.present?
+      raise ActiveRecord::RecordNotFound if key.blank?
       raise "Cannot destroy a key with wildcards: #{key.key}" if key.has_wildcards?
       Argu::Redis.delete(key.key)
     end

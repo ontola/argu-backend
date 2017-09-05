@@ -30,7 +30,7 @@ class AuthorizedController < ApplicationController
   private
 
   def add_errors_tab(notification)
-    return unless authenticated_resource&.errors.present?
+    return if authenticated_resource&.errors.blank?
     notification.add_tab(:errors, authenticated_resource.errors.to_h)
   end
 
@@ -78,7 +78,7 @@ class AuthorizedController < ApplicationController
     banners = stubborn_hgetall('banners') || {}
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
     forum = current_forum
-    return unless forum.present?
+    return if forum.blank?
     @banners = policy_scope(forum.banners.published)
                  .reject { |b| banners[b.identifier] == 'hidden' }
   end
@@ -100,7 +100,7 @@ class AuthorizedController < ApplicationController
   end
 
   def language_from_edge_tree
-    return unless current_forum.present?
+    return if current_forum.blank?
     I18n.available_locales.include?(current_forum.language) ? current_forum.language : :en
   end
 

@@ -39,7 +39,7 @@ Doorkeeper.configure do
     }
     request.env['devise.allow_params_authentication'] = true
     user = request.env['warden'].authenticate(scope: :user)
-    raise(Argu::InvalidCredentialsError.new) unless user.present?
+    raise(Argu::InvalidCredentialsError.new) if user.blank?
     request.env['warden'].logout
     user
   end

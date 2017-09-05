@@ -36,7 +36,7 @@ module ApplicationHelper
   end
 
   def awesome_time_ago_in_words(date)
-    return unless date.present?
+    return if date.blank?
     if 1.day.ago < date
       distance_of_time_in_words(date, Time.current)
     elsif 1.year.ago < date

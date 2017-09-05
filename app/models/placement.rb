@@ -38,7 +38,7 @@ class Placement < ApplicationRecord
 
   # Destroys placement when no country_code and no postal_code is provided
   def destruct_if_unneeded
-    destroy unless location_attributes.present?
+    destroy if location_attributes.blank?
   end
 
   def location_attributes

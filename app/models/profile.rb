@@ -165,7 +165,7 @@ class Profile < ApplicationRecord
   end
 
   def owner_of(tenant)
-    return false unless tenant.present?
+    return false if tenant.blank?
     case tenant
     when Forum
       self == tenant.page.owner

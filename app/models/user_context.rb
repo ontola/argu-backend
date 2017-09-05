@@ -143,7 +143,7 @@ class UserContext
   private
 
   def build_tree(tree)
-    return unless tree.present?
+    return if tree.blank?
     @cached_nodes = {}
     root = tree.find { |e| e.parent_id.blank? }
     @grants_in_scope =

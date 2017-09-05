@@ -79,7 +79,7 @@ class UsersController < AuthorizedController
     if I18n.available_locales.include?(locale.to_sym)
       success = current_user.guest? ? cookies['locale'] = locale : current_user.update(language: locale)
       respond_to do |format|
-        flash[:error] = t('errors.general') unless success.present?
+        flash[:error] = t('errors.general') if success.blank?
         format.html { redirect_back(fallback_location: root_path) }
       end
     else
@@ -111,7 +111,7 @@ class UsersController < AuthorizedController
   def complete_feed_param; end
 
   def email_changed?
-    return unless permit_params[:emails_attributes].present?
+    return if permit_params[:emails_attributes].blank?
     permit_params[:emails_attributes].any? do |email|
       email.second['id'].nil? ||
         email.second['email'].present? &&

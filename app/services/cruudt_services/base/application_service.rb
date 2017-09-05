@@ -23,7 +23,7 @@ class ApplicationService
                 on: "update_#{resource.model_name.singular}_successful",
                 with: :update_successful)
     end
-    return unless options[:uuid].present?
+    return if options[:uuid].blank?
     subscribe(AnalyticsListener.new(
                 uuid: options[:uuid],
                 client_id: options[:client_id]
@@ -150,7 +150,7 @@ class ApplicationService
   end
 
   def prepare_placement_attributes
-    return unless @attributes[:edge_attributes][:placements_attributes].present?
+    return if @attributes[:edge_attributes][:placements_attributes].blank?
     @attributes[:edge_attributes][:placements_attributes] = placements_attributes
   end
 

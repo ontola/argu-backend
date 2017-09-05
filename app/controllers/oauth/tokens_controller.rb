@@ -64,7 +64,7 @@ module Oauth
     end
 
     def r_with_authenticity_token(r)
-      return '' unless r.present?
+      return '' if r.blank?
       uri = URI.parse(r)
       query = URI.decode_www_form(uri.query || '')
       query << ['authenticity_token', form_authenticity_token] if is_post?(r)

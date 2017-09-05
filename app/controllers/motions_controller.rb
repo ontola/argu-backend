@@ -13,8 +13,8 @@ class MotionsController < EdgeTreeController
     else
       skip_verify_policy_scoped(true)
       errors = []
-      errors << {title: 'Query parameter `q` not present'} unless params[:q].present?
-      errors << {title: 'Type parameter `thing` not present'} unless params[:thing].present?
+      errors << {title: 'Query parameter `q` not present'} if params[:q].blank?
+      errors << {title: 'Type parameter `thing` not present'} if params[:thing].blank?
       render status: 400,
              json: {errors: errors}
     end

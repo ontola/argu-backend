@@ -18,7 +18,7 @@ module ArgumentsHelper
 
   # Note: only used in widget view and opinions view
   def print_references(argument)
-    return unless argument.references.present?
+    return if argument.references.blank?
     concat content_tag :p, t('arguments.references') + ':', class: 'references-title'
     content_tag :ol, class: 'references-list' do
       argument.references.each do |ref|

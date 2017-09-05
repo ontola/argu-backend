@@ -41,7 +41,7 @@ class DecisionsController < EdgeTreeController
   end
 
   def edit_respond_success_html(resource)
-    resource.edge.argu_publication.draft! unless resource.edge.argu_publication.present?
+    resource.edge.argu_publication.draft! if resource.edge.argu_publication.blank?
 
     render action: 'index',
            locals: {
@@ -70,7 +70,7 @@ class DecisionsController < EdgeTreeController
                      .children
                      .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)))
                      .owner
-      decision.build_happening(happened_at: DateTime.current) unless decision.happening.present?
+      decision.build_happening(happened_at: DateTime.current) if decision.happening.blank?
       decision.edge.build_argu_publication
     end
     decision

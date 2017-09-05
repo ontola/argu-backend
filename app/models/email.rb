@@ -7,7 +7,7 @@ class Email < ApplicationRecord
 
   belongs_to :user, inverse_of: :emails
   before_save :remove_other_primaries
-  before_save { |user| user.email = email.downcase unless email.blank? }
+  before_save { |user| user.email = email.downcase if email.present? }
   after_commit :publish_data_event
 
   validate :dont_update_confirmed_email

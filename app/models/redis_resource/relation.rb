@@ -59,7 +59,7 @@ module RedisResource
       %i[parent path owner_type edge_id].each do |attr|
         send("#{attr}=", opts.delete(attr)) if opts[attr].present?
       end
-      raise 'It is required to provide a creator or publisher' unless user.present?
+      raise 'It is required to provide a creator or publisher' if user.blank?
       clear_filtered_keys if opts.present?
       where_clause.merge!(opts)
     end

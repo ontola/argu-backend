@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
     if super['data']['type'].present? && super['data']['type'] != controller_name.camelcase(:lower)
       raise ActionController::UnpermittedParameters.new(%w[type])
     end
-    raise ActionController::ParameterMissing.new(:attributes) unless super['data']['attributes'].present?
+    raise ActionController::ParameterMissing.new(:attributes) if super['data']['attributes'].blank?
     ActionController::Parameters.new(
       super.to_unsafe_h.merge(
         super.require(:data).require(:type).singularize.underscore =>
@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_profile_forum
-    return unless current_forum.present?
+    return if current_forum.blank?
     if current_user.guest?
       Argu::Redis.setex("session:#{session.id}:last_forum", 1.day.seconds.to_i, current_forum.id)
     else
