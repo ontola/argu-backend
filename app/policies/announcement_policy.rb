@@ -18,8 +18,10 @@ class AnnouncementPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i[title forum cited_profile content cited_name
-                         audience cited_function published_at ends_at] if create?
+    if create?
+      attributes.concat %i[title forum cited_profile content cited_name
+                           audience cited_function published_at ends_at]
+    end
     attributes.append :id if staff?
     attributes
   end

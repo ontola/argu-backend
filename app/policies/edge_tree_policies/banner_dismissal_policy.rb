@@ -9,8 +9,10 @@ class BannerDismissalPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i[title forum cited_profile content profile_photo
-                         cited_name cited_function published_at] if create?
+    if create?
+      attributes.concat %i[title forum cited_profile content profile_photo
+                           cited_name cited_function published_at]
+    end
     attributes.append :id if staff?
     attributes
   end

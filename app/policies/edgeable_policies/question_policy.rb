@@ -5,8 +5,10 @@ class QuestionPolicy < EdgeablePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i[id title content tag_list forum_id project_id cover_photo
-                         remove_cover_photo cover_photo_attribution] if create?
+    if create?
+      attributes.concat %i[id title content tag_list forum_id project_id cover_photo
+                           remove_cover_photo cover_photo_attribution]
+    end
     attributes.concat %i[include_motions f_convert] if staff?
     attributes.concat %i[pinned require_location] if is_manager? || staff?
     append_default_photo_params(attributes)
