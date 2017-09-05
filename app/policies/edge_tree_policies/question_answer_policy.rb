@@ -21,17 +21,6 @@ class QuestionAnswerPolicy < EdgeTreePolicy
     rule is_manager?, is_super_admin?, super
   end
 
-  def destroy?
-    (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
-      is_manager? ||
-      is_super_admin? ||
-      super
-  end
-
-  def update?
-    rule is_manager?, is_super_admin?, super
-  end
-
   def shortname?
     false
   end

@@ -139,6 +139,18 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
+  test 'staff should not post convert motion to argument' do
+    sign_in staff
+
+    post edge_conversions_path(motion.edge),
+         params: {
+           conversion: {
+             klass: 'arguments'
+           }
+         }
+    assert_response 403
+  end
+
   test 'staff should get convert motion' do
     sign_in staff
 
