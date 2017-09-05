@@ -7,7 +7,6 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def resolve
-      return scope.published.untrashed if staff?
       scope
         .joins(:edge)
         .where("edges.path ? #{Edge.path_array(granted_edges_within_tree || user.profile.granted_edges)}")
@@ -18,6 +17,10 @@ class EdgeTreePolicy < RestrictivePolicy
     def granted_edges_within_tree
       return unless context.has_tree?
       user.profile.granted_edges.where('path <@ ?', context.tree_root.id.to_s)
+    end
+
+    def staff?
+      context.granted_group_ids(context.tree_root.id, 'staff').any?
     end
   end
 
@@ -83,6 +86,10 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_manager_up?
       is_manager? || is_super_admin? || staff?
+    end
+
+    def staff?
+      is_role?(:staff)
     end
   end
   include Roles

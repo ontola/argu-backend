@@ -37,6 +37,10 @@ class ActivityPolicy < RestrictivePolicy
                "#{Edge.path_array(user.profile.granted_edges(nil, :manager))}",
                profile_ids: user.managed_profile_ids)
     end
+
+    def staff?
+      context.has_tree? ? super : user.is_staff?
+    end
   end
 
   def show?

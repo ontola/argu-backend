@@ -3,6 +3,8 @@
 class FavoritesFeedController < FeedController
   private
 
+  def authenticated_tree; end
+
   def authorize_action
     skip_verify_policy_authorized true
     raise Argu::NotAuthorizedError.new(query: :feed?) unless current_user.is_staff?

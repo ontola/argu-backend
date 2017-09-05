@@ -3,7 +3,6 @@
 class EdgePolicy < EdgeTreePolicy
   class Scope < Scope
     def resolve
-      return scope.published.untrashed if staff?
       scope
         .where("edges.path ? #{Edge.path_array(granted_edges_within_tree || user.profile.granted_edges)}")
         .published
