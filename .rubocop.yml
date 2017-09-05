@@ -18,6 +18,12 @@ Rails:
 Rails/ApplicationRecord:
   Exclude:
     - 'config/initializers/doorkeeper.rb'
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_opts
+    - find_by_iri
+    - find_by_iri!
+    - find_by_path
 Rails/SkipsModelValidations:
   Enabled: false
 Style/IfUnlessModifier:
