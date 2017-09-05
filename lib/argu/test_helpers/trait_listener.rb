@@ -80,7 +80,9 @@ module Argu
             creator: profile,
             forum: @resource.forum,
             publisher: profile.profileable,
-            content: Rack::Test::UploadedFile.new(File.join(Rails.root, 'test', 'fixtures', 'profile_photo.png'))
+            content: Rack::Test::UploadedFile.new(
+              Rails.root.join('test', 'fixtures', 'profile_photo.png')
+            )
           )
         end
       end

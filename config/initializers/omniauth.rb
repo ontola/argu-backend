@@ -11,7 +11,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
              site: 'https://graph.facebook.com/v2.8',
              authorize_url: 'https://www.facebook.com/v2.8/dialog/oauth',
              ssl: {
-               ca_file: "#{Rails.root}/config/ca-bundle.crt"
+               ca_file: Rails.root.join('config', 'ca-bundle.crt')
              }
            },
            token_params: {

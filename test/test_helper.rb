@@ -32,7 +32,7 @@ module TestHelper
   Sidekiq::Testing.fake!
   MiniTest::Reporters.use!
 
-  MiniTest.after_run { FileUtils.rm_rf(Dir["#{Rails.root}/public/photos/[^.]*"]) }
+  MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public', 'photos', '[^.]*')) }
 
   User.find_or_create_by(id: User::COMMUNITY_ID) do |user|
     user.shortname = Shortname.new(shortname: 'community')
