@@ -3,6 +3,5 @@
 class UpdateDecision < UpdateService
   private
 
-  def object_attributes=(obj)
-  end
+  def object_attributes=(obj); end
 end

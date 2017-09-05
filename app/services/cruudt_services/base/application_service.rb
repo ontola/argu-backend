@@ -129,8 +129,7 @@ class ApplicationService
   # @note This should be used for attributes that are consistent across all the associations.
   # @see {set_nested_associations}
   # @param [ActiveRecord::Base] obj The model on which the attributes should be set
-  def object_attributes=(obj)
-  end
+  def object_attributes=(obj); end
 
   def prepare_attributes
     return unless resource.is_edgeable?

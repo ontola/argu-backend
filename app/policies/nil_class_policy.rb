@@ -16,8 +16,7 @@ class NilClassPolicy < RestrictivePolicy
   end
 
   class Scope
-    def initialize
-    end
+    def initialize; end
 
     def resolve
       scope

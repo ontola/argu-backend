@@ -8,6 +8,5 @@ class CreateGrant < CreateService
 
   private
 
-  def object_attributes=
-  end
+  def object_attributes=; end
 end
