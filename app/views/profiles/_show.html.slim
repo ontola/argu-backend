@@ -7,7 +7,7 @@
     .box
       section
         h1= resource.display_name
-        - if resource.roles.pluck(:name).include?('staff')
+        - if resource.profileable.try(:is_staff?)
           span.role Staff
         p= resource.about
         - if resource.profileable_type == 'User' && resource.profileable.favorite_forums.present?

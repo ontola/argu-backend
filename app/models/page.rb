@@ -20,6 +20,7 @@ class Page < Edgeable::Base
   validates :profile, :owner_id, :last_accepted, presence: true
 
   after_create :create_default_groups
+  after_create :create_staff_grant
 
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
@@ -84,5 +85,10 @@ class Page < Edgeable::Base
       raise gm.errors.full_messages
     end
     service.commit
+  end
+
+  def create_staff_grant
+    staff_group = Group.find_by(id: Group::STAFF_ID)
+    Grant.create!(role: Grant.roles[:staff], edge: edge, group: staff_group) if staff_group
   end
 end

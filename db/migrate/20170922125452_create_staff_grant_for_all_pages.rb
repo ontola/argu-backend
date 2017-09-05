@@ -20,6 +20,14 @@ class CreateStaffGrantForAllPages < ActiveRecord::Migration[5.1]
       gm.save!(validate: false)
     end
     raise 'Wrong staff count' unless GroupMembership.where(group_id: Group::STAFF_ID).count == shortnames.count
+
+    grant_count = Grant.count
+    Grant.create!(
+      Edge.where(owner_type: 'Page').pluck(:id).map do |edge_id|
+        {role: Grant.roles[:staff], edge_id: edge_id, group_id: group.id}
+      end
+    )
+    raise 'Missing grants' unless Grant.count - grant_count == Page.count
   end
 
   def down

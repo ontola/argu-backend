@@ -98,7 +98,7 @@ module Argu
         def create_super_admin(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
-          create(:group_membership, parent: page.edge.groups.first, member: user.profile)
+          create(:group_membership, parent: page.edge.groups.custom.first, member: user.profile)
           user
         end
 
