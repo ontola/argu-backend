@@ -108,6 +108,7 @@ export const Gallery = React.createClass({
             <div>
                 {this.renderGallery()}
                 <Lightbox
+                    backdropClosesModal={true}
                     currentImage={this.state.currentImage}
                     images={this.images()}
                     isOpen={this.state.lightboxIsOpen}
