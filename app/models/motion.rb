@@ -38,7 +38,6 @@ class Motion < Edgeable::Content
   counter_cache true
   paginates_per 30
   parentable :question, :project, :forum
-  resourcify
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 110}

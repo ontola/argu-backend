@@ -58,6 +58,12 @@ module TestHelper
     group.page = Page.find(0)
   end
 
+  Group.find_or_create_by(id: Group::STAFF_ID) do |group|
+    group.name = 'Staff group'
+    group.name_singular = 'Staff'
+    group.page = Page.find(0)
+  end
+
   community_user = User.community
   community_user.build_public_group_membership
   community_user.profile.save

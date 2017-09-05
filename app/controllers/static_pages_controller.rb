@@ -39,9 +39,9 @@ class StaticPagesController < ApplicationController
 
   def home
     authorize :static_page
-    if current_user.profile.has_role?(:staff)
+    if current_user.is_staff?
       @activities =
-        policy_scope(Activity.feed_for_favorites(current_user.favorites, !current_user.profile.has_role?(:staff)))
+        policy_scope(Activity.feed_for_favorites(current_user.favorites, !current_user.is_staff?))
           .order(created_at: :desc)
           .limit(10)
       preload_user_votes(vote_event_ids_from_activities(@activities))

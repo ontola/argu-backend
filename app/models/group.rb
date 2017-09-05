@@ -15,7 +15,7 @@ class Group < ApplicationRecord
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
 
-  scope :custom, -> { where('groups.id != ?', Group::PUBLIC_ID) }
+  scope :custom, -> { where('groups.id > 0') }
 
   delegate :publisher, to: :page
   delegate :include?, to: :members
@@ -27,6 +27,7 @@ class Group < ApplicationRecord
   parentable :page
 
   PUBLIC_ID = -1
+  STAFF_ID = -2
 
   def as_json(options = {})
     super(options.merge(except: %i[created_at updated_at]))
@@ -48,5 +49,9 @@ class Group < ApplicationRecord
 
   def self.public
     Group.find_by(id: Group::PUBLIC_ID)
+  end
+
+  def self.staff
+    Group.find_by(id: Group::STAFF_ID)
   end
 end

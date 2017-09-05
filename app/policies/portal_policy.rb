@@ -23,7 +23,7 @@ class PortalPolicy < Struct.new(:user, :portal)
   end
 
   def home?
-    user.profile.has_role?(:staff)
+    user.is_staff?
   end
 
   # Make sure that a tab param is actually accounted for

@@ -218,6 +218,10 @@ class User < ApplicationRecord
     authentications.any? && password.blank?
   end
 
+  def is_staff?
+    @is_staff ||= profile.is_group_member?(Group::STAFF_ID)
+  end
+
   def last_email_sent_at(redis = nil)
     Argu::Redis.get("user:#{id}:email.sent.at", redis)
   end

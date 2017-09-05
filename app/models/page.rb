@@ -76,7 +76,7 @@ class Page < Edgeable::Base
     group.save!
 
     service = CreateGroupMembership.new(
-      edge.groups.first,
+      group,
       attributes: {member: owner},
       options: {publisher: owner.profileable, creator: owner}
     )

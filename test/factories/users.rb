@@ -24,7 +24,12 @@ FactoryGirl.define do
 
     trait :staff do
       after(:create) do |user|
-        user.profile.add_role :staff
+        gm = GroupMembership.new(
+          group: Group.find(Group::STAFF_ID),
+          member: user.profile,
+          start_date: DateTime.current
+        )
+        gm.save!(validate: false)
       end
     end
 

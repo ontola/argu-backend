@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   after_action :set_version_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
-      Rack::MiniProfiler.authorize_request if current_user.profile.has_role?(:staff)
+      Rack::MiniProfiler.authorize_request if current_user.is_staff?
     end
   end
 

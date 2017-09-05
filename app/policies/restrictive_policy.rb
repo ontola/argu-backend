@@ -23,7 +23,7 @@ class RestrictivePolicy
     end
 
     def staff?
-      user.profile.has_role?(:staff)
+      user.is_staff?
     end
   end
 
@@ -37,7 +37,7 @@ class RestrictivePolicy
     end
 
     def staff?
-      staff if user.profile.has_role?(:staff)
+      staff if user.is_staff?
     end
 
     def service

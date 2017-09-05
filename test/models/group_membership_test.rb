@@ -7,6 +7,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
   subject { create(:group_membership, parent: custom_group, member: user.profile) }
   let(:second_record) { create(:group_membership, parent: custom_group, member: manager.profile) }
   let(:custom_group) { create(:group, parent: freetown.page.edge) }
+  let(:second_group) { create(:group, parent: freetown.page.edge) }
   let(:user) { create(:user) }
   let(:manager) { create_manager(freetown) }
 
@@ -45,7 +46,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
 
     # can create outside member/group scope
     assert create_group_membership(member: manager.profile), @errors
-    assert create_group_membership(group: Group.second), @errors
+    assert create_group_membership(group: second_group), @errors
 
     # cannot create before or during existing membership
     assert_not create_group_membership

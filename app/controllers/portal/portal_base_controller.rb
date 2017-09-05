@@ -6,7 +6,7 @@ class Portal::PortalBaseController < ApplicationController
   private
 
   def authorize_staff
-    return if current_user.profile.has_role?(:staff)
+    return if current_user.is_staff?
     raise Argu::NotAuthorizedError.new(query: "#{params[:action]}?")
   end
 end

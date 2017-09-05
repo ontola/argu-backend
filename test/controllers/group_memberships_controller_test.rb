@@ -198,6 +198,23 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'create')
   end
 
+  test 'super_admin should not post create for staff group' do
+    staff_group = Group.find(Group::STAFF_ID)
+    sign_in create_super_admin(staff_group.page)
+    user
+    assert_difference 'GroupMembership.count', 0 do
+      post :create,
+           params: {
+             group_id: staff_group,
+             shortname: user.url,
+             r: settings_forum_path(freetown.url, tab: :groups)
+           }
+    end
+
+    assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+    assert_analytics_not_collected
+  end
+
   test 'super_admin should post create other json' do
     sign_in create_super_admin(freetown)
     user

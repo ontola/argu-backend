@@ -12,10 +12,10 @@ class AdministrationPolicy < Struct.new(:context, :administration)
   delegate :actor, to: :context
 
   def show?
-    user.profile.has_role? :staff
+    user.is_staff?
   end
 
   def list?
-    user.profile.has_role? :staff
+    user.is_staff?
   end
 end

@@ -171,6 +171,9 @@ RSpec.configure do |config|
       community_user.build_public_group_membership
       community_user.profile.save
     end
+    if Group.find_by(id: Group::STAFF_ID).blank?
+      create(:group, id: Group::STAFF_ID, parent: Page.find(0).edge, name: 'Staff group', name_singular: 'Staff')
+    end
     if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
       Doorkeeper::Application.create!(
         id: Doorkeeper::Application::ARGU_ID,

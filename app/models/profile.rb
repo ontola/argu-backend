@@ -11,7 +11,6 @@ class Profile < ApplicationRecord
   belongs_to :profileable,
              polymorphic: true,
              inverse_of: :profile
-  rolify after_remove: :role_removed, before_add: :role_added
 
   before_destroy :anonymize_dependencies
   has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception
@@ -105,6 +104,11 @@ class Profile < ApplicationRecord
     {default_profile_photo: {}, profileable: :shortname}
   end
 
+  # @return [Boolean] Whether the user has a group_membership for the provided group_id
+  def is_group_member?(group_id)
+    group_memberships.pluck(:group_id)&.include?(group_id)
+  end
+
   def owner
     profileable
   end
@@ -113,10 +117,6 @@ class Profile < ApplicationRecord
   def page_ids(role = :manager)
     @page_ids ||= {}
     @page_ids[role] ||= granted_record_ids('Page', role)
-  end
-
-  def profile_frozen?
-    has_role? 'frozen'
   end
 
   def url
@@ -140,10 +140,6 @@ class Profile < ApplicationRecord
     votes.where("voteable_type = 'Question' OR voteable_type = 'Motion'")
   end
 
-  def freeze
-    add_role :frozen
-  end
-
   # Returns the last visted forum
   def last_forum
     forum_id = Argu::Redis.get("profile:#{id}:last_forum")
@@ -160,6 +156,8 @@ class Profile < ApplicationRecord
     profileable.class == Page
   end
 
+  # @param [Edgeable] tenant The resource to check membership of
+  # @return [Boolean] Whether the profile has a member grant on the Edgeable
   def member_of?(tenant)
     tenant.present? && granted_edges(nil, 'member').include?(tenant.edge)
   end
@@ -174,10 +172,6 @@ class Profile < ApplicationRecord
     end
   end
 
-  def unfreeze
-    remove_role :frozen
-  end
-
   private
 
   # Sets the dependent foreign relations to the Community profile
@@ -189,17 +183,5 @@ class Profile < ApplicationRecord
         .model
         .anonymize(send(association))
     end
-  end
-
-  def role_added(role)
-    # if self.profile_frozen?
-    # Send mail or notification to user that he has been unfrozen
-    # end
-  end
-
-  def role_removed(role)
-    # if self.profile_frozen?
-    # Send mail or notification to user that he has been frozen
-    # end
   end
 end

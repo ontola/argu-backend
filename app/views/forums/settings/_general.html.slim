@@ -49,7 +49,7 @@
         span.fa.fa-plus
         span.icon-left= t('grants.new')
     =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false, wrapper_html: {class: 'form-col-2'}
-  -if current_user.profile.has_role?(:staff)
+  -if current_user.is_staff?
     =f.inputs name: t('forms.staff_only'), class: 'danger-zone' do
       =f.input :discoverable, as: :boolean
       -if policy(resource).shortname?

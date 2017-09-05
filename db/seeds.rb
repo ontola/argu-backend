@@ -33,6 +33,13 @@ public_group = Group.new(
 )
 public_group.save!
 
+staff_group = Group.new(
+  id: Group::STAFF_ID,
+  name: 'Staff',
+  page: argu
+)
+staff_group.save!
+
 staff = User
   .create!(
     email: 'staff@argu.co',
@@ -44,22 +51,12 @@ staff = User
     finished_intro: true,
     profile: Profile.new
   )
-staff.profile.add_role :staff
+CreateGroupMembership.new(
+  staff_group,
+  attributes: {member: staff.profile},
+  options: {publisher: staff, creator: staff.profile}
+).commit
 argu.update(owner: staff.profile)
-
-User
-  .new(
-    email: 'user@argu.co',
-    shortname_attributes: {shortname: 'user_account'},
-    password: 'arguargu',
-    password_confirmation: 'arguargu',
-    first_name: 'Maarten',
-    last_name: 'Scharendrecht',
-    finished_intro: true,
-    profile: Profile.new
-  )
-  .profile
-  .add_role :user
 
 forum = Forum.new(name: 'Nederland',
                   page: argu,
