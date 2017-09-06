@@ -13,6 +13,7 @@ nl:
       createdAt: "Uitgenodigd op"
       message: "Toelichting"
       sender_profile: "Versturen als:"
+      isRead: "Gelezen"
     bearer:
       title: "Uitnodigingslinks"
       description: "Als mensen op een uitnodigingslink klikken worden ze automatisch toegevoegd aan deze groep. De links kunnen onbeperkt worden herbruikt."
@@ -26,6 +27,7 @@ nl:
       default_message: "Ik nodig je uit om lid te worden van de groep '%{group}'."
       has_invalid: "Bevat incorrecte email(s)"
       placeholder: "Zoek gebruiker(s) of voer email-adres(sen) in"
+      delivery_failed: "Mail kon niet worden afgeleverd"
     discussion:
       title: "Mensen uitnodigen"
       description: "Nodig mensen uit om mee te denken."

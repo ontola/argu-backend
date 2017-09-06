@@ -143,7 +143,7 @@ export const EmailTokenInvite = React.createClass({
                         value="Submit"> {I18n.t('tokens.email.create')} </button>
                 </fieldset>
                 <TokenList
-                    columns={['invitee', 'createdAt']}
+                    columns={['invitee', 'createdAt', 'isRead']}
                     header={I18n.t('tokens.email.pending')}
                     retractHandler={this.onRetract}
                     tokens={this.state.tokens}/>
