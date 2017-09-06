@@ -21,3 +21,4 @@ nl:
     unsubscribe:
       success: "Je ontvangt geen meldingen meer voor '%{item}'."
       failed: "Je ontvangt al geen meldingen meer voor '%{item}'."
+    changed_successfully: "Je melding instellingen zijn aangepast"

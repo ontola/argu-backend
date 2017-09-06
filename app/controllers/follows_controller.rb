@@ -1,72 +1,62 @@
 # frozen_string_literal: true
 
 class FollowsController < AuthorizedController
-  skip_before_action :check_if_registered, only: :show
   PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment Project BlogPost].freeze
-
-  def show
-    @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
-  end
+  skip_before_action :check_if_registered, if: :unsubscribe?
+  skip_before_action :authorize_action, if: :unsubscribe?
 
   private
 
   def create_handler_success(_resource)
     send_event category: 'follows',
                action: permit_params[:follow_type],
-               label: followable.model_name.collection
+               label: authenticated_resource.followable.model_name.collection
     super
-  end
-
-  def create_respond_blocks_failure(_resource, format)
-    format.json { head 304 }
-  end
-
-  def create_respond_blocks_success(_resource, format)
-    format.html { redirect_back(fallback_location: root_path, notification: t('followed')) }
-    format.js { head 201 }
-    format.json { head 201 }
   end
 
   def destroy_handler_success(_resource)
     send_event category: 'follows',
                action: permit_params[:follow_type],
-               label: followable.model_name.collection
+               label: authenticated_resource.followable.model_name.collection
     super
   end
 
-  def destroy_respond_blocks_failure(_resource, format)
-    format.json { head 400 }
+  def destroy_respond_failure_html(resource)
+    return super unless request.method == 'GET'
+    render 'destroy', locals: {unsubscribed: false}
   end
 
-  def destroy_respond_blocks_success(_resource, format)
-    format.html { redirect_back(fallback_location: root_path, status: 303, notification: t('unfollowed')) }
-    format.json { head 204 }
+  def destroy_respond_success_html(resource)
+    return super unless request.method == 'GET'
+    render 'destroy', locals: {unsubscribed: true}
   end
 
   def execute_destroy
-    authenticated_resource.save
+    @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
   end
 
-  def authenticated_resource!
-    return super unless %w[create destroy].include?(action_name)
+  def message_success(_resource, _action)
+    t('notifications.changed_successfully')
+  end
+
+  def new_resource_from_params
     @resource ||= current_user.follows.find_or_initialize_by(
-      followable_id: followable.edge.id,
+      followable_id: Edge.where(owner_type: PERMITTED_CLASSES).find(permit_params[:gid]).id,
       followable_type: 'Edge'
     )
     @resource.follow_type = action_name == 'create' ? permit_params[:follow_type] || :reactions : :never
     @resource
   end
 
-  def authorize_action
-    return super unless %w[create destroy].include?(action_name)
-    authorize followable, :follow?
-  end
-
-  def followable
-    @followable ||= Edge.where(owner_type: PERMITTED_CLASSES).find(permit_params[:gid]).owner
-  end
-
   def permit_params
     params.permit %i[follow_type gid]
+  end
+
+  def redirect_model_success(resource)
+    url_for([resource.followable.owner, only_path: true])
+  end
+
+  def unsubscribe?
+    action_name == 'destroy' && request.method == 'GET'
   end
 end

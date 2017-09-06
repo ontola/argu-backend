@@ -56,17 +56,7 @@ class ForumsController < EdgeTreeController
   end
 
   def settings
-    prepend_view_path 'app/views/forums'
-    @grants = Grant
-                .custom
-                .where(edge_id: [resource_by_id.edge.id, resource_by_id.edge.parent_id])
-                .includes(group: {group_memberships: {member: {profileable: :shortname}}})
-
-    render locals: {
-      tab: tab,
-      active: tab,
-      resource: resource_by_id
-    }
+    respond_with_form
   end
 
   def statistics
@@ -88,8 +78,8 @@ class ForumsController < EdgeTreeController
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
     render 'settings', locals: {
-      tab: tab,
-      active: tab
+      tab: tab!,
+      active: tab!
     }
   end
 
@@ -101,8 +91,8 @@ class ForumsController < EdgeTreeController
   end
 
   def authorize_action
-    return super unless action_name == 'show'
     authorize resource_by_id, :list?
+    return super unless action_name == 'show'
   end
 
   def city_count(forum)
@@ -180,7 +170,7 @@ class ForumsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super if action_name == 'destroy'
+    return super unless resource.persisted?
     settings_forum_path(resource, tab: tab)
   end
 
@@ -189,20 +179,34 @@ class ForumsController < EdgeTreeController
     @forum ||= Forum.find_via_shortname_or_id(params[:id])
   end
 
-  def respond_with_form(_)
-    render :settings, locals: {tab: tab, active: tab}
+  def respond_with_form(resource = resource_by_id)
+    prepend_view_path 'app/views/forums'
+    @grants = Grant
+                .custom
+                .where(edge_id: [resource_by_id.edge.id, resource_by_id.edge.parent_id])
+                .includes(group: {group_memberships: {member: {profileable: :shortname}}})
+
+    render 'settings',
+           locals: {
+             tab: tab!,
+             active: tab!,
+             resource: resource
+           }
   end
 
   def respond_with_form_js(_)
-    respond_js('forums/settings', tab: tab, active: tab)
+    respond_js('forums/settings', tab: tab!, active: tab!)
   end
 
   def show_params
     params.permit(:page)
   end
 
+  def tab!
+    @verified_tab ||= policy(resource_by_id || Forum).verify_tab(tab)
+  end
+
   def tab
-    t = params[:tab] || params[:forum].try(:[], :tab)
-    policy(resource_by_id || Forum).verify_tab(t)
+    @tab ||= params[:tab] || params[:forum].try(:[], :tab) || policy(authenticated_resource).default_tab
   end
 end

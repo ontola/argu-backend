@@ -64,22 +64,10 @@ class PagesController < EdgeTreeController
     authorize authenticated_resource, :update?
 
     render locals: {
-      tab: tab,
-      active: tab,
+      tab: tab!,
+      active: tab!,
       resource: @page
     }
-  end
-
-  def destroy
-    unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
-      @page.errors.add(:confirmation_string, t('errors.messages.should_match'))
-    end
-    if @page.errors.empty? && @page.destroy
-      redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
-    else
-      flash[:error] = t('errors.general')
-      redirect_to(delete_page_path)
-    end
   end
 
   protected
@@ -114,11 +102,6 @@ class PagesController < EdgeTreeController
 
   private
 
-  def check_if_registered
-    return unless current_user.guest?
-    raise Argu::NotAUserError.new(r: new_page_path)
-  end
-
   def create_respond_failure_html(resource)
     render 'new',
            locals: {
@@ -130,6 +113,22 @@ class PagesController < EdgeTreeController
 
   def create_respond_failure_js(resource)
     respond_js('pages/new', page: resource, errors: resource.errors)
+  end
+
+  def destroy_respond_success_html(_resource)
+    redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
+  end
+
+  def destroy_respond_failure_html(resource)
+    flash[:error] = t('errors.general')
+    redirect_to(delete_page_path(resource))
+  end
+
+  def execute_destroy
+    unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
+      authenticated_resource.errors.add(:confirmation_string, t('errors.messages.should_match'))
+    end
+    authenticated_resource.errors.empty? && authenticated_resource.destroy
   end
 
   def handle_not_authorized_error(exception)
@@ -185,18 +184,23 @@ class PagesController < EdgeTreeController
   end
 
   def respond_with_form(_resource)
-    render :settings, locals: {tab: tab, active: tab}
+    render :settings, locals: {tab: tab!, active: tab!}
   end
 
   def respond_with_form_js(_resource)
-    respond_js('pages/settings', tab: tab, active: tab)
+    respond_js('pages/settings', tab: tab!, active: tab!)
   end
 
   def redirect_model_success(resource)
+    return new_page_path unless resource.persisted?
     settings_page_path(resource, tab: tab)
   end
 
+  def tab!
+    @verified_tab ||= policy(@page || Page).verify_tab(tab)
+  end
+
   def tab
-    @tab ||= policy(@page || Page).verify_tab(params[:tab])
+    @tab ||= params[:tab] || policy(authenticated_resource).default_tab
   end
 end

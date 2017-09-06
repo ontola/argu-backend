@@ -48,6 +48,11 @@ module Argu
         end
       end
 
+      def sign_out
+        allow_any_instance_of(Doorkeeper::OAuth::Token::Methods)
+          .to receive(:cookie_token_extractor).and_return(nil)
+      end
+
       def sign_in_manually(user = create(:user), navigate = true, redirect_to: forum_path(freetown))
         if navigate
           visit new_user_session_path

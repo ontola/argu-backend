@@ -241,17 +241,22 @@ module Argu
           let(:public_source) { Source.find_by(shortname: 'public_source') }
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
+          let(:linked_record_vote) { LinkedRecord.first.votes.first }
+          let(:project) { freetown.projects.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }
           let(:motion) { question.motions.first }
+          let(:forum_motion) { freetown.motions.first }
           let(:decision) { motion.decisions.first }
           let(:vote_event) { motion.default_vote_event }
           let(:vote) { vote_event.votes.first }
           let(:argument) { motion.arguments.first }
+          let(:argument_vote) { argument.votes.first }
           let(:comment) { argument.comment_threads.first }
           let(:nested_comment) { comment.children.first }
           let(:blog_post) { question.blog_posts.first }
           let(:blog_post_comment) { blog_post.comment_threads.first }
+          let(:motion_blog_post) { motion.blog_posts.first }
         end
 
         # @param [Symbol] key The key to search for.

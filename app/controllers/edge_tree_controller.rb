@@ -75,13 +75,6 @@ class EdgeTreeController < ServiceController
     parent_edge || raise(ActiveRecord::RecordNotFound)
   end
 
-  # Method to determine where the action should redirect to after it succeeds.
-  # @param [Class] resource The resource from the result of the action
-  def redirect_model_success(resource)
-    return resource.parent_model if action_name == 'trash'
-    super
-  end
-
   # Prepares a memoized {TrashService} for the relevant model for use in controller#trash
   # @return [TrashService] The service, generally initialized with {resource_id}
   # @example

@@ -1,28 +1,9 @@
 # frozen_string_literal: true
 
 class DecisionsController < EdgeTreeController
+  include Common::Show
+  include DecisionsHelper
   skip_before_action :check_if_registered, only: :index
-
-  def index
-    authorize parent_resource!, :show?
-    respond_to do |format|
-      format.html do
-        render locals: {decisionable: parent_resource!}
-      end
-      format.json { respond_with_200(parent_resource!.last_decision, :json) }
-      format.js   { render 'show', locals: {decision: parent_resource!.last_decision} }
-    end
-  end
-
-  def show
-    respond_to do |format|
-      format.html do
-        render action: 'index', locals: {decisionable: parent_resource!}
-      end
-      format.json { respond_with_200(authenticated_resource, :json) }
-      format.js   { render 'show', locals: {decision: authenticated_resource} }
-    end
-  end
 
   private
 
@@ -50,8 +31,16 @@ class DecisionsController < EdgeTreeController
            }
   end
 
+  def index_respond_blocks_success(_, format)
+    format.html { render locals: {decisionable: parent_resource!} }
+    format.json { respond_with_200(parent_resource!.last_decision, :json) }
+    format.js { render 'show', locals: {decision: parent_resource!.last_decision} }
+    format.json_api { render json: index_response_association, include: include_index }
+    format.n3 { render json: index_response_association, include: include_index }
+  end
+
   def parent_from_params(opts = params)
-    super || Edge.find_by(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts)).owner
+    super || Edge.find_by(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))&.owner
   end
 
   def message_success(resource, _)
@@ -84,6 +73,10 @@ class DecisionsController < EdgeTreeController
            }
   end
 
+  def redirect_model_success(resource)
+    url_for([resource.parent_model, only_path: true])
+  end
+
   def resource_by_id
     parent_resource!.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
   end
@@ -95,9 +88,12 @@ class DecisionsController < EdgeTreeController
     )
   end
 
-  def redirect_model_success(resource)
-    return super if %w[destroy trash].include?(action_name)
-    resource.parent_model
+  def show_respond_success_html(resource)
+    render action: 'index', locals: {decisionable: resource.parent_model}
+  end
+
+  def show_respond_success_js(resource)
+    render 'show', locals: {decision: resource}
   end
 
   def update_respond_failure_html(resource)

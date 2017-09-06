@@ -1,7 +1,7 @@
 =set_title authenticated_resource.followable.owner
 .col-1
   div[data-intro= t('intro.motion.back')]= to_parent(authenticated_resource.followable.owner)
-  - if @unsubscribed
+  - if local_assigns[:unsubscribed]
     .box
       section
         p= t('notifications.unsubscribe.success', item: authenticated_resource.followable.owner.display_name)

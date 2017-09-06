@@ -13,6 +13,7 @@ class DiscussionsController < AuthorizedController
   def authorize_action
     raise 'Internal server error' unless action_name == 'new'
     authorize parent_resource!, :list?
+    authorize parent_resource!, :show?
   end
 
   def new_resource_from_params

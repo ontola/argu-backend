@@ -30,6 +30,6 @@ class VoteMatchPolicy < RestrictivePolicy
   end
 
   def is_creator?
-    creator if record.creator.present? && record.creator == actor
+    creator if record.publisher.present? && record.publisher == user
   end
 end

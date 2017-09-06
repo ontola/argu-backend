@@ -110,7 +110,7 @@ class SourcesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to portal_path
+    assert_redirected_to page_source_path(page, Source.last)
   end
 
   test 'staff should get show JSON API with ids' do

@@ -72,7 +72,7 @@ class ArgumentsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super unless action_name == 'create'
-    resource.parent_model
+    return super unless action_name == 'create' && resource.persisted?
+    url_for([resource.parent_model, only_path: true])
   end
 end

@@ -127,8 +127,13 @@ class RestrictivePolicy
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
     tab ||= default_tab
-    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
-    tab
+    valid = permitted_tabs.include?(tab.to_sym)
+    assert! valid, "#{tab}?"
+    valid ? tab : default_tab
+  end
+
+  def default_tab
+    'general'
   end
 
   private
@@ -159,10 +164,6 @@ class RestrictivePolicy
   def check_action(action)
     return nil if record.try(:id).blank?
     user_context.check_key(record.identifier, action)
-  end
-
-  def default_tab
-    'general'
   end
 
   def new_record?

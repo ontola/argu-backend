@@ -99,14 +99,13 @@ class CommentsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super if %w[trash destroy].include?(action_name)
+    return url_for([resource.parent_model, only_path: true]) unless resource.persisted? && !resource.deleted?
     if [Motion, Question].include?(resource.parent_model.class)
-      polymorphic_url([resource.parent_model, :comments])
+      url_for([resource.parent_model, :comments, only_path: true])
     else
-      polymorphic_url([resource.parent_model], anchor: resource.identifier)
+      url_for([resource.parent_model, anchor: resource.identifier, only_path: true])
     end
   end
-  alias redirect_model_failure redirect_model_success
 
   def resource_new_params
     super.merge(body: comment_body)

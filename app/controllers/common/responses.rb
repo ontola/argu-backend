@@ -14,7 +14,7 @@ module Common
     # Method to determine where the action should redirect to after it succeeds.
     # @param [Class] resource The resource from the result of the action
     def redirect_model_success(resource)
-      action_name == 'destroy' ? resource.parent_model : resource
+      url_for([resource.persisted? ? resource : resource.parent_model, only_path: true])
     end
 
     def respond_with_200(resource, format)
@@ -31,7 +31,9 @@ module Common
     def respond_with_201(resource, format)
       case format
       when :json, :json_api
-        render json: resource, status: :created, location: resource
+        render json: resource, status: :created, location: resource.iri.to_s
+      when :n3
+        render n3: resource, status: :created, location: resource.iri.to_s
       when :js
         head :created
       else
@@ -130,7 +132,7 @@ module Common
     private
 
     def raise_unkown_format
-      raise Error('Unknown format')
+      raise 'Unknown format'
     end
 
     def redirect_with_message(location, message, opts = {})

@@ -28,6 +28,8 @@ Lint/UselessAssignment:
 # Offense count: 211
 Metrics/AbcSize:
   Max: 93
+  Exclude:
+    - 'lib/argu/test_helpers/automated_requests.rb'
 
 # Offense count: 2
 Metrics/BlockNesting:
@@ -76,6 +78,7 @@ Metrics/MethodLength:
     - 'app/controllers/test/bearer_tokens_controller.rb'
     - 'app/helpers/header_helper.rb'
     - 'app/helpers/menu_helper.rb'
+    - 'lib/argu/test_helpers/automated_requests.rb'
     - 'lib/argu/test_helpers/test_definitions.rb'
     - 'lib/argu/test_helpers/test_helper_methods.rb'
     - 'lib/argu/test_helpers/test_mocks.rb'

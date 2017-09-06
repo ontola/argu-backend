@@ -15,6 +15,6 @@ class PhasesController < EdgeTreeController
 
   def redirect_model_success(resource)
     super unless action_name == 'update'
-    resource.parent_model
+    url_for([resource.parent_model, only_path: true])
   end
 end

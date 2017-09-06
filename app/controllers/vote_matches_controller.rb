@@ -41,6 +41,11 @@ class VoteMatchesController < ServiceController
     end
   end
 
+  def redirect_model_success(resource)
+    return super if resource.persisted? || !resource.parent_model.is_a?(GuestUser)
+    root_path
+  end
+
   def resource_by_id
     return super if params[:page_id].nil? && params[:user_id].nil? || @_resource_by_id.present?
     @_resource_by_id ||= VoteMatch.find_by(creator: parent_resource!.profile, shortname: params[:id])

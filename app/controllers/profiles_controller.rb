@@ -15,7 +15,6 @@ class ProfilesController < ApplicationController
   # GET /p/shortname/edit
   def edit
     @resource = Shortname.find_resource(params[:id])
-    authorize @resource, :settings?
     if @resource.is_a? User
       redirect_to url_for([:settings, tab: :profile])
     else

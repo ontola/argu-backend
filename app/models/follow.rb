@@ -14,6 +14,7 @@ class Follow < ApplicationRecord
                     !model.never? ? 'follows_count' : nil
                   },
                   column_names: {['follows.follow_type != ?', Follow.follow_types[:never]] => 'follows_count'}
+  validates :follow_type, presence: true
   validate :terms_accepted
 
   def block!

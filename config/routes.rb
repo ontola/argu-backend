@@ -199,7 +199,7 @@ Rails.application.routes.draw do
             only: %i[show update],
             concerns: [:destroyable] do
     get :settings, on: :member
-    resources :group_memberships, path: 'memberships', only: %i[new create], as: :membership
+    resources :group_memberships, path: 'memberships', only: %i[new create]
   end
   resources :group_memberships, only: %i[show destroy]
 
@@ -259,8 +259,8 @@ Rails.application.routes.draw do
   resources :comments, concerns: [:trashable], only: %i[show edit update]
 
   resources :follows, only: :create do
-    delete :destroy, on: :collection
-    get :unsubscribe, action: :show, on: :member
+    delete :destroy, on: :member
+    get :unsubscribe, action: :destroy, on: :member
   end
 
   resources :shortnames, only: %i[edit update destroy]
@@ -359,5 +359,5 @@ Rails.application.routes.draw do
     post 'tokens', to: 'test/bearer_tokens#create'
   end
 
-  get '*path', to: 'static_pages#not_found'
+  match '*path', to: 'static_pages#not_found', via: :all
 end

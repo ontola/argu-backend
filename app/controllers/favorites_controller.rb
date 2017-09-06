@@ -20,16 +20,12 @@ class FavoritesController < AuthorizedController
     parent_edge || raise(ActiveRecord::RecordNotFound)
   end
 
-  def redirect_url
-    url_for([parent_resource, only_path: true])
-  end
-
   def resource_by_id
     current_user.favorites.find_by(edge: parent_edge)
   end
 
   def redirect_model_success(resource)
-    resource.edge.owner
+    url_for([resource.edge.owner, only_path: true])
   end
 
   def message_success(resource, action)

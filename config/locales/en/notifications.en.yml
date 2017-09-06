@@ -21,3 +21,4 @@ en:
     unsubscribe:
       success: "You no longer receive notifications for '%{item}'."
       failed: "You don't receive notifications already for '%{item}'."
+    changed_successfully: "Your notification settings are updated"

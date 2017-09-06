@@ -5,6 +5,9 @@ class SourcesController < ServiceController
     return unless policy(resource_by_id).show?
 
     respond_to do |format|
+      format.html do
+        redirect_to settings_page_source_path(authenticated_resource.parent_model, authenticated_resource)
+      end
       format.json_api do
         render json: authenticated_resource,
                include: include_show
@@ -20,8 +23,8 @@ class SourcesController < ServiceController
     prepend_view_path 'app/views/sources'
 
     render locals: {
-      active: tab,
-      tab: tab,
+      active: tab!,
+      tab: tab!,
       resource: resource_by_id
     }
   end
@@ -46,20 +49,24 @@ class SourcesController < ServiceController
                          end
   end
 
+  def tab!
+    @verified_tab ||= policy(authenticated_resource).verify_tab(tab)
+  end
+
   def tab
-    tab_param = params[:tab] || params[:source].try(:[], :tab)
-    policy(authenticated_resource).verify_tab(tab_param)
+    @tab ||= params[:tab] || params[:source].try(:[], :tab) || policy(authenticated_resource).default_tab
   end
 
   def redirect_model_success(resource)
+    return super unless resource.persisted?
     settings_page_source_path(resource.page, resource, tab: tab)
   end
 
   def update_respond_failure_html(resource)
     render 'settings',
            locals: {
-             active: tab,
-             tab: tab,
+             active: tab!,
+             tab: tab!,
              resource: resource
            }
   end

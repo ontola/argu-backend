@@ -17,6 +17,7 @@ module Decisionable
             through: :edge,
             source: :decisions,
             class_name: 'Decision'
+    with_collection :decisions, pagination: true
 
     # @return [Boolean] Whether this Decision is assigned to the `to_user` or one of its groups
     def assigned_to_user?(to_user)
@@ -43,6 +44,17 @@ module Decisionable
 
     def new_decision(state = :pending)
       Edge.new(owner: Decision.new(forum_id: forum_id, state: state), parent_id: edge.id).owner
+    end
+  end
+
+  module Serializer
+    extend ActiveSupport::Concern
+    included do
+      has_one :decision_collection, predicate: NS::ARGU[:decisions]
+
+      def decision_collection
+        object.decision_collection(user_context: scope)
+      end
     end
   end
 end

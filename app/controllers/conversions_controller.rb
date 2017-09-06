@@ -64,6 +64,10 @@ class ConversionsController < ServiceController
 
   def resource_by_id; end
 
+  def redirect_model_success(resource)
+    url_for([resource.edge.owner, only_path: true])
+  end
+
   def resource_new_params
     {
       edge: convertible_edge!,

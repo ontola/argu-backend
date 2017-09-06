@@ -9,6 +9,8 @@ class QuestionAnswer
 
   attr_accessor :question, :motion, :options
 
+  alias read_attribute_for_serialization send
+
   parentable :motion, :question
 
   def initialize(question: nil, motion: nil, options: {})
@@ -16,6 +18,10 @@ class QuestionAnswer
     @motion = motion
     @options = options
   end
+
+  def id; end
+
+  def iri; end
 
   def is_fertile?
     false
@@ -46,7 +52,7 @@ class QuestionAnswer
   end
 
   def same_forum
-    if @question.forum.present? && @motion.forum.present?
+    if @question.forum.present? && @motion&.forum.present?
       @question.forum.id == @motion.forum.id
     else
       false

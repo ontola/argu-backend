@@ -6,7 +6,7 @@ class QuestionAnswersController < AuthorizedController
   private
 
   def current_forum
-    question.forum
+    question&.forum
   end
 
   def collect_banners; end
@@ -16,7 +16,7 @@ class QuestionAnswersController < AuthorizedController
   end
 
   def parent_resource
-    parent_edge&.owner
+    parent_edge!.owner
   end
 
   def message_success(resource, action)
@@ -30,18 +30,22 @@ class QuestionAnswersController < AuthorizedController
 
   def resource_new_params
     {
-      question: question,
+      question: question!,
       motion: motion,
       options: service_options
     }
   end
 
+  def question!
+    question || raise(ActiveRecord::RecordNotFound)
+  end
+
   def question
-    Question.find(params.require(:question_answer)[:question_id])
+    Question.find_by(id: params.require(:question_answer)[:question_id])
   end
 
   def redirect_model_success(resource)
-    resource.question
+    url_for([resource.question, only_path: true])
   end
 
   def service_options(options = {})

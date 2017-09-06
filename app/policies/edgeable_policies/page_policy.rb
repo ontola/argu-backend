@@ -86,11 +86,11 @@ class PagePolicy < EdgeablePolicy
     false
   end
 
-  private
-
   def default_tab
     'profile'
   end
+
+  private
 
   def is_group_member?
     group_grant if user.profile.group_memberships.joins(:group).where(groups: {page: record}).present?

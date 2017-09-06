@@ -10,8 +10,7 @@ class AuthorizedController < ApplicationController
   include Common::Edit
   include Common::Destroy
   include Common::Create
-  before_action :check_if_registered,
-                except: %i[show shift move convert convert!]
+  before_action :check_if_registered, except: %i[show]
   before_action :authorize_action
   before_action :verify_terms_accepted, only: %i[update create]
   before_bugsnag_notify :add_errors_tab
@@ -130,12 +129,10 @@ class AuthorizedController < ApplicationController
   end
 
   def redirect_url
-    if request.method != 'GET' && authenticated_resource.present? && authenticated_resource.persisted?
-      url_for([authenticated_resource, only_path: true])
-    elsif request.method != 'GET' && parent_resource.present?
-      url_for([parent_resource!, only_path: true])
-    else
+    if request.method == 'GET' || authenticated_resource.nil?
       [request.path, request.query_string].reject(&:blank?).join('?')
+    else
+      redirect_model_success(authenticated_resource)
     end
   end
 

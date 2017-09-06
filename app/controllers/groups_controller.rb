@@ -15,15 +15,15 @@ class GroupsController < ServiceController
   end
 
   def settings
-    if tab == 'members'
+    if tab! == 'members'
       @members = resource
                  .group_memberships
                  .includes(member: {profileable: :shortname})
                  .page(params[:page])
     end
     render locals: {
-      tab: tab,
-      active: tab,
+      tab: tab!,
+      active: tab!,
       resource: resource_by_id
     }
   end
@@ -87,15 +87,18 @@ class GroupsController < ServiceController
   end
 
   def tab
-    tab_param = params[:tab] || params[:group].try(:[], :tab)
-    policy(resource_by_id || Group).verify_tab(tab_param)
+    @tab ||= params[:tab] || params[:group].try(:[], :tab) || policy(authenticated_resource).default_tab
+  end
+
+  def tab!
+    @verified_tab ||= policy(resource_by_id || Group).verify_tab(tab)
   end
 
   def update_respond_failure_html(resource)
     render 'settings',
            locals: {
-             tab: tab,
-             active: tab,
+             tab: tab!,
+             active: tab!,
              resource: resource
            }
   end

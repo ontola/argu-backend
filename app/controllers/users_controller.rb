@@ -37,8 +37,8 @@ class UsersController < AuthorizedController
     authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
     authenticated_resource.build_shortname if authenticated_resource.shortname.nil?
     render 'settings', locals: {
-      tab: tab,
-      active: tab,
+      tab: tab!,
+      active: tab!,
       profile: authenticated_resource.profile
     }
   end
@@ -152,14 +152,17 @@ class UsersController < AuthorizedController
       'users/settings',
       resource: resource,
       profile: resource.profile,
-      tab: tab,
-      active: tab
+      tab: tab!,
+      active: tab!
     )
   end
 
+  def tab!
+    policy(authenticated_resource || User).verify_tab(tab)
+  end
+
   def tab
-    t = params[:tab] || params[:user].try(:[], :tab)
-    policy(authenticated_resource || User).verify_tab(t)
+    params[:tab] || params[:user].try(:[], :tab) || policy(authenticated_resource || User).default_tab
   end
 
   def update_respond_failure_html(resource)
@@ -172,7 +175,7 @@ class UsersController < AuthorizedController
       end
     else
       render 'settings',
-             locals: {tab: tab, active: tab, profile: resource.profile}
+             locals: {tab: tab!, active: tab!, profile: resource.profile}
     end
   end
 

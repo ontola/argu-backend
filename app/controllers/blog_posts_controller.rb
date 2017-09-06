@@ -25,7 +25,7 @@ class BlogPostsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super unless action_name == 'create'
-    url_for(url_for_blog_post(resource))
+    return super unless action_name == 'create' && resource.persisted?
+    url_for_blog_post(resource, only_path: true)
   end
 end

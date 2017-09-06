@@ -121,7 +121,7 @@ group :test do
   gem 'minitest-reporters', '~> 1.1.8'
   gem 'minitest-bang'
   gem 'minitest-have_tag', '~> 0.1.0'
-  gem 'rspec-rails', '~> 3.5.2'
+  gem 'rspec-rails', '~> 3.6.1'
   gem 'rspec-retry'
   gem 'capybara', '~> 2.15.4'
   gem 'selenium-webdriver', '~> 3.6.0'

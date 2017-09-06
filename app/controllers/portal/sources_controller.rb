@@ -3,24 +3,20 @@
 module Portal
   class SourcesController < EdgeTreeController
     def new
-      authorize new_resource_from_params, :new?
       render 'new', locals: {source: new_resource_from_params}
     end
 
-    def create
-      authorize create_service.resource, :create?
-      create_service.on(:create_source_successful) do
-        redirect_to portal_path
-      end
-      create_service.on(:create_source_failed) do |source|
-        render 'new',
-               notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}],
-               locals: {source: source}
-      end
-      create_service.commit
+    private
+
+    def create_respond_failure_html(resource)
+      render 'new',
+             notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}],
+             locals: {source: resource}
     end
 
-    private
+    def redirect_model_success(resource)
+      page_source_path(resource.parent_model, resource)
+    end
 
     def parent_resource
       @parent_resource ||= Shortname.find_resource(params[:page]) || Page.find_by(id: params.require(:source)[:page_id])

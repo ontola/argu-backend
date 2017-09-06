@@ -7,7 +7,7 @@ class VotesController < EdgeTreeController
   # GET /model/:model_id/vote
   def show
     respond_to do |format|
-      format.html { redirect_to url_for([:new, authenticated_resource.parent_model, :vote, for: for_param]) }
+      format.html { redirect_to url_for(authenticated_resource.parent_model) }
       format.json { render 'create', location: authenticated_resource }
       format.json_api { render json: authenticated_resource, include: :upvoted_arguments }
       format.n3 { render n3: authenticated_resource, include: :upvoted_arguments }
@@ -53,8 +53,6 @@ class VotesController < EdgeTreeController
 
   def respond_with_201(resource, format)
     case format
-    when :json_api
-      render json: resource, status: :created, location: vote_url(resource)
     when :json
       render locals: {model: resource.parent_model, vote: resource}, status: :created, location: vote_url(resource)
     else

@@ -34,15 +34,13 @@ class GrantsController < ServiceController
            }
   end
 
-  def redirect_path(_ = nil)
-    if authenticated_edge.owner_type == 'Forum'
-      settings_forum_path(authenticated_edge.owner)
+  def redirect_model_success(resource = nil)
+    if resource.edge.owner_type == 'Forum'
+      settings_forum_path(resource.edge.owner)
     else
-      settings_page_path(authenticated_edge.owner, tab: :groups)
+      settings_page_path(resource.edge.owner, tab: :groups)
     end
   end
-  alias redirect_model_failure redirect_path
-  alias redirect_model_success redirect_path
 
   def resource_new_params
     HashWithIndifferentAccess.new(

@@ -6,7 +6,7 @@ class VoteEventsController < EdgeTreeController
   def show
     respond_to do |format|
       format.html do
-        render 'show', locals: {resource: authenticated_resource}
+        redirect_to authenticated_resource.parent_model
       end
       format.json_api do
         render json: authenticated_resource, include: include_show

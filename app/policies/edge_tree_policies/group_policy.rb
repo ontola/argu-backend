@@ -50,8 +50,6 @@ class GroupPolicy < EdgeTreePolicy
     rule is_super_admin?, super
   end
 
-  private
-
   def default_tab
     'members'
   end

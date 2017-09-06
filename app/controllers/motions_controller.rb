@@ -90,7 +90,7 @@ class MotionsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
-    return super unless action_name == 'create'
+    return super unless action_name == 'create' && resource.persisted?
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)
   end

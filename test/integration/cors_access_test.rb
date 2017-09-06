@@ -50,19 +50,13 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
   end
 
   test 'Guest should not OPTIONS non-assets cross-origin' do
-    rescued = false
-    begin
-      options motion_path(5),
-              headers: {
-                Host: 'https://argu.co',
-                Origin: 'https://argu.co',
-                'Access-Control-Request-Method': 'GET',
-                'Access-Control-Request-Headers': 'X-Requested-With'
-              }
-    rescue ActionController::RoutingError
-      rescued = true
-    end
-
-    assert rescued
+    options motion_path(5),
+            headers: {
+              Host: 'https://argu.co',
+              Origin: 'https://argu.co',
+              'Access-Control-Request-Method': 'GET',
+              'Access-Control-Request-Headers': 'X-Requested-With'
+            }
+    assert_response 404
   end
 end

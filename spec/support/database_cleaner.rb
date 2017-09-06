@@ -53,9 +53,11 @@ RSpec.configure do |config|
       )
       create_forum(
         :populated_forum,
+        page: page,
+        parent: page.edge,
         shortname_attributes: {shortname: 'holland'},
         discoverable: false,
-        public_grant: 'member'
+        public_grant: 'none'
       )
       public_source = create(
         :source,
@@ -66,18 +68,27 @@ RSpec.configure do |config|
       )
       linked_record = create(:linked_record, source: public_source)
       create(:argument, parent: linked_record.edge)
-      create(:motion, parent: freetown.edge)
+      linked_record_vote_event = linked_record.default_vote_event
+      create(:vote, parent: linked_record_vote_event.edge)
+      create(:project, parent: freetown.edge)
+      forum_motion = create(:motion, parent: freetown.edge)
+      create(:argument, parent: forum_motion.edge)
       question = create(:question, parent: freetown.edge)
       motion = create(:motion, parent: question.edge)
+      actor_membership = create(:group_membership, parent: create(:group, parent: freetown.page.edge))
       create(:decision,
              parent: motion.edge,
-             state: 'approved',
+             state: 'forwarded',
+             forwarded_user: actor_membership.member.profileable,
+             forwarded_group: actor_membership.group,
              happening_attributes: {happened_at: DateTime.current})
       vote_event = motion.default_vote_event
       create(:vote, parent: vote_event.edge)
       argument = create(:argument, parent: motion.edge)
+      create(:vote, parent: argument.edge)
       comment = create(:comment, parent: argument.edge)
       create(:comment, parent: argument.edge, parent_id: comment.id)
+      create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: DateTime.current})
       blog_post = create(:blog_post, parent: question.edge, happening_attributes: {happened_at: DateTime.current})
       create(:comment, parent: blog_post.edge)
     end
