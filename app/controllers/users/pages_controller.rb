@@ -2,6 +2,8 @@
 
 module Users
   class PagesController < AuthorizedController
+    skip_before_action :authorize_action, only: %i[index]
+
     def index
       @user = User.find_via_shortname! params[:id]
       authorize @user, :update?

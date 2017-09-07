@@ -12,7 +12,7 @@ class AuthorizedController < ApplicationController
   include Common::Create
   before_action :check_if_registered,
                 except: %i[show shift move convert convert!]
-  before_action :authorize_action, except: :index
+  before_action :authorize_action
   before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_edge, :authenticated_resource, :collect_banners
 
@@ -35,7 +35,11 @@ class AuthorizedController < ApplicationController
   end
 
   def authorize_action
-    authorize authenticated_resource, "#{params[:action].chomp('!')}?"
+    if action_name == 'index'
+      authorize parent_resource, :index_children?, controller_name
+    else
+      authorize authenticated_resource, "#{params[:action].chomp('!')}?"
+    end
   end
 
   def authenticated_edge

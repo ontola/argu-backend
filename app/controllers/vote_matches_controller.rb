@@ -3,6 +3,7 @@
 class VoteMatchesController < ServiceController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
+  skip_before_action :authorize_action, only: :index
 
   def show
     respond_to do |format|

@@ -6,7 +6,7 @@
       "fingerprint": "32c83d01417275d5f3453247f54e0212c17d86f5ec3d74e8ceb1ba00907bcf78",
       "message": "Possible SQL injection",
       "file": "app/controllers/forums_controller.rb",
-      "line": 19,
+      "line": 20,
       "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:manager]))}\")",
       "render_path": null,
@@ -22,12 +22,12 @@
     {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
-      "fingerprint": "87cb2d5069b4bf67ffb5a77b67c48beb66060e4337f2ad16aeb96758e1560349",
+      "fingerprint": "9483deb3be0ad06e9585662f2d7417c06790420b1de3576b292ebcc879534337",
       "message": "User controlled method execution",
       "file": "lib/argu/ruled_it.rb",
-      "line": 35,
+      "line": 36,
       "link": "http://brakemanscanner.org/docs/warning_types/dangerous_send/",
-      "code": "policy(record).public_send((params[:action].to_s + \"?\"))",
+      "code": "policy(record).public_send((params[:action].to_s + \"?\"), *opts)",
       "render_path": null,
       "location": {
         "type": "method",
@@ -36,24 +36,9 @@
       },
       "user_input": "(params[:action].to_s + \"?\")",
       "confidence": "High",
-      "note": "This results from a source copy of the Pundit methods, in practice letting the user call these should be safe since the public methods have no side effects."
-    },
-    {
-      "warning_type": "Session Setting",
-      "warning_code": 29,
-      "fingerprint": "f0ee1cc1980474c82a013645508f002dcc801e00db5592f7dd8cd6bdb93c73fe",
-      "message": "Session secret should not be included in version control",
-      "file": "config/secrets.yml",
-      "line": 2,
-      "link": "http://brakemanscanner.org/docs/warning_types/session_setting/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "High",
-      "note": "We never store actual production secrets locally, they don't even get off the server. These are to test production mode locally (since shit tends to respond differently when class caching is enabled)."
+      "note": ""
     }
   ],
-  "updated": "2017-08-04 09:33:47 +0200",
-  "brakeman_version": "3.2.1"
+  "updated": "2017-09-07 14:04:06 +0200",
+  "brakeman_version": "3.4.1"
 }

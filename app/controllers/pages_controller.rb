@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < EdgeTreeController
-  skip_before_action :authorize_action, only: :settings
+  skip_before_action :authorize_action, only: %i[settings index]
   skip_before_action :check_if_registered, only: :index
   ::INC_NESTED_COLLECTION = [
     :create_action, members: :profile_photo, views: [

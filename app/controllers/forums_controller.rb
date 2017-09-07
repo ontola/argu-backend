@@ -4,7 +4,7 @@ class ForumsController < EdgeTreeController
   prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
   prepend_before_action :write_client_access_token
-  skip_before_action :authorize_action, only: :discover
+  skip_before_action :authorize_action, only: %i[discover index]
   skip_before_action :check_if_registered, only: :discover
   skip_after_action :verify_authorized, only: :discover
   before_action :redirect_bearer_token

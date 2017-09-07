@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class GroupMembershipsController < ServiceController
+  skip_before_action :authorize_action, only: :index
   include NestedResourceHelper
 
   def show
