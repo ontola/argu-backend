@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   concern :commentable do
     resources :comments,
               path: 'c',
-              only: %i[new index show create update edit]
+              only: %i[new index show create]
     patch 'comments' => 'comments#create'
   end
   concern :destroyable do
@@ -247,7 +247,7 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-  resources :comments, concerns: [:trashable], only: :show
+  resources :comments, concerns: [:trashable], only: %i[show edit update]
 
   resources :follows, only: :create do
     delete :destroy, on: :collection

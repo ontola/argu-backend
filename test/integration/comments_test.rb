@@ -51,14 +51,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
            parent: second_cairo_argument.edge)
   end
 
-  def edit_path(record)
-    url_for([:edit, record.parent_model, record])
-  end
-
-  def update_path(record)
-    url_for([record.parent_model, record])
-  end
-
   def destroy_path(record)
     url_for([record, destroy: true])
   end

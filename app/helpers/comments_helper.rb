@@ -3,12 +3,12 @@
 module CommentsHelper
   include DropdownHelper
 
-  def comment_items(resource, comment)
+  def comment_items(comment)
     link_items = []
     resource_policy = policy(comment)
     if resource_policy.update?
       link_items << link_item(t('edit'),
-                              polymorphic_url_for_action(:edit, [resource, comment], {}),
+                              polymorphic_url_for_action(:edit, comment, {}),
                               data: {comment_id: comment.id, turbolinks: 'false'},
                               fa: 'edit')
     end
@@ -18,7 +18,7 @@ module CommentsHelper
                               data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'},
                               fa: 'close')
     end
-    if resource.is_trashable? && resource_policy.trash?
+    if comment.is_trashable? && resource_policy.trash?
       if comment.is_trashed?
         link_items << link_item(t('untrash'),
                                 polymorphic_url([:untrash, comment]),
