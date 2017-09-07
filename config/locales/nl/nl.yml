@@ -14,6 +14,7 @@ nl:
   sign_up_sign_in: "Registreren of Inloggen"
   sign_in_facebook: "Log in met Facebook"
   sign_up_facebook_notice: "We plaatsen niets op je wall."
+  sign_in_facebook_failure: "Het is niet gelukt om in te loggen met Facebook. Probeer het op een andere manier."
   sign_in_twitter: "Log in met twitter"
   sign_in_existing: "Log in met een bestaand argu account:"
   forgot_password: "Wachtwoord vergeten?"

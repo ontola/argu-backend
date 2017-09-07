@@ -14,6 +14,7 @@ en:
   sign_up_sign_in: "Register or log in"
   sign_in_facebook: "Log in with Facebook"
   sign_up_facebook_notice: "We won't post anything to your wall."
+  sign_in_facebook_failure: "We couldn't log you in with Facebook. Please try something else."
   sign_in_twitter: "Log in with twitter"
   sign_in_existing: "Log in with an existing argu account:"
   forgot_password: "Forgot password?"

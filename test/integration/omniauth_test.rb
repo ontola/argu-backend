@@ -57,7 +57,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     guest_vote
     other_guest_vote
 
-    assert_differences [['User.count', 1], ['Vote.count', 1], ['Favorite.count', 1]] do
+    assert_differences [['User.count', 1], ['Identity.count', 1], ['Vote.count', 1], ['Favorite.count', 1]] do
       Sidekiq::Testing.inline! do
         follow_redirect!
         assert_redirected_to setup_users_path
@@ -83,6 +83,21 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     follow_redirect!
+  end
+
+  test 'should not sign up with facebook without email' do
+    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: '')
+
+    get user_facebook_omniauth_authorize_path(r: user_path(user2))
+    assert_redirected_to user_facebook_omniauth_callback_path(r: user_path(user2))
+
+    assert_differences [['User.count', 0], ['Identity.count', 0]] do
+      Sidekiq::Testing.inline! do
+        follow_redirect!
+        assert_redirected_to new_user_registration_path(r: user_path(user2))
+        assert_equal flash[:notice], 'We couldn\'t log you in with Facebook. Please try something else.'
+      end
+    end
   end
 
   test 'should sign up with facebook with wrong r' do

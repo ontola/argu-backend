@@ -72,7 +72,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif current_user.guest?
       # No connection, no current_user and no email..
       session["devise.#{provider}_data"] = request.env['omniauth.auth']
-      redirect_to new_user_registration_url(r: r_param(env))
+      redirect_to new_user_registration_url(r: r_param(request.env)), notice: t('sign_in_facebook_failure')
     end
   end
 
