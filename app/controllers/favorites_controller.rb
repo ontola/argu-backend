@@ -16,6 +16,10 @@ class FavoritesController < AuthorizedController
     parent_resource&.edge
   end
 
+  def redirect_url
+    url_for(parent_resource)
+  end
+
   def resource_by_id
     current_user.favorites.find_by(edge: parent_edge)
   end
