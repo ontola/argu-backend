@@ -99,6 +99,7 @@ class CommentsController < EdgeTreeController
   end
 
   def redirect_model_success(resource)
+    return super if %w[trash destroy].include?(action_name)
     if [Motion, Question].include?(resource.parent_model.class)
       polymorphic_url([resource.parent_model, :comments])
     else
