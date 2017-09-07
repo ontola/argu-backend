@@ -130,7 +130,13 @@ class AuthorizedController < ApplicationController
   end
 
   def redirect_url
-    [request.path, request.query_string].reject(&:blank?).join('?')
+    if request.method != 'GET' && authenticated_resource.present? && authenticated_resource.persisted?
+      url_for([authenticated_resource, only_path: true])
+    elsif request.method != 'GET' && parent_resource.present?
+      url_for([parent_resource!, only_path: true])
+    else
+      [request.path, request.query_string].reject(&:blank?).join('?')
+    end
   end
 
   # Searches the current primary resource by its id
