@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MenuItemSerializer < BaseSerializer
   attributes :label, :href, :data
 

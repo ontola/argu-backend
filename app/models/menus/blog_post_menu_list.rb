@@ -1,8 +1,11 @@
 # frozen_string_literal: true
+
 class BlogPostMenuList < MenuList
-  include SettingsHelper, Menus::ShareMenuItems, Menus::ActionMenuItems
+  include SettingsHelper
+  include Menus::ShareMenuItems
+  include Menus::ActionMenuItems
   cattr_accessor :defined_menus
-  has_menus %i(actions share)
+  has_menus %i[actions share]
 
   private
 

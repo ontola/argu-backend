@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Menus
   module ActionMenuItems
     def comments_link
@@ -8,7 +9,7 @@ module Menus
         image: 'fa-comments-o',
         href: polymorphic_url([resource, :comments]),
         policy: :index_children?,
-        policy_arguments: %i(comments)
+        policy_arguments: %i[comments]
       )
     end
 
@@ -27,7 +28,7 @@ module Menus
         image: 'fa-bullhorn',
         href: polymorphic_url([:new, resource, :blog_post]),
         policy: :create_child?,
-        policy_arguments: %i(blog_posts)
+        policy_arguments: %i[blog_posts]
       )
     end
 

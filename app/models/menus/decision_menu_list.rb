@@ -1,8 +1,11 @@
 # frozen_string_literal: true
+
 class DecisionMenuList < MenuList
-  include SettingsHelper, DecisionsHelper, Menus::ActionMenuItems
+  include SettingsHelper
+  include DecisionsHelper
+  include Menus::ActionMenuItems
   cattr_accessor :defined_menus
-  has_menus %i(actions)
+  has_menus %i[actions]
 
   private
 

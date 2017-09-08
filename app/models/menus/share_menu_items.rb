@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Menus
   module ShareMenuItems
     def share_menu_items(opts = {})

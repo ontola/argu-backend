@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     get :invite, controller: :invites, action: :new
   end
   concern :menuable do
-    resources :menus, only: [:index, :show]
+    resources :menus, only: %i[index show]
   end
   concern :moveable do
     get :move, action: :shift
@@ -232,7 +232,7 @@ Rails.application.routes.draw do
     put :finish, to: 'phases#finish'
   end
 
-  resources :menus, only: [:show, :index]
+  resources :menus, only: %i[show index]
 
   resources :media_objects, only: :show
 

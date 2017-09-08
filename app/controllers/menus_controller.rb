@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MenusController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_registered

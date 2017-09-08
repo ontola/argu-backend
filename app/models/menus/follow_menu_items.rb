@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 module Menus
   module FollowMenuItems
     def follow_menu_items(opts = {})
-      follow_types = opts.delete(:follow_types) || %i(news reactions never)
+      follow_types = opts.delete(:follow_types) || %i[news reactions never]
       follow_type = user.following_type(resource.edge)
       icon = case follow_type
              when 'never'

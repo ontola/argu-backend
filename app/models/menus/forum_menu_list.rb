@@ -1,8 +1,12 @@
 # frozen_string_literal: true
+
 class ForumMenuList < MenuList
-  include SettingsHelper, Menus::ActionMenuItems, Menus::FollowMenuItems, Menus::ShareMenuItems
+  include SettingsHelper
+  include Menus::ActionMenuItems
+  include Menus::FollowMenuItems
+  include Menus::ShareMenuItems
   cattr_accessor :defined_menus
-  has_menus %i(actions follow navigations share)
+  has_menus %i[actions follow navigations share]
 
   private
 

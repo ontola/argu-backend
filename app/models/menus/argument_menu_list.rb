@@ -1,8 +1,12 @@
 # frozen_string_literal: true
+
 class ArgumentMenuList < MenuList
-  include SettingsHelper, Menus::FollowMenuItems, Menus::ShareMenuItems, Menus::ActionMenuItems
+  include SettingsHelper
+  include Menus::FollowMenuItems
+  include Menus::ShareMenuItems
+  include Menus::ActionMenuItems
   cattr_accessor :defined_menus
-  has_menus %i(actions follow share)
+  has_menus %i[actions follow share]
 
   private
 
@@ -15,7 +19,7 @@ class ArgumentMenuList < MenuList
   end
 
   def follow_menu
-    follow_menu_items(follow_types: [:reactions, :never])
+    follow_menu_items(follow_types: %i[reactions never])
   end
 
   def share_menu

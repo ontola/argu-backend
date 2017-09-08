@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MenuItem
   include ActiveModel::Model
   include ActiveModel::Serialization

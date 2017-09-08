@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class ApplicationMenuList < MenuList
   include SettingsHelper
   cattr_accessor :defined_menus
-  has_menus %i(organizations)
+  has_menus %i[organizations]
 
   def jsonld_context
     {}

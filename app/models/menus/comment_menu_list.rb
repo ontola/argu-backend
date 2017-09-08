@@ -1,8 +1,11 @@
 # frozen_string_literal: true
+
 class CommentMenuList < MenuList
-  include SettingsHelper, Menus::FollowMenuItems, Menus::ActionMenuItems
+  include SettingsHelper
+  include Menus::FollowMenuItems
+  include Menus::ActionMenuItems
   cattr_accessor :defined_menus
-  has_menus %i(actions follow)
+  has_menus %i[actions follow]
 
   private
 
@@ -15,6 +18,6 @@ class CommentMenuList < MenuList
   end
 
   def follow_menu
-    follow_menu_items(follow_types: [:reactions, :never])
+    follow_menu_items(follow_types: %i[reactions never])
   end
 end

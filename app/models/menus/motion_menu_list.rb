@@ -1,8 +1,12 @@
 # frozen_string_literal: true
+
 class MotionMenuList < MenuList
-  include SettingsHelper, Menus::FollowMenuItems, Menus::ShareMenuItems, Menus::ActionMenuItems
+  include SettingsHelper
+  include Menus::FollowMenuItems
+  include Menus::ShareMenuItems
+  include Menus::ActionMenuItems
   cattr_accessor :defined_menus
-  has_menus %i(actions follow share)
+  has_menus %i[actions follow share]
 
   private
 
