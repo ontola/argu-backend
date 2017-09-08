@@ -87,6 +87,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
   test 'should not sign up with facebook without email' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: '')
+    cookies[:locale] = 'en'
 
     get user_facebook_omniauth_authorize_path(r: user_path(user2))
     assert_redirected_to user_facebook_omniauth_callback_path(r: user_path(user2))
