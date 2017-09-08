@@ -6,7 +6,8 @@ module ProCon
   VOTE_OPTIONS = [:pro].freeze unless defined?(VOTE_OPTIONS)
 
   included do
-    include Trashable, Edgeable, HasLinks, PublicActivity::Common, Commentable
+    include HasLinks
+    include Commentable
 
     has_many :votes, as: :voteable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'

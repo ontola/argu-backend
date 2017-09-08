@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-class Forum < ApplicationRecord
-  include Ldable
+class Forum < Edgeable::Base
   include Questionable
   include Motionable
-  include Edgeable
   include ProfilePhotoable
   include Photoable
   include Shortnameable

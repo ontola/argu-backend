@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
-class Question < ApplicationRecord
-  include Edgeable
-  include PublicActivity::Common
+class Question < Edgeable::Content
   include ActivePublishable
-  include Loggable
-  include Ldable
-
-  include Trashable
   include Attachable
   include Commentable
   include HasLinks

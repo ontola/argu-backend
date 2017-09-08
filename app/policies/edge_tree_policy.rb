@@ -215,7 +215,7 @@ class EdgeTreePolicy < RestrictivePolicy
     r =
       if klass.parent_classes.include?(record.class.name.underscore.to_sym)
         child = klass.new(attrs)
-        if child.is_edgeable?
+        if child.is_a?(Edgeable::Base)
           child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
           child = record.edge.children.new(owner: child, is_published: true).owner
           child.edge.persisted_edge = persisted_edge

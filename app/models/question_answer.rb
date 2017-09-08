@@ -21,10 +21,6 @@ class QuestionAnswer
     false
   end
 
-  def is_edgeable?
-    false
-  end
-
   def persisted?
     false
   end

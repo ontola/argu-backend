@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
-class Comment < ApplicationRecord
+class Comment < Edgeable::Content
   include TruncateHelper
-  include Ldable
-  include PublicActivity::Common
-  include Trashable
-  include Edgeable
-  include Loggable
 
   belongs_to :forum
   belongs_to :creator, class_name: 'Profile'

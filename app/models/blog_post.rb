@@ -1,16 +1,11 @@
 # frozen_string_literal: true
 
-class BlogPost < ApplicationRecord
-  include Ldable
+class BlogPost < Edgeable::Content
   include Commentable
   include Happenable
-  include Edgeable
   include ActivePublishable
-  include PublicActivity::Common
-  include Loggable
   include HasLinks
   include Attachable
-  include Trashable
 
   belongs_to :forum
   belongs_to :creator,

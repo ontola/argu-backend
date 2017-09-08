@@ -2,13 +2,8 @@
 
 include ActionView::Helpers::NumberHelper
 
-class Motion < ApplicationRecord
-  include Edgeable
-  include PublicActivity::Common
+class Motion < Edgeable::Content
   include ActivePublishable
-  include Loggable
-  include Ldable
-  include Trashable
   include Argumentable
   include Attachable
   include Commentable

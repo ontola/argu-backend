@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class Decision < ApplicationRecord
+class Decision < Edgeable::Base
   include Loggable
   include Happenable
   include HasLinks
-  include Edgeable
   include ActivePublishable
 
   belongs_to :creator, class_name: 'Profile'
@@ -23,6 +22,12 @@ class Decision < ApplicationRecord
   alias_attribute :title, :display_name
   alias_attribute :description, :content
   parentable :motion
+
+  contextualize_as_type 'argu:Decision'
+  contextualize_with_id do |r|
+    Rails.application.routes.url_helpers.polymorphic_url([r.parent_model, r], protocol: :https)
+  end
+  contextualize :content, as: 'schema:text'
 
   # @return [Array<Symbol>] States that indicate an action was taken on this decision
   def self.actioned_keys

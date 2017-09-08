@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
-class Project < ApplicationRecord
-  include PublicActivity::Common
+class Project < Edgeable::Content
   include Timelineable
-  include Loggable
   include Photoable
-  include Edgeable
   include ActivePublishable
   include BlogPostable
   include HasLinks
-  include Trashable
 
   alias_attribute :display_name, :title
   alias_attribute :description, :content
@@ -30,6 +26,11 @@ class Project < ApplicationRecord
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
 
   before_save :update_start_date_of_first_phase
+
+  contextualize_as_type 'argu:Project'
+  contextualize_with_id { |r| Rails.application.routes.url_helpers.project_url(r, protocol: :https) }
+  contextualize :display_name, as: 'schema:name'
+  contextualize :content, as: 'schema:text'
 
   counter_cache true
   parentable :forum

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class Phase < ApplicationRecord
-  include Edgeable
+class Phase < Edgeable::Base
   attr_accessor :finish_phase
 
   belongs_to :forum
@@ -19,6 +18,11 @@ class Phase < ApplicationRecord
 
   parentable :project
   counter_cache true
+
+  contextualize_as_type 'argu:Phase'
+  contextualize_with_id { |r| Rails.application.routes.url_helpers.phase_url(r, protocol: :https) }
+  contextualize :display_name, as: 'schema:name'
+  contextualize :description, as: 'schema:text'
 
   def end_date_after_start_date
     return unless start_date.present? && end_date.present? && end_date < start_date

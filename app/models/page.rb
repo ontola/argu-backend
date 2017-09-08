@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-class Page < ApplicationRecord
+class Page < Edgeable::Base
   has_many :groups, dependent: :destroy, inverse_of: :page
-  include Ldable
   include Shortnameable
-  include Edgeable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
