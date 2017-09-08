@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class MotionSerializer < BaseEdgeSerializer
-  include Loggable::Serializer
+class MotionSerializer < ContentEdgeSerializer
   include Argumentable::Serializer
   include Attachable::Serializer
   include Commentable::Serializer

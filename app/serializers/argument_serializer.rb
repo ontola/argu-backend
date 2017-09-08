@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ArgumentSerializer < BaseEdgeSerializer
+class ArgumentSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   attribute :content, key: :text
   attribute :display_name, key: :name

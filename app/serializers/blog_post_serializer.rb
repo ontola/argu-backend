@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BlogPostSerializer < BaseSerializer
+class BlogPostSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   attributes :title, :content
 

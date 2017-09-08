@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuestionSerializer < BaseEdgeSerializer
+class QuestionSerializer < ContentEdgeSerializer
   include Attachable::Serializer
   include Commentable::Serializer
   include Motionable::Serializer

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProjectSerializer < BaseSerializer
+class ProjectSerializer < ContentEdgeSerializer
   attributes :display_name, :content
 
   has_many :phases

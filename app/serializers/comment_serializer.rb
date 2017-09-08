@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class CommentSerializer < BaseEdgeSerializer
+class CommentSerializer < ContentEdgeSerializer
   attribute :body, key: :text
 end
