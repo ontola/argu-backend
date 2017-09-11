@@ -6,7 +6,7 @@
   li.form-helper
     span= t('profiles.edit.file_limit_notice')
     - if pf.object&.url.present?
-      =pf.input :content, as: :preview_image, html_options: {style: preview_style}
+      =pf.input :content, as: :preview_image, html_options: {style: preview_style}, label: '&nbsp;'
       - if pf.object&.file.present?
         - if relation == :default_profile_photo
           =pf.input :remove_content, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
