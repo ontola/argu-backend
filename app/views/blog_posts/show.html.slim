@@ -7,7 +7,7 @@
       =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
       .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
     section.section--attachments
-      =react_component_store 'Gallery', props: {files: blog_post.attachments.map { |a| {src: a.url, caption: a.description.presence, thumbnail: a.thumbnail, is_image: a.is_image?} }}
+      =react_component_store 'Gallery', props: gallery_props(blog_post)
     section.section--footer
       =render partial: blog_post.creator, locals: {resource: blog_post}
       ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background

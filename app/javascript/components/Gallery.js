@@ -1,5 +1,7 @@
 import React from 'react';
 import Lightbox from 'react-images';
+import VideoViewer from './VideoViewer';
+import Modal from './Modal';
 
 export const Gallery = React.createClass({
     propTypes: {
@@ -9,6 +11,7 @@ export const Gallery = React.createClass({
     getInitialState () {
         return {
             currentImage: 0,
+            currentVideo: null,
             lightboxIsOpen: false
         };
     },
@@ -54,12 +57,20 @@ export const Gallery = React.createClass({
         this.handleClickNext();
     },
 
+    handleVideoClose () {
+        this.setState({ currentVideo: null })
+    },
+
     images () {
-        return this.props.files.filter(file => { return (file.is_image); });
+        return this.props.files.filter(file => { return (file.type === 'image'); });
     },
 
     imageIndex (index) {
-        return this.props.files.slice(0, index).filter(file => { return (file.is_image); }).length;
+        return this.props.files.slice(0, index).filter(file => { return (file.type === 'image'); }).length;
+    },
+
+    openVideo (e) {
+        this.setState({ currentVideo: this.props.files[e.target.dataset.number] })
     },
 
     renderGallery () {
@@ -70,7 +81,14 @@ export const Gallery = React.createClass({
         }
 
         const gallery = files.map((obj, i) => {
-            return obj.is_image ? this.renderImage(obj, i) : this.renderFile(obj, i);
+            switch (obj.type) {
+            case 'image':
+                return this.renderImage(obj, i);
+            case 'video':
+                return this.renderVideo(obj, i);
+            default:
+                return this.renderFile(obj, i);
+            }
         });
 
         return (
@@ -91,6 +109,17 @@ export const Gallery = React.createClass({
         );
     },
 
+    renderVideo (obj, i) {
+        return (
+            <a data-title={obj.caption}
+               key={i}
+               onClick={this.openVideo}>
+                <img src={obj.thumbnail} />
+                <span className="fa fa-play" data-number={i}/>
+            </a>
+        );
+    },
+
     renderImage (obj, i) {
         const clickHandler = e => { this.openLightbox(this.imageIndex(i), e) };
         return (
@@ -104,6 +133,10 @@ export const Gallery = React.createClass({
     },
 
     render() {
+        let videoModal;
+        if (this.state.currentVideo) {
+            videoModal = <Modal onClose={this.handleVideoClose}><VideoViewer {...this.state.currentVideo}/></Modal>
+        }
         return (
             <div>
                 {this.renderGallery()}
@@ -117,6 +150,7 @@ export const Gallery = React.createClass({
                     onClickPrev={this.handleClickPrev}
                     onClickThumbnail={this.handleClickThumbnail}
                     onClose={this.handleOnClose}/>
+                {videoModal}
             </div>
         );
     }

@@ -1,0 +1,23 @@
+.gallery span.fa {
+  font-size: 4em;
+  display: table-caption;
+  &.fa-play {
+    position: absolute;
+    top: 16px;
+    font-size: 23px;
+    color: #ffffff;
+    margin-left: 11px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.5);
+    width: 43px;
+    height: 32px;
+    padding: 4px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.gallery a {
+  display: inline-block;
+  position: relative;
+}

@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module DiscussionsHelper
+  def gallery_props(resource)
+    files =
+      resource
+        .attachments
+        .map do |a|
+        {src: a.url, caption: a.description.presence, thumbnail: a.thumbnail, type: a.type, embed_url: a.embed_url}
+      end
+    {files: files}
+  end
+
   # Checks if the user is able to start a top-level discussion in the current context/tenant
   # @return [Boolean] Whether the user can new? any discussion object
   def can_start_discussion?(record)

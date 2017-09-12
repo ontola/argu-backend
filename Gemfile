@@ -97,6 +97,7 @@ gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails', '~> 4.7.0.2'
 gem 'babel-transpiler'
 gem 'redcarpet', '~> 3.3.4'
+gem 'video_info'
 
 ################## User management ########################
 gem 'devise', '~> 4.3.0'

@@ -16,7 +16,7 @@ class MediaObject < ApplicationRecord
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
   filterable used_as: {values: MediaObject.used_as}
 
-  delegate :url, :file, :icon, :avatar, :is_image?, to: :content
+  delegate :file, :icon, :avatar, :is_image?, to: :content
 
   contextualize_as_type 'schema:MediaObject'
   contextualize_with_id do |p|
@@ -43,13 +43,18 @@ class MediaObject < ApplicationRecord
     is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
 
+  delegate :embed_url, to: :video_info, allow_nil: true
+
   def remote_content_url=(url)
     self.remote_url = url
+    video_info ? super(video_info.thumbnail) : super
   end
 
   def thumbnail
     case content.content_type
     when *MediaObjectUploader::IMAGE_TYPES
+      content.icon.url
+    when *MediaObjectUploader::VIDEO_TYPES
       content.icon.url
     when *MediaObjectUploader::PORTABLE_DOCUMENT_TYPES
       'file-pdf-o'
@@ -66,14 +71,31 @@ class MediaObject < ApplicationRecord
     end
   end
 
+  def type
+    video_info ? 'video' : content&.content_type&.split('/')&.first
+  end
+
+  def url(*args)
+    type == 'video' ? remote_url : content.url(*args)
+  end
+
   private
 
   def set_file_name
-    self.filename = content.file.original_filename if content&.file.try(:original_filename).present?
+    if video_info
+      self.filename = video_info.title
+    elsif content&.file.try(:original_filename).present?
+      self.filename = content.file.original_filename
+    end
   end
 
   def set_publisher_and_creator
     self.creator = about if creator.nil? && creator_id.nil? && about.present?
     self.publisher = creator.profileable if publisher.nil? && publisher_id.nil? && creator.profileable.present?
+  end
+
+  def video_info
+    return unless remote_url.present? && VideoInfo.usable?(remote_url)
+    @video_info ||= VideoInfo.new(remote_url)
   end
 end

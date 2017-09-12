@@ -4,4 +4,4 @@ nl:
     add: "Bijlage toevoegen"
     file_limit_notice: "Het bestand moet kleiner zijn dan 18MB."
     helpers:
-      remote_url: "Of geef voer een link in naar een bestand:"
+      remote_url: "Of geef voer een link in naar een bestand of filmpje:"

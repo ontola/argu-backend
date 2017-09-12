@@ -18,6 +18,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
                           application/vnd.openxmlformats-officedocument.presentationml.slideshow].freeze
   SPREADSHEET_TYPES = %w[text/csv application/excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
                          text/comma-separated-values application/vnd.oasis.opendocument.spreadsheet].freeze
+  VIDEO_TYPES = %w[video/mp4].freeze
 
   if Rails.env.development? || Rails.env.test?
     storage :file

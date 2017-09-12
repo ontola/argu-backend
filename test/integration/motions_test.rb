@@ -231,6 +231,20 @@ class MotionsTest < ActionDispatch::IntegrationTest
     define_test(hash, :create, suffix: ' with remote attachment', options: options) do
       {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
+    options = {
+      parent: :project,
+      analytics: stats_opt('motions', 'create_success'),
+      attributes: {
+        attachments_attributes: {
+          '1234': {
+            remote_content_url: 'https://youtu.be/movie_id'
+          }
+        }
+      }
+    }
+    define_test(hash, :create, suffix: ' with movie attachment', options: options) do
+      {creator: exp_res(response: 302, should: true, asserts: [assert_has_media_object])}
+    end
     define_test(hash, :show, asserts: [assert_no_trashed_arguments]) do
       user_types[:show].except!(:non_member)
     end
