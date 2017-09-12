@@ -15,6 +15,10 @@ class MenusController < AuthorizedController
 
   private
 
+  def authenticated_tree
+    parent_resource.try(:edge)&.self_and_ancestors
+  end
+
   def authorize_action
     skip_verify_policy_scoped(true)
     if parent_resource.present?

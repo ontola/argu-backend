@@ -21,8 +21,12 @@ class ApplicationMenuList < MenuList
   end
 
   def page_links
-    policy_scope(Page.joins(forums: {edge: :favorites}).where(favorites: {user_id: user.id}))
-      .distinct
+    policy_scope(
+      Page
+        .joins(forums: {edge: :favorites})
+        .where(favorites: {user_id: user.id})
+        .includes(:shortname, profile: :default_profile_photo)
+    ).distinct
       .map do |page|
       menu_item(
         page.url,

@@ -10,7 +10,7 @@ class PageMenuList < MenuList
   def navigations_menu
     menu_item(
       :navigations,
-      menus: policy_scope(resource.forums)
+      menus: policy_scope(resource.forums.includes(:shortname, :edge, :default_profile_photo))
                .map { |forum| navigation_item(forum) }
                .concat(resource.sources.map { |source| navigation_item(source) })
     )
