@@ -2,8 +2,11 @@
 
 FactoryGirl.define do
   factory :media_object, traits: [:set_publisher] do
-    filename { "mediaobject-#{id}.pdf" }
-    content_type 'application/pdf'
+    used_as :attachment
+    association :forum
+
+    content Rack::Test::UploadedFile.new(File.join(File.expand_path('test/fixtures/'), 'blank.pdf'), 'application/pdf')
+
     creator do
       if passed_in?(:creator)
         creator
@@ -11,9 +14,10 @@ FactoryGirl.define do
         publisher.present? ? publisher.profile : create(:profile)
       end
     end
+
     factory :image_object do
-      filename { "imageobject-#{id}.png" }
-      content_type 'image/png'
+      content Rack::Test::UploadedFile
+                .new(File.join(File.expand_path('test/fixtures/'), 'cover_photo.jpg'), 'image/jpeg')
     end
   end
 end

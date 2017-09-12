@@ -10,7 +10,7 @@ FactoryGirl.define do
     locale 'en-GB'
 
     before(:create) do |forum|
-      forum.build_edge
+      forum.build_edge(user: build(:user), parent: forum.page.edge)
       forum.shortname.shortname = forum.name
     end
   end

@@ -26,7 +26,7 @@ class MediaObject < ApplicationRecord
   contextualize :thumbnail, as: 'schema:thumbnail'
   store_accessor :content_attributes
 
-  before_save :set_file_name_and_type
+  before_save :set_file_name
   before_save :set_publisher_and_creator
 
   # Hands over publication of a collection to the Community profile
@@ -43,18 +43,8 @@ class MediaObject < ApplicationRecord
     is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
 
-  def set_file_name_and_type
-    self.content_type = content.file.content_type if content&.file.try(:content_type).present?
-    self.filename = content.file.original_filename if content&.file.try(:original_filename).present?
-  end
-
-  def set_publisher_and_creator
-    self.creator = about if creator.nil? && creator_id.nil? && about.present?
-    self.publisher = creator.profileable if publisher.nil? && publisher_id.nil? && creator.profileable.present?
-  end
-
   def thumbnail
-    case content_type
+    case content.content_type
     when *MediaObjectUploader::IMAGE_TYPES
       content.icon.url
     when *MediaObjectUploader::PORTABLE_DOCUMENT_TYPES
@@ -70,5 +60,16 @@ class MediaObject < ApplicationRecord
     else
       'file-o'
     end
+  end
+
+  private
+
+  def set_file_name
+    self.filename = content.file.original_filename if content&.file.try(:original_filename).present?
+  end
+
+  def set_publisher_and_creator
+    self.creator = about if creator.nil? && creator_id.nil? && about.present?
+    self.publisher = creator.profileable if publisher.nil? && publisher_id.nil? && creator.profileable.present?
   end
 end

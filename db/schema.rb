@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828114737) do
+ActiveRecord::Schema.define(version: 20170911102831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,7 +344,6 @@ ActiveRecord::Schema.define(version: 20170828114737) do
     t.datetime "date_created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "content_type"
     t.string "filename"
     t.hstore "content_attributes"
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type"

@@ -72,6 +72,17 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     filename&.split('.')&.last
   end
 
+  def is_image?(_file = nil)
+    return true if profile_photo? || cover_photo?
+    content_type&.split('/')&.first == 'image'
+  end
+
+  def profile_photo?(_file = nil)
+    model.profile_photo?
+  end
+
+  private
+
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
@@ -90,15 +101,6 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     else
       MediaObjectUploader::IMAGE_TYPES
     end
-  end
-
-  def is_image?(_file = nil)
-    return true if profile_photo? || cover_photo?
-    (content_type || model.content_type)&.split('/')&.first == 'image'
-  end
-
-  def profile_photo?(_file = nil)
-    model.profile_photo?
   end
 
   # Override the directory where uploaded files will be stored.
