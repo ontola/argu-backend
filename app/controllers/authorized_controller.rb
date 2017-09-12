@@ -37,7 +37,7 @@ class AuthorizedController < ApplicationController
 
   def authorize_action
     if action_name == 'index'
-      authorize parent_resource, :index_children?, controller_name
+      authorize parent_resource!, :index_children?, controller_name
     else
       authorize authenticated_resource, "#{params[:action].chomp('!')}?"
     end
