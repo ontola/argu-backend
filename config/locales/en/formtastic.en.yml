@@ -129,6 +129,9 @@ en:
       group:
         name: "e.g. 'Civilians'"
         name_singular: "e.g. 'Civilian'"
+      attachment:
+        remote_content_url: "https://example.com"
+        description: "Description (optional)"
     map:
       add_marker: "Add location"
       remove_marker: "Remove location"

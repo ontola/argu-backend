@@ -6,11 +6,14 @@
     =f.input :content_cache, as: :hidden
     li.form-helper
       span= t('attachments.file_limit_notice')
+    li.form-helper
+      span= t('attachments.helpers.remote_url')
+    =f.input :remote_content_url, input_html: { value: f.object.remote_url, placeholder: t('formtastic.placeholders.attachment.remote_content_url') }, label: '&nbsp;'
     - if f.object&.url.present?
       - if f.object.is_image?
         =f.input :content, as: :preview_image, html_options: {style: 'max-height: 256px;'}, label: '&nbsp;'
       - else
         =f.label ' '
         span= f.object.filename
-    =f.input :description, input_html: { rows: 5 }, label: '&nbsp;'
+    =f.input :description, input_html: { rows: 5, placeholder: t('formtastic.placeholders.attachment.description') }, label: '&nbsp;'
   =link_to_remove_association t('delete_type', type: t('attachments.type')), f, class: 'btn btn--light'

@@ -43,6 +43,10 @@ class MediaObject < ApplicationRecord
     is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
 
+  def remote_content_url=(url)
+    self.remote_url = url
+  end
+
   def thumbnail
     case content.content_type
     when *MediaObjectUploader::IMAGE_TYPES

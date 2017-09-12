@@ -3,3 +3,5 @@ en:
     type: "Attachment"
     add: "Add attachment"
     file_limit_notice: "The file size limit is 18MB."
+    helpers:
+      remote_url: "Or enter a link to a file:"

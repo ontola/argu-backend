@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911102831) do
+ActiveRecord::Schema.define(version: 20170912080843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -346,6 +346,7 @@ ActiveRecord::Schema.define(version: 20170911102831) do
     t.datetime "updated_at", null: false
     t.string "filename"
     t.hstore "content_attributes"
+    t.string "remote_url"
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type"
     t.index ["content_attributes"], name: "index_media_objects_on_content_attributes", using: :gin
     t.index ["forum_id"], name: "index_media_objects_on_forum_id"

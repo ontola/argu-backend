@@ -20,6 +20,8 @@ module Argu
         end
       end
 
+      def automated_test_stubs; end
+
       def perform_automated_test(action, test_case, user_type, results, method)
         if %i[member non_member].include?(user_type)
           freetown.grants.where(group_id: Group::PUBLIC_ID).destroy_all
@@ -30,6 +32,8 @@ module Argu
           freetown.grants.find_by(group_id: Group::PUBLIC_ID).spectator!
           public_source.grants.find_by(group_id: Group::PUBLIC_ID).spectator! if respond_to?(:public_source)
         end
+
+        automated_test_stubs
 
         sign_in send(user_type) unless user_type == :guest || user_type.nil?
 

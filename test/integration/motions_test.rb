@@ -81,6 +81,12 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
   let(:require_question_member) { create_member(require_question_forum) }
 
+  def automated_test_stubs
+    stub_request(:get, 'https://example.com/cover_photo.jpg')
+      .to_return(status: 200, body: File.join(File.expand_path('test/fixtures/'), 'cover_photo.jpg'))
+    stub_request(:get, 'https://youtu.be/movie_id').to_return(status: 200, body: '')
+  end
+
   def self.assert_as_page
     "Motion.last.creator.profileable_type == 'Page'"
   end
@@ -209,6 +215,20 @@ class MotionsTest < ActionDispatch::IntegrationTest
       }
     }
     define_test(hash, :create, suffix: ' with attachment', options: options) do
+      {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
+    end
+    options = {
+      parent: :project,
+      analytics: stats_opt('motions', 'create_success'),
+      attributes: {
+        attachments_attributes: {
+          '1234': {
+            remote_content_url: 'https://example.com/cover_photo.jpg'
+          }
+        }
+      }
+    }
+    define_test(hash, :create, suffix: ' with remote attachment', options: options) do
       {creator: exp_res(response: 302, should: true, asserts: [assert_attachment_identifier, assert_has_media_object])}
     end
     define_test(hash, :show, asserts: [assert_no_trashed_arguments]) do

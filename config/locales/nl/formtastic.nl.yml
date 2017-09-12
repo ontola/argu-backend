@@ -130,6 +130,9 @@ nl:
       group:
         name: "bv Burgers"
         name_singular: "bv Burger"
+      attachment:
+        remote_content_url: "https://example.com"
+        description: "Toelichting (optioneel)"
     map:
       add_marker: "Voeg locatie toe"
       remove_marker: "Verwijder locatie"
