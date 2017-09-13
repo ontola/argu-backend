@@ -101,11 +101,14 @@ class Place < ApplicationRecord
     # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
     # @return [String] OSM url with params
     def url_for_osm_query(params = {})
-      params = {format: 'jsonv2', addressdetails: 1, limit: 1, polygon: 0, extratags: 1, namedetails: 1}.merge(params)
+      params = {format: 'json', addressdetails: 1, limit: 1, polygon: 0, extratags: 1, namedetails: 1}.merge(params)
       params[:postalcode] = params.delete :postcode
       params[:country] = params.delete :country_code
+      params[:key] = ENV['NOMINATIM_KEY'] if ENV['NOMINATIM_KEY'].present?
 
-      "https://nominatim.openstreetmap.org/search?#{params.to_query}"
+      url = URI(ENV['NOMINATIM_URL'] || 'http://open.mapquestapi.com/nominatim/v1/search')
+      url.query = params.to_query
+      url.to_s
     end
   end
 end

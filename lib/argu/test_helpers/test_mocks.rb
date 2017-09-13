@@ -69,8 +69,8 @@ module Argu
 
       def nominatim_netherlands
         stub_request(:get,
-                     'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&'\
-                     'extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=&state=&street=&town=&city=')
+                     'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
+                     'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode=&state=&street=&town=&city=')
           .to_return(body: [
             {
               place_id: '144005013',
@@ -113,8 +113,8 @@ module Argu
 
       def nominatim_country_code_only
         stub_request(:get,
-                     'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&'\
-                     'extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=')
+                     'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
+                     'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode=')
           .to_return(body: [
             {
               place_id: '144005013',
@@ -128,8 +128,8 @@ module Argu
 
       def nominatim_postal_code_valid
         stub_request(:get,
-                     'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&'\
-                     'extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=3583GP')
+                     'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
+                     'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode=3583GP')
           .to_return(body: [
             {
               place_id: '145555300',
@@ -148,8 +148,8 @@ module Argu
 
       def nominatim_postal_code_wrong
         stub_request(:get,
-                     'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&'\
-                     'extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode='\
+                     'http://open.mapquestapi.com/nominatim/v1/search?addressdetails=1&country=nl&'\
+                     'extratags=1&format=json&limit=1&namedetails=1&polygon=0&postalcode='\
                      'WRONG_POSTAL_CODE')
           .to_return(body: [].to_json)
       end
