@@ -10,7 +10,7 @@ class MediaObjectSerializer < RecordSerializer
 
   def thumbnail
     url = object.url(:icon)
-    return url if Rails.env.production? || url&.include?('gravatar.com')
-    "https://argu-logos.s3.amazonaws.com#{object.url(:icon)}"
+    return {'@id': "https:/#{url}"} if Rails.env.production? || url&.include?('gravatar.com')
+    {'@id': "https://argu-logos.s3.amazonaws.com#{object.url(:icon)}"}
   end
 end

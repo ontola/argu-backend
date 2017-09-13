@@ -110,8 +110,11 @@ Rails.application.routes.draw do
   get '/token', to: 'static_pages#token'
 
   # namespace 'argu_rdf', path: 'local' do
-  scope 'local', module: :argu_rdf do
-    resources :events, controller: :rdf_resource, only: :show do
+  scope 'local', module: :argu_rdf, defaults: {format: :json_api} do
+    resources :events,
+              controller: :rdf_resource,
+              only: :show,
+              defaults: {collection_name: 'events'} do
       resources :agenda_items,
                 only: :index,
                 as: :argu_rdf_agenda_items,
@@ -120,6 +123,12 @@ Rails.application.routes.draw do
                   collection_name: 'agenda_items'
                 }
     end
+    resources :agendaitems,
+              controller: :rdf_resource,
+              only: :show,
+              defaults: {
+                collection_name: 'agenda_items'
+              }
   end
 
   devise_for :users,

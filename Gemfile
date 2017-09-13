@@ -119,7 +119,7 @@ gem 'webpacker', '~> 2.0'
 
 ################## Linked data ########################
 gem 'rdf', '~> 2.2.7'
-gem 'rdf-marmotta', '~> 0.1.1'
+# gem 'rdf-marmotta', '~> 0.1.1'
 gem 'rdf-n3'
 gem 'rdf-reasoner'
 gem 'rdf-trig'
@@ -127,7 +127,7 @@ gem 'rdf-trix'
 gem 'rdf-turtle'
 gem 'rdf-vocab'
 gem 'sparql'
-gem 'sparql-client'
+gem 'sparql-client', '~> 2.1.0'
 
 group :test do
   gem 'minitest-rails', '~> 3.0.0'

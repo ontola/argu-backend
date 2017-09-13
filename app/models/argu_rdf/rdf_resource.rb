@@ -12,6 +12,7 @@ module ArguRDF
       @id = opts[:id]
       @attributes = attributes
       @type = @attributes.find { |_, p, __| p == RDF.type } if @attributes
+      super
     end
 
     def display_name

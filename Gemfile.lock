@@ -381,8 +381,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    net-http-persistent (3.0.0)
-      connection_pool (~> 2.2)
+    net-http-persistent (2.9.4)
     net_http_timeout_errors (0.3.0)
     netrc (0.11.0)
     nio4r (2.1.0)
@@ -481,16 +480,11 @@ GEM
       rake
     raindrops (0.17.0)
     rake (12.0.0)
-    rdf (2.2.7)
+    rdf (2.2.9)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (2.2.0)
       rdf (~> 2.0)
-    rdf-marmotta (0.1.1)
-      nokogiri
-      rake
-      rdf (~> 2.0)
-      sparql-client (~> 2.0.1)
     rdf-n3 (2.1.0)
       rdf (~> 2.0)
     rdf-reasoner (0.4.2)
@@ -626,7 +620,7 @@ GEM
       rdf-xsd (~> 2.1)
       sparql-client (~> 2.0)
       sxp (~> 1.0)
-    sparql-client (2.0.1)
+    sparql-client (2.1.0)
       net-http-persistent (~> 2.9)
       rdf (~> 2.0)
     spring (1.7.2)
@@ -810,7 +804,6 @@ DEPENDENCIES
   rails-controller-testing
   rails-i18n (~> 5.0.4)
   rdf (~> 2.2.7)
-  rdf-marmotta (~> 0.1.1)
   rdf-n3
   rdf-reasoner
   rdf-trig
@@ -841,7 +834,7 @@ DEPENDENCIES
   simplecov
   slim (~> 3.0.6)
   sparql
-  sparql-client
+  sparql-client (~> 2.1.0)
   spring (~> 1.7.2)
   spring-commands-rspec
   spring-commands-testunit

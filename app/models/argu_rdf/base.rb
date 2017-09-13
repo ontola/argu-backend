@@ -4,24 +4,36 @@ module ArguRDF
   # Implements low-level API's to mimic ActiveModel and other required
   #   interfaces.
   class Base
-    include ActiveModel::Serializers::JSON
     include ActiveModel::Model
+    include ActiveModel::Serializers::JSON
     include ActionDispatch::Routing
     include Rails.application.routes.url_helpers
     include Ldable
 
-    attr_accessor :attributes, :id, :iri, :type
-    def read_attribute_for_serialization(name)
-      attr = send(name)
-      attr.is_a?(Array) ? attr.map(&method(:attribute_for_serialization)) : plain_attribute(attr)
+    attr_accessor :attributes,
+                  :contextualizer,
+                  :id,
+                  :iri,
+                  :type
+
+    contextualize_as_type 'rdfs:Resource'
+    contextualize_with_id(&:uri)
+
+    def initialize(_iri, _attributes = [], **opts)
+      @contextualizer = self.class.contextualizer.dup
+      assign_attributes(opts)
+    end
+
+    def attributes
+      Hash[@attributes.map { |_, p, o| [p.to_s, o] }]
     end
 
     def context_id
-      plain_attribute(@iri)
+      plain_attribute(uri)
     end
 
     def context_type
-      plain_attribute(type)
+      plain_attribute(type) || self.class.contextualized_type
     end
 
     def empty?
@@ -29,13 +41,20 @@ module ArguRDF
     end
 
     def jsonld_context
-      {}
+      contextualizer.definitions_for_terms
     end
 
     def method_missing(name, *args, &block)
       attr = attribute_in_resource?(name)
       return attr[2] if attr.present?
+      attr = attributes[name.to_s]
+      return attr if attr.present?
       super unless name.to_s.include?('=')
+    end
+
+    def read_attribute_for_serialization(name)
+      attr = send(name)
+      attr.is_a?(Array) ? attr.map(&method(:attribute_for_serialization)) : plain_attribute(attr)
     end
 
     def respond_to?(name, include_private = false)
@@ -56,18 +75,24 @@ module ArguRDF
     end
 
     def to_hash
-      context = {}
-      attrs = attributes.flat_map do |_, p, o|
+      # context = {}
+      attrs = @attributes.flat_map do |_, p, o|
         a = "attr-#{p.hash}"
-        context[a] = p.to_s
+        # context[a] = p.to_s
+        contextualizer.add_term a, as: p.to_s
         [a, o.to_s]
       end
-      attrs.push('@context', context)
+      # vxzc
+      # attrs.push('@context', context)
       Hash[*attrs]
     end
 
     def to_param
       id
+    end
+
+    def uri
+      iri
     end
 
     protected

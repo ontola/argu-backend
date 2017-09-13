@@ -11,11 +11,9 @@ module ArguRDF
     def initialize(iri = nil, attributes = [], **opts)
       @iri = iri
       @id = opts[:id]
-      @predicate = opts[:predicate]
-      @order = opts[:order]
       @attributes = attributes
       @type = @attributes.find { |_, p, __| p == RDF.type } if @attributes
-      super(**opts)
+      super
     end
 
     def members
@@ -29,11 +27,11 @@ module ArguRDF
       RDFCollectionSerializer
     end
 
-    def type
-      'collections'
+    def title
+      'fds'
     end
 
-    def uri(query_values = '')
+    def uri(query_values = query_opts)
       base = if url_constructor.present?
                send(url_constructor, parent.id, protocol: :https)
              else

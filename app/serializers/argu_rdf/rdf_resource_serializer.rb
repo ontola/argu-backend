@@ -5,7 +5,5 @@ module ArguRDF
     include RDFSerializer
 
     attributes :id
-
-    has_one :agenda_item_collection
   end
 end

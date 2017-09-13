@@ -1,4 +1,5 @@
 # frozen_string_literal: false
+
 module ArguRDF
   class RDFResourceController < ApplicationController
     module AuthorizedControllerMethods
@@ -35,22 +36,16 @@ module ArguRDF
     include Common::Setup
     include Common::Index
 
-    TYPE_MAP = {
-      m: 'http://argu.co/ns/core#motions'
-    }.freeze
-
-    def index_handler_success(_)
-      render json: index_response_association
-    end
-
     def show
-      render json: authenticated_resource
+      respond_to do |format|
+        format.json_api { render json: authenticated_resource }
+      end
     end
 
     private
 
     def authenticated_resource
-      @resource ||= ArguRDF::Event.find(
+      @resource ||= controller_class.find(
         resource_iri,
         **permit_params.to_h.symbolize_keys
       )
@@ -71,6 +66,12 @@ module ArguRDF
     # Set in the routes for RDF resources
     def controller_name
       params[:collection_name]
+    end
+
+    def index_respond_blocks_success(_, format)
+      format.json_api do
+        render json: index_response_association
+      end
     end
 
     def parent_from_params(opts = params)

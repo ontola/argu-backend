@@ -12,12 +12,13 @@ module ArguRDF
 
       base_attrs = self.class._attributes_data.each_with_object({}) do |(key, attr), hash|
         next if attr.excluded?(self)
-        next unless requested_attrs&.include?(key)
+        # next unless requested_attrs&.include?(key)
         hash[key] = attr.value(self)
       end
 
       attrs = object.to_hash
-      attrs['@context'] = (base_attrs['@context'] || {}).merge(attrs['@context'])
+      # attrs['@context'] = (base_attrs['@context'] || ld_context).merge(attrs['@context'])
+      attrs['@context'] = ld_context
 
       @attributes = base_attrs.merge(attrs)
     end

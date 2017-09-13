@@ -8,6 +8,8 @@ module ArguRDF
                     association_class: AgendaItem,
                     collection_class: ArguRDF::Collection
 
+    contextualize :title, as: 'schema:name'
+
     def model_name
       ActiveModel::Name.new(self.class, nil, 'Event')
     end
