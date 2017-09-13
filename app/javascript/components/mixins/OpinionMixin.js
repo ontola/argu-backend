@@ -154,7 +154,7 @@ const OpinionMixin = {
         this.setState({ submitting: true });
         fetch(`${this.props.userRegistrationUrl}.json`, safeCredentials({
             method: 'POST',
-            body: JSON.stringify({ user: { email: signupEmail, r: window.location.href } })
+            body: JSON.stringify({ accept_terms: true, user: { email: signupEmail, r: window.location.href } })
         })).then(statusSuccess)
             .then(json)
             .then(data => {
