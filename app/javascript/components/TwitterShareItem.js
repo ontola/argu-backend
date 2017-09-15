@@ -24,7 +24,7 @@ export const TwitterShareItem = React.createClass({
 
     fetchCount () {
         $.getJSON(`https://opensharecount.com/count.json?url=${this.props.iri}`, data => {
-            this.updateCount('twitter', data.count);
+            this.props.updateCount('twitter', data.count);
         });
     },
 

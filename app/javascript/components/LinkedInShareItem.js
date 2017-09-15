@@ -24,7 +24,7 @@ export const LinkedInShareItem = React.createClass({
 
     fetchCount () {
         $.getJSON(`https://www.linkedin.com/countserv/count/share?url=${this.props.iri}&callback=?`, data => {
-            this.updateCount('linkedIn', data.count);
+            this.props.updateCount('linkedIn', data.count);
         });
     },
 
