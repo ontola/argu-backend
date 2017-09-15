@@ -5,7 +5,7 @@
   =pf.input :used_as, as: :hidden, input_html: {value: type}
   li.form-helper
     span= t('profiles.edit.file_limit_notice')
-    - if pf.object&.url.present?
+    - if pf.object&.content&.url.present?
       =pf.input :content, as: :preview_image, html_options: {style: preview_style}, label: '&nbsp;'
       - if pf.object&.file.present?
         - if relation == :default_profile_photo
