@@ -13,6 +13,11 @@ class MediaObjectsController < AuthorizedController
 
   private
 
+  def authorize_action
+    return super unless action_name == 'index'
+    authorize parent_resource, :index_children?, [controller_name, about: parent_resource]
+  end
+
   def index_collection_association
     'attachment_collection'
   end

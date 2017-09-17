@@ -2,6 +2,7 @@
 
 class MediaObject < ApplicationRecord
   include Ldable
+  include Parentable
   belongs_to :about, polymorphic: true, inverse_of: :media_objects
   belongs_to :forum
   belongs_to :creator, class_name: 'Profile'
@@ -28,6 +29,9 @@ class MediaObject < ApplicationRecord
 
   before_save :set_file_name
   before_save :set_publisher_and_creator
+
+  parentable :forum, :question, :motion, :profile
+  alias parent_model about
 
   # Hands over publication of a collection to the Community profile
   def self.anonymize(collection)
