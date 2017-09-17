@@ -44,6 +44,12 @@ class CommentsController < EdgeTreeController
     respond_with_redirect_success(resource, :create)
   end
 
+  def create_respond_success_js(resource)
+    return super if params[:modal].blank?
+    flash.now[:notice] = message_success(resource, :create)
+    render 'alert'
+  end
+
   def destroy_respond_failure_js
     render
   end

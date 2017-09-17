@@ -12,4 +12,5 @@
         li
           div
             a.btn-cancel[data-comment-id="#{comment.id}"] X &nbsp;
+      =hidden_field_tag :modal, local_assigns[:modal]
       =f.action :submit, as: :button, label: comment_form_label(comment)

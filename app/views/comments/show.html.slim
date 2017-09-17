@@ -4,12 +4,12 @@
     header
       h2= t('comments.reply')
     .box[data-intro= t('intro.comments.form')]
-      =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true, comment: comment }
+      =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true, comment: comment, modal: local_assigns[:modal] }
   - if policy(resource).show?
     header
       h2#comments= t('comments.plural') if @comments.present?
     .comments
       span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
       - @comments.reject { |c| c.abandoned? }.each do |c|
-        =render partial: 'comments/comment', locals: { resource: resource, c: c }
+        =render partial: 'comments/comment', locals: { resource: resource, c: c, modal: local_assigns[:modal] }
       =paginate @comments, remote: local_assigns[:modal], params: { anchor: 'comments' }

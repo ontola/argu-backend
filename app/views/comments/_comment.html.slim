@@ -17,8 +17,8 @@
             span.fa.fa-reply
             span.icon-left= t('reply')
   .comment.comment-form
-    .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new }
+    .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new, modal: local_assigns[:modal] }
   - if c.has_children?
     - c.children.reject { |c| c.abandoned? }.each do |ch|
-      =render partial: 'comments/comment', locals: { resource: resource, c: ch }
+      =render partial: 'comments/comment', locals: { resource: resource, c: ch, modal: local_assigns[:modal] }
     =link_to t('comments.more'), '/' if c.children.length > 40
