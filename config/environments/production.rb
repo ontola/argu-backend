@@ -3,6 +3,7 @@
 Rails.application.configure do
   config.host_name = ENV['HOSTNAME']
   Rails.application.routes.default_url_options[:host] = config.host_name
+  Rails.application.routes.default_url_options[:protocol] = :https
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.logstasher.enabled = true
@@ -70,8 +71,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "argu_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = {host: 'https://argu.co'}
-  Rails.application.routes.default_url_options[:host] = 'https://argu.co'
+  config.action_mailer.default_url_options = {host: "https://#{config.host_name}"}
   config.roadie.url_options = {host: 'argu.co', scheme: 'https'}
   config.action_mailer.asset_host = nil
 
