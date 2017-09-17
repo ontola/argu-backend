@@ -1,16 +1,16 @@
 .box.box-with-btns.argument[id="#{model.identifier.present? ? model.identifier.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed?}"]
   section
-    =link_to argument_path(model)
+    =link_to argument_path(model), remote: true
       h4[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
     =render partial: 'arguments/shr', locals: {model: model, vote: upvote_for(model, current_profile)}
     -if model.content.present?
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if policy(model).create_child?(:comments)
-      =link_to argument_path(model), class: 'sticky--bottom-right btn-subtle btn--mini sticky--on-top'
+      =link_to argument_path(model), remote: true, class: 'sticky--bottom-right btn-subtle btn--mini sticky--on-top'
         span.icon-right= t('reply')
         span.fa.fa-comments
 - if model.top_comment.present? && policy(model).index_children?(:comments)
-  =link_to argument_path(model) + '#comments'
+  =link_to argument_path(model), remote: true
     .top-comment-container[class=status_classes_for(model.top_comment)]
       .top-comment
         p.wrap-normal

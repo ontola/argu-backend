@@ -14,7 +14,7 @@
     - if model.edge.arguments_pro.present? || model.edge.arguments_con.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.edge.arguments_pro.first(5).each do |argument|
-          li= link_to argument_path(argument.id)
+          li= link_to argument_path(argument.id), remote: true
             h4[class="pro-t tooltip--wider"]
               span.fa.fa-plus
               .list-item.icon-left
@@ -28,7 +28,7 @@
             span= t('arguments.new.pro')
       ul.box-list.box-list--arguments.box-list--icons
         - model.edge.arguments_con.first(5).each do |argument|
-          li= link_to argument_path(argument.id)
+          li= link_to argument_path(argument.id), remote: true
             h4[class="con-t tooltip--wider"]
               span.fa.fa-minus
               .list-item.icon-left

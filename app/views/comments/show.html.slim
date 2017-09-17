@@ -12,4 +12,4 @@
       span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
       - @comments.reject { |c| c.abandoned? }.each do |c|
         =render partial: 'comments/comment', locals: { resource: resource, c: c }
-      =paginate @comments, params: { anchor: 'comments' }
+      =paginate @comments, remote: local_assigns[:modal], params: { anchor: 'comments' }

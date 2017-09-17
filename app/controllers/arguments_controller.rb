@@ -6,24 +6,20 @@ class ArgumentsController < EdgeTreeController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
-    @length = authenticated_resource.root_comments.length
-    @vote = Vote.find_by(
-      voteable_id: authenticated_resource.id,
-      voteable_type: 'Argument',
-      creator: current_profile
-    )
-
     respond_to do |format|
       format.html do
+        prepare_view
         render locals: {
           argument: authenticated_resource,
           comment: Edge.new(owner: Comment.new, parent: authenticated_edge).owner
         }
       end
-      format.widget do
-        render authenticated_resource,
-               locals: {argument: authenticated_resource}
+      format.js do
+        prepare_view
+        render locals: {
+          argument: authenticated_resource,
+          comment: Edge.new(owner: Comment.new, parent: authenticated_edge).owner
+        }
       end
       format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api do
@@ -52,6 +48,16 @@ class ArgumentsController < EdgeTreeController
     format.html { render text: 'Bad request', status: 400 }
     format.json { respond_with_400(resource, :json) }
     format.json_api { respond_with_400(resource, :json_api) }
+  end
+
+  def prepare_view
+    @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
+    @length = authenticated_resource.root_comments.length
+    @vote = Vote.find_by(
+      voteable_id: authenticated_resource.id,
+      voteable_type: 'Argument',
+      creator: current_profile
+    )
   end
 
   def service_options(opts = {})

@@ -1,0 +1,20 @@
+.modal-container
+  .overlay
+  .modal.modal-scroll-box.col-1
+    .box
+      section
+        h1[class=(argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= argument.title
+        =render partial: 'arguments/shr', locals: {model: argument, vote: @vote}
+        .markdown[itemprop="text"]
+          =markdown_to_html(argument.content)
+      section.section--footer
+        =render partial: argument.creator, locals: {resource: argument} if argument.creator.present?
+        ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
+          - unless current_user.guest?
+            li
+              ul= dropdown_menu(argument, :follow, item_opts: {renderLeft: true})
+          =dropdown_menu(argument, :actions, item_opts: {renderLeft: true})
+          li
+            ul= dropdown_menu(argument, :share, item_opts: {isMobile: browser.device.mobile?, renderLeft: true})
+    - if policy(argument).index_children?(:comments)
+      =render template: 'comments/show', locals: {resource: argument, comment: comment, modal: true}
