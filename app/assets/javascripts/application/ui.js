@@ -65,7 +65,7 @@ const ui = {
     },
 
     bindRemoteLinks: function () {
-        $('.remote-link, form[data-remote=true]')
+        $('a[data-remote=true], form[data-remote=true]')
             .bind("ajax:beforeSend", function () {
                 $(this).addClass("is-loading");
             })
