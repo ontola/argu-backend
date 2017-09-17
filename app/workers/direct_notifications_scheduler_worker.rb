@@ -22,8 +22,8 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
       .where(t_notifications[:read_at].eq(nil))
       .where(t_notifications[:send_mail_after].lt(DateTime.current))
       .each do |notification|
-      NotificationsMailer.try(notification.notification_type, notification)&.deliver
       notification.update!(send_mail_after: nil)
+      NotificationsMailer.try(notification.notification_type, notification)&.deliver
     end
   end
 end
