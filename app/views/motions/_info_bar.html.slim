@@ -41,6 +41,7 @@ section.section--details
           .fa.fa-clock-o
         .detail__text
           time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
+    =render partial: 'decisions/decision_and_deadline', locals: {deadline: motion.expires_at}
     - if motion.pinned?
       .detail[data-title=t('edges.pinned_at', datetime: motion.edge.pinned_at.to_formatted_s(:short))]
         .detail__icon
