@@ -36,6 +36,7 @@ nl:
       language: "Taal"
       mark_as_important: "Markeer als belangrijk"
       password_confirmation: "Wachtwoord bevestigen"
+      email: "Email of gebruikersnaam"
       password: "Wachtwoord"
       pinned: "Vastzetten"
       postal_code: "Postcode"

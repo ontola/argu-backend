@@ -46,7 +46,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     guest_vote
     other_guest_vote
 
-    assert_differences([['Vote.count', 0], ['Favorite.count', 0]]) do
+    assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
              headers: {
@@ -80,7 +80,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     other_guest_vote
     vote
 
-    assert_differences([['Vote.count', 1], ['Favorite.count', 0]]) do
+    assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 1], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
              headers: {
@@ -100,135 +100,194 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with credentials and empty password for other domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'other.example'
-         },
-         params: {
-           email: user_without_password.email,
-           password: '',
-           grant_type: 'password',
-           scope: 'user'
-         }
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             email: user_without_password.email,
+             password: '',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
     assert_response 302
   end
 
   test 'User should not post create token with credentials and empty password for Argu domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: Rails.application.config.host_name
-         },
-         params: {
-           email: user_without_password.email,
-           password: '',
-           grant_type: 'password',
-           scope: 'user'
-         }
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: Rails.application.config.host_name
+           },
+           params: {
+             email: user_without_password.email,
+             password: '',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
     assert_redirected_to new_user_session_path(r: '', show_error: true)
   end
 
-  test 'User should post create token with username for other domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'other.example'
-         },
-         params: {
-           username: user.email,
-           password: user.password,
-           grant_type: 'password',
-           scope: 'user'
-         }
-
+  test 'User should post create token with username email for other domain' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             username: user.email,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
     assert_response 200
   end
 
-  test 'User should not post create token with bad credentials for other domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'other.example'
-         },
-         params: {
-           email: user.email,
-           password: 'wrong',
-           grant_type: 'password',
-           scope: 'user'
-         }
+  test 'User should post create token with username username for other domain' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             username: user.url,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_response 200
+  end
 
+  test 'User should post create token with username email for Argu domain' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             username: user.email,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_redirected_to root_path
+  end
+
+  test 'User should post create token with username username for Argu domain' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             username: user.url,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_redirected_to root_path
+  end
+
+  test 'User should not post create token with bad credentials for other domain' do
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             email: user.email,
+             password: 'wrong',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
     assert_response 302
   end
 
   test 'User should not post create token with bad credentials for Argu domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'argu.co'
-         },
-         params: {
-           email: user.email,
-           password: 'wrong',
-           grant_type: 'password',
-           scope: 'user'
-         }
-
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             email: user.email,
+             password: 'wrong',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
     assert_response 302
   end
 
   test 'User should not post create token with service scope for other domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'other.example'
-         },
-         params: {
-           email: user.email,
-           password: user.password,
-           grant_type: 'password',
-           scope: 'service'
-         }
-
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             email: user.email,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'service'
+           }
+    end
     assert_response 401
   end
 
   test 'User should not post create token with service scope for Argu domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'argu.co'
-         },
-         params: {
-           email: user.email,
-           password: user.password,
-           grant_type: 'password',
-           scope: 'service'
-         }
-
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             email: user.email,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'service'
+           }
+    end
     assert_response 401
   end
 
   test 'User should not post create token with user and service scope for other domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'other.example'
-         },
-         params: {
-           email: user.email,
-           password: user.password,
-           grant_type: 'password',
-           scope: 'user service'
-         }
-
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             email: user.email,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user service'
+           }
+    end
     assert_response 401
   end
 
   test 'User should not post create token with user and service scope for Argu domain' do
-    post oauth_token_path,
-         headers: {
-           HTTP_HOST: 'argu.co'
-         },
-         params: {
-           email: user.email,
-           password: user.password,
-           grant_type: 'password',
-           scope: 'user service'
-         }
-
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             email: user.email,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user service'
+           }
+    end
     assert_response 401
   end
 
@@ -242,7 +301,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     guest_vote
     other_guest_vote
 
-    assert_differences([['Vote.count', 0], ['Favorite.count', 0]]) do
+    assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
              headers: {
@@ -266,7 +325,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     guest_vote
     other_guest_vote
 
-    assert_differences([['Vote.count', 0], ['Favorite.count', 0]]) do
+    assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
              headers: {

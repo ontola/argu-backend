@@ -8,6 +8,7 @@
         h2= t('sign_in')
         .inspectlet-sensitive=f.inputs do
           =f.input :email,
+                   as: :string,
                    placeholder: false,
                    input_html: {name: 'username', autofocus: :autofocus, required: true}
           =f.input :password,

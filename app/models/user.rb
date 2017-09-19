@@ -87,6 +87,14 @@ class User < ApplicationRecord
 
   auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
 
+  def self.find_for_database_authentication(warden_conditions)
+    if warden_conditions[:email].include?('@')
+      joins(:emails).find_by('lower(emails.email) = ?', warden_conditions[:email])
+    else
+      joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email])
+    end
+  end
+
   def active_at(redis = nil)
     Argu::Redis.get("user:#{id}:active.at", redis)
   end
