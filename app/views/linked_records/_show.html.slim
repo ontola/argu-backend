@@ -10,7 +10,7 @@
           h4[class="pro-t tooltip--wider"]
             span.fa.fa-plus
             .list-item.icon-left
-              span[title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument.content, '...')) : nil)]= argument.title
+              span[title=safe_truncated_text(argument.content)]= argument.title
               - if argument.children_count(:comments) > 0
                 .comments-counter.comments-counter--inline
                   .fa.fa-comment
@@ -23,7 +23,7 @@
           h4[class="con-t tooltip--wider"]
             span.fa.fa-minus
             .list-item.icon-left
-              span[title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument.content, '...')) : nil)]= argument.title
+              span[title=safe_truncated_text(argument.content)]= argument.title
               - if argument.children_count(:comments) > 0
                 .comments-counter.comments-counter--inline
                   .fa.fa-comment
