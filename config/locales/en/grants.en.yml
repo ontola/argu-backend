@@ -20,7 +20,7 @@ en:
     type: "grant"
     plural: "grants"
     description: "Grants also apply to the underlying content."
-    label: "Leden van deze groep mogen:"
+    label: "Members of this group may:"
     in_current_forum: "In forum %{forum}"
     in_all_forums: "In all forums"
     empty: "none"

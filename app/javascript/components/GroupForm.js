@@ -98,7 +98,7 @@ export const GroupForm = React.createClass({
                     className="form-input-content"
                     name="group-name-singular"
                     onChange={this.handleNameSingularChange}
-                    placeholder={I18n.t('formtastic.placeholders.group.name')}
+                    placeholder={I18n.t('formtastic.placeholders.group.name_singular')}
                     type="text"
                     value={this.state.nameSingular}/>
                 <label>{I18n.t('roles.label')}</label>

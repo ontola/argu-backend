@@ -20,7 +20,7 @@ nl:
     type: "recht"
     plural: "rechten"
     description: "Rechten gelden voor ook voor onderliggen items."
-    label: "Members of this group may:"
+    label: "Leden van deze groep mogen:"
     in_current_forum: "In forum %{forum}"
     in_all_forums: "In alle forums"
     empty: "geen"
