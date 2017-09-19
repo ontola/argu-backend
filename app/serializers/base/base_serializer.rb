@@ -8,7 +8,9 @@ class BaseSerializer < ActiveModel::Serializer
   def ld_context
     return unless object.respond_to?(:jsonld_context)
     object.jsonld_context.merge(
-      '@vocab': 'http://schema.org/'
+      '@vocab': 'http://schema.org/',
+      schema: 'http://schema.org/',
+      argu: 'https://argu.co/ns/core#'
     )
   end
 
