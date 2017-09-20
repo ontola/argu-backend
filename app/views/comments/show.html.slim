@@ -6,8 +6,9 @@
     .box[data-intro= t('intro.comments.form')]
       =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true, comment: comment, modal: local_assigns[:modal] }
   - if policy(resource).show?
-    header
-      h2#comments= t('comments.plural') if @comments.present?
+    - if @comments.present?
+      header
+        h2#comments= t('comments.plural')
     .comments
       span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
       - @comments.reject { |c| c.abandoned? }.each do |c|
