@@ -322,10 +322,10 @@ export const OpinionShow = React.createClass({
                             <p>{explanation}</p>
                         </div>
                         <div className="opinion-body__arguments-list">
-                            {argumentFields['pro'].map(result => { return <a href={result.url} key={result.value}><label className="pro-t">{result.label}</label></a>; })}
+                            {argumentFields['pro'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="pro-t">{result.label}</label></a>; })}
                         </div>
                         <div className="opinion-body__arguments-list">
-                            {argumentFields['con'].map(result => { return <a href={result.url} key={result.value}><label className="con-t">{result.label}</label></a>; })}
+                            {argumentFields['con'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="con-t">{result.label}</label></a>; })}
                         </div>
                     </section>
                     <section className="section--footer">
