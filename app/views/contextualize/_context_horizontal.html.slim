@@ -2,11 +2,11 @@
 - _next = item.next(show_trashed?)
 .context.context--horizontal
   - if previous.present? && item.previous != item
-    =link_to previous, class: 'context--horizontal-button context--previous' do
-      .context-content.tooltip--left[data-title=previous.title]
+    =link_to previous, class: 'context--horizontal-button context--previous', remote: local_assigns[:modal] do
+      div[class="context-content tooltip--#{local_assigns[:modal] ? 'right' : 'left'}" data-title=previous.title]
         span[class="fa fa-arrow-left #{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
   - if _next.present? && _next != item
-    =link_to _next, class: 'context--horizontal-button context--next' do
-      .context-content.tooltip--right[data-title=_next.title]
+    =link_to _next, class: 'context--horizontal-button context--next', remote: local_assigns[:modal] do
+      div[class="context-content tooltip--#{local_assigns[:modal] ? 'left' : 'right'}" data-title=_next.title]
         span[class="fa fa-arrow-right #{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t"]
 .clear
