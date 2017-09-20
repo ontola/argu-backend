@@ -70,7 +70,9 @@ const ui = {
                 $(this).addClass("is-loading");
             })
             .bind('ajax:complete', function () {
-                $(this).removeClass("is-loading");
+                if (!document.body.classList.contains('turbolinks-redirect')) {
+                    $(this).removeClass("is-loading");
+                }
             })
             .bind("ajax:error", function () {
                 $(this).removeClass("is-loading");
