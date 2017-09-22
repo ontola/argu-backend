@@ -17,6 +17,7 @@ gem 'indefinite_article'
 gem 'logstasher', '~> 1.2.0'
 gem 'uri_template'
 gem 'health_check'
+gem 'nokogiri', '~> 1.8.1'
 
 ################## DB ########################
 gem 'pg', '0.18.2'
@@ -154,7 +155,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'nokogiri', '~> 1.8.0'
   gem 'pry'
   # gem 'byebug'
   # gem 'pry-byebug'
