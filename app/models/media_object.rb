@@ -25,6 +25,8 @@ class MediaObject < ApplicationRecord
   end
   contextualize :display_name, as: 'schema:name'
   contextualize :thumbnail, as: 'schema:thumbnail'
+  contextualize :url, as: 'argu:url'
+  contextualize :position_y, as: 'argu:positionY'
   store_accessor :content_attributes
 
   before_save :set_file_name

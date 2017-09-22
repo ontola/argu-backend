@@ -5,6 +5,7 @@ class MotionSerializer < ContentEdgeSerializer
   include Attachable::Serializer
   include Commentable::Serializer
   include Voteable::Serializer
+  include Photoable::Serializer
   attributes :content, :current_vote
   include_menus
 

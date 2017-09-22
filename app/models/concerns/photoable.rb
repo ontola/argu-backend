@@ -21,4 +21,47 @@ module Photoable
                                       attrs['remote_content_url'].blank?
                                   }
   end
+
+  module Serializer
+    extend ActiveSupport::Concern
+    included do
+      has_one :default_cover_photo do
+        obj = object.default_cover_photo
+        if obj
+          link(:self) do
+            {
+              meta: {
+                '@type': 'argu:coverPhoto'
+              }
+            }
+          end
+          link(:related) do
+            {
+              href: obj.context_id,
+              meta: {
+                '@type': 'schema:imageObject'
+              }
+            }
+          end
+        else
+          link(:self) do
+            {
+              meta: {
+                '@type': 'argu:coverPhoto'
+              }
+            }
+          end
+          link(:related) do
+            {
+              href: nil,
+              meta: {
+                '@type': 'schema:imageObject'
+              }
+            }
+          end
+        end
+        obj
+      end
+    end
+  end
 end

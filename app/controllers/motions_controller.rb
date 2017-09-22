@@ -44,6 +44,7 @@ class MotionsController < EdgeTreeController
       format.json_api do
         render json: authenticated_resource,
                include: [
+                 :default_cover_photo,
                  argument_collection: INC_NESTED_COLLECTION,
                  attachment_collection: INC_NESTED_COLLECTION,
                  vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}

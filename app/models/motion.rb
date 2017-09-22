@@ -6,6 +6,7 @@ class Motion < Edgeable::Content
   include ActivePublishable
   include Argumentable
   include Attachable
+  include Photoable
   include Commentable
   include Voteable
   include Attribution
@@ -14,7 +15,6 @@ class Motion < Edgeable::Content
   include Convertible
   include BlogPostable
   include Timelineable
-  include Photoable
 
   include Decisionable
 
