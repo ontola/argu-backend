@@ -243,6 +243,17 @@ class User < ApplicationRecord
     password.present? || password_confirmation.present?
   end
 
+  def previous_changes
+    changes = super
+    if changes.include?('encrypted_password')
+      changes['has_pass'] = [
+        changes['encrypted_password'].first.present?,
+        changes['encrypted_password'].second.present?
+      ]
+    end
+    changes
+  end
+
   def publish_data_event
     DataEvent.publish(self)
   end
