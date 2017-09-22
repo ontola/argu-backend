@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmailSerializer < BaseSerializer
-  attributes :email, :primary
+  attributes :email, :primary, :confirmed_at
   attribute :confirmation_token, if: :service_scope?
 
   has_one :user do

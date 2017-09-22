@@ -26,6 +26,7 @@ class UsersController < AuthorizedController
         render json: authenticated_resource,
                include: [
                  :profile_photo,
+                 :emails,
                  vote_match_collection: INC_NESTED_COLLECTION
                ]
       end
