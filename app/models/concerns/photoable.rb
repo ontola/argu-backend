@@ -21,4 +21,13 @@ module Photoable
                                       attrs['remote_content_url'].blank?
                                   }
   end
+
+  module Serializer
+    extend ActiveSupport::Concern
+    included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
+      has_one :default_cover_photo, predicate: NS::ARGU['coverPhoto']
+      # rubocop:enable Rails/HasManyOrHasOneDependent
+    end
+  end
 end

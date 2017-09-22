@@ -5,5 +5,6 @@ class QuestionSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   include Motionable::Serializer
   include BlogPostable::Serializer
+  include Photoable::Serializer
   include_menus
 end

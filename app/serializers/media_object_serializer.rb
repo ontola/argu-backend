@@ -3,6 +3,7 @@
 class MediaObjectSerializer < RecordSerializer
   attribute :url, predicate: NS::SCHEMA[:url]
   attribute :thumbnail, predicate: NS::SCHEMA[:thumbnail]
+  attribute :position_y, predicate: NS::ARGU[:imagePositionY]
   attribute :used_as
 
   def type

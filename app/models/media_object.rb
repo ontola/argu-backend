@@ -54,6 +54,10 @@ class MediaObject < ApplicationRecord
     end
   end
 
+  def position_y
+    content_attributes.try(:[], 'position_y')
+  end
+
   def remote_content_url=(url)
     self.remote_url = url
     video_info ? super(video_info.thumbnail) : super
@@ -84,7 +88,7 @@ class MediaObject < ApplicationRecord
   end
 
   def url(*args)
-    RDF::URI(type == 'video' ? remote_url : content.url(*args))
+    RDF::URI(type == 'video' ? remote_url : content.url(*args)).presence
   end
 
   private

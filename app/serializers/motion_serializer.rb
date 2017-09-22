@@ -7,6 +7,7 @@ class MotionSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   include Decisionable::Serializer
   include Voteable::Serializer
+  include Photoable::Serializer
   attribute :current_vote, predicate: NS::ARGU[:currentVote]
   include_menus
 

@@ -42,6 +42,7 @@ class MotionsController < EdgeableController
 
   def include_show
     [
+      :default_cover_photo,
       argument_collection: inc_nested_collection,
       attachment_collection: inc_nested_collection,
       vote_event_collection: {member_sequence: {members: {vote_collection: inc_nested_collection}}}

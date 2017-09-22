@@ -17,6 +17,7 @@ class QuestionsController < EdgeableController
 
   def include_show
     [
+      :default_cover_photo,
       attachment_collection: inc_nested_collection,
       motion_collection: inc_nested_collection
     ]
