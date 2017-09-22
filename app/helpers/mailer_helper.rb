@@ -13,8 +13,9 @@ module MailerHelper
   end
 
   def link_to_object(object, description = nil)
+    url = object.is_a?(BlogPost) ? url_for_blog_post(object) : url_for(object)
     link_to(description || type_for(object),
-            object,
+            url,
             title: object.display_name)
   end
 

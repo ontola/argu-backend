@@ -5,9 +5,9 @@ require 'test_helper'
 class NotificationsMailerTest < ActionMailer::TestCase
   include ActivityHelper
   include MailerHelper
-  include ActionDispatch::Routing
+  include DecisionsHelper
+  include BlogPostsHelper
   include Rails.application.routes.url_helpers
-  include ActionView::Helpers::UrlHelper
 
   define_freetown
   let!(:follower) { create(:user) }
@@ -70,120 +70,160 @@ class NotificationsMailerTest < ActionMailer::TestCase
   end
 
   test 'should send email for new question' do
-    email = assert_deliver question.activities.second.notifications.where(user: follower)
-    assert_email email, "New challenge: '#{question.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: question.activities.second.notifications.find_by(user: follower),
+      subject: "New challenge: '#{question.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    )
   end
 
   test 'should send email for trashing question' do
     trash_resource(question)
-    email = assert_deliver question.trash_activity.notifications.where(user: follower)
-    assert_email email, "'#{question.display_name}' is trashed"
+    assert_email(
+      notification: question.trash_activity.notifications.find_by(user: follower),
+      subject: "'#{question.display_name}' is trashed"
+    )
   end
 
   test 'should send email for new motion' do
-    email = assert_deliver motion.activities.second.notifications.where(user: follower)
-    assert_email email, "New idea: '#{motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: motion.activities.second.notifications.find_by(user: follower),
+      subject: "New idea: '#{motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    )
   end
 
   test 'should send email for trashing motion' do
     trash_resource(motion)
-    email = assert_deliver motion.trash_activity.notifications.where(user: follower)
-    assert_email email, "'#{motion.display_name}' is trashed"
+    assert_email(
+      notification: motion.trash_activity.notifications.find_by(user: follower),
+      subject: "'#{motion.display_name}' is trashed"
+    )
   end
 
   test 'should send email for new question_motion' do
-    email = assert_deliver question_motion.activities.second.notifications.where(user: follower)
-    assert_email email, "New idea: '#{question_motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: question_motion.activities.second.notifications.find_by(user: follower),
+      subject: "New idea: '#{question_motion.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    )
   end
 
   test 'should send email for new argument_pro' do
-    email = assert_deliver argument_pro.activities.first.notifications.where(user: follower)
-    assert_email email, "New argument: '#{argument_pro.parent_model.display_name}'"\
-                        " by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: argument_pro.activities.first.notifications.find_by(user: follower),
+      subject: "New argument: '#{argument_pro.parent_model.display_name}'"\
+               " by #{publisher.first_name} #{publisher.last_name}"
+    )
   end
 
   test 'should send email for new argument_con' do
-    email = assert_deliver argument_con.activities.first.notifications.where(user: follower)
-    assert_email email, "New argument: '#{argument_con.parent_model.display_name}'"\
-                        " by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: argument_con.activities.first.notifications.find_by(user: follower),
+      subject: "New argument: '#{argument_con.parent_model.display_name}'"\
+               " by #{publisher.first_name} #{publisher.last_name}"
+    )
   end
 
   test 'should send email for trashing argument' do
     trash_resource(argument_pro)
-    email = assert_deliver argument_pro.trash_activity.notifications.where(user: follower)
-    assert_email email, "'#{argument_pro.display_name}' is trashed"
+    assert_email(
+      notification: argument_pro.trash_activity.notifications.find_by(user: follower),
+      subject: "'#{argument_pro.display_name}' is trashed"
+    )
   end
 
   test 'should send email for new comment' do
-    email = assert_deliver comment.activities.first.notifications.where(user: follower)
-    assert_email email, "New comment on '#{comment.parent_model.display_name}'"\
-                        " by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: comment.activities.first.notifications.find_by(user: follower),
+      subject: "New comment on '#{comment.parent_model.display_name}'"\
+               " by #{publisher.first_name} #{publisher.last_name}",
+      title_link: comment.body
+    )
   end
 
   test 'should send email for trashing comment' do
     trash_resource(comment)
-    email = assert_deliver comment.trash_activity.notifications.where(user: follower)
-    assert_email email, 'Comment is trashed'
+    assert_email(
+      notification: comment.trash_activity.notifications.find_by(user: follower),
+      subject: 'Comment is trashed',
+      title_link: 'comment'
+    )
   end
 
   test 'should send email for new comment_comment' do
-    email = assert_deliver comment_comment.activities.first.notifications.where(user: follower)
-    assert_email email, "New comment on '#{comment_comment.parent_model.display_name}'"\
-                        " by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: comment_comment.activities.first.notifications.find_by(user: follower),
+      subject: "New comment on '#{comment_comment.parent_model.display_name}'"\
+               " by #{publisher.first_name} #{publisher.last_name}",
+      title_link: comment_comment.body
+    )
   end
 
   test 'should send email for new approval' do
-    email = assert_deliver decision.activities.second.notifications.where(user: follower)
-    assert_email email, "'#{motion.display_name}' is approved"
+    assert_email(
+      notification: decision.activities.second.notifications.find_by(user: follower),
+      subject: "'#{motion.display_name}' is approved",
+      title_link: false
+    )
   end
 
   test 'should send email for new rejection' do
-    email = assert_deliver rejection.activities.second.notifications.where(user: follower)
-    assert_email email, "'#{motion.display_name}' is rejected"
+    assert_email(
+      notification: rejection.activities.second.notifications.find_by(user: follower),
+      subject: "'#{motion.display_name}' is rejected",
+      title_link: false
+    )
   end
 
   test 'should send email for new forward' do
-    email = assert_deliver forward.activities.second.notifications.where(user: follower)
-    assert_email email, "'#{motion.display_name}' is forwarded"
+    assert_email(
+      notification: forward.activities.second.notifications.find_by(user: follower),
+      subject: "'#{motion.display_name}' is forwarded",
+      title_link: false
+    )
   end
 
   test 'should send email for new blog_post' do
-    email = assert_deliver blog_post.activities.second.notifications.where(user: follower)
-    assert_email email, "New update: '#{blog_post.display_name}'"
+    assert_email(
+      notification: blog_post.activities.second.notifications.find_by(user: follower),
+      subject: "New update: '#{blog_post.display_name}'",
+      url: url_for_blog_post(blog_post)
+    )
   end
 
   test 'should send email for trashing blog_post' do
     trash_resource(blog_post)
-    email = assert_deliver blog_post.trash_activity.notifications.where(user: blog_post.publisher)
-    assert_email email, "'#{blog_post.display_name}' is trashed"
+    assert_email(
+      notification: blog_post.trash_activity.notifications.find_by(user: blog_post.publisher),
+      subject: "'#{blog_post.display_name}' is trashed",
+      url: url_for_blog_post(blog_post)
+    )
   end
 
   test 'should send email for new project' do
-    email = assert_deliver project.activities.second.notifications.where(user: follower)
-    assert_email email, "New project: '#{project.display_name}'"\
-                        " by #{publisher.first_name} #{publisher.last_name}"
+    assert_email(
+      notification: project.activities.second.notifications.find_by(user: follower),
+      subject: "New project: '#{project.display_name}' by #{publisher.first_name} #{publisher.last_name}"
+    )
   end
 
   private
 
-  def assert_deliver(notifications)
-    email = NotificationsMailer.notifications_email(follower, notifications)
-    assert_emails 1 do
-      email.deliver_now
-    end
-    email
-  end
+  def assert_email(notification: nil, subject: nil, url: nil, title_link: nil)
+    url ||= url_for(notification.activity.trackable)
+    email = NotificationsMailer.notifications_email(follower, [notification])
 
-  def assert_email(email, subject)
+    assert_emails 1 { email.deliver_now }
+    assert_select_email do
+      assert_select 'a[href=?]', url, text: 'Go to discussion'
+      unless title_link == false
+        assert_select 'a[href=?]', url, text: title_link || notification.activity.trackable.display_name
+      end
+    end
     assert_equal ['noreply@argu.co'], email.from
     assert_equal [follower.email], email.to
     assert_equal subject, email.subject
   end
 
-  def trash_resource(resource)
-    user = create(:user)
-    TrashService
-      .new(resource, options: {creator: user.profile, publisher: user})
-      .commit
+  def trash_resource(resource, user: create(:user))
+    TrashService.new(resource, options: {creator: user.profile, publisher: user}).commit
   end
 end
