@@ -3,7 +3,7 @@
 module TimelineHelper
   def current_happening(happenings)
     if params[:happening_id].present?
-      happenings.select { |happening| happening.id == params[:happening_id] }
+      happenings.detect { |happening| happening.id.to_i == params[:happening_id].to_i }
     else
       happenings.last
     end
