@@ -18,17 +18,27 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def confirm
-    @original_token = params[resource_name].try(:[], :confirmation_token)
-    self.resource = email_by_token.user
-    resource.assign_attributes(devise_parameter_sanitizer.sanitize(:sign_up))
+    respond_to do |format|
+      format.html do
+        @original_token = params[resource_name].try(:[], :confirmation_token)
+        raise ActiveRecord::RecordNotFound if email_by_token.blank?
+        self.resource = email_by_token.user
+        resource.assign_attributes(devise_parameter_sanitizer.sanitize(:sign_up))
 
-    if resource.valid?
-      email_by_token.confirm
-      set_flash_message :notice, :confirmed
-      sign_in resource
-      redirect_to after_sign_in_path_for(resource)
-    else
-      render 'show'
+        if resource.valid?
+          email_by_token.confirm
+          set_flash_message :notice, :confirmed
+          sign_in resource
+          redirect_to after_sign_in_path_for(resource)
+        else
+          render 'show'
+        end
+      end
+      format.json do
+        raise Argu::NotAuthorizedError.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
+        Email.find_by!(email: params[:email]).confirm
+        head 200
+      end
     end
   end
 

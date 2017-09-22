@@ -43,6 +43,40 @@ module Users
       assert_select 'header h2', 'Send confirmation link again'
     end
 
+    test 'guest should not put confirm email with wrong token' do
+      put users_confirm_path,
+          params: {
+            user: {
+              confirmation_token: 'wrong_token',
+              password: 'password',
+              password_confirmation: 'password'
+            }
+          }
+      assert_response 404
+    end
+
+    test 'guest should put confirm email' do
+      put users_confirm_path,
+          params: {
+            user: {
+              confirmation_token: user.confirmation_token,
+              password: 'password',
+              password_confirmation: 'password'
+            }
+          }
+      assert_redirected_to root_path
+    end
+
+    test 'guest should not put confirm email json' do
+      put users_confirm_path,
+          params: {
+            format: :json,
+            email: user.email
+          }
+      assert_not_authorized
+      assert_not user.reload.confirmed?
+    end
+
     ####################################
     # As user
     ####################################
@@ -120,6 +154,71 @@ module Users
       assert_not_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
                        user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
       assert_redirected_to settings_path(tab: :authentication)
+    end
+
+    test 'user should not put confirm email with wrong token' do
+      sign_in user
+      put users_confirm_path,
+          params: {
+            user: {
+              confirmation_token: 'wrong_token',
+              password: 'password',
+              password_confirmation: 'password'
+            }
+          }
+      assert_response 404
+    end
+
+    test 'user should put confirm email' do
+      sign_in user
+      put users_confirm_path,
+          params: {
+            user: {
+              confirmation_token: user.confirmation_token,
+              password: 'password',
+              password_confirmation: 'password'
+            }
+          }
+      assert_redirected_to root_path
+    end
+
+    test 'user should not put confirm email json' do
+      sign_in user
+      put users_confirm_path,
+          params: {
+            format: :json,
+            email: user.email
+          }
+      assert_not_authorized
+      assert_not user.reload.confirmed?
+    end
+
+    ####################################
+    # As service
+    ####################################
+    let(:service_headers) { {Authorization: "Bearer #{create(:service_token).token}"} }
+
+    test 'service should not put confirm wrong email json' do
+      put users_confirm_path,
+          params: {
+            format: :json,
+            email: 'wrong@example.com'
+          },
+          headers: service_headers
+      assert_response 404
+      assert_not user.reload.confirmed?
+    end
+
+    test 'service should put confirm email json' do
+      assert_not user.confirmed?
+      put users_confirm_path,
+          params: {
+            format: :json,
+            email: user.email
+          },
+          headers: service_headers
+      assert_response 200
+      assert user.reload.confirmed?
     end
   end
 end
