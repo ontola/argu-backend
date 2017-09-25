@@ -15,7 +15,7 @@ module Common
 
       # @!visibility public
       def new_respond_blocks_success(resource, format)
-        format.js { render js: "window.location = #{request.url.to_json}" }
+        format.js { new_respond_success_js(resource) }
         format.html { new_respond_success_html(resource) }
         format.json { respond_with_200(resource, :json) }
         format.json_api { respond_with_200(resource, :json_api) }
@@ -24,6 +24,11 @@ module Common
       # @!visibility public
       def new_respond_success_html(resource)
         respond_with_form(resource)
+      end
+
+      # @!visibility public
+      def new_respond_success_js(_resource)
+        render js: "window.location = #{request.url.to_json}"
       end
     end
   end

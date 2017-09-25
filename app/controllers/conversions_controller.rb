@@ -50,6 +50,10 @@ class ConversionsController < ServiceController
     @current_forum ||= convertible_edge&.parent_model(:forum)
   end
 
+  def new_respond_success_js(resource)
+    render :form, locals: {conversion: resource}
+  end
+
   def parent_edge
     convertible_edge&.parent
   end
