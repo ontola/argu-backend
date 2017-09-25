@@ -289,10 +289,10 @@ ActiveRecord::Schema.define(version: 20170926151946) do
   end
 
   create_table "groups", id: :serial, force: :cascade do |t|
-    t.string "name", default: ""
+    t.string "name", default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "name_singular"
+    t.string "name_singular", null: false
     t.boolean "deletable", default: true
     t.integer "page_id", null: false
   end

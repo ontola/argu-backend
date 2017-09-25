@@ -54,6 +54,7 @@ module TestHelper
 
   Group.find_or_create_by(id: Group::PUBLIC_ID) do |group|
     group.name = 'Public group'
+    group.name_singular = 'User'
     group.page = Page.find(0)
   end
 

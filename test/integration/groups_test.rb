@@ -106,7 +106,8 @@ class GroupsTest < ActionDispatch::IntegrationTest
       post page_groups_path(freetown.page),
            params: {
              group: {
-               name: 'Test group'
+               name: 'Test group',
+               name_singular: 'Tester'
              }
            }
     end
@@ -121,6 +122,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
            params: {
              group: {
                name: 'Test group',
+               name_singular: 'Tester',
                grants_attributes: {
                  '0': {
                    role: 'member',

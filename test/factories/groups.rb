@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :group do
     sequence(:name) { |i| "fg_groups#{i}end" }
-    name_singular 'Group'
+    sequence(:name_singular) { |i| "fg_group#{i}end" }
   end
 end
