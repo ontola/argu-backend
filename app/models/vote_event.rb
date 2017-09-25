@@ -21,7 +21,7 @@ class VoteEvent < Edgeable::Base
   delegate :is_trashed?, to: :parent_model
 
   def display_name
-    group_id == -1 ? 'Argu voting' : "Voting by #{group.name}"
+    group_id == Group::PUBLIC_ID ? 'Argu voting' : "Voting by #{group.name}"
   end
 
   def stats

@@ -5,7 +5,9 @@ nl:
     type: "Groep"
     plural: "Groepen"
     new: "Groep toevoegen"
-    public: "Publiek"
+    public:
+      name: "Publiek"
+      name_singular: "Gebruiker"
     members: 'Leden'
     description: "Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
     destroy:

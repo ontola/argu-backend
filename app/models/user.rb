@@ -139,7 +139,17 @@ class User < ApplicationRecord
   end
 
   def display_name
-    [first_name, middle_name, last_name].compact.join(' ').presence || url || I18n.t('users.no_shortname', id: id)
+    [first_name, middle_name, last_name].compact.join(' ').presence ||
+      url ||
+      [
+        profile
+          .group_memberships
+          .order("(group_id = #{Group::PUBLIC_ID}) ASC, created_at ASC")
+          .first
+          .group
+          .name_singular,
+        id
+      ].join(' ')
   end
 
   # Creates a new follow record for this instance to follow the passed object.

@@ -18,6 +18,7 @@ class Group < ApplicationRecord
   scope :custom, -> { where('groups.id != ?', Group::PUBLIC_ID) }
 
   delegate :publisher, to: :page
+  delegate :include?, to: :members
   attr_accessor :confirmation_string
 
   contextualize_as_type 'argu:Group'
@@ -32,15 +33,17 @@ class Group < ApplicationRecord
   end
 
   def display_name
-    id == Group::PUBLIC_ID ? I18n.t('groups.public') : name
+    id == Group::PUBLIC_ID ? I18n.t('groups.public.name') : name
   end
-
-  delegate :include?, to: :members
 
   def inherited_grants(edge)
     grants
       .joins(:edge)
       .where(edges: {id: edge.self_and_ancestor_ids})
+  end
+
+  def name_singular
+    id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
   end
 
   def self.public

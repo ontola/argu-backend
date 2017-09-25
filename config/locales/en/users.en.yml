@@ -4,7 +4,6 @@ en:
   users:
     type: "User"
     plural: "Users"
-    no_shortname: "User %{id}"
     guest: 'Guest user'
     settings:
       title: "User settings"
