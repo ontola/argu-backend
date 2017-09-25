@@ -165,6 +165,23 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_response 303
   end
 
+  test 'super_admin should put update' do
+    sign_in super_admin
+
+    put group_path(group),
+        params: {
+          group: {
+            name: 'new_name',
+            name_singular: 'new_singular',
+            tab: 'general'
+          }
+        }
+
+    assert_equal group.reload.name, 'new_name'
+    assert_equal group.reload.name_singular, 'new_singular'
+    assert_redirected_to settings_page_path(group.page, tab: :groups)
+  end
+
   private
 
   # Asserts that the group is shown on a specific tab
