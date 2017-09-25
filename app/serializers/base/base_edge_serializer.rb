@@ -2,7 +2,11 @@
 
 class BaseEdgeSerializer < RecordSerializer
   attribute :display_name, key: :name
-  attributes :created_at, :updated_at
+  attributes :created_at, :updated_at, :path
+
+  def path
+    object.edge.path
+  end
 
   has_one :parent do
     obj = object.parent_model

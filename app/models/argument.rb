@@ -19,6 +19,7 @@ class Argument < Edgeable::Content
   contextualize :name, as: 'schema:name'
   contextualize :text, as: 'schema:text'
   contextualize :pro, as: 'schema:option'
+  contextualize :path, as: 'argu:path'
 
   def assert_tenant
     return if parent_model.is_a?(LinkedRecord) || forum == parent_model.forum

@@ -33,6 +33,7 @@ class Motion < Edgeable::Content
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'
   contextualize :current_vote, as: 'argu:currentVote'
+  contextualize :path, as: 'argu:path'
 
   convertible questions: %i[activities blog_posts]
   counter_cache true
