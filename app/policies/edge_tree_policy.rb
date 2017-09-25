@@ -176,10 +176,12 @@ class EdgeTreePolicy < RestrictivePolicy
   def trash?
     rule is_manager?, is_super_admin?, staff?
   end
+  alias bin? trash?
 
   def untrash?
     rule is_manager?, is_super_admin?, staff?
   end
+  alias unbin? trash?
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?

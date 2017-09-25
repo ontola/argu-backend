@@ -27,6 +27,7 @@ en:
       edit: "Edit"
       statistics: "Statistics"
       trash: "Delete"
+      untrash: "Untrash"
       destroy: "Delete permanently"
       couple_motion: "Couple idea"
       take_decision: "Take decision"

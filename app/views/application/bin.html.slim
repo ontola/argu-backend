@@ -1,0 +1,18 @@
+.modal-container
+  .overlay
+  .modal.col-1
+    header
+      h1= t('delete_type', type: type_for(resource))
+      .box
+        section.unpadded
+          =semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
+            .modal-section
+              p= t('trash_confirmation')
+              p= t('activities.ui.comment')
+              div= text_area_tag 'activity[comment]', nil, class: 'form-input-content'
+            section.section--footer
+              =render partial: 'profiles/creator', locals: {resource: resource}
+              =f.actions
+                .sticky-submit
+                  =link_to t('cancel'), nil, class: 'close-trigger margin-right'
+                  =f.action :submit, as: :button, label: t('trash'), wrapper_html: {class: 'inline-button-form'}

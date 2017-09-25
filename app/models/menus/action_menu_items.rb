@@ -63,16 +63,16 @@ module Menus
         href: polymorphic_url([:untrash, resource]),
         image: 'fa-eye',
         link_opts: {
-          data: {confirm: I18n.t('untrash_confirmation'), method: 'put', turbolinks: 'false'}
+          data: {remote: 'true'}
         },
-        policy: :trash?
+        policy: :untrash?
       )
     end
 
     def trash_link
       menu_item(
         :trash,
-        href: polymorphic_url([:delete, resource]),
+        href: polymorphic_url([:trash, resource]),
         image: 'fa-trash',
         link_opts: {
           data: {remote: 'true'}

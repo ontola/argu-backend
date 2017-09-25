@@ -131,6 +131,14 @@ module Common
       redirect_to location, opts.merge(notice: message.capitalize)
     end
 
+    def lookup_template(file)
+      if lookup_context.exists?("#{controller_name}/#{file}.html")
+        "#{controller_name}/#{file}.html"
+      else
+        "application/#{file}.html"
+      end
+    end
+
     def message_failure
       t('errors.general')
     end

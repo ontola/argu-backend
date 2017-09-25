@@ -79,10 +79,14 @@ Rails.application.routes.draw do
     put :move, action: :move
   end
   concern :trashable do
-    get :delete, action: :delete, path: :delete, as: :delete, on: :member
+    get :delete, action: :delete, as: :delete, on: :member
+    delete '', action: :destroy, on: :member, as: :destroy, constraints: Argu::DestroyConstraint
+
+    get :trash, action: :bin, as: :trash, on: :member
+    delete '', action: :trash, on: :member
+
+    get :untrash, action: :unbin, as: :untrash, on: :member
     put :untrash, action: :untrash, on: :member
-    match '/', action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
-    match '/', action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
     resources :votes, only: %i[new create]

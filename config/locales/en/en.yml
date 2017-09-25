@@ -84,6 +84,7 @@ en:
   edited: "Edited"
   deleted: "Deleted"
   delete_type: "Delete %{type}"
+  untrash_type: "Untrash %{type}"
   trashed: "Hidden"
   reply: "Reply"
   reply_count: "Reply (%{comment_count})"
