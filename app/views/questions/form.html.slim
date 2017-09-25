@@ -30,17 +30,14 @@
             =link_to_add_association f, :attachments, class: 'btn-subtle' do
               span.fa.fa-plus
               span.icon-left= t('attachments.add')
-          .collapsible-wrapper
-            input.collapsible-input[type="checkbox" value="selected" id="collapse-advanced"]
-            label.collapsible-label.collapsible-label--form[for="collapse-advanced"]
-            .collapsible-content
-              =f.inputs name: t('forms.advanced')
-                - if policy(question).permitted_attributes.include?(:require_location)
-                  =f.input :require_location, as: :reverse_boolean
-                - if policy(question).permitted_attributes.include?(:pinned)
-                  =f.input :pinned, as: :reverse_boolean
-                  li.form-helper
-                    span= t('edges.form.helper.pinned')
+          - if policy(question).permitted_attributes.include?(:require_location) || policy(question).permitted_attributes.include?(:pinned) || policy(question).permitted_nested_attributes(:edge_attributes).include?(:expires_at) || (question.persisted? && policy(question).move?)
+            =f.inputs name: t('forms.advanced')
+              - if policy(question).permitted_attributes.include?(:require_location)
+                =f.input :require_location, as: :reverse_boolean
+              - if policy(question).permitted_attributes.include?(:pinned)
+                =f.input :pinned, as: :reverse_boolean
+                li.form-helper
+                  span= t('edges.form.helper.pinned')
               /TODO Add Checkbox for using expires_at.
               /TODO Hide expires_at input unless checkbox is checked.
               /TODO Use current datetime as default input.

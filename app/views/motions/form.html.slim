@@ -29,22 +29,19 @@
             =link_to_add_association f, :attachments, class: 'btn-subtle' do
               span.fa.fa-plus
               span.icon-left= t('attachments.add')
-          .collapsible-wrapper
-            input.collapsible-input[type="checkbox" value="selected" id="collapse-advanced"]
-            label.collapsible-label.collapsible-label--form[for="collapse-advanced"]
-            .collapsible-content
-              =f.inputs name: t('forms.advanced')
-                - if policy(motion).permitted_attributes.include?(:pinned)
-                  =f.input :pinned, as: :reverse_boolean
-                  li.form-helper
-                    span= t('edges.form.helper.pinned')
-                - if policy(motion).permitted_nested_attributes(:edge_attributes).include?(:expires_at)
-                  =f.semantic_fields_for :edge do |ef|
-                    =ef.input :expires_at, as: :datetime_picker
-                - if motion.persisted? && policy(motion).move?
-                  =f.input :invert_arguments, as: :reverse_boolean
-                  =f.input :f_move, as: :link, url: motion_move_url(motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-                  =f.input :f_convert, as: :link, url: new_edge_conversion_url(motion.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
+          - if policy(motion).permitted_attributes.include?(:pinned) || policy(motion).permitted_nested_attributes(:edge_attributes).include?(:expires_at) || (motion.persisted? && policy(motion).move?)
+            =f.inputs name: t('forms.advanced')
+              - if policy(motion).permitted_attributes.include?(:pinned)
+                =f.input :pinned, as: :reverse_boolean
+                li.form-helper
+                  span= t('edges.form.helper.pinned')
+              - if policy(motion).permitted_nested_attributes(:edge_attributes).include?(:expires_at)
+                =f.semantic_fields_for :edge do |ef|
+                  =ef.input :expires_at, as: :datetime_picker
+              - if motion.persisted? && policy(motion).move?
+                =f.input :invert_arguments, as: :reverse_boolean
+                =f.input :f_move, as: :link, url: motion_move_url(motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: new_edge_conversion_url(motion.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
         section.section--footer.footer-flex
           .footer-flex-element.footer-creator
             =render partial: 'profiles/creator', locals: {resource: motion}
