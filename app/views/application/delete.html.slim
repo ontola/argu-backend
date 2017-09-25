@@ -2,13 +2,12 @@
   .overlay
   .modal.col-1
     header
-      h1= t('delete_type', type: type_for(resource))
+      h1= t('destroy_type', type: type_for(resource))
       .box
         section.unpadded
-          =semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
+          =semantic_form_for resource, url: url_for([resource, destroy: true]), method: :delete, html: {class: 'confirm'} do |f|
             .modal-section
-              p= t('activities.ui.comment')
-              div= text_area_tag 'activity[comment]', nil, class: 'form-input-content'
+              p= t('destroy_confirmation')
             section.section--footer
               =render partial: 'profiles/creator', locals: {resource: resource}
               =f.actions

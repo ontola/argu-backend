@@ -48,10 +48,10 @@ module Menus
     def destroy_link
       menu_item(
         :destroy,
-        href: polymorphic_url(resource, destroy: true),
+        href: polymorphic_url([:delete, resource]),
         image: 'fa-close',
         link_opts: {
-          data: {confirm: I18n.t('destroy_confirmation'), method: 'delete', turbolinks: 'false'}
+          data: {remote: 'true'}
         },
         policy: :destroy?
       )
