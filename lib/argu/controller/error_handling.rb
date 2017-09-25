@@ -14,7 +14,6 @@ module Argu
       rescue_from ActiveRecord::StaleObjectError, with: :handle_stale_object_error
       rescue_from ActionController::BadRequest, with: :handle_bad_request
       rescue_from ActionController::ParameterMissing, with: :handle_bad_request
-      rescue_from ActionController::RoutingError, with: :handle_route_not_found
       rescue_from ActionController::UnpermittedParameters, with: :handle_bad_request
       rescue_from ::Redis::ConnectionError, with: :handle_redis_connection_error
       alias_method :handle_bad_request, :handle_error

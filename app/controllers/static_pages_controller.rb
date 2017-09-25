@@ -82,6 +82,10 @@ class StaticPagesController < ApplicationController
                  "tablet: #{browser.device.tablet?}, ua: #{browser.ua}"
   end
 
+  def not_found
+    handle_error(ActionController::RoutingError.new('Route not found'))
+  end
+
   # Used for persistent redis-backed cookies
   def persist_cookie
     authorize :static_page

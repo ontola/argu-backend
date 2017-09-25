@@ -407,9 +407,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   test 'super_admin should not get new' do
     sign_in create_super_admin(argu)
-    assert_raise ActionController::RoutingError do
-      get new_portal_forum_path(page: argu)
-    end
+    get new_portal_forum_path(page: argu)
+    assert_response 404
   end
 
   ####################################
