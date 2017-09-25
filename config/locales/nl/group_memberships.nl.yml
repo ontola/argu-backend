@@ -6,3 +6,4 @@ nl:
     empty: "Geen groepsleden"
     welcome: "Je bent toegevoegd aan de groep '%{group}'"
     already_member: "Je bent al lid van '%{group}'"
+    destroy_confirmation: "Weet je zeker dat je %{user} uit de groep %{group} wil zetten?"

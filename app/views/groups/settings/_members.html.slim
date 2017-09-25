@@ -8,7 +8,7 @@ h3= t('group_memberships.plural')
         tr[class=membership.member.identifier]
           td.name= link_to membership.member.display_name, url_for(membership.member.profileable)
           - if policy(membership).destroy?
-            td= link_to group_membership_path(membership, r: settings_group_path(resource)), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
+            td= link_to group_membership_path(membership, r: settings_group_path(resource)), data: {method: :delete, turbolinks: 'false', confirm: t('group_memberships.destroy_confirmation', user: membership.member.display_name, group: membership.group.display_name)}, class: 'btn--light btn--smaller' do
               span.fa.fa-close
               span.icon-left= t('destroy')
   =paginate @members
