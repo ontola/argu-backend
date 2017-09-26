@@ -55,7 +55,7 @@ module Menus
         type: 'twitter_share',
         image: 'fa-twitter',
         link_opts: {target: '_blank'},
-        href: ShareHelper.linkedin_share_url(url, title: resource.display_name)
+        href: ShareHelper.twitter_share_url(url, title: resource.display_name)
       )
     end
 
@@ -65,7 +65,7 @@ module Menus
         type: 'linked_in_share',
         image: 'fa-linkedin',
         link_opts: {target: '_blank'},
-        href: ShareHelper.twitter_share_url(url, title: resource.display_name)
+        href: ShareHelper.linkedin_share_url(url, title: resource.display_name)
       )
     end
 

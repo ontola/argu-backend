@@ -37,7 +37,7 @@ class ForumMenuList < MenuList
   def settings_link
     menu_item(
       :settings,
-      href: settings_forum_path(resource),
+      href: settings_forum_url(resource),
       image: 'fa-gear',
       link_opts: {data: {turbolinks: 'true'}},
       policy: :update?

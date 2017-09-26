@@ -30,7 +30,7 @@ class MotionMenuList < MenuList
     menu_item(
       :take_decision,
       image: 'fa-gavel',
-      href: motion_decisions_path(resource),
+      href: motion_decisions_url(resource),
       policy: :decide?
     )
   end

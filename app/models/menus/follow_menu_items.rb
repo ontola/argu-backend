@@ -21,7 +21,7 @@ module Menus
         menus: follow_types.map do |type|
           menu_item(
             type,
-            href: follows_path(gid: resource.edge.id, follow_type: type),
+            href: follows_url(gid: resource.edge.id, follow_type: type),
             image: follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o',
             link_opts: {
               data: {method: type == :never ? 'DELETE' : 'POST'}

@@ -16,7 +16,7 @@ module ShareHelper
 
   # https://developer.linkedin.com/docs/share-on-linkedin
   def self.linkedin_share_url(url, options = {})
-    "http://www.linkedin.com/shareArticle?mini=true&url=#{CGI.escape(url)}&title=#{CGI.escape(options[:title])}"
+    "https://www.linkedin.com/shareArticle?mini=true&url=#{CGI.escape(url)}&title=#{CGI.escape(options[:title])}"
   end
 
   # https://developers.google.com/+/web/share/#share-link
