@@ -245,6 +245,11 @@
   padding: 0 0.5em;
   display: inline-block;
   vertical-align: top;
+
+  a {
+    display: block;
+  }
+
   @include bp-medium{
     width: 100%;
   }

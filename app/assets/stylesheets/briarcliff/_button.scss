@@ -706,6 +706,14 @@ h1 + .btn {
 .is-loading{
   pointer-events: none !important;
   opacity: .8;
+  position: relative;
+
+  &:after {
+    @include spinner;
+    top: .15em;
+    left: auto;
+    right: calc(100% + .5em);
+  }
 }
 
 .pagination {
@@ -744,7 +752,7 @@ h1 + .btn {
   .fa {
     margin-right: .5em;
   }
-  
+
   li {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1em;
