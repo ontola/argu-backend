@@ -81,9 +81,9 @@ nl:
         owner_id: "Object id"
       user:
         shortname: "Gebruikersnaam"
-        first_name: "Voornaam*"
+        first_name: "Voornaam"
         middle_name: "Middelste naam(en)"
-        last_name: "Achternaam*"
+        last_name: "Achternaam"
         has_analytics: "Browser diensten"
         reactions_email: "Bij nieuwe items"
         news_email: "Bij belangrijke items"

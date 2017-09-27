@@ -81,9 +81,9 @@ en:
         owner_id: "Resource id"
       user:
         shortname: "Username"
-        first_name: "First name*"
+        first_name: "First name"
         middle_name: "Middele name(s)"
-        last_name: "Last name*"
+        last_name: "Last name"
         has_analytics: "Browser services"
         reactions_email: "For new items"
         news_email: "For important items"

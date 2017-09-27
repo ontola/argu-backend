@@ -77,3 +77,4 @@ en:
       body:
         profile: "Your profile is visible for all visitors of Argu. You don't need to enter anything, but a complete name and a picture will make you appear more reliable to other users."
         shortname: "Set a username. Your username is visible to other users and must be unique. You cannot change your username later on."
+        skip: "Skip profile setup."

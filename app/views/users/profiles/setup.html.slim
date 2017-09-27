@@ -5,6 +5,9 @@
   .box
     section
       p= raw t('intro.initial.body.profile')
+      =form_for resource, url: setup_profiles_path, method: :put, authenticity_token: true  do |f|
+        =f.hidden_field :id
+        p= f.button t('intro.initial.body.skip'), class: 'btn--as-text', type: 'submit'
   header
     h1= t('profiles.edit.title')
   .box

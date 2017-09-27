@@ -324,7 +324,7 @@ RSpec.feature 'Adam west', type: :feature do
     click_button 'Next'
 
     profile_attr = attributes_for(:profile)
-    within('form') do
+    within('form.formtastic') do
       fill_in 'user_first_name', with: user_attr[:first_name]
       fill_in 'user_last_name', with: user_attr[:last_name]
       fill_in 'user_profile_attributes_about', with: profile_attr[:about]
