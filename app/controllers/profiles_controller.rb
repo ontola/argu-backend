@@ -48,8 +48,7 @@ class ProfilesController < ApplicationController
       respond_to do |format|
         format.html do
           render 'users/profiles/setup',
-                 locals: {profile: @profile, resource: @resource},
-                 layout: 'closed'
+                 locals: {profile: @profile, resource: @resource}
         end
       end
     end
@@ -74,8 +73,7 @@ class ProfilesController < ApplicationController
       else
         format.html do
           render 'users/profiles/setup',
-                 locals: {profile: @profile, resource: @resource},
-                 layout: 'closed'
+                 locals: {profile: @profile, resource: @resource}
         end
         format.json { respond_with_422(@profile, :json) }
         format.json_api { respond_with_422(@profile, :json_api) }

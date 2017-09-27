@@ -52,7 +52,7 @@ class UsersController < AuthorizedController
   def setup
     authenticated_resource.build_shortname if authenticated_resource.shortname.blank?
 
-    render 'setup_shortname', layout: 'closed'
+    render 'setup_shortname'
   end
 
   def setup!

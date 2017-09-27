@@ -45,10 +45,6 @@ module Argu
       g.integration_tool :rspec, fixture: true, views: true
     end
 
-    ActiveSupport::Reloader.to_prepare do
-      Devise::SessionsController.layout 'closed'
-    end
-
     ActiveModelSerializers.config.key_transform = :camel_lower
 
     VideoInfo.provider_api_keys = {youtube: ENV['YOUTUBE_KEY'], vimeo: ENV['VIMEO_KEY']}

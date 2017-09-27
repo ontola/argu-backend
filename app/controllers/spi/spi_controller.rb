@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'argu'
+
 module SPI
   class SPIController < ActionController::API
     include Argu::ErrorHandling
