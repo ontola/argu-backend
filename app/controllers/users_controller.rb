@@ -35,6 +35,7 @@ class UsersController < AuthorizedController
 
   def settings
     authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
+    authenticated_resource.build_shortname if authenticated_resource.shortname.nil?
     render 'settings', locals: {
       tab: tab,
       active: tab,
