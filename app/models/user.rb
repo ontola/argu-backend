@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
   has_many :edges
-  has_many :emails, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
+  has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
   has_many :identities, dependent: :destroy
   has_many :notifications
@@ -30,7 +30,7 @@ class User < ApplicationRecord
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank
-  accepts_nested_attributes_for :emails, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
 
   # Include default devise modules. Others available are:
   # :token_authenticatable,
@@ -89,7 +89,7 @@ class User < ApplicationRecord
 
   def self.find_for_database_authentication(warden_conditions)
     if warden_conditions[:email].include?('@')
-      joins(:emails).find_by('lower(emails.email) = ?', warden_conditions[:email])
+      joins(:email_addresses).find_by('lower(email_addresses.email) = ?', warden_conditions[:email])
     else
       joins(:shortname).find_by('lower(shortnames.shortname) = ?', warden_conditions[:email])
     end
@@ -125,7 +125,7 @@ class User < ApplicationRecord
   end
 
   def confirmed?
-    @confirmed ||= emails.where('confirmed_at IS NOT NULL').any?
+    @confirmed ||= email_addresses.where('confirmed_at IS NOT NULL').any?
   end
 
   def create_confirmation_reminder_notification
@@ -314,7 +314,7 @@ class User < ApplicationRecord
         .model
         .expropriate(send(association))
     end
-    emails.update_all(primary: false)
+    email_addresses.update_all(primary: false)
     edges.update_all user_id: User::COMMUNITY_ID
   end
 

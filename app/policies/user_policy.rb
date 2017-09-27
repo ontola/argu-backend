@@ -14,7 +14,7 @@ class UserPolicy < RestrictivePolicy
       attrs.append(profile_attributes: %i[name profile_photo])
     end
     attrs.append(home_placement_attributes: %i[postal_code country_code id])
-    attrs.append(emails_attributes: %i[email _destroy id])
+    attrs.append(email_addresses_attributes: %i[email _destroy id])
     attrs.append(shortname_attributes: %i[shortname]) if new_record?
     attrs.concat %i[first_name middle_name last_name]
     if update?

@@ -78,7 +78,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    assert_difference('Email.where(confirmed_at: nil).count', -1) do
+    assert_difference('EmailAddress.where(confirmed_at: nil).count', -1) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_redirected_to new_user_session_path
@@ -116,7 +116,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
-                          ['Email.where(confirmed_at: nil).count', 1]]) do
+                          ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
         post user_registration_path,
              params: {
                format: :json,
@@ -138,13 +138,13 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    assert_difference('Email.where(confirmed_at: nil).count', 0) do
+    assert_difference('EmailAddress.where(confirmed_at: nil).count', 0) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_response 200
     assert User.last.encrypted_password == ''
 
-    assert_difference('Email.where(confirmed_at: nil).count', -1) do
+    assert_difference('EmailAddress.where(confirmed_at: nil).count', -1) do
       put users_confirm_path,
           params: {
             user: {

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class Email < ApplicationRecord
+class EmailAddress < ApplicationRecord
   include RedisResourcesHelper
   include Ldable
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  belongs_to :user, inverse_of: :emails
+  belongs_to :user, inverse_of: :email_addresses
   before_save :remove_other_primaries
   before_save { |user| user.email = email.downcase if email.present? }
   after_commit :publish_data_event
@@ -56,7 +56,7 @@ class Email < ApplicationRecord
   end
 
   def newly_secondary_email_not_primary
-    return if !primary? || user.emails.count.zero?
+    return if !primary? || user.email_addresses.count.zero?
     errors.add(:email, 'You cannot set a new email to primary on creation')
   end
 
@@ -70,7 +70,7 @@ class Email < ApplicationRecord
 
   def remove_other_primaries
     return unless primary?
-    user.emails.each do |email|
+    user.email_addresses.each do |email|
       next if email == self
       email.update(primary: false)
     end

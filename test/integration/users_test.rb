@@ -7,8 +7,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
-  let(:second_email) { create(:email, user: user, email: 'second@argu.co', confirmed_at: DateTime.current) }
-  let(:unconfirmed_email) { create(:email, user: user, email: 'unconfirmed@argu.co') }
+  let(:second_email) { create(:email_address, user: user, email: 'second@argu.co', confirmed_at: DateTime.current) }
+  let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:super_admin) { create_super_admin(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
@@ -120,12 +120,12 @@ class UsersTest < ActionDispatch::IntegrationTest
   ####################################
   test 'user should add second email' do
     sign_in user
-    assert_differences([['Email.count', 1],
+    assert_differences([['EmailAddress.count', 1],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
                 '1490174149635': {email: 'secondary@argu.co'}
               },
@@ -134,8 +134,8 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
     user.reload
-    assert_equal user.emails.count, 2
-    assert_equal user.emails.last.email, 'secondary@argu.co'
+    assert_equal user.email_addresses.count, 2
+    assert_equal user.email_addresses.last.email, 'secondary@argu.co'
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
     assert_redirected_to settings_user_path(tab: :general)
@@ -147,12 +147,12 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_not_equal user.primary_email_record.email, second_email.email
 
-    assert_differences([['Email.count', 0],
+    assert_differences([['EmailAddress.count', 0],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
                 '1': {email: second_email.email, id: second_email.id}
               },
@@ -162,8 +162,8 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
     user.reload
-    assert_equal user.emails.where(primary: true).count, 1
-    assert_not_equal user.emails.last.email, second_email.email
+    assert_equal user.email_addresses.where(primary: true).count, 1
+    assert_not_equal user.email_addresses.last.email, second_email.email
     assert_equal user.primary_email_record.email, second_email.email
 
     assert_redirected_to settings_user_path(tab: :general)
@@ -173,12 +173,12 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     second_email
 
-    assert_differences([['Email.count', -1],
+    assert_differences([['EmailAddress.count', -1],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '0': {email: user.primary_email_record.email, id: user.primary_email_record.id, _destroy: 'false'},
                 '1': {email: second_email.email, id: second_email.id, _destroy: '1'}
               },
@@ -194,32 +194,30 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     second_email
 
-    assert_raises(ActiveRecord::RecordNotDestroyed) do
-      assert_differences([['Email.count', 0],
-                          ['Sidekiq::Worker.jobs.count', 0]]) do
-        put user_path(user),
-            params: {
-              user: {
-                emails_attributes: {
-                  '0': {email: user.primary_email_record.email, id: user.primary_email_record.id, _destroy: '1'},
-                  '1': {email: second_email.email, id: second_email.id, _destroy: '0'}
-                },
-                current_password: user.password
-              }
+    assert_differences([['EmailAddress.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 0]]) do
+      put user_path(user),
+          params: {
+            user: {
+              email_addresses_attributes: {
+                '0': {email: user.primary_email_record.email, id: user.primary_email_record.id, _destroy: '1'},
+                '1': {email: second_email.email, id: second_email.id, _destroy: '0'}
+              },
+              current_password: user.password
             }
-      end
+          }
     end
   end
 
   test 'user should change unconfirmed email' do
     sign_in user
     unconfirmed_email
-    assert_differences([['Email.count', 0],
+    assert_differences([['EmailAddress.count', 0],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
                 '1': {email: 'changed@argu.co', id: unconfirmed_email.id}
               },
@@ -236,12 +234,12 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should not change confirmed email' do
     sign_in user
     second_email
-    assert_differences([['Email.count', 0],
+    assert_differences([['EmailAddress.count', 0],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '0': {email: user.primary_email_record.email, id: user.primary_email_record.id},
                 '1': {email: 'changed@argu.co', id: second_email.id}
               },
@@ -268,11 +266,11 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user with correct email should redirect to r on wrong_email' do
     sign_in user
 
-    assert_no_difference('Email.count') do
+    assert_no_difference('EmailAddress.count') do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '99999' => {email: user.email}
               },
               form: 'wrong_email',
@@ -287,11 +285,11 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user with other email should redirect to r on wrong_email' do
     sign_in user
 
-    assert_difference('Email.count') do
+    assert_difference('EmailAddress.count') do
       put user_path(user),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '99999' => {email: 'new@email.com'}
               },
               form: 'wrong_email',
@@ -307,11 +305,11 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user_public
     user
 
-    assert_no_difference('Email.count') do
+    assert_no_difference('EmailAddress.count') do
       put user_path(user_public),
           params: {
             user: {
-              emails_attributes: {
+              email_addresses_attributes: {
                 '99999' => {email: user.email}
               },
               form: 'wrong_email',

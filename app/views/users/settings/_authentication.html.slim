@@ -12,10 +12,10 @@
       p= t('users.authentications.cant_decouple_note_provider', provider: authenticated_resource.identities.first.provider)
     label= 'emails'
     .formtastic--full-width
-      =f.fields_for :emails do |email|
-        =render 'email_fields', f: email
+      =f.fields_for :email_addresses do |email|
+        =render 'email_address_fields', f: email
       .links
-        =link_to_add_association f, :emails, class: 'btn-subtle' do
+        =link_to_add_association f, :email_addresses, class: 'btn-subtle' do
           span.fa.fa-plus
           span.icon-left= t('users.emails.add')
     -if authenticated_resource.has_password?

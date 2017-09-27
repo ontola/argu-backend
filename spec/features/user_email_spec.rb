@@ -19,14 +19,14 @@ RSpec.feature 'User email' do
     expect(page).not_to have_link('Send confirmation mail')
 
     click_link 'Add email'
-    all("input[name*='user[emails_attributes]']:not(:disabled)")
+    all("input[name*='user[email_addresses_attributes]']:not(:disabled)")
       .find("input[name*='[email]']")
       .first
       .set(new_email)
 
     fill_in 'user_current_password', with: user.password
 
-    assert_differences([['Email.count', 1],
+    assert_differences([['EmailAddress.count', 1],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       click_button 'Save'
       confirm_msg = 'We have send you a mail to the new address. Please '\

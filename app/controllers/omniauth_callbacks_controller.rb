@@ -65,7 +65,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.present?
       process_user(email)
-    elsif (user_with_email = Email.where(email: email).first&.user).present?
+    elsif (user_with_email = EmailAddress.where(email: email).first&.user).present?
       connect_user(provider, user_with_email)
     elsif current_user.guest? && email.present?
       create_new_user(provider, connector)

@@ -26,7 +26,7 @@ class UsersController < AuthorizedController
         render json: authenticated_resource,
                include: [
                  :profile_photo,
-                 :emails,
+                 :email_addresses,
                  vote_match_collection: INC_NESTED_COLLECTION
                ]
       end
@@ -112,11 +112,11 @@ class UsersController < AuthorizedController
   def complete_feed_param; end
 
   def email_changed?
-    return if permit_params[:emails_attributes].blank?
-    permit_params[:emails_attributes].any? do |email|
+    return if permit_params[:email_addresses_attributes].blank?
+    permit_params[:email_addresses_attributes].any? do |email|
       email.second['id'].nil? ||
         email.second['email'].present? &&
-          authenticated_resource.emails.find(email.second['id']).email != email.second['email']
+          authenticated_resource.email_addresses.find(email.second['id']).email != email.second['email']
     end
   end
 
@@ -130,7 +130,7 @@ class UsersController < AuthorizedController
     merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
     if pp[:primary_email].present?
-      pp['emails_attributes'][pp[:primary_email][1..-2]][:primary] = true
+      pp['email_addresses_attributes'][pp[:primary_email][1..-2]][:primary] = true
     end
     pp.except(:primary_email)
   end
@@ -156,8 +156,8 @@ class UsersController < AuthorizedController
 
   def update_respond_failure_html(resource)
     if params[:user][:form] == 'wrong_email'
-      email = params[:user][:emails_attributes]['99999'][:email]
-      if current_user.emails.any? { |e| e.email == email }
+      email = params[:user][:email_addresses_attributes]['99999'][:email]
+      if current_user.email_addresses.any? { |e| e.email == email }
         redirect_to r_param
       else
         render 'wrong_email', locals: {email: email, r: r_param}

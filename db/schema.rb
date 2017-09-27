@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912080843) do
+ActiveRecord::Schema.define(version: 20170926151946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 20170912080843) do
     t.index ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id"
   end
 
-  create_table "emails", id: :serial, force: :cascade do |t|
+  create_table "email_addresses", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "email"
     t.boolean "primary", default: false, null: false
@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(version: 20170912080843) do
     t.string "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.index ["email"], name: "index_emails_on_email", unique: true
+    t.index ["email"], name: "index_email_addresses_on_email", unique: true
   end
 
   create_table "favorites", id: :serial, force: :cascade do |t|
@@ -745,7 +745,7 @@ ActiveRecord::Schema.define(version: 20170912080843) do
   add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
-  add_foreign_key "emails", "users"
+  add_foreign_key "email_addresses", "users"
   add_foreign_key "favorites", "edges"
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id"

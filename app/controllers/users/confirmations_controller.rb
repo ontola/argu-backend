@@ -5,7 +5,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   skip_before_action :check_finished_intro, only: %i[show confirm]
 
   def create
-    email = current_user.emails.find_by!(email: resource_params[:email])
+    email = current_user.email_addresses.find_by!(email: resource_params[:email])
     set_flash_message :notice, :send_instructions if email.send_confirmation_instructions
     redirect_back(fallback_location: settings_path(tab: :authentication))
   end
@@ -36,7 +36,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       end
       format.json do
         raise Argu::NotAuthorizedError.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
-        Email.find_by!(email: params[:email]).confirm
+        EmailAddress.find_by!(email: params[:email]).confirm
         head 200
       end
     end
@@ -57,6 +57,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def email_by_token
-    @email_by_token ||= Email.find_first_by_auth_conditions(confirmation_token: @original_token)
+    @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: @original_token)
   end
 end
