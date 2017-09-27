@@ -64,7 +64,7 @@ export const SmallVoteContainer = React.createClass({
     render () {
         let opinionContainer;
         if (this.state.currentVote !== 'abstain') {
-            opinionContainer = <OpinionContainer actor={this.props.actor}
+            opinionContainer = <OpinionContainer actor={this.state.actor}
                                                  argumentUrl={this.props.argumentUrl}
                                                  argumentForm={this.state.argumentForm}
                                                  arguments={this.state.arguments}
@@ -85,11 +85,10 @@ export const SmallVoteContainer = React.createClass({
                                                  onSignupEmailChange={this.signupEmailChangeHandler}
                                                  onSubmitArgument={this.argumentHandler}
                                                  onSubmitOpinion={this.opinionHandler}
+                                                 onSubmitRegistration={this.registrationHandler}
                                                  opinionForm={this.state.opinionForm}
                                                  selectedArguments={this.state.selectedArguments}
-                                                 signupEmail={this.state.signupEmail}
-                                                 submitting={this.state.submitting}
-                                                 userRegistrationUrl={this.props.userRegistrationUrl}/>;
+                                                 signupEmail={this.state.signupEmail}/>;
         }
         return (
             <div>

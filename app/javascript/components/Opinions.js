@@ -50,6 +50,7 @@ const OpinionContainerProps = {
     onOpenOpinionForm: React.PropTypes.func.isRequired,
     onSubmitArgument: React.PropTypes.func.isRequired,
     onSubmitOpinion: React.PropTypes.func.isRequired,
+    onSubmitRegistration: React.PropTypes.func.isRequired,
     opinionForm: React.PropTypes.bool.isRequired,
     selectedArguments: React.PropTypes.array.isRequired,
     submitting: React.PropTypes.bool.isRequired
@@ -94,8 +95,9 @@ export const OpinionSignUp = React.createClass({
     propTypes: {
         facebookUrl: React.PropTypes.string.isRequired,
         onSignupEmailChange: React.PropTypes.func.isRequired,
+        onSubmitRegistration: React.PropTypes.func.isRequired,
         signupEmail: React.PropTypes.string.isRequired,
-        userRegistrationUrl: React.PropTypes.string.isRequired
+        submitting: React.PropTypes.bool.isRequired
     },
 
     getInitialState () {
@@ -110,9 +112,9 @@ export const OpinionSignUp = React.createClass({
     },
 
     render () {
-        const { facebookUrl, onSignupEmailChange, signupEmail, userRegistrationUrl } = this.props;
+        const { facebookUrl, onSignupEmailChange, signupEmail, submitting } = this.props;
         return (
-            <form action={userRegistrationUrl} className={"formtastic formtastic--full-width"} method="post">
+            <form className={"formtastic formtastic--full-width"} onSubmit={this.props.onSubmitRegistration}>
                 <input type="hidden" name="authenticity_token" value={this.state.authenticityToken}/>
                 <input type="hidden" name="user[r]" value={this.state.currentUrl}/>
                 <div className="box">
@@ -142,7 +144,7 @@ export const OpinionSignUp = React.createClass({
                             <ol>
                                 <div className="sticky-submit">
                                     <li className="action button_action">
-                                        <button type="submit">
+                                        <button type="submit" disabled={submitting}>
                                             {I18n.t('opinions.form.submit')}
                                         </button>
                                     </li>

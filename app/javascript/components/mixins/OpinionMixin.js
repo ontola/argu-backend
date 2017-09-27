@@ -146,6 +146,29 @@ const OpinionMixin = {
             });
     },
 
+    registrationHandler (e) {
+        e.preventDefault();
+        const { signupEmail } = this.state;
+        this.setState({ submitting: true });
+        fetch(`${this.props.userRegistrationUrl}.json`, safeCredentials({
+            method: 'POST',
+            body: JSON.stringify({ user: { email: signupEmail, r: window.location.href } })
+        })).then(statusSuccess, tryLogin)
+            .then(json)
+            .then(data => {
+                if (typeof data !== 'undefined') {
+                    window.location.hash = `${this.props.objectType}${this.props.objectId}`;
+                    window.location.reload();
+                }
+            }).catch(er => {
+                this.setState({ submitting: false });
+                const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
+                new Alert(message, 'alert', true);
+                Bugsnag.notifyException(er);
+                throw er;
+            });
+    },
+
     signupEmailChangeHandler (e) {
         this.setState({ signupEmail: e.target.value });
     }
