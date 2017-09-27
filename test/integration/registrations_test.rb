@@ -82,10 +82,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_redirected_to new_user_session_path
-
-    sign_in User.last
-    get root_path
-    assert_redirected_to setup_users_path
   end
 
   test 'should post create nl' do
@@ -131,11 +127,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
 
-    get forum_path(freetown), params: {format: :json_api}
-    assert_response 200
-    get forum_path(freetown)
-    assert_redirected_to setup_users_path
-
     delete destroy_user_session_path
 
     assert_difference('EmailAddress.where(confirmed_at: nil).count', 0) do
@@ -156,10 +147,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_redirected_to root_path
     end
     assert_not User.last.encrypted_password == ''
-
-    sign_in User.last
-    get root_path
-    assert_redirected_to setup_users_path
   end
 
   test 'should post create transfer guest votes' do

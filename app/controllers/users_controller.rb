@@ -61,7 +61,7 @@ class UsersController < AuthorizedController
 
       if current_user.save
         flash[:success] = t('devise.registrations.signed_up') if current_user.finished_intro?
-        redirect_with_r(current_user)
+        redirect_to setup_profiles_path
       else
         render 'setup_shortname'
       end

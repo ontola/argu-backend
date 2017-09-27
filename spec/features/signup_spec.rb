@@ -30,11 +30,10 @@ RSpec.feature 'Signup', type: :feature do
         within('.opinion-form') do
           click_link 'Log in with Facebook'
         end
-        expect(page).to have_current_path setup_users_path
       end
     end
 
-    click_button 'Volgende'
+    expect(page).to have_current_path motion_path(motion)
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
   end

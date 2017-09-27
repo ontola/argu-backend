@@ -2,7 +2,6 @@
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
   include OauthHelper
-  skip_before_action :check_finished_intro, only: %i[show confirm]
 
   def create
     email = current_user.email_addresses.find_by!(email: resource_params[:email])

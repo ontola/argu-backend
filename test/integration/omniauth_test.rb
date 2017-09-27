@@ -81,8 +81,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assert_redirected_to root_path
-    follow_redirect!
+    assert_redirected_to setup_profiles_path
   end
 
   test 'should not sign up with facebook without email' do

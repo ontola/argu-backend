@@ -31,7 +31,6 @@ class ApplicationController < ActionController::Base
   setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
   before_action :set_layout
-  before_action :check_finished_intro, if: :format_html?
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :authorize_current_actor
@@ -172,22 +171,6 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer
       .permit(:sign_up, keys: [:email, :r, shortname_attributes: [:shortname]])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
-  end
-
-  # @private
-  # Before_action which redirects the {User} if he didn't finish the intro.
-  def check_finished_intro
-    return if current_user.guest?
-    if current_user.url.blank?
-      redirect_to setup_users_path if request.original_url != setup_users_url
-    elsif !current_user.finished_intro? && !request.original_url.in?(intro_urls)
-      redirect_to setup_profiles_url
-    end
-  end
-
-  # @private
-  def intro_urls
-    [profile_url(current_user), setup_profiles_url]
   end
 
   # The name of the current model.
