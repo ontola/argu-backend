@@ -29,7 +29,8 @@ export const VoteButton = React.createClass({
         disabledMessage: React.PropTypes.string,
         objectId: React.PropTypes.number,
         r: React.PropTypes.string,
-        side: React.PropTypes.string
+        side: React.PropTypes.string,
+        submittingVote: React.PropTypes.string
     },
 
     iconForSide () {
@@ -55,7 +56,7 @@ export const VoteButton = React.createClass({
         return (
             <li data-title={this.props.disabledMessage}>
                 <a
-                className={`btn-${side} ${this.props.disabled ? 'disabled' : 'enabled'}`}
+                className={`btn-${side} ${this.props.disabled ? 'disabled' : 'enabled'}${this.props.submittingVote === this.props.side ? ' is-loading' : ''}`}
                 data-voted-on={current}
                 href={url}
                 onClick={clickHandler}
@@ -75,6 +76,7 @@ export const VoteButtons = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
+        submittingVote: React.PropTypes.string,
         currentVote: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
@@ -119,7 +121,8 @@ export const VoteButtons = React.createClass({
                                    key={i}
                                    objectId={this.props.objectId}
                                    r={this.props.r}
-                                   side={side} />;
+                                   side={side}
+                                   submittingVote={this.props.submittingVote} />;
             });
 
         return (

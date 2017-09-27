@@ -163,6 +163,7 @@ export const DiscussionInvite = React.createClass({
                         value={this.state.currentActor}
                         valueRenderer={this.valueRenderer}/>
                     <button
+                        className={`${errorMessage !== undefined ? 'is-loading' : ''}`}
                         data-title={errorMessage}
                         disabled={errorMessage !== undefined}
                         onClick={this.handleSubmit}

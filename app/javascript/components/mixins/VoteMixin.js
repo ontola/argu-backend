@@ -37,6 +37,7 @@ const VoteMixin = {
     },
 
     vote (side) {
+        this.setState({ submittingVote: side });
         fetch(`${this.props.vote_url}.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
@@ -48,9 +49,10 @@ const VoteMixin = {
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
-                    this.setState(Object.assign({}, data.vote, { opinionForm: true }));
+                    this.setState(Object.assign({}, data.vote, { submittingVote: '', opinionForm: true }));
                 }
             }).catch(e => {
+                this.setState({ submittingVote: '' });
                 const message = errorMessageForStatus(e.status).fallback || I18n.t('errors.general');
                 new Alert(message, 'alert', true);
                 Bugsnag.notifyException(e);

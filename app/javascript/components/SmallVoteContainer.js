@@ -88,7 +88,8 @@ export const SmallVoteContainer = React.createClass({
                                                  onSubmitRegistration={this.registrationHandler}
                                                  opinionForm={this.state.opinionForm}
                                                  selectedArguments={this.state.selectedArguments}
-                                                 signupEmail={this.state.signupEmail}/>;
+                                                 signupEmail={this.state.signupEmail}
+                                                 submitting={this.state.submitting}/>;
         }
         return (
             <div>

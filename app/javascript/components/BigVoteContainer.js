@@ -58,7 +58,8 @@ export const BigVoteContainer = React.createClass({
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
             signupEmail: '',
-            submitting: false
+            submitting: false,
+            submittingVote: ''
         };
     },
 

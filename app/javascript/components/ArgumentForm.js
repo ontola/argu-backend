@@ -3,7 +3,7 @@ import I18n from 'i18n-js';
 
 export const ArgumentForm = props => {
     return (
-        <form className="formtastic formtastic--full-width argument-form" onSubmit={props.onSubmitArgument}>
+        <form className={`formtastic formtastic--full-width argument-form ${props.submitting ? 'is-loading' : ''}`} onSubmit={props.onSubmitArgument}>
             <div className="box">
                 <section>
                     <div className="box form-toggle">

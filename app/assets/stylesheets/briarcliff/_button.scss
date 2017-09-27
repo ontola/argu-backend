@@ -716,6 +716,10 @@ h1 + .btn {
   }
 }
 
+.btns-opinion .is-loading:after, .btns-opinion--bottom .is-loading:after {
+  right: calc(100% - 1.9em);
+}
+
 .pagination {
   span {
     color: $g3;

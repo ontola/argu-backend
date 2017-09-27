@@ -114,7 +114,7 @@ export const OpinionSignUp = React.createClass({
     render () {
         const { facebookUrl, onSignupEmailChange, signupEmail, submitting } = this.props;
         return (
-            <form className={"formtastic formtastic--full-width"} onSubmit={this.props.onSubmitRegistration}>
+            <form className={`formtastic formtastic--full-width ${submitting ? 'is-loading' : ''}`} onSubmit={this.props.onSubmitRegistration}>
                 <input type="hidden" name="authenticity_token" value={this.state.authenticityToken}/>
                 <input type="hidden" name="user[r]" value={this.state.currentUrl}/>
                 <div className="box">
@@ -234,7 +234,7 @@ export const OpinionForm = React.createClass({
             confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')} <strong>{actor.confirmationEmail}</strong>.</p>;
         }
         return (
-            <form className="formtastic formtastic--full-width"
+            <form className={`formtastic formtastic--full-width ${submitting ? 'is-loading' : ''}`}
                   onSubmit={onSubmitOpinion}>
                 <div className="box">
                     <section>
