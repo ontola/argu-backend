@@ -9,21 +9,32 @@ module HeaderHelper
   end
 
   def profile_dropdown_items
-    page_index =
-      if current_user.page_management?
-        link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building')
+    items =
+      if current_user.url.present?
+        [
+          link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")),
+                    dual_profile_url(current_profile),
+                    fa: 'user'),
+          link_item(t('profiles.edit.title'), settings_user_url(tab: :profile), fa: 'pencil')
+        ]
       else
-        link_item(t('pages.create'), new_page_path, fa: 'building')
+        [link_item(t('profiles.setup.link'), setup_users_url, fa: 'user')]
       end
-    drafts_index = link_item(
-      t('users.drafts.title'),
-      drafts_user_url(current_user),
-      fa: 'pencil-square-o'
-    )
-    forum_management = current_user.forum_management? &&
-      link_item(t('forums.management.title'),
-                forums_user_url(current_user),
-                fa: 'group')
+    items << link_item(t('users.settings.title'), settings_user_url, fa: 'gear')
+    items << link_item(t('users.drafts.title'), drafts_user_url(current_user), fa: 'pencil-square-o')
+    items << if current_user.page_management?
+               link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building')
+             else
+               link_item(t('pages.create'), new_page_path, fa: 'building')
+             end
+    if current_user.forum_management?
+      items << link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group')
+    end
+    items << link_item(t('sign_out'),
+                       destroy_user_session_url,
+                       fa: 'sign-out',
+                       data: {method: 'delete', turbolinks: 'false'})
+
     {
       defaultAction: dual_profile_url(current_profile),
       trigger: {
@@ -36,26 +47,7 @@ module HeaderHelper
         triggerClass: 'navbar-item navbar-profile'
       },
       dropdownClass: 'navbar-profile-selector',
-      sections: [
-        {
-          items: [
-            link_item(t('show_type',
-                        type: t("#{current_profile.profileable.class_name}.type")),
-                      dual_profile_url(current_profile),
-                      fa: 'user'),
-            link_item(t('profiles.edit.title'), settings_user_url(tab: :profile), fa: 'pencil'),
-            link_item(t('users.settings.title'), settings_user_url, fa: 'gear'),
-            drafts_index,
-            page_index,
-            forum_management,
-            link_item(t('sign_out'),
-                      destroy_user_session_url,
-                      fa: 'sign-out',
-                      data: {method: 'delete', turbolinks: 'false'}),
-            nil # NotABug Make sure compact! actually returns the array and not nil
-          ].compact!
-        }
-      ]
+      sections: [{items: items}]
     }
   end
 

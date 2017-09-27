@@ -17,6 +17,8 @@ en:
         unfreeze: 'Unfreeze'
         admin: 'Promote to admin'
         unadmin: 'Demote admin'
+    setup:
+      link: "Finish profile"
     edit:
       title: "Edit profile"
       shortname_not_allowed: "You can't change your username. However, you can change the name that other users see at "

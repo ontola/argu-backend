@@ -17,6 +17,8 @@ nl:
         unfreeze: 'Ontdooien'
         admin: 'Maak admin'
         unadmin: 'Degradeer admin'
+    setup:
+      link: "Profiel afmaken"
     edit:
       title: "Profiel bewerken"
       shortname_not_allowed: "Je kunt jouw gebruikersnaam niet wijzigen. Je kan wel de naam wijzigen die andere gebruikers zien bij "
