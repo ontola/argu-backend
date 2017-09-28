@@ -9,6 +9,9 @@ module Argu
     included do
       rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
       rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
+      rescue_from Argu::UnknownEmailError, with: :handle_bad_credentials
+      rescue_from Argu::UnknownUsernameError, with: :handle_bad_credentials
+      rescue_from Argu::WrongPasswordError, with: :handle_bad_credentials
       rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
       rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
       rescue_from ActiveRecord::StaleObjectError, with: :handle_stale_object_error
@@ -49,6 +52,13 @@ module Argu
         format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json { render status: error_status(e), json: json_error_hash(error_id(e), e) }
         format.json_api { render json_api_error(error_status(e), json_api_error_hash(error_id(e), e)) }
+      end
+    end
+
+    def handle_bad_credentials(e)
+      return handle_error(e) unless [:html, nil].include?(request.format.symbol)
+      respond_to do |format|
+        format.html { redirect_to new_user_session_path(r: e.r, show_error: true) }
       end
     end
 

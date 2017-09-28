@@ -22,6 +22,9 @@ nl:
       timeout: 'Jouw sessie is verlopen, log opnieuw in om door te gaan.'
       inactive: 'Jouw account is nog niet geactiveerd.'
       invalid: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord. Heeft u al geregistreerd met dit e-mail adres?'
+      invalid_email: 'We konden geen gebruiker vinden met dit e-mailadres.'
+      invalid_password: 'Het wachtwoord is niet correct.'
+      invalid_username: 'We konden geen gebruiker vinden met deze naam.'
       user:
         not_found_in_database: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.'
     sessions:

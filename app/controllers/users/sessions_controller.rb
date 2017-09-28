@@ -74,7 +74,10 @@ class Users::SessionsController < Devise::SessionsController
     params[:r] || request.env['HTTP_TURBOLINKS_REFERRER'] || request.referer
   end
 
-  def r_with_authenticity_token(r)
+  def r_with_authenticity_token
+    r = params.dig(:user, :r) || params[:r]
+    return '' if r.blank?
+
     uri = URI.parse(r)
     query = URI.decode_www_form(uri.query || '')
     query << ['authenticity_token', form_authenticity_token] if is_post?(r)

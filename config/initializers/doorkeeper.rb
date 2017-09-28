@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'argu/invalid_credentials_error'
+require 'argu/unknown_email_error'
+require 'argu/unknown_username_error'
+require 'argu/wrong_password_error'
 
 module Doorkeeper
   class Application < ActiveRecord::Base
@@ -39,7 +41,16 @@ Doorkeeper.configure do
     }
     request.env['devise.allow_params_authentication'] = true
     user = request.env['warden'].authenticate(scope: :user)
-    raise(Argu::InvalidCredentialsError.new) if user.blank?
+    if user.blank?
+      email = params[:user][:email].include?('@')
+      if email && EmailAddress.find_by(email: params[:user][:email]).nil?
+        raise Argu::UnknownEmailError.new(r: r_with_authenticity_token)
+      end
+      if !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
+        raise Argu::UnknownUsernameError.new(r: r_with_authenticity_token)
+      end
+      raise Argu::WrongPasswordError.new(r: r_with_authenticity_token)
+    end
     request.env['warden'].logout
     user
   end

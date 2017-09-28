@@ -4,6 +4,9 @@ require 'argu/controller'
 require 'argu/ruled_it'
 require 'argu/not_authorized_error'
 require 'argu/not_a_user_error'
+require 'argu/unknown_email_error'
+require 'argu/unknown_username_error'
+require 'argu/wrong_password_error'
 
 require 'react-rails/lib/server_rendering/webpack_manifest_container'
 
@@ -16,6 +19,18 @@ module Argu
     Argu::NotAUserError => {
       id: 'NOT_A_USER',
       status: 401
+    },
+    Argu::UnknownEmailError => {
+      id: 'UNKNOWN_EMAIL',
+      status: 422
+    },
+    Argu::UnknownUsernameError => {
+      id: 'UNKNOWN_USERNAME',
+      status: 422
+    },
+    Argu::WrongPasswordError => {
+      id: 'WRONG_PASSWORD',
+      status: 422
     },
     ActiveRecord::RecordNotFound => {
       id: 'NOT_FOUND',

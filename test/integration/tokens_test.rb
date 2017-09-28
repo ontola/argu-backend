@@ -28,7 +28,6 @@ class TokensTest < ActionDispatch::IntegrationTest
     user
   end
 
-
   ####################################
   # WITHOUT CREDENTIALS
   ####################################
@@ -212,7 +211,24 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(r: '', show_error: true)
+    assert_redirected_to new_user_session_path(show_error: true)
+  end
+
+  test 'User should not post create token with credentials and empty password for Argu domain JSON' do
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: Rails.application.config.host_name
+           },
+           params: {
+             format: :json,
+             email: user_without_password.email,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_response 422
+    assert_equal parsed_body['error_id'], 'WRONG_PASSWORD'
   end
 
   ####################################
@@ -247,7 +263,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(r: '', show_error: true)
+    assert_redirected_to new_user_session_path(show_error: true)
   end
 
   test 'User should not post create token with wrong password and r for Argu domain' do
@@ -265,6 +281,24 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_redirected_to new_user_session_path(r: forum_path(freetown), show_error: true)
+  end
+
+  test 'User should not post create token with unknown email for Argu domain JSON' do
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             format: :json,
+             email: user.email,
+             password: 'wrong',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_response 422
+    assert_equal parsed_body['error_id'], 'WRONG_PASSWORD'
   end
 
   ####################################
@@ -299,7 +333,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(r: '', show_error: true)
+    assert_redirected_to new_user_session_path(show_error: true)
   end
 
   test 'User should not post create token with unknown email and r for Argu domain' do
@@ -317,6 +351,24 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_redirected_to new_user_session_path(r: forum_path(freetown), show_error: true)
+  end
+
+  test 'User should not post create token with unknown email and r for Argu domain JSON' do
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             format: :json,
+             email: 'wrong@example.com',
+             password: 'wrong',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_response 422
+    assert_equal parsed_body['error_id'], 'UNKNOWN_EMAIL'
   end
 
   ####################################
@@ -351,7 +403,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(r: '', show_error: true)
+    assert_redirected_to new_user_session_path(show_error: true)
   end
 
   test 'User should not post create token with unknown username and r for Argu domain' do
@@ -369,6 +421,24 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_redirected_to new_user_session_path(r: forum_path(freetown), show_error: true)
+  end
+
+  test 'User should not post create token with unknown username for Argu domain JSON' do
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             format: :json,
+             username: 'wrong',
+             password: 'wrong',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_response 422
+    assert_equal parsed_body['error_id'], 'UNKNOWN_USERNAME'
   end
 
   ####################################

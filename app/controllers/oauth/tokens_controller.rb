@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'argu/invalid_credentials_error'
+require 'argu'
+require 'argu/controller/error_handling'
 
 module Oauth
   class TokensController < Doorkeeper::TokensController
@@ -10,13 +11,16 @@ module Oauth
     include ActionController::Cookies
     include ActionController::MimeResponds
     include ActionController::Redirecting
+    include ActionController::Rescue
     include Rails.application.routes.url_helpers
+    include Argu::ErrorHandling
+
     ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
     FRONTEND_HOST = URI(Rails.configuration.frontend_url).host.freeze
 
     def create
       return super unless argu_classic_frontend_request?
-      r = r_with_authenticity_token(params.dig(:user, :r) || params[:r] || '')
+      r = r_with_authenticity_token
       remember_me = %w[1 true].include?(params[:user].try(:[], :remember_me) || params[:remember_me])
       guest_session_id = session.id
       response = authorize_response
@@ -31,8 +35,6 @@ module Oauth
       resource.update r: ''
       schedule_redis_resource_worker(GuestUser.new(id: guest_session_id), resource, r) if guest_session_id.present?
       redirect_to r.presence || root_path
-    rescue Argu::InvalidCredentialsError
-      handle_invalid_credentials(r)
     rescue Doorkeeper::Errors::DoorkeeperError => e
       handle_doorkeeper_error(e)
     end
@@ -45,16 +47,6 @@ module Oauth
       !match.nil? && match >= 0 || request.env['HTTP_HOST'] == 'backend'
     end
 
-    def handle_invalid_credentials(r)
-      respond_to do |format|
-        format.html { redirect_to new_user_session_path(r: r, show_error: true) }
-        format.json do
-          render status: 422,
-                 json: {error: {code: 'WRONG_CREDENTIALS', message: 'wrong username or password'}}
-        end
-      end
-    end
-
     def handle_doorkeeper_error(e)
       handle_token_exception e
     end
@@ -63,8 +55,10 @@ module Oauth
       r.match(%r{\/v(\?|\/)|\/c(\?|\/)})
     end
 
-    def r_with_authenticity_token(r)
+    def r_with_authenticity_token
+      r = params.dig(:user, :r) || params[:r]
       return '' if r.blank?
+
       uri = URI.parse(r)
       query = URI.decode_www_form(uri.query || '')
       query << ['authenticity_token', form_authenticity_token] if is_post?(r)

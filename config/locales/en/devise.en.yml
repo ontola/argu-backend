@@ -22,6 +22,9 @@ en:
       timeout: 'Your session has expired, log in to continue.'
       inactive: 'Your account has not been activated.'
       invalid: 'We couldn''t find a user with that email and password combination.'
+      invalid_email: 'We couldn''t find a user with this email.'
+      invalid_password: 'Invalid password.'
+      invalid_username: 'We couldn''t find a user with this name.'
       user:
         not_found_in_database: 'We couldn''t find a user with that email and password combination.'
     sessions:
