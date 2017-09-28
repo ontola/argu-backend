@@ -1,18 +1,21 @@
 import React from 'react';
 
-import { VoteButtons } from './Vote';
+import actorStore from './stores/actor_store';
+import { VoteButtons, VoteResults } from './Vote';
 import OpinionMixin from './mixins/OpinionMixin';
 import VoteMixin from './mixins/VoteMixin';
-import { OpinionContainer } from './opinions/OpinionContainer';
+import OpinionContainer from './opinions/OpinionContainer';
 
 /**
- * Component that displays current vote options.
+ * Component that displays current vote options based on whether the user is member of a group.
+ * Also reveals the results if the user has already voted.
  * This component is not pure.
  * @class
- * @exports SmallVoteContainer
+ * @exports VoteContainer
  * @see {@linkcode Vote.VoteButtons}
+ * @see {@linkcode Vote.VoteResults}
  */
-export const SmallVoteContainer = React.createClass({
+export const VoteContainer = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         argumentUrl: React.PropTypes.string,
@@ -57,12 +60,25 @@ export const SmallVoteContainer = React.createClass({
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
             signupEmail: '',
-            submitting: false
+            submitting: false,
+            submittingVote: ''
         };
     },
 
+    componentDidMount () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount () {
+        this.unsubscribe();
+    },
+
     render () {
-        let opinionContainer;
+        let voteResultsComponent, opinionContainer;
+        const voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
+        if (this.props.buttonsType === 'big') {
+            voteResultsComponent = <VoteResults {...this.state} showResults={this.props.disabled || this.state.currentVote !== 'abstain'}/>;
+        }
         if (this.state.currentVote !== 'abstain') {
             opinionContainer = <OpinionContainer actor={this.state.actor}
                                                  argumentUrl={this.props.argumentUrl}
@@ -92,12 +108,13 @@ export const SmallVoteContainer = React.createClass({
                                                  submitting={this.state.submitting}/>;
         }
         return (
-            <div>
-                <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler} />
-                {opinionContainer}
-            </div>
+                <div className="center motion-shr">
+                    {voteButtonsComponent}
+                    {opinionContainer}
+                    {voteResultsComponent}
+                </div>
         );
     }
 });
 
-export default SmallVoteContainer;
+export default VoteContainer;
