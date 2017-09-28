@@ -7,7 +7,6 @@ import {
     safeCredentials,
     json,
     statusSuccess,
-    tryLogin,
     errorMessageForStatus
 } from '../lib/helpers';
 
@@ -45,7 +44,7 @@ const VoteMixin = {
                     for: side
                 }
             })
-        })).then(statusSuccess, tryLogin)
+        })).then(statusSuccess)
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {

@@ -126,7 +126,7 @@ const OpinionMixin = {
                     for: currentVote
                 }
             })
-        })).then(statusSuccess, tryLogin)
+        })).then(statusSuccess)
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
@@ -153,7 +153,7 @@ const OpinionMixin = {
         fetch(`${this.props.userRegistrationUrl}.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({ user: { email: signupEmail, r: window.location.href } })
-        })).then(statusSuccess, tryLogin)
+        })).then(statusSuccess)
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {

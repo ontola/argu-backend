@@ -180,14 +180,6 @@ export function statusSuccess (response) {
     }
 }
 
-export function tryLogin (response) {
-    if (response.status === 401) {
-        // return Promise.resolve(window.alert(errorMessageForStatus(response.status).fallback));
-    } else {
-        return Promise.reject(response);
-    }
-}
-
 export function userIdentityToken (options) {
     options = options || {};
     return Object.assign(options, {
