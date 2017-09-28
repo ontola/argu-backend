@@ -5,7 +5,7 @@ const OpinionAdd = props => {
     const { actor, newExplanation, onOpenOpinionForm } = props;
     let confirmHeader;
     if (actor.confirmed === false) {
-        confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')} <strong>{actor.confirmationEmail}</strong>.</p>;
+        confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm_notice')} <strong>{actor.confirmationEmail}</strong>.</p>;
     }
     return (
         <form className={"formtastic formtastic--full-width"}>

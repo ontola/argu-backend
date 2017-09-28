@@ -42,7 +42,7 @@ const OpinionShow = React.createClass({
         });
         let confirmHeader;
         if (actor.confirmed === false) {
-            confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')} <strong>{actor.confirmationEmail}</strong>.</p>;
+            confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm_notice')} <strong>{actor.confirmationEmail}</strong>.</p>;
         }
         return (
             <div>

@@ -76,7 +76,7 @@ const OpinionForm = React.createClass({
             </div>
         </div>;
         if (actor.confirmed === false) {
-            confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm')} <strong>{actor.confirmationEmail}</strong>.</p>;
+            confirmHeader = <p className="unconfirmed-vote-warning">{I18n.t('opinions.form.confirm_notice')} <strong>{actor.confirmationEmail}</strong>.</p>;
         }
         return (
             <form className={`formtastic formtastic--full-width ${submitting ? 'is-loading' : ''}`}
