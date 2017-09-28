@@ -3,7 +3,7 @@ import React from 'react';
 import { VoteButtons } from './Vote';
 import OpinionMixin from './mixins/OpinionMixin';
 import VoteMixin from './mixins/VoteMixin';
-import { OpinionContainer } from './Opinions';
+import { OpinionContainer } from './opinions/OpinionContainer';
 
 /**
  * Component that displays current vote options.

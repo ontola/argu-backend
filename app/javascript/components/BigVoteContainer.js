@@ -4,7 +4,7 @@ import actorStore from './stores/actor_store';
 import { VoteButtons, VoteResults } from './Vote';
 import OpinionMixin from './mixins/OpinionMixin';
 import VoteMixin from './mixins/VoteMixin';
-import { OpinionContainer } from './Opinions';
+import { OpinionContainer } from './opinions/OpinionContainer';
 
 /**
  * Component that displays current vote options based on whether the user is member of a group.
