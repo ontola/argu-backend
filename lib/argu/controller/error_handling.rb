@@ -49,9 +49,9 @@ module Argu
       error_mode(e)
       respond_to do |format|
         format.html { error_response_html(e) }
-        format.js { render status: error_status(e), json: json_error_hash(error_id(e), e) }
-        format.json { render status: error_status(e), json: json_error_hash(error_id(e), e) }
-        format.json_api { render json_api_error(error_status(e), json_api_error_hash(error_id(e), e)) }
+        format.js { render status: error_status(e), json: json_error_hash(e) }
+        format.json { render json_error(error_status(e), json_error_hash(e)) }
+        format.json_api { render json_api_error(error_status(e), json_error_hash(e)) }
       end
     end
 
@@ -124,18 +124,38 @@ module Argu
       end
     end
 
-    def json_error_hash(id, exception)
-      error = {type: :error, error_id: id, message: exception.message}
-      error.merge(notifications: [error])
-    end
-
-    def json_api_error_hash(id, exception)
-      {code: id, message: exception.message}
-    end
-
     def handle_redis_connection_error(exception)
       Redis.rescue_redis_connection_error(exception)
       raise '500'
+    end
+
+    def json_error_hash(error)
+      {code: error_id(error), message: error.message}
+    end
+
+    # @param [Integer] status HTTP response code
+    # @param [Array<Hash, String>] errors A list of errors
+    # @return [Hash] Error hash to use in a render method
+    def json_error(status, errors = nil)
+      errors = json_api_formatted_errors(errors, Rack::Utils::HTTP_STATUS_CODES[status])
+      {
+        json: {
+          code: errors&.first.try(:[], :code),
+          message: errors&.first.try(:[], :message),
+          notifications: errors.map { |error| {type: :error, message: error[:message]} }
+        },
+        status: status
+      }
+    end
+
+    def respond_with(*resources, &_block)
+      if [:html, nil].include?(request.format.symbol) || resources.all? { |r| r.respond_to?(:valid?) ? r.valid? : true }
+        return super
+      end
+      respond_to do |format|
+        format.json { respond_with_422(resources.first, :json) }
+        format.json_api { respond_with_422(resources.first, :json_api) }
+      end
     end
 
     def stale_record_recovery_action

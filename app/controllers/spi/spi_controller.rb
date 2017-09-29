@@ -25,7 +25,7 @@ module SPI
 
     def handle_error(e)
       error_mode(e)
-      render json_api_error(error_status(e), json_api_error_hash(error_id(e), e))
+      render json_api_error(error_status(e), json_error_hash(e))
     end
     alias handle_not_authorized_error handle_error
     alias handle_bad_request handle_error

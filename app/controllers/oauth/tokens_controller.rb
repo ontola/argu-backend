@@ -7,6 +7,7 @@ module Oauth
   class TokensController < Doorkeeper::TokensController
     include RedisResourcesHelper
     include OauthHelper
+    include JsonApiHelper
     include ActionController::RequestForgeryProtection
     include ActionController::Cookies
     include ActionController::MimeResponds

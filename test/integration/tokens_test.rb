@@ -228,7 +228,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_response 422
-    assert_equal parsed_body['error_id'], 'WRONG_PASSWORD'
+    assert_equal parsed_body['code'], 'WRONG_PASSWORD'
   end
 
   ####################################
@@ -298,7 +298,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_response 422
-    assert_equal parsed_body['error_id'], 'WRONG_PASSWORD'
+    assert_equal parsed_body['code'], 'WRONG_PASSWORD'
   end
 
   ####################################
@@ -368,7 +368,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_response 422
-    assert_equal parsed_body['error_id'], 'UNKNOWN_EMAIL'
+    assert_equal parsed_body['code'], 'UNKNOWN_EMAIL'
   end
 
   ####################################
@@ -438,7 +438,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            }
     end
     assert_response 422
-    assert_equal parsed_body['error_id'], 'UNKNOWN_USERNAME'
+    assert_equal parsed_body['code'], 'UNKNOWN_USERNAME'
   end
 
   ####################################

@@ -8,16 +8,6 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:user) { create(:user) }
 
-  def json_api_errors(status, message, code)
-    [
-      {
-        'status' => status,
-        'message' => message,
-        'code' => code
-      }
-    ]
-  end
-
   test 'guest should get 401' do
     post motion_arguments_url(motion),
          params: {
@@ -34,9 +24,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 401
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Unauthorized',
-                   'You must authenticate before you can continue.',
-                   'NOT_A_USER'
+                   status: 'Unauthorized',
+                   message: 'You must authenticate before you can continue.',
+                   code: 'NOT_A_USER'
                  )
   end
 
@@ -57,9 +47,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 403
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Forbidden',
-                   "You're not authorized for that action. (create)",
-                   'NOT_AUTHORIZED'
+                   status: 'Forbidden',
+                   message: "You're not authorized for that action. (create)",
+                   code: 'NOT_AUTHORIZED'
                  )
   end
 
@@ -73,9 +63,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 400
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Bad Request',
-                   'param is missing or the value is empty: argument',
-                   'BAD_REQUEST'
+                   status: 'Bad Request',
+                   message: 'param is missing or the value is empty: argument',
+                   code: 'BAD_REQUEST'
                  )
   end
 
@@ -90,9 +80,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 400
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Bad Request',
-                   'param is missing or the value is empty: argument',
-                   'BAD_REQUEST'
+                   status: 'Bad Request',
+                   message: 'param is missing or the value is empty: argument',
+                   code: 'BAD_REQUEST'
                  )
   end
 
@@ -112,9 +102,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 400
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Bad Request',
-                   'param is missing or the value is empty: type',
-                   'BAD_REQUEST'
+                   status: 'Bad Request',
+                   message: 'param is missing or the value is empty: type',
+                   code: 'BAD_REQUEST'
                  )
   end
 
@@ -135,9 +125,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 400
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Bad Request',
-                   'found unpermitted parameter: :type',
-                   'BAD_REQUEST'
+                   status: 'Bad Request',
+                   message: 'found unpermitted parameter: :type',
+                   code: 'BAD_REQUEST'
                  )
   end
 
@@ -154,9 +144,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 400
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   'Bad Request',
-                   'param is missing or the value is empty: attributes',
-                   'BAD_REQUEST'
+                   status: 'Bad Request',
+                   message: 'param is missing or the value is empty: attributes',
+                   code: 'BAD_REQUEST'
                  )
   end
 
@@ -176,26 +166,41 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_response 422
     assert_equal parsed_body,
                  'errors' => [
-                   {
-                     'status' => 'Unprocessable Entity',
-                     'source' => {'parameter' => 'content'},
-                     'message' => "can't be blank"
-                   },
-                   {
-                     'status' => 'Unprocessable Entity',
-                     'source' => {'parameter' => 'content'},
-                     'message' => 'is too short (minimum is 5 characters)'
-                   },
-                   {
-                     'status' => 'Unprocessable Entity',
-                     'source' => {'parameter' => 'title'},
-                     'message' => "can't be blank"
-                   },
-                   {
-                     'status' => 'Unprocessable Entity',
-                     'source' => {'parameter' => 'title'},
-                     'message' => 'is too short (minimum is 5 characters)'
-                   }
-                 ]
+                   json_api_errors(
+                     status: 'Unprocessable Entity',
+                     source: {'parameter' => 'content'},
+                     message: "Content can't be blank",
+                     code: 'VALUE_BLANK'
+                   ),
+                   json_api_errors(
+                     status: 'Unprocessable Entity',
+                     source: {'parameter' => 'content'},
+                     message: 'Content is too short (minimum is 5 characters)',
+                     code: 'VALUE_TOO_SHORT'
+                   ),
+                   json_api_errors(
+                     status: 'Unprocessable Entity',
+                     source: {'parameter' => 'title'},
+                     message: "Title can't be blank",
+                     code: 'VALUE_BLANK'
+                   ),
+                   json_api_errors(
+                     status: 'Unprocessable Entity',
+                     source: {'parameter' => 'title'},
+                     message: 'Title is too short (minimum is 5 characters)',
+                     code: 'VALUE_TOO_SHORT'
+                   )
+                 ].flatten
+  end
+
+  private
+
+  def json_api_errors(code: nil, message: nil, source: nil, status: nil)
+    errors = {}
+    errors['status'] = status if status.present?
+    errors['message'] = message if message.present?
+    errors['code'] = code if code.present?
+    errors['source'] = source if source.present?
+    [errors]
   end
 end

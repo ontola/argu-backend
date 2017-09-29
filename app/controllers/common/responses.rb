@@ -69,7 +69,7 @@ module Common
     def respond_with_422(resource, format)
       case format
       when :json
-        render json: resource.errors, status: :unprocessable_entity
+        render json_error(422, resource.errors)
       when :json_api
         render json_api_error(422, resource.errors)
       else
