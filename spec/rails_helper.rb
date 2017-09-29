@@ -120,49 +120,51 @@ RSpec.configure do |config|
   Capybara.default_max_wait_time = 10
   Capybara.exact = true
 
-  config.before(:each) do
-    if User.find_by(id: User::COMMUNITY_ID).blank?
-      create(:user,
-             id: User::COMMUNITY_ID,
-             shortname: build(:shortname, shortname: 'community'),
-             email: 'community@argu.co',
-             password: 'password',
-             first_name: nil,
-             last_name: nil,
-             profile: build(:profile, id: Profile::COMMUNITY_ID))
-    end
-    if Page.find_by(id: Profile::COMMUNITY_ID).blank?
-      create(:page,
-             id: 0,
-             last_accepted: DateTime.current,
-             profile: Profile.new(name: 'public page profile'),
-             owner: User.create!(
-               shortname: Shortname.new(shortname: 'page_owner'),
-               profile: Profile.new,
-               email: 'page_owner@argu.co'
-             ).profile,
-             shortname: Shortname.new(shortname: 'public_page'))
-    end
-    if Group.find_by(id: Group::PUBLIC_ID).blank?
-      g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')
-      public_membership =
-        CreateGroupMembership.new(
-          g,
-          attributes: {member: Profile.community},
-          options: {publisher: User.community, creator: Profile.community}
-        ).resource
-      public_membership.save(validate: false)
-    end
-    if Group.find_by(id: Group::STAFF_ID).blank?
-      create(:group, id: Group::STAFF_ID, parent: Page.find(0).edge, name: 'Staff group', name_singular: 'Staff')
-    end
-    if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
-      Doorkeeper::Application.create!(
-        id: Doorkeeper::Application::ARGU_ID,
-        name: 'Argu',
-        owner: Profile.community,
-        redirect_uri: 'http://example.com/'
-      )
+  unless ENV['RSPEC_TRANSACTION']
+    config.before(:each) do
+      if User.find_by(id: User::COMMUNITY_ID).blank?
+        create(:user,
+               id: User::COMMUNITY_ID,
+               shortname: build(:shortname, shortname: 'community'),
+               email: 'community@argu.co',
+               password: 'password',
+               first_name: nil,
+               last_name: nil,
+               profile: build(:profile, id: Profile::COMMUNITY_ID))
+      end
+      if Page.find_by(id: Profile::COMMUNITY_ID).blank?
+        create(:page,
+               id: 0,
+               last_accepted: DateTime.current,
+               profile: Profile.new(name: 'public page profile'),
+               owner: User.create!(
+                 shortname: Shortname.new(shortname: 'page_owner'),
+                 profile: Profile.new,
+                 email: 'page_owner@argu.co'
+               ).profile,
+               shortname: Shortname.new(shortname: 'public_page'))
+      end
+      if Group.find_by(id: Group::PUBLIC_ID).blank?
+        g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')
+        public_membership =
+          CreateGroupMembership.new(
+            g,
+            attributes: {member: Profile.community},
+            options: {publisher: User.community, creator: Profile.community}
+          ).resource
+        public_membership.save(validate: false)
+      end
+      if Group.find_by(id: Group::STAFF_ID).blank?
+        create(:group, id: Group::STAFF_ID, parent: Page.find(0).edge, name: 'Staff group', name_singular: 'Staff')
+      end
+      if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
+        Doorkeeper::Application.create!(
+          id: Doorkeeper::Application::ARGU_ID,
+          name: 'Argu',
+          owner: Profile.community,
+          redirect_uri: 'http://example.com/'
+        )
+      end
     end
   end
 

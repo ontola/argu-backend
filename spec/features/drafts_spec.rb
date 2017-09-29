@@ -33,11 +33,20 @@ RSpec.feature 'Show drafts', type: :feature do
            publisher: user,
            edge_attributes: {argu_publication_attributes: {draft: true}})
   end
+  let!(:published_question) do
+    create(:question,
+           parent: freetown.edge,
+           publisher: user)
+  end
 
   scenario 'User with drafts shows drafts' do
     sign_in(user)
 
     visit(drafts_user_path(user))
+
+    expect(user.blog_posts.count).to eq(2)
+    expect(user.motions.count).to eq(2)
+    expect(user.questions.count).to eq(2)
 
     expect(page).to have_selector('div.box.blog_post', text: blog_post.title, count: 1)
     expect(page).to have_selector('div.box.motion', text: motion.title, count: 1)

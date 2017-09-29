@@ -234,6 +234,26 @@ module Argu
           let(:page) { argu } if mdig?(:page, let)
         end
 
+        def define_spec_objects
+          let(:argu) { Page.find_via_shortname('argu') }
+          let(:freetown) { Forum.find_via_shortname('freetown') }
+          let(:holland) { Forum.find_via_shortname('holland') }
+          let(:public_source) { Source.find_by(shortname: 'public_source') }
+          let(:linked_record) { LinkedRecord.first }
+          let(:linked_record_argument) { LinkedRecord.first.arguments.first }
+          let(:forum_motion) { freetown.motions.first }
+          let(:question) { freetown.questions.first }
+          let(:motion) { question.motions.first }
+          let(:decision) { motion.decisions.first }
+          let(:vote_event) { motion.default_vote_event }
+          let(:vote) { vote_event.votes.first }
+          let(:argument) { motion.arguments.first }
+          let(:comment) { argument.comment_threads.first }
+          let(:nested_comment) { comment.children.first }
+          let(:blog_post) { question.blog_posts.first }
+          let(:blog_post_comment) { blog_post.comment_threads.first }
+        end
+
         # @param [Symbol] key The key to search for.
         # @param [Array] arr Array of options to search in.
         # @return [Boolean] Whether `key` is present in arr.

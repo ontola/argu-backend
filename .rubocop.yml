@@ -47,6 +47,7 @@ Metrics/BlockLength:
     - '**/*.jbuilder'
     - 'spec/rails_helper.rb'
     - 'config/**/*.rb'
+    - 'spec/support/database_cleaner.rb'
   ExcludedMethods:
     - context
     - define
