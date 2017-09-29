@@ -101,6 +101,87 @@ const OpinionMixin = {
         this.setState({ newExplanation: e.target.value });
     },
 
+    handleCancelLogin (e) {
+        e.preventDefault();
+        this.setState({ loginStep: 'initial' });
+    },
+
+    handleLogin (e) {
+        e.preventDefault();
+        const { signupEmail, signupPassword } = this.state;
+        this.setState({ submitting: true });
+        fetch(`${this.props.oauthTokenUrl}.json`, safeCredentials({
+            method: 'POST',
+            body: JSON.stringify({
+                email: signupEmail,
+                password: signupPassword,
+                grant_type: 'password',
+                scope: 'user',
+                r: window.location.href
+            })
+        })).then(statusSuccess)
+            .then(json)
+            .then(data => {
+                if (typeof data !== 'undefined') {
+                    window.location.hash = `${this.props.objectType}${this.props.objectId}`;
+                    window.location.reload();
+                }
+            }).catch(er => {
+                json(er)
+                    .then(data => {
+                        if (data.code === 'UNKNOWN_EMAIL') {
+                            this.setState({ loginStep: 'register', errorMessage: data.message });
+                            Promise.resolve(data);
+                        } else if (data.code === 'WRONG_PASSWORD') {
+                            this.setState({ loginStep: 'login', errorMessage: this.state.loginStep === 'initial' ? '' : data.message });
+                            Promise.resolve(data);
+                        } else {
+                            Promise.reject();
+                        }
+                    }).catch(() => {
+                        const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
+                        new Alert(message, 'alert', true);
+                        Bugsnag.notifyException(er);
+                        throw er;
+                    });
+                this.setState({ submitting: false });
+            });
+    },
+
+    handleRegistration (e) {
+        e.preventDefault();
+        const { signupEmail } = this.state;
+        this.setState({ submitting: true });
+        fetch(`${this.props.userRegistrationUrl}.json`, safeCredentials({
+            method: 'POST',
+            body: JSON.stringify({ user: { email: signupEmail, r: window.location.href } })
+        })).then(statusSuccess)
+            .then(json)
+            .then(data => {
+                if (typeof data !== 'undefined') {
+                    window.location.hash = `${this.props.objectType}${this.props.objectId}`;
+                    window.location.reload();
+                }
+            }).catch(er => {
+                json(er)
+                    .then(data => {
+                        if (data.code === 'VALUE_TAKEN') {
+                            this.setState({ loginStep: 'login', errorMessage: '' });
+                        }
+                    }).catch(() => {
+                        const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
+                        new Alert(message, 'alert', true);
+                        Bugsnag.notifyException(er);
+                        throw er;
+                    });
+                this.setState({ submitting: false });
+            });
+    },
+
+    handleSignupEmailChange (e) {
+        this.setState({ signupPassword: e.target.value });
+    },
+
     openArgumentFormHandler (e) {
         e.preventDefault();
         this.setState({
@@ -136,29 +217,6 @@ const OpinionMixin = {
                         selectedArguments: this.state.newSelectedArguments,
                         submitting: false
                     }));
-                }
-            }).catch(er => {
-                this.setState({ submitting: false });
-                const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
-                new Alert(message, 'alert', true);
-                Bugsnag.notifyException(er);
-                throw er;
-            });
-    },
-
-    registrationHandler (e) {
-        e.preventDefault();
-        const { signupEmail } = this.state;
-        this.setState({ submitting: true });
-        fetch(`${this.props.userRegistrationUrl}.json`, safeCredentials({
-            method: 'POST',
-            body: JSON.stringify({ user: { email: signupEmail, r: window.location.href } })
-        })).then(statusSuccess)
-            .then(json)
-            .then(data => {
-                if (typeof data !== 'undefined') {
-                    window.location.hash = `${this.props.objectType}${this.props.objectId}`;
-                    window.location.reload();
                 }
             }).catch(er => {
                 this.setState({ submitting: false });

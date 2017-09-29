@@ -25,6 +25,7 @@ const OpinionContainerProps = {
     currentExplanation: React.PropTypes.object.isRequired,
     currentVote: React.PropTypes.string.isRequired,
     facebookUrl: React.PropTypes.string.isRequired,
+    forgotPassword: React.PropTypes.object.isRequired,
     newArgumentButtons: React.PropTypes.bool.isRequired,
     newExplanation: React.PropTypes.string,
     newSelectedArguments: React.PropTypes.array.isRequired,
@@ -36,7 +37,6 @@ const OpinionContainerProps = {
     onOpenOpinionForm: React.PropTypes.func.isRequired,
     onSubmitArgument: React.PropTypes.func.isRequired,
     onSubmitOpinion: React.PropTypes.func.isRequired,
-    onSubmitRegistration: React.PropTypes.func.isRequired,
     opinionForm: React.PropTypes.bool.isRequired,
     selectedArguments: React.PropTypes.array.isRequired,
     submitting: React.PropTypes.bool.isRequired

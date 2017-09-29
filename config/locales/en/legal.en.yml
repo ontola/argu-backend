@@ -3,4 +3,6 @@ en:
     agree_and_create: "Agree and create account"
     documents:
       policy: "Terms of use"
-      values: "Core values"
+      values:
+    form_html: "By creating an Argu account you agree to our %{link}."
+    notice: "By creating an Argu account you agree to our "

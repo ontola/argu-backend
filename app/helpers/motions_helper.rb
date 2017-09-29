@@ -28,10 +28,16 @@ module MotionsHelper
       disabledMessage: disabled_message,
       distribution: motion_vote_counts(motion),
       facebookUrl: omniauth_authorize_path(:user, :facebook, r: request.env['PATH_INFO']),
+      forgotPassword: {
+        href: new_user_password_path,
+        text: t('forgot_password')
+      },
       newArgumentButtons: policy(motion).create_child?(:arguments).present?,
+      oauthTokenUrl: oauth_token_url,
       objectId: motion.id,
       objectType: 'motion',
       percent: motion.default_vote_event.votes_pro_percentages,
+      policyPath: policy_path,
       userRegistrationUrl: user_registration_url(r: request.env['PATH_INFO']),
       selectedArguments: vote&.argument_ids || [],
       total_votes: motion.default_vote_event.total_vote_count,

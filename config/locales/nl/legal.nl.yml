@@ -4,3 +4,5 @@ nl:
     documents:
       policy: "Gebruiksvoorwaarden"
       values: "Kernwaarden"
+    form_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
+    notice: "Door je aan te melden voor Argu ga je akkoord met de "

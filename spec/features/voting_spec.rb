@@ -11,7 +11,6 @@ RSpec.feature 'Voting', type: :feature do
   # As Guest
   ####################################
   scenario 'Guest should vote on a motion, register, leave an opinion, edit the opinion and confirm' do
-    profile_attr = attributes_for(:profile)
     user_attr = attributes_for(:user)
 
     visit motion_path(motion)
@@ -23,17 +22,15 @@ RSpec.feature 'Voting', type: :feature do
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
         fill_in 'user[email]', with: user_attr[:email]
-        click_button 'Save'
+        click_button 'Continue'
       end
 
-      expect(page).to have_current_path setup_users_path
-      click_button 'Next'
+      assert_differences([['Vote.count', 0]]) do
+        expect(page).to have_content('By creating an Argu account you agree to our')
 
-      within('form') do
-        fill_in 'user_first_name', with: user_attr[:first_name]
-        fill_in 'user_last_name', with: user_attr[:last_name]
-        fill_in 'user_profile_attributes_about', with: profile_attr[:about]
-        click_button 'Next'
+        click_button 'Confirm'
+
+        expect(page).to have_current_path motion_path(motion)
       end
     end
 
@@ -75,17 +72,15 @@ RSpec.feature 'Voting', type: :feature do
 
     visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
 
-    assert_differences([['Vote.count', 1]]) do
-      Sidekiq::Testing.inline! do
-        expect(page).to have_content('Choose a password')
-        within('form') do
-          fill_in 'user_password', with: 'new_password'
-          fill_in 'user_password_confirmation', with: 'new_password'
-          click_button 'Confirm account'
-        end
-
-        expect(page).to have_content('Your account has been confirmed. You are now logged in.')
+    Sidekiq::Testing.inline! do
+      expect(page).to have_content('Choose a password')
+      within('form') do
+        fill_in 'user_password', with: 'new_password'
+        fill_in 'user_password_confirmation', with: 'new_password'
+        click_button 'Confirm account'
       end
+
+      expect(page).to have_content('Your account has been confirmed. You are now logged in.')
     end
     visit motion_path(motion)
 
@@ -107,27 +102,20 @@ RSpec.feature 'Voting', type: :feature do
     click_link('Info')
     find('span', text: 'I\'m against').click
 
-    Sidekiq::Testing.inline! do
-      within('.opinion-form') do
-        fill_in 'user[email]', with: user.email
-        click_button 'Save'
-      end
-
-      within('.btns-devise') do
-        click_link 'Log in'
-      end
-
-      assert_differences([['Vote.count', 1]]) do
-        within('#new_user') do
-          fill_in 'user_email', with: user.email
-          fill_in 'user_password', with: user.password
-          click_button 'Log in'
+    assert_differences([['Vote.count', 1]]) do
+      Sidekiq::Testing.inline! do
+        within('.opinion-form') do
+          fill_in 'user[email]', with: user.email
+          click_button 'Continue'
         end
+
+        fill_in 'user[password]', with: user.password
+        click_button 'Login'
         expect(page).to have_current_path motion_path(motion)
       end
-    end
 
-    expect(page).to have_css('.btn-con[data-voted-on=true]')
+      expect(page).to have_css('.btn-con[data-voted-on=true]')
+    end
   end
 
   ####################################

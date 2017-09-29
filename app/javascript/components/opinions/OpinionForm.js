@@ -3,6 +3,8 @@ import I18n from 'i18n-js';
 import { CheckboxGroup } from '../CheckboxGroup';
 import OnClickOutside from 'react-onclickoutside';
 
+import Footer from '../forms/Footer';
+
 const OpinionForm = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
@@ -97,19 +99,7 @@ const OpinionForm = React.createClass({
                         </div>
                         {argumentSelection}
                     </section>
-                    <section className="section--footer">
-                        <fieldset className="actions">
-                            <ol>
-                                <div className="sticky-submit">
-                                    <li className="action button_action">
-                                        <button type="submit" disabled={submitting}>
-                                            {I18n.t('opinions.form.submit')}
-                                        </button>
-                                    </li>
-                                </div>
-                            </ol>
-                        </fieldset>
-                    </section>
+                    <Footer disabled={submitting} submitButton={I18n.t('opinions.form.submit')}/>
                 </div>
             </form>
         )

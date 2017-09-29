@@ -248,7 +248,6 @@ nl:
     staff_only: "Staff only"
     advanced: "Geavanceerd"
     admin: "Administratieve functies"
-    legal_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
   users:
     logged_in_banner_text: "%{name}"
     registrations:

@@ -24,18 +24,9 @@ RSpec.feature 'Partial Voting', type: :feature do
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
         fill_in 'user[email]', with: user_attr[:email]
-        click_button 'Save'
-      end
+        click_button 'Continue'
 
-      expect(page).to have_current_path setup_users_path
-      click_button 'Next'
-
-      profile_attr = attributes_for(:profile)
-      within('form') do
-        fill_in 'user_first_name', with: user_attr[:first_name]
-        fill_in 'user_last_name', with: user_attr[:last_name]
-        fill_in 'user_profile_attributes_about', with: profile_attr[:about]
-        click_button 'Next'
+        click_button 'Confirm'
       end
     end
 

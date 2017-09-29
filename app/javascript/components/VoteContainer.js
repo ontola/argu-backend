@@ -27,10 +27,13 @@ export const VoteContainer = React.createClass({
         disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
         facebookUrl: React.PropTypes.string,
+        forgotPassword: React.PropTypes.object,
         newArgumentButtons: React.PropTypes.bool,
+        oauthTokenUrl: React.PropTypes.string,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
+        policyPath: React.PropTypes.string,
         r: React.PropTypes.string,
         selectedArguments: React.PropTypes.array,
         userRegistrationUrl: React.PropTypes.string,
@@ -54,12 +57,14 @@ export const VoteContainer = React.createClass({
             currentExplanation: this.props.currentExplanation,
             currentVote: this.props.currentVote,
             distribution: this.props.distribution,
+            loginStep: 'initial',
             newExplanation: this.props.currentExplanation.explanation || '',
             newSelectedArguments: this.props.selectedArguments,
             opinionForm: false,
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
             signupEmail: '',
+            signupPassword: '',
             submitting: false,
             submittingVote: ''
         };
@@ -87,24 +92,31 @@ export const VoteContainer = React.createClass({
                                                  createArgument={this.state.createArgument}
                                                  currentExplanation={this.state.currentExplanation}
                                                  currentVote={this.state.currentVote}
+                                                 errorMessage={this.state.errorMessage}
                                                  facebookUrl={this.props.facebookUrl}
+                                                 forgotPassword={this.props.forgotPassword}
+                                                 loginStep={this.state.loginStep}
                                                  newArgumentButtons={this.props.newArgumentButtons}
                                                  newExplanation={this.state.newExplanation}
                                                  newSelectedArguments={this.state.newSelectedArguments}
                                                  onArgumentChange={this.argumentChangeHandler}
                                                  onArgumentSelectionChange={this.argumentSelectionChangeHandler}
+                                                 onCancelLogin={this.handleCancelLogin}
                                                  onCloseArgumentForm={this.closeArgumentFormHandler}
                                                  onCloseOpinionForm={this.closeOpinionFormHandler}
                                                  onExplanationChange={this.explanationChangeHandler}
                                                  onOpenArgumentForm={this.openArgumentFormHandler}
                                                  onOpenOpinionForm={this.openOpinionFormHandler}
                                                  onSignupEmailChange={this.signupEmailChangeHandler}
+                                                 onSignupPasswordChange={this.handleSignupEmailChange}
                                                  onSubmitArgument={this.argumentHandler}
+                                                 onSubmitEmail={this.state.loginStep === 'register' ? this.handleRegistration : this.handleLogin}
                                                  onSubmitOpinion={this.opinionHandler}
-                                                 onSubmitRegistration={this.registrationHandler}
                                                  opinionForm={this.state.opinionForm}
+                                                 policyPath={this.props.policyPath}
                                                  selectedArguments={this.state.selectedArguments}
                                                  signupEmail={this.state.signupEmail}
+                                                 signupPassword={this.state.signupPassword}
                                                  submitting={this.state.submitting}/>;
         }
         return (

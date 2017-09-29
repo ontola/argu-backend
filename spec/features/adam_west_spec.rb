@@ -87,10 +87,8 @@ RSpec.feature 'Adam west', type: :feature do
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
         fill_in 'user[email]', with: user_attr[:email]
-        click_button 'Save'
+        click_button 'Continue'
       end
-
-      setup_profile(user_attr)
     end
 
     expect(page).to have_css('.btn-neutral[data-voted-on=true]')

@@ -9,9 +9,16 @@ en:
       arguments: "Which arguments are important to you?"
       edit: "Edit"
       cancel: "Cancel"
+      continue: "Continue"
       submit: "Save"
-      signup: "Confirm your vote with email or Facebook:"
+      confirm: "Confirm"
+      login: "Login"
+      signup: "Confirm your vote with email:"
+      welcome_back: "Welcome back!"
       email:
         placeholder: "Enter your email address here"
+      password:
+        placeholder: "Enter your password to continue"
+      or: "or"
       facebook_login: "Log in with Facebook"
       facebook_notice: "We never post to your Facebook wall."

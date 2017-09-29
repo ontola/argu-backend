@@ -1,6 +1,8 @@
 import React from 'react'
 import I18n from 'i18n-js';
 
+import Footer from './forms/Footer';
+
 export const ArgumentForm = props => {
     return (
         <form className={`formtastic formtastic--full-width argument-form ${props.submitting ? 'is-loading' : ''}`} onSubmit={props.onSubmitArgument}>
@@ -45,24 +47,7 @@ export const ArgumentForm = props => {
                         onChange={props.onArgumentChange}
                         value={props.createArgument.body}/>
                 </section>
-                <section className="section--footer">
-                    <fieldset className="actions">
-                        <ol>
-                            <div className="sticky-submit">
-                                <li className="action button_action">
-                                    <button className="btn--transparant" onClick={props.onCloseArgumentForm}>
-                                        {I18n.t('opinions.form.cancel')}
-                                    </button>
-                                </li>
-                                <li className="action button_action">
-                                    <button type="submit" disabled={props.submitting}>
-                                        {I18n.t('opinions.form.submit')}
-                                    </button>
-                                </li>
-                            </div>
-                        </ol>
-                    </fieldset>
-                </section>
+                <Footer cancelButton={I18n.t('opinions.form.cancel')} disabled={props.submitting} onCancel={props.onCloseArgumentForm} submitButton={I18n.t('opinions.form.submit')}/>
             </div>
         </form>
     );
