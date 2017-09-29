@@ -66,14 +66,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'user should not show new' do
-    sign_in user
-
-    get :new, params: {group_id: group}
-
-    assert_not_authorized
-  end
-
   test 'user should not post create' do
     sign_in user
 
@@ -194,14 +186,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # As Admin
   ####################################
-  test 'super_admin should show new' do
-    sign_in create_super_admin(freetown)
-
-    get :new, params: {group_id: group}
-
-    assert_redirected_to settings_group_path(group, tab: :invite)
-  end
-
   test 'super_admin should not post create member' do
     sign_in create_super_admin(freetown)
 

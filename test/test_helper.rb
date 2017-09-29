@@ -99,7 +99,6 @@ module ActiveSupport
     include SidekiqMinitestSupport
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
-    include Argu::TestHelpers::AutomatedTests
     include Argu::TestHelpers::TestDefinitions
     include Argu::TestHelpers::TestAssertions
     include Argu::TestHelpers::RequestHelpers

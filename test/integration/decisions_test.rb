@@ -38,74 +38,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            state: Decision.states[:approved])
   end
-
-  ####################################
-  # As Guest
-  ####################################
-
-  test 'guest should get show' do
-    general_show
-  end
-
-  test 'guest should not get show draft' do
-    general_show
-  end
-
-  test 'guest should not post approve' do
-    general_decide
-  end
-
-  ####################################
-  # As User
-  ####################################
-  let(:user) { create(:user) }
-
-  test 'user should get show' do
-    sign_in user
-    general_show
-  end
-
-  test 'user should not post approve' do
-    sign_in user
-    general_decide 403
-    assert_not_authorized
-  end
-
-  test 'user should not patch update approved' do
-    sign_in user
-    general_update_approved 403, false
-    assert_not_authorized
-  end
-
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(freetown) }
-
-  test 'member should get show' do
-    sign_in member
-    general_show
-  end
-
-  test 'member should not post approve' do
-    sign_in member
-    general_decide 403
-  end
-
-  test 'member should not patch update approved' do
-    sign_in member
-    general_update_approved 403, false
-  end
-
-  ####################################
-  # As Creator
-  ####################################
   let(:creator) { create_member(freetown) }
-
-  test 'creator should patch update approved' do
-    sign_in creator
-    general_update_approved 302, true
-  end
 
   ####################################
   # As Actor
@@ -164,11 +97,12 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   ####################################
   # As GroupMember
   ####################################
+  let(:user) { create(:user) }
   test 'group_member should post approve' do
-    sign_in member
+    sign_in user
     create(:group_membership,
            group_id: create(:group, parent: motion.forum.page.edge).id,
-           member: member.profile)
+           member: user.profile)
     create(:decision,
            parent: motion.edge,
            happening_attributes: {

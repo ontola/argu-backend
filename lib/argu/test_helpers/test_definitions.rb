@@ -115,60 +115,6 @@ module Argu
         analytics_collection_check(analytics, results[:analytics])
       end
 
-      def general_shift(results: {}, record: subject)
-        record = send(record) if record.is_a?(Symbol)
-
-        get move_path(record),
-            params: {format: request_format},
-            headers: @_argu_headers
-
-        assert_response results[:response]
-      end
-
-      def general_move(results: {}, record: subject, attributes: {})
-        forum_to = send(attributes[:forum_id])
-        assert_differences [["record.forum.reload.#{model_name.underscore}s.count",
-                             results[:should] ? -1 : 0],
-                            ["forum_to.reload.#{model_name.underscore}s.count",
-                             results[:should] ? 1 : 0]] do
-          put move_path(record),
-              headers: @_argu_headers,
-              params: {format: request_format, model_sym => attributes.merge(forum_id: forum_to.id)}
-        end
-
-        assert_response results[:response]
-        return unless results[:should]
-        assert_redirected_to record
-
-        assert assigns(:resource)
-        assert_equal forum_to, assigns(:resource).forum
-        forum_id = forum_to.id
-        case model_class
-        when Motion
-          assert assigns(:resource).arguments.count.positive?
-          assigns(:resource).arguments.pluck(:forum_id).each do |id|
-            assert_equal forum_id, id
-          end
-          assert assigns(:resource).question.blank?
-        when Question
-          assert record.forum != forum_to.id
-          assigns(:resource).motions.pluck(:forum_id).each do |id|
-            assert_equal record.forum.id, id
-          end
-          assert assigns(:resource).reload.motions.blank?
-        end
-        assert assigns(:resource).activities.count.positive?
-        assigns(:resource).activities.pluck(:forum_id).each do |id|
-          assert_equal forum_id, id
-        end
-        assigns(:resource).activities.pluck(:recipient_id).each do |id|
-          assert_equal forum_id, id
-        end
-        assigns(:resource).activities.pluck(:recipient_type).each do |type|
-          assert_equal 'Forum', type
-        end
-      end
-
       # Model names
       def model_class
         model_name.constantize

@@ -79,19 +79,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   ####################################
   # as Guest
   ####################################
-  test 'guest should get show other json_api' do
-    get vote_path(vote), params: {format: :json_api}
-
-    assert_response 200
-  end
-
-  test 'guest should not get show json_api of user with hidden votes' do
-    get vote_path(hidden_vote), params: {format: :json_api}
-
-    assert_not_authorized
-  end
-
-  test 'guest should get show vote' do
+  test 'guest should get show vote by parent' do
     get root_path
     guest_vote
     get motion_show_vote_path(motion.id, format: :json_api)
@@ -108,35 +96,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     other_guest_vote
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 404
-  end
-
-  test 'guest should not get new' do
-    get new_motion_vote_path(motion)
-
-    assert_redirected_to new_user_session_path(r: new_motion_vote_path(confirm: true))
-    assert_not assigns(:model)
-  end
-
-  test 'guest should post create vote for motion' do
-    get root_path
-    post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
-    assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_show_vote_path(motion.id, format: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-  end
-
-  test 'guest should post create vote for vote_event' do
-    get root_path
-    assert_difference('Argu::Redis.keys("temporary.*").count', 1) do
-      post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con})
-    end
-    assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_show_vote_path(motion.id, format: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'guest should post create for motion with upvoted arguments json' do
@@ -195,20 +154,6 @@ class VotesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:unconfirmed) { create(:user, :unconfirmed) }
 
-  test 'unconfirmed should get show other json_api' do
-    sign_in unconfirmed
-    get vote_path(vote), params: {format: :json_api}
-
-    assert_response 200
-  end
-
-  test 'unconfirmed should not get show json_api of user with hidden votes' do
-    sign_in unconfirmed
-    get vote_path(hidden_vote), params: {format: :json_api}
-
-    assert_not_authorized
-  end
-
   test 'unconfirmed should get show vote' do
     sign_in unconfirmed
     get root_path
@@ -228,30 +173,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     unconfirmed_vote2
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 404
-  end
-
-  test 'unconfirmed should post create vote for motion' do
-    sign_in unconfirmed
-    get root_path
-    post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
-    assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_show_vote_path(motion.id, format: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-  end
-
-  test 'unconfirmed should post create vote for vote_event' do
-    sign_in unconfirmed
-    get root_path
-    assert_difference('Argu::Redis.keys("temporary.*").count', 1) do
-      post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con})
-    end
-    assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_show_vote_path(motion.id, format: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'unconfirmed should post create for motion with upvoted arguments json' do
@@ -279,32 +200,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument.edge)
     assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument2.edge)
     assert_response 201
-  end
-
-  test 'unconfirmed should post not create vote for closed motion' do
-    sign_in unconfirmed
-    get root_path
-    post motion_votes_path(closed_question_motion.id, format: :json_api, vote: {for: :con})
-    assert_response 403
-    get motion_show_vote_path(closed_question_motion.id, format: :json_api)
-    assert_response 404
-  end
-
-  test 'unconfirmed should post update vote' do
-    sign_in unconfirmed
-    get root_path
-    unconfirmed_vote
-    get motion_show_vote_path(motion.id, format: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
-    assert_differences([['Argu::Redis.keys("temporary.*").count', 0], ['Vote.count', 0]]) do
-      post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
-    end
-    assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_show_vote_path(motion.id, format: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'unconfirmed should post update vote that also exists in postgres' do
@@ -338,58 +233,6 @@ class VotesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should get new' do
-    sign_in user
-
-    get new_motion_vote_path(motion)
-
-    assert_response 200
-  end
-
-  test 'user should get show json_api' do
-    sign_in user
-
-    get vote_path(vote), params: {format: :json_api}
-
-    assert_response 200
-  end
-
-  test 'user should not get show json_api of user with hidden votes' do
-    sign_in user
-
-    get vote_path(hidden_vote), params: {format: :json_api}
-
-    assert_not_authorized
-  end
-
-  test 'user without vote should not get show own vote json_api' do
-    sign_in user
-
-    get motion_show_vote_path(motion), params: {format: :json_api}
-
-    assert_response 404
-  end
-
-  test 'user should post create for motion json' do
-    sign_in user
-
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post motion_votes_path(motion),
-           params: {
-             format: :json,
-             vote: {
-               for: :pro
-             }
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert_analytics_collected('votes', 'create', 'pro')
-  end
-
   test 'user should post create for motion with upvoted arguments json' do
     sign_in user
     create(:vote, parent: argument.edge, creator: user.profile, publisher: user)
@@ -416,7 +259,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('votes', 'create', 'pro')
   end
 
-  test 'user should post create for argument json' do
+  test 'user should post create upvote for argument json' do
     sign_in user
     argument
 
@@ -426,77 +269,13 @@ class VotesTest < ActionDispatch::IntegrationTest
       post argument_votes_path(argument),
            params: {
              format: :json,
-             vote: {
-               for: :pro
-             }
+             for: :pro
            }
     end
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
-  end
-
-  test 'user should not post create for motion of closed question' do
-    sign_in user
-    closed_question_motion
-
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['closed_question_motion.default_vote_event.reload.children_count(:votes_pro)', 0]]) do
-      post motion_votes_path(closed_question_motion),
-           params: {
-             format: :json,
-             vote: {
-               for: :pro
-             }
-           }
-    end
-
-    assert_not_authorized
-  end
-
-  test 'user should not post create for argument of closed question' do
-    sign_in user
-    closed_question_argument
-
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['closed_question_argument.reload.children_count(:votes_pro)', 0]]) do
-      post argument_votes_path(closed_question_argument),
-           params: {
-             for: :pro,
-             format: :json
-           }
-    end
-
-    assert_not_authorized
-  end
-
-  test 'user should post create json_api' do
-    sign_in user
-
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post motion_votes_path(motion),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
-    assert assigns(:create_service).resource.pro?
-    assert_nil assigns(:create_service).resource.explanation
-    assert_nil assigns(:create_service).resource.explained_at
   end
 
   test 'user should post create json_api with explanation' do
@@ -596,60 +375,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.pro?
   end
 
-  test 'user should post create con json_api for linked record' do
-    linked_record_mock(1)
-    linked_record_mock(2)
-    linked_record
-    sign_in user
-
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
-      post linked_record_votes_path(linked_record),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :con
-               }
-             }
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.con?
-  end
-
-  test "user should not delete destroy others' vote" do
-    sign_in user
-
-    vote # Trigger
-    assert_no_difference('Vote.count') do
-      delete vote_path(vote.id), params: {format: :json}
-    end
-
-    assert_response 403
-  end
-
   ####################################
   # As Creator
   ####################################
-  test 'creator should get show json_api' do
-    sign_in creator
-
-    get vote_path(vote), params: {format: :json_api}
-
-    assert_response 200
-  end
-
-  test 'creator should get show own vote json_api' do
-    sign_in creator
-
-    get motion_show_vote_path(motion), params: {format: :json_api}
-
-    assert_response 200
-  end
-
   test 'creator should not create unchanged vote for motion json' do
     sign_in creator
 
@@ -667,47 +395,6 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 304
     assert assigns(:create_service).resource.valid?
-  end
-
-  test 'creator should not create unchanged vote for argument json' do
-    sign_in creator
-
-    assert_differences([['Vote.count', 0],
-                        ['argument.children_count(:votes_pro)', 0]]) do
-      post argument_votes_path(argument),
-           params: {
-             vote: {
-               for: 'pro'
-             },
-             format: :json
-           }
-    end
-
-    assert_response 304
-    assert assigns(:create_service).resource.valid?
-  end
-
-  test 'creator should not create unchanged vote json_api' do
-    sign_in creator
-
-    assert_differences([['Vote.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', 0]]) do
-      post motion_votes_path(motion),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           }
-    end
-
-    assert_response 304
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
   end
 
   test 'creator should not create new vote html' do
@@ -794,19 +481,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.con?
   end
 
-  test 'creator should delete destroy vote for motion json' do
-    sign_in creator
-
-    assert_differences([['Vote.count', -1],
-                        ['Edge.count', -1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', -1]]) do
-      delete vote_path(vote), params: {format: :json}
-    end
-
-    assert_response 204
-    assert_analytics_collected('votes', 'destroy', 'pro')
-  end
-
   test 'creator should not put update json_api side' do
     sign_in creator
 
@@ -879,130 +553,6 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 204
     assert_analytics_collected('votes', 'destroy', 'pro')
-  end
-
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(cairo) }
-
-  test 'member should get new' do
-    sign_in member
-
-    get new_motion_vote_path(cairo_motion)
-
-    assert_response 200
-  end
-
-  test 'member should post create' do
-    sign_in member
-
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['cairo_motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post motion_votes_path(cairo_motion),
-           params: {
-             format: :json,
-             vote: {
-               for: :pro
-             }
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert_analytics_collected('votes', 'create', 'pro')
-  end
-
-  test 'member should post create json_api' do
-    sign_in member
-
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['cairo_motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post motion_votes_path(cairo_motion),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
-  end
-
-  test 'member should delete destroy own vote' do
-    member_vote = create(:vote,
-                         parent: cairo_motion.default_vote_event.edge,
-                         options: {
-                           creator: member.profile
-                         },
-                         for: 'neutral')
-    sign_in member
-
-    assert_differences([['Vote.count', -1],
-                        ['Edge.count', -1],
-                        ['cairo_motion.default_vote_event.reload.children_count(:votes_neutral)', -1]]) do
-      delete vote_path(member_vote), params: {format: :json}
-    end
-
-    assert_response 204
-    assert_analytics_collected('votes', 'destroy', 'neutral')
-  end
-
-  ####################################
-  # As Non-Member
-  ####################################
-  test 'non-member should not get new' do
-    sign_in user
-
-    get new_motion_vote_path(cairo_motion)
-
-    assert_response 403
-    assert_not_authorized
-  end
-
-  test 'non-member should not post create' do
-    sign_in user
-
-    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
-      post motion_votes_path(cairo_motion),
-           params: {
-             format: :json,
-             vote: {
-               for: :pro
-             }
-           }
-    end
-
-    assert_response 403
-    assert_not_authorized
-  end
-
-  test 'non-member should not post create json_api' do
-    sign_in user
-
-    assert_differences([['Vote.count', 0], ['Edge.count', 0]]) do
-      post motion_votes_path(cairo_motion),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           }
-    end
-
-    assert_response 403
-    assert_not_authorized
   end
 
   private

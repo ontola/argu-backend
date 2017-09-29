@@ -54,109 +54,9 @@ class ConversionsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As User
-  ####################################
-  let(:user) { create(:user) }
-
-  test 'user should not get convert motion' do
-    sign_in user
-    get new_edge_conversion_url(motion.edge)
-    assert_not_authorized
-    assert_response 403
-  end
-
-  test 'user should not post convert motion' do
-    sign_in user
-    post edge_conversions_path(motion.edge),
-         params: {
-           conversion: {
-             klass: 'questions'
-           }
-         }
-    assert_not_authorized
-    assert_response 403
-  end
-
-  test 'user should not get convert question' do
-    sign_in user
-    get new_edge_conversion_url(question.edge)
-    assert_not_authorized
-    assert_response 403
-  end
-
-  test 'user should not post convert question' do
-    sign_in user
-    post edge_conversions_path(question.edge),
-         params: {
-           conversion: {
-             klass: 'motions'
-           }
-         }
-    assert_not_authorized
-    assert_response 403
-  end
-
-  ####################################
   # As Staff
   ####################################
   let(:staff) { create(:user, :staff) }
-
-  test 'staff should not get convert project' do
-    sign_in staff
-
-    get new_edge_conversion_path(project.edge)
-    assert_response 403
-  end
-
-  test 'staff should not post convert project' do
-    sign_in staff
-
-    post edge_conversions_path(project.edge),
-         params: {
-           conversion: {
-             klass: 'questions'
-           }
-         }
-    assert_response 403
-  end
-
-  test 'staff should not get convert argument' do
-    sign_in staff
-
-    get new_edge_conversion_path(argument.edge)
-    assert_response 403
-  end
-
-  test 'staff should not post convert argument' do
-    sign_in staff
-
-    post edge_conversions_path(argument.edge),
-         params: {
-           conversion: {
-             klass: 'questions'
-           }
-         }
-    assert_response 403
-  end
-
-  test 'staff should not post convert motion to argument' do
-    sign_in staff
-
-    post edge_conversions_path(motion.edge),
-         params: {
-           conversion: {
-             klass: 'arguments'
-           }
-         }
-    assert_response 403
-  end
-
-  test 'staff should get convert motion' do
-    sign_in staff
-
-    get new_edge_conversion_path(motion.edge)
-    assert_response 200
-  end
 
   test 'staff should post convert motion' do
     sign_in staff
@@ -236,13 +136,6 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert Motion.where(id: project_motion.id).empty?
     assert_equal Question, edge.owner.class
     assert_equal Project, edge.parent.owner.class
-  end
-
-  test 'staff should get convert question' do
-    sign_in staff
-
-    get new_edge_conversion_path(question.edge)
-    assert_response 200
   end
 
   test 'staff should post convert question' do

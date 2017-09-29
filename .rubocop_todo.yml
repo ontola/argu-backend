@@ -17,7 +17,6 @@ Lint/AssignmentInCondition:
 Security/Eval:
   Exclude:
     - 'app/models/user.rb'
-    - 'lib/argu/test_helpers/automated_tests.rb'
     - 'lib/argu/test_helpers/test_assertions.rb'
 
 # Offense count: 1

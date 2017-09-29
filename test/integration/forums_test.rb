@@ -62,27 +62,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 302
   end
 
-  test 'guest should get show' do
-    # Trigger creation of items
-    holland_nested_project_items
-    get forum_path(holland)
-
-    general_show(holland)
-  end
-
-  test 'guest should not get delete' do
-    get delete_forum_path(holland)
-    assert_redirected_to new_user_session_path(r: '/holland/delete')
-  end
-
-  test 'guest should not delete destroy' do
-    holland
-    assert_no_difference('Forum.count') do
-      delete forum_path(holland)
-    end
-    assert_redirected_to new_user_session_path(r: '/holland')
-  end
-
   ####################################
   # As User
   ####################################
@@ -103,22 +82,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     refute_have_tag response.body,
                     '.box-grid h3',
                     holland.display_name
-  end
-
-  test 'user should get show' do
-    # Trigger creation of items
-    holland_nested_project_items
-    sign_in
-
-    general_show(holland)
-  end
-
-  test 'user should not show settings' do
-    sign_in
-
-    get settings_forum_path(freetown)
-    assert_response 403
-    assert_not_authorized
   end
 
   test 'should not show statistics' do
@@ -146,38 +109,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 404, 'Hidden forums are visible'
   end
 
-  test 'user should not put update settings' do
-    sign_in
-
-    assert_no_difference('holland.reload.lock_version') do
-      put forum_path(holland),
-          params: {
-            forum: {
-              name: 'New title',
-              bio: 'new contents'
-            }
-          }
-    end
-
-    assert_response 403
-    assert_not_authorized
-  end
-
-  test 'user should not get delete' do
-    sign_in
-    get delete_forum_path(holland)
-    assert_not_authorized
-  end
-
-  test 'user should not delete destroy' do
-    holland
-    sign_in
-    assert_no_difference('Forum.count') do
-      delete forum_path(holland)
-    end
-    assert_not_authorized
-  end
-
   ####################################
   # As Member
   ####################################
@@ -203,14 +134,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     holland.display_name
   end
 
-  test 'member should get show' do
-    # Trigger creation of items
-    holland_nested_project_items
-    sign_in holland_member
-
-    general_show(holland)
-  end
-
   test 'member should show closed children to members' do
     sign_in cologne_member
 
@@ -228,36 +151,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_forum_shown(helsinki)
   end
 
-  test 'member should not put update settings' do
-    sign_in holland_member
-
-    assert_no_difference('holland.reload.lock_version') do
-      put forum_path(holland),
-          params: {
-            forum: {
-              name: 'New title',
-              bio: 'new contents'
-            }
-          }
-    end
-
-    assert_not_authorized
-  end
-
-  test 'member should not get delete' do
-    sign_in holland_member
-    get delete_forum_path(holland)
-    assert_not_authorized
-  end
-
-  test 'member should not delete destroy' do
-    sign_in holland_member
-    assert_no_difference('Forum.count') do
-      delete forum_path(holland)
-    end
-    assert_not_authorized
-  end
-
   ####################################
   # As Manager
   ####################################
@@ -271,14 +164,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_select '.box.box-grid', 4
   end
 
-  test 'manager should not show settings' do
-    sign_in holland_manager
-
-    get settings_forum_path(holland),
-        params: {tab: :general}
-    assert_response 403
-  end
-
   test 'manager should get index' do
     sign_in holland_manager
     get forums_user_path(holland_manager)
@@ -287,20 +172,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body,
                     '.box-grid h3',
                     holland.display_name
-  end
-
-  test 'manager should not get delete' do
-    sign_in holland_manager
-    get delete_forum_path(holland)
-    assert_not_authorized
-  end
-
-  test 'manager should not delete destroy' do
-    sign_in holland_manager
-    assert_no_difference('Forum.count') do
-      delete forum_path(holland)
-    end
-    assert_not_authorized
   end
 
   ####################################
@@ -391,26 +262,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
-  test 'super_admin should get delete' do
-    sign_in create_super_admin(holland)
-    get delete_forum_path(holland)
-    assert_response 200
-  end
-
-  test 'super_admin should delete destroy' do
-    sign_in create_super_admin(holland)
-    assert_difference('Forum.count', -1) do
-      delete forum_path(holland)
-    end
-    assert_redirected_to holland.page
-  end
-
-  test 'super_admin should not get new' do
-    sign_in create_super_admin(argu)
-    get new_portal_forum_path(page: argu)
-    assert_response 404
-  end
-
   ####################################
   # As Staff
   ####################################
@@ -484,42 +335,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
     assert_equal holland.edge.grants.size, 1
-  end
-
-  test 'staff should get delete' do
-    sign_in staff
-    get delete_forum_path(holland)
-    assert_response 200
-  end
-
-  test 'staff should delete destroy' do
-    holland
-    sign_in staff
-    assert_difference('Forum.count', -1) do
-      delete forum_path(holland)
-    end
-    assert_redirected_to holland.page
-  end
-
-  test 'staff should get new' do
-    sign_in staff
-    get new_portal_forum_path(page: argu)
-    assert_response 200
-  end
-
-  test 'staff should post create' do
-    sign_in staff
-    assert_difference('Forum.count', 1) do
-      post portal_forums_path params: {
-        forum: {
-          name: 'New forum',
-          locale: 'en-GB',
-          shortname_attributes: {shortname: 'new_forum'},
-          page_id: argu.id
-        }
-      }
-    end
-    assert_redirected_to Forum.last
   end
 
   test 'staff should post create forum with latlon' do

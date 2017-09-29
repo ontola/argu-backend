@@ -51,7 +51,6 @@ Metrics/BlockLength:
   ExcludedMethods:
     - context
     - define
-    - define_tests
     - describe
     - draw
     - factory
