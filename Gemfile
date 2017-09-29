@@ -102,7 +102,7 @@ gem 'video_info'
 
 ################## User management ########################
 gem 'devise', '~> 4.3.0'
-gem 'devise-multi_email', '~> 2.0.1'
+gem 'devise-multi_email', '~> 2.0.1', git: 'https://github.com/ArthurWD/devise-multi_email', ref: '25ae8'
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-facebook', '~> 4.0.0', git: 'https://github.com/ArthurWD/omniauth-facebook', ref: '23019'

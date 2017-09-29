@@ -8,6 +8,14 @@ GIT
       rails (~> 5.0)
 
 GIT
+  remote: https://github.com/ArthurWD/devise-multi_email
+  revision: 25ae855ede68c65542950005a82e1dc38d707b9e
+  ref: 25ae8
+  specs:
+    devise-multi_email (2.0.1)
+      devise
+
+GIT
   remote: https://github.com/ArthurWD/omniauth-facebook
   revision: 23019ecc28ae291849053793ac80139f3b755bb2
   ref: 23019
@@ -237,8 +245,6 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
-    devise-multi_email (2.0.1)
-      devise
     diff-lcs (1.3)
     docile (1.1.5)
     domain_name (0.5.20170223)
@@ -713,7 +719,7 @@ DEPENDENCIES
   country_select
   database_cleaner (~> 1.5.3)
   devise (~> 4.3.0)
-  devise-multi_email (~> 2.0.1)
+  devise-multi_email (~> 2.0.1)!
   doorkeeper (~> 4.2.0)
   doorkeeper-jwt (~> 0.1.6)
   dotenv-rails
