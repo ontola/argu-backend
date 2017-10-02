@@ -13,6 +13,8 @@
   overflow-y: auto;
   text-align: center;
   pointer-events: bounding-box; // Makes the overflow clickable, so it can close.
+  max-height: calc(100vh - 4em);
+  bottom: initial;
 
   .box {
     pointer-events: auto;
@@ -40,6 +42,10 @@
 
   .leaflet-container {
     height: 400px;
+  }
+
+  .formtastic .actions {
+    margin-bottom: 0;
   }
 }
 
@@ -105,8 +111,6 @@
   margin-top: 2em;
   border-radius: 5px;
   margin-bottom: 3em;
-  max-height: calc(100vh - 4em);
-  bottom: initial;
 }
 
 .modal-container {
