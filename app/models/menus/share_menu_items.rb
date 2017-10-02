@@ -8,16 +8,14 @@ module Menus
       url = polymorphic_url(resource, only_path: false)
       items = [invite_link]
       if resource.edge.is_public?
-        items.concat(
-          [
-            facebook_share_link(url),
-            twitter_share_link(url),
-            linkedin_share_link(url),
-            google_share_link(url),
-            email_share_link(url),
-            whatsapp_share_link(url)
-          ]
-        )
+        items.concat([
+                       facebook_share_link(url),
+                       twitter_share_link(url),
+                       linkedin_share_link(url),
+                       google_share_link(url),
+                       whatsapp_share_link(url)
+                     ])
+        items << email_share_link(url) unless policy(resource).invite?
       end
       menu_item(
         :share,
