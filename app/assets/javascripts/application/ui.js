@@ -65,17 +65,17 @@ const ui = {
     },
 
     bindRemoteLinks: function () {
-        $('a[data-remote=true], form[data-remote=true]')
-            .bind("ajax:beforeSend", function () {
-                $(this).addClass("is-loading");
+        $(document)
+            .on('ajax:beforeSend', 'a[data-remote=true], form[data-remote=true]', function () {
+                $(this).addClass('is-loading');
             })
-            .bind('ajax:complete', function () {
+            .on('ajax:complete', 'a[data-remote=true], form[data-remote=true]', function () {
                 if (!document.body.classList.contains('turbolinks-redirect')) {
-                    $(this).removeClass("is-loading");
+                    $(this).removeClass('is-loading');
                 }
             })
-            .bind("ajax:error", function () {
-                $(this).removeClass("is-loading");
+            .on('ajax:error', 'a[data-remote=true], form[data-remote=true]', function () {
+                $(this).removeClass('is-loading');
             });
     },
 
