@@ -31,4 +31,4 @@
 export_i18n_js: false
 translations:
 - file: "app/assets/javascripts/i18n/translations.js"
-  only: ['*.intro', '*.votes', '*.tokens', '*.opinions', '*.arguments', '*.activities', '*.profiles', '*.formtastic', '*.roles', '*.legal', '*.errors']
+  only: ['*.intro', '*.votes', '*.tokens', '*.opinions', '*.arguments', '*.activities', '*.profiles', '*.formtastic', '*.roles', '*.legal', '*.errors', '*.menus']

@@ -3,6 +3,7 @@ import React from 'react';
 import Notifications from './Notifications';
 import LinkItem from './LinkItem';
 import ActorItem from './ActorItem';
+import CopyItem from './CopyItem';
 import FBShareItem from './FBShareItem';
 import LinkedInShareItem from './LinkedInShareItem';
 import TwitterShareItem from './TwitterShareItem';
@@ -81,6 +82,8 @@ export const DropdownContent = React.createClass({
                     const items = section.items.map((item, childI) => {
                         if (item.type === 'link') {
                             return <LinkItem current_actor={currentActor} done={close} key={childI} {...item} />;
+                        } else if (item.type === 'copy') {
+                            return <CopyItem done={close} key={childI} {...item} />;
                         } else if (item.type === 'actor') {
                             return <ActorItem done={close} key={childI} {...item} />;
                         } else if (item.type === 'fb_share') {

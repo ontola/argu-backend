@@ -1,5 +1,6 @@
 nl:
   menus:
+    copy_successful: "'%{url}' is gekopieerd naar het klembord"
     default:
       facebook: "Facebook"
       twitter: "Twitter"
@@ -8,6 +9,7 @@ nl:
       email: "E-Mail"
       whatsapp: "Whatsapp"
       share: "Delen"
+      copy: "Kopieer link"
       follow: "Meldingen"
       never: 'Nooit meldingen ontvangen'
       reactions: 'Alle items'

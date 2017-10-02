@@ -1,5 +1,6 @@
 en:
   menus:
+    copy_successful: "Copied '%{url}' to clipboard"
     default:
       facebook: "Facebook"
       twitter: "Twitter"
@@ -8,6 +9,7 @@ en:
       email: "E-Mail"
       whatsapp: "Whatsapp"
       share: "Share"
+      copy: "Copy link"
       follow: "Notifications"
       never: 'Never receive notifications'
       reactions: 'All items'

@@ -16,6 +16,7 @@ module Menus
                      ])
         items << email_share_link(url) unless policy(resource).invite?
       end
+      items << copy_share_link(url)
       menu_item(
         :share,
         image: 'fa-share-alt',
@@ -34,6 +35,15 @@ module Menus
       )
     rescue NoMethodError
       nil
+    end
+
+    def copy_share_link(url)
+      menu_item(
+        :copy,
+        type: 'copy',
+        image: 'fa-clipboard',
+        href: url
+      )
     end
 
     def facebook_share_link(url)
