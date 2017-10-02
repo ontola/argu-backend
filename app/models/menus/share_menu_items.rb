@@ -12,7 +12,6 @@ module Menus
                        facebook_share_link(url),
                        twitter_share_link(url),
                        linkedin_share_link(url),
-                       google_share_link(url),
                        whatsapp_share_link(url)
                      ])
         items << email_share_link(url) unless policy(resource).invite?
@@ -64,15 +63,6 @@ module Menus
         image: 'fa-linkedin',
         link_opts: {target: '_blank'},
         href: ShareHelper.linkedin_share_url(url, title: resource.display_name)
-      )
-    end
-
-    def google_share_link(url)
-      menu_item(
-        :google_plus,
-        image: 'fa-google-plus',
-        link_opts: {target: '_blank'},
-        href: ShareHelper.googleplus_share_url(url)
       )
     end
 
