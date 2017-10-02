@@ -6,6 +6,7 @@ import ActorItem from './ActorItem';
 import CopyItem from './CopyItem';
 import FBShareItem from './FBShareItem';
 import LinkedInShareItem from './LinkedInShareItem';
+import NoticeItem from './NoticeItem';
 import TwitterShareItem from './TwitterShareItem';
 
 const ANIMATION_DURATION = 10;
@@ -86,6 +87,8 @@ export const DropdownContent = React.createClass({
                             return <CopyItem done={close} key={childI} {...item} />;
                         } else if (item.type === 'actor') {
                             return <ActorItem done={close} key={childI} {...item} />;
+                        } else if (item.type === 'notice') {
+                            return <NoticeItem done={close} key={childI} {...item} />;
                         } else if (item.type === 'fb_share') {
                             return <FBShareItem
                                 count={this.props.socialCounts['facebook']}

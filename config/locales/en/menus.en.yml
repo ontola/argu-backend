@@ -10,6 +10,7 @@ en:
       whatsapp: "Whatsapp"
       share: "Share"
       copy: "Copy link"
+      no_social_media: "Sharing on social media is only possible in public forums"
       follow: "Notifications"
       never: 'Never receive notifications'
       reactions: 'All items'

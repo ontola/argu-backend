@@ -15,8 +15,16 @@ module Menus
                        whatsapp_share_link(url)
                      ])
         items << email_share_link(url) unless policy(resource).invite?
+        items << copy_share_link(url)
+      else
+        items.concat(
+          [
+            copy_share_link(url),
+            no_social_media_notice
+          ]
+        )
       end
-      items << copy_share_link(url)
+
       menu_item(
         :share,
         image: 'fa-share-alt',
@@ -64,6 +72,10 @@ module Menus
         link_opts: {target: '_blank'},
         href: ShareHelper.twitter_share_url(url, title: resource.display_name)
       )
+    end
+
+    def no_social_media_notice
+      menu_item(:no_social_media, type: 'notice')
     end
 
     def linkedin_share_link(url)

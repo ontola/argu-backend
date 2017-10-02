@@ -194,3 +194,13 @@ span.dropdown-header {
   background-color: $darken1;
   transition: .2s;
 }
+
+.dropdown-notice span {
+  padding: .1em .4em;
+  display: inline-block;
+  font-size: .8em;
+  line-height: 1.4em;
+  &:hover {
+    cursor: default;
+  }
+}
