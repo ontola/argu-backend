@@ -102,20 +102,18 @@ RSpec.feature 'Voting', type: :feature do
     click_link('Info')
     find('span', text: 'I\'m against').click
 
-    assert_differences([['Vote.count', 1]]) do
-      Sidekiq::Testing.inline! do
-        within('.opinion-form') do
-          fill_in 'user[email]', with: user.email
-          click_button 'Continue'
-        end
-
-        fill_in 'user[password]', with: user.password
-        click_button 'Login'
-        expect(page).to have_current_path motion_path(motion)
+    Sidekiq::Testing.inline! do
+      within('.opinion-form') do
+        fill_in 'user[email]', with: user.email
+        click_button 'Continue'
       end
 
-      expect(page).to have_css('.btn-con[data-voted-on=true]')
+      fill_in 'user[password]', with: user.password
+      click_button 'Login'
+      expect(page).to have_current_path motion_path(motion)
     end
+
+    expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 
   ####################################
