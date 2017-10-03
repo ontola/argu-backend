@@ -1,0 +1,152 @@
+nl:
+  landing:
+    header:
+      title: "Betrek mensen bij het nemen van beslissingen"
+      body: "Creëer draagvlak en voorkom teleurstellingen. Benut de kennis en creativiteit van uw doelgroep om samen betere besluiten te nemen."
+    concept:
+      challenges:
+        header: "Verzamel goede ideeën"
+        body: "Laat mensen van binnen of van buiten uw organisatie meedenken over uitdagingen."
+        crowdsource_innovation_title: "Crowdsource innovatie"
+        crowdsource_innovation_body: "Benut de creativiteit van uw doelgroep en geef ze de kans om hun eigen ideeën te delen."
+        invite_title: "Oplossingsgerichte discussies"
+        invite_body: "Onze discussiestructuur is ontworpen om van vragen toe te werken naar uitvoerbare oplossingen."
+        reward_title: "Prijsvragen"
+        reward_body: "Haal nog meer en betere ideeën op door een beloning uit te keren."
+        example: "Hoe lossen we probleem X op?"
+      ideas:
+        header: "Beargumenteerd besluiten"
+        body: "Bespreek de voor- en nadelen van voorstellen en krijg inzicht in draagvlak. Neem digitaal uw besluit, zodat iedereen weet wat er besloten is."
+        arguments_title: "Argumenten"
+        arguments_body: "Krijg een helder overzicht van de belangrijkste voor- en tegenargumenten."
+        voting_title: "Stemmen"
+        voting_body: "Deelnemers kunnen stemmen op ideeën en argumenten."
+        decide_title: "Transparant beslissen"
+        decide_body: "Na een besluit ontvangen alle betrokkenen automatisch een melding."
+        example: "Idee"
+        accepted: "Aangenomen"
+    cases:
+      header: "Praktijkvoorbeelden e-participatie"
+      body: "Van draagvlakmeting tot ideegeneratie: Argu is flexibel inzetbaar voor diverse participatietrajecten."
+      read_more: "Lees verder"
+      heerenveen:
+        title: "Draagvlak meten"
+        body: "De gemeente Heerenveen liet inwoners online meestemmen en argumenten uitwisselen over de eventuele komst van een Hotel."
+        metric1_html: "<b>180</b> stemmen geplaatst"
+        metric2_html: "<b>142</b> reacties en argumenten"
+        case_preview: "Wat is uw mening over de mogelijke komst van een Van der Valkhotel in Heerenveen?"
+      rochedale:
+        title: "Beleid co-creëren"
+        body: "Woningcorporatie Rochedale deelde hun eigen voorstellen over duurzaamheidsbeleid en liet hun bewoners stemmen, reageren en eigen ideeën indienen."
+        metric1_html: "<b>193</b> stemmen geplaatst"
+        metric2_html: "<b>100</b> reacties en argumenten"
+        case_preview: "Denkt u met ons mee hoe we onze woningen energiezuiniger kunnen maken?"
+      hollandskroon:
+        title: "Budget verdelen"
+        body: "De gemeente Hollands Kroon gaf inwoners de kans om zelf te bepalen waar het projectbudget naartoe ging."
+        metric1_html: "<b>3538</b> stemmen geplaatst"
+        metric2_html: "<b>393</b> reacties en argumenten"
+        case_preview: "Welk goed doel of initiatief verdient volgens jou €2.500,-?"
+      utrecht:
+        title: "Opties afwegen"
+        body: "In de gemeente Utrecht mochten inwoners meestemmen over de herinrichting van een belangrijk kruispunt."
+        metric1_html: "<b>797</b> stemmen geplaatst"
+        metric2_html: "<b>172</b> reacties en argumenten"
+        case_preview: "Denk mee over de nieuwe Maliebaan!"
+    features:
+      header: "Functionaliteiten"
+      body: "Wij hosten Argu en blijven het ontwikkelen, zodat u altijd over de nieuwste mogelijkheden beschikt."
+      locations:
+        title: "Kaarten"
+        body: "Krijg te zien waar discussies plaats vinden."
+      invite:
+        title: "Uitnodigen"
+        body: "Importeer e-mailadressen of deel een geheime link."
+      notifications:
+        title: "Meldingen"
+        body: "Blijf via e-mail op de hoogte van de laatste discussies."
+      manage:
+        title: "Beheer"
+        body: "Stel in wie mogen stemmen en wie wat mag bekijken, maken of bewerken."
+      attachments:
+        title: "Bijlagen"
+        body: "Reacties kunnen worden aangevuld met plaatjes, filmpjes en documenten."
+      voting:
+        title: "E-voting"
+        body: "Eenvoudig te gebruiken stemsysteem met krachtige validatie opties."
+      reports:
+        title: "Rapportage"
+        body: "Ontvang uitgebreide statistische rapportage van de resultaten en de bereikte doelgroep."
+      opinions:
+        title: "Opinies"
+        body: "Krijg inzicht in de redenen waarom mensen ergens voor of tegen zijn."
+      deadlines:
+        title: "Deadlines"
+        body: "Creëer urgentie door discussies automatisch te laten sluiten."
+      # Unreleased features, have an image
+      branding:
+        title: "Huisstijl"
+        body: "Wijzig de vormgeving van Argu om bij uw huisstijl te passen."
+      api:
+        title: "Linked Data API"
+        body: "Blijf eigenaar van alle data, direct herbruikbaar via onze API."
+      export:
+        title: "Export"
+        body: "Sla hele discussies op als Excel, JSON of CSV."
+      # Not included in view, have no image
+      auditing:
+        title: "Logboek"
+        body: "Alle interacties worden opgeslagen en zijn controleerbaar."
+      censorship:
+        title: "Geen censuur"
+        body: "Verwijderde items verdwijnen uit overzichten, maar verdwijnen niet van de server om censuur te voorkomen."
+      shortnames:
+        title: "Korte URL's"
+        body: "Maak eenvoudig te onthouden links."
+      updates:
+        title: "Updates delen"
+        body: "Houd deelnemers via mail op de hoogte van uitkomsten en ontwikkelingen."
+      drafts:
+        title: "Concepten"
+        body: "Sla tussentijdse versies op, zodat u niet bang hoeft te zijn als u het tabblad sluit."
+      scheduling:
+        title: "Inplannen"
+        body: "Bepaal wanneer discussies automatisch worden geplaatst. Stel in wie hier een melding van ontvangen."
+      visibility:
+        title: "Gesloten of open"
+        body: "Bepaal wie er toegang hebben tot uw discussie-omgeving."
+    method:
+      header: "Werkwijze"
+      body: "Wij hebben veel ervaring opgedaan over hoe mensen effectief zijn te betrekken met online tools en wij helpen u daarom graag. Een dergelijk traject ziet er als volgt uit:"
+      step1:
+        title: "Oriënterend gesprek"
+        body: "We denken mee over uw vraagstuk en kijken of Argu een geschikt middel is."
+      step2:
+        title: "Discussies opzetten"
+        body: "Wij komen graag bij u langs om mee te denken. We bespreken het vraagstuk en stellen de doelen van het participatietraject vast. Samen kiezen we de best passende aanpak."
+      step3:
+        title: "Mensen bereiken"
+        body: "Samen met u voeren we het communicatieplan uit om uw doelgroep te bereiken. Een dergelijk traject bestaat doorgaans uit het inzetten van zowel online als offline kanalen."
+      step4:
+        title: "Moderatie"
+        body: "Tijdens de discussie houden wij de inbreng in de gaten. Als het nodig is grijpen we met uw toestemming in."
+      step5:
+        title: "Rapportage & terugkoppeling"
+        body: "Na het sluiten van de discussie kan er eenvoudig worden teruggekoppeld, zodat alle betrokkenen op de hoogte worden gehouden van een eventuele uitkomst. Wij stellen een rapportage op waarin we statistieken aanleveren en suggesties geven voor vervolgtrajecten."
+    faq:
+      header: "Vragen"
+      cost:
+        question: "Wat kost het gebruik van Argu?"
+        answer: "Dit hangt af van het type organisatie, de grootte van uw doelgroep en de mate waarin u zou willen dat wij advies leveren. Neem contact op voor meer informatie."
+      moderation:
+        question: "Hoe zit het met moderatie?"
+        answer: "Op verzoek kijken wij mee met de discussie en modereren wij deze. U kunt er uiteraard ook voor kiezen om de ingebouwde moderatie tools zelf te gebruiken."
+      voting:
+        question: "Hoe werkt stemmen op Argu?"
+        answer: "U kunt ervoor kiezen dat iedere bezoeker met een bevestigd e-mailadres kan stemmen. Als u strengere controle op stemmen wilt, kunt u er voor kiezen om bijvoorbeeld specifieke e-mailadressen uit te nodigen of om zelf stemcodes te verstrekken aan uw doelgroep."
+      other:
+        question: "Ik heb een andere vraag."
+        answer_html: 'Stuur een mail naar <a href="mailto:info@argu.co">info@argu.co</a> of bel <a href="tel:0031653962242">0653962242</a>.'
+    c2a:
+      contact_us: "Neem contact op"
+      ask_demo: "Vraag een demonstratie aan"

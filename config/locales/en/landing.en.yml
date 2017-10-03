@@ -1,0 +1,151 @@
+en:
+  landing:
+    header:
+      title: "Involve people in decision making"
+    concept:
+      challenges:
+        header: "Gather great ideas"
+        body: "Allow people from inside or outside of your organisation to help solve the challenges that you face."
+        crowdsource_innovation_title: "Crowdsource innovation"
+        crowdsource_innovation_body: "Use the creativity of your audience and let them share their own ideas."
+        invite_title: "Solution-oriented discussions"
+        invite_body: "Our discussion struture is designed to work from questions to practical proposals."
+        reward_title: "Contests"
+        reward_body: "Collect even more and better ideas by setting rewards."
+        example: "How do we solve problem X?"
+      ideas:
+        header: "Argued decision making"
+        body: "Discuss the pros and cons of proposals and gain insight in support."
+        arguments_title: "Arguments"
+        arguments_body: "Get a clear overview of the most important advantages and problems of ideas."
+        voting_title: "Voting"
+        voting_body: "Participants get to vote on ideas and arguments."
+        decide_title: "Transparent decision making"
+        decide_body: "After making a decision, those who were involved automatically receive a notification."
+        example: "Idea"
+        accepted: "Accepted"
+    cases:
+      header: "Examples of online civic engagement"
+      body: "From support level measurement to idea generation: Argu can be used in various civic engagement projects."
+      read_more: "Read more"
+      heerenveen:
+        title: "Measure support"
+        body: "The municipality Heerenveen allowed citizens to vote and exchange opinions about the potential arrival of a new Hotel."
+        metric1_html: "<b>180</b> votes"
+        metric2_html: "<b>142</b> comments and arguments"
+        case_preview: "Wat is uw mening over de mogelijke komst van een Van der Valkhotel in Heerenveen?"
+      rochedale:
+        title: "Policy co-creation"
+        body: "Housing corporation Rochedale shared their own proposals for sustainability and allowed residents to vote, respond and share their own ideas."
+        metric1_html: "<b>193</b> votes"
+        metric2_html: "<b>100</b> comments and arguments"
+        case_preview: "Denkt u met ons mee hoe we onze woningen energiezuiniger kunnen maken?"
+      hollandskroon:
+        title: "Allocate a budget"
+        body: "The municipality Hollands Kroon gave citizens the opportunity to decide how a project budget was spent."
+        metric1_html: "<b>3538</b> votes"
+        metric2_html: "<b>393</b> comments and arguments"
+        case_preview: "Welk goed doel of initiatief verdient volgens jou €2.500,-?"
+      utrecht:
+        title: "Weigh options"
+        body: "In the municipality Utrecht, citizens could vote on the redevelopment of an important intersection."
+        metric1_html: "<b>797</b> votes"
+        metric2_html: "<b>172</b> comments and arguments"
+        case_preview: "Denk mee over de nieuwe Maliebaan!"
+    features:
+      header: "Features"
+      body: "We host Argu and will continue to develop it, so you can always use the latest features."
+      locations:
+        title: "Maps"
+        body: "See where discussions take place."
+      invite:
+        title: "Invite"
+        body: "Import email addresses or share a secret URL."
+      notifications:
+        title: "Notifications"
+        body: "Stay up to date of new discussions through email."
+      manage:
+        title: "Management"
+        body: "You are in control of the rights of the users."
+      attachments:
+        title: "Attachments"
+        body: "Add images, videos and documents."
+      voting:
+        title: "E-voting"
+        body: "Easy to use voting system with powerful verficiation features."
+      reports:
+        title: "Reports"
+        body: "Receive complete reports with statistics about the results of the discussion and your audience."
+      opinions:
+        title: "Opinions"
+        body: "Gain insight into why your audience is either for or against something."
+      deadlines:
+        title: "Deadlines"
+        body: "Create urgency by automatically closing discussions."
+      # Unreleased features, have an image
+      branding:
+        title: "Branding"
+        body: "Change how Argu looks to match your corporate identity."
+      api:
+        title: "Linked Data API"
+        body: "You own your data. Re-use it with our powerful API."
+      export:
+        title: "Export"
+        body: "Save discussions as Excel, JSON or CSV."
+      # Not included in view, have no image
+      auditing:
+        title: "Logging & auditing"
+        body: "We log all interactions so you'll always know who did what."
+      censorship:
+        title: "No censorship"
+        body: "Deleted items disappear from pages, but the data exists to prevent censorship."
+      shortnames:
+        title: "Shorten URLs"
+        body: "Create easy to remember URLs."
+      updates:
+        title: "Share updates"
+        body: "Keep participants notified of relevant developments."
+      drafts:
+        title: "Concepts"
+        body: "Save unpublished versions of your discussions."
+      scheduling:
+        title: "Planning"
+        body: "Decide when discussions will be launched."
+      visibility:
+        title: "Closed or open"
+        body: "Set the privacy settings of your forum."
+    method:
+      header: "Our method"
+      body: "We're experienced with civic engagement and we'd love to help you successfully engage your audience. Working with us might look like this:"
+      step1:
+        title: "Exploratory conversation"
+        body: "Together we will discuss your case and decide whether Argu is the right tool for the job."
+      step2:
+        title: "Set up discussions"
+        body: "We set goals for the engagement process and propose a way to set up the discussion. Together we pick the best approach."
+      step3:
+        title: "Reach your audience"
+        body: "Together we will execute the communication strategy to reach your target audience. Generally we use both online and offline communication channels."
+      step4:
+        title: "Moderation"
+        body: "During the discussion we will monitor the activity. If necessary, we will intervene with your permission."
+      step5:
+        title: "Reporting & feedback"
+        body: "After closing the discussion, an update can be sent to all participants to inform them about decisions. We create a report with statitics."
+    faq:
+      header: "Questions"
+      cost:
+        question: "How much does Argu cost?"
+        answer: "Our pricing depends on your organization's size, the size of your target audience and how much consultancy you request. Get in touch for more information."
+      moderation:
+        question: "Who moderates the discussion?"
+        answer: "If you want to, we do, but you can always use the built-in moderation tools."
+      voting:
+        question: "How does voting work?"
+        answer: "You can allow everyone with a valid email address to vote, you can whitelist a set of emailaddresses, share a uniqute URL or you can generate single-use tokens."
+      other:
+        question: "I have a different question."
+        answer_html: 'Send us an email at <a href="mailto:info@argu.co">info@argu.co</a> or dial <a href="tel:0031653962242">0031653962242</a>.'
+    c2a:
+      contact_us: "Get in touch"
+      ask_demo: "Request a demo"

@@ -14,7 +14,7 @@ RSpec.feature 'Signup', type: :feature do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
 
     visit root_path
-    expect(page).to have_content 'Betrek mensen bij het nemen van beslissingen'
+    expect(page).to have_content 'Involve people in decision making'
     expect(page).to have_current_path root_path
 
     visit forum_path(freetown)
