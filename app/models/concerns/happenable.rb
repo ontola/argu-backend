@@ -15,6 +15,8 @@ module Happenable
     accepts_nested_attributes_for :happening
     attr_accessor :happened_at
     delegate :happened_at, to: :happening, allow_nil: true
+
+    validates :happening, presence: true
   end
 
   def is_happenable?
