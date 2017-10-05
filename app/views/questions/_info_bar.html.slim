@@ -15,7 +15,7 @@ section.section--details
               .detail__text
                 span[itemprop="headline"]= truncate(question.parent_model.title, length: 30)
     - if question.children_count(:motions) > 0
-      .detail[data-title=t('motions.tooltips.count', count: question.children_count(:motions))]
+      .detail[data-title=t('motions.tooltips.count')]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]
         .detail__text

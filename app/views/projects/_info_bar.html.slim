@@ -6,19 +6,19 @@ section.section--details
       .detail__text
         span= project_type
     - if project.children_count(:questions) > 0
-      .detail[data-title=t('questions.tooltips.count', count: project.children_count(:questions))]
+      .detail[data-title=t('questions.tooltips.count')]
         .detail__icon.question-t
           span[class="fa fa-#{question_icon}"]
         .detail__text
           span= project.children_count(:questions)
     - if project.children_count(:motions) > 0
-      .detail[data-title=t('motions.tooltips.count', count: project.children_count(:motions))]
+      .detail[data-title=t('motions.tooltips.count')]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]
         .detail__text
           span= project.children_count(:motions)
     - if project.children_count(:blog_posts) > 0
-      .detail[data-title=t('motions.tooltips.count', count: project.children_count(:blog_posts))]
+      .detail[data-title=t('motions.tooltips.count')]
         .detail__icon.blog_post-t
           span[class="fa fa-#{blog_post_icon}"]
         .detail__text

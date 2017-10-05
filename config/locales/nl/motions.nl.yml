@@ -19,10 +19,7 @@ nl:
       one: "Één persoon heeft hier op gestemd."
       other: "%{percentage}% of %{count} votes is in favor."
     tooltips:
-      count:
-        zero: "Er zijn nog geen ideeën geplaatst."
-        one: "Er is één idee geplaatst."
-        other: "Er zijn %{count} ideeën geplaatst."
+      count: "Aantal geplaatste ideeën"
       info: "Een idee is een voorstel waar je voor of tegen kan zijn."
     votes:
       pro: "Ik ben voor"

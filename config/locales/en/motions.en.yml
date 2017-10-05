@@ -19,10 +19,7 @@ en:
       one: "1 user is in favor."
       other: "%{percentage}% of %{count} votes is in favor."
     tooltips:
-      count:
-        zero: "No ideas submitted yet."
-        one: "One idea is submitted."
-        other: "%{count} ideas are submitted."
+      count: "Number of ideas"
       info: "An idea is a proposal on which people can vote and add pro- or con arguments."
     votes:
       pro: "Agree"
