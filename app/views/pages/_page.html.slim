@@ -21,7 +21,7 @@
         span.icon-left= profile.profileable.groups.count
       .details-part[data-title=t('users.plural')]
         span[class="fa fa-user"]
-        span.icon-left= GroupMembership.joins(group: :page).where('pages.id = ? AND groups.id != ?', profile.profileable_id, Group::PUBLIC_ID).count
+        span.icon-left= GroupMembership.joins(group: :page).where('pages.id = ? AND groups.id > 0', profile.profileable_id).count
       .details-part[data-title=t('forums.plural')]
         span[class="fa fa-comments"]
         span.icon-left= profile.profileable.forums.count

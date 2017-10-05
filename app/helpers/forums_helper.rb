@@ -77,7 +77,7 @@ module ForumsHelper
   end
 
   def options_for_public_grant
-    ['none', *Grant.roles.except(:manager, :super_admin).keys].map { |n| [t("roles.types.#{n}").capitalize, n] }
+    ['none', *Grant.roles.except(:manager, :super_admin, :staff).keys].map { |n| [t("roles.types.#{n}").capitalize, n] }
   end
 
   def public_form_member_label(value)

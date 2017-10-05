@@ -21,7 +21,7 @@ module DiscussionsHelper
     resource
       .edge
       .granted_groups(:spectator)
-      .where('groups.id != ?', Group::PUBLIC_ID)
+      .where('groups.id > 0')
       .map do |group|
         {
           label: "#{group.name} (#{t('roles.may')} #{t("roles.types.#{Grant.roles.key(group.role)}")})",
@@ -44,7 +44,9 @@ module DiscussionsHelper
       message: t('tokens.discussion.default_message', resource: resource.display_name),
       pageEdge: resource.parent_edge(:page).id,
       resource: resource.context_id,
-      roles: Grant.roles.except('manager').map { |role, _| {label: t("roles.types.#{role}").capitalize, value: role} }
+      roles: Grant.roles.except('manager', 'staff').map do |role, _|
+        {label: t("roles.types.#{role}").capitalize, value: role}
+      end
     }
   end
 end
