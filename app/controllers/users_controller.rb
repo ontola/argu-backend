@@ -15,7 +15,7 @@ class UsersController < AuthorizedController
                         .limit(10)
         preload_user_votes(vote_event_ids_from_activities(@activities))
 
-        if (/[a-zA-Z]/i =~ params[:id]).nil?
+        if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
           redirect_to url_for(authenticated_resource), status: 307
         else
           render 'show'

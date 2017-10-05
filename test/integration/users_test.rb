@@ -11,6 +11,11 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:super_admin) { create_super_admin(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
+  let(:user_no_shortname) do
+    u = create(:user, profile: create(:profile))
+    u.shortname.destroy
+    u
+  end
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
   let(:dutch_forum) { create_forum(public_grant: 'member', locale: 'nl-NL') }
@@ -22,6 +27,12 @@ class UsersTest < ActionDispatch::IntegrationTest
     get user_path(user_public.id)
 
     assert_redirected_to user_public
+  end
+
+  test 'guest should get show by id user without shortname' do
+    get user_path(user_no_shortname.id)
+
+    assert_response 200
   end
 
   test 'guest should not get show non public' do
@@ -53,6 +64,14 @@ class UsersTest < ActionDispatch::IntegrationTest
     get user_path(user_public.id)
 
     assert_redirected_to user_public
+  end
+
+  test 'user should get show by id user without shortname' do
+    sign_in user
+
+    get user_path(user_no_shortname.id)
+
+    assert_response 200
   end
 
   test 'user should get show non public' do
