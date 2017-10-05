@@ -118,7 +118,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should post create' do
     sign_in user
 
-    assert_differences([['Page.count', 1], ["Grant.where(group_id: #{Group::STAFF_ID}).count", 1]]) do
+    assert_differences([['Page.count', 1], ["Grant.where(group_id: #{Group::STAFF_ID}, role: :staff).count", 1]]) do
       post pages_path,
            params: {
              page: {

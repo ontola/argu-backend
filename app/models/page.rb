@@ -89,6 +89,8 @@ class Page < Edgeable::Base
 
   def create_staff_grant
     staff_group = Group.find_by(id: Group::STAFF_ID)
-    Grant.create!(role: Grant.roles[:staff], edge: edge, group: staff_group) if staff_group
+    return if staff_group.nil?
+    grant = Grant.new(role: Grant.roles[:staff], edge: edge, group: staff_group)
+    grant.save!(validate: false)
   end
 end
