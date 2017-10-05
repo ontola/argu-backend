@@ -1,5 +1,16 @@
 =set_title t('portal.title')
 =render partial: 'portal/navbar'
+
+h2= t('users.plural')
+table.styled
+  thead
+    tr
+      td= 'Total'
+      td= 'Confirmed'
+  tbody
+    tr
+      td= User.count
+      td= EmailAddress.where('confirmed_at IS NOT NULL').count
 h2= t('portal.pages')
 -if @pages.blank?
   p= t('portal.none')
