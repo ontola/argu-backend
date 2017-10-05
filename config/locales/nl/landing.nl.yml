@@ -26,18 +26,18 @@ nl:
         example: "Idee"
         accepted: "Aangenomen"
     cases:
-      header: "Praktijkvoorbeelden e-participatie"
-      body: "Van draagvlakmeting tot ideegeneratie: Argu is flexibel inzetbaar voor diverse participatietrajecten."
+      header: "Voorbeelden e-participatie"
+      body: "Van draagvlakmeting tot ideegeneratie: Argu is flexibel inzetbaar voor diverse vormen van burgerparticipatie."
       read_more: "Lees verder"
       heerenveen:
         title: "Draagvlak meten"
-        body: "De gemeente Heerenveen liet inwoners online meestemmen en argumenten uitwisselen over de eventuele komst van een Hotel."
+        body: "De gemeente Heerenveen liet inwoners online meestemmen en argumenten uitwisselen over de eventuele komst van een Hotel. Zo werd Argu ingezet als alternatief voor een referendum."
         metric1_html: "<b>180</b> stemmen geplaatst"
         metric2_html: "<b>142</b> reacties en argumenten"
         case_preview: "Wat is uw mening over de mogelijke komst van een Van der Valkhotel in Heerenveen?"
-      rochedale:
-        title: "Beleid co-creëren"
-        body: "Woningcorporatie Rochedale deelde hun eigen voorstellen over duurzaamheidsbeleid en liet hun bewoners stemmen, reageren en eigen ideeën indienen."
+      rochdale:
+        title: "Co-creatie van beleid"
+        body: "Woningcorporatie Rochdale deelde hun eigen voorstellen over duurzaamheidsbeleid en liet hun bewoners stemmen, reageren en eigen ideeën indienen."
         metric1_html: "<b>193</b> stemmen geplaatst"
         metric2_html: "<b>100</b> reacties en argumenten"
         case_preview: "Denkt u met ons mee hoe we onze woningen energiezuiniger kunnen maken?"
