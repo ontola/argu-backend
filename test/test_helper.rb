@@ -40,7 +40,6 @@ module TestHelper
     user.first_name = nil
     user.last_name = nil
     user.password = 'password'
-    user.finished_intro = true
     user.profile = Profile.new(id: Profile::COMMUNITY_ID)
   end
 

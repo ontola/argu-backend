@@ -9,7 +9,7 @@ class CurrentActor
 
   attr_accessor :actor, :user
   delegate :display_name, to: :actor, allow_nil: true
-  delegate :finished_intro, :id, to: :user
+  delegate :id, to: :user
 
   contextualize_as_type 'https://argu.co/ns/core#CurrentActor'
   contextualize_with_id { Rails.application.routes.url_helpers.c_a_url(protocol: :https) }

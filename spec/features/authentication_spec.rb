@@ -14,7 +14,6 @@ RSpec.feature 'Authentication', type: :feature do
       :user,
       email: 'user_fb_only@argu.co',
       encrypted_password: '',
-      finished_intro: true,
       first_name: 'First',
       last_name: 'Lastname_facebook',
       confirmed_at: Time.current

@@ -11,7 +11,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   let!(:user3) do
     create(:user,
            email: 'user3@argu.co',
-           finished_intro: true,
            first_name: 'User3',
            last_name: 'Lastname3',
            password: 'useruser',
@@ -23,7 +22,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     create(:user,
            email: 'user_fb_only@argu.co',
            encrypted_password: '',
-           finished_intro: true,
            first_name: 'First',
            last_name: 'Lastname_facebook',
            confirmed_at: Time.current)

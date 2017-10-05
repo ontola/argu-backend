@@ -90,7 +90,7 @@ RSpec.feature 'Signup', type: :feature do
     fill_in_select '#user_home_placement_attributes_country_code_input',
                    with: 'Netherlands',
                    selector: /Netherlands$/
-    click_button 'Next'
+    click_button 'Save'
 
     expect(page).to have_current_path(user_path(User.last))
     expect(User.last.country).to eq('NL')

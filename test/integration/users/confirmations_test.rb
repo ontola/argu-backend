@@ -93,17 +93,6 @@ module Users
       assert user.reload.confirmed?
     end
 
-    test 'user without finished intro should get show confirmation' do
-      sign_in user
-      user.update(finished_intro: false)
-      user.reload
-      assert_not user.confirmed?
-      assert_not user.finished_intro?
-      get user_confirmation_path(confirmation_token: user.confirmation_token)
-      assert_redirected_to new_user_session_path
-      assert user.reload.confirmed?
-    end
-
     test 'user should get show confirmation and persist temporary votes' do
       id1 = unconfirmed_vote.id
       edge1_id = unconfirmed_vote.edge.id

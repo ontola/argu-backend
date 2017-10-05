@@ -45,7 +45,7 @@ module UsersHelper
   end
 
   def redirect_with_r(user)
-    if user.r.present? && user.finished_intro?
+    if user.r.present?
       r = URI.decode(user.r)
       user.update r: ''
     end

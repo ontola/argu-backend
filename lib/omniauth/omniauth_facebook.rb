@@ -18,7 +18,6 @@ module Omniauth
           middle_name: middle_name,
           last_name: last_name,
           gender: raw['gender'],
-          finished_intro: true,
           r: r,
           profile_attributes: {
             default_profile_photo_attributes: {

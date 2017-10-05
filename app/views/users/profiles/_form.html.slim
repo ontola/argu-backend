@@ -1,4 +1,4 @@
-.inspectlet-sensitive= semantic_form_for resource, url: resource.finished_intro? ? settings_user_path : setup_profiles_path, method: :put, remote: resource.finished_intro?, authenticity_token: true  do |f|
+.inspectlet-sensitive= semantic_form_for resource, url: local_assigns[:setup] ? setup_profiles_path : settings_user_path, method: :put, remote: !local_assigns[:setup], authenticity_token: true  do |f|
   =f.inputs name: t('profiles.edit.general') do
     p= t('profiles.heads_up')
     =f.input :first_name, input_html: {autofocus: true}
@@ -15,7 +15,7 @@
                       type: :cover_photo,
                       relation: :default_cover_photo,
                       preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
-    - unless resource.finished_intro?
+    - if local_assigns[:setup]
       =f.inputs name: t('profiles.edit.personal_information') do
         p= t('profiles.edit.personal_information_notice')
         =f.semantic_fields_for :home_placement_attributes, f.object.home_placement do |ha|
@@ -26,4 +26,4 @@
   - if tab.present?
     =f.input :tab, as: :hidden, input_html: {value: tab}
   =f.actions do
-    =f.action :submit, as: :button, label: current_user.finished_intro? ? t('save') : t('next')
+    =f.action :submit, as: :button, label: t('save')

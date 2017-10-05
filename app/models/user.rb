@@ -286,10 +286,6 @@ class User < ApplicationRecord
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
-  def requires_name?
-    finished_intro?
-  end
-
   def salt
     if encrypted_password.presence
       ::BCrypt::Password.new(encrypted_password).salt

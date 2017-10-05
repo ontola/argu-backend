@@ -11,7 +11,6 @@ FactoryGirl.define do
     encrypted_password { Devise::Encryptor.digest(User, 'password') }
     password 'password'
     password_confirmation 'password'
-    finished_intro true
     language 'en'
     has_analytics false
     notifications_viewed_at nil

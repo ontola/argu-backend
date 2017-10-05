@@ -154,7 +154,6 @@ RSpec.configure do |config|
              password: 'password',
              first_name: nil,
              last_name: nil,
-             finished_intro: true,
              profile: build(:profile, id: Profile::COMMUNITY_ID))
     end
     if Page.find_by(id: Profile::COMMUNITY_ID).blank?

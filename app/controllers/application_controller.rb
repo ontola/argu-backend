@@ -72,7 +72,6 @@ class ApplicationController < ActionController::Base
   def add_user_info_to_bugsnag(notification)
     notification.user = {
       confirmed: current_user.confirmed?,
-      finished_intro: current_user.finished_intro,
       id: current_user.id,
       ip: notification.user_id,
       scopes: doorkeeper_scopes,

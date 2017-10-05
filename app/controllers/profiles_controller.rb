@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
     q = params[:q].tr(' ', '|')
     @profiles = policy_scope(Profile)
                   .where(profileable_type: 'User',
-                         profileable_id: User.where(finished_intro: true)
+                         profileable_id: User
                                            .joins(:shortname)
                                            .where('lower(shortname) SIMILAR TO lower(?) OR ' \
                                                     'lower(first_name) SIMILAR TO lower(?) OR ' \
@@ -42,14 +42,10 @@ class ProfilesController < ApplicationController
     @profile = @resource.profile
     authorize @profile, :edit?
 
-    if @resource.finished_intro?
-      redirect_to settings_url_for(@resource, :profile)
-    else
-      respond_to do |format|
-        format.html do
-          render 'users/profiles/setup',
-                 locals: {profile: @profile, resource: @resource}
-        end
+    respond_to do |format|
+      format.html do
+        render 'users/profiles/setup',
+               locals: {profile: @profile, resource: @resource}
       end
     end
   end
@@ -60,11 +56,8 @@ class ProfilesController < ApplicationController
     @profile = @resource.profile
     authorize @profile, :update?
 
-    updated = @resource.update(setup_permit_params)
-    @resource.update_column(:finished_intro, true) if updated
-
     respond_to do |format|
-      if updated
+      if @resource.update(setup_permit_params)
         format.html do
           redirect_to redirect_url || dual_profile_url(@profile), notice: 'Profile was successfully updated.'
         end

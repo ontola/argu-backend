@@ -38,8 +38,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def show?
-    (record.profile.is_public? || !user.guest?) && record.finished_intro? ||
-      super
+    (record.profile.is_public? || !user.guest?) || super
   end
 
   def create?

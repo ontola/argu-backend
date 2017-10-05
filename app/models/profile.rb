@@ -123,9 +123,6 @@ class Profile < ApplicationRecord
     profileable.presence && profileable.url.presence
   end
 
-  # TODO: Crashes if false
-  delegate :finished_intro?, to: :profileable
-
   # ######Methods########
   def voted_on?(item)
     Vote.where(creator_id: id,

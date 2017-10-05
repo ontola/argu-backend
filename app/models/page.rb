@@ -48,10 +48,6 @@ class Page < Edgeable::Base
     end
   end
 
-  def finished_intro?
-    true
-  end
-
   def email
     'anonymous'
   end
