@@ -28,7 +28,7 @@ en:
     types:
       empty: "no additional role"
       none: "see nothing"
-      spectator: "see everything"
+      spectator: "only read"
       member: "participate"
       manager: "moderate"
       super_admin: "manage"

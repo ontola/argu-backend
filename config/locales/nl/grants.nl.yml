@@ -28,7 +28,7 @@ nl:
     types:
       empty: "geen aanvullende rol"
       none: "niets zien"
-      spectator: "alles bekijken"
+      spectator: "alleen lezen"
       member: "meedoen"
       manager: "modereren"
       super_admin: "beheren"
