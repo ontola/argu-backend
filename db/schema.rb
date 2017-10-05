@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018141440) do
+ActiveRecord::Schema.define(version: 20171019091813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 20171018141440) do
     t.index ["user_id", "edge_id"], name: "index_favorites_on_user_id_and_edge_id", unique: true
   end
 
-  create_table "follows", id: :serial, force: :cascade do |t|
+  create_table "follows", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.integer "followable_id", null: false
     t.string "followable_type", default: "Edge", null: false
     t.integer "follower_id", null: false
