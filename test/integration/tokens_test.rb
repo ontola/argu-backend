@@ -195,7 +195,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(show_error: true)
+    assert_response 401
   end
 
   test 'User should not post create token with credentials and empty password for Argu domain' do
@@ -247,7 +247,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(show_error: true)
+    assert_response 401
   end
 
   test 'User should not post create token with wrong password for Argu domain' do
@@ -317,7 +317,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(show_error: true)
+    assert_response 401
   end
 
   test 'User should not post create token with unknown email for Argu domain' do
@@ -387,7 +387,7 @@ class TokensTest < ActionDispatch::IntegrationTest
              scope: 'user'
            }
     end
-    assert_redirected_to new_user_session_path(show_error: true)
+    assert_response 401
   end
 
   test 'User should not post create token with unknown username for Argu domain' do

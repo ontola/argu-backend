@@ -196,27 +196,27 @@ module Users
     ####################################
     # As service
     ####################################
-    let(:service_headers) { {Authorization: "Bearer #{create(:service_token).token}"} }
-
     test 'service should not put confirm wrong email json' do
+      sign_in :service
+
       put users_confirm_path,
           params: {
             format: :json,
             email: 'wrong@example.com'
-          },
-          headers: service_headers
+          }
       assert_response 404
       assert_not user.reload.confirmed?
     end
 
     test 'service should put confirm email json' do
+      sign_in :service
+
       assert_not user.confirmed?
       put users_confirm_path,
           params: {
             format: :json,
             email: user.email
-          },
-          headers: service_headers
+          }
       assert_response 200
       assert user.reload.confirmed?
     end

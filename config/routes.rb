@@ -345,6 +345,9 @@ Rails.application.routes.draw do
     namespace :spi do
       get 'authorize', to: 'authorize#show'
       get 'current_user', to: 'users#current'
+      scope :oauth do
+        post :token, to: 'tokens#create'
+      end
     end
   end
 

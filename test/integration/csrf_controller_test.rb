@@ -12,13 +12,10 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As Guest
   ####################################
-  let(:guest_token) { create(:guest_token, resource_owner_id: SecureRandom.base64(30)) }
-
   test 'Guest should not get show CSRF token' do
-    get csrf_path,
-        headers: {
-          Authorization: "Bearer #{guest_token.token}"
-        }
+    sign_in :guest
+
+    get csrf_path
 
     assert_response 403
   end
@@ -27,13 +24,11 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
   # As User
   ####################################
   let(:user) { create(:user) }
-  let(:user_token) { create(:user_token, resource_owner_id: user.id) }
 
   test 'User should not get show CSRF token' do
-    get csrf_path,
-        headers: {
-          Authorization: "Bearer #{user_token.token}"
-        }
+    sign_in user
+
+    get csrf_path
 
     assert_response 403
   end
@@ -41,13 +36,10 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As Service
   ####################################
-  let(:service_token) { create(:service_token) }
-
   test 'should get show CSRF token' do
-    get csrf_path,
-        headers: {
-          Authorization: "Bearer #{service_token.token}"
-        }
+    sign_in :service
+
+    get csrf_path
 
     assert_response 200
     assert parsed_body['token'].length > 15

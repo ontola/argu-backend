@@ -41,18 +41,23 @@ Doorkeeper.configure do
     }
     request.env['devise.allow_params_authentication'] = true
     user = request.env['warden'].authenticate(scope: :user)
-    if user.blank?
-      email = params[:user][:email].include?('@')
-      if email && EmailAddress.find_by(email: params[:user][:email]).nil?
-        raise Argu::UnknownEmailError.new(r: r_with_authenticity_token)
-      end
-      if !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
-        raise Argu::UnknownUsernameError.new(r: r_with_authenticity_token)
-      end
-      raise Argu::WrongPasswordError.new(r: r_with_authenticity_token)
+    if user.blank? && !(argu_classic_frontend_request? || doorkeeper_token&.acceptable?('service'))
+      nil
+    elsif user.blank?
+      email = params[:user][:email]&.include?('@')
+      e = if email && EmailAddress.find_by(email: params[:user][:email]).nil?
+            Argu::UnknownEmailError.new(r: r_with_authenticity_token)
+          elsif !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
+            Argu::UnknownUsernameError.new(r: r_with_authenticity_token)
+          else
+            Argu::WrongPasswordError.new(r: r_with_authenticity_token)
+          end
+      raise e if argu_classic_frontend_request?
+      e
+    else
+      request.env['warden'].logout
+      user
     end
-    request.env['warden'].logout
-    user
   end
 
   # Authorization Code expiration time (default 10 minutes).
@@ -134,7 +139,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  grant_flows %w[authorization_code client_credentials password]
+  grant_flows %w[authorization_code password]
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.

@@ -162,11 +162,20 @@ module ActionDispatch
         )
     end
 
-    def sign_in(user = create(:user))
+    def sign_in(resource = create(:user))
+      id, role =
+        case resource
+        when :service
+          [0, 'service']
+        when :guest
+          [SecureRandom.hex, 'guest']
+        else
+          [resource.id, 'user']
+        end
       t = Doorkeeper::AccessToken.find_or_create_for(
         Doorkeeper::Application.argu,
-        user.id,
-        'user',
+        id,
+        role,
         10.minutes,
         false
       )

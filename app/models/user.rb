@@ -47,11 +47,13 @@ class User < ApplicationRecord
   COMMUNITY_ID = 0
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
+  LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
+  FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
   before_save :adjust_birthday, if: :birthday_changed?
   before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
-  after_commit :publish_data_event
+  after_commit :publish_data_event, if: :should_broadcast_changes
 
   attr_accessor :current_password, :confirmation_string, :tab
 
@@ -334,6 +336,12 @@ class User < ApplicationRecord
 
   def adjust_birthday
     self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
+  end
+
+  def should_broadcast_changes
+    keys = previous_changes.keys
+    return true if keys.length != LOGIN_ATTRS.length && keys.length != FAILED_LOGIN_ATTRS.length
+    !(keys & LOGIN_ATTRS == keys || keys & FAILED_LOGIN_ATTRS == keys)
   end
 
   class << self
