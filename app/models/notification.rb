@@ -27,7 +27,11 @@ class Notification < ApplicationRecord
     if activity.present?
       activity_string_for(activity, user)
     elsif confirmation_reminder?
-      vote_count = RedisResource::Key.new(user: user).matched_keys.count
+      vote_count = RedisResource::Key
+                     .new(user: user)
+                     .matched_keys
+                     .select { |k| k.parent.owner_type == 'VoteEvent' }
+                     .count
       t('notifications.permanent.confirm_account', count: vote_count, email: user.email)
     else
       super
