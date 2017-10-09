@@ -61,7 +61,7 @@ export const DiscussionInvite = React.createClass({
             .then(json)
             .then(() => {
                 new Alert(I18n.t('tokens.email.success'), 'success', true);
-                modal.closeModal.bind(document.getElementsByClassName('modal')[0])();
+                modal.close();
             });
     },
 
