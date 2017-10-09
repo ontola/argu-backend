@@ -362,7 +362,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_equal 1, Motion.last.edge.placements.first.zoom_level
   end
 
-  test 'member should not post create motion with latlon in question requiring location' do
+  test 'member should not post create motion without latlon in question requiring location' do
     sign_in member
 
     general_create(
@@ -370,6 +370,54 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: false, response: 200},
       parent: :question_requires_location,
       differences: [['Motion', 0], ['Activity.loggings', 0]]
+    )
+  end
+
+  test 'member should not post create motion with empty latlon in question requiring location' do
+    sign_in member
+
+    general_create(
+      attributes: {
+        edge_attributes: {
+          placements_attributes: {
+            '0' => {
+              id: '',
+              placement_type: 'custom',
+              lat: '',
+              lon: '',
+              zoom_level: '1'
+            }
+          }
+        }
+      },
+      analytics: stats_opt('motions', 'create_failed'),
+      results: {should: false, response: 200},
+      parent: :question_requires_location,
+      differences: [['Motion', 0], ['Activity.loggings', 0]]
+    )
+  end
+
+  test 'member should post create motion with latlon in question requiring location' do
+    sign_in member
+
+    general_create(
+      attributes: {
+        edge_attributes: {
+          placements_attributes: {
+            '0' => {
+              id: '',
+              placement_type: 'custom',
+              lat:  2.0,
+              lon:  2.0,
+              zoom_level: '1'
+            }
+          }
+        }
+      },
+      analytics: stats_opt('motions', 'create_success'),
+      results: {should: true, response: 302},
+      parent: :question_requires_location,
+      differences: [['Motion', 1], ['Activity.loggings', 2]]
     )
   end
 

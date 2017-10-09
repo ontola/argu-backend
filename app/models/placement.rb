@@ -9,7 +9,7 @@ class Placement < ApplicationRecord
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   before_validation :destruct_if_unneeded
-  validate :validate_place, unless: :destroyed?
+  validate :validate_place, unless: :marked_for_destruction?
 
   enum placement_type: {home: 0, country: 1, custom: 2}
   delegated_attribute :country_code, :string, to: :place
@@ -38,7 +38,7 @@ class Placement < ApplicationRecord
 
   # Destroys placement when no country_code and no postal_code is provided
   def destruct_if_unneeded
-    destroy if location_attributes.blank?
+    mark_for_destruction if location_attributes.blank?
   end
 
   def location_attributes
