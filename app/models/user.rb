@@ -141,17 +141,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    [first_name, middle_name, last_name].compact.join(' ').presence ||
-      url ||
-      [
-        profile
-          .group_memberships
-          .order("(group_id = #{Group::PUBLIC_ID}) ASC, created_at ASC")
-          .first
-          .group
-          .name_singular,
-        id
-      ].join(' ')
+    [first_name, middle_name, last_name].compact.join(' ').presence || url || display_name_from_group
   end
 
   # Creates a new follow record for this instance to follow the passed object.
@@ -318,6 +308,15 @@ class User < ApplicationRecord
 
   private
 
+  def adjust_birthday
+    self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
+  end
+
+  def display_name_from_group
+    group = profile.group_memberships.order("(group_id = #{Group::PUBLIC_ID}) ASC, created_at ASC").first&.group
+    [group.name_singular, id].join(' ') if group
+  end
+
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
     %w[comments motions arguments questions blog_posts projects votes vote_events vote_matches uploaded_media_objects]
@@ -328,10 +327,6 @@ class User < ApplicationRecord
     end
     email_addresses.update_all(primary: false)
     edges.update_all user_id: User::COMMUNITY_ID
-  end
-
-  def adjust_birthday
-    self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
   end
 
   def should_broadcast_changes

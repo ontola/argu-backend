@@ -13,6 +13,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   define_freetown
   let(:user) { create(:user) }
+  let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
   let(:guest_user) { GuestUser.new(session: session) }
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
   let(:place) { create(:place) }
@@ -207,6 +208,22 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     assert_analytics_collected('registrations', 'destroy', user.id)
+  end
+
+  test 'user without name and shortname should delete destroy' do
+    sign_in user_no_shortname
+
+    assert_difference('User.count', -1) do
+      delete user_registration_path,
+             params: {
+               user: {
+                 confirmation_string: 'remove'
+               }
+             }
+    end
+
+    assert_redirected_to root_path
+    assert_analytics_collected('registrations', 'destroy', user_no_shortname.id)
   end
 
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do

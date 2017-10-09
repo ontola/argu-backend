@@ -21,6 +21,12 @@ FactoryGirl.define do
       user.primary_email_record.update(confirmed_at: DateTime.current)
     end
 
+    trait :no_shortname do
+      after(:create) do |user|
+        user.shortname.destroy
+      end
+    end
+
     trait :staff do
       after(:create) do |user|
         gm = GroupMembership.new(
