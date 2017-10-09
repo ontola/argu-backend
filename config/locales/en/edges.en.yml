@@ -5,3 +5,4 @@ en:
     form:
       helper:
         pinned: "This item will be shown at the top of the page"
+        require_location: "Require selecting a location for submitted ideas."

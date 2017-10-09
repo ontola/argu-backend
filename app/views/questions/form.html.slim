@@ -34,6 +34,8 @@
             =f.inputs name: t('forms.advanced')
               - if policy(question).permitted_attributes.include?(:require_location)
                 =f.input :require_location, as: :reverse_boolean
+                li.form-helper
+                  span= t('edges.form.helper.require_location')
               - if policy(question).permitted_attributes.include?(:pinned)
                 =f.input :pinned, as: :reverse_boolean
                 li.form-helper
