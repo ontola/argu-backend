@@ -71,7 +71,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r)
+    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r) if session.present?
     setup_favorites(resource)
     send_event user: resource,
                category: 'registrations',
