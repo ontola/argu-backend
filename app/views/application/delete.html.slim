@@ -1,16 +1,17 @@
 .modal-container
-  .overlay
+  .overlay.overlay-back
   .modal.col-1
     header
       h1= t('destroy_type', type: type_for(resource))
-      .box
-        section.unpadded
-          =semantic_form_for resource, url: url_for([resource, destroy: true]), method: :delete, html: {class: 'confirm'} do |f|
-            .modal-section
-              p= t('destroy_confirmation')
-            section.section--footer
-              =render partial: 'profiles/creator', locals: {resource: resource}
-              =f.actions
-                .sticky-submit
-                  =link_to t('cancel'), nil, class: 'close-trigger margin-right'
-                  =f.action :submit, as: :button, label: t('trash'), wrapper_html: {class: 'inline-button-form'}
+    .box
+      section.unpadded
+        =semantic_form_for resource, url: url_for([resource, destroy: true]), method: :delete, html: {class: 'confirm'} do |f|
+          .modal-section
+            p= t('destroy_confirmation')
+          section.section--footer
+            =render partial: 'profiles/creator', locals: {resource: resource}
+            =f.actions
+              .sticky-submit
+                =link_to t('cancel'), nil, class: 'close-trigger margin-right'
+                =f.action :submit, as: :button, label: t('trash'), wrapper_html: {class: 'inline-button-form'}
+    .overlay.overlay-bottom

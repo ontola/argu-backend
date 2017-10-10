@@ -1,5 +1,5 @@
 .modal-container
-  .overlay
+  .overlay.overlay-back
   .modal.col-1
     header
       h1=t('forums.settings.advanced.delete.confirm.header')
@@ -13,3 +13,4 @@
             =f.input :confirmation_string, input_html: {class: 'confirm-text', :'confirm-text' => t('forums.settings.advanced.delete.confirm.string')}
           =f.actions do
             =f.action :submit, as: :button, label: t('forums.settings.advanced.delete.confirm.understand'), button_html: { class: 'confirm-action', disabled: true }
+    .overlay.overlay-bottom

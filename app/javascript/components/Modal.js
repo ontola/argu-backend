@@ -41,11 +41,12 @@ export const Modal = React.createClass({
     render() {
         return (
             <div className={`react-modal-container ${this.state.hide ? 'modal-hide' : ''}`}>
-                <div className="overlay" onClick={this.handleCloseModal}/>
+                <div className="overlay overlay-back" onClick={this.handleCloseModal}/>
                 <div className="modal col-1">
                     <div className="box">
                         {this.props.children}
                     </div>
+                    <div className="overlay overlay-bottom" onClick={this.handleCloseModal}/>
                 </div>
             </div>
         );

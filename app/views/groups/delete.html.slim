@@ -1,5 +1,5 @@
 .modal-container
-  .overlay
+  .overlay.overlay-back
   .modal.col-1
     header
       h1= t('destroy_type', type: t('groups.type'))
@@ -10,3 +10,4 @@
             p= t('groups.destroy.body', group_memberships_count: resource.group_memberships.count)
             =f.actions do
               =f.action :submit, as: :button, label: t('destroy'), button_html: {class: 'btn--warning'}
+    .overlay.overlay-bottom

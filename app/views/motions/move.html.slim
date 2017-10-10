@@ -1,5 +1,5 @@
 .modal-container
-  .overlay
+  .overlay.overlay-back
   .modal.col-1
     header
       h1= t('motions.move.header')
@@ -13,3 +13,4 @@
               =f.input :forum, required: false, include_blank: false
             =f.actions do
               =f.action :submit, as: :button, label: t('move.button_label')
+    .overlay.overlay-bottom

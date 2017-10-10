@@ -1,5 +1,5 @@
 .modal-container
-  .overlay
+  .overlay.overlay-back
   .modal.col-1
     header
       h1= t('motions.convert.header')
@@ -13,3 +13,4 @@
               =f.input :klass, as: :select, collection: convertible_class_names(conversion.edge.owner), required: false, include_blank: false
             =f.actions do
               =f.action :submit, :as => :button, label: t('convert')
+    .overlay.overlay-bottom

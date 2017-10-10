@@ -13,12 +13,11 @@
   overflow-y: auto;
   text-align: center;
   pointer-events: bounding-box; // Makes the overflow clickable, so it can close.
-  max-height: calc(100vh - 4em);
-  bottom: initial;
 
   .box {
     pointer-events: auto;
     text-align: left;
+    width: 100%;
   }
   .box-small {
     display: inline-block;
@@ -31,6 +30,8 @@
     padding-top: 1em;
   }
   &.col-1{
+    display: flex;
+    flex-direction: column;
     margin-bottom: 0;
   }
   .modal-section {
@@ -43,10 +44,6 @@
   .leaflet-container {
     height: 400px;
   }
-
-  .formtastic .actions {
-    margin-bottom: 0;
-  }
 }
 
 .modal h1 {
@@ -54,7 +51,7 @@
   color: white;
 }
 
-.overlay{
+.overlay-back {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -68,22 +65,28 @@
   @include transition(.2s);
 }
 
+.overlay-bottom {
+  flex-grow: 1;
+}
+
 .modal-container:not(.no-close), .react-modal-container:not(.no-close){
   .overlay{
     cursor: pointer;
-    &:hover{
-      background-color: lighten($darken_overlay, 5%);
-    }
-    &:after{
-      content: 'x';
-      font-weight: bold;
-      position: absolute;
-      top: 0;
-      right: 0;
-      color: white;
-      background-color: rgba(255, 255, 255, 0.24);
-      padding: 0.5em 0.7em;
-      pointer-events: none;
+    &.overlay-back {
+      &:hover{
+        background-color: lighten($darken_overlay, 5%);
+      }
+      &:after{
+        content: 'x';
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: white;
+        background-color: rgba(255, 255, 255, 0.24);
+        padding: 0.5em 0.7em;
+        pointer-events: none;
+      }
     }
   }
 }
@@ -100,17 +103,18 @@
   .modal {
     @include animation(to-bottom-fade .3s ease-in both);
   }
-  .overlay {
+  .overlay-back {
     @include animation(fade-out .3s linear both);
   }
 }
 
-.modal.modal-scroll-box {
+.modal-scroll-box {
   background-color: #ececec ;
   padding: 0;
   margin-top: 2em;
   border-radius: 5px;
-  margin-bottom: 3em;
+  max-height: calc(100vh - 4em);
+  overflow-y: auto;
 }
 
 .modal-container {
