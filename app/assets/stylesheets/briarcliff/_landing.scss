@@ -36,9 +36,10 @@
   background-size: cover;
   display: block;
   display: flex;
-  height: 100%;
+  height: 40em;
   height: 80vh;
   margin-top: -2em;
+  max-height: 900px;
   min-height: 20em;
   position: relative;
   text-align: center;
@@ -57,7 +58,7 @@
 .landing__hero__content {
   z-index: 1;
   flex: 1;
-  padding-top: 20vh;
+  padding-top: 20%;
 }
 
 .landing__button-wrapper {
@@ -78,10 +79,9 @@
 
 .landing__hero__header {
   color: white;
-  margin-bottom: 5vh;
-}
-
-.landing__block {
+  margin-bottom: 5%;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .landing__block--grey {
@@ -140,6 +140,8 @@
   padding-left: 2em;
   padding-right: 2em;
   padding-top: 4em;
+  min-width: 23em;
+  max-width: 100%;
 }
 
 .landing__column--header {
@@ -368,6 +370,8 @@
   padding-top: 1em;
   padding-bottom: 1em;
   margin-bottom: 4em;
+  width: 50%;
+  display: inline-block;
 }
 
 .landing__case__image {
@@ -388,10 +392,21 @@
 }
 
 .landing__case__box {
-  width: 26em;
+  max-width: 26em;
   margin: auto;
 }
 
-.landing__case__wrapper {
+.landing__case__text {
   flex: 1;
+  width: 50%;
+}
+
+@media only screen and (max-width: 50em) {
+  .landing__case {
+    width: 100%;
+  }
+
+  .landing__case__box {
+    max-width: none;
+  }
 }

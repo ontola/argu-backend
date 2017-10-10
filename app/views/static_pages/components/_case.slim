@@ -1,16 +1,17 @@
-a.landing__case__wrapper[href="#{link}"]
-  .landing__column.landing__case.landing__case__box
-    .box.landing-box
-      .box-image--container
-        .box-image.bg-img[style="background-image: url('#{asset_path("cases/#{id}.jpg")}'); "]
-      section
-        h4.landing__case__header= t("landing.cases.#{id}.case_preview")
-.landing__column.landing__case
-  h3.landing__case__title= t("landing.cases.#{id}.title")
-  p.landing__case__body
-    =t("landing.cases.#{id}.body")
-    span= " "
-    a[href="#{link}"]= t("landing.cases.read_more")
-  p.landing__case__metric= t("landing.cases.#{id}.metric1_html")
-  p.landing__case__metric
-    =t("landing.cases.#{id}.metric2_html")
+.landing__case__wrapper
+  a.landing__case__text[href="#{link}"]
+    .landing__column.landing__case.landing__case__box
+      .box.landing-box
+        .box-image--container
+          .box-image.bg-img[style="background-image: url('#{asset_path("cases/#{id}.jpg")}'); "]
+        section
+          h4.landing__case__header= t("landing.cases.#{id}.case_preview")
+  .landing__column.landing__case
+    h3.landing__case__title= t("landing.cases.#{id}.title")
+    p.landing__case__body
+      =t("landing.cases.#{id}.body")
+      span= " "
+      a[href="#{link}"]= t("landing.cases.read_more")
+    p.landing__case__metric= t("landing.cases.#{id}.metric1_html")
+    p.landing__case__metric
+      =t("landing.cases.#{id}.metric2_html")
