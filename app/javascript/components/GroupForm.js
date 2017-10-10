@@ -127,7 +127,6 @@ export const GroupForm = React.createClass({
                     </span>
                 </label>
                 <button
-                    className={`${disabled ? 'is-loading' : ''}`}
                     disabled={disabled}
                     onClick={this.handleCreateGroup}
                     type="submit"
