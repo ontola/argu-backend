@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'argu'
+
 # app/controllers/oauth/applications_controller.rb
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   include Argu::ErrorHandling
