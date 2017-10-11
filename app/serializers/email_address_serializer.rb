@@ -2,7 +2,6 @@
 
 class EmailAddressSerializer < BaseSerializer
   attributes :email, :primary, :confirmed_at
-  attribute :confirmation_token, if: :service_scope?
 
   has_one :user do
     obj = object.user

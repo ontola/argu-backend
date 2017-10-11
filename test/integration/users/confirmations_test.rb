@@ -136,8 +136,8 @@ module Users
     test 'user should post create confirmation' do
       sign_in user
       post user_confirmation_path(user: {email: user.email})
-      assert_not_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
-                       user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
+      assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
+                   user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
       assert_redirected_to settings_path(tab: :authentication)
     end
 

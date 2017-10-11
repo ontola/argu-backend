@@ -37,17 +37,6 @@ class EmailAddress < ApplicationRecord
     email && email !~ TEMP_EMAIL_REGEX
   end
 
-  def send_confirmation_instructions
-    return if @raw_confirmation_token
-    @raw_confirmation_token =
-      if confirmation_token && !confirmation_period_expired?
-        confirmation_token
-      else
-        Devise.friendly_token
-      end
-    update(confirmation_sent_at: Time.now.utc, confirmation_token: @raw_confirmation_token)
-  end
-
   private
 
   def dont_update_confirmed_email
