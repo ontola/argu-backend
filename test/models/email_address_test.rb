@@ -11,6 +11,14 @@ class EmailAddressTest < ActiveSupport::TestCase
   end
 
   test 'should set secondary email to primary on update' do
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirm_secondary',
+      user.email,
+      confirmationToken: /.+/,
+      email: 'test@example.com'
+    )
+
     original_email = user.primary_email_record
     assert original_email.reload.primary?
     new_email = user.email_addresses.create(email: 'test@example.com')

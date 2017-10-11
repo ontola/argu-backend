@@ -14,6 +14,14 @@ RSpec.feature 'User email' do
     sign_in user
     new_email = 'new_email@example.com'
 
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirm_secondary',
+      user.email,
+      confirmationToken: /.+/,
+      email: new_email
+    )
+
     visit settings_user_path(tab: :authentication)
     expect(page).to have_content('Email confirmed')
     expect(page).not_to have_link('Send confirmation mail')

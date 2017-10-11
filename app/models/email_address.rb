@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'argu/api'
+
 class EmailAddress < ApplicationRecord
   include RedisResourcesHelper
   include Ldable
@@ -37,6 +39,10 @@ class EmailAddress < ApplicationRecord
     email && email !~ TEMP_EMAIL_REGEX
   end
 
+  def reconfirmation_required?
+    email_changed?
+  end
+
   private
 
   def dont_update_confirmed_email
@@ -55,6 +61,21 @@ class EmailAddress < ApplicationRecord
 
   def publish_data_event
     DataEvent.publish(self)
+  end
+
+  # Sends a mail with confirmation instructions for secondary emails
+  # Confirmation instructions for primary emails are send by the {RegistationsController}
+  def send_confirmation_instructions
+    return if primary?
+    Argu::API
+      .service_api
+      .create_email(
+        :ConfirmationsMailer,
+        :confirm_secondary,
+        user,
+        confirmationToken: confirmation_token,
+        email: email
+      )
   end
 
   def remove_other_primaries
