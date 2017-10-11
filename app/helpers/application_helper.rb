@@ -85,8 +85,8 @@ module ApplicationHelper
     [nil, nil]
   end
 
-  def remote_if_non_modern
-    browser.modern? ? {turbolinks: 'false'} : {remote: true, turbolinks: 'false'}
+  def remote_if_modern
+    {remote: browser.modern?, turbolinks: 'false'}
   end
 
   # Used in forms for the 'r' system
