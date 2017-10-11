@@ -114,6 +114,14 @@ RSpec.feature 'Comments', type: :feature do
   def sign_up_and_confirm_comment
     click_link 'Sign up with email'
     user_attr = attributes_for(:user)
+
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirmation',
+      user_attr[:email],
+      confirmationToken: /.+/
+    )
+
     within('#new_user') do
       fill_in 'user[email]', with: user_attr[:email]
       fill_in 'user[password]', with: user_attr[:password]

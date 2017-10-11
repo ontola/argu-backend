@@ -13,6 +13,14 @@ RSpec.feature 'Voting', type: :feature do
   scenario 'Guest should vote on a motion, register, leave an opinion, edit the opinion and confirm' do
     user_attr = attributes_for(:user)
 
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirm_votes',
+      user_attr[:email],
+      confirmationToken: /.+/,
+      motions: [{display_name: motion.display_name, option: 'con', url: motion.context_id}]
+    )
+
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 

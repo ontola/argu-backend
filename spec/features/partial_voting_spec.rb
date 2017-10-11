@@ -21,6 +21,15 @@ RSpec.feature 'Partial Voting', type: :feature do
     find('a', text: 'I\'m against').click
 
     user_attr = attributes_for(:user)
+
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirm_votes',
+      user_attr[:email],
+      confirmationToken: /.+/,
+      motions: [{display_name: subject.display_name, option: 'con', url: subject.context_id}]
+    )
+
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
         fill_in 'user[email]', with: user_attr[:email]

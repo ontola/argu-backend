@@ -103,6 +103,14 @@ RSpec.feature 'Adam west', type: :feature do
       expect(page).to have_current_path new_user_registration_path(r: redirect_url)
 
       user_attr = attributes_for(:user)
+
+      create_email_mock(
+        'ConfirmationsMailer',
+        'confirmation',
+        user_attr[:email],
+        confirmationToken: /.+/
+      )
+
       within('#new_user') do
         fill_in 'user_email', with: user_attr[:email]
         fill_in 'user_password', with: user_attr[:password]

@@ -137,7 +137,7 @@ RSpec.feature 'User Password', type: :feature do
     expect(current_email.subject).to eq 'Password reset instructions'
     current_email.click_link 'Change my password'
 
-    expect(page).to have_content('Change password')
+    expect(page).to have_content('Choose a password')
     within('#new_user') do
       fill_in 'user_password', with: 'new_password'
       fill_in 'user_password_confirmation', with: 'new_password'

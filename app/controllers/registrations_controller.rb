@@ -71,6 +71,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
+    send_confirmation_mail(
+      resource,
+      session.presence && RedisResource::Relation
+                            .where(publisher: GuestUser.new(id: session.id), voteable_type: 'Motion')
+    )
     schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r) if session.present?
     setup_favorites(resource)
     send_event user: resource,
@@ -89,5 +94,25 @@ class RegistrationsController < Devise::RegistrationsController
     return unless session[:omniauth]
     @user.apply_omniauth(session[:omniauth])
     @user.valid?
+  end
+
+  def send_confirmation_mail(user, guest_votes)
+    if guest_votes&.count&.positive?
+      api.create_email(
+        :ConfirmationsMailer,
+        :confirm_votes,
+        user,
+        confirmationToken: user.confirmation_token,
+        motions: guest_votes.map do |guest_vote|
+          m = guest_vote.resource.parent_model(:motion)
+          {display_name: m.display_name, url: m.context_id, option: guest_vote.resource.for}
+        end
+      )
+    elsif resource.password.present?
+      api.create_email(:ConfirmationsMailer, :confirmation, user, confirmationToken: user.confirmation_token)
+    else
+      token = user.send(:set_reset_password_token)
+      api.create_email(:ConfirmationsMailer, :set_password, user, passwordToken: token)
+    end
   end
 end

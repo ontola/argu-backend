@@ -19,6 +19,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:place) { create(:place) }
   let(:argu) { create(:page) }
   let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:argument) { create(:argument, parent: motion.edge) }
   let(:motion2) { create(:motion, parent: freetown.edge) }
   let(:motion3) { create(:motion, parent: freetown.edge) }
   let(:guest_vote) do
@@ -45,6 +46,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
+  let(:argument_guest_vote) do
+    create(:vote, parent: argument.edge, creator: guest_user.profile, publisher: guest_user)
+  end
 
   ####################################
   # As Guest
@@ -54,6 +58,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     clear_emails
     locale = :en
     cookies[:locale] = locale.to_s
+    create_email_mock('ConfirmationsMailer', 'confirmation', 'test@example.com', confirmationToken: /.+/)
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
@@ -88,16 +93,35 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'should post create nl' do
     locale = :nl
     cookies[:locale] = locale.to_s
+    attrs = attributes_for(:user)
+    create_email_mock('ConfirmationsMailer', 'confirmation', attrs[:email], confirmationToken: /.+/)
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],
                         ['Sidekiq::Worker.jobs.count', 1]]) do
       post user_registration_path,
-           params: {user: attributes_for(:user)}
+           params: {user: attrs}
       assert_redirected_to setup_users_path
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
+  end
+
+  test 'should post create without password' do
+    create_email_mock('ConfirmationsMailer', 'set_password', 'test@example.com', passwordToken: /.+/)
+
+    assert_differences([['User.count', 1],
+                        ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
+      post user_registration_path,
+           params: {
+             format: :json,
+             user: {
+               email: 'test@example.com'
+             }
+           }
+      assert_response 201
+      assert_analytics_collected('registrations', 'create', 'email')
+    end
   end
 
   test 'should post create without password and transfer and persist guest votes' do
@@ -106,6 +130,17 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     guest_vote
     guest_vote2
     other_guest_vote3
+    argument_guest_vote
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirm_votes',
+      'test@example.com',
+      confirmationToken: /.+/,
+      motions: [
+        {display_name: motion.display_name, option: 'pro', url: motion.context_id},
+        {display_name: motion2.display_name, option: 'pro', url: motion2.context_id}
+      ]
+    )
 
     locale = :en
     cookies[:locale] = locale.to_s
@@ -154,6 +189,18 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     guest_vote2
     other_guest_vote
     other_guest_vote3
+    argument_guest_vote
+    attrs = attributes_for(:user)
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirm_votes',
+      attrs[:email],
+      confirmationToken: /.+/,
+      motions: [
+        {display_name: motion.display_name, option: 'pro', url: motion.context_id},
+        {display_name: motion2.display_name, option: 'pro', url: motion2.context_id}
+      ]
+    )
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
@@ -161,7 +208,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                           ['Favorite.count', 1],
                           ['Notification.confirmation_reminder.count', 1]]) do
         post user_registration_path,
-             params: {user: attributes_for(:user)}
+             params: {user: attrs}
       end
     end
     assert_redirected_to setup_users_path

@@ -77,6 +77,13 @@ RSpec.feature 'Signup', type: :feature do
 
     user_attrs = attributes_for(:user)
 
+    create_email_mock(
+      'ConfirmationsMailer',
+      'confirmation',
+      user_attrs[:email],
+      confirmationToken: /.+/
+    )
+
     within('#new_user') do
       fill_in 'user_email', with: user_attrs[:email]
       fill_in 'user_password', with: user_attrs[:password]
