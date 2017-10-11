@@ -141,7 +141,9 @@ class User < ApplicationRecord
   end
 
   def display_name
-    [first_name, middle_name, last_name].compact.join(' ').presence || url || display_name_from_group
+    [first_name, middle_name, last_name].compact.join(' ').presence ||
+      url ||
+      [I18n.t('groups.public.name_singular'), id].join(' ')
   end
 
   # Creates a new follow record for this instance to follow the passed object.
@@ -310,11 +312,6 @@ class User < ApplicationRecord
 
   def adjust_birthday
     self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
-  end
-
-  def display_name_from_group
-    group = profile.group_memberships.order("(group_id = #{Group::PUBLIC_ID}) ASC, created_at ASC").first&.group
-    [group.name_singular, id].join(' ') if group
   end
 
   # Sets the dependent foreign relations to the Community profile
