@@ -40,6 +40,26 @@ module Argu
         end
       end
 
+      def handle_oauth_error(e)
+        case e.response.status
+        when 401
+          handle_unauthorized_error
+        when 403
+          handle_forbidden_error
+        else
+          handle_general_oauth_error(e)
+        end
+      end
+
+      def handle_general_oauth_error(e)
+        Bugsnag.notify(e)
+        respond_to do |format|
+          format.html { error_response_html(e) }
+          format.json { render status: 500 }
+          format.json_api { render json_api_error(500, e.response.body) }
+        end
+      end
+
       def handle_not_a_user_error(e)
         @_not_a_user_caught = true
         return handle_error(e) unless [:html, :js, nil].include?(request.format.symbol)

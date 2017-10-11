@@ -135,10 +135,19 @@ module Users
 
     test 'user should post create confirmation' do
       sign_in user
+      create_email_mock(
+        'ConfirmationsMailer',
+        'requested_confirmation',
+        user.email,
+        email: user.email,
+        confirmationToken: /.+/
+      )
       post user_confirmation_path(user: {email: user.email})
       assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
                    user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
       assert_redirected_to settings_path(tab: :authentication)
+      assert_equal flash[:notice],
+                   'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
     end
 
     test 'user should not put confirm email with wrong token' do

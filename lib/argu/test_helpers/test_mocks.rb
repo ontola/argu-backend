@@ -8,6 +8,20 @@ module Argu
           .to_return(status: 200)
       end
 
+      def create_email_mock(mailer, template, email, options)
+        stub_request(:post, argu_url('/email/spi/emails'))
+          .with(
+            body: {
+              email: {
+                mailer: mailer,
+                template: template,
+                recipient: {display_name: /.+/, id: /.+/, language: /.+/, email: email},
+                options: options
+              }
+            }
+          )
+      end
+
       def facebook_picture(opts = {})
         uid = opts[:uid] || '102555400181774'
         stub_request(:get, "https://graph.facebook.com/v2.8/#{uid}/picture?redirect=false&type=large")

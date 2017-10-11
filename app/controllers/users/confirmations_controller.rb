@@ -5,7 +5,14 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   def create
     email = current_user.email_addresses.find_by!(email: resource_params[:email])
-    set_flash_message :notice, :send_instructions if email.send_confirmation_instructions
+    create_email = api.create_email(
+      :ConfirmationsMailer,
+      :requested_confirmation,
+      current_user,
+      confirmationToken: email.confirmation_token,
+      email: email.email
+    )
+    set_flash_message :notice, :send_instructions if create_email
     redirect_back(fallback_location: settings_path(tab: :authentication))
   end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'argu'
+require 'argu/api'
 
 class ApplicationController < ActionController::Base
   include Argu::RuledIt
@@ -89,6 +90,14 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(_resource_or_scope)
     params[:r].present? && valid_redirect?(params[:r]) ? params[:r] : super
+  end
+
+  def api
+    @api ||= Argu::API.new(
+      service_token: ENV['SERVICE_TOKEN'],
+      user_token: request.cookie_jar.encrypted['argu_client_token'],
+      cookie_jar: request.cookie_jar
+    )
   end
 
   def authorize_current_actor

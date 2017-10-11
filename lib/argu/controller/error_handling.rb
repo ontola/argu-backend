@@ -27,6 +27,7 @@ module Argu
       rescue_from ActionController::ParameterMissing, with: :handle_bad_request
       rescue_from ActionController::UnpermittedParameters, with: :handle_bad_request
       rescue_from ::Redis::ConnectionError, with: :handle_redis_connection_error
+      rescue_from OAuth2::Error, with: :handle_oauth_error
       alias_method :handle_bad_request, :handle_error
       alias_method :handle_record_not_found, :handle_error
     end
