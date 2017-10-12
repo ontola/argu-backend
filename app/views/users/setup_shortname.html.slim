@@ -22,4 +22,6 @@
               li.form-helper
                 span=t('users.shortname_helper_html')
         =f.actions do
-          =f.action :submit, :as => :button, label: t('next')
+          .sticky-submit
+            =link_to t('intro.skip').capitalize, setup_profiles_path, class: 'close-trigger margin-right'
+            =f.action :submit, as: :button, label: t('next'), wrapper_html: {class: 'inline-button-form'}
