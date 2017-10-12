@@ -708,7 +708,7 @@ h1 + .btn {
   opacity: .8;
   position: relative;
 
-  &:after {
+  &:not([data-title]):after {
     @include spinner;
     top: .15em;
     left: auto;
