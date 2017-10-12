@@ -39,6 +39,8 @@ nl:
       edit:
         header: 'Wachtwoord wijzigen'
         submit: 'Opslaan'
+      set:
+        header: 'Kies een wachtwoord'
       new:
         header: 'Wachtwoord vergeten?'
         helper: 'Vul je e-mailadres of gebruikersnaam in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'

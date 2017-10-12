@@ -39,6 +39,8 @@ en:
       edit:
         header: 'Change password'
         submit: 'Save'
+      set:
+        header: 'Choose a password'
       new:
         header: 'Forgotten password?'
         helper: "Enter your email address or username and we'll send you a mail with a link where you can enter a new password."

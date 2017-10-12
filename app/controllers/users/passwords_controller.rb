@@ -20,11 +20,16 @@ class Users::PasswordsController < Devise::PasswordsController
     end
   end
 
+  private
+
+  def after_resetting_password_path_for(resource)
+    return super if resource.url.present?
+    setup_users_url
+  end
+
   def sign_in(scope, resource)
     super(resource, scope)
   end
-
-  private
 
   def no_password_required?
     !current_user.guest? && !current_user.password_required?

@@ -1,6 +1,6 @@
 .col-1
   header
-    h2= t('devise.passwords.edit.header')
+    h2= resource.encrypted_password.present? ? t('devise.passwords.edit.header') : t('devise.passwords.set.header')
   .box
     section
       =semantic_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
