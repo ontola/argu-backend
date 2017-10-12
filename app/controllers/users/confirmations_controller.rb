@@ -13,6 +13,9 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     @original_token = params[:confirmation_token]
     self.resource = email_by_token&.user
     return super if resource.nil? || resource.encrypted_password.present?
+    email_by_token.confirm
+    sign_in resource
+    set_flash_message :notice, :confirmed
     render 'show'
   end
 
@@ -24,10 +27,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
         self.resource = email_by_token.user
         resource.assign_attributes(devise_parameter_sanitizer.sanitize(:sign_up))
 
-        if resource.valid?
-          email_by_token.confirm
-          set_flash_message :notice, :confirmed
-          sign_in resource
+        if resource.save
           redirect_to after_sign_in_path_for(resource)
         else
           render 'show'
@@ -49,6 +49,11 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     else
       super
     end
+  end
+
+  def after_sign_in_path_for(resource)
+    return super if resource.url.present?
+    setup_users_path
   end
 
   def correct_mail

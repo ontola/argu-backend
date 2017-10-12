@@ -35,6 +35,8 @@ module OauthHelper
       false
     )
     set_argu_client_token_cookie(t.token)
+    current_actor.user = resource
+    set_layout
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
   end
 

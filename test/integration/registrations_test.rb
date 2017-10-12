@@ -130,23 +130,21 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    assert_difference('EmailAddress.where(confirmed_at: nil).count', 0) do
+    assert_difference('EmailAddress.where(confirmed_at: nil).count', -1) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_response 200
     assert User.last.encrypted_password == ''
 
-    assert_difference('EmailAddress.where(confirmed_at: nil).count', -1) do
-      put users_confirm_path,
-          params: {
-            user: {
-              confirmation_token: User.last.confirmation_token,
-              password: 'password',
-              password_confirmation: 'password'
-            }
+    put users_confirm_path,
+        params: {
+          user: {
+            confirmation_token: User.last.confirmation_token,
+            password: 'password',
+            password_confirmation: 'password'
           }
-      assert_redirected_to root_path
-    end
+        }
+    assert_redirected_to setup_users_path
     assert_not User.last.encrypted_password == ''
   end
 

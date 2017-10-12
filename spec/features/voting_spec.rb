@@ -70,18 +70,19 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     expect(page).not_to have_content('Opinions')
 
-    visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
-
     Sidekiq::Testing.inline! do
-      expect(page).to have_content('Choose a password')
-      within('form') do
-        fill_in 'user_password', with: 'new_password'
-        fill_in 'user_password_confirmation', with: 'new_password'
-        click_button 'Confirm account'
-      end
-
-      expect(page).to have_content('Your account has been confirmed. You are now logged in.')
+      visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
+
+    expect(page).to have_content('Choose a password')
+    within('form') do
+      fill_in 'user_password', with: 'new_password'
+      fill_in 'user_password_confirmation', with: 'new_password'
+      click_button 'Confirm account'
+    end
+
+    expect(page).to have_content('Your account has been confirmed. You are now logged in.')
+
     visit motion_path(motion)
 
     expect(page).not_to have_content('Please confirm your vote by clicking the link we\'ve send to ')
