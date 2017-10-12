@@ -12,6 +12,7 @@ module Loggable
             -> { where("key ~ '*.trash'").order(created_at: :desc) },
             class_name: 'Activity',
             as: :trackable
+    after_destroy :destroy_notifications
 
     def destroy_notifications
       activities.each do |activity|

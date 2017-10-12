@@ -31,7 +31,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  test 'staff should create and destroy motion with notifications' do
+  test 'staff should create and trash motion with notifications' do
     sign_in staff
 
     # Notification for follower of Forum
@@ -40,18 +40,24 @@ class NotificationsTest < ActionDispatch::IntegrationTest
            params: {motion: attributes_for(:motion)}
     end
 
-    assert_differences([['Motion.published.count', 1], ['Notification.count', 1]]) do
-      reset_publication(Publication.last)
-    end
-
-    assert_equal Notification.last.notification_type, 'reaction'
+    assert_notifications(1, 'reaction', ['Motion.published.count', 1])
 
     assert_differences([['Motion.trashed.count', 1], [create_notification_count, -1]]) do
       delete motion_path(Motion.last)
     end
   end
 
-  test 'staff should create and destroy question with notifications' do
+  test 'staff should destroy motion with notifications' do
+    sign_in staff
+
+    motion
+
+    assert_differences([['Motion.count', -1], [create_notification_count, -2]]) do
+      delete motion_path(motion, destroy: true)
+    end
+  end
+
+  test 'staff should create and trash question with notifications' do
     sign_in staff
 
     # Notification for follower of Forum
@@ -60,18 +66,24 @@ class NotificationsTest < ActionDispatch::IntegrationTest
            params: {question: attributes_for(:question)}
     end
 
-    assert_differences([['Question.published.count', 1], ['Notification.count', 1]]) do
-      reset_publication(Publication.last)
-    end
-
-    assert_equal Notification.last.notification_type, 'reaction'
+    assert_notifications(1, 'reaction', ['Question.published.count', 1])
 
     assert_differences([['Question.trashed.count', 1], [create_notification_count, -1]]) do
       delete question_path(Question.last)
     end
   end
 
-  test 'staff should create and destroy argument with notifications' do
+  test 'staff should destroy question with notifications' do
+    sign_in staff
+
+    question
+
+    assert_differences([['Question.count', -1], [create_notification_count, -2]]) do
+      delete question_path(question, destroy: true)
+    end
+  end
+
+  test 'staff should create and trash argument with notifications' do
     sign_in staff
     motion
 
@@ -89,7 +101,17 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should create and destroy comment with notifications' do
+  test 'staff should destroy argument with notifications' do
+    sign_in staff
+
+    argument
+
+    assert_differences([['Argument.count', -1], [create_notification_count, -2]]) do
+      delete argument_path(argument, destroy: true)
+    end
+  end
+
+  test 'staff should create and trash comment with notifications' do
     sign_in staff
     argument
 
@@ -105,7 +127,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should create and destroy comment for blog_post with notifications' do
+  test 'staff should create and trash comment for blog_post with notifications' do
     sign_in staff
     blog_post
 
@@ -121,7 +143,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should create and destroy comment for motion with notifications' do
+  test 'staff should create and trash comment for motion with notifications' do
     sign_in staff
     motion
 
@@ -137,7 +159,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should create and destroy project with notifications' do
+  test 'staff should create and trash project with notifications' do
     sign_in staff
 
     assert_differences([['Project.count', 1]]) do
@@ -145,17 +167,14 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
 
     # Notification for follower of Forum
-    assert_differences([['Notification.count', 1]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
+    assert_notifications(1, 'reaction')
 
     assert_differences([['Project.trashed.count', 1], [create_notification_count, -1]]) do
       delete project_path(Project.last)
     end
   end
 
-  test 'staff should create and destroy blog_post with notifications' do
+  test 'staff should create and trash blog_post with notifications' do
     sign_in staff
 
     assert_differences([['BlogPost.count', 1]]) do
@@ -166,10 +185,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
 
     # Notification for creator, follower and news_follower of Project
-    assert_differences([['Notification.count', 3]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'news'
+    assert_notifications(3, 'news')
 
     assert_differences([['BlogPost.trashed.count', 1], [create_notification_count, -3]]) do
       delete blog_post_path(BlogPost.last)
@@ -193,10 +209,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
            }
     end
     # Notification for creator and follower of Motion and forwarded_to_user
-    assert_differences([['Notification.count', 3]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
+    assert_notifications(3, 'reaction')
   end
 
   test 'staff should forward to self and approve with notifications' do
@@ -215,10 +228,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
            }
     end
     # Notification for creator and follower of Motion
-    assert_differences([['Notification.count', 2]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
+    assert_notifications(2, 'reaction')
 
     assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
       post motion_decisions_path(motion),
@@ -230,15 +240,19 @@ class NotificationsTest < ActionDispatch::IntegrationTest
            }
     end
     # Notification for creator, follower and news_follower of Motion
-    assert_differences([['Notification.count', 3]]) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, 'news'
+    assert_notifications(3, 'news')
   end
 
   private
 
   def create_notification_count
     'Notification.joins(:activity).where("key ~ \'*.create|publish\'").count'
+  end
+
+  def assert_notifications(count, type, *differences)
+    assert_differences(differences.append(['Notification.count', count])) do
+      reset_publication(Publication.last)
+    end
+    assert_equal Notification.last.notification_type, type
   end
 end
