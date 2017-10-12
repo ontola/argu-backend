@@ -161,14 +161,22 @@ RSpec.configure do |config|
              id: 0,
              last_accepted: DateTime.current,
              profile: Profile.new(name: 'public page profile'),
-             owner: User.community.profile,
+             owner: User.create!(
+               shortname: Shortname.new(shortname: 'page_owner'),
+               profile: Profile.new,
+               email: 'page_owner@argu.co'
+             ).profile,
              shortname: Shortname.new(shortname: 'public_page'))
     end
     if Group.find_by(id: Group::PUBLIC_ID).blank?
-      create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')
-      community_user = User.community
-      community_user.build_public_group_membership
-      community_user.profile.save
+      g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')
+      public_membership =
+        CreateGroupMembership.new(
+          g,
+          attributes: {member: Profile.community},
+          options: {publisher: User.community, creator: Profile.community}
+        ).resource
+      public_membership.save(validate: false)
     end
     if Group.find_by(id: Group::STAFF_ID).blank?
       create(:group, id: Group::STAFF_ID, parent: Page.find(0).edge, name: 'Staff group', name_singular: 'Staff')

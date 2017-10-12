@@ -47,11 +47,15 @@ module TestHelper
     page.edge = Edge.new(user: User.community)
     page.last_accepted = DateTime.current
     page.profile = Profile.new(name: 'public page profile')
-    page.owner = User.community.profile
+    page.owner = User.create!(
+      shortname: Shortname.new(shortname: 'page_owner'),
+      profile: Profile.new,
+      email: 'page_owner@argu.co'
+    ).profile
     page.shortname = Shortname.new(shortname: 'public_page')
   end
 
-  Group.find_or_create_by(id: Group::PUBLIC_ID) do |group|
+  public_group = Group.find_or_create_by(id: Group::PUBLIC_ID) do |group|
     group.name = 'Public group'
     group.name_singular = 'User'
     group.page = Page.find(0)
@@ -63,9 +67,13 @@ module TestHelper
     group.page = Page.find(0)
   end
 
-  community_user = User.community
-  community_user.build_public_group_membership
-  community_user.profile.save
+  public_membership =
+    CreateGroupMembership.new(
+      public_group,
+      attributes: {member: Profile.community},
+      options: {publisher: User.community, creator: Profile.community}
+    ).resource
+  public_membership.save(validate: false)
 
   if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
     Doorkeeper::Application.create!(

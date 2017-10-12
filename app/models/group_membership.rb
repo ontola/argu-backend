@@ -29,6 +29,7 @@ class GroupMembership < ApplicationRecord
   validate :end_date_after_start_date
   validate :no_overlapping_group_memberships
   validates :group_id, exclusion: {in: [Group::STAFF_ID]}
+  validates :member_id, exclusion: {in: [Profile::COMMUNITY_ID]}
 
   paginates_per 30
   parentable :group

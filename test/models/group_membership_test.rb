@@ -15,6 +15,10 @@ class GroupMembershipTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
+  test 'membership for comminuty profile is invalid' do
+    assert_not GroupMembership.new(group: custom_group, member: Profile.community, start_date: DateTime.current).valid?
+  end
+
   test 'manager destroy managership' do
     manager
     assert_difference('manager.profile.grants.count', -1) do

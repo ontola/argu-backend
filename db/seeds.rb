@@ -3,20 +3,35 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-u1 = User
-       .new(
-         id: User::COMMUNITY_ID,
-         shortname: Shortname.new(shortname: 'community'),
-         email: 'community@argu.co',
-         password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66'
-       )
-u1.build_profile(id: Profile::COMMUNITY_ID, profileable: u1)
-u1.save!
-u1.update(encrypted_password: '')
+community_profile =
+  Profile.new(
+    id: Profile::COMMUNITY_ID,
+    profileable:
+      User
+        .new(
+          id: User::COMMUNITY_ID,
+          shortname: Shortname.new(shortname: 'community'),
+          email: 'community@argu.co',
+          password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66'
+        )
+  )
+community_profile.save!(validate: false)
+community_profile.profileable.update(encrypted_password: '')
+
+staff = User
+          .create!(
+            email: 'staff@argu.co',
+            shortname_attributes: {shortname: 'staff_account'},
+            password: 'arguargu',
+            password_confirmation: 'arguargu',
+            first_name: 'Douglas',
+            last_name: 'Engelbart',
+            profile: Profile.new
+          )
 
 argu = Page
          .new(
-           owner: User.find_via_shortname!('community').profile,
+           owner: staff.profile,
            shortname_attributes: {shortname: 'argu'},
            last_accepted: Time.current
          )
@@ -28,6 +43,7 @@ argu.edge.publish!
 public_group = Group.new(
   id: Group::PUBLIC_ID,
   name: 'Public',
+  name_singular: 'Public',
   page: argu
 )
 public_group.save!
@@ -35,25 +51,19 @@ public_group.save!
 staff_group = Group.new(
   id: Group::STAFF_ID,
   name: 'Staff',
+  name_singular: 'Staff',
   page: argu
 )
 staff_group.save!
 
-staff = User
-  .create!(
-    email: 'staff@argu.co',
-    shortname_attributes: {shortname: 'staff_account'},
-    password: 'arguargu',
-    password_confirmation: 'arguargu',
-    first_name: 'Douglas',
-    last_name: 'Engelbart',
-    profile: Profile.new
-  )
-CreateGroupMembership.new(
-  staff_group,
-  attributes: {member: staff.profile},
-  options: {publisher: staff, creator: staff.profile}
-).commit
+staff_membership =
+  CreateGroupMembership.new(
+    staff_group,
+    attributes: {member: staff.profile},
+    options: {publisher: staff, creator: staff.profile}
+  ).resource
+staff_membership.save!(validate: false)
+
 argu.update(owner: staff.profile)
 
 forum = Forum.new(name: 'Nederland',
@@ -70,7 +80,7 @@ forum.edge.publish!
 Doorkeeper::Application.create!(
   id: Doorkeeper::Application::ARGU_ID,
   name: 'Argu',
-  owner: u1.profile,
+  owner: community_profile,
   redirect_uri: 'https://argu.co/'
 )
 
