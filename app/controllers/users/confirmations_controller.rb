@@ -23,8 +23,9 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     respond_to do |format|
       format.html do
         @original_token = params[resource_name].try(:[], :confirmation_token)
-        raise ActiveRecord::RecordNotFound if email_by_token.blank?
-        self.resource = email_by_token.user
+        self.resource = email_by_token!.user
+        raise Argu::NotAuthorizedError.new(query: :confirm?) if resource.encrypted_password.present?
+
         resource.assign_attributes(devise_parameter_sanitizer.sanitize(:sign_up))
 
         if resource.save
@@ -62,5 +63,9 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   def email_by_token
     @email_by_token ||= EmailAddress.find_first_by_auth_conditions(confirmation_token: @original_token)
+  end
+
+  def email_by_token!
+    email_by_token || raise(ActiveRecord::RecordNotFound)
   end
 end

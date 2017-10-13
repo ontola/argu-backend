@@ -6,6 +6,11 @@ module Users
   class ConfirmationsTest < ActionDispatch::IntegrationTest
     define_freetown
     let(:user) { create(:user, :unconfirmed) }
+    let!(:user_without_password) do
+      user = create(:user)
+      user.update(encrypted_password: '')
+      user
+    end
     let(:other_user) { create(:user, :unconfirmed) }
     let(:confirmed_user) { create(:user) }
     let(:motion) { create(:motion, parent: freetown.edge) }
@@ -44,27 +49,18 @@ module Users
     end
 
     test 'guest should not put confirm email with wrong token' do
-      put users_confirm_path,
-          params: {
-            user: {
-              confirmation_token: 'wrong_token',
-              password: 'password',
-              password_confirmation: 'password'
-            }
-          }
+      put_confirm('wrong_token', 'password', 'password')
       assert_response 404
     end
 
-    test 'guest should put confirm email' do
-      put users_confirm_path,
-          params: {
-            user: {
-              confirmation_token: user.confirmation_token,
-              password: 'password',
-              password_confirmation: 'password'
-            }
-          }
+    test 'guest should put confirm email for user without password' do
+      put_confirm(user_without_password.confirmation_token, 'password', 'password')
       assert_redirected_to root_path
+    end
+
+    test 'guest should not put confirm email for user with password' do
+      put_confirm(user.confirmation_token, 'password', 'password')
+      assert_not_authorized
     end
 
     test 'guest should not put confirm email json' do
@@ -147,19 +143,21 @@ module Users
 
     test 'user should not put confirm email with wrong token' do
       sign_in user
-      put users_confirm_path,
-          params: {
-            user: {
-              confirmation_token: 'wrong_token',
-              password: 'password',
-              password_confirmation: 'password'
-            }
-          }
+      put_confirm('wrong_token', 'password', 'password')
       assert_response 404
     end
 
-    test 'user should put confirm email' do
+    test 'user without password should put confirm email' do
+      sign_in user_without_password
+      put_confirm(user_without_password.confirmation_token, 'password', 'password')
+
+      assert_redirected_to root_path
+    end
+
+    test 'user with password should not put confirm email' do
       sign_in user
+      put_confirm(user.confirmation_token, 'password', 'password')
+
       put users_confirm_path,
           params: {
             user: {
@@ -168,7 +166,7 @@ module Users
               password_confirmation: 'password'
             }
           }
-      assert_redirected_to root_path
+      assert_not_authorized
     end
 
     test 'user should not put confirm email json' do
@@ -208,6 +206,19 @@ module Users
           }
       assert_response 200
       assert user.reload.confirmed?
+    end
+
+    private
+
+    def put_confirm(confirmation_token, password, password_confirmation)
+      put users_confirm_path,
+          params: {
+            user: {
+              confirmation_token: confirmation_token,
+              password: password,
+              password_confirmation: password_confirmation
+            }
+          }
     end
   end
 end
