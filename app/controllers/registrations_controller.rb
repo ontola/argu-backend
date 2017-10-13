@@ -99,7 +99,6 @@ class RegistrationsController < Devise::RegistrationsController
   def send_confirmation_mail(user, guest_votes)
     if guest_votes&.count&.positive?
       api.create_email(
-        :ConfirmationsMailer,
         :confirm_votes,
         user,
         confirmationToken: user.confirmation_token,
@@ -109,10 +108,10 @@ class RegistrationsController < Devise::RegistrationsController
         end
       )
     elsif resource.password.present?
-      api.create_email(:ConfirmationsMailer, :confirmation, user, confirmationToken: user.confirmation_token)
+      api.create_email(:confirmation, user, confirmationToken: user.confirmation_token)
     else
       token = user.send(:set_reset_password_token)
-      api.create_email(:ConfirmationsMailer, :set_password, user, passwordToken: token)
+      api.create_email(:set_password, user, passwordToken: token)
     end
   end
 end

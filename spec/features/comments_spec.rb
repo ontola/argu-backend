@@ -116,7 +116,6 @@ RSpec.feature 'Comments', type: :feature do
     user_attr = attributes_for(:user)
 
     create_email_mock(
-      'ConfirmationsMailer',
       'confirmation',
       user_attr[:email],
       confirmationToken: /.+/

@@ -58,7 +58,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     clear_emails
     locale = :en
     cookies[:locale] = locale.to_s
-    create_email_mock('ConfirmationsMailer', 'confirmation', 'test@example.com', confirmationToken: /.+/)
+    create_email_mock('confirmation', 'test@example.com', confirmationToken: /.+/)
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
@@ -94,7 +94,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     locale = :nl
     cookies[:locale] = locale.to_s
     attrs = attributes_for(:user)
-    create_email_mock('ConfirmationsMailer', 'confirmation', attrs[:email], confirmationToken: /.+/)
+    create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],
@@ -108,7 +108,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create without password' do
-    create_email_mock('ConfirmationsMailer', 'set_password', 'test@example.com', passwordToken: /.+/)
+    create_email_mock('set_password', 'test@example.com', passwordToken: /.+/)
 
     assert_differences([['User.count', 1],
                         ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
@@ -132,7 +132,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     other_guest_vote3
     argument_guest_vote
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_votes',
       'test@example.com',
       confirmationToken: /.+/,
@@ -192,7 +191,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     argument_guest_vote
     attrs = attributes_for(:user)
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_votes',
       attrs[:email],
       confirmationToken: /.+/,

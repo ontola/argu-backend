@@ -136,7 +136,6 @@ module Users
     test 'user should post create confirmation' do
       sign_in user
       create_email_mock(
-        'ConfirmationsMailer',
         'requested_confirmation',
         user.email,
         email: user.email,

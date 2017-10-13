@@ -14,7 +14,6 @@ RSpec.feature 'Voting', type: :feature do
     user_attr = attributes_for(:user)
 
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_votes',
       user_attr[:email],
       confirmationToken: /.+/,

@@ -140,7 +140,6 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should add second email' do
     sign_in user
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_secondary',
       /.+/,
       email: 'secondary@argu.co',
@@ -239,14 +238,12 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should change unconfirmed email' do
     sign_in user
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_secondary',
       /.+/,
       confirmationToken: /.+/,
       email: 'unconfirmed@argu.co'
     )
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_secondary',
       /.+/,
       confirmationToken: /.+/,
@@ -326,7 +323,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
   test 'user with other email should redirect to r on wrong_email' do
     sign_in user
-    create_email_mock('ConfirmationsMailer', 'confirm_secondary', /.+/, email: 'new@email.com', confirmationToken: /.+/)
+    create_email_mock('confirm_secondary', /.+/, email: 'new@email.com', confirmationToken: /.+/)
 
     assert_difference('EmailAddress.count') do
       put user_path(user),

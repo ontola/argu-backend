@@ -70,7 +70,6 @@ class EmailAddress < ApplicationRecord
     Argu::API
       .service_api
       .create_email(
-        :ConfirmationsMailer,
         :confirm_secondary,
         user,
         confirmationToken: confirmation_token,

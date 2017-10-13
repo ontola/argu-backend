@@ -6,7 +6,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   def create
     email = current_user.email_addresses.find_by!(email: resource_params[:email])
     create_email = api.create_email(
-      :ConfirmationsMailer,
       :requested_confirmation,
       current_user,
       confirmationToken: email.confirmation_token,

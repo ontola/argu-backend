@@ -8,12 +8,11 @@ module Argu
           .to_return(status: 200)
       end
 
-      def create_email_mock(mailer, template, email, options)
+      def create_email_mock(template, email, options)
         stub_request(:post, argu_url('/email/spi/emails'))
           .with(
             body: {
               email: {
-                mailer: mailer,
                 template: template,
                 recipient: {display_name: /.+/, id: /.+/, language: /.+/, email: email},
                 options: options

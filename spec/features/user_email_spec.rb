@@ -15,7 +15,6 @@ RSpec.feature 'User email' do
     new_email = 'new_email@example.com'
 
     create_email_mock(
-      'ConfirmationsMailer',
       'confirm_secondary',
       user.email,
       confirmationToken: /.+/,
