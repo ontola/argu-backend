@@ -12,7 +12,7 @@ const Footer = React.createClass({
         let cancelButton;
         if (this.props.cancelButton) {
             cancelButton = <li className="action button_action">
-                    <button className="btn--transparant" onClick={this.props.onCancel}>
+                    <button type="button" className="btn--transparant" onClick={this.props.onCancel}>
                         {this.props.cancelButton}
                     </button>
                 </li>
