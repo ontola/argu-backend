@@ -62,7 +62,7 @@ gem 'rack-attack', '~> 4.3.1'
 gem 'country_select'
 gem 'http_accept_language'
 gem 'browser'
-gem 'addressable', '~> 2.3.8'
+gem 'addressable', '~> 2.5.2'
 gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
@@ -144,6 +144,8 @@ group :test do
 end
 
 group :development, :test do
+  gem 'rswag', git: 'https://github.com/moserke/rswag.git', branch: 'swagger_ui_3x'
+  gem 'json-schema', '~> 2.8.0'
   gem 'rubocop', '~> 0.49.1'
   gem 'rubocop-rspec', '~> 1.15.1'
   gem 'spring', '~> 1.7.2'

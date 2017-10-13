@@ -36,6 +36,8 @@ require 'argu/whitelist_constraint'
 # z:
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   concern :blog_postable do
     resources :blog_posts,
               only: %i[index new create],

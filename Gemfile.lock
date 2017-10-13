@@ -31,6 +31,25 @@ GIT
     multimap (1.1.4)
 
 GIT
+  remote: https://github.com/moserke/rswag.git
+  revision: 944ef003531bb4e7155c1e692862ad967a8a0008
+  branch: swagger_ui_3x
+  specs:
+    rswag (1.2.1)
+      rswag-api (= 1.2.1)
+      rswag-specs (= 1.2.1)
+      rswag-ui (= 1.2.1)
+    rswag-api (1.2.1)
+      rails (>= 3.1, < 5.2)
+    rswag-specs (1.2.1)
+      json (~> 1.8)
+      json-schema (~> 2.2)
+      rails (>= 3.1, < 5.2)
+      rspec-rails (>= 2.14, < 4)
+    rswag-ui (1.2.1)
+      rails (>= 3.1, < 5.2)
+
+GIT
   remote: https://github.com/st0012/Sidekiq-Logging-JSON.git
   revision: 08098971d5baa75f05bb3b9d53d2d0e811d0ebc1
   ref: 08098971d5baa75f05bb3b9d53d2d0e811d0ebc1
@@ -98,7 +117,8 @@ GEM
       awesome_nested_set (>= 3.0)
     acts_as_list (0.7.7)
       activerecord (>= 3.0)
-    addressable (2.3.8)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     after_commit_action (1.0.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -313,6 +333,8 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
+    json-schema (2.8.0)
+      addressable (>= 2.4)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
@@ -434,6 +456,7 @@ GEM
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
+    public_suffix (3.0.0)
     puma (3.7.1)
     pundit (1.0.1)
       activesupport (>= 3.0.0)
@@ -691,7 +714,7 @@ DEPENDENCIES
   acts_as_commentable_with_threading (~> 2.0.0)
   acts_as_follower!
   acts_as_list (~> 0.7.2)
-  addressable (~> 2.3.8)
+  addressable (~> 2.5.2)
   auto_strip_attributes (~> 2.0.6)
   awesome_nested_set (~> 3.1.3)
   babel-transpiler
@@ -737,6 +760,7 @@ DEPENDENCIES
   indefinite_article
   jbuilder (~> 2.6.0)
   jquery-rails (~> 4.3.1)
+  json-schema (~> 2.8.0)
   jwt
   kaminari (~> 0.17.0)
   koala (~> 2.5.0)
@@ -782,6 +806,7 @@ DEPENDENCIES
   roadie-rails (~> 1.2.1)
   rollout
   rspec-rails (~> 3.5.2)
+  rswag!
   rubocop (~> 0.49.1)
   rubocop-rspec (~> 1.15.1)
   sass (= 3.4.18)
