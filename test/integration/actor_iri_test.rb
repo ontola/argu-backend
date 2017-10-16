@@ -49,10 +49,10 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  test 'staff should not post create as page' do
+  test 'staff should post create as page' do
     sign_in staff
 
-    post_motion(false, freetown.page.context_id)
+    post_motion(true, freetown.page.context_id)
   end
 
   private

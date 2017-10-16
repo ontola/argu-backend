@@ -27,9 +27,7 @@ class CurrentActorPolicy < RestrictivePolicy
       owner == user
     else
       return unless user.confirmed?
-      owner.owner == user.profile ||
-        (user.profile.page_ids(:manager) + user.profile.page_ids(:super_admin))
-          .include?(owner.id)
+      owner.owner == user.profile || user.managed_profile_ids.include?(owner.profile.id)
     end
   end
 end
