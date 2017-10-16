@@ -52,7 +52,7 @@ nl:
       confirmed: 'Jouw account is bevestigd. Je bent nu ingelogd.'
       set_password:
         header: "Kies een wachtwoord"
-        button: "Bevestig account"
+        button: "Wachtwoord instellen"
       edit:
         header: 'Bevestigingslink opnieuw versturen'
         submit: 'Verzend bevestigingslink opnieuw'

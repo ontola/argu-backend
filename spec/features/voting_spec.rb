@@ -85,7 +85,7 @@ RSpec.feature 'Voting', type: :feature do
     within('form') do
       fill_in 'user_password', with: 'new_password'
       fill_in 'user_password_confirmation', with: 'new_password'
-      click_button 'Confirm account'
+      click_button 'Set password'
     end
 
     expect(page).to have_content('Your account has been confirmed. You are now logged in.')

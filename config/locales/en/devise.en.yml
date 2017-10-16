@@ -52,7 +52,7 @@ en:
       confirmed: 'Your account has been confirmed. You are now logged in.'
       set_password:
         header: "Choose a password"
-        button: "Confirm account"
+        button: "Set password"
       edit:
         header: 'Send confirmation link again'
         submit: 'Send confirmation link'
