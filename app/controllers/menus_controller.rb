@@ -8,7 +8,7 @@ class MenusController < AuthorizedController
   def show
     respond_to do |format|
       format.json_api do
-        render json: resource_by_id, include: [menus: :menus]
+        render json: resource_by_id!, include: [menus: :menus]
       end
     end
   end
