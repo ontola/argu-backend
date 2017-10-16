@@ -21,12 +21,20 @@ class ApplicationMenuList < MenuList
   end
 
   def page_links
-    policy_scope(
-      Page
-        .joins(forums: {edge: :favorites})
-        .where(favorites: {user_id: user.id})
-        .includes(:shortname, profile: :default_profile_photo)
-    ).distinct
+    pages =
+      if user.guest?
+        Page
+          .joins(forums: :shortname)
+          .where(shortnames: {shortname: Setting.get('suggested_forums')&.split(',')&.map(&:strip)})
+          .includes(:shortname, profile: :default_profile_photo)
+      else
+        Page
+          .joins(forums: {edge: :favorites})
+          .where(favorites: {user_id: user.id})
+          .includes(:shortname, profile: :default_profile_photo)
+      end
+    policy_scope(pages)
+      .distinct
       .map do |page|
       menu_item(
         page.url,
