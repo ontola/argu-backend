@@ -49,28 +49,34 @@ class VotesController < EdgeTreeController
     authorize authenticated_resource, method
   end
 
-  def create_respond_blocks_failure(resource, format)
-    format.json { respond_with_400(resource, :json) }
-    format.json_api { respond_with_400(resource, :json_api) }
-    # format.js { head :bad_request }
-    format.html do
-      redirect_to polymorphic_url(resource.parent_model.voteable),
-                  notice: t('votes.alerts.failed')
+  def respond_with_201(resource, format)
+    case format
+    when :json_api
+      render json: resource, status: :created, location: vote_url(resource)
+    when :json
+      render locals: {model: resource.parent_model, vote: resource}, status: :created, location: vote_url(resource)
+    else
+      super
     end
   end
 
-  def create_respond_blocks_success(resource, format)
-    format.json { render location: vote_url(resource), locals: {model: resource.parent_model, vote: resource} }
-    format.json_api { respond_with_200(resource, :json_api) }
-    format.js { render locals: {model: resource.parent_model, vote: resource} }
-    format.html do
-      if params[:vote].try(:[], :r).present?
-        redirect_to redirect_param
-      else
-        redirect_to polymorphic_url(resource.parent_model.voteable),
-                    notice: t('votes.alerts.success')
-      end
+  def create_respond_failure_html(resource)
+    redirect_to polymorphic_url(resource.parent_model.voteable),
+                notice: t('votes.alerts.failed')
+  end
+
+  def create_respond_success_html(resource)
+    if params[:vote].try(:[], :r).present?
+      redirect_to redirect_param
+    else
+      redirect_to polymorphic_url(resource.parent_model.voteable),
+                  notice: t('votes.alerts.success')
     end
+  end
+
+  def create_respond_success_js(resource)
+    return super(resource.parent_model.voteable) unless resource.parent_model.is_a?(Argument)
+    render locals: {model: resource.parent_model, vote: resource}
   end
 
   def destroy_respond_success_js(resource)

@@ -6,3 +6,5 @@ nl:
       values: "Kernwaarden"
     form_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
     notice: "Door je aan te melden voor Argu ga je akkoord met de "
+    continue_html: "Door verder te gaan ga je akkoord met de %{link}."
+    accept: "Accepteer"

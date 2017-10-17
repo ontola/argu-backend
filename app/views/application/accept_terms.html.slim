@@ -1,0 +1,16 @@
+.modal-container
+  .overlay.overlay-back
+  .modal.col-1
+    header
+      h1= t('legal.documents.policy')
+    .box
+      section.unpadded
+        .modal-section
+          p= t('legal.continue_html', link: link_to(t('legal.documents.policy'), policy_path, target: '_blank'))
+          =semantic_form_for '', url: request.original_url, method: request.method, remote: true, authenticity_token: true do |f|
+            =params_to_hidden_fields(params.except(:format).to_unsafe_h)
+            =hidden_field_tag :accept_terms, true
+            =f.actions
+              =link_to t('cancel'), nil, class: 'close-trigger margin-right'
+              =f.action :submit, as: :button, label: t('legal.accept'), wrapper_html: {class: 'inline-button-form'}
+    .overlay.overlay-bottom

@@ -13,6 +13,7 @@ class AuthorizedController < ApplicationController
   before_action :check_if_registered,
                 except: %i[show shift move convert convert!]
   before_action :authorize_action
+  before_action :verify_terms_accepted, only: %i[update create]
   before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_edge, :authenticated_resource, :collect_banners, :user_context
 
@@ -161,5 +162,24 @@ class AuthorizedController < ApplicationController
 
   def _route?
     !%i[new create].include? params[:action]
+  end
+
+  def verify_terms_accepted
+    return if current_user.guest? || current_user.last_accepted.present?
+    if accept_terms_param
+      current_user.update!(last_accepted: DateTime.current)
+    else
+      respond_to do |format|
+        format.js { render 'accept_terms' }
+        format.json do
+          render status: 403,
+                 json: {
+                   body: render_to_string('accept_terms.html', layout: false),
+                   code: 'TERMS_NOT_ACCEPTED'
+                 }
+        end
+        format.html { render 'accept_terms' }
+      end
+    end
   end
 end

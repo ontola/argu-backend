@@ -3,6 +3,10 @@
 module UsersHelper
   include IRIHelper
 
+  def accept_terms_param
+    params[:accept_terms].to_s == 'true'
+  end
+
   def forum_from_r_action(user)
     return if user.r.nil?
     resource = resource_from_iri(user.r)

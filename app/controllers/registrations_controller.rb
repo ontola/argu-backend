@@ -91,7 +91,7 @@ class RegistrationsController < Devise::RegistrationsController
     resource.shortname = nil if resource.shortname.shortname.blank?
     resource.build_profile
     resource.language = I18n.locale
-    resource.last_accepted = DateTime.current if params[:accept_terms].to_s == 'true'
+    resource.last_accepted = DateTime.current if accept_terms_param
     return unless session[:omniauth]
     @user.apply_omniauth(session[:omniauth])
     @user.valid?

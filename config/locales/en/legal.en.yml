@@ -6,3 +6,5 @@ en:
       values:
     form_html: "By creating an Argu account you agree to our %{link}."
     notice: "By creating an Argu account you agree to our "
+    continue_html: "By creating an Argu account you agree to our %{link}."
+    accept: "Accept"

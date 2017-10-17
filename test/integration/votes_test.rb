@@ -123,7 +123,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should post create vote for motion' do
     get root_path
     post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
@@ -135,7 +135,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Argu::Redis.keys("temporary.*").count', 1) do
       post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con})
     end
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
@@ -166,7 +166,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_redis_resource_count(0, owner_type: 'Vote', publisher: guest_user, parent: argument3.edge)
     assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: argument.edge)
     assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: argument2.edge)
-    assert_response 200
+    assert_response 201
   end
 
   test 'guest should post not create vote for closed motion' do
@@ -186,7 +186,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
     end
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
@@ -238,7 +238,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in unconfirmed
     get root_path
     post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
@@ -251,7 +251,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_difference('Argu::Redis.keys("temporary.*").count', 1) do
       post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con})
     end
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
@@ -282,7 +282,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_redis_resource_count(0, owner_type: 'Vote', publisher: unconfirmed, parent: argument3.edge)
     assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument.edge)
     assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument2.edge)
-    assert_response 200
+    assert_response 201
   end
 
   test 'unconfirmed should post not create vote for closed motion' do
@@ -304,7 +304,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_differences([['Argu::Redis.keys("temporary.*").count', 0], ['Vote.count', 0]]) do
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
     end
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
@@ -333,7 +333,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       assert vote.reload.con?
       assert RedisResource::Relation.where(publisher: creator).first.resource.con?
     end
-    assert_response 200
+    assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], 'https://argu.co/ns/core#no'
   end
 
@@ -389,7 +389,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
   end
@@ -416,7 +416,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert Vote.find_by(id: vote_to_remove.id).nil?
     assert Vote.find_by(voteable_id: argument.id, voteable_type: 'Argument').present?
     assert Vote.find_by(voteable_id: argument2.id, voteable_type: 'Argument').present?
-    assert_response 200
+    assert_response 201
     assert_analytics_collected('votes', 'create', 'pro')
   end
 
@@ -436,7 +436,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
   end
@@ -495,7 +495,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
     assert assigns(:create_service).resource.pro?
@@ -522,7 +522,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
     assert_equal 'Explanation', assigns(:create_service).resource.explanation
@@ -549,7 +549,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
@@ -617,7 +617,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
@@ -641,7 +641,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.con?
   end
@@ -771,7 +771,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'update', 'con')
   end
@@ -792,7 +792,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
   end
 
@@ -815,7 +815,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.con?
   end
@@ -935,7 +935,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert_analytics_collected('votes', 'create', 'pro')
   end
@@ -958,7 +958,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_response 200
+    assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
   end
