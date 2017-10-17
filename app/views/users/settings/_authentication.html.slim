@@ -1,6 +1,7 @@
 =semantic_form_for authenticated_resource, url: settings_user_path, method: :put, remote: true, authenticity_token: true do |f|
   =f.inputs name: t('users.registrations.categories.authentication') do
-    =f.inputs :shortname, for: :shortname, disabled: authenticated_resource.url.present?
+    =f.inputs :shortname, for: :shortname, disabled: authenticated_resource.url.present? do |sf|
+      =sf.input :shortname, required: false
     - if authenticated_resource.url.present?
       li.form-helper
         span="#{t('profiles.edit.shortname_not_allowed')} #{link_to t('users.settings.menu.profile'), settings_url_for(authenticated_resource, :profile)}.".html_safe
