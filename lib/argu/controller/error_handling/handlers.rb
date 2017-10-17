@@ -55,7 +55,7 @@ module Argu
         Bugsnag.notify(e)
         respond_to do |format|
           format.html { error_response_html(e) }
-          format.json { render status: 500 }
+          format.json { json_error(500, e.response.body) }
           format.json_api { render json_api_error(500, e.response.body) }
         end
       end
