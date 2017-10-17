@@ -16,9 +16,14 @@ FactoryGirl.define do
     notifications_viewed_at nil
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
+    last_accepted DateTime.current
 
     after(:create) do |user|
       user.primary_email_record.update(confirmed_at: DateTime.current)
+    end
+
+    trait :not_accepted_terms do
+      last_accepted nil
     end
 
     trait :no_shortname do
