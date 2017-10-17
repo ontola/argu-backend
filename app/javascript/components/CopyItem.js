@@ -31,10 +31,14 @@ export const CopyItem = React.createClass({
         this.clipboard.destroy();
     },
 
+    handleClick (e) {
+        e.preventDefault();
+        this.props.done()
+    },
+
     handleMouseDown (e) {
         e.preventDefault();
         new Alert(I18n.t('menus.copy_successful', { url: this.props.url }), 'notice', true);
-        this.props.done()
     },
 
     render () {
@@ -52,6 +56,7 @@ export const CopyItem = React.createClass({
                data-clipboard-text={this.props.url}
                data-turbolinks={turbolinks}
                href='#'
+               onClickCapture={this.handleClick}
                onMouseDownCapture={this.handleMouseDown}
                onTouchEnd={this.handleTap}
                rel="nofollow" >
