@@ -1,2 +1,2 @@
-window.modal.open("<%= escape_javascript render(template: template, layout: false, locals: local_assigns) %>");
+window.modal.open("<%= escape_javascript render(template: template, layout: false, locals: local_assigns) %>", "<%= request.original_url %>");
 ReactRailsUJS.mountComponents(".modal");

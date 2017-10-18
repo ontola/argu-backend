@@ -37,25 +37,45 @@ export const modal = {
 
         document.documentElement.scrollTop = bodyScrollTop;
         document.body.scrollTop = bodyScrollTop;
+
+        history.pushState({ modal: true }, null, document.getElementsByClassName('modal-container')[0].dataset.previousUrl);
     },
 
-    open: function (content) {
+    open: function (content, href) {
         var bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        let previousUrl;
+
         $('body').addClass('modal-opened');
 
         if ($('.modal-container').length === 0) {
+            if (typeof window !== 'undefined') {
+                previousUrl = window.location.href;
+            }
             $('.container').append(content);
             document.body.style.overflow = 'visible';
             document.body.style.position = 'fixed';
             document.body.style.left = '0';
             document.body.style.right = '0';
             document.body.style.top = -bodyScrollTop + 'px';
+
+            history.pushState({ modal: true }, null, href);
         } else {
+            previousUrl = document.getElementsByClassName('modal-container')[0].dataset.previousUrl;
+
             $('.modal-container').replaceWith(content);
+
+            history.replaceState({ modal: true }, null, href);
         }
+        document.getElementsByClassName('modal-container')[0].setAttribute('data-previous-url', previousUrl)
     }
 };
 
 if (typeof window !== 'undefined') {
     window.modal = modal;
+    window.onpopstate = function(event){
+        if (event.state.modal === true) {
+            Turbolinks.visit(window.location.href, { action: 'replace' });
+        }
+    }
 }
+

@@ -1,2 +1,2 @@
-window.modal.open("<%= escape_javascript render(template: 'motions/move.html', layout: false, locals: {resource: resource}) %>");
+window.modal.open("<%= escape_javascript render(template: 'motions/move.html', layout: false, locals: {resource: resource}) %>", "<%= request.original_url %>");
 
