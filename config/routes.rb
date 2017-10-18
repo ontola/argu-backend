@@ -89,7 +89,8 @@ Rails.application.routes.draw do
     put :untrash, action: :untrash, on: :member
   end
   concern :votable do
-    resources :votes, only: %i[new create]
+    resources :votes, only: %i[new create index]
+    delete 'votes' => 'votes#destroy'
     get 'vote' => 'votes#show', as: :show_vote
   end
 
@@ -155,9 +156,7 @@ Rails.application.routes.draw do
   get :feed, controller: :favorites_feed, action: :show
 
   resources :votes, only: %i[destroy update show], path: :v, as: :vote
-  resources :vote_events, only: [:show], concerns: [:votable] do
-    resources :votes, only: :index
-  end
+  resources :vote_events, only: [:show], concerns: [:votable]
 
   resources :vote_matches, only: %i[index show create update destroy] do
     get :voteables, to: 'list_items#index', relationship: :voteables
@@ -187,7 +186,6 @@ Rails.application.routes.draw do
                          feedable trashable decisionable invitable menuable] do
     resources :arguments, only: %i[new create index]
     resources :media_objects, only: :index
-    resources :votes, only: :index
     resources :vote_events, only: :index
   end
 
@@ -269,7 +267,6 @@ Rails.application.routes.draw do
   resources :linked_records, only: %i[show], path: :lr, concerns: %i[votable commentable] do
     get '/', action: :show, on: :collection
     resources :arguments, only: %i[new create index]
-    resources :votes, only: :index
     resources :vote_events, only: :index
   end
 

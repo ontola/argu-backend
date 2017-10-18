@@ -2,7 +2,7 @@
 
 class VotesController < EdgeTreeController
   include UriTemplateHelper
-  skip_before_action :check_if_registered, only: %i[index show create]
+  skip_before_action :check_if_registered, only: %i[index show create destroy]
 
   # GET /model/:model_id/vote
   def show
@@ -86,7 +86,7 @@ class VotesController < EdgeTreeController
   end
 
   def resource_by_id
-    return super unless params[:action] == 'show' && params[:motion_id].present?
+    return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||= Edge
                            .where_owner('Vote', creator: current_profile)
                            .find_by(parent: parent_from_params.edge)
@@ -106,16 +106,6 @@ class VotesController < EdgeTreeController
 
   def parent_from_params(opts = params)
     super.try(:default_vote_event) || super
-  end
-
-  def handle_record_not_found(exception)
-    return super unless action_name == 'destroy' && request.format.js?
-    render 'destroy', locals: {
-      vote: Edge.new(
-        owner: Vote.new,
-        parent_id: Activity.where(trackable_type: 'Vote', trackable_id: params[:id]).pluck(:recipient_edge_id).first
-      ).owner
-    }
   end
 
   def unmodified?

@@ -47,7 +47,7 @@ module Edgeable
 
     def destroy
       remove_from_redis if store_in_redis?
-      super if persisted?
+      persisted? ? super : true
     end
 
     def is_published?
