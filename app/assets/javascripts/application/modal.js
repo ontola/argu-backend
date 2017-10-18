@@ -2,7 +2,8 @@ export const modal = {
     init: function () {
         $(document)
             .on('click', '.modal-container:not(.no-close) .overlay', this.handleCloseModal.bind(this))
-            .on('click', '.modal-container .close-trigger', this.handleCloseModal.bind(this));
+            .on('click', '.modal-container .close-trigger', this.handleCloseModal.bind(this))
+            .on('click', '.modal > header', this.handleCloseModal.bind(this));
 
         // Close modal when pressing escape button
         // @TODO: Just listen to escape, not all the time all the buttons
