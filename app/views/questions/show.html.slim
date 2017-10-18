@@ -54,6 +54,7 @@
                   buttons_url: polymorphic_url([:new, question, :motion]),
                   buttons_text: t('add_type', type: motion_type),
                   page_param: :page,
+                  sort_buttons: sort_items_param(question),
                   buttons_icon: 'fa-lightbulb-o',
                   buttons_header: @motion_edges.present? && t('motions.one_up'),
                   buttons_class: 'box-link--motion')

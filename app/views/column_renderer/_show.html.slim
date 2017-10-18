@@ -1,4 +1,5 @@
 div[class="col-#{model.keys.length}"]
+  =sort_buttons(options)
   =header(options)
   -model.keys.each_with_index do |key,i|
     div[class="col-#{model.keys.length}-1"]

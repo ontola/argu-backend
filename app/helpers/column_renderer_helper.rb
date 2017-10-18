@@ -59,6 +59,17 @@ module ColumnRendererHelper
     end
   end
 
+  def sort_buttons(options)
+    return unless options[:sort_buttons]
+    content_tag :div, class: 'btns-list--subtle btns-sort-motions' do
+      content_tag :li do
+        content_tag :ul do
+          react_component_store 'HyperDropdown', props: options[:sort_buttons]
+        end
+      end
+    end
+  end
+
   # Stitches the url for a button beneath a column together
   def buttons_url(model)
     if model[:buttons_param].present?

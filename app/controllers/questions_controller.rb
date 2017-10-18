@@ -18,7 +18,7 @@ class QuestionsController < EdgeTreeController
           @all_motion_edges
             .includes(Motion.edge_includes_for_index(true))
             .joins(:default_vote_event_edge)
-            .order("cast(default_vote_event_edges_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+            .order(sort_from_param)
             .page(show_params[:page])
         preload_user_votes(@motion_edges.map { |edge| edge.default_vote_event_edge.id })
         render locals: {question: authenticated_resource}
@@ -51,5 +51,16 @@ class QuestionsController < EdgeTreeController
 
   def show_params
     params.permit(:page)
+  end
+
+  def sort_from_param
+    case sort_param_or_default
+    when 'popular'
+      "cast(default_vote_event_edges_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST"
+    when 'created_at'
+      {created_at: :desc}
+    when 'updated_at'
+      'edges.last_activity_at DESC'
+    end
   end
 end

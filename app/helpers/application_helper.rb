@@ -149,6 +149,24 @@ module ApplicationHelper
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
+  def sort_items_param(record)
+    link_items = [
+      sort_item(record, :popular, 'check-square-o'),
+      sort_item(record, :created_at, 'clock-o'),
+      sort_item(record, :updated_at, 'fire')
+    ]
+
+    dropdown_options(t("filtersort.#{sort_param_or_default}"), [{items: link_items}], fa: 'fa-sort')
+  end
+
+  def sort_item(record, type, icon)
+    link_item(t("filtersort.#{type}"), url_for([record, sort: type]), fa: icon)
+  end
+
+  def sort_param_or_default
+    params[:sort] || authenticated_resource.default_sorting
+  end
+
   def filter_items
     link_items = [
       link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
