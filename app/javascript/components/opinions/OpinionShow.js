@@ -30,7 +30,7 @@ const OpinionShow = React.createClass({
     },
 
     render () {
-        const { actor, currentExplanation: { explanation, explained_at }, onOpenOpinionForm, selectedArguments } = this.props;
+        const { actor, currentExplanation: { explanation_html, explained_at }, onOpenOpinionForm, selectedArguments } = this.props;
         const argumentFields = {};
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
@@ -50,9 +50,7 @@ const OpinionShow = React.createClass({
                 <div className="box">
                     <section>
                         {confirmHeader}
-                        <div className="markdown" itemProp="text">
-                            <p>{explanation}</p>
-                        </div>
+                        <div className="markdown" dangerouslySetInnerHTML={{ __html: explanation_html }} itemProp="text"/>
                         <div className="opinion-body__arguments-list">
                             {argumentFields['pro'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="pro-t">{result.label}</label></a>; })}
                         </div>

@@ -15,6 +15,14 @@ module MotionsHelper
     }
   end
 
+  def current_explanation_props(vote)
+    {
+      explanation: vote&.explanation,
+      explanation_html: markdown_to_html(vote&.explanation),
+      explained_at: vote&.explained_at
+    }
+  end
+
   def motion_vote_props(actor, motion, vote, opts = {})
     disabled_message = motion_vote_disabled_message(motion, vote)
     localized_react_component({
@@ -23,7 +31,7 @@ module MotionsHelper
       arguments: motion_vote_arguments(motion),
       buttonsType: opts.fetch(:buttons_type, 'big'),
       currentVote: vote.try(:for) || 'abstain',
-      currentExplanation: {explanation: vote&.explanation, explained_at: vote&.explained_at},
+      currentExplanation: current_explanation_props(vote),
       disabled: disabled_message.present?,
       disabledMessage: disabled_message,
       distribution: motion_vote_counts(motion),
