@@ -27,6 +27,7 @@ Rails.application.configure do
   config.public_file_server.headers = {
     'Cache-Control' => 'public, max-age=3600'
   }
+  config.assets.digest = true
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

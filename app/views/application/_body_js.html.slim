@@ -1,0 +1,18 @@
+div#async-styles[data-turbolinks-permanent]
+- if asset_present?(current_controller_js_path)
+  =javascript_include_tag current_controller_js_path, defer: true
+javascript:
+  window.__INITIAL_STATE__ = #{(@initial_js_state || {}).to_json.html_safe};
+  javascript:
+    var loadDeferredStyles = function () {
+        var addStylesNode = document.getElementById('deferred-styles');
+        var replacement = document.getElementById('async-styles');
+        replacement.innerHTML = addStylesNode.textContent;
+        addStylesNode.parentElement.removeChild(addStylesNode);
+    };
+  var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+    webkitRequestAnimationFrame || msRequestAnimationFrame;
+  if (raf) raf(function () {
+      window.setTimeout(loadDeferredStyles, 0);
+  });
+  else window.addEventListener('load', loadDeferredStyles);

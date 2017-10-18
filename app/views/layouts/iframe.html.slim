@@ -11,11 +11,11 @@ html[class="no-js"]
     meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
     meta[name="iframe-csrf-token" content="#{iframe_csrf_token}"]
 
-    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
-    =javascript_pack_tag 'application', data: {:'turbolinks-permanent' => true}
-    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
+    =javascript_include_tag 'turbolinks/dist/turbolinks', defer: true, data: {:'turbolinks-permanent' => true}
+    =javascript_pack_tag 'application', defer: true, data: {:'turbolinks-permanent' => true}
+    =javascript_include_tag 'application', defer: true, data: {:'turbolinks-permanent' => true}
+    =render partial: 'styles'
 
-    =stylesheet_link_tag 'application', media: 'all'
     - if request.original_url.include? developers_path
       =stylesheet_link_tag 'developers/developers', media: 'all'
 

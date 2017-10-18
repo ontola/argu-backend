@@ -1,0 +1,8 @@
+style[data-turbolinks-permanent]
+  - if Rails.env.production?
+    =File.read(Rails.root.join('public').to_s + compute_asset_path('essential.css').to_s).html_safe
+  - else
+    =Rails.application.assets.find_asset('essential.css').source.html_safe
+link[rel="prefetch" as="style" href=path_to_stylesheet('application') data-turbolinks-permanent]
+noscript.data-turbolinks-permanent#deferred-styles
+  =stylesheet_link_tag 'application', :media => 'all'
