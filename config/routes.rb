@@ -174,6 +174,7 @@ Rails.application.routes.draw do
 
   resources :question_answers, path: 'qa', only: %i[new create]
   resources :edges, only: [] do
+    get :statistics, to: 'statistics#show'
     resources :conversions, path: 'conversion', only: %i[new create]
   end
   resources :grants, path: 'grants', only: [:destroy]

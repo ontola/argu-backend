@@ -20,7 +20,7 @@ class MotionMenuList < MenuList
         activity_link,
         new_update_link,
         edit_link,
-        vote_statistics_link,
+        statistics_link,
         trash_and_destroy_links
       ]
     )
@@ -41,14 +41,5 @@ class MotionMenuList < MenuList
 
   def share_menu
     share_menu_items
-  end
-
-  def vote_statistics_link
-    menu_item(
-      :statistics,
-      image: 'fa-bar-chart-o',
-      href: vote_event_url(resource.default_vote_event),
-      policy: :statistics?
-    )
   end
 end

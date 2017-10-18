@@ -14,7 +14,15 @@ class QuestionMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [couple_motion_link, comments_link, activity_link, new_update_link, edit_link, trash_and_destroy_links]
+      menus: [
+        couple_motion_link,
+        comments_link,
+        activity_link,
+        new_update_link,
+        edit_link,
+        statistics_link,
+        trash_and_destroy_links
+      ]
     )
   end
 

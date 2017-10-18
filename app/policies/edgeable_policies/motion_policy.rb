@@ -41,8 +41,4 @@ class MotionPolicy < EdgeablePolicy
   def update?
     rule is_creator?, is_manager?, is_super_admin?, super
   end
-
-  def statistics?
-    rule is_manager?, is_super_admin?, staff?
-  end
 end

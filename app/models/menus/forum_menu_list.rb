@@ -14,7 +14,7 @@ class ForumMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [activity_link, settings_link],
+      menus: [activity_link, statistics_link, settings_link],
       link_opts: {triggerClass: 'btn--transparant'}
     )
   end

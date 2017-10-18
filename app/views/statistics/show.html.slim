@@ -1,0 +1,16 @@
+=set_title resource
+.col-1
+  div= to_parent(resource)
+.col-1
+  =header(header: t('statistics.header'))
+  .col--motion
+    .box
+      section
+        .markdown[itemprop="text"]
+          table
+            tbody
+              - @statistics.each do |key, value|
+                - if value.positive?
+                  tr
+                    td[data-title=t("statistics.#{key}.tooltip")]= t("statistics.#{key}.label")
+                    td= value

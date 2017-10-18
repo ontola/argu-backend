@@ -41,6 +41,15 @@ module Menus
       )
     end
 
+    def statistics_link
+      menu_item(
+        :statistics,
+        image: 'fa-bar-chart-o',
+        href: edge_statistics_url(resource.edge),
+        policy: :statistics?
+      )
+    end
+
     def trash_and_destroy_links
       resource.is_trashed? ? [untrash_link, destroy_link] : [trash_link, destroy_link]
     end

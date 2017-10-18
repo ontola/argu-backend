@@ -1,0 +1,27 @@
+en:
+  statistics:
+    header: "Statistics"
+    users:
+      label: "Invloved users"
+      tooltip: "The amount of users that voted or made a contribution."
+    votes:
+      label: "Votes"
+      tooltip: "The amount of votes for or against an idea."
+    questions:
+      label: "Challenges"
+      tooltip: "The amount of submitted challenges."
+    motions:
+      label: "Ideas"
+      tooltip: "The amount of submitted ideas."
+    arguments:
+      label: "Arguments"
+      tooltip: "The amount arguments for or against an idea."
+    opinions:
+      label: "Opinions"
+      tooltip: "The amount of opinions attached to votes."
+    comments:
+      label: "Comments"
+      tooltip: "The amount comments on arguments, ideas and challenges."
+    contributions:
+      label: "Contributions"
+      tooltip: "All items with text. These are comments, ideas, arguments en opinions combined."

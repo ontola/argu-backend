@@ -195,6 +195,10 @@ class EdgeTreePolicy < RestrictivePolicy
     rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
   end
 
+  def statistics?
+    rule is_manager?, is_super_admin?, staff?
+  end
+
   private
 
   def cache_action(action, val)

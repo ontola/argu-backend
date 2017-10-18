@@ -1,0 +1,27 @@
+nl:
+  statistics:
+    header: "Statistieken"
+    users:
+      label: "Betrokken gebruikers"
+      tooltip: "Het aantal gebruikers dat heeft gestemd en/of een bijdrage heeft geleverd."
+    votes:
+      label: "Stemmen"
+      tooltip: "Het aantal stemmen voor of tegen een idee."
+    questions:
+      label: "Uitdagingen"
+      tooltip: "Het aantal ingediende uitdagingen."
+    motions:
+      label: "Ideeën"
+      tooltip: "Het aantal ingediende ideeën."
+    arguments:
+      label: "Argumenten"
+      tooltip: "Het aantal argumenten voor en tegen een idee."
+    opinions:
+      label: "Opinies"
+      tooltip: "Het aantal toelichtingen op stemmen."
+    comments:
+      label: "Reacties"
+      tooltip: "Het aantal reacties op argumenten, ideeën en uitdagingen."
+    contributions:
+      label: "Bijdragen"
+      tooltip: "Alle items waar text in staat. Dit zijn de reacties, ideeën, argumenten en opinies bij elkaar opgeteld."
