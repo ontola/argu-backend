@@ -48,3 +48,10 @@ nl:
       tooltip: "Deze uitdaging sloot op %{date}."
     expires_at:
       tooltip: "Deze uitdaging wordt gesloten op %{date}."
+  activerecord:
+    attributes:
+      question:
+        default_sortings:
+          popular: "Meeste stemmen voor"
+          created_at: "Nieuwste"
+          updated_at: "Laatst actief"

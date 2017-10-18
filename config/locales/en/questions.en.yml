@@ -48,3 +48,10 @@ en:
       tooltip: "This challenge expired at %{date}."
     expires_at:
       tooltip: "This challenge will expire on %{date}."
+  activerecord:
+    attributes:
+      question:
+        default_sortings:
+          popular: "Most votes in favour"
+          created_at: "Newest"
+          updated_at: "Most recently active"

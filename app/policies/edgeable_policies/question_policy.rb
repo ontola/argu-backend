@@ -10,7 +10,7 @@ class QuestionPolicy < EdgeablePolicy
                            remove_cover_photo cover_photo_attribution]
     end
     attributes.concat %i[include_motions f_convert] if staff?
-    attributes.concat %i[pinned require_location] if is_manager? || staff?
+    attributes.concat %i[pinned require_location default_sorting] if is_manager? || staff?
     append_default_photo_params(attributes)
     append_attachment_params(attributes)
     attributes
