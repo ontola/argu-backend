@@ -28,6 +28,7 @@ Rails.application.configure do
     'Cache-Control' => 'public, max-age=3600'
   }
   config.assets.digest = true
+  config.assets.image_optim = false
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
