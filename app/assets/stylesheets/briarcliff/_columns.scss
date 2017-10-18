@@ -1,58 +1,6 @@
 @import "variables";
 @import "mixins";
 
-
-.col-1 {
-  position: relative;
-  clear: both;
-  margin: 0 auto;
-  padding: .01em 1em; //unpadded means margins are negated
-  margin-bottom: 1em;
-  max-width: 48em;
-  @include bp-medium(){
-    width: 100%;
-  }
-}
-
-.col-1-big {
-  @include container-width;
-}
-
-.col-1--small {
-  max-width: 35em;
-}
-
-.col-2 {
-  position: relative;
-  clear: both;
-  margin: 0 auto;
-  @include container-width;
-  .col-2 {
-    margin-left: -1em;
-    margin-right: -1em;
-  }
-  .col-3 {
-    margin-left: -1em;
-    margin-right: -1em;
-  }
-}
-
-.col-2--small {
-  max-width: 55em;
-}
-
-.col-2-1 {
-  position: relative;
-  float: left;
-  width: 50%;
-  margin-bottom: 2em;
-  padding: 0 1em;
-  @include bp-medium(){
-    width: 100%;
-    margin-bottom: 1em;
-  }
-}
-
 .col-3 {
   position: relative;
   clear: both;

@@ -1,107 +1,20 @@
 @import "variables";
 @import "mixins";
 
-section {
-  padding: 1.1em 1.4em 0.1em 1.4em;
-  background-color: white;
-}
-
-// All this wizardry is to make only the correct borders round.
-// As you can see, .section-info requires some special treatment.
-.box > section:first-child:not(.section-info), .box > a:first-child > section:not(.section-info), .box > a:first-child > .box-image--container {
-  display: block;
-  border-top-left-radius: $border-radius-size;
-  border-top-right-radius: $border-radius-size;
-}
-
-.box > section.section-info:first-child, .box > a:first-child  > section.section-info{
-  border-top-left-radius: $border-radius-size;
-  border-top-right-radius: $border-radius-size;
-
-  .details-part--type {
-    border-top-left-radius: $border-radius-size;
-  }
-  .details-part--right {
-    border-top-right-radius: $border-radius-size;
-  }
-}
-
-//.box > section:last-child, .box > a:last-child > section{
-.box > section:last-child, .box > a:last-child {
-  display: block;
-  border-bottom-left-radius: $border-radius-size;
-  border-bottom-right-radius: $border-radius-size;
-}
-
-.section-info {
-  height: $info—bar-height;
-  background-color: $g00;
-  padding: 0;
-  position: relative;
-
-  span {
-    font-size: .8em;
-  }
-
-  .fa-group {
-    font-size: 0.7em;
-  }
-
-}
-
-.section--attachments {
-  padding-top: 0;
-}
-
-.details {
-  padding: 0;
-  line-height: $info—bar-height;
-  color: $g2a;
-  display: block;
-  width: 100%;
-  // May interfere with overflow:hidden! But if removed, it places the info section always at the top.
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: $info—bar-height;
-}
-
-.details-parts, .details-part {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.details-part{
-  padding: 0 .5em;
-  height: 100%;
-  &:hover{
+.details-part {
+  &:hover {
     background-color: $g0;
     color: $g3;
   }
 }
 
-.details-part--right{
-  float: right;
-}
-
-.details-part--type{
-  color: white;
-  padding-left: 1.2em;
-  padding-right: 1.2em;
-  margin-right: .6em;
-  +.details-part {
-    padding-left: 1em;
-  }
+.details-part--type {
   &:hover{
     color: white;
   }
 }
 
 .details-part--filled {
-  color: white;
-
   &:hover {
     color: white;
     background-color: $g3;
@@ -182,33 +95,12 @@ section {
 
 */
 
-section.unpadded {
-  padding: 0;
-}
-
-section.smallpadded {
-  padding: 1.1em 1em 0 1em;
-}
-
-.section-small {
-  position: relative;
-  padding: .3em 1.4em 0.1em 1.4em;
-}
-
 .box .section-fill {
-  background-color: $g3;
-
   h2 {
-    color: White !important;
-
     &:hover {
       color: white !important;
     }
   }
-}
-
-.section-description {
-  background-color: $g00;
 }
 
 .section-video {
@@ -230,46 +122,6 @@ section.smallpadded {
 
 .section--has-readmore {
   padding-bottom: .4em;
-}
-
-.section-draft {
-}
-
-.section-trashed {
-  border: 2px solid $red;
-  .activity-string {
-    display: inline-flex;
-  }
-}
-
-.section--footer {
-  background-color: $g00;
-  padding: 0;
-  height: $section-footer-height;
-}
-
-.section--context {
-  padding: 0.7em 1.5em;
-  font-size: 0.8em;
-}
-
-.section--details {
-  overflow: visible !important;
-  margin-top: -0.7em;
-  padding-top: 0.7em;
-  padding-bottom: 0.5em;
-
-  .display-hide-details &{
-    display: none !important;
-  }
-}
-
-.section--details + section {
-  padding-top: 0;
-}
-
-.section--no-top-padding {
-  padding-top: 0;
 }
 
 // Drop a picture to upload it

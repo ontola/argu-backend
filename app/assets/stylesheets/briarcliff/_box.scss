@@ -2,26 +2,11 @@
 @import "mixins";
 
 .box {
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 1em;
-  display: block;
   @include border-radius();
   @include box-shadow();
-
-  .box {
-    margin-bottom: 0;
-    border: solid 1px $g1;
-  }
-}
-
-.box-transparant {
-  background-color: initial;
 }
 
 .box h3 a, .box a h1, .box a h2, .box a h3, .box a h4 {
-  display: inline-block;
-  position: relative;
   @include transition(.2s);
 
   &:before {
@@ -49,10 +34,6 @@
 
 }
 
-.box.trashed, .trashed > .box {
-  background-color: $g00;
-}
-
 .box.box-link {
   opacity: .8;
 
@@ -70,20 +51,6 @@
     top: 1px;
     box-shadow: none;
   }
-  h3 {
-    font-size: 1.2em;
-    margin-bottom: .8em;
-  }
-}
-
-.box h1, .box h2, .box h3, .box h4 {
-  margin-bottom: .5em;
-  line-height: 1.15em;
-}
-
-.box p {
-  margin-bottom: .9em;
-  white-space: pre-wrap;
 }
 
 .box code {
@@ -92,19 +59,6 @@
 
 .box ol, .box ul {
   color: $g4;
-}
-
-.box-container {
-  position: relative;
-}
-
-.box-divider {
-  border-top: solid 1px #e8e8e8;
-  width: calc(100% + 2em);
-  margin-left: -1em;
-  z-index: 1;
-  display: block;
-  position: relative;
 }
 
 .box-divider-space {
@@ -118,12 +72,6 @@
 
 .box-image{
   @include transition(.2s);
-  background-position: center;
-  background-size: cover;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  height: $box-image-height;
-  width: 100%;
 
   a & {
     &:hover{
@@ -134,10 +82,6 @@
       opacity: .6;
       transition: none;
     }
-  }
-
-  .display-hide-images & {
-    display: none;
   }
 }
 
@@ -153,22 +97,7 @@
     box-shadow: none;
     transition: none;
   }
-  h3 {
-    font-size: 1.2em;
-    margin-bottom: .8em;
-  }
-  .icon-left {
-    margin-left: .4em;
-  }
   &.box-link--fill{
-
-    section {
-      background: none;
-    }
-
-    h3 {
-      color: white;
-    }
     &:hover h3 {
       text-decoration: underline;
     }
@@ -204,12 +133,6 @@
 
 .box-small{
   max-width: 17em;
-}
-
-.box-with-btns {
-  h1, h2, h3 {
-    padding-right: .7em;
-  }
 }
 
 .box-list {
@@ -280,38 +203,14 @@
   }
 }
 
-.box--extra-margin{
-  margin-bottom: 2em;
-}
-.box .box--extra-margin {
-  margin: 0;
-}
-
 .box-detailed {
   width: 90% !important;
   width: calc(100% - 2em) !important;
 }
 
 .box {
-  .outside-the-box {
-    visibility: hidden;
-    position: absolute;
-    left: -2em;
-    top: 0;
-    padding: .25em 2em 5em .5em;
-  }
   &:hover .outside-the-box{
     visibility: visible;
-  }
-}
-
-.box-image--container{
-
-  .motion & {
-    background-color: lighten($blu, 40);
-  }
-  .question & {
-    background-color: lighten($bro, 40);
   }
 }
 

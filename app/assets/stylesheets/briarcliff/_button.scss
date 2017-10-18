@@ -1,20 +1,6 @@
 @import "variables";
 @import "mixins";
 
-.btn {
-  @include button();
-}
-
-.btn--lineheight {
-  line-height: normal;
-}
-
-.actions .btn, .form-actions .btn {
-  position: absolute;
-  margin: 0;
-  height: 3em;
-}
-
 .btn-auth {
   margin-right: 1em;
   position: relative;
@@ -51,44 +37,12 @@
   }
 }
 
-.btn--warning {
-  @include button($red-alert);
-}
-
-.btn--pro {
-  @include button($pro);
-}
-
-.btn--neutral {
-  @include button($neutral);
-}
-
-.btn--con {
-  @include button($con);
-}
-
-.btn--motion {
-  @include button($motion);
-}
-
-.btn--question {
-  @include button($question);
-}
-
-.btn--project {
-  @include button($project);
-}
-
 .btn--twitter {
   @include button(#55ACEE);
 }
 
 .btn--facebook {
   @include button(#3B5998);
-}
-
-.btn--argu {
-  @include button($blu);
 }
 
 .btn--transparant, .btn--transparant--parent > div > div{
@@ -146,47 +100,7 @@
   }
 }
 
-// The sticky class 'sticks' elements to a corner of a parent. Make sure the parent is relatively positioned.
-
-.sticky, .sticky--bottom-right, .sticky--center, .sticky--top-left, .sticky--top-right {
-  position: absolute !important;
-}
-
-.sticky--on-top {
-  z-index: 1;
-}
-
-.sticky, .sticky--top-right {
-  top: 0;
-  right: 0;
-}
-
-.sticky--bottom-right {
-  top: auto;
-  bottom: 0;
-  right: 0;
-  margin-bottom: 0;
-}
-
-.sticky--top-left {
-  top: 0;
-  right: auto;
-  left: 0;
-}
-
-.sticky--center {
-  top: 50%;
-  bottom: 50%;
-}
-
 .btn-subtle{
-  @include button(rgba(255,255,255,0));
-  border: none;
-  @include border-radius(0);
-  color: $g3;
-  padding-left: 1em;
-  padding-right: 1em;
-
   &:hover{
     color: $g4;
     background-color: $darken1;
@@ -291,21 +205,8 @@
   }
 }
 
-.btn--mini {
-  padding: .5em !important;
-}
-
-.btn--smaller {
-  padding:  0em 0.9em !important;
-}
 
 .btn--light {
-  @include button($g0);
-  color: $g3;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-right: 1em;
-
   &:hover{
     color: $g4;
   }
@@ -450,21 +351,6 @@
 }
 
 .btns-opinion {
-  display: block;
-  margin-bottom: 1em;
-  width: 100%;
-  width: calc(100% + 1em);
-  margin-left: -0.5em;
-
-  li {
-    display: inline-block;
-    margin: 0 0;
-    margin-bottom: 0.5em;
-    width: 33.3%;
-    width: calc(33.3% - 1em);
-    margin: 0 .5em;
-  }
-
   &[data-voted] a {
     opacity: .6;
 
@@ -476,71 +362,15 @@
       opacity: 1;
     }
   }
-  a, button {
-    width: 100% !important;
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: .6
-    }
-
-    .fa {
-      font-size: 1.2em;
-      vertical-align: center;
-      width: auto;
-    }
-  }
-  .btn-pro {
-    background-color: $pro;
-    @include button($color: $pro);
-
-  }
-  .btn-neutral {
-    background-color: $neutral;
-    @include button($color: $neutral);
-
-  }
-  .btn-con {
-    background-color: $con;
-    @include button($color: $con);
-
-    margin-right: 0;
-  }
-
-  .vote-text {
-    margin-left: .4em;
-  }
 }
 
 .btns-opinion--subtle {
-  display: block;
-  margin-bottom: 1em;
-  text-align: center;
-  // Fixes a single white pixel that hides the border
-  padding-top: 0.1em;
-
-  li {
-    display: inline-block;
-    margin: 0 0;
-    margin-bottom: 0.5em;
-  }
-
   a, button {
-    background-color: $g0;
-    padding: .8em;
-    display: inline-block;
     @include transition(.2s all linear);
-    box-sizing: border-box;
-    font-size: .8em;
-    text-transform: uppercase;
 
     &.disabled {
       cursor: not-allowed;
       opacity: .6
-    }
-
-    .fa {
-      font-size: 1.2em;
     }
 
     &:hover {
@@ -554,37 +384,9 @@
       background-color: $g1a;
     }
   }
-
-  a.btn-pro {
-    color: $pro;
-    border-top-left-radius: 999px;
-    border-bottom-left-radius: 999px;
-    padding-left: 1.2em;
-  }
-
-  a.btn-neutral {
-    color: $neutral;
-    margin: 0 3px;
-  }
-
-  a.btn-con {
-    color: $con;
-    border-top-right-radius: 999px;
-    border-bottom-right-radius: 999px;
-    padding-right: 1.2em;
-  }
 }
 
 .btns-opinion, .btns-opinion--subtle, .btns-opinion--bottom {
-
-  .vote-count {
-    margin-left: .4em;
-  }
-
-  .vote-text {
-    margin-left: .4em;
-  }
-
   &[data-voted] a {
 
     &[data-voted-on=true] {
@@ -604,21 +406,7 @@
     }
   }
 
-  .vote-count {
-    &:before{
-      content: "("
-    }
-    &:after {
-      content: ")"
-    }
-  }
-
   @include bp-medium {
-    .vote-text {
-      display: none;
-      margin: 0;
-    }
-
     .vote-count {
       &:before {
         content: none;
@@ -628,13 +416,6 @@
       }
     }
   }
-}
-
-.btns-opinion--subtle {
-  border-top: 1px solid $g1;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 
 .btns-floating {
@@ -670,10 +451,6 @@
 
 .btns-horizontal > li {
   display: inline-block;
-}
-
-.btns-padded li {
-  margin: 0.6em;
 }
 
 .btns--vote a{
@@ -736,10 +513,6 @@ h1 + .btn {
   }
 }
 
-.btn--square {
-  @include border-radius(0);
-}
-
 .btn--in-subtle-list{
   vertical-align: top;
   @include border-radius(0);
@@ -748,38 +521,9 @@ h1 + .btn {
 }
 
 .btns-opinion--bottom, .btns__bottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-top: solid 1px $g1;
-
-  .fa {
-    margin-right: .5em;
-  }
-
   li {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1em;
-    margin: 0;
-    border: none;
-    display: inline-block;
-    cursor: pointer;
-    background-color: white;
-    border-right: 1px solid $g1;
-    flex-grow: 1;
-    flex-basis: 0;
-    justify-content: center;
-    display: flex;
-
     a {
       @include transition(background-color .2s);
-      background-color: $g00;
-      flex-grow: 1;
-      flex-basis: 0;
-      justify-content: center;
-      display: flex;
-      padding: 0.8em;
-      color: $g2;
 
       &:hover {
         color: $g4;
@@ -807,7 +551,6 @@ h1 + .btn {
   }
 
   .btn-pro {
-    color: $pro;
     &:hover {
       color: $pro;
       background-color: lighten($pro, 50);
@@ -818,7 +561,6 @@ h1 + .btn {
     }
   }
   .btn-neutral {
-    color: $neutral;
     &:hover {
       color: $neutral;
       background-color: lighten($neutral, 45);
@@ -829,7 +571,6 @@ h1 + .btn {
     }
   }
   .btn-con {
-    color: $con;
     &:hover {
       color: $con;
       background-color: lighten($con, 50);

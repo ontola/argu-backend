@@ -89,7 +89,7 @@
       .landing__column.landing__column--fixed-height
         .box.landing-box
           .box-image--container
-            .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
+            .box-image.bg-img.b-lazy[data-src=asset_path('new-discussion-motion-cover.jpg')]
           section[data-scroll data-scroll-class="landing__visible"]
             h3.motion-t= t('landing.concept.ideas.example')
             .detailsBar.li-motion-4.animate.landing__detail-decision

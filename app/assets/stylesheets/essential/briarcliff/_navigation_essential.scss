@@ -1,0 +1,174 @@
+@import "variables";
+@import "mixins_essential";
+
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 11;
+  height: $navbar-height;
+  background-color: $blu;
+}
+
+.navbar-item {
+  color: white;
+  display: block;
+  padding: 0 0.7em;
+  font-size: 1em;
+  background-color: $blu;
+  height: $navbar-height;
+
+  span {
+    line-height: $navbar-height;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  > .fa {
+    line-height: $navbar-height + .2em;
+    float: none;
+    padding: 0;
+  }
+}
+
+.navbar-links {
+  margin-left: 1em;
+  float: left;
+
+  > li {
+    float: left;
+  }
+
+  > div {
+    display: inline-block;
+    float: left;
+  }
+
+  @include bp-small {
+    margin-left: 0;
+  }
+}
+
+.navbar-links-right {
+  float: right;
+  margin-right: 1em;
+  margin-left: 0;
+
+  @include bp-small {
+    margin-right: 0;
+  }
+}
+
+.navbar-logo {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  width: 5.8em;
+  background-color: $blu;
+
+  img {
+    width: 82%;
+    margin-top: 4.6%;
+
+    @include bp-small{
+      width: 60%;
+      margin-top: 10.6%;
+    }
+  }
+}
+
+.nav-container {
+  @include container-width;
+  margin: auto;
+  position: relative;
+  height: 100%;
+}
+
+.profile-picture--navbar{
+  height: 2.2em;
+  width: 2.2em;
+  margin: .4em;
+  margin-left: 0;
+  margin-right: .4em;
+  @include border-radius(999px);
+  @include bp-medium-large{
+    margin-right: 0;
+  }
+}
+
+.profile-picture--navbar--forum {
+  @include bp-medium-large{
+    margin-right: .4em;
+  }
+}
+
+.profile-picture--navbar > a > .icon-left {
+  vertical-align: top;
+  margin-top: 1em;
+  display: inline-block;
+}
+
+.profile-name--navbar {
+  padding: 1em 0;
+  display: inline-block;
+  float: right;
+}
+
+.navbar-below {
+  position: fixed;
+  top: $navbar-height;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  > div {
+    padding: 0 1em;
+    margin: auto;
+    max-width: 1200px;
+  }
+  @include bp-medium {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding: 0;
+    width: auto;
+  }
+}
+
+.navbar-profile span, .navbar-current-forum span {
+  @include bp-medium-large() {
+    display: none;
+
+    &.dont-hide{
+      display: inline-block;
+    }
+
+    &.fa {
+      display: inline-block;
+    }
+  }
+}
+
+.navbar-item span {
+  @include bp-small() {
+    display: none;
+
+    &.dont-hide{
+      display: inline-block;
+    }
+
+    &.fa {
+      display: inline-block;
+    }
+  }
+}
+
+// Accessibility here
+
+// For users who rely on keyboard navigation
+.accessibility-link {
+  position: fixed;
+}

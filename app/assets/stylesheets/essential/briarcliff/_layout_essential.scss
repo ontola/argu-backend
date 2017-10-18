@@ -1,0 +1,85 @@
+@import "variables";
+@import "mixins_essential";
+
+html {
+  max-width: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+html, body {
+  height: calc(100% - 2.5em);
+}
+
+body {
+  background-color: $g1;
+  overflow-y: initial !important;
+
+  @include bp-smaller{
+    font-size: .9em;
+  }
+  @include bp-smallest{
+    font-size: .8em;
+  }
+}
+
+.bg {
+  -moz-background-size: cover; /* Firefox 3.6 */
+  background-size: cover; /* Chrome, Firefox 4.0+, Safari 4.1+, Opera 10+ and IE9 */
+}
+
+.center {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+}
+
+.container {
+  margin: 0 auto;
+  margin-top: 5em;
+  position: relative;
+}
+
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.margin-bottom--big {
+  margin-bottom: 3em;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+.margin-right {
+  margin-right: 1em;
+}
+
+.margin-left {
+  margin-left: 1em;
+}
+
+.move-up {
+  margin-top: -1em;
+}
+
+.move-down {
+  margin-bottom: -1em;
+}
+
+.hidden {
+  display: none;
+}
+
+.float-right {
+  float: right;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,49 @@
+@import "variables";
+
+.detail {
+  display: inline-flex;
+  align-items: center;
+  margin-right: .8em;
+  height: 1.3em;
+  margin-bottom: .3em;
+}
+
+.detail__text, .detail--interactive .icon-left {
+  font-size: .8em;
+  color: $g3;
+}
+
+.detail__icon {
+  margin-right: .3em;
+  width: 1.4em;
+  height: 1.4em;
+  display: flex;
+  border-radius: 1em;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: $g3;
+}
+
+.detail__icon--type {
+  color: white;
+  font-size: .8em;
+  margin-right: .5em;
+  background-color: $g3;
+}
+
+.detail__icon--inline {
+  color: white;
+  font-size: 1em;
+  width: 1.4em;
+  display: inline-block;
+  height: 1.4em;
+  text-align: center;
+  margin-right: .3em;
+}
+
+.detailsBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}

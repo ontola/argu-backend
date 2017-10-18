@@ -1,0 +1,432 @@
+@import "variables";
+@import "mixins_essential";
+
+.btn {
+  @include button();
+}
+
+.btn--lineheight {
+  line-height: normal;
+}
+
+.actions .btn, .form-actions .btn {
+  position: absolute;
+  margin: 0;
+  height: 3em;
+}
+
+.btn--warning {
+  @include button($red-alert);
+}
+
+.btn--pro {
+  @include button--colored($pro);
+}
+
+.btn--neutral {
+  @include button--colored($neutral);
+}
+
+.btn--con {
+  @include button--colored($con);
+}
+
+.btn--motion {
+  @include button--colored($motion);
+}
+
+.btn--question {
+  @include button--colored($question);
+}
+
+.btn--project {
+  @include button--colored($project);
+}
+
+.btn--argu {
+  @include button--colored($blu);
+}
+
+.btn--g4 {
+  @include button($g4);
+}
+
+.btn--narrow {
+  padding: .7em;
+}
+
+.btn--dropdown-trigger {
+  padding: 0;
+
+  .dropdown-trigger {
+    padding: .7em 2.5em .7em;
+  }
+}
+
+.btn-box {
+  color: white;
+}
+
+// The sticky class 'sticks' elements to a corner of a parent. Make sure the parent is relatively positioned.
+
+.sticky, .sticky--bottom-right, .sticky--center, .sticky--top-left, .sticky--top-right {
+  position: absolute !important;
+}
+
+.sticky--on-top {
+  z-index: 1;
+}
+
+.sticky, .sticky--top-right {
+  top: 0;
+  right: 0;
+}
+
+.sticky--bottom-right {
+  top: auto;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 0;
+}
+
+.sticky--top-left {
+  top: 0;
+  right: auto;
+  left: 0;
+}
+
+.sticky--center {
+  top: 50%;
+  bottom: 50%;
+}
+
+.btn-subtle{
+  @include button(rgba(255,255,255,0));
+  border: none;
+  @include border-radius(0);
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.btn--border {
+  @include button(rgba(255,255,255,1));
+  border: solid 1px $g1;
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+}
+
+.box-link {
+  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
+    h3 {
+      color: white;
+    }
+  }
+}
+
+.btn--mini {
+  padding: .5em !important;
+}
+
+.btn--smaller {
+  padding:  0em 0.9em !important;
+}
+
+.btn--light {
+  @include button($g0);
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+}
+
+.btns-links {
+  margin-bottom: .6em;
+}
+
+.btns-links li {
+  display: inline-block;
+  margin-bottom: .5em;
+  font-size: .8em;
+}
+
+.btns-links li a {
+  text-transform: uppercase;
+  margin-right: 1em;
+  color: $g3;
+  &:hover {
+    text-decoration: underline;
+    color: $g4;
+  }
+}
+
+.btns-list {
+  > li > a {
+    @include button();
+  }
+}
+
+// Used to make buttons overlap profile text on really small screens.
+.btns-list--grey-background {
+  background-color: $g00;
+  border-bottom-right-radius: $border-radius-size;
+  border-top-right-radius: $border-radius-size;
+}
+
+.btns-list--subtle {
+  display: inline-block;
+}
+
+.btns-list--subtle .is-checked {
+  text-decoration: underline !important;
+}
+
+.btns-list--subtle > li {
+  text-decoration: none;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+  color: $g3;
+
+  > a, .dropdown-trigger, > div > div {
+    padding: .7em;
+    display: block;
+    color: $g3;
+    height: $section-footer-height;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.box .btns-list--subtle .dropdown-trigger .icon-left {
+  @include bp-small {
+    display: none;
+  }
+}
+
+.btns-opinion {
+  display: block;
+  margin-bottom: 1em;
+  width: 100%;
+  width: calc(100% + 1em);
+  margin-left: -0.5em;
+
+  li {
+    display: inline-block;
+    margin: 0 0;
+    margin-bottom: 0.5em;
+    width: 33.3%;
+    width: calc(33.3% - 1em);
+    margin: 0 .5em;
+  }
+
+  a, button {
+    width: 100% !important;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: .6
+    }
+
+    .fa {
+      font-size: 1.2em;
+      vertical-align: center;
+      width: auto;
+    }
+  }
+  .btn-pro {
+    background-color: $pro;
+    @include button($color: $pro);
+
+  }
+  .btn-neutral {
+    background-color: $neutral;
+    @include button($color: $neutral);
+
+  }
+  .btn-con {
+    background-color: $con;
+    @include button($color: $con);
+
+    margin-right: 0;
+  }
+
+  .vote-text {
+    margin-left: .4em;
+  }
+}
+
+.btns-opinion--subtle {
+  display: block;
+  margin-bottom: 1em;
+  text-align: center;
+  // Fixes a single white pixel that hides the border
+  padding-top: 0.1em;
+
+  li {
+    display: inline-block;
+    margin: 0 0;
+    margin-bottom: 0.5em;
+  }
+
+  a, button {
+    background-color: $g0;
+    padding: .8em;
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: .8em;
+    text-transform: uppercase;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: .6
+    }
+
+    .fa {
+      font-size: 1.2em;
+    }
+  }
+
+  a.btn-pro {
+    color: $pro;
+    border-top-left-radius: 999px;
+    border-bottom-left-radius: 999px;
+    padding-left: 1.2em;
+  }
+
+  a.btn-neutral {
+    color: $neutral;
+    margin: 0 3px;
+  }
+
+  a.btn-con {
+    color: $con;
+    border-top-right-radius: 999px;
+    border-bottom-right-radius: 999px;
+    padding-right: 1.2em;
+  }
+}
+
+.btns-opinion, .btns-opinion--subtle, .btns-opinion--bottom {
+
+  .vote-count {
+    margin-left: .4em;
+  }
+
+  .vote-text {
+    margin-left: .4em;
+  }
+
+  .vote-count {
+    &:before{
+      content: "("
+    }
+    &:after {
+      content: ")"
+    }
+  }
+
+  @include bp-medium {
+    .vote-text {
+      display: none;
+      margin: 0;
+    }
+  }
+}
+
+.btns-opinion--subtle {
+  border-top: 1px solid $g1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.btns-horizontal > li {
+  display: inline-block;
+}
+
+h1 + .btn {
+  margin-bottom: 2em;
+}
+
+.icon-left {
+  margin-left: .4em;
+}
+
+.icon-right {
+  margin-right: .4em;
+}
+
+.fa {
+  width: 1em;
+  text-align: center;
+}
+
+.btn--square {
+  @include border-radius(0);
+}
+
+.btns-opinion--bottom, .btns__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-top: solid 1px $g1;
+
+  .fa {
+    margin-right: .5em;
+  }
+
+  li {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1em;
+    margin: 0;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: white;
+    border-right: 1px solid $g1;
+    flex-grow: 1;
+    flex-basis: 0;
+    justify-content: center;
+    display: flex;
+
+    a {
+      background-color: $g00;
+      flex-grow: 1;
+      flex-basis: 0;
+      justify-content: center;
+      display: flex;
+      padding: 0.8em;
+      color: $g2;
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+}
+
+.btns-opinion--bottom {
+  a, button {
+    &.disabled {
+      cursor: not-allowed;
+      opacity: .6
+    }
+  }
+
+  .btn-pro {
+    color: $pro;
+  }
+  .btn-neutral {
+    color: $neutral;
+  }
+  .btn-con {
+    color: $con;
+  }
+}

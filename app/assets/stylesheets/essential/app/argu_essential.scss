@@ -1,0 +1,67 @@
+@import "variables";
+@import "mixins_essential";
+
+.argu-logo {
+	width: 5em;
+	height: 3em;
+}
+
+.pro-bg {
+  background-color: $pro !important;
+}
+
+.con-bg {
+  background-color: $con !important;
+}
+
+.motion-bg {
+  background-color: $motion !important;
+}
+
+.neutral-bg{
+  background-color: $neutral !important;
+}
+
+.question-bg{
+  background-color: $question !important;
+}
+
+.project-bg{
+  background-color: $project !important;
+}
+
+.pro-t{
+  color: $pro !important;
+}
+
+.con-t{
+  color: $con !important;
+}
+
+.neutral-t{
+  color: $neutral !important;
+}
+
+.motion-t{
+  color: $motion !important;
+}
+
+.question-t {
+  color: $question !important;
+}
+
+.project-t{
+  color: $project !important;
+}
+
+.question {
+  color: $question;
+}
+
+.motion {
+  color: $motion;
+}
+
+.align-right {
+  text-align: right;
+}

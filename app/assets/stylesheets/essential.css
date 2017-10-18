@@ -1,4 +1,12 @@
 /*
  * Essential CSS for above the fold content.
+ *= require essential/_reset
  *= require_self
+ *= require _variables
+ *= require _mixins_essential
+ *= require_tree ./essential/briarcliff
+ *= require_tree ./essential/app
+ *= require ./briarcliff/_filter_and_sort
+ *= require ./briarcliff/components/_votepie
+ *= require essential/app/argu_essential.scss
 */

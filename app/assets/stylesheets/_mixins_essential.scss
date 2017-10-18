@@ -1,0 +1,110 @@
+@import "variables";
+
+@mixin transform($opts) {
+  transform: $opts;
+  -moz-transform: $opts;
+  -webkit-transform: $opts;
+  -o-transform: $opts;
+}
+
+@mixin border-radius($opts: $border-radius-size){
+  border-radius: $opts;
+}
+
+@mixin text_settings($align: justify, $color: $g5, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
+  text-align: $align;
+  color: $color;
+  font-family: $family;
+  font-size: $size;
+  margin: $margin;
+  padding: $padding;
+  line-height: $line-height;
+}
+
+@mixin button--colored ($color: $gre){
+  background-color: $color;
+  border-bottom: solid 3px darken($color, 10%);
+  border-top: solid 3px $color;
+}
+
+@mixin button ($color: $gre){
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  font-family: $font-sans;
+  padding: .7em 2.5em .7em;
+  background-color: $color;
+  @include button--colored($color);
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  width: auto;
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: solid 3px darken($color, 10%);
+  border-top: solid 3px $color;
+  @include border-radius(.4em);
+  &:disabled{
+    opacity: .6;
+    cursor: default;
+  }
+}
+
+@mixin container-width {
+  max-width: 1200px;
+}
+
+@mixin uppercase {
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+// Responsive
+@mixin bp-larger {
+  @media only screen and (min-width: 70em) {
+    @content;
+  }
+}
+
+@mixin bp-large-2 {
+  @media only screen and (max-width: 85em) {
+    @content;
+  }
+}
+
+@mixin bp-large {
+  @media only screen and (max-width: 70em) {
+    @content;
+  }
+}
+
+@mixin bp-medium-large {
+  @media only screen and (max-width: 55em) {
+    @content;
+  }
+}
+
+@mixin bp-medium {
+  @media only screen and (max-width: 40em) {
+    @content;
+  }
+}
+
+@mixin bp-small {
+  @media only screen and (max-width: 33em) {
+    @content;
+  }
+}
+
+@mixin bp-smaller {
+  @media only screen and (max-width: 27em) {
+    @content;
+  }
+}
+
+@mixin bp-smallest {
+  @media only screen and (max-width: 20em) {
+    @content;
+  }
+}

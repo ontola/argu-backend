@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins_essential";
 
 /*
 @mixin placeholder($color, $opacity: 1) {
@@ -64,32 +65,8 @@
   display: inline-block;
   cursor: pointer;
   border-bottom: solid 3px darken($color, 10%);
-  @include transition(.15s);
   border-top: solid 3px $color;
   @include border-radius(.4em);
-  //vertical-align: bottom;
-  &:hover, &:focus {
-    background-color: darken($color, 5%);
-    border-top-color: darken($color, 5%);
-    border-bottom-color: darken($color, 15%);
-  }
-  // Removes the ugly outline on hover, except for keyboard-only users, where it applies something that looks like Chrome's default focus outline
-  &:focus {
-    outline-color: rgb(77, 144, 254);
-    outline-offset: -2px;
-    outline-style: auto;
-    outline-width: 5px;
-  }
-  &:hover:focus{
-    outline: none;
-  }
-  &:active {
-    //padding: .9em 2.5em .5em; Although this looks cool, it can cause parts of the page to move when clicking.
-    background-color: darken($color, 15%);
-    border-bottom-color: darken($color, 15%);
-    border-top-color: darken($color, 20%);
-    transition: none;
-  }
   &:disabled{
     opacity: .6;
     cursor: default;

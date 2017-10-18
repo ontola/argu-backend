@@ -1,0 +1,212 @@
+@import "variables";
+@import "mixins_essential";
+
+.box {
+  position: relative;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  display: block;
+  @include border-radius();
+
+  .box {
+    margin-bottom: 0;
+    border: solid 1px $g1;
+  }
+}
+
+.box-transparant {
+  background-color: initial;
+}
+
+.box h3 a, .box a h1, .box a h2, .box a h3, .box a h4 {
+  display: inline-block;
+  position: relative;
+}
+
+.box.trashed, .trashed > .box {
+  background-color: $g00;
+}
+
+.box.box-link {
+  opacity: .8;
+
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
+}
+
+.box h1, .box h2, .box h3, .box h4 {
+  margin-bottom: .5em;
+  line-height: 1.15em;
+}
+
+.box p {
+  margin-bottom: .9em;
+  white-space: pre-wrap;
+}
+
+.box ol, .box ul {
+  color: $g4;
+}
+
+.box-container {
+  position: relative;
+}
+
+.box-divider {
+  border-top: solid 1px #e8e8e8;
+  width: calc(100% + 2em);
+  margin-left: -1em;
+  z-index: 1;
+  display: block;
+  position: relative;
+}
+
+.box-image{
+  background-position: center;
+  background-size: cover;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: $box-image-height;
+  width: 100%;
+
+  .display-hide-images & {
+    display: none;
+  }
+}
+
+.box.box-link {
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
+  .icon-left {
+    margin-left: .4em;
+  }
+  &.box-link--fill{
+
+    section {
+      background: none;
+    }
+
+    h3 {
+      color: white;
+    }
+  }
+}
+
+.box-with-btns {
+  h1, h2, h3 {
+    padding-right: .7em;
+  }
+}
+
+.box-list--icons {
+  list-style-type: none;
+  padding-left: 0;
+  span.fa{
+    position: absolute;
+    font-size: 0.8em;
+    line-height: 1.6em;
+  }
+  span.icon-left {
+    margin-left: 1em;
+  }
+  .list-item {
+    margin-left: 1.3em;
+    display: block;
+  }
+}
+
+.box-list--arguments {
+  list-style-type: none;
+  width: 50%;
+  width: calc(50% + 0.5em);
+  margin-left: -0.5em;
+  padding: 0 0.5em;
+  display: inline-block;
+  vertical-align: top;
+
+  a {
+    display: block;
+  }
+
+  @include bp-medium{
+    width: 100%;
+  }
+}
+
+.box-list-item--subtle a, .box-list-item a {
+  color: $g3;
+  margin-bottom: 1em;
+  display: block;
+}
+
+.no-touch .box-list-item a{
+  color: $g2;
+}
+
+.no-touch .box-list-item--subtle a {
+  color: transparent;
+}
+
+.no-touch .box:hover .box-list-item--subtle a{
+  color: $g2;
+}
+
+.box--extra-margin{
+  margin-bottom: 2em;
+}
+.box .box--extra-margin {
+  margin: 0;
+}
+
+.box {
+  .outside-the-box {
+    visibility: hidden;
+    position: absolute;
+    left: -2em;
+    top: 0;
+    padding: .25em 2em 5em .5em;
+  }
+}
+
+.box-image--container {
+  .motion & {
+    background-color: lighten($blu, 40);
+  }
+  .question & {
+    background-color: lighten($bro, 40);
+  }
+}
+
+.parent-visibility-icon {
+  float: right;
+  font-size: .8em;
+}
+
+.back-to-forum {
+  background-color: $blu !important;
+
+  h3 {
+    color: white;
+    position: relative;
+    margin-left: 1.8em;
+  }
+
+  .profile-picture {
+    width: 2em;
+    height: 2em;
+    display: inline-block;
+    background-size: cover;
+    position: absolute;
+    left: 1em;
+    bottom: 0.75em;
+  }
+}
+
+// Used to hide lazy loaded images. Only shows when the user has JS enabled.
+.no-js .b-lazy-hide-container {
+  display: none !important;
+}

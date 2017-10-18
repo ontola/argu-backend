@@ -1,0 +1,98 @@
+@import "variables";
+@import "mixins_essential";
+
+h1, h2, h3, h4 {
+  font-family: $font-special;
+  margin-bottom: 0.4em;
+  color: $g4;
+  font-weight: bold;
+  font-weight: 700;
+  word-break: break-word;
+  line-height: 1.5em;
+  span {
+    font-family: $font-special;
+  }
+}
+
+h1 {
+  font-size: 2.3em;
+  @include bp-large {
+    font-size: 2em;
+  }
+  @include bp-medium {
+    font-size: 1.5em;
+  }
+}
+
+h2 {
+  font-size: 1.4em;
+  @include bp-large {
+    font-size: 1.3em;
+  }
+  @include bp-medium {
+    font-size: 1.2em;
+  }
+}
+
+h3 {
+  font-size: 1.3em;
+}
+
+h4 {
+  font-size: 1.3em;
+}
+
+br {
+  height: .5em;
+  display: block;
+}
+
+p, div, small, ol, ul, li, small, span, blockquote, a {
+  font-family: $font-sans;
+  word-break: break-word;
+}
+
+a {
+  text-decoration: none;
+  color: $blus;
+}
+
+b {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
+p {
+  line-height: 1.5em;
+  color: $g5;
+}
+
+header {
+  clear: both;
+  text-align: center;
+}
+
+header h1, header h2, header h3 {
+  color: $g4;
+  margin-bottom: 0.8em;
+  @include uppercase;
+}
+
+header h1 {
+  font-size: 1.8em;
+  @include bp-medium {
+    font-size: 1.3em;
+  }
+}
+
+header h2 {
+  margin-bottom: .66em;
+  font-size: 1.3em;
+}
+
+.wrap-normal {
+  white-space: normal !important;
+}
