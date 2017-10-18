@@ -17,7 +17,7 @@ class Notification < ApplicationRecord
 
   scope :renderable, -> { where.not(activity_id: nil) }
 
-  enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4}
+  enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
 
   def sync_notification_count
     user.try :sync_notification_count
@@ -33,6 +33,8 @@ class Notification < ApplicationRecord
                      .select { |k| k.parent.owner_type == 'VoteEvent' }
                      .count
       t('notifications.permanent.confirm_account', count: vote_count, email: user.email)
+    elsif finish_intro?
+      t('notifications.permanent.finish_intro')
     else
       super
     end

@@ -25,6 +25,8 @@ class Shortname < ApplicationRecord
             }
   validate :forum_id_matches_owner
 
+  after_create :destroy_finish_intro_notification
+
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
   def self.shortname_for(klass_name, id)
@@ -44,6 +46,10 @@ class Shortname < ApplicationRecord
   end
 
   private
+
+  def destroy_finish_intro_notification
+    owner.notifications.finish_intro.destroy_all if owner.is_a?(User)
+  end
 
   def forum_id_matches_owner
     return if owner.is_a? Forum

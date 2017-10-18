@@ -17,3 +17,4 @@ nl:
       confirm_account:
         one: "Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild naar %{email}"
         other: "Vergeet niet je %{count} stemmen te bevestigen door op de link te klikken die we je hebben gemaild naar %{email}"
+      finish_intro: "Maak je profiel af om meer herkenbaar te zijn."

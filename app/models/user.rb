@@ -140,6 +140,15 @@ class User < ApplicationRecord
     )
   end
 
+  def create_finish_intro_notification
+    return if url.present?
+    Notification.finish_intro.create(
+      user: self,
+      url: Rails.application.routes.url_helpers.setup_users_path,
+      permanent: true
+    )
+  end
+
   def display_name
     [first_name, middle_name, last_name].compact.join(' ').presence ||
       url ||
