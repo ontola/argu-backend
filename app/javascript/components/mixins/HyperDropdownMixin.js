@@ -44,7 +44,6 @@ const HyperDropdownMixin = {
         });
         /* eslint-enable*/
         window.addEventListener('resize', this.handleResize);
-        this.calculateRenderLeft();
     },
 
     componentWillUnmount () {
@@ -97,10 +96,13 @@ const HyperDropdownMixin = {
     },
 
     handleResize () {
-        this.calculateRenderLeft();
+        if (this.state.opened) {
+            this.calculateRenderLeft();
+        }
     },
 
     open () {
+        this.calculateRenderLeft();
         this.setState({ openState: true, opened: true });
     },
 

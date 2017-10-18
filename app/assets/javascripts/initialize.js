@@ -12,13 +12,17 @@ import iso from './application/briarcliff/isotope-briarcliff';
 
 function init () {
     // All init functions can rest assured that the document is ready.
+    [transition, alert, ui, n, activityFeed].forEach(module => {
+        window.setTimeout(() => {
+            try {
+                module.init();
+            } catch (error) {
+                console.error('Something went wrong during initialisation', error);
+                Bugsnag.notifyException(error);
+            }
+        }, 0)
+    });
     try {
-        transition.init();
-        alert.init();
-        ui.init();
-        n.init();
-
-        activityFeed.init();
         iso();
         if (typeof ga === 'function') {
             let first = true;
