@@ -1,59 +1,64 @@
 # frozen_string_literal: true
 
-class FollowsController < ApplicationController
-  before_action :check_user
-  before_action :set_thing
-
-  def create
-    authorize @thing, :follow?
-
-    if current_user.follow @thing.edge, permit_params[:follow_type] || :reactions
-      send_event category: 'follows',
-                 action: permit_params[:follow_type],
-                 label: @thing.model_name.collection
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, notification: t('followed')) }
-        format.js { head 201 }
-        format.json { head 201 }
-      end
-    else
-      respond_to do |format|
-        format.json { head 304 }
-      end
-    end
-  end
-
-  def destroy
-    authorize @thing, :follow?
-
-    resp = current_user.stop_following @thing.edge
-    send_event category: 'follows',
-               action: permit_params[:follow_type],
-               label: @thing.model_name.collection
-    if resp.nil? || resp
-      respond_to do |format|
-        format.html { redirect_back(fallback_location: root_path, status: 303, notification: t('unfollowed')) }
-        format.json { head 204 }
-      end
-    else
-      respond_to do |format|
-        format.json { head 400 }
-      end
-    end
-  end
+class FollowsController < AuthorizedController
+  PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment Project BlogPost].freeze
 
   private
 
-  def check_user
-    return unless current_user.guest?
-    flash[:error] = t('devise.failure.unauthenticated')
-    redirect_back(fallback_location: root_path)
+  def create_handler_success(_resource)
+    send_event category: 'follows',
+               action: permit_params[:follow_type],
+               label: followable.model_name.collection
+    super
   end
 
-  def set_thing
-    permitted_classes = %w[Forum Question Motion Argument Comment Project BlogPost]
-    @thing = Edge.where(owner_type: permitted_classes).find(permit_params[:gid]).owner
-    @forum = @thing.try :forum
+  def create_respond_blocks_failure(_resource, format)
+    format.json { head 304 }
+  end
+
+  def create_respond_blocks_success(_resource, format)
+    format.html { redirect_back(fallback_location: root_path, notification: t('followed')) }
+    format.js { head 201 }
+    format.json { head 201 }
+  end
+
+  def destroy_handler_success(_resource)
+    send_event category: 'follows',
+               action: permit_params[:follow_type],
+               label: followable.model_name.collection
+    super
+  end
+
+  def destroy_respond_blocks_failure(_resource, format)
+    format.json { head 400 }
+  end
+
+  def destroy_respond_blocks_success(_resource, format)
+    format.html { redirect_back(fallback_location: root_path, status: 303, notification: t('unfollowed')) }
+    format.json { head 204 }
+  end
+
+  def execute_destroy
+    authenticated_resource.destroy
+  end
+
+  def authenticated_resource!
+    return super unless %w[create destroy].include?(action_name)
+    @resource ||= current_user.follows.find_or_initialize_by(
+      followable_id: followable.edge.id,
+      followable_type: 'Edge'
+    )
+    @resource.follow_type = permit_params[:follow_type]
+    @resource
+  end
+
+  def authorize_action
+    return super unless %w[create destroy].include?(action_name)
+    authorize followable, :follow?
+  end
+
+  def followable
+    @followable ||= Edge.where(owner_type: PERMITTED_CLASSES).find(permit_params[:gid]).owner
   end
 
   def permit_params
