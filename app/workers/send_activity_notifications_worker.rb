@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SendBatchNotificationsWorker
+class SendActivityNotificationsWorker
   include Sidekiq::Worker
 
   COOLDOWN_PERIOD = 4.minutes
@@ -15,7 +15,7 @@ class SendBatchNotificationsWorker
 
     ActiveRecord::Base.transaction do
       begin
-        notifications = collect_notifications(user)
+        notifications = collect_activity_notifications(user)
 
         if notifications.length.zero?
           logger.warn 'No notifications to send'
@@ -38,16 +38,17 @@ class SendBatchNotificationsWorker
 
   private
 
-  def collect_notifications(user, lock = nil)
+  def collect_activity_notifications(user, lock = nil)
     t_notifications = Notification.arel_table
     lock = lock ? 'FOR UPDATE NOWAIT' : false
-    user.notifications
-        .renderable
-        .where(t_notifications[:read_at]
-                   .eq(nil)
-                   .and(t_notifications[:created_at]
-                            .gt(user.notifications_viewed_at || 1.year.ago)))
-        .order(created_at: :desc)
-        .lock(lock)
+    user
+      .notifications
+      .for_activity
+      .where(t_notifications[:read_at]
+               .eq(nil)
+               .and(t_notifications[:created_at]
+                      .gt(user.notifications_viewed_at || 1.year.ago)))
+      .order(created_at: :desc)
+      .lock(lock)
   end
 end

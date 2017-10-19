@@ -7,7 +7,7 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
   recurrence { minutely }
 
   def perform
-    send_batch_notifications(User.reactions_emails[:direct_reactions_email])
+    send_activity_notifications(User.reactions_emails[:direct_reactions_email])
 
     send_individual_notifications
   end

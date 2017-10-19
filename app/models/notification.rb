@@ -15,7 +15,7 @@ class Notification < ApplicationRecord
   validates :title, length: {maximum: 140}
   validates :url, length: {maximum: 512}
 
-  scope :renderable, -> { where.not(activity_id: nil) }
+  scope :for_activity, -> { where.not(activity_id: nil) }
 
   enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
 

@@ -7,6 +7,6 @@ class WeeklyNotificationsSchedulerWorker < NotificationsSchedulerWorker
   recurrence { weekly }
 
   def perform
-    send_batch_notifications(User.reactions_emails[:weekly_reactions_email])
+    send_activity_notifications(User.reactions_emails[:weekly_reactions_email])
   end
 end

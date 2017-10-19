@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BatchNotificationsReceiversCollector
+class ActivityNotificationsReceiversCollector
   def initialize(email_frequency)
     @email_frequency = email_frequency
   end
