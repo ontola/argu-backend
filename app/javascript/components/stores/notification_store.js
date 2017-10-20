@@ -9,7 +9,6 @@ export const NotificationActions = Reflux.createActions({
     'notificationUpdate': {},
     'markAllAsRead': { asyncResult: true },
     'fetchNextPage': { asyncResult: true },
-    'checkForNew': { asyncResult: true },
     'fetchNew': { asyncResult: true }
 });
 if (typeof window !== 'undefined') {
@@ -32,7 +31,6 @@ const notificationStore = Reflux.createStore({
         this.listenTo(NotificationActions.notificationUpdate, this.output);
         this.listenTo(NotificationActions.markAllAsRead, this.onMarkAllAsRead);
         this.listenTo(NotificationActions.fetchNextPage, this.fetchNextPage);
-        this.listenTo(NotificationActions.checkForNew, this.checkForNew);
         this.listenTo(NotificationActions.fetchNew, this.fetchNew);
 
         if (typeof window === 'undefined') {
@@ -40,12 +38,7 @@ const notificationStore = Reflux.createStore({
         }
         Promise
             .resolve()
-            .then(NotificationActions.checkForNew)
-            .then(count => {
-                if (count >= 0) {
-                    return NotificationActions.fetchNew();
-                }
-            });
+            .then(NotificationActions.fetchNew);
     },
 
     fetchNextPage () {
@@ -68,21 +61,6 @@ const notificationStore = Reflux.createStore({
                         });
                 }
             }).catch(NotificationActions.fetchNextPage.failed);
-    },
-
-    checkForNew () {
-        return fetch('//meta.argu.co/n', userIdentityToken({
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }))
-            .then(statusSuccess)
-            .then(json)
-            .then(response => {
-                return NotificationActions.checkForNew.completed(parseInt(response.notificationCount) > this.state.notifications.notificationCount ? response.notificationCount : false);
-            })
     },
 
     fetchNew (notificationCount) {

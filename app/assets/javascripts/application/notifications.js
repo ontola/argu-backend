@@ -54,7 +54,6 @@ const n = {
                 return Promise.resolve();
             };
             Promise.resolve()
-                .then(NotificationActions.checkForNew)
                 .then(NotificationActions.fetchNew)
                 .then(done)
                 .catch((e) => {
