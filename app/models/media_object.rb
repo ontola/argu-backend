@@ -43,6 +43,13 @@ class MediaObject < ApplicationRecord
     collection.update_all(publisher_id: User::COMMUNITY_ID)
   end
 
+  def content_type
+    content&.content_type
+  rescue Aws::S3::Errors::NotFound
+    Bugsnag.notify(RuntimeError.new("Aws::S3::Errors::NotFound: #{context_id}"))
+    nil
+  end
+
   def context_type
     is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
@@ -55,7 +62,7 @@ class MediaObject < ApplicationRecord
   end
 
   def thumbnail
-    case content.content_type
+    case content_type
     when *MediaObjectUploader::IMAGE_TYPES
       content.icon.url
     when *MediaObjectUploader::VIDEO_TYPES
@@ -76,7 +83,7 @@ class MediaObject < ApplicationRecord
   end
 
   def type
-    video_info ? 'video' : content&.content_type&.split('/')&.first
+    video_info ? 'video' : content_type&.split('/')&.first
   end
 
   def url(*args)
