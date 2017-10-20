@@ -161,6 +161,19 @@ class FollowsControllerTest < ActionController::TestCase
     assert_analytics_collected('follows', 'news', 'motions')
   end
 
+  test 'member should get show' do
+    follow = create(:follow, followable: motion.edge, follower: member)
+    sign_in member
+
+    assert_equal follow.follow_type, 'reactions'
+    assert_no_difference('Follow.count') do
+      get :show, params: {id: follow.id}
+    end
+    assert_equal follow.reload.follow_type, 'never'
+
+    assert_response 200
+  end
+
   test 'member should delete destroy' do
     create(:follow, followable: motion.edge, follower: member)
     sign_in member

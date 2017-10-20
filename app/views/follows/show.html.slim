@@ -1,0 +1,11 @@
+=set_title authenticated_resource.followable.owner
+.col-1
+  div[data-intro= t('intro.motion.back')]= to_parent(authenticated_resource.followable.owner)
+  - if @unsubscribed
+    .box
+      section
+        p= t('notifications.unsubscribe.success', item: authenticated_resource.followable.owner.display_name)
+  - else
+    .box
+      section
+        p= t('notifications.unsubscribe.failed', item: authenticated_resource.followable.owner.display_name)

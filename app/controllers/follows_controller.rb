@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class FollowsController < AuthorizedController
+  skip_before_action :check_if_registered, only: :show
   PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment Project BlogPost].freeze
+
+  def show
+    @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
+  end
 
   private
 
@@ -39,7 +44,7 @@ class FollowsController < AuthorizedController
   end
 
   def execute_destroy
-    authenticated_resource.destroy
+    authenticated_resource.save
   end
 
   def authenticated_resource!
@@ -48,7 +53,7 @@ class FollowsController < AuthorizedController
       followable_id: followable.edge.id,
       followable_type: 'Edge'
     )
-    @resource.follow_type = permit_params[:follow_type]
+    @resource.follow_type = action_name == 'create' ? permit_params[:follow_type] || :reactions : :never
     @resource
   end
 
