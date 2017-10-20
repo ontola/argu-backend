@@ -7,10 +7,4 @@ class MediaObjectSerializer < RecordSerializer
   end
   type(&:context_type)
   attributes :url, :thumbnail, :used_as
-
-  def thumbnail
-    url = object.url(:icon)
-    return url if Rails.env.production? || url&.include?('gravatar.com')
-    "https://argu-logos.s3.amazonaws.com#{object.url(:icon)}"
-  end
 end

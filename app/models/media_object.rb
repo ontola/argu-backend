@@ -62,11 +62,10 @@ class MediaObject < ApplicationRecord
   end
 
   def thumbnail
+    return url_for_environment(:icon) if file.nil?
     case content_type
-    when *MediaObjectUploader::IMAGE_TYPES
-      content.icon.url
-    when *MediaObjectUploader::VIDEO_TYPES
-      content.icon.url
+    when *(MediaObjectUploader::IMAGE_TYPES + MediaObjectUploader::VIDEO_TYPES)
+      url_for_environment(:icon)
     when *MediaObjectUploader::PORTABLE_DOCUMENT_TYPES
       'file-pdf-o'
     when *MediaObjectUploader::DOCUMENT_TYPES
@@ -103,6 +102,12 @@ class MediaObject < ApplicationRecord
   def set_publisher_and_creator
     self.creator = about if creator.nil? && creator_id.nil? && about.present?
     self.publisher = creator.profileable if publisher.nil? && publisher_id.nil? && creator.profileable.present?
+  end
+
+  def url_for_environment(type)
+    url = content.url(type)
+    return url if Rails.env.production? || url&.include?('gravatar.com')
+    "https://argu-logos.s3.amazonaws.com#{url}"
   end
 
   def video_info
