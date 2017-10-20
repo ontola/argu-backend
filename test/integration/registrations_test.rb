@@ -253,6 +253,26 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
+  test 'user should delete destroy with group_membership' do
+    sign_in user
+    group = create(:group, parent: freetown.page.edge)
+    create(:group_membership, parent: group, member: user.profile)
+
+    assert_differences([['User.count', -1], ['GroupMembership.active.count', -2], ['GroupMembership.count', 0]]) do
+      delete user_registration_path,
+             params: {
+               user: {
+                 confirmation_string: 'remove'
+               }
+             }
+    end
+
+    assert_not Profile.community.is_group_member?(group.id)
+
+    assert_redirected_to root_path
+    assert_analytics_collected('registrations', 'destroy', user.id)
+  end
+
   test 'user without name and shortname should delete destroy' do
     sign_in user_no_shortname
 
