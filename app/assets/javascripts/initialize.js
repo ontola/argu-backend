@@ -1,6 +1,5 @@
 /*globals $, Bugsnag, ga */
 import 'whatwg-fetch';
-import 'scroll-triggers';
 import './application/meta';
 import './application/briarcliff/introjs-briarcliff';
 import activityFeed from './application/activity_feed';
@@ -8,7 +7,7 @@ import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';
 import transition from './application/transition';
-import iso from './application/briarcliff/isotope-briarcliff';
+
 
 function init () {
     // All init functions can rest assured that the document is ready.
@@ -23,7 +22,6 @@ function init () {
         }, 0)
     });
     try {
-        iso();
         if (typeof ga === 'function') {
             let first = true;
             $(document).on('turbolinks:load', () => {

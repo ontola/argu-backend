@@ -1,6 +1,5 @@
 import React from 'react';
 
-import actorStore from './stores/actor_store';
 import { VoteButtons, VoteResults } from './Vote';
 import OpinionMixin from './mixins/OpinionMixin';
 import VoteMixin from './mixins/VoteMixin';
@@ -68,14 +67,6 @@ export const VoteContainer = React.createClass({
             submitting: false,
             submittingVote: ''
         };
-    },
-
-    componentDidMount () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
-    },
-
-    componentWillUnmount () {
-        this.unsubscribe();
     },
 
     render () {

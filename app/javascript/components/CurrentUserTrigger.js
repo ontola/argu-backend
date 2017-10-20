@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { image } from './lib/helpers';
-import actorStore from './stores/actor_store';
 
 export const CurrentUserTrigger = React.createClass({
     propTypes: {
@@ -26,14 +25,6 @@ export const CurrentUserTrigger = React.createClass({
             display_name: this.props.title,
             profile_photo: this.props.profile_photo
         };
-    },
-
-    componentDidMount () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
-    },
-
-    componentWillUnmount () {
-        this.unsubscribe();
     },
 
     onActorChange (data) {

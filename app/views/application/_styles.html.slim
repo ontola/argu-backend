@@ -1,5 +1,5 @@
-style[data-turbolinks-permanent]
-  - if Rails.env.production?
+style[data-turbolinks-permanent type="text/css"]
+  - unless Rails.env.development?
     =File.read(Rails.root.join('public').to_s + compute_asset_path('essential.css').to_s).html_safe
   - else
     =Rails.application.assets.find_asset('essential.css').source.html_safe

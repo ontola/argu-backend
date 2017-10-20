@@ -5,7 +5,6 @@ import OnClickOutside from 'react-onclickoutside';
 
 import NotificationTrigger from './NotificationTrigger';
 import { image } from './lib/helpers';
-import actorStore from './stores/actor_store';
 import HyperDropdownMixin from './mixins/HyperDropdownMixin';
 
 import DropdownContent from './DropdownContent';
@@ -51,14 +50,6 @@ export const HyperDropdown = React.createClass({
                 twitter: 0
             }
         };
-    },
-
-    componentDidMount () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
-    },
-
-    componentWillUnmount () {
-        this.unsubscribe();
     },
 
     onActorChange (data) {

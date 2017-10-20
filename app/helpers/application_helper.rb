@@ -35,6 +35,11 @@ module ApplicationHelper
     types.map { |type| {label: t("publications.type.#{type}"), value: type} }
   end
 
+  def asset_present?(name)
+    return Rails.application.assets_manifest.assets[name].present? unless Rails.env.development?
+    Rails.application.assets.find_asset(name).present?
+  end
+
   def awesome_time_ago_in_words(date)
     return if date.blank?
     if 1.day.ago < date
@@ -44,6 +49,12 @@ module ApplicationHelper
     else
       date.strftime('%Y-%m-%d %H:%M')
     end
+  end
+
+  def current_controller_js_path
+    path = params[:controller].split('/')
+    path[-1].sub!(/^/, '_')
+    "dist/controllers/#{path.join('/')}_bundle.js"
   end
 
   def image_tag(source, options = {})

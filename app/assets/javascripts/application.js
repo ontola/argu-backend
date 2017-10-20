@@ -23,4 +23,4 @@
 //= require application/version
 //= require i18n
 //= require i18n/translations
-//= require _bundle
+//= require dist/_bundle

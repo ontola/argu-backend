@@ -26,7 +26,7 @@ var files = '**/*.js';
 
 var src = {
     source: basePath + srcFolder + files,
-    destination: basePath + dstFolder + srcFolder
+    destination: basePath + dstFolder
 };
 
 function browserifyOptions(name) {
@@ -65,7 +65,7 @@ function browserifyBundle(bundleName, entryPoint) {
         //.pipe(uglify())
         .on('error', gutil.log)
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(basePath));
+        .pipe(gulp.dest(src.destination));
 }
 
 function browserifyBundleStaging(bundleName, entryPoint) {
@@ -82,7 +82,7 @@ function browserifyBundleStaging(bundleName, entryPoint) {
         .pipe(buffer())
         // Add transformation tasks to the pipeline here.
         .on('error', gutil.log)
-        .pipe(gulp.dest(basePath));
+        .pipe(gulp.dest(src.destination));
 }
 
 function browserifyBundleProduction(bundleName, entryPoint) {
@@ -101,20 +101,35 @@ function browserifyBundleProduction(bundleName, entryPoint) {
         // Add transformation tasks to the pipeline here.
         .pipe(uglify())
         .on('error', gutil.log)
-        .pipe(gulp.dest(basePath));
+        .pipe(gulp.dest(src.destination));
 }
 
+var bundles = [
+  ['_bundle.js', 'App.js'],
+  ['controllers/_forums_bundle.js', 'controllers/forums.js'],
+  ['controllers/_info_bundle.js', 'controllers/info.js'],
+  ['controllers/_pages_bundle.js', 'controllers/pages.js'],
+  ['controllers/_static_pages_bundle.js', 'controllers/static_pages.js'],
+  ['controllers/portal/_portal_bundle.js', 'controllers/portal/portal.js']
+];
+
 gulp.task('build', function () {
-    return browserifyBundle('_bundle.js', 'App.js');
+    bundles.forEach(bundle => {
+        return browserifyBundle(bundle[0], bundle[1]);
+    });
 });
 
 // Envified but not minified
 gulp.task('build:staging', function () {
-    browserifyBundleStaging('_bundle.js', 'App.js');
+    bundles.forEach(bundle => {
+        browserifyBundleStaging(bundle[0], bundle[1]);
+    });
 });
 
 gulp.task('build:production', function () {
-    browserifyBundleProduction('_bundle.js', 'App.js');
+    bundles.forEach(bundle => {
+        browserifyBundleProduction(bundle[0], bundle[1]);
+    });
 });
 
 gulp.task('lint-src', function () {

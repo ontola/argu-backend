@@ -1,3 +1,4 @@
+/* globals $ */
 import Alert from '../../../javascript/components/Alert';
 import { FastClick } from 'fastclick';
 import { modal } from './modal';
@@ -118,7 +119,6 @@ const ui = {
     },
 
     handleDOMChangedFinished: function () {
-        ui.handleEditableSettings();
         ui.bg = $(".background");
         $("a[href*='#']:not([href='#'])[class~=smoothscroll]").click(ui.handleClickSmoothly);
         ui.bindRemoteLinks();
@@ -127,33 +127,6 @@ const ui = {
         });
         $('.bg-img').bgLoaded({});
         twReplace();
-    },
-
-    handleEditableSettings: function () {
-        var settings;
-        if ((settings = $('.settings-table'))) {
-            var editableOptions = {
-                onsubmit: function (settings) {
-                    settings.target = '/portal/setting/';
-                },
-                submitdata : function () {
-                    return {key: this.getAttribute('id')};
-                },
-                indicator : 'Saving...',
-                tooltip   : 'Click to edit...'
-            };
-
-            settings.find('.setting .value').editable('', editableOptions);
-
-            settings.find('.add-setting').click(function () {
-                var key = window.prompt('Enter the key', '');
-                if (key !== null && key.length > 0) {
-                    var newSetting = $('<tr class="setting"><td class="key">'+key+'</td><td class="value" id="'+key+'" title="Click to edit..."></td></tr>');
-                    $('.settings-table tbody').append(newSetting);
-                    newSetting.find('.value').editable('', editableOptions);
-                }
-            });
-        }
     },
 
     handleFormToggleClick: function () {
