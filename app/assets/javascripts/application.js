@@ -17,9 +17,6 @@
 //= require jquery.jeditable.mini
 //= require bg_loaded
 //= require cocoon
-//= require sifter
-//= require microplugin
-//= require selectize
 //= require application/version
 //= require i18n
 //= require i18n/translations
