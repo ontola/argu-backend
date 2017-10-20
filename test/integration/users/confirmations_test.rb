@@ -147,6 +147,7 @@ module Users
       assert_redirected_to settings_path(tab: :authentication)
       assert_equal flash[:notice],
                    'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
+      assert_email_sent
     end
 
     test 'user should not put confirm email with wrong token' do

@@ -90,6 +90,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_redirected_to new_user_session_path
+    assert_email_sent(skip_sidekiq: true)
   end
 
   test 'should post create nl' do
@@ -125,6 +126,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
+    assert_email_sent
   end
 
   test 'should post create without password' do
@@ -143,6 +145,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_not User.last.accepted_terms?
+    assert_email_sent
   end
 
   test 'should post create without password and transfer and persist guest votes' do
@@ -202,6 +205,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
         }
     assert_redirected_to setup_users_path
     assert_not User.last.encrypted_password == ''
+    assert_email_sent(skip_sidekiq: true)
   end
 
   test 'should post create transfer guest votes' do
@@ -235,6 +239,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
     assert_analytics_collected('registrations', 'create', 'email')
+    assert_email_sent(skip_sidekiq: true)
   end
 
   test "guest should not post create when passwords don't match" do

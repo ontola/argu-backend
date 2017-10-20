@@ -165,6 +165,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
     assert_redirected_to settings_user_path(tab: :general)
+    assert_email_sent
   end
 
   test 'user should switch primary email' do
@@ -243,14 +244,15 @@ class UsersTest < ActionDispatch::IntegrationTest
       confirmationToken: /.+/,
       email: 'unconfirmed@argu.co'
     )
+    unconfirmed_email
+    assert_email_sent
+
     create_email_mock(
       'confirm_secondary',
       /.+/,
       confirmationToken: /.+/,
       email: 'changed@argu.co'
     )
-    unconfirmed_email
-
     assert_differences([['EmailAddress.count', 0],
                         ['Sidekiq::Worker.jobs.count', 0]]) do
       put user_path(user),
@@ -268,6 +270,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal unconfirmed_email.email, 'changed@argu.co'
 
     assert_redirected_to settings_user_path(tab: :general)
+    assert_email_sent
   end
 
   test 'user should not change confirmed email' do
@@ -339,6 +342,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to argu_url('/tokens/email/xxx')
+    assert_email_sent
   end
 
   test 'user should not add email of other account on wrong_email' do

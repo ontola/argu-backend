@@ -21,6 +21,8 @@ class EmailAddressTest < ActiveSupport::TestCase
     original_email = user.primary_email_record
     assert original_email.reload.primary?
     new_email = user.email_addresses.create(email: 'test@example.com')
+    assert_email_sent
+
     new_email.update(primary: true)
     assert new_email.reload.primary?
     assert_not original_email.reload.primary?

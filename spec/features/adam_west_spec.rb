@@ -119,6 +119,8 @@ RSpec.feature 'Adam west', type: :feature do
 
       setup_profile(user_attr)
     end
+
+    assert_email_sent
   end
 
   ####################################

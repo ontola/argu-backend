@@ -85,10 +85,18 @@ module TestHelper
   end
 end
 
+module SidekiqMinitestSupport
+  def after_teardown
+    Sidekiq::Worker.clear_all
+    super
+  end
+end
+
 module ActiveSupport
   class TestCase
     include TestHelper
     include FactoryGirl::Syntax::Methods
+    include SidekiqMinitestSupport
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
     include Argu::TestHelpers::AutomatedTests
@@ -120,6 +128,7 @@ module ActionDispatch
     include Capybara::DSL
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
+    include SidekiqMinitestSupport
 
     def get(path, *args, **opts)
       super(
@@ -210,12 +219,6 @@ module FactoryGirl
       # Also check that we didn't pass in nil.
       __override_names__.include?(name) && send(name)
     end
-  end
-end
-
-module SidekiqMinitestSupport
-  def after_teardown
-    Sidekiq::Worker.clear_all
   end
 end
 

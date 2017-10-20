@@ -101,5 +101,6 @@ RSpec.feature 'Signup', type: :feature do
 
     expect(page).to have_current_path(user_path(User.last))
     expect(User.last.country).to eq('NL')
+    assert_email_sent
   end
 end

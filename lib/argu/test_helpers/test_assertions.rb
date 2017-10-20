@@ -50,6 +50,16 @@ module Argu
       def assert_not_authorized
         assert_equal true, assigns(:_not_authorized_caught)
       end
+
+      def assert_email_sent(count: 1, skip_sidekiq: false)
+        unless skip_sidekiq
+          assert_equal count, Sidekiq::Worker.jobs.select { |j| j['class'] == 'SendEmailWorker' }.count
+          SendEmailWorker.drain
+        end
+
+        assert_requested :post, argu_url('/email/spi/emails'), times: count
+        WebMock.reset!
+      end
     end
   end
 end

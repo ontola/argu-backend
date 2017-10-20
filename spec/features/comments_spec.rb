@@ -143,5 +143,6 @@ RSpec.feature 'Comments', type: :feature do
     end
 
     expect(page).to have_content comment_args[:body]
+    assert_email_sent
   end
 end

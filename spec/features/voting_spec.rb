@@ -98,6 +98,8 @@ RSpec.feature 'Voting', type: :feature do
       expect(page).to have_content('This is my new opinion')
       expect(page).not_to have_content('Argument title')
     end
+
+    assert_email_sent(skip_sidekiq: true)
   end
 
   scenario 'Guest should vote and continue with existing email' do
