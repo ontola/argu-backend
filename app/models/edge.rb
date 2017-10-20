@@ -114,6 +114,10 @@ class Edge < ApplicationRecord
     @arguments_con ||= active_arguments.select(&:con?)
   end
 
+  def content
+    owner.try(:content) || owner.try(:body)
+  end
+
   # @return [Array] The ids of (persisted) ancestors, excluding self
   def persisted_ancestor_ids
     parent && parent.persisted_edge.path.split('.').map(&:to_i)
