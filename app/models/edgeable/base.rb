@@ -102,7 +102,7 @@ module Edgeable
     end
 
     def save_linked_record
-      return unless parent_model&.is_a?(LinkedRecord) && parent_model.changed?
+      return unless parent_model&.is_a?(LinkedRecord) && parent_model.has_changes_to_save?
       parent_model.save!
     end
 
