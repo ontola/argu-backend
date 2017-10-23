@@ -75,7 +75,7 @@ export const CoverUploader = React.createClass({
         } else if (this.state.removeImage === 0 && this.props.imageUrl !== null) {
             return this.props.imageUrl;
         } else {
-            return '';
+            return undefined;
         }
     },
 
@@ -88,12 +88,15 @@ export const CoverUploader = React.createClass({
 
     render () {
         const imageStyle = {
-            backgroundImage: `url(${this.displayedImage()})`,
             backgroundPositionY: `${this.state.positionY}%`
         };
+        const image = this.displayedImage();
+        if (typeof image !== 'undefined' && image.length > 1) {
+            imageStyle.backgroundImage = `url(${image})`;
+        }
 
         return (
-            <div >
+            <div>
                 <div className={`dropzone--cover--container ${this.state.hoverClass}`}>
                     <Dropzone accept={this.props.supportedFileTypes}
                               className="dropzone--cover"
