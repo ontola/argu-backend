@@ -17,8 +17,8 @@ class PhaseTest < ActiveSupport::TestCase
     project.phases.reload
     assert_equal subject, project.phases.first
     assert_equal next_phase, subject.next_phase
-    assert_equal subject.end_date, nil
-    assert_equal next_phase.start_date, nil
+    assert_nil subject.end_date
+    assert_nil next_phase.start_date
 
     project.update(start_date: DateTime.yesterday)
     subject.reload

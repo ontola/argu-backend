@@ -15,7 +15,7 @@ class CorsAccessTest < ActionDispatch::IntegrationTest
           'Access-Control-Request-Headers': 'X-Requested-With'
         }
 
-    assert_equal nil, response.headers['Access-Control-Allow-Origin']
+    assert_nil response.headers['Access-Control-Allow-Origin']
   end
 
   ####################################

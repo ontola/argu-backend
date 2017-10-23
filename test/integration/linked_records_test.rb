@@ -92,8 +92,8 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
       get linked_records_path(iri: 'https://iri.test/resource/2'), params: {format: :json_api}
     end
     assert LinkedRecord.last.edge.is_published?
-    assert_equal nil, LinkedRecord.last.title
-    assert_equal nil, LinkedRecord.last.record_type
+    assert_nil LinkedRecord.last.title
+    assert_nil LinkedRecord.last.record_type
     assert_equal 'https://iri.test/resource/2', LinkedRecord.last.iri
     assert_redirected_to linked_record_path(LinkedRecord.last)
   end
@@ -104,8 +104,8 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
       get linked_records_path(iri: linked_record.iri), params: {format: :json_api}
     end
     linked_record.reload
-    assert_equal nil, linked_record.title
-    assert_equal nil, linked_record.record_type
+    assert_nil linked_record.title
+    assert_nil linked_record.record_type
     assert_equal 'https://iri.test/resource/1', linked_record.iri
     assert_redirected_to linked_record_path(linked_record)
   end
@@ -117,8 +117,8 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
       get linked_records_path(iri: 'https://iri.test/resource/1?noise=true'), params: {format: :json_api}
     end
     linked_record.reload
-    assert_equal nil, linked_record.title
-    assert_equal nil, linked_record.record_type
+    assert_nil linked_record.title
+    assert_nil linked_record.record_type
     assert_equal 'https://iri.test/resource/1', linked_record.iri
     assert_redirected_to linked_record_path(linked_record)
   end
@@ -129,8 +129,8 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
       get linked_record_path(linked_record), params: {format: :json_api}
     end
     linked_record.reload
-    assert_equal nil, linked_record.title
-    assert_equal nil, linked_record.record_type
+    assert_nil linked_record.title
+    assert_nil linked_record.record_type
     assert_equal 'https://iri.test/resource/1', linked_record.iri
     assert_response 200
   end

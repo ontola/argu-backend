@@ -31,7 +31,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
              motion_id: motion.id
            }
          }
-    assert_equal nil, assigns(:resource).motion.question_id
+    assert_nil assigns(:resource).motion.question_id
     assert_response 403
   end
 
@@ -62,7 +62,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
              motion_id: motion.id
            }
          }
-    assert_equal nil, assigns(:resource).motion.question_id
+    assert_nil assigns(:resource).motion.question_id
 
     assert_response 403
   end
