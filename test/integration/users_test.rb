@@ -254,7 +254,7 @@ class UsersTest < ActionDispatch::IntegrationTest
       email: 'changed@argu.co'
     )
     assert_differences([['EmailAddress.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 0]]) do
+                        ['Sidekiq::Worker.jobs.count', 1]]) do
       put user_path(user),
           params: {
             user: {

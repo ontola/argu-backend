@@ -8,6 +8,7 @@ class EmailAddress < ApplicationRecord
   belongs_to :user, inverse_of: :email_addresses
   before_save :remove_other_primaries
   before_save { |user| user.email = email.downcase if email.present? }
+  before_update :send_confirmation_instructions, if: :email_changed?
   after_commit :publish_data_event
 
   validate :dont_update_confirmed_email
@@ -39,7 +40,7 @@ class EmailAddress < ApplicationRecord
   end
 
   def reconfirmation_required?
-    email_changed?
+    false
   end
 
   private
