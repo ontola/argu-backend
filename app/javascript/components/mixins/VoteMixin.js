@@ -54,6 +54,8 @@ const VoteMixin = {
             .then(data => {
                 if (typeof data !== 'undefined') {
                     this.setState(Object.assign({}, data.vote, { submittingVote: '', opinionForm: true }));
+                } else {
+                    this.setState({ submittingVote: '', opinionForm: true });
                 }
             }).catch(e => {
                 json(e)

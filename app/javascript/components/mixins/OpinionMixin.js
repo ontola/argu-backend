@@ -244,6 +244,8 @@ const OpinionMixin = {
                         selectedArguments: this.state.newSelectedArguments,
                         submitting: false
                     }));
+                } else {
+                    this.setState({ opinionForm: false, submitting: false });
                 }
             }).catch(er => {
                 this.setState({ submitting: false });
