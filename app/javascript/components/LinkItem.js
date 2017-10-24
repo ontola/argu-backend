@@ -55,7 +55,7 @@ export const LinkItem = React.createClass({
             displaySetting = this.props.data['display-setting'];
         }
 
-        return (<div className={this.props.type}>
+        return (<div className={`link ${this.props.type}`}>
             {divider}
             <a className={className}
                data-confirm={confirm}
