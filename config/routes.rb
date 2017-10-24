@@ -205,6 +205,7 @@ Rails.application.routes.draw do
   end
   resources :group_memberships, only: %i[show destroy]
 
+  get '/o/find', to: 'organizations_finder#show'
   resources :pages,
             path: 'o',
             only: %i[new create show update index],
