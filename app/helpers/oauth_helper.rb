@@ -19,7 +19,7 @@ module OauthHelper
       session: session
     )
     actor = if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
-              resource_from_iri(request.parameters[:actor_iri]).profile
+              resource_from_iri!(request.parameters[:actor_iri]).profile
             else
               user.profile
             end

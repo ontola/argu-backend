@@ -30,6 +30,10 @@ module IRIHelper
     id, type = id_and_type_from_iri(iri).values
     klass = ApplicationRecord.descendants.detect { |m| m.to_s == type.classify } if id.present? || type.present?
     return if klass.nil?
-    klass.shortnameable? ? klass.find_via_shortname_or_id!(id) : klass.find(id)
+    klass.shortnameable? ? klass.find_via_shortname_or_id(id) : klass.find_by(id: id)
+  end
+
+  def resource_from_iri!(iri)
+    resource_from_iri(iri) || raise(ActiveRecord::RecordNotFound)
   end
 end
