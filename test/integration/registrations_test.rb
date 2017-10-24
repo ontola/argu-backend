@@ -98,7 +98,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
+                        ['Sidekiq::Worker.jobs.count', 2]]) do
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path

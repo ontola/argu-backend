@@ -98,9 +98,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   def send_confirmation_mail(user, guest_votes)
     if guest_votes&.count&.positive?
-      api.create_email(
+      SendEmailWorker.perform_async(
         :confirm_votes,
-        user,
+        user.id,
         confirmationToken: user.confirmation_token,
         motions: guest_votes.map do |guest_vote|
           m = guest_vote.resource.parent_model(:motion)
@@ -108,10 +108,10 @@ class RegistrationsController < Devise::RegistrationsController
         end
       )
     elsif resource.password.present?
-      api.create_email(:confirmation, user, confirmationToken: user.confirmation_token)
+      SendEmailWorker.perform_async(:confirmation, user.id, confirmationToken: user.confirmation_token)
     else
       token = user.send(:set_reset_password_token)
-      api.create_email(:set_password, user, passwordToken: token)
+      SendEmailWorker.perform_async(:set_password, user.id, passwordToken: token)
     end
   end
 end

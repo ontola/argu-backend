@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/api'
-
 class EmailAddress < ApplicationRecord
   include RedisResourcesHelper
   include Ldable
@@ -68,14 +66,12 @@ class EmailAddress < ApplicationRecord
   # Confirmation instructions for primary emails are send by the {RegistationsController}
   def send_confirmation_instructions
     return if primary?
-    Argu::API
-      .service_api
-      .create_email(
-        :confirm_secondary,
-        user,
-        confirmationToken: confirmation_token,
-        email: email
-      )
+    SendEmailWorker.perform_async(
+      :confirm_secondary,
+      user.id,
+      confirmationToken: confirmation_token,
+      email: email
+    )
   end
 
   def remove_other_primaries
