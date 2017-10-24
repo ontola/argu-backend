@@ -35,6 +35,13 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
         secret_access_key: Rails.application.secrets.aws_key,
         region:            'eu-central-1'
       }
+
+      config.aws_signer = lambda do |unsigned_url, _options|
+        signer = Aws::S3::Presigner.new
+        key = URI.parse(unsigned_url).path
+        key.slice!(0)
+        signer.presigned_url(:get_object, bucket: 'argu-logos', key: key)
+      end
     end
     storage :aws
   end
