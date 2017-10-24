@@ -29,7 +29,7 @@
     }
 
     @include bp-medium {
-      span {
+      span.icon-left {
         display: none;
 
         &.fa {
