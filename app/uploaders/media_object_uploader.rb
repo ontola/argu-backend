@@ -109,7 +109,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   def store_dir
     case model.used_as.to_sym
     when :attachment
-      "o/#{model.forum.page.id}/media_objects/#{model.id}"
+      "media_objects/#{model.id}"
     else
       "photos/#{model.id}"
     end
