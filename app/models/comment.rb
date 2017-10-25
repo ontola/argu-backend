@@ -78,6 +78,15 @@ class Comment < Edgeable::Content
     lft || rgt
   end
 
+  def shallow_wipe
+    if is_trashed?
+      self.body = '[DELETED]'
+      self.creator = nil
+      self.is_processed = true
+    end
+    children.each(&:shallow_wipe) if children.present?
+  end
+
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
     Comment.transaction do

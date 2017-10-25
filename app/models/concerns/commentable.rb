@@ -9,25 +9,23 @@ module Commentable
 
     with_collection :comments, association: :filtered_threads, pagination: true
 
-    def filtered_threads(show_trashed = nil, page = nil, order = 'comments.created_at ASC')
-      i = comment_threads
-            .includes(:children, edge: :parent, creator: Profile.includes_for_profileable)
-            .where(parent_id: nil)
-            .order(order)
-            .page(page)
-      i.each(&shallow_wipe) unless show_trashed
-      i
+    def mixed_comments(order = 'comments.created_at DESC')
+      @mixed_comments ||=
+        Edge
+          .joins("LEFT JOIN comments ON edges.owner_id = comments.id AND edges.owner_type = 'Comment'")
+          .where(parent_id: edge.id, owner_type: 'Comment', comments: {parent_id: nil})
+          .includes(:parent, owner: {creator: Profile.includes_for_profileable})
+          .order(order)
     end
 
-    def shallow_wipe
-      proc do |c|
-        if c.is_trashed?
-          c.body = '[DELETED]'
-          c.creator = nil
-          c.is_processed = true
+    def filtered_threads(show_trashed = nil, page = nil, order = 'comments.created_at ASC')
+      i = mixed_comments(order).page(page)
+      unless show_trashed
+        i.each do |edge|
+          edge.owner.shallow_wipe if edge.owner_type == 'Comment'
         end
-        c.children.each(&shallow_wipe) if c.children.present?
       end
+      i
     end
   end
 

@@ -6,11 +6,14 @@
     .box[data-intro= t('intro.comments.form')]
       =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true, comment: comment, modal: local_assigns[:modal] }
   - if policy(resource).show?
-    - if @comments.present?
+    - if @comment_edges.present?
       header
         h2#comments= t('comments.plural')
     .comments
       span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
-      - @comments.reject { |c| c.abandoned? }.each do |c|
-        =render partial: 'comments/comment', locals: { resource: resource, c: c, modal: local_assigns[:modal] }
-      =paginate @comments, remote: local_assigns[:modal], params: { anchor: 'comments' }
+      - @comment_edges.reject { |edge| edge.owner_type == 'Comment'  && edge.owner.abandoned? }.each do |edge|
+        - if edge.owner_type == 'Comment'
+          =render 'comments/comment', c: edge.owner, resource: resource
+        - else
+          =render 'votes/vote', model: edge.owner
+      =paginate @comment_edges, remote: local_assigns[:modal], params: {anchor: 'comments'}, param_name: :comments_page

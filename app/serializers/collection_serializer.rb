@@ -84,5 +84,8 @@ class CollectionSerializer < BaseSerializer
         }
       }
     end
+    if object.members.present?
+      object.members.model_name == 'Edge' ? object.members.map(&:owner) : object.members
+    end
   end
 end

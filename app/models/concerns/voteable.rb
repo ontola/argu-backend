@@ -16,6 +16,19 @@ module Voteable
 
     after_create :create_default_vote_event
 
+    def mixed_comments(order = 'comments.created_at DESC')
+      @mixed_comments ||=
+        Edge
+          .joins("LEFT JOIN votes ON edges.owner_id = votes.id AND edges.owner_type = 'Vote'")
+          .joins("LEFT JOIN comments ON edges.owner_id = comments.id AND edges.owner_type = 'Comment'")
+          .where(parent_id: [edge.id, default_vote_event.edge.id])
+          .where(owner_type: %w[Comment Vote])
+          .where("votes.id IS NULL OR votes.explanation IS NOT NULL AND votes.explanation != ''")
+          .where('comments.id IS NULL OR comments.parent_id IS NULL')
+          .includes(:parent, owner: {creator: Profile.includes_for_profileable})
+          .order(order)
+    end
+
     def create_default_vote_event
       VoteEvent.create!(
         edge: Edge.new(parent: edge, user: publisher, is_published: true),

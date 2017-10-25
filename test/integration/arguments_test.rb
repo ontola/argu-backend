@@ -55,7 +55,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   end
 
   def self.assert_only_allowed_comments
-    'assigns(:comments).none? { |c| c.is_trashed? && c.body != "[DELETED]" }'
+    'assigns(:comment_edges).none? { |edge| edge.is_trashed? && edge.owner.body != "[DELETED]" }'
   end
 
   define_tests do

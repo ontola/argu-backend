@@ -4,7 +4,7 @@ class BlogPostsController < EdgeTreeController
   include BlogPostsHelper
 
   def show
-    @comments = authenticated_resource.filtered_threads(show_trashed?, params[:page])
+    @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
     respond_to do |format|
       format.html { render locals: {blog_post: authenticated_resource, comment: Comment.new} }
       format.json { respond_with_200(authenticated_resource, :json) }

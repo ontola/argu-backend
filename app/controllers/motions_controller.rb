@@ -73,11 +73,7 @@ class MotionsController < EdgeTreeController
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]
     )
-    @votes = resource
-               .votes
-               .where('explanation IS NOT NULL AND explanation != \'\'')
-               .order(created_at: :desc)
-               .page(params[:page_opinions])
+    @comment_edges = resource.filtered_threads(false, params[:comments_page])
     render locals: {motion: resource}
   end
 

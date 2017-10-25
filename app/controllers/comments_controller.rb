@@ -76,7 +76,7 @@ class CommentsController < EdgeTreeController
              include: include_index
     end
     format.html do
-      @comments = parent_resource!.filtered_threads(show_trashed?, params[:page])
+      @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
       render locals: {comment: Comment.new}
     end
   end
