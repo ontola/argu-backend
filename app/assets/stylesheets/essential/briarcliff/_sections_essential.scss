@@ -47,6 +47,11 @@ section {
   }
 }
 
+.section--bottom {
+  background-color: $g00;
+  position: relative;
+}
+
 .section--attachments {
   padding-top: 0;
 }

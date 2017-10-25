@@ -24,7 +24,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span', text: 'I\'m against').click
+    find('span', text: 'Disagree').click
 
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
@@ -45,7 +45,7 @@ RSpec.feature 'Voting', type: :feature do
     within('.opinion-form') do
       fill_in 'opinion-body', with: 'This is my opinion'
 
-      find('.opinion-form__arguments-selector .box-list-item span', text: 'Add pro').click
+      find('.opinion-form__arguments-selector .box-list-item--subtle a', text: 'Add pro').click
 
       within('.argument-form') do
         fill_in 'argument-title', with: 'Argument title'
@@ -58,23 +58,17 @@ RSpec.feature 'Voting', type: :feature do
 
     visit motion_path(motion)
     expect(page).not_to have_content('Opinions')
+    find('span', text: 'Disagree').click
     within('.opinion-form') do
       expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
       expect(page).to have_content('This is my opinion')
       expect(page).to have_content('Argument title')
-    end
-
-    within('.opinion-form') do
-      find('span.icon-left', text: 'Edit').click
-      expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
       fill_in 'opinion-body', with: 'This is my new opinion'
       find('label.pro-t').click
       click_button 'Save'
     end
-    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
 
     visit motion_path(motion)
-    expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     expect(page).not_to have_content('Opinions')
 
     Sidekiq::Testing.inline! do
@@ -92,7 +86,6 @@ RSpec.feature 'Voting', type: :feature do
 
     visit motion_path(motion)
 
-    expect(page).not_to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     expect(page).to have_content('Opinions')
     within('.opinion-columns') do
       expect(page).to have_content('This is my new opinion')
@@ -110,7 +103,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     # Click a random dropdown to prevent the follow dropdown from interfering
     click_link('Info')
-    find('span', text: 'I\'m against').click
+    find('span', text: 'Disagree').click
 
     Sidekiq::Testing.inline! do
       within('.opinion-form') do
@@ -141,14 +134,14 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     # Click a random dropdown to prevent the follow dropdown from interfering
     click_link('Info')
-    find('span', text: 'I\'m against').click
+    find('span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
     expect(page).to have_css('.opinion-form')
 
     within('.opinion-form') do
       fill_in 'opinion-body', with: 'This is my opinion'
 
-      find('.opinion-form__arguments-selector .box-list-item span', text: 'Add pro').click
+      find('.opinion-form__arguments-selector .box-list-item--subtle a', text: 'Add pro').click
 
       within('.argument-form') do
         fill_in 'argument-title', with: 'Argument title'
@@ -164,12 +157,10 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content('Opinions')
     within('.opinion-columns') do
       expect(page).to have_content('This is my opinion')
-      expect(page).to have_content('Argument title')
     end
 
+    find('span', text: 'Disagree').click
     within('.opinion-form') do
-      find('span.icon-left', text: 'Edit').click
-      expect(page).to have_content('Thanks for your vote')
       find('label.pro-t').click
       click_button 'Save'
     end

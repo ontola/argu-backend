@@ -17,7 +17,7 @@ module MotionsHelper
 
   def current_explanation_props(vote)
     {
-      explanation: vote&.explanation,
+      explanation: vote&.explanation || '',
       explanation_html: markdown_to_html(vote&.explanation),
       explained_at: vote&.explained_at
     }
@@ -57,6 +57,7 @@ module MotionsHelper
     motion.edge.active_arguments.map do |argument|
       {
         id: argument.id,
+        commentCount: argument.children_count(:comments),
         displayName: argument.display_name,
         key: argument.identifier,
         side: argument.key.to_s,

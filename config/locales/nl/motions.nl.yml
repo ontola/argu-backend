@@ -22,9 +22,9 @@ nl:
       count: "Aantal geplaatste ideeën"
       info: "Een idee is een voorstel waar je voor of tegen kan zijn."
     votes:
-      pro: "Ik ben voor"
-      neutral: "Geen van beiden"
-      con: "Ik ben tegen"
+      pro: "Voor"
+      neutral: "Anders"
+      con: "Tegen"
       show: "Laat stemresultaten zien"
     preview:
       pro:

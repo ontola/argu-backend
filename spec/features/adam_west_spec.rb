@@ -80,7 +80,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-neutral[data-voted-on=true]')
-    find('a', text: 'Neutral').click
+    find('a', text: 'Other').click
 
     user_attr = attributes_for(:user)
 

@@ -59,6 +59,7 @@ const OpinionMixin = {
                         displayName: data.data.attributes.name,
                         id,
                         key: `arguments_${id}`,
+                        url: data.data.id,
                         side: data.data.attributes.pro ? 'pro' : 'con'
                     });
                     const selectedArguments = this.state.selectedArguments.slice();
@@ -180,6 +181,11 @@ const OpinionMixin = {
 
     handleSignupEmailChange (e) {
         this.setState({ signupPassword: e.target.value });
+    },
+
+    handleShowAllArguments (e) {
+        e.preventDefault();
+        this.setState({ showAllArguments: true });
     },
 
     openArgumentFormHandler (e) {

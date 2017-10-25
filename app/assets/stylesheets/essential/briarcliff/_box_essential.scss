@@ -141,18 +141,7 @@
   color: $g3;
   margin-bottom: 1em;
   display: block;
-}
-
-.no-touch .box-list-item a{
-  color: $g2;
-}
-
-.no-touch .box-list-item--subtle a {
-  color: transparent;
-}
-
-.no-touch .box:hover .box-list-item--subtle a{
-  color: $g2;
+  font-weight: bold;
 }
 
 .box--extra-margin{

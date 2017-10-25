@@ -97,10 +97,8 @@ export const OpinionSignUp = React.createClass({
         return <form className={`formtastic${submitting ? ' is-loading' : ''}`} onSubmit={this.props.onSubmitEmail}>
             <input type="hidden" name="authenticity_token" value={this.state.authenticityToken}/>
             <input type="hidden" name="user[r]" value={this.state.currentUrl}/>
-            <div className="box">
-                <section>{form}</section>
-                {footer}
-            </div>
+            <section className="section--bottom">{form}</section>
+            {footer}
         </form>;
     }
 });

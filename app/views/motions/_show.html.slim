@@ -10,43 +10,6 @@
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
   section.section--attachments
     =react_component_store 'Gallery', props: gallery_props(model)
-  section
-    - if model.edge.arguments_pro.present? || model.edge.arguments_con.present?
-      ul.box-list.box-list--arguments.box-list--icons
-        - model.edge.arguments_pro.first(5).each do |argument|
-          li= link_to argument_path(argument.id), remote: true
-            h4[class="pro-t tooltip--wider"]
-              span.fa.fa-plus
-              .list-item.icon-left
-                span[title=safe_truncated_text(argument.content)]= argument.title
-                - if argument.children_count(:comments) > 0
-                  .comments-counter.comments-counter--inline
-                    .fa.fa-comment
-                    .icon-left= argument.children_count(:comments)
-        - if policy(model).create_child?(:arguments)
-          li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
-            span= t('arguments.new.pro')
-      ul.box-list.box-list--arguments.box-list--icons
-        - model.edge.arguments_con.first(5).each do |argument|
-          li= link_to argument_path(argument.id), remote: true
-            h4[class="con-t tooltip--wider"]
-              span.fa.fa-minus
-              .list-item.icon-left
-                span[title=safe_truncated_text(argument.content)]= argument.title
-                - if argument.children_count(:comments) > 0
-                  .comments-counter.comments-counter--inline
-                    .fa.fa-comment
-                    .icon-left= argument.children_count(:comments)
-        - if policy(model).create_child?(:arguments)
-          li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
-            span= t('arguments.new.con')
-    - else
-      ul.box-list.box-list--arguments
-        li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'pro') do
-          span= t('arguments.new.pro')
-      ul.box-list.box-list--arguments
-        li.box-list-item--subtle= link_to new_motion_argument_path(model, pro: 'con') do
-          span= t('arguments.new.con')
   =yield
   section.unpadded.section--opinion
     - unless local_assigns[:hide_vote_buttons]

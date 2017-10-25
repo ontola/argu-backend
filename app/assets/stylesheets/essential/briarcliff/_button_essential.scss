@@ -224,6 +224,7 @@
     width: 33.3%;
     width: calc(33.3% - 1em);
     margin: 0 .5em;
+    text-align: center;
   }
 
   a, button {
@@ -262,65 +263,17 @@
   }
 }
 
-.btns-opinion--subtle {
-  display: block;
-  margin-bottom: 1em;
-  text-align: center;
-  // Fixes a single white pixel that hides the border
-  padding-top: 0.1em;
-
-  li {
-    display: inline-block;
-    margin: 0 0;
-    margin-bottom: 0.5em;
-  }
-
-  a, button {
-    background-color: $g0;
-    padding: .8em;
-    display: inline-block;
-    box-sizing: border-box;
-    font-size: .8em;
-    text-transform: uppercase;
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: .6
-    }
-
-    .fa {
-      font-size: 1.2em;
-    }
-  }
-
-  a.btn-pro {
-    color: $pro;
-    border-top-left-radius: 999px;
-    border-bottom-left-radius: 999px;
-    padding-left: 1.2em;
-  }
-
-  a.btn-neutral {
-    color: $neutral;
-    margin: 0 3px;
-  }
-
-  a.btn-con {
-    color: $con;
-    border-top-right-radius: 999px;
-    border-bottom-right-radius: 999px;
-    padding-right: 1.2em;
-  }
-}
-
-.btns-opinion, .btns-opinion--subtle, .btns-opinion--bottom {
+.btns-opinion, .btns-opinion--bottom {
 
   .vote-count {
+    font-weight: normal;
     margin-left: .4em;
+    line-height: 1.5em;
   }
 
   .vote-text {
     margin-left: .4em;
+    line-height: 1.5em;
   }
 
   .vote-count {
@@ -332,19 +285,31 @@
     }
   }
 
+  .fa-commenting-o {
+    font-size: .8em !important;
+  }
+
+  &[data-voted] a {
+    opacity: .5;
+
+    &[data-voted-on=true] {
+      opacity: 1;
+      font-weight: bold;
+    }
+  }
+
   @include bp-medium {
     .vote-text {
       display: none;
       margin: 0;
+      &:before {
+        content: none;
+      }
+      &:after {
+        content: none;
+      }
     }
   }
-}
-
-.btns-opinion--subtle {
-  border-top: 1px solid $g1;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 }
 
 .btns-horizontal > li {
@@ -376,10 +341,10 @@ h1 + .btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  border-top: solid 1px $g1;
 
   .fa {
-    margin-right: .5em;
+    margin-right: .1em;
+    font-size: 1.5em;
   }
 
   li {
@@ -390,14 +355,12 @@ h1 + .btn {
     display: inline-block;
     cursor: pointer;
     background-color: white;
-    border-right: 1px solid $g1;
     flex-grow: 1;
     flex-basis: 0;
     justify-content: center;
     display: flex;
 
     a {
-      background-color: $g00;
       flex-grow: 1;
       flex-basis: 0;
       justify-content: center;

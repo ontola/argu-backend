@@ -1,7 +1,6 @@
 import React from 'react'
 import I18n from 'i18n-js';
 import { CheckboxGroup } from '../CheckboxGroup';
-import OnClickOutside from 'react-onclickoutside';
 
 import Footer from '../forms/Footer';
 
@@ -29,12 +28,12 @@ const OpinionForm = React.createClass({
         submitting: React.PropTypes.bool.isRequired
     },
 
-    mixins: [
-        OnClickOutside
-    ],
-
-    handleClickOutside () {
-        this.props.onCloseOpinionForm();
+    addArgumentButton (side) {
+        return (
+            <li className="box-list-item--subtle">
+                <a data-value={side} href="#" onClick={this.props.onOpenArgumentForm}>{I18n.t(`arguments.new.${side}`)}</a>
+            </li>
+        )
     },
 
     render () {
@@ -47,16 +46,8 @@ const OpinionForm = React.createClass({
         });
         let argumentSelection, addArgumentProButton, addArgumentConButton, confirmHeader;
         if (this.props.newArgumentButtons) {
-            addArgumentProButton = <span className="box-list-item">
-                <a href="#">
-                    <span data-value="pro" onClick={this.props.onOpenArgumentForm}>{I18n.t('arguments.new.pro')}</span>
-                </a>
-            </span>;
-            addArgumentConButton = <span className="box-list-item">
-                <a href="#">
-                    <span data-value="con" onClick={this.props.onOpenArgumentForm}>{I18n.t('arguments.new.con')}</span>
-                </a>
-            </span>;
+            addArgumentProButton = this.addArgumentButton('pro');
+            addArgumentConButton = this.addArgumentButton('con');
         }
         argumentSelection = <div>
             <label>{I18n.t('opinions.form.arguments')}</label>
@@ -83,24 +74,25 @@ const OpinionForm = React.createClass({
         return (
             <form className={`formtastic formtastic--full-width ${submitting ? 'is-loading' : ''}`}
                   onSubmit={onSubmitOpinion}>
-                <div className="box">
-                    <section>
-                        <div>
-                            {confirmHeader}
-                            <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
-                            <div>
-                                <textarea
-                                    name="opinion-body"
-                                    autoFocus
-                                    className="form-input-content"
-                                    onChange={onExplanationChange}
-                                    value={newExplanation}/>
-                            </div>
-                        </div>
+                <section className="section--bottom">
+                    <div>
+                        {confirmHeader}
                         {argumentSelection}
-                    </section>
-                    <Footer disabled={submitting} submitButton={I18n.t('opinions.form.submit')}/>
-                </div>
+                        <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
+                        <div>
+                            <textarea
+                                name="opinion-body"
+                                autoFocus
+                                className="form-input-content"
+                                onChange={onExplanationChange}
+                                value={newExplanation}/>
+                        </div>
+                    </div>
+                </section>
+                <Footer cancelButton={I18n.t('opinions.form.cancel')}
+                        disabled={submitting}
+                        onCancel={this.props.onCloseOpinionForm}
+                        submitButton={I18n.t('opinions.form.submit')}/>
             </form>
         )
     }

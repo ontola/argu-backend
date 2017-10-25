@@ -25,6 +25,7 @@ export const VoteButton = React.createClass({
         clickHandler: React.PropTypes.func,
         count: React.PropTypes.number,
         current: React.PropTypes.bool,
+        currentExplanation: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
         objectId: React.PropTypes.number,
@@ -65,6 +66,9 @@ export const VoteButton = React.createClass({
                     <span className="vote-text">
                         {I18n.t(`votes.type.${side}`)}
                     </span>
+                    {(this.props.currentExplanation.explanation !== '') && current &&
+                      <span className={'fa fa-commenting-o icon-left'} />
+                    }
                     {voteCountElem}
                 </a>
             </li>
@@ -78,6 +82,7 @@ export const VoteButtons = React.createClass({
         buttonsType: React.PropTypes.string,
         submittingVote: React.PropTypes.string,
         currentVote: React.PropTypes.string,
+        currentExplanation: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
@@ -99,8 +104,6 @@ export const VoteButtons = React.createClass({
 
     buttonsClassName () {
         switch (this.props.buttonsType) {
-        case 'subtle':
-            return 'btns-opinion--subtle';
         case 'bottom':
             return 'btns-opinion--bottom';
         case 'big':
@@ -116,6 +119,7 @@ export const VoteButtons = React.createClass({
                                    clickHandler={this.props[`${side}Handler`]}
                                    count={this.props.distribution[side]}
                                    current={this.props.currentVote === side}
+                                   currentExplanation={this.props.currentExplanation}
                                    disabled={this.props.disabled}
                                    disabledMessage={this.props.disabledMessage}
                                    key={i}
@@ -141,8 +145,7 @@ const LOWER_DISPLAY_LIMIT = 5;
  */
 export const VoteResults = React.createClass({
     propTypes: {
-        percent: React.PropTypes.object,
-        showResults: React.PropTypes.bool
+        percent: React.PropTypes.object
     },
 
     voteWidth (side) {
@@ -164,19 +167,12 @@ export const VoteResults = React.createClass({
     },
 
     render () {
-        let results;
-
-        if (this.props.showResults) {
-            results = (
-                    <ul className="progress-bar progress-bar-stacked">
-                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
-                        <li style={this.voteWidth('neutral')}><span className="btn-neutral">{this.props.percent.neutral + '%'}</span></li>
-                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
-                    </ul>);
-        } else {
-            results = null;
-        }
-
-        return results;
+        return (
+            <ul className="progress-bar progress-bar-stacked">
+                <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
+                <li style={this.voteWidth('neutral')}><span className="btn-neutral">{this.props.percent.neutral + '%'}</span></li>
+                <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
+            </ul>
+        );
     }
 });

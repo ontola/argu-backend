@@ -6,10 +6,9 @@
 import React from 'react'
 
 import ArgumentForm from '../ArgumentForm';
+import ArgumentsList from '../ArgumentsList';
 
-import OpinionAdd from './OpinionAdd';
 import OpinionForm from './OpinionForm';
-import OpinionShow from './OpinionShow';
 import OpinionSignUp from './OpinionSignUp';
 
 const OpinionContainerProps = {
@@ -21,6 +20,7 @@ const OpinionContainerProps = {
         displayName: React.PropTypes.string,
         side: React.PropTypes.string
     })),
+    buttonsType: React.PropTypes.string.isRequired,
     createArgument: React.PropTypes.object.isRequired,
     currentExplanation: React.PropTypes.object.isRequired,
     currentVote: React.PropTypes.string.isRequired,
@@ -36,24 +36,32 @@ const OpinionContainerProps = {
     onOpenArgumentForm: React.PropTypes.func.isRequired,
     onOpenOpinionForm: React.PropTypes.func.isRequired,
     onSubmitArgument: React.PropTypes.func.isRequired,
+    onShowAllArguments: React.PropTypes.func.isRequired,
     onSubmitOpinion: React.PropTypes.func.isRequired,
     opinionForm: React.PropTypes.bool.isRequired,
     selectedArguments: React.PropTypes.array.isRequired,
+    showAllArguments: React.PropTypes.bool.isRequired,
     submitting: React.PropTypes.bool.isRequired
 };
 const OpinionContainer = props => {
-    const { actor, argumentForm, currentVote, opinionForm } = props;
+    const { actor, argumentForm, currentVote, opinionForm, createArgument } = props;
     let component;
     if (argumentForm) {
         component = <ArgumentForm {...props}/>;
-    } else if (currentVote !== 'abstain' && actor.actor_type === 'GuestUser') {
+    } else if ((createArgument.shouldSubmit === true || currentVote !== 'abstain') && actor.actor_type === 'GuestUser') {
         component = <OpinionSignUp {...props}/>;
+    } else if (props.currentVote === 'abstain' && props.buttonsType !== 'big') {
+        component = <ArgumentsList arguments={props.arguments}
+                                   showAllArguments={props.showAllArguments}
+                                   onShowAllArguments={props.onShowAllArguments}
+                                   onOpenArgumentForm={props.onOpenArgumentForm}/>
     } else if (opinionForm) {
         component = <OpinionForm {...props}/>;
-    } else if (props.currentExplanation.explanation === null || props.currentExplanation.explanation === '') {
-        component = <OpinionAdd actor={props.actor} currentVote={props.currentVote} newExplanation={props.newExplanation} onOpenOpinionForm={props.onOpenOpinionForm}/>;
-    } else {
-        component = <OpinionShow {...props}/>;
+    } else if (props.buttonsType !== 'big') {
+        component = <ArgumentsList arguments={props.arguments}
+                                   showAllArguments={props.showAllArguments}
+                                   onShowAllArguments={props.onShowAllArguments}
+                                   onOpenArgumentForm={props.onOpenArgumentForm}/>
     }
     return <div className={`opinion-form opinion-container-${props.currentVote}`}>{component}</div>;
 };

@@ -60,7 +60,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span', text: 'I\'m against').click
+    find('span', text: 'Disagree').click
 
     expect(page).to have_content('Terms of use')
     click_button 'Accept'

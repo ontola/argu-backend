@@ -35,6 +35,7 @@ export const VoteContainer = React.createClass({
         policyPath: React.PropTypes.string,
         r: React.PropTypes.string,
         selectedArguments: React.PropTypes.array,
+        total_votes: React.PropTypes.number,
         userRegistrationUrl: React.PropTypes.string,
         vote_url: React.PropTypes.string
     },
@@ -62,6 +63,7 @@ export const VoteContainer = React.createClass({
             opinionForm: false,
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
+            showAllArguments: false,
             signupEmail: '',
             signupPassword: '',
             submitting: false,
@@ -70,51 +72,59 @@ export const VoteContainer = React.createClass({
     },
 
     render () {
-        let voteResultsComponent, opinionContainer;
-        const voteButtonsComponent = <VoteButtons {...this.props} {...this.state} conHandler={this.conHandler} neutralHandler={this.neutralHandler} proHandler={this.proHandler}/>;
-        if (this.props.buttonsType === 'big') {
-            voteResultsComponent = <VoteResults {...this.state} showResults={this.props.disabled || this.state.currentVote !== 'abstain'}/>;
+        let voteResultsComponent, bottomBody;
+        const voteButtonsComponent = <VoteButtons
+                                        {...this.props}
+                                        {...this.state}
+                                        conHandler={this.conHandler}
+                                        currentExplanation={this.state.currentExplanation}
+                                        neutralHandler={this.neutralHandler}
+                                        proHandler={this.proHandler}/>;
+        if (this.props.total_votes > 0) {
+            voteResultsComponent = <VoteResults {...this.state}/>;
         }
-        if (this.state.currentVote !== 'abstain') {
-            opinionContainer = <OpinionContainer actor={this.state.actor}
-                                                 argumentUrl={this.props.argumentUrl}
-                                                 argumentForm={this.state.argumentForm}
-                                                 arguments={this.state.arguments}
-                                                 createArgument={this.state.createArgument}
-                                                 currentExplanation={this.state.currentExplanation}
-                                                 currentVote={this.state.currentVote}
-                                                 errorMessage={this.state.errorMessage}
-                                                 facebookUrl={this.props.facebookUrl}
-                                                 forgotPassword={this.props.forgotPassword}
-                                                 loginStep={this.state.loginStep}
-                                                 newArgumentButtons={this.props.newArgumentButtons}
-                                                 newExplanation={this.state.newExplanation}
-                                                 newSelectedArguments={this.state.newSelectedArguments}
-                                                 onArgumentChange={this.argumentChangeHandler}
-                                                 onArgumentSelectionChange={this.argumentSelectionChangeHandler}
-                                                 onCancelLogin={this.handleCancelLogin}
-                                                 onCloseArgumentForm={this.closeArgumentFormHandler}
-                                                 onCloseOpinionForm={this.closeOpinionFormHandler}
-                                                 onExplanationChange={this.explanationChangeHandler}
-                                                 onOpenArgumentForm={this.openArgumentFormHandler}
-                                                 onOpenOpinionForm={this.openOpinionFormHandler}
-                                                 onSignupEmailChange={this.signupEmailChangeHandler}
-                                                 onSignupPasswordChange={this.handleSignupEmailChange}
-                                                 onSubmitArgument={this.argumentHandler}
-                                                 onSubmitEmail={this.state.loginStep === 'register' ? this.handleRegistration : this.handleLogin}
-                                                 onSubmitOpinion={this.opinionHandler}
-                                                 opinionForm={this.state.opinionForm}
-                                                 policyPath={this.props.policyPath}
-                                                 selectedArguments={this.state.selectedArguments}
-                                                 signupEmail={this.state.signupEmail}
-                                                 signupPassword={this.state.signupPassword}
-                                                 submitting={this.state.submitting}/>;
-        }
+        bottomBody = <OpinionContainer actor={this.state.actor}
+                                       argumentUrl={this.props.argumentUrl}
+                                       argumentForm={this.state.argumentForm}
+                                       arguments={this.state.arguments}
+                                       buttonsType={this.props.buttonsType}
+                                       createArgument={this.state.createArgument}
+                                       currentExplanation={this.state.currentExplanation}
+                                       currentVote={this.state.currentVote}
+                                       errorMessage={this.state.errorMessage}
+                                       facebookUrl={this.props.facebookUrl}
+                                       forgotPassword={this.props.forgotPassword}
+                                       loginStep={this.state.loginStep}
+                                       newArgumentButtons={this.props.newArgumentButtons}
+                                       newExplanation={this.state.newExplanation}
+                                       newSelectedArguments={this.state.newSelectedArguments}
+                                       onArgumentChange={this.argumentChangeHandler}
+                                       onArgumentSelectionChange={this.argumentSelectionChangeHandler}
+                                       onCancelLogin={this.handleCancelLogin}
+                                       onCloseArgumentForm={this.closeArgumentFormHandler}
+                                       onCloseOpinionForm={this.closeOpinionFormHandler}
+                                       onExplanationChange={this.explanationChangeHandler}
+                                       onOpenArgumentForm={this.openArgumentFormHandler}
+                                       onOpenOpinionForm={this.openOpinionFormHandler}
+                                       onSignupEmailChange={this.signupEmailChangeHandler}
+                                       onSignupPasswordChange={this.handleSignupEmailChange}
+                                       onShowAllArguments={this.handleShowAllArguments}
+                                       onSubmitArgument={this.argumentHandler}
+                                       onSubmitEmail={this.state.loginStep === 'register' ? this.handleRegistration : this.handleLogin}
+                                       onSubmitOpinion={this.opinionHandler}
+                                       opinionForm={this.state.opinionForm}
+                                       policyPath={this.props.policyPath}
+                                       selectedArguments={this.state.selectedArguments}
+                                       signupEmail={this.state.signupEmail}
+                                       signupPassword={this.state.signupPassword}
+                                       showAllArguments={this.state.showAllArguments}
+                                       submitting={this.state.submitting}/>;
+
         return (
-                <div className="center motion-shr">
+                <div className="motion-shr">
                     {voteButtonsComponent}
-                    {opinionContainer}
                     {voteResultsComponent}
+                    {bottomBody}
                 </div>
         );
     }

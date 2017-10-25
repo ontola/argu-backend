@@ -23,25 +23,7 @@
   position: relative;
   text-align: left;
 }
-.col--motion .opinion-container-pro:after, .col--motion .opinion-container-neutral:after, .col--motion .opinion-container-con:after {
-  content: "";
-  position: absolute;
-  top: -15px;
-  border-width: 0 15px 15px;
-  border-style: solid;
-  border-color: #fff transparent;
-  display: block;
-  width: 0;
-}
-.col--motion .opinion-container-pro:after {
-  left: 15%;
-}
-.col--motion .opinion-container-neutral:after {
-  left: 50%;
-}
-.col--motion .opinion-container-con:after {
-  right: 15%;
-}
+
 .opinion-form__arguments-selector, .opinion-body__arguments-list {
   list-style-type: none;
   width: 50%;
@@ -61,17 +43,47 @@
     line-height: 1.2em;
     top: .2em;
     width: 100%;
+    position: relative;
 
     span {
       display: block;
-      margin-left: 1.2em;
-      margin-bottom: 1em;
+      font-weight: bold;
+      margin-left: 1.3em;
+      margin-bottom: .7em;
     }
   }
 
   input[type="checkbox"] {
     position: absolute;
     margin: 0;
+    left: 0;
+    top: 2px;
+  }
+
+  input[type=checkbox] {
+    padding-left:5px;
+    padding-right:5px;
+    border-radius:15px;
+
+    -webkit-appearance:button;
+
+    border: solid 2px $g3;
+
+    background-color: white;
+    color:#FFF;
+    white-space: nowrap;
+    overflow:hidden;
+
+    width:15px;
+    height:15px;
+  }
+
+  input[type=checkbox]:checked {
+    background-color: $g3 !important;
+  }
+
+  input[type=checkbox]:hover {
+    background-color: $g4;
   }
 }
 .opinion-body__arguments-list {

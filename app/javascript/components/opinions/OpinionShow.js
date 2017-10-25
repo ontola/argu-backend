@@ -47,43 +47,41 @@ const OpinionShow = React.createClass({
         return (
             <div>
                 <span className={`fa fa-${this.iconForSide()} opinion-icon opinion-icon-${this.props.currentVote}`} />
-                <div className="box">
-                    <section>
-                        {confirmHeader}
-                        <div className="markdown" dangerouslySetInnerHTML={{ __html: explanation_html }} itemProp="text"/>
-                        <div className="opinion-body__arguments-list">
-                            {argumentFields['pro'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="pro-t">{result.label}</label></a>; })}
-                        </div>
-                        <div className="opinion-body__arguments-list">
-                            {argumentFields['con'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="con-t">{result.label}</label></a>; })}
-                        </div>
-                    </section>
-                    <section className="section--footer">
-                        <div className="profile-small">
+                <section className="section--bottom">
+                    {confirmHeader}
+                    <div className="markdown" dangerouslySetInnerHTML={{ __html: explanation_html }} itemProp="text"/>
+                    <div className="opinion-body__arguments-list">
+                        {argumentFields['pro'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="pro-t">{result.label}</label></a>; })}
+                    </div>
+                    <div className="opinion-body__arguments-list">
+                        {argumentFields['con'].map(result => { return <a data-remote="true" href={result.url} key={result.value}><label className="con-t">{result.label}</label></a>; })}
+                    </div>
+                </section>
+                <section className="section--footer">
+                    <div className="profile-small">
+                        <a href={this.props.actor.url}>
+                            <img alt="profile-picture profile-picture--small" itemProp="image" src={this.props.actor.profile_photo}/>
+                        </a>
+                        <div className="info-block">
                             <a href={this.props.actor.url}>
-                                <img alt="profile-picture profile-picture--small" itemProp="image" src={this.props.actor.profile_photo}/>
+                                <span className="info">
+                                    <time dateTime={explained_at}>{new Date(explained_at).toUTCString()}</time>
+                                </span>
+                                <div className="profile-name" itemProp="name">{this.props.actor.display_name}</div>
                             </a>
-                            <div className="info-block">
-                                <a href={this.props.actor.url}>
-                                    <span className="info">
-                                        <time dateTime={explained_at}>{new Date(explained_at).toUTCString()}</time>
-                                    </span>
-                                    <div className="profile-name" itemProp="name">{this.props.actor.display_name}</div>
-                                </a>
-                            </div>
                         </div>
-                        <ul className="btns-list--subtle btns-horizontal sticky--bottom-right btns-list--grey-background">
-                            <li>
-                                <div onClick={onOpenOpinionForm}>
-                                    <div>
-                                        <span className="fa fa-pencil"></span>
-                                        <span className="icon-left">{I18n.t('opinions.form.edit')}</span>
-                                    </div>
+                    </div>
+                    <ul className="btns-list--subtle btns-horizontal sticky--bottom-right btns-list--grey-background">
+                        <li>
+                            <div onClick={onOpenOpinionForm}>
+                                <div>
+                                    <span className="fa fa-pencil"></span>
+                                    <span className="icon-left">{I18n.t('opinions.form.edit')}</span>
                                 </div>
-                            </li>
-                        </ul>
-                    </section>
-                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
             </div>
         );
     }

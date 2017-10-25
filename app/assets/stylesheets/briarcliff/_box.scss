@@ -185,24 +185,6 @@
   @include transition(.2s color);
 }
 
-.no-touch .box-list-item a{
-  color: $g2;
-  &:hover {
-    color: $g4;
-  }
-}
-
-.no-touch .box-list-item--subtle a {
-  color: transparent;
-}
-
-.no-touch .box:hover .box-list-item--subtle a{
-  color: $g2;
-  &:hover {
-    color: $g4;
-  }
-}
-
 .box-detailed {
   width: 90% !important;
   width: calc(100% - 2em) !important;

@@ -6,9 +6,9 @@ import Footer from './forms/Footer';
 export const ArgumentForm = props => {
     return (
         <form className={`formtastic formtastic--full-width argument-form ${props.submitting ? 'is-loading' : ''}`} onSubmit={props.onSubmitArgument}>
-            <div className="box">
-                <section>
-                    <div className="box form-toggle">
+            <div className={`argument side-${props.createArgument.side}`}>
+                <section className="section--bottom">
+                    <div className="form-toggle">
                         <ol className="choices-group">
                             <li className="choice">
                                 <label className={`argument-pro ${props.createArgument.side === 'pro' ? 'checked' : ''}`}
@@ -28,22 +28,23 @@ export const ArgumentForm = props => {
                             </li>
                         </ol>
                     </div>
-                    <label>{I18n.t('arguments.form.title_heading')}</label>
                     <textarea
                         autoFocus
-                        className="form-input-content"
+                        className="form-input-title"
                         data-field="title"
                         maxLength="75"
                         minLength="5"
+                        placeholder={I18n.t('arguments.form.title_heading')}
                         name="argument-title"
                         onChange={props.onArgumentChange}
                         required={true}
                         value={props.createArgument.title}/>
-                    <label>{I18n.t('arguments.form.content_heading')}</label>
                     <textarea
+                        placeholder={I18n.t('arguments.form.content_heading')}
                         className="form-input-content"
                         data-field="body"
                         name="argument-body"
+                        rows={4}
                         onChange={props.onArgumentChange}
                         value={props.createArgument.body}/>
                 </section>

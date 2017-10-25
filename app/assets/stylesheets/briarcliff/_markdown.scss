@@ -34,7 +34,7 @@
 
   a{
     text-decoration: underline;
-    
+
     &:hover{
       color: $blu;
     }
@@ -87,6 +87,10 @@
 .markdown--argument-pro {
   color: $gre;
   font-weight: bold;
+}
+
+.markdown--smaller {
+  font-size: .9em;
 }
 
 .collapsible-label {

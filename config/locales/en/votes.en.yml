@@ -4,18 +4,18 @@ en:
   votes:
     score: "score"
     header:
-      pro: "Is pro"
-      neutral: "Neutral"
-      con: "Is con"
+      pro: "Agrees"
+      neutral: "Other"
+      con: "Disagrees"
     tooltips:
       argument: "Important argument"
     alerts:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
     type:
-      pro: "I'm in favor"
-      neutral: "Neutral"
-      con: "I'm against"
+      pro: "Agree"
+      neutral: "Other"
+      con: "Disagree"
     plural: "Votes"
     confirm:
       headline: "Confirm vote"

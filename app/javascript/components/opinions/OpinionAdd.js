@@ -9,21 +9,19 @@ const OpinionAdd = props => {
     }
     return (
         <form className={"formtastic formtastic--full-width"}>
-            <div className="box">
-                <section>
+            <section className="section--bottom">
+                <div>
+                    {confirmHeader}
+                    <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
                     <div>
-                        {confirmHeader}
-                        <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
-                        <div>
-                            <textarea
-                                name="opinion-body"
-                                className="form-input-content"
-                                onClick={onOpenOpinionForm}
-                                value={newExplanation}/>
-                        </div>
+                        <textarea
+                            name="opinion-body"
+                            className="form-input-content"
+                            onClick={onOpenOpinionForm}
+                            value={newExplanation}/>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </form>
     );
 };

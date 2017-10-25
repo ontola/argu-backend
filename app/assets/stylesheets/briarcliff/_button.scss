@@ -364,60 +364,6 @@
   }
 }
 
-.btns-opinion--subtle {
-  a, button {
-    @include transition(.2s all linear);
-
-    &.disabled {
-      cursor: not-allowed;
-      opacity: .6
-    }
-
-    &:hover {
-      cursor: pointer;
-      background-color: $g1;
-    }
-
-    &:active {
-      @include transition(none);
-      cursor: pointer;
-      background-color: $g1a;
-    }
-  }
-}
-
-.btns-opinion, .btns-opinion--subtle, .btns-opinion--bottom {
-  &[data-voted] a {
-
-    &[data-voted-on=true] {
-      color: white;
-    }
-
-    &[data-voted-on=true].btn-pro{
-      background-color: $pro;
-    }
-
-    &[data-voted-on=true].btn-neutral{
-      background-color: $neutral;
-    }
-
-    &[data-voted-on=true].btn-con{
-      background-color: $con;
-    }
-  }
-
-  @include bp-medium {
-    .vote-count {
-      &:before {
-        content: none;
-      }
-      &:after {
-        content: none;
-      }
-    }
-  }
-}
-
 .btns-floating {
   display: block;
   width: auto;
