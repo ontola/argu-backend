@@ -37,12 +37,18 @@ module Edgeable
     delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :expires_at, to: :edge
     delegate :potential_audience, to: :parent_edge
 
-    def counter_cache_name
-      return class_name if self.class.counter_cache_options == true
-      match = self.class.counter_cache_options.find do |_, conditions|
-        conditions.all? { |key, value| send("#{key}_before_type_cast") == value }
+    def counter_cache_names
+      return [class_name] if self.class.counter_cache_options == true
+      matches = self.class.counter_cache_options.select do |_, conditions|
+        conditions.except(:sql).all? do |key, value|
+          if value.is_a?(Symbol)
+            send("#{key}_before_type_cast").send(value)
+          else
+            send("#{key}_before_type_cast") == value
+          end
+        end
       end
-      match[0].to_s
+      matches.map { |name, _options| name.to_s }
     end
 
     def destroy
@@ -200,7 +206,11 @@ module Edgeable
             .reorder('parents_edges.id ASC')
         return query if conditions.nil?
         query = query.joins("INNER JOIN #{quoted_table_name} ON #{quoted_table_name}.id = edges.owner_id")
-        conditions.reduce(query) { |a, e| a.where(quoted_table_name => {e[0] => e[1]}) }
+        if conditions.key?(:sql)
+          query.where(conditions[:sql])
+        else
+          conditions.reduce(query) { |a, e| a.where(quoted_table_name => {e[0] => e[1]}) }
+        end
       end
 
       def fix_counts_with_options(cache_name = nil, conditions = nil)

@@ -23,7 +23,8 @@ class Vote < Edgeable::Base
   filterable option: {key: 'votes.for', values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}}
   counter_cache votes_pro: {for: Vote.fors[:pro]},
                 votes_con: {for: Vote.fors[:con]},
-                votes_neutral: {for: Vote.fors[:neutral]}
+                votes_neutral: {for: Vote.fors[:neutral]},
+                opinions: {explanation: :present?, sql: "votes.explanation IS NOT NULL AND explanation != ''"}
   delegate :create_confirmation_reminder_notification, to: :publisher
 
   validates :creator, :for, presence: true

@@ -94,7 +94,7 @@ class Edge < ApplicationRecord
   validates :parent, presence: true, unless: :root_object?
   validates :placements, presence: true, if: :requires_location?
 
-  before_destroy :decrement_counter_cache, unless: :is_trashed?
+  before_destroy :decrement_counter_caches, unless: :is_trashed?
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
   before_destroy :destroy_redis_children
@@ -243,7 +243,7 @@ class Edge < ApplicationRecord
   def publish!
     self.class.transaction do
       update!(is_published: true)
-      increment_counter_cache unless is_trashed?
+      increment_counter_caches unless is_trashed?
     end
   end
 
@@ -260,7 +260,7 @@ class Edge < ApplicationRecord
     self.class.transaction do
       update!(trashed_at: DateTime.current)
       owner.destroy_notifications if owner.is_loggable?
-      decrement_counter_cache if is_published?
+      decrement_counter_caches if is_published?
     end
   end
 
@@ -274,20 +274,30 @@ class Edge < ApplicationRecord
     return if trashed_at.nil?
     self.class.transaction do
       update!(trashed_at: nil)
-      increment_counter_cache if is_published?
+      increment_counter_caches if is_published?
     end
   end
 
-  def decrement_counter_cache(counter_cache_name = nil)
+  def decrement_counter_caches
     return unless owner&.class&.counter_cache_options
-    counter_cache_name ||= owner.counter_cache_name
+    owner.counter_cache_names.each do |counter_cache_name|
+      decrement_counter_cache(counter_cache_name)
+    end
+  end
+
+  def decrement_counter_cache(counter_cache_name)
     parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) - 1
     parent.save
   end
 
-  def increment_counter_cache(counter_cache_name = nil)
-    return unless owner.class.counter_cache_options
-    counter_cache_name ||= owner.counter_cache_name
+  def increment_counter_caches
+    return unless owner&.class&.counter_cache_options
+    owner.counter_cache_names.each do |counter_cache_name|
+      increment_counter_cache(counter_cache_name)
+    end
+  end
+
+  def increment_counter_cache(counter_cache_name)
     parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) + 1
     parent.save
   end
