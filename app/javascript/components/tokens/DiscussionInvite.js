@@ -1,3 +1,4 @@
+/* global Bugsnag */
 import React from 'react';
 import I18n from 'i18n-js';
 import Select from 'react-select';
@@ -5,7 +6,7 @@ import Select from 'react-select';
 import Alert from '../Alert';
 import GroupForm from '../GroupForm';
 import { modal } from '../../../assets/javascripts/application/modal';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { errorMessageForStatus, safeCredentials, statusSuccess, json } from '../lib/helpers';
 
 import InvitedSelection from './InvitedSelection';
 
@@ -62,6 +63,16 @@ export const DiscussionInvite = React.createClass({
             .then(() => {
                 new Alert(I18n.t('tokens.email.success'), 'success', true);
                 modal.close();
+            }).catch(e => {
+                if (e.status === 504) {
+                    new Alert(I18n.t('tokens.email.processing'), 'success', true);
+                    modal.close();
+                } else {
+                    const message = errorMessageForStatus(e.status).fallback || I18n.t('errors.general');
+                    new Alert(message, 'alert', true);
+                    Bugsnag.notifyException(e);
+                    throw e;
+                }
             });
     },
 

@@ -23,7 +23,7 @@ RSpec.feature 'Invite', type: :feature do
       end
       click_button('Send invites')
     end
-    expect(page).to have_content('The invitations are sent')
+    expect(page).to have_content('The invitations are being sent')
   end
 
   scenario 'Super admin invites user for new group' do
@@ -49,6 +49,6 @@ RSpec.feature 'Invite', type: :feature do
       end
       click_button('Send invites')
     end
-    expect(page).to have_content('The invitations are sent')
+    expect(page).to have_content('The invitations are being sent')
   end
 end
