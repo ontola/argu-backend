@@ -16,7 +16,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 Rails.application.config.assets.precompile += %w[
   essential.css
-  polyfill.js
   dist/controllers/*.js
   mail.css
   testing.css
