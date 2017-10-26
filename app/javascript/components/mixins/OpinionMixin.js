@@ -6,7 +6,6 @@ import {
     safeCredentials,
     json,
     statusSuccess,
-    tryLogin,
     errorMessageForStatus
 } from '../lib/helpers';
 
@@ -49,42 +48,56 @@ const OpinionMixin = {
                     title
                 }
             })
-        })).then(statusSuccess, tryLogin)
+        })).then(statusSuccess)
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
-                    const id = parseInt(data.data.id.split('/').pop());
-                    const args = this.state.arguments.slice();
-                    args.push({
-                        displayName: data.data.attributes.name,
-                        id,
-                        key: `arguments_${id}`,
-                        url: data.data.id,
-                        side: data.data.attributes.pro ? 'pro' : 'con'
-                    });
-                    const selectedArguments = this.state.selectedArguments.slice();
-                    selectedArguments.push(id);
-                    const newSelectedArguments = this.state.newSelectedArguments.slice();
-                    newSelectedArguments.push(id);
+                    if (this.state.actor.actor_type !== this.props.actor.actor_type) {
+                        window.location.hash = `${this.props.objectType}${this.props.objectId}`;
+                        window.location.reload();
+                    } else {
+                        const id = parseInt(data.data.id.split('/').pop());
+                        const args = this.state.arguments.slice();
+                        args.push({
+                            displayName: data.data.attributes.name,
+                            id,
+                            key: `arguments_${id}`,
+                            url: data.data.id,
+                            body: data.data.attributes.text,
+                            side: data.data.attributes.pro ? 'pro' : 'con'
+                        });
+                        const selectedArguments = this.state.selectedArguments.slice();
+                        selectedArguments.push(id);
+                        const newSelectedArguments = this.state.newSelectedArguments.slice();
+                        newSelectedArguments.push(id);
+                        this.setState({
+                            argumentForm: false,
+                            arguments: args,
+                            createArgument: {
+                                side: undefined,
+                                title: '',
+                                shouldSubmit: false,
+                                body: ''
+                            },
+                            selectedArguments,
+                            submitting: false,
+                            newSelectedArguments
+                        });
+                    }
+                }
+            }).catch(err => {
+                this.setState({ submitting: false });
+                if (err.status === 401) {
                     this.setState({
                         argumentForm: false,
-                        arguments: args,
-                        createArgument: {
-                            side: undefined,
-                            title: '',
-                            body: ''
-                        },
-                        selectedArguments,
-                        submitting: false,
-                        newSelectedArguments
+                        createArgument: Object.assign({}, this.state.createArgument, { shouldSubmit: true })
                     });
+                } else {
+                    const message = errorMessageForStatus(err.status).fallback || I18n.t('errors.general');
+                    new Alert(message, 'alert', true);
+                    Bugsnag.notifyException(err);
+                    throw err;
                 }
-            }).catch(er => {
-                this.setState({ submitting: false });
-                const message = errorMessageForStatus(er.status).fallback || I18n.t('errors.general');
-                new Alert(message, 'alert', true);
-                Bugsnag.notifyException(er);
-                throw er;
             });
     },
 
@@ -122,8 +135,11 @@ const OpinionMixin = {
             })
         })).then(statusSuccess)
             .then(json)
-            .then(data => {
-                if (typeof data !== 'undefined') {
+            .then(() => {
+                this.setState({ actor: Object.assign({}, this.state.actor, { actor_type: 'User' }) });
+                if (this.state.createArgument.shouldSubmit === true) {
+                    this.argumentHandler(e);
+                } else {
                     window.location.hash = `${this.props.objectType}${this.props.objectId}`;
                     window.location.reload();
                 }
@@ -160,8 +176,13 @@ const OpinionMixin = {
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
-                    window.location.hash = `${this.props.objectType}${this.props.objectId}`;
-                    window.location.reload();
+                    this.setState({ actor: Object.assign({}, this.state.actor, { actor_type: 'User' }) });
+                    if (this.state.createArgument.shouldSubmit === true) {
+                        this.argumentHandler(e);
+                    } else {
+                        window.location.hash = `${this.props.objectType}${this.props.objectId}`;
+                        window.location.reload();
+                    }
                 }
             }).catch(er => {
                 json(er)

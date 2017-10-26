@@ -35,7 +35,10 @@ module Oauth
       resource = User.find(response.token.resource_owner_id)
       resource.update r: ''
       schedule_redis_resource_worker(GuestUser.new(id: guest_session_id), resource, r) if guest_session_id.present?
-      redirect_to r.presence || root_path
+      respond_to do |format|
+        format.html { redirect_to r.presence || root_path }
+        format.json { render json: response.token, status: 201 }
+      end
     rescue Doorkeeper::Errors::DoorkeeperError => e
       handle_doorkeeper_error(e)
     end

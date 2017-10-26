@@ -89,7 +89,7 @@ export const VoteContainer = React.createClass({
             expanded={this.props.buttonsType === 'big' || this.state.showExpandedVoteResults}
             total_votes={this.props.totalVotes}/>;
         }
-        bottomBody = <OpinionContainer actor={this.state.actor}
+        bottomBody = <OpinionContainer actor={this.props.actor}
                                        argumentUrl={this.props.argumentUrl}
                                        argumentForm={this.state.argumentForm}
                                        arguments={this.state.arguments}

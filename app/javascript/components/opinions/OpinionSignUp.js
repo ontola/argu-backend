@@ -6,6 +6,7 @@ import Footer from '../forms/Footer';
 
 export const OpinionSignUp = React.createClass({
     propTypes: {
+        createArgument: React.PropTypes.object.isRequired,
         errorMessage: React.PropTypes.string,
         facebookUrl: React.PropTypes.string.isRequired,
         forgotPassword: React.PropTypes.object.isRequired,
@@ -49,7 +50,7 @@ export const OpinionSignUp = React.createClass({
         switch (this.props.loginStep) {
         case 'initial':
             form = <div>
-                <div className="formtastic--full-width"><label>{I18n.t('opinions.form.signup')}</label></div>
+                <div className="formtastic--full-width"><label>{I18n.t(`opinions.form.signup.${this.props.createArgument.shouldSubmit ? 'argument' : 'vote'}`)}</label></div>
                 {signupEmailField}
                 <button type="submit" disabled={submitting}>{I18n.t('opinions.form.continue')}</button>
                 <div className="margin-bottom">

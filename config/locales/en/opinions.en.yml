@@ -13,7 +13,9 @@ en:
       submit: "Save"
       confirm: "Confirm"
       login: "Login"
-      signup: "Confirm your vote with email:"
+      signup:
+        vote: "Confirm your vote with email:"
+        argument: "Enter your email to submit the argument:"
       welcome_back: "Welcome back!"
       email:
         placeholder: "Enter your email address here"

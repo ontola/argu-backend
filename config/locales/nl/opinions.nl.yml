@@ -13,7 +13,9 @@ nl:
       submit: "Opslaan"
       confirm: "Bevestig"
       login: "Log in"
-      signup: "Bevestig jouw stem met email:"
+      signup:
+        vote: "Bevestig jouw stem met email:"
+        argument: "Voer jouw email in om het argument in te dienen:"
       welcome_back: "Welkom terug!"
       email:
         placeholder: "Vul hier jouw e-mail adres in"
