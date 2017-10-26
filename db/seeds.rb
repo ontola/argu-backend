@@ -64,6 +64,22 @@ staff_membership =
   ).resource
 staff_membership.save!(validate: false)
 
+public_membership =
+  CreateGroupMembership.new(
+    public_group,
+    attributes: {member: community_profile},
+    options: {publisher: community_profile.profileable, creator: community_profile}
+  ).resource
+public_membership.save!(validate: false)
+
+public_staff_membership =
+  CreateGroupMembership.new(
+    public_group,
+    attributes: {member: staff.profile},
+    options: {publisher: staff, creator: staff.profile}
+  ).resource
+public_staff_membership.save!(validate: false)
+
 argu.update(owner: staff.profile)
 
 forum = Forum.new(name: 'Nederland',
@@ -75,6 +91,10 @@ forum.edge = Edge.new(owner: forum,
                       parent: argu.edge)
 forum.edge.grants.new(group: public_group, role: :member)
 forum.save!
+
+g = forum.edge.grants.new(group: staff_group, role: :staff)
+g.save!(validate: false)
+
 forum.edge.publish!
 
 Doorkeeper::Application.create!(
