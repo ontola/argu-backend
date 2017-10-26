@@ -12,6 +12,8 @@ en:
     vote: "vote"
     new_btn: "Add argument"
     references: "references"
+    show_all_x_pro: "Show %{count} pros"
+    show_all_x_con: "Show %{count} cons"
     header:
       pro: "pro argument"
       con: "con argument"

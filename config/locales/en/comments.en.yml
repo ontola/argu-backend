@@ -3,6 +3,10 @@ en:
     type: "comment"
     type_new: "new comment"
     plural: "Comments"
+    show_all:
+      zero: "Place a comment"
+      one: "Place a comment"
+      other: "Show all %{count} comments"
     menu:
       zero: "Comments"
       one: "Comments (%{count})"

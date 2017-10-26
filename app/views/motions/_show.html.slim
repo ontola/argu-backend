@@ -14,3 +14,6 @@
   section.unpadded.section--opinion
     - unless local_assigns[:hide_vote_buttons]
       .motion-votes= react_component_store 'VoteContainer', props: motion_vote_props(current_profile, model, user_vote_for(model), buttonsType: 'bottom', r: request.env['PATH_INFO']), **prerender_options
+  - if model.children_count(:comments).positive? || model.default_vote_event_edge.children_count(:opinions).positive?
+    section.unpadded.section--bottom
+      =render 'comments/small_comment', resource: policy_scope(model.mixed_comments).first.owner, parent: model

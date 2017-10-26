@@ -12,6 +12,8 @@ nl:
     vote: "Stem"
     new_btn: "Argument toevoegen"
     references: "Referenties"
+    show_all_x_pro: "Toon %{count} voordelen"
+    show_all_x_con: "Toon %{count} nadelen"
     header:
       pro: "Argument voor"
       con: "Argument tegen"

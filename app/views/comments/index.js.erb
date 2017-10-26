@@ -1,0 +1,3 @@
+window.modal.open("<%= escape_javascript render(template: 'comments/index_modal.html', layout: false, locals: local_assigns) %>", "<%= request.original_url %>");
+
+ReactRailsUJS.mountComponents(".modal");

@@ -33,6 +33,8 @@ class Vote < Edgeable::Base
   contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url(v, protocol: :https) }
   contextualize :option, as: 'schema:option'
 
+  alias_attribute :body, :explanation
+
   # #########methods###########
   def argument_ids
     @argument_ids ||= upvoted_arguments.pluck(:id)

@@ -1,0 +1,8 @@
+.section__divider
+section.section--bottom
+  =render partial: 'profiles/detail_profile', locals: {resource: resource}
+  div[id=resource.id itemprop="text" class="markdown markdown--smaller #{resource.is_a?(Vote) ? 'has-opinion-icon' : ''}"]
+    -if resource.is_a?(Vote)
+      span[class="fa fa-#{icon_for_side(resource.for)} opinion-icon opinion-icon-#{resource.for}"]
+    =resource.is_trashed? ? I18n.t('trashed') : markdown_to_html(safe_truncated_text(resource.body)) || I18n.t('deleted')
+  .section__top-button= link_to I18n.t('comments.show_all', count: parent.children_count(:comments) + parent.default_vote_event_edge.children_count(:opinions)), motion_comments_path(parent), remote: true

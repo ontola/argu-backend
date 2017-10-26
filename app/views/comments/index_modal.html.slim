@@ -1,0 +1,12 @@
+.modal-container
+  .overlay.overlay-back
+  .modal.col-1
+    header
+    .modal-scroll-box
+      .box
+        section
+          h1.motion-t= resource.title
+          .markdown[itemprop="text"]
+            =markdown_to_html(resource.content)
+      =render template: 'comments/show', locals: {resource: resource, comment: Comment.new, modal: true}
+    .overlay.overlay-bottom
