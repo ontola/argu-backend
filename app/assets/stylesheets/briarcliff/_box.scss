@@ -282,3 +282,7 @@
     border-radius: 0 0 4px 4px;
   }
 }
+
+.HoverBox__hidden-part.HoverBox__hidden-part--visible {
+  @include box-shadow();
+}

@@ -1,11 +1,15 @@
 import I18n from 'i18n-js';
 import React from 'react'
 
-const MAX_ARGUMENTS_SHOWN = 5;
+import HoverBox from './HoverBox';
+
+const MAX_ARGUMENTS_SHOWN = 3;
+const TRUNCATE_LENGTH = 250;
 
 export const ArgumentsList = React.createClass({
     propTypes: {
         arguments: React.PropTypes.arrayOf(React.PropTypes.shape({
+            body: React.PropTypes.string,
             commentCount: React.PropTypes.number,
             id: React.PropTypes.number,
             displayName: React.PropTypes.string,
@@ -48,26 +52,45 @@ export const ArgumentsList = React.createClass({
         )
     },
 
-    argument (item, side) {
-        return (
-          <li>
-            <a
-              data-remote='true'
-              href={item.url} >
-              <h4 className={`${side}-t tooltip--wider`}>
-                <div className="list-item">
-                  <span>{item.displayName}</span>
-                  {item.commentCount > 0 &&
-                    <div className="comments-counter comments-counter--inline">
-                      <div className="fa fa-comment"/>
-                      <div className="icon-left">{item.commentCount}</div>
-                    </div>
-                  }
+    argumentTitle (item, side) {
+      return (
+        <a
+          data-remote='true'
+          href={item.url} >
+          <h4 className={`${side}-t tooltip--wider`}>
+            <div className="list-item">
+              <span>{item.displayName}</span>
+              {item.commentCount > 0 &&
+                <div className="comments-counter comments-counter--inline">
+                  <div className="fa fa-comment"/>
+                  <div className="icon-left">{item.commentCount}</div>
                 </div>
-              </h4>
-            </a>
-          </li>
-        );
+              }
+            </div>
+          </h4>
+        </a>
+      )
+    },
+
+    truncate (string) {
+        if (string.length > TRUNCATE_LENGTH) {
+            return string.substring(0, TRUNCATE_LENGTH) + '...';
+        }
+        return string;
+    },
+
+    argument (item, side) {
+        if (item.body === null) {
+            return this.argumentTitle(item, side)
+        }
+        return (
+          <HoverBox children={
+              this.argumentTitle(item, side)
+            }
+            hiddenChildren={
+              <p style={{ marginBottom: 0 }}>{this.truncate(item.body)}</p>
+          }/>
+        )
     },
 
     showMoreButton (side, count) {

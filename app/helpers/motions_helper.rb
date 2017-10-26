@@ -57,6 +57,7 @@ module MotionsHelper
     motion.edge.active_arguments.map do |argument|
       {
         id: argument.id,
+        body: argument.description,
         commentCount: argument.children_count(:comments),
         displayName: argument.display_name,
         key: argument.identifier,
