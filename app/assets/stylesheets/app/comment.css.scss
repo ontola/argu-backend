@@ -2,5 +2,6 @@
 @import "mixins";
 
 .comment_form textarea {
+  overflow-x: hidden;
   min-height: 5em;
 }

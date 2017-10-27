@@ -6,7 +6,7 @@
   width: 100%;
   overflow: hidden;
   @include transition(.2s ease-in-out);
-  height: .5em;
+  height: 7px;
   opacity: .5;
   cursor: pointer;
   &:hover {
@@ -16,11 +16,11 @@
   span {
     width: 100%;
     display: inline-block;
-    line-height: 1.6em;
+    line-height: 20px;
     text-transform: uppercase;
     top: 0;
     position: relative;
-    font-size: .9em;
+    font-size: 14px;
     color: white;
 
     @include bp-small {
@@ -71,8 +71,7 @@
 }
 
 .progress-bar--expanded {
-  height: auto;
-  cursor: initial;
+  height: 18px;
   opacity: 1 !important;
 
   .progress-bar__section {

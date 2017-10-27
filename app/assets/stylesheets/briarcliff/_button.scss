@@ -497,7 +497,7 @@ h1 + .btn {
   }
 
   .btn-pro {
-    &:hover {
+    &:hover, &[data-voted-on=true] {
       color: $pro;
       background-color: lighten($pro, 50);
     }
@@ -507,7 +507,7 @@ h1 + .btn {
     }
   }
   .btn-neutral {
-    &:hover {
+    &:hover, &[data-voted-on=true] {
       color: $neutral;
       background-color: lighten($neutral, 45);
     }
@@ -517,7 +517,7 @@ h1 + .btn {
     }
   }
   .btn-con {
-    &:hover {
+    &:hover, &[data-voted-on=true] {
       color: $con;
       background-color: lighten($con, 50);
     }

@@ -130,5 +130,9 @@ footer {
 }
 .section--footer .schedule-select .Select-control,
 .section--footer .Select-profile .Select-control {
+  border: none;
   background-color: rgb(249, 249, 249);
+  &:hover {
+    border: none;
+  }
 }

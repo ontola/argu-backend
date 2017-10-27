@@ -283,6 +283,28 @@
   }
 }
 
+.HoverBox {
+  position: relative;
+}
+
+.HoverBox__hidden-part {
+  display: none;
+  pointer-events: none;
+
+  &.HoverBox__hidden-part--visible {
+    background-color: white;
+    @include border-radius();
+    box-sizing: padding-box;
+    display: block;
+    left: -10px;
+    padding: 10px;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    z-index: 2;
+  }
+}
+
 .HoverBox__hidden-part.HoverBox__hidden-part--visible {
-  @include box-shadow();
+  @include box-shadow-intense();
 }
