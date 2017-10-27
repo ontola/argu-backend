@@ -16,6 +16,44 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   let!(:member) { create(:group_membership, parent: group).member.profileable }
 
   ####################################
+  # As User not accepted terms
+  ####################################
+  let(:user_not_accepted) { create(:user, :not_accepted_terms) }
+
+  test 'user not accepted terms should post create with valid token for single_forum_group' do
+    validate_valid_bearer_token
+    sign_in user_not_accepted
+
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1]] do
+      post :create, params: {group_id: single_forum_group, token: '1234567890'}
+    end
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'user not accepted terms should post create with valid token for forum_group' do
+    validate_valid_bearer_token
+    sign_in user_not_accepted
+
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+      post :create, params: {group_id: forum_group, token: '1234567890'}
+    end
+
+    assert_redirected_to page_url(argu)
+  end
+
+  test 'user not accepted terms should post create with valid token for page_group' do
+    validate_valid_bearer_token
+    sign_in user_not_accepted
+
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+      post :create, params: {group_id: page_group, token: '1234567890'}
+    end
+
+    assert_redirected_to page_url(argu)
+  end
+
+  ####################################
   # As User
   ####################################
   let(:user) { create(:user) }
