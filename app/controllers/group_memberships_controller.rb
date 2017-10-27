@@ -2,6 +2,8 @@
 
 class GroupMembershipsController < ServiceController
   skip_before_action :authorize_action, only: :index
+  skip_before_action :verify_terms_accepted
+
   include NestedResourceHelper
 
   def show
