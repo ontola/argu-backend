@@ -24,11 +24,11 @@ class UsersController < AuthorizedController
       format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api do
         render json: authenticated_resource,
-               include: [
-                 :profile_photo,
-                 :email_addresses,
-                 vote_match_collection: INC_NESTED_COLLECTION
-               ]
+               include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource,
+               include: include_show
       end
     end
   end
@@ -118,6 +118,14 @@ class UsersController < AuthorizedController
         email.second['email'].present? &&
           authenticated_resource.email_addresses.find(email.second['id']).email != email.second['email']
     end
+  end
+
+  def include_show
+    [
+      :profile_photo,
+      :email_addresses,
+      vote_match_collection: INC_NESTED_COLLECTION
+    ]
   end
 
   def permit_locale_params

@@ -21,6 +21,8 @@ module Common
       case format
       when :json, :json_api
         render json: resource
+      when :n3
+        render n3: resource
       else
         raise_unkown_format
       end
@@ -39,7 +41,7 @@ module Common
 
     def respond_with_204(_, format)
       case format
-      when :json, :json_api
+      when :json, :json_api, :n3
         head :no_content
       else
         raise_unkown_format
@@ -59,6 +61,8 @@ module Common
       case format
       when :json, :json_api
         render json: resource.errors, status: :bad_request
+      when :n3
+        render n3: resource.errors, status: :bad_request
       when :js
         head 400
       else
@@ -71,6 +75,8 @@ module Common
       when :json
         render json_error(422, resource.errors)
       when :json_api
+        render json_api_error(422, resource.errors)
+      when :n3
         render json_api_error(422, resource.errors)
       else
         raise_unkown_format

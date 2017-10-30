@@ -18,6 +18,7 @@ module Argu
           format.js { render status: error_status(e), json: json_error_hash(e) }
           format.json { render json_error(error_status(e), json_error_hash(e)) }
           format.json_api { render json_api_error(error_status(e), json_error_hash(e)) }
+          format.n3 { render json_api_error(error_status(e), json_error_hash(e)) }
         end
       end
 
@@ -57,6 +58,7 @@ module Argu
           format.html { error_response_html(e) }
           format.json { json_error(500, e.response.body) }
           format.json_api { render json_api_error(500, e.response.body) }
+          format.n3 { render json_api_error(500, e.response.body) }
         end
       end
 
@@ -128,6 +130,7 @@ module Argu
       respond_to do |format|
         format.json { respond_with_422(resources.first, :json) }
         format.json_api { respond_with_422(resources.first, :json_api) }
+        format.n3 { respond_with_422(resources.first, :json_api) }
       end
     end
   end

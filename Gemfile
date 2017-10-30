@@ -18,6 +18,7 @@ gem 'logstasher', '~> 1.2.0'
 gem 'uri_template'
 gem 'health_check'
 gem 'nokogiri', '~> 1.8.1'
+gem 'rdf'
 
 ################## DB ########################
 gem 'pg', '0.18.2'

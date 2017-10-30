@@ -8,7 +8,10 @@ class MenusController < AuthorizedController
   def show
     respond_to do |format|
       format.json_api do
-        render json: resource_by_id!, include: [menus: :menus]
+        render json: resource_by_id!, include: include_show
+      end
+      format.n3 do
+        render n3: resource_by_id!, include: include_show
       end
     end
   end
@@ -31,6 +34,10 @@ class MenusController < AuthorizedController
   def current_forum; end
 
   def include_index
+    [menus: :menus]
+  end
+
+  def include_show
     [menus: :menus]
   end
 

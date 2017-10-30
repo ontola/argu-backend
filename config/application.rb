@@ -4,6 +4,8 @@ require_relative 'boot'
 
 require_relative './initializers/version'
 require_relative './initializers/build'
+
+require_relative '../lib/rdf'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems

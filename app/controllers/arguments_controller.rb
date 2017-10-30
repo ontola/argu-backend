@@ -23,10 +23,10 @@ class ArgumentsController < EdgeTreeController
       end
       format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api do
-        render json: authenticated_resource,
-               include: [
-                 comment_collection: INC_NESTED_COLLECTION
-               ]
+        render json: authenticated_resource, include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource, include: include_show
       end
     end
   end
@@ -42,12 +42,17 @@ class ArgumentsController < EdgeTreeController
     {keys: {name: :title, text: :content}}
   end
 
+  def include_show
+    [comment_collection: INC_NESTED_COLLECTION]
+  end
+
   def new_respond_blocks_success(resource, format)
     resource.assign_attributes(pro: %w[pro yes].include?(params[:pro] || params[:filter].try(:[], :option)))
     return super if params[:motion_id].present?
     format.html { render text: 'Bad request', status: 400 }
     format.json { respond_with_400(resource, :json) }
     format.json_api { respond_with_400(resource, :json_api) }
+    format.n3 { respond_with_400(resource, :n3) }
   end
 
   def prepare_view

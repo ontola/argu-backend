@@ -43,16 +43,24 @@ class MotionsController < EdgeTreeController
       format.json # show.json.jbuilder
       format.json_api do
         render json: authenticated_resource,
-               include: [
-                 argument_collection: INC_NESTED_COLLECTION,
-                 attachment_collection: INC_NESTED_COLLECTION,
-                 vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}
-               ]
+               include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource,
+               include: include_show
       end
     end
   end
 
   private
+
+  def include_show
+    [
+      argument_collection: INC_NESTED_COLLECTION,
+      attachment_collection: INC_NESTED_COLLECTION,
+      vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}
+    ]
+  end
 
   def resource_new_params
     if parent_resource!.try(:project).present?

@@ -8,6 +8,7 @@ class MediaObjectsController < AuthorizedController
     respond_to do |format|
       format.json { respond_with_200(resource_by_id, :json) }
       format.json_api { respond_with_200(resource_by_id, :json_api) }
+      format.n3 { respond_with_200(resource_by_id, :n3) }
     end
   end
 

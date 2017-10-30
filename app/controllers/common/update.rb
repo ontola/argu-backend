@@ -15,6 +15,7 @@ module Common
         format.js { update_respond_failure_js(resource) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
+        format.n3 { respond_with_422(resource, :n3) }
       end
 
       # @!visibility public
@@ -23,6 +24,7 @@ module Common
         format.js { update_respond_success_js(resource) }
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
+        format.n3 { respond_with_204(resource, :n3) }
       end
 
       # @!visibility public

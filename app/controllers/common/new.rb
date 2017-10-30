@@ -19,6 +19,7 @@ module Common
         format.html { new_respond_success_html(resource) }
         format.json { respond_with_200(resource, :json) }
         format.json_api { respond_with_200(resource, :json_api) }
+        format.n3 { respond_with_200(resource, :n3) }
       end
 
       # @!visibility public

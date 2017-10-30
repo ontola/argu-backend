@@ -7,10 +7,11 @@ class SourcesController < ServiceController
     respond_to do |format|
       format.json_api do
         render json: authenticated_resource,
-               include: [
-                 motion_collection: INC_NESTED_COLLECTION,
-                 question_collection: INC_NESTED_COLLECTION
-               ]
+               include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource,
+               include: include_show
       end
     end
   end
@@ -26,6 +27,13 @@ class SourcesController < ServiceController
   end
 
   private
+
+  def include_show
+    [
+      motion_collection: INC_NESTED_COLLECTION,
+      question_collection: INC_NESTED_COLLECTION
+    ]
+  end
 
   def resource_by_id
     @_resource_by_id ||= if (/[a-zA-Z]/i =~ params[:id]).nil?

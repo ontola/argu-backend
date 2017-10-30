@@ -9,6 +9,7 @@ class BlogPostsController < EdgeTreeController
       format.html { render locals: {blog_post: authenticated_resource, comment: Comment.new} }
       format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api { respond_with_200(authenticated_resource, :json_api) }
+      format.n3 { respond_with_200(authenticated_resource, :n3) }
       format.js { render locals: {blog_post: authenticated_resource} }
     end
   end
@@ -19,6 +20,7 @@ class BlogPostsController < EdgeTreeController
     format.html { update_respond_success_html(resource) }
     format.json { respond_with_200(resource, :json) }
     format.json_api { respond_with_204(resource, :json_api) }
+    format.n3 { respond_with_204(resource, :n3) }
   end
 
   def redirect_model_success(resource)

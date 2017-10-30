@@ -12,7 +12,8 @@ class GroupMembershipsController < ServiceController
         flash.keep
         redirect_to redirect_url
       end
-      format.json_api { render json: authenticated_resource, include: %i[organization] }
+      format.json_api { render json: authenticated_resource, include: include_show }
+      format.n3 { render n3: authenticated_resource, include: include_show }
     end
   end
 
@@ -59,6 +60,7 @@ class GroupMembershipsController < ServiceController
       end
     end
     format.json_api { respond_with_422(resource, :json_api) }
+    format.n3 { respond_with_422(resource, :n3) }
   end
 
   alias create_service_parent parent_resource!
@@ -73,6 +75,10 @@ class GroupMembershipsController < ServiceController
       .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
     @existing_record = controller_class
                          .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
+  end
+
+  def include_show
+    %i[organization]
   end
 
   def new_respond_success_html(resource)

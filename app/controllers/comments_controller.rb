@@ -16,6 +16,7 @@ class CommentsController < EdgeTreeController
     respond_to do |format|
       format.html { redirect_to redirect_model_success(authenticated_resource) }
       format.json_api { respond_with_200(authenticated_resource, :json_api) }
+      format.n3 { respond_with_200(authenticated_resource, :n3) }
     end
   end
 
@@ -73,6 +74,10 @@ class CommentsController < EdgeTreeController
   def index_respond_blocks_success(_, format)
     format.json_api do
       render json: index_response_association,
+             include: include_index
+    end
+    format.n3 do
+      render n3: index_response_association,
              include: include_index
     end
     format.html do

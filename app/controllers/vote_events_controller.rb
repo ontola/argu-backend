@@ -9,7 +9,10 @@ class VoteEventsController < EdgeTreeController
         render 'show', locals: {resource: authenticated_resource}
       end
       format.json_api do
-        render json: authenticated_resource, include: [vote_collection: INC_NESTED_COLLECTION]
+        render json: authenticated_resource, include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource, include: include_show
       end
     end
   end
@@ -18,5 +21,9 @@ class VoteEventsController < EdgeTreeController
 
   def include_index
     [members: {vote_collection: {views: [:members, views: :members]}}]
+  end
+
+  def include_show
+    [vote_collection: INC_NESTED_COLLECTION]
   end
 end

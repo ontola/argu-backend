@@ -47,10 +47,12 @@ class RegistrationsController < Devise::RegistrationsController
         format.html { redirect_to root_path, status: 303, notice: t('type_destroy_success', type: 'Account') }
         format.json { respond_with_204(@user, :json) }
         format.json_api { respond_with_204(@user, :json_api) }
+        format.n3 { respond_with_204(@user, :n3) }
       else
         format.html { render action: 'cancel' }
         format.json { respond_with_422(@user, :json) }
         format.json_api { respond_with_422(@user, :json_api) }
+        format.n3 { respond_with_422(@user, :n3) }
       end
     end
   end

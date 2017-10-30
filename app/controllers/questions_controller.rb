@@ -26,11 +26,10 @@ class QuestionsController < EdgeTreeController
       format.widget { render authenticated_resource }
       format.json # show.json.jbuilder
       format.json_api do
-        render json: authenticated_resource,
-               include: [
-                 attachment_collection: INC_NESTED_COLLECTION,
-                 motion_collection: INC_NESTED_COLLECTION
-               ]
+        render json: authenticated_resource, include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource, include: include_show
       end
     end
   end
@@ -43,6 +42,13 @@ class QuestionsController < EdgeTreeController
     else
       super
     end
+  end
+
+  def include_show
+    [
+      attachment_collection: INC_NESTED_COLLECTION,
+      motion_collection: INC_NESTED_COLLECTION
+    ]
   end
 
   def move_options

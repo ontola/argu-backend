@@ -46,10 +46,11 @@ class ForumsController < EdgeTreeController
       format.js
       format.json_api do
         render json: authenticated_resource,
-               include: [
-                 motion_collection: INC_NESTED_COLLECTION,
-                 question_collection: INC_NESTED_COLLECTION
-               ]
+               include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource,
+               include: include_show
       end
     end
   end
@@ -140,6 +141,13 @@ class ForumsController < EdgeTreeController
 
   def current_forum
     resource_by_id
+  end
+
+  def include_show
+    [
+      motion_collection: INC_NESTED_COLLECTION,
+      question_collection: INC_NESTED_COLLECTION
+    ]
   end
 
   def permit_params

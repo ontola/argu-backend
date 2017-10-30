@@ -6,7 +6,10 @@ class GroupsController < ServiceController
   def show
     respond_to do |format|
       format.json_api do
-        render json: authenticated_resource, include: %i[organization]
+        render json: authenticated_resource, include: include_show
+      end
+      format.n3 do
+        render n3: authenticated_resource, include: include_show
       end
     end
   end
@@ -35,6 +38,10 @@ class GroupsController < ServiceController
              group: resource,
              resource: resource.page
            }
+  end
+
+  def include_show
+    %i[organization]
   end
 
   def new_resource_from_params

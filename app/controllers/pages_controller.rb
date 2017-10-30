@@ -27,10 +27,11 @@ class PagesController < EdgeTreeController
       end
       format.json_api do
         render json: @page,
-               include: [
-                 :profile_photo,
-                 vote_match_collection: INC_NESTED_COLLECTION
-               ]
+               include: include_show
+      end
+      format.n3 do
+        render n3: @page,
+               include: include_show
       end
     end
   end
@@ -154,6 +155,13 @@ class PagesController < EdgeTreeController
       page: params[:page],
       pagination: true
     )
+  end
+
+  def include_show
+    [
+      :profile_photo,
+      vote_match_collection: INC_NESTED_COLLECTION
+    ]
   end
 
   def new_resource_from_params

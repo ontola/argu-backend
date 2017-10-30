@@ -29,6 +29,10 @@ module Common
           render json: index_response_association,
                  include: include_index
         end
+        format.n3 do
+          render n3: index_response_association,
+                 include: include_index
+        end
       end
 
       def index_response_association

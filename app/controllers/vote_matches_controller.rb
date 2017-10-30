@@ -9,6 +9,7 @@ class VoteMatchesController < ServiceController
     respond_to do |format|
       format.json { respond_with_200(authenticated_resource, :json) }
       format.json_api { respond_with_200(authenticated_resource, :json_api) }
+      format.n3 { respond_with_200(authenticated_resource, :n3) }
     end
   end
 
@@ -32,6 +33,10 @@ class VoteMatchesController < ServiceController
       end
     format.json_api do
       render json: collection,
+             include: INC_NESTED_COLLECTION
+    end
+    format.n3 do
+      render n3: collection,
              include: INC_NESTED_COLLECTION
     end
   end
