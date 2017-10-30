@@ -16,8 +16,17 @@ class ApplicationMenuList < MenuList
 
   private
 
+  def discover_link
+    menu_item(
+      :discover,
+      image: 'fa-compass',
+      label: I18n.t('forums.discover'),
+      href: discover_forums_url
+    )
+  end
+
   def organizations_menu
-    menu_item(:organizations, image: 'fa-comments', menus: page_links)
+    menu_item(:organizations, image: 'fa-comments', menus: page_links.append(discover_link))
   end
 
   def page_links
