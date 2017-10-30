@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
 class PhaseSerializer < BaseSerializer
-  attributes :display_name, :description, :start_date, :end_date
+  attribute :display_name, predicate: RDF::SCHEMA[:name]
+  attribute :description, predicate: RDF::SCHEMA[:description]
+  attribute :start_date, predicate: RDF::SCHEMA[:startDate]
+  attribute :end_date, predicate: RDF::SCHEMA[:endDate]
 end

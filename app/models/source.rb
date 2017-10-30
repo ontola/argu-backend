@@ -2,7 +2,7 @@
 
 class Source < Edgeable::Base
   include Menuable
-  contextualize_as_type 'argu:Source'
+  contextualize_as_type RDF::ARGU[:Source]
   contextualize_with_id { |s| Rails.application.routes.url_helpers.page_source_url(s.page.id, s.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
 

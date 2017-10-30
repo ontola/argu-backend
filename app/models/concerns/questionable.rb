@@ -6,7 +6,7 @@ module Questionable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :question_collection do
+      has_one :question_collection, predicate: RDF::ARGU[:questions] do
         link(:self) do
           {
             href: "#{object.context_id}/questions",

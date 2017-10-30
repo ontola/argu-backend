@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class VoteMatchSerializer < RecordSerializer
-  attributes :name, :text
+  attribute :name, predicate: RDF::SCHEMA[:name]
+  attribute :text, predicate: RDF::SCHEMA[:text]
 
-  has_many :voteables do
+  has_many :voteables, predicate: RDF::ARGU[:motions] do
     link(:self) do
       {
         href: "#{object.context_id}/voteables",
@@ -21,7 +22,7 @@ class VoteMatchSerializer < RecordSerializer
     end
   end
 
-  has_many :vote_comparables do
+  has_many :vote_comparables, predicate: RDF::ARGU[:profiles] do
     link(:self) do
       {
         href: "#{object.context_id}/vote_comparables",
@@ -39,7 +40,7 @@ class VoteMatchSerializer < RecordSerializer
     end
   end
 
-  has_one :creator do
+  has_one :creator, predicate: RDF::SCHEMA[:creator] do
     obj = object.creator.profileable
     link(:self) do
       {
@@ -66,7 +67,7 @@ class VoteMatchSerializer < RecordSerializer
     obj
   end
 
-  has_one :vote_compare_result do
+  has_one :vote_compare_result, predicate: RDF::ARGU[:voteCompareResult] do
     link(:related) do
       {
         href: "https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}",

@@ -10,6 +10,7 @@ class LinkedRecordSerializer < RecordSerializer
     {
       href: object.iri,
       meta: {
+        '@type': RDF::SCHEMA[:isRelatedTo],
         attributes: {
           '@id': object.iri,
           '@type': object.record_type,
@@ -23,5 +24,6 @@ class LinkedRecordSerializer < RecordSerializer
     }
   end
 
-  attributes :title, :record_type
+  attribute :title, predicate: RDF::SCHEMA[:name]
+  attribute :record_type
 end

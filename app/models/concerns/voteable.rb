@@ -45,7 +45,7 @@ module Voteable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :vote_event_collection do
+      has_one :vote_event_collection, predicate: RDF::ARGU[:voteEvents] do
         link(:self) do
           {
             href: "#{object.context_id}/vote_events",
@@ -64,7 +64,7 @@ module Voteable
         end
       end
 
-      has_one :default_vote_event, key: :voteable_vote_event do
+      has_one :default_vote_event, key: :voteable_vote_event, predicate: RDF::ARGU[:voteableVoteEvent] do
         obj = object.default_vote_event
         if obj
           link(:self) do

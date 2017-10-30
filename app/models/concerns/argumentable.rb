@@ -30,7 +30,7 @@ module Argumentable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :argument_collection do
+      has_one :argument_collection, predicate: RDF::ARGU[:arguments] do
         link(:self) do
           {
             href: "#{object.context_id}/arguments",

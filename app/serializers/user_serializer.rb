@@ -5,9 +5,11 @@ class UserSerializer < RecordSerializer
     service_scope? || object == scope&.user
   end
 
-  attributes :display_name, :about, :url
-  attribute :language, if: :service_scope?
-  attribute :email, if: :service_or_self?
+  attribute :display_name, predicate: RDF::SCHEMA[:name]
+  attribute :about, predicate: RDF::SCHEMA[:description]
+  attribute :url
+  attribute :language, predicate: RDF::SCHEMA[:language], if: :service_scope?
+  attribute :email, predicate: RDF::SCHEMA[:email], if: :service_or_self?
   has_many :email_addresses, if: :service_or_self? do
     link(:self) do
       {
@@ -18,12 +20,12 @@ class UserSerializer < RecordSerializer
     end
   end
 
-  has_one :profile_photo do
+  has_one :profile_photo, predicate: RDF::SCHEMA[:image] do
     obj = object.profile.default_profile_photo
     link(:self) do
       {
         meta: {
-          '@type': 'http://schema.org/image'
+          '@type': RDF::SCHEMA[:image]
         }
       }
     end
@@ -38,7 +40,7 @@ class UserSerializer < RecordSerializer
     obj
   end
 
-  has_one :vote_match_collection do
+  has_one :vote_match_collection, predicate: RDF::ARGU[:voteMatches] do
     link(:self) do
       {
         href: "#{object.context_id}/vote_matches",

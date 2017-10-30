@@ -19,7 +19,7 @@ class MediaObject < ApplicationRecord
 
   delegate :file, :icon, :avatar, :is_image?, to: :content
 
-  contextualize_as_type 'schema:MediaObject'
+  contextualize_as_type RDF::SCHEMA[:MediaObject]
   contextualize_with_id do |p|
     Rails.application.routes.url_helpers.root_url(protocol: :https) + "media_objects/#{p.id}"
   end
@@ -106,8 +106,8 @@ class MediaObject < ApplicationRecord
 
   def url_for_environment(type)
     url = content.url(type)
-    return url if Rails.env.production? || url&.include?('gravatar.com')
-    "https://argu-logos.s3.amazonaws.com#{url}"
+    return RDF::IRI.new(url) if Rails.env.production? || url&.to_s&.include?('gravatar.com')
+    RDF::IRI.new("https://argu-logos.s3.amazonaws.com#{content.url(:icon)}")
   end
 
   def video_info

@@ -5,8 +5,4 @@ class ListItemSerializer < BaseSerializer
     self._type = block || type
   end
   type(&:resource_type)
-
-  def id
-    ld_id
-  end
 end

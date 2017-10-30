@@ -21,7 +21,7 @@ class Group < ApplicationRecord
   delegate :include?, to: :members
   attr_accessor :confirmation_string
 
-  contextualize_as_type 'argu:Group'
+  contextualize_as_type RDF::ARGU[:Group]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.group_url(r, protocol: :https) }
 
   parentable :page

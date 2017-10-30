@@ -24,7 +24,7 @@ class Decision < Edgeable::Base
   alias_attribute :description, :content
   parentable :motion
 
-  contextualize_as_type 'argu:Decision'
+  contextualize_as_type RDF::ARGU[:Decision]
   contextualize_with_id do |r|
     Rails.application.routes.url_helpers.polymorphic_url([r.parent_model, r], protocol: :https)
   end

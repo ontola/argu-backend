@@ -18,7 +18,7 @@ class VoteMatch < ApplicationRecord
   validates :name, length: {minimum: 5, maximum: 75}
   validates :text, length: {maximum: 5000}
 
-  contextualize_as_type 'argu:VoteMatch'
+  contextualize_as_type RDF::ARGU[:VoteMatch]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.vote_match_url(r, protocol: :https) }
   contextualize :name, as: 'schema:name'
   contextualize :text, as: 'schema:text'

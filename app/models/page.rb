@@ -29,7 +29,7 @@ class Page < Edgeable::Base
                   pagination: true,
                   url_constructor: :page_vote_matches_url
 
-  contextualize_as_type 'schema:Organization'
+  contextualize_as_type RDF::SCHEMA[:Organization]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.page_url(r.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :about, as: 'schema:description'

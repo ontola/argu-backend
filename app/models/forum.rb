@@ -61,7 +61,7 @@ class Forum < Edgeable::Base
       .order('edges.follows_count DESC')
   }
 
-  contextualize_as_type 'argu:Forum'
+  contextualize_as_type RDF::ARGU[:Forum]
   contextualize_with_id { |f| Rails.application.routes.url_helpers.canonical_forum_url(f.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
 

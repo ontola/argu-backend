@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class BaseEdgeSerializer < RecordSerializer
-  attribute :display_name, key: :name
-  attributes :created_at, :updated_at
+  attribute :display_name, key: :name, predicate: RDF::SCHEMA[:name]
 
-  has_one :parent do
+  has_one :parent, predicate: RDF::SCHEMA[:isPartOf] do
     obj = object.parent_model
     link(:self) do
       {
         meta: {
-          '@type': 'schema:isPartOf'
+          '@type': RDF::SCHEMA[:isPartOf]
         }
       }
     end
@@ -34,12 +33,12 @@ class BaseEdgeSerializer < RecordSerializer
     obj
   end
 
-  has_one :organization do
+  has_one :organization, predicate: RDF::SCHEMA[:organization] do
     obj = object.parent_model(:page)
     link(:self) do
       {
         meta: {
-          '@type': 'schema:organization'
+          '@type': RDF::SCHEMA[:organization]
         }
       }
     end
@@ -63,12 +62,12 @@ class BaseEdgeSerializer < RecordSerializer
     obj
   end
 
-  has_one :creator do
+  has_one :creator, predicate: RDF::SCHEMA[:creator] do
     obj = object.creator.profileable
     link(:self) do
       {
         meta: {
-          '@type': 'schema:creator'
+          '@type': RDF::SCHEMA[:creator]
         }
       }
     end

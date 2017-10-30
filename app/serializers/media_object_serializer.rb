@@ -6,5 +6,7 @@ class MediaObjectSerializer < RecordSerializer
     self._type = block || type
   end
   type(&:context_type)
-  attributes :url, :thumbnail, :used_as
+  attribute :url, predicate: RDF::SCHEMA[:url]
+  attribute :thumbnail, predicate: RDF::SCHEMA[:thumbnail]
+  attribute :used_as
 end

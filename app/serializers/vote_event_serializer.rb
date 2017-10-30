@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class VoteEventSerializer < BaseEdgeSerializer
-  attributes :group_id, :starts_at, :ends_at, :result, :option_counts
+  attribute :group_id
+  attribute :starts_at, predicate: RDF::SCHEMA[:startDate]
+  attribute :ends_at, predicate: RDF::SCHEMA[:endDate]
+  attribute :result
+  attribute :option_counts
   link(:self) { object.context_id if object.persisted? }
 
   def option_counts
@@ -12,7 +16,7 @@ class VoteEventSerializer < BaseEdgeSerializer
     }
   end
 
-  has_one :vote_collection do
+  has_one :vote_collection, predicate: RDF::ARGU[:votes] do
     link(:self) do
       {
         href: "#{object.context_id}/votes",

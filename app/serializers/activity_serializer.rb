@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ActivitySerializer < BaseSerializer
-  attributes :id
+  attribute :id
   attribute :action_status
 
   has_one :forum

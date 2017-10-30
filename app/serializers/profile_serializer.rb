@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class ProfileSerializer < BaseSerializer
-  attributes :display_name
+  attribute :display_name, predicate: RDF::SCHEMA[:name]
 end

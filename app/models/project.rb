@@ -27,7 +27,7 @@ class Project < Edgeable::Content
 
   before_save :update_start_date_of_first_phase
 
-  contextualize_as_type 'argu:Project'
+  contextualize_as_type RDF::ARGU[:Project]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.project_url(r, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :content, as: 'schema:text'

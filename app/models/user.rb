@@ -73,7 +73,7 @@ class User < ApplicationRecord
     direct_decisions_email: 3
   }
 
-  contextualize_as_type 'schema:Person'
+  contextualize_as_type RDF::SCHEMA[:Person]
   contextualize_with_id { |m| Rails.application.routes.url_helpers.user_url(m.id, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :about, as: 'schema:description'

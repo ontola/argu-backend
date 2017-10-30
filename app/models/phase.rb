@@ -19,7 +19,7 @@ class Phase < Edgeable::Base
   parentable :project
   counter_cache true
 
-  contextualize_as_type 'argu:Phase'
+  contextualize_as_type RDF::ARGU[:Phase]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.phase_url(r, protocol: :https) }
   contextualize :display_name, as: 'schema:name'
   contextualize :description, as: 'schema:text'

@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
 class VoteSerializer < BaseEdgeSerializer
-  attributes :option, :explanation, :explained_at
+  attribute :option, predicate: RDF::SCHEMA[:option]
+  attribute :explanation, predicate: RDF::SCHEMA[:text]
+  attribute :explained_at
 
   def option
     case object.for
     when 'pro'
-      'https://argu.co/ns/core#yes'
+      RDF::ARGU[RDF::ARGU[:yes]]
     when 'con'
-      'https://argu.co/ns/core#no'
+      RDF::ARGU[:no]
     else
-      'https://argu.co/ns/core#other'
+      RDF::ARGU[:other]
     end
   end
 
-  has_one :voteable do
+  has_one :voteable, predicate: RDF::SCHEMA[:isPartOf] do
     obj = object.parent_model.voteable
     link(:self) do
       {
@@ -47,7 +49,7 @@ class VoteSerializer < BaseEdgeSerializer
     obj
   end
 
-  has_many :upvoted_arguments do
+  has_many :upvoted_arguments, predicate: RDF::ARGU[:upvotedArguments] do
     link(:self) do
       {
         meta: {

@@ -40,7 +40,7 @@ class MenuItem
   alias id context_id
 
   def ld_type
-    return "argu:#{tag.capitalize}Menu" if parent.is_a?(MenuList)
-    menus.present? ? 'argu:SubMenu' : 'argu:MenuItem'
+    return RDF::IRI.new("https://argu.co/ns/core##{tag}Menu") if parent.is_a?(MenuList)
+    menus.present? ? RDF::IRI.new(RDF::ARGU[:SubMenu]) : RDF::IRI.new(RDF::ARGU[:MenuItem])
   end
 end

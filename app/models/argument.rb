@@ -15,7 +15,7 @@ class Argument < Edgeable::Content
 
   delegate :page, to: :forum
 
-  contextualize_as_type 'argu:Argument'
+  contextualize_as_type RDF::ARGU[:Argument]
   contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m, protocol: :https) }
   contextualize :name, as: 'schema:name'
   contextualize :text, as: 'schema:text'

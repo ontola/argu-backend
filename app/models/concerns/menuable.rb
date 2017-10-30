@@ -27,7 +27,7 @@ module Menuable
             object.menu(scope, menu)
           end
 
-          has_many method_name do
+          has_many method_name, predicate: "https://argu.co/ns/core##{menu.to_s.camelize(:lower)}Menu" do
             if scope.is_a?(UserContext)
               href = object.menu(scope, menu).context_id
               link(:self) do

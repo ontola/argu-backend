@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class RecordSerializer < BaseSerializer
-  attributes :created_at, :updated_at
-
-  def id
-    ld_id
-  end
+  attribute :created_at, predicate: RDF::SCHEMA[:dateCreated]
+  attribute :updated_at, predicate: RDF::SCHEMA[:dateModified]
+  attribute :display_name, predicate: RDF::SCHEMA[:name]
 end

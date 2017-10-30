@@ -6,7 +6,7 @@ module Motionable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :motion_collection do
+      has_one :motion_collection, predicate: RDF::ARGU[:motions] do
         link(:self) do
           {
             href: "#{object.context_id}/motions",

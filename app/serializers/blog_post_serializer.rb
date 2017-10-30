@@ -2,8 +2,7 @@
 
 class BlogPostSerializer < ContentEdgeSerializer
   include Commentable::Serializer
-  attributes :title, :content
+  attribute :title, predicate: RDF::SCHEMA[:name]
+  attribute :content, predicate: 'http//schema.org/text', key: :body
   include_menus
-
-  belongs_to :creator
 end

@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class CurrentActorSerializer < BaseSerializer
-  attributes %i[actor_type display_name shortname url]
-  has_one :profile_photo do
+  attribute :actor_type, predicate: RDF::ARGU[:actorType], key: :body
+  attribute :display_name, predicate: RDF::SCHEMA[:name], key: :body
+  attribute :shortname
+  attribute :url
+
+  has_one :profile_photo, predicate: RDF::SCHEMA[:image] do
     obj = object.actor&.default_profile_photo
     if obj
       link(:self) do
         {
           meta: {
-            '@type': 'http://schema.org/image'
+            '@type': RDF::SCHEMA[:image]
           }
         }
       end
@@ -24,7 +28,7 @@ class CurrentActorSerializer < BaseSerializer
     obj
   end
 
-  has_one :user do
+  has_one :user, predicate: RDF::ARGU[:user] do
     obj = object.user
     if obj
       link(:self) do
@@ -46,7 +50,7 @@ class CurrentActorSerializer < BaseSerializer
     obj
   end
 
-  has_one :actor do
+  has_one :actor, predicate: RDF::ARGU[:actor] do
     obj = object.actor&.profileable
     if obj
       link(:self) do

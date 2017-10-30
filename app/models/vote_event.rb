@@ -9,10 +9,10 @@ class VoteEvent < Edgeable::Base
 
   with_collection :votes, pagination: true
 
-  contextualize_as_type 'argu:VoteEvent'
+  contextualize_as_type RDF::ARGU[:VoteEvent]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.vote_event_url(r, protocol: :https) }
-  contextualize :starts_at, as: 'http://schema.org/startDate'
-  contextualize :ends_at, as: 'http://schema.org/endDate'
+  contextualize :starts_at, as: RDF::SCHEMA[:startDate]
+  contextualize :ends_at, as: RDF::SCHEMA[:endDate]
 
   parentable :motion, :linked_record
 

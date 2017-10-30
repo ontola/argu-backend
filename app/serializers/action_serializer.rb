@@ -6,5 +6,6 @@ class ActionSerializer < BaseSerializer
   end
   type(&:context_type)
 
-  attributes :target, :name
+  attribute :target, predicate: RDF::SCHEMA[:name]
+  attribute :name, predicate: RDF::SCHEMA[:target]
 end

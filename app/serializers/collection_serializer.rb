@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 class CollectionSerializer < BaseSerializer
-  attributes :title, :total_count
+  attribute :title, predicate: RDF::SCHEMA[:name]
+  attribute :total_count, predicate: RDF::ARGU[:totalCount]
 
   %i[first previous next last].each do |attr|
     link(attr) do
       {
         href: object.send(attr),
         meta: {
-          '@type': "argu:#{attr}"
+          '@type': "https://argu.co/ns/core##{attr}"
         }
       }
     end
@@ -18,12 +19,12 @@ class CollectionSerializer < BaseSerializer
     {
       href: object.parent_view_iri,
       meta: {
-        '@type': 'argu:parentView'
+        '@type': RDF::ARGU[:parentView]
       }
     }
   end
 
-  has_one :parent do
+  has_one :parent, predicate: RDF::SCHEMA[:isPartOf] do
     obj = object.parent
     if obj.present?
       link(:self) do
@@ -55,7 +56,7 @@ class CollectionSerializer < BaseSerializer
     obj
   end
 
-  has_one :create_action do
+  has_one :create_action, predicate: RDF::ARGU[:createAction] do
     link(:self) do
       {
         href: object.create_action.id,
@@ -66,7 +67,7 @@ class CollectionSerializer < BaseSerializer
     end
   end
 
-  has_many :views do
+  has_many :views, predicate: RDF::ARGU[:views] do
     link(:self) do
       {
         meta: {
@@ -76,7 +77,7 @@ class CollectionSerializer < BaseSerializer
     end
   end
 
-  has_many :members do
+  has_many :members, predicate: RDF::ARGU[:members] do
     link(:self) do
       {
         meta: {

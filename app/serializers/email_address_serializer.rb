@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class EmailAddressSerializer < BaseSerializer
-  attributes :email, :primary, :confirmed_at
+  attribute :email, predicate: RDF::SCHEMA[:email]
+  attribute :primary
+  attribute :confirmed_at
 
-  has_one :user do
+  has_one :user, predicate: RDF::ARGU[:user] do
     obj = object.user
     link(:self) do
       {
@@ -21,9 +23,5 @@ class EmailAddressSerializer < BaseSerializer
       }
     end
     obj
-  end
-
-  def id
-    ld_id
   end
 end

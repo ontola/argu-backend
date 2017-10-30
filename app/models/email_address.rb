@@ -18,7 +18,7 @@ class EmailAddress < ApplicationRecord
   validate :newly_secondary_email_not_primary, on: :create
   delegate :greeting, to: :user
 
-  contextualize_as_type 'argu:Email'
+  contextualize_as_type RDF::ARGU[:Email]
   contextualize_with_id { |e| "#{e.user.context_id}/email/#{e.id}" }
 
   def after_confirmation

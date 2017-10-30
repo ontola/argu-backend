@@ -38,7 +38,7 @@ class ContextTest < ActionDispatch::IntegrationTest
                  body['data']['attributes']['@context']['option'],
                  'vote has no context or content'
     kv_pair = body['data']['attributes']['@context'].find { |_, v| v == 'schema:option' }
-    assert_equal 'https://argu.co/ns/core#yes',
+    assert_equal RDF::ARGU[:yes],
                  body['data']['attributes'][kv_pair[0]],
                  'vote values are set incorrectly'
   end

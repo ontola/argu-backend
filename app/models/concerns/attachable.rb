@@ -26,7 +26,7 @@ module Attachable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :attachment_collection do
+      has_one :attachment_collection, predicate: RDF::ARGU[:attachments] do
         link(:self) do
           {
             href: "#{object.context_id}/media_objects?filter[used_as]=attachment",

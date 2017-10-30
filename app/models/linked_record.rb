@@ -13,7 +13,7 @@ class LinkedRecord < Edgeable::Base
   validates :page, presence: true
   validates :source, presence: true
 
-  contextualize_as_type 'argu:LinkedRecord'
+  contextualize_as_type RDF::ARGU[:LinkedRecord]
   contextualize_with_id { |r| Rails.application.routes.url_helpers.linked_record_url(r, protocol: :https) }
   contextualize :title, as: 'schema:name'
   contextualize :record_type, as: 'schema:additionalType'

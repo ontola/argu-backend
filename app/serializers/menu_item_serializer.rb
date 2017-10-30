@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class MenuItemSerializer < BaseSerializer
-  attributes :label, :href, :data
+  attribute :label, predicate: RDF::ARGU[:label]
+  attribute :href, predicate: RDF::ARGU[:href]
+  attribute :data
 
   has_one :parent
 
-  has_many :menus do
+  has_many :menus, predicate: RDF::ARGU[:menuItems] do
     link(:self) do
       {
         meta: {
@@ -20,13 +22,13 @@ class MenuItemSerializer < BaseSerializer
     end
   end
 
-  has_one :image do
+  has_one :image, predicate: RDF::SCHEMA[:image] do
     obj = object.image
     if obj
       link(:self) do
         {
           meta: {
-            '@type': 'http://schema.org/image'
+            '@type': RDF::SCHEMA[:image]
           }
         }
       end
