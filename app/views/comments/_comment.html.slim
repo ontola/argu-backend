@@ -1,23 +1,20 @@
 .comment[id=c.identifier class=status_classes_for(c) itemscope="itemscope" itemtype="http://schema.org/Comment"]
-  .box
-    section
-      .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')
-        =markdown_to_html(motion.content)
-    section.section--footer
-      =render partial: 'profiles/profile', locals: {profile: c.creator, resource: c} if c.creator.present?
-      ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-        - unless current_user.guest?
-          li
-            ul= dropdown_menu(c, :follow)
-        - if policy(c).update? || policy(c).trash?
-          li
-            ul= dropdown_menu(c, :actions)
-        - if !c.is_trashed? && policy(c.parent_model).create_child?(:comments, parent_id: c.id)
-          li= link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, turbolinks: 'false' }, class: 'btn-reply'} do
-            span.fa.fa-reply
-            span.icon-left= t('reply')
-  .comment.comment-form
-    .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new, modal: local_assigns[:modal] }
+  section.section--details.section--details--comment
+    - if policy(c).update? || policy(c).trash?
+      .sticky--top-right.menu-button= dropdown_menu(c, :actions, item_opts: {renderLeft: true})
+    .detailsBar
+      =render partial: 'profiles/detail_profile', locals: {resource: c}
+      .detail
+        .detail__text
+          time[datetime=c.created_at ]= awesome_time_ago_in_words c.created_at
+  section
+    .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')
+      =markdown_to_html(motion.content)
+    - if !c.is_trashed? && policy(c.parent_model).create_child?(:comments, parent_id: c.id)
+      =link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, turbolinks: 'false' }, class: 'sticky--bottom-right btn-subtle btn--mini btn-reply'} do
+        span.fa.fa-reply
+        span.icon-left= t('reply')
+  =render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new, modal: local_assigns[:modal] }
   - if c.has_children?
     - c.children.reject { |c| c.abandoned? }.each do |ch|
       =render partial: 'comments/comment', locals: { resource: resource, c: ch, modal: local_assigns[:modal] }

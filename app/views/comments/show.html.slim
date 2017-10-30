@@ -9,7 +9,7 @@
     - if @comment_edges.present?
       header
         h2#comments= t('comments.plural')
-    .comments
+    .comments.box
       span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
       - @comment_edges.reject { |edge| edge.owner_type == 'Comment'  && edge.owner.abandoned? }.each do |edge|
         - if edge.owner_type == 'Comment'

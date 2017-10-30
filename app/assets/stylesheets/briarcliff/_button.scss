@@ -81,6 +81,12 @@
   padding: .7em;
 }
 
+.btn--mini {
+  padding: .5em !important;
+  text-transform: none;
+  font-weight: bold;
+}
+
 .btn--dropdown-trigger {
   padding: 0;
 
@@ -554,5 +560,18 @@ button.btn--as-text, .formtastic button.btn--as-text {
     text-transform: initial;
     text-decoration: underline;
     cursor: pointer
+  }
+}
+
+.menu-button {
+  padding: .6em;
+  li {
+    list-style: none;
+  }
+  .icon-left {
+    display: none;
+  }
+  a {
+    color: $g2;
   }
 }

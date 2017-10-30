@@ -5,12 +5,12 @@
   position: relative;
 }
 
-.comment .comment:not(.comment_form), .top-comment-container {
-  padding-left: 1em;
+.comment .comment, .top-comment-container {
+  padding-left: .5em;
   position: relative;
   &:before{
     content: "";
-    background-color: $g00;
+    background-color: $g1a;
     opacity: .5;
     width: 0.5em;
     height: 100%;
@@ -24,22 +24,8 @@
   }
 }
 
-.comment .box {
-  margin: 0 0 .5em 0;
-  color: transparent;
-}
-
 .comment_form input[type="submit"]{
   height: 3em;
-}
-
-.comments {
-  margin-left: -1em;
-  margin: 0 auto;
-}
-
-.modal .comments {
-  margin: 0 1em;
 }
 
 .comments-counter {
@@ -104,4 +90,19 @@
     background-color: white;
     transition: none;
   }
+}
+
+.comment {
+  border-top: solid 1px $g1;
+}
+
+.comment:first-child {
+  border-top: none;
+}
+
+.section--details--comment {
+  overflow: visible !important;
+  margin-top: 0;
+  padding-top: 1em;
+  padding-bottom: .3em;
 }

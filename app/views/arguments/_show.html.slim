@@ -7,14 +7,9 @@
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if policy(model).create_child?(:comments)
       =link_to argument_path(model), remote: true, class: 'sticky--bottom-right btn-subtle btn--mini sticky--on-top'
-        span.icon-right= t('reply')
-        span.fa.fa-comments
-- if model.top_comment.present? && policy(model).index_children?(:comments)
-  =link_to argument_path(model), remote: true
-    .top-comment-container[class=status_classes_for(model.top_comment)]
-      .top-comment
-        p.wrap-normal
-          =model.top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(model.top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
-        .comments-counter
-          span.icon-right= model.children_count(:comments).to_s
-          span.fa.fa-comments
+        span.fa.fa-reply
+        span.icon-left= t('reply')
+  - if model.top_comment.present? && policy(model).index_children?(:comments)
+    =link_to argument_path(model), remote: true
+      section.unpadded.section--bottom
+        =render 'comments/small_comment', resource: policy_scope(model.mixed_comments).first.owner, parent: model

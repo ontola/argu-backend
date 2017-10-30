@@ -8,18 +8,20 @@
 .side-pro .upvote[data-voted-on="true"]{
   color: white;
   background-color: $gre;
+  opacity: .6;
 
   &:hover {
-    background-color: $gred;
+    opacity: 1;
   }
 }
 
 .side-con .upvote[data-voted-on="true"] {
   color: white;
   background-color: $red;
+  opacity: .6;
 
   &:hover {
-    background-color: $redd;
+    opacity: 1;
   }
 }
 

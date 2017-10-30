@@ -45,15 +45,15 @@
   .leaflet-container {
     height: 400px;
   }
-
-  header {
-    min-height: 3em;
-  }
 }
 
 .modal h1 {
   margin-bottom: 1em;
   color: white;
+}
+
+.modal .comments {
+  margin-bottom: 0;
 }
 
 .overlay-back {
@@ -139,8 +139,4 @@
     left: initial;
     right: 0;
   }
-}
-
-.modal .comments-container .box {
-  margin-bottom: 1px;
 }

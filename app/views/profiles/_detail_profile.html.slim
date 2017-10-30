@@ -1,5 +1,7 @@
 = link_to dual_profile_url(resource.creator) do
   .detail[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
     img.detail__icon[src=resource.creator.default_profile_photo.url(:icon) itemprop="image"]
+    -if resource.is_a?(Vote)
+      div[class="fa fa-#{icon_for_side(resource.for)} detail__vote opinion-icon opinion-icon-#{resource.for}"]
     .detail__text[itemprop="name"]
       .span = resource.creator.display_name

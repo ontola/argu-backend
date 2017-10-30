@@ -64,3 +64,10 @@
     color: $red;
   }
 }
+
+.detail__vote.opinion-icon {
+  position: relative;
+  font-size: 0.6em;
+  top: auto;
+  margin-left: -0.2em;
+}

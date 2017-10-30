@@ -4,9 +4,9 @@ nl:
     type_new: "nieuwe reactie"
     plural: "Reacties"
     show_all:
-      zero: "Plaats een reactie"
-      one: "Plaats een reactie"
-      other: "Toon alle %{count} reacties"
+      zero: "Reageer"
+      one: "Reageer"
+      other: "%{count} reacties"
     menu:
       zero: "Reacties"
       one: "Reacties (%{count})"

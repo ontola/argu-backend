@@ -29,6 +29,10 @@ class Argument < Edgeable::Content
     self
   end
 
+  def default_vote_event_edge
+    edge
+  end
+
   # http://schema.org/description
   def description
     content

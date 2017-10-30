@@ -1,15 +1,10 @@
-.opinion-body
-  span[class="fa fa-#{icon_for_side(model.for)} opinion-icon opinion-icon-#{model.for}"]
-  .box
-    section
-      =render partial: 'application/markdown_collapsible', locals: {content: model.explanation, identifier: model.identifier, character_length: 350}
-      .opinion-body__arguments-list
-        -model.upvoted_arguments.where(pro: true).each do |argument|
-          =link_to argument, remote: true do
-            label.pro-t= argument.display_name
-      .opinion-body__arguments-list
-        -model.upvoted_arguments.where(pro: false).each do |argument|
-          =link_to argument, remote: true do
-            label.con-t= argument.display_name
-    section.section--footer
-      =render partial: model.creator, locals: {resource: model}
+.comment
+  section.section--details.section--details--comment
+    .detailsBar
+      =render partial: 'profiles/detail_profile', locals: {resource: model}
+      .detail
+        .detail__text
+          time[datetime=model.created_at ]= awesome_time_ago_in_words model.created_at
+  section
+    .markdown[id=model.id itemprop="text"]= model.is_trashed? ? I18n.t('trashed') : markdown_to_html(model.body) || I18n.t('deleted')
+      =markdown_to_html(model.content)

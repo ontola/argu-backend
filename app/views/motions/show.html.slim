@@ -29,4 +29,4 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                                   header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize},
                                   show_new_buttons: policy(motion).create_child?(:arguments).present?)
 .opinion-columns
-  div.col-1= render template: 'comments/show', locals: {resource: motion}
+  div.col-1= render template: 'comments/show', locals: {resource: motion, comment: Comment.new}
