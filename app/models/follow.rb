@@ -14,8 +14,15 @@ class Follow < ApplicationRecord
                     !model.never? ? 'follows_count' : nil
                   },
                   column_names: {['follows.follow_type != ?', Follow.follow_types[:never]] => 'follows_count'}
+  validate :terms_accepted
 
   def block!
     update_attribute(:blocked, true)
+  end
+
+  private
+
+  def terms_accepted
+    errors.add(:follower, 'Terms not accepted') if follower.last_accepted.nil?
   end
 end

@@ -24,7 +24,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user_not_accepted
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1]] do
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
       post :create, params: {group_id: single_forum_group, token: '1234567890'}
     end
 
@@ -35,7 +35,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user_not_accepted
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 0]] do
       post :create, params: {group_id: forum_group, token: '1234567890'}
     end
 
@@ -46,7 +46,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user_not_accepted
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 0]] do
       post :create, params: {group_id: page_group, token: '1234567890'}
     end
 
@@ -99,7 +99,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1]] do
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 1]] do
       post :create, params: {group_id: single_forum_group, token: '1234567890'}
     end
 
@@ -110,7 +110,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 2]] do
       post :create, params: {group_id: forum_group, token: '1234567890'}
     end
 
@@ -121,7 +121,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2]] do
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 2]] do
       post :create, params: {group_id: page_group, token: '1234567890'}
     end
 
