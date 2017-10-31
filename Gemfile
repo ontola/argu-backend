@@ -125,6 +125,7 @@ group :test do
   gem 'minitest-bang'
   gem 'minitest-have_tag', '~> 0.1.0'
   gem 'rspec-rails', '~> 3.5.2'
+  gem 'rspec-retry'
   gem 'capybara', '~> 2.15.4'
   gem 'capybara-email', '~> 2.5.0'
   gem 'selenium-webdriver', '~> 3.6.0'
