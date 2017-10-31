@@ -102,6 +102,22 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 1]] do
       post :create, params: {group_id: single_forum_group, token: '1234567890'}
     end
+    assert_equal user.reload.following_type(freetown.edge), 'news'
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'user should post create with valid token for single_forum_group with never follow present' do
+    validate_valid_bearer_token
+    sign_in user
+
+    create(:follow, followable: freetown.edge, follower: user, follow_type: 'never')
+    assert_equal user.following_type(freetown.edge), 'never'
+
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
+      post :create, params: {group_id: single_forum_group, token: '1234567890'}
+    end
+    assert_equal user.reload.following_type(freetown.edge), 'never'
 
     assert_redirected_to forum_url(freetown)
   end

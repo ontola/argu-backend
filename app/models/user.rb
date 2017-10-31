@@ -166,21 +166,20 @@ class User < ApplicationRecord
       [I18n.t('groups.public.name_singular'), id].join(' ')
   end
 
-  # Creates a new follow record for this instance to follow the passed object.
-  # Does not allow duplicate records to be created.
+  # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
+  # Follows the ancestors if #ancestor_type is given.
   def follow(followable, type = :reactions, ancestor_type = nil)
-    return if self == followable
+    return if self == followable || !accepted_terms?
     if type.present?
       follow = follows.find_or_initialize_by(followable_id: followable.id,
                                              followable_type: parent_class_name(followable))
-      follow.update(follow_type: type)
+      if follow.new_record? || (!follow.never? && Follow.follow_types[type] > Follow.follow_types[follow.follow_type])
+        follow.update!(follow_type: type)
+      end
     end
     if ancestor_type.present?
       followable.ancestors.where(owner_type: %w[Motion Question Project Forum]).find_each do |ancestor|
-        current_follow_type = following_type(ancestor)
-        if Follow.follow_types[ancestor_type] > Follow.follow_types[current_follow_type]
-          follow(ancestor, ancestor_type)
-        end
+        follow(ancestor, ancestor_type)
       end
     end
     true
