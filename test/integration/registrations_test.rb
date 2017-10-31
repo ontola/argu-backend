@@ -62,7 +62,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
-                          ['Favorite.count', 1],
+                          ['Favorite.count', 0],
                           ['Notification.confirmation_reminder.count', 0]]) do
         post user_registration_path,
              params: {
@@ -95,6 +95,24 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     cookies[:locale] = locale.to_s
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
+
+    assert_differences([['User.count', 1],
+                        ['Favorite.count', 0],
+                        ['Sidekiq::Worker.jobs.count', 2]]) do
+      post user_registration_path,
+           params: {user: attrs}
+      assert_redirected_to setup_users_path
+      assert_analytics_collected('registrations', 'create', 'email')
+    end
+    assert_equal locale, User.last.language.to_sym
+  end
+
+  test 'should post create after visiting freetown' do
+    locale = :nl
+    cookies[:locale] = locale.to_s
+    attrs = attributes_for(:user)
+    create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
+    get forum_path(freetown)
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],
@@ -147,6 +165,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
+                          ['Favorite.count', 0],
                           ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
         post user_registration_path,
              params: {
@@ -203,7 +222,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
                           ['Vote.count', 0],
-                          ['Favorite.count', 1],
+                          ['Favorite.count', 0],
                           ['Notification.confirmation_reminder.count', 1]]) do
         post user_registration_path,
              params: {user: attrs}

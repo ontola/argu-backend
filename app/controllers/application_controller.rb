@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :authorize_current_actor
-  after_action :set_profile_forum, only: :format_html?
+  after_action :set_profile_forum, if: :format_html?
   around_action :time_zone
   after_action :set_version_header
   if Rails.env.development? || Rails.env.staging?
