@@ -12,4 +12,8 @@ class CurrentActorSerializer < BaseSerializer
   has_one :actor, predicate: RDF::ARGU[:actor] do
     object.actor&.profileable
   end
+
+  def type
+    RDF::ARGU["#{object.actor_type}Actor"]
+  end
 end

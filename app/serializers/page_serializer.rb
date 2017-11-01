@@ -17,8 +17,4 @@ class PageSerializer < RecordSerializer
   def vote_match_collection
     object.vote_match_collection(user_context: scope)
   end
-
-  def about
-    object.profile.about
-  end
 end

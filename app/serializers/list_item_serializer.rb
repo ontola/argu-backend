@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ListItemSerializer < BaseSerializer
-  def self.type(type = nil, &block)
-    self._type = block || type
+  def type
+    RDF::URI.new object.resource_type
   end
-  type(&:resource_type)
 end

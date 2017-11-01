@@ -26,4 +26,9 @@ class MenuItemSerializer < BaseSerializer
   def data
     object.link_opts.try(:[], :data)
   end
+
+  def type
+    return RDF::ARGU["#{object.tag.capitalize}Menu"] if object.parent.is_a?(MenuList)
+    object.menus.present? ? RDF::ARGU[:SubMenu] : RDF::ARGU[:MenuItem]
+  end
 end

@@ -163,7 +163,7 @@ Doorkeeper::JWT.configure do
         iat: Time.current.iso8601(5),
         user: {
           type: 'guest',
-          '@id': GuestUser.new(id: opts[:resource_owner_id]).context_id
+          '@id': GuestUser.new(id: opts[:resource_owner_id]).iri
         }
       }
     else
@@ -173,7 +173,7 @@ Doorkeeper::JWT.configure do
         iat: Time.current.iso8601(5),
         user: {
           type: 'user',
-          '@id': user.context_id,
+          '@id': user.iri,
           id: user.id,
           email: user.email
         }

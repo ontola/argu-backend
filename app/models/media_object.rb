@@ -26,6 +26,7 @@ class MediaObject < ApplicationRecord
 
   parentable :forum, :question, :motion, :profile
   alias parent_model about
+  alias_attribute :display_name, :title
 
   # Hands over publication of a collection to the Community profile
   def self.anonymize(collection)
@@ -76,7 +77,7 @@ class MediaObject < ApplicationRecord
   end
 
   def url(*args)
-    type == 'video' ? remote_url : content.url(*args)
+    RDF::IRI.new(type == 'video' ? remote_url : content.url(*args))
   end
 
   private
