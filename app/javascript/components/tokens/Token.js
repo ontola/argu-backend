@@ -36,6 +36,8 @@ export const Token = React.createClass({
                 let icon;
                 if (column === 'invitee' && this.props.token.attributes.status === 'failed') {
                     icon = <span className="fa fa-warning" data-title={I18n.t('tokens.email.delivery_failed')}/>
+                } else if (column === 'invitee' && this.props.token.attributes.status === 'pending') {
+                    icon = <span className="fa fa-hourglass-o" data-title={I18n.t('tokens.email.pending')}/>
                 }
                 return <td key={column}>{icon}{attributes[column]}</td>;
             }

@@ -29,6 +29,7 @@ en:
       has_invalid: "Has invalid email(s)"
       placeholder: "Search user(s) or enter email addres(ses)"
       delivery_failed: "Mail could not be delivered"
+      pending: "Sending email"
     discussion:
       title: "Invite people"
       description: "Invite people to join the discussion."
