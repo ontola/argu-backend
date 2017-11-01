@@ -4,88 +4,16 @@ class VoteMatchSerializer < RecordSerializer
   attribute :name, predicate: RDF::SCHEMA[:name]
   attribute :text, predicate: RDF::SCHEMA[:text]
 
-  has_many :voteables, predicate: RDF::ARGU[:motions] do
-    link(:self) do
-      {
-        href: "#{object.context_id}/voteables",
-        meta: {
-          '@type': 'argu:motions'
-        }
-      }
-    end
-    meta do
-      href = object.context_id
-      {
-        '@type': 'argu:collectionAssociation',
-        '@id': "#{href}/voteables"
-      }
-    end
-  end
-
-  has_many :vote_comparables, predicate: RDF::ARGU[:profiles] do
-    link(:self) do
-      {
-        href: "#{object.context_id}/vote_comparables",
-        meta: {
-          '@type': 'argu:profiles'
-        }
-      }
-    end
-    meta do
-      href = object.context_id
-      {
-        '@type': 'argu:collectionAssociation',
-        '@id': "#{href}/vote_comparables"
-      }
-    end
-  end
+  has_many :voteables, predicate: RDF::ARGU[:motions]
+  has_many :vote_comparables, predicate: RDF::ARGU[:profiles]
 
   has_one :creator, predicate: RDF::SCHEMA[:creator] do
-    obj = object.creator.profileable
-    link(:self) do
-      {
-        meta: {
-          '@type': 'schema:creator'
-        }
-      }
-    end
-    link(:related) do
-      {
-        href: obj.context_id,
-        meta: {
-          attributes: {
-            '@context': {
-              schema: 'http://schema.org/',
-              name: 'schema:name'
-            },
-            '@type': obj.context_type,
-            name: obj.display_name
-          }
-        }
-      }
-    end
-    obj
+    object.creator.profileable
   end
-
   has_one :vote_compare_result, predicate: RDF::ARGU[:voteCompareResult] do
-    link(:related) do
-      {
-        href: "https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}",
-        meta: {
-          '@type': 'argu:VoteCompareResult'
-        }
-      }
-    end
-    link(:self) do
-      {
-        meta: {
-          '@type': 'argu:voteCompareResult'
-        }
-      }
-    end
     {
       id: "https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}",
-      type: 'argu:voteCompareResults'
+      type: RDF::ARGU[:voteCompareResults]
     }
   end
 end

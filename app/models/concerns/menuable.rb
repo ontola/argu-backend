@@ -24,28 +24,10 @@ module Menuable
         "#{name.gsub('Serializer', '')}MenuList".constantize.defined_menus.each do |menu|
           method_name = "#{menu}_menu"
           define_method method_name do
-            object.menu(scope, menu)
+            object.menu(scope, menu) if scope.is_a?(UserContext)
           end
 
-          has_many method_name, predicate: "https://argu.co/ns/core##{menu.to_s.camelize(:lower)}Menu" do
-            if scope.is_a?(UserContext)
-              href = object.menu(scope, menu).context_id
-              link(:self) do
-                {
-                  href: href,
-                  meta: {
-                    '@type': 'argu:menus'
-                  }
-                }
-              end
-              meta do
-                {
-                  '@type': "argu:#{menu.to_s.camelize}Menu",
-                  '@id': href
-                }
-              end
-            end
-          end
+          has_many method_name, predicate: RDF::ARGU["#{menu.to_s.camelize(:lower)}Menu"]
         end
       end
     end

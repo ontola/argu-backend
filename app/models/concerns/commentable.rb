@@ -32,23 +32,7 @@ module Commentable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :comment_collection, predicate: RDF::SCHEMA[:comments] do
-        link(:self) do
-          {
-            href: "#{object.context_id}/c",
-            meta: {
-              '@type': 'schema:comments'
-            }
-          }
-        end
-        meta do
-          href = object.context_id
-          {
-            '@type': 'argu:collectionAssociation',
-            '@id': "#{href}/c"
-          }
-        end
-      end
+      has_one :comment_collection, predicate: RDF::SCHEMA[:comments]
 
       def comment_collection
         object.comment_collection(user_context: scope)

@@ -44,47 +44,11 @@ module Voteable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :vote_event_collection, predicate: RDF::ARGU[:voteEvents] do
-        link(:self) do
-          {
-            href: "#{object.context_id}/vote_events",
-            meta: {
-              '@type': 'argu:voteEvents'
-            }
-          }
-        end
-        link(:related) do
-          {
-            href: "#{object.context_id}/vote_events",
-            meta: {
-              '@type': 'argu:VoteEventCollection'
-            }
-          }
-        end
-      end
-
-      has_one :default_vote_event, key: :voteable_vote_event, predicate: RDF::ARGU[:voteableVoteEvent] do
-        obj = object.default_vote_event
-        if obj
-          link(:self) do
-            {
-              href: obj.context_id,
-              meta: {
-                '@type': 'argu:voteableVoteEvent'
-              }
-            }
-          end
-          link(:related) do
-            {
-              href: obj.context_id,
-              meta: {
-                '@type': obj.context_type
-              }
-            }
-          end
-        end
-        obj
-      end
+      has_one :vote_event_collection,
+              predicate: RDF::ARGU[:voteEvents]
+      has_one :default_vote_event,
+              key: :voteable_vote_event,
+              predicate: RDF::ARGU[:voteableVoteEvent]
 
       def vote_event_collection
         object.vote_event_collection(user_context: scope)

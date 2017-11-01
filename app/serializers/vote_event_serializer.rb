@@ -16,24 +16,7 @@ class VoteEventSerializer < BaseEdgeSerializer
     }
   end
 
-  has_one :vote_collection, predicate: RDF::ARGU[:votes] do
-    link(:self) do
-      {
-        href: "#{object.context_id}/votes",
-        meta: {
-          '@type': 'argu:votes'
-        }
-      }
-    end
-    link(:related) do
-      {
-        href: "#{object.context_id}/votes",
-        meta: {
-          '@type': 'argu:VoteCollection'
-        }
-      }
-    end
-  end
+  has_one :vote_collection, predicate: RDF::ARGU[:votes]
 
   def ends_at
     object.edge.expires_at
