@@ -130,8 +130,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create without password' do
-    create_email_mock('set_password', 'test@example.com', passwordToken: /.+/)
-
     assert_differences([['User.count', 1],
                         ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
       post user_registration_path,
@@ -145,7 +143,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_not User.last.accepted_terms?
-    assert_email_sent
   end
 
   test 'should post create without password and transfer and persist guest votes' do

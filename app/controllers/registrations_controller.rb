@@ -71,12 +71,12 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
-    resource.accept_terms! if accept_terms_param
-    send_confirmation_mail(
+    mail_sent = send_confirmation_mail(
       resource,
       session.presence && RedisResource::Relation
                             .where(publisher: GuestUser.new(id: session.id), voteable_type: 'Motion')
     )
+    resource.accept_terms!(mail_sent) if accept_terms_param
     schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r) if session.present?
     setup_favorites(resource)
     send_event user: resource,
@@ -110,9 +110,6 @@ class RegistrationsController < Devise::RegistrationsController
       )
     elsif resource.password.present?
       SendEmailWorker.perform_async(:confirmation, user.id, confirmationToken: user.confirmation_token)
-    else
-      token = user.send(:set_reset_password_token)
-      SendEmailWorker.perform_async(:set_password, user.id, passwordToken: token)
     end
   end
 end

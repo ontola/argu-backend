@@ -12,8 +12,8 @@ RSpec.feature 'Authentication', type: :feature do
   let(:omniauth_user) do
     user_fb_only = create(
       :user,
+      :no_password,
       email: 'user_fb_only@argu.co',
-      encrypted_password: '',
       first_name: 'First',
       last_name: 'Lastname_facebook',
       confirmed_at: Time.current

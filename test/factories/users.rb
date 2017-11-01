@@ -26,6 +26,12 @@ FactoryGirl.define do
       last_accepted nil
     end
 
+    trait :no_password do
+      password nil
+      password_confirmation nil
+      encrypted_password nil
+    end
+
     trait :no_shortname do
       after(:create) do |user|
         user.shortname.destroy

@@ -6,13 +6,35 @@ RSpec.feature 'Accept terms spec', type: :feature do
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:user) { create(:user, :not_accepted_terms) }
+  let(:user_without_password) { create(:user, :not_accepted_terms, :no_password) }
 
   ####################################
   # As User without accepted terms
   ####################################
-  scenario 'User should accept terms before posting motion' do
-    motion_attr = attributes_for(:motion)
+  scenario 'User without password should accept terms before posting motion' do
+    create_email_mock('set_password', user_without_password.email, passwordToken: /.+/)
+    accept_terms_before_posting_motion(user_without_password)
+    assert_email_sent
+  end
 
+  scenario 'User should accept terms before posting motion' do
+    accept_terms_before_posting_motion(user)
+  end
+
+  scenario 'User without password should accept terms before voting' do
+    create_email_mock('set_password', user_without_password.email, passwordToken: /.+/)
+    accept_terms_before_voting(user_without_password)
+    assert_email_sent
+  end
+
+  scenario 'User should accept terms before voting' do
+    accept_terms_before_voting(user)
+  end
+
+  private
+
+  def accept_terms_before_posting_motion(user)
+    motion_attr = attributes_for(:motion)
     sign_in user
 
     visit new_forum_motion_path(freetown)
@@ -31,8 +53,9 @@ RSpec.feature 'Accept terms spec', type: :feature do
     expect(user.reload.accepted_terms?).to be_truthy
   end
 
-  scenario 'User should accept terms before voting' do
+  def accept_terms_before_voting(user)
     sign_in user
+
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
@@ -43,19 +66,6 @@ RSpec.feature 'Accept terms spec', type: :feature do
     click_button 'Accept'
 
     expect(page).to have_css('.btn-con[data-voted-on=true]')
-
-    find_field('opinion-body').click
-    within('.opinion-form') do
-      fill_in 'opinion-body', with: 'This is my opinion'
-      click_button 'Save'
-    end
-    expect(page).not_to have_content('Would you like to comment on your opinion?')
-
-    visit motion_path(motion)
-    expect(page).to have_content('Opinions')
-    within('.opinion-columns') do
-      expect(page).to have_content('This is my opinion')
-    end
 
     expect(user.reload.accepted_terms?).to be_truthy
   end

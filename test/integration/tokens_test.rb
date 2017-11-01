@@ -22,11 +22,7 @@ class TokensTest < ActionDispatch::IntegrationTest
            publisher: other_guest_user)
   end
   let!(:user) { create(:user) }
-  let!(:user_without_password) do
-    user = create(:user)
-    user.update(encrypted_password: '')
-    user
-  end
+  let!(:user_without_password) { create(:user, :no_password) }
 
   ####################################
   # WITHOUT CREDENTIALS

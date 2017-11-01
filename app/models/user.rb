@@ -97,8 +97,11 @@ class User < ApplicationRecord
     end
   end
 
-  def accept_terms!
+  def accept_terms!(skip_set_password_mail = false)
     update!(last_accepted: DateTime.current)
+    return if skip_set_password_mail || encrypted_password.present?
+    token = set_reset_password_token
+    SendEmailWorker.perform_async(:set_password, id, passwordToken: token)
   end
 
   def accepted_terms?

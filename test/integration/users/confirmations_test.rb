@@ -6,11 +6,7 @@ module Users
   class ConfirmationsTest < ActionDispatch::IntegrationTest
     define_freetown
     let(:user) { create(:user, :unconfirmed) }
-    let!(:user_without_password) do
-      user = create(:user)
-      user.update(encrypted_password: '')
-      user
-    end
+    let!(:user_without_password) { create(:user, :no_password) }
     let(:other_user) { create(:user, :unconfirmed) }
     let(:confirmed_user) { create(:user) }
     let(:motion) { create(:motion, parent: freetown.edge) }

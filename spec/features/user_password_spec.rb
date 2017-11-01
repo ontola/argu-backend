@@ -13,10 +13,7 @@ RSpec.feature 'User Password', type: :feature do
     user
   end
   let(:user_omni_only) do
-    user = build(:user,
-                 encrypted_password: nil,
-                 password: nil,
-                 password_confirmation: nil)
+    user = build(:user, :no_password)
     user.identities.new uid: '111907595807605',
                         provider: 'facebook'
     user.save!

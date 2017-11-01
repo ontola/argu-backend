@@ -20,8 +20,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   let(:user2) { create(:user) }
   let!(:user_fb_only) do
     create(:user,
+           :no_password,
            email: 'user_fb_only@argu.co',
-           encrypted_password: '',
            first_name: 'First',
            last_name: 'Lastname_facebook',
            confirmed_at: Time.current)
