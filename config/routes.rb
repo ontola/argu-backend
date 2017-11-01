@@ -240,7 +240,7 @@ Rails.application.routes.draw do
 
   resources :media_objects, only: :show
 
-  resources :announcements, only: [] do
+  resources :announcements, only: %i[show] do
     post '/dismissals',
          to: 'static_pages#dismiss_announcement'
     get '/dismissals',
