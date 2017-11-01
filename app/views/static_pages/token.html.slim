@@ -2,8 +2,8 @@
   header
     h1= t('tokens.form.header')
   .box
-    section.token-form
-      =semantic_form_for('', url: '/tokens', method: :get) do |f|
+    section
+      =semantic_form_for('', url: '/tokens', method: :get, html: {class: 'input-with-button-wrapper'}) do |f|
         .input-wrapper
           =f.input :secret, as: :react_formatted, label: false, value: @token, auto_focus: true, className: 'input--full', options: {blocks: [4, 4, 4, 4], delimiter: ' - ', uppercase: true}
           - if params[:error]

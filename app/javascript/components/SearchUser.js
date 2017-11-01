@@ -32,26 +32,40 @@ export const SearchUser = React.createClass({
         }))
     },
 
-    filterResults (data) {
+    filterResults (data, query) {
         return data.profiles.map(profile => {
+            const label = (query.indexOf('@') !== -1) ? `${profile.name} (${profile.email})` : `${profile.name} (${profile.shortname})`;
             return {
-                value: profile.shortname,
-                label: `${profile.name} (${profile.shortname})`,
-                image: profile.profile_photo.avatar.url
+                image: profile.profile_photo.avatar.url,
+                iri: profile.url,
+                label,
+                value: profile.shortname
             };
         });
     },
 
+    handleOnClick (e) {
+        e.preventDefault();
+        debugger;
+        window.location = this.state.value.iri;
+    },
+
     render () {
-        return (<SearchSelect
-            fetchResults={this.fetchResults}
-            fieldName={this.props.fieldName}
-            filterResults={this.filterResults}
-            multi={this.props.multi}
-            onChange={this.handleChange}
-            placeholder="Select user"
-            things={this.props.things}
-            value={this.state.value}/>);
+        return (
+            <div className="input-with-button-wrapper">
+                <SearchSelect
+                    className="input-wrapper"
+                    fetchResults={this.fetchResults}
+                    fieldName={this.props.fieldName}
+                    filterResults={this.filterResults}
+                    multi={this.props.multi}
+                    onChange={this.handleChange}
+                    placeholder="Select user"
+                    things={this.props.things}
+                    value={this.state.value}/>
+                <button className="btn" disabled={this.state.value === undefined} onClick={this.handleOnClick}>{">"}</button>
+            </div>
+        );
     }
 });
 

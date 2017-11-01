@@ -5,21 +5,8 @@ class ProfilesController < ApplicationController
 
   def index
     return if current_user.guest? || params[:q].blank?
-    # This is a working mess.
     q = params[:q].tr(' ', '|')
-    @profiles = policy_scope(Profile)
-                  .where(profileable_type: 'User',
-                         profileable_id: User
-                                           .joins(:shortname)
-                                           .where('lower(shortname) SIMILAR TO lower(?) OR ' \
-                                                    'lower(first_name) SIMILAR TO lower(?) OR ' \
-                                                    'lower(last_name) SIMILAR TO lower(?)',
-                                                  "%#{q}%",
-                                                  "%#{q}%",
-                                                  "%#{q}%")
-                                           .pluck(:owner_id))
-                  .includes(:default_profile_photo, profileable: %i[shortname email_addresses])
-
+    @profiles = search_scope(q).includes(:default_profile_photo, profileable: %i[shortname email_addresses])
     return unless params[:things] && params[:things].split(',').include?('pages')
     @profiles += policy_scope(Profile)
                    .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
@@ -89,6 +76,24 @@ class ProfilesController < ApplicationController
     @resource.update r: ''
     r_opts = r_to_url_options(r)[0]
     r_opts.present? ? r_opts.merge(Addressable::URI.parse(r).query_values || {}) : r
+  end
+
+  def search_scope(q)
+    scope =
+      policy_scope(Profile)
+        .where(profileable_type: 'User')
+        .joins("INNER JOIN users ON profiles.profileable_id = users.id AND profiles.profileable_type = 'User'")
+        .joins("INNER JOIN shortnames ON shortnames.owner_id = users.id AND shortnames.owner_type = 'User'")
+    wheres = [
+      'lower(shortname) SIMILAR TO lower(?)',
+      'lower(first_name) SIMILAR TO lower(?)',
+      'lower(last_name) SIMILAR TO lower(?)'
+    ]
+    if current_user.is_staff?
+      scope = scope.joins('INNER JOIN email_addresses ON email_addresses.user_id = users.id')
+      wheres << 'email_addresses.email SIMILAR TO lower(?)'
+    end
+    scope.where(wheres.join(' OR '), *wheres.map { |_| "%#{q}%" }).distinct
   end
 
   def setup_permit_params

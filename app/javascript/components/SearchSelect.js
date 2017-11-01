@@ -9,6 +9,7 @@ const FETCH_TIMEOUT_AMOUNT = 500;
 
 const SearchSelect = React.createClass({
     propTypes: {
+        className: React.PropTypes.string,
         fetchResults: React.PropTypes.func,
         fieldName: React.PropTypes.string.isRequired,
         filterResults: React.PropTypes.func,
@@ -66,6 +67,7 @@ const SearchSelect = React.createClass({
 
     render () {
         return (<Select.Async
+                  className={this.props.className}
                   clearable={false}
                   filterOptions={this.filterOptions}
                   loadOptions={this.loadOptions}

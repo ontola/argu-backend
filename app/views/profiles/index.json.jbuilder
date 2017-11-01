@@ -5,6 +5,7 @@ json.profiles @profiles do |profile|
   json.url dual_profile_url(profile)
   json.shortname profile.url
   json.name profile.display_name
+  json.email profile.profileable.email if current_user.is_staff?
   json.profile_photo do
     json.url profile.default_profile_photo.url
     json.icon do
