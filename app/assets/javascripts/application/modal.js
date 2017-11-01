@@ -39,7 +39,9 @@ export const modal = {
         document.documentElement.scrollTop = bodyScrollTop;
         document.body.scrollTop = bodyScrollTop;
 
-        history.pushState({ modal: true }, null, document.getElementsByClassName('modal-container')[0].dataset.previousUrl);
+        if (document.getElementsByClassName('modal-container').length > 0) {
+            history.pushState({ modal: true }, null, document.getElementsByClassName('modal-container')[0].dataset.previousUrl);
+        }
     },
 
     open: function (content, href) {
