@@ -26,7 +26,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     CarrierWave.configure do |config|
       config.storage    = :aws
       config.aws_bucket = 'argu-logos'
-      config.aws_acl    = :public_read
+      config.aws_acl    = :private
       config.asset_host = 'https://argu-logos.s3.amazonaws.com'
       config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
