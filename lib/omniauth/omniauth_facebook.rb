@@ -17,6 +17,7 @@ module Omniauth
           first_name: first_name,
           middle_name: middle_name,
           last_name: last_name,
+          last_accepted: DateTime.current,
           gender: raw['gender'],
           r: r,
           profile_attributes: {

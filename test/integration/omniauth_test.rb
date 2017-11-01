@@ -64,6 +64,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     end
 
     assert User.last.confirmed?
+    assert User.last.accepted_terms?
     assert_nil User.last.primary_email_record.confirmation_token
 
     follow_redirect!
