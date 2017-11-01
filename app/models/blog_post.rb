@@ -13,11 +13,6 @@ class BlogPost < Edgeable::Content
   belongs_to :publisher,
              class_name: 'User'
 
-  contextualize_as_type RDF::ARGU[:BlogPost]
-  contextualize_with_id { |r| Rails.application.routes.url_helpers.blog_post_url(r, protocol: :https) }
-  contextualize :display_name, as: 'schema:name'
-  contextualize :description, as: 'schema:text'
-
   counter_cache true
   parentable :motion, :question, :project
 

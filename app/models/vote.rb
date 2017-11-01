@@ -29,10 +29,6 @@ class Vote < Edgeable::Base
 
   validates :creator, :for, presence: true
 
-  contextualize_as_type RDF::ARGU[:Vote]
-  contextualize_with_id { |v| Rails.application.routes.url_helpers.vote_url(v, protocol: :https) }
-  contextualize :option, as: 'schema:option'
-
   alias_attribute :body, :explanation
 
   # #########methods###########

@@ -5,10 +5,6 @@ class ApplicationMenuList < MenuList
   cattr_accessor :defined_menus
   has_menus %i[organizations]
 
-  def jsonld_context
-    {}
-  end
-
   def context_id
     "https://#{Rails.application.config.host_name}/menus"
   end

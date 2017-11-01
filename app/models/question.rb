@@ -32,11 +32,6 @@ class Question < Edgeable::Content
   auto_strip_attributes :content
   # TODO: validate expires_at
 
-  contextualize_as_type RDF::ARGU[:Question]
-  contextualize_with_id { |m| Rails.application.routes.url_helpers.question_url(m, protocol: :https) }
-  contextualize :display_name, as: 'schema:name'
-  contextualize :content, as: 'schema:text'
-
   enum default_sorting: {popular: 0, created_at: 1, updated_at: 2}
   attr_accessor :include_motions
 

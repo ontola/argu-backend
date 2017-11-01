@@ -11,21 +11,12 @@ class CurrentActor
   delegate :display_name, to: :actor, allow_nil: true
   delegate :id, to: :user
 
-  contextualize_as_type RDF::ARGU[:CurrentActor]
-  contextualize_with_id { Rails.application.routes.url_helpers.c_a_url(protocol: :https) }
-  contextualize :display_name, as: 'schema:name'
-  contextualize :actor_type, as: RDF::ARGU[:actorType]
-
   def actor_type
     if actor.present?
       actor&.owner&.class&.name
     else
       'Guest'
     end
-  end
-
-  def context_type
-    RDF::ARGU["#{actor_type}Actor"]
   end
 
   def shortname

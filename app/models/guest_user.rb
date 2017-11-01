@@ -4,10 +4,6 @@ class GuestUser < User
   include NoPersistence
   attr_accessor :cookies, :headers, :id, :session
 
-  contextualize_as_type RDF::SCHEMA[:Person]
-  contextualize_with_id { |r| "https://#{Rails.application.config.host_name}/sessions/#{r.id}" }
-  contextualize :display_name, as: 'schema:name'
-
   def access_tokens
     []
   end

@@ -2,7 +2,6 @@
 
 module Voteable
   extend ActiveSupport::Concern
-  include PragmaticContext::Contextualizable
 
   included do
     has_one :default_vote_event_edge,

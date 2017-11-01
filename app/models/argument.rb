@@ -15,12 +15,6 @@ class Argument < Edgeable::Content
 
   delegate :page, to: :forum
 
-  contextualize_as_type RDF::ARGU[:Argument]
-  contextualize_with_id { |m| Rails.application.routes.url_helpers.argument_url(m, protocol: :https) }
-  contextualize :name, as: 'schema:name'
-  contextualize :text, as: 'schema:text'
-  contextualize :pro, as: 'schema:option'
-
   def assert_tenant
     return if parent_model.is_a?(LinkedRecord) || forum == parent_model.forum
     errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))

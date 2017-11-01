@@ -19,11 +19,6 @@ class Phase < Edgeable::Base
   parentable :project
   counter_cache true
 
-  contextualize_as_type RDF::ARGU[:Phase]
-  contextualize_with_id { |r| Rails.application.routes.url_helpers.phase_url(r, protocol: :https) }
-  contextualize :display_name, as: 'schema:name'
-  contextualize :description, as: 'schema:text'
-
   def end_date_after_start_date
     return unless start_date.present? && end_date.present? && end_date < start_date
     errors.add(:end_date, "can't be before start date")

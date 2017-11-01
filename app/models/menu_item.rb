@@ -7,10 +7,6 @@ class MenuItem
 
   attr_accessor :label, :image, :parent, :tag, :menus, :href,
                 :type, :description, :link_opts, :resource
-  contextualize_with_type(&:ld_type)
-  contextualize :href, as: 'argu:href'
-  contextualize :image, as: 'argu:imageObject'
-  contextualize :label, as: 'argu:label'
 
   def initialize(attributes = {})
     super

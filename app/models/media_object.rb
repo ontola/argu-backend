@@ -19,12 +19,6 @@ class MediaObject < ApplicationRecord
 
   delegate :file, :icon, :avatar, :is_image?, to: :content
 
-  contextualize_as_type RDF::SCHEMA[:MediaObject]
-  contextualize_with_id do |p|
-    Rails.application.routes.url_helpers.root_url(protocol: :https) + "media_objects/#{p.id}"
-  end
-  contextualize :display_name, as: 'schema:name'
-  contextualize :thumbnail, as: 'schema:thumbnail'
   store_accessor :content_attributes
 
   before_save :set_file_name
@@ -46,12 +40,8 @@ class MediaObject < ApplicationRecord
   def content_type
     content&.content_type
   rescue Aws::S3::Errors::NotFound
-    Bugsnag.notify(RuntimeError.new("Aws::S3::Errors::NotFound: #{context_id}"))
+    Bugsnag.notify(RuntimeError.new("Aws::S3::Errors::NotFound: #{id}"))
     nil
-  end
-
-  def context_type
-    is_image? ? 'schema:ImageObject' : 'schema:MediaObject'
   end
 
   delegate :embed_url, to: :video_info, allow_nil: true

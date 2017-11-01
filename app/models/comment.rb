@@ -19,9 +19,7 @@ class Comment < Edgeable::Content
 
   attr_accessor :is_processed
 
-  contextualize_as_type RDF::ARGU[:Comment]
-  contextualize_with_id { |c| Rails.application.routes.url_helpers.comment_url(c, protocol: :https) }
-  contextualize :text, as: 'schema:text'
+  alias_attribute :content, :body
 
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.

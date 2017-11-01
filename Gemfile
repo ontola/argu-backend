@@ -10,7 +10,6 @@ gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>5.1.3'
 gem 'active_model_serializers', '~> 0.10.4'
-gem 'pragmatic_context'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
