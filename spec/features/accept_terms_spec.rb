@@ -28,6 +28,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
 
     expect(page).to have_content(motion_attr[:title].capitalize)
     expect(page).to have_current_path(motion_path(Motion.last, start_motion_tour: true))
+    expect(user.accepted_terms?).to be_truthy
   end
 
   scenario 'User should accept terms before voting' do
@@ -55,5 +56,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
     within('.opinion-columns') do
       expect(page).to have_content('This is my opinion')
     end
+
+    expect(user.accepted_terms?).to be_truthy
   end
 end

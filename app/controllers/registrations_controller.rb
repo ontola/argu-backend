@@ -71,6 +71,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
+    resource.accept_terms! if accept_terms_param
     send_confirmation_mail(
       resource,
       session.presence && RedisResource::Relation
@@ -91,7 +92,6 @@ class RegistrationsController < Devise::RegistrationsController
     resource.shortname = nil if resource.shortname.shortname.blank?
     resource.build_profile
     resource.language = I18n.locale
-    resource.last_accepted = DateTime.current if accept_terms_param
     return unless session[:omniauth]
     @user.apply_omniauth(session[:omniauth])
     @user.valid?

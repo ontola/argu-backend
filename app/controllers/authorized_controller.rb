@@ -165,9 +165,9 @@ class AuthorizedController < ApplicationController
   end
 
   def verify_terms_accepted
-    return if current_user.guest? || current_user.last_accepted.present?
+    return if current_user.guest? || current_user.accepted_terms?
     if accept_terms_param
-      current_user.update!(last_accepted: DateTime.current)
+      current_user.accept_terms!
     else
       respond_to do |format|
         format.js { render 'accept_terms' }

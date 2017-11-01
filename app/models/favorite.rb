@@ -11,7 +11,7 @@ class Favorite < ApplicationRecord
   after_create :follow_edge
 
   def follow_edge
-    return if user.last_accepted.nil? || Follow.follow_types[:news] <= Follow.follow_types[user.following_type(edge)]
+    return if !user.accepted_terms? || Follow.follow_types[:news] <= Follow.follow_types[user.following_type(edge)]
     user.follow(edge, :news)
   end
 end

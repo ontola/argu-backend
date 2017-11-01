@@ -70,7 +70,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                  email: 'test@example.com',
                  password: 'password',
                  password_confirmation: 'password'
-               }
+               },
+               accept_terms: true
              }
         assert_redirected_to setup_users_path
         assert_analytics_collected('registrations', 'create', 'email')
@@ -81,6 +82,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not_nil User.last.current_sign_in_at
     assert_not_nil User.last.last_sign_in_ip
     assert_not_nil User.last.last_sign_in_at
+    assert User.last.accepted_terms?
 
     delete destroy_user_session_path
 
@@ -140,6 +142,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_response 201
       assert_analytics_collected('registrations', 'create', 'email')
     end
+    assert_not User.last.accepted_terms?
   end
 
   test 'should post create without password and transfer and persist guest votes' do

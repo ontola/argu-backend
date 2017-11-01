@@ -97,6 +97,14 @@ class User < ApplicationRecord
     end
   end
 
+  def accept_terms!
+    update!(last_accepted: DateTime.current)
+  end
+
+  def accepted_terms?
+    last_accepted.present?
+  end
+
   def active_at(redis = nil)
     Argu::Redis.get("user:#{id}:active.at", redis)
   end
