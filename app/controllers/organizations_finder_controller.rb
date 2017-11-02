@@ -11,7 +11,7 @@ class OrganizationsFinderController < AuthorizedController
         s = ActiveModelSerializers::Adapter::N3::Triple.new(
           RDF::URI(Rails.application.routes.url_helpers.o_find_url(iri: params[:iri])),
           RDF::OWL[:sameAs],
-          RDF::URI(page_url(organization.id))
+          RDF::URI(organization.iri)
         )
         render n3: organization,
                meta: [s],

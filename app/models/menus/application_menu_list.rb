@@ -10,6 +10,10 @@ class ApplicationMenuList < MenuList
   end
   alias id context_id
 
+  def iri
+    RDF::IRI.new expand_uri_template('menus_iri')
+  end
+
   private
 
   def discover_link

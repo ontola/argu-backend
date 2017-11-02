@@ -23,20 +23,15 @@ class MenuItem
     (link_opts || {}).merge(fa: image).merge(opts)
   end
 
-  def context_id
+  def iri
     seperator = if parent.is_a?(MenuList)
                   '/'
-                elsif parent.context_id.include?('#')
+                elsif parent.iri.to_s.include?('#')
                   '.'
                 else
                   '#'
                 end
-    "#{parent.context_id}#{seperator}#{tag}"
+    RDF::IRI.new "#{parent.iri}#{seperator}#{tag}"
   end
-  alias id context_id
-
-  def ld_type
-    return RDF::IRI.new("https://argu.co/ns/core##{tag}Menu") if parent.is_a?(MenuList)
-    menus.present? ? RDF::IRI.new(RDF::ARGU[:SubMenu]) : RDF::IRI.new(RDF::ARGU[:MenuItem])
-  end
+  alias id iri
 end

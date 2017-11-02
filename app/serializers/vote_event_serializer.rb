@@ -6,7 +6,7 @@ class VoteEventSerializer < BaseEdgeSerializer
   attribute :ends_at, predicate: RDF::SCHEMA[:endDate]
   attribute :result
   attribute :option_counts
-  link(:self) { object.context_id if object.persisted? }
+  link(:self) { object.iri if object.persisted? }
 
   def option_counts
     {

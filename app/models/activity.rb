@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Activity < PublicActivity::Activity
+  include Iriable
   RELEVANT_KEYS = %w[vote.create question.publish motion.publish argument.create blog_post.publish
                      decision.approved decision.rejected comment.create].freeze
   has_many :notifications, dependent: :destroy

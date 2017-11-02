@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include RedirectHelper
+  include Iriable
   include Ldable
   include Placeable
   include Shortnameable

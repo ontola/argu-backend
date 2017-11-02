@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationRecord < ActiveRecord::Base
+  include Iriable
+
   self.abstract_class = true
 
   %w[comment page forum question motion argument project blog_post group edge].each do |model|

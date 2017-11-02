@@ -56,12 +56,27 @@ module Edgeable
       persisted? ? super : true
     end
 
+    def iri_opts
+      {
+        id: id,
+        parent_iri: parent_iri(true)
+      }
+    end
+
     def is_published?
       persisted? && edge.is_published?
     end
 
     def parent_edge(type = nil)
       type.nil? ? edge&.parent : edge&.parent_edge(type)
+    end
+
+    def parent_iri(only_path = false)
+      expand_uri_template(
+        "#{parent_edge.owner_type.underscore.pluralize}_iri",
+        id: parent_edge.owner_id,
+        path_only: only_path
+      )
     end
 
     def root_object?

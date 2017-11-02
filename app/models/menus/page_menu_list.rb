@@ -2,6 +2,7 @@
 
 class PageMenuList < MenuList
   include SettingsHelper
+  include Iriable
   cattr_accessor :defined_menus
   has_menus %i[navigations]
 

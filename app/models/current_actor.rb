@@ -2,6 +2,7 @@
 
 class CurrentActor
   include ProfilesHelper
+  include Iriable
   include Ldable
   include ActiveModel::Serialization
   include ActiveModel::Model

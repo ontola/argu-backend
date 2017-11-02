@@ -3,6 +3,7 @@
 class MenuList
   include ActiveModel::Model
   include Ldable
+  include Iriable
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
   include Pundit
@@ -13,10 +14,9 @@ class MenuList
   alias read_attribute_for_serialization send
   alias current_user user_context
 
-  def context_id
-    "#{resource.context_id}/menus"
+  def iri
+    RDF::IRI.new expand_uri_template('menu_lists_iri', parent_iri: resource.iri, path_only: true)
   end
-  alias id context_id
 
   def self.has_menus(menus)
     self.defined_menus = menus
