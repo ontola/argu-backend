@@ -3,18 +3,10 @@
 # @note: Common create ready
 class NotificationsController < ApplicationController
   include NotificationsHelper
-  after_action :update_viewed_time
+  include Common::Setup
+  include Common::Index
 
-  def index
-    if current_user.guest?
-      skip_verify_policy_scoped(true)
-      head 204
-    elsif params[:from_time].present?
-      fetch_more
-    else
-      refresh
-    end
-  end
+  after_action :update_viewed_time
 
   def show
     notification = Notification.find params[:id]
@@ -94,6 +86,59 @@ class NotificationsController < ApplicationController
       .order(permanent: :desc, created_at: :desc)
       .where(since ? ['created_at > ?', since] : nil)
       .page params[:page]
+  end
+
+  def index_respond_blocks_success(_, format)
+    format.html { head 204 }
+    format.json do
+      if current_user.guest?
+        head 204
+      elsif params[:from_time].present?
+        fetch_more
+      else
+        refresh
+      end
+    end
+    format.json_api do
+      render json: index_response_association,
+             include: include_index
+    end
+    format.n3 do
+      render n3: index_response_association,
+             meta: meta,
+             include: include_index
+    end
+  end
+
+  def index_response_association
+    @collection ||= Collection.new(
+      association_class: Notification,
+      before: params[:before],
+      user_context: user_context,
+      type: params[:type],
+      pagination: true,
+      parent: nil,
+      includes: [:user, activity: [:trackable, :recipient, owner: [profileable: :shortname]]]
+    )
+  end
+
+  def meta
+    m = []
+    m <<
+      if index_response_association.parent_view_iri.present?
+        ActiveModelSerializers::Adapter::N3::Triple.new(
+          RDF::URI(index_response_association.parent_view_iri),
+          NS::ARGU[:views],
+          RDF::URI(index_response_association.iri)
+        )
+      else
+        ActiveModelSerializers::Adapter::N3::Triple.new(
+          RDF::URI(index_response_association.iri),
+          NS::ARGU[:unreadCount],
+          unread_notification_count
+        )
+      end
+    m
   end
 
   def permit_params

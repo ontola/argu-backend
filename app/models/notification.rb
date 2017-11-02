@@ -2,6 +2,7 @@
 
 class Notification < ApplicationRecord
   include BlogPostsHelper
+  include Ldable
   include ActivityHelper
   include ActionView::Helpers
   include Rails.application.routes.url_helpers
@@ -18,6 +19,10 @@ class Notification < ApplicationRecord
   scope :for_activity, -> { where.not(activity_id: nil) }
 
   enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
+
+  def creator_url
+    dual_profile_url activity.owner, only_path: false, canonical: true
+  end
 
   def sync_notification_count
     user.try :sync_notification_count
@@ -42,11 +47,13 @@ class Notification < ApplicationRecord
   alias display_name title
 
   def url_object
-    if activity.present?
-      activity.trackable_type == 'BlogPost' ? url_for_blog_post(activity.trackable) : activity.trackable
-    else
-      url
-    end
+    href =
+      if activity.present?
+        activity.trackable_type == 'BlogPost' ? url_for_blog_post(activity.trackable) : activity.trackable.iri
+      else
+        url
+      end
+    RDF::IRI.new href
   end
 
   def image

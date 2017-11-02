@@ -8,7 +8,7 @@ json.notifications do
     json.id notification.id
     json.title notification.title
     json.created_at notification.created_at
-    json.url url_for(notification.url_object)
+    json.url url_for(notification.url_object.to_s)
     json.permanent notification.permanent
     json.read notification.read_at.present?
     json.read_at notification.read_at
