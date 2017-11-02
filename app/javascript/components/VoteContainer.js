@@ -43,6 +43,10 @@ export const VoteContainer = React.createClass({
     mixins: [OpinionMixin, VoteMixin],
 
     getInitialState () {
+        let highlightedId;
+        if (typeof window !== 'undefined') {
+            highlightedId = parseInt(window.location.hash.split('motion')[1], 10);
+        }
         return {
             actor: this.props.actor || null,
             argumentForm: false,
@@ -60,7 +64,7 @@ export const VoteContainer = React.createClass({
             loginStep: 'initial',
             newExplanation: this.props.currentExplanation.explanation || '',
             newSelectedArguments: this.props.selectedArguments,
-            opinionForm: false,
+            opinionForm: (highlightedId === this.props.objectId),
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
             showAllArguments: false,
