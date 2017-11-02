@@ -48,7 +48,7 @@ module MotionsHelper
       policyPath: policy_path,
       userRegistrationUrl: user_registration_url(r: request.env['PATH_INFO']),
       selectedArguments: vote&.argument_ids || [],
-      total_votes: motion.default_vote_event.total_vote_count,
+      totalVotes: motion.default_vote_event.total_vote_count,
       vote_url: motion_votes_path(motion)
     }.merge(opts))
   end

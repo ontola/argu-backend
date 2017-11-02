@@ -35,6 +35,11 @@ const VoteMixin = {
         }
     },
 
+    expandVoteResultsHandler (e) {
+        e.preventDefault();
+        this.setState({ showExpandedVoteResults: !this.state.showExpandedVoteResults })
+    },
+
     vote (side) {
         this.setState({ submittingVote: side });
         fetch(this.props.vote_url, safeCredentials({

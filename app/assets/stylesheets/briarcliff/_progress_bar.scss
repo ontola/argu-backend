@@ -3,19 +3,16 @@
 
 .progress-bar {
   display: block;
-  //margin-bottom: 1em;
   width: 100%;
   overflow: hidden;
-  height: 2.5em;
-  @include transition(1s ease-in-out);
-  li {
-    display: inline-block;
-    margin: 0 0;
-    width: 33.3%;
-    overflow: hidden;
-    white-space: nowrap;
-    @include border-radius();
+  @include transition(.2s ease-in-out);
+  height: .5em;
+  opacity: .5;
+  cursor: pointer;
+  &:hover {
+    opacity: .7;
   }
+
   span {
     width: 100%;
     display: inline-block;
@@ -25,26 +22,13 @@
     position: relative;
     font-size: .9em;
     color: white;
-    border-left: solid .1em $g1;
-    border-right: solid .1em $g1;
+
     @include bp-small {
       // Compensates for the percent sign
       padding: 0.1em;
       font-size: 0.8em;
       line-height: 1.8em;
     }
-  }
-  .btn-pro {
-    background-color: $gre;
-    border-left: none;
-  }
-  .btn-neutral {
-    background-color: $g3;
-  }
-  .btn-con {
-    background-color: $red;
-    margin-right: 0;
-    border-right: none;
   }
   //Use these classes to show and hide the progress bar
   &[data-collapsed] {
@@ -56,4 +40,49 @@
     height: 2.5em;
     opacity: 1;
   }
+}
+
+.progress-bar__section {
+  display: inline-block;
+  margin: 0 0;
+  width: 33.3%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  border-left: solid .1em $g1;
+  border-right: solid .1em $g1;
+
+  &.progress-bar__section--pro {
+    background-color: $gre;
+    border-left: none;
+  }
+  &.progress-bar__section--neutral {
+    background-color: $g3;
+  }
+  &.progress-bar__section--con {
+    background-color: $red;
+    margin-right: 0;
+    border-right: none;
+  }
+
+  span {
+    color: transparent;
+  }
+}
+
+.progress-bar--expanded {
+  height: auto;
+  cursor: initial;
+  opacity: 1 !important;
+
+  .progress-bar__section {
+    span {
+      color: white;
+    }
+  }
+}
+
+.progress-bar--always-expanded {
+  @include border-radius();
+  cursor: initial;
 }

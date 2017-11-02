@@ -66,10 +66,10 @@ export const VoteButton = React.createClass({
                     <span className="vote-text">
                         {I18n.t(`votes.type.${side}`)}
                     </span>
+                    {voteCountElem}
                     {(this.props.currentExplanation.explanation !== '') && current &&
                       <span className={'fa fa-commenting-o icon-left'} />
                     }
-                    {voteCountElem}
                 </a>
             </li>
         );
@@ -80,9 +80,8 @@ export const VoteButtons = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
-        submittingVote: React.PropTypes.string,
-        currentVote: React.PropTypes.string,
         currentExplanation: React.PropTypes.string,
+        currentVote: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
@@ -90,6 +89,7 @@ export const VoteButtons = React.createClass({
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object,
         r: React.PropTypes.string,
+        submittingVote: React.PropTypes.string,
         vote_url: React.PropTypes.string
     },
 
@@ -145,6 +145,9 @@ const LOWER_DISPLAY_LIMIT = 5;
  */
 export const VoteResults = React.createClass({
     propTypes: {
+        alwaysExpanded: React.PropTypes.bool.isRequired,
+        expanded: React.PropTypes.bool,
+        onToggleExpand: React.PropTypes.func.isRequired,
         percent: React.PropTypes.object
     },
 
@@ -166,13 +169,22 @@ export const VoteResults = React.createClass({
         };
     },
 
+    section (side) {
+        return (
+          <div style={this.voteWidth(side)} className={`progress-bar__section progress-bar__section--${side}`}>
+            <span>{this.props.percent[side] + '%'}</span>
+          </div>
+        );
+    },
+
     render () {
         return (
-            <ul className="progress-bar progress-bar-stacked">
-                <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
-                <li style={this.voteWidth('neutral')}><span className="btn-neutral">{this.props.percent.neutral + '%'}</span></li>
-                <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
-            </ul>
-        );
+                <div
+                  onClick={this.props.onToggleExpand}
+                  className={`progress-bar progress-bar-stacked ${this.props.expanded && 'progress-bar--expanded'} ${this.props.alwaysExpanded && 'progress-bar--always-expanded'}`}>
+                    {this.section('pro')}
+                    {this.section('neutral')}
+                    {this.section('con')}
+                </div>);
     }
 });

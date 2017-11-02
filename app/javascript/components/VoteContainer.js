@@ -35,7 +35,7 @@ export const VoteContainer = React.createClass({
         policyPath: React.PropTypes.string,
         r: React.PropTypes.string,
         selectedArguments: React.PropTypes.array,
-        total_votes: React.PropTypes.number,
+        totalVotes: React.PropTypes.number,
         userRegistrationUrl: React.PropTypes.string,
         vote_url: React.PropTypes.string
     },
@@ -64,6 +64,7 @@ export const VoteContainer = React.createClass({
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
             showAllArguments: false,
+            showExpandedVoteResults: false,
             signupEmail: '',
             signupPassword: '',
             submitting: false,
@@ -80,8 +81,13 @@ export const VoteContainer = React.createClass({
                                         currentExplanation={this.state.currentExplanation}
                                         neutralHandler={this.neutralHandler}
                                         proHandler={this.proHandler}/>;
-        if (this.props.total_votes > 0) {
-            voteResultsComponent = <VoteResults {...this.state}/>;
+        if (this.props.totalVotes > 0) {
+            voteResultsComponent = <VoteResults
+            {...this.state}
+            alwaysExpanded={(this.props.buttonsType === 'big')}
+            onToggleExpand={this.expandVoteResultsHandler}
+            expanded={this.props.buttonsType === 'big' || this.state.showExpandedVoteResults}
+            total_votes={this.props.totalVotes}/>;
         }
         bottomBody = <OpinionContainer actor={this.state.actor}
                                        argumentUrl={this.props.argumentUrl}
