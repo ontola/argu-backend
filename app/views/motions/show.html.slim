@@ -16,7 +16,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     -unless motion.is_published?
       = render partial: 'application/publish', locals: {resource: motion}
 =render partial: 'happenings/timeline',
-        locals: { resource: motion, happenings: policy_scope(resource.happenings).includes(trackable: [creator: Profile.includes_for_profileable, edge: :published_publications]) }
+        locals: { resource: motion, happenings: policy_scope(resource.happenings).includes(:trackable, trackable_edge: :published_publications) }
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
 .argument-columns= render_columns(@arguments,

@@ -29,7 +29,7 @@
           ul= dropdown_menu(question, :share, item_opts: {isMobile: browser.device.mobile?})
   - unless question.is_published?
     =render partial: 'application/publish', locals: {resource: question}
-  =render partial: 'happenings/timeline', locals: {resource: question, happenings: policy_scope(resource.happenings).includes(trackable: [creator: Profile.includes_for_profileable, edge: :published_publications]), show_unpublished: policy(question).update?}
+  =render partial: 'happenings/timeline', locals: {resource: question, happenings: policy_scope(resource.happenings).includes(trackable: [creator: Profile.includes_for_profileable], trackable_edge: :published_publications), show_unpublished: policy(question).update?}
 - if question.edge.custom_placements.present?
   .col-1.large-map
     =react_component_store 'MapViewer', props: map_question_props(question)

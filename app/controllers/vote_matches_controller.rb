@@ -21,8 +21,8 @@ class VoteMatchesController < ServiceController
 
   def index_respond_blocks_success(_, format)
     collection =
-      if parent_resource.present?
-        parent_resource.vote_match_collection(collection_options)
+      if parent_id_from_params(params).present?
+        parent_resource!.vote_match_collection(collection_options)
       else
         Collection.new(
           association_class: VoteMatch,

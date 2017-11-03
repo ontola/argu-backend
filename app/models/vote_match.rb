@@ -27,4 +27,8 @@ class VoteMatch < ApplicationRecord
   def self.expropriate(collection)
     collection.update_all(publisher_id: User::COMMUNITY_ID)
   end
+
+  def parent_model
+    creator.profileable
+  end
 end

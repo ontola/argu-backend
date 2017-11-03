@@ -2,6 +2,7 @@
 
 class BlogPostsController < EdgeTreeController
   include BlogPostsHelper
+  skip_before_action :check_if_registered, only: :index
 
   def show
     @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])

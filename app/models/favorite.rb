@@ -13,4 +13,8 @@ class Favorite < ApplicationRecord
   def follow_edge
     user.follow(edge, :news)
   end
+
+  def forum
+    edge.owner if edge.owner_type == 'Forum'
+  end
 end

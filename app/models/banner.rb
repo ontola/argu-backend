@@ -12,7 +12,7 @@ class Banner < NewsBoy
   enum audience: {guests: 0, users: 1, members: 2, everyone: 3}
 
   validates :forum, :audience, presence: true
-  # validates :sample_size, min: 1, max: 100, default: 100
+  alias parent_model forum
 
   def shallow_parent
     forum.edge

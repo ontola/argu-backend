@@ -15,7 +15,7 @@ class GrantsController < ServiceController
            locals: {
              tab: 'grants/new',
              active: 'grants',
-             page: resource.group.page,
+             page: resource.group&.page,
              resource: authenticated_edge.owner
            }
   end

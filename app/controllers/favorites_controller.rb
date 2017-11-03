@@ -9,15 +9,19 @@ class FavoritesController < AuthorizedController
   private
 
   def new_resource_from_params
-    current_user.favorites.find_or_initialize_by(edge: parent_edge)
+    current_user.favorites.find_or_initialize_by(edge: parent_edge!)
   end
 
   def parent_edge
     parent_resource&.edge
   end
 
+  def parent_edge!
+    parent_edge || raise(ActiveRecord::RecordNotFound)
+  end
+
   def redirect_url
-    url_for(parent_resource)
+    url_for([parent_resource, only_path: true])
   end
 
   def resource_by_id
@@ -36,7 +40,7 @@ class FavoritesController < AuthorizedController
     end
   end
 
-  def create_respond_failure_html
+  def create_respond_failure_html(_resource)
     flash[:error] = t('errors.general')
     redirect_back(fallback_location: root_path)
   end
