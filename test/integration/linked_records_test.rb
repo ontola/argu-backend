@@ -6,7 +6,7 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
   define_public_source
   let!(:linked_record) do
     linked_record_mock(1)
-    create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1')
+    create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1')
   end
 
   ####################################
@@ -31,7 +31,7 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
 
   test 'guest should get show existing iri' do
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: linked_record.iri), params: {format: :json_api}
+      get linked_records_path(iri: linked_record.record_iri), params: {format: :json_api}
     end
 
     assert_redirected_to linked_record_path(linked_record)
@@ -68,7 +68,7 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
     assert LinkedRecord.last.edge.is_published?
     assert_equal 'Record name', LinkedRecord.last.title
     assert_equal 'motions', LinkedRecord.last.record_type
-    assert_equal 'https://iri.test/resource/2', LinkedRecord.last.iri
+    assert_equal 'https://iri.test/resource/2', LinkedRecord.last.record_iri
     assert_redirected_to linked_record_path(LinkedRecord.last)
   end
 
@@ -81,7 +81,7 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
     assert LinkedRecord.last.edge.is_published?
     assert_equal 'Record name', LinkedRecord.last.title
     assert_equal 'motions', LinkedRecord.last.record_type
-    assert_equal 'https://iri.test/resource/2', LinkedRecord.last.iri
+    assert_equal 'https://iri.test/resource/2', LinkedRecord.last.record_iri
     assert_redirected_to linked_record_path(LinkedRecord.last)
   end
 
@@ -94,19 +94,19 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
     assert LinkedRecord.last.edge.is_published?
     assert_nil LinkedRecord.last.title
     assert_nil LinkedRecord.last.record_type
-    assert_equal 'https://iri.test/resource/2', LinkedRecord.last.iri
+    assert_equal 'https://iri.test/resource/2', LinkedRecord.last.record_iri
     assert_redirected_to linked_record_path(LinkedRecord.last)
   end
 
   test 'user should get show existing iri' do
     sign_in user
     assert_differences([['LinkedRecord.count', 0], ['Edge.count', 0]]) do
-      get linked_records_path(iri: linked_record.iri), params: {format: :json_api}
+      get linked_records_path(iri: linked_record.record_iri), params: {format: :json_api}
     end
     linked_record.reload
     assert_nil linked_record.title
     assert_nil linked_record.record_type
-    assert_equal 'https://iri.test/resource/1', linked_record.iri
+    assert_equal 'https://iri.test/resource/1', linked_record.record_iri
     assert_redirected_to linked_record_path(linked_record)
   end
 
@@ -119,7 +119,7 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
     linked_record.reload
     assert_nil linked_record.title
     assert_nil linked_record.record_type
-    assert_equal 'https://iri.test/resource/1', linked_record.iri
+    assert_equal 'https://iri.test/resource/1', linked_record.record_iri
     assert_redirected_to linked_record_path(linked_record)
   end
 
@@ -131,7 +131,7 @@ class LinkedRecordsTest < ActionDispatch::IntegrationTest
     linked_record.reload
     assert_nil linked_record.title
     assert_nil linked_record.record_type
-    assert_equal 'https://iri.test/resource/1', linked_record.iri
+    assert_equal 'https://iri.test/resource/1', linked_record.record_iri
     assert_response 200
   end
 end

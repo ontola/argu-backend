@@ -10,7 +10,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   let(:helsinki_motion) { create(:motion, parent: helsinki.edge) }
   let(:linked_record) do
     linked_record_mock(1)
-    create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1')
+    create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1')
   end
 
   ####################################
@@ -43,7 +43,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   test 'guest should get show organization of initialized linked_record' do
-    get :show, params: {iri: linked_record.iri, format: :json_api}
+    get :show, params: {iri: linked_record.record_iri, format: :json_api}
 
     assert_response 200
   end
@@ -93,7 +93,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   test 'user should get show organization of initialized linked_record' do
-    get :show, params: {iri: linked_record.iri, format: :json_api}
+    get :show, params: {iri: linked_record.record_iri, format: :json_api}
     sign_in user
 
     assert_response 200

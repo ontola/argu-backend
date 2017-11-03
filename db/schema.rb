@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101093541) do
+ActiveRecord::Schema.define(version: 20171103144147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -313,13 +313,13 @@ ActiveRecord::Schema.define(version: 20171101093541) do
   create_table "linked_records", id: :serial, force: :cascade do |t|
     t.integer "page_id", null: false
     t.integer "source_id", null: false
-    t.string "iri", null: false
+    t.string "record_iri", null: false
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "record_type"
-    t.index ["iri", "source_id", "page_id"], name: "index_linked_records_on_iri_and_source_id_and_page_id"
-    t.index ["iri"], name: "index_linked_records_on_iri", unique: true
+    t.index ["record_iri", "source_id", "page_id"], name: "index_linked_records_on_record_iri_and_source_id_and_page_id"
+    t.index ["record_iri"], name: "index_linked_records_on_record_iri", unique: true
   end
 
   create_table "list_items", id: :serial, force: :cascade do |t|
@@ -327,8 +327,8 @@ ActiveRecord::Schema.define(version: 20171101093541) do
     t.string "listable_type", null: false
     t.string "relationship", null: false
     t.integer "order", null: false
-    t.string "iri", null: false
-    t.string "resource_type", null: false
+    t.string "item_iri", null: false
+    t.string "item_type", null: false
   end
 
   create_table "media_objects", id: :serial, force: :cascade do |t|

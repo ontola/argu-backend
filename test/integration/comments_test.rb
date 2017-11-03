@@ -31,7 +31,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:blog_post_subject) { create(:comment, publisher: creator, parent: blog_post.edge) }
   let(:motion_subject) { create(:comment, publisher: creator, parent: motion.edge) }
   let(:question_subject) { create(:comment, publisher: creator, parent: question.edge) }
-  let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
+  let(:linked_record) { create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1') }
 
   define_cairo
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }

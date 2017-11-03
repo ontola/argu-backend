@@ -6,13 +6,13 @@ class LinkedRecordsController < AuthorizedController
   def show
     if params[:id].nil?
       respond_to do |format|
-        format.html { redirect_to url_for(authenticated_resource!.iri) }
+        format.html { redirect_to url_for(authenticated_resource!.record_iri) }
         format.json_api { redirect_to url_for(authenticated_resource!) }
         format.n3 { redirect_to url_for(authenticated_resource!) }
       end
     else
       respond_to do |format|
-        format.html { redirect_to url_for(authenticated_resource!.iri) }
+        format.html { redirect_to url_for(authenticated_resource!.record_iri) }
         format.json { respond_with_200(authenticated_resource!, :json) }
         format.json_api do
           render json: authenticated_resource!,

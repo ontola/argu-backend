@@ -7,10 +7,10 @@ class LinkedRecordSerializer < RecordSerializer
 
   attribute :record_type, predicate: RDF::SCHEMA[:additionalType]
 
-  link(:self) { object.iri if object.persisted? }
+  link(:self) { object.record_iri if object.persisted? }
   link(:related) do
     {
-      href: object.iri,
+      href: object.record_iri,
       meta: {
         predicate: RDF::SCHEMA[:isRelatedTo]
       }

@@ -4,7 +4,7 @@ require 'test_helper'
 
 class ArgumentsTest < ActionDispatch::IntegrationTest
   define_public_source
-  let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
+  let(:linked_record) { create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1') }
 
   define_automated_tests_objects
 

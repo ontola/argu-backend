@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :linked_record do
-    sequence(:iri) { |n| "https://iri.test/m/#{n}" }
+    sequence(:record_iri) { |n| "https://iri.test/m/#{n}" }
 
     before :create do |record|
       record.edge = Edge.new(parent: record.source.edge, user_id: User::COMMUNITY_ID, is_published: true)

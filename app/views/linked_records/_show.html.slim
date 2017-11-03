@@ -1,6 +1,6 @@
 .box.box--extra-margin.motion
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
-    =link_to model.iri
+    =link_to model.record_iri
     h3.motion-t[itemprop="headline"]= model.title
   section
     - if model.edge.arguments_pro.present? || model.edge.arguments_con.present?

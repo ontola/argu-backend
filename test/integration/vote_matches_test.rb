@@ -23,11 +23,11 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
   end
 
   def self.has_voteables
-    "assert_equal resource.reload.voteables.pluck(:iri), ['https://example.com/1', 'https://example.com/2']"
+    "assert_equal resource.reload.voteables.pluck(:item_iri), ['https://example.com/1', 'https://example.com/2']"
   end
 
   def self.has_other_voteables
-    "assert_equal resource.reload.voteables.pluck(:iri), ['https://example.com/a', 'https://example.com/b']"
+    "assert_equal resource.reload.voteables.pluck(:item_iri), ['https://example.com/a', 'https://example.com/b']"
   end
 
   define_tests do
@@ -75,8 +75,8 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         voteables: [
-          {resource_type: 'argu:Motion', iri: 'https://example.com/a'},
-          {resource_type: 'argu:Motion', iri: 'https://example.com/b'}
+          {item_type: 'argu:Motion', item_iri: 'https://example.com/a'},
+          {item_type: 'argu:Motion', item_iri: 'https://example.com/b'}
         ]
       },
       differences: [['VoteMatch', 1]]
@@ -95,8 +95,8 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         voteables: [
-          {resource_type: 'argu:Motion', iri: 'https://example.com/a'},
-          {resource_type: 'argu:Motion', iri: 'https://example.com/b'}
+          {item_type: 'argu:Motion', item_iri: 'https://example.com/a'},
+          {item_type: 'argu:Motion', item_iri: 'https://example.com/b'}
         ]
       },
       differences: []

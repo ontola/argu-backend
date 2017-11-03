@@ -62,7 +62,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event.edge) }
-  let(:linked_record) { create(:linked_record, source: public_source, iri: 'https://iri.test/resource/1') }
+  let(:linked_record) { create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1') }
   let(:vote_event) do
     create(:vote_event,
            parent: motion.edge,
