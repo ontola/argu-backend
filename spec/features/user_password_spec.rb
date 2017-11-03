@@ -114,6 +114,8 @@ RSpec.feature 'User Password', type: :feature do
                          last_name: user_omni_only.last_name,
                          middle_name: nil,
                          uid: '111907595807605')
+    create_email_mock('reset_password_instructions', user_omni_only.email, token: /.+/)
+
     visit new_user_session_path
 
     click_link 'Log in with Facebook'
@@ -129,10 +131,9 @@ RSpec.feature 'User Password', type: :feature do
       expect(page).to have_content('You will receive an email shortly with instructions to reset your password.')
     end
 
-    open_email(user_omni_only.email)
-
-    expect(current_email.subject).to eq 'Password reset instructions'
-    current_email.click_link 'Change my password'
+    match = assert_email_send(skip_sidekiq: true)
+    token = Rack::Utils.parse_nested_query(match.body)['email']['options']['token']
+    visit edit_user_password_path(reset_password_token: token)
 
     expect(page).to have_content('Choose a password')
     within('#new_user') do

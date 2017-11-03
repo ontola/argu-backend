@@ -110,10 +110,14 @@ module Users
     end
 
     test 'user should post create password for existing email' do
+      create_email_mock('reset_password_instructions', user.email, token: /.+/)
+
       sign_in user
       post user_password_path, params: {user: {email: user.email}}
       assert_equal flash[:notice], 'You will receive an email shortly with instructions to reset your password.'
       assert_redirected_to settings_user_path
+
+      assert_email_sent
     end
 
     test 'user should not get edit password without token' do

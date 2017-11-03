@@ -306,6 +306,15 @@ class User < ApplicationRecord
     end
   end
 
+  def send_devise_notification(notification, *args)
+    case notification
+    when :reset_password_instructions
+      SendEmailWorker.perform_async(notification, id, token: args.first)
+    else
+      raise "Trying to send a Devise #{notification} mail"
+    end
+  end
+
   def sync_notification_count
     Argu::Redis.set("user:#{id}:notification.count", notifications.count)
   end

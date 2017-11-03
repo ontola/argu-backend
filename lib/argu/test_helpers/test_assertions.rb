@@ -58,7 +58,14 @@ module Argu
         end
 
         assert_requested :post, argu_url('/email/spi/emails'), times: count
+        last_match = WebMock::RequestRegistry
+                       .instance
+                       .requested_signatures
+                       .hash
+                       .keys
+                       .detect { |r| r.uri.to_s == argu_url('/email/spi/emails') }
         WebMock.reset!
+        last_match
       end
     end
   end
