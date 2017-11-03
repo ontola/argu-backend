@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 class VoteSerializer < BaseEdgeSerializer
-  attribute :option, predicate: RDF::SCHEMA[:option]
-  attribute :explanation, predicate: RDF::SCHEMA[:text]
+  attribute :option, predicate: NS::SCHEMA[:option]
+  attribute :explanation, predicate: NS::SCHEMA[:text]
   attribute :explained_at
 
-  has_one :voteable, predicate: RDF::SCHEMA[:isPartOf] do
+  has_one :voteable, predicate: NS::SCHEMA[:isPartOf] do
     object.parent_model.voteable
   end
 
-  has_many :upvoted_arguments, predicate: RDF::ARGU[:upvotedArguments]
+  has_many :upvoted_arguments, predicate: NS::ARGU[:upvotedArguments]
 
   def option
     case object.for
     when 'pro'
-      RDF::ARGU[:yes]
+      NS::ARGU[:yes]
     when 'con'
-      RDF::ARGU[:no]
+      NS::ARGU[:no]
     else
-      RDF::ARGU[:other]
+      NS::ARGU[:other]
     end
   end
 end

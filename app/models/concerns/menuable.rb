@@ -27,7 +27,7 @@ module Menuable
             object.menu(scope, menu) if scope.is_a?(UserContext)
           end
 
-          has_many method_name, predicate: RDF::ARGU["#{menu.to_s.camelize(:lower)}Menu"]
+          has_many method_name, predicate: NS::ARGU["#{menu.to_s.camelize(:lower)}Menu"]
         end
       end
     end

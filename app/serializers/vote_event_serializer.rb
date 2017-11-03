@@ -2,8 +2,8 @@
 
 class VoteEventSerializer < BaseEdgeSerializer
   attribute :group_id
-  attribute :starts_at, predicate: RDF::SCHEMA[:startDate]
-  attribute :ends_at, predicate: RDF::SCHEMA[:endDate]
+  attribute :starts_at, predicate: NS::SCHEMA[:startDate]
+  attribute :ends_at, predicate: NS::SCHEMA[:endDate]
   attribute :result
   attribute :option_counts
   link(:self) { object.iri if object.persisted? }
@@ -16,7 +16,7 @@ class VoteEventSerializer < BaseEdgeSerializer
     }
   end
 
-  has_one :vote_collection, predicate: RDF::ARGU[:votes]
+  has_one :vote_collection, predicate: NS::ARGU[:votes]
 
   def ends_at
     object.edge.expires_at

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class GuestUserSerializer < BaseSerializer
-  attribute :display_name, predicate: RDF::SCHEMA[:name]
+  attribute :display_name, predicate: NS::SCHEMA[:name]
 
   def type
-    RDF::SCHEMA[:Person]
+    NS::SCHEMA[:Person]
   end
 end

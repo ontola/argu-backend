@@ -5,7 +5,7 @@ class MotionSerializer < ContentEdgeSerializer
   include Attachable::Serializer
   include Commentable::Serializer
   include Voteable::Serializer
-  attribute :current_vote, predicate: RDF::ARGU[:currentVote]
+  attribute :current_vote, predicate: NS::ARGU[:currentVote]
   include_menus
 
   def current_vote

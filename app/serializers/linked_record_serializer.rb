@@ -5,14 +5,14 @@ class LinkedRecordSerializer < RecordSerializer
   include Voteable::Serializer
   include Commentable::Serializer
 
-  attribute :record_type, predicate: RDF::SCHEMA[:additionalType]
+  attribute :record_type, predicate: NS::SCHEMA[:additionalType]
 
   link(:self) { object.record_iri if object.persisted? }
   link(:related) do
     {
       href: object.record_iri,
       meta: {
-        predicate: RDF::SCHEMA[:isRelatedTo]
+        predicate: NS::SCHEMA[:isRelatedTo]
       }
     }
   end

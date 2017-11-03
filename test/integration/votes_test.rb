@@ -123,10 +123,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'guest should post create vote for vote_event' do
@@ -135,10 +135,10 @@ class VotesTest < ActionDispatch::IntegrationTest
       post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con})
     end
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'guest should post create for motion with upvoted arguments json' do
@@ -181,15 +181,15 @@ class VotesTest < ActionDispatch::IntegrationTest
     guest_vote
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:yes]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
     end
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   ####################################
@@ -237,10 +237,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'unconfirmed should post create vote for vote_event' do
@@ -250,10 +250,10 @@ class VotesTest < ActionDispatch::IntegrationTest
       post vote_event_votes_path(motion.default_vote_event.id, format: :json_api, vote: {for: :con})
     end
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'unconfirmed should post create for motion with upvoted arguments json' do
@@ -298,15 +298,15 @@ class VotesTest < ActionDispatch::IntegrationTest
     unconfirmed_vote
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:yes]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_differences([['Argu::Redis.keys("temporary.*").count', 0], ['Vote.count', 0]]) do
       post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
     end
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'unconfirmed should post update vote that also exists in postgres' do
@@ -323,7 +323,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     get motion_show_vote_path(motion.id, format: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:yes]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_differences([['Vote.pro.count', -1], ['Vote.con.count', 1], ['Argu::Redis.keys("temporary.*").count', 0]]) do
       assert vote.pro?
       assert RedisResource::Relation.where(publisher: creator).first.resource.pro?
@@ -332,7 +332,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       assert RedisResource::Relation.where(publisher: creator).first.resource.con?
     end
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], RDF::ARGU[:no]
+    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   ####################################

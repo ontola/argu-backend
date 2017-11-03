@@ -10,7 +10,7 @@ class OrganizationsFinderController < AuthorizedController
       format.n3 do
         s = ActiveModelSerializers::Adapter::N3::Triple.new(
           RDF::URI(Rails.application.routes.url_helpers.o_find_url(iri: params[:iri])),
-          RDF::OWL[:sameAs],
+          NS::OWL[:sameAs],
           RDF::URI(organization.iri)
         )
         render n3: organization,

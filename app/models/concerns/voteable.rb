@@ -45,10 +45,10 @@ module Voteable
     extend ActiveSupport::Concern
     included do
       has_one :vote_event_collection,
-              predicate: RDF::ARGU[:voteEvents]
+              predicate: NS::ARGU[:voteEvents]
       has_one :default_vote_event,
               key: :voteable_vote_event,
-              predicate: RDF::ARGU[:voteableVoteEvent]
+              predicate: NS::ARGU[:voteableVoteEvent]
 
       def vote_event_collection
         object.vote_event_collection(user_context: scope)

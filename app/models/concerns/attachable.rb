@@ -26,7 +26,7 @@ module Attachable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :attachment_collection, predicate: RDF::ARGU[:attachments]
+      has_one :attachment_collection, predicate: NS::ARGU[:attachments]
 
       def attachment_collection
         object.attachment_collection(user_context: scope)

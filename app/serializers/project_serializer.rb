@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ProjectSerializer < ContentEdgeSerializer
-  attribute :display_name, predicate: RDF::SCHEMA[:name]
-  attribute :content, predicate: RDF::SCHEMA[:text], key: :body
+  attribute :display_name, predicate: NS::SCHEMA[:name]
+  attribute :content, predicate: NS::SCHEMA[:text], key: :body
   include_menus
 
   has_many :phases

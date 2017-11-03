@@ -30,7 +30,7 @@ module Argumentable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :argument_collection, predicate: RDF::ARGU[:arguments]
+      has_one :argument_collection, predicate: NS::ARGU[:arguments]
 
       def argument_collection
         object.argument_collection(user_context: scope)

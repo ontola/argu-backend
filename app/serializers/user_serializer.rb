@@ -5,17 +5,17 @@ class UserSerializer < RecordSerializer
     service_scope? || object == scope&.user
   end
 
-  attribute :about, predicate: RDF::SCHEMA[:description]
+  attribute :about, predicate: NS::SCHEMA[:description]
   attribute :url
-  attribute :language, predicate: RDF::SCHEMA[:language], if: :service_scope?
-  attribute :email, predicate: RDF::SCHEMA[:email], if: :service_or_self?
-  has_many :email_addresses, predicate: RDF::ARGU[:emails], if: :service_or_self?
+  attribute :language, predicate: NS::SCHEMA[:language], if: :service_scope?
+  attribute :email, predicate: NS::SCHEMA[:email], if: :service_or_self?
+  has_many :email_addresses, predicate: NS::ARGU[:emails], if: :service_or_self?
 
-  has_one :profile_photo, predicate: RDF::SCHEMA[:image] do
+  has_one :profile_photo, predicate: NS::SCHEMA[:image] do
     object.profile.default_profile_photo
   end
 
-  has_one :vote_match_collection, predicate: RDF::ARGU[:voteMatches]
+  has_one :vote_match_collection, predicate: NS::ARGU[:voteMatches]
 
   def vote_match_collection
     object.vote_match_collection(user_context: scope)
@@ -30,6 +30,6 @@ class UserSerializer < RecordSerializer
   end
 
   def type
-    RDF::SCHEMA[:Person]
+    NS::SCHEMA[:Person]
   end
 end

@@ -4,5 +4,5 @@ class ContentEdgeSerializer < BaseEdgeSerializer
   include Loggable::Serializer
   include Menuable::Serializer
 
-  attribute :content, predicate: RDF::SCHEMA[:text]
+  attribute :content, predicate: NS::SCHEMA[:text]
 end

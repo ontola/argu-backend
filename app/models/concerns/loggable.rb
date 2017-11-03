@@ -42,7 +42,7 @@ module Loggable
         {
           href: log_url(object.edge),
           meta: {
-            predicate: RDF::ARGU[:log]
+            predicate: NS::ARGU[:log]
           }
         }
       end

@@ -6,7 +6,7 @@ module Questionable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :question_collection, predicate: RDF::ARGU[:questions]
+      has_one :question_collection, predicate: NS::ARGU[:questions]
 
       def question_collection
         object.question_collection(user_context: scope)

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class MenuItemSerializer < BaseSerializer
-  attribute :label, predicate: RDF::ARGU[:label]
-  attribute :href, predicate: RDF::ARGU[:href]
+  attribute :label, predicate: NS::ARGU[:label]
+  attribute :href, predicate: NS::ARGU[:href]
   attribute :data
 
-  has_one :parent, predicate: RDF::SCHEMA[:isPartOf]
+  has_one :parent, predicate: NS::SCHEMA[:isPartOf]
 
-  has_many :menus, predicate: RDF::ARGU[:menuItems]
-  has_one :image, predicate: RDF::SCHEMA[:image] do
+  has_many :menus, predicate: NS::ARGU[:menuItems]
+  has_one :image, predicate: NS::SCHEMA[:image] do
     obj = object.image
     if obj
       if obj.is_a?(MediaObject)
@@ -17,7 +17,7 @@ class MenuItemSerializer < BaseSerializer
         obj = obj.gsub(/^fa-/, 'http://fontawesome.io/icon/')
         {
           id: obj,
-          type: RDF::ARGU[:FontAwesomeIcon]
+          type: NS::ARGU[:FontAwesomeIcon]
         }
       end
     end
@@ -28,7 +28,7 @@ class MenuItemSerializer < BaseSerializer
   end
 
   def type
-    return RDF::ARGU["#{object.tag.capitalize}Menu"] if object.parent.is_a?(MenuList)
-    object.menus.present? ? RDF::ARGU[:SubMenu] : RDF::ARGU[:MenuItem]
+    return NS::ARGU["#{object.tag.capitalize}Menu"] if object.parent.is_a?(MenuList)
+    object.menus.present? ? NS::ARGU[:SubMenu] : NS::ARGU[:MenuItem]
   end
 end

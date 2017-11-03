@@ -32,7 +32,7 @@ module Commentable
   module Serializer
     extend ActiveSupport::Concern
     included do
-      has_one :comment_collection, predicate: RDF::SCHEMA[:comments]
+      has_one :comment_collection, predicate: NS::SCHEMA[:comments]
 
       def comment_collection
         object.comment_collection(user_context: scope)

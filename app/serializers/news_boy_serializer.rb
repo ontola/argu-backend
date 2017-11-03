@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class NewsBoySerializer < BaseSerializer
-  attribute :title, predicate: RDF::SCHEMA[:name]
-  attribute :content, predicate: RDF::SCHEMA[:text]
-  attribute :audience, predicate: RDF::ARGU[:audience]
-  attribute :sample_size, predicate: RDF::ARGU[:sampleSize]
-  attribute :dismissable, predicate: RDF::ARGU[:dismissable]
-  attribute :published_at, predicate: RDF::ARGU[:publishedAt]
-  attribute :ends_at, predicate: RDF::ARGU[:endsAt]
+  attribute :title, predicate: NS::SCHEMA[:name]
+  attribute :content, predicate: NS::SCHEMA[:text]
+  attribute :audience, predicate: NS::ARGU[:audience]
+  attribute :sample_size, predicate: NS::ARGU[:sampleSize]
+  attribute :dismissable, predicate: NS::ARGU[:dismissable]
+  attribute :published_at, predicate: NS::ARGU[:publishedAt]
+  attribute :ends_at, predicate: NS::ARGU[:endsAt]
 end
