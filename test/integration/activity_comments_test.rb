@@ -41,7 +41,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
       delete motion_path(motion),
-             params: {actor_iri: freetown.page.context_id, activity: {comment: 'Reason for trashing'}}
+             params: {actor_iri: freetown.page.iri, activity: {comment: 'Reason for trashing'}}
     end
 
     comment = motion.activities.last.comment

@@ -26,7 +26,7 @@ RSpec.feature 'Partial Voting', type: :feature do
       'confirm_votes',
       user_attr[:email],
       confirmationToken: /.+/,
-      motions: [{display_name: subject.display_name, option: 'con', url: subject.context_id}]
+      motions: [{display_name: subject.display_name, option: 'con', url: subject.iri}]
     )
 
     Sidekiq::Testing.inline! do

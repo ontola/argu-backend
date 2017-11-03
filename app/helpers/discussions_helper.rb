@@ -35,7 +35,7 @@ module DiscussionsHelper
     {
       createTokenUrl: '/tokens',
       createGroupUrl: page_groups_url(resource.parent_model(:page)),
-      currentActor: current_user.context_id,
+      currentActor: current_user.iri,
       forumEdge: resource.parent_edge(:forum).id,
       forumName: resource.parent_model(:forum).display_name,
       forumNames: resource.parent_model(:page).forums.pluck(:name).join(', '),
@@ -43,7 +43,7 @@ module DiscussionsHelper
       managedProfiles: managed_profiles_list,
       message: t('tokens.discussion.default_message', resource: resource.display_name),
       pageEdge: resource.parent_edge(:page).id,
-      resource: resource.context_id,
+      resource: resource.iri,
       roles: Grant.roles.except('manager', 'staff').map do |role, _|
         {label: t("roles.types.#{role}").capitalize, value: role}
       end

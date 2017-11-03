@@ -107,7 +107,7 @@ class RegistrationsController < Devise::RegistrationsController
         confirmationToken: user.confirmation_token,
         motions: guest_votes.map do |guest_vote|
           m = guest_vote.resource.parent_model(:motion)
-          {display_name: m.display_name, url: m.context_id, option: guest_vote.resource.for}
+          {display_name: m.display_name, url: m.iri, option: guest_vote.resource.for}
         end
       )
     elsif resource.password.present?

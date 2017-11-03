@@ -37,7 +37,7 @@ class Profile < ApplicationRecord
            foreign_key: 'creator_id',
            dependent: :restrict_with_exception
 
-  delegate :context_id, to: :profileable
+  delegate :iri, to: :profileable
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}

@@ -23,13 +23,13 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   test 'guest should get show organization of public motion' do
-    get :show, params: {iri: motion.context_id, format: :json_api}
+    get :show, params: {iri: motion.iri, format: :json_api}
 
     assert_response 200
   end
 
   test 'guest should get show organization of hidden motion' do
-    get :show, params: {iri: helsinki_motion.context_id, format: :json_api}
+    get :show, params: {iri: helsinki_motion.iri, format: :json_api}
 
     assert_not_authorized
   end
@@ -70,7 +70,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'user should get show organization of public motion' do
     sign_in user
 
-    get :show, params: {iri: motion.context_id, format: :json_api}
+    get :show, params: {iri: motion.iri, format: :json_api}
 
     assert_response 200
   end
@@ -78,7 +78,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'user should get show organization of hidden motion' do
     sign_in user
 
-    get :show, params: {iri: helsinki_motion.context_id, format: :json_api}
+    get :show, params: {iri: helsinki_motion.iri, format: :json_api}
 
     assert_not_authorized
   end
@@ -114,7 +114,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'member should get show organization of hidden motion' do
     sign_in member
 
-    get :show, params: {iri: helsinki_motion.context_id, format: :json_api}
+    get :show, params: {iri: helsinki_motion.iri, format: :json_api}
 
     assert_response 200
   end

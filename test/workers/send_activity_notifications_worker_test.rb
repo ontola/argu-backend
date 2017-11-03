@@ -132,7 +132,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
         {
           notifications: WebMock::Matchers::AnyArgMatcher.new(false),
           follow_id: nil,
-          followable: {display_name: motion.display_name, id: motion.context_id, pro: nil, type: 'Motion'},
+          followable: {display_name: motion.display_name, id: motion.iri, pro: nil, type: 'Motion'},
           organization: {display_name: motion.forum.page.display_name}
         }
       ]

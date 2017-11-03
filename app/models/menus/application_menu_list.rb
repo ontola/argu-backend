@@ -5,11 +5,6 @@ class ApplicationMenuList < MenuList
   cattr_accessor :defined_menus
   has_menus %i[organizations]
 
-  def context_id
-    "https://#{Rails.application.config.host_name}/menus"
-  end
-  alias id context_id
-
   def iri
     RDF::IRI.new expand_uri_template('menus_iri')
   end
@@ -49,7 +44,7 @@ class ApplicationMenuList < MenuList
         page.url,
         image: page.profile.try(:default_profile_photo),
         label: page.display_name,
-        href: page.context_id
+        href: page.iri
       )
     end
   end

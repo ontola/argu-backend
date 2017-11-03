@@ -18,7 +18,6 @@ class Activity < PublicActivity::Activity
   belongs_to :forum
 
   alias_attribute :happened_at, :created_at
-  alias context_id id
 
   validates :key, presence: true
   validates :trackable, :trackable_edge, :recipient, :recipient_edge, :owner,

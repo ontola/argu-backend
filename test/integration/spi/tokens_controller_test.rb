@@ -146,7 +146,7 @@ module SPI
       assert_not_nil token['user']
       assert_equal 'user', token['user']['type']
       assert_equal user.id, token['user']['id']
-      assert_equal user.context_id, token['user']['@id']
+      assert_equal user.iri, token['user']['@id']
       assert_equal user.email, token['user']['email']
     end
   end

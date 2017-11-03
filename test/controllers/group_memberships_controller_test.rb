@@ -314,7 +314,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_difference 'GroupMembership.count', 1 do
       post :create,
            params: {
-             actor_iri: freetown.page.context_id,
+             actor_iri: freetown.page.iri,
              group_id: group,
              shortname: user.url,
              r: settings_forum_path(freetown.url, tab: :groups)

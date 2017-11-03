@@ -40,10 +40,10 @@ class SendActivityNotificationsWorker
     return if followable_edge.nil?
 
     result[followable_edge.id] ||= Struct::Follow.new(
-      @user.follow_for(followable_edge)&.context_id,
+      @user.follow_for(followable_edge)&.iri,
       {display_name: followable_edge.root.display_name},
       {
-        id: followable_edge.owner.context_id,
+        id: followable_edge.owner.iri,
         display_name: followable_edge.display_name,
         pro: followable_edge.owner.try(:pro),
         type: followable_edge.owner_type
@@ -53,12 +53,12 @@ class SendActivityNotificationsWorker
     result[followable_edge.id].notifications << {
       action: activity.action,
       content: activity.comment || trackable_edge.content,
-      id: trackable_edge.owner.context_id,
+      id: trackable_edge.owner.iri,
       display_name: trackable_edge.display_name,
       pro: trackable_edge.owner.try(:pro),
       type: trackable_edge.owner_type,
       creator: {
-        id: activity.owner.context_id,
+        id: activity.owner.iri,
         thumbnail: activity.owner.default_profile_photo.thumbnail,
         display_name: activity.owner.display_name
       }

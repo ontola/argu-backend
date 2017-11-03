@@ -17,12 +17,6 @@ class ApplicationRecord < ActiveRecord::Base
     name.tableize
   end
 
-  def context_id
-    Rails.application.routes.url_helpers.url_for(action: 'show', controller: class_name, id: id)
-  rescue ActionController::UrlGenerationError
-    id
-  end
-
   def edited?
     updated_at - 2.minutes > created_at
   end

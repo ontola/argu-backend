@@ -50,7 +50,7 @@ module SPI
 
     test 'guest should not show page actor as iri' do
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.context_id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
       )
 
       assert_response 403
@@ -66,7 +66,7 @@ module SPI
 
     test 'guest should not show user actor as iri' do
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show'
       )
 
       assert_response 403
@@ -107,7 +107,7 @@ module SPI
       sign_in user
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.context_id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
       )
 
       assert_response 403
@@ -124,7 +124,7 @@ module SPI
     test 'user should show user actor as iri' do
       sign_in user
 
-      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show')
+      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show')
 
       assert_response 200
     end
@@ -181,7 +181,7 @@ module SPI
       sign_in manager
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.context_id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
       )
 
       assert_response 200
@@ -198,7 +198,7 @@ module SPI
     test 'manager should not show user actor as iri' do
       sign_in manager
 
-      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.context_id, authorize_action: 'show')
+      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show')
 
       assert_response 403
     end

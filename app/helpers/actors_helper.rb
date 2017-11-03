@@ -14,7 +14,7 @@ module ActorsHelper
     {
       label: profile.display_name,
       image: profile.default_profile_photo.url(:icon),
-      value: profile.profileable.context_id
+      value: profile.profileable.iri
     }
   end
 end

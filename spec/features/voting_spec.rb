@@ -17,7 +17,7 @@ RSpec.feature 'Voting', type: :feature do
       'confirm_votes',
       user_attr[:email],
       confirmationToken: /.+/,
-      motions: [{display_name: motion.display_name, option: 'con', url: motion.context_id}]
+      motions: [{display_name: motion.display_name, option: 'con', url: motion.iri}]
     )
 
     visit motion_path(motion)

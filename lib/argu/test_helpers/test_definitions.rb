@@ -24,7 +24,7 @@ module Argu
                          **opts)
         parent = send(parent) if parent.is_a?(Symbol)
         attributes = default_create_attributes(parent: parent).merge(attributes)
-        actor_iri = send(opts[:actor])&.context_id if opts[:actor].present?
+        actor_iri = send(opts[:actor])&.iri if opts[:actor].present?
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           post create_path(parent),
