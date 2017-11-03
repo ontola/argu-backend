@@ -15,13 +15,13 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
     get media_object_path(media_object, format: :json_api)
 
     assert_response 200
-    assert_equal 'schema:MediaObject', parsed_body['data']['attributes']['@type']
+    assert_equal NS::SCHEMA[:MediaObject].to_s, parsed_body['data']['attributes']['type']
   end
 
   test 'Guest should get show ImageObject' do
     get media_object_path(image_object, format: :json_api)
 
     assert_response 200
-    assert_equal 'schema:ImageObject', parsed_body['data']['attributes']['@type']
+    assert_equal NS::SCHEMA[:ImageObject].to_s, parsed_body['data']['attributes']['type']
   end
 end

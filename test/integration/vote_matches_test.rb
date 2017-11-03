@@ -75,8 +75,8 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         voteables: [
-          {item_type: 'argu:Motion', item_iri: 'https://example.com/a'},
-          {item_type: 'argu:Motion', item_iri: 'https://example.com/b'}
+          {item_type: NS::ARGU[:Motion], item_iri: 'https://example.com/a'},
+          {item_type: NS::ARGU[:Motion], item_iri: 'https://example.com/b'}
         ]
       },
       differences: [['VoteMatch', 1]]
@@ -95,8 +95,8 @@ class VoteMatchesTest < ActionDispatch::IntegrationTest
     options = {
       attributes: {
         voteables: [
-          {item_type: 'argu:Motion', item_iri: 'https://example.com/a'},
-          {item_type: 'argu:Motion', item_iri: 'https://example.com/b'}
+          {item_type: NS::ARGU[:Motion], item_iri: 'https://example.com/a'},
+          {item_type: NS::ARGU[:Motion], item_iri: 'https://example.com/b'}
         ]
       },
       differences: []
