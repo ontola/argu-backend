@@ -556,4 +556,27 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_redirected_to forum_path(freetown)
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
   end
+
+  ####################################
+  # Locking
+  ####################################
+  test 'User should lock after exceeding failed_attempts limit' do
+    create_email_mock('unlock_instructions', user.email, token: /.+/)
+
+    user.update!(failed_attempts: 19)
+    assert_no_difference('Doorkeeper::AccessToken.count') do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             email: user.email,
+             password: 'wrong',
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+
+    assert_email_sent
+  end
 end
