@@ -17,7 +17,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w[
   essential.css
   dist/controllers/*.js
-  mail.css
   testing.css
   turbolinks/dist/turbolinks.js
 ]

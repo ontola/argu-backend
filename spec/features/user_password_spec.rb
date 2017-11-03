@@ -131,7 +131,7 @@ RSpec.feature 'User Password', type: :feature do
       expect(page).to have_content('You will receive an email shortly with instructions to reset your password.')
     end
 
-    match = assert_email_send(skip_sidekiq: true)
+    match = assert_email_sent(skip_sidekiq: true)
     token = Rack::Utils.parse_nested_query(match.body)['email']['options']['token']
     visit edit_user_password_path(reset_password_token: token)
 

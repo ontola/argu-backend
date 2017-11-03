@@ -23,7 +23,13 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
       .where(t_notifications[:send_mail_after].lt(DateTime.current))
       .each do |notification|
       notification.update!(send_mail_after: nil)
-      NotificationsMailer.try(notification.notification_type, notification)&.deliver
+      Argu::API
+        .service_api
+        .create_email(
+          notification.notification_type,
+          notification.user,
+          token: user.primary_email_record.confirmation_token
+        )
     end
   end
 end

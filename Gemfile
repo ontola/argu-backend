@@ -64,11 +64,8 @@ gem 'http_accept_language'
 gem 'browser'
 gem 'addressable', '~> 2.3.8'
 gem 'auto_strip_attributes', '~> 2.0.6'
-gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
-gem 'roadie', '~> 3.2.2'
-gem 'roadie-rails', '~> 1.2.1'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list', '~> 0.7.2'
@@ -127,7 +124,6 @@ group :test do
   gem 'rspec-rails', '~> 3.5.2'
   gem 'rspec-retry'
   gem 'capybara', '~> 2.15.4'
-  gem 'capybara-email', '~> 2.5.0'
   gem 'selenium-webdriver', '~> 3.6.0'
   gem 'chromedriver-helper', '~> 1.1.0'
   gem 'mocha'
@@ -142,6 +138,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock', '~> 2.3.2'
   gem 'rails-controller-testing'
+  gem 'rack-test', '~> 0.6.2'
 end
 
 group :development, :test do
@@ -174,7 +171,6 @@ group :production, :staging do
   gem 'libv8', '~> 3.16.14.13'
   gem 'therubyracer', '~> 0.12.3'
   gem 'unicorn', '5.0.1'
-  gem 'rack-test', '~> 0.6.2'
 end
 
 group :staging, :development do

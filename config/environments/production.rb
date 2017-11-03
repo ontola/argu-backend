@@ -73,17 +73,7 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "argu_#{Rails.env}"
-  config.action_mailer.perform_caching = false
-
-  config.action_mailer.default_url_options = {host: "https://#{config.host_name}"}
-  config.roadie.url_options = {host: 'argu.co', scheme: 'https'}
-  config.action_mailer.asset_host = nil
-
-  config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.mailgun_settings = {
-    api_key: Rails.application.secrets.mailgun_api_token,
-    domain: Rails.application.secrets.mailgun_domain
-  }
+  config.action_mailer.delivery_method = :test
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

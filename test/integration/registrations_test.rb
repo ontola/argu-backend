@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'capybara/email'
 
 class RegistrationsTest < ActionDispatch::IntegrationTest
-  include Capybara::Email::DSL
   include TestHelper
 
   setup do
@@ -55,7 +53,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'should post create en' do
-    clear_emails
     locale = :en
     cookies[:locale] = locale.to_s
     create_email_mock('confirmation', 'test@example.com', confirmationToken: /.+/)
@@ -164,7 +161,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     locale = :en
     cookies[:locale] = locale.to_s
-    clear_emails
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],

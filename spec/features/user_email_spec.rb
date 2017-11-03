@@ -6,10 +6,6 @@ RSpec.feature 'User email' do
   define_freetown
   let(:user) { create(:user) }
 
-  background do
-    clear_emails
-  end
-
   scenario 'User adds email address' do
     sign_in user
     new_email = 'new_email@example.com'
