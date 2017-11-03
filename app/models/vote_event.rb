@@ -3,7 +3,6 @@
 class VoteEvent < Edgeable::Base
   belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events
   belongs_to :forum
-  belongs_to :group
   belongs_to :publisher, class_name: 'User', required: true
   edge_tree_has_many :votes
 
@@ -16,7 +15,7 @@ class VoteEvent < Edgeable::Base
   delegate :is_trashed?, to: :parent_model
 
   def display_name
-    group_id == Group::PUBLIC_ID ? 'Argu voting' : "Voting by #{group.name}"
+    'Argu voting'
   end
 
   def stats

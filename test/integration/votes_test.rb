@@ -66,13 +66,11 @@ class VotesTest < ActionDispatch::IntegrationTest
   let(:vote_event) do
     create(:vote_event,
            parent: motion.edge,
-           group: create(:group, parent: freetown.page.edge),
            edge_attributes: {expires_at: 1.day.from_now})
   end
   let(:closed_vote_event) do
     create(:vote_event,
            parent: motion.edge,
-           group: create(:group, parent: freetown.page.edge),
            edge_attributes: {expires_at: DateTime.current})
   end
   let(:creator) { create(:user) }
@@ -529,7 +527,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'user should post create json_api on vote_event' do
     sign_in user
-    create(:group_membership, parent: vote_event.group, member: user.profile)
+    vote_event
 
     assert_differences([['Vote.count', 1],
                         ['Edge.count', 1],
@@ -552,31 +550,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert assigns(:create_service).resource.pro?
   end
 
-  test 'user should not post create json_api on vote_event without group_membership' do
-    sign_in user
-    vote_event
-
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 0],
-                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
-      post vote_event_votes_path(vote_event),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           }
-    end
-    assert_not_authorized
-  end
-
   test 'user should not post create json_api on closed vote_event' do
     sign_in user
-    create(:group_membership, parent: closed_vote_event.group, member: user.profile)
+    closed_vote_event
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
