@@ -25,8 +25,8 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   else
     CarrierWave.configure do |config|
       config.storage    = :aws
-      config.aws_bucket = 'argu-logos'
-      config.asset_host = 'https://argu-logos.s3.amazonaws.com'
+      config.aws_bucket = ENV['AWS_BUCKET'] || 'argu-logos'
+      config.asset_host = "https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com"
       config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
       config.aws_credentials = {
@@ -69,7 +69,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
       signer = Aws::S3::Presigner.new
       key = URI.parse(unsigned_url).path
       key.slice!(0)
-      signer.presigned_url(:get_object, bucket: 'argu-logos', key: key)
+      signer.presigned_url(:get_object, bucket: ENV['AWS_BUCKET'] || 'argu-logos', key: key)
     end
   end
 
