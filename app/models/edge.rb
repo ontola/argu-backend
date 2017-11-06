@@ -104,7 +104,7 @@ class Edge < ApplicationRecord
   has_ltree_hierarchy
 
   attr_writer :root
-  delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
+  delegate :creator, :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
 
   def arguments_pro
     @arguments_pro ||= active_arguments.select(&:pro?)
@@ -116,6 +116,14 @@ class Edge < ApplicationRecord
 
   def content
     owner.try(:content) || owner.try(:body)
+  end
+
+  def iri
+    RDF::IRI.new expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", **iri_opts)
+  end
+
+  def iri_opts
+    {id: owner_id}
   end
 
   # @return [Array] The ids of (persisted) ancestors, excluding self
@@ -156,6 +164,7 @@ class Edge < ApplicationRecord
   end
 
   def parent_edge(type)
+    return parent if type.nil?
     return self if owner_type == type.to_s.classify
     return persisted_edge&.parent_edge(type) unless persisted?
     if type == :page
@@ -168,7 +177,7 @@ class Edge < ApplicationRecord
     end
   end
 
-  def parent_model(type)
+  def parent_model(type = nil)
     parent_edge(type)&.owner
   end
 
