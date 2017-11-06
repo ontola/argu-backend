@@ -26,7 +26,6 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     CarrierWave.configure do |config|
       config.storage    = :aws
       config.aws_bucket = 'argu-logos'
-      config.aws_acl    = :private
       config.asset_host = 'https://argu-logos.s3.amazonaws.com'
       config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
@@ -35,13 +34,6 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
         secret_access_key: Rails.application.secrets.aws_key,
         region:            'eu-central-1'
       }
-
-      config.aws_signer = lambda do |unsigned_url, _options|
-        signer = Aws::S3::Presigner.new
-        key = URI.parse(unsigned_url).path
-        key.slice!(0)
-        signer.presigned_url(:get_object, bucket: 'argu-logos', key: key)
-      end
     end
     storage :aws
   end
@@ -65,6 +57,20 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   version :icon, if: :is_image? do
     process convert: 'jpeg'
     process resize_to_fill: [64, 64]
+  end
+
+  def aws_acl
+    public_content? ? 'public-read' : 'private'
+  end
+
+  def aws_signer
+    return if Rails.env.development? || Rails.env.test? || public_content?
+    lambda do |unsigned_url, _options|
+      signer = Aws::S3::Presigner.new
+      key = URI.parse(unsigned_url).path
+      key.slice!(0)
+      signer.presigned_url(:get_object, bucket: 'argu-logos', key: key)
+    end
   end
 
   def cover_photo?(_file = nil)
@@ -109,6 +115,10 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
     else
       MediaObjectUploader::IMAGE_TYPES
     end
+  end
+
+  def public_content?
+    model.profile_photo?
   end
 
   # Override the directory where uploaded files will be stored.
