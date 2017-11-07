@@ -46,6 +46,7 @@
     "react-dom": "^0.14.8",
     "react-dropzone": "^3.4.0",
     "react-images": "0.5.4",
+    "react-js-pagination": "^3.0.0",
     "react-leaflet": "^1.4.1",
     "react-onclickoutside": "^4.1.0",
     "react-rangeslider": "^2.1.0",

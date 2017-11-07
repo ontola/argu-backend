@@ -3,6 +3,7 @@ nl:
     invite: "Uitnodigen"
     generate: "Genereer link"
     loading: "Laden..."
+    total: "Totaal: %{total}"
     retract:
       button: "intrekken"
       confirm: "Weet je zeker dat je deze link wil intrekken?"

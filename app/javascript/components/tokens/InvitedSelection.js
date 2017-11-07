@@ -5,8 +5,10 @@ import I18n from 'i18n-js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import { AsyncCreatable } from 'react-select';
 import 'whatwg-fetch';
+import Pagination from 'react-js-pagination';
 
 const FETCH_TIMEOUT_AMOUNT = 500;
+const PAGE_SIZE = 50;
 
 export const InvitedSelection = React.createClass({
     propTypes: {
@@ -17,7 +19,8 @@ export const InvitedSelection = React.createClass({
 
     getInitialState () {
         return {
-            value: ''
+            value: '',
+            page: 1
         }
     },
 
@@ -53,6 +56,10 @@ export const InvitedSelection = React.createClass({
             }
             this.props.handleInvitedChange(values);
         }
+    },
+
+    handlePageChange(pageNumber) {
+        this.setState({page: pageNumber});
     },
 
     invalidEmail (email) {
@@ -162,9 +169,22 @@ export const InvitedSelection = React.createClass({
     },
 
     render () {
-        const currentValues = this.props.values.map(value => {
+        const currentValues = this.props.values.slice((this.state.page - 1) * PAGE_SIZE, this.state.page * PAGE_SIZE).map(value => {
             return <div className="invite-selection" key={value.value}>{this.selectionRenderer(value)}</div>;
         });
+        let pagination;
+        if (this.props.values.length > PAGE_SIZE) {
+            pagination = <div>
+                <Pagination
+                    activePage={this.state.page}
+                    innerClass="react-pagination"
+                    itemsCountPerPage={PAGE_SIZE}
+                    totalItemsCount={this.props.values.length}
+                    pageRangeDisplayed={5}
+                    onChange={::this.handlePageChange}/>
+                <div>{I18n.t('tokens.total', { total: this.props.values.length })}</div>
+            </div>;
+        }
 
         return (
             <div className="select-users-and-emails">
@@ -181,6 +201,7 @@ export const InvitedSelection = React.createClass({
                     shouldKeyDownEventCreateNewOption={this.shouldKeyDownEventCreateNewOption}
                     value={this.state.value}/>
                 <div>{currentValues}</div>
+                {pagination}
             </div>
         );
     }
