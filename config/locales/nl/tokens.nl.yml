@@ -29,8 +29,9 @@ nl:
       default_message: "Ik nodig je uit om lid te worden van de groep '%{group}'."
       has_invalid: "Bevat incorrecte email(s)"
       placeholder: "Zoek gebruiker(s) of voer email-adres(sen) in"
-      delivery_failed: "Mail kon niet worden afgeleverd"
-      pending: "Bezig met het versturen van de mail"
+      status:
+        delivery_failed: "Mail kon niet worden afgeleverd"
+        pending: "Bezig met het versturen van de mail"
     discussion:
       title: "Mensen uitnodigen"
       description: "Nodig mensen uit om mee te denken."
