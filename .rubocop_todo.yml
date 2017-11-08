@@ -73,6 +73,7 @@ Metrics/MethodLength:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/motions_controller.rb'
     - 'app/controllers/profiles_controller.rb'
+    - 'app/controllers/test/bearer_tokens_controller.rb'
     - 'app/helpers/header_helper.rb'
     - 'app/helpers/menu_helper.rb'
     - 'lib/argu/test_helpers/test_definitions.rb'

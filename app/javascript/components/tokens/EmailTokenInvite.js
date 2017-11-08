@@ -20,20 +20,14 @@ export const EmailTokenInvite = React.createClass({
     getInitialState () {
         return {
             currentActor: this.props.currentActor,
+            shouldLoadPage: false,
             message: this.props.message,
-            tokens: undefined,
             values: []
         };
     },
 
     componentDidMount () {
-        const { indexTokenUrl } = this.props;
-        fetch(`${indexTokenUrl}/g/${this.props.groupId}`, safeCredentials())
-            .then(statusSuccess)
-            .then(json)
-            .then(data => {
-                this.setState({ tokens: data.data });
-            });
+        this.setState({ shouldLoadPage: true });
     },
 
     createTokens () {
@@ -57,12 +51,9 @@ export const EmailTokenInvite = React.createClass({
             }))
             .then(statusSuccess)
             .then(json)
-            .then(data => {
+            .then(() => {
                 new Alert(I18n.t('tokens.email.success'), 'success', true);
-                this.setState({
-                    tokens: this.state.tokens.concat(data.data),
-                    values: []
-                });
+                this.setState({ values: [], shouldLoadPage: true });
             });
     },
 
@@ -72,6 +63,10 @@ export const EmailTokenInvite = React.createClass({
 
     handleMessageChange (e) {
         this.setState({ message: e.target.value });
+    },
+
+    handlePageLoaded () {
+        this.setState({ shouldLoadPage: false });
     },
 
     handleRemoveInvited (e) {
@@ -89,10 +84,8 @@ export const EmailTokenInvite = React.createClass({
         this.setState({ currentActor: value.value })
     },
 
-    onRetract (token) {
-        this.setState({
-            tokens: this.state.tokens.filter(i => { return i.id !== token.id })
-        });
+    onRetract () {
+        this.setState({ shouldLoadPage: true });
     },
 
     valueRenderer (obj) {
@@ -145,8 +138,10 @@ export const EmailTokenInvite = React.createClass({
                 <TokenList
                     columns={['invitee', 'createdAt', 'isRead']}
                     header={I18n.t('tokens.email.pending')}
-                    retractHandler={this.onRetract}
-                    tokens={this.state.tokens}/>
+                    onPageLoaded={this.handlePageLoaded}
+                    shouldLoadPage={this.state.shouldLoadPage}
+                    iri={`${this.props.indexTokenUrl}/g/${this.props.groupId}`}
+                    retractHandler={this.onRetract}/>
             </div>
         );
     }

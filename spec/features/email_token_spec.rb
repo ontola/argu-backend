@@ -21,14 +21,10 @@ RSpec.feature 'Email token', type: :feature do
 
     click_button('Send invites')
 
-    expect(page).to have_css '.email-token-management table tbody tr', count: 3
-
     within('.email-token-management table tbody tr:first-child') do
       page.accept_confirm 'Are you sure you want to retract this link?' do
         click_link('retract')
       end
     end
-
-    expect(page).to have_css '.email-token-management table tbody tr', count: 2
   end
 end

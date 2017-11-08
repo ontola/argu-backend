@@ -13,18 +13,12 @@ export const BearerTokens = React.createClass({
 
     getInitialState () {
         return {
-            tokens: undefined
+            shouldLoadPage: false
         };
     },
 
     componentDidMount () {
-        const { indexTokenUrl } = this.props;
-        fetch(`${indexTokenUrl}/g/${this.props.groupId}`, safeCredentials())
-            .then(statusSuccess)
-            .then(json)
-            .then(data => {
-                this.setState({ tokens: data.data });
-            });
+        this.setState({ shouldLoadPage: true });
     },
 
     handleCreateToken () {
@@ -43,17 +37,17 @@ export const BearerTokens = React.createClass({
               }))
             .then(statusSuccess)
             .then(json)
-            .then(data => {
-                this.setState({
-                    tokens: this.state.tokens.concat(data.data)
-                });
+            .then(() => {
+                this.setState({ shouldLoadPage: true });
             });
     },
 
-    onRetract (token) {
-        this.setState({
-            tokens: this.state.tokens.filter(i => { return i.id !== token.id })
-        });
+    handlePageLoaded () {
+        this.setState({ shouldLoadPage: false });
+    },
+
+    onRetract () {
+        this.setState({ shouldLoadPage: true });
     },
 
     render () {
@@ -61,8 +55,10 @@ export const BearerTokens = React.createClass({
             <div className="formtastic">
                 <TokenList
                     columns={['link', 'usages']}
-                    retractHandler={this.onRetract}
-                    tokens={this.state.tokens}/>
+                    onPageLoaded={this.handlePageLoaded}
+                    shouldLoadPage={this.state.shouldLoadPage}
+                    iri={`${this.props.indexTokenUrl}/g/${this.props.groupId}`}
+                    retractHandler={this.onRetract}/>
                 <fieldset className="actions">
                     <button
                         onClick={this.handleCreateToken}
