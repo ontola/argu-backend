@@ -7,7 +7,14 @@ module ActiveModelSerializers
         def initialize(subject, predicate, object)
           @subject = RDF::IRI.new subject
           @predicate = RDF::IRI.new predicate
-          @object = object.is_a?(RDF::Resource) ? object : RDF::Literal(object)
+          @object =
+            if object.is_a?(RDF::Resource)
+              object
+            elsif object.is_a?(ActiveSupport::TimeWithZone)
+              RDF::Literal(object.to_datetime)
+            else
+              RDF::Literal(object)
+            end
         end
 
         def to_s
