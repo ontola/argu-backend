@@ -27,7 +27,9 @@ class MediaObjectsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/m/#{motion.id}/media_objects", filter: {used_as: :attachment}, page: 1))
+    expect_included(
+      argu_url("/m/#{motion.id}/media_objects", filter: {used_as: :attachment}, page: 1, type: 'paginated')
+    )
     expect_included(motion.media_objects.map { |m| argu_url("/media_objects/#{m.id}") })
   end
 

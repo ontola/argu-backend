@@ -21,13 +21,19 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes"))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, page: 1))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, page: 1))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, page: 1))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", type: 'paginated'))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, type: 'paginated'))
+    expect_included(
+      argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, page: 1, type: 'paginated')
+    )
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, type: 'paginated'))
+    expect_included(
+      argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, page: 1, type: 'paginated')
+    )
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, type: 'paginated'))
+    expect_included(
+      argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, page: 1, type: 'paginated')
+    )
     expect_included(
       vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
     )
@@ -48,18 +54,36 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('members', 1)
 
     expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}") })
-    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes") })
-    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}) })
+    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", type: 'paginated') })
     expect_included(
-      motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, page: 1) }
+      motion
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, type: 'paginated') }
     )
-    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}) })
     expect_included(
-      motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, page: 1) }
+      motion
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, page: 1, type: 'paginated') }
     )
-    expect_included(motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}) })
     expect_included(
-      motion.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, page: 1) }
+      motion
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, type: 'paginated') }
+    )
+    expect_included(
+      motion
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, page: 1, type: 'paginated') }
+    )
+    expect_included(
+      motion
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, type: 'paginated') }
+    )
+    expect_included(
+      motion
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, page: 1, type: 'paginated') }
     )
     expect_included(
       vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
@@ -81,24 +105,36 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('members', 1)
 
     expect_included(linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}") })
-    expect_included(linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes") })
+    expect_included(linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", type: 'paginated') })
     expect_included(
-      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}) }
+      linked_record
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, type: 'paginated') }
     )
     expect_included(
-      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, page: 1) }
+      linked_record
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'yes'}, page: 1, type: 'paginated') }
     )
     expect_included(
-      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}) }
+      linked_record
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, type: 'paginated') }
     )
     expect_included(
-      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, page: 1) }
+      linked_record
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'other'}, page: 1, type: 'paginated') }
     )
     expect_included(
-      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}) }
+      linked_record
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, type: 'paginated') }
     )
     expect_included(
-      linked_record.vote_events.map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, page: 1) }
+      linked_record
+        .vote_events
+        .map { |ve| argu_url("/vote_events/#{ve.id}/votes", filter: {option: 'no'}, page: 1, type: 'paginated') }
     )
   end
 end

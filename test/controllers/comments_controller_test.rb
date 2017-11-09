@@ -33,7 +33,7 @@ class CommentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/a/#{argument.id}/c", page: 1))
+    expect_included(argu_url("/a/#{argument.id}/c", page: 1, type: 'paginated'))
     expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
     expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end
@@ -61,7 +61,7 @@ class CommentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/posts/#{blog_post.id}/c", page: 1))
+    expect_included(argu_url("/posts/#{blog_post.id}/c", page: 1, type: 'paginated'))
     expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
     expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end

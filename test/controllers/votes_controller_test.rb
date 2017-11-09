@@ -43,12 +43,18 @@ class VotesControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 3)
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, page: 1))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, page: 1))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}))
-    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, page: 1))
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, type: 'paginated'))
+    expect_included(
+      argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'yes'}, page: 1, type: 'paginated')
+    )
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, type: 'paginated'))
+    expect_included(
+      argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'other'}, page: 1, type: 'paginated')
+    )
+    expect_included(argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, type: 'paginated'))
+    expect_included(
+      argu_url("/vote_events/#{vote_event.id}/votes", filter: {option: 'no'}, page: 1, type: 'paginated')
+    )
     expect_included(
       vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
     )

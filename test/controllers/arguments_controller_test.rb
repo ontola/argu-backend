@@ -21,8 +21,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('commentCollection', 1)
-    expect_included(argu_url("/a/#{argument.id}/c"))
-    expect_included(argu_url("/a/#{argument.id}/c", page: 1))
+    expect_included(argu_url("/a/#{argument.id}/c", type: 'paginated'))
+    expect_included(argu_url("/a/#{argument.id}/c", page: 1, type: 'paginated'))
     expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
     expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
   end
@@ -38,8 +38,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 2)
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}))
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}))
+    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, type: 'paginated'))
+    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, type: 'paginated'))
     expect_included(motion.arguments.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
   end
@@ -52,7 +52,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, page: 1))
+    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, page: 1, type: 'paginated'))
     expect_included(motion.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.con.map { |a| argu_url("/a/#{a.id}") })
@@ -79,7 +79,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, page: 1))
+    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(motion.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.pro.map { |a| argu_url("/a/#{a.id}") })
@@ -109,8 +109,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 2)
-    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'yes'}))
-    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'no'}))
+    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'yes'}, type: 'paginated'))
+    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'no'}, type: 'paginated'))
     expect_included(linked_record.arguments.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
   end
@@ -123,7 +123,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'yes'}, page: 1))
+    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'yes'}, page: 1, type: 'paginated'))
     expect_included(linked_record.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.con.map { |a| argu_url("/a/#{a.id}") })
@@ -150,7 +150,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_relationship('members', 0)
 
     expect_relationship('views', 1)
-    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'no'}, page: 1))
+    expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(linked_record.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.pro.map { |a| argu_url("/a/#{a.id}") })
