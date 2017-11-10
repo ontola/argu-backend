@@ -65,9 +65,8 @@ class SendActivityNotificationsWorker
     }
   end
 
-  def collect_activity_notifications(lock = nil)
+  def collect_activity_notifications
     t_notifications = Notification.arel_table
-    lock = lock ? 'FOR UPDATE NOWAIT' : false
     @notifications =
       @user
         .notifications
@@ -77,7 +76,7 @@ class SendActivityNotificationsWorker
                  .and(t_notifications[:created_at]
                         .gt(@user.notifications_viewed_at || 1.year.ago)))
         .order(created_at: :desc)
-        .lock(lock)
+        .lock('FOR UPDATE NOWAIT')
   end
 
   def outside_cooldown_period

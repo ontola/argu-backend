@@ -49,7 +49,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
     assert_email_sent(skip_sidekiq: true)
 
     follower_daily.reload
-    assert_equal 0, snw.send(:collect_activity_notifications, follower_daily).length, 'Notifications will be send twice'
+    assert_equal 0, snw.send(:collect_activity_notifications).length, 'Notifications will be send twice'
   end
 
   test 'should send mail to weekly follower' do
@@ -67,7 +67,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
 
     follower_weekly.reload
     assert_equal 0,
-                 snw.send(:collect_activity_notifications, follower_weekly).length, 'Notifications will be send twice'
+                 snw.send(:collect_activity_notifications).length, 'Notifications will be send twice'
   end
 
   test 'should send multiple notifications as a digest' do
@@ -90,7 +90,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
     assert_email_sent(skip_sidekiq: true)
 
     follower.reload
-    assert_equal 0, snw.send(:collect_activity_notifications, follower).length, 'Notifications will be send twice'
+    assert_equal 0, snw.send(:collect_activity_notifications).length, 'Notifications will be send twice'
   end
 
   test 'should not send direct mail to weekly follower' do
