@@ -78,8 +78,14 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    return unless profile_photo? && model.about.respond_to?(:email) && model.about.email.present?
-    Gravatar.gravatar_url(model.about.email, size: '128x128', default: 'identicon')
+    return unless profile_photo?
+    email =
+      if model.about.try(:profileable_type) == 'Page'
+        'anonymous'
+      else
+        "#{model.about_type}_#{model.about_id}@gravatar.argu.co"
+      end
+    Gravatar.gravatar_url(email, size: '128x128', default: 'identicon')
   end
 
   def extension
