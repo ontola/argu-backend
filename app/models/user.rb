@@ -185,7 +185,7 @@ class User < ApplicationRecord
   # @param [Edge] followable The Edge to find the Follow for
   # @return [Follow, nil]
   def follow_for(followable)
-    Follow.unblocked.for_follower(self).for_followable(followable)&.first
+    Follow.unblocked.for_follower(self).find_by(followable_id: followable.id, followable_type: 'Edge')
   end
 
   # The follow_type for the followable
