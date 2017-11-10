@@ -22,6 +22,7 @@ export const EmailTokenInvite = React.createClass({
             currentActor: this.props.currentActor,
             shouldLoadPage: false,
             message: this.props.message,
+            submitting: false,
             values: []
         };
     },
@@ -33,6 +34,7 @@ export const EmailTokenInvite = React.createClass({
     createTokens () {
         const { createTokenUrl, groupId } = this.props;
         const emails = this.state.values.map(email => { return email.value; });
+        this.setState({ submitting: true });
         fetch(createTokenUrl,
             safeCredentials({
                 method: 'POST',
@@ -53,7 +55,7 @@ export const EmailTokenInvite = React.createClass({
             .then(json)
             .then(() => {
                 new Alert(I18n.t('tokens.email.success'), 'success', true);
-                this.setState({ values: [], shouldLoadPage: true });
+                this.setState({ values: [], shouldLoadPage: true, submitting: false });
             });
     },
 
@@ -103,7 +105,7 @@ export const EmailTokenInvite = React.createClass({
             errorMessage = I18n.t('tokens.errors.no_receivers');
         }
         return (
-            <div className="formtastic">
+            <div className={`formtastic ${this.state.submitting ? 'is-loading' : ''}`}>
                 <InvitedSelection
                     handleInvitedChange={this.handleInvitedChange}
                     handleRemoveInvited={this.handleRemoveInvited}

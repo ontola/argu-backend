@@ -34,6 +34,7 @@ export const DiscussionInvite = React.createClass({
             currentGroup: null,
             groups: this.props.groups,
             message: this.props.message,
+            submitting: false,
             values: []
         };
     },
@@ -41,6 +42,7 @@ export const DiscussionInvite = React.createClass({
     createTokens () {
         const { createTokenUrl } = this.props;
         const emails = this.state.values.map(email => { return email.value; });
+        this.setState({ submitting: true });
         fetch(createTokenUrl,
             safeCredentials({
                 method: 'POST',
@@ -137,7 +139,7 @@ export const DiscussionInvite = React.createClass({
                                    roles={this.props.roles}/>;
         }
         return (
-            <div className="formtastic formtastic--full-width">
+            <div className={`formtastic formtastic--full-width ${this.state.submitting ? 'is-loading' : ''}`}>
                 <InvitedSelection
                     handleInvitedChange={this.handleInvitedChange}
                     handleRemoveInvited={this.handleRemoveInvited}

@@ -13,7 +13,8 @@ export const BearerTokens = React.createClass({
 
     getInitialState () {
         return {
-            shouldLoadPage: false
+            shouldLoadPage: false,
+            submitting: false
         };
     },
 
@@ -23,6 +24,7 @@ export const BearerTokens = React.createClass({
 
     handleCreateToken () {
         const { createTokenUrl, groupId } = this.props;
+        this.setState({ submitting: true });
         fetch(createTokenUrl,
               safeCredentials({
                   method: 'POST',
@@ -38,7 +40,7 @@ export const BearerTokens = React.createClass({
             .then(statusSuccess)
             .then(json)
             .then(() => {
-                this.setState({ shouldLoadPage: true });
+                this.setState({ shouldLoadPage: true, submitting: false });
             });
     },
 
@@ -52,7 +54,7 @@ export const BearerTokens = React.createClass({
 
     render () {
         return (
-            <div className="formtastic">
+            <div className={`formtastic ${this.state.submitting ? 'is-loading' : ''}`}>
                 <TokenList
                     columns={['link', 'usages']}
                     onPageLoaded={this.handlePageLoaded}
