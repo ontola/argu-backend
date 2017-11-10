@@ -40,7 +40,7 @@ class SendActivityNotificationsWorker
     return if followable_edge.nil?
 
     result[followable_edge.id] ||= Struct::Follow.new(
-      @user.follow_for(followable_edge)&.iri,
+      @user.follow_for(followable_edge)&.unsubscribe_iri,
       {display_name: followable_edge.root.display_name},
       {
         id: followable_edge.owner.iri,

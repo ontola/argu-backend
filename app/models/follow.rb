@@ -20,6 +20,10 @@ class Follow < ApplicationRecord
     update_attribute(:blocked, true)
   end
 
+  def unsubscribe_iri
+    RDF::IRI.new expand_uri_template('follows_unsubscribe_iri', id: id)
+  end
+
   private
 
   def terms_accepted

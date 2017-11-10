@@ -122,6 +122,10 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
            activity: argument.activities.first,
            user: user,
            created_at: 1.day.ago)
+
+    create(:follow,
+           followable: argument.activities.first.recipient_edge,
+           follower: user)
   end
 
   def notification_email_mock(user)
