@@ -73,10 +73,6 @@ class PagePolicy < EdgeablePolicy
     rule is_super_admin?, super
   end
 
-  def list?
-    rule record.closed?, show?
-  end
-
   def pages_left?
     return if user.guest?
     member if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages

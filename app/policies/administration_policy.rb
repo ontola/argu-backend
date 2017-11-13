@@ -14,8 +14,4 @@ class AdministrationPolicy < Struct.new(:context, :administration)
   def show?
     user.is_staff?
   end
-
-  def list?
-    user.is_staff?
-  end
 end

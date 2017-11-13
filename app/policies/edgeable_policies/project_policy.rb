@@ -24,14 +24,6 @@ class ProjectPolicy < EdgeablePolicy
     rule is_manager?, is_super_admin?, staff?
   end
 
-  def list?
-    if record.is_published? && !record.is_trashed?
-      rule is_member?, is_manager?, is_super_admin?, super
-    else
-      rule is_manager?, is_super_admin?, super
-    end
-  end
-
   def update?
     rule is_manager?, is_super_admin?, super
   end

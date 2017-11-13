@@ -101,11 +101,6 @@ class RestrictivePolicy
     staff? || service?
   end
 
-  # Used when items won't include nested content, this is a less restrictive version of show?
-  def list?
-    staff?
-  end
-
   def update?
     staff?
   end

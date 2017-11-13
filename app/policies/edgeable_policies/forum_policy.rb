@@ -40,7 +40,7 @@ class ForumPolicy < EdgeablePolicy
   end
 
   def list?
-    raise(ActiveRecord::RecordNotFound) unless @record.discoverable? || show?
+    raise(ActiveRecord::RecordNotFound) unless record.discoverable? || show?
     true
   end
 
