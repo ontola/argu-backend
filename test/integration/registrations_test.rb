@@ -233,6 +233,21 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
     assert_analytics_collected('registrations', 'create', 'email')
     assert_email_sent(skip_sidekiq: true)
+
+    assert_difference('Notification.confirmation_reminder.where("send_mail_after < ?", DateTime.current).count', 1) do
+      travel 2.days
+    end
+
+    create_email_mock('confirmation_reminder', attrs[:email], token: /.+/)
+
+    Sidekiq::Testing.inline! do
+      Notification
+        .where('notification_type != ?', Notification.notification_types[:confirmation_reminder])
+        .update_all(read_at: DateTime.current)
+      DirectNotificationsSchedulerWorker.new.perform
+    end
+
+    assert_email_sent(skip_sidekiq: true)
   end
 
   test "guest should not post create when passwords don't match" do

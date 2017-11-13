@@ -28,7 +28,7 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
         .create_email(
           notification.notification_type,
           notification.user,
-          token: user.primary_email_record.confirmation_token
+          token: notification.user.primary_email_record.confirmation_token
         )
     end
   end
