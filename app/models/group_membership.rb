@@ -18,7 +18,7 @@ class GroupMembership < ApplicationRecord
 
   scope :active, lambda {
     where(
-      'start_date < ? AND (end_date IS NULL OR end_date > ?)',
+      'start_date <= ? AND (end_date IS NULL OR end_date > ?)',
       DateTime.current,
       DateTime.current
     )

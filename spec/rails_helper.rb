@@ -10,7 +10,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
 require 'database_cleaner'
-require 'fakeredis'
+require 'fakeredis/rspec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
 require 'argu/test_helpers'
