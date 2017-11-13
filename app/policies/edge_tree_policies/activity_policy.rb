@@ -43,12 +43,16 @@ class ActivityPolicy < RestrictivePolicy
     end
   end
 
-  def show?
-    Pundit.policy(context, record.trackable)
-  end
+  delegate :show?, to: :edgeable_policy
 
   def permitted_attributes
     attributes = super
     attributes
+  end
+
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.trackable
   end
 end

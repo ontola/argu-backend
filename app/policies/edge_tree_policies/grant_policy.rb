@@ -10,11 +10,21 @@ class GrantPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule is_super_admin?, super
+    edgeable_policy.update?
   end
 
   def destroy?
     return if record.group_id == Group::PUBLIC_ID || record.super_admin?
-    rule is_super_admin?, staff?
+    edgeable_policy.update?
+  end
+
+  def show?
+    edgeable_policy.update?
+  end
+
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.page
   end
 end

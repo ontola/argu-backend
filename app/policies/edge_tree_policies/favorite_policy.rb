@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class FavoritePolicy < EdgeTreePolicy
+  delegate :show?, to: :edgeable_policy
+
   def create?
-    rule is_member?, is_manager?, is_super_admin?, super
+    edgeable_policy.show?
   end
 
   def destroy?
@@ -10,6 +12,10 @@ class FavoritePolicy < EdgeTreePolicy
   end
 
   private
+
+  def edgeable_record
+    @edgeable_record ||= record.edge.owner
+  end
 
   def is_creator?
     creator if record.user == user

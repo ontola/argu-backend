@@ -19,13 +19,9 @@ class GroupMembershipPolicy < EdgeTreePolicy
     end
   end
 
-  def edge
-    record.group.parent_edge(:page)
-  end
-
   def permitted_attributes
     attributes = %i[lock_version token]
-    attributes.append(:shortname) if rule(is_super_admin?, staff?)
+    attributes.append(:shortname) if edgeable_policy.update?
     attributes
   end
 
@@ -34,15 +30,19 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule valid_token?, is_super_admin?, super
+    valid_token? || edgeable_policy.update?
   end
 
   def destroy?
     return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
-    rule is_group_member?, is_super_admin?, staff?
+    is_group_member? || edgeable_policy.update?
   end
 
   private
+
+  def edgeable_record
+    @edgeable_record ||= record.page
+  end
 
   def is_group_member?
     creator if record.member == user.profile

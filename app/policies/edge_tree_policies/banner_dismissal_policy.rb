@@ -3,10 +3,6 @@
 class BannerDismissalPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 
-  def edge
-    record.banner.forum.edge
-  end
-
   def permitted_attributes
     attributes = super
     if create?
@@ -20,15 +16,15 @@ class BannerDismissalPolicy < EdgeTreePolicy
   def create?
     case record.banner.audience.to_sym
     when :guests then user.guest?
-    when :users then !user.member_of?(context_forum)
-    when :members then user.member_of?(context_forum)
+    when :users then !user.member_of?(edgeable_record)
+    when :members then user.member_of?(edgeable_record)
     when :everyone then true
     end
   end
 
   private
 
-  def context_forum
-    @context_forum ||= persisted_edge.parent_model(:forum)
+  def edgeable_record
+    @edgeable_record ||= record.banner.parent_model
   end
 end

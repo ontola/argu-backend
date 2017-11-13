@@ -7,10 +7,6 @@ class QuestionAnswerPolicy < EdgeTreePolicy
     end
   end
 
-  def edge
-    record.question.edge
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i[id motion_id question_id]
@@ -18,10 +14,16 @@ class QuestionAnswerPolicy < EdgeTreePolicy
   end
 
   def create?
-    rule is_manager?, is_super_admin?, super
+    edgeable_policy.update?
   end
 
   def shortname?
     false
+  end
+
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.question
   end
 end

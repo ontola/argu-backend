@@ -2,18 +2,6 @@
 
 class EdgeTreePolicy < RestrictivePolicy
   class Scope < RestrictivePolicy::Scope
-    def class_name
-      self.class.name.split('Policy')[0]
-    end
-
-    def resolve
-      scope
-        .joins(:edge)
-        .where("edges.path ? #{Edge.path_array(granted_edges_within_tree || user.profile.granted_edges)}")
-        .published
-        .untrashed
-    end
-
     def granted_edges_within_tree
       return unless context.has_tree?
       user.profile.granted_edges.where('path <@ ?', context.tree_root.id.to_s)
@@ -93,168 +81,20 @@ class EdgeTreePolicy < RestrictivePolicy
     end
   end
   include Roles
-  delegate :edge, to: :record
-  delegate :persisted_edge, to: :edge
-  attr_accessor :outside_tree
+  include ChildOperations
+  delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?,
+           :outside_tree, :persisted_edge, to: :edgeable_policy
 
   def initialize(context, record)
     super
-    raise('No edge avaliable in policy') unless edge
-  end
-
-  def has_expired_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
-  end
-
-  def has_trashed_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.trashed?(persisted_edge) : edge.has_trashed_ancestors?
-  end
-
-  def has_unpublished_ancestors?
-    if context.within_tree?(persisted_edge, outside_tree)
-      context.unpublished?(persisted_edge)
-    else
-      edge.has_unpublished_ancestors?
-    end
-  end
-
-  def permitted_attributes
-    attributes = super
-    if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
-        (!record.is_published? || record.argu_publication&.reactions?)
-      attributes.append(:mark_as_important)
-    end
-    attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
-    attributes
-  end
-
-  def convert?
-    false
-  end
-
-  # Checks whether creating a child of a given class is allowed
-  # Initialises a child with the given attributes and checks its policy for new?
-  # @param raw_klass [Symbol] the class of the child
-  # @param attrs [Hash] attributes used for initialising the child
-  # @return [Integer, false] The user's clearance level
-  def create_child?(raw_klass, attrs = {})
-    child_operation(:create?, raw_klass, attrs)
-  end
-
-  def destroy?
-    return super if edge.children_counts.values.map(&:to_i).sum.positive?
-    rule is_creator?, staff?
-  end
-
-  def follow?
-    rule is_spectator?, is_member?, is_super_admin?, staff?
-  end
-
-  # Checks whether indexing children of a has_many relation is allowed
-  # Initialises a child with the given attributes and checks its policy for show?
-  # @param raw_klass [Symbol] the class of the child
-  # @param attrs [Hash] attributes used for initialising the child
-  # @return [Integer, false] The user's clearance level
-  def index_children?(raw_klass, attrs = {})
-    child_operation(:show?, raw_klass, attrs)
-  end
-
-  def log?
-    rule is_manager?, is_super_admin?, staff?
-  end
-
-  def feed?
-    rule show?
-  end
-
-  def invite?
-    false
-  end
-
-  def move?
-    false
-  end
-
-  def shift?
-    move?
-  end
-
-  def trash?
-    rule is_manager?, is_super_admin?, staff?
-  end
-  alias bin? trash?
-
-  def untrash?
-    rule is_manager?, is_super_admin?, staff?
-  end
-  alias unbin? trash?
-
-  def show?
-    return show_unpublished? if has_unpublished_ancestors?
-    rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
-  end
-
-  def statistics?
-    rule is_manager?, is_super_admin?, staff?
+    raise('No edgeable record avaliable in policy') unless edgeable_record
   end
 
   private
 
-  def cache_action(action, val)
-    user_context.cache_key(edge.id, action, val)
+  def edgeable_policy
+    @edgeable_policy ||= Pundit.policy(context, edgeable_record)
   end
 
-  def change_owner?
-    staff?
-  end
-
-  def check_action(action)
-    user_context.check_key(edge.id, action)
-  end
-
-  # Initialises a child of the type {raw_klass} with the given {attrs} and checks
-  #   its policy for `{method}?`
-  # @return [Boolean] Whether the action is allowed. Returns a cached value when
-  #   the combination {method} {klass} is already evaluated.
-  def child_operation(method, raw_klass, attrs = {})
-    klass = raw_klass.to_s.classify.constantize
-    if attrs.empty?
-      cache_key = "#{method}_child_for_#{klass}?".to_sym
-      c = check_action(cache_key)
-      return c unless c.nil?
-    end
-
-    r =
-      if klass.parent_classes.include?(record.class.name.underscore.to_sym)
-        child = klass.new(attrs)
-        if child.is_a?(Edgeable::Base)
-          child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
-          child = record.edge.children.new(owner: child, is_published: true).owner
-          child.edge.persisted_edge = persisted_edge
-          child.parent_model = record
-          context.cache_node(persisted_edge) if context.within_tree?(persisted_edge, outside_tree)
-        end
-        Pundit.policy(context, child).send(method) || false
-      else
-        false
-      end
-    cache_action(cache_key, r) if attrs.empty?
-    r
-  end
-
-  def create_expired?
-    nil
-  end
-
-  def create_trashed?
-    false
-  end
-
-  def show_unpublished?
-    rule is_creator?, is_manager?, is_super_admin?, staff?, service?
-  end
-
-  def parent_policy(type = nil)
-    Pundit.policy(context, record.parent_model(type))
-  end
+  def edgeable_record; end
 end

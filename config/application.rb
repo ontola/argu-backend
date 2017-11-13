@@ -26,6 +26,7 @@ module Argu
     config.autoload_paths += %W[#{config.root}/app/serializers/base]
     config.autoload_paths += %W[#{config.root}/app/policies/edge_tree_policies]
     config.autoload_paths += %W[#{config.root}/app/policies/edgeable_policies]
+    config.autoload_paths += %W[#{config.root}/app/policies/helpers]
 
     config.paths['app/views'].unshift(Rails.root.join('lib', 'app', 'views'))
 

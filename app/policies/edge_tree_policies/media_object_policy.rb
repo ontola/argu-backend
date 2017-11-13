@@ -18,8 +18,7 @@ class MediaObjectPolicy < EdgeTreePolicy
 
   def show?
     return true if record.profile_photo?
-    return super if edge.present?
-    Pundit.policy(context, record.about).show?
+    edgeable_policy.show?
   end
 
   def permitted_attributes
@@ -29,5 +28,11 @@ class MediaObjectPolicy < EdgeTreePolicy
                          content_original_h content_original_w _destroy description]
     attributes.append(content_attributes: %i[position_y])
     attributes
+  end
+
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.about
   end
 end

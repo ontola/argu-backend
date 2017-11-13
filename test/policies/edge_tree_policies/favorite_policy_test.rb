@@ -11,6 +11,10 @@ class FavoritePolicyTest < PolicyTest
 
   private
 
+  def create_results
+    everybody_results.merge(non_member: false)
+  end
+
   def destroy_results
     nobody_results.merge(creator: true)
   end

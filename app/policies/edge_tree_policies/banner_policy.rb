@@ -16,10 +16,6 @@ class BannerPolicy < EdgeTreePolicy
     end
   end
 
-  def edge
-    record.forum.edge
-  end
-
   def permitted_attributes
     attributes = super
     if create?
@@ -31,15 +27,19 @@ class BannerPolicy < EdgeTreePolicy
     attributes
   end
 
+  delegate :update?, :show?, to: :edgeable_policy
+
   def create?
-    rule is_super_admin?, super
+    edgeable_policy.update?
   end
 
   def destroy?
-    rule is_super_admin?, staff?
+    edgeable_policy.update?
   end
 
-  def update?
-    rule is_super_admin?, super
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.forum
   end
 end

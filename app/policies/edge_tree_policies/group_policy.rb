@@ -11,10 +11,6 @@ class GroupPolicy < EdgeTreePolicy
     member if user&.profile&.is_group_member?(record.id)
   end
 
-  def edge
-    record.parent_edge
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i[name name_singular] if create?
@@ -25,32 +21,35 @@ class GroupPolicy < EdgeTreePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[members invite general grants advanced] if is_super_admin? || staff?
+    tabs.concat %i[members invite general grants advanced] if edgeable_policy.update?
     tabs
   end
+  delegate :update?, :show?, to: :edgeable_policy
 
   def show?
-    rule is_member?, is_manager?, is_super_admin?, service?, staff?
+    is_member? || service? || edgeable_policy.update?
   end
 
   def create?
-    rule is_super_admin?, super()
+    edgeable_policy.update?
   end
 
   def destroy?
     return false unless record.deletable
-    rule is_super_admin?, staff?
+    edgeable_policy.update?
   end
 
   def settings?
     update?
   end
 
-  def update?
-    rule is_super_admin?, super
-  end
-
   def default_tab
     'members'
+  end
+
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.parent_model
   end
 end

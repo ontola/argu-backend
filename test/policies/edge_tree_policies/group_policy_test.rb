@@ -30,6 +30,6 @@ class GroupPolicyTest < PolicyTest
   end
 
   def show_results
-    manager_plus_results.merge(group_member: true)
+    nobody_results.merge(super_admin: true, staff: true, group_member: true)
   end
 end

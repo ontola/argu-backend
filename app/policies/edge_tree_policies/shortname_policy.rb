@@ -1,26 +1,25 @@
 # frozen_string_literal: true
 
 class ShortnamePolicy < EdgeTreePolicy
-  def edge
-    record.forum.edge
-  end
-
   def permitted_attributes
     attributes = super
-    attributes.concat %i[shortname owner_id owner_type] if is_manager_up?
+    attributes.concat %i[shortname owner_id owner_type]
     attributes
   end
+  delegate :update?, :show?, to: :edgeable_policy
 
   def create?
-    r, m = rule is_super_admin?, super
-    return r, m if r && !record.forum.shortnames_depleted?
-  end
-
-  def update?
-    rule is_super_admin?, super
+    return if edgeable_record.shortnames_depleted?
+    edgeable_policy.update?
   end
 
   def destroy?
-    rule is_super_admin?, super
+    edgeable_policy.update?
+  end
+
+  private
+
+  def edgeable_record
+    @edgeable_record ||= record.forum
   end
 end
