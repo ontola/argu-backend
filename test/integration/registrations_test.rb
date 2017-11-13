@@ -234,17 +234,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('registrations', 'create', 'email')
     assert_email_sent(skip_sidekiq: true)
 
-    assert_difference('Notification.confirmation_reminder.where("send_mail_after < ?", DateTime.current).count', 1) do
-      travel 2.days
-    end
-
     create_email_mock('confirmation_reminder', attrs[:email], token: /.+/)
 
     Sidekiq::Testing.inline! do
       Notification
         .where('notification_type != ?', Notification.notification_types[:confirmation_reminder])
         .update_all(read_at: DateTime.current)
-      DirectNotificationsSchedulerWorker.new.perform
+      travel 2.days do
+        DirectNotificationsSchedulerWorker.new.perform
+      end
     end
 
     assert_email_sent(skip_sidekiq: true)
