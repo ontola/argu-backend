@@ -59,11 +59,11 @@ const OpinionMixin = {
                         const id = parseInt(data.data.id.split('/').pop());
                         const args = this.state.arguments.slice();
                         args.push({
-                            displayName: data.data.attributes.name,
+                            displayName: data.data.attributes.displayName,
                             id,
                             key: `arguments_${id}`,
                             url: data.data.id,
-                            body: data.data.attributes.text,
+                            body: data.data.attributes.content,
                             side: data.data.attributes.pro ? 'pro' : 'con'
                         });
                         const selectedArguments = this.state.selectedArguments.slice();
