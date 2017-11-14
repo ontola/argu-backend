@@ -89,7 +89,7 @@ export const InvitedSelection = React.createClass({
                     .then(data => {
                         callback(null, { options: this.filterUsers(data, input), complete: false });
                     }).catch(e => {
-                        Alert('Server error occured, please try again later', 'alert', true);
+                        new Alert('Server error occured, please try again later', 'alert', true);
                         Bugsnag.notifyException(e);
                         callback();
                     });

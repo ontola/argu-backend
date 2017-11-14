@@ -44,7 +44,7 @@ const SearchSelect = React.createClass({
                     .then(data => {
                         callback(null, { options: this.props.filterResults(data, input), complete: false });
                     }).catch(e => {
-                        Alert('Server error occured, please try again later', 'alert', true);
+                        new Alert('Server error occured, please try again later', 'alert', true);
                         Bugsnag.notifyException(e);
                         callback();
                     });
