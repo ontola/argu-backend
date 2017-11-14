@@ -54,7 +54,7 @@ var lint = function (paths) {
 function browserifyBundle(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
     b.transform(envify({
-        FRONTEND_URL: 'https://beta.argu.dev'
+        FRONTEND_URL: 'https://argu.dev'
     }));
 
     return b.bundle()
@@ -72,6 +72,7 @@ function browserifyBundleStaging(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
     b.transform(envify({
         _: 'purge',
+        FRONTEND_URL: 'https://leopard.argu.staging.c66.me',
         NODE_ENV: 'production'
     }), {
         global: true
@@ -87,9 +88,12 @@ function browserifyBundleStaging(bundleName, entryPoint) {
 
 function browserifyBundleProduction(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
+    if (typeof process.env.FRONTEND_HOSTNAME === 'undefined') {
+        throw new Error('NO FRONTEND_HOSTNAME GIVEN');
+    }
     b.transform(envify({
         _: 'purge',
-        FRONTEND_URL: 'https://beta.argu.co',
+        FRONTEND_URL: `https://${process.env.FRONTEND_HOSTNAME}`,
         NODE_ENV: 'production'
     }), {
         global: true

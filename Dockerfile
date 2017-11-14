@@ -50,6 +50,8 @@ ENV FRESHDESK_SECRET ''
 
 RUN npm install -g yarn
 RUN yarn
+
+ARG FRONTEND_HOSTNAME
 RUN yarn run build:production
 
 RUN bundle exec rake RAILS_ENV=production ASSET_HOST=$ASSET_HOST DEVISE_SECRET=dummy assets:precompile
