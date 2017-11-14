@@ -4,18 +4,14 @@ class OrganizationsFinderController < AuthorizedController
   def show
     organization = authenticated_resource.parent_model(:page)
     respond_to do |format|
-      format.json_api do
-        render json: organization, include: include_show
-      end
       format.n3 do
         s = ActiveModelSerializers::Adapter::N3::Triple.new(
           RDF::URI(Rails.application.routes.url_helpers.o_find_url(iri: params[:iri])),
-          NS::OWL[:sameAs],
+          NS::ARGU[:contains],
           RDF::URI(organization.iri)
         )
-        render n3: organization,
-               meta: [s],
-               include: include_show
+        render n3: Blank.new,
+               meta: [s]
       end
     end
   end
