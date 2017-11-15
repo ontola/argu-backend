@@ -35,7 +35,7 @@ gem 'tzinfo-data'
 
 gem 'rack-cors', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
-gem 'redis', '~> 3.3.3'
+gem 'redis', '~> 3.3.5'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap',

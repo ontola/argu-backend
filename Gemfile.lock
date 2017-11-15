@@ -493,7 +493,7 @@ GEM
       railties (>= 3.2)
       tilt
     redcarpet (3.3.4)
-    redis (3.3.3)
+    redis (3.3.5)
     ref (2.0.0)
     render_anywhere (0.0.12)
       rails (>= 3.0.7)
@@ -766,7 +766,7 @@ DEPENDENCIES
   rdf
   react-rails (~> 2.2.1)
   redcarpet (~> 3.3.4)
-  redis (~> 3.3.3)
+  redis (~> 3.3.5)
   render_anywhere
   rest-client
   rfc-822 (~> 0.4.1)
