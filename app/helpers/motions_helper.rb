@@ -29,6 +29,7 @@ module MotionsHelper
       actor: actor_props(actor),
       argumentUrl: motion_arguments_path(motion),
       arguments: motion_vote_arguments(motion),
+      argumentsDisabled: !policy(motion).create_child?(:arguments),
       buttonsType: opts.fetch(:buttons_type, 'big'),
       currentVote: vote.try(:for) || 'abstain',
       currentExplanation: current_explanation_props(vote),

@@ -20,6 +20,7 @@ const OpinionContainerProps = {
         displayName: React.PropTypes.string,
         side: React.PropTypes.string
     })),
+    argumentsDisabled: React.PropTypes.bool.isRequired,
     buttonsType: React.PropTypes.string.isRequired,
     createArgument: React.PropTypes.object.isRequired,
     currentExplanation: React.PropTypes.object.isRequired,
@@ -52,6 +53,7 @@ const OpinionContainer = props => {
         component = <OpinionSignUp {...props}/>;
     } else if (props.currentVote === 'abstain' && props.buttonsType !== 'big') {
         component = <ArgumentsList arguments={props.arguments}
+                                   argumentsDisabled={props.argumentsDisabled}
                                    showAllArguments={props.showAllArguments}
                                    onShowAllArguments={props.onShowAllArguments}
                                    onOpenArgumentForm={props.onOpenArgumentForm}/>
@@ -59,6 +61,7 @@ const OpinionContainer = props => {
         component = <OpinionForm {...props}/>;
     } else if (props.buttonsType !== 'big') {
         component = <ArgumentsList arguments={props.arguments}
+                                   argumentsDisabled={props.argumentsDisabled}
                                    showAllArguments={props.showAllArguments}
                                    onShowAllArguments={props.onShowAllArguments}
                                    onOpenArgumentForm={props.onOpenArgumentForm}/>

@@ -16,6 +16,7 @@ export const ArgumentsList = React.createClass({
             side: React.PropTypes.string,
             url: React.PropTypes.string
         })),
+        argumentsDisabled: React.PropTypes.bool.isRequired,
         onOpenArgumentForm: React.PropTypes.func.isRequired,
         onShowAllArguments: React.PropTypes.func.isRequired,
         showAllArguments: React.PropTypes.bool.isRequired
@@ -111,6 +112,9 @@ export const ArgumentsList = React.createClass({
             return (
               this.showMoreButton(side, count)
             );
+        }
+        if (this.props.argumentsDisabled) {
+            return <span/>;
         }
         return (
           this.addArgumentButton(side)

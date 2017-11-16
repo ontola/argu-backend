@@ -19,6 +19,7 @@ export const VoteContainer = React.createClass({
         actor: React.PropTypes.object,
         argumentUrl: React.PropTypes.string,
         arguments: React.PropTypes.array,
+        argumentsDisabled: React.PropTypes.bool,
         buttonsType: React.PropTypes.string,
         currentExplanation: React.PropTypes.object,
         currentVote: React.PropTypes.string,
@@ -97,6 +98,7 @@ export const VoteContainer = React.createClass({
                                        argumentUrl={this.props.argumentUrl}
                                        argumentForm={this.state.argumentForm}
                                        arguments={this.state.arguments}
+                                       argumentsDisabled={this.props.argumentsDisabled}
                                        buttonsType={this.props.buttonsType}
                                        createArgument={this.state.createArgument}
                                        currentExplanation={this.state.currentExplanation}
