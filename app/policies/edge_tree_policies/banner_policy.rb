@@ -7,8 +7,6 @@ class BannerPolicy < EdgeTreePolicy
       audience <<
         if user.guest?
           Banner.audiences[:guests]
-        elsif user.member_of?(scope.build.forum)
-          Banner.audiences[:members]
         else
           Banner.audiences[:users]
         end

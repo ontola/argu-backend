@@ -20,7 +20,7 @@ RSpec.feature 'Banners', type: :feature do
            title: 'ended_banner')
   end
 
-  %i[guests users members everyone].each do |audience|
+  %i[guests users everyone].each do |audience|
     let!("banner_#{audience}".to_sym) do
       create(:banner,
              published_at: 1.hour.ago,
@@ -69,8 +69,6 @@ RSpec.feature 'Banners', type: :feature do
                     "Guest doesn't see guests banners"
     expect(page).not_to have_content(banner_users.title),
                         'Guest sees user banners'
-    expect(page).not_to have_content(banner_members.title),
-                        'Guest sees member banners'
     expect(page).not_to have_content(unpublished_banner.title),
                         'Unpublished visible for guests'
     expect(page).not_to have_content(ended_banner.title),
@@ -112,8 +110,6 @@ RSpec.feature 'Banners', type: :feature do
                         'User sees guests banners'
     expect(page).to have_content(banner_users.title),
                     "User doesn't see users banners"
-    expect(page).not_to have_content(banner_members.title),
-                        'User sees members banners'
     expect(page).not_to have_content(unpublished_banner.title),
                         'Unpublished visible for users'
     expect(page).not_to have_content(ended_banner.title),
@@ -150,32 +146,6 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(spain) }
-
-  scenario 'Member sees everyone banners' do
-    sign_in(member)
-    question = spain.questions.first
-    visit question_path question
-    expect(page).to have_content(question.title),
-                    'page not loaded correctly to run expectations'
-
-    expect(page).to have_content(banner_everyone.title),
-                    "Member doesn't see everyone banners"
-    expect(page).not_to have_content(banner_guests.title),
-                        'Member sees guests banners'
-    expect(page).not_to have_content(banner_users.title),
-                        'Member sees users banners'
-    expect(page).to have_content(banner_members.title),
-                    "Member doesn't see members banners"
-    expect(page).not_to have_content(unpublished_banner.title),
-                        'Unpublished visible for members'
-    expect(page).not_to have_content(ended_banner.title),
-                        'Ended visible for members'
-  end
-
-  ####################################
   # As Staff
   ####################################
   let(:staff) { create(:user, :staff) }
@@ -206,7 +176,7 @@ RSpec.feature 'Banners', type: :feature do
 
     visit settings_forum_path(spain, tab: :banners)
     within('#banners-published') do
-      %i[guests users members everyone].each do |level|
+      %i[guests users everyone].each do |level|
         expect(page).to have_content(send("banner_#{level}").title)
       end
     end

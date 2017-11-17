@@ -16,8 +16,7 @@ class BannerDismissalPolicy < EdgeTreePolicy
   def create?
     case record.banner.audience.to_sym
     when :guests then user.guest?
-    when :users then !user.member_of?(edgeable_record)
-    when :members then user.member_of?(edgeable_record)
+    when :users then !user.guest?
     when :everyone then true
     end
   end

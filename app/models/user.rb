@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   attr_accessor :current_password, :confirmation_string, :tab
 
-  delegate :description, :member_of?, to: :profile
+  delegate :description, to: :profile
 
   enum reactions_email: {
     never_reactions_email: 0,

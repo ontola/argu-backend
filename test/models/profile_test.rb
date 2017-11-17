@@ -22,11 +22,6 @@ class ProfileTest < ActiveSupport::TestCase
     assert_equal "#{subject.profileable.first_name} #{subject.profileable.last_name}", subject.display_name
   end
 
-  test 'member_of? function' do
-    assert subject.member_of?(freetown), 'false negative when forum is passed'
-    assert_not subject.member_of?(capetown), 'false positive when forum is passed'
-  end
-
   test 'granted_edges' do
     capetown
 

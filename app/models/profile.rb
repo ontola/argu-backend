@@ -153,12 +153,6 @@ class Profile < ApplicationRecord
     profileable.class == Page
   end
 
-  # @param [Edgeable] tenant The resource to check membership of
-  # @return [Boolean] Whether the profile has a member grant on the Edgeable
-  def member_of?(tenant)
-    tenant.present? && granted_edges(nil, 'member').include?(tenant.edge)
-  end
-
   def owner_of(tenant)
     return false if tenant.blank?
     case tenant
