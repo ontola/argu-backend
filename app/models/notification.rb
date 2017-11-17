@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
+  include Actionable
   include BlogPostsHelper
   include Ldable
   include ActivityHelper

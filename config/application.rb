@@ -17,6 +17,7 @@ module Argu
     config.token_url = ENV['TOKEN_SERVICE_URL']
     config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || 'argu.co'}"
 
+    config.autoload_paths += %W[#{config.root}/app/models/actions]
     config.autoload_paths += %W[#{config.root}/app/models/banners]
     config.autoload_paths += %W[#{config.root}/app/models/menus]
     config.autoload_paths += %W[#{config.root}/app/services]

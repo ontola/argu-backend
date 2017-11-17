@@ -10,7 +10,7 @@ class NotificationsController < AuthorizedController
 
   def show
     respond_to do |format|
-      format.n3 { render n3: authenticated_resource }
+      format.n3 { render n3: authenticated_resource, include: :operation }
       format.all { redirect_to url_for(authenticated_resource.activity.trackable) }
     end
   end
@@ -99,7 +99,7 @@ class NotificationsController < AuthorizedController
   end
 
   def include_index
-    [views: [members: [operation: :target]]]
+    [:members, views: [members: [operation: :target]]]
   end
 
   def index_respond_blocks_success(_, format)

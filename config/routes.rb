@@ -36,6 +36,9 @@ require 'argu/whitelist_constraint'
 # z:
 
 Rails.application.routes.draw do
+  concern :actionable do
+    resources :actions, only: %i[index show]
+  end
   concern :blog_postable do
     resources :blog_posts,
               only: %i[index new create],
@@ -103,7 +106,10 @@ Rails.application.routes.draw do
                 tokens: 'oauth/tokens'
   end
 
-  resources :notifications, only: %i[index show update], path: 'n' do
+  resources :notifications,
+            concerns: %i[actionable],
+            only: %i[index show update],
+            path: 'n' do
     patch :read, on: :collection
   end
 

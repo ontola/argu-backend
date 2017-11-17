@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
 
   ::INC_NESTED_COLLECTION = [
-    :members, :create_action, views: [:members, :create_action, views: %i[members create_action].freeze].freeze
+    :members, operation: :target, views: [:members, operation: :target, views: [members: [operation: :target], operation: :target].freeze].freeze
   ].freeze
 
   protect_from_forgery with: :exception, prepend: true, unless: (lambda do
