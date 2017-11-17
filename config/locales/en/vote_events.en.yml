@@ -1,5 +1,7 @@
 nl:
   vote_events:
+    type: "Vote event"
+    plural: "Vote events"
     statistics:
       count:
         header: "Count"

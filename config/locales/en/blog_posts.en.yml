@@ -4,6 +4,7 @@ en:
   blog_posts:
     type: "Update"
     type_new: "New update"
+    plural: "Updates"
     unpublished: "Draft"
     tooltips:
       info: "An update is a message in which the progress of a project is shared."

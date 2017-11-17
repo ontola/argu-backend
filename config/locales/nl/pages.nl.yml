@@ -2,6 +2,7 @@ nl:
   pages:
     resource_name: "Organisatie"
     type: "Organisatie"
+    plural: "Organisaties"
     show: "Organisatie weergeven"
     settings:
       title: "Organisatie instellingen"

@@ -1,6 +1,7 @@
 nl:
   decisions:
     type: "besluit"
+    plural: "Besluiten"
     menu: "Besluit nemen"
     approved: "Aangenomen"
     rejected: "Verworpen"

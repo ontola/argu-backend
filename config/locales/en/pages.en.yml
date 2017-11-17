@@ -2,6 +2,7 @@ en:
   pages:
     resource_name: "Organizations"
     type: "Organization"
+    plural: "Organizations"
     show: "Show organization"
     settings:
       title: "Organization settings"
