@@ -16,7 +16,7 @@ class NotificationsControllerTest < ActionController::TestCase
   test 'guest should not get index' do
     get :index
 
-    assert_response 204
+    assert_redirected_to new_user_session_path(r: notifications_path)
   end
 
   ####################################

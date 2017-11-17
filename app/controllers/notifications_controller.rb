@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 # @note: Common create ready
-class NotificationsController < ApplicationController
+class NotificationsController < AuthorizedController
   include NotificationsHelper
-  include Common::Setup
-  include Common::Index
+
+  skip_before_action :authorize_action, only: :index
 
   after_action :update_viewed_time
 
   def show
-    notification = Notification.find params[:id]
-    authorize notification, :show?
-
-    redirect_to url_for(notification.activity.trackable)
+    respond_to do |format|
+      format.n3 { render n3: authenticated_resource }
+      format.all { redirect_to url_for(authenticated_resource.activity.trackable) }
+    end
   end
 
   def create
@@ -44,22 +44,32 @@ class NotificationsController < ApplicationController
     end
   end
 
-  def update
-    notification = Notification.includes(activity: :trackable).find(params[:id])
-    authorize notification, :update?
+  def execute_update
+    n = authenticated_resource
+    read_before = n.read_at.present?
+    read_before || n.permanent? || n.update(read_at: Time.current)
+  end
 
-    read_before = notification.read_at.present?
+  def update_respond_success_html(_resource)
+    @notifications = get_notifications
+    @unread = unread_notification_count
+    render 'index'
+  end
 
-    if read_before || notification.permanent? || notification.update(read_at: Time.current)
-      @notifications = get_notifications
-      @unread = unread_notification_count
-      render 'index'
-      send_event category: 'notifications',
-                 action: 'read',
-                 label: read_before ? 'old' : 'new'
-    else
-      head 400
-    end
+  def update_respond_blocks_success(resource, format)
+    format.html { update_respond_success_html(resource) }
+    format.js { update_respond_success_js(resource) }
+    format.json { respond_with_204(resource, :json) }
+    format.json_api { respond_with_204(resource, :json_api) }
+    format.n3 { render n3: resource, meta: meta }
+  end
+
+  def update_respond_blocks_failure(_resource, format)
+    format.html { head 400 }
+    format.js { head 400 }
+    format.json { head 400 }
+    format.json_api { head 400 }
+    format.n3 { head 400 }
   end
 
   private
@@ -86,6 +96,10 @@ class NotificationsController < ApplicationController
       .order(permanent: :desc, created_at: :desc)
       .where(since ? ['created_at > ?', since] : nil)
       .page params[:page]
+  end
+
+  def include_index
+    [views: [members: [operation: :target]]]
   end
 
   def index_respond_blocks_success(_, format)
