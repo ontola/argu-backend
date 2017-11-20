@@ -43,7 +43,7 @@ class ArgumentsController < EdgeTreeController
   end
 
   def include_show
-    [comment_collection: INC_NESTED_COLLECTION]
+    [comment_collection: inc_nested_collection]
   end
 
   def new_respond_blocks_success(resource, format)

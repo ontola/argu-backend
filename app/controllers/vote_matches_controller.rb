@@ -33,11 +33,11 @@ class VoteMatchesController < ServiceController
       end
     format.json_api do
       render json: collection,
-             include: INC_NESTED_COLLECTION
+             include: inc_nested_collection
     end
     format.n3 do
       render n3: collection,
-             include: INC_NESTED_COLLECTION
+             include: inc_nested_collection
     end
   end
 

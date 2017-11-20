@@ -22,10 +22,6 @@ class ApplicationController < ActionController::Base
   include ActorsHelper
   helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
 
-  ::INC_NESTED_COLLECTION = [
-    :members, operation: :target, views: [:members, operation: :target, views: [members: [operation: :target], operation: :target].freeze].freeze
-  ].freeze
-
   protect_from_forgery with: :exception, prepend: true, unless: (lambda do
     headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
   end)
@@ -66,6 +62,18 @@ class ApplicationController < ActionController::Base
           ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
       )
     )
+  end
+
+  protected
+
+  def inc_nested_collection
+    @inc_nested_collection ||= [
+      :members,
+      operation: :target,
+      views: [:members,
+              operation: :target,
+              views: [:members, operation: :target].freeze].freeze
+    ].freeze
   end
 
   private

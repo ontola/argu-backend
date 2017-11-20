@@ -46,8 +46,8 @@ class QuestionsController < EdgeTreeController
 
   def include_show
     [
-      attachment_collection: INC_NESTED_COLLECTION,
-      motion_collection: INC_NESTED_COLLECTION
+      attachment_collection: inc_nested_collection,
+      motion_collection: inc_nested_collection
     ]
   end
 

@@ -24,6 +24,6 @@ class VoteEventsController < EdgeTreeController
   end
 
   def include_show
-    [vote_collection: INC_NESTED_COLLECTION]
+    [vote_collection: inc_nested_collection]
   end
 end

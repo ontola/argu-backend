@@ -124,7 +124,7 @@ class UsersController < AuthorizedController
     [
       :profile_photo,
       :email_addresses,
-      vote_match_collection: INC_NESTED_COLLECTION
+      vote_match_collection: inc_nested_collection
     ]
   end
 

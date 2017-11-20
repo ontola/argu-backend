@@ -135,8 +135,8 @@ class ForumsController < EdgeTreeController
 
   def include_show
     [
-      motion_collection: INC_NESTED_COLLECTION,
-      question_collection: INC_NESTED_COLLECTION
+      motion_collection: inc_nested_collection,
+      question_collection: inc_nested_collection
     ]
   end
 

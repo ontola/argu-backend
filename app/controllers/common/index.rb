@@ -15,7 +15,7 @@ module Common
       private
 
       def include_index
-        ::INC_NESTED_COLLECTION
+        inc_nested_collection
       end
 
       # @!visibility public

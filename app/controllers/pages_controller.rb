@@ -3,11 +3,6 @@
 class PagesController < EdgeTreeController
   skip_before_action :authorize_action, only: %i[settings index]
   skip_before_action :check_if_registered, only: :index
-  ::INC_NESTED_COLLECTION = [
-    :create_action, members: :profile_photo, views: [
-      :create_action, members: :profile_photo, views: [:create_action, members: :profile_photo].freeze
-    ].freeze
-  ].freeze
 
   def show
     @forums = policy_scope(authenticated_resource.forums)
@@ -96,6 +91,16 @@ class PagesController < EdgeTreeController
       end
   end
 
+  def inc_nested_collection
+    @inc_nested_collection = [
+      :create_action,
+      members: :profile_photo,
+      views: [:create_action,
+              members: :profile_photo,
+              views: [:create_action, members: :profile_photo].freeze].freeze
+    ].freeze
+  end
+
   def resource_by_id
     @page ||= Page.find_via_shortname_or_id params[:id]
   end
@@ -159,7 +164,7 @@ class PagesController < EdgeTreeController
   def include_show
     [
       :profile_photo,
-      vote_match_collection: INC_NESTED_COLLECTION
+      vote_match_collection: inc_nested_collection
     ]
   end
 

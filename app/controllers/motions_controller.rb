@@ -56,9 +56,9 @@ class MotionsController < EdgeTreeController
 
   def include_show
     [
-      argument_collection: INC_NESTED_COLLECTION,
-      attachment_collection: INC_NESTED_COLLECTION,
-      vote_event_collection: {members: {vote_collection: INC_NESTED_COLLECTION}}
+      argument_collection: inc_nested_collection,
+      attachment_collection: inc_nested_collection,
+      vote_event_collection: {members: {vote_collection: inc_nested_collection}}
     ]
   end
 
