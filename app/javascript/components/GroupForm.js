@@ -22,7 +22,7 @@ export const GroupForm = React.createClass({
         return {
             name: '',
             nameSingular: '',
-            currentRole: 'member',
+            currentRole: 'participator',
             currentEdge: this.props.forumEdge
         };
     },

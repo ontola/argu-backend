@@ -7,9 +7,9 @@ class GroupMembershipPolicyTest < PolicyTest
   include DefaultPolicyTests
   let(:subject) { create(:group_membership, parent: create(:group, parent: page.edge), member: group_member.profile) }
   let(:group_member) { create(:user) }
-  let(:admin_membership) { page.grants.super_admin.first.group.group_memberships.first }
-  let(:second_admin_membership) { create(:group_membership, parent: page.grants.super_admin.first.group) }
-  let(:subject_with_token) { create(:group_membership, parent: page.grants.super_admin.first.group, token: 'valid') }
+  let(:admin_membership) { page.grants.administrator.first.group.group_memberships.first }
+  let(:second_admin_membership) { create(:group_membership, parent: page.grants.administrator.first.group) }
+  let(:subject_with_token) { create(:group_membership, parent: page.grants.administrator.first.group, token: 'valid') }
 
   generate_crud_tests
 

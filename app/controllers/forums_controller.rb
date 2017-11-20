@@ -17,7 +17,7 @@ class ForumsController < EdgeTreeController
         .joins(:edge)
         .where(
           'edges.path ? '\
-          "#{Edge.path_array(current_user.profile.granted_edges.where('grants.role >= ?', Grant.roles[:manager]))}"
+          "#{Edge.path_array(current_user.profile.granted_edges.where('grants.role >= ?', Grant.roles[:moderator]))}"
         )
     @_pundit_policy_scoped = true
   end

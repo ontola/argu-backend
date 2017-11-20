@@ -8,13 +8,14 @@ class Grant < ApplicationRecord
   belongs_to :group, inverse_of: :grants
 
   scope :forum_manager, lambda {
-    where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Forum'})
+    where('role >= ?', Grant.roles[:moderator]).joins(:edge).where(edges: {owner_type: 'Forum'})
   }
   scope :forum_member, -> { member.joins(:edge).where(edges: {owner_type: 'Forum'}) }
-  scope :page_manager, -> { where('role >= ?', Grant.roles[:manager]).joins(:edge).where(edges: {owner_type: 'Page'}) }
+  scope :page_manager,
+        -> { where('role >= ?', Grant.roles[:moderator]).joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
   scope :custom, -> { where('group_id > 0') }
-  enum role: {spectator: 0, member: 1, manager: 2, super_admin: 10, staff: 100}
+  enum role: {spectator: 0, participator: 1, moderator: 2, administrator: 10, staff: 100}
 
   validates :group, :role, presence: true
   validates :edge, presence: true, uniqueness: {scope: :group}

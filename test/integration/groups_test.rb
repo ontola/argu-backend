@@ -10,7 +10,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     create(:grant,
            edge: freetown.edge,
            group: granted_group,
-           role: :member)
+           role: :participator)
   end
 
   setup do
@@ -126,7 +126,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
                name_singular: 'Tester',
                grants_attributes: {
                  '0': {
-                   role: 'member',
+                   role: :participator,
                    edge_id: freetown.page.edge.id
                  }
                }

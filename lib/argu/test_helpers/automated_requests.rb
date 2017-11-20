@@ -173,7 +173,7 @@ module Argu
             public_source.edge.grants.destroy_all
             holland.edge.grants.destroy_all
             freetown.edge.grants.destroy_all
-            create_forum(public_grant: 'member')
+            create_forum(public_grant: 'participator')
             create(:user)
           end
 

@@ -44,7 +44,7 @@ module DiscussionsHelper
       message: t('tokens.discussion.default_message', resource: resource.display_name),
       pageEdge: resource.parent_edge(:page).id,
       resource: resource.iri,
-      roles: Grant.roles.except('manager', 'staff').map do |role, _|
+      roles: Grant.roles.except('moderator', 'staff').map do |role, _|
         {label: t("roles.types.#{role}").capitalize, value: role}
       end
     }

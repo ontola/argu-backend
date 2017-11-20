@@ -3,19 +3,19 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "32c83d01417275d5f3453247f54e0212c17d86f5ec3d74e8ceb1ba00907bcf78",
+      "fingerprint": "9c56200cb00566c0ba536fb76453b9feaf842e64d30a37b19652046b7a177975",
       "message": "Possible SQL injection",
       "file": "app/controllers/forums_controller.rb",
       "line": 20,
       "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:manager]))}\")",
+      "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:moderator]))}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "ForumsController",
         "method": "index"
       },
-      "user_input": "Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:manager]))",
+      "user_input": "Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:moderator]))",
       "confidence": "High",
       "note": ""
     },
@@ -39,6 +39,6 @@
       "note": ""
     }
   ],
-  "updated": "2017-09-07 14:04:06 +0200",
+  "updated": "2017-11-20 12:35:31 +0100",
   "brakeman_version": "3.4.1"
 }

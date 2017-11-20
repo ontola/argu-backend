@@ -18,7 +18,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   end
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
-  let(:dutch_forum) { create_forum(public_grant: 'member', locale: 'nl-NL') }
+  let(:dutch_forum) { create_forum(public_grant: 'participator', locale: 'nl-NL') }
 
   ####################################
   # Show as Guest

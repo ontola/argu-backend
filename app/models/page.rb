@@ -69,7 +69,7 @@ class Page < Edgeable::Base
       page: self,
       deletable: false
     )
-    group.grants << Grant.new(role: Grant.roles[:super_admin], edge: edge)
+    group.grants << Grant.new(role: Grant.roles[:administrator], edge: edge)
     group.save!
 
     service = CreateGroupMembership.new(

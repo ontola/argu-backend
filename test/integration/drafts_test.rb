@@ -57,7 +57,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
              :grant,
              edge: freetown.page.edge,
              group: create(:group, parent: freetown.page.edge),
-             role: Grant.roles['manager']
+             role: Grant.roles['moderator']
            ).group,
            shortname: user.url)
     sign_in user

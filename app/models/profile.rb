@@ -114,7 +114,7 @@ class Profile < ApplicationRecord
   end
   deprecate :owner
 
-  def page_ids(role = :manager)
+  def page_ids(role = :moderator)
     @page_ids ||= {}
     @page_ids[role] ||= granted_record_ids('Page', role)
   end

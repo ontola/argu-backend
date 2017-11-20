@@ -84,12 +84,12 @@ argu.update(owner: staff.profile)
 
 forum = Forum.new(name: 'Nederland',
                   page: argu,
-                  public_grant: 'member',
+                  public_grant: 'participator',
                   shortname_attributes: {shortname: 'nederland'})
 forum.edge = Edge.new(owner: forum,
                       user: User.find_via_shortname!('staff_account'),
                       parent: argu.edge)
-forum.edge.grants.new(group: public_group, role: :member)
+forum.edge.grants.new(group: public_group, role: :participator)
 forum.save!
 
 g = forum.edge.grants.new(group: staff_group, role: :staff)

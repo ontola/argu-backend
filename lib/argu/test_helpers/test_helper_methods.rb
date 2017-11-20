@@ -79,7 +79,7 @@ module Argu
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, role: Grant.roles['manager'])
+          create(:grant, edge: record.edge, group: group, role: Grant.roles['moderator'])
           user
         end
 
@@ -90,7 +90,7 @@ module Argu
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, role: Grant.roles['member'])
+          create(:grant, edge: record.edge, group: group, role: Grant.roles['participator'])
           user
         end
 

@@ -3,10 +3,10 @@
     h1= t('users_cancel_title')
   .box
     section
-      - if @user.profile.grants.super_admin.count.positive?
+      - if @user.profile.grants.administrator.count.positive?
         p.danger= t('users_cancel_super_admin')
         ul
-          - @user.profile.grants.super_admin.each do |grant|
+          - @user.profile.grants.administrator.each do |grant|
             li=link_to grant.edge.owner.display_name, grant.edge.owner
       - else
         =semantic_form_for @user, url: user_registration_path, method: :delete, html: {class: 'confirm'} do |f|

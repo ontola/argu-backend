@@ -324,7 +324,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
     create(:grant,
            group: create(:group, parent: holland.page.edge),
-           edge: holland.edge, role: Grant.roles[:member])
+           edge: holland.edge, role: Grant.roles[:participator])
     assert_equal holland.edge.grants.size, 2
     put forum_path(holland),
         params: {

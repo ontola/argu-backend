@@ -49,7 +49,7 @@ RSpec.configure do |config|
         shortname_attributes: {shortname: 'freetown'},
         page: page,
         parent: page.edge,
-        public_grant: 'member'
+        public_grant: 'participator'
       )
       create_forum(
         :populated_forum,
@@ -63,7 +63,7 @@ RSpec.configure do |config|
         :source,
         parent: page.edge,
         iri_base: 'https://iri.test',
-        public_grant: 'member',
+        public_grant: 'participator',
         shortname: 'public_source'
       )
       linked_record = create(:linked_record, source: public_source)

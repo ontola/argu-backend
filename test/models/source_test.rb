@@ -14,7 +14,7 @@ class SourceTest < ActiveSupport::TestCase
 
   test 'should reset public grant' do
     assert_equal subject.grants.where(group_id: -1).count, 0
-    subject.update(public_grant: 'member')
+    subject.update(public_grant: 'participator')
     assert_equal subject.grants.where(group_id: -1).count, 1
 
     assert_equal public_source.grants.where(group_id: -1).count, 1

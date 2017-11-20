@@ -212,7 +212,7 @@ class User < ApplicationRecord
   end
 
   def forum_management?
-    page_management? || profile.grants.manager.presence
+    page_management? || profile.grants.moderator.presence
   end
 
   def page_management?

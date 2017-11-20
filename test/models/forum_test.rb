@@ -23,7 +23,7 @@ class ForumTest < ActiveSupport::TestCase
     assert create(:forum, parent: page.edge, shortname_attributes: {shortname: 'new_forum'}, locale: 'nl')
              .default_decision_group
              .grants
-             .super_admin
+             .administrator
              .present?
   end
 
@@ -33,7 +33,7 @@ class ForumTest < ActiveSupport::TestCase
     assert_equal subject.grants.where(group_id: -1).count, 0
 
     assert_equal cairo.grants.where(group_id: -1).count, 0
-    cairo.update(public_grant: 'member')
+    cairo.update(public_grant: 'participator')
     assert_equal cairo.grants.where(group_id: -1).count, 1
   end
 

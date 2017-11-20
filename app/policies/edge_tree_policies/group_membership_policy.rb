@@ -34,7 +34,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    return false if record.group.grants.super_admin.present? && record.group.group_memberships.count <= 1
+    return false if record.group.grants.administrator.present? && record.group.group_memberships.count <= 1
     is_group_member? || edgeable_policy.update?
   end
 

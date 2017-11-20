@@ -29,7 +29,7 @@ class RuleTest < ActionDispatch::IntegrationTest
     create(:rule,
            branch: freetown.edge,
            action: 'show?',
-           role: 'member',
+           role: 'participator',
            model_type: 'Argument',
            trickles: Rule.trickles[:trickles_down],
            message: 'user not allowed')
@@ -39,7 +39,7 @@ class RuleTest < ActionDispatch::IntegrationTest
     create(:rule,
            branch: freetown.edge,
            action: 'show?',
-           role: 'manager',
+           role: 'moderator',
            model_type: 'Argument',
            trickles: Rule.trickles[:doesnt_trickle],
            message: 'ask your boss to buy')
@@ -49,7 +49,7 @@ class RuleTest < ActionDispatch::IntegrationTest
     create(:rule,
            branch: freetown.edge,
            action: 'show?',
-           role: 'super_admin',
+           role: 'administrator',
            model_type: 'Argument',
            trickles: Rule.trickles[:doesnt_trickle],
            message: 'buy this feature')
@@ -58,7 +58,7 @@ class RuleTest < ActionDispatch::IntegrationTest
     create(:rule,
            branch: question2.edge,
            action: 'show?',
-           role: 'manager',
+           role: 'moderator',
            model_type: 'Motion',
            trickles: Rule.trickles[:doesnt_trickle],
            message: 'showing motions not allowed')

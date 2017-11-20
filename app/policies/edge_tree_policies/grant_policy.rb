@@ -14,7 +14,7 @@ class GrantPolicy < EdgeTreePolicy
   end
 
   def destroy?
-    return if record.group_id == Group::PUBLIC_ID || record.super_admin?
+    return if record.group_id == Group::PUBLIC_ID || record.administrator?
     edgeable_policy.update?
   end
 

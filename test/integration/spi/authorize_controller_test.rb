@@ -134,7 +134,7 @@ module SPI
 
       get spi_authorize_path(
         resource_type: 'Group',
-        resource_id: freetown.page.grants.super_admin.first.group,
+        resource_id: freetown.page.grants.administrator.first.group,
         authorize_action: 'is_member'
       )
 
@@ -208,7 +208,7 @@ module SPI
 
       get spi_authorize_path(
         resource_type: 'Group',
-        resource_id: freetown.page.grants.manager.first.group,
+        resource_id: freetown.page.grants.moderator.first.group,
         authorize_action: 'is_member'
       )
 

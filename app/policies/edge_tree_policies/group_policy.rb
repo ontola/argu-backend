@@ -8,7 +8,7 @@ class GroupPolicy < EdgeTreePolicy
   end
 
   def is_member?
-    member if user&.profile&.is_group_member?(record.id)
+    participator if user&.profile&.is_group_member?(record.id)
   end
 
   def permitted_attributes

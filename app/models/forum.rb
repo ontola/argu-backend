@@ -163,6 +163,6 @@ class Forum < Edgeable::Base
   end
 
   def set_default_decision_group
-    self.default_decision_group = page.grants.super_admin.joins(:group).find_by(groups: {deletable: false}).group
+    self.default_decision_group = page.grants.administrator.joins(:group).find_by(groups: {deletable: false}).group
   end
 end

@@ -29,8 +29,9 @@ nl:
       empty: "geen aanvullende rol"
       none: "niets zien"
       spectator: "alleen lezen"
-      member: "meedoen"
-      manager: "modereren"
-      super_admin: "beheren"
+      participator: "meedoen"
+      initiator: "initiëren"
+      moderator: "modereren"
+      administrator: "beheren"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Weet je zeker dat je dit recht wilt intrekken?'><span class='fa fa-close'></span></a>"

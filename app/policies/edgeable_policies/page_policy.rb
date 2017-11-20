@@ -75,7 +75,7 @@ class PagePolicy < EdgeablePolicy
 
   def pages_left?
     return if user.guest?
-    member if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
+    participator if user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
   end
 
   def follow?

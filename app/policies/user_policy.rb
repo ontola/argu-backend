@@ -78,7 +78,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def destroy?
-    return if record.profile.grants.super_admin.count.positive?
+    return if record.profile.grants.administrator.count.positive?
     current_user?
   end
 

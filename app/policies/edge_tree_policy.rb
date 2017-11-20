@@ -21,7 +21,7 @@ class EdgeTreePolicy < RestrictivePolicy
       2
     end
 
-    def member
+    def participator
       3
     end
 
@@ -30,7 +30,7 @@ class EdgeTreePolicy < RestrictivePolicy
       5
     end
 
-    def manager
+    def moderator
       7
     end
 
@@ -38,7 +38,7 @@ class EdgeTreePolicy < RestrictivePolicy
       8
     end
 
-    def super_admin
+    def administrator
       10
     end
 
@@ -56,7 +56,7 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_member?
-      is_role?(:member)
+      is_role?(:participator)
     end
 
     def is_creator?
@@ -65,11 +65,11 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def is_manager?
-      is_role?(:manager) || is_role?(:super_admin)
+      is_role?(:moderator) || is_role?(:administrator)
     end
 
     def is_super_admin?
-      is_role?(:super_admin)
+      is_role?(:administrator)
     end
 
     def is_manager_up?

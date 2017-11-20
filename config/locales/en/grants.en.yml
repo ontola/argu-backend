@@ -29,8 +29,9 @@ en:
       empty: "no additional role"
       none: "see nothing"
       spectator: "only read"
-      member: "participate"
-      manager: "moderate"
-      super_admin: "manage"
+      participator: "participate"
+      initiator: "initiate"
+      moderator: "moderate"
+      administrator: "manage"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-turbolinks='false' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"

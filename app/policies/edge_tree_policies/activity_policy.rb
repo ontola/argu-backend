@@ -34,7 +34,7 @@ class ActivityPolicy < RestrictivePolicy
       scope
         .joins(:trackable_edge)
         .where('edges.is_published = true OR activities.owner_id IN (:profile_ids) OR edges.path ? '\
-               "#{Edge.path_array(user.profile.granted_edges(nil, :manager))}",
+               "#{Edge.path_array(user.profile.granted_edges(nil, :moderator))}",
                profile_ids: user.managed_profile_ids)
     end
 

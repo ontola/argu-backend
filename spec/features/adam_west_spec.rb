@@ -13,7 +13,7 @@ RSpec.feature 'Adam west', type: :feature do
              model_type: 'Comment',
              model_id: nil,
              action: action,
-             role: 'manager',
+             role: 'moderator',
              permit: false)
     end
   end
@@ -23,7 +23,7 @@ RSpec.feature 'Adam west', type: :feature do
            model_type: 'Question',
            model_id: nil,
            action: :create?,
-           role: 'member',
+           role: 'participator',
            permit: false)
   end
   let!(:f_rule_m_ncwwoq) do
@@ -32,7 +32,7 @@ RSpec.feature 'Adam west', type: :feature do
            model_type: 'Motion',
            model_id: nil,
            action: :create_without_question?,
-           role: 'member',
+           role: 'participator',
            permit: false)
   end
   let!(:question) do
