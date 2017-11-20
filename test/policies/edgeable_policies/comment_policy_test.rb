@@ -12,13 +12,13 @@ class CommentPolicyTest < PolicyTest
 
   generate_edgeable_tests
 
-  test 'should create comment for expired blog_post' do
-    test_policy(expired_blog_post_comment, :create, create_results)
-  end
-
   private
 
   alias destroy_with_children_results destroy_results
+
+  def create_expired_results
+    create_results
+  end
 
   def update_results
     nobody_results.merge(creator: true)

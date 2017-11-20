@@ -17,7 +17,6 @@ class CommentPolicy < EdgeablePolicy
   end
 
   def create_expired?
-    return unless record.parent_model.is_a?(BlogPost)
     rule is_member?, is_manager?, is_super_admin?, staff?
   end
 
