@@ -144,7 +144,7 @@ end
 group :development, :test do
   gem 'rubocop', '~> 0.49.1'
   gem 'rubocop-rspec', '~> 1.15.1'
-  gem 'spring', '~> 1.7.2'
+  gem 'spring', '~> 2.0.2'
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
   gem 'brakeman', '~> 3.2.1'
