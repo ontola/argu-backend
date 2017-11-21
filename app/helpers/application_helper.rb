@@ -112,31 +112,6 @@ module ApplicationHelper
     provide :title, title_string
   end
 
-  # Generates social media links for any resource for HyperDropdown
-  def share_items(resource, opts = {})
-    url = polymorphic_url(resource, only_path: false)
-    if resource.edge.is_public?
-      share_urls = {
-        facebook: ShareHelper.facebook_share_url(url),
-        linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
-        twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
-        googlePlus: ShareHelper.googleplus_share_url(url),
-        email: ShareHelper.email_share_url(url, title: resource.display_name)
-      }
-      share_urls[:whatsapp] = ShareHelper.whatsapp_share_url(url) if browser.device.mobile?
-    else
-      share_urls = {}
-    end
-    share_urls[:invite] = polymorphic_url([resource, :invite], only_path: false) if policy(resource).invite?
-
-    {
-      title: t('share'),
-      url: url,
-      shareUrls: share_urls,
-      triggerClass: opts[:trigger_class]
-    }
-  end
-
   def sort_items
     link_items = [
       link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
