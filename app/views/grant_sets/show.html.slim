@@ -1,0 +1,21 @@
+.col-1
+  =header(header: resource.display_name)
+  .box
+    section
+      table
+        thead
+          tr
+            th= 'type'
+            - PermittedAction::ACTIONS.each do |action|
+              th= action
+        - PermittedAction.distinct(:resource_type).pluck(:resource_type).each do |resource_type|
+          tr
+            th= t("#{resource_type.tableize}.plural")
+            - PermittedAction::ACTIONS.each do |action|
+              td
+                - unless resource_type == 'Page' && action == 'create'
+                  - permitted_action = resource.permitted_actions.find_by(resource_type: resource_type, action: action)
+                  - if permitted_action&.tooltip.present?
+                    span[class="fa fa-#{permitted_action&.icon || 'close'} permitted-icon" data-title=permitted_action&.tooltip]
+                  - else
+                    span[class="fa fa-#{permitted_action&.icon || 'close'} permitted-icon"]

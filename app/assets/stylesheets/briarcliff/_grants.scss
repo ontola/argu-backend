@@ -1,0 +1,15 @@
+@import "variables";
+
+.permitted-icon {
+  &.fa-close {
+    color: $red;
+  }
+
+  &.fa-check {
+    color: $gre;
+  }
+
+  &.fa-question {
+    color: $yel;
+  }
+}
