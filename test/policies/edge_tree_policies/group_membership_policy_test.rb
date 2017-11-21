@@ -34,7 +34,7 @@ class GroupMembershipPolicyTest < PolicyTest
   private
 
   def create_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def show_results
@@ -46,6 +46,6 @@ class GroupMembershipPolicyTest < PolicyTest
   end
 
   def destroy_results
-    nobody_results.merge(group_member: true, super_admin: true, staff: true)
+    nobody_results.merge(group_member: true, administrator: true, staff: true)
   end
 end

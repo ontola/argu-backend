@@ -7,12 +7,12 @@ RSpec.feature 'Voting', type: :feature do
   let(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
 
-  scenario 'Member should place comment without body' do
-    sign_in member
+  scenario 'Initiator should place comment without body' do
+    sign_in initiator
 
     visit motion_path(motion)
     within('[page_param="page_arg_pro"]') do

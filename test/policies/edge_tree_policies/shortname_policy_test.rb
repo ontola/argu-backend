@@ -11,7 +11,7 @@ class ShortnamePolicyTest < PolicyTest
 
   test 'should create shortname when not depleted' do
     freetown.update(max_shortname_count: 2)
-    test_policy(subject, :create, nobody_results.merge(super_admin: true, staff: true))
+    test_policy(subject, :create, nobody_results.merge(administrator: true, staff: true))
   end
 
   private
@@ -21,10 +21,10 @@ class ShortnamePolicyTest < PolicyTest
   end
 
   def destroy_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def update_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 end

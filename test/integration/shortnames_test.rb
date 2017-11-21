@@ -45,74 +45,74 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
 
-  test 'member should not post create' do
-    sign_in member
+  test 'initiator should not post create' do
+    sign_in initiator
     general_create(403, [['Shortname.count', 0]])
     assert_not_authorized
   end
 
-  test 'member should not put update' do
-    sign_in member
+  test 'initiator should not put update' do
+    sign_in initiator
     general_update(403)
   end
 
-  test 'member should not delete destroy' do
+  test 'initiator should not delete destroy' do
     subject
-    sign_in member
+    sign_in initiator
     general_destroy(403)
   end
 
   ####################################
-  # As Manager
+  # As Moderator
   ####################################
-  let(:manager) { create_manager(freetown) }
+  let(:moderator) { create_moderator(freetown) }
 
-  test 'manager should not post create' do
-    sign_in manager
+  test 'moderator should not post create' do
+    sign_in moderator
     general_create(403, [['Shortname.count', 0]])
     assert_not_authorized
   end
 
-  test 'manager should not put update' do
-    sign_in manager
+  test 'moderator should not put update' do
+    sign_in moderator
     general_update(403)
   end
 
-  test 'manager should not delete destroy' do
+  test 'moderator should not delete destroy' do
     subject
-    sign_in manager
+    sign_in moderator
     general_destroy(403)
   end
 
   ####################################
   # As Super admin
   ####################################
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
-  test 'super_admin should post create' do
-    sign_in super_admin
+  test 'administrator should post create' do
+    sign_in administrator
     general_create
   end
 
-  test 'super_admin post create should not overflow limit' do
+  test 'administrator post create should not overflow limit' do
     create(:discussion_shortname, forum: freetown, owner: motion)
     assert freetown.max_shortname_count, freetown.shortnames.count
-    sign_in super_admin
+    sign_in administrator
     general_create 403, [['Shortname.count', 0]]
   end
 
-  test 'super_admin should put update' do
-    sign_in super_admin
+  test 'administrator should put update' do
+    sign_in administrator
     general_update 302, true
   end
 
-  test 'super_admin should delete destroy' do
+  test 'administrator should delete destroy' do
     subject
-    sign_in super_admin
+    sign_in administrator
     general_destroy 303, -1
   end
 

@@ -7,10 +7,10 @@ module DefaultPolicyResults
       creator: true,
       user: true,
       spectator: true,
-      member: true,
+      initiator: true,
       non_member: true,
-      manager: true,
-      super_admin: true,
+      moderator: true,
+      administrator: true,
       staff: true
     }
   end
@@ -20,10 +20,10 @@ module DefaultPolicyResults
       guest: false,
       user: false,
       spectator: false,
-      member: false,
+      initiator: false,
       non_member: false,
-      manager: false,
-      super_admin: false,
+      moderator: false,
+      administrator: false,
       staff: false
     }
   end
@@ -46,14 +46,14 @@ module DefaultPolicyResults
     everybody_results.merge(spectator: false, non_member: false)
   end
 
-  def manager_plus_results
-    nobody_results.merge(manager: true, super_admin: true, staff: true)
+  def moderator_plus_results
+    nobody_results.merge(moderator: true, administrator: true, staff: true)
   end
-  alias trash_results manager_plus_results
-  alias log_results manager_plus_results
+  alias trash_results moderator_plus_results
+  alias log_results moderator_plus_results
 
   def update_results
-    manager_plus_results.merge(creator: true)
+    moderator_plus_results.merge(creator: true)
   end
 
   def destroy_results

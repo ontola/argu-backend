@@ -44,8 +44,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
            parent: question.edge)
   end
 
-  test 'member should show tutorial only on first post create' do
-    sign_in member
+  test 'initiator should show tutorial only on first post create' do
+    sign_in initiator
 
     general_create(
       analytics: stats_opt('motions', 'create_success'),
@@ -88,8 +88,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_equal subject.parent_model, freetown
   end
 
-  test 'member should post create motion with latlon' do
-    sign_in member
+  test 'initiator should post create motion with latlon' do
+    sign_in initiator
 
     general_create(
       analytics: stats_opt('motions', 'create_success'),
@@ -115,8 +115,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_equal 1, Motion.last.edge.placements.first.zoom_level
   end
 
-  test 'member should not post create motion without latlon in question requiring location' do
-    sign_in member
+  test 'initiator should not post create motion without latlon in question requiring location' do
+    sign_in initiator
 
     general_create(
       analytics: stats_opt('motions', 'create_failed'),
@@ -126,8 +126,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     )
   end
 
-  test 'member should not post create motion with empty latlon in question requiring location' do
-    sign_in member
+  test 'initiator should not post create motion with empty latlon in question requiring location' do
+    sign_in initiator
 
     general_create(
       attributes: {
@@ -150,8 +150,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     )
   end
 
-  test 'member should post create motion with latlon in question requiring location' do
-    sign_in member
+  test 'initiator should post create motion with latlon in question requiring location' do
+    sign_in initiator
 
     general_create(
       attributes: {

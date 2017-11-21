@@ -39,7 +39,7 @@ RSpec.describe 'Pages', type: :request do
     expect(response.body).to(include('new_name'))
   end
   let(:destroy_params) { {page: {confirmation_string: 'remove'}} }
-  let(:authorized_user) { create_super_admin(subject, create(:user)) }
+  let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:expect_delete_destroy_html) do
     expect(response.code).to eq('303')
     expect(response).to redirect_to(root_path)

@@ -72,7 +72,7 @@ module Argu
           resource
         end
 
-        def create_manager(record, user = nil)
+        def create_moderator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
           group = create(:group, parent: page.edge)
@@ -83,7 +83,7 @@ module Argu
           user
         end
 
-        def create_member(record, user = nil)
+        def create_initiator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
           group = create(:group, parent: page.edge)
@@ -94,7 +94,7 @@ module Argu
           user
         end
 
-        def create_super_admin(record, user = nil)
+        def create_administrator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
           create(:group_membership, parent: page.edge.groups.custom.first, member: user.profile)
@@ -223,11 +223,11 @@ module Argu
           define_freetown
           let(:spectator) { user } if mdig?(:spectator, let)
           let(:user) { create(:user) } if mdig?(:user, let)
-          let(:member) { create_member(freetown) } if mdig?(:member, let)
+          let(:initiator) { create_initiator(freetown) } if mdig?(:member, let)
           let(:non_member) { user } if mdig?(:non_member, let)
-          let(:creator) { create_member(freetown) } if mdig?(:creator, let)
-          let(:manager) { create_manager(freetown) } if mdig?(:manager, let)
-          let(:super_admin) { create_super_admin(freetown) } if mdig?(:owner, let)
+          let(:creator) { create_initiator(freetown) } if mdig?(:creator, let)
+          let(:moderator) { create_moderator(freetown) } if mdig?(:manager, let)
+          let(:administrator) { create_administrator(freetown) } if mdig?(:owner, let)
           let(:staff) { create(:user, :staff) } if mdig?(:staff, let)
           let(:page) { argu } if mdig?(:page, let)
         end

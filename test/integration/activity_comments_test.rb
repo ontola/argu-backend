@@ -9,21 +9,21 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Super admin
   ####################################
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
-  test 'super admin should trash without comment' do
-    sign_in super_admin
+  test 'administrator should trash without comment' do
+    sign_in administrator
     motion
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
       delete motion_path(motion)
     end
     assert_nil Activity.last.comment
-    assert_equal Notification.last.title, "#{super_admin.display_name} trashed #{motion.display_name}"
+    assert_equal Notification.last.title, "#{administrator.display_name} trashed #{motion.display_name}"
   end
 
-  test 'super admin should trash with comment' do
-    sign_in super_admin
+  test 'administrator should trash with comment' do
+    sign_in administrator
     motion
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
@@ -32,11 +32,11 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
 
     comment = motion.activities.last.comment
     assert_equal comment, 'Reason for trashing'
-    assert_equal Notification.last.title, "#{super_admin.display_name} trashed #{motion.display_name}"
+    assert_equal Notification.last.title, "#{administrator.display_name} trashed #{motion.display_name}"
   end
 
-  test 'super admin should trash with comment as page' do
-    sign_in super_admin
+  test 'administrator should trash with comment as page' do
+    sign_in administrator
     motion
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do

@@ -51,12 +51,12 @@ class GroupsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Manager
+  # As Moderator
   ####################################
-  let(:manager) { create_manager(@freetown.page) }
+  let(:moderator) { create_moderator(@freetown.page) }
 
-  test 'manager should not post create group' do
-    sign_in manager
+  test 'moderator should not post create group' do
+    sign_in moderator
 
     assert_difference('Group.count', 0) do
       post page_groups_path(freetown.page),
@@ -70,23 +70,23 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
-  test 'manager should not get new' do
-    sign_in manager
+  test 'moderator should not get new' do
+    sign_in moderator
 
     get new_page_group_path(@freetown.page)
 
     assert_not_authorized
   end
 
-  test 'manager should not get settings and some tabs' do
-    sign_in manager
+  test 'moderator should not get settings and some tabs' do
+    sign_in moderator
 
     get settings_group_path(@group)
     assert_not_authorized
   end
 
-  test 'manager should not delete destroy' do
-    sign_in manager
+  test 'moderator should not delete destroy' do
+    sign_in moderator
 
     assert_no_difference 'Group.count' do
       delete group_path(@group)
@@ -96,12 +96,12 @@ class GroupsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Admin
+  # As Administrator
   ####################################
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
-  test 'super_admin should post create group' do
-    sign_in super_admin
+  test 'administrator should post create group' do
+    sign_in administrator
 
     assert_differences([['Group.count', 1], ['Grant.count', 0]]) do
       post page_groups_path(freetown.page),
@@ -115,8 +115,8 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_page_path(freetown.page, tab: :groups)
   end
 
-  test 'super_admin should post create group with grant' do
-    sign_in super_admin
+  test 'administrator should post create group with grant' do
+    sign_in administrator
 
     assert_differences([['Group.count', 1], ['Grant.count', 1]]) do
       post page_groups_path(freetown.page),
@@ -136,16 +136,16 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_page_path(freetown.page, tab: :groups)
   end
 
-  test 'super_admin should get new' do
-    sign_in super_admin
+  test 'administrator should get new' do
+    sign_in administrator
 
     get new_page_group_path(@freetown.page)
 
     assert_response 200
   end
 
-  test 'super_admin should show settings and all tabs' do
-    sign_in super_admin
+  test 'administrator should show settings and all tabs' do
+    sign_in administrator
 
     get settings_group_path(@group)
     assert_response 200
@@ -156,8 +156,8 @@ class GroupsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'super_admin should delete destroy' do
-    sign_in super_admin
+  test 'administrator should delete destroy' do
+    sign_in administrator
 
     assert_difference 'Group.count', -1 do
       delete group_path(@group)
@@ -166,8 +166,8 @@ class GroupsTest < ActionDispatch::IntegrationTest
     assert_response 303
   end
 
-  test 'super_admin should put update' do
-    sign_in super_admin
+  test 'administrator should put update' do
+    sign_in administrator
 
     put group_path(group),
         params: {

@@ -24,23 +24,23 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
 
-  test 'member should get show' do
-    sign_in member
+  test 'initiator should get show' do
+    sign_in initiator
     get vote_event_path(motion.default_vote_event, params: {format: :json_api})
     assert_response 200
   end
 
   ####################################
-  # As super_admin
+  # As administrator
   ####################################
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
-  test 'super_admin should get show' do
-    sign_in super_admin
+  test 'administrator should get show' do
+    sign_in administrator
     get vote_event_path(motion.default_vote_event, params: {format: :json_api})
     assert_response 200
   end

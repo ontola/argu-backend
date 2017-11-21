@@ -4,7 +4,7 @@ require 'test_helper'
 
 class DecisionsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:super_admin) { create_super_admin(freetown) }
+  let!(:administrator) { create_administrator(freetown) }
   let(:group_membership) do
     create(:group_membership,
            parent: create(:group, parent: freetown.page.edge))
@@ -38,12 +38,12 @@ class DecisionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            state: Decision.states[:approved])
   end
-  let(:creator) { create_member(freetown) }
+  let(:creator) { create_initiator(freetown) }
 
   ####################################
   # As Actor
   ####################################
-  let(:actor) { create_member(freetown) }
+  let(:actor) { create_initiator(freetown) }
   test 'actor should post approve' do
     sign_in actor
     general_decide 302, true
@@ -116,32 +116,32 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Manager
+  # As Moderator
   ####################################
-  let(:manager) { create_manager freetown }
+  let(:moderator) { create_moderator freetown }
 
-  test 'manager should get show' do
-    sign_in manager
+  test 'moderator should get show' do
+    sign_in moderator
     general_show
   end
 
-  test 'manager should not post approve' do
-    sign_in manager
+  test 'moderator should not post approve' do
+    sign_in moderator
     general_decide 403, false
   end
 
-  test 'manager should not post reject' do
-    sign_in manager
+  test 'moderator should not post reject' do
+    sign_in moderator
     general_decide 403, false, 'rejected'
   end
 
-  test 'manager should post forward' do
-    sign_in manager
+  test 'moderator should post forward' do
+    sign_in moderator
     general_forward 302, true, group_membership.group.id, group_membership.member.profileable_id
   end
 
-  test 'manager should patch update approved' do
-    sign_in manager
+  test 'moderator should patch update approved' do
+    sign_in moderator
     general_update_approved 302, true
   end
 

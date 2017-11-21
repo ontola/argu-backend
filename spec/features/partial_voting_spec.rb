@@ -64,12 +64,12 @@ RSpec.feature 'Partial Voting', type: :feature do
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
 
-  scenario 'Member should vote on a motion' do
-    sign_in(member)
+  scenario 'Initiator should vote on a motion' do
+    sign_in(initiator)
 
     visit question_path(question)
     expect(page).to have_content(subject.content)

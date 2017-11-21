@@ -12,7 +12,6 @@ class ForumTest < ActiveSupport::TestCase
   let(:page) { create(:page) }
   let(:group) { create(:group, parent: page.edge) }
   let(:user) { create(:user) }
-  let(:subject_member) { create_member(subject) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s

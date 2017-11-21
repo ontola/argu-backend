@@ -18,14 +18,14 @@ class BannerPolicyTest < PolicyTest
   private
 
   def destroy_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def update_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def create_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 end

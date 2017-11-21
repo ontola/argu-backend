@@ -5,8 +5,8 @@ require 'test_helper'
 class QuestionsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
-  test 'member should post create question with latlon' do
-    sign_in member
+  test 'initiator should post create question with latlon' do
+    sign_in initiator
 
     general_create(
       analytics: stats_opt('questions', 'create_success'),

@@ -10,8 +10,8 @@ class PolicyTest < ActiveSupport::TestCase
   define_public_source
   define_freetown(:expired_freetown, attributes: {edge_attributes: {expires_at: 1.minute.ago}})
   define_freetown(:trashed_freetown, attributes: {edge_attributes: {trashed_at: 1.minute.ago}})
-  let(:manager) { create_manager(page, create(:user)) }
-  let(:member) { create_member(page, create(:user)) }
+  let(:moderator) { create_moderator(page, create(:user)) }
+  let(:initiator) { create_initiator(page, create(:user)) }
   let(:guest) { GuestUser.new(id: 'my_id') }
 
   let(:linked_record) { create(:linked_record, source: public_source) }

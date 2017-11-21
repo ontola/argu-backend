@@ -6,10 +6,10 @@ RSpec.feature 'Invite', type: :feature do
   define_freetown
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
   let(:user) { create(:user) }
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
   scenario 'Super admin invites user for existing group' do
-    sign_in super_admin
+    sign_in administrator
     visit(forum_path(freetown))
     page.find('.cover-buttons-container .share-menu a').click
     click_link('Invite')
@@ -27,7 +27,7 @@ RSpec.feature 'Invite', type: :feature do
   end
 
   scenario 'Super admin invites user for new group' do
-    sign_in super_admin
+    sign_in administrator
     visit(forum_path(freetown))
     page.find('.cover-buttons-container .share-menu a').click
     click_link('Invite')

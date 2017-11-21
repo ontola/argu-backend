@@ -13,7 +13,7 @@ class MotionPolicyTest < PolicyTest
   generate_edgeable_tests
 
   test 'statistics motion' do
-    test_policy(subject, :statistics, manager_plus_results)
+    test_policy(subject, :statistics, moderator_plus_results)
   end
 
   private
@@ -22,6 +22,6 @@ class MotionPolicyTest < PolicyTest
   alias convert_results staff_only_results
 
   def invite_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 end

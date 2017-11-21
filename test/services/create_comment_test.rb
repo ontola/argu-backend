@@ -4,7 +4,7 @@ require 'test_helper'
 
 class CreateCommentTest < ActiveSupport::TestCase
   define_freetown
-  let(:user) { create_member(freetown) }
+  let(:user) { create_initiator(freetown) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:commentable) do
     create(:argument,

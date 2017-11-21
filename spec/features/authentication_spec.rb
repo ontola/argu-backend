@@ -6,7 +6,7 @@ RSpec.feature 'Authentication', type: :feature do
   include ActionView::Helpers::TextHelper
 
   define_holland
-  let!(:holland_member) { create_member(holland) }
+  let!(:holland_initiator) { create_initiator(holland) }
   let(:user) { create(:user_with_votes) }
 
   let(:omniauth_user) do
@@ -40,7 +40,7 @@ RSpec.feature 'Authentication', type: :feature do
         click_link('sign_in')
         expect do
           within('#new_user') do
-            fill_in 'user_email', with: holland_member.email
+            fill_in 'user_email', with: holland_initiator.email
             fill_in 'user_password', with: 'password'
             click_button 'log_in'
           end
@@ -53,7 +53,7 @@ RSpec.feature 'Authentication', type: :feature do
         click_link('sign_in')
         expect do
           within('#new_user') do
-            fill_in 'user_email', with: holland_member.email
+            fill_in 'user_email', with: holland_initiator.email
             fill_in 'user_password', with: 'password'
             click_button 'log_in'
           end

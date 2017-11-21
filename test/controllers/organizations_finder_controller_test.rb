@@ -137,12 +137,12 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(helsinki) }
+  let(:initiator) { create_initiator(helsinki) }
 
-  test 'member should get show organization of hidden motion' do
-    sign_in member
+  test 'initiator should get show organization of hidden motion' do
+    sign_in initiator
 
     get :show, params: {iri: helsinki_motion.iri, format: :n3}
 

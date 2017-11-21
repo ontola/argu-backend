@@ -166,7 +166,7 @@ module Argu
 
           # Users
           let(:staff) { create(:user, :staff) }
-          let(:authorized_user) { create_super_admin(argu, create(:user)) }
+          let(:authorized_user) { create_administrator(argu, create(:user)) }
           let(:authorized_user_update) { authorized_user }
           let(:authorized_user_trash) { authorized_user_update }
           let(:unauthorized_user) do

@@ -18,18 +18,18 @@ class GroupPolicyTest < PolicyTest
   private
 
   def create_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def update_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def destroy_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def show_results
-    nobody_results.merge(super_admin: true, staff: true, group_member: true)
+    nobody_results.merge(administrator: true, staff: true, group_member: true)
   end
 end

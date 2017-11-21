@@ -5,7 +5,7 @@ require 'test_helper'
 class PhasesControllerTest < ActionController::TestCase
   define_freetown
   let!(:page) { argu }
-  let!(:super_admin) { create_super_admin(freetown) }
+  let!(:administrator) { create_administrator(freetown) }
   let!(:project) { create(:project, parent: freetown.edge) }
   let!(:unpublished_project) do
     create(:project,
@@ -63,86 +63,86 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
 
-  test 'member should get show published' do
-    sign_in member
+  test 'initiator should get show published' do
+    sign_in initiator
     general_show
   end
 
-  test 'member should not get show unpublished' do
-    sign_in member
+  test 'initiator should not get show unpublished' do
+    sign_in initiator
     general_show_unpublished 403
   end
 
-  test 'member should not get edit' do
-    sign_in member
+  test 'initiator should not get edit' do
+    sign_in initiator
     general_edit 403
   end
 
-  test 'member should not patch update' do
-    sign_in member
+  test 'initiator should not patch update' do
+    sign_in initiator
     general_update 403
   end
 
   ####################################
-  # As Admin
+  # As Administrator
   ####################################
 
-  test 'super_admin should get show published' do
-    sign_in super_admin
+  test 'administrator should get show published' do
+    sign_in administrator
     general_show
   end
 
-  test 'super_admin should get show unpublished' do
-    sign_in super_admin
+  test 'administrator should get show unpublished' do
+    sign_in administrator
     general_show_unpublished 200
   end
 
-  test 'super_admin should get edit' do
-    sign_in super_admin
+  test 'administrator should get edit' do
+    sign_in administrator
     general_edit 200
   end
 
-  test 'super_admin should patch update' do
-    sign_in super_admin
+  test 'administrator should patch update' do
+    sign_in administrator
     general_update 302, true
   end
 
-  test 'super_admin should patch update finish' do
-    sign_in super_admin
+  test 'administrator should patch update finish' do
+    sign_in administrator
     general_finish 302, true
   end
 
   ####################################
-  # As Manager
+  # As Moderator
   ####################################
-  let(:manager) { create_manager freetown }
+  let(:moderator) { create_moderator freetown }
 
-  test 'manager should get show published' do
-    sign_in manager
+  test 'moderator should get show published' do
+    sign_in moderator
     general_show 200
   end
 
-  test 'manager should get show unpublished' do
-    sign_in manager
+  test 'moderator should get show unpublished' do
+    sign_in moderator
     general_show_unpublished 200
   end
 
-  test 'manager should get edit' do
-    sign_in manager
+  test 'moderator should get edit' do
+    sign_in moderator
     general_edit 200
   end
 
-  test 'manager should patch update' do
-    sign_in manager
+  test 'moderator should patch update' do
+    sign_in moderator
     general_update 302, true
   end
 
-  test 'manager should patch update finish' do
-    sign_in manager
+  test 'moderator should patch update finish' do
+    sign_in moderator
     general_finish 302, true
   end
 

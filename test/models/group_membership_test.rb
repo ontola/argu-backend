@@ -5,11 +5,11 @@ require 'test_helper'
 class GroupMembershipTest < ActiveSupport::TestCase
   define_freetown
   subject { create(:group_membership, parent: custom_group, member: user.profile) }
-  let(:second_record) { create(:group_membership, parent: custom_group, member: manager.profile) }
+  let(:second_record) { create(:group_membership, parent: custom_group, member: moderator.profile) }
   let(:custom_group) { create(:group, parent: freetown.page.edge) }
   let(:second_group) { create(:group, parent: freetown.page.edge) }
   let(:user) { create(:user) }
-  let(:manager) { create_manager(freetown) }
+  let(:moderator) { create_moderator(freetown) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -19,10 +19,10 @@ class GroupMembershipTest < ActiveSupport::TestCase
     assert_not GroupMembership.new(group: custom_group, member: Profile.community, start_date: DateTime.current).valid?
   end
 
-  test 'manager destroy managership' do
-    manager
-    assert_difference('manager.profile.grants.count', -1) do
-      manager
+  test 'moderator destroy moderatorship' do
+    moderator
+    assert_difference('moderator.profile.grants.count', -1) do
+      moderator
         .profile
         .group_memberships
         .joins(:grants)
@@ -32,10 +32,10 @@ class GroupMembershipTest < ActiveSupport::TestCase
     end
   end
 
-  test 'manager expire managership' do
-    manager
-    assert_difference('manager.reload.profile.grants.count', -1) do
-      manager
+  test 'moderator expire moderatorship' do
+    moderator
+    assert_difference('moderator.reload.profile.grants.count', -1) do
+      moderator
         .profile
         .group_memberships
         .joins(:grants)
@@ -49,7 +49,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
     subject.update(end_date: 2.days.from_now)
 
     # can create outside member/group scope
-    assert create_group_membership(member: manager.profile), @errors
+    assert create_group_membership(member: moderator.profile), @errors
     assert create_group_membership(group: second_group), @errors
 
     # cannot create before or during existing membership

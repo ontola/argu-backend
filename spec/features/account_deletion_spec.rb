@@ -67,12 +67,12 @@ RSpec.feature 'Account deletion', type: :feature do
     expect(page).to have_content 'community'
   end
 
-  scenario 'super_admin should not delete destroy' do
-    sign_in(create_super_admin(freetown))
+  scenario 'administrator should not delete destroy' do
+    sign_in(create_administrator(freetown))
     visit settings_user_path(tab: :advanced)
     click_link 'Delete Argu account'
 
-    expect(page).to have_content 'You are the super admin in one or more places. '\
+    expect(page).to have_content 'You are the administrator in one or more places. '\
                                  'If you want to delete your account, please first transfer or remove these rights'
   end
 end

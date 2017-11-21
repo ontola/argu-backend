@@ -58,7 +58,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not get index' do
-    get forums_user_path(holland_manager)
+    get forums_user_path(holland_moderator)
     assert_response 302
   end
 
@@ -76,7 +76,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   test 'user should get index' do
     sign_in
-    get forums_user_path(holland_manager)
+    get forums_user_path(holland_moderator)
     assert_response 200
 
     refute_have_tag response.body,
@@ -110,23 +110,23 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:holland_member) { create_member(holland) }
-  let(:cologne_member) { create_member(cologne) }
-  let(:helsinki_member) { create_member(helsinki) }
+  let(:holland_initiator) { create_initiator(holland) }
+  let(:cologne_initiator) { create_initiator(cologne) }
+  let(:helsinki_initiator) { create_initiator(helsinki) }
 
-  test 'member should get discover' do
+  test 'initiator should get discover' do
     secondary_forums
-    sign_in holland_member
+    sign_in holland_initiator
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
   end
 
-  test 'member should get index' do
-    sign_in holland_member
-    get forums_user_path(holland_manager)
+  test 'initiator should get index' do
+    sign_in holland_initiator
+    get forums_user_path(holland_moderator)
     assert_response 200
 
     refute_have_tag response.body,
@@ -134,8 +134,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     holland.display_name
   end
 
-  test 'member should show closed children to members' do
-    sign_in cologne_member
+  test 'initiator should show closed children to members' do
+    sign_in cologne_initiator
 
     get forum_path(cologne)
     assert_forum_shown(cologne)
@@ -144,29 +144,29 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert assigns(:children), 'Closed forum content is not present'
   end
 
-  test 'member should show hidden to members' do
-    sign_in helsinki_member
+  test 'initiator should show hidden to members' do
+    sign_in helsinki_initiator
 
     get forum_path(helsinki)
     assert_forum_shown(helsinki)
   end
 
   ####################################
-  # As Manager
+  # As Moderator
   ####################################
-  let(:holland_manager) { create_manager(holland) }
+  let(:holland_moderator) { create_moderator(holland) }
 
-  test 'manager should get discover' do
+  test 'moderator should get discover' do
     secondary_forums
-    sign_in holland_manager
+    sign_in holland_moderator
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
   end
 
-  test 'manager should get index' do
-    sign_in holland_manager
-    get forums_user_path(holland_manager)
+  test 'moderator should get index' do
+    sign_in holland_moderator
+    get forums_user_path(holland_moderator)
     assert_response 200
 
     assert_have_tag response.body,
@@ -175,21 +175,21 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Admin
+  # As Administrator
   ####################################
-  let(:forum_pair) { create_forum_super_admin_pair(type: :populated_forum) }
+  let(:forum_pair) { create_forum_administrator_pair(type: :populated_forum) }
 
-  test 'super_admin should get discover' do
+  test 'administrator should get discover' do
     secondary_forums
-    sign_in create_super_admin(holland)
+    sign_in create_administrator(holland)
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
   end
 
-  test 'super_admin should get index' do
-    sign_in create_super_admin(holland)
-    get forums_user_path(holland_manager)
+  test 'administrator should get index' do
+    sign_in create_administrator(holland)
+    get forums_user_path(holland_moderator)
     assert_response 200
 
     assert_have_tag response.body,
@@ -197,8 +197,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     holland.display_name
   end
 
-  test 'super_admin should only show general settings' do
-    sign_in create_super_admin(holland)
+  test 'administrator should only show general settings' do
+    sign_in create_administrator(holland)
 
     get settings_forum_path(holland)
     assert_forum_settings_shown holland
@@ -209,8 +209,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'super_admin should update settings' do
-    sign_in create_super_admin(holland)
+  test 'administrator should update settings' do
+    sign_in create_administrator(holland)
     assert_difference('holland.reload.lock_version', 1) do
       put forum_path(holland),
           params: {
@@ -238,9 +238,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal 2, assigns(:forum).media_objects.count
   end
 
-  test 'super_admin should update locale affecting placement' do
+  test 'administrator should update locale affecting placement' do
     nominatim_netherlands
-    sign_in create_super_admin(holland)
+    sign_in create_administrator(holland)
     assert_equal holland.edge.reload.places.first.country_code, 'GB'
     assert_differences([['holland.reload.lock_version', 1], ['Placement.count', 0]]) do
       put forum_path(holland),
@@ -254,8 +254,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal holland.edge.reload.places.first.country_code, 'NL'
   end
 
-  test 'super_admin should not show statistics yet' do
-    sign_in create_super_admin(holland)
+  test 'administrator should not show statistics yet' do
+    sign_in create_administrator(holland)
 
     get statistics_forum_path(holland)
     assert assigns(:forum)

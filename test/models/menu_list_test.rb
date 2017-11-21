@@ -9,19 +9,19 @@ class MenuListTest < ActiveSupport::TestCase
   let(:user) { create(:user) }
   let(:user_context) { UserContext.new(user, user.profile, {}) }
 
-  let(:super_admin) { create_super_admin(freetown.page) }
-  let(:super_admin_context) { UserContext.new(super_admin, super_admin.profile, {}) }
+  let(:administrator) { create_administrator(freetown.page) }
+  let(:administrator_context) { UserContext.new(administrator, administrator.profile, {}) }
 
-  test 'Menu for super admin should include update' do
-    assert freetown.menu(super_admin_context, :actions).menus.map(&:tag).include?(:settings)
+  test 'Menu for administrator should include update' do
+    assert freetown.menu(administrator_context, :actions).menus.map(&:tag).include?(:settings)
   end
 
   test 'Menu for user should not include update' do
     assert_not freetown.menu(user_context, :actions).menus.map(&:tag).include?(:settings)
   end
 
-  test 'Application menu for super admin should include hidden forum' do
-    assert freetown.page.menu(super_admin_context, :navigations).menus.map(&:tag).include?(:second)
+  test 'Application menu for administrator should include hidden forum' do
+    assert freetown.page.menu(administrator_context, :navigations).menus.map(&:tag).include?(:second)
   end
 
   test 'Application menu for user should not include hidden forum' do

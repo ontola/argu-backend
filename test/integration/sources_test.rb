@@ -28,36 +28,36 @@ class SourcesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As member
+  # As initiator
   ####################################
-  let(:member) { create_member(page) }
+  let(:initiator) { create_initiator(page) }
 
-  test 'member should not show settings and all tabs' do
-    sign_in member
+  test 'initiator should not show settings and all tabs' do
+    sign_in initiator
 
     get settings_page_source_path(page, source)
     assert_not_authorized
   end
 
-  test 'member should get show JSON API with ids' do
-    sign_in member
+  test 'initiator should get show JSON API with ids' do
+    sign_in initiator
     get page_source_path(page_id: page.id, id: source.id, format: :json_api)
     assert_response 200
   end
 
-  test 'member should get show JSON API with shortnames' do
-    sign_in member
+  test 'initiator should get show JSON API with shortnames' do
+    sign_in initiator
     get page_source_path(page_id: page.url, id: source.url, format: :json_api)
     assert_response 200
   end
 
   ####################################
-  # As super admin
+  # As administrator
   ####################################
-  let(:super_admin) { create_super_admin(page) }
+  let(:administrator) { create_administrator(page) }
 
-  test 'super_admin should show settings and all tabs' do
-    sign_in super_admin
+  test 'administrator should show settings and all tabs' do
+    sign_in administrator
 
     get settings_page_source_path(page, source)
     assert_source_settings_shown source
@@ -68,8 +68,8 @@ class SourcesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'super_admin should update settings' do
-    sign_in super_admin
+  test 'administrator should update settings' do
+    sign_in administrator
 
     put page_source_path(source.page, source),
         params: {

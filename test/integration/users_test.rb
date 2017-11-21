@@ -9,7 +9,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
   let(:second_email) { create(:email_address, user: user, email: 'second@argu.co', confirmed_at: DateTime.current) }
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
   let(:user_no_shortname) do
     u = create(:user, profile: create(:profile))

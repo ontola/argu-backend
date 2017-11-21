@@ -184,10 +184,10 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Admin
+  # As Administrator
   ####################################
-  test 'super_admin should not post create member' do
-    sign_in create_super_admin(freetown)
+  test 'administrator should not post create member' do
+    sign_in create_administrator(freetown)
 
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -202,8 +202,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_not_collected
   end
 
-  test 'super_admin should not post create member json' do
-    sign_in create_super_admin(freetown)
+  test 'administrator should not post create member json' do
+    sign_in create_administrator(freetown)
 
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -220,8 +220,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_not_collected
   end
 
-  test 'super_admin should post create other' do
-    sign_in create_super_admin(freetown)
+  test 'administrator should post create other' do
+    sign_in create_administrator(freetown)
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
@@ -236,9 +236,9 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'create')
   end
 
-  test 'super_admin should not post create for staff group' do
+  test 'administrator should not post create for staff group' do
     staff_group = Group.find(Group::STAFF_ID)
-    sign_in create_super_admin(staff_group.page)
+    sign_in create_administrator(staff_group.page)
     user
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -253,8 +253,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_not_collected
   end
 
-  test 'super_admin should post create other json' do
-    sign_in create_super_admin(freetown)
+  test 'administrator should post create other json' do
+    sign_in create_administrator(freetown)
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
@@ -272,8 +272,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'create')
   end
 
-  test 'super_admin should delete expire' do
-    sign_in create_super_admin(freetown)
+  test 'administrator should delete expire' do
+    sign_in create_administrator(freetown)
 
     group_membership = create(:group_membership, parent: group)
 
@@ -293,7 +293,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   # As Page
   ####################################
   test 'page should post create other' do
-    sign_in create_super_admin(freetown)
+    sign_in create_administrator(freetown)
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,

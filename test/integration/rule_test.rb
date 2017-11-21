@@ -4,22 +4,22 @@ require 'test_helper'
 
 class RuleTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:freetown_super_admin) { create_super_admin(freetown) }
-  let(:freetown_manager) { create_manager(freetown) }
+  let!(:freetown_administrator) { create_administrator(freetown) }
+  let(:freetown_moderator) { create_moderator(freetown) }
 
   def log_out
     get destroy_user_session_path
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
   let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:member_argument) do
+  let(:initiator_argument) do
     create(:argument,
            parent: motion.edge,
-           creator: member.profile)
+           creator: initiator.profile)
   end
   let(:question1) { create(:question, parent: freetown.edge) }
   let(:question2) { create(:question, parent: freetown.edge) }
@@ -35,7 +35,7 @@ class RuleTest < ActionDispatch::IntegrationTest
            message: 'user not allowed')
   end
 
-  let(:no_show_managers) do
+  let(:no_show_moderators) do
     create(:rule,
            branch: freetown.edge,
            action: 'show?',
@@ -45,7 +45,7 @@ class RuleTest < ActionDispatch::IntegrationTest
            message: 'ask your boss to buy')
   end
 
-  let(:no_show_super_admins) do
+  let(:no_show_administrators) do
     create(:rule,
            branch: freetown.edge,
            action: 'show?',
@@ -67,42 +67,42 @@ class RuleTest < ActionDispatch::IntegrationTest
   test 'shows custom message' do
     no_show_users
 
-    get argument_path(member_argument)
+    get argument_path(initiator_argument)
     assert_not_authorized
     assert_equal flash[:alert], 'user not allowed'
   end
 
   test 'shows appropriate message level to users' do
     no_show_users
-    no_show_super_admins
+    no_show_administrators
 
-    get argument_path(member_argument)
+    get argument_path(initiator_argument)
     assert_not_authorized
     assert_equal flash[:alert], 'user not allowed'
   end
 
-  test 'shows appropriate message level to super_admins' do
-    sign_in(freetown_manager)
+  test 'shows appropriate message level to administrators' do
+    sign_in(freetown_moderator)
     no_show_users
-    no_show_managers
+    no_show_moderators
 
-    get argument_path(member_argument)
+    get argument_path(initiator_argument)
     assert_not_authorized
     assert_equal flash[:alert], 'ask your boss to buy'
   end
 
   test 'shows the highest level message when multiple are active' do
     no_show_users
-    no_show_super_admins
-    no_show_managers
+    no_show_administrators
+    no_show_moderators
 
     [
-      [member, 'user not allowed'],
-      [freetown_manager, 'ask your boss to buy'],
-      [freetown_super_admin, 'buy this feature']
+      [initiator, 'user not allowed'],
+      [freetown_moderator, 'ask your boss to buy'],
+      [freetown_administrator, 'buy this feature']
     ].each do |user, message|
       sign_in(user)
-      get argument_path(member_argument)
+      get argument_path(initiator_argument)
       assert_not_authorized
       assert_equal message, flash[:alert]
       log_out
@@ -111,7 +111,7 @@ class RuleTest < ActionDispatch::IntegrationTest
 
   test 'hide motions for specific question' do
     no_show_motion_in_specific_question
-    sign_in freetown_manager
+    sign_in freetown_moderator
 
     get motion_path(motion1)
     assert_response 200

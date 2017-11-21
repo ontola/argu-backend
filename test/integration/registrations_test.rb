@@ -393,12 +393,12 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Admin
+  # As Administrator
   ####################################
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
-  test 'super_admin should not delete destroy' do
-    sign_in super_admin
+  test 'administrator should not delete destroy' do
+    sign_in administrator
 
     assert_differences([['User.count', 0]]) do
       delete user_registration_path,

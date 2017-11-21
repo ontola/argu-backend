@@ -7,6 +7,6 @@ class QuestionAnswerPolicyTest < PolicyTest
   subject { QuestionAnswer.new(question: question, motion: motion) }
 
   test 'create question_answer' do
-    test_policy(subject, :create, manager_plus_results)
+    test_policy(subject, :create, moderator_plus_results)
   end
 end

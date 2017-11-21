@@ -82,12 +82,12 @@ RSpec.feature 'Comments', type: :feature do
   end
 
   ####################################
-  # As member
+  # As initiator
   ####################################
-  let(:member) { create_member(holland) }
+  let(:initiator) { create_initiator(holland) }
 
-  scenario 'Member places a comment' do
-    sign_in(member)
+  scenario 'Initiator places a comment' do
+    sign_in(initiator)
     visit argument_path(argument)
 
     fill_in_and_submit_comment

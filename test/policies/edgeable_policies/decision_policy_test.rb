@@ -32,7 +32,7 @@ class DecisionPolicyTest < PolicyTest
   alias feed_results nobody_results
 
   test 'create forward forwarded decision' do
-    test_policy(forwarded_subject, :create, manager_plus_results.merge(forwarded_user: true))
+    test_policy(forwarded_subject, :create, moderator_plus_results.merge(forwarded_user: true))
   end
 
   test 'create approve forwarded decision' do

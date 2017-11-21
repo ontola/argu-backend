@@ -176,7 +176,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   define_freetown('amsterdam')
   define_freetown('utrecht')
-  let(:user2) { create_member(amsterdam, create_member(utrecht)) }
+  let(:user2) { create_initiator(amsterdam, create_initiator(utrecht)) }
 
   test 'user should not get settings when not page owner' do
     sign_in user
@@ -206,13 +206,13 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Forum member
+  # As Forum initiator
   ####################################
-  let(:forum_member) { create_member(freetown) }
-  let(:non_public_forum_member) { create_member(cairo) }
+  let(:forum_initiator) { create_initiator(freetown) }
+  let(:non_public_forum_initiator) { create_initiator(cairo) }
 
-  test 'forum_member should get show when public' do
-    sign_in forum_member
+  test 'forum_initiator should get show when public' do
+    sign_in forum_initiator
 
     get page_path(page)
 
@@ -220,8 +220,8 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_not_nil assigns(:profile)
   end
 
-  test 'forum_member should get show when not public' do
-    sign_in non_public_forum_member
+  test 'forum_initiator should get show when not public' do
+    sign_in non_public_forum_initiator
 
     get page_path(page_non_public)
 
@@ -230,9 +230,9 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Admin
+  # As Administrator
   ####################################
-  test 'super_admin should get settings and all tabs' do
+  test 'administrator should get settings and all tabs' do
     create(:place, address: {country_code: 'nl'})
     sign_in page.owner.profileable
 
@@ -247,7 +247,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'super_admin should update settings' do
+  test 'administrator should update settings' do
     sign_in page.owner.profileable
 
     put page_path(page),
@@ -278,7 +278,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 'new_about', assigns(:page).profile.about
   end
 
-  test 'super_admin should put update page add latlon' do
+  test 'administrator should put update page add latlon' do
     create(:place, address: {country_code: 'nl'})
     sign_in page.owner.profileable
 
@@ -305,7 +305,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 2, page.edge.custom_placements.first.lon
   end
 
-  test 'super_admin should get new' do
+  test 'administrator should get new' do
     sign_in page.owner.profileable
 
     get new_page_path
@@ -315,7 +315,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body, 'section.page-limit-reached'
   end
 
-  test 'super_admin should not post create' do
+  test 'administrator should not post create' do
     sign_in page.owner.profileable
 
     assert_no_difference('Page.count') do
@@ -336,7 +336,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body, 'section.page-limit-reached'
   end
 
-  test 'super_admin should delete destroy and anonimize its content' do
+  test 'administrator should delete destroy and anonimize its content' do
     init_cairo_with_content
     sign_in page.owner.profileable
 
@@ -354,7 +354,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'super_admin should delete destroy when page not owns a forum' do
+  test 'administrator should delete destroy when page not owns a forum' do
     sign_in page.owner.profileable
 
     assert_difference('Page.count', -1) do
@@ -367,7 +367,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'super_admin should not delete destroy when page owns a forum' do
+  test 'administrator should not delete destroy when page owns a forum' do
     sign_in page.owner.profileable
     freetown
 

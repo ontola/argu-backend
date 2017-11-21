@@ -4,8 +4,8 @@ require 'test_helper'
 
 class ActivityStringTest < ActiveSupport::TestCase
   define_freetown
-  let(:updater) { create_member(freetown) }
-  let(:receiver) { create_member(freetown) }
+  let(:updater) { create_initiator(freetown) }
+  let(:receiver) { create_initiator(freetown) }
   let!(:project) do
     create(:project,
            parent: freetown.edge)

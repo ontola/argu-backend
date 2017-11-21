@@ -13,11 +13,11 @@ class GrantPolicyTest < PolicyTest
   private
 
   def show_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def create_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def update_results
@@ -25,6 +25,6 @@ class GrantPolicyTest < PolicyTest
   end
 
   def destroy_results
-    nobody_results.merge(super_admin: true, staff: true)
+    nobody_results.merge(administrator: true, staff: true)
   end
 end

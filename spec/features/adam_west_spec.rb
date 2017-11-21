@@ -176,19 +176,19 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   ####################################
-  # As Member
+  # As Initiator
   ####################################
-  let(:member) { create_member(freetown) }
+  let(:initiator) { create_initiator(freetown) }
 
-  scenario 'member should walk from answer up until forum' do
-    sign_in(member)
+  scenario 'Initiator should walk from answer up until forum' do
+    sign_in(initiator)
 
-    walk_up_to_forum member
+    walk_up_to_forum initiator
     expect(page).not_to have_content('New discussion')
   end
 
-  scenario 'member should visit forum show' do
-    sign_in(member)
+  scenario 'Initiator should visit forum show' do
+    sign_in(initiator)
 
     visit forum_path(freetown)
 
@@ -196,8 +196,8 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(question.display_name)
   end
 
-  scenario 'member should not see comment section' do
-    sign_in(member)
+  scenario 'Initiator should not see comment section' do
+    sign_in(initiator)
 
     visit argument_path(argument)
 
@@ -205,8 +205,8 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Comments')
   end
 
-  scenario 'member should not see top comment' do
-    sign_in(member)
+  scenario 'Initiator should not see top comment' do
+    sign_in(initiator)
 
     visit motion_path(motion)
 
@@ -230,8 +230,8 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(c.body)
   end
 
-  scenario 'member should not post create comment' do
-    sign_in(member)
+  scenario 'Initiator should not post create comment' do
+    sign_in(initiator)
 
     visit argument_path(argument)
 
@@ -239,10 +239,10 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Comments')
   end
 
-  scenario 'member should vote on a motion' do
+  scenario 'Initiator should vote on a motion' do
     nominatim_netherlands
 
-    sign_in(member)
+    sign_in(initiator)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
@@ -256,26 +256,26 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
   end
 
-  scenario 'member should post a new motion' do
-    sign_in(member)
+  scenario 'Initiator should post a new motion' do
+    sign_in(initiator)
 
     create_motion_for_question
   end
 
   ####################################
-  # As Manager
+  # As Moderator
   ####################################
-  let(:manager) { create_manager(freetown) }
+  let(:moderator) { create_moderator(freetown) }
 
-  scenario 'manager should walk from answer up until forum' do
-    sign_in(manager)
+  scenario 'moderator should walk from answer up until forum' do
+    sign_in(moderator)
 
-    walk_up_to_forum manager
+    walk_up_to_forum moderator
     expect(page).to have_content('New discussion')
   end
 
-  scenario 'manager should visit forum show' do
-    sign_in(manager)
+  scenario 'moderator should visit forum show' do
+    sign_in(moderator)
 
     visit forum_path(freetown)
 
@@ -284,8 +284,8 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_current_path(forum_path(freetown))
   end
 
-  scenario 'manager should not see comment section' do
-    sign_in(manager)
+  scenario 'moderator should not see comment section' do
+    sign_in(moderator)
 
     visit argument_path(argument)
 
@@ -293,8 +293,8 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Comments')
   end
 
-  scenario 'manager should see motion new button' do
-    sign_in(manager)
+  scenario 'moderator should see motion new button' do
+    sign_in(moderator)
 
     visit question_path(question)
 

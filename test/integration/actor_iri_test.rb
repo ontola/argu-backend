@@ -23,12 +23,12 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Unconfirmed Super Admin
+  # As Unconfirmed Administrator
   ####################################
-  let(:unconfirmed_super_admin) { create_super_admin(freetown, create(:user, :unconfirmed)) }
+  let(:unconfirmed_administrator) { create_administrator(freetown, create(:user, :unconfirmed)) }
 
-  test 'unconfirmed super admin should not post create as page' do
-    sign_in unconfirmed_super_admin
+  test 'unconfirmed administrator should not post create as page' do
+    sign_in unconfirmed_administrator
 
     post_motion(false, freetown.page.iri)
   end
@@ -36,10 +36,10 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   ####################################
   # As Super Admin
   ####################################
-  let(:super_admin) { create_super_admin(freetown) }
+  let(:administrator) { create_administrator(freetown) }
 
-  test 'super admin should post create as page' do
-    sign_in super_admin
+  test 'administrator should post create as page' do
+    sign_in administrator
 
     post_motion(true, freetown.page.iri)
   end

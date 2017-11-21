@@ -49,9 +49,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As manager
+  # As moderator
   ####################################
-  test 'manager should get index' do
+  test 'moderator should get index' do
     create(:group_membership,
            parent: create(
              :grant,

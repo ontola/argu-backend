@@ -97,44 +97,44 @@ module Portal
     end
 
     ####################################
-    # As Member
+    # As Initiator
     ####################################
     test 'member should not post create' do
-      sign_in create_member(freetown)
+      sign_in create_initiator(freetown)
 
       general_create 403
     end
 
     test 'member should not delete destroy' do
-      sign_in create_member(freetown)
+      sign_in create_initiator(freetown)
 
       general_destroy 403
     end
     ####################################
-    # As Manager
+    # As Moderator
     ####################################
-    test 'manager should post create' do
-      sign_in create_manager(freetown)
+    test 'moderator should post create' do
+      sign_in create_moderator(freetown)
 
       general_create 403
     end
 
-    test 'manager should not delete destroy' do
-      sign_in create_manager(freetown)
+    test 'moderator should not delete destroy' do
+      sign_in create_moderator(freetown)
 
       general_destroy 403
     end
     ####################################
-    # As Admin
+    # As Administrator
     ####################################
-    test 'super_admin should not post create' do
-      sign_in create_super_admin(freetown)
+    test 'administrator should not post create' do
+      sign_in create_administrator(freetown)
 
       general_create 403
     end
 
-    test 'super_admin should not delete destroy' do
-      sign_in create_super_admin(freetown)
+    test 'administrator should not delete destroy' do
+      sign_in create_administrator(freetown)
 
       general_destroy 403
     end
