@@ -20,6 +20,9 @@
     text-align: left;
     width: 100%;
   }
+  .box:last-child {
+    margin-bottom: 0;
+  }
   .box-small {
     display: inline-block;
     vertical-align: top;
@@ -50,10 +53,6 @@
 .modal h1 {
   margin-bottom: 1em;
   color: white;
-}
-
-.modal .comments {
-  margin-bottom: 0;
 }
 
 .overlay-back {
