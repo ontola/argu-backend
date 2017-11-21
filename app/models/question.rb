@@ -19,7 +19,7 @@ class Question < Edgeable::Base
 
   convertible motions: %i[activities blog_posts media_objects]
   counter_cache true
-  parentable :project, :forum
+  parentable :forum
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 110}

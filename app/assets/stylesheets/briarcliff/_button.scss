@@ -160,10 +160,6 @@
   &[collection_model="Question"]{
     @include button--colored($question);
   }
-
-  &[collection_model="Project"]{
-    @include button--colored($project);
-  }
 }
 
 // Used in the column renderer, where only the parent of the link can have a CSS class
@@ -177,7 +173,7 @@
 }
 
 .box-link {
-  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
+  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"] {
     h3 {
       color: white;
     }
@@ -201,9 +197,6 @@
   }
   &[collection_model="Question"]{
     background-color: $question;
-  }
-  &[collection_model="Project"]{
-    background-color: $project;
   }
 }
 

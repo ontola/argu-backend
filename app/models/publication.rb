@@ -3,7 +3,7 @@
 class Publication < ApplicationRecord
   include Wisper::Publisher
   belongs_to :publishable, class_name: 'Edge'
-  belongs_to :creator, class_name: 'Profile', inverse_of: :projects
+  belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
   before_save :reset

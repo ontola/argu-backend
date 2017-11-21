@@ -21,8 +21,7 @@ require 'argu/whitelist_constraint'
 # m: motions
 # n: notifications
 # o: pages (organisations)
-# p: projects
-# phase: phases
+# p:
 # posts: blog posts
 # q: questions
 # r:
@@ -248,16 +247,6 @@ Rails.application.routes.draw do
             only: %i[show edit update],
             concerns: %i[trashable commentable menuable]
 
-  resources :projects,
-            path: 'p',
-            only: %i[show edit update],
-            concerns: %i[blog_postable feedable discussable trashable menuable]
-
-  resources :phases,
-            only: %i[show edit update] do
-    put :finish, to: 'phases#finish'
-  end
-
   resources :menus, only: %i[show index]
 
   resources :media_objects, only: :show
@@ -349,7 +338,6 @@ Rails.application.routes.draw do
       get :settings, on: :member
       get :statistics, on: :member
       resources :shortnames, only: %i[new create]
-      resources :projects, path: 'p', only: %i[new create]
       resources :banners, except: %i[index show]
     end
   end

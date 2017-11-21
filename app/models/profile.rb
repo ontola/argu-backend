@@ -27,7 +27,6 @@ class Profile < ApplicationRecord
   has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :comments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
-  has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :vote_matches, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
@@ -175,7 +174,7 @@ class Profile < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def anonymize_dependencies
-    %w[comments motions arguments questions blog_posts projects vote_events vote_matches activities
+    %w[comments motions arguments questions blog_posts vote_events vote_matches activities
        uploaded_media_objects unscoped_group_memberships]
       .each do |association|
       send(association)

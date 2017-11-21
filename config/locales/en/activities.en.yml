@@ -1,6 +1,7 @@
 
 en:
   activities:
+    timeline: "Timeline"
     votes:
       create: "%{owner} %{side} %{parent}"
       pro: "is in favour of"
@@ -41,8 +42,6 @@ en:
       update: "%{owner} updated a %{subject} for %{parent}"
     group_responses:
       create: "%{owner} posted a %{type} as a %{group_singular} in %{parent}"
-    projects:
-      create: "%{owner} posted a draft %{type} in %{parent}"
     ui:
       load_more: "Load more"
       no_more_artivities: "No more activities"

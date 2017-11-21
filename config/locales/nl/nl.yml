@@ -321,9 +321,6 @@ nl:
     profile:
       name: 'Bekijk alle standpunten'
       description: 'Alle standpunten van %{title} in één overzicht.'
-    project:
-      name: 'Bekijk alle standpunten'
-      description: 'Alle standpunten van %{title} in één overzicht.'
     question:
       name: 'Bespreek en deel ideeën'
       description: 'Deel ideeën voor ''%{title}'' en bespreek de voor- en nadelen.'

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 @actions = HashWithIndifferentAccess.new
-%w[Page Forum Question Motion Phase LinkedRecord Argument
+%w[Page Forum Question Motion LinkedRecord Argument
    Comment VoteEvent Vote BlogPost Decision].each do |type|
   %w[create show update destroy trash]
     .each do |action|
@@ -22,7 +22,7 @@ end
     action: 'create'
   )
 
-show_actions = %i[page_show forum_show question_show motion_show linked_record_show argument_show phase_show
+show_actions = %i[page_show forum_show question_show motion_show linked_record_show argument_show
                   comment_show vote_event_show vote_show blog_post_show decision_show].map { |a| @actions[a] }
 
 spectate = GrantSet.new(title: 'spectator')
@@ -44,41 +44,40 @@ initiate.save!(validate: false)
 moderate = GrantSet.new(title: 'moderator')
 moderate.permitted_actions << show_actions
 moderate.permitted_actions <<
-  %i[question_create motion_create argument_create comment_create phase_create
+  %i[question_create motion_create argument_create comment_create
      vote_create blog_post_create decision_create].map { |a| @actions[a] }
 moderate.permitted_actions <<
-  %i[question_update motion_update argument_update phase_update
+  %i[question_update motion_update argument_update
      blog_post_update decision_update].map { |a| @actions[a] }
 moderate.permitted_actions <<
   %i[question_trash motion_trash argument_trash blog_post_trash comment_trash].map { |a| @actions[a] }
-moderate.permitted_actions << %i[phase_destroy].map { |a| @actions[a] }
 moderate.save!(validate: false)
 
 administrate = GrantSet.new(title: 'administrator')
 administrate.permitted_actions << show_actions
 administrate.permitted_actions <<
-  %i[question_create motion_create argument_create comment_create phase_create
+  %i[question_create motion_create argument_create comment_create
      vote_create blog_post_create decision_create].map { |a| @actions[a] }
 administrate.permitted_actions <<
-  %i[page_update forum_update question_update motion_update phase_update
+  %i[page_update forum_update question_update motion_update
      argument_update blog_post_update decision_update].map { |a| @actions[a] }
 administrate.permitted_actions <<
   %i[question_trash motion_trash argument_trash blog_post_trash comment_trash].map { |a| @actions[a] }
 administrate.permitted_actions <<
-  %i[page_destroy forum_destroy phase_destroy].map { |a| @actions[a] }
+  %i[page_destroy forum_destroy].map { |a| @actions[a] }
 administrate.save!(validate: false)
 
 staff = GrantSet.new(title: 'staff')
 staff.permitted_actions << show_actions
 staff.permitted_actions <<
-  %i[forum_create question_create motion_create argument_create phase_create
+  %i[forum_create question_create motion_create argument_create
      comment_create vote_create blog_post_create decision_create].map { |a| @actions[a] }
 staff.permitted_actions <<
-  %i[page_update forum_update question_update motion_update phase_update
+  %i[page_update forum_update question_update motion_update
      argument_update blog_post_update decision_update].map { |a| @actions[a] }
 staff.permitted_actions <<
   %i[question_trash motion_trash argument_trash blog_post_trash comment_trash].map { |a| @actions[a] }
 staff.permitted_actions <<
   %i[page_destroy forum_destroy question_destroy motion_destroy argument_destroy
-     blog_post_destroy comment_destroy phase_destroy].map { |a| @actions[a] }
+     blog_post_destroy comment_destroy].map { |a| @actions[a] }
 staff.save!(validate: false)

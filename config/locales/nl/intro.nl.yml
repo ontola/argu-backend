@@ -18,7 +18,6 @@ nl:
         advanced: ''
         # TODO
         privacy: ''
-        projects: ''
         statistics: 'Bekijk diverse statistieken over het gebruik van dit forum.'
         groups: 'Groepen kan je gebruiken om bepaalde groepen gebruikers extra rechten te geven. Zo kan je bijvoorbeeld politieke partijen in jouw forum maken.'
         managers: 'Bepaal wie er items kan verwijderen en bewerken.'
@@ -64,8 +63,6 @@ nl:
     comments:
       show: 'Hieronder staan de reacties op dit item.'
       form: 'Als je wilt reageren, kan je dat hier doen.'
-    projects:
-      back: 'Klik hier om terug te gaan naar het <b>forum</b>.'
     start: 'Hoe werkt deze pagina?'
     start_short: 'Help'
     profile:

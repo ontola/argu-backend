@@ -116,7 +116,6 @@ FactorySeeder.create(:argument, parent: linked_record.edge)
 FactorySeeder.create(:comment, parent: linked_record.edge)
 linked_record_vote_event = linked_record.default_vote_event
 FactorySeeder.create(:vote, parent: linked_record_vote_event.edge)
-FactorySeeder.create(:project, parent: freetown.edge)
 forum_motion = FactorySeeder.create(:motion, parent: freetown.edge)
 FactorySeeder.create(:argument, parent: forum_motion.edge)
 question = FactorySeeder.create(:question, parent: freetown.edge)

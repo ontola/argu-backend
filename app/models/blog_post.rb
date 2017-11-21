@@ -9,7 +9,7 @@ class BlogPost < Edgeable::Base
   include Attachable
 
   counter_cache true
-  parentable :motion, :question, :project
+  parentable :motion, :question
 
   validates :content, presence: true, length: {minimum: 2}
   validates :title, presence: true, length: {minimum: 2, maximum: 110}

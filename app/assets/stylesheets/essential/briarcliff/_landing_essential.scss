@@ -181,30 +181,6 @@
   text-transform: uppercase;
 }
 
-.landing__projects {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.landing__project {
-  background-color: white;
-  border-radius: 5px;
-  flex: 1;
-  flex-basis: 20em;
-  margin: 1em;
-  max-width: 27em;
-}
-
-.landing__project__picture {
-  width: 100%;
-}
-
-.landing__project__content {
-  padding: 1em;
-}
 
 .landing-box {
   max-width: 25em;

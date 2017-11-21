@@ -23,16 +23,10 @@ RSpec.feature 'Account deletion', type: :feature do
            parent: motion.edge,
            publisher: user)
   end
-  let(:project) do
-    create(:project,
-           creator: user.profile,
-           parent: freetown.edge,
-           publisher: user)
-  end
   let(:blog_post) do
     create(:blog_post,
            creator: user.profile,
-           parent: project.edge,
+           parent: question.edge,
            publisher: user,
            happening_attributes: {happened_at: Time.current})
   end
@@ -44,7 +38,7 @@ RSpec.feature 'Account deletion', type: :feature do
   end
 
   scenario 'user should delete destroy' do
-    [argument, motion, question, project, blog_post, comment].each do |resource|
+    [argument, motion, question, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
 
@@ -60,7 +54,7 @@ RSpec.feature 'Account deletion', type: :feature do
     end.to change { User.count }.by(-1)
     argument.reload
 
-    [Comment, Argument, Motion, Question, Project, BlogPost].each do |klass|
+    [Comment, Argument, Motion, Question, BlogPost].each do |klass|
       expect(klass.anonymous.count).to eq(1)
     end
     visit motion_path(motion)

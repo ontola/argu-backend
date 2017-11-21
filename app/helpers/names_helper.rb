@@ -13,9 +13,6 @@ module NamesHelper
       hide_action :motion_icon
       hide_action :motion_type
       hide_action :motions_type
-      hide_action :projects_type
-      hide_action :projects_icon
-      hide_action :projects_type
       hide_action :questions_type
       hide_action :question_icon
       hide_action :question_type
@@ -92,25 +89,6 @@ module NamesHelper
   end
 
   #########################
-  #        Project        #
-  #########################
-
-  # Icon substring for project
-  def project_icon
-    'rocket'
-  end
-
-  # Singular translation for {Project}
-  def project_type
-    I18n.t('projects.type')
-  end
-
-  # Plural translation for {Project}
-  def projects_type
-    I18n.t('projects.plural')
-  end
-
-  #########################
   #       Questions       #
   #########################
 
@@ -159,7 +137,6 @@ module NamesHelper
 
   # @private
   def type_for(item)
-    return I18n.t('projects.phases.type') if item.is_a?(Phase)
     I18n.t("#{item.model_name.collection}.type")
   end
 end

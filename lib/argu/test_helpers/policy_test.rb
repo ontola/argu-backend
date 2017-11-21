@@ -19,8 +19,6 @@ class PolicyTest < ActiveSupport::TestCase
   let(:linked_record_argument) { create(:argument, parent: linked_record.edge, publisher: creator) }
 
   ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
-    let("#{prefix}project") { create(:project, parent: send("#{prefix}freetown").edge, publisher: creator) }
-    let("#{prefix}phase") { create(:phase, parent: send("#{prefix}project").edge, publisher: creator) }
     let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown").edge, publisher: creator) }
     let("#{prefix}forum_motion") { create(:motion, parent: send("#{prefix}freetown").edge, publisher: creator) }
     let("#{prefix}motion") { create(:motion, parent: send("#{prefix}question").edge, publisher: creator) }

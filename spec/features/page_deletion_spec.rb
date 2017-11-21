@@ -24,16 +24,10 @@ RSpec.feature 'Page deletion', type: :feature do
            parent: motion.edge,
            publisher: user)
   end
-  let(:project) do
-    create(:project,
-           creator: forum_page.profile,
-           parent: freetown.edge,
-           publisher: user)
-  end
   let(:blog_post) do
     create(:blog_post,
            creator: forum_page.profile,
-           parent: project.edge,
+           parent: question.edge,
            publisher: user,
            happening_attributes: {happened_at: Time.current})
   end
@@ -48,7 +42,7 @@ RSpec.feature 'Page deletion', type: :feature do
 
   scenario 'user should delete destroy' do
     nederland
-    [argument, motion, question, project, blog_post, comment].each do |resource|
+    [argument, motion, question, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
 
@@ -65,14 +59,14 @@ RSpec.feature 'Page deletion', type: :feature do
       expect(page).to have_content 'Organization deleted successfully'
     end.to change { Page.count }.by(-1)
 
-    [Comment, Argument, Motion, Question, Project, BlogPost].each do |klass|
+    [Comment, Argument, Motion, Question, BlogPost].each do |klass|
       expect(klass.anonymous.count).to eq(1)
     end
   end
 
   scenario 'owner should not delete destroy' do
     nederland
-    [argument, motion, question, project, blog_post, comment].each do |resource|
+    [argument, motion, question, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
     freetown.update(page_id: forum_page.id)

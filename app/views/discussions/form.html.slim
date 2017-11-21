@@ -82,38 +82,3 @@
           h3
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= t('motions.type_new')
--if parent_resource.respond_to?(:projects) && policy(parent_resource).create_child?(:projects)
-  .col-1.col-1--small
-    header
-      h2=t('discussions.new.or_start_a_project')
-    .box
-      section
-        p
-          span= t('projects.call_to_action.body') + ' '
-          =link_to polymorphic_path([:new, parent_resource, :project])
-            b.motion-t= t('projects.call_to_action.action')
-    =link_to polymorphic_path([:new, parent_resource, :project])
-      .box.motion
-        .box-image--container
-          /.box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-        section.section-info
-          .details
-            .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
-              span[class="fa fa-#{blog_post_icon}"]
-              span.icon-left= t('projects.type')
-            .details-part[data-title=t('blog_posts.tooltips.count')]
-              span.fa.fa-bullhorn
-              span.icon-left 3
-            .details-part[data-title=t('questions.tooltips.count')]
-              span.fa.fa-question
-              span.icon-left 3
-            .details-part[data-title=t('motions.tooltips.count')]
-              span.fa.fa-lightbulb-o
-              span.icon-left 4
-        section
-          h3.project-t= t('discussions.new.project_title')
-    .btn--project.btn--huge[collection_model="Project"]
-      =link_to polymorphic_path([:new, parent_resource, :project])
-        h3
-          span[class="fa fa-rocket"]
-          span.icon-left= t('projects.type_new')

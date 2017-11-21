@@ -22,7 +22,6 @@ class User < ApplicationRecord
   has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
-  has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
@@ -177,7 +176,7 @@ class User < ApplicationRecord
       end
     end
     if ancestor_type.present?
-      followable.ancestors.where(owner_type: %w[Motion Question Project Forum]).find_each do |ancestor|
+      followable.ancestors.where(owner_type: %w[Motion Question Forum]).find_each do |ancestor|
         follow(ancestor, ancestor_type)
       end
     end
@@ -334,7 +333,7 @@ class User < ApplicationRecord
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w[comments motions arguments questions blog_posts projects votes vote_events vote_matches uploaded_media_objects]
+    %w[comments motions arguments questions blog_posts votes vote_events vote_matches uploaded_media_objects]
       .each do |association|
       send(association)
         .model

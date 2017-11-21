@@ -95,7 +95,6 @@ module ForumsHelper
 
   def shortname_owner_types
     [
-      %w[Project Project],
       %w[Question Question],
       %w[Motion Motion],
       %w[Argument Argument],

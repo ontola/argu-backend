@@ -380,7 +380,6 @@ ActiveRecord::Schema.define(version: 20180209124354) do
     t.integer "publisher_id", null: false
     t.integer "question_id"
     t.bigint "place_id"
-    t.integer "project_id"
     t.index ["forum_id"], name: "index_motions_on_forum_id"
     t.index ["id"], name: "index_motions_on_id"
   end
@@ -460,21 +459,6 @@ ActiveRecord::Schema.define(version: 20180209124354) do
     t.index ["title"], name: "index_permitted_actions_on_title", unique: true
   end
 
-  create_table "phases", id: :serial, force: :cascade do |t|
-    t.integer "forum_id", null: false
-    t.integer "project_id", null: false
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
-    t.integer "position"
-    t.string "name"
-    t.text "description"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["forum_id", "project_id"], name: "index_phases_on_forum_id_and_project_id"
-  end
-
   create_table "placements", id: :serial, force: :cascade do |t|
     t.integer "forum_id"
     t.integer "place_id", null: false
@@ -527,27 +511,6 @@ ActiveRecord::Schema.define(version: 20180209124354) do
     t.index ["slug"], name: "index_profiles_on_slug", unique: true
   end
 
-  create_table "projects", id: :serial, force: :cascade do |t|
-    t.integer "forum_id", null: false
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
-    t.integer "group_id"
-    t.integer "state", default: 0, null: false
-    t.string "title", null: false
-    t.text "content"
-    t.datetime "start_date"
-    t.string "email"
-    t.datetime "end_date"
-    t.datetime "achieved_end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "cover_photo", default: ""
-    t.string "cover_photo_attribution", default: ""
-    t.boolean "is_published", default: false, null: false
-    t.index ["forum_id", "is_published"], name: "index_projects_on_forum_id_and_is_published"
-    t.index ["forum_id"], name: "index_projects_on_forum_id"
-  end
-
   create_table "publications", id: :serial, force: :cascade do |t|
     t.string "job_id"
     t.datetime "published_at"
@@ -571,7 +534,6 @@ ActiveRecord::Schema.define(version: 20180209124354) do
     t.datetime "expires_at"
     t.integer "publisher_id", null: false
     t.bigint "place_id"
-    t.integer "project_id"
     t.boolean "require_location", default: false, null: false
     t.integer "default_sorting", default: 0, null: false
     t.index ["forum_id"], name: "index_questions_on_forum_id"
@@ -780,27 +742,17 @@ ActiveRecord::Schema.define(version: 20180209124354) do
   add_foreign_key "motions", "forums"
   add_foreign_key "motions", "places"
   add_foreign_key "motions", "profiles", column: "creator_id"
-  add_foreign_key "motions", "projects"
   add_foreign_key "motions", "questions"
   add_foreign_key "motions", "users", column: "publisher_id"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "pages", "profiles", column: "owner_id"
-  add_foreign_key "phases", "forums"
-  add_foreign_key "phases", "profiles", column: "creator_id"
-  add_foreign_key "phases", "projects"
-  add_foreign_key "phases", "users", column: "publisher_id"
   add_foreign_key "placements", "forums"
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
-  add_foreign_key "projects", "forums"
-  add_foreign_key "projects", "groups"
-  add_foreign_key "projects", "profiles", column: "creator_id"
-  add_foreign_key "projects", "users", column: "publisher_id"
   add_foreign_key "questions", "places"
   add_foreign_key "questions", "profiles", column: "creator_id"
-  add_foreign_key "questions", "projects"
   add_foreign_key "questions", "users", column: "publisher_id"
   add_foreign_key "rules", "edges", column: "branch_id"
   add_foreign_key "shortnames", "forums"

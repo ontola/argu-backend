@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FollowsController < AuthorizedController
-  PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment Project BlogPost].freeze
+  PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment BlogPost].freeze
   skip_before_action :check_if_registered, if: :unsubscribe?
   skip_before_action :authorize_action, if: :unsubscribe?
 

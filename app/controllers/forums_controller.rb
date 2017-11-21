@@ -97,7 +97,7 @@ class ForumsController < EdgeableController
     forum
       .edge
       .descendants
-      .where(owner_type: %w[Argument Vote Project Question Motion Comment])
+      .where(owner_type: %w[Argument Vote Question Motion Comment])
       .group(:owner_type)
       .count
       .sort { |x, y| y[1] <=> x[1] }

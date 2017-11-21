@@ -5,13 +5,7 @@ require 'test_helper'
 class NotificationsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
-  let(:project) do
-    create(:project,
-           :with_follower,
-           :with_news_follower,
-           parent: freetown.edge)
-  end
-  let(:question) { create(:question, :with_follower, :with_news_follower, parent: project.edge) }
+  let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown.edge) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question.edge) }
   let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }

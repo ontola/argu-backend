@@ -8,7 +8,7 @@ class FollowersCollectorTest < ActiveSupport::TestCase
   let(:motion) { create(:motion, parent: cairo.edge, publisher: creator) }
   let(:important_motion) { create(:motion, parent: cairo.edge, publisher: creator, mark_as_important: '1') }
   let(:argument) { create(:argument, parent: motion.edge, publisher: creator) }
-  let(:activity) { project.activities.first }
+  let(:activity) { motion.activities.first }
   let!(:news_follow) { create(:news_follow, followable: cairo.edge, follower: create_initiator(cairo)) }
   let!(:granted_follower) { create(:follow, followable: cairo.edge, follower: create_initiator(cairo)) }
   let!(:non_granted_follower) { create(:follow, followable: cairo.edge, follower: create(:user)) }

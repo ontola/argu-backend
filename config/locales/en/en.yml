@@ -319,9 +319,6 @@ en:
     profile:
       name: 'Views & opinions'
       description: 'All views & opinions of %{title}.'
-    project:
-      name: 'Views & opinions'
-      description: 'All views & opinions of %{title}.'
     question:
       name: 'Discuss and share ideas'
       description: 'Discuss and share ideas about %{title}. Vote on the best arguments and join the debate!'

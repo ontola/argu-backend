@@ -1,6 +1,7 @@
 
 nl:
   activities:
+    timeline: "Tijdlijn"
     votes:
       create: "%{owner} %{side} %{parent}"
       pro: "is vóór"
@@ -41,8 +42,6 @@ nl:
       update: "%{owner} heeft een %{subject} op %{parent} gewijzigd"
     group_responses:
       create: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
-    projects:
-      create: "%{owner} heeft een concept %{type} geplaatst in %{parent}"
     ui:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"

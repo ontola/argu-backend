@@ -23,10 +23,6 @@
   background-image: image-url("landing/Motion.png");
 }
 
-.landing__project {
-  @include box-shadow();
-}
-
 @keyframes appear {
     0% {
       height: 0;

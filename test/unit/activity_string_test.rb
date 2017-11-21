@@ -6,11 +6,7 @@ class ActivityStringTest < ActiveSupport::TestCase
   define_freetown
   let(:updater) { create_initiator(freetown) }
   let(:receiver) { create_initiator(freetown) }
-  let!(:project) do
-    create(:project,
-           parent: freetown.edge)
-  end
-  let!(:question) { create(:question, parent: project.edge) }
+  let!(:question) { create(:question, parent: freetown.edge) }
   let!(:motion) { create(:motion, parent: question.edge) }
   let!(:approved_decision) do
     create(:decision,
@@ -39,7 +35,7 @@ class ActivityStringTest < ActiveSupport::TestCase
     update_activity = update_resource(question, {content: 'updated content'}, updater).activities.last
     trash_activity = trash_resource(question, updater).activities.last
     assert_equal "[#{question.publisher.display_name}](#{url("/u/#{question.publisher.url}")}) "\
-                  "posted a draft challenge in [#{project.display_name}](#{url("/p/#{project.id}")})",
+                  "posted a draft challenge in [#{freetown.display_name}](#{url('/freetown')})",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "updated [#{question.display_name}](#{url("/q/#{question.id}")})",
@@ -56,7 +52,7 @@ class ActivityStringTest < ActiveSupport::TestCase
     destroy_resource(question, updater)
     destroy_activity = Activity.last
     assert_equal "[#{question.publisher.display_name}](#{url("/u/#{question.publisher.url}")}) "\
-                  "posted a draft challenge in [#{project.display_name}](#{url("/p/#{project.id}")})",
+                  "posted a draft challenge in [#{freetown.display_name}](#{url('/freetown')})",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
                   "updated #{question.display_name}",
@@ -69,19 +65,19 @@ class ActivityStringTest < ActiveSupport::TestCase
                  Argu::ActivityString.new(destroy_activity, receiver, true).to_s
   end
 
-  test 'string for activities of question with deleted parent' do
-    create_activity = question.activities.first
-    update_activity = update_resource(question, {content: 'updated content'}, updater).activities.last
-    trash_activity = trash_resource(question, updater).activities.last
-    destroy_resource(project)
-    assert_equal "[#{question.publisher.display_name}](#{url("/u/#{question.publisher.url}")}) "\
-                  "posted a draft challenge in #{project.display_name}",
+  test 'string for activities of motion of deleted question' do
+    create_activity = motion.activities.first
+    update_activity = update_resource(motion, {content: 'updated content'}, updater).activities.last
+    trash_activity = trash_resource(motion, updater).activities.last
+    destroy_resource(question)
+    assert_equal "[#{motion.publisher.display_name}](#{url("/u/#{motion.publisher.url}")}) "\
+                  "posted a draft idea in #{question.display_name}",
                  Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
-                  "updated #{question.display_name}",
+                  "updated #{motion.display_name}",
                  Argu::ActivityString.new(update_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](#{url("/u/#{updater.url}")}) "\
-                  "trashed #{question.display_name}",
+                  "trashed #{motion.display_name}",
                  Argu::ActivityString.new(trash_activity, receiver, true).to_s
   end
 
@@ -90,7 +86,7 @@ class ActivityStringTest < ActiveSupport::TestCase
     update_activity = update_resource(question, {content: 'updated content'}, question.publisher).activities.last
     trash_activity = trash_resource(question, question.publisher).activities.last
     question.publisher.destroy
-    assert_equal "community posted a draft challenge in [#{project.display_name}](#{url("/p/#{project.id}")})",
+    assert_equal "community posted a draft challenge in [#{freetown.display_name}](#{url('/freetown')})",
                  Argu::ActivityString.new(create_activity.reload, receiver, true).to_s
     assert_equal "community updated [#{question.display_name}](#{url("/q/#{question.id}")})",
                  Argu::ActivityString.new(update_activity.reload, receiver, true).to_s

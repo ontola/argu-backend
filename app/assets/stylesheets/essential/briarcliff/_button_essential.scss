@@ -39,10 +39,6 @@
   @include button--colored($question);
 }
 
-.btn--project {
-  @include button--colored($project);
-}
-
 .btn--argu {
   @include button--colored($blu);
 }
@@ -119,7 +115,7 @@
 }
 
 .box-link {
-  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
+  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"] {
     h3 {
       color: white;
     }

@@ -21,7 +21,6 @@ class Activity < PublicActivity::Activity
   validates :key, presence: true
   validates :trackable, :trackable_edge, :recipient, :recipient_edge, :owner,
             presence: {on: :create, if: proc { |a| a.trackable_type != 'Banner' && a.action != 'destroy' }}
-  validate :validate_happening_within_project_scope
 
   # Represents the physical event of the trackable.
   # @note A happening is an Activity with '*.happened' as key
@@ -62,7 +61,7 @@ class Activity < PublicActivity::Activity
     when 'create'
       %w[argument comment].include?(object)
     when 'publish'
-      %w[blog_post project motion question].include?(object)
+      %w[blog_post motion question].include?(object)
     when 'approved', 'rejected', 'forwarded'
       true
     else
@@ -78,14 +77,5 @@ class Activity < PublicActivity::Activity
     return if %w[destroy trash untrash].include?(action)
     trackable_edge.touch(:last_activity_at) if trackable_edge&.persisted?
     recipient_edge.touch(:last_activity_at) if recipient_edge&.persisted? && !%w[Vote].include?(trackable_type)
-  end
-
-  private
-
-  def validate_happening_within_project_scope
-    return unless action == 'happened' && trackable.parent_model.is_a?(Project)
-    return unless trackable.parent_model.start_date > created_at ||
-        (trackable.parent_model.end_date.present? && trackable.parent_model.end_date < created_at)
-    errors.add(:happened_at, 'must be published during a phase of the project')
   end
 end

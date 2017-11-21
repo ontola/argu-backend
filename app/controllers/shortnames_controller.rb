@@ -3,7 +3,7 @@
 class ShortnamesController < ParentableController
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
 
-  SAFE_OWNER_TYPES = %w[Project Question Motion Argument Comment].freeze
+  SAFE_OWNER_TYPES = %w[Question Motion Argument Comment].freeze
 
   def create
     if execute_update

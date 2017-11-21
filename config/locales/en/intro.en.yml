@@ -18,7 +18,6 @@ en:
         advanced: ''
         # TODO
         privacy: ''
-        projects: ''
         statistics: 'Browse diverse statistics about the usage of the forum.'
         groups: 'Groups can be used to give certain users extra rights. This way, you can create political parties in your own forum, for example.'
         managers: 'Decide who can remove and change items.'
@@ -64,8 +63,6 @@ en:
     comments:
       show: 'Below are replies to this item.'
       form: "If you'd like to reply, you can do so here."
-    projects:
-      back: 'Click here to return to the <b>forum</b>.'
     start: 'How does this page work?'
     start_short: 'Help'
     profile:

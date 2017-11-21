@@ -24,27 +24,23 @@ class ForumsTest < ActionDispatch::IntegrationTest
   define_cologne
   define_helsinki
 
-  let(:project) do
-    create(:project, parent: holland.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
+  let(:draft_motion) do
+    create(:motion, parent: holland.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
   end
-  let(:q1) { create(:question, parent: project.edge) }
-  let(:m0) { create(:motion, parent: q1.edge) }
-  let(:m1) { create(:motion, parent: project.edge) }
+  let(:draft_question) do
+    create(:question, parent: holland.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
+  end
+  let(:motion_in_draft_question) { create(:motion, parent: draft_question.edge) }
 
-  let(:published_project) { create(:project, parent: holland.edge) }
-  let(:q2) { create(:question, parent: published_project.edge) }
-  let(:m2) { create(:motion, parent: q2.edge) }
-  let(:m3) { create(:motion, parent: published_project.edge) }
+  let(:question) { create(:question, parent: holland.edge) }
+  let(:motion) { create(:motion, parent: question.edge) }
+  let(:motion_in_question) { create(:question, parent: holland.edge) }
 
-  let(:q3) { create(:question, parent: holland.edge) }
-  let(:m4) { create(:motion, parent: q3.edge) }
+  let(:trashed_motion) { create(:motion, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
+  let(:trashed_question) { create(:question, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
 
   let(:tm) { create(:motion, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
   let(:tq) { create(:question, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
-  let(:tp) { create(:project, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
-  def holland_nested_project_items
-    [m0, m1, m2, m3, m4, q1, q2, q3, tq, tm, tp]
-  end
 
   ####################################
   # As Guest
@@ -467,34 +463,28 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
     assert_not assigns(:children).any?(&:is_trashed?), 'Trashed items are visible'
 
-    assert_project_children_visible
+    assert_content_visible
     assert_unpublished_content_invisible
   end
 
-  def assert_project_children_visible
-    assert included_in_items?(q3),
+  def assert_content_visible
+    assert included_in_items?(motion),
+           'Motions are not visible'
+    assert included_in_items?(question),
            'Questions are not visible'
-    assert_not included_in_items?(m4),
+    assert_not included_in_items?(motion_in_question),
                'Question motions are visible'
-    assert_not included_in_items?(m3),
-               'Project motions are visible'
-    assert_not included_in_items?(q2),
-               'Project questions are visible'
-    assert_not included_in_items?(m3),
-               'Project Question motions are visible'
   end
 
   def assert_unpublished_content_invisible
     assert_not assigns(:children).any?(&:is_trashed?),
                'Trashed items are visible'
-    assert_not included_in_items?(project),
-               'Unpublished projects are visible'
-    assert_not included_in_items?(q1),
-               "Unpublished projects' questions are visible"
-    assert_not included_in_items?(m0),
-               "Unpublished projects' nested motions are visible"
-    assert_not included_in_items?(m1),
-               "Unpublished projects' motions are visible"
+    assert_not included_in_items?(draft_question),
+               'Unpublished questions are visible'
+    assert_not included_in_items?(draft_motion),
+               'Unpublished motions are visible'
+    assert_not included_in_items?(motion_in_draft_question),
+               "Unpublished questions' motions are visible"
   end
 
   def secondary_forums

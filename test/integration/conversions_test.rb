@@ -4,23 +4,10 @@ require 'test_helper'
 
 class ConversionsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:project) do
-    create(:project,
-           :with_follower,
-           parent: freetown.edge)
-  end
   let(:question) do
     create(:question,
            :with_follower,
            parent: freetown.edge,
-           options: {
-             creator: create(:profile_direct_email)
-           })
-  end
-  let(:project_question) do
-    create(:question,
-           :with_follower,
-           parent: project.edge,
            options: {
              creator: create(:profile_direct_email)
            })
@@ -37,12 +24,6 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            :with_arguments,
            :with_votes,
            parent: question.edge)
-  end
-  let(:project_motion) do
-    create(:motion,
-           :with_arguments,
-           :with_votes,
-           parent: project.edge)
   end
   let(:argument) do
     create(:argument, parent: motion.edge)
@@ -118,29 +99,6 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_equal Forum, edge.parent.owner.class
   end
 
-  test 'staff should post convert project motion' do
-    sign_in staff
-    motion_blog_post
-
-    edge = project_motion.edge
-
-    assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0]]) do
-      post edge_conversions_path(project_motion.edge),
-           params: {
-             conversion: {
-               klass: 'questions'
-             }
-           }
-    end
-
-    assert_redirected_to edge.reload.owner
-
-    assert Motion.where(id: project_motion.id).empty?
-    assert_equal Question, edge.owner.class
-    assert_equal Project, edge.parent.owner.class
-  end
-
   test 'staff should post convert question' do
     sign_in staff
     question_blog_post
@@ -169,28 +127,5 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     # Activity for Create, Publish and Convert
     assert_equal 3, edge.owner.activities.count
-  end
-
-  test 'staff should post convert project question' do
-    sign_in staff
-    question_blog_post
-
-    edge = project_question.edge
-
-    assert_differences([['Question.count', -1], ['Motion.count', 1], ['VoteEvent.count', 1], ['Vote.count', 0],
-                        ['Edge.count', 1], ['Activity.count', 1], ['BlogPost.count', 0]]) do
-      post edge_conversions_path(project_question.edge),
-           params: {
-             conversion: {
-               klass: 'motions'
-             }
-           }
-    end
-
-    assert_redirected_to edge.reload.owner
-
-    assert Question.where(id: project_question.id).empty?
-    assert_equal Motion, edge.owner.class
-    assert_equal Project, edge.parent.owner.class
   end
 end

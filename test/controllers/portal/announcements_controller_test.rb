@@ -42,8 +42,7 @@ module Portal
 
       patch :update,
             params: {
-              id: subject,
-              project: attributes_for(:project)
+              id: subject
             }
 
       assert_response response

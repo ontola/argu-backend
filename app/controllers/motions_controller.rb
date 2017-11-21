@@ -50,14 +50,6 @@ class MotionsController < EdgeableController
     ]
   end
 
-  def resource_new_params
-    if parent_resource!.try(:project).present?
-      super.merge(project: parent_resource!.project)
-    else
-      super
-    end
-  end
-
   def show_respond_success_html(resource)
     @arguments = Argument.ordered(
       policy_scope(

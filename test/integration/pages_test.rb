@@ -28,36 +28,8 @@ class PagesTest < ActionDispatch::IntegrationTest
            publisher: page.owner.profileable)
   end
 
-  let(:project) do
-    create(:project,
-           parent: cairo.edge,
-           creator: page.profile,
-           publisher: page.owner.profileable)
-  end
-
-  let(:project_motion) do
-    create(:motion,
-           parent: project.edge,
-           creator: page.profile,
-           publisher: page.owner.profileable)
-  end
-
-  let(:project_argument) do
-    create(:argument,
-           parent: project_motion.edge,
-           creator: page.profile,
-           publisher: page.owner.profileable)
-  end
-
   def init_cairo_with_content
-    [cairo, motion, argument, comment, project, project_motion, project_argument]
-  end
-
-  test 'should redirect p to o' do
-    get "/p/#{page.url}"
-
-    assert_redirected_to page_url(page)
-    assert_redirected_to "/o/#{page.url}"
+    [cairo, motion, argument, comment]
   end
 
   ####################################
@@ -343,10 +315,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in page.owner.profileable
 
     assert_differences([['Page.count', -1],
-                        ['Argument.anonymous.count', 2],
+                        ['Argument.anonymous.count', 1],
                         ['Comment.anonymous.count', 1],
-                        ['Motion.anonymous.count', 2],
-                        ['Project.anonymous.count', 1]]) do
+                        ['Motion.anonymous.count', 1]]) do
       delete page_path(page),
              params: {
                page: {

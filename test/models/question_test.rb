@@ -19,7 +19,7 @@ class QuestionTest < ActiveSupport::TestCase
 
   test 'raise when converting to non-convertible class' do
     begin
-      subject.convert_to(Project)
+      subject.convert_to(Argument)
     rescue ArgumentError
       assert true
     else

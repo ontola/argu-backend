@@ -118,9 +118,6 @@ en:
         content: "Enter details and background information on your update here."
       motion:
         title: "Enter the core of your %{type} here"
-      project:
-        title: "Enter the title of your project here"
-        content: "Enter a description of the project here"
       question:
         title: "Enter the core of your %{type} here"
         content: "Enter details and background information on your %{type} here."

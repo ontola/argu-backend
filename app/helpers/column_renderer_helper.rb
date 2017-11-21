@@ -13,7 +13,7 @@ module ColumnRendererHelper
   def render_columns(columns, options = {})
     return if columns.nil?
     included_models = [Motion, ProArgument, ConArgument, Vote, Question, QuestionAnswer,
-                       Comment, Project, BlogPost, Decision, LinkedRecord]
+                       Comment, BlogPost, Decision, LinkedRecord]
     partial = if included_models.include?(columns.class)
                 "#{columns.class.base_class.name.tableize}/show"
               else
