@@ -2,12 +2,17 @@
 
 class GrantTree
   class Node
-    attr_accessor :id, :expired, :trashed, :unpublished, :children, :grant_tree, :permitted_actions, :grant_sets
+    include ActiveModel::Model
+    include Iriable
+
+    attr_accessor :edge, :id, :expired, :trashed, :unpublished, :children, :grant_tree, :permitted_actions, :grant_sets
     alias expired? expired
     alias trashed? trashed
     alias unpublished? unpublished
+    alias read_attribute_for_serialization send
 
     def initialize(edge, parent, grant_tree)
+      self.edge = edge
       self.id = edge.id
       self.expired = parent&.expired || edge.expires_at && edge.expires_at < Time.current
       self.expired = edge.owner.starts_at > Time.current if !expired && edge.owner_type == 'VoteEvent'
@@ -51,6 +56,17 @@ class GrantTree
       ids = permitted_actions.dig(resource_type.to_s, action.to_s, parent_type.to_s) || []
       return ids if parent_type == '*'
       (ids + (permitted_actions.dig(resource_type.to_s, action.to_s, '*') || [])).uniq
+    end
+
+    def permission_groups
+      @granted_groups ||= granted_group_ids.map { |id| PermissionGroup.new(id, self) }
+    end
+
+    def permitted_parent_types(action: nil, group_id: nil, resource_type: nil)
+      permitted_actions
+        .dig(resource_type.to_s, action.to_s)
+        &.select { |_parent_type, ids| ids.include?(group_id) }
+        &.keys || []
     end
   end
 end

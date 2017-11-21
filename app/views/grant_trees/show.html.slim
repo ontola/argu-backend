@@ -1,0 +1,22 @@
+.col-1
+  =to_parent(parent_resource.owner)
+  .box
+    section
+      - authenticated_resource.permission_groups.each do |permission_group|
+        h3= permission_group.group.display_name
+        table
+          thead
+            tr
+              th= 'type'
+              - PermittedAction::ACTIONS.each do |action|
+                th= action
+          - permission_group.permissions.each do |permission|
+            tr
+              th
+                =t("#{permission.resource_type.tableize}.plural")
+              - PermittedAction::ACTIONS.each do |action|
+                td
+                  - if permission.resource_type == 'Page' && action == 'create'
+                    span[class="fa permitted-icon fa-minus"]
+                  - else
+                    span[class="fa permitted-icon #{permission.send("#{action}_icon")}" data-title=permission.send("#{action}_tooltip")]

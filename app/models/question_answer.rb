@@ -3,6 +3,7 @@
 class QuestionAnswer
   extend ActiveModel::Naming
   include ActiveModel::Validations
+  include Iriable
   include Parentable
 
   validates :question, :motion, presence: true

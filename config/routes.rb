@@ -186,6 +186,7 @@ Rails.application.routes.draw do
   resources :edges, only: [] do
     get :statistics, to: 'statistics#show'
     resources :conversions, path: 'conversion', only: %i[new create]
+    resource :grant_tree, only: %i[show], path: 'permissions'
   end
   resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log

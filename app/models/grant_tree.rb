@@ -12,6 +12,10 @@ class GrantTree
     @cached_nodes = {}
   end
 
+  def as_json(_opts = {})
+    {}
+  end
+
   def cache_node(node)
     return cached_node(node) if cached?(node)
     edge = node.is_a?(Edge) ? node : Edge.find(node)
@@ -73,6 +77,15 @@ class GrantTree
       .slice(*group_ids)
       .values
       .flatten
+  end
+
+  # Find the permitted parent_types for the given filters
+  # @param [Edge] edge The edge to check
+  # @param [Hash] filters The filters the grants should apply to
+  # @return [Array<String>] A list of the permitted parent_types
+  def permitted_parent_types(edge, filters = {})
+    find_or_cache_node(edge)
+      .permitted_parent_types(filters)
   end
 
   # Checks whether the edge or any of its ancestors is trashed
