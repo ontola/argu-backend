@@ -8,7 +8,7 @@ module Users
       @user = User.find_via_shortname! params[:id]
       authorize @user, :update?
       @pages = policy_scope(Page)
-                 .where(id: @user.profile.granted_record_ids('Page')
+                 .where(id: @user.profile.granted_record_ids(owner_type: 'Page')
                               .concat(@user.profile.pages.pluck(:id)))
                  .distinct
 

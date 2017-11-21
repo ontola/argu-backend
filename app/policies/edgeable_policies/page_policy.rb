@@ -6,7 +6,7 @@ class PagePolicy < EdgeablePolicy
       t = Page.arel_table
 
       cond = t[:visibility].eq_any([Page.visibilities[:open], Page.visibilities[:closed]])
-      cond = cond.or(t[:id].in(user.profile.granted_record_ids('Page')
+      cond = cond.or(t[:id].in(user.profile.granted_record_ids(owner_type: 'Page')
                                  .concat(user.profile.pages.pluck(:id))))
       scope.where(cond)
     end

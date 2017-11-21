@@ -85,19 +85,19 @@ class Profile < ApplicationRecord
     granted_records('Forum')
   end
 
-  def granted_edges(owner_type = nil, role = nil)
+  def granted_edges(owner_type: nil, role: nil)
     scope = granted_edges_scope
     scope = scope.where(owner_type: owner_type) if owner_type.present?
     scope = scope.where(grants: {role: Grant.roles[role]}) if role.present?
     scope
   end
 
-  def granted_records(owner_type, role = nil)
-    owner_type.constantize.where(id: granted_record_ids(owner_type, role))
+  def granted_records(owner_type: nil, role: nil)
+    owner_type.constantize.where(id: granted_record_ids(owner_type: owner_type, role: role))
   end
 
-  def granted_record_ids(owner_type, role = nil)
-    granted_edges(owner_type, role).pluck(:owner_id)
+  def granted_record_ids(owner_type: nil, role: nil)
+    granted_edges(owner_type: owner_type, role: role).pluck(:owner_id)
   end
 
   def self.includes_for_profileable
@@ -116,7 +116,7 @@ class Profile < ApplicationRecord
 
   def page_ids(role = :moderator)
     @page_ids ||= {}
-    @page_ids[role] ||= granted_record_ids('Page', role)
+    @page_ids[role] ||= granted_record_ids(owner_type: 'Page', role: role)
   end
 
   def url
