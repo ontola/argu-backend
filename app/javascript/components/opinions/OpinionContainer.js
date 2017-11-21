@@ -51,15 +51,9 @@ const OpinionContainer = props => {
         component = <ArgumentForm {...props}/>;
     } else if ((createArgument.shouldSubmit === true || currentVote !== 'abstain') && actor.actor_type === 'GuestUser') {
         component = <OpinionSignUp {...props}/>;
-    } else if (props.currentVote === 'abstain' && props.buttonsType !== 'big') {
-        component = <ArgumentsList arguments={props.arguments}
-                                   argumentsDisabled={props.argumentsDisabled}
-                                   showAllArguments={props.showAllArguments}
-                                   onShowAllArguments={props.onShowAllArguments}
-                                   onOpenArgumentForm={props.onOpenArgumentForm}/>
     } else if (opinionForm) {
         component = <OpinionForm {...props}/>;
-    } else if (props.buttonsType !== 'big') {
+    } else if (props.buttonsType !== 'big' && (!props.argumentsDisabled || (props.arguments[0] !== undefined))) {
         component = <ArgumentsList arguments={props.arguments}
                                    argumentsDisabled={props.argumentsDisabled}
                                    showAllArguments={props.showAllArguments}
