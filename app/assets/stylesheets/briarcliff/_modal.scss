@@ -119,6 +119,7 @@
   border-radius: 5px;
   max-height: calc(100vh - 4em);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-container {
