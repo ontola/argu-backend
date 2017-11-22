@@ -27,7 +27,6 @@ class ApplicationController < ActionController::Base
   end)
   setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
-  before_action :set_layout
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :authorize_current_actor
@@ -40,6 +39,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  layout :set_layout
   serialization_scope :user_context
 
   # The params, deserialized when format is json_api and method is not GET
@@ -200,11 +200,11 @@ class ApplicationController < ActionController::Base
   # Determines what layout the {User} should see.
   def set_layout
     if iframe?
-      self.class.layout 'iframe'
+      'iframe'
     elsif current_user.guest?
-      self.class.layout 'guest'
+      'guest'
     else
-      self.class.layout 'application'
+      'application'
     end
   end
 
