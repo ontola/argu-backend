@@ -324,7 +324,7 @@ class User < ApplicationRecord
   end
 
   def validate_r
-    return if valid_redirect?(r)
+    return if argu_iri_or_relative?(r)
     errors.add(:r, "Redirecting to #{r} is not allowed")
   end
 

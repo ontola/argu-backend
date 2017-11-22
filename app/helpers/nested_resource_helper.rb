@@ -11,6 +11,16 @@ module NestedResourceHelper
     @parent_resource ||= parent_id_from_params(params).present? ? parent_from_params(params) : super
   end
 
+  # Extracts a parent resource from an Argu URI
+  # @return [ApplicationRecord, nil] The parent resource corresponding to the iri, or nil if no parent is found
+  def parent_from_iri(iri)
+    return nil unless argu_iri_or_relative?(iri)
+    route = Rails.application.routes.recognize_path(iri)
+    parent_from_params(route) if parent_resource_key(route)
+  rescue ActionController::RoutingError
+    nil
+  end
+
   # Finds the parent resource based on the URL's :foo_id param
   # @note This method knows {Shortnameable}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.

@@ -25,7 +25,6 @@ class MediaObject < ApplicationRecord
   before_save :set_publisher_and_creator
 
   parentable :forum, :question, :motion, :profile
-  alias parent_model about
   alias_attribute :display_name, :title
 
   # Hands over publication of a collection to the Community profile
@@ -46,6 +45,14 @@ class MediaObject < ApplicationRecord
   end
 
   delegate :embed_url, to: :video_info, allow_nil: true
+
+  def parent_model(type = nil)
+    if type.nil? || type.to_s.classify == about_type
+      about
+    else
+      about.try(:parent_model, type)
+    end
+  end
 
   def remote_content_url=(url)
     self.remote_url = url

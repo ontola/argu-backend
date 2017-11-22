@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module IRIHelper
-  ARGU_URI_MATCH = /(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)/
+  include RedirectHelper
 
   # Converts an Argu URI into a hash containing the type and id of the resource
   # @return [Hash] The id and type of the resource, or nil if the IRI is not found
@@ -15,8 +15,7 @@ module IRIHelper
   #   iri = nil
   #   id_and_type_from_iri # => {}
   def id_and_type_from_iri(iri)
-    match = iri =~ ARGU_URI_MATCH unless iri.nil?
-    return {} if iri.nil? || (match.nil? || match <= 0) && URI.parse(iri).hostname.present?
+    return {} unless argu_iri_or_relative?(iri)
     parent = Rails.application.routes.recognize_path(iri)
     return {} unless parent[:action] == 'show' && parent[:id].present? && parent[:controller].present?
     {id: parent[:id], type: parent[:controller].singularize}

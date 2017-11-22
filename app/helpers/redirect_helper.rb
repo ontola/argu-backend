@@ -7,7 +7,7 @@ module RedirectHelper
     Rails.application.config.frontend_url
   ].uniq.freeze
 
-  def valid_redirect?(r)
+  def argu_iri_or_relative?(r)
     uri = r && URI.parse(r)
     return true if uri.nil? || uri.hostname.nil?
     uri.scheme = 'https' if Rails.env.test?

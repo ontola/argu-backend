@@ -45,7 +45,7 @@ module UsersHelper
 
   def r_param
     r = (params[:user]&.permit(:r) || params.permit(:r)).try(:[], :r)
-    r if valid_redirect?(r)
+    r if argu_iri_or_relative?(r)
   end
 
   def redirect_with_r(user)
