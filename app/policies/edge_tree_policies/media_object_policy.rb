@@ -17,6 +17,7 @@ class MediaObjectPolicy < EdgeTreePolicy
   end
 
   def show?
+    return true if record.profile_photo?
     return super if edge.present?
     Pundit.policy(context, record.about).show?
   end
