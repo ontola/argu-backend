@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class QuestionAnswersController < AuthorizedController
-  helper_method :collect_banners
-
   private
 
   def current_forum

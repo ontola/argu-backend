@@ -77,7 +77,8 @@ class AuthorizedController < ApplicationController
   end
 
   def collect_banners
-    @banners if @banners.present?
+    return @banners if @banners
+    @banners = []
 
     banners = stubborn_hgetall('banners') || {}
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)

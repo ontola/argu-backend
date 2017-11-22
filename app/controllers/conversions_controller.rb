@@ -2,8 +2,6 @@
 
 class ConversionsController < ServiceController
   include ConvertibleHelper
-  helper_method :collect_banners
-
   before_action :verify_convertible_edge
 
   private
