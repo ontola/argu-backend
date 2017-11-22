@@ -97,7 +97,7 @@ class MediaObject < ApplicationRecord
 
   def url_for_environment(type)
     url = content.url(type)
-    return RDF::IRI.new(url) if Rails.env.production? || url&.to_s&.include?('gravatar.com')
+    return RDF::IRI.new(url) if Rails.env.production? || Rails.env.staging? || url&.to_s&.include?('gravatar.com')
     RDF::IRI.new("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{content.url(:icon)}")
   end
 
