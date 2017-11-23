@@ -3,7 +3,7 @@
     - if policy(c).update? || policy(c).trash?
       .sticky--top-right.menu-button= dropdown_menu(c, :actions, item_opts: {renderLeft: true})
     .detailsBar
-      =render partial: 'profiles/detail_profile', locals: {resource: c}
+      =render partial: 'profiles/detail_profile', locals: {resource: c} if c.creator.present?
       .detail
         .detail__text
           time[datetime=c.created_at ]= awesome_time_ago_in_words c.created_at
