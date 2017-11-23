@@ -5,7 +5,10 @@ module Commentable
 
   included do
     acts_as_commentable
-    has_one :top_comment, -> { untrashed.order('comments.created_at ASC') }, class_name: 'Comment', as: :commentable
+    has_one :top_comment,
+            -> { untrashed.where(parent_id: nil).order('comments.created_at ASC') },
+            class_name: 'Comment',
+            as: :commentable
 
     with_collection :comments, association: :filtered_threads, pagination: true
 
