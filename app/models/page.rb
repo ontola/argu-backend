@@ -18,6 +18,7 @@ class Page < Edgeable::Base
 
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner_id, :last_accepted, presence: true
+  validates :base_color, css_hex_color: true
 
   after_create :create_default_groups
   after_create :create_staff_grant
