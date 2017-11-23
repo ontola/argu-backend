@@ -21,6 +21,8 @@ html[class="no-js"]
 
   body.iframe
     =render partial: 'alerts'
+    - if current_user.is_staff?
+      =render partial: 'staff_sign'
     .container
       =yield
     =render partial: 'body_js'
