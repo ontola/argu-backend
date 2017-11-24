@@ -27,6 +27,18 @@ module DefaultPolicyTests
         end
       end
 
+      define_method "test_show_#{model_name}_in_unpublished_forum" do
+        test_policy(unpublished_subject, :show, show_unpublished_results) if unpublished_subject
+      end
+
+      define_method "test_show_#{model_name}_in_expired_forum" do
+        test_policy(expired_subject, :show, show_expired_results) if expired_subject
+      end
+
+      define_method "test_show_#{model_name}_in_trashed_forum" do
+        test_policy(expired_subject, :show, show_trashed_results) if trashed_subject
+      end
+
       define_method "test_create_#{model_name}_in_expired_forum" do
         test_policy(expired_subject, :create, create_expired_results) if expired_subject
       end

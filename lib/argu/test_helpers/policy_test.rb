@@ -10,6 +10,7 @@ class PolicyTest < ActiveSupport::TestCase
   define_public_source
   define_freetown(:expired_freetown, attributes: {edge_attributes: {expires_at: 1.minute.ago}})
   define_freetown(:trashed_freetown, attributes: {edge_attributes: {trashed_at: 1.minute.ago}})
+  define_freetown(:unpublished_freetown, attributes: {edge_attributes: {is_published: false}})
   let(:moderator) { create_moderator(page, create(:user)) }
   let(:initiator) { create_initiator(page, create(:user)) }
   let(:guest) { GuestUser.new(id: 'my_id') }
@@ -17,7 +18,7 @@ class PolicyTest < ActiveSupport::TestCase
   let(:linked_record) { create(:linked_record, source: public_source) }
   let(:linked_record_argument) { create(:argument, parent: linked_record.edge, publisher: creator) }
 
-  ['', 'expired_', 'trashed_'].each do |prefix|
+  ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
     let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown").edge, publisher: creator) }
     let("#{prefix}motion") { create(:motion, parent: send("#{prefix}question").edge, publisher: creator) }
     let("#{prefix}decision") do

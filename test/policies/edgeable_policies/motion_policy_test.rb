@@ -8,6 +8,7 @@ class MotionPolicyTest < PolicyTest
   subject { motion }
   let(:trashed_subject) { trashed_motion }
   let(:expired_subject) { expired_motion }
+  let(:unpublished_subject) { unpublished_motion }
   let(:direct_child) { argument }
 
   generate_edgeable_tests

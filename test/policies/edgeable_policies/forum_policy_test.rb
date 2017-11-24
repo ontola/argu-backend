@@ -8,6 +8,7 @@ class ForumPolicyTest < PolicyTest
   subject { freetown }
   let(:trashed_subject) { nil }
   let(:expired_subject) { nil }
+  let(:unpublished_subject) { nil }
   let(:direct_child) { question }
 
   generate_edgeable_tests

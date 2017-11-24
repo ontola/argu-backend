@@ -8,6 +8,7 @@ class CommentPolicyTest < PolicyTest
   subject { comment }
   let(:trashed_subject) { trashed_comment }
   let(:expired_subject) { expired_comment }
+  let(:unpublished_subject) { unpublished_comment }
   let(:direct_child) { nested_comment }
 
   generate_edgeable_tests

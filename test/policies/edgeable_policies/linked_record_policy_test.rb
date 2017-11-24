@@ -8,6 +8,7 @@ class LinkedRecordPolicyTest < PolicyTest
   subject { linked_record }
   let(:trashed_subject) { nil }
   let(:expired_subject) { nil }
+  let(:unpublished_subject) { nil }
   let(:direct_child) { linked_record_argument }
 
   generate_edgeable_tests

@@ -8,6 +8,7 @@ class BlogPostPolicyTest < PolicyTest
   subject { blog_post }
   let(:trashed_subject) { trashed_blog_post }
   let(:expired_subject) { expired_blog_post }
+  let(:unpublished_subject) { unpublished_blog_post }
   let(:direct_child) { blog_post_comment }
 
   generate_edgeable_tests

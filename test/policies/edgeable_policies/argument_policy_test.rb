@@ -8,6 +8,7 @@ class ArgumentPolicyTest < PolicyTest
   subject { argument }
   let(:trashed_subject) { trashed_argument }
   let(:expired_subject) { expired_argument }
+  let(:unpublished_subject) { unpublished_argument }
   let(:direct_child) { comment }
 
   generate_edgeable_tests

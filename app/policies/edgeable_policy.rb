@@ -137,6 +137,6 @@ class EdgeablePolicy < RestrictivePolicy
   end
 
   def show_unpublished?
-    rule is_creator?, is_manager?, is_super_admin?, staff?, service?
+    update?
   end
 end

@@ -36,7 +36,22 @@ module DefaultPolicyResults
   def show_results
     everybody_results.merge(non_member: false)
   end
-  alias feed_results show_results
+
+  def show_unpublished_results
+    update_results
+  end
+
+  def show_expired_results
+    show_results
+  end
+
+  def show_trashed_results
+    show_results
+  end
+
+  def feed_results
+    show_results
+  end
 
   def follow_results
     everybody_results.merge(non_member: false)

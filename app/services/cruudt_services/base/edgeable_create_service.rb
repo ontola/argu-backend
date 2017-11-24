@@ -17,7 +17,7 @@ class EdgeableCreateService < CreateService
 
   def after_save
     unless resource.store_in_redis?
-      @edge.publish! unless resource_klass.is_publishable?
+      @edge.publish! unless resource_klass.is_publishable? || @attributes[:edge_attributes][:is_published] == false
       notify
     end
     super

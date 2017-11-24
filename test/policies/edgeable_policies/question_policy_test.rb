@@ -8,6 +8,7 @@ class QuestionPolicyTest < PolicyTest
   subject { question }
   let(:trashed_subject) { trashed_question }
   let(:expired_subject) { expired_question }
+  let(:unpublished_subject) { unpublished_question }
   let(:direct_child) { motion }
 
   generate_edgeable_tests

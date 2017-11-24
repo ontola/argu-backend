@@ -8,6 +8,7 @@ class VotePolicyTest < PolicyTest
   subject { vote }
   let(:trashed_subject) { trashed_vote }
   let(:expired_subject) { expired_vote }
+  let(:unpublished_subject) { unpublished_vote }
   let(:direct_child) { nil }
   let(:hidden_vote) do
     create(:vote,
@@ -27,5 +28,9 @@ class VotePolicyTest < PolicyTest
 
   def update_results
     nobody_results.merge(creator: true, staff: true)
+  end
+
+  def show_unpublished_results
+    moderator_plus_results.merge(creator: true)
   end
 end

@@ -8,6 +8,7 @@ class SourcePolicyTest < PolicyTest
   subject { public_source }
   let(:trashed_subject) { nil }
   let(:expired_subject) { nil }
+  let(:unpublished_subject) { nil }
   let(:direct_child) { linked_record }
 
   generate_edgeable_tests

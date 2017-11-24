@@ -8,6 +8,7 @@ class DecisionPolicyTest < PolicyTest
   subject { decision }
   let(:trashed_subject) { trashed_decision }
   let(:expired_subject) { expired_decision }
+  let(:unpublished_subject) { unpublished_decision }
   let(:direct_child) { nil }
 
   let(:group) { create(:group, parent: freetown.page.edge) }
