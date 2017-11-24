@@ -28,7 +28,7 @@
     vertical-align: top;
     margin: 0 1em 1em;
   }
-  @include animation(from-top-fade .3s ease-out);
+  @include animation(from-top-fade .2s ease-out);
   @include bp-medium{
     //position: absolute;
     margin-top: 1em;
@@ -65,7 +65,7 @@
   height: 100%;
   overflow: hidden;
   background-color: $darken_overlay;
-  @include animation(fade-in .3s linear);
+  @include animation(fade-in .2s linear);
   @include transition(.2s);
 }
 
@@ -77,9 +77,6 @@
   .overlay{
     cursor: pointer;
     &.overlay-back {
-      &:hover{
-        background-color: lighten($darken_overlay, 5%);
-      }
       &:after{
         content: 'x';
         font-weight: bold;
@@ -105,10 +102,10 @@
 
 .modal-hide {
   .modal {
-    @include animation(to-bottom-fade .3s ease-in both);
+    @include animation(to-bottom-fade .2s ease-in both);
   }
   .overlay-back {
-    @include animation(fade-out .3s linear both);
+    @include animation(fade-out .2s linear both);
   }
 }
 

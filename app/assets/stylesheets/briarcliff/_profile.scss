@@ -1,58 +1,6 @@
 @import "variables";
 @import "mixins";
 
-.profile-small {
-  // Not sure where and if these are needed for
-  //position: relative;
-  //overflow: hidden;
-
-  img {
-    //deprecated
-    position: absolute;
-    left: 0;
-    min-height: 2em;
-    width: 2em;
-    height: 2em;
-    border-radius: 999px;
-    margin: 0.2em;
-  }
-
-  .info {
-    vertical-align: top;
-    margin: 0;
-    padding: 0;
-    display: block;
-  }
-
-  .profile-picture {
-    position: absolute;
-    left: 0;
-    min-height: 2em;
-    border-radius: 999px;
-    margin: 0.2em;
-  }
-
-  .profile-name {
-    display: inline-block;
-    font-weight: bold;
-    color: $g3;
-    font-size: 0.8em;
-    position: absolute;
-    top: 1.7em;
-    left: 0.4em;
-    &.profile-name--bigger{
-      top: .6em;
-      font-size: 1em;
-      &:hover {
-        text-decoration: none;
-      }
-    }
-    &:hover{
-      text-decoration: underline;
-    }
-  }
-}
-
 .profile-big .box {
   min-height: 8em;
 }
@@ -114,6 +62,7 @@ $profile-big-width: 7em;
 .profile-picture-upload {
   margin: 0 0 1em 0;
 }
+
 .profile-switcher {
 
   li {
@@ -139,12 +88,6 @@ $profile-big-width: 7em;
 
 .profile-switcher-current {
   background-color: $darken1;
-}
-
-.info-block {
-  margin-left: 2.3em;
-  padding: .3em;
-  position: relative;
 }
 
 .info-block--no-padding {

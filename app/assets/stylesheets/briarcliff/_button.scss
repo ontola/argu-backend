@@ -26,14 +26,12 @@
     left: 0;
     right: 0;
     opacity: 0;
-    @include transition(.2s)
   }
   &:hover:after{
     opacity: .6;
   }
   &:active:after{
     opacity: 1;
-    transition: none;
   }
 }
 
@@ -138,13 +136,11 @@
   width: 100%;
   text-transform: initial;
   font-size: 1em;
-  @include transition(background-color .2s linear);
 
   h3 {
     color: white;
   }
   &:active {
-    @include transition(none);
   }
 }
 
@@ -321,7 +317,6 @@
   display: block;
   color: $g3;
 
-  @include transition(.2s);
   > a, .dropdown-trigger, > div > div {
     padding: .7em;
     //display: inline-block; // Seems to un-align buttons if div buttons are present (e.g. in motion show box)
@@ -475,14 +470,11 @@ h1 + .btn {
 .btns-opinion--bottom, .btns__bottom {
   li {
     a {
-      @include transition(background-color .2s);
-
       &:hover {
         color: $g4;
         background-color: $g0;
       }
       &:hover {
-        @include transition(none);
         color: $g5;
         background-color: $g1;
       }

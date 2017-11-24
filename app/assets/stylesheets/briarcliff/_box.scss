@@ -7,7 +7,6 @@
 }
 
 .box h3 a, .box a h1, .box a h2, .box a h3, .box a h4 {
-  @include transition(.2s);
 
   &:before {
     content: "";
@@ -19,7 +18,6 @@
     height: .0em;
     opacity: 0;
     background-color: $darken2;
-    @include transition(.2s);
   }
 
   &:hover:before {

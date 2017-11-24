@@ -42,6 +42,10 @@ body {
   position: relative;
 }
 
+.iframe .container {
+  margin-top: 2em;
+}
+
 .margin-bottom {
   margin-bottom: 1em;
 }
@@ -82,4 +86,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#staff_sign {
+  display: none;
 }

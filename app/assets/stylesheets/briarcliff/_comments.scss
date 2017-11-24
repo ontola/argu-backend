@@ -58,40 +58,6 @@
   }
 }
 
-.top-comment-container {
-  margin-top: -.5em;
-}
-
-.top-comment:hover .comments-counter{
-  color: $g4;
-}
-
-.top-comment {
-  color: $g3;
-  background-color: #f9f9f9;
-  position: relative;
-  @include transition(opacity .2s);
-  transition: 0.2s;
-  margin-bottom: 1em;
-  padding: .9em;
-  @include border-radius();
-
-  &:hover {
-    background-color: white;
-    .comments-counter span{
-      color: $g3;
-    }
-  }
-}
-
-.top-comment p {
-  font-size: 0.8em;
-  &:active {
-    background-color: white;
-    transition: none;
-  }
-}
-
 .comment {
   border-top: solid 1px $g1;
 }
