@@ -16,6 +16,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   setup do
     @freetown = freetown
     @group = create(:group, parent: @freetown.page.edge)
+    create(:group_membership, parent: @group)
   end
 
   ####################################
