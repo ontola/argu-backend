@@ -11,7 +11,7 @@ nav#navbar.navbar[role="navigation"]
           span= preferred_forum.display_name
       =react_component_store 'HyperDropdown', props: forum_selector_items(true)
     ul.navbar-links.navbar-links-right
-      =react_component_store 'HyperDropdown', props: info_dropdown_items
+      =dropdown_menu(nil, :info)
       li[tabIndex="0"]
         =link_to new_user_session_path, id: 'sign_in', class: 'navbar-item center', data: remote_if_modern do
           span.fa.fa-sign-in

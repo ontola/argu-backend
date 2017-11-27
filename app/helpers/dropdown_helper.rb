@@ -10,7 +10,11 @@ module DropdownHelper
   end
 
   def dropdown_menu(resource, menu_tag, trigger_opts: {}, item_opts: {})
-    menu = resource.menu(user_context, menu_tag)
+    menu = if resource.nil?
+             ApplicationMenuList.new(resource: current_user, user_context: user_context).send("#{menu_tag}_menu")
+           else
+             resource.menu(user_context, menu_tag)
+           end
     link_items = menu.menus.map do |menu_item|
       item(
         menu_item.type || 'link',

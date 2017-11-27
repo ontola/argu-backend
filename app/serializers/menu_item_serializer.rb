@@ -28,6 +28,7 @@ class MenuItemSerializer < BaseSerializer
   end
 
   def type
+    return object.type if object.type.present?
     return NS::ARGU["#{object.tag.capitalize}Menu"] if object.parent.is_a?(MenuList)
     object.menus.present? ? NS::ARGU[:SubMenu] : NS::ARGU[:MenuItem]
   end
