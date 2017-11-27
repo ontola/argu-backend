@@ -45,7 +45,7 @@ class MenusController < AuthorizedController
     if parent_resource.present?
       parent_resource.menus(user_context)
     else
-      ApplicationMenuList.new(user_context: user_context).menus
+      ApplicationMenuList.new(resource: current_user, user_context: user_context).menus
     end
   end
 
@@ -53,7 +53,7 @@ class MenusController < AuthorizedController
     if parent_resource.present?
       parent_resource.menu(user_context, params[:id].to_sym)
     else
-      ApplicationMenuList.new(user_context: user_context).menu[params[:id].to_sym]
+      ApplicationMenuList.new(resource: current_user, user_context: user_context).menu[params[:id].to_sym]
     end
   end
 
