@@ -9,10 +9,10 @@ class Vote < Edgeable::Base
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
   before_save :decrement_previous_counter_cache, unless: :new_record?
-  before_save :set_explained_at, if: :explanation_changed?
+  before_save :sanitize_explanation, if: :explanation_changed?
   before_save :up_and_downvote_arguments
   define_model_callbacks :redis_save, only: :before
-  before_redis_save :set_explained_at, if: :explanation_changed?
+  before_redis_save :sanitize_explanation, if: :explanation_changed?
   before_redis_save :up_and_downvote_arguments
   before_redis_save :create_confirmation_reminder_notification
 
@@ -101,8 +101,9 @@ class Vote < Edgeable::Base
 
   private
 
-  def set_explained_at
-    self.explained_at = DateTime.current
+  def sanitize_explanation
+    self.explanation = explanation.presence
+    self.explained_at = explanation.present? ? DateTime.current : nil
   end
 
   def up_and_downvote_arguments
