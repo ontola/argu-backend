@@ -9,11 +9,22 @@ class ForumTest < ActiveSupport::TestCase
   define_holland('subject')
   define_cairo('cairo2')
 
+  let(:page) { create(:page) }
+  let(:group) { create(:group, parent: page.edge) }
   let(:user) { create(:user) }
   let(:subject_member) { create_member(subject) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s
+  end
+
+  test 'default decision group' do
+    group
+    assert create(:forum, parent: page.edge, shortname_attributes: {shortname: 'new_forum'}, locale: 'nl')
+             .default_decision_group
+             .grants
+             .super_admin
+             .present?
   end
 
   test 'should reset public grant' do
