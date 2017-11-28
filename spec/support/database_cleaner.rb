@@ -59,6 +59,11 @@ RSpec.configure do |config|
         discoverable: false,
         public_grant: 'none'
       )
+      create_forum(
+        parent: create(:page).edge,
+        shortname_attributes: {shortname: 'other_page_forum'},
+        public_grant: 'participator'
+      )
       public_source = create(
         :source,
         parent: page.edge,

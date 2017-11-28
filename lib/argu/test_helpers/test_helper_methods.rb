@@ -236,6 +236,7 @@ module Argu
           let(:argu) { Page.find_via_shortname('argu') }
           let(:freetown) { Forum.find_via_shortname('freetown') }
           let(:holland) { Forum.find_via_shortname('holland') }
+          let(:other_page_forum) { Forum.find_via_shortname('other_page_forum') }
           let(:public_source) { Source.find_by(shortname: 'public_source') }
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }

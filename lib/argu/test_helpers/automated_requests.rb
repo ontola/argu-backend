@@ -19,7 +19,7 @@ module Argu
           let(:move_differences) do
             [
               ["freetown.reload.#{subject.class_name}.count", -1],
-              ["holland.reload.#{subject.class_name}.count", 1]
+              ["other_page_forum.reload.#{subject.class_name}.count", 1]
             ]
           end
           let(:destroy_differences) { [["#{subject.class}.count", -1], ['Activity.loggings.count', 1]] }
@@ -138,13 +138,13 @@ module Argu
           let(:expect_put_move) do
             expect(response).to redirect_to(show_path)
             subject.reload
-            assert_equal holland, subject.forum
-            assert_equal holland, subject.parent_model
+            assert_equal other_page_forum, subject.forum
+            assert_equal other_page_forum, subject.parent_model
             case subject
             when Motion
               assert subject.arguments.count.positive?
               subject.arguments.pluck(:forum_id).each do |id|
-                assert_equal holland.id, id
+                assert_equal other_page_forum.id, id
               end
             when Question
               subject.motions.pluck(:forum_id).each do |id|
@@ -154,10 +154,10 @@ module Argu
             end
             assert subject.activities.count.positive?
             subject.activities.pluck(:forum_id).each do |id|
-              assert_equal holland.id, id
+              assert_equal other_page_forum.id, id
             end
             subject.activities.pluck(:recipient_id).each do |id|
-              assert_equal holland.id, id
+              assert_equal other_page_forum.id, id
             end
             subject.activities.pluck(:recipient_type).each do |type|
               assert_equal 'Forum', type
@@ -189,7 +189,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, '1'] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {class_sym => {forum_id: holland.id}} }
+          let(:move_params) { {class_sym => {forum_id: other_page_forum.id}} }
           let(:destroy_params) { {} }
 
           # Paths
