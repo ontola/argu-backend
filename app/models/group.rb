@@ -7,6 +7,10 @@ class Group < ApplicationRecord
   has_many :group_memberships, -> { active }, dependent: :destroy
   has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :members, through: :group_memberships, class_name: 'Profile'
+  has_many :default_decision_forums,
+           foreign_key: :default_decision_group_id,
+           class_name: 'Forum',
+           dependent: :restrict_with_exception
   belongs_to :page, required: true, inverse_of: :groups
   belongs_to :forum
   has_many :decisions

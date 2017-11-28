@@ -10,6 +10,7 @@ class Forum < Edgeable::Base
   include Menuable
 
   belongs_to :page, inverse_of: :forums
+  belongs_to :default_decision_group, class_name: 'Group'
   has_many :banners, inverse_of: :forum
   has_many :shortnames, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
@@ -44,6 +45,7 @@ class Forum < Edgeable::Base
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :bio, nullify: false
 
+  before_create :set_default_decision_group
   before_update :transfer_page, if: :page_id_changed?
   after_save :reset_country
   after_save :reset_public_grant
@@ -68,10 +70,6 @@ class Forum < Edgeable::Base
 
   def creator
     page.owner
-  end
-
-  def default_decision_group
-    edge.granted_groups('super_admin').first
   end
 
   def default_decision_user
@@ -162,5 +160,9 @@ class Forum < Edgeable::Base
         edge.grants.create!(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
       end
     end
+  end
+
+  def set_default_decision_group
+    self.default_decision_group = page.grants.super_admin.joins(:group).find_by(groups: {deletable: false}).group
   end
 end

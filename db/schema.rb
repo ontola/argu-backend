@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127095137) do
+ActiveRecord::Schema.define(version: 20171128084749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 20171127095137) do
     t.integer "max_shortname_count", default: 0, null: false
     t.boolean "discoverable", default: true, null: false
     t.string "locale", default: "nl-NL"
+    t.integer "default_decision_group_id", null: false
     t.index ["slug"], name: "index_forums_on_slug", unique: true
     t.index ["visibility"], name: "index_forums_on_visibility"
   end
@@ -752,6 +753,7 @@ ActiveRecord::Schema.define(version: 20171127095137) do
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id"
   add_foreign_key "follows", "users", column: "follower_id"
+  add_foreign_key "forums", "groups", column: "default_decision_group_id"
   add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
   add_foreign_key "grants", "edges"
