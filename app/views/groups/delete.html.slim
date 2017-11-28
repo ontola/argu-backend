@@ -5,9 +5,5 @@
       h1= t('destroy_type', type: t('groups.type'))
     .box
       section
-        .form
-          =semantic_form_for resource, url: group_path(resource), method: :delete do |f|
-            p= t('groups.destroy.body', group_memberships_count: resource.group_memberships.count)
-            =f.actions do
-              =f.action :submit, as: :button, label: t('destroy'), button_html: {class: 'btn--warning'}
+        =render 'delete'
     .overlay.overlay-bottom

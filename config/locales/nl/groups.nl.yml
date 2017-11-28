@@ -10,8 +10,6 @@ nl:
       name_singular: "Gebruiker"
     members: 'Leden'
     description: "Je kan rechten verlenen aan groepen. Leden van deze groepen kunnen dan bijvoorbeeld content aanpassen."
-    destroy:
-      body: "%{group_memberships_count} groepsleden zullen worden verwijderd."
     settings:
       title: "Groepsinstellingen"
       menu:
@@ -22,7 +20,9 @@ nl:
         advanced: 'Geavanceerd'
     delete:
       info: "Weet je zeker dat je de groep '%{group}' wil verwijderen?"
+      member_count: "De groep heeft %{group_memberships_count} leden."
       howto: "Voer hieronder '%{cancel_string}' in om het verwijderen van de groep te bevestigen."
       cancel_string: "verwijder"
+      not_allowed: "Het is niet mogelijk om deze groep te verwijderen."
     visible_for: "Zichtbaar voor %{groups}"
     visible_for_everybody: "Zichtbaar voor iedereen"
