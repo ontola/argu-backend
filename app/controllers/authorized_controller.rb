@@ -22,8 +22,7 @@ class AuthorizedController < ApplicationController
       current_user,
       current_profile,
       doorkeeper_scopes,
-      @_error_mode ? nil : authenticated_tree,
-      session[:a_tokens]
+      @_error_mode ? nil : authenticated_tree
     )
   end
 

@@ -108,8 +108,7 @@ class StaticPagesController < ApplicationController
       current_user,
       current_profile,
       doorkeeper_scopes,
-      nil,
-      session[:a_tokens]
+      nil
     )
   end
 

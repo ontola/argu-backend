@@ -3,13 +3,12 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_reader :user, :actor, :doorkeeper_scopes, :opts, :cached_nodes, :grants_in_scope, :rules_in_scope, :tree_root
+  attr_reader :user, :actor, :doorkeeper_scopes, :cached_nodes, :grants_in_scope, :rules_in_scope, :tree_root
 
-  def initialize(user, profile, doorkeeper_scopes, tree_relation = nil, opts = {})
+  def initialize(user, profile, doorkeeper_scopes, tree_relation = nil)
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
-    @opts = opts
     @lookup_map = {}
     @tree_root = build_tree(tree_relation&.to_a)
   end
