@@ -30,6 +30,7 @@ const activityFeed = {
             success: (d, s, xhr) => {
                 if (xhr.status == 200 || xhr.status == 304) {
                     feedDOM.append(d);
+                    ReactRailsUJS.mountComponents(".activity-feed");
                     _this.text(I18n.t('activities.ui.load_more'));
                     var bLazy = new Blazy({
                         offset: 100 // Loads images 100px before they're visible
