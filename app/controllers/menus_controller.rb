@@ -38,7 +38,7 @@ class MenusController < AuthorizedController
   end
 
   def include_show
-    [menus: :menus]
+    [menus: [menus: :menus]]
   end
 
   def index_response_association

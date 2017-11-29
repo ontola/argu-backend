@@ -9,11 +9,29 @@ class PageMenuList < MenuList
   private
 
   def navigations_menu
+    forums = policy_scope(resource.forums.includes(:shortname, :edge, :default_profile_photo))
+    children = forums + resource.sources
+    section_items =
+      if children.count == 1
+        children.first.menu(user_context, :navigations).menus
+      else
+        children.map { |child| navigation_item(child) }
+      end
     menu_item(
       :navigations,
-      menus: policy_scope(resource.forums.includes(:shortname, :edge, :default_profile_photo))
-               .map { |forum| navigation_item(forum) }
-               .concat(resource.sources.map { |source| navigation_item(source) })
+      menus: [
+        menu_item(
+          :settings,
+          image: 'fa-gear',
+          href: settings_page_url(resource)
+        ),
+        menu_item(
+          :forums,
+          label: children.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
+          type: NS::ARGU[:MenuSection],
+          menus: section_items
+        )
+      ]
     )
   end
 

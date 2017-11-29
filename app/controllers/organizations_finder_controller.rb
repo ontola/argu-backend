@@ -29,8 +29,4 @@ class OrganizationsFinderController < AuthorizedController
   end
 
   def current_forum; end
-
-  def include_show
-    [navigations_menu: [menus: :menus]]
-  end
 end
