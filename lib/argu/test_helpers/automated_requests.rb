@@ -22,6 +22,8 @@ module Argu
         end
 
         def define_spec_variables
+          let(:request_format) { :html }
+
           # Differences
           let(:create_differences) { [["#{subject.class}.count", 1], ['Activity.loggings.count', 1]] }
           let(:update_differences) { [["#{subject.class}.count", 0], ['Activity.loggings.count', 1]] }
@@ -168,6 +170,7 @@ module Argu
           let(:staff) { create(:user, :staff) }
           let(:authorized_user) { create_administrator(argu, create(:user)) }
           let(:authorized_user_update) { authorized_user }
+          let(:authorized_user_destroy) { staff }
           let(:authorized_user_trash) { authorized_user_update }
           let(:unauthorized_user) do
             public_source.edge.grants.destroy_all

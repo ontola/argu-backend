@@ -12,31 +12,20 @@ class VotePolicy < EdgeablePolicy
     end
   end
 
-  def show?
-    if record.creator.are_votes_public
-      Pundit.policy(context, record.parent_model).show?
-    else
-      rule is_creator?, staff?, service?
-    end
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat [:explanation, argument_ids: []]
     attributes
   end
 
-  def create?
-    return create_expired? if has_expired_ancestors?
-    return create_trashed? if has_trashed_ancestors?
-    rule is_member?, is_manager?, is_super_admin?, staff?
+  def show?
+    return show_unpublished? if has_unpublished_ancestors?
+    (record.creator.are_votes_public && has_grant?(:show)) || is_creator? || staff? || service?
   end
 
-  def update?
-    rule is_creator?, super
-  end
+  private
 
-  def destroy?
-    rule is_creator?, super
+  def is_creator?
+    record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
   end
 end

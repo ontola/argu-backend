@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class DecisionPolicy < EdgeablePolicy
-  class Scope < EdgeablePolicy::Scope; end
-
-  # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
-  def decision_is_assigned?
-    group_grant if record.parent_model.assigned_to_user?(user)
-  end
-
   def permitted_attributes
     attributes = super
     attributes.concat %i[content]
@@ -16,14 +9,19 @@ class DecisionPolicy < EdgeablePolicy
     attributes
   end
 
+  # @return [Boolean] Returns true if the Decision is assigned to the current_user or one of its groups
+  def decision_is_assigned?
+    record.parent_model.assigned_to_user?(user)
+  end
+
   # Creating a Decision when a draft is present is not allowed
   # Managers and the Owner are allowed to forward a Decision when not assigned to him
   def create?
     return nil if record.edge.parent.decisions.unpublished.present?
     if record.forwarded?
-      rule decision_is_assigned?, is_manager?, is_super_admin?, staff?
+      decision_is_assigned? || has_grant?(:create)
     else
-      rule decision_is_assigned?
+      decision_is_assigned?
     end
   end
 
@@ -31,11 +29,11 @@ class DecisionPolicy < EdgeablePolicy
     false
   end
 
-  def update?
-    rule decision_is_assigned?, is_creator?, is_manager?, is_super_admin?, super
-  end
-
   def feed?
     false
+  end
+
+  def update?
+    decision_is_assigned? || is_creator? || has_grant?(:update)
   end
 end

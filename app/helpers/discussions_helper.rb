@@ -28,15 +28,21 @@ module DiscussionsHelper
   end
 
   def discussion_invite_groups(resource)
-    resource
-      .edge
-      .granted_groups(:spectator)
-      .where('groups.id > 0')
+    group_ids =
+      user_context
+        .grant_tree
+        .granted_group_ids(resource.edge, action: 'show', resource_type: resource.edge.owner_type)
+        .select(&:positive?)
+    Group
+      .find(group_ids)
       .map do |group|
-        {
-          label: "#{group.name} (#{t('roles.may')} #{t("roles.types.#{Grant.roles.key(group.role)}")})",
-          value: group.id
-        }
+        grant_sets_string =
+          user_context
+            .grant_tree
+            .grant_sets(resource.edge, group_ids: [group.id])
+            .map { |grant_set| t("roles.types.#{grant_set}") }
+            .join(', ')
+        {label: "#{group.name} (#{t('roles.may')} #{grant_sets_string})", value: group.id}
       end
       .append(label: t('groups.new'), value: -1)
   end
@@ -46,6 +52,7 @@ module DiscussionsHelper
       createTokenUrl: '/tokens',
       createGroupUrl: page_groups_url(resource.parent_model(:page)),
       currentActor: current_user.iri,
+      defaultRole: GrantSet.participator.id,
       forumEdge: resource.parent_edge(:forum).id,
       forumName: resource.parent_model(:forum).display_name,
       forumNames: resource.parent_model(:page).forums.pluck(:name).join(', '),
@@ -54,9 +61,10 @@ module DiscussionsHelper
       message: t('tokens.discussion.default_message', resource: resource.display_name),
       pageEdge: resource.parent_edge(:page).id,
       resource: resource.iri,
-      roles: Grant.roles.except('moderator', 'staff').map do |role, _|
-        {label: t("roles.types.#{role}").capitalize, value: role}
-      end
+      roles: GrantSet
+               .selectable
+               .pluck(:title, :id)
+               .map { |title, id| {label: t("roles.types.#{title}").capitalize, title: title, value: id} }
     }
   end
 end

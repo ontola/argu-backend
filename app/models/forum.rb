@@ -125,7 +125,7 @@ class Forum < Edgeable::Base
   end
 
   def public_grant
-    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.role || 'none'
+    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title || 'none'
   end
 
   # Is the forum out of its shortname limit
@@ -164,14 +164,15 @@ class Forum < Edgeable::Base
     if public_grant == 'none'
       grants.where(group_id: Group::PUBLIC_ID).destroy_all
     else
-      grants.where(group_id: Group::PUBLIC_ID).where('role != ?', Grant.roles[public_grant]).destroy_all
-      unless grants.find_by(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
-        edge.grants.create!(group_id: Group::PUBLIC_ID, role: Grant.roles[public_grant])
+      grants.joins(:grant_set).where('group_id = ? AND title != ?', Group::PUBLIC_ID, public_grant).destroy_all
+      unless grants.joins(:grant_set).find_by(group_id: Group::PUBLIC_ID, grant_sets: {title: public_grant})
+        edge.grants.create!(group_id: Group::PUBLIC_ID, grant_set: GrantSet.find_by!(title: public_grant))
       end
     end
   end
 
   def set_default_decision_group
-    self.default_decision_group = page.grants.administrator.joins(:group).find_by(groups: {deletable: false}).group
+    self.default_decision_group =
+      page.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
   end
 end

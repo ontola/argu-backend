@@ -26,7 +26,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
         .profile
         .group_memberships
         .joins(:grants)
-        .where(grants: {role: Grant.roles[:moderator]})
+        .where(grants: {grant_set_id: GrantSet.moderator.id})
         .first
         .destroy
     end
@@ -39,7 +39,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
         .profile
         .group_memberships
         .joins(:grants)
-        .where(grants: {role: Grant.roles[:moderator]})
+        .where(grants: {grant_set_id: GrantSet.moderator.id})
         .first
         .update(end_date: Time.current)
     end

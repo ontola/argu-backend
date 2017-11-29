@@ -17,6 +17,10 @@ class MotionPolicyTest < PolicyTest
     test_policy(subject, :statistics, moderator_plus_results)
   end
 
+  test 'create motion for forum' do
+    test_policy(forum_motion, :create, create_results.merge(participator: false))
+  end
+
   private
 
   alias move_results staff_only_results

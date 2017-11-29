@@ -8,11 +8,11 @@ class CurrentActorPolicy < RestrictivePolicy
   end
 
   def show?
-    current_user && is_manager?
+    current_user && moderator?
   end
 
   def update?
-    current_user && is_manager?
+    current_user && moderator?
   end
 
   private
@@ -21,7 +21,7 @@ class CurrentActorPolicy < RestrictivePolicy
     record.user == user
   end
 
-  def is_manager?
+  def moderator?
     owner = record.actor.profileable
     if owner.class == User || owner.class == GuestUser
       owner == user

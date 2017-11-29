@@ -15,6 +15,7 @@ export const DiscussionInvite = React.createClass({
         createGroupUrl: React.PropTypes.string,
         createTokenUrl: React.PropTypes.string,
         currentActor: React.PropTypes.number,
+        defaultRole: React.PropTypes.number,
         forumEdge: React.PropTypes.number,
         forumName: React.PropTypes.string,
         forumNames: React.PropTypes.string,
@@ -131,6 +132,7 @@ export const DiscussionInvite = React.createClass({
         if (this.state.currentGroup === -1) {
             groupForm = <GroupForm createGroupUrl={this.props.createGroupUrl}
                                    currentEdge={this.props.groupEdge}
+                                   defaultRole={this.props.defaultRole}
                                    forumEdge={this.props.forumEdge}
                                    forumName={this.props.forumName}
                                    forumNames={this.props.forumNames}

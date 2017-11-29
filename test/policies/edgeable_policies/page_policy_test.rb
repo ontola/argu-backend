@@ -26,7 +26,7 @@ class PagePolicyTest < PolicyTest
     everybody_results.merge(guest: false, creator: false)
   end
 
-  def follow_results
+  def trash_results
     nobody_results
   end
 end

@@ -34,6 +34,12 @@ module TestHelper
 
   MiniTest.after_run { FileUtils.rm_rf(Rails.root.join('public', 'photos', '[^.]*')) }
 
+  Grant.delete_all
+  GrantSetsPermittedAction.delete_all
+  PermittedAction.delete_all
+  GrantSet.delete_all
+  load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
+
   User.find_or_create_by(id: User::COMMUNITY_ID) do |user|
     user.shortname = Shortname.new(shortname: 'community')
     user.email = 'community@argu.co'

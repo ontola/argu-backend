@@ -40,4 +40,10 @@ class DecisionPolicyTest < PolicyTest
     forwarded_subject
     test_policy(approve_forwarded_subject, :create, nobody_results.merge(forwarded_user: true))
   end
+
+  private
+
+  def trash_results
+    nobody_results
+  end
 end

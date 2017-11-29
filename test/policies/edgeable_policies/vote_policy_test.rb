@@ -27,10 +27,14 @@ class VotePolicyTest < PolicyTest
   private
 
   def update_results
-    nobody_results.merge(creator: true, staff: true)
+    nobody_results.merge(creator: true)
   end
 
-  def show_unpublished_results
-    moderator_plus_results.merge(creator: true)
+  def trash_results
+    nobody_results
+  end
+
+  def destroy_results
+    nobody_results.merge(creator: true)
   end
 end

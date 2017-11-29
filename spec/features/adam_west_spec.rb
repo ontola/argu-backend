@@ -3,38 +3,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
-  let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
-  define_freetown('default', attributes: {name: 'default'})
-  define_freetown
-  let!(:f_rule_c) do
-    %w[show? create?].each do |action|
-      create(:rule,
-             branch: freetown.edge,
-             model_type: 'Comment',
-             model_id: nil,
-             action: action,
-             role: 'moderator',
-             permit: false)
-    end
+  let!(:grant_set) do
+    grant_set = GrantSet.participator.clone('adam_west_set', create(:page))
+    grant_set.grant_sets_permitted_actions.joins(:permitted_action).where('title LIKE ?', 'comment_%').destroy_all
+    grant_set
   end
-  let!(:f_rule_q_c) do
-    create(:rule,
-           branch: freetown.edge,
-           model_type: 'Question',
-           model_id: nil,
-           action: :create?,
-           role: 'participator',
-           permit: false)
-  end
-  let!(:f_rule_m_ncwwoq) do
-    create(:rule,
-           branch: freetown.edge,
-           model_type: 'Motion',
-           model_id: nil,
-           action: :create_without_question?,
-           role: 'participator',
-           permit: false)
-  end
+  define_freetown(attributes: {public_grant: 'adam_west_set'})
   let!(:question) do
     create(:question,
            parent: freetown.edge)
@@ -176,93 +150,6 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   ####################################
-  # As Initiator
-  ####################################
-  let(:initiator) { create_initiator(freetown) }
-
-  scenario 'Initiator should walk from answer up until forum' do
-    sign_in(initiator)
-
-    walk_up_to_forum initiator
-    expect(page).not_to have_content('New discussion')
-  end
-
-  scenario 'Initiator should visit forum show' do
-    sign_in(initiator)
-
-    visit forum_path(freetown)
-
-    expect(page).to have_content(freetown.bio)
-    expect(page).to have_content(question.display_name)
-  end
-
-  scenario 'Initiator should not see comment section' do
-    sign_in(initiator)
-
-    visit argument_path(argument)
-
-    expect(page.body).not_to have_content('Reply')
-    expect(page.body).not_to have_content('Comments')
-  end
-
-  scenario 'Initiator should not see top comment' do
-    sign_in(initiator)
-
-    visit motion_path(motion)
-
-    expect(page).to have_content(argument.title)
-    expect(page).not_to have_content(comment.body)
-    expect(page.body).not_to have_content('Reply')
-
-    # Anti-test
-    arg = create(:argument, parent: create(:motion, parent: default.edge).edge)
-
-    visit motion_path(arg.parent_model)
-
-    expect(page).to have_content(arg.title)
-    expect(page.body).to have_content('Reply')
-
-    c = create(:comment,
-               parent: arg.edge)
-
-    visit motion_path(arg.parent_model)
-    expect(page).to have_content(arg.title)
-    expect(page).to have_content(c.body)
-  end
-
-  scenario 'Initiator should not post create comment' do
-    sign_in(initiator)
-
-    visit argument_path(argument)
-
-    expect(page.body).not_to have_content('Reply')
-    expect(page.body).not_to have_content('Comments')
-  end
-
-  scenario 'Initiator should vote on a motion' do
-    nominatim_netherlands
-
-    sign_in(initiator)
-
-    visit motion_path(motion)
-    expect(page).to have_content(motion.content)
-    expect(page).not_to have_content('New discussion')
-
-    expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
-    find('.btn-pro').click
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
-
-    visit motion_path(motion)
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
-  end
-
-  scenario 'Initiator should post a new motion' do
-    sign_in(initiator)
-
-    create_motion_for_question
-  end
-
-  ####################################
   # As Moderator
   ####################################
   let(:moderator) { create_moderator(freetown) }
@@ -284,13 +171,12 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_current_path(forum_path(freetown))
   end
 
-  scenario 'moderator should not see comment section' do
+  scenario 'moderator should see comment section' do
     sign_in(moderator)
 
     visit argument_path(argument)
 
-    expect(page.body).not_to have_content('Reply')
-    expect(page.body).not_to have_content('Comments')
+    expect(page.body).to have_content('Reply')
   end
 
   scenario 'moderator should see motion new button' do

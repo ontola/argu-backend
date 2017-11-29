@@ -7,7 +7,7 @@ module Menus
 
       url = polymorphic_url(resource, only_path: false)
       items = [invite_link]
-      if resource.edge.is_public?
+      if is_public?
         items.concat([
                        facebook_share_link(url),
                        twitter_share_link(url),
@@ -103,6 +103,15 @@ module Menus
         image: 'fa-whatsapp',
         href: ShareHelper.whatsapp_share_url(url)
       )
+    end
+
+    private
+
+    def is_public?
+      user_context
+        .grant_tree_for(resource.edge)
+        .granted_group_ids(resource.edge)
+        .include?(Group::PUBLIC_ID)
     end
   end
 end

@@ -10,13 +10,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     create(:grant,
            edge: freetown.edge,
            group: granted_group,
-           role: :participator)
-  end
-
-  setup do
-    @freetown = freetown
-    @group = create(:group, parent: @freetown.page.edge)
-    create(:group_membership, parent: @group)
+           grant_set: GrantSet.participator)
   end
 
   ####################################
@@ -53,7 +47,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Moderator
   ####################################
-  let(:moderator) { create_moderator(@freetown.page) }
+  let(:moderator) { create_moderator(freetown.page) }
 
   test 'moderator should not post create group' do
     sign_in moderator
@@ -73,15 +67,15 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'moderator should not get new' do
     sign_in moderator
 
-    get new_page_group_path(@freetown.page)
+    get new_page_group_path(freetown.page)
 
     assert_not_authorized
   end
 
-  test 'moderator should not get settings and some tabs' do
+  test 'moderator should not get settings' do
     sign_in moderator
 
-    get settings_group_path(@group)
+    get settings_group_path(group)
     assert_not_authorized
   end
 
@@ -89,7 +83,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in moderator
 
     assert_no_difference 'Group.count' do
-      delete group_path(@group)
+      delete group_path(group)
     end
 
     assert_response 403
@@ -126,7 +120,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
                name_singular: 'Tester',
                grants_attributes: {
                  '0': {
-                   role: :participator,
+                   grant_set_id: GrantSet.participator.id,
                    edge_id: freetown.page.edge.id
                  }
                }
@@ -139,7 +133,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'administrator should get new' do
     sign_in administrator
 
-    get new_page_group_path(@freetown.page)
+    get new_page_group_path(freetown.page)
 
     assert_response 200
   end
@@ -147,12 +141,12 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'administrator should show settings and all tabs' do
     sign_in administrator
 
-    get settings_group_path(@group)
+    get settings_group_path(granted_group)
     assert_response 200
 
     %i[general members invite grants].each do |tab|
-      get settings_group_path(@group, tab: tab)
-      assert_group_settings_shown @group, tab
+      get settings_group_path(granted_group, tab: tab)
+      assert_group_settings_shown group, tab
     end
   end
 
@@ -160,7 +154,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference 'Group.count', -1 do
-      delete group_path(@group), params: {group: {confirmation_string: 'remove'}}
+      delete group_path(group), params: {group: {confirmation_string: 'remove'}}
     end
 
     assert_response 303
@@ -170,7 +164,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference 'Group.count', 0 do
-      delete group_path(@group)
+      delete group_path(group)
     end
   end
 

@@ -27,7 +27,7 @@
       "check_name": "Send",
       "message": "User controlled method execution",
       "file": "lib/argu/ruled_it.rb",
-      "line": 36,
+      "line": 33,
       "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
       "code": "policy(record).public_send((params[:action].to_s + \"?\"), *opts)",
       "render_path": null,
@@ -43,20 +43,20 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "9c56200cb00566c0ba536fb76453b9feaf842e64d30a37b19652046b7a177975",
+      "fingerprint": "f51b2ee7306b69f875b8e36f3e330ad145dbe366daf8709fccbc884a28fc314d",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/controllers/forums_controller.rb",
-      "line": 19,
+      "line": 15,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:moderator]))}\")",
+      "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges(:grant_set => ([\"moderator\", \"administrator\"])))}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "ForumsController",
         "method": "index"
       },
-      "user_input": "Edge.path_array(current_user.profile.granted_edges.where(\"grants.role >= ?\", Grant.roles[:moderator]))",
+      "user_input": "Edge.path_array(current_user.profile.granted_edges(:grant_set => ([\"moderator\", \"administrator\"])))",
       "confidence": "High",
       "note": ""
     },
@@ -81,6 +81,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-01-19 10:04:02 +0100",
+  "updated": "2018-01-23 17:26:26 +0100",
   "brakeman_version": "4.1.1"
 }

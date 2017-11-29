@@ -35,7 +35,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   def destroy?
     return false if record.group.grants.administrator.present? && record.group.group_memberships.count <= 1
-    is_group_member? || edgeable_policy.update?
+    group_member? || edgeable_policy.update?
   end
 
   private
@@ -44,12 +44,8 @@ class GroupMembershipPolicy < EdgeTreePolicy
     @edgeable_record ||= record.page
   end
 
-  def is_group_member?
-    creator if record.member == user.profile
-  end
-
-  def token
-    2
+  def group_member?
+    record.member == user.profile
   end
 
   def valid_token?
@@ -57,6 +53,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
     response = HTTParty.get(
       expand_uri_template(:verify_token, jwt: sign_payload(secret: record.token, group_id: record.group_id))
     )
-    token if response.code == 200
+    response.code == 200
   end
 end

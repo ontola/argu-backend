@@ -21,6 +21,10 @@ class SourcePolicyTest < PolicyTest
     nobody_results.merge(staff: true)
   end
 
+  def trash_results
+    nobody_results
+  end
+
   def update_results
     nobody_results.merge(administrator: true, staff: true)
   end

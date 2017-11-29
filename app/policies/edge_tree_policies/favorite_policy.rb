@@ -8,7 +8,7 @@ class FavoritePolicy < EdgeTreePolicy
   end
 
   def destroy?
-    rule is_creator?
+    is_creator?
   end
 
   private
@@ -18,6 +18,6 @@ class FavoritePolicy < EdgeTreePolicy
   end
 
   def is_creator?
-    creator if record.user == user
+    record.user == user
   end
 end

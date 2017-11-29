@@ -33,7 +33,7 @@ class MenuListTest < ActiveSupport::TestCase
     assert_not freetown.menu(user_context, :actions).menus.map(&:tag).include?(:settings)
   end
 
-  test 'Application menu for administrator should include hidden forum' do
+  test 'Page menu for administrator should include hidden forum' do
     assert freetown
              .page
              .menu(administrator_context, :navigations)
@@ -44,7 +44,7 @@ class MenuListTest < ActiveSupport::TestCase
              .include?(:second)
   end
 
-  test 'Application menu for user should not include hidden forum' do
+  test 'Page menu for user should not include hidden forum' do
     assert_not freetown
                  .page
                  .menu(user_context, :navigations)

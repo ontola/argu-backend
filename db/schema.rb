@@ -267,12 +267,24 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.index ["visibility"], name: "index_forums_on_visibility"
   end
 
+  create_table "grant_sets", force: :cascade do |t|
+    t.string "title"
+    t.integer "page_id"
+    t.index ["title", "page_id"], name: "index_grant_sets_on_title_and_page_id", unique: true
+  end
+
+  create_table "grant_sets_permitted_actions", force: :cascade do |t|
+    t.integer "grant_set_id", null: false
+    t.integer "permitted_action_id", null: false
+  end
+
   create_table "grants", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "edge_id", null: false
-    t.integer "role", default: 0, null: false
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "grant_set_id"
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
   end
 
@@ -436,6 +448,14 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.string "base_color"
     t.index ["owner_id"], name: "index_pages_on_owner_id"
     t.index ["slug"], name: "index_pages_on_slug", unique: true
+  end
+
+  create_table "permitted_actions", force: :cascade do |t|
+    t.string "title"
+    t.string "resource_type", null: false
+    t.string "parent_type", null: false
+    t.string "action", null: false
+    t.index ["title"], name: "index_permitted_actions_on_title", unique: true
   end
 
   create_table "phases", id: :serial, force: :cascade do |t|
@@ -741,7 +761,11 @@ ActiveRecord::Schema.define(version: 20180104161506) do
   add_foreign_key "forums", "groups", column: "default_decision_group_id"
   add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
+  add_foreign_key "grant_sets", "pages"
+  add_foreign_key "grant_sets_permitted_actions", "grant_sets"
+  add_foreign_key "grant_sets_permitted_actions", "permitted_actions"
   add_foreign_key "grants", "edges"
+  add_foreign_key "grants", "grant_sets"
   add_foreign_key "grants", "groups"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "profiles", column: "member_id"

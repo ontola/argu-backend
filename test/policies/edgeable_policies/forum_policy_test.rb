@@ -25,6 +25,10 @@ class ForumPolicyTest < PolicyTest
     nobody_results.merge(administrator: true, staff: true)
   end
 
+  def trash_results
+    nobody_results
+  end
+
   def invite_results
     nobody_results.merge(administrator: true, staff: true)
   end

@@ -22,7 +22,7 @@ class CreateGroupMembership < CreateService
         forum_edge_ids = resource.page.edge.children.where(owner_type: 'Forum').pluck(:id)
       end
       forum_edge_ids.each do |forum_edge_id|
-        Favorite.create(user: resource.member.profileable, edge_id: forum_edge_id)
+        Favorite.create!(user: resource.member.profileable, edge_id: forum_edge_id)
       end
     end
     super

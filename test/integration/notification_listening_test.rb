@@ -5,13 +5,7 @@ require 'test_helper'
 class NotificationListeningTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
-  let(:project) do
-    create(:project,
-           :with_follower,
-           :with_news_follower,
-           parent: freetown.edge)
-  end
-  let(:question) { create(:question, :with_follower, :with_news_follower, parent: project.edge) }
+  let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown.edge) }
   let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question.edge) }
   let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
@@ -74,7 +68,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     question
 
-    assert_differences([['Question.count', -1], [create_notification_count, -2]]) do
+    assert_differences([['Question.count', -1], [create_notification_count, -1]]) do
       delete question_path(question, destroy: true)
     end
   end
@@ -155,32 +149,17 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should create and trash project with notifications' do
-    sign_in staff
-
-    assert_differences([['Project.count', 1]]) do
-      post forum_projects_path(freetown), params: {project: attributes_for(:project)}
-    end
-
-    # Notification for follower of Forum
-    assert_notifications(1, 'reaction')
-
-    assert_differences([['Project.trashed.count', 1], [create_notification_count, -1]]) do
-      delete project_path(Project.last)
-    end
-  end
-
   test 'staff should create and trash blog_post with notifications' do
     sign_in staff
 
     assert_differences([['BlogPost.count', 1]]) do
-      post project_blog_posts_path(project),
+      post question_blog_posts_path(question),
            params: {
              blog_post: attributes_for(:blog_post, happening_attributes: {happened_at: Time.current})
            }
     end
 
-    # Notification for creator, follower and news_follower of Project
+    # Notification for creator, follower and news_follower of Question
     assert_notifications(3, 'news')
 
     assert_differences([['BlogPost.trashed.count', 1], [create_notification_count, -3]]) do

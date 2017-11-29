@@ -5,7 +5,9 @@ require 'argu/test_helpers/policy_test'
 
 class GrantPolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:grant, edge: freetown.edge, group: create(:group, parent: page.edge)) }
+  let(:subject) do
+    create(:grant, edge: freetown.edge, group: create(:group, parent: page.edge), grant_set: GrantSet.participator)
+  end
   let(:group_member) { create(:group_membership, parent: subject.group).member.profileable }
 
   generate_crud_tests

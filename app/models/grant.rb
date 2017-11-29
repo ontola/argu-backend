@@ -6,22 +6,30 @@ class Grant < ApplicationRecord
   # The Edge this Grant is providing rules for
   belongs_to :edge
   belongs_to :group, inverse_of: :grants
+  belongs_to :grant_set
+  has_many :permitted_actions, through: :grant_set
 
-  scope :forum_manager, lambda {
-    where('role >= ?', Grant.roles[:moderator]).joins(:edge).where(edges: {owner_type: 'Forum'})
-  }
-  scope :forum_member, -> { member.joins(:edge).where(edges: {owner_type: 'Forum'}) }
-  scope :page_manager,
-        -> { where('role >= ?', Grant.roles[:moderator]).joins(:edge).where(edges: {owner_type: 'Page'}) }
-  scope :page_member, -> { member.joins(:edge).where(edges: {owner_type: 'Page'}) }
+  scope :creator, -> { where(grant_set_id: GrantSet.creator.id) }
+  scope :spectator, -> { where(grant_set_id: GrantSet.spectator.id) }
+  scope :participator, -> { where(grant_set_id: GrantSet.participator.id) }
+  scope :initiator, -> { where(grant_set_id: GrantSet.initiator.id) }
+  scope :moderator, -> { where(grant_set_id: GrantSet.moderator.id) }
+  scope :administrator, -> { where(grant_set_id: GrantSet.administrator.id) }
+  scope :staff, -> { where(grant_set_id: GrantSet.staff.id) }
+
   scope :custom, -> { where('group_id > 0') }
-  enum role: {spectator: 0, participator: 1, moderator: 2, administrator: 10, staff: 100}
 
-  validates :group, :role, presence: true
+  validates :grant_set, presence: true
+  validates :group, presence: true
   validates :edge, presence: true, uniqueness: {scope: :group}
-  validates :role, exclusion: {in: ['staff', :staff, Grant.roles[:staff]]}
 
   parentable :edge
+
+  %i[creator spectator participator initiator moderator administrator staff].each do |role|
+    define_method "#{role}?" do
+      grant_set.title == role
+    end
+  end
 
   def display_name
     case edge.owner_type
@@ -32,6 +40,11 @@ class Grant < ApplicationRecord
     else
       I18n.t('grants.other')
     end
+  end
+
+  def grant_set=(value)
+    value = GrantSet.find_by!(title: value) if value.is_a?(String)
+    super
   end
 
   def page

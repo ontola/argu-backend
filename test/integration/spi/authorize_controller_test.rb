@@ -163,12 +163,12 @@ module SPI
     end
 
     ####################################
-    # As Moderator
+    # As Administrator
     ####################################
-    let(:moderator) { create_moderator(freetown.page) }
+    let(:administrator) { create_administrator(freetown.page) }
 
-    test 'moderator should show page actor' do
-      sign_in moderator
+    test 'administrator should show page actor' do
+      sign_in administrator
 
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: freetown.page.profile.id, authorize_action: 'show'
@@ -177,8 +177,8 @@ module SPI
       assert_response 200
     end
 
-    test 'moderator should show page actor as iri' do
-      sign_in moderator
+    test 'administrator should show page actor as iri' do
+      sign_in administrator
 
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
@@ -187,28 +187,28 @@ module SPI
       assert_response 200
     end
 
-    test 'moderator should not show user actor' do
-      sign_in moderator
+    test 'administrator should not show user actor' do
+      sign_in administrator
 
       get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.profile.id, authorize_action: 'show')
 
       assert_response 403
     end
 
-    test 'moderator should not show user actor as iri' do
-      sign_in moderator
+    test 'administrator should not show user actor as iri' do
+      sign_in administrator
 
       get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show')
 
       assert_response 403
     end
 
-    test 'moderator should is_member holland_moderator group' do
-      sign_in moderator
+    test 'administrator should group_member administrators group' do
+      sign_in administrator
 
       get spi_authorize_path(
         resource_type: 'Group',
-        resource_id: freetown.page.grants.moderator.first.group,
+        resource_id: freetown.page.grants.administrator.first.group,
         authorize_action: 'is_member'
       )
 

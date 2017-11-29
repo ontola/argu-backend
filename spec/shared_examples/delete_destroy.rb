@@ -2,7 +2,6 @@
 
 RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
   let(:r_param) { update_failed_path }
-  let(:authorized_user) { staff }
 
   destroy_formats.each do |format|
     context "as #{format}" do
@@ -27,7 +26,7 @@ RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
       unless opts[:skip].include?(:destroy_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           parent_path # touch path because subject be deleted
-          sign_in(authorized_user_update)
+          sign_in(authorized_user_destroy)
           assert_differences(destroy_differences) do
             delete destroy_path, params: destroy_params.merge(format: format)
           end
@@ -37,7 +36,7 @@ RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:destroy_non_existing) || opts[:skip].include?(:non_existing)
         it 'non existing' do
-          sign_in(authorized_user_update)
+          sign_in(authorized_user_destroy)
           delete non_existing_destroy_path, params: {format: format}
           expect_not_found
         end

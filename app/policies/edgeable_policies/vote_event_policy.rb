@@ -7,23 +7,7 @@ class VoteEventPolicy < EdgeablePolicy
     end
   end
 
-  def create?
-    false
-  end
-
-  def trash?
-    false
-  end
-
-  def update?
-    false
-  end
-
   def destroy?
     false
-  end
-
-  def show?
-    Pundit.policy(context, record.parent_model).show?
   end
 end

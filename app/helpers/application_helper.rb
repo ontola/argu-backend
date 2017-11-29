@@ -154,7 +154,10 @@ module ApplicationHelper
 
   def visible_for_group_ids(resource)
     @visible_for_group_ids ||= {}
-    @visible_for_group_ids[resource] ||= resource.edge.granted_group_ids(:spectator)
+    @visible_for_group_ids[resource] ||=
+      user_context
+        .grant_tree_for(resource.persisted_edge)
+        .granted_group_ids(resource.persisted_edge)
   end
 
   def visible_for_string(resource)

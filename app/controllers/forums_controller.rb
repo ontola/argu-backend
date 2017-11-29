@@ -11,13 +11,8 @@ class ForumsController < EdgeableController
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
   def index
-    @forums =
-      Forum
-        .joins(:edge)
-        .where(
-          'edges.path ? '\
-          "#{Edge.path_array(current_user.profile.granted_edges.where('grants.role >= ?', Grant.roles[:moderator]))}"
-        )
+    edges = current_user.profile.granted_edges(grant_set: %w[moderator administrator])
+    @forums = Forum.joins(:edge).where("edges.path ? #{Edge.path_array(edges)}")
     @_pundit_policy_scoped = true
   end
 

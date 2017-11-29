@@ -14,7 +14,6 @@ class EdgeablePolicy < RestrictivePolicy
         .untrashed
     end
   end
-  include EdgeTreePolicy::Roles
   include ChildOperations
 
   delegate :edge, to: :record
@@ -25,6 +24,13 @@ class EdgeablePolicy < RestrictivePolicy
     super
     raise('No edge available in policy') unless edge
     @grant_tree = context.grant_tree_for(edge)
+  end
+
+  %i[spectator participator moderator administrator staff].each do |role|
+    define_method "#{role}?" do
+      return instance_variable_get("@#{role}") if instance_variable_defined?("@#{role}")
+      instance_variable_set("@#{role}", has_grant_set?(role))
+    end
   end
 
   def has_expired_ancestors?
@@ -39,9 +45,28 @@ class EdgeablePolicy < RestrictivePolicy
     grant_tree.unpublished?(persisted_edge)
   end
 
+  def has_grant?(action)
+    group_ids =
+      grant_tree
+        .granted_group_ids(
+          persisted_edge,
+          action: action,
+          resource_type: class_name,
+          parent_type: edge&.parent&.owner_type
+        )
+    (group_ids & user.profile.group_ids).any?
+  end
+
+  def has_grant_set?(grant_set)
+    return false if grant_tree.nil?
+    grant_tree
+      .grant_sets(persisted_edge, group_ids: user.profile.group_ids)
+      .include?(grant_set.to_s)
+  end
+
   def permitted_attributes
     attributes = super
-    if (is_manager? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
+    if (moderator? || administrator? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
         (!record.is_published? || record.argu_publication&.reactions?)
       attributes.append(:mark_as_important)
     end
@@ -54,7 +79,7 @@ class EdgeablePolicy < RestrictivePolicy
   end
 
   def contact?
-    is_super_admin? || staff?
+    administrator? || staff?
   end
 
   def move?
@@ -67,17 +92,17 @@ class EdgeablePolicy < RestrictivePolicy
 
   def show?
     return show_unpublished? if has_unpublished_ancestors?
-    rule is_spectator?, is_member?, is_manager?, is_super_admin?, super
+    has_grant?(:show)
   end
 
   def create?
     return create_expired? if has_expired_ancestors?
     return create_trashed? if has_trashed_ancestors?
-    rule is_member?, is_manager?, is_super_admin?, super
+    has_grant?(:create)
   end
 
   def trash?
-    rule is_manager?, is_super_admin?, staff?
+    has_grant?(:trash)
   end
   alias bin? trash?
 
@@ -86,21 +111,25 @@ class EdgeablePolicy < RestrictivePolicy
   end
   alias unbin? trash?
 
+  def update?
+    is_creator? || has_grant?(:update)
+  end
+
   def destroy?
     return super if edge.children_counts.values.map(&:to_i).sum.positive?
-    rule is_creator?, staff?
+    is_creator? || has_grant?(:destroy)
   end
 
   def follow?
-    rule is_spectator?, is_member?, is_super_admin?, staff?
+    show?
   end
 
   def log?
-    rule is_manager?, is_super_admin?, staff?
+    update?
   end
 
   def feed?
-    rule show?
+    show?
   end
 
   def invite?
@@ -108,7 +137,7 @@ class EdgeablePolicy < RestrictivePolicy
   end
 
   def statistics?
-    rule is_manager?, is_super_admin?, staff?
+    has_grant?(:update)
   end
 
   private
@@ -117,12 +146,12 @@ class EdgeablePolicy < RestrictivePolicy
     user_context.cache_key(edge.id, action, val)
   end
 
-  def change_owner?
-    staff?
-  end
-
   def check_action(action)
     user_context.check_key(edge.id, action)
+  end
+
+  def class_name
+    self.class.name.split('Policy')[0]
   end
 
   def create_expired?
@@ -131,6 +160,11 @@ class EdgeablePolicy < RestrictivePolicy
 
   def create_trashed?
     false
+  end
+
+  def is_creator?
+    return if record.creator.blank?
+    record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
   end
 
   def parent_policy(type = nil)

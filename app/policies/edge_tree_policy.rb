@@ -12,75 +12,11 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def staff?
-      grant_tree.granted_group_ids(grant_tree.tree_root_id, 'staff', group_ids: user.profile.group_ids).any?
+      grant_tree
+        .grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
+        .include?('staff')
     end
   end
-
-  module Roles
-    def open
-      1
-    end
-
-    def spectator
-      2
-    end
-
-    def participator
-      3
-    end
-
-    # Not an actual role, but reserved nevertheless
-    def group_grant
-      5
-    end
-
-    def moderator
-      7
-    end
-
-    def owner
-      8
-    end
-
-    def administrator
-      10
-    end
-
-    def is_role?(role)
-      return if persisted_edge.nil?
-      send(role) if grant_tree.granted_group_ids(persisted_edge, role.to_s, group_ids: user.profile.group_ids).any?
-    end
-
-    def is_spectator?
-      is_role?(:spectator)
-    end
-
-    def is_member?
-      is_role?(:participator)
-    end
-
-    def is_creator?
-      return if record.creator.blank?
-      creator if record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
-    end
-
-    def is_manager?
-      is_role?(:moderator) || is_role?(:administrator)
-    end
-
-    def is_super_admin?
-      is_role?(:administrator)
-    end
-
-    def is_manager_up?
-      is_manager? || is_super_admin? || staff?
-    end
-
-    def staff?
-      is_role?(:staff)
-    end
-  end
-  include Roles
   include ChildOperations
   delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?,
            :persisted_edge, to: :edgeable_policy

@@ -11,9 +11,7 @@ class ForumPolicy < EdgeablePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i[name bio bio_long profile_id locale] if update?
-    attributes.concat %i[public_grant page_id] if change_owner?
-    attributes.append(memberships_attributes: %i[role id profile_id forum_id])
+    attributes.concat %i[name bio bio_long profile_id locale public_grant page_id]
     attributes.append(:max_shortname_count) if max_shortname_count?
     attributes.concat %i[discoverable] if staff?
     append_default_photo_params(attributes)
@@ -22,17 +20,9 @@ class ForumPolicy < EdgeablePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[general] if is_super_admin? || staff?
+    tabs.concat %i[general]
     tabs.concat %i[shortnames banners] if staff?
     tabs
-  end
-
-  def create?
-    staff?
-  end
-
-  def destroy?
-    rule is_super_admin?, super
   end
 
   def invite?
@@ -45,14 +35,10 @@ class ForumPolicy < EdgeablePolicy
   end
 
   def max_shortname_count?
-    rule staff?
+    staff?
   end
 
   def settings?
     update?
-  end
-
-  def update?
-    rule is_super_admin?, super
   end
 end

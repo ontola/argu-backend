@@ -85,22 +85,27 @@ class Profile < ApplicationRecord
     granted_records('Forum')
   end
 
-  def granted_edges(owner_type: nil, role: nil)
+  def granted_edges(owner_type: nil, grant_set: nil)
     @granted_edges ||= {}
     @granted_edges[owner_type] ||= {}
-    return @granted_edges[owner_type][role] if @granted_edges[owner_type].key?(role)
+    return @granted_edges[owner_type][grant_set] if @granted_edges[owner_type].key?(grant_set)
     scope = granted_edges_scope
     scope = scope.where(owner_type: owner_type) if owner_type.present?
-    scope = scope.where(grants: {role: Grant.roles[role]}) if role.present?
-    @granted_edges[owner_type][role] = scope
+    if grant_set.present?
+      scope =
+        scope
+          .joins('INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id')
+          .where(grant_sets: {title: grant_set})
+    end
+    @granted_edges[owner_type][grant_set] = scope
   end
 
-  def granted_records(owner_type: nil, role: nil)
-    owner_type.constantize.where(id: granted_record_ids(owner_type: owner_type, role: role))
+  def granted_records(owner_type: nil, grant_set: nil)
+    owner_type.constantize.where(id: granted_record_ids(owner_type: owner_type, grant_set: grant_set))
   end
 
-  def granted_record_ids(owner_type: nil, role: nil)
-    granted_edges(owner_type: owner_type, role: role).pluck(:owner_id)
+  def granted_record_ids(owner_type: nil, grant_set: nil)
+    granted_edges(owner_type: owner_type, grant_set: grant_set).pluck(:owner_id)
   end
 
   def self.includes_for_profileable
@@ -117,9 +122,9 @@ class Profile < ApplicationRecord
   end
   deprecate :owner
 
-  def page_ids(role = :moderator)
+  def page_ids(grant_set = :moderator)
     @page_ids ||= {}
-    @page_ids[role] ||= granted_record_ids(owner_type: 'Page', role: role)
+    @page_ids[role] ||= granted_record_ids(owner_type: 'Page', grant_set: grant_set)
   end
 
   def url

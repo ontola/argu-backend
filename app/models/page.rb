@@ -76,7 +76,7 @@ class Page < Edgeable::Base
       page: self,
       deletable: false
     )
-    group.grants << Grant.new(role: Grant.roles[:administrator], edge: edge)
+    group.grants << Grant.new(grant_set: GrantSet.administrator, edge: edge)
     group.save!
 
     service = CreateGroupMembership.new(
@@ -93,7 +93,7 @@ class Page < Edgeable::Base
   def create_staff_grant
     staff_group = Group.find_by(id: Group::STAFF_ID)
     return if staff_group.nil?
-    grant = Grant.new(role: Grant.roles[:staff], edge: edge, group: staff_group)
+    grant = Grant.new(grant_set: GrantSet.staff, edge: edge, group: staff_group)
     grant.save!(validate: false)
   end
 end

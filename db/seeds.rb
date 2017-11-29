@@ -89,10 +89,10 @@ forum = Forum.new(name: 'Nederland',
 forum.edge = Edge.new(owner: forum,
                       user: User.find_via_shortname!('staff_account'),
                       parent: argu.edge)
-forum.edge.grants.new(group: public_group, role: :participator)
+forum.edge.grants.new(group: public_group, grant_set: GrantSet.participator)
 forum.save!
 
-g = forum.edge.grants.new(group: staff_group, role: :staff)
+g = forum.edge.grants.new(group: staff_group, grant_set: GrantSet.staff)
 g.save!(validate: false)
 
 forum.edge.publish!

@@ -8,13 +8,13 @@ class GroupPolicy < EdgeTreePolicy
   end
 
   def is_member?
-    participator if user&.profile&.is_group_member?(record.id)
+    user&.profile&.is_group_member?(record.id)
   end
 
   def permitted_attributes
     attributes = super
     attributes.concat %i[name name_singular] if create?
-    attributes.append(grants_attributes: %i[id role edge_id group_id])
+    attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id])
     attributes.append :id if staff?
     attributes
   end

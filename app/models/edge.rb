@@ -187,19 +187,6 @@ class Edge < ApplicationRecord
     parent_edge(type)&.owner
   end
 
-  def granted_groups(role)
-    Group
-      .joins(grants: :edge)
-      .where(edges: {id: self_and_ancestor_ids})
-      .where('grants.role >= ?', Grant.roles[role])
-      .order('groups.name ASC')
-      .select('groups.*, grants.role as role, grants.id as grant_id, grants.edge_id as granted_edge_id')
-  end
-
-  def granted_group_ids(role)
-    granted_groups(role).pluck(:id)
-  end
-
   def has_expired_ancestors?
     persisted_edge
       .self_and_ancestors
@@ -220,10 +207,6 @@ class Edge < ApplicationRecord
 
   def is_child_of?(edge)
     ancestor_ids.include?(edge.id)
-  end
-
-  def is_public?
-    granted_groups('participator').pluck(:id).include?(-1)
   end
 
   def is_trashed?

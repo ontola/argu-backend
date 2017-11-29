@@ -11,13 +11,11 @@ module Argu
       def authorize(user, record, query)
         policy = policy!(user, record)
 
-        authorized, verdict = policy.public_send(query)
-        unless authorized
+        unless policy.public_send(query)
           raise Argu::Errors::NotAuthorized.new(
             query: query,
             record: record,
-            policy: policy,
-            verdict: verdict
+            policy: policy
           )
         end
 
@@ -36,8 +34,7 @@ module Argu
         raise Argu::Errors::NotAuthorized.new(
           query: query,
           record: record,
-          policy: policy,
-          verdict: policy.last_verdict
+          policy: policy
         )
       end
 

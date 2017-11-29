@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require 'exception_to_the_rule'
-
 class RestrictivePolicy
   include TuplesHelper
-  prepend ExceptionToTheRule
 
   class Scope
     attr_reader :context, :user, :scope
@@ -27,28 +24,13 @@ class RestrictivePolicy
     end
   end
 
-  module Roles
-    def creator
-      4
-    end
-
-    def staff
-      10
-    end
-
-    def staff?
-      staff if user.is_staff?
-    end
-
-    def service
-      9
-    end
-
-    def service?
-      service if context.doorkeeper_scopes&.include? 'service'
-    end
+  def staff?
+    user.is_staff?
   end
-  include Roles
+
+  def service?
+    @service ||= context.doorkeeper_scopes&.include? 'service'
+  end
 
   delegate :user, to: :context
   delegate :actor, to: :context
@@ -93,7 +75,7 @@ class RestrictivePolicy
   end
 
   def feed?
-    rule staff?
+    staff?
   end
 
   # Used when an item displays nested content, therefore this should use the heaviest restrictions

@@ -29,6 +29,10 @@ class UserContext
     @lookup_map.dig(ident, key)
   end
 
+  def grant_tree
+    grant_tree_for_id(tree_root_id)
+  end
+
   def grant_tree_for(edge)
     return unless edge&.persisted_edge&.present?
     raise 'No root is present' if tree_root_id.nil?

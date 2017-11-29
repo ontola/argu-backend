@@ -31,52 +31,38 @@ class GrantTree
     find_or_cache_node(edge).expired?
   end
 
-  # Find all groups with a grant of the specified role on this edge or any of its ancestors
+  # Find the ids of all groups with a grant as specified in the filters
   # @param [Edge] edge The edge to check
-  # @param [String] role The role to check
-  # @return [Array<Integer>] A list of group_ids with a grant of the specified role
-  def granted_group_ids(edge, role, group_ids: nil)
-    granted_group_ids = find_or_cache_node(edge)
-                          .grants_in_scope
-                          .select { |grant| grant.role_before_type_cast >= Grant.roles[role] }
-                          .map(&:group_id)
-    if group_ids
-      group_ids & granted_group_ids
-    else
-      granted_group_ids
-    end
+  # @param [Hash] filters The filters the grants should apply to
+  # @return [Array<Integer>] A list of group_ids with a grant
+  def granted_group_ids(edge, filters = {})
+    find_or_cache_node(edge).granted_group_ids(filters)
   end
 
+  # Find all groups with a grant as specified in the filters
+  # @param [Edge] edge The edge to check
+  # @param [Hash] filters The filters the grants should apply to
+  # @return [ActiveRecord::Relation] All groups with a grant
+  def granted_groups(edge, filters = {})
+    Group.where(id: granted_group_ids(edge, filters))
+  end
+
+  # All grants available for the root
+  # @return [Array<Grant>] An array of all grants in the edge tree branch
   def grants_in_scope
     @grants_in_scope ||=
       Grant
         .joins(:edge)
-        .includes(:edge)
+        .includes(:edge, :grant_set, :permitted_actions)
         .where('edges.path <@ ?', tree_root_id.to_s)
         .to_a
   end
 
-  def rules_in_scope
-    @rules_in_scope ||=
-      Rule
-        .joins(:branch)
-        .where('edges.path <@ ?', tree_root_id.to_s)
-        .to_a
-  end
-
-  # Find all rules active for the action on the record on the edge
-  # @param [Edge] edge The position in the edge tree
-  # @param [ActiveRecord] record The record to find rules for
-  # @param [String] action The action to find rules for
-  # @return [Array<Rule>]
-  def rules(edge, record, action)
-    model_type = record.class.to_s
-    model_id = record.try(:id)
-    find_or_cache_node(edge.persisted_edge)
-      .rules_in_scope
-      .select do |rule|
-      rule.action == action.to_s && rule.model_type == model_type && [model_id, nil].include?(rule.model_id)
-    end
+  def grant_sets(edge, group_ids: [])
+    find_or_cache_node(edge).grant_sets
+      .slice(*group_ids)
+      .values
+      .flatten
   end
 
   # Checks whether the edge or any of its ancestors is trashed

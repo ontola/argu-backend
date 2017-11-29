@@ -5,7 +5,7 @@ class GrantPolicy < EdgeTreePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat %i[group_id edge_id role]
+    attributes.concat %i[group_id edge_id grant_set_id]
     attributes
   end
 
@@ -15,7 +15,7 @@ class GrantPolicy < EdgeTreePolicy
 
   def destroy?
     return if record.group_id == Group::PUBLIC_ID || record.administrator?
-    edgeable_policy.update?
+    edgeable_policy.has_grant?(:update)
   end
 
   def show?

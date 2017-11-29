@@ -13,13 +13,17 @@ class PolicyTest < ActiveSupport::TestCase
   define_freetown(:unpublished_freetown, attributes: {edge_attributes: {is_published: false}})
   let(:moderator) { create_moderator(page, create(:user)) }
   let(:initiator) { create_initiator(page, create(:user)) }
+  let(:participator) { create_participator(page, create(:user)) }
   let(:guest) { GuestUser.new(id: 'my_id') }
 
   let(:linked_record) { create(:linked_record, source: public_source) }
   let(:linked_record_argument) { create(:argument, parent: linked_record.edge, publisher: creator) }
 
   ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
+    let("#{prefix}project") { create(:project, parent: send("#{prefix}freetown").edge, publisher: creator) }
+    let("#{prefix}phase") { create(:phase, parent: send("#{prefix}project").edge, publisher: creator) }
     let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown").edge, publisher: creator) }
+    let("#{prefix}forum_motion") { create(:motion, parent: send("#{prefix}freetown").edge, publisher: creator) }
     let("#{prefix}motion") { create(:motion, parent: send("#{prefix}question").edge, publisher: creator) }
     let("#{prefix}decision") do
       create(:decision,
@@ -60,6 +64,10 @@ class PolicyTest < ActiveSupport::TestCase
     when :spectator
       [freetown, expired_freetown, public_source].each do |record|
         record.public_grant = 'spectator'
+      end
+    when :participator
+      [freetown, expired_freetown, public_source].each do |record|
+        record.public_grant = 'participator'
       end
     when :non_member, :member
       [freetown, expired_freetown, public_source].each do |record|

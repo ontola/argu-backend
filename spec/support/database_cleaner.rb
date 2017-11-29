@@ -10,6 +10,8 @@ RSpec.configure do |config|
       extend FactoryGirl::Syntax::Methods
       extend Argu::TestHelpers::TestHelperMethods::InstanceMethods
 
+      load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
+
       create(:user,
              id: User::COMMUNITY_ID,
              shortname: build(:shortname, shortname: 'community'),

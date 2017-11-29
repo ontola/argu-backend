@@ -7,6 +7,7 @@ module DefaultPolicyResults
       creator: true,
       user: true,
       spectator: true,
+      participator: true,
       initiator: true,
       non_member: true,
       moderator: true,
@@ -20,6 +21,7 @@ module DefaultPolicyResults
       guest: false,
       user: false,
       spectator: false,
+      participator: false,
       initiator: false,
       non_member: false,
       moderator: false,
@@ -54,7 +56,7 @@ module DefaultPolicyResults
   end
 
   def follow_results
-    everybody_results.merge(non_member: false)
+    show_results
   end
 
   def create_results
@@ -64,11 +66,17 @@ module DefaultPolicyResults
   def moderator_plus_results
     nobody_results.merge(moderator: true, administrator: true, staff: true)
   end
-  alias trash_results moderator_plus_results
-  alias log_results moderator_plus_results
+
+  def trash_results
+    moderator_plus_results
+  end
 
   def update_results
     moderator_plus_results.merge(creator: true)
+  end
+
+  def log_results
+    update_results
   end
 
   def destroy_results

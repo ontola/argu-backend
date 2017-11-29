@@ -1,4 +1,4 @@
-=semantic_form_for resource, multipart: true, remote: true, authenticity_token: true do |f|
+=semantic_form_for resource, multipart: true, remote: false, authenticity_token: true do |f|
   =f.input :lock_version, as: :hidden
   =f.input :active, value: local_assigns[:active], as: :hidden
   - resource.errors.full_messages.each do |message|
@@ -39,7 +39,7 @@
                 =link_to new_group_group_membership_path(grant.group), class: 'btn--light btn--smaller' do
                   span.fa.fa-plus
             td
-              =t("roles.types.#{grant.role}")
+              =t("roles.types.#{grant.grant_set.title}")
               - if grant.edge_id == resource.edge.id
                 =t('roles.list.remove_html', url: grant_path(grant))
               - else

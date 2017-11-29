@@ -41,7 +41,7 @@ module Argu
               shortname_attributes: {shortname: name},
               page: argu,
               parent: argu.edge,
-              public_grant: 'participator'
+              public_grant: 'initiator'
             }.merge(attributes)
           )
         end
@@ -57,7 +57,7 @@ module Argu
           create(:grant,
                  edge: forum.edge,
                  group: create(:group, parent: forum.page.edge),
-                 role: Grant.roles[:participator])
+                 grant_set: GrantSet.initiator)
           forum
         end
       end
@@ -73,7 +73,7 @@ module Argu
           create(:grant,
                  edge: forum.edge,
                  group: create(:group, parent: forum.page.edge),
-                 role: Grant.roles[:participator])
+                 grant_set: GrantSet.initiator)
           forum
         end
       end
@@ -89,7 +89,7 @@ module Argu
           create(:grant,
                  edge: forum.edge,
                  group: create(:group, parent: forum.page.edge),
-                 role: Grant.roles[:participator])
+                 grant_set: GrantSet.initiator)
           forum
         end
       end
@@ -100,7 +100,7 @@ module Argu
             :populated_forum,
             {
               shortname_attributes: {shortname: name},
-              public_grant: 'participator'
+              public_grant: 'initiator'
             }.merge(attributes)
           )
         end
@@ -124,7 +124,7 @@ module Argu
           create(:source,
                  parent: argu.edge,
                  iri_base: 'https://iri.test',
-                 public_grant: 'participator',
+                 public_grant: 'initiator',
                  shortname: 'public_source')
         end
       end

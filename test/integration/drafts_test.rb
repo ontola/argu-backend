@@ -49,17 +49,12 @@ class DraftsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As moderator
+  # As administrator
   ####################################
-  test 'moderator should get index' do
-    create(:group_membership,
-           parent: create(
-             :grant,
-             edge: freetown.page.edge,
-             group: create(:group, parent: freetown.page.edge),
-             role: Grant.roles['moderator']
-           ).group,
-           shortname: user.url)
+  test 'administrator should get index' do
+    group = create(:group, parent: freetown.page.edge)
+    create(:group_membership, parent: group, shortname: user.url)
+    create(:grant, edge: freetown.page.edge, group: group, grant_set: GrantSet.administrator)
     sign_in user
     get drafts_user_path(user)
     assert 200

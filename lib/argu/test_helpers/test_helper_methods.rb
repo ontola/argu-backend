@@ -77,7 +77,18 @@ module Argu
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, role: Grant.roles['moderator'])
+          create(:grant, edge: record.edge, group: group, grant_set: GrantSet.moderator)
+          user
+        end
+
+        def create_participator(record, user = nil)
+          user ||= create(:user)
+          page = record.is_a?(Page) ? record : record.page
+          group = create(:group, parent: page.edge)
+          create(:group_membership,
+                 parent: group,
+                 shortname: user.url)
+          create(:grant, edge: record.edge, group: group, grant_set: GrantSet.participator)
           user
         end
 
@@ -88,7 +99,7 @@ module Argu
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, role: Grant.roles['participator'])
+          create(:grant, edge: record.edge, group: group, grant_set: GrantSet.initiator)
           user
         end
 

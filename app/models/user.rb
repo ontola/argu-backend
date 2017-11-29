@@ -242,7 +242,11 @@ class User < ApplicationRecord
   # @return [ActiveRecord::Relation] The pages managed by the user
   def managed_pages
     return @managed_pages if @managed_pages.present?
-    page_ids = profile.grants.page_manager.pluck('edges.owner_id')
+    page_ids = profile
+                 .grants
+                 .joins(:edge, grant_set: :permitted_actions)
+                 .where(edges: {owner_type: 'Page'}, permitted_actions: {resource_type: 'Page', action: 'update'})
+                 .pluck('DISTINCT edges.owner_id')
     @managed_pages = page_ids.present? ? Page.where(id: page_ids) : Page.none
   end
 

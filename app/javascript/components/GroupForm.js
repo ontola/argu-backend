@@ -10,6 +10,7 @@ const MIN_NAME_LENGTH = 3;
 export const GroupForm = React.createClass({
     propTypes: {
         createGroupUrl: React.PropTypes.number,
+        defaultRole: React.PropTypes.number,
         forumEdge: React.PropTypes.number,
         forumName: React.PropTypes.string,
         forumNames: React.PropTypes.string,
@@ -22,7 +23,9 @@ export const GroupForm = React.createClass({
         return {
             name: '',
             nameSingular: '',
-            currentRole: 'participator',
+            currentRole: this.props.roles.find(obj => {
+                return obj.value === this.props.defaultRole;
+            }),
             currentEdge: this.props.forumEdge
         };
     },
@@ -38,7 +41,7 @@ export const GroupForm = React.createClass({
                         grants_attributes: {
                             0: {
                                 edge_id: this.state.currentEdge,
-                                role: this.state.currentRole
+                                grant_set_id: this.state.currentRole.value
                             }
                         }
                     }
@@ -48,7 +51,7 @@ export const GroupForm = React.createClass({
             .then(json)
             .then(body => {
                 const id = parseInt(body.data.id.split('/').pop());
-                const label = `${this.state.name} (${I18n.t('roles.may')} ${I18n.t(`roles.types.${this.state.currentRole}`)})`;
+                const label = `${this.state.name} (${I18n.t('roles.may')} ${I18n.t(`roles.types.${this.state.currentRole.title}`)})`;
                 this.props.onCreate(id, label)
             }).catch(e => {
                 json(e).then(body => {
@@ -78,7 +81,7 @@ export const GroupForm = React.createClass({
     },
 
     handleRoleChange (value) {
-        this.setState({ currentRole: value.value });
+        this.setState({ currentRole: value });
     },
 
     render () {
@@ -106,7 +109,7 @@ export const GroupForm = React.createClass({
                     clearable={false}
                     onChange={this.handleRoleChange}
                     options={this.props.roles}
-                    value={this.state.currentRole}/>
+                    value={this.state.currentRole.value}/>
                 <label>
                     <input type="radio"
                            value={this.props.forumEdge}

@@ -21,6 +21,7 @@ RSpec.describe 'Votes', type: :request do
   let(:expect_get_show_guest_html) { expect_get_show_html }
   let(:guest_user) { GuestUser.new(session: session) }
   let(:authorized_user_update) { subject.publisher }
+  let(:authorized_user_destroy) { subject.publisher }
 
   shared_examples_for 'by parent' do
     let(:show_path) do

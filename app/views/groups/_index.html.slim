@@ -24,7 +24,7 @@ table.styled
             - group.grants.each do |grant|
               li
                 =>"#{grant.display_name}:"
-                =t("roles.types.#{grant.role}")
+                =t("roles.types.#{grant.grant_set.title}")
                 = t('roles.list.remove_html', url: grant_path(grant))
       td
         - if policy(resource.edge).create_child?(:grants, edge: resource.edge)

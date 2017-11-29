@@ -13,8 +13,6 @@ class VoteEventPolicyTest < PolicyTest
 
   generate_edgeable_tests
 
-  private
-
   alias create_results nobody_results
   alias create_expired_results nobody_results
   alias create_trashed_results nobody_results
@@ -22,8 +20,4 @@ class VoteEventPolicyTest < PolicyTest
   alias trash_results nobody_results
   alias destroy_results nobody_results
   alias destroy_with_children_results nobody_results
-
-  def show_unpublished_results
-    moderator_plus_results.merge(creator: true)
-  end
 end

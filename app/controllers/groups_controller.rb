@@ -35,7 +35,7 @@ class GroupsController < ServiceController
     resource = super
     resource.grants.build(
       edge: parent_edge,
-      role: :participator
+      grant_set: GrantSet.participator
     )
     resource
   end
