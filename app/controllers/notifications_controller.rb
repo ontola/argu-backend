@@ -16,21 +16,16 @@ class NotificationsController < AuthorizedController
   end
 
   def create
-    authorize Notification, :create?
-    @notification = Notification.new permit_params
-
     respond_to do |format|
-      if @notification.save
+      if authenticated_resource.save
         format.json { head 201 }
       else
-        format.json { respond_with_422(@notification, :json) }
+        format.json { respond_with_422(authenticated_resource, :json) }
       end
     end
   end
 
   def read
-    authorize Notification, :read?
-
     if policy_scope(Notification)
          .where(read_at: nil, permanent: false)
          .update_all(read_at: Time.current)
@@ -73,6 +68,11 @@ class NotificationsController < AuthorizedController
   end
 
   private
+
+  def authorize_action
+    return super unless action_name == 'read'
+    authorize Notification, :read?
+  end
 
   def fetch_more
     begin

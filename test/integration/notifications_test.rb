@@ -27,232 +27,41 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Staff
+  # As guest
   ####################################
-  let(:staff) { create(:user, :staff) }
-
-  test 'staff should create and trash motion with notifications' do
-    sign_in staff
-
-    # Notification for follower of Forum
-    assert_differences([['Motion.count', 1], ['Notification.count', 0]]) do
-      post forum_motions_path(freetown),
-           params: {motion: attributes_for(:motion)}
-    end
-
-    assert_notifications(1, 'reaction', ['Motion.published.count', 1])
-
-    assert_differences([['Motion.trashed.count', 1], [create_notification_count, -1]]) do
-      delete motion_path(Motion.last)
-    end
-  end
-
-  test 'staff should destroy motion with notifications' do
-    sign_in staff
-
-    motion
-
-    assert_differences([['Motion.count', -1], [create_notification_count, -2]]) do
-      delete motion_path(motion, destroy: true)
-    end
-  end
-
-  test 'staff should create and trash question with notifications' do
-    sign_in staff
-
-    # Notification for follower of Forum
-    assert_differences([['Question.count', 1], ['Notification.count', 0]]) do
-      post forum_questions_path(freetown),
-           params: {question: attributes_for(:question)}
-    end
-
-    assert_notifications(1, 'reaction', ['Question.published.count', 1])
-
-    assert_differences([['Question.trashed.count', 1], [create_notification_count, -1]]) do
-      delete question_path(Question.last)
-    end
-  end
-
-  test 'staff should destroy question with notifications' do
-    sign_in staff
-
-    question
-
-    assert_differences([['Question.count', -1], [create_notification_count, -2]]) do
-      delete question_path(question, destroy: true)
-    end
-  end
-
-  test 'staff should create and trash argument with notifications' do
-    sign_in staff
-    motion
-
-    # Notification for creator and follower of Motion
-    assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
-      post motion_arguments_path(motion),
-           params: {
-             argument: attributes_for(:argument)
-           }
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['Argument.trashed.count', 1], [create_notification_count, -2]]) do
-      delete argument_path(Argument.last)
-    end
-  end
-
-  test 'staff should destroy argument with notifications' do
-    sign_in staff
-
+  test 'guest should get index' do
     argument
-
-    assert_differences([['Argument.count', -1], [create_notification_count, -2]]) do
-      delete argument_path(argument, destroy: true)
-    end
+    get notifications_path, params: {format: :json}
+    assert_response 401
   end
 
-  test 'staff should create and trash comment with notifications' do
-    sign_in staff
+  test 'guest should not mark as read' do
     argument
-
-    # Notification for creator and follower of Argument
-    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
-      post argument_comments_path(argument),
-           params: {comment: attributes_for(:comment)}
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['Comment.trashed.count', 1], [create_notification_count, -2]]) do
-      delete destroy_comment_path(Comment.last)
+    assert_differences([['Notification.count', 0], ['Notification.where(read_at: nil).count', 0]]) do
+      patch read_notifications_path
+      assert_response 302
     end
   end
 
-  test 'staff should create and trash comment for blog_post with notifications' do
-    sign_in staff
-    blog_post
+  ####################################
+  # As follower
+  ####################################
+  let(:follower) { motion.publisher }
 
-    # Notification for creator and follower of BlogPost
-    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
-      post blog_post_comments_path(blog_post),
-           params: {comment: attributes_for(:comment)}
-    end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['Comment.trashed.count', 1], [create_notification_count, -2]]) do
-      delete destroy_comment_path(Comment.last)
-    end
+  test 'follower should get index' do
+    argument
+    sign_in follower
+    get notifications_path, params: {format: :json}
+    assert_response 200
+    assert_equal parsed_body['notifications']['unread'], 1
   end
 
-  test 'staff should create and trash comment for motion with notifications' do
-    sign_in staff
-    motion
-
-    # Notification for creator and follower of Motion
-    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
-      post motion_comments_path(motion),
-           params: {comment: attributes_for(:comment)}
+  test 'follower should mark as read' do
+    argument
+    sign_in follower
+    assert_differences([['Notification.count', 0], ['Notification.where(read_at: nil).count', -1]]) do
+      patch read_notifications_path, params: {format: :json}
+      assert_response 200
     end
-    assert_equal Notification.last.notification_type, 'reaction'
-
-    assert_differences([['Comment.trashed.count', 1], [create_notification_count, -2]]) do
-      delete destroy_comment_path(Comment.last)
-    end
-  end
-
-  test 'staff should create and trash project with notifications' do
-    sign_in staff
-
-    assert_differences([['Project.count', 1]]) do
-      post forum_projects_path(freetown), params: {project: attributes_for(:project)}
-    end
-
-    # Notification for follower of Forum
-    assert_notifications(1, 'reaction')
-
-    assert_differences([['Project.trashed.count', 1], [create_notification_count, -1]]) do
-      delete project_path(Project.last)
-    end
-  end
-
-  test 'staff should create and trash blog_post with notifications' do
-    sign_in staff
-
-    assert_differences([['BlogPost.count', 1]]) do
-      post project_blog_posts_path(project),
-           params: {
-             blog_post: attributes_for(:blog_post, happening_attributes: {happened_at: Time.current})
-           }
-    end
-
-    # Notification for creator, follower and news_follower of Project
-    assert_notifications(3, 'news')
-
-    assert_differences([['BlogPost.trashed.count', 1], [create_notification_count, -3]]) do
-      delete blog_post_path(BlogPost.last)
-    end
-  end
-
-  test 'staff should forward to other with notification' do
-    sign_in staff
-    motion
-    group_membership
-
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'forwarded',
-                                      forwarded_user_id: user.id,
-                                      forwarded_group_id: group.id,
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
-           }
-    end
-    # Notification for creator and follower of Motion and forwarded_to_user
-    assert_notifications(3, 'reaction')
-  end
-
-  test 'staff should forward to self and approve with notifications' do
-    sign_in staff
-    motion
-    create(:group_membership, parent: group, member: staff.profile)
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'forwarded',
-                                      forwarded_user_id: staff.id,
-                                      forwarded_group_id: group.id,
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
-           }
-    end
-    # Notification for creator and follower of Motion
-    assert_notifications(2, 'reaction')
-
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
-      post motion_decisions_path(motion),
-           params: {
-             decision: attributes_for(:decision,
-                                      state: 'approved',
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
-           }
-    end
-    # Notification for creator, follower and news_follower of Motion
-    assert_notifications(3, 'news')
-  end
-
-  private
-
-  def create_notification_count
-    'Notification.joins(:activity).where("key ~ \'*.create|publish\'").count'
-  end
-
-  def assert_notifications(count, type, *differences)
-    assert_differences(differences.append(['Notification.count', count])) do
-      reset_publication(Publication.last)
-    end
-    assert_equal Notification.last.notification_type, type
   end
 end

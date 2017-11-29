@@ -129,7 +129,7 @@ class AuthorizedController < ApplicationController
   end
 
   def redirect_url
-    if request.method == 'GET' || authenticated_resource.nil?
+    if request.method == 'GET' || authenticated_resource!.nil?
       [request.path, request.query_string].reject(&:blank?).join('?')
     else
       redirect_model_success(authenticated_resource)

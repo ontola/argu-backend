@@ -9,15 +9,13 @@ RSpec.describe 'Favorites', type: :request do
   let(:non_existing_create_path) { forum_favorites_path('non_existent') }
   let(:non_existing_destroy_path) { forum_favorites_path('non_existent') }
   let(:destroy_path) { forum_favorites_path(holland) }
-  let(:update_failed_path) { url_for([holland, only_path: true]) }
+  let(:update_failed_path) { url_for([holland, :favorites, only_path: true]) }
   let(:created_resource_path) { forum_path(holland) }
   let(:create_differences) { [['Favorite.count', 1]] }
   let(:destroy_differences) { [['Favorite.count', -1]] }
   let(:create_path) { url_for([holland, :favorites, only_path: true]) }
   let(:create_params) { {} }
   let(:authorized_user) { staff }
-  let(:expect_delete_destroy_guest_html) { expect_not_found }
-  let(:expect_delete_destroy_guest_json_api) { expect_not_found }
   let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
   let(:expect_delete_destroy_unauthorized_json_api) { expect_not_found }
 
