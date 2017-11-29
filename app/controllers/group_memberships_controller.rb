@@ -107,4 +107,16 @@ class GroupMembershipsController < ServiceController
     flash.keep
     redirect_to redirect_url
   end
+
+  def tree_root_id
+    @tree_root_id ||=
+      case action_name
+      when 'new', 'create'
+        parent_resource&.page&.edge&.id
+      when 'index'
+        parent_resource&.edge&.id
+      else
+        resource_by_id&.page&.edge&.id
+      end
+  end
 end

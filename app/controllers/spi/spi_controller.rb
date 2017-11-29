@@ -13,12 +13,13 @@ module SPI
     serialization_scope :user_context
 
     def user_context
-      UserContext.new(
-        current_user,
-        current_user.profile,
-        doorkeeper_scopes,
-        []
-      )
+      @user_context ||=
+        UserContext.new(
+          current_user,
+          current_user.profile,
+          doorkeeper_scopes,
+          GrantTree::ANY_ROOT
+        )
     end
 
     private

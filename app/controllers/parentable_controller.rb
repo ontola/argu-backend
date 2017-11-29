@@ -49,4 +49,16 @@ class ParentableController < AuthorizedController
       publisher: current_user
     )
   end
+
+  # The scope of the item used for authorization
+  # @return [number] The id of the root edge.
+  def tree_root_id
+    @tree_root_id ||=
+      case action_name
+      when 'new', 'create', 'index'
+        parent_edge&.root_id
+      else
+        resource_by_id.try(:edge)&.root_id
+      end
+  end
 end

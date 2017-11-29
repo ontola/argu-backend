@@ -39,7 +39,7 @@ class ActivityPolicy < RestrictivePolicy
     end
 
     def staff?
-      context.has_tree? ? super : user.is_staff?
+      grant_tree.nil? ? user.is_staff? : super
     end
   end
 

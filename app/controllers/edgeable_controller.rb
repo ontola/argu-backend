@@ -24,19 +24,6 @@ class EdgeableController < ServiceController
       end
   end
 
-  # The scope of the item used for authorization
-  def authenticated_tree
-    @_tree ||=
-      case action_name
-      when 'new', 'create', 'index'
-        parent_edge&.self_and_ancestors
-      when 'update'
-        resource_by_id&.edge&.self_and_ancestors
-      else
-        authenticated_edge&.self_and_ancestors
-      end
-  end
-
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params

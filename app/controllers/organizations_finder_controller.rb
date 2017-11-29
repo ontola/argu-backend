@@ -35,4 +35,8 @@ class OrganizationsFinderController < AuthorizedController
   def resource_from_param
     resource_from_iri(params[:iri]) || parent_from_iri(params[:iri]) || LinkedRecord.find_or_fetch_by_iri(params[:iri])
   end
+
+  def tree_root_id
+    authenticated_resource!.try(:edge)&.root_id
+  end
 end

@@ -19,15 +19,13 @@ class ShortnamesController < ParentableController
     authenticated_resource.owner.edge
   end
 
-  def authenticated_tree
-    @_tree ||=
+  def tree_root_id
+    @tree_root_id ||=
       case action_name
       when 'new', 'create', 'index'
-        parent_edge.self_and_ancestors
-      when 'update'
-        resource_by_id&.owner&.edge&.self_and_ancestors
+        parent_edge.root_id
       else
-        authenticated_edge&.self_and_ancestors
+        resource_by_id&.owner&.edge&.root_id
       end
   end
 

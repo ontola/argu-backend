@@ -20,6 +20,8 @@ module Argu
       end
     end
 
+    def tree_root_id; end
+
     def skip_verify_policy_authorized(sure = false)
       @_pundit_policy_authorized = true if sure
     end
@@ -33,17 +35,13 @@ module Argu
     end
 
     def user_context
-      UserContext.new(
-        current_user,
-        current_profile,
-        doorkeeper_scopes
-      )
-    end
-
-    def policy(record, outside_tree: false)
-      p = super record
-      p.outside_tree = true if outside_tree
-      p
+      @user_context ||=
+        UserContext.new(
+          current_user,
+          current_profile,
+          doorkeeper_scopes,
+          @_error_mode ? nil : tree_root_id
+        )
     end
   end
 end

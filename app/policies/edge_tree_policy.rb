@@ -2,13 +2,17 @@
 
 class EdgeTreePolicy < RestrictivePolicy
   class Scope < RestrictivePolicy::Scope
+    def grant_tree
+      return unless context.tree_root_id.is_a?(Integer)
+      @grant_tree ||= context.grant_tree_for_id(context.tree_root_id)
+    end
+
     def granted_edges_within_tree
-      return unless context.has_tree?
-      user.profile.granted_edges.where('path <@ ?', context.tree_root.id.to_s)
+      user.profile.granted_edges.where('path <@ ?', grant_tree.tree_root_id.to_s) if grant_tree.present?
     end
 
     def staff?
-      context.granted_group_ids(context.tree_root.id, 'staff').any?
+      grant_tree.granted_group_ids(grant_tree.tree_root_id, 'staff', group_ids: user.profile.group_ids).any?
     end
   end
 
@@ -44,11 +48,7 @@ class EdgeTreePolicy < RestrictivePolicy
 
     def is_role?(role)
       return if persisted_edge.nil?
-      if context.within_tree?(persisted_edge, outside_tree)
-        send(role) if context.granted_group_ids(persisted_edge, role.to_s).any?
-      elsif (user.profile.group_ids & persisted_edge.granted_group_ids(role.to_s)).any?
-        send(role)
-      end
+      send(role) if grant_tree.granted_group_ids(persisted_edge, role.to_s, group_ids: user.profile.group_ids).any?
     end
 
     def is_spectator?
@@ -83,11 +83,13 @@ class EdgeTreePolicy < RestrictivePolicy
   include Roles
   include ChildOperations
   delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?,
-           :outside_tree, :persisted_edge, to: :edgeable_policy
+           :persisted_edge, to: :edgeable_policy
+  attr_reader :grant_tree
 
   def initialize(context, record)
     super
     raise('No edgeable record avaliable in policy') unless edgeable_record
+    @grant_tree = context.grant_tree_for(edgeable_record.edge)
   end
 
   private

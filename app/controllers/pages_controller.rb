@@ -61,16 +61,9 @@ class PagesController < EdgeableController
       end
   end
 
-  def authenticated_tree
-    @_tree ||=
-      case action_name
-      when 'new', 'create', 'index'
-        nil
-      when 'update'
-        resource_by_id&.edge&.self_and_ancestors
-      else
-        authenticated_edge&.self_and_ancestors
-      end
+  def tree_root_id
+    return super unless %w[create new index].include?(action_name)
+    GrantTree::ANY_ROOT
   end
 
   def inc_nested_collection

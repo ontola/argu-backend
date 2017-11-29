@@ -186,8 +186,10 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # As Administrator
   ####################################
+  let(:administator) { create_administrator(freetown) }
+
   test 'administrator should not post create member' do
-    sign_in create_administrator(freetown)
+    sign_in administator
 
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -203,7 +205,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   test 'administrator should not post create member json' do
-    sign_in create_administrator(freetown)
+    sign_in administator
 
     assert_difference 'GroupMembership.count', 0 do
       post :create,
@@ -221,7 +223,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   test 'administrator should post create other' do
-    sign_in create_administrator(freetown)
+    sign_in administator
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
@@ -254,7 +256,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   test 'administrator should post create other json' do
-    sign_in create_administrator(freetown)
+    sign_in administator
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,
@@ -273,7 +275,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   test 'administrator should delete expire' do
-    sign_in create_administrator(freetown)
+    sign_in administator
 
     group_membership = create(:group_membership, parent: group)
 
@@ -289,11 +291,39 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_analytics_collected('memberships', 'destroy')
   end
 
+  test 'administrator should get index' do
+    sign_in administator
+
+    get :index,
+        params: {
+          page_id: freetown.page.id,
+          q: administator.first_name,
+          thing: 'o/fg_shortname26end'
+        }
+
+    assert_equal parsed_body['data'].size, 1
+    assert_response 200
+  end
+
+  test 'administrator should get index non found' do
+    sign_in administator
+
+    get :index,
+        params: {
+          page_id: freetown.page.id,
+          q: 'wrong',
+          thing: 'o/fg_shortname26end'
+        }
+
+    assert_equal parsed_body['data'].size, 0
+    assert_response 200
+  end
+
   ####################################
   # As Page
   ####################################
   test 'page should post create other' do
-    sign_in create_administrator(freetown)
+    sign_in administator
     user
     assert_difference 'GroupMembership.count', 1 do
       post :create,

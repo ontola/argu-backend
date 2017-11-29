@@ -77,6 +77,16 @@ class GroupsController < ServiceController
     @verified_tab ||= policy(resource_by_id || Group).verify_tab(tab)
   end
 
+  def tree_root_id
+    @tree_root_id ||=
+      case action_name
+      when 'new', 'create', 'index'
+        parent_edge&.root_id
+      else
+        resource_by_id&.page&.edge&.root_id
+      end
+  end
+
   def update_respond_failure_html(resource)
     render 'settings',
            locals: {

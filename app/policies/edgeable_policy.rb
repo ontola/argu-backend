@@ -19,27 +19,24 @@ class EdgeablePolicy < RestrictivePolicy
 
   delegate :edge, to: :record
   delegate :persisted_edge, to: :edge
-  attr_accessor :outside_tree
+  attr_reader :grant_tree
 
   def initialize(context, record)
     super
     raise('No edge available in policy') unless edge
+    @grant_tree = context.grant_tree_for(edge)
   end
 
   def has_expired_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.expired?(persisted_edge) : edge.has_expired_ancestors?
+    grant_tree.expired?(persisted_edge)
   end
 
   def has_trashed_ancestors?
-    context.within_tree?(persisted_edge, outside_tree) ? context.trashed?(persisted_edge) : edge.has_trashed_ancestors?
+    grant_tree.trashed?(persisted_edge)
   end
 
   def has_unpublished_ancestors?
-    if context.within_tree?(persisted_edge, outside_tree)
-      context.unpublished?(persisted_edge)
-    else
-      edge.has_unpublished_ancestors?
-    end
+    grant_tree.unpublished?(persisted_edge)
   end
 
   def permitted_attributes

@@ -145,10 +145,15 @@ class ApplicationController < ActionController::Base
   # {Forum.first_public}.
   def preferred_forum(profile = nil)
     profile ||= current_profile
-    @_preferred_forum ||= [current_forum, profile.last_forum, profile.preferred_forum, Forum.first_public]
-                            .compact
-                            .uniq
-                            .find { |forum| policy(forum, outside_tree: true).show? }
+    @_preferred_forum ||=
+      [current_forum, profile.last_forum, profile.preferred_forum, Forum.first_public]
+        .compact
+        .uniq
+        .find do |forum|
+        user_context.with_root_id(forum.edge.parent_id) do
+          policy(forum).show?
+        end
+      end
   end
 
   # @private

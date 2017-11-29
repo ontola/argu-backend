@@ -46,7 +46,12 @@ class PolicyTest < ActiveSupport::TestCase
   private
 
   def policy(subject, user)
-    self.class.name.gsub('Test', '').constantize.new(UserContext.new(user, user.profile, {}), subject)
+    self
+      .class
+      .name
+      .gsub('Test', '')
+      .constantize
+      .new(UserContext.new(user, user.profile, {}, GrantTree::ANY_ROOT), subject)
   end
 
   def reset_grants(subject, user_type)

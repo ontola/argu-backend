@@ -4,7 +4,9 @@ module Users
   class FeedController < ::FeedController
     private
 
-    def authenticated_tree; end
+    def tree_root_id
+      GrantTree::ANY_ROOT
+    end
 
     def feed
       Activity.feed_for_profile(authenticated_resource.profile)

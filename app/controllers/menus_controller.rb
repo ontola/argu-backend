@@ -6,10 +6,6 @@ class MenusController < ParentableController
 
   private
 
-  def authenticated_tree
-    parent_resource.try(:edge)&.self_and_ancestors
-  end
-
   def authorize_action
     skip_verify_policy_scoped(true)
     if parent_resource.present?
@@ -46,4 +42,8 @@ class MenusController < ParentableController
   end
 
   def resource_by_id_parent; end
+
+  def tree_root_id
+    parent_resource.try(:edge)&.root_id
+  end
 end

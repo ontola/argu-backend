@@ -26,6 +26,10 @@ class NotificationPolicy < RestrictivePolicy
     !user.guest?
   end
 
+  def show?
+    record.user == user
+  end
+
   def create?
     staff?
   end

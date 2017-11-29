@@ -64,9 +64,9 @@ class ForumsController < EdgeableController
 
   private
 
-  def authenticated_tree
-    return if action_name == 'index'
-    super
+  def tree_root_id
+    return super unless %w[discover index].include?(action_name)
+    GrantTree::ANY_ROOT
   end
 
   def authorize_action

@@ -17,16 +17,6 @@ class AuthorizedController < ApplicationController
   before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_edge, :authenticated_resource, :collect_banners, :user_context
 
-  # @private
-  def user_context
-    @_uc ||= UserContext.new(
-      current_user,
-      current_profile,
-      doorkeeper_scopes,
-      @_error_mode ? nil : authenticated_tree
-    )
-  end
-
   private
 
   def add_errors_tab(notification)
@@ -61,9 +51,6 @@ class AuthorizedController < ApplicationController
         resource_by_id
       end
   end
-
-  # The scope of the item used for authorization
-  def authenticated_tree; end
 
   def check_if_registered
     return unless current_user.guest?
@@ -147,6 +134,10 @@ class AuthorizedController < ApplicationController
   def _route?
     !%i[new create].include? params[:action]
   end
+
+  # The scope of the item used for authorization
+  # @return [number] The id of the root edge.
+  def tree_root_id; end
 
   def verify_terms_accepted
     return if current_user.guest? || current_user.accepted_terms?

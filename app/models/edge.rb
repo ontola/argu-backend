@@ -120,6 +120,10 @@ class Edge < ApplicationRecord
     owner.try(:content) || owner.try(:body)
   end
 
+  def expired?
+    expires_at? && expires_at < Time.current
+  end
+
   def iri
     RDF::URI(expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", **iri_opts))
   end
@@ -223,7 +227,7 @@ class Edge < ApplicationRecord
   end
 
   def is_trashed?
-    @is_trashed ||= trashed_at.present?
+    @is_trashed ||= trashed_at && trashed_at <= Time.current
   end
   alias is_trashed is_trashed?
 
@@ -263,7 +267,8 @@ class Edge < ApplicationRecord
   end
 
   def root_id
-    @root_id ||= path.split('.').first.to_i
+    return @root_id if @root_id.present?
+    @root_id ||= path&.split('.')&.first&.to_i || persisted_edge.root_id
   end
 
   def trash

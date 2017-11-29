@@ -37,4 +37,8 @@ class BannersController < ServiceController
   def update_respond_failure_html(resource)
     render_settings(:edit, resource, resource.forum)
   end
+
+  def tree_root_id
+    parent_edge&.root_id
+  end
 end

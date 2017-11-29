@@ -55,5 +55,12 @@ RSpec.describe 'Pages', type: :request do
       trash untrash new_unauthorized new_non_existing create_non_existing
       create_unauthorized index_non_existing index_unauthorized
     ]
+    context 'user pages' do
+      let(:index_path) { pages_user_path(authorized_user) }
+      let(:non_existing_index_path) { pages_user_path(-1) }
+      let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
+      let(:expect_get_index_guest_serializer) { expect(response.code).to eq('401') }
+      it_behaves_like 'get index'
+    end
   end
 end

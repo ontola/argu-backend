@@ -13,7 +13,9 @@ module EdgeTree
 
       def move
         @forum = Forum.find permit_params[:forum_id]
-        authorize @forum, :update?, outside_tree: true
+        user_context.with_root_id(@forum.edge.parent_id) do
+          authorize @forum, :update?
+        end
         moved = false
         authenticated_resource.with_lock do
           moved = authenticated_resource.move_to @forum, *move_options

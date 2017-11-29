@@ -22,4 +22,8 @@ class DraftsController < ApplicationController
   def show_params
     params.permit(:page)
   end
+
+  def tree_root_id
+    GrantTree::ANY_ROOT
+  end
 end

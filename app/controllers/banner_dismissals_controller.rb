@@ -28,4 +28,8 @@ class BannerDismissalsController < AuthorizedController
   end
 
   def resource_by_id; end
+
+  def tree_root_id
+    authenticated_resource&.banner&.forum&.edge&.root_id
+  end
 end

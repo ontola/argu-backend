@@ -26,8 +26,8 @@ class FeedController < AuthorizedController
     @resource ||= parent_resource
   end
 
-  def authenticated_tree
-    @_tree ||= authenticated_edge&.self_and_ancestors
+  def tree_root_id
+    @tree_root_id ||= authenticated_edge&.root_id
   end
 
   def collect_banners; end

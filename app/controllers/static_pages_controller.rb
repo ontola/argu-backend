@@ -103,20 +103,16 @@ class StaticPagesController < ApplicationController
     render :token
   end
 
-  def user_context
-    @_uc ||= UserContext.new(
-      current_user,
-      current_profile,
-      doorkeeper_scopes,
-      nil
-    )
-  end
-
   private
 
   def complete_feed_param; end
 
   def default_forum_path
     preferred_forum
+  end
+
+  def tree_root_id
+    return super unless action_name == 'home'
+    GrantTree::ANY_ROOT
   end
 end
