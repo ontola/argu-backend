@@ -63,7 +63,7 @@ class MotionsController < EdgeableController
         resource
           .arguments
           .show_trashed(show_trashed?)
-          .includes(edge: :votes, top_comment: :edge)
+          .includes(:top_comment, edge: :votes)
       ),
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]

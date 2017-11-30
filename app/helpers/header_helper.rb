@@ -69,7 +69,7 @@ module HeaderHelper
     items = []
     Forum
       .public_forums
-      .includes(:default_profile_photo, :shortname)
+      .includes(:shortname)
       .select { |f| suggested_forums.include?(f.shortname.shortname) }
       .first(limit)
       .each do |forum|

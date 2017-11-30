@@ -86,10 +86,13 @@ class Profile < ApplicationRecord
   end
 
   def granted_edges(owner_type: nil, role: nil)
+    @granted_edges ||= {}
+    @granted_edges[owner_type] ||= {}
+    return @granted_edges[owner_type][role] if @granted_edges[owner_type].key?(role)
     scope = granted_edges_scope
     scope = scope.where(owner_type: owner_type) if owner_type.present?
     scope = scope.where(grants: {role: Grant.roles[role]}) if role.present?
-    scope
+    @granted_edges[owner_type][role] = scope
   end
 
   def granted_records(owner_type: nil, role: nil)

@@ -18,7 +18,7 @@ module Commentable
         Edge
           .joins("LEFT JOIN comments ON edges.owner_id = comments.id AND edges.owner_type = 'Comment'")
           .where(parent_id: edge.id, owner_type: 'Comment', comments: {parent_id: nil})
-          .includes(:parent, owner: {creator: Profile.includes_for_profileable})
+          .includes(owner: {creator: Profile.includes_for_profileable})
           .order(order)
     end
 

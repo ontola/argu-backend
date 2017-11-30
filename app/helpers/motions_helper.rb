@@ -55,7 +55,7 @@ module MotionsHelper
   end
 
   def motion_vote_arguments(motion)
-    motion.edge.active_arguments.map do |argument|
+    motion.edge.active_arguments.includes(edge: :parent).map do |argument|
       {
         id: argument.id,
         body: argument.description,

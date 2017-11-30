@@ -6,6 +6,7 @@ module VotesHelper
                     Edge
                       .where_owner('Vote', creator: current_profile)
                       .where(parent_id: voteable_ids)
+                      .includes(owner: :creator)
                       .eager_load!
                   else
                     Edge.where_owner('Vote', creator: current_profile)
