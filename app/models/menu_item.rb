@@ -31,7 +31,7 @@ class MenuItem
                 else
                   '#'
                 end
-    RDF::IRI.new "#{parent.iri}#{seperator}#{tag}"
+    RDF::URI("#{parent.iri}#{seperator}#{tag}")
   end
   alias id iri
 end

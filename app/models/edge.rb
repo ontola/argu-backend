@@ -119,7 +119,7 @@ class Edge < ApplicationRecord
   end
 
   def iri
-    RDF::IRI.new expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", **iri_opts)
+    RDF::URI(expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", **iri_opts))
   end
 
   def iri_opts

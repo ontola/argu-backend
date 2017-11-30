@@ -5,8 +5,8 @@ module ActiveModelSerializers
     class N3
       class Triple
         def initialize(subject, predicate, object)
-          @subject = RDF::IRI.new subject
-          @predicate = RDF::IRI.new predicate
+          @subject = RDF::URI(subject)
+          @predicate = RDF::URI(predicate)
           @object =
             if object.is_a?(RDF::Resource)
               object

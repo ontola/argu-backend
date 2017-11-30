@@ -22,7 +22,7 @@ class Follow < ApplicationRecord
   end
 
   def unsubscribe_iri
-    RDF::IRI.new expand_uri_template('follows_unsubscribe_iri', id: id)
+    RDF::URI(expand_uri_template('follows_unsubscribe_iri', id: id))
   end
 
   private

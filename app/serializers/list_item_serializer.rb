@@ -2,6 +2,6 @@
 
 class ListItemSerializer < BaseSerializer
   def type
-    RDF::URI.new object.item_type
+    RDF::URI(object.item_type)
   end
 end

@@ -49,7 +49,7 @@ class Page < Edgeable::Base
   end
 
   def iri
-    RDF::IRI.new expand_uri_template("#{model_name.route_key}_iri", id: id)
+    RDF::URI(expand_uri_template("#{model_name.route_key}_iri", id: id))
   end
 
   def publisher

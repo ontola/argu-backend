@@ -54,7 +54,7 @@ class Notification < ApplicationRecord
       else
         url
       end
-    RDF::IRI.new href
+    RDF::URI(href)
   end
 
   def image

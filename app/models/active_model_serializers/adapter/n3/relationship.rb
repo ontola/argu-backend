@@ -13,7 +13,7 @@ module ActiveModelSerializers
             Triple.new(
               parent_serializer.id,
               association.options[:predicate],
-              RDF::IRI.new(relationship[:id])
+              RDF::URI(relationship[:id])
             )
           end
         end

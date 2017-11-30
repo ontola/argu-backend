@@ -19,7 +19,7 @@ class NotificationActions < ActionList
     entry_point_item(
       :read,
       image: 'fa-check',
-      url: RDF::IRI.new(notification_url(resource, type: :infinite)),
+      url: RDF::URI(notification_url(resource, type: :infinite)),
       http_method: :put
     )
   end

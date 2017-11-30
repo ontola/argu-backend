@@ -15,7 +15,7 @@ class MenuList
   alias current_user user_context
 
   def iri
-    RDF::IRI.new expand_uri_template('menu_lists_iri', parent_iri: resource.iri, path_only: true)
+    RDF::URI(expand_uri_template('menu_lists_iri', parent_iri: resource.iri, path_only: true))
   end
 
   def self.has_menus(menus)

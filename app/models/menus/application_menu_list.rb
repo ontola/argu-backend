@@ -6,7 +6,7 @@ class ApplicationMenuList < MenuList
   has_menus %i[organizations info user]
 
   def iri
-    RDF::IRI.new expand_uri_template('menus_iri')
+    RDF::URI(expand_uri_template('menus_iri'))
   end
 
   def info_menu
