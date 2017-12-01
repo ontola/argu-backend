@@ -254,12 +254,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal holland.edge.reload.places.first.country_code, 'NL'
   end
 
-  test 'administrator should not show statistics yet' do
+  test 'administrator should show statistics' do
     sign_in create_administrator(holland)
 
     get statistics_forum_path(holland)
-    assert assigns(:forum)
-    assert_response 403
+    assert_response 200
   end
 
   ####################################

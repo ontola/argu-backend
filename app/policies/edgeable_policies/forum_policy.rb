@@ -52,10 +52,6 @@ class ForumPolicy < EdgeablePolicy
     update?
   end
 
-  def statistics?
-    staff?
-  end
-
   def update?
     rule is_super_admin?, super
   end

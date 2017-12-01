@@ -36,7 +36,7 @@ class StatisticsController < EdgeTreeController
   private
 
   def authorize_action
-    authorize parent_resource, :statistics?
+    authorize parent_resource.owner, :statistics?
   end
 
   def contribution_keys
