@@ -267,6 +267,13 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.index ["visibility"], name: "index_forums_on_visibility"
   end
 
+  create_table "grant_resets", force: :cascade do |t|
+    t.integer "edge_id", null: false
+    t.string "resource_type", null: false
+    t.string "action", null: false
+    t.index ["edge_id", "resource_type", "action"], name: "index_grant_resets_on_edge_id_and_resource_type_and_action", unique: true
+  end
+
   create_table "grant_sets", force: :cascade do |t|
     t.string "title"
     t.integer "page_id"
@@ -761,6 +768,7 @@ ActiveRecord::Schema.define(version: 20180104161506) do
   add_foreign_key "forums", "groups", column: "default_decision_group_id"
   add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
+  add_foreign_key "grant_resets", "edges"
   add_foreign_key "grant_sets", "pages"
   add_foreign_key "grant_sets_permitted_actions", "grant_sets"
   add_foreign_key "grant_sets_permitted_actions", "permitted_actions"

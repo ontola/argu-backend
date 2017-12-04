@@ -30,4 +30,12 @@ class GrantSet < ApplicationRecord
   def display_name
     title
   end
+
+  def self.for_one_action(resource_type, action)
+    title = "#{resource_type.underscore}_#{action}"
+    find_or_initialize_by(title: title) do |grant_set|
+      grant_set.permitted_actions << PermittedAction.find_by!(title: title)
+      grant_set.save!(validate: false)
+    end
+  end
 end

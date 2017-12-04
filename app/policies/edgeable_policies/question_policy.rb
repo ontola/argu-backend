@@ -8,7 +8,10 @@ class QuestionPolicy < EdgeablePolicy
                            remove_cover_photo cover_photo_attribution]
     end
     attributes.concat %i[include_motions f_convert] if staff?
-    attributes.concat %i[pinned require_location default_sorting] if moderator? || administrator? || staff?
+    if moderator? || administrator? || staff?
+      attributes.concat %i[pinned require_location default_sorting reset_create_motion]
+      attributes.concat [create_motion_group_ids: []]
+    end
     append_default_photo_params(attributes)
     append_attachment_params(attributes)
     attributes

@@ -409,3 +409,15 @@ label.inline {
     width: 100%;
   }
 }
+
+.inline-checkboxes {
+  padding-bottom: 1em;
+  ol {
+    width: 70%;
+    display: inline-block;
+  }
+  .choice label {
+    width: 100%;
+    padding: 0;
+  }
+}

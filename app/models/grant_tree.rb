@@ -58,6 +58,16 @@ class GrantTree
         .to_a
   end
 
+  # All grant_resets available for the root
+  # @return [Array<GrantReset>] An array of all grant_resets in the edge tree branch
+  def grant_resets_in_scope
+    @grant_resets_in_scope ||=
+      GrantReset
+        .joins(:edge)
+        .where('edges.path <@ ?', tree_root_id.to_s)
+        .to_a
+  end
+
   def grant_sets(edge, group_ids: [])
     find_or_cache_node(edge).grant_sets
       .slice(*group_ids)

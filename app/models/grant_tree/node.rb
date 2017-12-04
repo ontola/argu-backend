@@ -16,6 +16,9 @@ class GrantTree
       self.grant_tree = grant_tree
       self.permitted_actions = parent.present? ? parent.permitted_actions.deep_dup : {}
       self.grant_sets = parent.present? ? parent.grant_sets.deep_dup : {}
+      grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
+        permitted_actions[grant_reset.resource_type][grant_reset.action] = {}
+      end
       grant_tree
         .grants_in_scope
         .select { |grant| grant.edge.path == edge.path }

@@ -11,6 +11,7 @@ class Question < Edgeable::Content
   include Timelineable
   include Photoable
   include Motionable
+  include CustomGrants
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -34,6 +35,8 @@ class Question < Edgeable::Content
 
   enum default_sorting: {popular: 0, created_at: 1, updated_at: 2}
   attr_accessor :include_motions
+
+  custom_grants_for :motions, :create
 
   # Might not be a good idea
   def creator

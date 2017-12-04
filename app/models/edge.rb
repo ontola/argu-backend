@@ -37,6 +37,7 @@ class Edge < ApplicationRecord
            foreign_key: :followable_id,
            dependent: :destroy
   has_many :grants, dependent: :destroy
+  has_many :grant_resets, inverse_of: :edge, dependent: :destroy
   has_many :groups, through: :grants
   has_many :group_memberships, -> { active }, through: :groups
   has_many :publications,

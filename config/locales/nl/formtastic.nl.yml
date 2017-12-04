@@ -55,6 +55,7 @@ nl:
       time_zone: "Tijdzone"
       username: "Gebruikersnaam"
       visibility: "Zichtbaarheid"
+      create_motion_group_ids: "Wie mogen ideeën plaatsen?"
       notifications:
         follows: "Items die ik volg"
         memberships: "Mijn forums"
