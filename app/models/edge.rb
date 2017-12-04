@@ -217,7 +217,7 @@ class Edge < ApplicationRecord
   end
 
   def is_public?
-    granted_groups(:member).pluck(:id).include?(-1)
+    granted_groups('participator').pluck(:id).include?(-1)
   end
 
   def is_trashed?
