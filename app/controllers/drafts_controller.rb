@@ -4,6 +4,7 @@ class DraftsController < ApplicationController
   def index
     @user = User.find_via_shortname! params[:id]
     authorize @user, :edit?
+    skip_verify_policy_scoped(true)
 
     blog_posts = BlogPost.where(creator_id: @user.managed_profile_ids).unpublished.untrashed
     motions = Motion.where(creator_id: @user.managed_profile_ids).unpublished.untrashed
