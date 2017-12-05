@@ -31,6 +31,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            :with_votes,
            parent: freetown.edge)
   end
+  let(:cover_photo) { create(:image_object, about: motion, used_as: :cover_photo) }
   let(:question_motion) do
     create(:motion,
            :with_arguments,
@@ -61,6 +62,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
   test 'staff should post convert motion' do
     sign_in staff
     motion_blog_post
+    cover_photo
 
     edge = motion.edge
     vote_count = motion.default_vote_event.edge.children.where(owner_type: 'Vote').count
@@ -68,7 +70,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            'no votes to test'
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0],
+                        ['MediaObject.count', 0]]) do
       post edge_conversions_path(motion.edge),
            params: {
              conversion: {

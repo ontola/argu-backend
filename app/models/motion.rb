@@ -28,7 +28,7 @@ class Motion < Edgeable::Content
 
   before_save :cap_title
 
-  convertible questions: %i[activities blog_posts]
+  convertible questions: %i[activities blog_posts media_objects]
   counter_cache true
   paginates_per 30
   parentable :question, :project, :forum

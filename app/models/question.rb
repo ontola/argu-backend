@@ -21,7 +21,7 @@ class Question < Edgeable::Content
 
   with_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
 
-  convertible motions: %i[activities blog_posts]
+  convertible motions: %i[activities blog_posts media_objects]
   counter_cache true
   parentable :project, :forum
 
