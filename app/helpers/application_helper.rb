@@ -86,7 +86,7 @@ module ApplicationHelper
   end
 
   def remote_if_modern
-    {remote: browser.modern?, turbolinks: 'false'}
+    {remote: browser.modern?, turbolinks: false_unless_iframe}
   end
 
   # Used in forms for the 'r' system

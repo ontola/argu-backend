@@ -42,7 +42,12 @@ module ForumsHelper
     pub_forum_items = public_forum_items(5)
 
     items.concat(pub_forum_items - profile_favorite_items) if items.length < pub_forum_items.length + 1
-    items << link_item(t('forums.show_open'), discover_forums_path, data: {turbolinks: 'false'}, fa: 'compass')
+    items << link_item(
+      t('forums.show_open'),
+      discover_forums_path,
+      data: {turbolinks: false_unless_iframe},
+      fa: 'compass'
+    )
   end
 
   def forum_title_dropdown_items(resource)
