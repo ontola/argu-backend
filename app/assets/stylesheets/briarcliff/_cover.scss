@@ -1,10 +1,6 @@
 @import "variables";
 @import "mixins";
 
-.cover, .cover-behind {
-  margin-top: -2em;
-}
-
 .cover {
   position: relative;
 }

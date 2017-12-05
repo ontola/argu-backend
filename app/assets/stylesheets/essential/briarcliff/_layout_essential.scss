@@ -89,5 +89,7 @@ body {
 }
 
 #staff_sign {
-  display: none;
+  position: fixed;
+  bottom: 0;
+  opacity: 0;
 }

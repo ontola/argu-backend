@@ -3,7 +3,7 @@
     .activity-header
       .profile-small
         =link_to dual_profile_url(activity.owner) do
-          img[src=activity.owner.default_profile_photo.url(:icon)]
+          img.profile-picture[src=activity.owner.default_profile_photo.url(:icon)]
         .info-block[style="padding: 0;"]
           p[style="margin-bottom: 0;"]
             =markdown_to_html(activity_string_for(activity, current_user, true))

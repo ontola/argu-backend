@@ -62,7 +62,8 @@ input[type="submit"].nav-search-button {
   margin: 0;
   overflow: hidden;
   clip: rect(1px, 1px, 1px, 1px);
-
+  visibility: visible;
+  
   &:focus {
     top: 0;
     z-index: 100;
