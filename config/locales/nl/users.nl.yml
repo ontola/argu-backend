@@ -53,7 +53,7 @@ nl:
     cap_reached: "We zitten vol"
     cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."
     authentications:
-      cant_decouple_note_provider: "Je kunt je %{provider} account alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."
+      cant_decouple_note_provider: "Je kunt je gekoppelde accounts alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."
       email_mismatch: "Email komt niet overeen met de huidige gebruiker, log eerst uit alvorens met een ander account in te loggen."
     connect:
       title: "Koppel accounts"

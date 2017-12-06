@@ -1,7 +1,10 @@
+label= t('users_oauth_coupled')
 - identities.each do |identity|
   .form-item
-    =image_tag "favicon_#{identity.provider}.svg", size: '64x64'
-    -if show_decouple
+    =image_tag "favicon_#{identity.provider}.svg", size: '64x64', alt: identity.provider.humanize
+    - if show_decouple
       =link_to t('users_oauth_remove'), user_identity_path(user_id: identity.user, id: identity.id),
              data: { confirm: 'Are you sure you want to remove this authentication option?', method: :delete,  turbolinks: 'false'},
              class: 'remove', rel: :nofollow
+- if !show_decouple
+  p= t('users.authentications.cant_decouple_note_provider')
