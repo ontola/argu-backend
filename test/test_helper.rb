@@ -129,6 +129,12 @@ module ActionDispatch
     include Argu::TestHelpers::TestMocks
     include SidekiqMinitestSupport
 
+    def follow_redirect!
+      raise "not a redirect! #{status} #{status_message}" unless redirect?
+      get(response.location)
+      status
+    end
+
     def get(path, *args, **opts)
       super(
         path,

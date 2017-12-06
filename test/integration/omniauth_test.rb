@@ -8,16 +8,9 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:guest_user) { GuestUser.new(session: session) }
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
-  let!(:user3) do
-    create(:user,
-           email: 'user3@argu.co',
-           first_name: 'User3',
-           last_name: 'Lastname3',
-           password: 'useruser',
-           password_confirmation: 'useruser',
-           confirmed_at: Time.current)
-  end
-  let(:user2) { create(:user) }
+  let(:user) { create(:user, password: 'useruser', password_confirmation: 'useruser') }
+  let(:secondary_email) { create(:email_address, user: user, email: 'secondary@argu.co') }
+  let(:other_user) { create(:user, password: 'useruser', password_confirmation: 'useruser') }
   let!(:user_fb_only) do
     create(:user,
            :no_password,
@@ -43,25 +36,106 @@ class OmniauthTest < ActionDispatch::IntegrationTest
            publisher: other_guest_user)
   end
 
-  test 'should sign up with facebook' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
-    Identity.any_instance.stubs(:email).returns('testuser@example.com')
-    Identity.any_instance.stubs(:name).returns('First Last')
-    Identity.any_instance.stubs(:image_url).returns('')
+  ####################################
+  # Guest existing identity
+  ####################################
+  test 'guest should sign in with facebook' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
+    visit_facebook_oauth_path(
+      expected_r: root_path,
+      favorites: 1,
+      votes: 1
+    )
+  end
 
-    get user_facebook_omniauth_authorize_path
-    assert_redirected_to user_facebook_omniauth_callback_path
+  test 'guest should sign in with facebook with r' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
 
-    guest_vote
-    other_guest_vote
+    visit_facebook_oauth_path(expected_r: user_path(user), favorites: 1, r: user_path(user), votes: 1)
+  end
 
-    assert_differences [['User.count', 1], ['Identity.count', 1], ['Vote.count', 1], ['Favorite.count', 1]] do
-      Sidekiq::Testing.inline! do
-        follow_redirect!
-        assert_redirected_to setup_users_path
-        assert_analytics_collected('registrations', 'create', 'facebook')
-      end
-    end
+  test 'guest should sign in with facebook with wrong r' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
+
+    visit_facebook_oauth_path(favorites: 1, votes: 1, r: 'https://evil.co', expected_r: root_path)
+  end
+
+  ####################################
+  # Guest existing email
+  ####################################
+  test 'guest should connect identity to existing user' do
+    facebook_mock(email: user.email)
+    visit_facebook_oauth_path(
+      identities: 1,
+      expected_r: proc { connect_user_path(user, token: identity_token(Identity.last)) }
+    )
+    follow_redirect!
+    assert_response 200
+
+    post connect_user_path(user, token: identity_token(Identity.last)),
+         params: {
+           user: {
+             password: 'useruser'
+           }
+         }
+    assert_redirected_to root_path
+
+    assert_equal user.reload.identities.first.access_token,
+                 'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
+                 'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\
+                 'Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD'
+  end
+
+  test 'guest should connect identity with secondary email to existing user' do
+    facebook_mock(email: secondary_email.email)
+    visit_facebook_oauth_path(
+      identities: 1,
+      expected_r: proc { connect_user_path(user, token: identity_token(Identity.last)) }
+    )
+    follow_redirect!
+    assert_response 200
+
+    post connect_user_path(user, token: identity_token(Identity.last)),
+         params: {
+           user: {
+             password: 'useruser'
+           }
+         }
+    assert_redirected_to root_path
+
+    assert_equal user.reload.identities.first.access_token,
+                 'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
+                 'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\
+                 'Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD'
+  end
+
+  test 'guest should not connect identity to other user' do
+    facebook_mock(email: user.email)
+    visit_facebook_oauth_path(
+      identities: 1,
+      expected_r: proc { connect_user_path(user, token: identity_token(Identity.last)) }
+    )
+    get connect_user_path(other_user, token: identity_token(Identity.last))
+    assert_response 200
+    post connect_user_path(other_user, token: identity_token(Identity.last)),
+         params: {
+           user: {
+             password: 'useruser'
+           }
+         }
+    assert_response 200
+    assert_equal user.reload.identities.count, 0
+    assert_equal other_user.reload.identities.count, 0
+  end
+
+  ####################################
+  # Guest new identity
+  ####################################
+  test 'guest should sign up with facebook' do
+    facebook_mock
+
+    visit_facebook_oauth_path(emails: 1, expected_r: setup_users_path, favorites: 1, identities: 1, users: 1, votes: 1)
+    assert_analytics_collected('registrations', 'create', 'facebook')
 
     assert User.last.confirmed?
     assert User.last.accepted_terms?
@@ -83,144 +157,134 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to setup_profiles_path
   end
 
-  test 'should not sign up with facebook without email' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: '')
-    cookies[:locale] = 'en'
+  test 'guest should sign up with facebook with valid r' do
+    facebook_mock
 
-    get user_facebook_omniauth_authorize_path(r: user_path(user2))
-    assert_redirected_to user_facebook_omniauth_callback_path(r: user_path(user2))
-
-    assert_differences [['User.count', 0], ['Identity.count', 0]] do
-      Sidekiq::Testing.inline! do
-        follow_redirect!
-        assert_redirected_to new_user_registration_path(r: user_path(user2))
-        assert_equal flash[:notice], 'We couldn\'t log you in with Facebook. Please try something else.'
-      end
-    end
-  end
-
-  test 'should sign up with facebook with wrong r' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
-    Identity.any_instance.stubs(:email).returns('testuser@example.com')
-    Identity.any_instance.stubs(:name).returns('First Last')
-    Identity.any_instance.stubs(:image_url).returns('')
-
-    get user_facebook_omniauth_authorize_path(r: 'https://evil.co')
-    assert_redirected_to user_facebook_omniauth_callback_path(r: 'https://evil.co')
-
-    assert_difference 'User.count', 1 do
-      follow_redirect!
-      assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'facebook')
-    end
-  end
-
-  test 'should sign in with facebook' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: 'user_fb_only@argu.co',
-                                                              uid: '111903726898977')
-    Identity.any_instance.stubs(:email).returns('user_fb_only@argu.co')
-    Identity.any_instance.stubs(:name).returns('First Last')
-    Identity.any_instance.stubs(:image_url).returns('')
-
-    get user_facebook_omniauth_authorize_path
-    assert_redirected_to user_facebook_omniauth_callback_path
-    guest_vote
-    other_guest_vote
-
-    assert_differences [['User.count', 0], ['Vote.count', 1], ['Favorite.count', 1]] do
-      Sidekiq::Testing.inline! do
-        follow_redirect!
-        assert_redirected_to root_path
-      end
-    end
-  end
-
-  test 'should sign in with facebook with r' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: 'user_fb_only@argu.co',
-                                                              uid: '111903726898977')
-    Identity.any_instance.stubs(:email).returns('user_fb_only@argu.co')
-    Identity.any_instance.stubs(:name).returns('First Last')
-    Identity.any_instance.stubs(:image_url).returns('')
-
-    get user_facebook_omniauth_authorize_path(r: user_path(user2))
-    assert_redirected_to user_facebook_omniauth_callback_path(r: user_path(user2))
-    follow_redirect!
-    assert_redirected_to user_path(user2)
-  end
-
-  test 'should connect to facebook' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(uid: '1119134323213',
-                                                              email: 'user3@argu.co',
-                                                              first_name: 'User3',
-                                                              last_name: 'Lastname3',
-                                                              middle_name: nil)
-    Identity.any_instance.stubs(:email).returns('user3@argu.co')
-    Identity.any_instance.stubs(:name).returns('User3 Lastname3')
-    Identity.any_instance.stubs(:image_url).returns('')
-
-    get user_facebook_omniauth_authorize_path
-    assert_redirected_to user_facebook_omniauth_callback_path
-    guest_vote
-    other_guest_vote
-
-    assert_differences [['User.count', 0], ['Vote.count', 1], ['Favorite.count', 1], ['Identity.count', 1]] do
-      Sidekiq::Testing.inline! do
-        follow_redirect!
-        assert_redirected_to connect_user_path(
-          user3,
-          token: identity_token(Identity.find_by(uid: 1_119_134_323_213))
-        )
-
-        follow_redirect!
-        assert_response 200
-
-        post connect_user_path(user3, token: identity_token(Identity.find_by(uid: 1_119_134_323_213))),
-             params: {
-               user: {
-                 password: 'useruser'
-               }
-             }
-        assert_redirected_to root_path
-      end
-    end
-
-    assert_equal user3.reload.identities.first.access_token,
-                 'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmSQ'\
-                 'qcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9br4'\
-                 'Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD'
-  end
-
-  test 'should not connect different accounts to facebook' do
-    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(uid: '1119134323213',
-                                                              email: 'user3@argu.co',
-                                                              first_name: 'User3',
-                                                              last_name: 'Lastname3',
-                                                              middle_name: nil)
-    Identity.any_instance.stubs(:email).returns('user3@argu.co')
-    Identity.any_instance.stubs(:name).returns('User3 Lastname3')
-    Identity.any_instance.stubs(:image_url).returns('')
-
-    get user_facebook_omniauth_authorize_path
-    assert_redirected_to user_facebook_omniauth_callback_path
-
-    follow_redirect!
-    assert_redirected_to connect_user_path(
-      user3,
-      token: identity_token(Identity.find_by(uid: 1_119_134_323_213))
+    visit_facebook_oauth_path(
+      emails: 1,
+      expected_r: user_path(user),
+      favorites: 1,
+      identities: 1,
+      r: user_path(user),
+      users: 1,
+      votes: 1
     )
+    assert_analytics_collected('registrations', 'create', 'facebook')
+  end
 
-    get connect_user_path(user2, token: identity_token(Identity.find_by(uid: 1_119_134_323_213)))
-    assert_response 200
+  test 'guest should sign up with facebook with wrong r' do
+    facebook_mock
 
-    post connect_user_path(user2,
-                           token: identity_token(Identity.find_by(uid: 1_119_134_323_213))),
-         params: {
-           user: {
-             password: 'useruser'
-           }
-         }
-    assert_response 200
-    assert_not_equal user2, assigns(:identity).user
-    assert_nil assigns(:identity).user
+    visit_facebook_oauth_path(
+      emails: 1,
+      expected_r: setup_users_path,
+      favorites: 1,
+      identities: 1,
+      r: 'https://evil.co',
+      users: 1,
+      votes: 1
+    )
+    assert_analytics_collected('registrations', 'create', 'facebook')
+  end
+
+  test 'guest should not sign up with facebook without email' do
+    facebook_mock(email: '')
+
+    visit_facebook_oauth_path(expected_r: new_user_registration_path)
+    assert_equal flash[:notice], 'We couldn\'t log you in with Facebook. Please try something else.'
+  end
+
+  ####################################
+  # User existing identity
+  ####################################
+  test 'user should not add existing identity' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
+    sign_in user
+    visit_facebook_oauth_path(expected_r: root_path)
+    assert_equal(
+      flash[:error],
+      'Email is different from the one you are currently using. Please log out before signing in with a different one.'
+    )
+  end
+
+  test 'user should not add own identity' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
+    sign_in user_fb_only
+    visit_facebook_oauth_path(expected_r: root_path)
+    assert_equal flash[:error], 'You are already authenticated.'
+  end
+
+  ####################################
+  # User existing email
+  ####################################
+  test 'user should add identity for own email' do
+    facebook_mock(email: user.email)
+    sign_in user
+    visit_facebook_oauth_path(expected_r: root_path, identities: 1)
+  end
+
+  test 'user should not add identity for other users email' do
+    facebook_mock(email: 'user_fb_only@argu.co')
+    sign_in user
+    visit_facebook_oauth_path(expected_r: root_path)
+    assert_equal(
+      flash[:error],
+      'Email is different from the one you are currently using. Please log out before signing in with a different one.'
+    )
+  end
+
+  ####################################
+  # User new identity
+  ####################################
+  test 'user should add identity' do
+    facebook_mock
+    sign_in user
+    visit_facebook_oauth_path(identities: 1, emails: 1, expected_r: root_path)
+  end
+
+  test 'user should not add identity without email' do
+    facebook_mock(email: '')
+    sign_in user
+    visit_facebook_oauth_path(expected_r: new_user_registration_path)
+    assert_equal flash[:notice], 'We couldn\'t log you in with Facebook. Please try something else.'
+  end
+
+  private
+
+  def facebook_mock(email: 'user@argu.co', first_name: 'Firstname', last_name: 'Lastname', uid: '1119134323213')
+    OmniAuth.config.mock_auth[:facebook] =
+      facebook_auth_hash(
+        uid: uid,
+        email: email,
+        first_name: first_name,
+        last_name: last_name,
+        middle_name: nil
+      )
+    facebook_me(fields: {email: email})
+    facebook_me(fields: {name: 'My Name'})
+  end
+
+  def visit_facebook_oauth_path(opts)
+    cookies[:locale] = 'en'
+    get user_facebook_omniauth_authorize_path(r: opts[:r])
+    assert_redirected_to user_facebook_omniauth_callback_path(r: opts[:r])
+
+    guest_vote
+    other_guest_vote
+
+    differences = [
+      ['EmailAddress.count', opts[:emails] || 0],
+      ['Favorite.count', opts[:favorites] || 0],
+      ['Identity.count', opts[:identities] || 0],
+      ['User.count', opts[:users] || 0],
+      ['Vote.count', opts[:votes] || 0]
+    ]
+
+    assert_differences(differences) do
+      Sidekiq::Testing.inline! do
+        follow_redirect!
+        assert_redirected_to opts[:expected_r]
+      end
+    end
   end
 end

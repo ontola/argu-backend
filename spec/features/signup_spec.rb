@@ -39,9 +39,8 @@ RSpec.feature 'Signup', type: :feature do
 
   scenario 'should register w/ oauth and connect account' do
     OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash
-    facebook_me('EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLu'\
-                'FEMDBNe7v7jUpRCmb4SmSQqcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5'\
-                'jvGZBE6ACZCZBmqkTewz65Deckyyf9br4Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD')
+    facebook_me
+    facebook_me(fields: {name: 'My Name'})
     u = create(:user, email: 'bpvjlwt_zuckersen_1467905538@tfbnw.net')
 
     visit motion_path(motion)

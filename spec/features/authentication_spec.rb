@@ -29,7 +29,7 @@ RSpec.feature 'Authentication', type: :feature do
       name: "#{user_fb_only.first_name} #{user_fb_only.last_name}"
     )
     OmniAuth.config.mock_auth[:facebook] = hash
-    facebook_me(hash.dig(:credentials, :token))
+    facebook_me(token: hash.dig(:credentials, :token))
   end
 
   describe 'login' do

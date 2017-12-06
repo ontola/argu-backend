@@ -59,17 +59,25 @@ module Argu
         )
       end
 
-      def facebook_me(token)
+      def facebook_me(token: nil, fields: {email: 'bpvjlwt_zuckersen_1467905538@tfbnw.net'})
+        token ||= 'EAANZAZBdAOGgUBADbu25EDEen6EXgLfTFGN28R6G9E0vgDQEsLuFEMDBNe7v7jUpRCmb4SmS'\
+                  'Qqcam37vnKszs80z28WBdJEiBHnHmZCwr3Fv33v1w5jvGZBE6ACZCZBmqkTewz65Deckyyf9b'\
+                  'r4Nsxz5dSZAQBJ8uqtFEEEj01ncwZDZD'
+        params = {
+          access_token: token,
+          fields: fields.keys.join(',')
+        }
+        if ENV['FACEBOOK_SECRET']
+          params[:appsecret_proof] =
+            OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), ENV['FACEBOOK_SECRET'], token)
+        end
         stub_request(
           :get,
-          "https://graph.facebook.com/me?access_token=#{token}"
+          "https://graph.facebook.com/me?#{params.to_param}"
         )
           .to_return(
             status: 200,
-            body: {
-              id: '102555400181774',
-              email: 'bpvjlwt_zuckersen_1467905538@tfbnw.net'
-            }.to_json
+            body: {id: '102555400181774'}.merge(fields).to_json
           )
       end
 
