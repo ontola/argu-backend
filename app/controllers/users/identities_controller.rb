@@ -30,8 +30,7 @@ class Users::IdentitiesController < AuthorizedController
     user.r = r_param
     schedule_redis_resource_worker(GuestUser.new(id: session.id), user, r_param)
     setup_favorites(user)
-
-    if authenticated_resource.email == user.email && user.valid_password?(params[:user][:password])
+    if connection_valid?(user)
       # Connect user to identity
       authenticated_resource.user = user
       if authenticated_resource.save
@@ -58,6 +57,11 @@ class Users::IdentitiesController < AuthorizedController
   end
 
   private
+
+  def connection_valid?(user)
+    user.email_addresses.where(email: authenticated_resource.email).exists? &&
+      user.valid_password?(params[:user][:password])
+  end
 
   def resource_id
     return super unless %w[connect connect!].include?(action_name)
