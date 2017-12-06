@@ -14,7 +14,7 @@ module Publishable
       end
 
       def email
-        me && me['email']
+        me(:email) && me(:email)['email']
       end
 
       def image_url
@@ -22,18 +22,19 @@ module Publishable
       end
 
       def name
-        me && me['name']
+        me(:name) && me(:name)['name']
       end
 
       def username
         nil
       end
 
-      def me
-        response = cached_response_for('fetch_object/me')
+      def me(*fields)
+        cache_key = "fetch_object/me?fields=#{fields.join(',')}"
+        response = cached_response_for(cache_key)
         if response.blank?
-          response = @_client.get_object('me')
-          cache_response('fetch_object/me', response)
+          response = @_client.get_object('me', fields: fields)
+          cache_response(cache_key, response)
         end
         response
       end
