@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     resources :direct_messages, path: :dm, only: [:new]
   end
   concern :destroyable do
-    delete '', action: :destroy, on: :member
+    delete '', action: :destroy, on: :member, as: :destroy
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
   concern :decisionable do
@@ -317,6 +317,7 @@ Rails.application.routes.draw do
       resources :announcements, except: :index
       resources :forums, only: %i[new create]
       resources :sources, only: %i[new create]
+      resources :users, only: [], concerns: %i[destroyable]
       mount Sidekiq::Web => '/sidekiq'
     end
   end

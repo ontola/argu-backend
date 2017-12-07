@@ -36,6 +36,11 @@ en:
         managers: 'Managers'
         setting: 'DB Settings'
         banners: 'Banners'
+    users:
+      delete:
+        destroy_content_label:
+          :true: "Destroy all content"
+          :false: "Anonimise all content"
   intro:
     initial:
       start_argu: "Start with argu"

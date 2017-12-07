@@ -140,8 +140,8 @@ module Common
     end
 
     def lookup_template(file)
-      if lookup_context.exists?("#{controller_name}/#{file}.html")
-        "#{controller_name}/#{file}.html"
+      if lookup_context.exists?("#{controller_path}/#{file}.html")
+        "#{controller_path}/#{file}.html"
       else
         "application/#{file}.html"
       end

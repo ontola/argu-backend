@@ -79,7 +79,7 @@ class UserPolicy < RestrictivePolicy
 
   def destroy?
     return if record.profile.grants.administrator.count.positive?
-    current_user?
+    current_user? || staff?
   end
 
   def current_user?

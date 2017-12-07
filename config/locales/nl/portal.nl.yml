@@ -37,6 +37,11 @@ nl:
         setting: 'DB Settings'
         managers: 'Beheerders'
         banners: "Banners"
+    users:
+      delete:
+        destroy_content_label:
+          :true: "Verwijder alle content"
+          :false: "Anonimiseer alle content"
   intro:
     initial:
       start_argu: "Begin met argu"

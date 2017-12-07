@@ -10,3 +10,5 @@
         - if resource.profileable.try(:is_staff?)
           span.role Staff
         p= resource.about
+        - if current_user.is_staff?
+          =link_to t('destroy'), delete_portal_user_path(resource.profileable), remote: true
