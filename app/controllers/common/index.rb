@@ -25,14 +25,11 @@ module Common
 
       # @!visibility public
       def index_respond_blocks_success(_, format)
-        format.json_api do
-          render json: index_response_association,
-                 include: include_index
-        end
-        format.n3 do
-          render n3: index_response_association,
-                 include: include_index
-        end
+        format.html { index_respond_success_html }
+        format.js { index_respond_success_js }
+        format.json { index_respond_success_json }
+        format.json_api { index_respond_success_json_api }
+        format.n3 { index_respond_success_n3 }
       end
 
       def index_response_association
@@ -40,6 +37,28 @@ module Common
           index_collection_association,
           collection_options
         )
+      end
+
+      def index_respond_success_html
+        raise NotImplementedError
+      end
+
+      def index_respond_success_js
+        raise NotImplementedError
+      end
+
+      def index_respond_success_json
+        raise NotImplementedError
+      end
+
+      def index_respond_success_json_api
+        render json: index_response_association,
+               include: include_index
+      end
+
+      def index_respond_success_n3
+        render n3: index_response_association,
+               include: include_index
       end
     end
   end

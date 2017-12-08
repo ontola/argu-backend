@@ -102,25 +102,17 @@ class NotificationsController < AuthorizedController
     [:members, views: [members: [operation: :target]]]
   end
 
-  def index_respond_blocks_success(_, format)
-    format.html { head 204 }
-    format.json do
-      if current_user.guest?
-        head 204
-      elsif params[:from_time].present?
-        fetch_more
-      else
-        refresh
-      end
-    end
-    format.json_api do
-      render json: index_response_association,
-             include: include_index
-    end
-    format.n3 do
-      render n3: index_response_association,
-             meta: meta,
-             include: include_index
+  def index_respond_success_html
+    head 204
+  end
+
+  def index_respond_success_json
+    if current_user.guest?
+      head 204
+    elsif params[:from_time].present?
+      fetch_more
+    else
+      refresh
     end
   end
 

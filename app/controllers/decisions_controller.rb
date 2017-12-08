@@ -31,12 +31,16 @@ class DecisionsController < EdgeTreeController
            }
   end
 
-  def index_respond_blocks_success(_, format)
-    format.html { render locals: {decisionable: parent_resource!} }
-    format.json { respond_with_200(parent_resource!.last_decision, :json) }
-    format.js { render 'show', locals: {decision: parent_resource!.last_decision} }
-    format.json_api { render json: index_response_association, include: include_index }
-    format.n3 { render json: index_response_association, include: include_index }
+  def index_respond_success_html
+    render locals: {decisionable: parent_resource!}
+  end
+
+  def index_respond_success_js
+    render 'show', locals: {decision: parent_resource!.last_decision}
+  end
+
+  def index_respond_success_json
+    respond_with_200(parent_resource!.last_decision, :json)
   end
 
   def parent_from_params(opts = params)

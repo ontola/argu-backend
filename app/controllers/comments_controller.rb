@@ -71,23 +71,14 @@ class CommentsController < EdgeTreeController
     }
   end
 
-  def index_respond_blocks_success(_, format)
-    format.json_api do
-      render json: index_response_association,
-             include: include_index
-    end
-    format.n3 do
-      render n3: index_response_association,
-             include: include_index
-    end
-    format.html do
-      @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
-      render locals: {comment: Comment.new}
-    end
-    format.js do
-      @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
-      render locals: {resource: parent_resource!}
-    end
+  def index_respond_success_html
+    @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
+    render locals: {comment: Comment.new}
+  end
+
+  def index_respond_success_js
+    @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
+    render locals: {resource: parent_resource!}
   end
 
   def new_resource_from_params

@@ -19,25 +19,20 @@ class VoteMatchesController < ServiceController
     nil
   end
 
-  def index_respond_blocks_success(_, format)
-    collection =
-      if parent_id_from_params(params).present?
-        parent_resource!.vote_match_collection(collection_options)
-      else
-        Collection.new(
-          association_class: VoteMatch,
-          user_context: user_context,
-          page: params[:page],
-          pagination: true
-        )
-      end
-    format.json_api do
-      render json: collection,
-             include: inc_nested_collection
-    end
-    format.n3 do
-      render n3: collection,
-             include: inc_nested_collection
+  def include_index
+    inc_nested_collection
+  end
+
+  def index_response_association
+    if parent_id_from_params(params).present?
+      parent_resource!.vote_match_collection(collection_options)
+    else
+      Collection.new(
+        association_class: VoteMatch,
+        user_context: user_context,
+        page: params[:page],
+        pagination: true
+      )
     end
   end
 
