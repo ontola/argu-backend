@@ -22,7 +22,7 @@ RSpec.describe 'Favorites', type: :request do
   subject { create(:favorite, user: staff, edge: holland.edge) }
   let(:request_format) { :html }
 
-  %i[html json_api n3].each do |format|
+  %i[html json_api nt].each do |format|
     context "as #{format}" do
       let(:request_format) { format }
       it_behaves_like 'post create', skip: %i[create_invalid]

@@ -12,8 +12,8 @@ class LogController < AuthorizedController
       format.json_api do
         respond_with_200(authenticated_resource!.activities, :json_api)
       end
-      format.n3 do
-        respond_with_200(authenticated_resource!.activities, :n3)
+      format.nt do
+        respond_with_200(authenticated_resource!.activities, :nt)
       end
     end
   end

@@ -46,7 +46,7 @@ RSpec.describe 'Sources', type: :request do
     let(:expect_get_new) { expect_not_found }
     let(:expect_unauthorized) { expect_not_found }
     it_behaves_like 'get new'
-    %i[html json_api n3].each do |format|
+    %i[html json_api nt].each do |format|
       context "as #{format}" do
         let(:request_format) { format }
         it_behaves_like 'post create'

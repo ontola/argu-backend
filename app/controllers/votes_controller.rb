@@ -10,7 +10,7 @@ class VotesController < EdgeTreeController
       format.html { redirect_to url_for(authenticated_resource.parent_model) }
       format.json { render 'create', location: authenticated_resource }
       format.json_api { render json: authenticated_resource, include: :upvoted_arguments }
-      format.n3 { render n3: authenticated_resource, include: :upvoted_arguments }
+      format.nt { render nt: authenticated_resource, include: :upvoted_arguments }
     end
   end
 
@@ -30,7 +30,7 @@ class VotesController < EdgeTreeController
                locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
       end
       format.json_api { respond_with_304(create_service.resource, :json_api) }
-      format.n3 { respond_with_304(create_service.resource, :n3) }
+      format.nt { respond_with_304(create_service.resource, :nt) }
       format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
       format.html do
         if params[:vote].try(:[], :r).present?

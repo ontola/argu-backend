@@ -213,9 +213,4 @@ class ApplicationController < ActionController::Base
   def after_sending_reset_password_instructions_path_for(_resource_name)
     password_reset_confirm_path
   end
-
-  ActionController::Renderers.add :n3 do |resource, options|
-    self.content_type = 'text/n3'
-    get_serializer(resource, options.merge(adapter: :n3_adapter)).adapter.triples
-  end
 end

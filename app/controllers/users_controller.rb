@@ -26,8 +26,8 @@ class UsersController < AuthorizedController
         render json: authenticated_resource,
                include: include_show
       end
-      format.n3 do
-        render n3: authenticated_resource,
+      format.nt do
+        render nt: authenticated_resource,
                include: include_show
       end
     end

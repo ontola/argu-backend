@@ -25,8 +25,8 @@ class ArgumentsController < EdgeTreeController
       format.json_api do
         render json: authenticated_resource, include: include_show
       end
-      format.n3 do
-        render n3: authenticated_resource, include: include_show
+      format.nt do
+        render nt: authenticated_resource, include: include_show
       end
     end
   end
@@ -52,7 +52,7 @@ class ArgumentsController < EdgeTreeController
     format.html { render text: 'Bad request', status: 400 }
     format.json { respond_with_400(resource, :json) }
     format.json_api { respond_with_400(resource, :json_api) }
-    format.n3 { respond_with_400(resource, :n3) }
+    format.nt { respond_with_400(resource, :nt) }
   end
 
   def prepare_view

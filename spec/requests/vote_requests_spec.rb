@@ -30,7 +30,7 @@ RSpec.describe 'Votes', type: :request do
 
   shared_examples_for 'show by parent' do
     let(:show_path) { url_for([subject.parent_model, :show, :vote, only_path: true]) }
-    %i[html json_api n3].each do |format|
+    %i[html json_api nt].each do |format|
       context "as #{format}" do
         let(:expect_get_show_unauthorized_json_api) { expect_not_found }
         let(:expect_get_show_unauthorized_html) { expect_not_found }

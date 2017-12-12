@@ -10,7 +10,7 @@ class NotificationsController < AuthorizedController
 
   def show
     respond_to do |format|
-      format.n3 { render n3: authenticated_resource, include: :operation }
+      format.nt { render nt: authenticated_resource, include: :operation }
       format.all { redirect_to url_for(authenticated_resource.activity.trackable) }
     end
   end
@@ -56,7 +56,7 @@ class NotificationsController < AuthorizedController
     format.js { update_respond_success_js(resource) }
     format.json { respond_with_204(resource, :json) }
     format.json_api { respond_with_204(resource, :json_api) }
-    format.n3 { render n3: resource, meta: meta }
+    format.nt { render nt: resource, meta: meta }
   end
 
   def update_respond_blocks_failure(_resource, format)
@@ -64,7 +64,7 @@ class NotificationsController < AuthorizedController
     format.js { head 400 }
     format.json { head 400 }
     format.json_api { head 400 }
-    format.n3 { head 400 }
+    format.nt { head 400 }
   end
 
   private
@@ -132,17 +132,17 @@ class NotificationsController < AuthorizedController
     m = []
     m <<
       if index_response_association.parent_view_iri.present?
-        ActiveModelSerializers::Adapter::N3::Triple.new(
+        [
           RDF::URI(index_response_association.parent_view_iri),
           NS::ARGU[:views],
           RDF::URI(index_response_association.iri)
-        )
+        ]
       else
-        ActiveModelSerializers::Adapter::N3::Triple.new(
+        [
           RDF::URI(index_response_association.iri),
           NS::ARGU[:unreadCount],
           unread_notification_count
-        )
+        ]
       end
     m
   end

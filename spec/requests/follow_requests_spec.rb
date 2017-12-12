@@ -23,7 +23,7 @@ RSpec.describe 'Follows', type: :request do
 
   subject { create(:follow, follower: staff, followable: freetown.edge) }
 
-  %i[html json_api n3].each do |format|
+  %i[html json_api nt].each do |format|
     context "as #{format}" do
       let(:request_format) { format }
       it_behaves_like 'post create', skip: %i[invalid]

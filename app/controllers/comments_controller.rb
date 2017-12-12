@@ -16,7 +16,7 @@ class CommentsController < EdgeTreeController
     respond_to do |format|
       format.html { redirect_to redirect_model_success(authenticated_resource) }
       format.json_api { respond_with_200(authenticated_resource, :json_api) }
-      format.n3 { respond_with_200(authenticated_resource, :n3) }
+      format.nt { respond_with_200(authenticated_resource, :nt) }
     end
   end
 

@@ -8,7 +8,7 @@ class LinkedRecordsController < AuthorizedController
       respond_to do |format|
         format.html { redirect_to url_for(authenticated_resource!.record_iri) }
         format.json_api { redirect_to url_for(authenticated_resource!) }
-        format.n3 { redirect_to url_for(authenticated_resource!) }
+        format.nt { redirect_to url_for(authenticated_resource!) }
       end
     else
       respond_to do |format|
@@ -18,8 +18,8 @@ class LinkedRecordsController < AuthorizedController
           render json: authenticated_resource!,
                  include: include_show
         end
-        format.n3 do
-          render n3: authenticated_resource!,
+        format.nt do
+          render nt: authenticated_resource!,
                  include: include_show
         end
       end

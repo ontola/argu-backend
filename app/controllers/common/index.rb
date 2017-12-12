@@ -30,6 +30,7 @@ module Common
         format.json { index_respond_success_json }
         format.json_api { index_respond_success_json_api }
         format.n3 { index_respond_success_n3 }
+        format.nt { index_respond_success_nt }
       end
 
       def index_response_association
@@ -56,8 +57,8 @@ module Common
                include: include_index
       end
 
-      def index_respond_success_n3
-        render n3: index_response_association,
+      def index_respond_success_nt
+        render nt: index_response_association,
                include: include_index
       end
     end

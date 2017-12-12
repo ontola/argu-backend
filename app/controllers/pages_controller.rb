@@ -24,8 +24,8 @@ class PagesController < EdgeTreeController
         render json: @page,
                include: include_show
       end
-      format.n3 do
-        render n3: @page,
+      format.nt do
+        render nt: @page,
                include: include_show
       end
     end

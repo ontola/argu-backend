@@ -10,8 +10,8 @@ class MenusController < AuthorizedController
       format.json_api do
         render json: resource_by_id!, include: include_show
       end
-      format.n3 do
-        render n3: resource_by_id!, include: include_show
+      format.nt do
+        render nt: resource_by_id!, include: include_show
       end
     end
   end

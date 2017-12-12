@@ -13,7 +13,7 @@ class GroupMembershipsController < ServiceController
         redirect_to redirect_url
       end
       format.json_api { render json: authenticated_resource, include: include_show }
-      format.n3 { render n3: authenticated_resource, include: include_show }
+      format.nt { render nt: authenticated_resource, include: include_show }
     end
   end
 
@@ -60,7 +60,7 @@ class GroupMembershipsController < ServiceController
       end
     end
     format.json_api { respond_with_422(resource, :json_api) }
-    format.n3 { respond_with_422(resource, :n3) }
+    format.nt { respond_with_422(resource, :nt) }
   end
 
   alias create_service_parent parent_resource!

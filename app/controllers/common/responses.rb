@@ -23,6 +23,8 @@ module Common
         render json: resource
       when :n3
         render n3: resource
+      when :nt
+        render nt: resource
       else
         raise_unkown_format
       end
@@ -34,6 +36,8 @@ module Common
         render json: resource, status: :created, location: resource.iri.to_s
       when :n3
         render n3: resource, status: :created, location: resource.iri.to_s
+      when :nt
+        render nt: resource, status: :created, location: resource.iri.to_s
       when :js
         head :created
       else
@@ -43,7 +47,7 @@ module Common
 
     def respond_with_204(_, format)
       case format
-      when :json, :json_api, :n3
+      when :json, :json_api, :n3, :nt
         head :no_content
       else
         raise_unkown_format
@@ -65,6 +69,8 @@ module Common
         render json: resource.errors, status: :bad_request
       when :n3
         render n3: resource.errors, status: :bad_request
+      when :nt
+        render nt: resource.errors, status: :bad_request
       when :js
         head 400
       else
@@ -78,7 +84,7 @@ module Common
         render json_error(422, resource.errors)
       when :json_api
         render json_api_error(422, resource.errors)
-      when :n3
+      when :n3, :nt
         render json_api_error(422, resource.errors)
       else
         raise_unkown_format

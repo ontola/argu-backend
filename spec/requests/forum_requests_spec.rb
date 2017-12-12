@@ -13,7 +13,7 @@ RSpec.describe 'Forums', type: :request do
   let(:non_existing_edit_path) { settings_forum_path(-1) }
   let(:expect_get_show_guest_html) { expect_not_found }
   let(:expect_get_show_guest_json_api) { expect_not_found }
-  let(:expect_get_show_guest_n3) { expect_not_found }
+  let(:expect_get_show_guest_nt) { expect_not_found }
   let(:updated_resource_path) { settings_forum_path(subject, tab: :general) }
   let(:expect_unauthorized) { expect_not_found }
   let(:update_params) { {forum: {page_id: argu.id, name: 'name'}} }
@@ -41,7 +41,7 @@ RSpec.describe 'Forums', type: :request do
     let(:expect_post_create_guest_json_api) { expect_not_found }
     let(:expect_get_new) { expect_not_found }
     it_behaves_like 'get new'
-    %i[html json_api n3].each do |format|
+    %i[html json_api nt].each do |format|
       context "as #{format}" do
         let(:request_format) { format }
         it_behaves_like 'post create'

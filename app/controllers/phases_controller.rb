@@ -6,7 +6,7 @@ class PhasesController < EdgeTreeController
       format.html { render locals: {phase: authenticated_resource!} }
       format.json { respond_with_200(authenticated_resource!, :json) }
       format.json_api { respond_with_200(authenticated_resource!, :json_api) }
-      format.n3 { respond_with_200(authenticated_resource!, :n3) }
+      format.nt { respond_with_200(authenticated_resource!, :nt) }
       format.js { render locals: {phase: authenticated_resource!} }
     end
   end

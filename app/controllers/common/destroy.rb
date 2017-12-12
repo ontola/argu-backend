@@ -36,6 +36,7 @@ module Common
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
         format.n3 { respond_with_422(resource, :n3) }
+        format.nt { respond_with_422(resource, :nt) }
         format.js { destroy_respond_failure_js(resource) }
       end
 
@@ -45,6 +46,7 @@ module Common
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
         format.n3 { respond_with_204(resource, :n3) }
+        format.nt { respond_with_204(resource, :nt) }
         format.js { destroy_respond_success_js(resource) }
       end
 

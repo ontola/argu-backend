@@ -50,6 +50,7 @@ class ProfilesController < ApplicationController
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
         format.n3 { respond_with_204(resource, :n3) }
+        format.nt { respond_with_204(resource, :nt) }
       else
         format.html do
           render 'users/profiles/setup',
@@ -58,6 +59,7 @@ class ProfilesController < ApplicationController
         format.json { respond_with_422(@profile, :json) }
         format.json_api { respond_with_422(@profile, :json_api) }
         format.n3 { respond_with_422(@profile, :n3) }
+        format.nt { respond_with_422(@profile, :nt) }
       end
     end
   end

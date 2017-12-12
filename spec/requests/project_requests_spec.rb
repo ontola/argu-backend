@@ -12,6 +12,6 @@ RSpec.describe 'Projects', type: :request do
     let(:non_existing_index_path) { forum_projects_path('non_existing') }
     let(:non_existing_new_path) { new_forum_project_path('non_existing') }
 
-    it_behaves_like 'requests', skip: %i[json_api n3 index]
+    it_behaves_like 'requests', skip: %i[json_api nt index]
   end
 end

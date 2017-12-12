@@ -13,7 +13,7 @@ RSpec.shared_examples_for 'requests' do |opts = {skip: []}|
     it_behaves_like 'get shift', opts if opts[:move]
   end
 
-  (%i[html json_api n3] - opts[:skip]).each do |format|
+  (%i[html json_api nt] - opts[:skip]).each do |format|
     context "as #{format}" do
       let(:request_format) { format }
       it_behaves_like 'get show', opts unless excluded?(opts, format, :show)

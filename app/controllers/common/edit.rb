@@ -19,6 +19,7 @@ module Common
         format.json { respond_with_200(resource, :json) }
         format.json_api { respond_with_200(resource, :json_api) }
         format.n3 { respond_with_200(resource, :n3) }
+        format.nt { respond_with_200(resource, :nt) }
         format.js { edit_respond_success_js(resource) }
       end
 

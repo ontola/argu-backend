@@ -51,12 +51,12 @@ class RegistrationsController < Devise::RegistrationsController
         end
         format.json { respond_with_204(@user, :json) }
         format.json_api { respond_with_204(@user, :json_api) }
-        format.n3 { respond_with_204(@user, :n3) }
+        format.nt { respond_with_204(@user, :nt) }
       else
         format.html { render action: 'cancel' }
         format.json { respond_with_422(@user, :json) }
         format.json_api { respond_with_422(@user, :json_api) }
-        format.n3 { respond_with_422(@user, :n3) }
+        format.nt { respond_with_422(@user, :nt) }
       end
     end
   end

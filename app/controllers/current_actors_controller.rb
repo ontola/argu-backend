@@ -6,6 +6,7 @@ class CurrentActorsController < ApplicationController
       format.json { respond_with_200(current_actor, :json) }
       format.json_api { render json: current_actor, include: include_show }
       format.n3 { render n3: current_actor, include: include_show }
+      format.nt { render nt: current_actor, include: include_show }
     end
   end
 

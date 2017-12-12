@@ -21,7 +21,7 @@ RSpec.describe 'Conversions', type: :request do
     let(:create_params) { {conversion: {klass: 'questions'}} }
     let(:create_differences) { [['Question.count', 1], ['Motion.count', -1], ['Activity.loggings.count', 1]] }
     it_behaves_like 'get new'
-    %i[html json_api n3].each do |format|
+    %i[html json_api nt].each do |format|
       context "as #{format}" do
         let(:request_format) { format }
         it_behaves_like 'post create'
@@ -41,7 +41,7 @@ RSpec.describe 'Conversions', type: :request do
       ]
     end
     it_behaves_like 'get new'
-    %i[html json_api n3].each do |format|
+    %i[html json_api nt].each do |format|
       context "as #{format}" do
         let(:request_format) { format }
         it_behaves_like 'post create'
