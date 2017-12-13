@@ -9,26 +9,8 @@ class PagesController < EdgeTreeController
                 .includes(:shortname, :default_cover_photo, :default_profile_photo, :edge)
                 .joins(:edge)
                 .order('edges.follows_count DESC')
-    @profile = @page.profile
-    authorize @page, :show?
-
-    respond_to do |format|
-      format.html do
-        if (/[a-zA-Z]/i =~ params[:id]).nil?
-          redirect_to url_for(@page), status: 307
-        else
-          render 'show'
-        end
-      end
-      format.json_api do
-        render json: @page,
-               include: include_show
-      end
-      format.nt do
-        render nt: @page,
-               include: include_show
-      end
-    end
+    @profile = authenticated_resource.profile
+    show_handler_success(authenticated_resource)
   end
 
   def new
@@ -199,6 +181,14 @@ class PagesController < EdgeTreeController
   def redirect_model_success(resource)
     return new_page_path unless resource.persisted?
     settings_page_path(resource, tab: tab)
+  end
+
+  def show_respond_success_html(resource)
+    if (/[a-zA-Z]/i =~ params[:id]).nil?
+      redirect_to url_for(resource), status: 307
+    else
+      render 'show'
+    end
   end
 
   def tab!

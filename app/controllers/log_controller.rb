@@ -3,21 +3,6 @@
 class LogController < AuthorizedController
   include NestedResourceHelper
 
-  def show
-    respond_to do |format|
-      format.html { render 'log', locals: {resource: authenticated_resource!} }
-      format.json do
-        respond_with_200(authenticated_resource!.activities, :json)
-      end
-      format.json_api do
-        respond_with_200(authenticated_resource!.activities, :json_api)
-      end
-      format.nt do
-        respond_with_200(authenticated_resource!.activities, :nt)
-      end
-    end
-  end
-
   private
 
   def authorize_action
@@ -26,5 +11,17 @@ class LogController < AuthorizedController
 
   def resource_by_id
     Edge.find_by(id: params[:edge_id]).owner
+  end
+
+  def show_respond_success_html(resource)
+    render 'log', locals: {resource: resource}
+  end
+
+  def show_respond_success_json(resource)
+    respond_with_200(resource.activities, :json)
+  end
+
+  def show_respond_success_serializer(resource, format)
+    respond_with_200(resource.activities, format)
   end
 end

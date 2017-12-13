@@ -6,17 +6,6 @@ class GroupMembershipsController < ServiceController
 
   include NestedResourceHelper
 
-  def show
-    respond_to do |format|
-      format.html do
-        flash.keep
-        redirect_to redirect_url
-      end
-      format.json_api { render json: authenticated_resource, include: include_show }
-      format.nt { render nt: authenticated_resource, include: include_show }
-    end
-  end
-
   def index
     return if params[:q].nil?
     q = params[:q].tr(' ', '|')
@@ -115,5 +104,10 @@ class GroupMembershipsController < ServiceController
   def respond_with_201(resource, format)
     return super unless %i[json json_api].include?(format)
     render json: resource, status: :created, location: resource, include: :group
+  end
+
+  def show_respond_success_html(_resource)
+    flash.keep
+    redirect_to redirect_url
   end
 end

@@ -5,17 +5,6 @@ class MenusController < AuthorizedController
   skip_before_action :check_if_registered
   before_action :authorize_action
 
-  def show
-    respond_to do |format|
-      format.json_api do
-        render json: resource_by_id!, include: include_show
-      end
-      format.nt do
-        render nt: resource_by_id!, include: include_show
-      end
-    end
-  end
-
   private
 
   def authenticated_tree

@@ -12,14 +12,6 @@ class CommentsController < EdgeTreeController
     }
   end
 
-  def show
-    respond_to do |format|
-      format.html { redirect_to redirect_model_success(authenticated_resource) }
-      format.json_api { respond_with_200(authenticated_resource, :json_api) }
-      format.nt { respond_with_200(authenticated_resource, :nt) }
-    end
-  end
-
   private
 
   def collect_banners; end
@@ -122,6 +114,10 @@ class CommentsController < EdgeTreeController
       resource: resource.parent_model,
       comment: resource
     )
+  end
+
+  def show_respond_success_html(resource)
+    redirect_to redirect_model_success(resource)
   end
 
   def update_respond_failure_html(resource)

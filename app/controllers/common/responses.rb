@@ -17,14 +17,14 @@ module Common
       url_for([resource.persisted? ? resource : resource.parent_model, only_path: true])
     end
 
-    def respond_with_200(resource, format)
+    def respond_with_200(resource, format, opts = {})
       case format
       when :json, :json_api
-        render json: resource
+        render opts.merge(json: resource)
       when :n3
-        render n3: resource
+        render opts.merge(n3: resource)
       when :nt
-        render nt: resource
+        render opts.merge(nt: resource)
       else
         raise_unkown_format
       end

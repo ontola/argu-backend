@@ -35,21 +35,7 @@ class MotionsController < EdgeTreeController
     )
     authenticated_resource.current_vote = @vote
 
-    respond_to do |format|
-      format.html do
-        show_respond_success_html(authenticated_resource)
-      end
-      format.widget { render authenticated_resource }
-      format.json # show.json.jbuilder
-      format.json_api do
-        render json: authenticated_resource,
-               include: include_show
-      end
-      format.nt do
-        render nt: authenticated_resource,
-               include: include_show
-      end
-    end
+    show_handler_success(authenticated_resource)
   end
 
   private

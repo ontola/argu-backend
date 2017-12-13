@@ -30,33 +30,13 @@ class ForumsController < EdgeTreeController
     render
   end
 
-  def show
-    return unless policy(resource_by_id).show?
-
-    respond_to do |format|
-      format.html do
-        if (/[a-zA-Z]/i =~ params[:id]).nil?
-          redirect_to url_for(@forum), status: 307
-        else
-          @children = collect_children
-          render
-        end
-      end
-      format.json
-      format.js
-      format.json_api do
-        render json: authenticated_resource,
-               include: include_show
-      end
-      format.nt do
-        render nt: authenticated_resource,
-               include: include_show
-      end
-    end
-  end
-
   def settings
     respond_with_form
+  end
+
+  def show
+    return unless policy(resource_by_id).show?
+    super
   end
 
   def statistics
@@ -106,9 +86,9 @@ class ForumsController < EdgeTreeController
     cities.sort { |x, y| y[1] <=> x[1] }
   end
 
-  def collect_children
+  def collect_children(resource)
     policy_scope(
-      resource_by_id
+      resource
         .edge
         .children
         .where(owner_type: %w[Motion Question])
@@ -200,6 +180,15 @@ class ForumsController < EdgeTreeController
 
   def show_params
     params.permit(:page)
+  end
+
+  def show_respond_success_html(resource)
+    if (/[a-zA-Z]/i =~ params[:id]).nil?
+      redirect_to url_for(resource), status: 307
+    else
+      @children = collect_children(resource)
+      render
+    end
   end
 
   def tab!

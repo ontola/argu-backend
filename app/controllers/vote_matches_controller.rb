@@ -5,14 +5,6 @@ class VoteMatchesController < ServiceController
   skip_before_action :check_if_registered, only: :index
   skip_before_action :authorize_action, only: :index
 
-  def show
-    respond_to do |format|
-      format.json { respond_with_200(authenticated_resource, :json) }
-      format.json_api { respond_with_200(authenticated_resource, :json_api) }
-      format.nt { respond_with_200(authenticated_resource, :nt) }
-    end
-  end
-
   private
 
   def create_service_parent

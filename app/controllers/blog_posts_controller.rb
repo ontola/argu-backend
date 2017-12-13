@@ -6,13 +6,7 @@ class BlogPostsController < EdgeTreeController
 
   def show
     @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
-    respond_to do |format|
-      format.html { render locals: {blog_post: authenticated_resource, comment: Comment.new} }
-      format.json { respond_with_200(authenticated_resource, :json) }
-      format.json_api { respond_with_200(authenticated_resource, :json_api) }
-      format.nt { respond_with_200(authenticated_resource, :nt) }
-      format.js { render locals: {blog_post: authenticated_resource} }
-    end
+    show_handler_success(authenticated_resource)
   end
 
   private
@@ -28,5 +22,13 @@ class BlogPostsController < EdgeTreeController
   def redirect_model_success(resource)
     return super unless action_name == 'create' && resource.persisted?
     url_for_blog_post(resource, only_path: true)
+  end
+
+  def show_respond_success_html(resource)
+    render locals: {blog_post: resource, comment: Comment.new}
+  end
+
+  def show_respond_success_js(resource)
+    render locals: {blog_post: resource}
   end
 end

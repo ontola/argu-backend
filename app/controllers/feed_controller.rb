@@ -7,33 +7,18 @@ class FeedController < AuthorizedController
   helper_method :complete_feed_param
 
   def show
-    @activities = policy_scope(feed)
-                    .where('activities.created_at < ?', from_time)
-                    .order('activities.created_at DESC')
-                    .limit(10)
-    respond_to do |format|
-      format.html do
-        preload_user_votes(vote_event_ids_from_activities(@activities))
-      end
-      format.js do
-        if @activities.present?
-          preload_user_votes(vote_event_ids_from_activities(@activities))
-          render
-        else
-          respond_with_204(nil, :json)
-        end
-      end
-      format.json do
-        if @activities.present?
-          render json: @activities, include: %w[recipient owner]
-        else
-          respond_with_204(nil, :json)
-        end
-      end
-    end
+    show_handler_success(nil)
   end
 
   private
+
+  def activities
+    @activities ||=
+      policy_scope(feed)
+        .where('activities.created_at < ?', from_time)
+        .order('activities.created_at DESC')
+        .limit(10)
+  end
 
   def authorize_action
     authorize authenticated_resource, :feed?
@@ -66,6 +51,39 @@ class FeedController < AuthorizedController
       DateTime.parse(params[:from_time]).utc.to_s
     rescue ArgumentError
       DateTime.current
+    end
+  end
+
+  def include_show
+    %w[recipient owner]
+  end
+
+  def show_respond_success_html(_resource)
+    preload_user_votes(vote_event_ids_from_activities(activities))
+  end
+
+  def show_respond_success_js(_resource)
+    if activities.present?
+      preload_user_votes(vote_event_ids_from_activities(activities))
+      render
+    else
+      respond_with_204(nil, :json)
+    end
+  end
+
+  def show_respond_success_json(_resource)
+    if activities.present?
+      render json: activities, include: %w[recipient owner]
+    else
+      respond_with_204(nil, :json)
+    end
+  end
+
+  def show_respond_success_serializer(_resource, format)
+    if activities.present?
+      render format => activities, include: %w[recipient owner]
+    else
+      respond_with_204(nil, :json)
     end
   end
 end

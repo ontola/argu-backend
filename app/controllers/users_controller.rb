@@ -7,32 +7,6 @@ class UsersController < AuthorizedController
   helper_method :authenticated_resource, :complete_feed_param
   skip_before_action :check_if_registered, only: :language
 
-  def show
-    respond_to do |format|
-      format.html do
-        @activities = policy_scope(Activity.feed_for_profile(authenticated_resource.profile))
-                        .order(created_at: :desc)
-                        .limit(10)
-        preload_user_votes(vote_event_ids_from_activities(@activities))
-
-        if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
-          redirect_to url_for(authenticated_resource), status: 307
-        else
-          render 'show'
-        end
-      end
-      format.json { respond_with_200(authenticated_resource, :json) }
-      format.json_api do
-        render json: authenticated_resource,
-               include: include_show
-      end
-      format.nt do
-        render nt: authenticated_resource,
-               include: include_show
-      end
-    end
-  end
-
   def settings
     authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
     authenticated_resource.build_shortname if authenticated_resource.shortname.nil?
@@ -155,6 +129,19 @@ class UsersController < AuthorizedController
       tab: tab!,
       active: tab!
     )
+  end
+
+  def show_respond_success_html(resource)
+    @activities = policy_scope(Activity.feed_for_profile(resource.profile))
+                    .order(created_at: :desc)
+                    .limit(10)
+    preload_user_votes(vote_event_ids_from_activities(@activities))
+
+    if (/[a-zA-Z]/i =~ params[:id]).nil? && resource.url.present?
+      redirect_to url_for(resource), status: 307
+    else
+      render 'show'
+    end
   end
 
   def tab!

@@ -4,16 +4,6 @@ class VotesController < EdgeTreeController
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: %i[index show create destroy]
 
-  # GET /model/:model_id/vote
-  def show
-    respond_to do |format|
-      format.html { redirect_to url_for(authenticated_resource.parent_model) }
-      format.json { render 'create', location: authenticated_resource }
-      format.json_api { render json: authenticated_resource, include: :upvoted_arguments }
-      format.nt { render nt: authenticated_resource, include: :upvoted_arguments }
-    end
-  end
-
   def new
     render locals: {
       resource: parent_resource!.voteable,
@@ -85,12 +75,20 @@ class VotesController < EdgeTreeController
     }
   end
 
+  def include_show
+    %i[upvoted_arguments]
+  end
+
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||= Edge
                            .where_owner('Vote', creator: current_profile)
                            .find_by(parent: parent_from_params.edge)
                            &.owner
+  end
+
+  def show_respond_success_html(resource)
+    redirect_to url_for(resource.parent_model)
   end
 
   def for_param

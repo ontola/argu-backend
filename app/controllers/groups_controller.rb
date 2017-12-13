@@ -3,17 +3,6 @@
 class GroupsController < ServiceController
   include NestedResourceHelper
 
-  def show
-    respond_to do |format|
-      format.json_api do
-        render json: authenticated_resource, include: include_show
-      end
-      format.nt do
-        render nt: authenticated_resource, include: include_show
-      end
-    end
-  end
-
   def settings
     if tab! == 'members'
       @members = resource
