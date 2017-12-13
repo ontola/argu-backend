@@ -18,9 +18,12 @@ module Common
         format.html { edit_respond_success_html(resource) }
         format.json { respond_with_200(resource, :json) }
         format.json_api { respond_with_200(resource, :json_api) }
+        format.js { edit_respond_success_js(resource) }
         format.n3 { respond_with_200(resource, :n3) }
         format.nt { respond_with_200(resource, :nt) }
-        format.js { edit_respond_success_js(resource) }
+        format.ttl { respond_with_200(resource, :ttl) }
+        format.jsonld { respond_with_200(resource, :jsonld) }
+        format.rdf { respond_with_200(resource, :rdf) }
       end
 
       # @!visibility public

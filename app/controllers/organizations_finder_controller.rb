@@ -8,6 +8,9 @@ class OrganizationsFinderController < AuthorizedController
     respond_to do |format|
       format.n3 { render n3: Blank.new, meta: meta }
       format.nt { render nt: Blank.new, meta: meta }
+      format.ttl { render ttl: Blank.new, meta: meta }
+      format.jsonld { render jsonld: Blank.new, meta: meta }
+      format.rdf { render rdf: Blank.new, meta: meta }
     end
   end
 

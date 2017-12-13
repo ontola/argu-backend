@@ -31,6 +31,9 @@ module Common
         format.json_api { index_respond_success_json_api }
         format.n3 { index_respond_success_n3 }
         format.nt { index_respond_success_nt }
+        format.ttl { index_respond_success_ttl }
+        format.jsonld { index_respond_success_jsonld }
+        format.rdf { index_respond_success_rdf }
       end
 
       def index_response_association
@@ -59,6 +62,21 @@ module Common
 
       def index_respond_success_nt
         render nt: index_response_association,
+               include: include_index
+      end
+
+      def index_respond_success_ttl
+        render ttl: index_response_association,
+               include: include_index
+      end
+
+      def index_respond_success_jsonld
+        render jsonld: index_response_association,
+               include: include_index
+      end
+
+      def index_respond_success_rdf
+        render rdf: index_response_association,
                include: include_index
       end
     end

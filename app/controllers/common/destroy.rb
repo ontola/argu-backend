@@ -35,9 +35,12 @@ module Common
         format.html { destroy_respond_failure_html(resource) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
+        format.js { destroy_respond_failure_js(resource) }
         format.n3 { respond_with_422(resource, :n3) }
         format.nt { respond_with_422(resource, :nt) }
-        format.js { destroy_respond_failure_js(resource) }
+        format.ttl { respond_with_422(resource, :ttl) }
+        format.jsonld { respond_with_422(resource, :jsonld) }
+        format.rdf { respond_with_422(resource, :rdf) }
       end
 
       # @!visibility public
@@ -45,9 +48,12 @@ module Common
         format.html { destroy_respond_success_html(resource) }
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
+        format.js { destroy_respond_success_js(resource) }
         format.n3 { respond_with_204(resource, :n3) }
         format.nt { respond_with_204(resource, :nt) }
-        format.js { destroy_respond_success_js(resource) }
+        format.ttl { respond_with_204(resource, :ttl) }
+        format.jsonld { respond_with_204(resource, :jsonld) }
+        format.rdf { respond_with_204(resource, :rdf) }
       end
 
       # @!visibility public

@@ -25,6 +25,12 @@ module Common
         render opts.merge(n3: resource)
       when :nt
         render opts.merge(nt: resource)
+      when :ttl
+        render opts.merge(ttl: resource)
+      when :jsonld
+        render opts.merge(jsonld: resource)
+      when :rdf
+        render opts.merge(rdf: resource)
       else
         raise_unkown_format
       end
@@ -38,6 +44,12 @@ module Common
         render n3: resource, status: :created, location: resource.iri.to_s
       when :nt
         render nt: resource, status: :created, location: resource.iri.to_s
+      when :ttl
+        render ttl: resource, status: :created, location: resource.iri.to_s
+      when :jsonld
+        render jsonld: resource, status: :created, location: resource.iri.to_s
+      when :rdf
+        render rdf: resource, status: :created, location: resource.iri.to_s
       when :js
         head :created
       else
@@ -47,7 +59,7 @@ module Common
 
     def respond_with_204(_, format)
       case format
-      when :json, :json_api, :n3, :nt
+      when :json, :json_api, :n3, :nt, :ttl, :jsonld, :rdf
         head :no_content
       else
         raise_unkown_format
@@ -71,6 +83,12 @@ module Common
         render n3: resource.errors, status: :bad_request
       when :nt
         render nt: resource.errors, status: :bad_request
+      when :ttl
+        render ttl: resource.errors, status: :bad_request
+      when :jsonld
+        render jsonld: resource.errors, status: :bad_request
+      when :rdf
+        render rdf: resource.errors, status: :bad_request
       when :js
         head 400
       else
@@ -84,7 +102,7 @@ module Common
         render json_error(422, resource.errors)
       when :json_api
         render json_api_error(422, resource.errors)
-      when :n3, :nt
+      when :n3, :nt, :ttl, :jsonld, :rdf
         render json_api_error(422, resource.errors)
       else
         raise_unkown_format

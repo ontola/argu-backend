@@ -21,6 +21,9 @@ module Common
         format.json_api { respond_with_200(resource, :json_api) }
         format.n3 { respond_with_200(resource, :n3) }
         format.nt { respond_with_200(resource, :nt) }
+        format.ttl { respond_with_200(resource, :ttl) }
+        format.jsonld { respond_with_200(resource, :jsonld) }
+        format.rdf { respond_with_200(resource, :rdf) }
       end
 
       # @!visibility public

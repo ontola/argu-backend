@@ -58,6 +58,9 @@ module EdgeTree
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
         format.nt { respond_with_422(resource, :nt) }
+        format.ttl { respond_with_422(resource, :ttl) }
+        format.jsonld { respond_with_422(resource, :jsonld) }
+        format.rdf { respond_with_422(resource, :rdf) }
         format.js
       end
 
@@ -67,6 +70,9 @@ module EdgeTree
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
         format.nt { respond_with_204(resource, :nt) }
+        format.ttl { respond_with_204(resource, :ttl) }
+        format.jsonld { respond_with_204(resource, :jsonld) }
+        format.rdf { respond_with_204(resource, :rdf) }
         format.js
       end
 
@@ -76,6 +82,9 @@ module EdgeTree
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
         format.nt { respond_with_422(resource, :nt) }
+        format.ttl { respond_with_422(resource, :ttl) }
+        format.jsonld { respond_with_422(resource, :jsonld) }
+        format.rdf { respond_with_422(resource, :rdf) }
         format.js
       end
 
@@ -85,6 +94,9 @@ module EdgeTree
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
         format.nt { respond_with_204(resource, :nt) }
+        format.ttl { respond_with_204(resource, :ttl) }
+        format.jsonld { respond_with_204(resource, :jsonld) }
+        format.rdf { respond_with_204(resource, :rdf) }
         format.js
       end
     end

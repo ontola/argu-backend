@@ -17,6 +17,9 @@ class BlogPostsController < EdgeTreeController
     format.json { respond_with_200(resource, :json) }
     format.json_api { respond_with_204(resource, :json_api) }
     format.nt { respond_with_204(resource, :nt) }
+    format.ttl { respond_with_204(resource, :ttl) }
+    format.jsonld { respond_with_204(resource, :jsonld) }
+    format.rdf { respond_with_204(resource, :rdf) }
   end
 
   def redirect_model_success(resource)

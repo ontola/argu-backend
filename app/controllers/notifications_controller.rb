@@ -57,6 +57,9 @@ class NotificationsController < AuthorizedController
     format.json { respond_with_204(resource, :json) }
     format.json_api { respond_with_204(resource, :json_api) }
     format.nt { render nt: resource, meta: meta }
+    format.ttl { render ttl: resource, meta: meta }
+    format.jsonld { render jsonld: resource, meta: meta }
+    format.rdf { render rdf: resource, meta: meta }
   end
 
   def update_respond_blocks_failure(_resource, format)

@@ -13,7 +13,7 @@ module Argu
 
       module ClassMethods
         def expectations_for(action)
-          %i[json_api n3 nt].each do |format|
+          %i[json_api n3 nt ttl jsonld rdf].each do |format|
             let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
             let("expect_#{action}_guest_#{format}") { send("expect_#{action}_guest_serializer") }
             let("expect_#{action}_unauthorized_#{format}") { send("expect_#{action}_unauthorized_serializer") }
@@ -236,7 +236,7 @@ module Argu
         end
 
         def default_formats
-          %i[html json_api nt]
+          %i[html json_api nt ttl jsonld rdf]
         end
 
         def show_formats

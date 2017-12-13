@@ -25,6 +25,9 @@ module Common
         format.json_api { show_respond_success_serializer(resource, :json_api) }
         format.n3 { show_respond_success_serializer(resource, :n3) }
         format.nt { show_respond_success_serializer(resource, :nt) }
+        format.ttl { show_respond_success_serializer(resource, :ttl) }
+        format.jsonld { show_respond_success_serializer(resource, :jsonld) }
+        format.rdf { show_respond_success_serializer(resource, :rdf) }
       end
 
       def show_respond_success_html(resource)

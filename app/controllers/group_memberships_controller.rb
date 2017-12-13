@@ -39,17 +39,16 @@ class GroupMembershipsController < ServiceController
     end
   end
 
-  def create_respond_blocks_failure(resource, format)
-    format.html { redirect_to redirect_url, notice: t('errors.general') }
-    format.json do
-      if existing_record
-        render json: resource.errors, status: 304, location: existing_record
-      else
-        respond_with_422(resource, :json)
-      end
+  def create_respond_failure_html(_resource)
+    redirect_to redirect_url, notice: t('errors.general')
+  end
+
+  def create_respond_failure_json(resource)
+    if existing_record
+      render json: resource.errors, status: 304, location: existing_record
+    else
+      respond_with_422(resource, :json)
     end
-    format.json_api { respond_with_422(resource, :json_api) }
-    format.nt { respond_with_422(resource, :nt) }
   end
 
   alias create_service_parent parent_resource!
