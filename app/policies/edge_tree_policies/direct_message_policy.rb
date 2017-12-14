@@ -6,7 +6,7 @@ class DirectMessagePolicy < EdgeTreePolicy
   end
 
   def create?
-    is_super_admin? || staff?
+    edgeable_policy.contact?
   end
 
   private

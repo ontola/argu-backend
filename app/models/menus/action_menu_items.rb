@@ -18,7 +18,8 @@ module Menus
         :contact,
         image: 'fa-send-o',
         link_opts: {data: {remote: 'true'}},
-        href: polymorphic_url([:new, resource, :direct_message])
+        href: polymorphic_url([:new, resource, :direct_message]),
+        policy: :contact?
       )
     end
 

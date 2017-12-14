@@ -56,6 +56,10 @@ class EdgeablePolicy < RestrictivePolicy
     false
   end
 
+  def contact?
+    is_super_admin? || staff?
+  end
+
   def move?
     false
   end
