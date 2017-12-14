@@ -18,7 +18,7 @@ module Gravatar
     gravatar_options[:default] ||= nil
 
     # Build the Gravatar url.
-    grav_url = '//www.gravatar.com/avatar.php?'
+    grav_url = 'https://www.gravatar.com/avatar.php?'
     grav_url << "gravatar_id=#{Digest::MD5.new.update(email)}"
     grav_url << "&rating=#{gravatar_options[:rating]}" if gravatar_options[:rating]
     grav_url << "&size=#{gravatar_options[:size]}" if gravatar_options[:size]
