@@ -5,8 +5,8 @@ require 'gravatar'
 
 class MediaObjectUploader < CarrierWave::Uploader::Base
   include ::CarrierWave::Backgrounder::Delay
-
   include CarrierWave::Vips
+  extend UrlHelper
 
   ARCHIVE_TYPES = %w[application/zip].freeze
   DOCUMENT_TYPES = %w[application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
@@ -21,6 +21,9 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   VIDEO_TYPES = %w[video/mp4].freeze
 
   if Rails.env.development? || Rails.env.test?
+    CarrierWave.configure do |config|
+      config.asset_host argu_url
+    end
     storage :file
   else
     CarrierWave.configure do |config|
