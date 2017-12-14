@@ -12,7 +12,7 @@ RSpec.describe 'Conversions', type: :request do
   let(:invalid_create_params) { {conversion: {klass: 'arguments'}} }
   let(:created_resource_path) { url_for([subject.reload.owner, only_path: true]) }
   let(:expect_post_create_failed_html) { expect_post_create_unauthorized_html }
-  let(:expect_post_create_failed_json_api) { expect_post_create_unauthorized_json_api }
+  let(:expect_post_create_failed_serializer) { expect_post_create_unauthorized_serializer }
   let(:authorized_user) { staff }
   let(:create_failed_path) { created_resource_path }
 
@@ -21,12 +21,7 @@ RSpec.describe 'Conversions', type: :request do
     let(:create_params) { {conversion: {klass: 'questions'}} }
     let(:create_differences) { [['Question.count', 1], ['Motion.count', -1], ['Activity.loggings.count', 1]] }
     it_behaves_like 'get new'
-    %i[html json_api nt].each do |format|
-      context "as #{format}" do
-        let(:request_format) { format }
-        it_behaves_like 'post create'
-      end
-    end
+    it_behaves_like 'post create'
   end
 
   context 'question_to_motion' do
@@ -41,11 +36,6 @@ RSpec.describe 'Conversions', type: :request do
       ]
     end
     it_behaves_like 'get new'
-    %i[html json_api nt].each do |format|
-      context "as #{format}" do
-        let(:request_format) { format }
-        it_behaves_like 'post create'
-      end
-    end
+    it_behaves_like 'post create'
   end
 end

@@ -4,40 +4,44 @@ RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
   let(:r_param) { update_failed_path }
   let(:authorized_user) { staff }
 
-  unless opts[:skip].include?(:destroy_guest) || opts[:skip].include?(:guest)
-    it 'as guest' do
-      sign_out
-      delete destroy_path, params: {format: request_format}
-      send("expect_delete_destroy_guest_#{request_format}")
-    end
-  end
-
-  unless opts[:skip].include?(:destroy_unauthorized) || opts[:skip].include?(:unauthorized)
-    it 'as unauthorized' do
-      sign_in(unauthorized_user)
-      assert_differences(no_differences) do
-        delete destroy_path, params: {format: request_format}
+  destroy_formats.each do |format|
+    context "as #{format}" do
+      unless opts[:skip].include?(:destroy_guest) || opts[:skip].include?(:guest)
+        it 'as guest' do
+          sign_out
+          delete destroy_path, params: {format: format}
+          send("expect_delete_destroy_guest_#{format}")
+        end
       end
-      send("expect_delete_destroy_unauthorized_#{request_format}")
-    end
-  end
 
-  unless opts[:skip].include?(:destroy_authorized) || opts[:skip].include?(:authorized)
-    it 'as authorized' do
-      parent_path # touch path because subject be deleted
-      sign_in(authorized_user_update)
-      assert_differences(destroy_differences) do
-        delete destroy_path, params: destroy_params.merge(format: request_format)
+      unless opts[:skip].include?(:destroy_unauthorized) || opts[:skip].include?(:unauthorized)
+        it 'as unauthorized' do
+          sign_in(unauthorized_user)
+          assert_differences(no_differences) do
+            delete destroy_path, params: {format: format}
+          end
+          send("expect_delete_destroy_unauthorized_#{format}")
+        end
       end
-      send("expect_delete_destroy_#{request_format}")
-    end
-  end
 
-  unless opts[:skip].include?(:destroy_non_existing) || opts[:skip].include?(:non_existing)
-    it 'non existing' do
-      sign_in(authorized_user_update)
-      delete non_existing_destroy_path, params: {format: request_format}
-      expect_not_found
+      unless opts[:skip].include?(:destroy_authorized) || opts[:skip].include?(:authorized)
+        it 'as authorized' do
+          parent_path # touch path because subject be deleted
+          sign_in(authorized_user_update)
+          assert_differences(destroy_differences) do
+            delete destroy_path, params: destroy_params.merge(format: format)
+          end
+          send("expect_delete_destroy_#{format}")
+        end
+      end
+
+      unless opts[:skip].include?(:destroy_non_existing) || opts[:skip].include?(:non_existing)
+        it 'non existing' do
+          sign_in(authorized_user_update)
+          delete non_existing_destroy_path, params: {format: format}
+          expect_not_found
+        end
+      end
     end
   end
 end

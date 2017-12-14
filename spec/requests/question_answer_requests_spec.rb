@@ -20,10 +20,5 @@ RSpec.describe 'QuestionAnswers', type: :request do
 
   subject { nil }
   it_behaves_like 'get new'
-  %i[html json_api nt].each do |format|
-    context "as #{format}" do
-      let(:request_format) { format }
-      it_behaves_like 'post create'
-    end
-  end
+  it_behaves_like 'post create'
 end

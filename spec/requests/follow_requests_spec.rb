@@ -5,6 +5,11 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Follows', type: :request do
   include Argu::TestHelpers::AutomatedRequests
+
+  def self.unsubscribe_formats
+    default_formats
+  end
+
   let(:create_path) { follows_path(gid: freetown.edge.id) }
   let(:non_existing_create_path) { follows_path(gid: -1) }
   let(:create_params) { {follow_type: 'reactions'} }
@@ -23,12 +28,7 @@ RSpec.describe 'Follows', type: :request do
 
   subject { create(:follow, follower: staff, followable: freetown.edge) }
 
-  %i[html json_api nt].each do |format|
-    context "as #{format}" do
-      let(:request_format) { format }
-      it_behaves_like 'post create', skip: %i[invalid]
-      it_behaves_like 'delete destroy'
-      it_behaves_like 'get unsubscribe'
-    end
-  end
+  it_behaves_like 'post create', skip: %i[invalid]
+  it_behaves_like 'delete destroy'
+  it_behaves_like 'get unsubscribe'
 end

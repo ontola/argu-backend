@@ -12,6 +12,15 @@ module Argu
       end
 
       module ClassMethods
+        def expectations_for(action)
+          %i[json_api n3 nt].each do |format|
+            let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
+            let("expect_#{action}_guest_#{format}") { send("expect_#{action}_guest_serializer") }
+            let("expect_#{action}_unauthorized_#{format}") { send("expect_#{action}_unauthorized_serializer") }
+            let("expect_#{action}_failed_#{format}") { send("expect_#{action}_failed_serializer") }
+          end
+        end
+
         def define_spec_variables
           # Differences
           let(:create_differences) { [["#{subject.class}.count", 1], ['Activity.loggings.count', 1]] }
@@ -40,101 +49,92 @@ module Argu
           let(:expect_get_delete) { expect_success }
           let(:expect_get_shift) { expect_success }
 
+          # Show
+          expectations_for(:get_show)
           let(:expect_get_show_guest_html) { expect_get_show_html }
-          let(:expect_get_show_guest_json_api) { expect_get_show_json_api }
-          let(:expect_get_show_guest_nt) { expect_get_show_guest_json_api }
+          let(:expect_get_show_guest_serializer) { expect_get_show_serializer }
           let(:expect_get_show_unauthorized_html) { expect_unauthorized }
-          let(:expect_get_show_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_get_show_unauthorized_nt) { expect_get_show_unauthorized_json_api }
+          let(:expect_get_show_unauthorized_serializer) { expect_unauthorized }
           let(:expect_get_show_html) { expect_success }
-          let(:expect_get_show_json_api) { expect_success }
-          let(:expect_get_show_nt) { expect_get_show_json_api }
+          let(:expect_get_show_serializer) { expect_success }
 
+          # Index
+          expectations_for(:get_index)
           let(:expect_get_index_guest_html) { expect_get_index_html }
-          let(:expect_get_index_guest_json_api) { expect_get_index_json_api }
-          let(:expect_get_index_guest_nt) { expect_get_index_guest_json_api }
+          let(:expect_get_index_guest_serializer) { expect_get_index_serializer }
           let(:expect_get_index_unauthorized_html) { expect_unauthorized }
-          let(:expect_get_index_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_get_index_unauthorized_nt) { expect_get_index_unauthorized_json_api }
+          let(:expect_get_index_unauthorized_serializer) { expect_unauthorized }
           let(:expect_get_index_html) { expect_success }
-          let(:expect_get_index_json_api) { expect_success }
-          let(:expect_get_index_nt) { expect_get_index_json_api }
+          let(:expect_get_index_serializer) { expect_success }
 
+          # Destroy
+          expectations_for(:delete_destroy)
           let(:expect_delete_destroy_guest_html) { expect_redirect_to_login }
-          let(:expect_delete_destroy_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_delete_destroy_guest_nt) { expect_delete_destroy_guest_json_api }
+          let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_delete_destroy_unauthorized_html) { expect_unauthorized }
-          let(:expect_delete_destroy_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_delete_destroy_unauthorized_nt) { expect_delete_destroy_unauthorized_json_api }
+          let(:expect_delete_destroy_unauthorized_serializer) { expect_unauthorized }
           let(:expect_delete_destroy_html) do
             expect(response.code).to eq('303')
             expect(response).to redirect_to(parent_path)
           end
-          let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
-          let(:expect_delete_destroy_nt) { expect_delete_destroy_json_api }
+          let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
 
+          # Trash
+          expectations_for(:delete_trash)
           let(:expect_delete_trash_guest_html) { expect_redirect_to_login }
-          let(:expect_delete_trash_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_delete_trash_guest_nt) { expect_delete_trash_guest_json_api }
+          let(:expect_delete_trash_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_delete_trash_unauthorized_html) { expect_unauthorized }
-          let(:expect_delete_trash_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_delete_trash_unauthorized_nt) { expect_delete_trash_unauthorized_json_api }
+          let(:expect_delete_trash_unauthorized_serializer) { expect_unauthorized }
           let(:expect_delete_trash_html) { expect(response).to redirect_to(show_path) }
-          let(:expect_delete_trash_json_api) { expect(response.code).to eq('204') }
-          let(:expect_delete_trash_nt) { expect_delete_trash_json_api }
+          let(:expect_delete_trash_serializer) { expect(response.code).to eq('204') }
 
+          # Create
+          expectations_for(:post_create)
           let(:expect_post_create_guest_html) { expect_redirect_to_login }
-          let(:expect_post_create_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_post_create_guest_nt) { expect_post_create_guest_json_api }
+          let(:expect_post_create_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_post_create_unauthorized_html) { expect_unauthorized }
-          let(:expect_post_create_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_post_create_unauthorized_nt) { expect_post_create_unauthorized_json_api }
+          let(:expect_post_create_unauthorized_serializer) { expect_unauthorized }
           let(:expect_post_create_html) { expect(response).to redirect_to(created_resource_path) }
-          let(:expect_post_create_json_api) { expect_created }
-          let(:expect_post_create_nt) { expect_post_create_json_api }
+          let(:expect_post_create_serializer) { expect_created }
           let(:expect_post_create_failed_html) do
             expect_success
             invalid_create_params[class_sym].each { |_k, v| expect(response.body).to(include(v)) }
           end
-          let(:expect_post_create_failed_json_api) { expect(response.code).to eq('422') }
-          let(:expect_post_create_failed_nt) { expect_post_create_failed_json_api }
+          let(:expect_post_create_failed_serializer) { expect(response.code).to eq('422') }
 
+          # Untrash
+          expectations_for(:put_untrash)
           let(:expect_put_untrash_guest_html) { expect_redirect_to_login }
-          let(:expect_put_untrash_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_put_untrash_guest_nt) { expect_put_untrash_guest_json_api }
+          let(:expect_put_untrash_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_put_untrash_unauthorized_html) { expect_unauthorized }
-          let(:expect_put_untrash_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_put_untrash_unauthorized_nt) { expect_put_untrash_unauthorized_json_api }
+          let(:expect_put_untrash_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_untrash_html) { expect(response).to redirect_to(url_for(subject)) }
-          let(:expect_put_untrash_json_api) { expect(response.code).to eq('204') }
-          let(:expect_put_untrash_nt) { expect_put_untrash_json_api }
+          let(:expect_put_untrash_serializer) { expect(response.code).to eq('204') }
 
+          # Update
+          expectations_for(:put_update)
           let(:expect_put_update_guest_html) { expect_redirect_to_login }
-          let(:expect_put_update_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_put_update_guest_nt) { expect_put_update_guest_json_api }
+          let(:expect_put_update_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_put_update_unauthorized_html) { expect_unauthorized }
-          let(:expect_put_update_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_put_update_unauthorized_nt) { expect_put_update_unauthorized_json_api }
+          let(:expect_put_update_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_update_html) do
             expect(response).to redirect_to(updated_resource_path)
             subject.reload
             update_params[class_sym].each { |k, v| expect(subject.send(k)).to eq(v) }
           end
-          let(:expect_put_update_json_api) { expect(response.code).to eq('204') }
-          let(:expect_put_update_nt) { expect_put_update_json_api }
+          let(:expect_put_update_serializer) { expect(response.code).to eq('204') }
           let(:expect_put_update_failed_html) do
             expect_success
             invalid_update_params[class_sym].each { |_k, v| expect(response.body).to(include(v)) }
           end
-          let(:expect_put_update_failed_json_api) { expect(response.code).to eq('422') }
-          let(:expect_put_update_failed_nt) { expect_put_update_failed_json_api }
+          let(:expect_put_update_failed_serializer) { expect(response.code).to eq('422') }
 
+          # Move
+          expectations_for(:put_move)
           let(:expect_put_move_guest_html) { expect_redirect_to_login }
-          let(:expect_put_move_guest_json_api) { expect(response.code).to eq('401') }
-          let(:expect_put_move_guest_nt) { expect_put_move_guest_json_api }
+          let(:expect_put_move_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_put_move_unauthorized_html) { expect_unauthorized }
-          let(:expect_put_move_unauthorized_json_api) { expect_unauthorized }
-          let(:expect_put_move_unauthorized_nt) { expect_put_move_unauthorized_json_api }
+          let(:expect_put_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_move) do
             expect(response).to redirect_to(show_path)
             subject.reload
@@ -233,6 +233,58 @@ module Argu
           let(:create_failed_path) { parent_path }
           let(:update_failed_path) { updated_resource_path }
           let(:move_failed_path) { update_failed_path }
+        end
+
+        def default_formats
+          %i[html json_api nt]
+        end
+
+        def show_formats
+          default_formats
+        end
+
+        def create_formats
+          default_formats
+        end
+
+        def index_formats
+          default_formats
+        end
+
+        def destroy_formats
+          default_formats
+        end
+
+        def trash_formats
+          default_formats
+        end
+
+        def untrash_formats
+          default_formats
+        end
+
+        def update_formats
+          default_formats
+        end
+
+        def new_formats
+          %i[html]
+        end
+
+        def edit_formats
+          %i[html]
+        end
+
+        def delete_formats
+          %i[html]
+        end
+
+        def move_formats
+          %i[html]
+        end
+
+        def shift_formats
+          %i[html]
         end
       end
     end

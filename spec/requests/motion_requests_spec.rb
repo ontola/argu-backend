@@ -5,12 +5,15 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Motions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
+  def self.index_formats
+    super - %i[html]
+  end
 
   let(:created_resource_path) { url_for([subject.class.last, start_motion_tour: true]) }
 
   context 'with question parent' do
     subject { motion }
-    it_behaves_like 'requests', skip: %i[html_index], move: true
+    it_behaves_like 'requests', move: true
   end
 
   context 'with forum parent' do
@@ -19,6 +22,6 @@ RSpec.describe 'Motions', type: :request do
     let(:non_existing_index_path) { forum_motions_path('non_existing') }
     let(:non_existing_new_path) { new_forum_motion_path('non_existing') }
 
-    it_behaves_like 'requests', skip: %i[html_index], move: true
+    it_behaves_like 'requests', move: true
   end
 end

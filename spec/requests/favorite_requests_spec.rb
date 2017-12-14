@@ -17,16 +17,9 @@ RSpec.describe 'Favorites', type: :request do
   let(:create_params) { {} }
   let(:authorized_user) { staff }
   let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
-  let(:expect_delete_destroy_unauthorized_json_api) { expect_not_found }
+  let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
 
   subject { create(:favorite, user: staff, edge: holland.edge) }
-  let(:request_format) { :html }
-
-  %i[html json_api nt].each do |format|
-    context "as #{format}" do
-      let(:request_format) { format }
-      it_behaves_like 'post create', skip: %i[create_invalid]
-      it_behaves_like 'delete destroy'
-    end
-  end
+  it_behaves_like 'post create', skip: %i[create_invalid]
+  it_behaves_like 'delete destroy'
 end

@@ -42,15 +42,10 @@ RSpec.describe 'Sources', type: :request do
     end
     let(:create_differences) { [['Source.count', 1]] }
     let(:created_resource_path) { page_source_path(argu, Source.last) }
-    let(:expect_post_create_guest_json_api) { expect_not_found }
+    let(:expect_post_create_guest_serializer) { expect_not_found }
     let(:expect_get_new) { expect_not_found }
     let(:expect_unauthorized) { expect_not_found }
     it_behaves_like 'get new'
-    %i[html json_api nt].each do |format|
-      context "as #{format}" do
-        let(:request_format) { format }
-        it_behaves_like 'post create'
-      end
-    end
+    it_behaves_like 'post create'
   end
 end

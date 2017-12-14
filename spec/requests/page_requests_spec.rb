@@ -5,13 +5,17 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Pages', type: :request do
   include Argu::TestHelpers::AutomatedRequests
+  def self.index_formats
+    super - %i[html]
+  end
+
   let(:edit_path) do
     nominatim_netherlands
     settings_page_path(subject)
   end
   let(:non_existing_edit_path) { settings_page_path(-1) }
   let(:non_existing_new_path) { new_page_path(-1) }
-  let(:expect_get_show_unauthorized_json_api) { expect_success }
+  let(:expect_get_show_unauthorized_serializer) { expect_success }
   let(:expect_get_show_unauthorized_html) { expect_success }
   let(:create_differences) { [['Page.count', 1]] }
   let(:update_differences) { [['Page.count', 0]] }
@@ -47,10 +51,9 @@ RSpec.describe 'Pages', type: :request do
 
   context 'public page' do
     subject { create(:page) }
-    let(:request_format) { :html }
     it_behaves_like 'requests', skip: %i[
       trash untrash new_unauthorized new_non_existing create_non_existing
-      create_unauthorized index_non_existing html_index index_unauthorized
+      create_unauthorized index_non_existing index_unauthorized
     ]
   end
 end

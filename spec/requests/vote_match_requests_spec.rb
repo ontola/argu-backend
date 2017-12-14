@@ -5,6 +5,10 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'VoteMatches', type: :request do
   include Argu::TestHelpers::AutomatedRequests
+  def self.default_formats
+    super - %i[html]
+  end
+
   let(:create_differences) { [["#{subject.class}.count", 1]] }
   let(:update_differences) { [["#{subject.class}.count", 0]] }
   let(:destroy_differences) { [["#{subject.class}.count", -1]] }
@@ -16,11 +20,11 @@ RSpec.describe 'VoteMatches', type: :request do
 
   context 'with user parent' do
     subject { create(:vote_match) }
-    it_behaves_like 'requests', skip: %i[trash untrash html unauthorized]
+    it_behaves_like 'requests', skip: %i[trash untrash unauthorized new edit delete]
   end
 
   context 'with page parent' do
     subject { create(:vote_match, creator: create(:page).profile) }
-    it_behaves_like 'requests', skip: %i[trash untrash html unauthorized]
+    it_behaves_like 'requests', skip: %i[trash untrash unauthorized new edit delete]
   end
 end
