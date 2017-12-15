@@ -28,12 +28,12 @@ module Common
         format.html { index_respond_success_html }
         format.js { index_respond_success_js }
         format.json { index_respond_success_json }
-        format.json_api { index_respond_success_json_api }
-        format.n3 { index_respond_success_n3 }
-        format.nt { index_respond_success_nt }
-        format.ttl { index_respond_success_ttl }
-        format.jsonld { index_respond_success_jsonld }
-        format.rdf { index_respond_success_rdf }
+        format.json_api { index_respond_success_serializer(:json_api) }
+        format.n3 { index_respond_success_serializer(:n3) }
+        format.nt { index_respond_success_serializer(:nt) }
+        format.ttl { index_respond_success_serializer(:ttl) }
+        format.jsonld { index_respond_success_serializer(:jsonld) }
+        format.rdf { index_respond_success_serializer(:rdf) }
       end
 
       def index_response_association
@@ -55,29 +55,13 @@ module Common
         raise NotImplementedError
       end
 
-      def index_respond_success_json_api
-        render json: index_response_association,
-               include: include_index
-      end
-
-      def index_respond_success_nt
-        render nt: index_response_association,
-               include: include_index
-      end
-
-      def index_respond_success_ttl
-        render ttl: index_response_association,
-               include: include_index
-      end
-
-      def index_respond_success_jsonld
-        render jsonld: index_response_association,
-               include: include_index
-      end
-
-      def index_respond_success_rdf
-        render rdf: index_response_association,
-               include: include_index
+      def index_respond_success_serializer(format)
+        case format
+        when :json_api
+          render json: index_response_association, include: include_index
+        else
+          render format => index_response_association, include: include_index
+        end
       end
     end
   end

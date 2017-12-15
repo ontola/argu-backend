@@ -3,22 +3,16 @@
 class FeedController < AuthorizedController
   include VotesHelper
   include NestedResourceHelper
+  skip_before_action :check_if_registered, only: %i[index]
+
   alias resource_by_id parent_resource
   helper_method :complete_feed_param
 
-  def show
-    show_handler_success(nil)
+  def index
+    index_handler_success(nil)
   end
 
   private
-
-  def activities
-    @activities ||=
-      policy_scope(feed)
-        .where('activities.created_at < ?', from_time)
-        .order('activities.created_at DESC')
-        .limit(10)
-  end
 
   def authorize_action
     authorize authenticated_resource, :feed?
@@ -54,36 +48,41 @@ class FeedController < AuthorizedController
     end
   end
 
-  def include_show
+  def index_response_association
+    @activities ||=
+      policy_scope(feed)
+        .where('activities.created_at < ?', from_time)
+        .order('activities.created_at DESC')
+        .limit(10)
+  end
+
+  def include_index
     %w[recipient owner]
   end
 
-  def show_respond_success_html(_resource)
-    preload_user_votes(vote_event_ids_from_activities(activities))
+  def index_respond_success_html
+    preload_user_votes(vote_event_ids_from_activities(index_response_association))
   end
 
-  def show_respond_success_js(_resource)
-    if activities.present?
-      preload_user_votes(vote_event_ids_from_activities(activities))
+  def index_respond_success_js
+    if index_response_association.present?
+      preload_user_votes(vote_event_ids_from_activities(index_response_association))
       render
     else
       respond_with_204(nil, :json)
     end
   end
 
-  def show_respond_success_json(_resource)
-    if activities.present?
-      render json: activities, include: %w[recipient owner]
+  def index_respond_success_json
+    if index_response_association.present?
+      render json: index_response_association, include: include_index
     else
       respond_with_204(nil, :json)
     end
   end
 
-  def show_respond_success_serializer(_resource, format)
-    if activities.present?
-      render format => activities, include: %w[recipient owner]
-    else
-      respond_with_204(nil, :json)
-    end
+  def index_respond_success_serializer(format)
+    return super if index_response_association.present?
+    respond_with_204(nil, :json)
   end
 end

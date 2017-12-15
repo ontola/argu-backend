@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     delete 'favorites', to: 'favorites#destroy'
   end
   concern :feedable do
-    get :feed, controller: :feed, action: :show
+    get :feed, controller: :feed, action: :index
   end
   concern :invitable do
     get :invite, controller: :invites, action: :new
@@ -146,7 +146,7 @@ Rails.application.routes.draw do
             only: %i[show update] do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
-    get :feed, controller: 'users/feed', action: :show
+    get :feed, controller: 'users/feed', action: :index
 
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member
@@ -162,7 +162,7 @@ Rails.application.routes.draw do
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end
 
-  get :feed, controller: :favorites_feed, action: :show
+  get :feed, controller: :favorites_feed, action: :index
 
   resources :votes, only: %i[destroy update show], path: :v, as: :vote
   resources :vote_events, only: [:show], concerns: [:votable]
