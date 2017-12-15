@@ -39,42 +39,17 @@ class NotificationsController < AuthorizedController
     end
   end
 
-  def execute_update
-    n = authenticated_resource
-    read_before = n.read_at.present?
-    read_before || n.permanent? || n.update(read_at: Time.current)
-  end
-
-  def update_respond_success_html(_resource)
-    @notifications = get_notifications
-    @unread = unread_notification_count
-    render 'index'
-  end
-
-  def update_respond_blocks_success(resource, format)
-    format.html { update_respond_success_html(resource) }
-    format.js { update_respond_success_js(resource) }
-    format.json { respond_with_204(resource, :json) }
-    format.json_api { respond_with_204(resource, :json_api) }
-    format.nt { render nt: resource, meta: meta }
-    format.ttl { render ttl: resource, meta: meta }
-    format.jsonld { render jsonld: resource, meta: meta }
-    format.rdf { render rdf: resource, meta: meta }
-  end
-
-  def update_respond_blocks_failure(_resource, format)
-    format.html { head 400 }
-    format.js { head 400 }
-    format.json { head 400 }
-    format.json_api { head 400 }
-    format.nt { head 400 }
-  end
-
   private
 
   def authorize_action
     return super unless action_name == 'read'
     authorize Notification, :read?
+  end
+
+  def execute_update
+    n = authenticated_resource
+    read_before = n.read_at.present?
+    read_before || n.permanent? || n.update(read_at: Time.current)
   end
 
   def fetch_more
@@ -177,6 +152,32 @@ class NotificationsController < AuthorizedController
                  value: @unread
     end
   rescue ArgumentError
+    head 400
+  end
+
+  def update_respond_success_serializer(resource, format)
+    respond_with_200(resource, format, include: include_show, meta: meta)
+  end
+
+  def update_respond_success_html(_resource)
+    @notifications = get_notifications
+    @unread = unread_notification_count
+    render 'index'
+  end
+
+  def update_respond_failure_html(_resource)
+    head 400
+  end
+
+  def update_respond_failure_js(_resource)
+    head 400
+  end
+
+  def update_respond_failure_json(_resource)
+    head 400
+  end
+
+  def update_respond_failure_serializer(_resource, _format)
     head 400
   end
 
