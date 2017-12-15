@@ -54,7 +54,7 @@ var lint = function (paths) {
 function browserifyBundle(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
     b.transform(envify({
-        FRONTEND_URL: 'https://argu.dev'
+        FRONTEND_URL: 'https://argu.localdev'
     }));
 
     return b.bundle()
