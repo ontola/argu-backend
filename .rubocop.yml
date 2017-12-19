@@ -26,10 +26,6 @@ Rails/DynamicFindBy:
     - find_by_path
 Rails/SkipsModelValidations:
   Enabled: false
-Style/IfUnlessModifier:
-  MaxLineLength: 100
-Style/WhileUntilModifier:
-  MaxLineLength: 100
 Style/RaiseArgs:
   EnforcedStyle: compact
 Layout/SpaceInsideHashLiteralBraces:
