@@ -14,8 +14,8 @@ class Profile < ApplicationRecord
 
   before_destroy :anonymize_dependencies
   has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception
-  has_many :group_memberships, -> { active }, foreign_key: :member_id, inverse_of: :member
-  has_many :unscoped_group_memberships, class_name: 'GroupMembership', foreign_key: :member_id
+  has_many :group_memberships, -> { active }, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
+  has_many :unscoped_group_memberships, class_name: 'GroupMembership', foreign_key: :member_id, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :edges, through: :groups
   has_many :grants, through: :groups

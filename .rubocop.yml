@@ -72,3 +72,5 @@ Rails/UnknownEnv:
     - staging
 Style/FormatStringToken:
   Enabled: false
+Rails/InverseOf:
+  Enabled: false

@@ -4,7 +4,7 @@ class Source < Edgeable::Base
   include Menuable
 
   belongs_to :page, inverse_of: :sources
-  has_many :linked_records
+  has_many :linked_records, dependent: :destroy
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   alias_attribute :display_name, :name

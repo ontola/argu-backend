@@ -11,10 +11,10 @@ class Forum < Edgeable::Base
 
   belongs_to :page, inverse_of: :forums
   belongs_to :default_decision_group, class_name: 'Group'
-  has_many :banners, inverse_of: :forum
-  has_many :shortnames, inverse_of: :forum
+  has_many :banners, inverse_of: :forum, dependent: :destroy
+  has_many :shortnames, inverse_of: :forum, dependent: :destroy
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
-  has_many :votes, inverse_of: :forum
+  has_many :votes, inverse_of: :forum, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :forum, dependent: :destroy
   has_many :motions, inverse_of: :forum, dependent: :destroy

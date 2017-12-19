@@ -11,7 +11,8 @@ module Edgeable
       has_one :edge,
               as: :owner,
               inverse_of: :owner,
-              required: false
+              required: false,
+              dependent: :restrict_with_exception
 
       before_validation :remove_edge
 

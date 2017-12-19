@@ -26,7 +26,9 @@ module Attachable
   module Serializer
     extend ActiveSupport::Concern
     included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
       has_one :attachment_collection, predicate: NS::ARGU[:attachments]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
 
       def attachment_collection
         object.attachment_collection(user_context: scope)

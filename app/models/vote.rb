@@ -5,7 +5,7 @@ class Vote < Edgeable::Base
   include Loggable
 
   belongs_to :creator, class_name: 'Profile', inverse_of: :votes
-  belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id'
+  belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id', inverse_of: :votes
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
   before_save :decrement_previous_counter_cache, unless: :new_record?

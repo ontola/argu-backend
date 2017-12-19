@@ -18,8 +18,9 @@ class Edge < ApplicationRecord
   has_many :children,
            class_name: 'Edge',
            inverse_of: :parent,
-           foreign_key: :parent_id
-  has_many :decisions, foreign_key: :decisionable_id, source: :decisionable
+           foreign_key: :parent_id,
+           dependent: false
+  has_many :decisions, foreign_key: :decisionable_id, source: :decisionable, dependent: :destroy
   has_one :last_decision,
           -> { order(step: :desc) },
           foreign_key: :decisionable_id,

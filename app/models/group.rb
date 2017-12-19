@@ -13,7 +13,7 @@ class Group < ApplicationRecord
            dependent: :restrict_with_exception
   belongs_to :page, required: true, inverse_of: :groups
   belongs_to :forum
-  has_many :decisions
+  has_many :decisions, foreign_key: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}

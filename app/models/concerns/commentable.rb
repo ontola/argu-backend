@@ -8,7 +8,8 @@ module Commentable
     has_one :top_comment,
             -> { untrashed.where(parent_id: nil).order('comments.created_at ASC') },
             class_name: 'Comment',
-            as: :commentable
+            as: :commentable,
+            dependent: :destroy
 
     with_collection :comments, association: :filtered_threads, pagination: true
 
@@ -35,7 +36,9 @@ module Commentable
   module Serializer
     extend ActiveSupport::Concern
     included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
       has_one :comment_collection, predicate: NS::SCHEMA[:comments]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
 
       def comment_collection
         object.comment_collection(user_context: scope)

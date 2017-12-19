@@ -10,24 +10,28 @@ class User < ApplicationRecord
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
-  has_many :edges
+  has_many :edges, dependent: :restrict_with_exception
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
   has_many :identities, dependent: :destroy
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   # User content
-  has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :vote_matches, inverse_of: :publisher, foreign_key: 'publisher_id'
-  has_many :uploaded_media_objects, class_name: 'MediaObject', inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :vote_matches, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
+  has_many :uploaded_media_objects,
+           class_name: 'MediaObject',
+           inverse_of: :publisher,
+           foreign_key: 'publisher_id',
+           dependent: :restrict_with_exception
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
   accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank

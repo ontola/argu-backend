@@ -44,11 +44,13 @@ module Voteable
   module Serializer
     extend ActiveSupport::Concern
     included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
       has_one :vote_event_collection,
               predicate: NS::ARGU[:voteEvents]
       has_one :default_vote_event,
               key: :voteable_vote_event,
               predicate: NS::ARGU[:voteableVoteEvent]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
 
       def vote_event_collection
         object.vote_event_collection(user_context: scope)

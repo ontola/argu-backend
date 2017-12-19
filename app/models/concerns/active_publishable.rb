@@ -5,7 +5,8 @@ module ActivePublishable
 
   included do
     has_many :publications,
-             through: :edge
+             through: :edge,
+             dependent: :destroy
     has_many :published_publications,
              -> { where('publications.published_at IS NOT NULL') },
              through: :edge,

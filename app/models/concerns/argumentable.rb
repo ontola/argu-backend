@@ -30,7 +30,9 @@ module Argumentable
   module Serializer
     extend ActiveSupport::Concern
     included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
       has_one :argument_collection, predicate: NS::ARGU[:arguments]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
 
       def argument_collection
         object.argument_collection(user_context: scope)

@@ -27,7 +27,9 @@ module Menuable
             object.menu(scope, menu) if scope.is_a?(UserContext)
           end
 
+          # rubocop:disable Rails/HasManyOrHasOneDependent
           has_many method_name, predicate: NS::ARGU["#{menu.to_s.camelize(:lower)}Menu"]
+          # rubocop:enable Rails/HasManyOrHasOneDependent
         end
       end
     end

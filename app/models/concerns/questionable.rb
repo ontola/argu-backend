@@ -6,7 +6,9 @@ module Questionable
   module Serializer
     extend ActiveSupport::Concern
     included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
       has_one :question_collection, predicate: NS::ARGU[:questions]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
 
       def question_collection
         object.question_collection(user_context: scope)
