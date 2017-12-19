@@ -12,7 +12,6 @@ class Phase < Edgeable::Base
   validate :end_date_after_start_date
 
   alias_attribute :display_name, :name
-  attr_accessor :end_time
 
   before_save :update_date_of_project_or_next_phase
 

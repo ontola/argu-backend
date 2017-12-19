@@ -6,7 +6,8 @@ class DirectMessage
   include ActiveModel::Model
   include IRIHelper
 
-  attr_accessor :actor, :body, :email, :resource, :resource_iri, :subject
+  attr_accessor :actor, :body, :email, :subject
+  attr_writer :resource, :resource_iri
   validates :actor, presence: true
   validates :body, presence: true
   validates :email, presence: true

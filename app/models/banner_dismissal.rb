@@ -6,7 +6,8 @@ class BannerDismissal
   include ActiveModel::Dirty
   include StubbornCookie
 
-  attr_accessor :banner, :user, :banner_class, :banner_key
+  attr_accessor :banner_class, :banner_key
+  attr_reader :banner, :user
   define_attribute_methods :banner, :user
 
   validates :banner, :user, presence: true

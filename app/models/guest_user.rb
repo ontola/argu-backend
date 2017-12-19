@@ -2,7 +2,8 @@
 
 class GuestUser < User
   include NoPersistence
-  attr_accessor :cookies, :headers, :id, :session
+  attr_accessor :cookies, :headers, :session
+  attr_writer :id
 
   def access_tokens
     []
