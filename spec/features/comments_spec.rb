@@ -8,7 +8,7 @@ RSpec.feature 'Comments', type: :feature do
   let!(:argument) { create(:argument, parent: motion.edge) }
   let!(:blog_post) do
     create(:blog_post,
-           happening_attributes: {happened_at: DateTime.current},
+           happening_attributes: {happened_at: Time.current},
            parent: motion.edge)
   end
 

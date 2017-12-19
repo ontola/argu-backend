@@ -7,7 +7,7 @@ class CommentsControllerTest < ActionController::TestCase
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
   let(:blog_post) do
-    create(:blog_post, :with_comments, parent: motion.edge, happening_attributes: {happened_at: DateTime.current})
+    create(:blog_post, :with_comments, parent: motion.edge, happening_attributes: {happened_at: Time.current})
   end
   let(:comment) { create(:comment, parent: argument.edge) }
 

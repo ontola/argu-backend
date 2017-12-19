@@ -16,7 +16,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
   end
 
   test 'membership for comminuty profile is invalid' do
-    assert_not GroupMembership.new(group: custom_group, member: Profile.community, start_date: DateTime.current).valid?
+    assert_not GroupMembership.new(group: custom_group, member: Profile.community, start_date: Time.current).valid?
   end
 
   test 'moderator destroy moderatorship' do
@@ -41,7 +41,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
         .joins(:grants)
         .where(grants: {role: Grant.roles[:moderator]})
         .first
-        .update(end_date: DateTime.current)
+        .update(end_date: Time.current)
     end
   end
 
@@ -54,8 +54,8 @@ class GroupMembershipTest < ActiveSupport::TestCase
 
     # cannot create before or during existing membership
     assert_not create_group_membership
-    assert_not create_group_membership(start_date: DateTime.current, end_date: 4.days.from_now)
-    assert_not create_group_membership(start_date: DateTime.current)
+    assert_not create_group_membership(start_date: Time.current, end_date: 4.days.from_now)
+    assert_not create_group_membership(start_date: Time.current)
     subject.update(end_date: nil)
     assert_not create_group_membership
     assert_not create_group_membership(start_date: 3.days.from_now)
@@ -73,7 +73,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
   test 'constraint allows no partial overlapping group_memberships' do
     subject.update(end_date: 2.days.from_now)
     assert_raises(ActiveRecord::StatementInvalid) do
-      second_record.update_columns(member_id: user.profile.id, start_date: DateTime.current, end_date: nil)
+      second_record.update_columns(member_id: user.profile.id, start_date: Time.current, end_date: nil)
     end
   end
 
@@ -86,7 +86,7 @@ class GroupMembershipTest < ActiveSupport::TestCase
 
   private
 
-  def create_group_membership(member: user.profile, group: custom_group, start_date: DateTime.current, end_date: nil)
+  def create_group_membership(member: user.profile, group: custom_group, start_date: Time.current, end_date: nil)
     gm = GroupMembership
       .create(
         group_id: group.id,

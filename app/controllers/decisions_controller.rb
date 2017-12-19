@@ -63,7 +63,7 @@ class DecisionsController < EdgeTreeController
                      .children
                      .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)))
                      .owner
-      decision.build_happening(happened_at: DateTime.current) if decision.happening.blank?
+      decision.build_happening(happened_at: Time.current) if decision.happening.blank?
       decision.edge.build_argu_publication
     end
     decision

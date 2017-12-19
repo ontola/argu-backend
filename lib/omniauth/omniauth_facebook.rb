@@ -17,7 +17,7 @@ module Omniauth
           first_name: first_name,
           middle_name: middle_name,
           last_name: last_name,
-          last_accepted: DateTime.current,
+          last_accepted: Time.current,
           gender: raw['gender'],
           r: r,
           profile_attributes: {
@@ -28,7 +28,7 @@ module Omniauth
         )
         user.identities << identity
         user.shortname = nil
-        user.primary_email_record.confirmed_at = DateTime.current
+        user.primary_email_record.confirmed_at = Time.current
         identity.save!
         user.save!
       end

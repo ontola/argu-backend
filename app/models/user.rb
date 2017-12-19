@@ -94,7 +94,7 @@ class User < ApplicationRecord
   end
 
   def accept_terms!(skip_set_password_mail = false)
-    update!(last_accepted: DateTime.current)
+    update!(last_accepted: Time.current)
     return if skip_set_password_mail || encrypted_password.present?
     token = set_reset_password_token
     SendEmailWorker.perform_async(:set_password, id, passwordToken: token)
@@ -125,7 +125,7 @@ class User < ApplicationRecord
     profile.group_memberships.build(
       member: profile,
       group_id: Group::PUBLIC_ID,
-      start_date: DateTime.current
+      start_date: Time.current
     )
   end
 

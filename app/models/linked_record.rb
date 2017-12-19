@@ -50,7 +50,7 @@ class LinkedRecord < Edgeable::Base
     @default_vote_event = VoteEvent.joins(:edge).where(edges: {parent_id: edge.id}).find_by(group_id: -1)
     @default_vote_event ||= VoteEvent.create!(
       edge: Edge.new(parent: edge, user: User.community),
-      starts_at: DateTime.current,
+      starts_at: Time.current,
       creator: Profile.community,
       publisher: User.community
     )

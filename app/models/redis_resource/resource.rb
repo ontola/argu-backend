@@ -36,7 +36,7 @@ module RedisResource
     def save
       resource.edge.id ||= reserved_edge_id
       resource.id ||= reserved_resource_id
-      resource.created_at ||= DateTime.current
+      resource.created_at ||= Time.current
       store_in_redis
       resource.persisted? ? resource.save!(skip_redis: true) : resource.run_callbacks(:redis_save)
       DataEvent.publish(resource)

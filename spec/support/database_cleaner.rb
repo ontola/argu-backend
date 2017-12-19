@@ -20,7 +20,7 @@ RSpec.configure do |config|
              profile: build(:profile, id: Profile::COMMUNITY_ID))
       create(:page,
              id: 0,
-             last_accepted: DateTime.current,
+             last_accepted: Time.current,
              profile: Profile.new(name: 'public page profile'),
              owner: User.create!(
                shortname: Shortname.new(shortname: 'page_owner'),
@@ -86,15 +86,15 @@ RSpec.configure do |config|
              state: 'forwarded',
              forwarded_user: actor_membership.member.profileable,
              forwarded_group: actor_membership.group,
-             happening_attributes: {happened_at: DateTime.current})
+             happening_attributes: {happened_at: Time.current})
       vote_event = motion.default_vote_event
       create(:vote, parent: vote_event.edge)
       argument = create(:argument, parent: motion.edge)
       create(:vote, parent: argument.edge)
       comment = create(:comment, parent: argument.edge)
       create(:comment, parent: argument.edge, parent_id: comment.id)
-      create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: DateTime.current})
-      blog_post = create(:blog_post, parent: question.edge, happening_attributes: {happened_at: DateTime.current})
+      create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
+      blog_post = create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
       create(:comment, parent: blog_post.edge)
     end
 

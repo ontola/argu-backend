@@ -26,7 +26,7 @@ class PolicyTest < ActiveSupport::TestCase
              parent: send("#{prefix}motion").edge,
              publisher: creator,
              state: 'approved',
-             happening_attributes: {happened_at: DateTime.current})
+             happening_attributes: {happened_at: Time.current})
     end
     let("#{prefix}vote_event") { send("#{prefix}motion").default_vote_event }
     let("#{prefix}vote") { create(:vote, parent: send("#{prefix}vote_event").edge, publisher: creator) }
@@ -38,7 +38,7 @@ class PolicyTest < ActiveSupport::TestCase
     end
     let("#{prefix}blog_post") do
       parent = send("#{prefix}question").edge
-      create(:blog_post, parent: parent, publisher: creator, happening_attributes: {happened_at: DateTime.current})
+      create(:blog_post, parent: parent, publisher: creator, happening_attributes: {happened_at: Time.current})
     end
     let("#{prefix}blog_post_comment") { create(:comment, parent: send("#{prefix}blog_post").edge, publisher: creator) }
   end

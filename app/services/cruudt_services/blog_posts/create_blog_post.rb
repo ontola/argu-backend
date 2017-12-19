@@ -25,7 +25,7 @@ class CreateBlogPost < PublishedCreateService
   def object_attributes=(obj)
     obj.forum ||= resource.forum
     if obj.is_a?(Activity)
-      obj.created_at || DateTime.current
+      obj.created_at || Time.current
       obj.owner ||= resource.creator
       obj.key ||= 'blog_post.happened'
       obj.recipient ||= resource.parent_model

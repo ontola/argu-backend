@@ -79,7 +79,7 @@ module Test
         type: 'tokens',
         attributes: {
           usages: 0,
-          createdAt: DateTime.current,
+          createdAt: Time.current,
           expiresAt: nil,
           retractedAt: nil
         },

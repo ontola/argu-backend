@@ -1,2 +1,2 @@
 -if !resource.is_published? && !resource.try(:is_trashed?)
-  =react_component_store 'PublishSelect', props: {publicationId: resource&.argu_publication&.id, publishAt: resource&.argu_publication&.published_at || DateTime.current, publishType: resource&.argu_publication&.publish_type || 'direct', publishTypes: allowed_publish_types(resource), resourceType: resource.class_name.singularize}
+  =react_component_store 'PublishSelect', props: {publicationId: resource&.argu_publication&.id, publishAt: resource&.argu_publication&.published_at || Time.current, publishType: resource&.argu_publication&.publish_type || 'direct', publishTypes: allowed_publish_types(resource), resourceType: resource.class_name.singularize}

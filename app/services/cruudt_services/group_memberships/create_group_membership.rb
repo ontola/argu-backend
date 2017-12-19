@@ -9,7 +9,7 @@ class CreateGroupMembership < CreateService
                           else
                             attributes[:member].presence || options.fetch(:creator)
                           end
-    attributes[:start_date] ||= DateTime.current
+    attributes[:start_date] ||= Time.current
     super
   end
 

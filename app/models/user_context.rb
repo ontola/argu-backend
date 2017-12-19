@@ -35,7 +35,7 @@ class UserContext
   # @param [Edge] node The node to check
   # @return [Bool] Whether the edge or any of its ancestors is expired
   def expired?(node)
-    return true if node.expires_at? && node.expires_at < DateTime.current
+    return true if node.expires_at? && node.expires_at < Time.current
     find_or_cache_node(node).expired?
   end
 
@@ -74,7 +74,7 @@ class UserContext
   # @param [Edge] node The node to check
   # @return [Bool] Whether the edge or any of its ancestors is trashed
   def trashed?(node)
-    return true if node.trashed_at && node.trashed_at < DateTime.current
+    return true if node.trashed_at && node.trashed_at < Time.current
     find_or_cache_node(node).trashed?
   end
 

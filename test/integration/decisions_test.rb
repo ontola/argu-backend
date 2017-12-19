@@ -22,7 +22,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     create(:decision,
            parent: motion.edge,
            happening_attributes: {
-             happened_at: DateTime.current
+             happened_at: Time.current
            },
            publisher: creator,
            forwarded_user: actor,
@@ -33,7 +33,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     create(:decision,
            parent: motion.edge,
            happening_attributes: {
-             happened_at: DateTime.current
+             happened_at: Time.current
            },
            publisher: creator,
            state: Decision.states[:approved])
@@ -58,7 +58,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     create(:decision,
            parent: motion.edge,
            happening_attributes: {
-             happened_at: DateTime.current
+             happened_at: Time.current
            },
            edge_attributes: {
              argu_publication_attributes: {
@@ -106,7 +106,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     create(:decision,
            parent: motion.edge,
            happening_attributes: {
-             happened_at: DateTime.current
+             happened_at: Time.current
            },
            publisher: creator,
            forwarded_user: nil,

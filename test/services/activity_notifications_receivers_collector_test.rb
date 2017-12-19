@@ -14,7 +14,7 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
   let(:blog_post) do
     create(:blog_post,
            publisher: publisher,
-           happening_attributes: {happened_at: DateTime.current},
+           happening_attributes: {happened_at: Time.current},
            parent: project.edge)
   end
 

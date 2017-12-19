@@ -87,7 +87,7 @@ class Edge < ApplicationRecord
   scope :unpublished, -> { where('edges.is_published = false') }
   scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }
   scope :untrashed, -> { where('edges.trashed_at IS NULL') }
-  scope :expired, -> { where('edges.expires_at <= ?', DateTime.current) }
+  scope :expired, -> { where('edges.expires_at <= ?', Time.current) }
 
   accepts_nested_attributes_for :argu_publication
 
@@ -267,7 +267,7 @@ class Edge < ApplicationRecord
   def trash
     return if trashed_at.present?
     self.class.transaction do
-      update!(trashed_at: DateTime.current)
+      update!(trashed_at: Time.current)
       owner.destroy_notifications if owner.is_loggable?
       decrement_counter_caches if is_published?
     end

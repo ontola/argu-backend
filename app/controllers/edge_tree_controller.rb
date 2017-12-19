@@ -53,7 +53,7 @@ class EdgeTreeController < ServiceController
                  .owner
     if resource.is_publishable?
       resource.edge.build_argu_publication(
-        published_at: DateTime.current,
+        published_at: Time.current,
         follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
       )
     end
@@ -63,7 +63,7 @@ class EdgeTreeController < ServiceController
         .custom_placements
         .new(params.permit(:lat, :lon, :zoom_level))
     end
-    resource.build_happening(created_at: DateTime.current) if resource.is_happenable?
+    resource.build_happening(created_at: Time.current) if resource.is_happenable?
     resource
   end
 

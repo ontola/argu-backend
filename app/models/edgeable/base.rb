@@ -27,7 +27,7 @@ module Edgeable
     }
     scope :expired, lambda {
       joins(edge_join_string)
-        .where("#{connection.quote_table_name("edges_#{class_name}")}.expires_at <= ?", DateTime.current)
+        .where("#{connection.quote_table_name("edges_#{class_name}")}.expires_at <= ?", Time.current)
     }
 
     before_save :save_linked_record
@@ -107,7 +107,7 @@ module Edgeable
     alias pinned? pinned
 
     def pinned=(value)
-      edge.pinned_at = value == '1' ? DateTime.current : nil
+      edge.pinned_at = value == '1' ? Time.current : nil
     end
 
     def reload(_opts = {})

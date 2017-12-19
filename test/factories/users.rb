@@ -16,10 +16,10 @@ FactoryGirl.define do
     notifications_viewed_at nil
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
-    last_accepted DateTime.current
+    last_accepted Time.current
 
     after(:create) do |user|
-      user.primary_email_record.update(confirmed_at: DateTime.current)
+      user.primary_email_record.update(confirmed_at: Time.current)
     end
 
     trait :not_accepted_terms do
@@ -43,7 +43,7 @@ FactoryGirl.define do
         gm = GroupMembership.new(
           group: Group.find(Group::STAFF_ID),
           member: user.profile,
-          start_date: DateTime.current
+          start_date: Time.current
         )
         gm.save!(validate: false)
       end
@@ -64,7 +64,7 @@ FactoryGirl.define do
     end
 
     trait :viewed_notifications_now do
-      notifications_viewed_at DateTime.current
+      notifications_viewed_at Time.current
     end
 
     trait :follows_reactions_directly do

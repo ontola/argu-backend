@@ -114,7 +114,7 @@ module Argu
         end
 
         def create_resource(klass, attributes = {}, options = {})
-          options[:publisher] = create(:user, confirmed_at: DateTime.current) if options[:publisher].nil?
+          options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
           options[:creator] = options[:publisher].profile if options[:creator].nil?
 
           parent_edge = attributes.delete(:parent)
@@ -147,7 +147,7 @@ module Argu
         def reset_publication(publication)
           return if publication.nil?
           publication.update(published_at: publication.published_at - 10.seconds) if publication.published_at.present?
-          if publication.published_at.present? && publication.published_at <= DateTime.current
+          if publication.published_at.present? && publication.published_at <= Time.current
             Sidekiq::Testing.inline! do
               publication.send(:reset)
             end

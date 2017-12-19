@@ -45,7 +45,7 @@ module TestHelper
 
   Page.find_or_create_by(id: 0) do |page|
     page.edge = Edge.new(user: User.community)
-    page.last_accepted = DateTime.current
+    page.last_accepted = Time.current
     page.profile = Profile.new(name: 'public page profile')
     page.owner = User.create!(
       shortname: Shortname.new(shortname: 'page_owner'),

@@ -16,20 +16,20 @@ class ActivityStringTest < ActiveSupport::TestCase
     create(:decision,
            parent: motion.edge,
            state: 'approved',
-           happening_attributes: {happened_at: DateTime.current})
+           happening_attributes: {happened_at: Time.current})
   end
   let!(:rejected_decision) do
     create(:decision,
            parent: motion.edge,
            state: 'rejected',
-           happening_attributes: {happened_at: DateTime.current})
+           happening_attributes: {happened_at: Time.current})
   end
   let(:group) { create(:group, parent: freetown.page.edge) }
   let!(:forwarded_decision) do
     create(:decision,
            parent: motion.edge,
            state: 'forwarded',
-           happening_attributes: {happened_at: DateTime.current},
+           happening_attributes: {happened_at: Time.current},
            forwarded_user_id: create(:group_membership, parent: group).member.profileable,
            forwarded_group_id: group.id)
   end

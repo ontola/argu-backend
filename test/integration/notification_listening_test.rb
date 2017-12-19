@@ -22,7 +22,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            :with_news_follower,
-           happening_attributes: {happened_at: DateTime.current},
+           happening_attributes: {happened_at: Time.current},
            parent: motion.edge)
   end
   let(:staff) { create(:user, :staff) }

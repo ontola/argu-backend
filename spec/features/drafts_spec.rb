@@ -9,12 +9,12 @@ RSpec.feature 'Show drafts', type: :feature do
   let!(:blog_post) do
     create(:blog_post,
            parent: motion.edge,
-           happened_at: DateTime.current,
+           happened_at: Time.current,
            publisher: user,
            edge_attributes: {argu_publication_attributes: {draft: true}})
   end
   let!(:published_blog_post) do
-    create(:blog_post, parent: published_motion.edge, happened_at: DateTime.current, publisher: user)
+    create(:blog_post, parent: published_motion.edge, happened_at: Time.current, publisher: user)
   end
   let!(:motion) do
     create(:motion,

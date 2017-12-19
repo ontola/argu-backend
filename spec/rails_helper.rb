@@ -135,7 +135,7 @@ RSpec.configure do |config|
       if Page.find_by(id: Profile::COMMUNITY_ID).blank?
         create(:page,
                id: 0,
-               last_accepted: DateTime.current,
+               last_accepted: Time.current,
                profile: Profile.new(name: 'public page profile'),
                owner: User.create!(
                  shortname: Shortname.new(shortname: 'page_owner'),

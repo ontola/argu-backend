@@ -102,7 +102,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif current_user.guest?
       create_new_user
     else
-      EmailAddress.create!(user: current_user, email: email, confirmed_at: DateTime.current)
+      EmailAddress.create!(user: current_user, email: email, confirmed_at: Time.current)
       create_identity_for_current_user
     end
   end

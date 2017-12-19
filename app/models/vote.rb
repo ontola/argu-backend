@@ -103,7 +103,7 @@ class Vote < Edgeable::Base
 
   def sanitize_explanation
     self.explanation = explanation.presence
-    self.explained_at = explanation.present? ? DateTime.current : nil
+    self.explained_at = explanation.present? ? Time.current : nil
   end
 
   def up_and_downvote_arguments

@@ -7,7 +7,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   define_cairo
 
   let(:user) { create(:user) }
-  let(:second_email) { create(:email_address, user: user, email: 'second@argu.co', confirmed_at: DateTime.current) }
+  let(:second_email) { create(:email_address, user: user, email: 'second@argu.co', confirmed_at: Time.current) }
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:administrator) { create_administrator(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }

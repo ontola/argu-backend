@@ -123,7 +123,7 @@ module RedisResource
       confirmed_vote.edge.update(user_id: unconfirmed.id)
       redis_resource = RedisResource::Resource
                          .find("temporary.user.#{unconfirmed.id}.vote.#{vote.edge.id}.#{vote.edge.parent.path}")
-      unconfirmed.primary_email_record.update(confirmed_at: DateTime.current)
+      unconfirmed.primary_email_record.update(confirmed_at: Time.current)
       redis_resource.persist(unconfirmed)
     end
 

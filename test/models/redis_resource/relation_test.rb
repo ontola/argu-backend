@@ -70,7 +70,7 @@ module RedisResource
         unconfirmed_relation.persist(unconfirmed)
       end
       # can persist votes of unconfirmed user
-      unconfirmed.primary_email_record.update(confirmed_at: DateTime.current)
+      unconfirmed.primary_email_record.update(confirmed_at: Time.current)
       assert_difference('Vote.count', 2) do
         unconfirmed_relation.persist(unconfirmed)
       end
@@ -91,7 +91,7 @@ module RedisResource
 
       assert_equal 1, user_relation.count
 
-      user.primary_email_record.update(confirmed_at: DateTime.current)
+      user.primary_email_record.update(confirmed_at: Time.current)
       assert_difference('Vote.count', 0) do
         user_relation.persist(user)
       end

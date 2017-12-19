@@ -54,7 +54,7 @@ class Question < Edgeable::Content
   end
 
   def expired?
-    expires_at.present? && expires_at < DateTime.current
+    expires_at.present? && expires_at < Time.current
   end
 
   def move_to(forum, include_motions = false)

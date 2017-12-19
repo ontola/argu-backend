@@ -26,7 +26,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
            edge_attributes: {
-             trashed_at: DateTime.current
+             trashed_at: Time.current
            },
            parent: motion.edge)
   end
@@ -34,7 +34,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
            edge_attributes: {
-             trashed_at: DateTime.current,
+             trashed_at: Time.current,
              argu_publication_attributes: {draft: true}
            },
            parent: motion.edge)
@@ -118,7 +118,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     UpdateBlogPost.new(
       unpublished_blog_post,
       attributes: {
-        edge_attributes: {trashed_at: DateTime.current, argu_publication_attributes: {draft: false}}
+        edge_attributes: {trashed_at: Time.current, argu_publication_attributes: {draft: false}}
       },
       options: service_options
     ).commit
@@ -146,10 +146,10 @@ class CounterCacheTest < ActiveSupport::TestCase
   test 'update opinion count' do
     assert_counts(motion.default_vote_event, opinions: 9)
     create(:vote, parent: motion.default_vote_event.edge)
-    create(:vote, parent: motion.default_vote_event.edge, explanation: '', explained_at: DateTime.current)
-    create(:vote, parent: motion.default_vote_event.edge, explained_at: DateTime.current)
+    create(:vote, parent: motion.default_vote_event.edge, explanation: '', explained_at: Time.current)
+    create(:vote, parent: motion.default_vote_event.edge, explained_at: Time.current)
     opinion =
-      create(:vote, parent: motion.default_vote_event.edge, explanation: 'explanation', explained_at: DateTime.current)
+      create(:vote, parent: motion.default_vote_event.edge, explanation: 'explanation', explained_at: Time.current)
     assert_counts(motion.default_vote_event, opinions: 10)
     opinion.update_column(:explanation, nil)
     assert_counts(motion.default_vote_event, opinions: 10)

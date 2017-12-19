@@ -40,11 +40,11 @@ class FeedController < AuthorizedController
   end
 
   def from_time
-    return DateTime.current if params[:from_time].blank?
+    return Time.current if params[:from_time].blank?
     begin
-      DateTime.parse(params[:from_time]).utc.to_s
+      Time.parse(params[:from_time]).utc.to_s
     rescue ArgumentError
-      DateTime.current
+      Time.current
     end
   end
 

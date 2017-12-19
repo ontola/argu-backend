@@ -19,8 +19,8 @@ class GroupMembership < ApplicationRecord
   scope :active, lambda {
     where(
       'start_date <= ? AND (end_date IS NULL OR end_date > ?)',
-      DateTime.current,
-      DateTime.current
+      Time.current,
+      Time.current
     )
   }
 
@@ -37,7 +37,7 @@ class GroupMembership < ApplicationRecord
   attr_accessor :token
 
   def self.anonymize(collection)
-    collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: DateTime.current)
+    collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
   end
 
   def publisher

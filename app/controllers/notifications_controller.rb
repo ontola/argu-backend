@@ -54,7 +54,7 @@ class NotificationsController < AuthorizedController
 
   def fetch_more
     begin
-      from_time = DateTime.parse(params[:from_time]).utc.to_s
+      from_time = Time.parse(params[:from_time]).utc.to_s
     rescue ArgumentError
       from_time = nil
     end
@@ -130,7 +130,7 @@ class NotificationsController < AuthorizedController
   end
 
   def refresh
-    since = DateTime.parse(last_notification).utc.to_s(:db) if last_notification
+    since = Time.parse(last_notification).utc.to_s(:db) if last_notification
     new_available = true
     if since.present?
       new_available = policy_scope(Notification)

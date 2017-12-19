@@ -2,7 +2,7 @@
 
 class DestroyGroupMembership < DestroyService
   def initialize(resource, attributes: {}, options: {})
-    attributes = {end_date: DateTime.current}
+    attributes = {end_date: Time.current}
     super
   end
 

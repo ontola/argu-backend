@@ -239,7 +239,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     Sidekiq::Testing.inline! do
       Notification
         .where('notification_type != ?', Notification.notification_types[:confirmation_reminder])
-        .update_all(read_at: DateTime.current)
+        .update_all(read_at: Time.current)
       travel 2.days do
         DirectNotificationsSchedulerWorker.new.perform
       end

@@ -7,19 +7,19 @@ class NewsBoy < ApplicationRecord
 
   def self.published
     where('published_at <= ? AND (ends_at IS NULL OR ends_at > ?)',
-          DateTime.current,
-          DateTime.current)
+          Time.current,
+          Time.current)
   end
 
   def self.unpublished
     where('published_at IS NULL OR published_at > ? OR ends_at < ?',
-          DateTime.current,
-          DateTime.current)
+          Time.current,
+          Time.current)
   end
 
   def self.ended
     where('published_at IS NOT NULL AND ends_at IS NOT NULL AND ends_at < ?',
-          DateTime.current)
+          Time.current)
   end
 
   def is_draft?
@@ -28,7 +28,7 @@ class NewsBoy < ApplicationRecord
 
   def is_published?
     published_at.present? &&
-      published_at < DateTime.current &&
-      (ends_at.nil? || ends_at > DateTime.current)
+      published_at < Time.current &&
+      (ends_at.nil? || ends_at > Time.current)
   end
 end

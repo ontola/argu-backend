@@ -20,7 +20,7 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
     t_notifications = Notification.arel_table
     Notification
       .where(t_notifications[:read_at].eq(nil))
-      .where(t_notifications[:send_mail_after].lt(DateTime.current))
+      .where(t_notifications[:send_mail_after].lt(Time.current))
       .each do |notification|
       notification.update!(send_mail_after: nil)
       Argu::API

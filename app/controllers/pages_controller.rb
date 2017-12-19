@@ -166,7 +166,7 @@ class PagesController < EdgeTreeController
                       .to_h
                       .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)
-    @_permit_params[:last_accepted] = DateTime.current if permit_params[:last_accepted] == '1'
+    @_permit_params[:last_accepted] = Time.current if permit_params[:last_accepted] == '1'
     @_permit_params
   end
 

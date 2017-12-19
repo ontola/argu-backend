@@ -31,7 +31,7 @@ module Voteable
     def create_default_vote_event
       VoteEvent.create!(
         edge: Edge.new(parent: edge, user: publisher, is_published: true),
-        starts_at: DateTime.current,
+        starts_at: Time.current,
         creator_id: creator.id,
         publisher_id: publisher.id,
         forum_id: try(:forum_id)

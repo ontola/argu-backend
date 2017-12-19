@@ -21,8 +21,8 @@ class UserContext
     def self.build(edge, parent, user_context)
       n = Node.new
       n.id = edge.id
-      n.expired = parent&.expired || edge.expires_at && edge.expires_at < DateTime.current
-      n.expired = edge.owner.starts_at > DateTime.current if !n.expired && edge.owner_type == 'VoteEvent'
+      n.expired = parent&.expired || edge.expires_at && edge.expires_at < Time.current
+      n.expired = edge.owner.starts_at > Time.current if !n.expired && edge.owner_type == 'VoteEvent'
       n.trashed = parent&.trashed || edge.is_trashed?
       n.unpublished = parent&.unpublished || !edge.is_published
       n.user_context = user_context

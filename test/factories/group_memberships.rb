@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :group_membership do
     member { passed_in?(:member) ? member : create(:profile) }
-    start_date DateTime.current
+    start_date Time.current
   end
 end
