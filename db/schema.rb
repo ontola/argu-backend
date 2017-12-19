@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219105029) do
+ActiveRecord::Schema.define(version: 20171219105401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -412,14 +412,6 @@ ActiveRecord::Schema.define(version: 20171219105029) do
     t.string "owner_type"
     t.index ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
-  end
-
-  create_table "page_memberships", id: :serial, force: :cascade do |t|
-    t.integer "profile_id", null: false
-    t.integer "page_id", null: false
-    t.integer "role", default: 0, null: false
-    t.index ["page_id"], name: "index_page_memberships_on_page_id"
-    t.index ["profile_id"], name: "index_page_memberships_on_profile_id"
   end
 
   create_table "pages", id: :serial, force: :cascade do |t|
