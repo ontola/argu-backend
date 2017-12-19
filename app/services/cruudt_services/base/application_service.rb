@@ -87,7 +87,7 @@ class ApplicationService
 
   def placements_attributes
     attrs = @attributes[:edge_attributes][:placements_attributes]
-    attrs.each do |_key, hash|
+    attrs.to_h.each_value do |hash|
       hash.merge!(creator: @options[:creator], publisher: @options[:publisher])
     end
   end
@@ -112,7 +112,7 @@ class ApplicationService
   # @note Requires `object_attributes=` to be overridden in the child class.
   def set_nested_associations
     return unless resource.nested_attributes_options?
-    resource.nested_attributes_options.keys.each do |association|
+    resource.nested_attributes_options.each_key do |association|
       next if association == :edge
       association_instance = resource.public_send(association)
       if association_instance.respond_to?(:length)

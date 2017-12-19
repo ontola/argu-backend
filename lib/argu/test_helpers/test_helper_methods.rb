@@ -42,7 +42,7 @@ module Argu
           attributes[:edge_attributes] ||= {} if model_type.to_s.classify.constantize.is_publishable?
 
           if klass.nested_attributes_options?
-            klass.nested_attributes_options.keys.each do |association|
+            klass.nested_attributes_options.each_key do |association|
               if attributes.include? association
                 attributes["#{association}_attributes"] = attributes.delete(association).attributes
               end

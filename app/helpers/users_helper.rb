@@ -50,7 +50,7 @@ module UsersHelper
 
   def redirect_with_r(user)
     if user.r.present?
-      r = URI.decode(user.r)
+      r = user.r
       user.update r: ''
     end
     redirect_to r.presence || root_path

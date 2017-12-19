@@ -2,8 +2,7 @@
 
 class DestroyGroupMembership < DestroyService
   def initialize(resource, attributes: {}, options: {})
-    attributes = {end_date: Time.current}
-    super
+    super(resource, attributes: attributes.merge(end_date: Time.current), options: options)
   end
 
   private

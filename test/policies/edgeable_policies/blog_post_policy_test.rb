@@ -15,6 +15,5 @@ class BlogPostPolicyTest < PolicyTest
 
   alias create_results moderator_plus_results
   alias create_expired_results moderator_plus_results
-  alias create_results moderator_plus_results
   alias feed_results nobody_results
 end

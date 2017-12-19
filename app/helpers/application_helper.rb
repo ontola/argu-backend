@@ -78,13 +78,6 @@ module ApplicationHelper
     uri.to_s
   end
 
-  def r_to_url_options(r)
-    url_options = Rails.application.routes.recognize_path(Addressable::URI.parse(URI.decode(r)).path)
-    [url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize]
-  rescue ActionController::RoutingError
-    [nil, nil]
-  end
-
   def remote_if_modern
     {remote: browser.modern?, turbolinks: false_unless_iframe}
   end

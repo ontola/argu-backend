@@ -8,11 +8,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include NestedResourceHelper
 
   def self.provides_callback_for(provider)
-    class_eval %{
+    class_eval <<-RUBY, __FILE__, __LINE__ + 1
       def #{provider}
         setup_provider(:#{provider})
       end
-    }
+    RUBY
   end
 
   %i[twitter facebook].each do |provider|
@@ -131,7 +131,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in resource_or_scope, *args
     redirect =
       if resource_or_scope.try(:r).present?
-        URI.decode(resource_or_scope.r) || root_path
+        resource_or_scope.r || root_path
       else
         after_sign_in_path_for(resource_or_scope)
       end

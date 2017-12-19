@@ -62,3 +62,13 @@ Metrics/BlockLength:
     - shared_examples_for
     - test
     - setup
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
+Style/FormatStringToken:
+  Enabled: false

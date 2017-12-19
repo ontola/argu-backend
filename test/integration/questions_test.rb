@@ -10,7 +10,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       analytics: stats_opt('questions', 'create_success'),
-      results: {should: :true, response: 302},
+      results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
         edge_attributes: {

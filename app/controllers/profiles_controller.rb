@@ -75,10 +75,9 @@ class ProfilesController < ApplicationController
   def redirect_url
     return cookies.delete(:token) if cookies[:token].present?
     return if @resource.try(:r).blank?
-    r = URI.decode(@resource.r)
+    r = @resource.r
     @resource.update r: ''
-    r_opts = r_to_url_options(r)[0]
-    r_opts.present? ? r_opts.merge(Addressable::URI.parse(r).query_values || {}) : r
+    r
   end
 
   def search_scope(q)

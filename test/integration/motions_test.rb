@@ -51,7 +51,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_success'),
       parent: :freetown,
       results: {
-        should: :true,
+        should: true,
         response: 302
       }
     )
@@ -64,7 +64,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_success'),
       parent: :freetown,
       results: {
-        should: :true,
+        should: true,
         response: 302
       }
     )
@@ -79,7 +79,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     general_update(
       attributes: {question_id: ''},
       results: {
-        should: :true,
+        should: true,
         response: 302
       }
     )
@@ -93,7 +93,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       analytics: stats_opt('motions', 'create_success'),
-      results: {should: :true, response: 302},
+      results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
         edge_attributes: {
@@ -178,7 +178,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     general_update(
-      results: {should: :true, response: 302},
+      results: {should: true, response: 302},
       record: :motion_with_placement,
       attributes: {
         edge_attributes: {
@@ -203,7 +203,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     general_update(
-      results: {should: :true, response: 302},
+      results: {should: true, response: 302},
       record: :motion_with_placement,
       attributes: {
         edge_attributes: {

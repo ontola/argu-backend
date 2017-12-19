@@ -98,7 +98,7 @@ module Argu
           let(:expect_post_create_serializer) { expect_created }
           let(:expect_post_create_failed_html) do
             expect_success
-            invalid_create_params[class_sym].each { |_k, v| expect(response.body).to(include(v)) }
+            invalid_create_params[class_sym].each_value { |v| expect(response.body).to(include(v)) }
           end
           let(:expect_post_create_failed_serializer) { expect(response.code).to eq('422') }
 
@@ -125,7 +125,7 @@ module Argu
           let(:expect_put_update_serializer) { expect(response.code).to eq('204') }
           let(:expect_put_update_failed_html) do
             expect_success
-            invalid_update_params[class_sym].each { |_k, v| expect(response.body).to(include(v)) }
+            invalid_update_params[class_sym].each_value { |v| expect(response.body).to(include(v)) }
           end
           let(:expect_put_update_failed_serializer) { expect(response.code).to eq('422') }
 
