@@ -25,9 +25,7 @@ module Oauth
       remember_me = %w[1 true].include?(params[:user].try(:[], :remember_me) || params[:remember_me])
       guest_session_id = session.id
       response = authorize_response
-      if response.is_a?(Doorkeeper::OAuth::ErrorResponse)
-        raise Doorkeeper::Errors::DoorkeeperError.new(response.name)
-      end
+      raise Doorkeeper::Errors::DoorkeeperError.new(response.name) if response.is_a?(Doorkeeper::OAuth::ErrorResponse)
       set_argu_client_token_cookie(
         response.token.token,
         remember_me ? response.token.created_at + response.token.expires_in : nil

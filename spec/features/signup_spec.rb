@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Signup', type: :feature do
-  include ApplicationHelper, UsersHelper
+  include ApplicationHelper
+  include UsersHelper
   let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
   define_freetown('default', attributes: {name: 'default'})
   define_freetown(attributes: {name: 'freetown'})

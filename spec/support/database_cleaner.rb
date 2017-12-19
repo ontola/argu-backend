@@ -116,9 +116,7 @@ RSpec.configure do |config|
     end
 
     config.around(:each) do |example|
-      if example.metadata[:clean_db_strategy]
-        DatabaseCleaner.strategy = example.metadata[:clean_db_strategy]
-      end
+      DatabaseCleaner.strategy = example.metadata[:clean_db_strategy] if example.metadata[:clean_db_strategy]
 
       DatabaseCleaner.cleaning do
         if example.metadata[:js] || example.metadata[:driver]

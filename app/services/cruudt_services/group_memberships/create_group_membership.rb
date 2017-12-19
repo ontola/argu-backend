@@ -6,10 +6,8 @@ class CreateGroupMembership < CreateService
     attributes = HashWithIndifferentAccess.new(attributes)
     attributes[:member] = if attributes['shortname'].present?
                             Shortname.find_resource(attributes.delete('shortname')).profile
-                          elsif attributes[:member].present?
-                            attributes[:member]
                           else
-                            options.fetch(:creator)
+                            attributes[:member].presence || options.fetch(:creator)
                           end
     attributes[:start_date] ||= DateTime.current
     super

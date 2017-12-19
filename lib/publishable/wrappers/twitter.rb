@@ -19,7 +19,7 @@ module Publishable
       end
 
       def image_url
-        verify && verify.profile_image_uri.to_s
+        verify&.profile_image_uri.to_s
       end
 
       delegate :name, to: :verify

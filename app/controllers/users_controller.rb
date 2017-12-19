@@ -111,9 +111,7 @@ class UsersController < AuthorizedController
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)
-    if pp[:primary_email].present?
-      pp['email_addresses_attributes'][pp[:primary_email][1..-2]][:primary] = true
-    end
+    pp['email_addresses_attributes'][pp[:primary_email][1..-2]][:primary] = true if pp[:primary_email].present?
     pp.except(:primary_email)
   end
 
@@ -176,9 +174,7 @@ class UsersController < AuthorizedController
 
   def execute_update
     if password_required
-      if authenticated_resource.update_with_password(permit_params(true))
-        bypass_sign_in(authenticated_resource)
-      end
+      bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params(true))
     else
       authenticated_resource.update_without_password(permit_params)
     end

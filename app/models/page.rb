@@ -78,7 +78,7 @@ class Page < Edgeable::Base
       options: {publisher: owner.profileable, creator: owner}
     )
     service.on(:create_group_membership_failed) do |gm|
-      raise gm.errors.full_messages
+      raise gm.errors.full_messages.join('\n')
     end
     service.commit
   end

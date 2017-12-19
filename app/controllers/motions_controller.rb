@@ -9,7 +9,7 @@ class MotionsController < EdgeTreeController
     skip_verify_policy_authorized(true)
     if params[:q].present? && params[:thing].present?
       @motions = policy_scope(parent_resource!.motions).search(params[:q])
-      render json: @motions.present? ? @motions : {data: []}
+      render json: @motions.presence || {data: []}
     else
       skip_verify_policy_scoped(true)
       errors = []

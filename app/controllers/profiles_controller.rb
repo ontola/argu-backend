@@ -7,7 +7,7 @@ class ProfilesController < ApplicationController
     return if current_user.guest? || params[:q].blank?
     q = params[:q].tr(' ', '|')
     @profiles = search_scope(q).includes(:default_profile_photo, profileable: %i[shortname email_addresses])
-    return unless params[:things] && params[:things].split(',').include?('pages')
+    return unless params[:things]&.split(',')&.include?('pages')
     @profiles += policy_scope(Profile)
                    .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
   end

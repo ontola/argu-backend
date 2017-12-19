@@ -128,7 +128,7 @@ class Edge < ApplicationRecord
 
   # @return [Array] The ids of (persisted) ancestors, excluding self
   def persisted_ancestor_ids
-    parent && parent.persisted_edge.path.split('.').map(&:to_i)
+    parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
   end
 
   # @return [Array] The ids of (persisted) ancestors, including self if persisted
