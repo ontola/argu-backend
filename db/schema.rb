@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128084749) do
+ActiveRecord::Schema.define(version: 20171219105029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,19 +18,6 @@ ActiveRecord::Schema.define(version: 20171128084749) do
   enable_extension "hstore"
   enable_extension "ltree"
   enable_extension "uuid-ossp"
-
-  create_table "access_tokens", id: :serial, force: :cascade do |t|
-    t.integer "item_id"
-    t.string "item_type"
-    t.string "access_token", null: false
-    t.integer "profile_id", null: false
-    t.integer "usages", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "sign_ups", default: 0
-    t.index ["access_token"], name: "index_access_tokens_on_access_token"
-    t.index ["item_id", "item_type"], name: "index_access_tokens_on_item_id_and_item_type"
-  end
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "trackable_id"
@@ -728,7 +715,6 @@ ActiveRecord::Schema.define(version: 20171128084749) do
     t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type"
   end
 
-  add_foreign_key "access_tokens", "profiles"
   add_foreign_key "activities", "edges", column: "recipient_edge_id"
   add_foreign_key "activities", "edges", column: "trackable_edge_id"
   add_foreign_key "arguments", "profiles", column: "creator_id"

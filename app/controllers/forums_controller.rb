@@ -7,7 +7,6 @@ class ForumsController < EdgeTreeController
   skip_before_action :authorize_action, only: %i[discover index]
   skip_before_action :check_if_registered, only: :discover
   skip_after_action :verify_authorized, only: :discover
-  before_action :redirect_bearer_token
 
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
@@ -129,14 +128,6 @@ class ForumsController < EdgeTreeController
 
   def photo_params_nesting_path
     []
-  end
-
-  # @todo remove when old links are no longer used
-  def redirect_bearer_token
-    access_token = AccessToken.find_by(access_token: params[:at])
-    return if access_token.blank?
-    access_token.increment!(:usages)
-    redirect_to BEARER_TOKEN_TEMPLATE.expand(access_token: access_token.access_token)
   end
 
   def redirect_generic_shortnames
