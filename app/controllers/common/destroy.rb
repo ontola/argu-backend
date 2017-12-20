@@ -64,8 +64,8 @@ module Common
       end
 
       # @!visibility public
-      def destroy_respond_success_js(_)
-        render
+      def destroy_respond_success_js(resource)
+        respond_with_redirect_success_js(resource, :destroy)
       end
 
       def execute_destroy
