@@ -26,7 +26,7 @@ module Menus
             href: href,
             image: follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o',
             link_opts: {
-              data: {method: type == :never ? 'DELETE' : 'POST'}
+              data: {remote: true, method: type == :never ? 'DELETE' : 'POST'}
             }
           )
         end

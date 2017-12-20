@@ -7,7 +7,7 @@
       .cover-overlay
     - if !current_user.has_favorite?(forum.edge) && policy(forum).create_child?(:favorites, edge: forum.edge)
       .sticky--top-left
-        =link_to forum_favorites_path(forum), data: {method: :post, turbolinks: false_unless_iframe}, rel: :nofollow, class: 'btn--transparant'
+        =link_to forum_favorites_path(forum), data: {remote: true, method: :post, turbolinks: false_unless_iframe}, rel: :nofollow, class: 'btn--transparant'
           span.fa.fa-plus
           span.icon-left= t('forums.join.title')
     - if policy(forum).update?

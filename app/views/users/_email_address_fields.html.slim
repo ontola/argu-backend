@@ -13,7 +13,7 @@ table.nested-fields
         -if f.object.confirmed_at.present?
           span= t('users.registrations.confirmed')
         -elsif f.object.persisted?
-          =link_to t('devise.confirmations.send'), user_confirmation_path(user: {email: f.object.email}), rel: :nofollow, data: {method: :post}
+          =link_to t('devise.confirmations.send'), user_confirmation_path(user: {email: f.object.email}), rel: :nofollow, data: {remote: true, method: :post}
       td[style='width: 50px;']
         -unless f.object.primary?
           =link_to_remove_association 'X', f, class: 'btn btn--light'

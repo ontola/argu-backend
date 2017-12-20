@@ -9,7 +9,7 @@
           - @user.profile.grants.administrator.each do |grant|
             li=link_to grant.edge.owner.display_name, grant.edge.owner
       - else
-        =semantic_form_for @user, url: user_registration_path, method: :delete, html: {class: 'confirm'} do |f|
+        =semantic_form_for @user, url: user_registration_path, remote: true, method: :delete, html: {class: 'confirm'} do |f|
           p= t('users_cancel_info')
           p= t('users_cancel_howto')
           =f.inputs do

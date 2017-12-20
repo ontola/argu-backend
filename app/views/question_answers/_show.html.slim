@@ -2,5 +2,5 @@
   - if policy(model).destroy?
     .outside-the-box
       =link_to motion_path(model, motion: {question_id: nil}),
-               data: {method: :patch, confirm: t('question_answers.destroy.confirmation')}
+               data: {remote: true, method: :patch, confirm: t('question_answers.destroy.confirmation')}
         span[class="fa fa-unlink"]

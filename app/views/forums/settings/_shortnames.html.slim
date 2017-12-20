@@ -21,6 +21,6 @@ table
         td= link_to shortname.owner.display_name, shortname.owner
         td
           =link_to t('edit'), edit_shortname_url(shortname), class: 'btn'
-          =link_to t('destroy'), shortname_url(shortname), class: 'btn btn--warning', data: {method: :delete, confirm: t('destroy_confirmation')}
+          =link_to t('destroy'), shortname_url(shortname), class: 'btn btn--warning', data: {remote: true, method: :delete, confirm: t('destroy_confirmation')}
 - if policy(@forum.shortnames.new).create?
   =link_to t('newe_type', type: t('shortnames.type')), new_forum_shortname_path(@forum), class: 'btn'

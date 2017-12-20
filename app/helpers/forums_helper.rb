@@ -78,7 +78,7 @@ module ForumsHelper
     items << link_item(t('forums.leave'),
                        forum_favorites_path(resource),
                        fa: 'sign-out',
-                       data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
+                       data: {method: :delete, remote: true, confirm: t('forums.leave_confirmation')})
   end
 
   def options_for_public_grant
