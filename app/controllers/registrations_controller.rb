@@ -45,6 +45,10 @@ class RegistrationsController < Devise::RegistrationsController
                    action: 'destroy',
                    label: @user.id
         format.html { redirect_to root_path, status: 303, notice: t('type_destroy_success', type: 'Account') }
+        format.js do
+          flash[:notice] = t('type_destroy_success', type: 'Account')
+          render 'turbolinks_redirect', locals: {location: root_url}
+        end
         format.json { respond_with_204(@user, :json) }
         format.json_api { respond_with_204(@user, :json_api) }
         format.n3 { respond_with_204(@user, :n3) }
