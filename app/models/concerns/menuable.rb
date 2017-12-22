@@ -28,7 +28,7 @@ module Menuable
           end
 
           # rubocop:disable Rails/HasManyOrHasOneDependent
-          has_many method_name, predicate: NS::ARGU["#{menu.to_s.camelize(:lower)}Menu"]
+          has_one method_name, predicate: NS::ARGU["#{menu.to_s.camelize(:lower)}Menu"]
           # rubocop:enable Rails/HasManyOrHasOneDependent
         end
       end
