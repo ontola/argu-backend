@@ -286,6 +286,17 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
+  test 'user should not delete destroy without confirmation' do
+    sign_in user
+
+    assert_difference('User.count', 0) do
+      delete user_registration_path,
+             params: {
+               user: {}
+             }
+    end
+  end
+
   test 'user should delete destroy with group_membership' do
     sign_in user
     group = create(:group, parent: freetown.page.edge)

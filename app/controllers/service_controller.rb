@@ -57,7 +57,7 @@ class ServiceController < AuthorizedController
   def destroy_service
     @destroy_service ||= service_klass.new(
       resource_by_id!,
-      options: service_options
+      options: service_options.merge(confirmation_string: params[model_name].try(:[], :confirmation_string))
     )
   end
 

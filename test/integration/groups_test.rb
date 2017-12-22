@@ -160,10 +160,18 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference 'Group.count', -1 do
-      delete group_path(@group)
+      delete group_path(@group), params: {group: {confirmation_string: 'remove'}}
     end
 
     assert_response 303
+  end
+
+  test 'administrator should not delete destroy without confirmation' do
+    sign_in administrator
+
+    assert_difference 'Group.count', 0 do
+      delete group_path(@group)
+    end
   end
 
   test 'administrator should put update' do

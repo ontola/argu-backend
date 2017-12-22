@@ -35,7 +35,7 @@ class RegistrationsController < Devise::RegistrationsController
   def destroy
     @user = User.find current_user.id
     authorize @user, :destroy?
-    unless params[:user][:confirmation_string] == t('users_cancel_string')
+    unless params[:user].try(:[], :confirmation_string) == t('users_cancel_string')
       @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
     end
     respond_to do |format|

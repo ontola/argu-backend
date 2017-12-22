@@ -381,6 +381,18 @@ class PagesTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'administrator should not delete destroy page without confirmation' do
+    sign_in page.owner.profileable
+    freetown
+
+    assert_difference('Page.count', 0) do
+      delete page_path(page),
+             params: {
+               page: {}
+             }
+    end
+  end
+
   ####################################
   # As Staff
   ####################################

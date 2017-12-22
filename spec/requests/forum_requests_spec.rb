@@ -22,6 +22,7 @@ RSpec.describe 'Forums', type: :request do
     expect(response.body).to(include('n1'))
   end
   let(:expect_put_update_failed_html) { expect_post_create_failed_html }
+  let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
 
   subject { holland }
   it_behaves_like 'requests', skip: %i[trash untrash new create index]

@@ -111,13 +111,6 @@ class PagesController < EdgeTreeController
     redirect_to(delete_page_path(resource))
   end
 
-  def execute_destroy
-    unless params[:page][:confirmation_string] == t('pages.settings.advanced.delete.confirm.string')
-      authenticated_resource.errors.add(:confirmation_string, t('errors.messages.should_match'))
-    end
-    authenticated_resource.errors.empty? && authenticated_resource.destroy
-  end
-
   def handle_not_authorized_error(exception)
     us_po = policy(current_user) unless current_user.guest?
     return super unless us_po&.max_pages_reached? && request.format.html?

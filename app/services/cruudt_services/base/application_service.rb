@@ -35,7 +35,7 @@ class ApplicationService
   # @see {after_save}
   def commit
     ActiveRecord::Base.transaction do
-      @actions[service_action] = resource.public_send service_method
+      @actions[service_action] = resource.public_send(service_method) if resource.errors.empty?
       after_save if @actions[service_action]
 
       publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]

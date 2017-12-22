@@ -410,6 +410,26 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'staff should delete destory forum with confirmation string' do
+    sign_in staff
+
+    assert_difference('Forum.count', -1) do
+      delete forum_path(freetown),
+             params: {forum: {confirmation_string: 'remove'}}
+    end
+  end
+
+  test 'staff should not delete destory forum without confirmation string' do
+    sign_in staff
+
+    assert_difference('Forum.count', 0) do
+      delete forum_path(freetown),
+             params: {
+               forum: {}
+             }
+    end
+  end
+
   private
 
   def included_in_items?(item)
