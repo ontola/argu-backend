@@ -5,6 +5,10 @@ module Common
   # Methods are named using their numbered counterpart for brevity
   #   and consistency.
   module Responses
+    def meta
+      []
+    end
+
     # Method to determine where the action should redirect to after it fails.
     # @param [Class] resource The resource from the result of the action
     def redirect_model_failure(resource)
@@ -21,35 +25,19 @@ module Common
       case format
       when :json, :json_api
         render opts.merge(json: resource)
-      when :n3
-        render opts.merge(n3: resource)
-      when :nt
-        render opts.merge(nt: resource)
-      when :ttl
-        render opts.merge(ttl: resource)
-      when :jsonld
-        render opts.merge(jsonld: resource)
-      when :rdf
-        render opts.merge(rdf: resource)
+      when :n3, :nt, :ttl, :jsonld, :rdf
+        render opts.merge(format => resource, meta: meta)
       else
         raise_unkown_format
       end
     end
 
-    def respond_with_201(resource, format)
+    def respond_with_201(resource, format, opts = {})
       case format
       when :json, :json_api
         render json: resource, status: :created, location: resource.iri.to_s
-      when :n3
-        render n3: resource, status: :created, location: resource.iri.to_s
-      when :nt
-        render nt: resource, status: :created, location: resource.iri.to_s
-      when :ttl
-        render ttl: resource, status: :created, location: resource.iri.to_s
-      when :jsonld
-        render jsonld: resource, status: :created, location: resource.iri.to_s
-      when :rdf
-        render rdf: resource, status: :created, location: resource.iri.to_s
+      when :n3, :nt, :ttl, :jsonld, :rdf
+        render opts.merge(format => resource, status: :created, meta: meta)
       when :js
         head :created
       else
@@ -77,18 +65,10 @@ module Common
 
     def respond_with_400(resource, format)
       case format
-      when :json, :json_api
+      when :json
         render json: resource.errors, status: :bad_request
-      when :n3
-        render n3: resource.errors, status: :bad_request
-      when :nt
-        render nt: resource.errors, status: :bad_request
-      when :ttl
-        render ttl: resource.errors, status: :bad_request
-      when :jsonld
-        render jsonld: resource.errors, status: :bad_request
-      when :rdf
-        render rdf: resource.errors, status: :bad_request
+      when :json_api, :n3, :nt, :ttl, :jsonld, :rdf
+        render json_api_error(400, resource.errors)
       when :js
         head 400
       else
@@ -100,9 +80,7 @@ module Common
       case format
       when :json
         render json_error(422, resource.errors)
-      when :json_api
-        render json_api_error(422, resource.errors)
-      when :n3, :nt, :ttl, :jsonld, :rdf
+      when :json_api, :n3, :nt, :ttl, :jsonld, :rdf
         render json_api_error(422, resource.errors)
       else
         raise_unkown_format

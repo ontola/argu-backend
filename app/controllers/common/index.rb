@@ -60,7 +60,7 @@ module Common
         when :json_api
           render json: index_response_association, include: include_index
         else
-          render format => index_response_association, include: include_index
+          render format => index_response_association, meta: meta, include: include_index
         end
       end
     end
