@@ -56,6 +56,19 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body['notifications']['unread'], 1
   end
 
+  test 'follower should get index as nt' do
+    argument
+    sign_in follower
+    get notifications_path, params: {format: :nt}
+    assert_response 200
+    assert_includes response.body,
+                    [
+                      "<#{argu_url('/n', type: :paginated)}>",
+                      '<https://argu.co/ns/core#unreadCount>',
+                      '"1"^^<http://www.w3.org/2001/XMLSchema#integer> .'
+                    ].join(' ')
+  end
+
   test 'follower should mark as read' do
     argument
     sign_in follower
