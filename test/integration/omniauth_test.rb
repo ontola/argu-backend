@@ -54,6 +54,14 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     visit_facebook_oauth_path(expected_r: user_path(user), favorites: 1, r: user_path(user), votes: 1)
   end
 
+  test 'guest should sign in with facebook with encoded r' do
+    facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
+    r = new_motion_comment_path(motion, comment: {body: 'this is a text'})
+    visit_facebook_oauth_path(expected_r: r, favorites: 1, r: r, votes: 1)
+    follow_redirect!
+    assert_select '.comment_form textarea', 'this is a text'
+  end
+
   test 'guest should sign in with facebook with wrong r' do
     facebook_mock(email: 'user_fb_only@argu.co', uid: fb_user_identity.uid)
 
