@@ -41,6 +41,15 @@ module Parentable
     end
   end
 
+  module Serializer
+    extend ActiveSupport::Concern
+    included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
+      has_one :parent_model, key: :parent, predicate: NS::SCHEMA[:isPartOf]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
+    end
+  end
+
   module ActiveRecordExtension
     def self.included(base)
       base.class_eval do

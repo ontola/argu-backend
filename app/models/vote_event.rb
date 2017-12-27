@@ -16,12 +16,24 @@ class VoteEvent < Edgeable::Base
 
   delegate :is_trashed?, to: :parent_model
 
+  def con_count
+    children_count(:votes_con)
+  end
+
   def display_name
     'Argu voting'
   end
 
   def iri_opts
     super.merge(id: to_param)
+  end
+
+  def neutral_count
+    children_count(:votes_neutral)
+  end
+
+  def pro_count
+    children_count(:votes_pro)
   end
 
   def stats

@@ -76,11 +76,15 @@ class Vote < Edgeable::Base
     self.for.to_sym
   end
 
+  def pinned_at
+    nil
+  end
+
   def store_in_redis?(opts = {})
     !opts[:skip_redis] && !publisher.confirmed? && !creator.confirmed?
   end
 
-  delegate :is_trashed?, to: :parent_model
+  delegate :is_trashed?, :trashed_at, to: :parent_model
 
   # #########Class methods###########
   def self.ordered(votes)
