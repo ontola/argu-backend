@@ -8,23 +8,14 @@ class MenuItemSerializer < BaseSerializer
   has_one :parent, predicate: NS::SCHEMA[:isPartOf]
 
   has_many :menus, predicate: NS::ARGU[:menuItems]
-  has_one :image, predicate: NS::SCHEMA[:image] do
-    obj = object.image
-    if obj
-      if obj.is_a?(MediaObject)
-        obj
-      elsif obj.is_a?(String)
-        obj = RDF::URI(obj.gsub(/^fa-/, 'http://fontawesome.io/icon/'))
-        {
-          id: obj,
-          type: NS::ARGU[:FontAwesomeIcon]
-        }
-      end
-    end
-  end
+  has_one :image, predicate: NS::SCHEMA[:image]
 
   def data
     object.link_opts.try(:[], :data)
+  end
+
+  def image
+    serialize_image(object.image)
   end
 
   def type
