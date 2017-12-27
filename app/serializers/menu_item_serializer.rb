@@ -14,7 +14,7 @@ class MenuItemSerializer < BaseSerializer
       if obj.is_a?(MediaObject)
         obj
       elsif obj.is_a?(String)
-        obj = obj.gsub(/^fa-/, 'http://fontawesome.io/icon/')
+        obj = RDF::URI(obj.gsub(/^fa-/, 'http://fontawesome.io/icon/'))
         {
           id: obj,
           type: NS::ARGU[:FontAwesomeIcon]
