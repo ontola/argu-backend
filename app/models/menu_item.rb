@@ -34,4 +34,8 @@ class MenuItem
     RDF::URI("#{parent.iri}#{seperator}#{tag}")
   end
   alias id iri
+
+  def menu_sequence
+    @menu_sequence ||= RDF::Sequence.new(menus)
+  end
 end

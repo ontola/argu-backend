@@ -22,11 +22,11 @@ class MenusController < ParentableController
   def current_forum; end
 
   def include_index
-    [menus: :menus]
+    [menu_sequence: [members: [menu_sequence: :members]]]
   end
 
   def include_show
-    [menus: [menus: :menus]]
+    [menu_sequence: [members: [menu_sequence: [members: [menu_sequence: :members]]]]]
   end
 
   def index_response_association

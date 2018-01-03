@@ -7,7 +7,7 @@ class MenuItemSerializer < BaseSerializer
 
   has_one :parent, predicate: NS::SCHEMA[:isPartOf]
 
-  has_many :menus, predicate: NS::ARGU[:menuItems]
+  has_one :menu_sequence, predicate: NS::ARGU[:menuItems], if: :menus_present?
   has_one :image, predicate: NS::SCHEMA[:image]
 
   def data
@@ -22,5 +22,9 @@ class MenuItemSerializer < BaseSerializer
     return object.type if object.type.present?
     return NS::ARGU["#{object.tag.capitalize}Menu"] if object.parent.is_a?(MenuList)
     object.menus.present? ? NS::ARGU[:SubMenu] : NS::ARGU[:MenuItem]
+  end
+
+  def menus_present?
+    object.menu_sequence.members.present?
   end
 end
