@@ -33,6 +33,10 @@ class Decision < Edgeable::Base
     I18n.t("decisions.#{parent_model.model_name.i18n_key}.#{state}")
   end
 
+  def iri_opts
+    {parent_iri: parent_iri(true), id: step}
+  end
+
   def to_param
     step.to_s
   end
