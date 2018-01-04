@@ -27,9 +27,11 @@ class ForumMenuList < MenuList
     menu_item(
       :navigations,
       menus: [
-        menu_item(:motions, image: 'fa-lightbulb-o', href: forum_canonical_motions_url(resource)),
-        menu_item(:questions, image: 'fa-question', href: forum_canonical_questions_url(resource)),
-        menu_item(:settings, image: 'fa-gear', href: settings_forum_url(resource), policy: :update?)
+        menu_item(:overview, image: 'fa-th-large', href: canonical_forum_url(resource.id)),
+        menu_item(:new_discussion, image: 'fa-plus', href: new_forum_discussion_url(resource)),
+        activity_link,
+        statistics_link,
+        settings_link
       ]
     )
   end
