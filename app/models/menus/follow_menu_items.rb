@@ -20,15 +20,15 @@ module Menus
         image: icon,
         link_opts: opts,
         menus: follow_types.map do |type|
-          href = type == :never ? follow && follow_path(follow) : follows_url(gid: resource.edge.id, follow_type: type)
-          menu_item(
-            type,
-            href: href,
-            image: follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o',
-            link_opts: {
-              data: {remote: true, method: type == :never ? 'DELETE' : 'POST'}
-            }
-          )
+          if type == :never
+            method = follow && 'DELETE'
+            href = follow && follow_path(follow)
+          else
+            method = 'POST'
+            href = follows_url(gid: resource.edge.id, follow_type: type)
+          end
+          image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
+          menu_item(type, href: href, image: image, link_opts: {data: {remote: true, method: method}})
         end
       )
     end

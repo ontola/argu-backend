@@ -40,7 +40,7 @@ export const LinkItem = React.createClass({
     },
 
     render () {
-        let divider, method, confirm, remote, turbolinks, sortValue, filterValue, displaySetting;
+        let divider, method, confirm, element, remote, turbolinks, sortValue, filterValue, displaySetting;
         if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
@@ -54,23 +54,31 @@ export const LinkItem = React.createClass({
             filterValue = this.props.data['filter-value'];
             displaySetting = this.props.data['display-setting'];
         }
-
+        const element_inner = (<span>
+            {image(this.props)}
+            <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
+        </span>);
+        if (this.props.url) {
+            element =
+                <a className={className}
+                   data-confirm={confirm}
+                   data-display-setting={displaySetting}
+                   data-filter-value={filterValue}
+                   data-method={method}
+                   data-remote={remote}
+                   data-sort-value={sortValue}
+                   data-turbolinks={turbolinks}
+                   href={this.props.url}
+                   onMouseDownCapture={this.handleMouseDown}
+                   target={target} >
+                    {element_inner}
+                </a>;
+        } else {
+            element = <a>{element_inner}</a>;
+        }
         return (<div className={`link ${this.props.type}`}>
             {divider}
-            <a className={className}
-               data-confirm={confirm}
-               data-display-setting={displaySetting}
-               data-filter-value={filterValue}
-               data-method={method}
-               data-remote={remote}
-               data-sort-value={sortValue}
-               data-turbolinks={turbolinks}
-               href={this.props.url}
-               onMouseDownCapture={this.handleMouseDown}
-               target={target} >
-                {image(this.props)}
-                <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
-            </a>
+            {element}
         </div>);
     }
 });
