@@ -14,6 +14,21 @@ class MenuList
   alias read_attribute_for_serialization send
   alias current_user user_context
 
+  def custom_menu_items(menu_type, resource)
+    CustomMenuItem
+      .where(menu_type: menu_type, resource_type: resource.class.name, resource_id: resource.id)
+      .order(:order)
+      .map do |menu_item|
+      menu_item(
+        "custom_#{menu_item.id}",
+        label: menu_item.label,
+        image: menu_item.image,
+        href: menu_item.href,
+        policy: menu_item.policy
+      )
+    end
+  end
+
   def iri
     RDF::URI(expand_uri_template('menu_lists_iri', parent_iri: resource.iri, path_only: true))
   end

@@ -12,6 +12,19 @@ class MenuListTest < ActiveSupport::TestCase
   let(:administrator) { create_administrator(freetown.page) }
   let(:administrator_context) { UserContext.new(administrator, administrator.profile, {}) }
 
+  let!(:custom_menu_item) do
+    CustomMenuItem.create(
+      menu_type: 'navigations',
+      resource_type: 'Page',
+      resource_id: freetown.page_id,
+      order: 0,
+      label: 'Custom label',
+      label_translation: false,
+      href: 'https://argu.localdev/i/about',
+      image: 'fa-info'
+    )
+  end
+
   test 'Menu for administrator should include update' do
     assert freetown.menu(administrator_context, :actions).menus.map(&:tag).include?(:settings)
   end
@@ -40,5 +53,26 @@ class MenuListTest < ActiveSupport::TestCase
                  .menus
                  .map(&:tag)
                  .include?(:second)
+  end
+
+  test 'Include custom menu items' do
+    assert_equal(
+      'Custom label',
+      freetown
+        .page
+        .menu(user_context, :navigations)
+        .menus
+        .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
+        .label
+    )
+  end
+
+  test 'Do not include custom menu items if other page' do
+    assert_nil(
+      create(:page)
+        .menu(user_context, :navigations)
+        .menus
+        .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
+    )
   end
 end

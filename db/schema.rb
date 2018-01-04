@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219111036) do
+ActiveRecord::Schema.define(version: 20180104125542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,18 @@ ActiveRecord::Schema.define(version: 20171219111036) do
     t.integer "forum_id"
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["creator_id"], name: "index_comments_on_creator_id"
+  end
+
+  create_table "custom_menu_items", force: :cascade do |t|
+    t.string "menu_type", null: false
+    t.string "resource_type", null: false
+    t.integer "resource_id", null: false
+    t.integer "order", null: false
+    t.string "label"
+    t.boolean "label_translation", default: false, null: false
+    t.string "image"
+    t.string "href", null: false
+    t.string "policy"
   end
 
   create_table "decisions", id: :serial, force: :cascade do |t|

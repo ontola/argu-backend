@@ -26,6 +26,7 @@ class PageMenuList < MenuList
           href: settings_page_url(resource),
           policy: :update?
         ),
+        *custom_menu_items(:navigations, resource),
         menu_item(
           :forums,
           label: children.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
