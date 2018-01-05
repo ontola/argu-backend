@@ -35,9 +35,9 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 2)
+    view_sequence = expect_relationship('viewSequence')
+    assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 2
     expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, type: 'paginated'))
     expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, type: 'paginated'))
     expect_included(motion.arguments.untrashed.map { |a| argu_url("/a/#{a.id}") })
@@ -49,9 +49,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, page: 1, type: 'paginated'))
     expect_included(motion.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
@@ -63,9 +62,10 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', motion.arguments.pro.untrashed.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 motion.arguments.pro.untrashed.count
     expect_included(motion.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.con.map { |a| argu_url("/a/#{a.id}") })
@@ -76,9 +76,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(motion.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
@@ -90,9 +89,10 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', motion.arguments.con.untrashed.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 motion.arguments.con.untrashed.count
     expect_included(motion.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.pro.map { |a| argu_url("/a/#{a.id}") })
@@ -106,9 +106,9 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 2)
+    view_sequence = expect_relationship('viewSequence')
+    assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 2
     expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'yes'}, type: 'paginated'))
     expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'no'}, type: 'paginated'))
     expect_included(linked_record.arguments.untrashed.map { |a| argu_url("/a/#{a.id}") })
@@ -120,9 +120,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'yes'}, page: 1, type: 'paginated'))
     expect_included(linked_record.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
@@ -134,9 +133,10 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', linked_record.arguments.pro.untrashed.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 linked_record.arguments.pro.untrashed.count
     expect_included(linked_record.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.con.map { |a| argu_url("/a/#{a.id}") })
@@ -147,9 +147,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/lr/#{linked_record.id}/arguments", filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(linked_record.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
@@ -161,9 +160,10 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', linked_record.arguments.con.untrashed.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 linked_record.arguments.con.untrashed.count
     expect_included(linked_record.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.pro.map { |a| argu_url("/a/#{a.id}") })

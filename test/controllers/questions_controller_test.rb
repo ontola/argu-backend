@@ -36,9 +36,8 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/f/#{holland.id}/questions", page: 1, type: 'paginated'))
     expect_included(holland.questions.untrashed.map { |q| argu_url("/q/#{q.id}") })
     expect_not_included(holland.questions.trashed.map { |q| argu_url("/q/#{q.id}") })
@@ -49,9 +48,10 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', holland.questions.untrashed.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 holland.questions.untrashed.count
     expect_included(holland.questions.untrashed.map { |q| argu_url("/q/#{q.id}") })
     expect_not_included(holland.questions.trashed.map { |q| argu_url("/q/#{q.id}") })
   end

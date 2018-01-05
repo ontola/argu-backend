@@ -68,11 +68,16 @@ class ApplicationController < ActionController::Base
 
   def inc_nested_collection
     @inc_nested_collection ||= [
-      :members,
+      member_sequence: :members,
       operation: :target,
-      views: [:members,
-              operation: :target,
-              views: [:members, operation: :target].freeze].freeze
+      view_sequence: [
+        members:
+          [
+            member_sequence: :members,
+            operation: :target,
+            view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
+          ].freeze
+      ].freeze
     ].freeze
   end
 

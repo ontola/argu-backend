@@ -6,7 +6,7 @@ class VoteEventsController < EdgeableController
   private
 
   def include_index
-    [members: {vote_collection: {views: [:members, views: :members]}}]
+    [member_sequence: {members: {vote_collection: inc_nested_collection}}]
   end
 
   def include_show

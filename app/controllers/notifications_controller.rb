@@ -76,10 +76,6 @@ class NotificationsController < AuthorizedController
       .page params[:page]
   end
 
-  def include_index
-    [:members, views: [members: [operation: :target]]]
-  end
-
   def index_respond_success_html
     head 204
   end

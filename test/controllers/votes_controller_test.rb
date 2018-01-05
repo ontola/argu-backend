@@ -41,9 +41,9 @@ class VotesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 3)
+    view_sequence = expect_relationship('viewSequence')
+    assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 3
     expect_included(argu_url(vote_event_base_path, filter: {option: 'yes'}, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path, filter: {option: 'yes'}, page: 1, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path, filter: {option: 'other'}, type: 'paginated'))

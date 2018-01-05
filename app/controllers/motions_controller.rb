@@ -44,7 +44,7 @@ class MotionsController < EdgeableController
     [
       argument_collection: inc_nested_collection,
       attachment_collection: inc_nested_collection,
-      vote_event_collection: {members: {vote_collection: inc_nested_collection}}
+      vote_event_collection: {member_sequence: {members: {vote_collection: inc_nested_collection}}}
     ]
   end
 

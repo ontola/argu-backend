@@ -24,9 +24,8 @@ class MediaObjectsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(
       argu_url("/m/#{motion.id}/media_objects", filter: {used_as: :attachment}, page: 1, type: 'paginated')
     )
@@ -38,9 +37,10 @@ class MediaObjectsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', motion.media_objects.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 motion.media_objects.count
     expect_included(motion.media_objects.map { |m| argu_url("/media_objects/#{m.id}") })
   end
 end

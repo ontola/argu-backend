@@ -58,9 +58,8 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/f/#{holland.id}/motions", page: 1, type: 'paginated'))
     expect_included(holland.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
@@ -71,9 +70,10 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', holland.motions.untrashed.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal holland.motions.untrashed.count,
+                 expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count
     expect_included(holland.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
   end
@@ -86,9 +86,8 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/q/#{question.id}/motions", page: 1, type: 'paginated'))
     expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
@@ -99,9 +98,8 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', question.motions.untrashed.count)
+    expect_relationship('memberSequence', question.motions.untrashed.count)
     expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
   end

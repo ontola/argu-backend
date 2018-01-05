@@ -16,9 +16,8 @@ class PagesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 0)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url('/o', page: 1, type: 'paginated'))
     expect_included(Page.open.map { |o| argu_url("/o/#{o.id}") })
     expect_not_included(argu_url("/o/#{closed_page.id}"))
@@ -30,9 +29,9 @@ class PagesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 0)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', 3)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 3
     expect_included(Page.open.map { |o| argu_url("/o/#{o.id}") })
     expect_not_included(argu_url("/o/#{closed_page.id}"))
     expect_not_included(argu_url("/o/#{hidden_page.id}"))

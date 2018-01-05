@@ -29,9 +29,8 @@ class VoteMatchesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 0)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url('/vote_matches', page: 1, type: 'paginated'))
     expect_included(VoteMatch.all.map { |r| argu_url("/vote_matches/#{r.id}") })
   end
@@ -41,9 +40,10 @@ class VoteMatchesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 0)
-    expect_relationship('views', 0)
 
-    expect_relationship('members', VoteMatch.count)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
+                 VoteMatch.count
     expect_included(VoteMatch.all.map { |r| argu_url("/vote_matches/#{r.id}") })
   end
 
@@ -52,9 +52,8 @@ class VoteMatchesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/u/#{user.id}/vote_matches", page: 1, type: 'paginated'))
     expect_included(VoteMatch.where(creator: user.profile).map { |r| argu_url("/vote_matches/#{r.id}") })
     expect_not_included(
@@ -67,9 +66,8 @@ class VoteMatchesControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('members', 0)
 
-    expect_relationship('views', 1)
+    expect_relationship('viewSequence', 1)
     expect_included(argu_url("/o/#{page.id}/vote_matches", page: 1, type: 'paginated'))
     expect_included(VoteMatch.where(creator: page.profile).map { |r| argu_url("/vote_matches/#{r.id}") })
     expect_not_included(

@@ -59,8 +59,8 @@ class VoteEventsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
-    expect_relationship('members', 2)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 2
 
     expect_included(motion.vote_events.map { |ve| argu_url("/m/#{motion.id}/vote_events/#{ve.id}") })
     expect_included(motion.vote_events.map { |ve| argu_url(vote_event_base_path(ve), type: 'paginated') })
@@ -147,8 +147,8 @@ class VoteEventsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('parent', 1)
-    expect_relationship('views', 0)
-    expect_relationship('members', 1)
+    member_sequence = expect_relationship('memberSequence', 1)
+    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 1
 
     expect_included(linked_record.vote_events.map { |ve| argu_url("/lr/#{linked_record.id}/vote_events/#{ve.id}") })
     expect_included(linked_record.vote_events.map { |ve| argu_url(vote_event_base_path(ve), type: 'paginated') })

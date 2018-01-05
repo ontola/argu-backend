@@ -76,10 +76,14 @@ class PagesController < EdgeableController
   def inc_nested_collection
     @inc_nested_collection = [
       :create_action,
-      members: :profile_photo,
-      views: [:create_action,
-              members: :profile_photo,
-              views: [:create_action, members: :profile_photo].freeze].freeze
+      member_sequence: [members: :profile_photo],
+      view_sequence: [
+        members: [
+          :create_action,
+          member_sequence: [members: :profile_photo],
+          views: [:create_action, member_sequence: [members: :profile_photo]].freeze
+        ].freeze
+      ].freeze
     ].freeze
   end
 
