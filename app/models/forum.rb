@@ -9,6 +9,7 @@ class Forum < Edgeable::Base
   include Shortnameable
   include Attribution
   include Menuable
+  include Widgetable
 
   belongs_to :page, inverse_of: :forums
   belongs_to :default_decision_group, class_name: 'Group'
@@ -29,6 +30,8 @@ class Forum < Edgeable::Base
                   url_constructor: :forum_canonical_discussions_url
   with_collection :motions, pagination: true, url_constructor: :forum_canonical_motions_url
   with_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
+
+  default_widgets :motions, :questions
 
   # @private
   attr_accessor :tab, :active, :confirmation_string

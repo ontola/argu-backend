@@ -5,5 +5,6 @@ class ForumSerializer < RecordSerializer
   include Questionable::Serializer
   include Menuable::Serializer
   include Photoable::Serializer
+  include Widgetable::Serializer
   include_menus
 end

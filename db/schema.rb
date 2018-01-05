@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104125542) do
+ActiveRecord::Schema.define(version: 20180104161506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -699,6 +699,19 @@ ActiveRecord::Schema.define(version: 20180104125542) do
     t.index ["creator_id"], name: "index_votes_on_creator_id"
     t.index ["voteable_id", "voteable_type", "creator_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_creator_id", unique: true
     t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type"
+  end
+
+  create_table "widgets", force: :cascade do |t|
+    t.integer "widget_type", null: false
+    t.string "owner_type", null: false
+    t.integer "owner_id", null: false
+    t.string "resource_iri", null: false
+    t.string "label"
+    t.boolean "label_translation", default: false, null: false
+    t.text "body"
+    t.integer "size", default: 1, null: false
+    t.integer "position", null: false
+    t.index ["owner_type", "owner_id"], name: "index_widgets_on_owner_type_and_owner_id"
   end
 
   add_foreign_key "activities", "edges", column: "recipient_edge_id"

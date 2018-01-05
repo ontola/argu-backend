@@ -76,7 +76,7 @@ gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
-gem 'acts_as_list', '~> 0.7.2'
+gem 'acts_as_list', '~> 0.9.10'
 # Pagination
 gem 'kaminari', '~>0.17.0'
 gem 'staccato', '~> 0.4.7'
