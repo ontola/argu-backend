@@ -9,13 +9,12 @@ class PageMenuList < MenuList
   private
 
   def navigations_menu
-    forums = policy_scope(resource.forums.includes(:shortname, :edge, :default_profile_photo))
-    children = forums + resource.sources
+    forums = resource.forums.joins(:edge).where("edges.path ? #{Edge.path_array(user.profile.granted_edges)}")
     section_items =
-      if children.count == 1
-        children.first.menu(user_context, :navigations).menus
+      if forums.count == 1
+        forums.first.menu(user_context, :navigations).menus
       else
-        children.map { |child| navigation_item(child) }
+        forums.map { |child| navigation_item(child) }
       end
     menu_item(
       :navigations,
@@ -29,7 +28,7 @@ class PageMenuList < MenuList
         *custom_menu_items(:navigations, resource),
         menu_item(
           :forums,
-          label: children.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
+          label: forums.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
           type: NS::ARGU[:MenuSection],
           menus: section_items
         )
