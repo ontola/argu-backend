@@ -63,7 +63,7 @@ Rails.application.routes.draw do
     end
   end
   concern :discussable do
-    resources :discussions, only: [:new]
+    resources :discussions, only: %i[index new]
     resources :questions, path: 'q', only: %i[index new create]
     resources :motions, path: 'm', only: %i[index new create]
   end
@@ -342,6 +342,7 @@ Rails.application.routes.draw do
   end
   resources :forums, only: %i[show update], path: 'f', as: :canonical_forum, concerns: %i[menuable]
   resources :forums, only: [], path: 'f' do
+    resources :discussions, only: %i[index new], as: :canonical_discussions
     resources :questions, path: 'questions', only: %i[index create], as: :canonical_questions
     resources :motions, path: 'motions', only: %i[index create], as: :canonical_motions
   end

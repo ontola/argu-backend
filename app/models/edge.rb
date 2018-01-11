@@ -2,6 +2,7 @@
 
 class Edge < ApplicationRecord
   include Placeable
+  include Ldable
 
   belongs_to :owner,
              inverse_of: :edge,

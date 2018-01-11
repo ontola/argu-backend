@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Forum < Edgeable::Base
+  include Discussable
   include Questionable
   include Motionable
   include ProfilePhotoable
@@ -21,6 +22,11 @@ class Forum < Edgeable::Base
   has_many :projects, inverse_of: :forum, dependent: :destroy
   has_many :questions, inverse_of: :forum, dependent: :destroy
 
+  with_collection :discussions,
+                  association_class: Edge,
+                  includes: [:parent, owner: {creator: :profileable}],
+                  pagination: true,
+                  url_constructor: :forum_canonical_discussions_url
   with_collection :motions, pagination: true, url_constructor: :forum_canonical_motions_url
   with_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
 
