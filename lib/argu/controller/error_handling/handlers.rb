@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'argu/errors/serializable_error'
+
 module Argu
   # The generic Argu error handling code. Currently a mess from different error
   # classes with inconsistent attributes.
@@ -18,11 +20,11 @@ module Argu
           format.js { render status: error_status(e), json: json_error_hash(e) }
           format.json { render json_error(error_status(e), json_error_hash(e)) }
           format.json_api { render json_api_error(error_status(e), json_error_hash(e)) }
-          format.n3 { render json_api_error(error_status(e), json_error_hash(e)) }
-          format.nt { render json_api_error(error_status(e), json_error_hash(e)) }
-          format.ttl { render json_api_error(error_status(e), json_error_hash(e)) }
-          format.jsonld { render json_api_error(error_status(e), json_error_hash(e)) }
-          format.rdf { render json_api_error(error_status(e), json_error_hash(e)) }
+          format.n3 { render n3: serializable_error(error_status(e), e), status: error_status(e) }
+          format.nt { render nt: serializable_error(error_status(e), e), status: error_status(e) }
+          format.ttl { render ttl: serializable_error(error_status(e), e), status: error_status(e) }
+          format.jsonld { render jsonld: serializable_error(error_status(e), e), status: error_status(e) }
+          format.rdf { render rdf: serializable_error(error_status(e), e), status: error_status(e) }
         end
       end
 
@@ -62,11 +64,11 @@ module Argu
           format.html { error_response_html(e) }
           format.json { json_error(500, e.response.body) }
           format.json_api { render json_api_error(500, e.response.body) }
-          format.n3 { render json_api_error(500, e.response.body) }
-          format.nt { render json_api_error(500, e.response.body) }
-          format.ttl { render json_api_error(500, e.response.body) }
-          format.jsonld { render json_api_error(500, e.response.body) }
-          format.rdf { render json_api_error(500, e.response.body) }
+          format.n3 { render n3: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
+          format.nt { render nt: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
+          format.ttl { render ttl: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
+          format.jsonld { render jsonld: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
+          format.rdf { render rdf: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
         end
       end
 
@@ -138,12 +140,16 @@ module Argu
       respond_to do |format|
         format.json { respond_with_422(resources.first, :json) }
         format.json_api { respond_with_422(resources.first, :json_api) }
-        format.n3 { respond_with_422(resources.first, :json_api) }
-        format.nt { respond_with_422(resources.first, :json_api) }
-        format.ttl { respond_with_422(resources.first, :json_api) }
-        format.jsonld { respond_with_422(resources.first, :json_api) }
-        format.rdf { respond_with_422(resources.first, :json_api) }
+        format.n3 { respond_with_422(resources.first, :n3) }
+        format.nt { respond_with_422(resources.first, :nt) }
+        format.ttl { respond_with_422(resources.first, :ttl) }
+        format.jsonld { respond_with_422(resources.first, :jsonld) }
+        format.rdf { respond_with_422(resources.first, :rdf) }
       end
+    end
+
+    def serializable_error(status, e)
+      Argu::Errors::SerializableError.new(status, request.original_url, e.is_a?(StandardError) ? e : e.new)
     end
   end
 end

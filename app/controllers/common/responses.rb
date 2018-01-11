@@ -67,8 +67,11 @@ module Common
       case format
       when :json
         render json: resource.errors, status: :bad_request
-      when :json_api, :n3, :nt, :ttl, :jsonld, :rdf
+      when :json_api
         render json_api_error(400, resource.errors)
+      when :n3, :nt, :ttl, :jsonld, :rdf
+        render format => serializable_error(400, StandardError.new(resource.errors.full_messages.join("\n"))),
+               status: 400
       when :js
         head 400
       else
@@ -80,8 +83,11 @@ module Common
       case format
       when :json
         render json_error(422, resource.errors)
-      when :json_api, :n3, :nt, :ttl, :jsonld, :rdf
+      when :json_api
         render json_api_error(422, resource.errors)
+      when :n3, :nt, :ttl, :jsonld, :rdf
+        render format => serializable_error(422, StandardError.new(resource.errors.full_messages.join("\n"))),
+               status: 422
       else
         raise_unknown_format
       end
