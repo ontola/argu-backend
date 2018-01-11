@@ -28,7 +28,7 @@ module Common
       when :n3, :nt, :ttl, :jsonld, :rdf
         render opts.merge(format => resource, meta: meta)
       else
-        raise_unkown_format
+        raise_unknown_format
       end
     end
 
@@ -41,7 +41,7 @@ module Common
       when :js
         head :created
       else
-        raise_unkown_format
+        raise_unknown_format
       end
     end
 
@@ -50,7 +50,7 @@ module Common
       when :json, :json_api, :n3, :nt, :ttl, :jsonld, :rdf
         head :no_content
       else
-        raise_unkown_format
+        raise_unknown_format
       end
     end
 
@@ -59,7 +59,7 @@ module Common
       when :json_api
         head 304
       else
-        raise_unkown_format
+        raise_unknown_format
       end
     end
 
@@ -72,7 +72,7 @@ module Common
       when :js
         head 400
       else
-        raise_unkown_format
+        raise_unknown_format
       end
     end
 
@@ -83,7 +83,7 @@ module Common
       when :json_api, :n3, :nt, :ttl, :jsonld, :rdf
         render json_api_error(422, resource.errors)
       else
-        raise_unkown_format
+        raise_unknown_format
       end
     end
 
@@ -133,7 +133,7 @@ module Common
 
     private
 
-    def raise_unkown_format
+    def raise_unknown_format
       raise 'Unknown format'
     end
 
