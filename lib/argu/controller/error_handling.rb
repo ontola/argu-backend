@@ -15,11 +15,11 @@ module Argu
     include Helpers
 
     included do
-      rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
-      rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
-      rescue_from Argu::UnknownEmailError, with: :handle_bad_credentials
-      rescue_from Argu::UnknownUsernameError, with: :handle_bad_credentials
-      rescue_from Argu::WrongPasswordError, with: :handle_bad_credentials
+      rescue_from Argu::Errors::NotAUser, with: :handle_not_a_user_error
+      rescue_from Argu::Errors::NotAuthorized, with: :handle_not_authorized_error
+      rescue_from Argu::Errors::UnknownEmail, with: :handle_bad_credentials
+      rescue_from Argu::Errors::UnknownUsername, with: :handle_bad_credentials
+      rescue_from Argu::Errors::WrongPassword, with: :handle_bad_credentials
       rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
       rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
       rescue_from ActiveRecord::StaleObjectError, with: :handle_stale_object_error

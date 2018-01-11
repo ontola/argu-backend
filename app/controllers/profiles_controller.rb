@@ -106,7 +106,7 @@ class ProfilesController < ApplicationController
   end
 
   def user_or_redirect(redirect = nil)
-    raise Argu::NotAUserError.new(r: redirect) if current_user.guest?
+    raise Argu::Errors::NotAUser.new(r: redirect) if current_user.guest?
     current_user
   end
 end

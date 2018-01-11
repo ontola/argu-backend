@@ -27,6 +27,6 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   private
 
   def authenticate_admin!
-    raise Argu::NotAuthorizedError.new(query: "#{params[:action]}?") unless current_user&.is_staff?
+    raise Argu::Errors::NotAuthorized.new(query: "#{params[:action]}?") unless current_user&.is_staff?
   end
 end

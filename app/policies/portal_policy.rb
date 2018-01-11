@@ -13,7 +13,7 @@ class PortalPolicy < Struct.new(:user, :portal)
   include RestrictivePolicy::Roles
 
   def assert!(assertion, query = nil)
-    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
+    raise Argu::Errors::NotAuthorized.new(record: record, query: query) unless assertion
   end
 
   def permitted_tabs

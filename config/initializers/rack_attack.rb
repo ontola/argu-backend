@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'argu/hacker_error'
+require 'argu/errors/hacker'
 
 unless Rails.env.test?
   ActiveSupport::Notifications.subscribe('rack.attack') do |name, _start, _finish, _request_id, req|
     if (%w[spam fail2ban] & req.env['rack.attack.matched'].split(' ')).present?
-      Bugsnag.notify(Argu::HackerError.new(name), request_data: req)
+      Bugsnag.notify(Argu::Error::HackerError.new(name), request_data: req)
     end
   end
 end

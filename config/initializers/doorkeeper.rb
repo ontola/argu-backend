@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'argu/unknown_email_error'
-require 'argu/unknown_username_error'
-require 'argu/wrong_password_error'
+require 'argu/errors/unknown_email'
+require 'argu/errors/unknown_username'
+require 'argu/errors/wrong_password'
 
 module Doorkeeper
   class Application < ActiveRecord::Base
@@ -46,11 +46,11 @@ Doorkeeper.configure do
     elsif user.blank?
       email = params[:user][:email]&.include?('@')
       e = if email && EmailAddress.find_by(email: params[:user][:email]).nil?
-            Argu::UnknownEmailError.new(r: r_with_authenticity_token)
+            Argu::Errors::UnknownEmail.new(r: r_with_authenticity_token)
           elsif !email && Shortname.find_by(owner_type: 'User', shortname: params[:user][:email]).nil?
-            Argu::UnknownUsernameError.new(r: r_with_authenticity_token)
+            Argu::Errors::UnknownUsername.new(r: r_with_authenticity_token)
           else
-            Argu::WrongPasswordError.new(r: r_with_authenticity_token)
+            Argu::Errors::WrongPassword.new(r: r_with_authenticity_token)
           end
       raise e if argu_classic_frontend_request?
       e

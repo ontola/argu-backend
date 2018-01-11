@@ -103,15 +103,15 @@ module SPI
                }
         end
 
-        validate_error Argu::WrongPasswordError
+        validate_error Argu::Errors::WrongPassword
       end
     end
 
     [
-      ['without', nil, Argu::UnknownUsernameError],
-      ['with empty', '', Argu::UnknownUsernameError],
-      ['with invalid', 'invalid_email@', Argu::UnknownEmailError],
-      ['with wrong', 'wrong_email@example.com', Argu::UnknownEmailError]
+      ['without', nil, Argu::Errors::UnknownUsername],
+      ['with empty', '', Argu::Errors::UnknownUsername],
+      ['with invalid', 'invalid_email@', Argu::Errors::UnknownEmail],
+      ['with wrong', 'wrong_email@example.com', Argu::Errors::UnknownEmail]
     ].each do |type, value, error|
       test "service should not post create user token #{type} email" do
         sign_in :service

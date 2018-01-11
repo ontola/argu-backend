@@ -14,7 +14,7 @@ class DirectMessagesController < ParentableController
 
   def create_respond_success_html(resource)
     unless current_user.email_addresses.confirmed.where(email: resource.email).exists?
-      raise Argu::NotAuthorizedError.new(record: resource, query: 'email?')
+      raise Argu::Errors::NotAuthorized.new(record: resource, query: 'email?')
     end
     resource.send_email!
     redirect_to resource.resource, notice: t('direct_messages.notice.success')

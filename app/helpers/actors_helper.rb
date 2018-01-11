@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'argu/not_authorized_error'
+require 'argu/errors/not_authorized'
 
 module ActorsHelper
   def managed_profiles_list

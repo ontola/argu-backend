@@ -134,7 +134,7 @@ class RestrictivePolicy
   private
 
   def assert!(assertion, query = nil)
-    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
+    raise Argu::Errors::NotAuthorized.new(record: record, query: query) unless assertion
   end
 
   def append_default_photo_params(attributes)

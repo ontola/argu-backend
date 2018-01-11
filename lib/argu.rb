@@ -2,33 +2,33 @@
 
 require 'argu/controller'
 require 'argu/ruled_it'
-require 'argu/not_authorized_error'
-require 'argu/not_a_user_error'
-require 'argu/unknown_email_error'
-require 'argu/unknown_username_error'
-require 'argu/wrong_password_error'
+require 'argu/errors/not_authorized'
+require 'argu/errors/not_a_user'
+require 'argu/errors/unknown_email'
+require 'argu/errors/unknown_username'
+require 'argu/errors/wrong_password'
 
 require 'react-rails/lib/server_rendering/webpack_manifest_container'
 
 module Argu
   ERROR_TYPES = {
-    Argu::NotAuthorizedError => {
+    Argu::Errors::NotAuthorized => {
       id: 'NOT_AUTHORIZED',
       status: 403
     },
-    Argu::NotAUserError => {
+    Argu::Errors::NotAUser => {
       id: 'NOT_A_USER',
       status: 401
     },
-    Argu::UnknownEmailError => {
+    Argu::Errors::UnknownEmail => {
       id: 'UNKNOWN_EMAIL',
       status: 422
     },
-    Argu::UnknownUsernameError => {
+    Argu::Errors::UnknownUsername => {
       id: 'UNKNOWN_USERNAME',
       status: 422
     },
-    Argu::WrongPasswordError => {
+    Argu::Errors::WrongPassword => {
       id: 'WRONG_PASSWORD',
       status: 422
     },
