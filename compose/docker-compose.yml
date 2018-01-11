@@ -51,6 +51,16 @@ services:
     hostname: argu-rabbit
     ports:
       - "5672:5672"
+  neo4j:
+    image: "neo4j:3.2.1"
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neodata:/data
+    environment:
+      - "NEO4J_AUTH=neo4j/abc"
 volumes:
   data:
     external: true
+  neodata:
