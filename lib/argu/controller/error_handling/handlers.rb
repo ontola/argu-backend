@@ -18,6 +18,7 @@ module Argu
           format.js { render status: error_status(e), json: json_error_hash(e) }
           format.json { render json_error(error_status(e), json_error_hash(e)) }
           format.json_api { render json_api_error(error_status(e), json_error_hash(e)) }
+          format.n3 { render json_api_error(error_status(e), json_error_hash(e)) }
           format.nt { render json_api_error(error_status(e), json_error_hash(e)) }
           format.ttl { render json_api_error(error_status(e), json_error_hash(e)) }
           format.jsonld { render json_api_error(error_status(e), json_error_hash(e)) }
@@ -61,6 +62,7 @@ module Argu
           format.html { error_response_html(e) }
           format.json { json_error(500, e.response.body) }
           format.json_api { render json_api_error(500, e.response.body) }
+          format.n3 { render json_api_error(500, e.response.body) }
           format.nt { render json_api_error(500, e.response.body) }
           format.ttl { render json_api_error(500, e.response.body) }
           format.jsonld { render json_api_error(500, e.response.body) }
@@ -136,6 +138,7 @@ module Argu
       respond_to do |format|
         format.json { respond_with_422(resources.first, :json) }
         format.json_api { respond_with_422(resources.first, :json_api) }
+        format.n3 { respond_with_422(resources.first, :json_api) }
         format.nt { respond_with_422(resources.first, :json_api) }
         format.ttl { respond_with_422(resources.first, :json_api) }
         format.jsonld { respond_with_422(resources.first, :json_api) }

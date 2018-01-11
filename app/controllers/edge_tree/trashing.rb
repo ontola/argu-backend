@@ -57,6 +57,7 @@ module EdgeTree
         format.html { respond_with_redirect_failure(resource, :trash) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
+        format.n3 { respond_with_422(resource, :n3) }
         format.nt { respond_with_422(resource, :nt) }
         format.ttl { respond_with_422(resource, :ttl) }
         format.jsonld { respond_with_422(resource, :jsonld) }
@@ -69,6 +70,7 @@ module EdgeTree
         format.html { respond_with_redirect_success(resource, :trash) }
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
+        format.n3 { respond_with_204(resource, :n3) }
         format.nt { respond_with_204(resource, :nt) }
         format.ttl { respond_with_204(resource, :ttl) }
         format.jsonld { respond_with_204(resource, :jsonld) }
@@ -81,6 +83,7 @@ module EdgeTree
         format.html { respond_with_redirect_failure(resource, :untrash) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
+        format.n3 { respond_with_422(resource, :n3) }
         format.nt { respond_with_422(resource, :nt) }
         format.ttl { respond_with_422(resource, :ttl) }
         format.jsonld { respond_with_422(resource, :jsonld) }
@@ -93,6 +96,7 @@ module EdgeTree
         format.html { respond_with_redirect_success(resource, :untrash) }
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
+        format.n3 { respond_with_204(resource, :n3) }
         format.nt { respond_with_204(resource, :nt) }
         format.ttl { respond_with_204(resource, :ttl) }
         format.jsonld { respond_with_204(resource, :jsonld) }
