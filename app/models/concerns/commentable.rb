@@ -13,7 +13,7 @@ module Commentable
 
     with_collection :comments, association: :filtered_threads, pagination: true
 
-    def mixed_comments(order = 'comments.created_at DESC')
+    def mixed_comments(order = 'edges.created_at DESC')
       @mixed_comments ||=
         Edge
           .joins("LEFT JOIN comments ON edges.owner_id = comments.id AND edges.owner_type = 'Comment'")
@@ -22,7 +22,7 @@ module Commentable
           .order(order)
     end
 
-    def filtered_threads(show_trashed = nil, page = nil, order = 'comments.created_at ASC')
+    def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
       i = mixed_comments(order).page(page)
       unless show_trashed
         i.each do |edge|

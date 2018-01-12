@@ -15,7 +15,7 @@ module Voteable
 
     after_create :create_default_vote_event
 
-    def mixed_comments(order = 'comments.created_at DESC')
+    def mixed_comments(order = 'edges.created_at DESC')
       @mixed_comments ||=
         Edge
           .joins("LEFT JOIN votes ON edges.owner_id = votes.id AND edges.owner_type = 'Vote'")
