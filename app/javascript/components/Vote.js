@@ -10,7 +10,7 @@ import I18n from 'i18n-js';
 import VoteMixin from './mixins/VoteMixin';
 
 const HUNDRED_PERCENT = 100;
-const voteURL = urltemplate.parse('/m{/id}/votes{?r}');
+const voteURL = urltemplate.parse('/m{/id}/votes/new{?r}');
 
 /**
  * Component for the POST-ing of a vote.
