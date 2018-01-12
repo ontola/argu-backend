@@ -8,7 +8,7 @@ module NestedResourceHelper
   include IRIHelper
 
   def parent_resource
-    @parent_resource ||= parent_id_from_params(params).present? ? parent_from_params(params) : super
+    @parent_resource ||= parent_from_params(params) if parent_id_from_params(params).present?
   end
 
   # Extracts a parent resource from an Argu URI

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class MenusController < AuthorizedController
-  include NestedResourceHelper
+class MenusController < ParentableController
   skip_before_action :check_if_registered
   before_action :authorize_action
 
@@ -46,7 +45,5 @@ class MenusController < AuthorizedController
     end
   end
 
-  def parent_resource
-    super if parent_id_from_params.present?
-  end
+  def resource_by_id_parent; end
 end

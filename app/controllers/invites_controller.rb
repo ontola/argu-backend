@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class InvitesController < AuthorizedController
-  include NestedResourceHelper
+class InvitesController < ParentableController
   alias resource_by_id parent_resource
   alias authenticated_resource! resource_by_id
 

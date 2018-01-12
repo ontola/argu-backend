@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class BannersController < ServiceController
-  include NestedResourceHelper
-
   private
 
   def create_respond_failure_html(resource)

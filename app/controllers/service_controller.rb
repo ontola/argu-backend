@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ServiceController < AuthorizedController
+class ServiceController < ParentableController
   include Service::Setup
   # The action creators have to be re-included since they have to be called
   # with the new setup method.

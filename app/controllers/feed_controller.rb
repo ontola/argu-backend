@@ -18,6 +18,10 @@ class FeedController < AuthorizedController
     authorize authenticated_resource, :feed?
   end
 
+  def authenticated_edge
+    @resource_edge ||= authenticated_resource!&.edge
+  end
+
   def authenticated_resource!
     @resource ||= parent_resource
   end

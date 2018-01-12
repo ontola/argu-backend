@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class DiscussionsController < AuthorizedController
-  include NestedResourceHelper
+class DiscussionsController < ParentableController
   skip_before_action :check_if_registered
 
   private
@@ -18,4 +17,6 @@ class DiscussionsController < AuthorizedController
       .merge(user_context: user_context)
       .to_options
   end
+
+  def resource_by_id; end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuestionAnswersController < AuthorizedController
+class QuestionAnswersController < ParentableController
   private
 
   def current_forum
@@ -9,12 +9,8 @@ class QuestionAnswersController < AuthorizedController
 
   def collect_banners; end
 
-  def parent_edge
-    @parent_edge ||= authenticated_resource&.question&.edge
-  end
-
   def parent_resource
-    parent_edge!.owner
+    authenticated_resource&.question
   end
 
   def message_success(resource, action)

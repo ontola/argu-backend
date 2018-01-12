@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class LinkedRecordsController < AuthorizedController
-  include NestedResourceHelper
-
+class LinkedRecordsController < ParentableController
   private
 
   def include_show

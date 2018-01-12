@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class ShortnamesController < AuthorizedController
-  include NestedResourceHelper
+class ShortnamesController < ParentableController
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
 
   SAFE_OWNER_TYPES = %w[Project Question Motion Argument Comment].freeze
@@ -39,10 +38,6 @@ class ShortnamesController < AuthorizedController
       else
         resource_by_id&.forum
       end
-  end
-
-  def parent_edge
-    parent_resource&.edge
   end
 
   def handle_record_not_unique

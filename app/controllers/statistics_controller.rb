@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class StatisticsController < EdgeTreeController
-  include NestedResourceHelper
+class StatisticsController < ParentableController
   alias authenticated_edge parent_resource
   helper_method :contribution_keys
 
@@ -50,4 +49,6 @@ class StatisticsController < EdgeTreeController
   def resource_by_id
     parent_resource.owner
   end
+
+  def resource_by_id_parent; end
 end

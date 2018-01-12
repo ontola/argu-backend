@@ -9,7 +9,6 @@
 # @see EdgeTree::Setup The interface for adjusting per-component behaviour.
 class EdgeableController < ServiceController
   include EdgeTree::Trashing
-  include NestedResourceHelper
 
   private
 
@@ -38,10 +37,6 @@ class EdgeableController < ServiceController
       end
   end
 
-  def current_forum
-    @current_forum ||= parent_resource&.parent_model(:forum)
-  end
-
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
@@ -65,14 +60,6 @@ class EdgeableController < ServiceController
     end
     resource.build_happening(created_at: Time.current) if resource.is_happenable?
     resource
-  end
-
-  def parent_edge
-    @parent_edge ||= parent_resource&.edge
-  end
-
-  def parent_edge!
-    parent_edge || raise(ActiveRecord::RecordNotFound)
   end
 
   # Prepares a memoized {TrashService} for the relevant model for use in controller#trash

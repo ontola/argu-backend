@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class GroupsController < ServiceController
-  include NestedResourceHelper
-
   def settings
     if tab! == 'members'
       @members = resource
@@ -49,10 +47,6 @@ class GroupsController < ServiceController
       group: resource,
       resource: resource.page
     }
-  end
-
-  def parent_edge
-    parent_resource&.edge
   end
 
   def redirect_model_success(resource)

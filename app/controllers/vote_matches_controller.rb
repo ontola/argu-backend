@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class VoteMatchesController < ServiceController
-  include NestedResourceHelper
   skip_before_action :check_if_registered, only: :index
   skip_before_action :authorize_action, only: :index
 
@@ -9,6 +8,10 @@ class VoteMatchesController < ServiceController
 
   def create_service_parent
     nil
+  end
+
+  def current_forum
+    @current_forum ||= parent_resource.try(:parent_model, :forum)
   end
 
   def include_index
@@ -37,6 +40,8 @@ class VoteMatchesController < ServiceController
     return super if params[:page_id].nil? && params[:user_id].nil? || @_resource_by_id.present?
     @_resource_by_id ||= VoteMatch.find_by(creator: parent_resource!.profile, shortname: params[:id])
   end
+
+  def resource_by_id_parent; end
 
   def resource_new_params
     HashWithIndifferentAccess.new(

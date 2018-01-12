@@ -52,12 +52,8 @@ class ConversionsController < ServiceController
     render :form, locals: {conversion: resource}
   end
 
-  def parent_edge
-    convertible_edge&.parent
-  end
-
   def parent_resource
-    parent_edge&.owner
+    convertible_edge&.parent&.owner
   end
 
   def resource_by_id; end

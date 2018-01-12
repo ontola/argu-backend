@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-class DirectMessagesController < AuthorizedController
-  include NestedResourceHelper
-
+class DirectMessagesController < ParentableController
   def new
     authenticated_resource.email = current_user.email if current_user.confirmed?
     new_handler_success(authenticated_resource)
   end
 
   private
+
+  def authenticated_edge
+    @resource_edge ||= parent_resource&.edge
+  end
 
   def create_respond_success_html(resource)
     unless current_user.email_addresses.confirmed.where(email: resource.email).exists?
@@ -29,12 +31,7 @@ class DirectMessagesController < AuthorizedController
   end
 
   def parent_resource
-    @parent_resource ||=
-      if parent_id_from_params(params).present?
-        parent_from_params(params)
-      else
-        resource_from_iri(params[:direct_message][:resource_iri])
-      end
+    @parent_resource ||= super || resource_from_iri(params[:direct_message][:resource_iri])
   end
 
   def resource_by_id; end

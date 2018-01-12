@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class GrantsController < ServiceController
-  include NestedResourceHelper
-
   private
 
   def create_service_parent

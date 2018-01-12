@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class LogController < AuthorizedController
-  include NestedResourceHelper
-
+class LogController < ParentableController
   private
 
   def authorize_action

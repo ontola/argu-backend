@@ -85,6 +85,8 @@ class DecisionsController < EdgeableController
     parent_resource!.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
   end
 
+  def resource_by_id_parent; end
+
   def resource_new_params
     HashWithIndifferentAccess.new(
       forum: parent_resource!.forum,

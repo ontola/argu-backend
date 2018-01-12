@@ -35,16 +35,10 @@ class AuthorizedController < ApplicationController
   end
 
   def authorize_action
-    if action_name == 'index'
-      authorize parent_resource!, :index_children?, controller_name
-    else
-      authorize authenticated_resource, "#{params[:action].chomp('!')}?"
-    end
+    authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
   end
 
-  def authenticated_edge
-    @resource_edge ||= authenticated_resource!&.edge
-  end
+  def authenticated_edge; end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found
   # @see {authenticated_resource!}
@@ -100,9 +94,7 @@ class AuthorizedController < ApplicationController
     controller_name.classify.constantize
   end
 
-  def current_forum
-    @current_forum ||= parent_resource.try(:parent_model, :forum)
-  end
+  def current_forum; end
 
   def language_from_edge_tree
     return if current_forum.blank?
@@ -113,14 +105,6 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
     controller_class.new(resource_new_params)
-  end
-
-  def parent_resource
-    resource_by_id.try(:parent_model)
-  end
-
-  def parent_resource!
-    parent_resource || raise(ActiveRecord::RecordNotFound)
   end
 
   def permit_params
@@ -150,14 +134,10 @@ class AuthorizedController < ApplicationController
     resource_by_id || raise(ActiveRecord::RecordNotFound)
   end
 
-  # Used in {authenticated_resource!} to build a new object. Overwrite this
-  #   function if the model needs more than just the {Forum}
+  # Used in {authenticated_resource!} to build a new object.
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
-    HashWithIndifferentAccess.new(
-      forum: parent_resource!.is_a?(Forum) ? parent_resource! : parent_resource!.parent_model(:forum),
-      publisher: current_user
-    )
+    {}
   end
 
   def resource_id

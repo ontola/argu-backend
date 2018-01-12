@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class FavoritesController < AuthorizedController
-  include NestedResourceHelper
+class FavoritesController < ParentableController
   alias force_check_if_registered check_if_registered
   before_action :force_check_if_registered
   skip_after_action :verify_authorized, only: :destroy
@@ -12,17 +11,11 @@ class FavoritesController < AuthorizedController
     current_user.favorites.find_or_initialize_by(edge: parent_edge!)
   end
 
-  def parent_edge
-    parent_resource&.edge
-  end
-
-  def parent_edge!
-    parent_edge || raise(ActiveRecord::RecordNotFound)
-  end
-
   def resource_by_id
     current_user.favorites.find_by(edge: parent_edge)
   end
+
+  def resource_by_id_parent; end
 
   def redirect_model_success(resource)
     url_for([resource.edge.owner, only_path: true])
