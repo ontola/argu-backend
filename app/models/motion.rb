@@ -29,6 +29,7 @@ class Motion < Edgeable::Content
 
   convertible questions: %i[activities blog_posts media_objects]
   counter_cache true
+  filterable pinned: {key: 'edges.pinned_at', values: {true: 'NOT NULL'}}
   paginates_per 30
   parentable :question, :project, :forum
 

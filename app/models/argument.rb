@@ -7,7 +7,7 @@ class Argument < Edgeable::Content
   belongs_to :publisher, class_name: 'User'
 
   counter_cache arguments_pro: {pro: true}, arguments_con: {pro: false}
-  filterable option: {key: :pro, values: {yes: true, no: false}}
+  filterable option: {key: :pro, values: {yes: true, no: false}, required: true}
   paginates_per 10
   with_collection :votes, pagination: true
 
