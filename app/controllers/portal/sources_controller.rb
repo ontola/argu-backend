@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Portal
-  class SourcesController < EdgeTreeController
+  class SourcesController < EdgeableController
     def new
       render 'new', locals: {source: new_resource_from_params}
     end

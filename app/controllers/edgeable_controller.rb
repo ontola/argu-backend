@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# Edge Tree Controllers provide a standard interface for accessing resources
+# Edgeable Controllers provide a standard interface for accessing resources
 # present in the edge tree.
 #
 # Since this controller includes `NestedResourceHelper`, subclassed models
 # are assumed to have `Edgeable` included.
 #
 # @see EdgeTree::Setup The interface for adjusting per-component behaviour.
-class EdgeTreeController < ServiceController
+class EdgeableController < ServiceController
   include EdgeTree::Trashing
   include NestedResourceHelper
 

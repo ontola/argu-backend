@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MotionsController < EdgeTreeController
+class MotionsController < EdgeableController
   include EdgeTree::Move
   skip_before_action :check_if_registered, only: :index
   skip_before_action :authorize_action, only: :search

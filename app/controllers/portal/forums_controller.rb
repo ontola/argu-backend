@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Portal::ForumsController < EdgeTreeController
+class Portal::ForumsController < EdgeableController
   private
 
   def parent_resource

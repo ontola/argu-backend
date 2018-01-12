@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DecisionsController < EdgeTreeController
+class DecisionsController < EdgeableController
   include Common::Show
   include DecisionsHelper
   skip_before_action :check_if_registered, only: :index

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BlogPostsController < EdgeTreeController
+class BlogPostsController < EdgeableController
   include BlogPostsHelper
   skip_before_action :check_if_registered, only: :index
 

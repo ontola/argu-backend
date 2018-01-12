@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CommentsController < EdgeTreeController
+class CommentsController < EdgeableController
   skip_before_action :check_if_registered, only: :index
 
   def new
