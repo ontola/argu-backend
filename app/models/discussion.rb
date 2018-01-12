@@ -4,6 +4,6 @@ class Discussion
   include ActiveModel::Model
   include Iriable
   include Parentable
-  attr_accessor :forum, :publisher
-  parentable :forum
+  attr_accessor :forum, :page, :publisher
+  parentable :forum, :page
 end

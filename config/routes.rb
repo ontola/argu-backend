@@ -219,6 +219,7 @@ Rails.application.routes.draw do
             path: 'o',
             only: %i[new create show update index],
             concerns: %i[feedable destroyable menuable] do
+    resources :discussions, only: %i[index]
     resources :grants, path: 'grants', only: %i[new create]
     resources :groups, path: 'g', only: %i[create new]
     resources :group_memberships, only: :index do

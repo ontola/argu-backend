@@ -61,6 +61,11 @@ class PagePolicy < EdgeablePolicy
     rule is_open?, is_group_member?, is_manager?, super
   end
 
+  def list?
+    raise(ActiveRecord::RecordNotFound) if record.hidden?
+    true
+  end
+
   def create?
     rule pages_left?, staff?
   end

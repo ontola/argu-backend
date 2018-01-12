@@ -2,15 +2,17 @@
 
 class Page < Edgeable::Base
   has_many :groups, dependent: :destroy, inverse_of: :page
+  has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
   include Shortnameable
   include Menuable
+  include Discussable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
-  has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
   has_many :sources, dependent: :restrict_with_exception, inverse_of: :page
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
+  has_many :discussions, through: :forums
 
   attr_accessor :confirmation_string, :tab, :active
 
@@ -25,6 +27,11 @@ class Page < Edgeable::Base
 
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
+  with_collection :discussions,
+                  association_class: Edge,
+                  includes: [:parent, owner: {creator: :profileable}],
+                  pagination: true,
+                  url_constructor: :page_discussions_url
   with_collection :vote_matches,
                   association: :profile_vote_matches,
                   pagination: true,

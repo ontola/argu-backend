@@ -11,6 +11,11 @@ RSpec.describe 'Discussions', type: :request do
     super - %i[html]
   end
 
+  context 'for page' do
+    let(:subject) { Discussion.new(page: argu) }
+    it_behaves_like 'get index', skip: %i[unauthorized]
+  end
+
   context 'for discoverable forum' do
     let(:subject) { Discussion.new(forum: freetown) }
     let(:expect_redirect_to_login) { expect_get_new }
