@@ -10,7 +10,7 @@ import I18n from 'i18n-js';
 import VoteMixin from './mixins/VoteMixin';
 
 const HUNDRED_PERCENT = 100;
-const voteURL = urltemplate.parse('/m{/id}/votes/new{?r}');
+const voteURL = urltemplate.parse('{+vote_path}/new{?r}');
 
 /**
  * Component for the POST-ing of a vote.
@@ -31,7 +31,8 @@ export const VoteButton = React.createClass({
         objectId: React.PropTypes.number,
         r: React.PropTypes.string,
         side: React.PropTypes.string,
-        submittingVote: React.PropTypes.string
+        submittingVote: React.PropTypes.string,
+        vote_path: React.PropTypes.string
     },
 
     iconForSide () {
@@ -46,8 +47,8 @@ export const VoteButton = React.createClass({
     },
 
     render () {
-        const { clickHandler, count, current, objectId: id, r, side } = this.props;
-        const url = voteURL.expand({ id, side, r });
+        const { clickHandler, count, current, r, side, vote_path } = this.props;
+        const url = voteURL.expand({ vote_path, r });
 
         let voteCountElem;
         if (count !== 0) {
@@ -126,7 +127,8 @@ export const VoteButtons = React.createClass({
                                    objectId={this.props.objectId}
                                    r={this.props.r}
                                    side={side}
-                                   submittingVote={this.props.submittingVote} />;
+                                   submittingVote={this.props.submittingVote}
+                                   vote_path={this.props.vote_path}/>;
             });
 
         return (
