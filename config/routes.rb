@@ -99,6 +99,9 @@ Rails.application.routes.draw do
     delete 'votes' => 'votes#destroy'
     get 'vote' => 'votes#show', as: :show_vote
   end
+  concern :vote_eventable do
+    resources :vote_events, only: %i[index show], concerns: %i[votable]
+  end
 
   constraints(Argu::WhitelistConstraint) do
     health_check_routes
@@ -165,7 +168,6 @@ Rails.application.routes.draw do
   get :feed, controller: :favorites_feed, action: :index
 
   resources :votes, only: %i[destroy update show], path: :v, as: :vote
-  resources :vote_events, only: [:show], concerns: [:votable]
 
   resources :vote_matches, only: %i[index show create update destroy] do
     get :voteables, to: 'list_items#index', relationship: :voteables
@@ -191,11 +193,10 @@ Rails.application.routes.draw do
   resources :motions,
             path: 'm',
             except: %i[index new create destroy],
-            concerns: %i[commentable blog_postable moveable votable contactable
+            concerns: %i[commentable blog_postable moveable vote_eventable contactable
                          feedable trashable decisionable invitable menuable] do
     resources :arguments, only: %i[new create index]
     resources :media_objects, only: :index
-    resources :vote_events, only: :index
   end
 
   resources :arguments,
@@ -277,10 +278,9 @@ Rails.application.routes.draw do
 
   resources :shortnames, only: %i[edit update destroy]
 
-  resources :linked_records, only: %i[show], path: :lr, concerns: %i[votable commentable] do
+  resources :linked_records, only: %i[show], path: :lr, concerns: %i[vote_eventable commentable] do
     get '/', action: :show, on: :collection
     resources :arguments, only: %i[new create index]
-    resources :vote_events, only: :index
   end
 
   match '/search/' => 'search#show', as: 'search', via: %i[get post]

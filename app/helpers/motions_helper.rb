@@ -50,7 +50,7 @@ module MotionsHelper
       userRegistrationUrl: user_registration_url(r: request.env['PATH_INFO']),
       selectedArguments: vote&.argument_ids || [],
       totalVotes: motion.default_vote_event.total_vote_count,
-      vote_path: motion_votes_path(motion)
+      vote_path: motion_vote_event_votes_path(motion, motion.default_vote_event)
     }.merge(opts))
   end
 

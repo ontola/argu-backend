@@ -26,6 +26,7 @@ class Vote < Edgeable::Base
                 votes_neutral: {for: Vote.fors[:neutral]},
                 opinions: {explanation: :present?, sql: "votes.explanation IS NOT NULL AND explanation != ''"}
   delegate :create_confirmation_reminder_notification, to: :publisher
+  delegate :voteable, to: :parent_model
 
   validates :creator, :for, presence: true
 

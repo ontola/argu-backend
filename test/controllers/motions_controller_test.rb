@@ -7,6 +7,7 @@ class MotionsControllerTest < ActionController::TestCase
   define_holland
   let(:question) { create(:question, :with_motions, parent: freetown.edge) }
   let(:motion) { create(:motion, :with_arguments, :with_votes, :with_attachments, parent: freetown.edge) }
+  let(:motion_votes_base_path) { "/m/#{motion.id}/vote_events/#{motion.default_vote_event.id}/votes" }
 
   ####################################
   # Show
@@ -33,30 +34,14 @@ class MotionsControllerTest < ActionController::TestCase
 
     expect_relationship('voteEventCollection', 1)
     expect_included(argu_url("/m/#{motion.id}/vote_events", type: 'paginated'))
-    expect_included(argu_url("/vote_events/#{motion.default_vote_event.id}"))
-    expect_included(argu_url("/vote_events/#{motion.default_vote_event.id}/votes", type: 'paginated'))
-    expect_included(
-      argu_url("/vote_events/#{motion.default_vote_event.id}/votes", filter: {option: 'yes'}, type: 'paginated')
-    )
-    expect_included(
-      argu_url(
-        "/vote_events/#{motion.default_vote_event.id}/votes", filter: {option: 'yes'}, page: 1, type: 'paginated'
-      )
-    )
-    expect_included(
-      argu_url("/vote_events/#{motion.default_vote_event.id}/votes", filter: {option: 'other'}, type: 'paginated')
-    )
-    expect_included(
-      argu_url(
-        "/vote_events/#{motion.default_vote_event.id}/votes", filter: {option: 'other'}, page: 1, type: 'paginated'
-      )
-    )
-    expect_included(
-      argu_url("/vote_events/#{motion.default_vote_event.id}/votes", filter: {option: 'no'}, type: 'paginated')
-    )
-    expect_included(
-      argu_url("/vote_events/#{motion.default_vote_event.id}/votes", filter: {option: 'no'}, page: 1, type: 'paginated')
-    )
+    expect_included(argu_url("/m/#{motion.id}/vote_events/#{motion.default_vote_event.id}"))
+    expect_included(argu_url(motion_votes_base_path, type: 'paginated'))
+    expect_included(argu_url(motion_votes_base_path, filter: {option: 'yes'}, type: 'paginated'))
+    expect_included(argu_url(motion_votes_base_path, filter: {option: 'yes'}, page: 1, type: 'paginated'))
+    expect_included(argu_url(motion_votes_base_path, filter: {option: 'other'}, type: 'paginated'))
+    expect_included(argu_url(motion_votes_base_path, filter: {option: 'other'}, page: 1, type: 'paginated'))
+    expect_included(argu_url(motion_votes_base_path, filter: {option: 'no'}, type: 'paginated'))
+    expect_included(argu_url(motion_votes_base_path, filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(
       motion.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
     )

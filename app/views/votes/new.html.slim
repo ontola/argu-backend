@@ -1,12 +1,12 @@
 .col-1
   header
     h1= t('votes.confirm.headline')
-  =render partial: "#{resource.class_name}/show", locals: {model: resource, hide_vote_buttons: true}
+  =render partial: "#{resource.voteable.class_name}/show", locals: {model: resource.voteable, hide_vote_buttons: true}
   ul.btns-opinion
-    =render partial: 'votes/vote_form', locals: { resource: resource, stance: :pro, icon: 'thumbs-up' } if resource.class::VOTE_OPTIONS.include?(:pro)
-    =render partial: 'votes/vote_form', locals: { resource: resource, stance: :neutral, icon: 'pause' } if resource.class::VOTE_OPTIONS.include?(:neutral)
-    =render partial: 'votes/vote_form', locals: { resource: resource, stance: :con, icon: 'thumbs-down' } if resource.class::VOTE_OPTIONS.include?(:con)
+    =render partial: 'votes/vote_form', locals: { resource: resource, stance: :pro, icon: 'thumbs-up' } if resource.voteable.class::VOTE_OPTIONS.include?(:pro)
+    =render partial: 'votes/vote_form', locals: { resource: resource, stance: :neutral, icon: 'pause' } if resource.voteable.class::VOTE_OPTIONS.include?(:neutral)
+    =render partial: 'votes/vote_form', locals: { resource: resource, stance: :con, icon: 'thumbs-down' } if resource.voteable.class::VOTE_OPTIONS.include?(:con)
 
-  .float-right=link_to resource, class: 'btn-subtle' do
+  .float-right=link_to resource.voteable, class: 'btn-subtle' do
     span.fa.fa-arrow-right
     span.icon-left= t('votes.confirm.skip')

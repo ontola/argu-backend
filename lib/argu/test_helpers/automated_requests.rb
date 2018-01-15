@@ -218,7 +218,7 @@ module Argu
           end
           let(:non_existing_show_path) { url_for([class_sym, id: -1, only_path: true]) }
           let(:non_existing_create_path) do
-            url_for([parent_class_sym, table_sym, "#{parent_class_sym}_id".to_sym => -1, only_path: true])
+            url_for([:motion, :vote_event, :votes, vote_event_id: -1, motion_id: motion.id, only_path: true])
           end
           let(:non_existing_update_path) { url_for([class_sym, id: -1, only_path: true]) }
           let(:non_existing_delete_path) { url_for([:delete, class_sym, id: -1, only_path: true]) }

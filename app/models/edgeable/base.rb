@@ -57,10 +57,7 @@ module Edgeable
     end
 
     def iri_opts
-      {
-        id: id,
-        parent_iri: parent_iri(true)
-      }
+      super.merge(parent_iri: parent_iri(true), :"#{parent_edge.owner_type.underscore}_id" => parent_edge.owner_id)
     end
 
     def is_published?

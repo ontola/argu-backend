@@ -16,16 +16,16 @@ class VotesTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:argument2) { create(:argument, parent: motion.edge) }
   let(:argument3) { create(:argument, parent: motion.edge) }
-  let!(:vote) { create(:vote, parent: motion.default_vote_event.edge, creator: creator.profile, publisher: creator) }
+  let!(:vote) { create(:vote, parent: vote_event.edge, creator: creator.profile, publisher: creator) }
   let(:guest_vote) do
-    create(:vote, parent: motion.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: vote_event.edge, creator: guest_user.profile, publisher: guest_user)
   end
   let(:guest_vote2) do
     create(:vote, parent: motion2.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
   end
   let(:other_guest_vote) do
     create(:vote,
-           parent: motion.default_vote_event.edge,
+           parent: vote_event.edge,
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
@@ -36,14 +36,14 @@ class VotesTest < ActionDispatch::IntegrationTest
            publisher: other_guest_user)
   end
   let(:unconfirmed_vote) do
-    create(:vote, parent: motion.default_vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
   end
   let(:unconfirmed_vote2) do
     create(:vote, parent: motion2.default_vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
   end
   let(:hidden_vote) do
     create(:vote,
-           parent: motion.default_vote_event.edge,
+           parent: vote_event.edge,
            creator: profile_hidden_votes,
            publisher: profile_hidden_votes.profileable)
   end
@@ -82,7 +82,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should get show vote by parent' do
     get root_path
     guest_vote
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
 
     expect_relationship('parent')
@@ -94,7 +94,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     guest_vote2
     other_guest_vote
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 404
   end
 
@@ -106,9 +106,9 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 0]]) do
+                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
       Sidekiq::Testing.inline! do
-        post motion_votes_path(motion),
+        post motion_vote_event_votes_path(motion, vote_event.id),
              params: {
                format: :json,
                vote: {
@@ -127,24 +127,37 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'guest should post not create vote for closed motion' do
     get root_path
-    post motion_votes_path(closed_question_motion.id, format: :json_api, vote: {for: :con})
+    post(
+      motion_vote_event_votes_path(
+        closed_question_motion.id,
+        closed_question_motion.default_vote_event.id,
+        format: :json_api,
+        vote: {for: :con}
+      )
+    )
     assert_response 403
-    get motion_show_vote_path(closed_question_motion.id, format: :json_api)
+    get(
+      motion_vote_event_show_vote_path(
+        closed_question_motion.id,
+        closed_question_motion.default_vote_event.id,
+        format: :json_api
+      )
+    )
     assert_response 404
   end
 
   test 'guest should post update vote' do
     get root_path
     guest_vote
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
-      post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
+      post motion_vote_event_votes_path(motion.id, vote_event.id, format: :json_api, vote: {for: :con})
     end
     assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
@@ -158,7 +171,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in unconfirmed
     get root_path
     unconfirmed_vote
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event, format: :json_api)
     assert_response 200
 
     expect_relationship('parent')
@@ -171,7 +184,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     other_guest_vote
     unconfirmed_vote2
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 404
   end
 
@@ -185,8 +198,8 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 0]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
+      post motion_vote_event_votes_path(motion, vote_event.id),
            params: {
              format: :json,
              vote: {
@@ -214,13 +227,13 @@ class VotesTest < ActionDispatch::IntegrationTest
     Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
     creator.primary_email_record.update(confirmed_at: nil)
 
-    get motion_show_vote_path(motion.id, format: :json_api)
+    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_differences([['Vote.pro.count', -1], ['Vote.con.count', 1], ['Argu::Redis.keys("temporary.*").count', 0]]) do
       assert vote.pro?
       assert RedisResource::Relation.where(publisher: creator).first.resource.pro?
-      post motion_votes_path(motion.id, format: :json_api, vote: {for: :con})
+      post motion_vote_event_votes_path(motion.id, vote_event.id, format: :json_api, vote: {for: :con})
       assert vote.reload.con?
       assert RedisResource::Relation.where(publisher: creator).first.resource.con?
     end
@@ -241,8 +254,8 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 1],
                         ['Edge.count', 1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              format: :json,
              vote: {
@@ -283,8 +296,8 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 1],
                         ['Edge.count', 1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              format: :json_api,
              data: {
@@ -304,40 +317,15 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_not_nil assigns(:create_service).resource.explained_at
   end
 
-  test 'user should post create json_api on vote_event' do
-    sign_in user
-    vote_event
-
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 0],
-                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
-      post vote_event_votes_path(vote_event),
-           params: {
-             format: :json_api,
-             data: {
-               type: 'votes',
-               attributes: {
-                 side: :pro
-               }
-             }
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-    assert assigns(:create_service).resource.pro?
-  end
-
   test 'user should not post create json_api on closed vote_event' do
     sign_in user
     closed_vote_event
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 0],
+                        ['vote_event.reload.children_count(:votes_pro)', 0],
                         ['closed_vote_event.reload.children_count(:votes_pro)', 0]]) do
-      post vote_event_votes_path(closed_vote_event),
+      post motion_vote_event_votes_path(motion, closed_vote_event),
            params: {
              format: :json_api,
              data: {
@@ -358,7 +346,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
-      post linked_record_votes_path(linked_record),
+      post linked_record_vote_event_votes_path(linked_record, linked_record.default_vote_event),
            params: {
              format: :json_api,
              data: {
@@ -382,9 +370,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_differences([['Vote.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', 0]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.total_vote_count', 0],
+                        ['vote_event.children_count(:votes_pro)', 0]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              vote: {
                for: 'pro'
@@ -401,9 +389,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_differences([['Vote.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', 0]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.total_vote_count', 0],
+                        ['vote_event.children_count(:votes_pro)', 0]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              vote: {
                for: 'pro'
@@ -420,10 +408,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 0],
                         ['Activity.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', -1],
-                        ['motion.default_vote_event.children_count(:votes_con)', 1]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.total_vote_count', 0],
+                        ['vote_event.children_count(:votes_pro)', -1],
+                        ['vote_event.children_count(:votes_con)', 1]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              vote: {
                for: 'con'
@@ -440,10 +428,10 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should post update explanation json' do
     sign_in creator
     assert_differences([['Vote.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', 0],
-                        ['motion.default_vote_event.children_count(:votes_con)', 0]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.total_vote_count', 0],
+                        ['vote_event.children_count(:votes_pro)', 0],
+                        ['vote_event.children_count(:votes_con)', 0]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              vote: {
                for: 'pro',
@@ -461,10 +449,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_differences([['Vote.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', -1],
-                        ['motion.default_vote_event.children_count(:votes_con)', 1]]) do
-      post motion_votes_path(motion),
+                        ['vote_event.reload.total_vote_count', 0],
+                        ['vote_event.children_count(:votes_pro)', -1],
+                        ['vote_event.children_count(:votes_con)', 1]]) do
+      post motion_vote_event_votes_path(motion, vote_event),
            params: {
              format: :json_api,
              data: {
@@ -485,9 +473,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator
 
     assert_differences([['Vote.count', 0],
-                        ['motion.default_vote_event.reload.total_vote_count', 0],
-                        ['motion.default_vote_event.children_count(:votes_pro)', 0],
-                        ['motion.default_vote_event.children_count(:votes_con)', 0]]) do
+                        ['vote_event.reload.total_vote_count', 0],
+                        ['vote_event.children_count(:votes_pro)', 0],
+                        ['vote_event.children_count(:votes_con)', 0]]) do
       put vote_path(vote),
           params: {
             format: :json_api,
@@ -529,13 +517,13 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', -1],
                         ['Edge.count', -1],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', -1]]) do
+                        ['vote_event.reload.children_count(:votes_pro)', -1]]) do
       delete vote_path(vote), params: {format: :json}
     end
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
-                        ['motion.default_vote_event.reload.children_count(:votes_pro)', 0]]) do
+                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
       delete vote_path(vote), params: {format: :json}
     end
 

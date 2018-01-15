@@ -6,7 +6,7 @@ class VotesController < EdgeableController
 
   def new
     render locals: {
-      resource: parent_resource!.voteable,
+      resource: parent_resource!,
       vote: Vote.new
     }
   end
@@ -88,7 +88,7 @@ class VotesController < EdgeableController
   end
 
   def show_respond_success_html(resource)
-    redirect_to url_for(resource.parent_model)
+    redirect_to url_for(resource.voteable)
   end
 
   def for_param
@@ -124,6 +124,10 @@ class VotesController < EdgeableController
 
   def redirect_param
     params.require(:vote).permit(:r)[:r]
+  end
+
+  def redirect_model_success(resource)
+    url_for([resource.persisted? ? resource : resource.voteable, only_path: true])
   end
 
   def redirect_url
