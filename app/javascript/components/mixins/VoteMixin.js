@@ -13,7 +13,7 @@ import {
 const VoteMixin = {
     propTypes: {
         actor: React.PropTypes.object,
-        vote_url: React.PropTypes.string.isRequired
+        vote_path: React.PropTypes.string.isRequired
     },
 
     proHandler (e) {
@@ -42,7 +42,7 @@ const VoteMixin = {
 
     vote (side) {
         this.setState({ submittingVote: side });
-        fetch(this.props.vote_url, safeCredentials({
+        fetch(this.props.vote_path, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
                 vote: {

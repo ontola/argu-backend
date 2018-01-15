@@ -90,7 +90,7 @@ export const VoteButtons = React.createClass({
         percent: React.PropTypes.object,
         r: React.PropTypes.string,
         submittingVote: React.PropTypes.string,
-        vote_url: React.PropTypes.string
+        vote_path: React.PropTypes.string
     },
 
     mixins: [VoteMixin],

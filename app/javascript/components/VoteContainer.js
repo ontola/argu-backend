@@ -38,7 +38,7 @@ export const VoteContainer = React.createClass({
         selectedArguments: React.PropTypes.array,
         totalVotes: React.PropTypes.number,
         userRegistrationUrl: React.PropTypes.string,
-        vote_url: React.PropTypes.string
+        vote_path: React.PropTypes.string
     },
 
     mixins: [OpinionMixin, VoteMixin],

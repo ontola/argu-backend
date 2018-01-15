@@ -225,7 +225,7 @@ const OpinionMixin = {
         e.preventDefault();
         const { currentVote, newExplanation, newSelectedArguments } = this.state;
         this.setState({ submitting: true });
-        fetch(`${this.props.vote_url}.json`, safeCredentials({
+        fetch(`${this.props.vote_path}.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
                 vote: {
