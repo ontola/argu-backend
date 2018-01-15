@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class VoteEvent < Edgeable::Base
+  DEFAULT_ID = 'default'
+
   belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events
   belongs_to :forum
   belongs_to :publisher, class_name: 'User', required: true
@@ -19,6 +21,10 @@ class VoteEvent < Edgeable::Base
 
   def display_name
     'Argu voting'
+  end
+
+  def iri_opts
+    super.merge(id: to_param)
   end
 
   def stats
@@ -52,6 +58,10 @@ class VoteEvent < Edgeable::Base
         total: total
       }
     end
+  end
+
+  def to_param
+    id || 'default'
   end
 
   def total_vote_count

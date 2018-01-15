@@ -272,6 +272,21 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('votes', 'create', 'pro')
   end
 
+  test 'user should post create for motion with default id' do
+    sign_in user
+    motion
+    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+      post motion_vote_event_votes_path(motion, 'default'),
+           params: {
+             format: :json,
+             vote: {
+               for: :pro
+             }
+           }
+    end
+    assert_response 201
+  end
+
   test 'user should post create upvote for argument json' do
     sign_in user
     argument
@@ -347,6 +362,30 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
       post linked_record_vote_event_votes_path(linked_record, linked_record.default_vote_event),
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro
+               }
+             }
+           }
+    end
+
+    assert_response 201
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create pro json_api for linked record width default id' do
+    linked_record_mock(1)
+    linked_record_mock(2)
+    linked_record
+    sign_in user
+
+    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+      post linked_record_vote_event_votes_path(linked_record, 'default'),
            params: {
              format: :json_api,
              data: {

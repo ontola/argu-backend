@@ -103,7 +103,8 @@ class VotesController < EdgeableController
   end
 
   def parent_from_params(opts = params)
-    super.try(:default_vote_event) || super
+    return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
+    super(opts.except(:vote_event_id)).default_vote_event
   end
 
   def unmodified?
