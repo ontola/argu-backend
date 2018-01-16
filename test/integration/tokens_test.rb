@@ -142,6 +142,38 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test 'User should post create token with caps for other domain' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'other.example'
+           },
+           params: {
+             username: user.email.capitalize,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_response 200
+  end
+
+  test 'User should post create token with caps for Argu domain' do
+    assert_difference('Doorkeeper::AccessToken.count', 1) do
+      post oauth_token_path,
+           headers: {
+             HTTP_HOST: 'argu.co'
+           },
+           params: {
+             username: user.email.capitalize,
+             password: user.password,
+             grant_type: 'password',
+             scope: 'user'
+           }
+    end
+    assert_redirected_to root_path
+  end
+
   test 'User should post create token with username username for Argu domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
