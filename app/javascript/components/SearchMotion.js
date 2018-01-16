@@ -35,7 +35,7 @@ export const SearchMotion = React.createClass({
         return data.data.map(motion => {
             return {
                 value: motion.id.toString().split('/').pop(),
-                label: motion.attributes.name
+                label: motion.attributes.displayName
             };
         });
     },
