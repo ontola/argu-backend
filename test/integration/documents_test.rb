@@ -32,7 +32,6 @@ class DocumentsTest < ActionDispatch::IntegrationTest
         Door onze Website te gebruiken, gaat u akkoord met de volgende voorwaarden die daarop van toepassing
         zijn. Indien u niet met deze Privacy Policy akkoord gaat, wordt u verzocht de Website niet te gebruiken
         en dit aan ons te melden.
-
         ##Definities
         In deze Privacy Policy hebben de navolgende begrippen de volgende betekenis:
         - Gebruiker: iedere gebruiker van de Website.

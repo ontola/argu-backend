@@ -41,7 +41,7 @@ gem 'rails-i18n', '~> 5.0.4'
 gem 'i18n-js', '~> 3.0.1'
 gem 'tzinfo-data'
 
-gem 'rack-cors', require: 'rack/cors'
+gem 'rack-cors', '~> 0.4.1', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
 gem 'redis', '~> 3.3.5'
 gem 'has_secure_token'
