@@ -12,7 +12,7 @@ class Shortname < ApplicationRecord
   validates :shortname,
             presence: true,
             length: 3..50,
-            uniqueness: true,
+            uniqueness: {case_sensitive: false},
             allow_nil: true
 
   validates :shortname,
