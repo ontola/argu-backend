@@ -23,6 +23,7 @@ gem 'rdf-serializers'
 gem 'rdf-turtle'
 gem 'json-ld'
 gem 'rdf-rdfxml'
+gem 'erubis'
 
 ################## DB ########################
 gem 'pg', '0.18.2'
@@ -152,7 +153,7 @@ group :development, :test do
   gem 'spring', '~> 2.0.2'
   gem 'spring-commands-rspec'
   gem 'spring-commands-testunit'
-  gem 'brakeman', '~> 3.2.1'
+  gem 'brakeman', '~> 4.1.1'
   gem 'oauth2', '~> 1.2.0'
 end
 

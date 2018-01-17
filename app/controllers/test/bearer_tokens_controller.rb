@@ -2,6 +2,7 @@
 
 module Test
   class BearerTokensController < ActionController::Base
+    protect_from_forgery with: :exception
     include UrlHelper
 
     def index
