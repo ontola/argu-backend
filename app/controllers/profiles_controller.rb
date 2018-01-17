@@ -25,6 +25,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/setup
   def setup
     @resource = user_or_redirect
+    @resource.build_home_placement if @resource.home_placement.nil?
     @profile = @resource.profile
     authorize @profile, :edit?
 

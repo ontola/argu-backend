@@ -16,6 +16,8 @@ nl:
         advanced: "Geavanceerd"
     edit:
       analytics_helper: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Google Analytics om de gebruikerservaring te verbeteren."
+    privacy:
+      public_helper: "Hierdoor kunnen zoekmachines jouw profielpagina indexeren."
     registrations:
       categories:
         general: "Algemeen"

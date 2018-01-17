@@ -73,7 +73,7 @@ nl:
       votes: 'Standaard worden de ideeën waar je op stemt in je profiel weergegeven. Zo kan je duidelijk maken waar je voor staat. Als je dat liever niet deelt, kan je het uitzetten bij "instellingen".'
     initial:
       headers:
-        profile: "Profiel invullen"
+        profile: "Account afmaken"
       body:
         profile: "Jouw profiel is zichtbaar voor alle bezoekers van Argu. Je hoeft niets in te vullen, maar met een volledige naam en een foto kom je betrouwbaarder over."
         shortname: "Kies een gebruikersnaam. Deze moet uniek zijn en is te zien door andere gebruikers. Je kunt jouw gebruikersnaam later niet meer wijzigen."

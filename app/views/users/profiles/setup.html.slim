@@ -1,4 +1,4 @@
-=set_title t('profiles.edit.title')
+=set_title t('intro.initial.headers.profile')
 .col-1
   header
     h1= t('intro.initial.headers.profile')
@@ -7,9 +7,13 @@
       p= raw t('intro.initial.body.profile')
       =form_for resource, url: setup_profiles_path, method: :put, authenticity_token: true  do |f|
         =f.hidden_field :id
-        p= f.button t('intro.initial.body.skip'), class: 'btn--as-text', type: 'submit'
-  header
-    h1= t('profiles.edit.title')
+        p= f.button t('intro.skip').capitalize, class: 'btn--as-text', type: 'submit'
   .box
-    section
-      =render partial: 'users/profiles/form', locals: {tab: nil, profile: profile, resource: resource, setup: true}
+    =semantic_form_for resource, url: setup_profiles_path, method: :put, authenticity_token: true do |f|
+      section
+        =render partial: 'users/settings/general', locals: {f: f, profile: profile, resource: resource, setup: true}
+        =render partial: 'users/profiles/form', locals: {f: f, profile: profile, resource: resource, setup: true}
+        =render partial: 'users/settings/notifications', locals: {f: f, authenticated_resource: resource, resource: resource, setup: true}
+        =render partial: 'users/settings/privacy', locals: {f: f, authenticated_resource: resource, resource: resource, setup: true}
+        =f.actions do
+          =f.action :submit, as: :button, label: t('save')

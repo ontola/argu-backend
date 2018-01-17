@@ -132,7 +132,7 @@ RSpec.feature 'Comments', type: :feature do
       click_button 'Next'
     end
 
-    expect(page).to have_content 'Fill in profile'
+    expect(page).to have_content 'Finish your account'
 
     within('.formtastic.user') do
       click_button 'Save'

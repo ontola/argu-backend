@@ -21,6 +21,14 @@
               =s.input :shortname, input_html: {title: t('formtastic.hints.user.shortname'), pattern: '[a-zA-Z]+[_a-zA-Z0-9]*'}
               li.form-helper
                 span=t('users.shortname_helper_html')
+          =f.input :first_name, input_html: {autofocus: true}
+          =f.inputs :last_name
+          =f.semantic_fields_for :profile do |pf|
+            =render partial: 'photos/form',
+                    locals: {form: pf,
+                            type: :profile_photo,
+                            relation: :default_profile_photo,
+                            preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
         =f.actions do
           .sticky-submit
             =link_to t('intro.skip').capitalize, setup_profiles_path, class: 'close-trigger margin-right'

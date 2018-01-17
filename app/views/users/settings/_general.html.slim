@@ -1,13 +1,10 @@
-=semantic_form_for authenticated_resource, url: settings_user_path, method: :put, remote: true, authenticity_token: true do |f|
+-unless local_assigns[:setup]
   =f.inputs name: t('users.registrations.categories.general') do
     =f.input :language, as: :react_select, collection: language_select_items, required: false, include_blank: false, clearable: false, searchable: false
     =f.input :time_zone
-  =f.inputs name: t('profiles.edit.personal_information') do
-    p= t('profiles.edit.personal_information_notice')
-    =f.semantic_fields_for :home_placement do |ha|
-      =ha.input :postal_code
-      =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE)
-    =f.input :birthday, label: false, prompt: t('formtastic.labels.birthday'), labels: {year: t('formtastic.labels.birthday')}, start_year: 120.years.ago.year, end_year: 12.years.ago.year, order: [:year], input_html: {class: 'Select-control'}
-  =f.input :tab, as: :hidden, input_html: {value: tab}
-  =f.actions do
-    =f.action :submit, as: :button, label: t('save')
+=f.inputs name: t('profiles.edit.personal_information') do
+  p= t('profiles.edit.personal_information_notice')
+  =f.semantic_fields_for :home_placement do |ha|
+    =ha.input :postal_code
+    =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE)
+  =f.input :birthday, label: false, prompt: t('formtastic.labels.birthday'), labels: {year: t('formtastic.labels.birthday')}, start_year: 120.years.ago.year, end_year: 12.years.ago.year, order: [:year], input_html: {class: 'Select-control'}

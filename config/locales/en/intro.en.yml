@@ -73,7 +73,7 @@ en:
       votes: "By default, motions you vote on are shown in your profile. This way, you can show what your opinion is. If you'd like to disable this, you can change it in \"settings\"."
     initial:
       headers:
-        profile: "Fill in profile"
+        profile: "Finish your account"
       body:
         profile: "Your profile is visible for all visitors of Argu. You don't need to enter anything, but a complete name and a picture will make you appear more reliable to other users."
         shortname: "Set a username. Your username is visible to other users and must be unique. You cannot change your username later on."
