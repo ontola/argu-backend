@@ -50,7 +50,7 @@ class QuestionsController < EdgeTreeController
   def sort_from_param
     case sort_param_or_default
     when 'popular'
-      "cast(default_vote_event_edges_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST"
+      "cast(default_vote_event_edges_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST, created_at DESC"
     when 'created_at'
       {created_at: :desc}
     when 'updated_at'
