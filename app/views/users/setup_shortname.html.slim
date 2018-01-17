@@ -14,7 +14,7 @@
                        input_html: {autofocus: true,
                                     title: t('formtastic.hints.user.shortname'),
                                     pattern: '[a-zA-Z]+[_a-zA-Z0-9]*',
-                                    value: authenticated_resource.email[/[^@]+/].gsub('.', '_')}
+                                    value: suggested_shortname(authenticated_resource)}
               li.form-helper
                 span=t('users.shortname_helper_html')
             - else

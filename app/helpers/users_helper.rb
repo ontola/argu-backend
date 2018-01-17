@@ -71,4 +71,13 @@ module UsersHelper
       Bugsnag.notify(e)
     end
   end
+
+  def suggested_shortname(resource)
+    shortname = resource.email[/[^@]+/].tr('.', '_').downcase
+    existing = Shortname.where('shortname ~* ?', "^#{shortname}\\d*$").pluck(:shortname).map(&:downcase)
+    return shortname unless existing.include?(shortname)
+    integers = existing.map { |s| s[/\d+/].to_i }.sort
+    gap = (integers + [integers.last + 1]).inject { |a, e| e == a.next ? e : (break a.next) }
+    "#{shortname}#{gap}"
+  end
 end
