@@ -67,6 +67,22 @@ module Argu
         WebMock.reset!
         last_match
       end
+
+      def expect_triple(subject, predicate, object)
+        triple = RDF::Statement(subject, predicate, object).to_s
+        assert_includes response.body, triple, "Expected to find #{triple} in\n#{response.body}"
+      end
+
+      def expect_sequence(subject, predicate)
+        m = response.body.match(/^#{Regexp.escape("<#{subject}> <#{predicate}>")} (.+).$/)
+        assert m, "Sequence for (#{subject} #{predicate}) not found"
+        RDF::Resource(m[1].strip)
+      end
+
+      def expect_sequence_member(subject, index, object)
+        expect_triple(subject, RDF[:"_#{index}"], object)
+        object
+      end
     end
   end
 end
