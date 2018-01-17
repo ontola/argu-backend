@@ -22,7 +22,9 @@ gem 'rdf-n3'
 gem 'rdf-serializers'
 gem 'rdf-turtle'
 gem 'json-ld'
-gem 'rdf-rdfxml'
+gem 'rdf-rdfa', git: 'https://github.com/ruby-rdf/rdf-rdfa', ref: 'cf05c59'
+gem 'rdf-rdfxml', git: 'https://github.com/ruby-rdf/rdf-rdfxml', ref: 'dd99a73'
+gem 'ebnf', git: 'https://github.com/dryruby/ebnf', ref: '3631273'
 gem 'erubis'
 
 ################## DB ########################
