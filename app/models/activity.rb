@@ -73,7 +73,7 @@ class Activity < PublicActivity::Activity
   def self.feed_for_favorites(favorites, filter_relevant = true)
     return Activity.none if favorites.empty?
     feed(filter_relevant)
-      .where("edges.path ? #{Edge.path_array(favorites.joins(:edge).pluck(:path))}")
+      .where("edges.path ? #{Edge.path_array(Edge.where(id: favorites.pluck(:edge_id)))}")
   end
 
   def self.feed_for_profile(profile, filter_relevant = true)

@@ -3,20 +3,20 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "358c61bf43de40853dbde2871f4b4c3fcf1cb0e376e57b462367913c5bcfc2ff",
+      "fingerprint": "5782765657eafc11bf3329c81eb6ca70238db7b548fb9cb93e6e3568b0cac243",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/activity.rb",
       "line": 76,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "feed(filter_relevant).where(\"edges.path ? #{Edge.path_array(favorites.joins(:edge).pluck(:path))}\")",
+      "code": "feed(filter_relevant).where(\"edges.path ? #{Edge.path_array(Edge.where(:id => favorites.pluck(:edge_id)))}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "Activity",
         "method": "Activity.feed_for_favorites"
       },
-      "user_input": "Edge.path_array(favorites.joins(:edge).pluck(:path))",
+      "user_input": "Edge.path_array(Edge.where(:id => favorites.pluck(:edge_id)))",
       "confidence": "Medium",
       "note": ""
     },
@@ -81,6 +81,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-01-17 11:17:27 +0100",
+  "updated": "2018-01-19 10:04:02 +0100",
   "brakeman_version": "4.1.1"
 }

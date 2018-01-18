@@ -313,16 +313,12 @@ class Edge < ApplicationRecord
     parent.save
   end
 
-  def self.path_array(paths)
-    return 'NULL' if paths.blank?
-    paths = case paths
-            when String
-              [paths]
-            when ActiveRecord::Associations::CollectionProxy, ActiveRecord::Relation
-              paths.map(&:path)
-            else
-              paths
-            end
+  def self.path_array(relation)
+    return 'NULL' if relation.blank?
+    unless relation.is_a?(ActiveRecord::Relation)
+      raise "Relation should be a ActiveRecord relation, but is a #{relation.class.name}"
+    end
+    paths = relation.map(&:path)
     paths.each { |path| paths.delete_if { |p| p.match(/^#{path}\./) } }
     "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}]"
   end
