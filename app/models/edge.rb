@@ -211,7 +211,7 @@ class Edge < ApplicationRecord
   end
 
   def is_trashed?
-    @is_trashed ||= trashed_at && trashed_at <= Time.current
+    @is_trashed ||= trashed_at ? trashed_at <= Time.current : false
   end
   alias is_trashed is_trashed?
 

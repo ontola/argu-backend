@@ -53,7 +53,7 @@ RSpec.configure do |config|
         parent: page.edge,
         public_grant: 'participator'
       )
-      create_forum(
+      holland = create_forum(
         :populated_forum,
         page: page,
         parent: page.edge,
@@ -98,6 +98,22 @@ RSpec.configure do |config|
       create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
       blog_post = create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
       create(:comment, parent: blog_post.edge)
+
+      hidden_question = create(:question, parent: holland.edge)
+      create(:motion, parent: hidden_question.edge)
+
+      trashed_motion = create(:motion,
+                              parent: question.edge,
+                              edge_attributes: {trashed_at: Time.current})
+      create(:argument, parent: trashed_motion.edge)
+
+      unpublished_motion = create(:motion,
+                                  title: 'jemoeder',
+                                  parent: question.edge,
+                                  edge_attributes: {
+                                    argu_publication_attributes: {draft: true}
+                                  })
+      create(:argument, parent: unpublished_motion.edge)
     end
 
     config.before(:each) do

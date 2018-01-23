@@ -243,13 +243,15 @@ module Argu
 
         def define_spec_objects
           let(:argu) { Page.find_via_shortname('argu') }
-          let(:freetown) { Forum.find_via_shortname('freetown') }
-          let(:holland) { Forum.find_via_shortname('holland') }
           let(:other_page_forum) { Forum.find_via_shortname('other_page_forum') }
-          let(:public_source) { Source.find_by(shortname: 'public_source') }
-          let(:linked_record) { LinkedRecord.first }
-          let(:linked_record_argument) { LinkedRecord.first.arguments.first }
-          let(:linked_record_vote) { LinkedRecord.first.votes.first }
+
+          define_freetown_spec_objects
+          define_hidden_spec_objects
+          define_source_spec_objects
+        end
+
+        def define_freetown_spec_objects
+          let(:freetown) { Forum.find_via_shortname('freetown') }
           let(:project) { freetown.projects.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }
@@ -265,6 +267,36 @@ module Argu
           let(:blog_post) { question.blog_posts.first }
           let(:blog_post_comment) { blog_post.comment_threads.first }
           let(:motion_blog_post) { motion.blog_posts.first }
+          let(:trashed_motion) { question.motions.trashed.first }
+          let(:unpublished_motion) { question.motions.unpublished.first }
+          let(:argument_unpublished_child) { unpublished_motion.arguments.first }
+        end
+
+        def define_hidden_spec_objects
+          let(:holland) { Forum.find_via_shortname('holland') }
+          let(:hidden_motion) { holland.edge.descendants.at_depth(4).where(owner_type: 'Motion').first.owner }
+        end
+
+        def define_source_spec_objects
+          let(:public_source) { Source.find_by(shortname: 'public_source') }
+          let(:linked_record) { LinkedRecord.first }
+          let(:linked_record_argument) { LinkedRecord.first.arguments.first }
+          let(:linked_record_vote) { LinkedRecord.first.votes.first }
+        end
+
+        def define_model_spec_objects
+          let(:described_method) do |example|
+            desc =
+              if example.example_group.description.starts_with?('#')
+                example.example_group.parent.description
+              elsif example.example_group.parent.description.starts_with?('#')
+                example.example_group.parent.description
+              elsif example.example_group.parent.parent.description.starts_with?('#')
+                example.example_group.parent.parent.description
+              end
+            return nil unless desc.is_a?(String) && desc != '#initialize'
+            desc[1..-1].to_sym
+          end
         end
 
         # @param [Symbol] key The key to search for.

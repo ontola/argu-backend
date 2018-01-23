@@ -30,7 +30,7 @@ RSpec.describe 'Conversions', type: :request do
     let(:create_differences) do
       [
         ['Question.count', -1],
-        ['Motion.where("question_id IS NOT NULL").count', -1],
+        ['Motion.where("question_id IS NOT NULL").count', -3],
         ['Motion.where("question_id IS NULL").count', 1],
         ['Activity.loggings.count', 1]
       ]
