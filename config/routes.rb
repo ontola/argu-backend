@@ -187,6 +187,7 @@ Rails.application.routes.draw do
   resources :question_answers, path: 'qa', only: %i[new create]
   resources :edges, only: [:show] do
     get :statistics, to: 'statistics#show'
+    resources :exports, only: %i[index create], concerns: %i[destroyable]
     resources :conversions, path: 'conversion', only: %i[new create]
     resource :grant_tree, only: %i[show], path: 'permissions'
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects

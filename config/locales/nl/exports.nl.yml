@@ -1,0 +1,18 @@
+nl:
+  exports:
+    type: "Export"
+    plural: "Exports"
+    empty: "Er zijn nog geen exports gemaakt"
+    create: "Maak export aan"
+    download: "Download"
+    headers:
+      created_at: "Gemaakt op"
+      status: "Status"
+      download: "Download"
+    destroy_confirmation: "Weet je zeker dat je deze export wilt verwijderen?"
+    status:
+      pending: "Wachten op verwerking"
+      processing: "Bezig met verwerken"
+      done: "Beschikbaar"
+      failed: "Fout tijdens verwerking"
+    create_helper: "Het duurt even om een export te maken. Je krijgt een mail als hij klaar is."

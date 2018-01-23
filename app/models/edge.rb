@@ -22,6 +22,7 @@ class Edge < ApplicationRecord
            foreign_key: :parent_id,
            dependent: false
   has_many :decisions, foreign_key: :decisionable_id, source: :decisionable, dependent: :destroy
+  has_many :exports, dependent: :destroy
   has_one :last_decision,
           -> { order(step: :desc) },
           foreign_key: :decisionable_id,
@@ -106,6 +107,7 @@ class Edge < ApplicationRecord
 
   acts_as_followable
   has_ltree_hierarchy
+  with_collection :exports, pagination: true
 
   attr_writer :root
   delegate :creator, :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true

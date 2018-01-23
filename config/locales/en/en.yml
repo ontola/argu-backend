@@ -62,6 +62,7 @@ en:
   previous: "Previous"
   older: "Older"
   newer: "Newer"
+  delete: "Delete"
   destroy: "Delete permanently"
   destroy_type: "Delete %{type} permanently"
   trash: "Trash"

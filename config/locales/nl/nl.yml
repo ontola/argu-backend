@@ -62,6 +62,7 @@ nl:
   previous: "Vorige"
   older: "Ouder"
   newer: "Nieuwer"
+  delete: "Verwijderen"
   destroy: "Permanent verwijderen"
   destroy_type: "%{type} permanent verwijderen"
   trash: "Verwijderen"

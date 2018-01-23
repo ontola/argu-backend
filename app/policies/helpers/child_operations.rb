@@ -51,7 +51,7 @@ module ChildOperations
     case raw_klass.to_s
     when 'Discussion'
       {forum: record}
-    when 'Favorite', 'GrantTree', 'Grant'
+    when 'Export', 'Favorite', 'GrantTree', 'Grant'
       {edge: record.is_a?(Edge) ? record : record.edge}
     when 'GroupMembership'
       {group: record}

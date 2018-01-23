@@ -134,6 +134,16 @@ RSpec.configure do |config|
                last_name: nil,
                profile: build(:profile, id: Profile::COMMUNITY_ID))
       end
+      if User.find_by(id: User::ANONYMOUS_ID).blank?
+        create(:user,
+               id: User::ANONYMOUS_ID,
+               shortname: build(:shortname, shortname: 'anonymous'),
+               email: 'anonymous@argu.co',
+               password: 'password',
+               first_name: nil,
+               last_name: nil,
+               profile: build(:profile, id: Profile::ANONYMOUS_ID))
+      end
       if Page.find_by(id: Profile::COMMUNITY_ID).blank?
         create(:page,
                id: 0,

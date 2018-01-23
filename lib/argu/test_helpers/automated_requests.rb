@@ -41,6 +41,7 @@ module Argu
           # Expectations
           let(:expect_success) { expect(response.code).to eq('200') }
           let(:expect_created) { expect(response.code).to eq('201') }
+          let(:expect_not_a_user) { expect(response.code).to eq('401') }
           let(:expect_unauthorized) { expect(response.code).to eq('403') }
           let(:expect_not_found) { expect(response.code).to eq('404') }
           let(:expect_redirect_to_login) { expect(response).to redirect_to(new_user_session_path(r: r_param)) }
@@ -232,6 +233,7 @@ module Argu
           let(:updated_resource_path) { show_path }
           let(:create_failed_path) { parent_path }
           let(:update_failed_path) { updated_resource_path }
+          let(:destroy_failed_path) { update_failed_path }
           let(:move_failed_path) { update_failed_path }
         end
 

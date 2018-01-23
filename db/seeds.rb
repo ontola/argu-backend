@@ -14,11 +14,23 @@ community_profile =
           id: User::COMMUNITY_ID,
           shortname: Shortname.new(shortname: 'community'),
           email: 'community@argu.co',
-          password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66'
+          password: SecureRandom.hex(64)
         )
   )
 community_profile.save!(validate: false)
 community_profile.profileable.update(encrypted_password: '')
+
+Profile.new(
+  id: Profile::ANONYMOUS_ID,
+  profileable:
+    User
+      .new(
+        id: User::ANONYMOUS_ID,
+        shortname: Shortname.new(shortname: 'anonymous'),
+        email: 'anonymous@argu.co',
+        password: SecureRandom.hex(64)
+      )
+)
 
 staff = User
           .create!(

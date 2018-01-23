@@ -59,6 +59,7 @@ Metrics/ClassLength:
     - 'app/controllers/users_controller.rb'
     - 'app/models/edge.rb'
     - 'app/models/edgeable/base.rb'
+    - 'app/models/profile.rb'
     - 'app/models/user.rb'
     - 'lib/argu/test_helpers/trait_listener.rb'
     - 'test/controllers/*.rb'

@@ -39,7 +39,7 @@ class GuestUser < User
     false
   end
 
-  def initialize(attributes = nil)
+  def initialize(attributes = {})
     @cookies ||= {}
     @headers ||= {}
     attributes[:time_zone] ||= 'Amsterdam'

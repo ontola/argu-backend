@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403154334) do
+ActiveRecord::Schema.define(version: 20180418113358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -218,6 +218,15 @@ ActiveRecord::Schema.define(version: 20180403154334) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.index ["email"], name: "index_email_addresses_on_email", unique: true
+  end
+
+  create_table "exports", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "edge_id", null: false
+    t.integer "status", default: 0, null: false
+    t.string "zip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "favorites", id: :serial, force: :cascade do |t|
@@ -720,6 +729,8 @@ ActiveRecord::Schema.define(version: 20180403154334) do
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
   add_foreign_key "email_addresses", "users"
+  add_foreign_key "exports", "edges"
+  add_foreign_key "exports", "users"
   add_foreign_key "favorites", "edges"
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id"

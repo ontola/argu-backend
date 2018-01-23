@@ -13,7 +13,7 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i[argument blog_post comment forum group_membership motion
+        SERVICE_MODELS = %i[argument blog_post comment forum group_membership motion export
                             banner group question vote decision grant vote_event vote_match].freeze
 
         def cascaded_forum(key, opts)
@@ -275,6 +275,8 @@ module Argu
           let(:trashed_motion) { question.motions.trashed.first }
           let(:unpublished_motion) { question.motions.unpublished.first }
           let(:argument_unpublished_child) { unpublished_motion.arguments.first }
+          let(:forum_export) { freetown.edge.exports.first }
+          let(:motion_export) { motion.edge.exports.first }
         end
 
         def define_hidden_spec_objects

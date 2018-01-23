@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
-  let(:r_param) { update_failed_path }
+  let(:r_param) { destroy_failed_path }
 
   (destroy_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do

@@ -48,6 +48,7 @@ class User < ApplicationRecord
                   pagination: true
 
   COMMUNITY_ID = 0
+  ANONYMOUS_ID = -1
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
   LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
@@ -116,6 +117,10 @@ class User < ApplicationRecord
 
   def active_for_authentication?
     true
+  end
+
+  def self.anonymous
+    User.find(User::ANONYMOUS_ID)
   end
 
   def apply_omniauth(omniauth)

@@ -26,6 +26,7 @@ gem 'rdf-rdfa', git: 'https://github.com/ruby-rdf/rdf-rdfa', ref: 'cf05c59'
 gem 'rdf-rdfxml', git: 'https://github.com/ruby-rdf/rdf-rdfxml', ref: 'dd99a73'
 gem 'ebnf', git: 'https://github.com/dryruby/ebnf', ref: '3631273'
 gem 'erubis'
+gem 'spreadsheet'
 
 ################## DB ########################
 gem 'pg', '0.18.2'
@@ -80,6 +81,7 @@ gem 'acts_as_list', '~> 0.9.10'
 # Pagination
 gem 'kaminari', '~>0.17.0'
 gem 'staccato', '~> 0.4.7'
+gem 'rubyzip'
 
 ################## Asset-y ########################
 gem 'slim', '~> 3.0.6'

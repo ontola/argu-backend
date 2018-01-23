@@ -58,6 +58,17 @@ module Menus
       )
     end
 
+    def export_link
+      menu_item(
+        :export,
+        href: edge_exports_url(resource.edge),
+        image: 'fa-cloud-download',
+        link_opts: {data: {remote: 'true'}},
+        policy: :create_child?,
+        policy_arguments: [:exports]
+      )
+    end
+
     def statistics_link
       menu_item(
         :statistics,

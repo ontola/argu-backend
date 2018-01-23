@@ -19,7 +19,7 @@ class EdgeTreePolicy < RestrictivePolicy
   end
   include ChildOperations
   delegate :has_expired_ancestors?, :has_trashed_ancestors?, :has_unpublished_ancestors?,
-           :persisted_edge, to: :edgeable_policy
+           :persisted_edge, :spectator?, :participator?, :moderator?, :administrator?, :staff?, to: :edgeable_policy
   attr_reader :grant_tree
 
   def initialize(context, record)

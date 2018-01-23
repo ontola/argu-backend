@@ -49,6 +49,15 @@ module TestHelper
     user.profile = Profile.new(id: Profile::COMMUNITY_ID)
   end
 
+  User.find_or_create_by!(id: User::ANONYMOUS_ID) do |user|
+    user.shortname = Shortname.new(shortname: 'anonymous')
+    user.email = 'anonymous@argu.co'
+    user.first_name = nil
+    user.last_name = nil
+    user.password = 'password'
+    user.profile = Profile.new(id: Profile::ANONYMOUS_ID)
+  end
+
   Page.find_or_create_by(id: 0) do |page|
     page.edge = Edge.new(user: User.community)
     page.last_accepted = Time.current

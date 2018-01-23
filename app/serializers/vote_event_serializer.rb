@@ -5,7 +5,7 @@ class VoteEventSerializer < BaseEdgeSerializer
   attribute :starts_at, predicate: NS::SCHEMA[:startDate]
   attribute :ends_at, predicate: NS::SCHEMA[:endDate]
   attribute :result
-  attribute :option_counts, export: false
+  attribute :option_counts, unless: :export?
   attribute :pro_count
   attribute :con_count
   attribute :neutral_count

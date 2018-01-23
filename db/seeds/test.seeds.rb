@@ -13,6 +13,15 @@ FactorySeeder.create(
   last_name: nil,
   profile: FactorySeeder.build(:profile, id: Profile::COMMUNITY_ID)
 )
+FactorySeeder.create(
+  :user,
+  id: User::ANONYMOUS_ID,
+  shortname: FactorySeeder.build(:shortname, shortname: 'anonymous'),
+  email: 'anonymous@argu.co',
+  first_name: nil,
+  last_name: nil,
+  profile: FactorySeeder.build(:profile, id: Profile::ANONYMOUS_ID)
+)
 
 staff = FactorySeeder.create(
   :user,
@@ -150,6 +159,12 @@ FactorySeeder.create(
 )
 vote_event = motion.default_vote_event
 FactorySeeder.create(:vote, parent: vote_event.edge)
+
+profile_hidden_votes =
+  FactorySeeder.create(:user, profile: FactorySeeder.build(:profile, are_votes_public: false)).profile
+FactorySeeder
+  .create(:vote, parent: vote_event.edge, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
+
 argument = FactorySeeder.create(:argument, parent: motion.edge)
 FactorySeeder.create(:vote, parent: argument.edge)
 comment = FactorySeeder.create(:comment, parent: argument.edge)
@@ -178,5 +193,8 @@ unpublished_motion =
     edge_attributes: {argu_publication_attributes: {draft: true}}
   )
 FactorySeeder.create(:argument, parent: unpublished_motion.edge)
+
+FactorySeeder.create(:export, parent: freetown.edge, user: FactorySeeder.create(:user))
+FactorySeeder.create(:export, parent: motion.edge, user: FactorySeeder.create(:user))
 
 Setting.set('suggested_forums', 'freetown,other_page_forum')

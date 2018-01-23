@@ -5,7 +5,7 @@
       h1= t('destroy_type', type: type_for(resource))
     .box
       section.unpadded
-        =semantic_form_for resource, url: url_for([resource, destroy: true]), method: :delete, html: {class: 'confirm'} do |f|
+        =semantic_form_for resource, url: url_for([:destroy, resource, destroy: true]), method: :delete, html: {class: 'confirm'} do |f|
           .modal-section
             p= t('destroy_confirmation')
           section.section--footer

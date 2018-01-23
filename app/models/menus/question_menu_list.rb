@@ -22,8 +22,9 @@ class QuestionMenuList < MenuList
           new_update_link,
           edit_link,
           statistics_link,
-          *trash_and_destroy_links,
-          contact_link
+          export_link,
+          contact_link,
+          *trash_and_destroy_links
         ]
       }
     )
