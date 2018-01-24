@@ -35,10 +35,6 @@ class ParentableController < AuthorizedController
     super || resource_by_id_parent
   end
 
-  def parent_resource!
-    parent_resource || raise(ActiveRecord::RecordNotFound)
-  end
-
   def resource_by_id_parent
     resource_by_id&.parent_model
   end

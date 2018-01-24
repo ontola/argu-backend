@@ -11,6 +11,10 @@ module NestedResourceHelper
     @parent_resource ||= parent_from_params(params) if parent_id_from_params(params).present?
   end
 
+  def parent_resource!
+    parent_resource || raise(ActiveRecord::RecordNotFound)
+  end
+
   # Extracts a parent resource from an Argu URI
   # @return [ApplicationRecord, nil] The parent resource corresponding to the iri, or nil if no parent is found
   def parent_from_iri(iri)
