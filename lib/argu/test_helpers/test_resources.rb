@@ -117,17 +117,6 @@ module Argu
           )
         end
       end
-
-      def define_public_source
-        define_page
-        let!(:public_source) do
-          create(:source,
-                 parent: argu.edge,
-                 iri_base: 'https://iri.test',
-                 public_grant: 'initiator',
-                 shortname: 'public_source')
-        end
-      end
     end
   end
 end

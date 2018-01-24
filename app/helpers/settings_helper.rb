@@ -46,8 +46,6 @@ module SettingsHelper
                      resource.downcase
                    when User
                      nil
-                   when Source
-                     [resource.page, resource]
                    else
                      resource
                    end

@@ -10,7 +10,6 @@ class Page < Edgeable::Base
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
-  has_many :sources, dependent: :restrict_with_exception, inverse_of: :page
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
   has_many :discussions, through: :forums
 

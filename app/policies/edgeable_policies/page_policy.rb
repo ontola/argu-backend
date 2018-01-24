@@ -25,7 +25,6 @@ class PagePolicy < EdgeablePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i[profile forums groups advanced]
-    tabs.concat %i[sources] if staff?
     tabs
   end
 

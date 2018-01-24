@@ -231,9 +231,6 @@ Rails.application.routes.draw do
       post :index, action: :index, on: :collection
     end
     resources :vote_matches, only: %i[index show]
-    resources :sources, only: %i[update show], path: 's', concerns: %i[menuable] do
-      get :settings, on: :member
-    end
     get :settings, on: :member
     get :edit, to: 'profiles#edit', on: :member
   end
@@ -324,7 +321,6 @@ Rails.application.routes.draw do
       post 'setting', to: 'portal#setting!', as: :update_setting
       resources :announcements, except: :index
       resources :forums, only: %i[new create]
-      resources :sources, only: %i[new create]
       resources :users, only: [], concerns: %i[destroyable]
       mount Sidekiq::Web => '/sidekiq'
     end

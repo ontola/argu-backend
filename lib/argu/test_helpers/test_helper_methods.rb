@@ -13,7 +13,7 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i[argument blog_post comment forum group_membership motion source
+        SERVICE_MODELS = %i[argument blog_post comment forum group_membership motion
                             phase banner group project question vote decision grant vote_event vote_match].freeze
 
         def cascaded_forum(key, opts)
@@ -247,11 +247,13 @@ module Argu
 
           define_freetown_spec_objects
           define_hidden_spec_objects
-          define_source_spec_objects
         end
 
         def define_freetown_spec_objects
           let(:freetown) { Forum.find_via_shortname('freetown') }
+          let(:linked_record) { LinkedRecord.first }
+          let(:linked_record_argument) { LinkedRecord.first.arguments.first }
+          let(:linked_record_vote) { LinkedRecord.first.votes.first }
           let(:project) { freetown.projects.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }
@@ -275,13 +277,6 @@ module Argu
         def define_hidden_spec_objects
           let(:holland) { Forum.find_via_shortname('holland') }
           let(:hidden_motion) { holland.edge.descendants.at_depth(4).where(owner_type: 'Motion').first.owner }
-        end
-
-        def define_source_spec_objects
-          let(:public_source) { Source.find_by(shortname: 'public_source') }
-          let(:linked_record) { LinkedRecord.first }
-          let(:linked_record_argument) { LinkedRecord.first.arguments.first }
-          let(:linked_record_vote) { LinkedRecord.first.votes.first }
         end
 
         def define_model_spec_objects
