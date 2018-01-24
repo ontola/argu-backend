@@ -52,7 +52,6 @@ RSpec.describe 'Votes', type: :request do
     let(:parent_path) { url_for([subject.voteable, subject.parent_model, only_path: true]) }
     let(:index_path) { url_for([subject.voteable, subject.parent_model, table_sym, only_path: true]) }
     let(:new_path) { url_for([:new, subject.voteable, subject.parent_model, class_sym, only_path: true]) }
-    let(:create_path) { url_for([subject.voteable, subject.parent_model, table_sym, only_path: true]) }
     let(:destroy_path) { url_for([subject.voteable, subject.parent_model, :votes, only_path: true]) }
     let(:update_path) { url_for([subject.voteable, subject.parent_model, :votes, only_path: true]) }
     let(:non_existing_new_path) do

@@ -200,7 +200,7 @@ module Argu
           let(:edit_path) { url_for([:edit, subject, only_path: true]) }
           let(:index_path) { url_for([subject.parent_model, table_sym, only_path: true]) }
           let(:show_path) { url_for([subject, only_path: true]) }
-          let(:create_path) { url_for([subject.parent_model, table_sym, only_path: true]) }
+          let(:create_path) { index_path }
           let(:update_path) { url_for([subject, only_path: true]) }
           let(:delete_path) { url_for([:delete, subject, only_path: true]) }
           let(:destroy_path) { url_for([subject, destroy: true, only_path: true]) }
@@ -220,9 +220,7 @@ module Argu
             url_for([parent_class_sym, table_sym, "#{parent_class_sym}_id".to_sym => -1, only_path: true])
           end
           let(:non_existing_show_path) { url_for([class_sym, id: -1, only_path: true]) }
-          let(:non_existing_create_path) do
-            url_for([:motion, :vote_event, :votes, vote_event_id: -1, motion_id: motion.id, only_path: true])
-          end
+          let(:non_existing_create_path) { non_existing_index_path }
           let(:non_existing_update_path) { url_for([class_sym, id: -1, only_path: true]) }
           let(:non_existing_delete_path) { url_for([:delete, class_sym, id: -1, only_path: true]) }
           let(:non_existing_destroy_path) { url_for([class_sym, id: -1, destroy: true, only_path: true]) }
