@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
   let(:r_param) { update_failed_path }
 
-  destroy_formats.each do |format|
+  (destroy_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:destroy_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

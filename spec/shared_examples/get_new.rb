@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'get new' do |opts = {skip: []}|
   let(:r_param) { new_path }
 
-  new_formats.each do |format|
+  (new_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:new_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

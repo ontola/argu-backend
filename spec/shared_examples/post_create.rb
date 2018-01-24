@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'post create' do |opts = {skip: []}|
   let(:r_param) { create_failed_path }
 
-  create_formats.each do |format|
+  (create_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:create_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

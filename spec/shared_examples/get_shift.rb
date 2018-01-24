@@ -4,7 +4,7 @@ RSpec.shared_examples_for 'get shift' do |opts = {skip: []}|
   let(:r_param) { shift_path }
   let(:authorized_user) { staff }
 
-  shift_formats.each do |format|
+  (shift_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:shift_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

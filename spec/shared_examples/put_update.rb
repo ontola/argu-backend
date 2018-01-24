@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'put update' do |opts = {skip: []}|
   let(:r_param) { update_failed_path }
 
-  update_formats.each do |format|
+  (update_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:new_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

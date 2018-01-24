@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
   let(:r_param) { update_failed_path }
 
-  untrash_formats.each do |format|
+  (untrash_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:untrash_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

@@ -4,7 +4,7 @@ RSpec.shared_examples_for 'get delete' do |opts = {skip: []}|
   let(:r_param) { delete_path }
   let(:authorized_user) { staff }
 
-  delete_formats.each do |format|
+  (delete_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:delete_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

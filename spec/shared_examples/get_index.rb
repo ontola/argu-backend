@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'get index' do |opts = {skip: []}|
   let(:r_param) { index_path }
 
-  index_formats.each do |format|
+  (index_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:index_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

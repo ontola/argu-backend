@@ -3,7 +3,7 @@
 RSpec.shared_examples_for 'get edit' do |opts = {skip: []}|
   let(:r_param) { edit_path }
 
-  edit_formats.each do |format|
+  (edit_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:edit_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

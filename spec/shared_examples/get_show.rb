@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples_for 'get show' do |opts = {skip: []}|
-  show_formats.each do |format|
+  (show_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:show_guest) || opts[:skip].include?(:guest)
         it 'as guest' do

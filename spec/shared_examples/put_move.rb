@@ -4,7 +4,7 @@ RSpec.shared_examples_for 'put move' do |opts = {skip: []}|
   let(:r_param) { move_failed_path }
   let(:authorized_user) { staff }
 
-  move_formats.each do |format|
+  (move_formats - (opts[:skip] || [])).each do |format|
     context "as #{format}" do
       unless opts[:skip].include?(:move_guest) || opts[:skip].include?(:guest)
         it 'as guest' do
