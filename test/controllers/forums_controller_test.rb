@@ -15,7 +15,8 @@ class ForumsControllerTest < ActionController::TestCase
     expect_relationship('motionCollection', 1)
     expect_included(argu_url("/f/#{holland.id}/motions", type: 'paginated'))
     expect_included(argu_url("/f/#{holland.id}/motions", page: 1, type: 'paginated'))
-    expect_included(holland.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(holland.motions.where(question_id: nil).untrashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_not_included(holland.motions.where('question_id IS NOT NULL').map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
 
     expect_relationship('questionCollection', 1)

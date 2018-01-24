@@ -20,6 +20,7 @@ class Forum < Edgeable::Base
   # User content
   has_many :arguments, inverse_of: :forum, dependent: :destroy
   has_many :motions, inverse_of: :forum, dependent: :destroy
+  has_many :direct_motions, -> { where(question_id: nil) }, class_name: 'Motion', inverse_of: :forum
   has_many :projects, inverse_of: :forum, dependent: :destroy
   has_many :questions, inverse_of: :forum, dependent: :destroy
 
@@ -28,7 +29,10 @@ class Forum < Edgeable::Base
                   includes: [:parent, owner: {creator: :profileable}],
                   pagination: true,
                   url_constructor: :forum_canonical_discussions_url
-  with_collection :motions, pagination: true, url_constructor: :forum_canonical_motions_url
+  with_collection :motions,
+                  pagination: true,
+                  url_constructor: :forum_canonical_motions_url,
+                  association: :direct_motions
   with_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
 
   default_widgets :motions, :questions
