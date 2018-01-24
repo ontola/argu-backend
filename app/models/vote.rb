@@ -17,7 +17,7 @@ class Vote < Edgeable::Base
   before_redis_save :create_confirmation_reminder_notification
 
   attr_writer :argument_ids
-  parentable :argument, :vote_event
+  parentable :argument, :vote_event, :linked_record
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
   filterable option: {key: 'votes.for', values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}}

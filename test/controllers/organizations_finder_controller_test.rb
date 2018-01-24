@@ -3,15 +3,12 @@
 require 'test_helper'
 
 class OrganizationsFinderControllerTest < ActionController::TestCase
+  include UrlHelper
+
   define_freetown
   define_helsinki
-  define_public_source
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:helsinki_motion) { create(:motion, parent: helsinki.edge) }
-  let(:linked_record) do
-    linked_record_mock(1)
-    create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1')
-  end
 
   ####################################
   # As Guest
@@ -26,12 +23,14 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     get :show, params: {iri: motion.iri, format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'guest should get show organization of new motion iri' do
     get :show, params: {iri: new_forum_motion_path(freetown), format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'guest should get show organization of root' do
@@ -56,6 +55,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     get :show, params: {iri: media_object_path(freetown.default_profile_photo), format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'guest should get show organization of hidden motion' do
@@ -64,18 +64,25 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'guest should get show organization of uninitialized linked_record' do
-    linked_record_mock(1, url: 'https://iri.test/resource/1')
-
-    get :show, params: {iri: 'https://iri.test/resource/1', format: :nt}
+  test 'guest should get show organization of deku iri' do
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/od/123"), format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
-  test 'guest should get show organization of initialized linked_record' do
-    get :show, params: {iri: linked_record.record_iri, format: :nt}
+  test 'guest should get show organization of linked_record' do
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123"), format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
+  end
+
+  test 'guest should get show organization of linked_record collection' do
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123/votes"), format: :nt}
+
+    assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'guest should not get show organization of invalid iri' do
@@ -103,6 +110,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     get :show, params: {iri: motion.iri, format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'user should get show organization of hidden motion' do
@@ -113,20 +121,31 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'user should get show organization of uninitialized linked_record' do
-    linked_record_mock(1, url: 'https://iri.test/resource/1')
+  test 'user should get show organization of deku iri' do
     sign_in user
 
-    get :show, params: {iri: 'https://iri.test/resource/1', format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/od/123"), format: :nt}
 
     assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
-  test 'user should get show organization of initialized linked_record' do
-    get :show, params: {iri: linked_record.record_iri, format: :nt}
+  test 'user should get show organization of linked_record' do
     sign_in user
 
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123"), format: :nt}
+
     assert_response 200
+    assert_equal argu, assigns(:organization)
+  end
+
+  test 'user should get show organization of linked_record collection' do
+    sign_in user
+
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123/votes"), format: :nt}
+
+    assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'user should not get show organization of invalid iri' do
@@ -147,5 +166,6 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     get :show, params: {iri: helsinki_motion.iri, format: :nt}
 
     assert_response 200
+    assert_equal helsinki.page, assigns(:organization)
   end
 end

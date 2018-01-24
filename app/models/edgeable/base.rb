@@ -30,7 +30,6 @@ module Edgeable
         .where("#{connection.quote_table_name("edges_#{class_name}")}.expires_at <= ?", Time.current)
     }
 
-    before_save :save_linked_record
     validate :validate_parent_type
 
     accepts_nested_attributes_for :edge
@@ -75,12 +74,8 @@ module Edgeable
       type.nil? ? edge&.parent : edge&.parent_edge(type)
     end
 
-    def parent_iri(only_path: false)
-      expand_uri_template(
-        "#{parent_edge.owner_type.underscore.pluralize}_iri",
-        id: parent_edge.owner_id,
-        only_path: only_path
-      )
+    def parent_iri(opts = {})
+      parent_model&.iri(opts)
     end
 
     def root_object?
@@ -124,11 +119,6 @@ module Edgeable
 
     def remove_from_redis
       RedisResource::Resource.new(resource: self).destroy
-    end
-
-    def save_linked_record
-      return unless parent_model&.is_a?(LinkedRecord) && parent_model.has_changes_to_save?
-      parent_model.save!
     end
 
     def store_in_redis

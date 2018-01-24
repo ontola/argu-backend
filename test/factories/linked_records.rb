@@ -2,13 +2,6 @@
 
 FactoryGirl.define do
   factory :linked_record do
-    sequence(:record_iri) { |n| "https://iri.test/m/#{n}" }
-
-    before :create do |record|
-      record.edge = Edge.new(parent: record.source.edge, user_id: User::COMMUNITY_ID, is_published: true)
-      record.page = record.source.page
-    end
-
     trait :with_votes do
       after(:create) do |resource|
         Argu::TestHelpers::TraitListener.new(resource).with_votes

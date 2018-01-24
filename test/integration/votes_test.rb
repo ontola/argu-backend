@@ -3,7 +3,6 @@
 require 'test_helper'
 
 class VotesTest < ActionDispatch::IntegrationTest
-  define_public_source
   define_freetown
   define_cairo
   let(:guest_user) { GuestUser.new(session: session) }
@@ -62,7 +61,8 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event.edge) }
-  let(:linked_record) { create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1') }
+  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
   let(:vote_event) do
     create(:vote_event,
            parent: motion.edge,
@@ -355,13 +355,12 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should post create pro json_api for linked record' do
-    linked_record_mock(1)
-    linked_record_mock(2)
     linked_record
     sign_in user
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
-      post linked_record_vote_event_votes_path(linked_record, linked_record.default_vote_event),
+      vote_event = linked_record.default_vote_event
+      post linked_record_vote_event_votes_path(linked_record.iri_opts.merge(vote_event_id: vote_event.id)),
            params: {
              format: :json_api,
              data: {
@@ -379,13 +378,32 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should post create pro json_api for linked record width default id' do
-    linked_record_mock(1)
-    linked_record_mock(2)
     linked_record
     sign_in user
 
     assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
-      post linked_record_vote_event_votes_path(linked_record, 'default'),
+      post linked_record_vote_event_votes_path(linked_record.iri_opts.merge(vote_event_id: 'default')),
+           params: {
+             format: :json_api,
+             data: {
+               type: 'votes',
+               attributes: {
+                 side: :pro
+               }
+             }
+           }
+    end
+
+    assert_response 201
+    assert assigns(:create_service).resource.valid?
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create pro json_api for non-persisted linked record' do
+    sign_in user
+
+    assert_differences([['Vote.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]) do
+      post linked_record_vote_event_votes_path(non_persisted_linked_record.iri_opts.merge(vote_event_id: 'default')),
            params: {
              format: :json_api,
              data: {

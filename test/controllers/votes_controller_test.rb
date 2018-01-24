@@ -4,12 +4,11 @@ require 'test_helper'
 
 class VotesControllerTest < ActionController::TestCase
   define_freetown
-  define_public_source
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
   let(:argument) { motion.arguments.untrashed.first }
   let(:vote_event) { motion.default_vote_event }
   let(:vote) { motion.votes.first }
-  let(:linked_record) { create(:linked_record, :with_arguments, :with_votes, source: public_source) }
+  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
   let(:user) { create(:user) }
   let(:vote_event_base_path) { "/m/#{motion.id}/vote_events/#{vote_event.id}/v" }
 

@@ -28,6 +28,16 @@ RSpec.describe "Iri's", type: :model do
 
   context 'LinkedRecord' do
     subject { linked_record }
+    let(:url) do
+      url_for(
+        [
+          subject,
+          organization: subject.parent_model(:page).url,
+          forum: subject.parent_model(:forum).url,
+          protocol: :https
+        ]
+      )
+    end
     it_behaves_like 'iri matches route'
   end
 

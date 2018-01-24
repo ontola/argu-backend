@@ -66,15 +66,9 @@ RSpec.configure do |config|
         shortname_attributes: {shortname: 'other_page_forum'},
         public_grant: 'participator'
       )
-      public_source = create(
-        :source,
-        parent: page.edge,
-        iri_base: 'https://iri.test',
-        public_grant: 'participator',
-        shortname: 'public_source'
-      )
-      linked_record = create(:linked_record, source: public_source)
+      linked_record = LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
       create(:argument, parent: linked_record.edge)
+      create(:comment, parent: linked_record.edge)
       linked_record_vote_event = linked_record.default_vote_event
       create(:vote, parent: linked_record_vote_event.edge)
       create(:project, parent: freetown.edge)

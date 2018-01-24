@@ -7,7 +7,6 @@ class PolicyTest < ActiveSupport::TestCase
   include DefaultPolicyResults
 
   define_automated_tests_objects
-  define_public_source
   define_freetown(:expired_freetown, attributes: {edge_attributes: {expires_at: 1.minute.ago}})
   define_freetown(:trashed_freetown, attributes: {edge_attributes: {trashed_at: 1.minute.ago}})
   define_freetown(:unpublished_freetown, attributes: {edge_attributes: {is_published: false}})
@@ -16,7 +15,7 @@ class PolicyTest < ActiveSupport::TestCase
   let(:participator) { create_participator(page, create(:user)) }
   let(:guest) { GuestUser.new(id: 'my_id') }
 
-  let(:linked_record) { create(:linked_record, source: public_source) }
+  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record_argument) { create(:argument, parent: linked_record.edge, publisher: creator) }
 
   ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
@@ -62,20 +61,20 @@ class PolicyTest < ActiveSupport::TestCase
     subject.open! if subject.is_a?(Page)
     case user_type
     when :spectator
-      [freetown, expired_freetown, public_source].each do |record|
+      [freetown, expired_freetown].each do |record|
         record.public_grant = 'spectator'
       end
     when :participator
-      [freetown, expired_freetown, public_source].each do |record|
+      [freetown, expired_freetown].each do |record|
         record.public_grant = 'participator'
       end
     when :non_member, :member
-      [freetown, expired_freetown, public_source].each do |record|
+      [freetown, expired_freetown].each do |record|
         record.public_grant = 'none'
       end
       subject.closed! if subject.is_a?(Page)
     end
-    [freetown, expired_freetown, public_source].each do |record|
+    [freetown, expired_freetown].each do |record|
       record.send(:reset_public_grant)
     end
   end

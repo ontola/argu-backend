@@ -5,9 +5,17 @@ require 'test_helper'
 class ArgumentsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
-  define_public_source
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
-  let(:linked_record) { create(:linked_record, :with_arguments, :with_votes, source: public_source) }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:linked_record) do
+    lr = LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
+    create(:argument, :with_comments, parent: lr.edge)
+    create(:argument, :with_comments, parent: lr.edge, pro: false)
+    create(:argument, :with_comments, parent: lr.edge, edge_attributes: {trashed_at: Time.current})
+    lr
+  end
+  let(:non_persisted_linked_record_base) { non_persisted_linked_record.iri.to_s.gsub('/od/', '/lr/') }
+  let(:linked_record_base) { linked_record.iri.to_s.gsub('/od/', '/lr/') }
   let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
 
   ####################################
@@ -102,34 +110,35 @@ class ArgumentsControllerTest < ActionController::TestCase
   # Index for LinkedRecord
   ####################################
   test 'should get index arguments of linked_record' do
-    get :index, params: {format: :json_api, linked_record_id: linked_record.id}
+    get :index, params: linked_record.iri_opts.merge(format: :json_api)
     assert_response 200
 
     expect_relationship('parent', 1)
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 2
-    expect_included(argu_url("/lr/#{linked_record.id}/a", filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url("/lr/#{linked_record.id}/a", filter: {option: 'no'}, type: 'paginated'))
+    expect_included("#{linked_record_base}/a?filter%5Boption%5D=yes&type=paginated")
+    expect_included("#{linked_record_base}/a?filter%5Boption%5D=no&type=paginated")
     expect_included(linked_record.arguments.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
   end
 
   test 'should get index arguments of linked_record with option=yes' do
-    get :index, params: {format: :json_api, linked_record_id: linked_record.id, filter: {option: 'yes'}}
+    get :index, params: linked_record.iri_opts.merge(format: :json_api, filter: {option: 'yes'})
+
     assert_response 200
 
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/lr/#{linked_record.id}/a", filter: {option: 'yes'}, page: 1, type: 'paginated'))
+    expect_included("#{linked_record_base}/a?filter%5Boption%5D=yes&page=1&type=paginated")
     expect_included(linked_record.arguments.pro.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.con.map { |a| argu_url("/a/#{a.id}") })
   end
 
   test 'should get index arguments of linked_record with option=yes and page=1' do
-    get :index, params: {format: :json_api, linked_record_id: linked_record.id, filter: {option: 'yes'}, page: 1}
+    get :index, params: linked_record.iri_opts.merge(format: :json_api, filter: {option: 'yes'}, page: 1)
     assert_response 200
 
     expect_relationship('parent', 1)
@@ -143,20 +152,21 @@ class ArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index arguments of linked_record with option=no' do
-    get :index, params: {format: :json_api, linked_record_id: linked_record.id, filter: {option: 'no'}}
+    get :index, params: linked_record.iri_opts.merge(format: :json_api, filter: {option: 'no'})
+
     assert_response 200
 
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/lr/#{linked_record.id}/a", filter: {option: 'no'}, page: 1, type: 'paginated'))
+    expect_included("#{linked_record_base}/a?filter%5Boption%5D=no&page=1&type=paginated")
     expect_included(linked_record.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.pro.map { |a| argu_url("/a/#{a.id}") })
   end
 
   test 'should get index arguments of linked_record with option=no and page=1' do
-    get :index, params: {format: :json_api, linked_record_id: linked_record.id, filter: {option: 'no'}, page: 1}
+    get :index, params: linked_record.iri_opts.merge(format: :json_api, filter: {option: 'no'}, page: 1)
     assert_response 200
 
     expect_relationship('parent', 1)
@@ -167,5 +177,20 @@ class ArgumentsControllerTest < ActionController::TestCase
     expect_included(linked_record.arguments.con.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(linked_record.arguments.pro.map { |a| argu_url("/a/#{a.id}") })
+  end
+
+  ####################################
+  # Index for non persisted LinkedRecord
+  ####################################
+  test 'should get index arguments of non_persisted_linked_record' do
+    get :index, params: non_persisted_linked_record.iri_opts.merge(format: :json_api)
+    assert_response 200
+
+    expect_relationship('parent', 1)
+
+    view_sequence = expect_relationship('viewSequence')
+    assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 2
+    expect_included("#{non_persisted_linked_record_base}/a?filter%5Boption%5D=yes&type=paginated")
+    expect_included("#{non_persisted_linked_record_base}/a?filter%5Boption%5D=no&type=paginated")
   end
 end

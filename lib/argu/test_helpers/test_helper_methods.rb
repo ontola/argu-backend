@@ -254,6 +254,7 @@ module Argu
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
           let(:linked_record_vote) { LinkedRecord.first.votes.first }
+          let(:linked_record_comment) { LinkedRecord.first.comment_threads.first }
           let(:project) { freetown.projects.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }

@@ -175,22 +175,6 @@ module Argu
           .to_return(body: [].to_json)
       end
 
-      def linked_record_mock(id, opts = {})
-        opts[:url] ||= "https://iri.test/resource/#{id}"
-        opts[:status] ||= 200
-        opts[:body] ||= {
-          data: {
-            type: 'motions',
-            attributes: {
-              title: 'Record name',
-              '@type': 'motions',
-              '@id': "https://iri.test/resource/#{id}"
-            }
-          }
-        }
-        stub_request(:get, opts[:url]).to_return(status: opts[:status], body: opts[:body].to_json)
-      end
-
       def validate_valid_bearer_token
         stub_request(:get,
                      Addressable::Template.new("#{Rails.configuration.token_url}/verify{?jwt}"))

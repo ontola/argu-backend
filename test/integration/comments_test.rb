@@ -4,7 +4,6 @@ require 'test_helper'
 
 class CommentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
-  define_public_source
 
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) do

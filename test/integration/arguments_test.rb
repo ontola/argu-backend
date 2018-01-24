@@ -4,8 +4,8 @@ require 'test_helper'
 
 class ArgumentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
-  define_public_source
-  let(:linked_record) { create(:linked_record, source: public_source, record_iri: 'https://iri.test/resource/1') }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
   let(:motion) do
     create(:motion,
            :with_follower,
@@ -41,8 +41,6 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should post create pro json_api for linked record' do
-    linked_record_mock(1)
-    linked_record_mock(2)
     linked_record
     sign_in user
 
@@ -55,8 +53,6 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should post create con json_api for linked record' do
-    linked_record_mock(1)
-    linked_record_mock(2)
     linked_record
     sign_in user
 
@@ -68,10 +64,33 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     assert_not assigns(:create_service).resource.pro?
   end
 
+  test 'user should post create pro json_api for non-persisted linked record' do
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]) do
+      general_create_json(non_persisted_linked_record)
+    end
+
+    assert_response 201
+    assert assigns(:create_service).resource.pro?
+  end
+
+  test 'user should post create con json_api for non-persisted linked record' do
+    sign_in user
+
+    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]) do
+      general_create_json(non_persisted_linked_record, false)
+    end
+
+    assert_response 201
+    assert_not assigns(:create_service).resource.pro?
+  end
+
   private
 
   def general_create_json(parent, pro = true)
-    post url_for([parent, :arguments]),
+    url = parent.is_a?(LinkedRecord) ? linked_record_arguments_path(parent.iri_opts) : url_for([parent, :arguments])
+    post url,
          params: {
            format: :json_api,
            data: {

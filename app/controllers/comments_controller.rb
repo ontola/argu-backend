@@ -74,17 +74,9 @@ class CommentsController < EdgeableController
     render locals: {resource: parent_resource!}
   end
 
-  def new_resource_from_params
-    @resource ||= parent_resource!
-                    .edge
-                    .children
-                    .new(owner: parent_resource!.comment_threads.new(resource_new_params))
-                    .owner
-  end
-
   def redirect_model_success(resource)
     return url_for([resource.parent_model, only_path: true]) unless resource.persisted? && !resource.deleted?
-    if [Motion, Question].include?(resource.parent_model.class)
+    if [Motion, Question, LinkedRecord].include?(resource.parent_model.class)
       expand_uri_template(
         'comments_collection_iri',
         parent_iri: resource.parent_model.iri(only_path: true),

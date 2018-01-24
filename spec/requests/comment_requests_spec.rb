@@ -46,4 +46,30 @@ RSpec.describe 'Comments', type: :request do
     subject { blog_post_comment }
     it_behaves_like 'requests'
   end
+
+  context 'with linked_record parent' do
+    subject { linked_record_comment }
+    let(:parent_path) {}
+    let(:index_path) do
+      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: linked_record.deku_id)
+    end
+    let(:non_existing_index_path) do
+      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+    end
+    it_behaves_like 'requests', skip: %i[html]
+  end
+
+  context 'with non-persisted linked_record parent' do
+    let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+    subject { build(:comment, edge: Edge.new(parent: non_persisted_linked_record.edge)) }
+    let(:parent_path) {}
+    let(:index_path) do
+      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: SecureRandom.uuid)
+    end
+    let(:non_existing_index_path) do
+      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+    end
+    it_behaves_like 'post create', skip: %i[html]
+    it_behaves_like 'get index', skip: %i[html]
+  end
 end

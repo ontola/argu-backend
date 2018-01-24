@@ -12,6 +12,7 @@ module ApplicationHelper
   include UsersHelper
   include NamesHelper
   include ActivityHelper
+  include UUIDHelper
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
@@ -60,10 +61,6 @@ module ApplicationHelper
   def image_tag(source, options = {})
     source = 'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=' if source.nil?
     super
-  end
-
-  def uuid?(string)
-    string.match?(/\A[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}\z/i)
   end
 
   def user_identity_token(user)

@@ -173,7 +173,6 @@ module Argu
           let(:authorized_user_destroy) { staff }
           let(:authorized_user_trash) { authorized_user_update }
           let(:unauthorized_user) do
-            public_source.edge.grants.destroy_all
             holland.edge.grants.destroy_all
             freetown.edge.grants.destroy_all
             create_forum(public_grant: 'participator')

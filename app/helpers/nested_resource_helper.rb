@@ -69,7 +69,11 @@ module NestedResourceHelper
   #   params = {motion_id: 1}
   #   parent_resource_key # => :motion_id
   def parent_resource_key(hash)
-    hash.keys.reverse.find { |k| /_id/ =~ k }
+    hash
+      .reject { |key, value| key == 'linked_record_id' || value == VoteEvent::DEFAULT_ID }
+      .keys
+      .reverse
+      .find { |k| /_id/ =~ k }
   end
 
   # Constantizes a class string from the params hash

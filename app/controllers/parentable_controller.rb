@@ -25,6 +25,13 @@ class ParentableController < AuthorizedController
     @current_forum ||= parent_resource&.parent_model(:forum)
   end
 
+  def linked_record_parent
+    return if params[:linked_record_id].blank?
+    @linked_record_parent ||=
+      LinkedRecord.find_by(deku_id: params[:linked_record_id]) ||
+      LinkedRecord.new_for_forum(params[:organization], params[:forum], params[:linked_record_id])
+  end
+
   def parent_edge
     @parent_edge ||= parent_resource&.edge
   end
@@ -34,7 +41,7 @@ class ParentableController < AuthorizedController
   end
 
   def parent_resource
-    @parent_resource ||= super || resource_by_id_parent
+    @parent_resource ||= super || resource_by_id_parent || linked_record_parent
   end
 
   def redirect_edge_parent_requests

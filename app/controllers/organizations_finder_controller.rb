@@ -2,6 +2,7 @@
 
 class OrganizationsFinderController < AuthorizedController
   include NestedResourceHelper
+  include UrlHelper
 
   def show
     @organization = authenticated_resource.parent_model(:page) || raise(ActiveRecord::RecordNotFound)
@@ -32,8 +33,16 @@ class OrganizationsFinderController < AuthorizedController
     ]
   end
 
+  def parent_from_linked_record(iri)
+    match = iri&.match(%r{#{Regexp.new argu_url}\/(.*)\/(.*)\/(lr|od)\/(.*)})
+    return if match.nil?
+    Page
+      .joins(:shortname, forums: :shortname)
+      .find_by(shortnames: {shortname: match[1]}, shortnames_forums: {shortname: match[2]})
+  end
+
   def resource_from_param
-    resource_from_iri(params[:iri]) || parent_from_iri(params[:iri]) || LinkedRecord.find_or_fetch_by_iri(params[:iri])
+    resource_from_iri(params[:iri]) || parent_from_iri(params[:iri]) || parent_from_linked_record(params[:iri])
   end
 
   def tree_root_id

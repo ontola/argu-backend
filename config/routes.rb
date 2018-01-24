@@ -39,6 +39,9 @@ Rails.application.routes.draw do
   concern :actionable do
     resources :actions, only: %i[index show]
   end
+  concern :argumentable do
+    resources :arguments, only: %i[new create index]
+  end
   concern :blog_postable do
     resources :blog_posts,
               only: %i[index new create],
@@ -196,9 +199,8 @@ Rails.application.routes.draw do
   resources :motions,
             path: 'm',
             except: %i[index new create destroy],
-            concerns: %i[commentable blog_postable moveable vote_eventable contactable
+            concerns: %i[argumentable commentable blog_postable moveable vote_eventable contactable
                          feedable trashable decisionable invitable menuable] do
-    resources :arguments, only: %i[new create index]
     resources :media_objects, only: :index
   end
 
@@ -279,10 +281,10 @@ Rails.application.routes.draw do
 
   resources :shortnames, only: %i[edit update destroy]
 
-  resources :linked_records, only: %i[show], path: :lr, concerns: %i[vote_eventable commentable] do
-    get '/', action: :show, on: :collection
-    resources :arguments, only: %i[new create index]
-  end
+  resources :linked_records,
+            only: %i[show],
+            path: ':organization/:forum/lr',
+            concerns: %i[argumentable commentable vote_eventable]
 
   resources :grant_sets, only: :show
 

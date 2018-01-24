@@ -83,7 +83,7 @@ class VotesController < EdgeableController
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||= Edge
                            .where_owner('Vote', creator: current_profile)
-                           .find_by(parent: parent_from_params.edge)
+                           .find_by(parent: (parent_from_params || linked_record_parent)&.edge)
                            &.owner
   end
 
@@ -104,7 +104,12 @@ class VotesController < EdgeableController
 
   def parent_from_params(opts = params)
     return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
-    super(opts.except(:vote_event_id)).default_vote_event
+    super&.default_vote_event if parent_resource_key(opts)
+  end
+
+  def linked_record_parent
+    return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
+    super&.default_vote_event
   end
 
   def unmodified?

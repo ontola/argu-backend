@@ -18,6 +18,8 @@ class VoteEventsController < EdgeableController
     parent_resource.default_vote_event
   end
 
+  def resource_by_id_parent; end
+
   def show_respond_success_html(resource)
     redirect_to resource.parent_model
   end

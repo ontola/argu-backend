@@ -65,6 +65,14 @@ class VoteEvent < Edgeable::Base
     children_count(:votes_pro).abs + children_count(:votes_con).abs + children_count(:votes_neutral).abs
   end
 
+  def vote_collection_iri_opts
+    if parent_model.is_a?(LinkedRecord)
+      parent_model.iri_opts.merge(vote_event_id: VoteEvent::DEFAULT_ID)
+    else
+      iri_opts.slice(:vote_event_id, :motion_id, :linked_record_id)
+    end
+  end
+
   def voteable
     parent_model
   end

@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20180207140316) do
   enable_extension "hstore"
   enable_extension "ltree"
   enable_extension "uuid-ossp"
+  enable_extension "pgcrypto"
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "trackable_id"
@@ -331,15 +332,10 @@ ActiveRecord::Schema.define(version: 20180207140316) do
   end
 
   create_table "linked_records", id: :serial, force: :cascade do |t|
-    t.integer "page_id", null: false
-    t.integer "source_id", null: false
-    t.string "record_iri", null: false
-    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "record_type"
-    t.index ["record_iri", "source_id", "page_id"], name: "index_linked_records_on_record_iri_and_source_id_and_page_id"
-    t.index ["record_iri"], name: "index_linked_records_on_record_iri", unique: true
+    t.uuid "deku_id", null: false
+    t.index ["deku_id"], name: "index_linked_records_on_deku_id", unique: true
   end
 
   create_table "list_items", id: :serial, force: :cascade do |t|
@@ -780,8 +776,6 @@ ActiveRecord::Schema.define(version: 20180207140316) do
   add_foreign_key "group_memberships", "profiles", column: "member_id"
   add_foreign_key "groups", "pages"
   add_foreign_key "identities", "users"
-  add_foreign_key "linked_records", "pages"
-  add_foreign_key "linked_records", "sources"
   add_foreign_key "media_objects", "forums"
   add_foreign_key "media_objects", "profiles", column: "creator_id"
   add_foreign_key "media_objects", "users", column: "publisher_id"
