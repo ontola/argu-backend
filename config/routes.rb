@@ -96,8 +96,7 @@ Rails.application.routes.draw do
   end
   concern :votable do
     resources :votes, only: %i[new create index]
-    delete 'votes' => 'votes#destroy'
-    get 'vote' => 'votes#show', as: :show_vote
+    resource :vote, only: %i[destroy show]
   end
   concern :vote_eventable do
     resources :vote_events, only: %i[index show], concerns: %i[votable]

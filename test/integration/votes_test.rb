@@ -82,7 +82,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should get show vote by parent' do
     get root_path
     guest_vote
-    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
 
     expect_relationship('parent')
@@ -94,7 +94,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     guest_vote2
     other_guest_vote
-    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 404
   end
 
@@ -137,7 +137,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     )
     assert_response 403
     get(
-      motion_vote_event_show_vote_path(
+      motion_vote_event_vote_path(
         closed_question_motion.id,
         closed_question_motion.default_vote_event.id,
         format: :json_api
@@ -149,7 +149,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'guest should post update vote' do
     get root_path
     guest_vote
-    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
@@ -157,7 +157,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
     assert_response 201
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
-    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
@@ -171,7 +171,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in unconfirmed
     get root_path
     unconfirmed_vote
-    get motion_vote_event_show_vote_path(motion.id, vote_event, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event, format: :json_api)
     assert_response 200
 
     expect_relationship('parent')
@@ -184,7 +184,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     other_guest_vote
     unconfirmed_vote2
-    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 404
   end
 
@@ -227,7 +227,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
     creator.primary_email_record.update(confirmed_at: nil)
 
-    get motion_vote_event_show_vote_path(motion.id, vote_event.id, format: :json_api)
+    get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
     assert_differences([['Vote.pro.count', -1], ['Vote.con.count', 1], ['Argu::Redis.keys("temporary.*").count', 0]]) do
