@@ -7,21 +7,11 @@ class CustomMenuItem < ApplicationRecord
     {
       id: id,
       menu_type: menu_type,
-      parent_iri: parent_iri(true)
+      parent_iri: resource.iri(only_path: true)
     }
   end
 
   def label
     label_translation ? I18n.t(super) : super
-  end
-
-  private
-
-  def parent_iri(only_path = false)
-    expand_uri_template(
-      "#{resource_type.underscore.pluralize}_iri",
-      id: resource_id,
-      path_only: only_path
-    )
   end
 end

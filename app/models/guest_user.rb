@@ -46,10 +46,6 @@ class GuestUser < User
     super
   end
 
-  def iri
-    RDF::URI("https://#{Rails.application.config.host_name}/sessions/#{id}")
-  end
-
   def managed_profile_ids
     []
   end

@@ -5,10 +5,6 @@ class ApplicationMenuList < MenuList
   cattr_accessor :defined_menus
   has_menus %i[organizations info user]
 
-  def iri
-    RDF::URI(expand_uri_template('menus_iri'))
-  end
-
   def info_menu
     menu_item(
       :info,
@@ -25,6 +21,10 @@ class ApplicationMenuList < MenuList
       ],
       type: NS::ARGU[:MenuItem]
     )
+  end
+
+  def iri(opts = {})
+    RDF::URI(expand_uri_template('menus_iri', opts))
   end
 
   def user_menu

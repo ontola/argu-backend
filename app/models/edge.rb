@@ -125,8 +125,10 @@ class Edge < ApplicationRecord
     expires_at? && expires_at < Time.current
   end
 
-  def iri
-    RDF::URI(expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", **iri_opts))
+  def iri(opts = {})
+    RDF::URI(
+      expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", iri_opts.merge(opts))
+    )
   end
 
   def iri_opts

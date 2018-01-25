@@ -22,7 +22,7 @@ class QuestionAnswer
 
   def id; end
 
-  def iri; end
+  def iri(_path_only = false); end
 
   def is_fertile?
     false
