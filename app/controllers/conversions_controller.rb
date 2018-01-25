@@ -59,7 +59,7 @@ class ConversionsController < ServiceController
   def resource_by_id; end
 
   def redirect_model_success(resource)
-    url_for([resource.edge.owner, only_path: true])
+    resource.edge.owner.iri(only_path: true).to_s
   end
 
   def resource_new_params

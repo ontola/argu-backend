@@ -78,7 +78,7 @@ class DecisionsController < EdgeableController
   end
 
   def redirect_model_success(resource)
-    url_for([resource.parent_model, only_path: true])
+    resource.parent_model.iri(only_path: true).to_s
   end
 
   def resource_by_id

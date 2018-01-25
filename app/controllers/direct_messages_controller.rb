@@ -37,7 +37,7 @@ class DirectMessagesController < ParentableController
   def resource_by_id; end
 
   def redirect_model_success(resource)
-    url_for([resource.resource, only_path: true])
+    resource.resource.iri(only_path: true).to_s
   end
 
   def resource_new_params

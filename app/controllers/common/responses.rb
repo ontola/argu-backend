@@ -18,7 +18,7 @@ module Common
     # Method to determine where the action should redirect to after it succeeds.
     # @param [Class] resource The resource from the result of the action
     def redirect_model_success(resource)
-      url_for([resource.persisted? ? resource : resource.parent_model, only_path: true])
+      resource.persisted? ? resource.iri(only_path: true).to_s : resource.parent_model.iri(only_path: true).to_s
     end
 
     def respond_with_200(resource, format, opts = {})

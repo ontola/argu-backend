@@ -128,7 +128,7 @@ class VotesController < EdgeableController
   end
 
   def redirect_model_success(resource)
-    url_for([resource.persisted? ? resource : resource.voteable, only_path: true])
+    resource.persisted? ? resource.iri(only_path: true).to_s : resource.voteable.iri(only_path: true).to_s
   end
 
   def redirect_url

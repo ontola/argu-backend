@@ -39,7 +39,7 @@ class QuestionAnswersController < ParentableController
   end
 
   def redirect_model_success(resource)
-    url_for([resource.question, only_path: true])
+    resource.question.iri(only_path: true).to_s
   end
 
   def service_options(options = {})

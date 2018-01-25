@@ -12,6 +12,6 @@ class PhasesController < EdgeableController
 
   def redirect_model_success(resource)
     super unless action_name == 'update'
-    url_for([resource.parent_model, only_path: true])
+    resource.parent_model.iri(only_path: true).to_s
   end
 end

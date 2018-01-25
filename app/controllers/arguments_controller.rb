@@ -65,6 +65,6 @@ class ArgumentsController < EdgeableController
 
   def redirect_model_success(resource)
     return super unless action_name == 'create' && resource.persisted?
-    url_for([resource.parent_model, only_path: true])
+    resource.parent_model.iri(only_path: true).to_s
   end
 end
