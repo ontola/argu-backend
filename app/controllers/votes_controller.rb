@@ -138,7 +138,7 @@ class VotesController < EdgeableController
       confirm: true,
       r: params[:r],
       'vote%5Bfor%5D' => for_param,
-      path_only: true
+      only_path: true
     )
   end
 

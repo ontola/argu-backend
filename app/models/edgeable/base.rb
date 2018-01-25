@@ -58,7 +58,7 @@ module Edgeable
 
     def iri_opts
       super.merge(
-        parent_iri: parent_iri(path_only: true),
+        parent_iri: parent_iri(only_path: true),
         :"#{parent_edge.owner_type.underscore}_id" => parent_edge.owner_id
       )
     end
@@ -71,11 +71,11 @@ module Edgeable
       type.nil? ? edge&.parent : edge&.parent_edge(type)
     end
 
-    def parent_iri(path_only: false)
+    def parent_iri(only_path: false)
       expand_uri_template(
         "#{parent_edge.owner_type.underscore.pluralize}_iri",
         id: parent_edge.owner_id,
-        path_only: path_only
+        only_path: only_path
       )
     end
 

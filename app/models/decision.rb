@@ -34,7 +34,7 @@ class Decision < Edgeable::Base
   end
 
   def iri_opts
-    {parent_iri: parent_iri(path_only: true), id: step}
+    {parent_iri: parent_iri(only_path: true), id: step}
   end
 
   def to_param
