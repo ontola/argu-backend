@@ -32,7 +32,7 @@ class PagePolicy < EdgeablePolicy
   def is_creator?; end
 
   def show?
-    record.open? || group_member?
+    record.open? || group_member? || service?
   end
 
   def list?
