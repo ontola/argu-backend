@@ -19,9 +19,9 @@ class PagesControllerTest < ActionController::TestCase
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url('/o', page: 1, type: 'paginated'))
-    expect_included(Page.open.map { |o| argu_url("/o/#{o.id}") })
-    expect_not_included(argu_url("/o/#{closed_page.id}"))
-    expect_not_included(argu_url("/o/#{hidden_page.id}"))
+    expect_included(Page.open.map { |o| argu_url("/o/#{o.url}") })
+    expect_not_included(argu_url("/o/#{closed_page.url}"))
+    expect_not_included(argu_url("/o/#{hidden_page.url}"))
   end
 
   test 'should get index pages page 1' do
@@ -32,8 +32,8 @@ class PagesControllerTest < ActionController::TestCase
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 3
-    expect_included(Page.open.map { |o| argu_url("/o/#{o.id}") })
-    expect_not_included(argu_url("/o/#{closed_page.id}"))
-    expect_not_included(argu_url("/o/#{hidden_page.id}"))
+    expect_included(Page.open.map { |o| argu_url("/o/#{o.url}") })
+    expect_not_included(argu_url("/o/#{closed_page.url}"))
+    expect_not_included(argu_url("/o/#{hidden_page.url}"))
   end
 end

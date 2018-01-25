@@ -33,13 +33,13 @@ class MenusTest < ActionDispatch::IntegrationTest
     get page_menus_path(argu, format: :nt)
 
     assert_response 200
-    expect_triple(RDF::URI(argu_url("/o/#{argu.id}/menus/navigations")), RDF[:type], NS::ARGU[:NavigationsMenu])
-    sequence = expect_sequence(RDF::URI(argu_url("/o/#{argu.id}/menus/navigations")), NS::ARGU[:menuItems])
+    expect_triple(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), RDF[:type], NS::ARGU[:NavigationsMenu])
+    sequence = expect_sequence(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), NS::ARGU[:menuItems])
     expect_sequence_member(sequence, 0, custom_menu_item.iri)
-    forums = expect_sequence_member(sequence, 1, RDF::URI("#{argu_url("/o/#{argu.id}/menus/navigations")}#forums"))
+    forums = expect_sequence_member(sequence, 1, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums"))
     items = expect_sequence(forums, NS::ARGU[:menuItems])
-    expect_sequence_member(items, 0, RDF::URI("#{argu_url("/o/#{argu.id}/menus/navigations")}#forums.overview"))
-    expect_sequence_member(items, 1, RDF::URI("#{argu_url("/o/#{argu.id}/menus/navigations")}#forums.new_discussion"))
-    expect_sequence_member(items, 2, RDF::URI("#{argu_url("/o/#{argu.id}/menus/navigations")}#forums.activity"))
+    expect_sequence_member(items, 0, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums.overview"))
+    expect_sequence_member(items, 1, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums.new_discussion"))
+    expect_sequence_member(items, 2, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums.activity"))
   end
 end

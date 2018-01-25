@@ -107,6 +107,10 @@ class Forum < Edgeable::Base
     end
   end
 
+  def iri_opts
+    {shortname: url}
+  end
+
   def language
     locale.split('-').first.to_sym
   end

@@ -23,6 +23,10 @@ class GuestUser < User
     @id ||= session.id
   end
 
+  def iri_opts
+    {id: id}
+  end
+
   def favorite_forum_ids
     []
   end

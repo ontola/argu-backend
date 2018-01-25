@@ -176,7 +176,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     expect_relationship('parent')
     creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "https://127.0.0.1:42000/u/#{unconfirmed.id}"
+    assert_equal creator.dig('data', 'id'), "https://127.0.0.1:42000/u/#{unconfirmed.url}"
   end
 
   test 'unconfirmed should not get show non-existent vote' do

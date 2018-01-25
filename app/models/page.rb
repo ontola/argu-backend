@@ -55,8 +55,8 @@ class Page < Edgeable::Base
     'anonymous'
   end
 
-  def iri
-    RDF::URI(expand_uri_template("#{model_name.route_key}_iri", id: id))
+  def iri_opts
+    {shortname: url}
   end
 
   def publisher

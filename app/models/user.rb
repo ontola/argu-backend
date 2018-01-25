@@ -227,6 +227,10 @@ class User < ApplicationRecord
     favorites.where(edge: edge).any?
   end
 
+  def iri_opts
+    {shortname: url}
+  end
+
   def is_omni_only
     authentications.any? && password.blank?
   end
