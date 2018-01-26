@@ -2,8 +2,6 @@
 
 FactoryGirl.define do
   factory :argument do
-    association :forum
-    association :motion
     publisher { passed_in?(:publisher) ? publisher : create(:user) }
     creator do
       if passed_in?(:creator)
