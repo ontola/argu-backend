@@ -30,12 +30,10 @@ class Page < Edgeable::Base
   with_collection :discussions,
                   association_class: Edge,
                   includes: [:parent, owner: {creator: :profileable}],
-                  pagination: true,
-                  url_constructor: :page_discussions_url
+                  pagination: true
   with_collection :vote_matches,
                   association: :profile_vote_matches,
-                  pagination: true,
-                  url_constructor: :page_vote_matches_url
+                  pagination: true
 
   parentable
 

@@ -22,8 +22,8 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_included(question.attachments.map { |r| argu_url("/media_objects/#{r.id}") })
 
     expect_relationship('motionCollection', 1)
-    expect_included(argu_url("/q/#{question.id}/motions", type: 'paginated'))
-    expect_included(argu_url("/q/#{question.id}/motions", page: 1, type: 'paginated'))
+    expect_included(argu_url("/q/#{question.id}/m", type: 'paginated'))
+    expect_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
     expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
   end
@@ -38,7 +38,7 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/f/#{holland.id}/questions", page: 1, type: 'paginated'))
+    expect_included(argu_url("/#{holland.url}/q", page: 1, type: 'paginated'))
     expect_included(holland.questions.untrashed.map { |q| argu_url("/q/#{q.id}") })
     expect_not_included(holland.questions.trashed.map { |q| argu_url("/q/#{q.id}") })
   end

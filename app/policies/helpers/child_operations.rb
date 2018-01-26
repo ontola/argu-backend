@@ -40,6 +40,7 @@ module ChildOperations
           child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
           child = record.edge.children.new(owner: child, is_published: true).owner
           child.edge.persisted_edge = persisted_edge
+          child.edge.parent = record.edge
           child.parent_model = record
           grant_tree.cache_node(persisted_edge)
         end

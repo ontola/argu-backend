@@ -27,13 +27,12 @@ class Forum < Edgeable::Base
   with_collection :discussions,
                   association_class: Edge,
                   includes: [:parent, owner: {creator: :profileable}],
-                  pagination: true,
-                  url_constructor: :forum_canonical_discussions_url
+                  pagination: true
   with_collection :motions,
                   pagination: true,
-                  url_constructor: :forum_canonical_motions_url,
                   association: :direct_motions
-  with_collection :questions, pagination: true, url_constructor: :forum_canonical_questions_url
+  with_collection :questions,
+                  pagination: true
 
   default_widgets :motions, :questions
 

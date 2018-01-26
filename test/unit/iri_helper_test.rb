@@ -7,11 +7,11 @@ class IriHelperTest < ActiveSupport::TestCase
   define_freetown
 
   test 'should find forum by its iri' do
-    assert resource_from_iri(argu_url('/freetown')).present?
+    assert_equal resource_from_iri(argu_url('/freetown')), freetown
   end
 
   test 'should find forum by its cannonical iri' do
-    assert resource_from_iri(argu_url("/f/#{freetown.id}")).present?
+    assert_equal resource_from_iri(argu_url("/edges/#{freetown.edge.id}")), freetown.edge
   end
 
   test 'should not find forum by non existing iri' do

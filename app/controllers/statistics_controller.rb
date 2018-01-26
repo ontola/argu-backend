@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class StatisticsController < ParentableController
-  alias authenticated_edge parent_resource
   helper_method :contribution_keys
 
   def show
@@ -35,7 +34,7 @@ class StatisticsController < ParentableController
   private
 
   def authorize_action
-    authorize parent_resource.owner, :statistics?
+    authorize resource_by_id, :statistics?
   end
 
   def contribution_keys
@@ -47,7 +46,7 @@ class StatisticsController < ParentableController
   end
 
   def resource_by_id
-    parent_resource.owner
+    parent_resource
   end
 
   def resource_by_id_parent; end

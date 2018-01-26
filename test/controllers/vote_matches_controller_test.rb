@@ -54,7 +54,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/u/#{user.id}/vote_matches", page: 1, type: 'paginated'))
+    expect_included(argu_url("/u/#{user.url}/vote_matches", page: 1, type: 'paginated'))
     expect_included(VoteMatch.where(creator: user.profile).map { |r| argu_url("/vote_matches/#{r.id}") })
     expect_not_included(
       VoteMatch.where('creator_id != ?', user.profile.id).map { |r| argu_url("/vote_matches/#{r.id}") }
@@ -68,7 +68,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/o/#{page.id}/vote_matches", page: 1, type: 'paginated'))
+    expect_included(argu_url("/o/#{page.url}/vote_matches", page: 1, type: 'paginated'))
     expect_included(VoteMatch.where(creator: page.profile).map { |r| argu_url("/vote_matches/#{r.id}") })
     expect_not_included(
       VoteMatch.where('creator_id != ?', page.profile.id).map { |r| argu_url("/vote_matches/#{r.id}") }

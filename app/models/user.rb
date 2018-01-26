@@ -46,8 +46,7 @@ class User < ApplicationRecord
   acts_as_follower
   with_collection :vote_matches,
                   association: :profile_vote_matches,
-                  pagination: true,
-                  url_constructor: :user_vote_matches_url
+                  pagination: true
 
   COMMUNITY_ID = 0
   TEMP_EMAIL_PREFIX = 'change@me'

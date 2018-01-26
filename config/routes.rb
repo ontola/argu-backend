@@ -179,14 +179,17 @@ Rails.application.routes.draw do
             concerns: %i[commentable blog_postable moveable feedable trashable invitable menuable contactable] do
     resources :media_objects, only: :index
     resources :motions, path: 'm', only: %i[index new create]
-    resources :motions, path: 'motions', only: %i[index create], as: :canonical_motions
   end
 
   resources :question_answers, path: 'qa', only: %i[new create]
-  resources :edges, only: [] do
+  resources :edges, only: [:show] do
     get :statistics, to: 'statistics#show'
     resources :conversions, path: 'conversion', only: %i[new create]
     resource :grant_tree, only: %i[show], path: 'permissions'
+    %i[arguments blog_posts comments decisions discussions forums media_objects
+       motions pages questions votes vote_events vote_matches].map do |edgeable|
+      resources edgeable, only: :index
+    end
   end
   resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log
@@ -270,7 +273,8 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-  resources :comments, concerns: [:trashable], only: %i[show edit update]
+  resources :comments, concerns: [:trashable], only: %i[show edit update], path: 'c'
+  resources :comments, only: %i[show]
 
   resources :follows, only: :create do
     delete :destroy, on: :member
@@ -343,12 +347,6 @@ Rails.application.routes.draw do
       resources :projects, path: 'p', only: %i[new create]
       resources :banners, except: %i[index show]
     end
-  end
-  resources :forums, only: %i[show update], path: 'f', as: :canonical_forum, concerns: %i[menuable]
-  resources :forums, only: [], path: 'f' do
-    resources :discussions, only: %i[index new], as: :canonical_discussions
-    resources :questions, path: 'questions', only: %i[index create], as: :canonical_questions
-    resources :motions, path: 'motions', only: %i[index create], as: :canonical_motions
   end
 
   get '/ns/core/:model', to: 'static_pages#context'

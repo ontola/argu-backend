@@ -8,10 +8,7 @@ class VoteEvent < Edgeable::Base
   belongs_to :publisher, class_name: 'User', required: true
   edge_tree_has_many :votes
 
-  with_collection :votes,
-                  pagination: true,
-                  url_constructor: ->(r) { "#{r.parent_model.class.name.underscore}_vote_event_votes_url" },
-                  url_constructor_opts: ->(r) { r.iri_opts.slice(:vote_event_id, :motion_id, :linked_record_id) }
+  with_collection :votes, pagination: true
 
   parentable :motion, :linked_record
 

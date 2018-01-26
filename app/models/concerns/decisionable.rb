@@ -43,7 +43,7 @@ module Decisionable
     end
 
     def new_decision(state = :pending)
-      Edge.new(owner: Decision.new(forum_id: forum_id, state: state), parent_id: edge.id).owner
+      Edge.new(owner: Decision.new(forum_id: forum_id, state: state), parent: edge).owner
     end
   end
 

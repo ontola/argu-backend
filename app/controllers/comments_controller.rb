@@ -85,7 +85,11 @@ class CommentsController < EdgeableController
   def redirect_model_success(resource)
     return url_for([resource.parent_model, only_path: true]) unless resource.persisted? && !resource.deleted?
     if [Motion, Question].include?(resource.parent_model.class)
-      expand_uri_template('comments_index', parent_iri: resource.parent_model.iri(only_path: true), only_path: true)
+      expand_uri_template(
+        'comments_collection_iri',
+        parent_iri: resource.parent_model.iri(only_path: true),
+        only_path: true
+      )
     else
       url_for([resource.parent_model, anchor: resource.identifier, only_path: true])
     end

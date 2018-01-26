@@ -32,7 +32,9 @@ class ParentableController < AuthorizedController
   end
 
   def parent_resource
-    super || resource_by_id_parent
+    return @parent_resource if @parent_resource.present?
+    @parent_resource = super || resource_by_id_parent
+    @parent_resource = @parent_resource.is_a?(Edge) ? @parent_resource.owner : @parent_resource
   end
 
   def resource_by_id_parent

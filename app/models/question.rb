@@ -20,7 +20,7 @@ class Question < Edgeable::Content
   has_many :motions, dependent: :nullify
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  with_collection :motions, pagination: true, url_constructor: :question_canonical_motions_url
+  with_collection :motions, pagination: true
 
   convertible motions: %i[activities blog_posts media_objects]
   counter_cache true

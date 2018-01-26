@@ -11,7 +11,7 @@ class VotesControllerTest < ActionController::TestCase
   let(:vote) { motion.votes.first }
   let(:linked_record) { create(:linked_record, :with_arguments, :with_votes, source: public_source) }
   let(:user) { create(:user) }
-  let(:vote_event_base_path) { "/m/#{motion.id}/vote_events/#{vote_event.id}/votes" }
+  let(:vote_event_base_path) { "/m/#{motion.id}/vote_events/#{vote_event.id}/v" }
 
   ####################################
   # Show

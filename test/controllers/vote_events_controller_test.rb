@@ -189,9 +189,9 @@ class VoteEventsControllerTest < ActionController::TestCase
   def vote_event_base_path(vote_event)
     case vote_event.voteable
     when Motion
-      "/m/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/votes"
+      "/m/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/v"
     when LinkedRecord
-      "/lr/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/votes"
+      "/lr/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/v"
     end
   end
 end

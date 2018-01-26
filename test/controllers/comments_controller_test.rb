@@ -33,8 +33,8 @@ class CommentsControllerTest < ActionController::TestCase
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/a/#{argument.id}/c", page: 1, type: 'paginated'))
-    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
-    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/c/#{c.id}") })
+    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/c/#{c.id}") })
   end
 
   test 'should get index comments of argument with page=1' do
@@ -46,8 +46,8 @@ class CommentsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
                  argument.comment_threads.untrashed.count
-    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
-    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/c/#{c.id}") })
+    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/c/#{c.id}") })
   end
 
   ####################################
@@ -61,8 +61,8 @@ class CommentsControllerTest < ActionController::TestCase
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/posts/#{blog_post.id}/c", page: 1, type: 'paginated'))
-    expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
-    expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/c/#{c.id}") })
+    expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/c/#{c.id}") })
   end
 
   test 'should get index comments of blog_post with page=1' do
@@ -74,7 +74,7 @@ class CommentsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
                  blog_post.comment_threads.untrashed.count
-    expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/comments/#{c.id}") })
-    expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/comments/#{c.id}") })
+    expect_included(blog_post.comment_threads.untrashed.map { |c| argu_url("/c/#{c.id}") })
+    expect_not_included(blog_post.comment_threads.trashed.map { |c| argu_url("/c/#{c.id}") })
   end
 end

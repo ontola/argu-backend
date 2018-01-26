@@ -7,7 +7,7 @@ class MotionsControllerTest < ActionController::TestCase
   define_holland
   let(:question) { create(:question, :with_motions, parent: freetown.edge) }
   let(:motion) { create(:motion, :with_arguments, :with_votes, :with_attachments, parent: freetown.edge) }
-  let(:motion_votes_base_path) { "/m/#{motion.id}/vote_events/#{motion.default_vote_event.id}/votes" }
+  let(:motion_votes_base_path) { "/m/#{motion.id}/vote_events/#{motion.default_vote_event.id}/v" }
 
   ####################################
   # Show
@@ -20,11 +20,11 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('argumentCollection', 1)
-    expect_included(argu_url("/m/#{motion.id}/arguments", type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'yes'}, page: 1, type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/arguments", filter: {option: 'no'}, page: 1, type: 'paginated'))
+    expect_included(argu_url("/m/#{motion.id}/a", type: 'paginated'))
+    expect_included(argu_url("/m/#{motion.id}/a", filter: {option: 'yes'}, type: 'paginated'))
+    expect_included(argu_url("/m/#{motion.id}/a", filter: {option: 'yes'}, page: 1, type: 'paginated'))
+    expect_included(argu_url("/m/#{motion.id}/a", filter: {option: 'no'}, type: 'paginated'))
+    expect_included(argu_url("/m/#{motion.id}/a", filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(motion.arguments.untrashed.map { |a| argu_url("/a/#{a.id}") })
     expect_not_included(motion.arguments.trashed.map { |a| argu_url("/a/#{a.id}") })
 
@@ -60,7 +60,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/f/#{holland.id}/motions", page: 1, type: 'paginated'))
+    expect_included(argu_url("/#{holland.url}/m", page: 1, type: 'paginated'))
     expect_included(holland.motions.where(question_id: nil).untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(question.motions.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
@@ -90,7 +90,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/q/#{question.id}/motions", page: 1, type: 'paginated'))
+    expect_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
     expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
   end

@@ -37,6 +37,10 @@ module Edgeable
     delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :expires_at, to: :edge
     delegate :potential_audience, to: :parent_edge
 
+    def canonical_iri(only_path: false)
+      RDF::URI(expand_uri_template(:edges_iri, id: edge.id, only_path: only_path))
+    end
+
     def counter_cache_names
       return [class_name] if self.class.counter_cache_options == true
       matches = self.class.counter_cache_options.select do |_, conditions|
