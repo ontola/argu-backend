@@ -27,7 +27,7 @@ class ForumMenuList < MenuList
     menu_item(
       :navigations,
       menus: [
-        menu_item(:overview, image: 'fa-th-large', href: canonical_forum_url(resource.id)),
+        menu_item(:overview, image: 'fa-th-large', href: forum_url(resource)),
         menu_item(:new_discussion, image: 'fa-plus', href: new_forum_discussion_url(resource)),
         activity_link,
         statistics_link,
