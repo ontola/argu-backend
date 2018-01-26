@@ -19,11 +19,11 @@ module DiscussionsHelper
 
   def direct_message_props(dm)
     {
-      currentActor: current_user.iri,
+      currentActor: current_user.canonical_iri,
       currentEmail: current_user.confirmed? ? current_user.email : nil,
       emails: current_user.email_addresses.pluck(:email).map { |email| {value: email, label: email} },
       managedProfiles: managed_profiles_list,
-      resource_iri: dm.resource.iri
+      resource_iri: dm.resource.canonical_iri
     }
   end
 
@@ -51,7 +51,7 @@ module DiscussionsHelper
     {
       createTokenUrl: '/tokens',
       createGroupUrl: page_groups_url(resource.parent_model(:page)),
-      currentActor: current_user.iri,
+      currentActor: current_user.canonical_iri,
       defaultRole: GrantSet.participator.id,
       forumEdge: resource.parent_edge(:forum).id,
       forumName: resource.parent_model(:forum).display_name,
@@ -60,7 +60,7 @@ module DiscussionsHelper
       managedProfiles: managed_profiles_list,
       message: t('tokens.discussion.default_message', resource: resource.display_name),
       pageEdge: resource.parent_edge(:page).id,
-      resource: resource.iri,
+      resource: resource.canonical_iri,
       roles: GrantSet
                .selectable
                .pluck(:title, :id)
