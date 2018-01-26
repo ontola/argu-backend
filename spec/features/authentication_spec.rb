@@ -89,8 +89,8 @@ RSpec.feature 'Authentication', type: :feature do
         page.find('.dropdown-trigger.navbar-profile', visible: true).click
         click_link 'Sign out'
       end
-
-      expect(page).to have_current_path root_path
+      expect(page).to have_content 'You have signed out successfully'
+      expect(page).to have_current_path forum_path(holland)
       expect(Doorkeeper::AccessToken.find_by(id: t.id)).to be_falsey
     end
 

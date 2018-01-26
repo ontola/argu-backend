@@ -85,6 +85,19 @@ class Users::SessionsController < Devise::SessionsController
     uri.to_s
   end
 
+  def respond_to_on_destroy
+    respond_to do |format|
+      format.all { head :no_content }
+      format.any(*navigational_formats) do
+        if params[:r].present? && argu_iri_or_relative?(params[:r])
+          redirect_to URI.parse(params[:r]).path
+        else
+          redirect_back(fallback_location: root_path)
+        end
+      end
+    end
+  end
+
   def generate_hash_from_params_hash(utctime)
     digest = OpenSSL::Digest::Digest.new('MD5')
     OpenSSL::HMAC.hexdigest(digest,
