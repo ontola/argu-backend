@@ -27,8 +27,6 @@ class Forum < Edgeable::Base
   with_collection :motions,
                   pagination: true,
                   association: :direct_motions
-  with_collection :questions,
-                  pagination: true
 
   default_widgets :motions, :questions
 
