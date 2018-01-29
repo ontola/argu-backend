@@ -24,10 +24,6 @@ class Forum < Edgeable::Base
   has_many :projects, inverse_of: :forum, dependent: :destroy
   has_many :questions, inverse_of: :forum, dependent: :destroy
 
-  with_collection :discussions,
-                  association_class: Edge,
-                  includes: [:parent, owner: {creator: :profileable}],
-                  pagination: true
   with_collection :motions,
                   pagination: true,
                   association: :direct_motions

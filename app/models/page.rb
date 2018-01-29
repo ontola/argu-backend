@@ -27,10 +27,6 @@ class Page < Edgeable::Base
 
   enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
-  with_collection :discussions,
-                  association_class: Edge,
-                  includes: [:parent, owner: {creator: :profileable}],
-                  pagination: true
   with_collection :vote_matches,
                   association: :profile_vote_matches,
                   pagination: true

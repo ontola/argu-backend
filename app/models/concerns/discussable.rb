@@ -7,8 +7,11 @@ module Discussable
     has_many :discussions,
              -> { where(owner_type: %w[Motion Question]) },
              through: :edge,
-             source: :children,
-             class_name: 'Edge'
+             source: :children
+
+    with_collection :discussions,
+                    includes: [:parent, :default_vote_event, owner: [:default_cover_photo, creator: :profileable]],
+                    pagination: true
   end
 
   module Serializer

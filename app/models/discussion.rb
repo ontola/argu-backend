@@ -6,4 +6,10 @@ class Discussion
   include Parentable
   attr_accessor :forum, :page, :publisher
   parentable :forum, :page
+
+  def self.default_per_page
+    10
+  end
+
+  def self.filter_options; end
 end
