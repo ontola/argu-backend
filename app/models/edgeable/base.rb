@@ -259,8 +259,11 @@ module Edgeable
       end
 
       def with_collection(name, options = {})
-        if (options[:association_class] || name.to_s.classify.constantize).is_a?(Edgeable::Base)
-          options[:includes] = {creator: :profileable, edge: :parent}.merge(options[:includes] || {})
+        if (options[:association_class] || name.to_s.classify.constantize) < Edgeable::Base
+          options[:includes] ||= {
+            creator: :profileable,
+            edge: [:default_vote_event, parent: :owner]
+          }
         end
         super
       end

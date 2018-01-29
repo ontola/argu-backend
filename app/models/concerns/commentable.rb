@@ -11,7 +11,14 @@ module Commentable
             as: :commentable,
             dependent: :destroy
 
-    with_collection :comments, association: :filtered_threads, pagination: true
+    with_collection :comments,
+                    association: :filtered_threads,
+                    pagination: true,
+                    includes: [
+                      :default_vote_event,
+                      parent: :owner,
+                      owner: {creator: :profileable}
+                    ]
 
     def mixed_comments(order = 'edges.created_at DESC')
       @mixed_comments ||=

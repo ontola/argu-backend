@@ -4,7 +4,7 @@ module Widgetable
   extend ActiveSupport::Concern
 
   included do
-    has_many :widgets, -> { order(position: :asc) }, as: :owner
+    has_many :widgets, -> { includes(:owner).order(position: :asc) }, as: :owner
 
     after_create :create_default_widgets
 
