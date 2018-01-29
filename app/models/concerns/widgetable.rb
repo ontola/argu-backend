@@ -25,7 +25,11 @@ module Widgetable
       widgets
         .motions
         .create(
-          resource_iri: "#{iri}/motions?type=paginated",
+          resource_iri: expand_uri_template(
+            'motions_collection_canonical',
+            parent_iri: edge.iri(only_path: true),
+            type: :paginated
+          ),
           label: 'motions.plural',
           label_translation: true,
           body: '',
@@ -37,7 +41,11 @@ module Widgetable
       widgets
         .questions
         .create(
-          resource_iri: "#{iri}/questions?type=paginated",
+          resource_iri: expand_uri_template(
+            'questions_collection_canonical',
+            parent_iri: edge.iri(only_path: true),
+            type: :paginated
+          ),
           label: 'questions.plural',
           label_translation: true,
           body: '',
