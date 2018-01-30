@@ -18,7 +18,14 @@ module Menus
         :contact,
         image: 'fa-send-o',
         link_opts: {data: {remote: 'true'}},
-        href: polymorphic_url([:new, resource, :direct_message]),
+        href: expand_uri_template(
+          'new_iri',
+          collection_iri: expand_uri_template(
+            'direct_messages_collection_iri',
+            parent_iri: resource.iri(only_path: true),
+            only_path: true
+          )
+        ),
         policy: :contact?
       )
     end
@@ -27,7 +34,7 @@ module Menus
       menu_item(
         :activity,
         image: 'fa-feed',
-        href: url_for([resource, :feed]),
+        href: expand_uri_template('feed_iri', parent_iri: resource.iri(only_path: true)),
         policy: :feed?
       )
     end
@@ -46,7 +53,7 @@ module Menus
       menu_item(
         :edit,
         image: 'fa-edit',
-        href: polymorphic_url([:edit, resource]),
+        href: expand_uri_template('edit_iri', parent_iri: resource.iri(only_path: true)),
         policy: :update?
       )
     end
@@ -67,7 +74,7 @@ module Menus
     def destroy_link
       menu_item(
         :destroy,
-        href: polymorphic_url([:delete, resource]),
+        href: expand_uri_template('delete_iri', parent_iri: resource.iri(only_path: true)),
         image: 'fa-close',
         link_opts: {
           data: {remote: 'true'}
@@ -79,7 +86,7 @@ module Menus
     def untrash_link
       menu_item(
         :untrash,
-        href: polymorphic_url([:untrash, resource]),
+        href: expand_uri_template('untrash_iri', parent_iri: resource.iri(only_path: true)),
         image: 'fa-eye',
         link_opts: {
           data: {remote: 'true'}
@@ -91,7 +98,7 @@ module Menus
     def trash_link
       menu_item(
         :trash,
-        href: polymorphic_url([:trash, resource]),
+        href: expand_uri_template('trash_iri', parent_iri: resource.iri(only_path: true)),
         image: 'fa-trash',
         link_opts: {
           data: {remote: 'true'}
