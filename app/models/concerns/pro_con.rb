@@ -10,8 +10,6 @@ module ProCon
     include Commentable
 
     has_many :votes, as: :voteable, dependent: :destroy
-    belongs_to :creator, class_name: 'Profile'
-    belongs_to :forum
 
     before_save :cap_title
 

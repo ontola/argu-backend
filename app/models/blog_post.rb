@@ -1,17 +1,12 @@
 # frozen_string_literal: true
 
-class BlogPost < Edgeable::Content
+class BlogPost < Edgeable::Base
+  include ContentEdgeable
   include Commentable
   include Happenable
   include ActivePublishable
   include HasLinks
   include Attachable
-
-  belongs_to :forum
-  belongs_to :creator,
-             class_name: 'Profile'
-  belongs_to :publisher,
-             class_name: 'User'
 
   counter_cache true
   parentable :motion, :question, :project

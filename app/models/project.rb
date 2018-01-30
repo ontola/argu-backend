@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class Project < Edgeable::Content
+class Project < Edgeable::Base
+  include ContentEdgeable
   include Timelineable
   include Photoable
   include ActivePublishable
@@ -9,10 +10,6 @@ class Project < Edgeable::Content
 
   alias_attribute :display_name, :title
   alias_attribute :description, :content
-
-  belongs_to :creator, class_name: 'Profile', inverse_of: :projects
-  belongs_to :forum, inverse_of: :projects
-  belongs_to :publisher, class_name: 'User'
 
   has_many :motions, dependent: :nullify
   has_many :top_motions,

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-class Question < Edgeable::Content
+class Question < Edgeable::Base
   include ActivePublishable
   include Attachable
   include Commentable
+  include ContentEdgeable
   include HasLinks
   include Attribution
   include Convertible
@@ -13,9 +14,6 @@ class Question < Edgeable::Content
   include Motionable
   include CustomGrants
 
-  belongs_to :forum, inverse_of: :questions
-  belongs_to :creator, class_name: 'Profile'
-  belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify
 

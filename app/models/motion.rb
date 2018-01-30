@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-class Motion < Edgeable::Content
+class Motion < Edgeable::Base
   include ActionView::Helpers::NumberHelper
   include ActivePublishable
   include Argumentable
   include Attachable
   include Photoable
   include Commentable
+  include ContentEdgeable
   include Voteable
   include Attribution
   include HasLinks
@@ -16,10 +17,6 @@ class Motion < Edgeable::Content
   include Timelineable
 
   include Decisionable
-
-  belongs_to :creator, class_name: 'Profile'
-  belongs_to :forum, inverse_of: :motions
-  belongs_to :publisher, class_name: 'User'
 
   attr_accessor :current_vote
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class Argument < Edgeable::Content
+class Argument < Edgeable::Base
+  include ContentEdgeable
   include VotesHelper
   include ProCon
-  belongs_to :publisher, class_name: 'User'
 
   counter_cache arguments_pro: {pro: true}, arguments_con: {pro: false}
   filterable option: {key: :pro, values: {yes: true, no: false}}

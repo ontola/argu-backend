@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-class Comment < Edgeable::Content
+class Comment < Edgeable::Base
+  include ContentEdgeable
   include TruncateHelper
-
-  belongs_to :forum
-  belongs_to :creator, class_name: 'Profile'
-  belongs_to :publisher, class_name: 'User'
 
   acts_as_nested_set scope: %i[commentable_id commentable_type]
   counter_cache true

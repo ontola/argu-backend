@@ -18,6 +18,8 @@ class Forum < Edgeable::Base
   has_many :votes, inverse_of: :forum, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :forum, dependent: :destroy
+  has_many :blog_posts, inverse_of: :forum, dependent: :destroy
+  has_many :comments, inverse_of: :forum, dependent: :destroy
   has_many :motions, inverse_of: :forum, dependent: :destroy
   has_many :direct_motions, -> { where(question_id: nil) }, class_name: 'Motion', inverse_of: :forum
   has_many :projects, inverse_of: :forum, dependent: :destroy
