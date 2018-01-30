@@ -136,6 +136,6 @@ class ActivityStringTest < ActiveSupport::TestCase
   private
 
   def url(u)
-    "http://#{Rails.application.config.host_name}#{u}"
+    "https://#{Rails.application.config.host_name}#{u}"
   end
 end

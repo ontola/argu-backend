@@ -19,7 +19,7 @@ class VotesController < EdgeableController
         if params[:vote].try(:[], :r).present?
           redirect_to redirect_param
         else
-          redirect_to polymorphic_url(create_service.resource.parent_model.voteable),
+          redirect_to create_service.resource.parent_model.voteable.iri(only_path: true).to_s,
                       notice: t('votes.alerts.not_modified')
         end
       end
@@ -51,7 +51,7 @@ class VotesController < EdgeableController
   end
 
   def create_respond_failure_html(resource)
-    redirect_to polymorphic_url(resource.parent_model.voteable),
+    redirect_to resource.parent_model.voteable.iri(only_path: true).to_s,
                 notice: t('votes.alerts.failed')
   end
 
@@ -59,7 +59,7 @@ class VotesController < EdgeableController
     if params[:vote].try(:[], :r).present?
       redirect_to redirect_param
     else
-      redirect_to polymorphic_url(resource.parent_model.voteable),
+      redirect_to resource.parent_model.voteable.iri(only_path: true).to_s,
                   notice: t('votes.alerts.success')
     end
   end
@@ -88,7 +88,7 @@ class VotesController < EdgeableController
   end
 
   def show_respond_success_html(resource)
-    redirect_to url_for(resource.voteable)
+    redirect_to resource.voteable.iri(only_path: true).to_s
   end
 
   def for_param

@@ -11,7 +11,7 @@ class NotificationsController < AuthorizedController
   def show
     respond_to do |format|
       format.nt { render nt: authenticated_resource, include: :operation }
-      format.all { redirect_to url_for(authenticated_resource.activity.trackable) }
+      format.all { redirect_to authenticated_resource.activity.trackable.iri(only_path: true).to_s }
     end
   end
 

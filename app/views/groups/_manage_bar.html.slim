@@ -1,7 +1,7 @@
 .tabs-to-top
   .tabs-container
     ul.tabs
-      li= link_to url_for(resource.page), data: {intro: t('intro.pages.settings.home')}
+      li= link_to resource.page.iri.to_s, data: {intro: t('intro.pages.settings.home')}
         span.fa.fa-building
         span.icon-left= resource.page.display_name
       li= link_to url_for([:settings, resource.page, tab: :groups])

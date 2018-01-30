@@ -34,7 +34,7 @@
             ul= dropdown_menu(resource, :actions)
         - else
           - if controller_name == 'feed'
-            li.float-right= link_to url_for(resource), class: 'btn--transparant'
+            li.float-right= link_to resource.iri.to_s, class: 'btn--transparant'
               span.fa.fa-th-large
               span.icon-left= t('overview')
           - elsif policy(resource).feed?

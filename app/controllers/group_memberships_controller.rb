@@ -92,7 +92,7 @@ class GroupMembershipsController < ServiceController
   def redirect_url(_ = nil)
     return redirect_param if redirect_param.present?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
-    return polymorphic_url(forum_grants.first.edge.owner) if forum_grants.count == 1
+    return forum_grants.first.edge.owner.iri(only_path: true).to_s if forum_grants.count == 1
     page_url(authenticated_resource!.page)
   end
   alias redirect_model_failure redirect_url

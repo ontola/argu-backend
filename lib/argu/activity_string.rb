@@ -55,7 +55,7 @@ module Argu
     def parent_string
       recipient = @activity.recipient_type == 'VoteEvent' ? @activity.recipient&.voteable : @activity.recipient
       return @activity.audit_data.try(:[], 'recipient_name') if recipient.nil?
-      @embedded_link ? "[#{recipient.display_name}](#{polymorphic_url(recipient)})" : recipient.display_name
+      @embedded_link ? "[#{recipient.display_name}](#{recipient.iri})" : recipient.display_name
     end
 
     # @return [String, nil] Translation of pro, neutral or con
@@ -76,15 +76,7 @@ module Argu
           @activity.audit_data.try(:[], 'trackable_name')
         end
       if @embedded_link && @activity.trackable.present?
-        url =
-          if @activity.object == 'decision'
-            if @activity.trackable.present? && @activity.recipient.present?
-              motion_decision_url(@activity.recipient_edge, id: @activity.trackable.step)
-            end
-          else
-            polymorphic_url(@activity.trackable)
-          end
-        "[#{string}](#{url})"
+        "[#{string}](#{@activity.trackable.iri})"
       else
         string.to_s
       end

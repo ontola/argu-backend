@@ -1,6 +1,6 @@
 ul.box-list.box-list--icons
   - project.top_discussions[0..2].each do |discussion|
-    li= link_to url_for(discussion) do
+    li= link_to discussion.iri.to_s do
       h3[class="#{discussion.model_name.singular}-t"]
         span[class='fa fa-#{public_send("#{discussion.model_name.singular}_icon")}']
         span.icon-left= discussion.title

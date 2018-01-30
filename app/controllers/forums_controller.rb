@@ -134,7 +134,7 @@ class ForumsController < EdgeableController
     send_event category: 'short_url',
                action: 'follow',
                label: params[:id]
-    redirect_to url_for(resource)
+    redirect_to resource.iri(only_path: true).to_s
   end
 
   def redirect_model_success(resource)
@@ -172,7 +172,7 @@ class ForumsController < EdgeableController
 
   def show_respond_success_html(resource)
     if (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to url_for(resource), status: 307
+      redirect_to resource.iri(only_path: true).to_s, status: 307
     else
       @children = collect_children(resource)
       render

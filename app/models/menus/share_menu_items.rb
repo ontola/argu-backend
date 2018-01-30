@@ -5,7 +5,7 @@ module Menus
     def share_menu_items(opts = {})
       return menu_item(:share, menus: []) unless resource.is_published?
 
-      url = polymorphic_url(resource, only_path: false)
+      url = resource.iri
       items = [invite_link]
       if is_public?
         items.concat([
