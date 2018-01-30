@@ -6,7 +6,6 @@ class Comment < Edgeable::Content
   belongs_to :forum
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
-  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   acts_as_nested_set scope: %i[commentable_id commentable_type]
   counter_cache true

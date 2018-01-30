@@ -3,7 +3,6 @@
 class Argument < Edgeable::Content
   include VotesHelper
   include ProCon
-  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 
   counter_cache arguments_pro: {pro: true}, arguments_con: {pro: false}

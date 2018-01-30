@@ -18,7 +18,6 @@ class Question < Edgeable::Content
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify
-  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   convertible motions: %i[activities blog_posts media_objects]
   counter_cache true

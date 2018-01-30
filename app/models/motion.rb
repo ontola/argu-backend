@@ -21,8 +21,6 @@ class Motion < Edgeable::Content
   belongs_to :forum, inverse_of: :motions
   belongs_to :publisher, class_name: 'User'
 
-  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
-
   attr_accessor :current_vote
 
   before_save :cap_title
