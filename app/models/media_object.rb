@@ -109,7 +109,12 @@ class MediaObject < ApplicationRecord
   def url_for_environment(type)
     url = content.url(type)
     return RDF::URI(url) if Rails.env.production? || Rails.env.staging? || url&.to_s&.include?('gravatar.com')
-    RDF::URI("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{content.url(:icon)}")
+    if File.exist?(content.file.path)
+      content.url(:icon)
+    else
+      path = icon.path.gsub(File.expand_path(content.root), '')
+      RDF::URI("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{path}")
+    end
   end
 
   def video_info
