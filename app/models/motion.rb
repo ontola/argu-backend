@@ -20,7 +20,7 @@ class Motion < Edgeable::Base
 
   attr_accessor :current_vote
 
-  before_save :cap_title
+  before_save :capitalize_title
 
   convertible questions: %i[activities blog_posts media_objects]
   counter_cache true
@@ -54,11 +54,6 @@ class Motion < Edgeable::Base
       methods: %i[display_name],
       only: %i[id content forum_id created_at cover_photo updated_at]
     ))
-  end
-
-  def cap_title
-    title[0] = title[0].upcase
-    title
   end
 
   def creator

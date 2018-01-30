@@ -11,7 +11,7 @@ module ProCon
 
     has_many :votes, as: :voteable, dependent: :destroy
 
-    before_save :cap_title
+    before_save :capitalize_title
 
     validates :content, presence: false, length: {maximum: 5000}
     validates :title, presence: true, length: {minimum: 5, maximum: 75}
@@ -28,11 +28,6 @@ module ProCon
     def is_pro_con?
       true
     end
-  end
-
-  def cap_title
-    title[0] = title[0].upcase
-    title
   end
 
   def con?
