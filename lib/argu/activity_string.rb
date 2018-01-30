@@ -60,7 +60,7 @@ module Argu
 
     # @return [String, nil] Translation of pro, neutral or con
     def side_string
-      return nil unless @activity.trackable.present? && @activity.trackable.is_pro_con?
+      return nil unless @activity.trackable.present? && @activity.trackable.is_a?(Vote)
       I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.key}",
              default: I18n.t(@activity.trackable.key))
     end
