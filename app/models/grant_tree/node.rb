@@ -5,7 +5,8 @@ class GrantTree
     include ActiveModel::Model
     include Iriable
 
-    attr_accessor :edge, :id, :expired, :trashed, :unpublished, :children, :grant_tree, :permitted_actions, :grant_sets
+    attr_accessor :edge, :id, :expired, :trashed, :unpublished, :children,
+                  :grant_tree, :permitted_actions, :grant_sets, :root_id
     alias expired? expired
     alias trashed? trashed
     alias unpublished? unpublished
@@ -14,6 +15,7 @@ class GrantTree
     def initialize(edge, parent, grant_tree)
       self.edge = edge
       self.id = edge.id
+      self.root_id = edge.root_id
       self.expired = parent&.expired || edge.expires_at && edge.expires_at < Time.current
       self.expired = edge.owner.starts_at > Time.current if !expired && edge.owner_type == 'VoteEvent'
       self.trashed = parent&.trashed || edge.is_trashed?
@@ -44,7 +46,7 @@ class GrantTree
     # @param [Edge] edge The child to add
     # @return [Edge] The child that was added
     def add_child(edge)
-      raise 'Inconsistent node' unless edge.parent_id == id
+      raise 'Inconsistent node' unless edge.root_id == root_id
       Node.new(edge, self, grant_tree)
     end
 

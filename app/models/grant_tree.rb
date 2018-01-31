@@ -6,7 +6,7 @@ class GrantTree
   attr_reader :cached_nodes
 
   def initialize(root)
-    @tree_root_id = root if root.is_a?(Integer)
+    @tree_root_id = root if root.is_a?(String)
     @tree_root = root if root.is_a?(Edge)
     raise ArgumentError.new("Edge expected as root, but got: #{root}") unless @tree_root_id || @tree_root
     @cached_nodes = {}
@@ -19,10 +19,17 @@ class GrantTree
   def cache_node(node)
     return cached_node(node) if cached?(node)
     edge = node.is_a?(Edge) ? node : Edge.find(node)
-    ancestors = Edge.find(edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id])
+    ancestors = Edge.where(
+      root_id: tree_root_id,
+      fragment: edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.fragment]
+    )
     (ancestors + [edge]).each do |ancestor|
-      cached_nodes[ancestor.id] =
-        ancestor.parent_id.nil? ? root_node(ancestor) : find_or_cache_node(ancestor.parent_id).add_child(ancestor)
+      cached_nodes[ancestor.fragment] =
+        if ancestor.parent_fragment.nil?
+          root_node(ancestor)
+        else
+          find_or_cache_node(ancestor.parent_fragment).add_child(ancestor)
+        end
     end
     cached_node(node)
   end
@@ -58,7 +65,7 @@ class GrantTree
       Grant
         .joins(:edge)
         .includes(:edge, :grant_set, :permitted_actions)
-        .where('edges.path <@ ?', tree_root_id.to_s)
+        .where(edges: {root_id: tree_root_id})
         .to_a
   end
 
@@ -68,7 +75,7 @@ class GrantTree
     @grant_resets_in_scope ||=
       GrantReset
         .joins(:edge)
-        .where('edges.path <@ ?', tree_root_id.to_s)
+        .where(edges: {root_id: tree_root_id})
         .to_a
   end
 
@@ -115,7 +122,7 @@ class GrantTree
   private
 
   def cached_node(edge)
-    cached_nodes[edge.is_a?(Edge) ? edge.id : edge]
+    cached_nodes[edge.is_a?(Edge) ? edge.fragment : edge]
   end
 
   # Checks whether the edge is in the current tree

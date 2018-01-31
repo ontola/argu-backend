@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104161506) do
+ActiveRecord::Schema.define(version: 20180131085435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json "audit_data"
-    t.integer "trackable_edge_id"
-    t.integer "recipient_edge_id"
     t.string "comment"
+    t.uuid "recipient_edge_id"
+    t.uuid "trackable_edge_id"
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type"
     t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable"
     t.index ["forum_id"], name: "index_activities_on_forum_id"
@@ -155,7 +155,6 @@ ActiveRecord::Schema.define(version: 20180104161506) do
 
   create_table "decisions", id: :serial, force: :cascade do |t|
     t.integer "forum_id", null: false
-    t.integer "decisionable_id", null: false
     t.integer "forwarded_group_id"
     t.integer "forwarded_user_id"
     t.integer "publisher_id", null: false
@@ -166,6 +165,7 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.boolean "is_published", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "decisionable_id", null: false
   end
 
   create_table "documents", id: :serial, force: :cascade do |t|
@@ -177,9 +177,9 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.index ["name"], name: "index_documents_on_name"
   end
 
-  create_table "edges", id: :serial, force: :cascade do |t|
+  create_table "edges", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.integer "fragment", null: false
     t.integer "user_id", null: false
-    t.integer "parent_id"
     t.integer "owner_id", null: false
     t.string "owner_type", null: false
     t.ltree "path"
@@ -192,7 +192,10 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.hstore "children_counts", default: {}
     t.integer "follows_count", default: 0, null: false
     t.datetime "expires_at"
+    t.uuid "root_id", null: false
+    t.integer "parent_fragment"
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
+    t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
   end
 
   create_table "edits", id: :serial, force: :cascade do |t|
@@ -222,14 +225,13 @@ ActiveRecord::Schema.define(version: 20180104161506) do
 
   create_table "favorites", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "edge_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "edge_id", null: false
     t.index ["user_id", "edge_id"], name: "index_favorites_on_user_id_and_edge_id", unique: true
   end
 
   create_table "follows", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.integer "followable_id", null: false
     t.string "followable_type", default: "Edge", null: false
     t.integer "follower_id", null: false
     t.string "follower_type", default: "User", null: false
@@ -238,7 +240,8 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.datetime "updated_at"
     t.boolean "send_email", default: false
     t.integer "follow_type", default: 30, null: false
-    t.index ["followable_id", "followable_type"], name: "fk_followables"
+    t.uuid "followable_id", null: false
+    t.index ["followable_id", "followable_type"], name: "index_follows_on_followable_id_and_followable_type"
     t.index ["follower_id", "follower_type"], name: "fk_follows"
     t.index ["follower_type", "follower_id", "followable_type", "followable_id"], name: "index_follower_followable", unique: true
   end
@@ -268,9 +271,9 @@ ActiveRecord::Schema.define(version: 20180104161506) do
   end
 
   create_table "grant_resets", force: :cascade do |t|
-    t.integer "edge_id", null: false
     t.string "resource_type", null: false
     t.string "action", null: false
+    t.uuid "edge_id", null: false
     t.index ["edge_id", "resource_type", "action"], name: "index_grant_resets_on_edge_id_and_resource_type_and_action", unique: true
   end
 
@@ -287,11 +290,11 @@ ActiveRecord::Schema.define(version: 20180104161506) do
 
   create_table "grants", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
-    t.integer "edge_id", null: false
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "grant_set_id"
+    t.uuid "edge_id", null: false
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
   end
 
@@ -556,12 +559,12 @@ ActiveRecord::Schema.define(version: 20180104161506) do
   create_table "publications", id: :serial, force: :cascade do |t|
     t.string "job_id"
     t.datetime "published_at"
-    t.integer "publishable_id"
     t.string "publishable_type", default: "Edge"
     t.string "channel"
     t.integer "creator_id", null: false
     t.integer "publisher_id"
     t.integer "follow_type", default: 3, null: false
+    t.uuid "publishable_id"
   end
 
   create_table "questions", id: :serial, force: :cascade do |t|
@@ -594,7 +597,7 @@ ActiveRecord::Schema.define(version: 20180104161506) do
     t.integer "context_id"
     t.integer "trickles", default: 0, null: false
     t.string "message"
-    t.integer "branch_id", null: false
+    t.uuid "branch_id", null: false
     t.index ["branch_id"], name: "index_rules_on_branch_id"
     t.index ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type"
     t.index ["model_id", "model_type"], name: "index_rules_on_model_id_and_model_type"
@@ -758,7 +761,6 @@ ActiveRecord::Schema.define(version: 20180104161506) do
   add_foreign_key "decisions", "profiles", column: "creator_id"
   add_foreign_key "decisions", "users", column: "forwarded_user_id"
   add_foreign_key "decisions", "users", column: "publisher_id"
-  add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
   add_foreign_key "email_addresses", "users"
   add_foreign_key "favorites", "edges"
@@ -805,6 +807,7 @@ ActiveRecord::Schema.define(version: 20180104161506) do
   add_foreign_key "projects", "groups"
   add_foreign_key "projects", "profiles", column: "creator_id"
   add_foreign_key "projects", "users", column: "publisher_id"
+  add_foreign_key "publications", "edges", column: "publishable_id"
   add_foreign_key "questions", "places"
   add_foreign_key "questions", "profiles", column: "creator_id"
   add_foreign_key "questions", "projects"

@@ -16,6 +16,14 @@ GIT
       devise
 
 GIT
+  remote: https://github.com/ArthurWD/ltree_hierarchy
+  revision: ecb478e68144d932baffab83780a04f152b9a190
+  specs:
+    ltree_hierarchy (1.0.0)
+      activerecord (>= 4.2.0)
+      pg
+
+GIT
   remote: https://github.com/ArthurWD/omniauth-facebook
   revision: 90671b291679b37a0560463521d8694308af859b
   ref: 90671
@@ -378,9 +386,6 @@ GEM
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    ltree_hierarchy (1.0.0)
-      activerecord (>= 4.2.0)
-      pg
     mail (2.7.0)
       mini_mime (>= 0.1.1)
     meta_request (0.4.3)
@@ -775,7 +780,7 @@ DEPENDENCIES
   libv8 (~> 3.16.14.13)
   license_finder
   logstasher (~> 1.2.0)
-  ltree_hierarchy
+  ltree_hierarchy!
   meta_request (~> 0.4.3)
   minitest-bang
   minitest-have_tag (~> 0.1.0)

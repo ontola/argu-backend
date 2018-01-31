@@ -9,17 +9,18 @@ class Edge < ApplicationRecord
              polymorphic: true,
              required: true,
              dependent: :destroy
-  belongs_to :parent,
-             class_name: 'Edge',
-             inverse_of: :children
+  # belongs_to :parent,
+  #            class_name: 'Edge',
+  #            inverse_of: :children
   belongs_to :user,
              required: true
   has_many :activities, foreign_key: :trackable_edge_id, inverse_of: :trackable_edge, dependent: :nullify
   has_many :recipient_activities, class_name: 'Activity', foreign_key: :recipient_edge_id, dependent: :nullify
   has_many :children,
+           ->(edge) { where(root_id: edge.root_id) },
            class_name: 'Edge',
            inverse_of: :parent,
-           foreign_key: :parent_id,
+           foreign_key: :parent_fragment,
            dependent: false
   has_many :decisions, foreign_key: :decisionable_id, source: :decisionable, dependent: :destroy
   has_one :last_decision,
@@ -104,7 +105,7 @@ class Edge < ApplicationRecord
   before_save :set_user_id
 
   acts_as_followable
-  has_ltree_hierarchy
+  has_ltree_hierarchy fragment: :fragment, scope: :root_id, parent_fragment: :parent_fragment
 
   attr_writer :root
   delegate :creator, :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
@@ -252,10 +253,10 @@ class Edge < ApplicationRecord
     @root ||= super
   end
 
-  def root_id
-    return @root_id if @root_id.present?
-    @root_id ||= path&.split('.')&.first&.to_i || persisted_edge.root_id
-  end
+  # def root_id
+  #   return @root_id if @root_id.present?
+  #   @root_id ||= path&.split('.')&.first&.to_i || persisted_edge.root_id
+  # end
 
   def trash
     return if trashed_at.present?

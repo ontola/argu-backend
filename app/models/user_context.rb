@@ -6,8 +6,8 @@ class UserContext
   attr_reader :user, :actor, :doorkeeper_scopes, :tree_root_id
 
   def initialize(user, profile, doorkeeper_scopes, tree_root_id = nil)
-    unless tree_root_id.nil? || tree_root_id == GrantTree::ANY_ROOT || tree_root_id.is_a?(Integer)
-      raise "tree_root_id should be an integer or the constant GrantTree::ANY_ROOT, but is #{tree_root_id}"
+    unless tree_root_id.nil? || tree_root_id == GrantTree::ANY_ROOT || tree_root_id.is_a?(String)
+      raise "tree_root_id should be a string or the constant GrantTree::ANY_ROOT, but is #{tree_root_id}"
     end
     @user = user
     @actor = profile
