@@ -4,10 +4,6 @@ en:
   arguments:
     type: "argument"
     type_new: "new argument"
-    type_scientific: "scientific"
-    type_axiomatic: "axiomatic"
-    type_other: "other"
-    type_discussion: "in discussion"
     plural: "Arguments"
     vote: "vote"
     new_btn: "Add argument"

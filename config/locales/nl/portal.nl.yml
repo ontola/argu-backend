@@ -37,6 +37,8 @@ nl:
         setting: 'DB Settings'
         managers: 'Beheerders'
         banners: "Banners"
+        documents: 'Documenten'
+        announcements: 'Aankondigingen'
     users:
       delete:
         destroy_content_label:

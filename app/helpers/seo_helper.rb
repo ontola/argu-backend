@@ -6,7 +6,7 @@ module SeoHelper
   end
 
   def seolized_title(model, **options)
-    appendage = t("seo.#{model.class.name.downcase}.name", **options)
+    appendage = t("seo.#{model.class.name.underscore}.name", **options)
     name = if model.is_a?(String)
              model
            elsif model.is_a?(Hash)
@@ -22,7 +22,7 @@ module SeoHelper
   end
 
   def seolized_description(model)
-    appendage = t("seo.#{model.class.name.downcase}.description", title: model.display_name.downcase)
+    appendage = t("seo.#{model.class.name.underscore}.description", title: model.display_name.downcase)
     [
       markdown_to_plaintext(model.description),
       (' | ' if model.description.present? && appendage.present?),

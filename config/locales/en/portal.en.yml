@@ -36,6 +36,8 @@ en:
         managers: 'Managers'
         setting: 'DB Settings'
         banners: 'Banners'
+        documents: 'Documents'
+        announcements: 'Announcements'
     users:
       delete:
         destroy_content_label:

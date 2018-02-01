@@ -135,7 +135,7 @@ module NamesHelper
 
   # @return formtastic placeholder translation for an object
   def placeholder_for(item, field, type)
-    I18n.t("formtastic.placeholders.#{item.class.name.downcase}.#{field}", type: type)
+    I18n.t("formtastic.placeholders.#{item.class.name.underscore}.#{field}", type: type)
   end
 
   private
