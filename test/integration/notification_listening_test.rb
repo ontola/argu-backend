@@ -87,7 +87,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     assert_equal Notification.last.notification_type, 'reaction'
 
     assert_differences([['Argument.trashed.count', 1], [create_notification_count, -2]]) do
-      delete argument_path(Argument.last)
+      delete pro_argument_path(Argument.last)
     end
   end
 
@@ -97,7 +97,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     argument
 
     assert_differences([['Argument.count', -1], [create_notification_count, -2]]) do
-      delete argument_path(argument, destroy: true)
+      delete pro_argument_path(argument, destroy: true)
     end
   end
 
@@ -107,7 +107,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Argument
     assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
-      post argument_comments_path(argument),
+      post pro_argument_comments_path(argument),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'

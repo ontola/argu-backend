@@ -5,7 +5,7 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   define_freetown
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
-  let(:argument) { motion.arguments.untrashed.first }
+  let(:argument) { motion.pro_arguments.untrashed.first }
   let(:vote_event) { motion.default_vote_event }
   let(:vote) { motion.votes.first }
   let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
@@ -28,7 +28,7 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   test 'should post create vote for argument as JS' do
     sign_in user
-    post :create, params: {format: :js, argument_id: argument.id, for: 'pro'}
+    post :create, params: {format: :js, pro_argument_id: argument.id, for: 'pro'}
     assert_response 200
   end
 

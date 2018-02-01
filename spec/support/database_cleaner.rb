@@ -92,6 +92,7 @@ RSpec.configure do |config|
       create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
       blog_post = create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
       create(:comment, parent: blog_post.edge)
+      create(:comment, parent: motion.edge)
 
       hidden_question = create(:question, parent: holland.edge)
       create(:motion, parent: hidden_question.edge)

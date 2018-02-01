@@ -10,8 +10,23 @@ module Argumentable
         Arel.sql('edges.last_activity_at') => :desc
       )
     }
+    edge_tree_has_many :pro_arguments, lambda {
+      where(type: 'ProArgument')
+        .order(
+          Arel.sql("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int)") => :desc,
+          Arel.sql('edges.last_activity_at') => :desc
+        )
+    }, source_type: 'Argument'
+    edge_tree_has_many :con_arguments, lambda {
+      where(type: 'ConArgument')
+        .order(
+          Arel.sql("cast(COALESCE(edges.children_counts -> 'votes_pro', '0') AS int)") => :desc,
+          Arel.sql('edges.last_activity_at') => :desc
+        )
+    }, source_type: 'Argument'
 
-    with_collection :arguments, pagination: true
+    with_collection :pro_arguments, pagination: true
+    with_collection :con_arguments, pagination: true
 
     def invert_arguments
       false
@@ -31,11 +46,16 @@ module Argumentable
     extend ActiveSupport::Concern
     included do
       # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :argument_collection, predicate: NS::ARGU[:arguments]
+      has_one :pro_argument_collection, predicate: NS::ARGU[:proArguments]
+      has_one :con_argument_collection, predicate: NS::ARGU[:conArguments]
       # rubocop:enable Rails/HasManyOrHasOneDependent
 
-      def argument_collection
-        object.argument_collection(user_context: scope)
+      def pro_argument_collection
+        object.pro_argument_collection(user_context: scope)
+      end
+
+      def con_argument_collection
+        object.con_argument_collection(user_context: scope)
       end
     end
   end

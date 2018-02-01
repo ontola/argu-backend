@@ -9,8 +9,6 @@ class Argument < Edgeable::Base
   include VotesHelper
 
   has_many :votes, as: :voteable, dependent: :destroy
-  scope :pro, -> { where(pro: true) }
-  scope :con, -> { where(pro: false) }
 
   before_save :capitalize_title
 
@@ -21,16 +19,17 @@ class Argument < Edgeable::Base
 
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
-  counter_cache arguments_pro: {pro: true}, arguments_con: {pro: false}
-  filterable option: {key: :pro, values: {yes: true, no: false}}
+  counter_cache arguments_pro: {type: 'ProArgument'}, arguments_con: {type: 'ConArgument'}
   paginates_per 10
   parentable :motion, :linked_record
   with_collection :votes, pagination: true
 
   delegate :page, to: :forum
+  attr_reader :pro
   alias_attribute :description, :content
   alias_attribute :display_name, :title
   alias default_vote_event_edge edge
+  alias pro? pro
 
   def con?
     !pro?
@@ -38,15 +37,6 @@ class Argument < Edgeable::Base
 
   def default_vote_event
     self
-  end
-
-  def is_pro_con?
-    true
-  end
-
-  # To facilitate the group_by command
-  def key
-    pro ? :pro : :con
   end
 
   # @return [Argument, nil] The id of the next item or nil.
@@ -60,8 +50,8 @@ class Argument < Edgeable::Base
   end
 
   def pro=(value)
-    value = false if value.to_s == 'con'
-    super value.to_s == 'pro' || value
+    value = false if %w[con false].include?(value)
+    @pro = value.to_s == 'pro' || value
   end
 
   def remove_upvote(user, profile)
@@ -104,14 +94,14 @@ class Argument < Edgeable::Base
     self
   end
 
-  def self.ordered(coll = [], page = {})
+  def self.ordered(pro_coll, con_coll, page = {})
     HashWithIndifferentAccess.new(
       pro: {
-        collection: coll.pro.page(page[:pro] || 1) || [],
+        collection: pro_coll.page(page[:pro] || 1) || [],
         page_param: :page_arg_pro
       },
       con: {
-        collection: coll.con.page(page[:con] || 1) || [],
+        collection: con_coll.page(page[:con] || 1) || [],
         page_param: :page_arg_con
       }
     )

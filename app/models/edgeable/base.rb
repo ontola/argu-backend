@@ -184,7 +184,7 @@ module Edgeable
 
       def edge_join_string
         "INNER JOIN \"edges\" #{edge_join_alias} ON #{edge_join_alias}.\"owner_id\" = #{quoted_table_name}.\"id\" "\
-        "AND #{edge_join_alias}.\"owner_type\" = '#{class_name.classify}'"
+        "AND #{edge_join_alias}.\"owner_type\" = '#{base_class.name}'"
       end
 
       # Adds an association for children through the edge tree
@@ -198,7 +198,7 @@ module Edgeable
       def edge_tree_has_many(name, scope = nil, options = {})
         options[:through] = :edge_children
         options[:source] = :owner
-        options[:source_type] = options[:class_name] || name.to_s.classify
+        options[:source_type] ||= options[:class_name] || name.to_s.classify
         has_many "#{name}_from_tree".to_sym, scope, options
         alias_attribute name.to_sym, "#{name}_from_tree".to_sym
       end
@@ -206,7 +206,7 @@ module Edgeable
       def fix_counts_query(cache_name, conditions)
         query =
           Edge
-            .where(owner_type: name)
+            .where(owner_type: base_class.name)
             .where('edges.trashed_at IS NULL AND edges.is_published = true')
             .select('parents_edges.id, parents_edges.parent_id, COUNT(parents_edges.id) AS count, ' \
                     "CAST(COALESCE(parents_edges.children_counts -> '#{connection.quote_string(cache_name.to_s)}', "\

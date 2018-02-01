@@ -1,7 +1,7 @@
 .col-1
   header
     h1= t('comments.confirm.headline')
-  =render partial: "#{resource.model_name.plural}/show",
+  =render partial: "#{resource.class.base_class.name.tableize}/show",
           locals: {model: resource,
                    comment: local_assigns[:comment]}
   .box

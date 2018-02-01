@@ -6,18 +6,17 @@ require 'argu/test_helpers/automated_requests'
 RSpec.describe 'Comments', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
+  let(:redirect_url) { url_for([subject.parent_model, anchor: "comments_#{subject.id}", only_path: true]) }
   let(:expect_get_show_html) do
-    expect(response).to redirect_to(url_for([subject.parent_model, anchor: "comments_#{subject.id}"]))
+    expect(response).to redirect_to(redirect_url)
     follow_redirect!
     expect(response.status).to eq(200)
   end
   let(:expect_post_create_failed_html) do
     redirect_to(url_for([subject.parent_model, comment: {body: 'comment', parent: nil}]))
   end
-  let(:expect_delete_trash_html) do
-    expect(response).to redirect_to(url_for([subject.parent_model, anchor: "comments_#{subject.id}", only_path: true]))
-  end
-  let(:expect_put_untrash_html) { expect_delete_trash_html }
+  let(:expect_delete_trash_html) { expect(response).to redirect_to(redirect_url) }
+  let(:expect_put_untrash_html) { expect(response).to redirect_to(redirect_url) }
   let(:create_failed_path) do
     url_for(
       [
@@ -35,10 +34,17 @@ RSpec.describe 'Comments', type: :request do
   let(:required_keys) { %w[body] }
   let(:authorized_user_update) { subject.publisher }
   let(:authorized_user_trash) { staff }
-  let(:update_failed_path) { url_for([subject.parent_model, anchor: "comments_#{subject.id}", only_path: true]) }
+  let(:update_failed_path) { redirect_url }
+
+  context 'with argument parent' do
+    subject { comment }
+    it_behaves_like 'requests'
+  end
 
   context 'with motion parent' do
-    subject { comment }
+    subject { motion_comment }
+    let(:redirect_url) { motion_comments_path(subject.parent_model) }
+    let(:created_resource_path) { redirect_url }
     it_behaves_like 'requests'
   end
 

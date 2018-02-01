@@ -45,8 +45,8 @@ RSpec.describe 'Votes', type: :request do
       url_for([subject.parent_model, :vote, only_path: true])
     end
     let(:expect_get_show_html) { expect(response).to redirect_to(argument) }
-    let(:expect_redirect_to_login) { new_argument_vote_path(argument, confirm: true) }
-    let(:created_resource_path) { argument_path(argument) }
+    let(:expect_redirect_to_login) { new_pro_argument_vote_path(argument, confirm: true) }
+    let(:created_resource_path) { pro_argument_path(argument) }
     it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
     it_behaves_like 'by parent'
   end

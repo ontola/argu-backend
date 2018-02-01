@@ -291,6 +291,12 @@ en:
     application:
       title: "Argu - Involve people in decision making"
       description: "Argu is a platform that helps you make better decisions by structuring discussions."
+    pro_argument:
+      name: 'Argument against %{motiontitle}'
+      description: 'Join the debate.'
+    con_argument:
+      name: 'Argument in favour of %{motiontitle}'
+      description: 'Join the debate.'
     argument:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Join the debate.'

@@ -15,6 +15,7 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:untrash_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
+          subject.trash
           sign_in(unauthorized_user)
           assert_differences(no_differences) do
             put untrash_path, params: {format: format}

@@ -294,7 +294,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_differences([['Vote.count', 1],
                         ['Edge.count', 1],
                         ['argument.reload.children_count(:votes_pro)', 1]]) do
-      post argument_votes_path(argument),
+      post pro_argument_votes_path(argument),
            params: {
              format: :json,
              for: :pro

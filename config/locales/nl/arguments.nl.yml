@@ -1,6 +1,14 @@
 #Dutch argument translations
 
 nl:
+  pro_arguments:
+    type: "Argument"
+    type_new: "Nieuw argument"
+    plural: "Argumenten"
+  con_arguments:
+    type: "Argument"
+    type_new: "Nieuw argument"
+    plural: "Argumenten"
   arguments:
     type: "Argument"
     type_new: "Nieuw argument"

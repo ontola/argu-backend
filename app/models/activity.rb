@@ -2,8 +2,8 @@
 
 class Activity < PublicActivity::Activity
   include Iriable
-  RELEVANT_KEYS = %w[vote.create question.publish motion.publish argument.create blog_post.publish
-                     decision.approved decision.rejected comment.create].freeze
+  RELEVANT_KEYS = %w[vote.create question.publish motion.publish argument.create pro_argument.create con_argument.create
+                     blog_post.publish decision.approved decision.rejected comment.create].freeze
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action

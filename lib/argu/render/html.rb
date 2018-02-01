@@ -22,7 +22,8 @@ module Argu
           when 'q'
             content_with_detail_icon(safe_content, 'question', 'question')
           when 'a'
-            pro, title = Argument.where(id: link.split('/').last).pluck(:pro, :title).first
+            type, title = Argument.where(id: link.split('/').last).pluck(:type, :title).first
+            pro = type == 'ProArgument'
             content_tag :span, class: "markdown--argument-#{pro ? 'pro' : 'con'}" do
               safe_join([content_tag(:span, '', class: "argument-bg fa fa-#{pro ? 'plus' : 'minus'}"), safe_content])
             end

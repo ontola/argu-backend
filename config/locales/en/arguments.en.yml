@@ -1,6 +1,14 @@
 #English argument translations
 
 en:
+  pro_arguments:
+    type: "argument"
+    type_new: "new argument"
+    plural: "Arguments"
+  con_arguments:
+    type: "argument"
+    type_new: "new argument"
+    plural: "Arguments"
   arguments:
     type: "argument"
     type_new: "new argument"

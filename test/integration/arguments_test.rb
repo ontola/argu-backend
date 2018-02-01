@@ -20,70 +20,72 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     sign_in user
     motion
 
-    assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['ProArgument.count', 1], ['Edge.count', 1]]) do
       general_create_json(motion)
     end
 
     assert_response 201
-    assert assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.is_a?(ProArgument)
   end
 
   test 'user should post create con json_api' do
     sign_in user
     motion
 
-    assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['ConArgument.count', 1], ['Edge.count', 1]]) do
       general_create_json(motion, false)
     end
 
     assert_response 201
-    assert_not assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.is_a?(ConArgument)
   end
 
   test 'user should post create pro json_api for linked record' do
     linked_record
     sign_in user
 
-    assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['ProArgument.count', 1], ['Edge.count', 1]]) do
       general_create_json(linked_record)
     end
 
     assert_response 201
-    assert assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.is_a?(ProArgument)
   end
 
   test 'user should post create con json_api for linked record' do
     linked_record
     sign_in user
 
-    assert_differences([['Argument.count', 1], ['Edge.count', 1]]) do
+    assert_differences([['ConArgument.count', 1], ['Edge.count', 1]]) do
       general_create_json(linked_record, false)
     end
 
     assert_response 201
-    assert_not assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.is_a?(ConArgument)
   end
 
   test 'user should post create pro json_api for non-persisted linked record' do
     sign_in user
 
-    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]) do
+    diff = [['ProArgument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]
+    assert_differences(diff) do
       general_create_json(non_persisted_linked_record)
     end
 
     assert_response 201
-    assert assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.is_a?(ProArgument)
   end
 
   test 'user should post create con json_api for non-persisted linked record' do
     sign_in user
 
-    assert_differences([['Argument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]) do
+    diff = [['ConArgument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]
+    assert_differences(diff) do
       general_create_json(non_persisted_linked_record, false)
     end
 
     assert_response 201
-    assert_not assigns(:create_service).resource.pro?
+    assert assigns(:create_service).resource.is_a?(ConArgument)
   end
 
   private

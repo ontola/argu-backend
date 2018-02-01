@@ -43,7 +43,8 @@ class MotionsController < EdgeableController
   def include_show
     [
       :default_cover_photo,
-      argument_collection: inc_nested_collection,
+      con_argument_collection: inc_nested_collection,
+      pro_argument_collection: inc_nested_collection,
       attachment_collection: inc_nested_collection,
       vote_event_collection: {member_sequence: {members: {vote_collection: inc_nested_collection}}}
     ]
@@ -61,7 +62,13 @@ class MotionsController < EdgeableController
     @arguments = Argument.ordered(
       policy_scope(
         resource
-          .arguments
+          .pro_arguments
+          .show_trashed(show_trashed?)
+          .includes(:top_comment, edge: :votes)
+      ),
+      policy_scope(
+        resource
+          .con_arguments
           .show_trashed(show_trashed?)
           .includes(:top_comment, edge: :votes)
       ),

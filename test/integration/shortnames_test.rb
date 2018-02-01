@@ -40,7 +40,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'guest should get comment' do
     general_show(302, comment, comment_shortname) do
-      assert_redirected_to argument_path(comment.parent_model, anchor: comment.identifier)
+      assert_redirected_to pro_argument_path(comment.parent_model, anchor: comment.identifier)
     end
   end
 
@@ -120,7 +120,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   def general_show(response, resource, shortname)
     get url_for("/#{shortname.shortname}")
-    assert_redirected_to url_for(resource)
+    assert_redirected_to resource.iri(only_path: true).to_s
     follow_redirect!
 
     assert_response response

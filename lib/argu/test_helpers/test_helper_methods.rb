@@ -267,6 +267,7 @@ module Argu
           let(:argument_vote) { argument.votes.first }
           let(:comment) { argument.comment_threads.first }
           let(:nested_comment) { comment.children.first }
+          let(:motion_comment) { motion.comment_threads.first }
           let(:blog_post) { question.blog_posts.first }
           let(:blog_post_comment) { blog_post.comment_threads.first }
           let(:motion_blog_post) { motion.blog_posts.first }

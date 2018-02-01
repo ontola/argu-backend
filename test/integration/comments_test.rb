@@ -39,7 +39,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_redirected_to argument_path(argument)
+    assert_redirected_to pro_argument_path(argument)
   end
 
   ####################################
@@ -63,6 +63,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_redirected_to argument_path(argument)
+    assert_redirected_to pro_argument_path(argument)
   end
 end

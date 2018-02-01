@@ -40,7 +40,9 @@ Rails.application.routes.draw do
     resources :actions, only: %i[index show]
   end
   concern :argumentable do
-    resources :arguments, only: %i[new create index]
+    resources :arguments, only: %i[new create], path: 'a'
+    resources :pro_arguments, only: %i[index], path: 'pros'
+    resources :con_arguments, only: %i[index], path: 'cons'
   end
   concern :blog_postable do
     resources :blog_posts,
@@ -188,7 +190,7 @@ Rails.application.routes.draw do
     get :statistics, to: 'statistics#show'
     resources :conversions, path: 'conversion', only: %i[new create]
     resource :grant_tree, only: %i[show], path: 'permissions'
-    %i[arguments blog_posts comments decisions discussions forums media_objects
+    %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
        motions pages questions votes vote_events vote_matches].map do |edgeable|
       resources edgeable, only: :index
     end
@@ -204,10 +206,13 @@ Rails.application.routes.draw do
     resources :media_objects, only: :index
   end
 
-  resources :arguments,
-            path: 'a',
-            except: %i[index new create],
-            concerns: %i[votable feedable trashable commentable menuable contactable]
+  resources :arguments, only: %i[show], path: 'a'
+  %i[pro_arguments con_arguments].each do |model|
+    resources model,
+              path: model == :pro_arguments ? 'pro' : 'con',
+              except: %i[index new create],
+              concerns: %i[votable feedable trashable commentable menuable contactable]
+  end
 
   resources :direct_messages, path: :dm, only: [:create]
 

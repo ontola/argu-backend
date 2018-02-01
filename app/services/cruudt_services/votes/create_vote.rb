@@ -3,7 +3,7 @@
 class CreateVote < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
     attributes[:voteable_id] = parent.owner.voteable.id
-    attributes[:voteable_type] = parent.owner.voteable.class.name
+    attributes[:voteable_type] = parent.owner.voteable.class.base_class.name
     super
   end
 

@@ -63,15 +63,14 @@ ActiveRecord::Schema.define(version: 20180209124354) do
   create_table "arguments", id: :serial, force: :cascade do |t|
     t.text "content"
     t.integer "motion_id"
-    t.boolean "pro", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title", limit: 255
     t.integer "creator_id", null: false
     t.integer "forum_id"
     t.integer "publisher_id", null: false
+    t.string "type", null: false
     t.index ["id"], name: "index_arguments_on_id"
-    t.index ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro"
     t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id"
     t.index ["motion_id"], name: "statement_id"
   end

@@ -12,9 +12,13 @@ module ColumnRendererHelper
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
     return if columns.nil?
-    included_models = [Motion, Argument, Vote, Question, QuestionAnswer,
+    included_models = [Motion, ProArgument, ConArgument, Vote, Question, QuestionAnswer,
                        Comment, Project, BlogPost, Decision, LinkedRecord]
-    partial = included_models.include?(columns.class) ? "#{columns.class_name}/show" : 'column_renderer/show'
+    partial = if included_models.include?(columns.class)
+                "#{columns.class.base_class.name.tableize}/show"
+              else
+                'column_renderer/show'
+              end
     partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
     if partial == 'column_renderer/show'

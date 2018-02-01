@@ -26,19 +26,19 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for Argument
   ####################################
   test 'should get index comments of argument' do
-    get :index, params: {format: :json_api, argument_id: argument.id}
+    get :index, params: {format: :json_api, pro_argument_id: argument.id}
     assert_response 200
 
     expect_relationship('parent', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/a/#{argument.id}/c", page: 1, type: 'paginated'))
+    expect_included(argu_url("/pro/#{argument.id}/c", page: 1, type: 'paginated'))
     expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/c/#{c.id}") })
     expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/c/#{c.id}") })
   end
 
   test 'should get index comments of argument with page=1' do
-    get :index, params: {format: :json_api, argument_id: argument.id, page: 1}
+    get :index, params: {format: :json_api, pro_argument_id: argument.id, page: 1}
     assert_response 200
 
     expect_relationship('parent', 1)
