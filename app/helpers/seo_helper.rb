@@ -42,7 +42,8 @@ module SeoHelper
         v[:id] = k
         content_tag(tag_name, nil, v)
       else
-        content_tag(:meta, nil, property: k, id: k, content: escape_once(options[v]))
+        content = options[v].is_a?(RDF::URI) ? options[v] : escape_once(options[v])
+        content_tag(:meta, nil, property: k, id: k, content: content)
       end
     end.join(' ').html_safe
   end
