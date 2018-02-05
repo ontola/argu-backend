@@ -38,7 +38,7 @@ module Edgeable
     delegate :potential_audience, to: :parent_edge
 
     def canonical_iri(only_path: false)
-      RDF::URI(expand_uri_template(:edges_iri, id: edge.id, only_path: only_path))
+      RDF::URI(expand_uri_template(:edges_iri, id: edge.uuid, only_path: only_path))
     end
 
     def counter_cache_names
