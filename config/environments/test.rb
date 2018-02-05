@@ -2,7 +2,8 @@
 
 Rails.application.configure do
   config.host_name = '127.0.0.1:42000'
-  config.token_url = 'https://127.0.0.1:42000/tokens'
+  config.token_url = 'http://127.0.0.1:42000/tokens'
+  config.origin = "http://#{config.host_name}"
 
   Rails.application.routes.default_url_options[:host] = config.host_name
   # Settings specified here will take precedence over those in config/application.rb.

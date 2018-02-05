@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
-  config.host_name = ENV['HOSTNAME']
   Rails.application.routes.default_url_options[:host] = config.host_name
   Rails.application.routes.default_url_options[:protocol] = :https
   # Settings specified here will take precedence over those in config/application.rb.

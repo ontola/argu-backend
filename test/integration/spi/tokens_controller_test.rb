@@ -46,7 +46,7 @@ module SPI
       token = JWT.decode(parsed_body['access_token'], nil, false)[0]
       assert_not_nil token['user']
       assert_equal 'guest', token['user']['type']
-      id_base = "https://#{Rails.application.config.host_name}/sessions/"
+      id_base = "http://#{Rails.application.config.host_name}/sessions/"
       assert token['user']['@id'].starts_with?(id_base)
       assert_equal SecureRandom.hex.length, token['user']['@id'].split(id_base).last.length
 

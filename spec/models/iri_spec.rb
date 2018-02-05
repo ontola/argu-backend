@@ -8,7 +8,7 @@ RSpec.describe "Iri's", type: :model do
   include DecisionsHelper
 
   define_spec_objects
-  let(:url) { url_for([subject, protocol: :https]) }
+  let(:url) { url_for([subject, protocol: :http]) }
 
   RSpec.shared_examples_for 'iri matches route' do
     it 'matches #iri with route' do
@@ -34,7 +34,7 @@ RSpec.describe "Iri's", type: :model do
           subject,
           organization: subject.parent_model(:page).url,
           forum: subject.parent_model(:forum).url,
-          protocol: :https
+          protocol: :http
         ]
       )
     end
@@ -58,7 +58,7 @@ RSpec.describe "Iri's", type: :model do
 
   context 'VoteEvent' do
     subject { vote_event }
-    let(:url) { motion_vote_event_url(vote_event.voteable, vote_event, protocol: :https) }
+    let(:url) { motion_vote_event_url(vote_event.voteable, vote_event, protocol: :http) }
     it_behaves_like 'iri matches route'
   end
 
@@ -89,13 +89,13 @@ RSpec.describe "Iri's", type: :model do
 
   context 'User profile' do
     subject { create(:user).profile }
-    let(:url) { url_for([subject.profileable, protocol: :https]) }
+    let(:url) { url_for([subject.profileable, protocol: :http]) }
     it_behaves_like 'iri matches route'
   end
 
   context 'Page profile' do
     subject { argu.profile }
-    let(:url) { url_for([subject.profileable, protocol: :https]) }
+    let(:url) { url_for([subject.profileable, protocol: :http]) }
     it_behaves_like 'iri matches route'
   end
 
