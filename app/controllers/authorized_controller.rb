@@ -145,6 +145,7 @@ class AuthorizedController < ApplicationController
       current_user.accept_terms!
     else
       respond_to do |format|
+        format.html { render 'accept_terms' }
         format.js { render 'accept_terms' }
         format.json do
           render status: 403,
@@ -153,7 +154,6 @@ class AuthorizedController < ApplicationController
                    code: 'TERMS_NOT_ACCEPTED'
                  }
         end
-        format.html { render 'accept_terms' }
       end
     end
   end

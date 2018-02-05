@@ -15,13 +15,6 @@ class VotesController < EdgeableController
   def create
     return super unless unmodified?
     respond_to do |format|
-      format.json do
-        render status: 304,
-               locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
-      end
-      format.json_api { respond_with_304(create_service.resource, :json_api) }
-      format.nt { respond_with_304(create_service.resource, :nt) }
-      format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
       format.html do
         if params[:vote].try(:[], :r).present?
           redirect_to redirect_param
@@ -30,6 +23,13 @@ class VotesController < EdgeableController
                       notice: t('votes.alerts.not_modified')
         end
       end
+      format.json do
+        render status: 304,
+               locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
+      end
+      format.json_api { respond_with_304(create_service.resource, :json_api) }
+      format.nt { respond_with_304(create_service.resource, :nt) }
+      format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
     end
   end
 

@@ -19,8 +19,8 @@ module Common
 
       # @!visibility public
       def show_respond_blocks_success(resource, format)
-        format.js { show_respond_success_js(resource) }
         format.html { show_respond_success_html(resource) }
+        format.js { show_respond_success_js(resource) }
         format.json { show_respond_success_json(resource) }
         format.json_api { show_respond_success_serializer(resource, :json_api) }
         format.n3 { show_respond_success_serializer(resource, :n3) }

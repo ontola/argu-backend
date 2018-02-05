@@ -63,11 +63,11 @@ class StaticPagesController < ApplicationController
     stubborn_hmset 'announcements', announcement.identifier => :hidden
 
     respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
       format.js do
         render 'announcements/dismissals/create',
                locals: {announcement: announcement}
       end
-      format.html { redirect_back(fallback_location: root_path) }
     end
   end
 

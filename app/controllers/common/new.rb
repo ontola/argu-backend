@@ -15,8 +15,8 @@ module Common
 
       # @!visibility public
       def new_respond_blocks_success(resource, format)
-        format.js { new_respond_success_js(resource) }
         format.html { new_respond_success_html(resource) }
+        format.js { new_respond_success_js(resource) }
         format.json { respond_with_200(resource, :json) }
         format.json_api { respond_with_200(resource, :json_api) }
         format.n3 { respond_with_200(resource, :n3) }

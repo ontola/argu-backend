@@ -6,8 +6,8 @@ class InvitesController < ParentableController
 
   def new
     respond_to do |format|
-      format.js { render 'new.js' }
       format.html { render 'new' }
+      format.js { render 'new.js' }
     end
   end
 
