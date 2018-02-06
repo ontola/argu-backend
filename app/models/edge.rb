@@ -249,7 +249,8 @@ class Edge < ApplicationRecord
   end
 
   def root
-    @root ||= super
+    return self if parent_id.nil?
+    @root ||= association_cached?(:parent) ? parent.root : super
   end
 
   def root_id
