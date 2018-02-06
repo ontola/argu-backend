@@ -59,6 +59,7 @@ class GrantTree
         .joins(:edge)
         .includes(:edge, :grant_set, :permitted_actions)
         .where('edges.path <@ ?', tree_root_id.to_s)
+        .includes(:edge)
         .to_a
   end
 
@@ -69,6 +70,7 @@ class GrantTree
       GrantReset
         .joins(:edge)
         .where('edges.path <@ ?', tree_root_id.to_s)
+        .includes(:edge)
         .to_a
   end
 
