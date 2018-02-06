@@ -75,6 +75,7 @@ export const CustomGrantsForm = React.createClass({
                            onChange={this.handleGrantResetChange}/>
                     {"Handmatig instellen"}
                 </label>
+                <input type="hidden" name={this.props.groupIdsFieldName} value=''/>
                 {checkboxes}
             </div>
         );

@@ -4,7 +4,7 @@ module CustomGrants
   extend ActiveSupport::Concern
 
   included do
-    before_save :sync_grants
+    after_save :sync_grants
 
     cattr_accessor :custom_grants
 
@@ -35,7 +35,7 @@ module CustomGrants
       end
 
       define_method "#{method_identifier}_group_ids" do |grant_tree = nil|
-        custom_grant_group_ids(action, singular, grant_tree)
+        custom_grant_group_ids(action, singular, grant_tree) || []
       end
 
       define_method "#{method_identifier}_group_ids=" do |value|
@@ -98,7 +98,7 @@ module CustomGrants
       return unless send("reset_#{action}_#{singular}")
       granted_group_ids = send("#{action}_#{singular}_group_ids")
       current_granted_group_ids =
-        if send("will_save_change_to_reset_#{action}_#{singular}?")
+        if send("saved_change_to_reset_#{action}_#{singular}?")
           []
         else
           send("#{action}_#{singular}_group_ids_was")
@@ -120,8 +120,8 @@ module CustomGrants
 
     def sync_grants
       custom_grants.each do |singular, action|
-        sync_grant_reset(action, singular) if send("will_save_change_to_reset_#{action}_#{singular}?")
-        sync_custom_grants(action, singular) if send("will_save_change_to_#{action}_#{singular}_group_ids?")
+        sync_grant_reset(action, singular) if send("saved_change_to_reset_#{action}_#{singular}?")
+        sync_custom_grants(action, singular) if send("saved_change_to_#{action}_#{singular}_group_ids?")
       end
     end
   end

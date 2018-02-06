@@ -33,6 +33,36 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test 'administrator should create with grant reset without group_ids' do
+    sign_in administrator
+
+    general_create(
+      analytics: stats_opt('questions', 'create_success'),
+      parent: freetown,
+      results: {should: true, response: 302},
+      attributes: {
+        reset_create_motion: true,
+        create_motion_group_ids: ['']
+      },
+      differences: [['Question', 1], ['GrantReset', 1], ['Grant', 0]]
+    )
+  end
+
+  test 'administrator should create with grant reset' do
+    sign_in administrator
+
+    general_create(
+      analytics: stats_opt('questions', 'create_success'),
+      parent: freetown,
+      results: {should: true, response: 302},
+      attributes: {
+        reset_create_motion: true,
+        create_motion_group_ids: [group.id]
+      },
+      differences: [['Question', 1], ['GrantReset', 1], ['Grant', 1]]
+    )
+  end
+
   test 'administrator should set grant reset without group_ids' do
     sign_in administrator
 
@@ -68,6 +98,21 @@ class QuestionsTest < ActionDispatch::IntegrationTest
         create_motion_group_ids: [group.id]
       },
       differences: [['GrantReset', 0], ['Grant', 0]]
+    )
+  end
+
+  test 'administrator should set grant reset with group_ids remove grants' do
+    sign_in administrator
+    reset_motion_grants
+    create_motion_grant
+    assert_equal 1, subject.grants.count
+    general_update(
+      results: {should: true, response: 302},
+      attributes: {
+        reset_create_motion: true,
+        create_motion_group_ids: ['']
+      },
+      differences: [['GrantReset', 0], ['Grant', -1]]
     )
   end
 
