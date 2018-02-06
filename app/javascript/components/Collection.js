@@ -38,14 +38,17 @@ export const Collection = React.createClass({
             .then(statusSuccess)
             .then(json)
             .then(data => {
-                let members = data.data.relationships.members.data;
-                if (!members || members.length === 0) {
+                let memberSequence = data.data.relationships.memberSequence;
+                if (!memberSequence) {
                     this.setState({ itemsCountPerPage: data.data.attributes.pageSize, totalItemsCount: data.data.attributes.totalCount });
-                    members = this.includedResources(data, data.data.relationships.views.data.map(obj => { return obj.id; }))[0].relationships.members.data;
+                    const viewSequenceId = data.data.relationships.viewSequence.data.id;
+                    const pageViews = this.includedResources(data, viewSequenceId)[0].relationships.members;
+                    memberSequence = pageViews && this.includedResources(data, pageViews.data[0].id)[0].relationships.memberSequence;
                 }
-                if (members && members.length > 0) {
-                    this.props.onPageLoaded(members);
-                    this.setState({ loading: false, values: this.includedResources(data, members.map(obj => { return obj.id; })) });
+                const members = memberSequence && this.includedResources(data, memberSequence.data.id)[0].relationships.members;
+                if (members && members.data.length > 0) {
+                    this.props.onPageLoaded(members.data);
+                    this.setState({ loading: false, values: this.includedResources(data, members.data.map(obj => { return obj.id; })) });
                 }
             });
     },

@@ -19,20 +19,29 @@ module Test
             last: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1)
           },
           relationships: {
-            members: {
-              data: nil
-            },
-            views: {
-              data: [
-                {
-                  id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1),
-                  type: 'collections'
-                }
-              ]
+            viewSequence: {
+              data: {
+                id: '_:g70345879532200',
+                type: 'rdfSequences'
+              }
             }
           }
         },
         included: [
+          {
+            id: '_:g70345879532200',
+            type: 'rdfSequences',
+            relationships: {
+              members: {
+                data: [
+                  {
+                    id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1),
+                    type: 'collections'
+                  }
+                ]
+              }
+            }
+          },
           {
             id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1),
             type: 'collections',
@@ -42,6 +51,18 @@ module Test
               title: 'Tokens',
               totalCount: 2
             },
+            relationships: {
+              memberSequence: {
+                data: {
+                  id: '_:g70345915729720',
+                  type: 'rdfSequences'
+                }
+              }
+            }
+          },
+          {
+            id: '_:g70345915729720',
+            type: 'rdfSequences',
             relationships: {
               members: {
                 data: [
@@ -54,9 +75,6 @@ module Test
                     type: 'tokens'
                   }
                 ]
-              },
-              views: {
-                data: nil
               }
             }
           },
