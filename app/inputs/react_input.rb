@@ -19,12 +19,21 @@ class ReactInput < Formtastic::Inputs::SelectInput
 
   def to_html
     input_wrapping do
-      label_html <<
-        render_react_component(@options[:component], react_render_options, prerender: true)
+      label_html << render_react_component
     end
   end
 
+  def react_component
+    @options[:component]
+  end
+
   def react_render_options
+    {
+      prerender: true
+    }
+  end
+
+  def react_render_props
     input_options.merge(
       name: react_name,
       options: react_options,
@@ -44,7 +53,7 @@ class ReactInput < Formtastic::Inputs::SelectInput
     @object.send(@method) if @object.present?
   end
 
-  def render_react_component(component, props = {}, opts = {})
-    InputReactComponent.new.render_react_component(component, props, opts)
+  def render_react_component
+    InputReactComponent.new.render_react_component(react_component, react_render_props, react_render_options)
   end
 end
