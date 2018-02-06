@@ -81,4 +81,9 @@ class MotionsController < EdgeableController
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)
   end
+
+  def tree_root_id
+    return super unless action_name == 'search'
+    parent_edge.root_id
+  end
 end
