@@ -1,8 +1,10 @@
+import I18n from 'i18n-js';
 import React from 'react';
 
 export const CustomGrantsForm = React.createClass({
     propTypes: {
         action: React.PropTypes.string,
+        defaultGroupIds: React.PropTypes.array,
         grantsReset: React.PropTypes.boolean,
         groupIdsFieldName: React.PropTypes.string,
         groups: React.PropTypes.array,
@@ -34,9 +36,9 @@ export const CustomGrantsForm = React.createClass({
     },
 
     render() {
-        let checkboxes;
+        let selection;
         if (this.state.grantsReset === true) {
-            checkboxes = <li className="form-helper inline-checkboxes"><ol>
+            selection = <li className="form-helper inline-checkboxes"><ol>
                 {
                     this.props.groups.map(group => {
                         return (
@@ -54,18 +56,30 @@ export const CustomGrantsForm = React.createClass({
                     })
                 }
             </ol></li>;
+        } else {
+            selection =
+                <li className="form-helper">
+                    {
+                        this
+                            .props
+                            .groups
+                            .filter(group => { return this.props.defaultGroupIds.indexOf(group.id) >= 0; })
+                            .map(group => { return group.displayName })
+                            .join(', ')
+                    }
+                </li>;
         }
 
         return (
             <div>
-                <span className="label"><label>{"Wie mogen ideeën plaatsen?"}</label></span>
+                <span className="label"><label>{I18n.t('grant_resets.label')}</label></span>
                 <label>
                     <input name={this.props.resetFieldName}
                            type="radio"
                            value={false}
                            checked={this.state.grantsReset === false}
                            onChange={this.handleGrantResetChange}/>
-                    {"Standaard"}
+                    {I18n.t('grant_resets.default')}
                 </label>
                 <label>
                     <input name={this.props.resetFieldName}
@@ -73,10 +87,10 @@ export const CustomGrantsForm = React.createClass({
                            value={true}
                            checked={this.state.grantsReset === true}
                            onChange={this.handleGrantResetChange}/>
-                    {"Handmatig instellen"}
+                    {I18n.t('grant_resets.manual')}
                 </label>
                 <input type="hidden" name={this.props.groupIdsFieldName} value=''/>
-                {checkboxes}
+                {selection}
             </div>
         );
     }

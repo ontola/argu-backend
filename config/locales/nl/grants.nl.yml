@@ -35,3 +35,7 @@ nl:
       administrator: "beheren"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Weet je zeker dat je dit recht wilt intrekken?'><span class='fa fa-close'></span></a>"
+  grant_resets:
+    label: "Wie mogen ideeën plaatsen?"
+    default: "Gebruik forum instellingen"
+    manual: "Handmatig instellen"

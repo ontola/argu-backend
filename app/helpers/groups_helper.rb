@@ -8,6 +8,15 @@ module GroupsHelper
   def custom_grant_props(resource, resource_type, action)
     {
       action: action,
+      defaultGroupIds:
+        user_context
+          .grant_tree
+          .granted_group_ids(
+            resource.parent_edge,
+            action: 'create',
+            resource_type: resource_type.classify,
+            parent_type: resource.class.name
+          ),
       grantsReset: resource.send("reset_#{action}_#{resource_type}"),
       groupIdsFieldName: "#{resource.class.name.underscore}[#{action}_#{resource_type}_group_ids][]",
       groups:

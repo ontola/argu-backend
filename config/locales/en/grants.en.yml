@@ -35,3 +35,7 @@ en:
       administrator: "manage"
     list:
       remove_html: "<a href='%{url}' data-method='delete' data-remote='true' data-confirm='Are you sure to revoke this grant?'><span class='fa fa-close'></span></a>"
+  grant_resets:
+    label: "Who may post ideas?"
+    default: "Use forum settings"
+    manual: "Manual settings"
