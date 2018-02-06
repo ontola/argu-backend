@@ -253,23 +253,6 @@ class User < ApplicationRecord
     @managed_pages = page_ids.present? ? Page.where(id: page_ids) : Page.none
   end
 
-  # Find profiles managed by the user, both its own profile as profiles of pages it manages
-  # @return [ActiveRecord::Relation] The profiles managed by the user
-  def managed_profiles
-    @managed_profiles ||=
-      if !confirmed? || managed_pages.empty?
-        Profile.where(profileable_type: 'User', profileable_id: id)
-      else
-        Profile.where(
-          '(profileable_type = ? AND profileable_id = ?) OR (profileable_type = ? AND profileable_id IN (?))',
-          'User',
-          id,
-          'Page',
-          managed_pages.pluck(:id)
-        )
-      end
-  end
-
   # Find the ids of profiles managed by the user, both its own profile as profiles of pages it manages
   # @return [Array] The ids of the profiles managed by the user
   def managed_profile_ids

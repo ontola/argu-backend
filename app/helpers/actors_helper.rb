@@ -5,9 +5,11 @@ require 'argu/errors/not_authorized'
 module ActorsHelper
   def managed_profiles_list
     @managed_profiles_list ||=
-      current_user.managed_profiles.includes(:default_profile_photo, :profileable).map do |profile|
-        managed_profiles_list_item(profile)
-      end
+      [managed_profiles_list_item(current_user.profile)].concat(
+        current_user.managed_pages.includes(:edge, profile: :default_profile_photo).map do |page|
+          managed_profiles_list_item(page.profile)
+        end
+      )
   end
 
   def managed_profiles_list_item(profile)
