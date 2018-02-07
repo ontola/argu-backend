@@ -3,33 +3,14 @@
 module Menus
   module ShareMenuItems
     def share_menu_items(opts = {})
-      return menu_item(:share, menus: []) unless resource.is_published?
+      return menu_item(:share, menus: -> { [] }) unless resource.is_published?
 
       url = resource.iri
-      items = [invite_link]
-      if is_public?
-        items.concat([
-                       facebook_share_link(url),
-                       twitter_share_link(url),
-                       linkedin_share_link(url),
-                       whatsapp_share_link(url)
-                     ])
-        items << email_share_link(url) unless policy(resource).invite?
-        items << copy_share_link(url)
-      else
-        items.concat(
-          [
-            copy_share_link(url),
-            no_social_media_notice
-          ]
-        )
-      end
-
       menu_item(
         :share,
         image: 'fa-share-alt',
         link_opts: opts.merge(iri: url),
-        menus: items
+        menus: -> { share_menu_links(url) }
       )
     end
 
@@ -112,6 +93,28 @@ module Menus
         .grant_tree_for(resource.edge)
         .granted_group_ids(resource.edge)
         .include?(Group::PUBLIC_ID)
+    end
+
+    def share_menu_links(url)
+      items = [invite_link]
+      if is_public?
+        items.concat([
+                       facebook_share_link(url),
+                       twitter_share_link(url),
+                       linkedin_share_link(url),
+                       whatsapp_share_link(url)
+                     ])
+        items << email_share_link(url) unless policy(resource).invite?
+        items << copy_share_link(url)
+      else
+        items.concat(
+          [
+            copy_share_link(url),
+            no_social_media_notice
+          ]
+        )
+      end
+      items
     end
   end
 end

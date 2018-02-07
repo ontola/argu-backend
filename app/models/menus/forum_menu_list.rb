@@ -14,7 +14,7 @@ class ForumMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [activity_link, statistics_link, settings_link],
+      menus: -> { [activity_link, statistics_link, settings_link] },
       link_opts: {triggerClass: 'btn--transparant'}
     )
   end
@@ -26,13 +26,15 @@ class ForumMenuList < MenuList
   def navigations_menu
     menu_item(
       :navigations,
-      menus: [
-        menu_item(:overview, image: 'fa-th-large', href: forum_url(resource)),
-        menu_item(:new_discussion, image: 'fa-plus', href: new_forum_discussion_url(resource)),
-        activity_link,
-        statistics_link,
-        settings_link
-      ]
+      menus: lambda {
+        [
+          menu_item(:overview, image: 'fa-th-large', href: forum_url(resource)),
+          menu_item(:new_discussion, image: 'fa-plus', href: new_forum_discussion_url(resource)),
+          activity_link,
+          statistics_link,
+          settings_link
+        ]
+      }
     )
   end
 

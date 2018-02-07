@@ -8,12 +8,6 @@ class MenuItem
   attr_accessor :label, :image, :parent, :tag, :menus, :href,
                 :type, :description, :link_opts, :resource
 
-  def initialize(attributes = {})
-    super
-    menus&.compact!
-    menus&.each { |menu| menu.parent = self }
-  end
-
   def as_json(_opts = {})
     {}
   end
@@ -37,6 +31,6 @@ class MenuItem
   alias id iri
 
   def menu_sequence
-    @menu_sequence ||= RDF::Sequence.new(menus)
+    @menu_sequence ||= RDF::Sequence.new(menus&.call&.compact&.each { |menu| menu.parent = self })
   end
 end

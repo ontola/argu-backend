@@ -10,29 +10,30 @@ class PageMenuList < MenuList
 
   def navigations_menu
     forums = resource.forums.joins(:edge).where("edges.path ? #{Edge.path_array(user.profile.granted_edges)}")
-    section_items =
-      if forums.count == 1
-        forums.first.menu(user_context, :navigations).menus
-      else
-        forums.map { |child| navigation_item(child) }
-      end
     menu_item(
       :navigations,
-      menus: [
-        menu_item(
-          :settings,
-          image: 'fa-gear',
-          href: settings_page_url(resource),
-          policy: :update?
-        ),
-        *custom_menu_items(:navigations, resource),
-        menu_item(
-          :forums,
-          label: forums.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
-          type: NS::ARGU[:MenuSection],
-          menus: section_items
-        )
-      ]
+      menus: lambda {
+        [
+          menu_item(
+            :settings,
+            image: 'fa-gear',
+            href: settings_page_url(resource),
+            policy: :update?
+          ),
+          *custom_menu_items(:navigations, resource),
+          menu_item(
+            :forums,
+            label: forums.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
+            type: NS::ARGU[:MenuSection],
+            menus:
+              if forums.count == 1
+                forums.first.menu(user_context, :navigations).menus
+              else
+                -> { forums.map { |child| navigation_item(child) } }
+              end
+          )
+        ]
+      }
     )
   end
 

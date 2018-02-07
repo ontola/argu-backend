@@ -14,7 +14,7 @@ class ArgumentMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [activity_link, edit_link, trash_and_destroy_links, contact_link]
+      menus: -> { [activity_link, edit_link, *trash_and_destroy_links, contact_link] }
     )
   end
 

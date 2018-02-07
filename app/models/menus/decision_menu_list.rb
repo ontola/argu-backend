@@ -13,7 +13,7 @@ class DecisionMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [edit_link]
+      menus: -> { [edit_link] }
     )
   end
 end

@@ -14,16 +14,18 @@ class MotionMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [
-        decisions_link,
-        comments_link,
-        activity_link,
-        new_update_link,
-        edit_link,
-        statistics_link,
-        trash_and_destroy_links,
-        contact_link
-      ]
+      menus: lambda {
+        [
+          decisions_link,
+          comments_link,
+          activity_link,
+          new_update_link,
+          edit_link,
+          statistics_link,
+          *trash_and_destroy_links,
+          contact_link
+        ]
+      }
     )
   end
 

@@ -15,7 +15,7 @@ module DropdownHelper
            else
              resource.menu(user_context, menu_tag)
            end
-    link_items = menu.menus.map do |menu_item|
+    link_items = menu.menus.call.compact.map do |menu_item|
       item(
         menu_item.type || 'link',
         menu_item.label,

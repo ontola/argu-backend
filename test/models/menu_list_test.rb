@@ -26,33 +26,23 @@ class MenuListTest < ActiveSupport::TestCase
   end
 
   test 'Menu for administrator should include update' do
-    assert freetown.menu(administrator_context, :actions).menus.map(&:tag).include?(:settings)
+    assert freetown.menu(administrator_context, :actions).menus.call.compact.map(&:tag).include?(:settings)
   end
 
   test 'Menu for user should not include update' do
-    assert_not freetown.menu(user_context, :actions).menus.map(&:tag).include?(:settings)
+    assert_not freetown.menu(user_context, :actions).menus.call.compact.map(&:tag).include?(:settings)
   end
 
   test 'Page menu for administrator should include hidden forum' do
-    assert freetown
-             .page
-             .menu(administrator_context, :navigations)
-             .menus
-             .find { |f| f.tag == :forums }
-             .menus
-             .map(&:tag)
-             .include?(:second)
+    forums =
+      freetown.page.menu(administrator_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
+    assert forums.menus.call.compact.map(&:tag).include?(:second)
   end
 
   test 'Page menu for user should not include hidden forum' do
-    assert_not freetown
-                 .page
-                 .menu(user_context, :navigations)
-                 .menus
-                 .find { |f| f.tag == :forums }
-                 .menus
-                 .map(&:tag)
-                 .include?(:second)
+    forums =
+      freetown.page.menu(user_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
+    assert_not forums.menus.call.compact.map(&:tag).include?(:second)
   end
 
   test 'Include custom menu items' do
@@ -62,6 +52,8 @@ class MenuListTest < ActiveSupport::TestCase
         .page
         .menu(user_context, :navigations)
         .menus
+        .call
+        .compact
         .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
         .label
     )
@@ -72,6 +64,8 @@ class MenuListTest < ActiveSupport::TestCase
       create(:page)
         .menu(user_context, :navigations)
         .menus
+        .call
+        .compact
         .find { |f| f.tag == "custom_#{custom_menu_item.id}" }
     )
   end

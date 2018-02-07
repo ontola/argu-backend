@@ -11,14 +11,16 @@ class ApplicationMenuList < MenuList
       label: I18n.t('about.info'),
       image: 'fa-info',
       link_opts: {triggerClass: 'navbar-item', defaultAction: i_about_url},
-      menus: [
-        menu_item(:about, label: I18n.t('about.about'), href: i_about_url),
-        menu_item(:team, label: I18n.t('about.team'), href: info_url(:team)),
-        menu_item(:governments, label: I18n.t('about.governments'), href: info_url(:governments)),
-        menu_item(:press_media, label: I18n.t('press_media'), href: 'https://argu.pr.co'),
-        menu_item(:support, label: I18n.t('help_support'), href: 'https://argu.freshdesk.com/support/home'),
-        menu_item(:contact, label: I18n.t('about.contact'), href: info_url(:contact))
-      ],
+      menus: lambda {
+        [
+          menu_item(:about, label: I18n.t('about.about'), href: i_about_url),
+          menu_item(:team, label: I18n.t('about.team'), href: info_url(:team)),
+          menu_item(:governments, label: I18n.t('about.governments'), href: info_url(:governments)),
+          menu_item(:press_media, label: I18n.t('press_media'), href: 'https://argu.pr.co'),
+          menu_item(:support, label: I18n.t('help_support'), href: 'https://argu.freshdesk.com/support/home'),
+          menu_item(:contact, label: I18n.t('about.contact'), href: info_url(:contact))
+        ]
+      },
       type: NS::ARGU[:MenuItem]
     )
   end
@@ -33,7 +35,7 @@ class ApplicationMenuList < MenuList
       label: resource.display_name,
       image: resource.profile.default_profile_photo.thumbnail,
       link_opts: {triggerClass: 'navbar-item', defaultAction: user_url(user)},
-      menus: user_links,
+      menus: -> { user_links },
       type: NS::ARGU[:MenuItem]
     )
   end
@@ -50,7 +52,7 @@ class ApplicationMenuList < MenuList
   end
 
   def organizations_menu
-    menu_item(:organizations, image: 'fa-comments', menus: page_links.append(discover_link))
+    menu_item(:organizations, image: 'fa-comments', menus: -> { page_links.append(discover_link) })
   end
 
   def page_links

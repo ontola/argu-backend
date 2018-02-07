@@ -14,16 +14,18 @@ class QuestionMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [
-        couple_motion_link,
-        comments_link,
-        activity_link,
-        new_update_link,
-        edit_link,
-        statistics_link,
-        trash_and_destroy_links,
-        contact_link
-      ]
+      menus: lambda {
+        [
+          couple_motion_link,
+          comments_link,
+          activity_link,
+          new_update_link,
+          edit_link,
+          statistics_link,
+          *trash_and_destroy_links,
+          contact_link
+        ]
+      }
     )
   end
 

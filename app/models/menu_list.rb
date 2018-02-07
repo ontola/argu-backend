@@ -55,7 +55,6 @@ class MenuList
     options[:label] ||= I18n.t("menus.#{resource&.class_name}.#{tag}",
                                options[:label_params]
                                  .merge(default: ["menus.default.#{tag}".to_sym, tag.to_s.capitalize]))
-    options[:menus]&.flatten!
     options.except!(:policy_resource, :policy, :policy_arguments, :label_params)
     MenuItem.new(resource: resource, tag: tag, parent: self, **options)
   end

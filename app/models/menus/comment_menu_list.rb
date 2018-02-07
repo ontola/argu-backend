@@ -13,7 +13,7 @@ class CommentMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: [edit_link, trash_and_destroy_links]
+      menus: -> { [edit_link, *trash_and_destroy_links] }
     )
   end
 
