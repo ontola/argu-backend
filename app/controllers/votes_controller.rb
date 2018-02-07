@@ -134,7 +134,7 @@ class VotesController < EdgeableController
   def redirect_url
     expand_uri_template(
       :new_vote,
-      voteable_path: url_for([parent_resource!.voteable, only_path: true]).split('/').select(&:present?),
+      voteable_path: parent_resource!.iri(only_path: true).to_s.split('/').select(&:present?),
       confirm: true,
       r: params[:r],
       'vote%5Bfor%5D' => for_param,
