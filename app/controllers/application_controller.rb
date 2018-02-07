@@ -42,6 +42,20 @@ class ApplicationController < ActionController::Base
   layout :set_layout
   serialization_scope :user_context
 
+  class_attribute :inc_nested_collection
+  self.inc_nested_collection = [
+    member_sequence: :members,
+    operation: :target,
+    view_sequence: [
+      members:
+        [
+          member_sequence: :members,
+          operation: :target,
+          view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
+        ].freeze
+    ].freeze
+  ].freeze
+
   # The params, deserialized when format is json_api and method is not GET
   # @return [Hash] The params
   # @example Resource params from json_api request
@@ -62,23 +76,6 @@ class ApplicationController < ActionController::Base
           ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
       )
     )
-  end
-
-  protected
-
-  def inc_nested_collection
-    @inc_nested_collection ||= [
-      member_sequence: :members,
-      operation: :target,
-      view_sequence: [
-        members:
-          [
-            member_sequence: :members,
-            operation: :target,
-            view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
-          ].freeze
-      ].freeze
-    ].freeze
   end
 
   private

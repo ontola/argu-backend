@@ -4,6 +4,18 @@ class PagesController < EdgeableController
   skip_before_action :authorize_action, only: %i[settings index]
   skip_before_action :check_if_registered, only: :index
 
+  self.inc_nested_collection = [
+    :create_action,
+    member_sequence: [members: :profile_photo],
+    view_sequence: [
+      members: [
+        :create_action,
+        member_sequence: [members: :profile_photo],
+        views: [:create_action, member_sequence: [members: :profile_photo]].freeze
+      ].freeze
+    ].freeze
+  ].freeze
+
   def show
     @forums = policy_scope(authenticated_resource.forums)
                 .includes(:shortname, :default_cover_photo, :default_profile_photo, :edge)
@@ -64,20 +76,6 @@ class PagesController < EdgeableController
   def tree_root_id
     return super unless %w[create new index].include?(action_name)
     GrantTree::ANY_ROOT
-  end
-
-  def inc_nested_collection
-    @inc_nested_collection = [
-      :create_action,
-      member_sequence: [members: :profile_photo],
-      view_sequence: [
-        members: [
-          :create_action,
-          member_sequence: [members: :profile_photo],
-          views: [:create_action, member_sequence: [members: :profile_photo]].freeze
-        ].freeze
-      ].freeze
-    ].freeze
   end
 
   def resource_by_id
