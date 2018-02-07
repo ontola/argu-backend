@@ -256,6 +256,7 @@ module Edgeable
             edge: [:default_vote_event, parent: :owner]
           }
           options[:includes][:default_cover_photo] = {} if klass.reflect_on_association(:default_cover_photo)
+          options[:collection_class] = EdgeableCollection
         end
         super
       end

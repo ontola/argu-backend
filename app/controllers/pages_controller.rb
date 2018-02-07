@@ -122,7 +122,7 @@ class PagesController < EdgeableController
   end
 
   def index_response_association
-    Collection.new(
+    EdgeableCollection.new(
       association_class: Page,
       user_context: user_context,
       association_scope: :open,
