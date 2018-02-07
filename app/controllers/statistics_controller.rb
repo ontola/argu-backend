@@ -50,4 +50,8 @@ class StatisticsController < ParentableController
   end
 
   def resource_by_id_parent; end
+
+  def parent_resource
+    @parent_resource ||= super&.owner
+  end
 end

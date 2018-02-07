@@ -6,6 +6,8 @@
 # Subclassed models are assumed to have `Parentable` included.
 class ParentableController < AuthorizedController
   include NestedResourceHelper
+  include UriTemplateHelper
+  prepend_before_action :redirect_edge_parent_requests, only: :index
   helper_method :parent_resource
 
   private
@@ -32,9 +34,17 @@ class ParentableController < AuthorizedController
   end
 
   def parent_resource
-    return @parent_resource if @parent_resource.present?
-    @parent_resource = super || resource_by_id_parent
-    @parent_resource = @parent_resource.is_a?(Edge) ? @parent_resource.owner : @parent_resource
+    @parent_resource ||= super || resource_by_id_parent
+  end
+
+  def redirect_edge_parent_requests
+    return unless parent_resource.is_a?(Edge)
+    path = expand_uri_template(
+      "#{controller_name}_collection_iri",
+      parent_iri: parent_resource.owner.iri(only_path: true),
+      only_path: true
+    )
+    redirect_to request.original_url.gsub(URI(request.original_url).path, path)
   end
 
   def resource_by_id_parent
