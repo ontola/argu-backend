@@ -249,11 +249,13 @@ module Edgeable
       end
 
       def with_collection(name, options = {})
-        if (options[:association_class] || name.to_s.classify.constantize) < Edgeable::Base
+        klass = options[:association_class] || name.to_s.classify.constantize
+        if klass < Edgeable::Base
           options[:includes] ||= {
-            creator: :profileable,
+            creator: {profileable: :shortname},
             edge: [:default_vote_event, parent: :owner]
           }
+          options[:includes][:default_cover_photo] = {} if klass.reflect_on_association(:default_cover_photo)
         end
         super
       end
