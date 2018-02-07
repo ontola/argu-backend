@@ -26,8 +26,8 @@ module Widgetable
         .motions
         .create(
           resource_iri: expand_uri_template(
-            'motions_collection_canonical',
-            parent_iri: edge.iri(only_path: true),
+            'motions_collection_iri',
+            parent_iri: iri(only_path: true),
             type: :paginated
           ),
           label: 'motions.plural',
@@ -42,8 +42,8 @@ module Widgetable
         .questions
         .create(
           resource_iri: expand_uri_template(
-            'questions_collection_canonical',
-            parent_iri: edge.iri(only_path: true),
+            'questions_collection_iri',
+            parent_iri: iri(only_path: true),
             type: :paginated
           ),
           label: 'questions.plural',
