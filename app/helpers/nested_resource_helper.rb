@@ -32,6 +32,8 @@ module NestedResourceHelper
   def parent_from_params(opts = params)
     if parent_resource_class(opts).try(:shortnameable?)
       parent_resource_class(opts)&.find_via_shortname_or_id(parent_id_from_params(opts))
+    elsif parent_resource_class(opts) == Edge && uuid?(parent_id_from_params(opts))
+      Edge.find_by(uuid: parent_id_from_params(opts))
     else
       parent_resource_class(opts)&.find_by(id: parent_id_from_params(opts))
     end
