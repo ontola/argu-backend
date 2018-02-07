@@ -54,7 +54,8 @@ class Edge < ApplicationRecord
   has_one :default_vote_event_edge,
           -> { where(owner_type: 'VoteEvent') },
           foreign_key: :parent_id,
-          class_name: 'Edge'
+          class_name: 'Edge',
+          inverse_of: :parent
   has_one :default_vote_event,
           through: :default_vote_event_edge,
           source: :owner,
