@@ -62,6 +62,10 @@ module ApplicationHelper
     super
   end
 
+  def uuid?(string)
+    string.match?(/\A[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}\z/i)
+  end
+
   def user_identity_token(user)
     sign_payload(user: user.id,
                  exp: 2.days.from_now.to_i,
