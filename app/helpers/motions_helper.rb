@@ -63,7 +63,7 @@ module MotionsHelper
         displayName: argument.display_name,
         key: argument.identifier,
         side: argument.key.to_s,
-        url: argument.canonical_iri
+        url: argument.iri
       }
     end
   end
