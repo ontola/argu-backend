@@ -5,38 +5,17 @@ class GrantTree
     include ActiveModel::Model
     include Iriable
 
-    attr_accessor :edge, :id, :expired, :trashed, :unpublished, :children, :grant_tree, :permitted_actions, :grant_sets
-    alias expired? expired
-    alias trashed? trashed
-    alias unpublished? unpublished
+    attr_accessor :edge, :id, :children, :grant_tree, :parent, :permitted_actions, :grant_sets
     alias read_attribute_for_serialization send
 
     def initialize(edge, parent, grant_tree)
       self.edge = edge
+      self.parent = parent
       self.id = edge.id
-      self.expired = parent&.expired || edge.expires_at && edge.expires_at < Time.current
-      self.expired = edge.owner.starts_at > Time.current if !expired && edge.owner_type == 'VoteEvent'
-      self.trashed = parent&.trashed || edge.is_trashed?
-      self.unpublished = parent&.unpublished || !edge.is_published
       self.grant_tree = grant_tree
       self.permitted_actions = parent.present? ? parent.permitted_actions.deep_dup : {}
       self.grant_sets = parent.present? ? parent.grant_sets.deep_dup : {}
-      grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
-        permitted_actions[grant_reset.resource_type][grant_reset.action] = {}
-      end
-      grant_tree
-        .grants_in_scope
-        .select { |grant| grant.edge.path == edge.path }
-        .each do |grant|
-          grant_sets[grant.group_id] ||= []
-          grant_sets[grant.group_id] << grant.grant_set.title
-          grant.permitted_actions.each do |permission|
-            permitted_actions[permission.resource_type] ||= {}
-            permitted_actions[permission.resource_type][permission.action] ||= {}
-            permitted_actions[permission.resource_type][permission.action][permission.parent_type] ||= []
-            permitted_actions[permission.resource_type][permission.action][permission.parent_type] << grant.group_id
-          end
-        end
+      calculate_permitted_actions(grant_tree)
       grant_tree.cached_nodes[id] = self
     end
 
@@ -46,6 +25,13 @@ class GrantTree
     def add_child(edge)
       raise 'Inconsistent node' unless edge.parent_id == id
       Node.new(edge, self, grant_tree)
+    end
+
+    def expired?
+      @expired ||=
+        parent&.expired? ||
+        edge.expires_at && edge.expires_at < Time.current ||
+        (edge.owner_type == 'VoteEvent' && edge.owner.starts_at > Time.current)
     end
 
     def granted_group_ids(action: nil, resource_type: nil, parent_type: nil)
@@ -67,6 +53,35 @@ class GrantTree
         .dig(resource_type.to_s, action.to_s)
         &.select { |_parent_type, ids| ids.include?(group_id) }
         &.keys || []
+    end
+
+    def trashed?
+      @trashed ||= parent&.trashed? || edge.is_trashed?
+    end
+
+    def unpublished?
+      @unpublished ||= parent&.unpublished? || !edge.is_published
+    end
+
+    private
+
+    def calculate_permitted_actions(grant_tree)
+      grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
+        permitted_actions[grant_reset.resource_type][grant_reset.action] = {}
+      end
+      grant_tree
+        .grants_in_scope
+        .select { |grant| grant.edge.path == edge.path }
+        .each do |grant|
+        grant_sets[grant.group_id] ||= []
+        grant_sets[grant.group_id] << grant.grant_set.title
+        grant.permitted_actions.each do |permission|
+          permitted_actions[permission.resource_type] ||= {}
+          permitted_actions[permission.resource_type][permission.action] ||= {}
+          permitted_actions[permission.resource_type][permission.action][permission.parent_type] ||= []
+          permitted_actions[permission.resource_type][permission.action][permission.parent_type] << grant.group_id
+        end
+      end
     end
   end
 end

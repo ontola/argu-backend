@@ -66,10 +66,7 @@ class EdgeablePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    if (moderator? || administrator? || staff?) && record.is_publishable? && !record.is_a?(Decision) &&
-        (!record.is_published? || record.argu_publication&.reactions?)
-      attributes.append(:mark_as_important)
-    end
+    attributes.append(:mark_as_important) if mark_as_important?
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
     attributes
   end
@@ -165,6 +162,13 @@ class EdgeablePolicy < RestrictivePolicy
   def is_creator?
     return if record.creator.blank?
     record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
+  end
+
+  def mark_as_important?
+    (moderator? || administrator? || staff?) &&
+      record.is_publishable? &&
+      !record.is_a?(Decision) &&
+      (!record.is_published? || record.argu_publication&.reactions?)
   end
 
   def parent_policy(type = nil)

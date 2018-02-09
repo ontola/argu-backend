@@ -15,11 +15,7 @@ class EdgePolicy < EdgeablePolicy
     if %w[Motion Question].include?(record.owner_type) && (moderator? || administrator? || staff?)
       attributes.concat %i[id expires_at]
     end
-    if record.owner.is_publishable?
-      argu_publication_attributes = %i[id draft]
-      argu_publication_attributes.append(:published_at) if moderator? || administrator? || staff?
-      attributes.append(argu_publication_attributes: argu_publication_attributes)
-    end
+    attributes.append(argu_publication_attributes: argu_publication_attributes) if record.owner.is_publishable?
     attributes.append(placements_attributes: %i[id lat lon placement_type zoom_level _destroy])
     attributes
   end
@@ -32,5 +28,11 @@ class EdgePolicy < EdgeablePolicy
 
   def edge
     record
+  end
+
+  def argu_publication_attributes
+    argu_publication_attributes = %i[id draft]
+    argu_publication_attributes.append(:published_at) if moderator? || administrator? || staff?
+    argu_publication_attributes
   end
 end

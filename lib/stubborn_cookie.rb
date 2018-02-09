@@ -23,11 +23,9 @@ module StubbornCookie
 
   def permeate_key(key, value = nil)
     if value.present? # && cookies.permanent[key].blank?
-      if cookies.permanent[key].present?
-        if value.is_a?(Hash)
-          json = JSON.parse(cookies.permanent[key])
-          value.merge!(json) if json.present?
-        end
+      if cookies.permanent[key].present? && value.is_a?(Hash)
+        json = JSON.parse(cookies.permanent[key])
+        value.merge!(json) if json.present?
       end
       cookies.permanent[key] = value.is_a?(Hash) ? value.to_json : value.to_s
     end

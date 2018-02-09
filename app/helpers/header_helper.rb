@@ -9,6 +9,23 @@ module HeaderHelper
   end
 
   def profile_dropdown_items
+    {
+      defaultAction: dual_profile_url(current_profile),
+      trigger: {
+        type: 'current_user',
+        title: truncate(current_profile.display_name, length: 20),
+        profile_photo: {
+          url: current_profile.default_profile_photo.url(:icon),
+          className: 'profile-picture--navbar'
+        },
+        triggerClass: 'navbar-item navbar-profile'
+      },
+      dropdownClass: 'navbar-profile-selector',
+      sections: profile_dropdown_sections
+    }
+  end
+
+  def profile_dropdown_sections
     items =
       if current_user.url.present?
         [
@@ -34,21 +51,7 @@ module HeaderHelper
                        destroy_user_session_url,
                        fa: 'sign-out',
                        data: {method: 'delete', turbolinks: 'false'})
-
-    {
-      defaultAction: dual_profile_url(current_profile),
-      trigger: {
-        type: 'current_user',
-        title: truncate(current_profile.display_name, length: 20),
-        profile_photo: {
-          url: current_profile.default_profile_photo.url(:icon),
-          className: 'profile-picture--navbar'
-        },
-        triggerClass: 'navbar-item navbar-profile'
-      },
-      dropdownClass: 'navbar-profile-selector',
-      sections: [{items: items}]
-    }
+    [{items: items}]
   end
 
   def notification_dropdown_items
