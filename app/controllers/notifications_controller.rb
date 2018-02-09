@@ -132,20 +132,18 @@ class NotificationsController < AuthorizedController
     m
   end
 
+  def new_available?(since)
+    return true if since.blank?
+    policy_scope(Notification).where('created_at > ?', since).count.positive?
+  end
+
   def permit_params
     params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
   end
 
   def refresh
     since = Time.parse(last_notification).utc.to_s(:db) if last_notification
-    new_available = true
-    if since.present?
-      new_available = policy_scope(Notification)
-                        .where('created_at > ?', since)
-                        .count
-                        .positive?
-    end
-    @notifications = get_notifications(since) if new_available
+    @notifications = get_notifications(since) if new_available?(since)
     if @notifications.present?
       @unread = unread_notification_count
       render

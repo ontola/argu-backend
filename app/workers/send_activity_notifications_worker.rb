@@ -10,10 +10,7 @@ class SendActivityNotificationsWorker
   def perform(user_id, delivery_type)
     @user = User.find(user_id)
 
-    unless delivery_type.present? && User.reactions_emails[@user.reactions_email] == delivery_type
-      logger.warn "Not sending notifications to mismatched delivery type #{delivery_type} for user #{@user.id}"
-      return
-    end
+    return if wrong_delivery_type?(delivery_type)
 
     ActiveRecord::Base.transaction do
       begin
@@ -107,5 +104,11 @@ class SendActivityNotificationsWorker
         follows: prepared_notifications
       )
     @user.update_column(:notifications_viewed_at, Time.current)
+  end
+
+  def wrong_delivery_type?(delivery_type)
+    return false if delivery_type.present? && User.reactions_emails[@user.reactions_email] == delivery_type
+    logger.warn "Not sending notifications to mismatched delivery type #{delivery_type} for user #{@user.id}"
+    true
   end
 end

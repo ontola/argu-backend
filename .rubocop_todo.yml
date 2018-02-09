@@ -85,8 +85,11 @@ Metrics/MethodLength:
     - 'test/integration/decisions_test.rb'
 
 # Offense count: 19
+# defaultMax: 7
 Metrics/PerceivedComplexity:
-  Max: 10
+  Max: 8
+  Exclude:
+    - 'lib/argu/test_helpers/test_helper_methods.rb'
 
 # Offense count: 7
 Rails/OutputSafety:

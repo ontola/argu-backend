@@ -19,27 +19,39 @@ module VotesHelper
       'voted-on': vote.present?
     }
     if policy(model).create_child?(:votes)
-      url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :votes], for: :pro)
-      data[:remote] = true
-      if vote.present?
-        data[:method] = :delete
-        data[:title] = t('tooltips.argument.vote_up_undo')
-      else
-        data[:method] = :post
-        data[:title] = t('tooltips.argument.vote_up')
-      end
-      link_to url, rel: :nofollow, class: classes, data: data do
+      toggle_vote_link_enabled(model, vote, classes, data) do
         yield
       end
     else
-      data[:title] = if policy(vote || Vote.new(edge: Edge.new(parent: model.edge))).has_expired_ancestors?
-                       t('votes.disabled.expired')
-                     else
-                       t('votes.disabled.unauthorized')
-                     end
-      content_tag(:span, class: classes, data: data) do
+      toggle_vote_link_disabled(model, vote, classes, data) do
         yield
       end
+    end
+  end
+
+  def toggle_vote_link_disabled(model, vote, classes, data)
+    data[:title] = if policy(vote || Vote.new(edge: Edge.new(parent: model.edge))).has_expired_ancestors?
+                     t('votes.disabled.expired')
+                   else
+                     t('votes.disabled.unauthorized')
+                   end
+    content_tag(:span, class: classes, data: data) do
+      yield
+    end
+  end
+
+  def toggle_vote_link_enabled(model, vote, classes, data)
+    url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :votes], for: :pro)
+    data[:remote] = true
+    if vote.present?
+      data[:method] = :delete
+      data[:title] = t('tooltips.argument.vote_up_undo')
+    else
+      data[:method] = :post
+      data[:title] = t('tooltips.argument.vote_up')
+    end
+    link_to url, rel: :nofollow, class: classes, data: data do
+      yield
     end
   end
 

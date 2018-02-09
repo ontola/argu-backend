@@ -153,20 +153,24 @@ class Edge < ApplicationRecord
   #         the system will use transient resources.
   # @return [ActiveRecord::Relation, RedisResource::Relation]
   def self.where_owner(type, where_clause = {})
-    if (where_clause[:creator].present? && !where_clause[:creator].confirmed?) ||
-        (where_clause[:publisher].present? && !where_clause[:publisher].confirmed?)
+    if (where_clause[:creator] && !where_clause[:creator].confirmed?) ||
+        (where_clause[:publisher] && !where_clause[:publisher].confirmed?)
       RedisResource::EdgeRelation.where(where_clause.merge(owner_type: type))
     else
       where_clause[:creator_id] ||= where_clause.delete(:creator).id if where_clause[:creator].present?
       where_clause[:publisher_id] ||= where_clause.delete(:publisher).id if where_clause[:publisher].present?
-      table = ActiveRecord::Base.connection.quote_string(type.tableize)
-      join_cond = [
-        "INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = ?",
-        type
-      ]
-      scope = joins(sanitize_sql_for_conditions(join_cond))
-      where_clause.present? ? scope.where(type.tableize => where_clause) : scope
+      where_owner_scope(type, where_clause)
     end
+  end
+
+  def self.where_owner_scope(type, where_clause)
+    table = ActiveRecord::Base.connection.quote_string(type.tableize)
+    join_cond = [
+      "INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = ?",
+      type
+    ]
+    scope = joins(sanitize_sql_for_conditions(join_cond))
+    where_clause.present? ? scope.where(type.tableize => where_clause) : scope
   end
 
   def children_count(association)
