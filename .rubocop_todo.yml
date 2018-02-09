@@ -140,15 +140,6 @@ Style/GlobalVars:
 Naming/PredicateName:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'app/controllers/users/sessions_controller.rb'
-    - 'app/models/concerns/has_links.rb'
-
 # Offense count: 3
 Style/StructInheritance:
   Exclude:

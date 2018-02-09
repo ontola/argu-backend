@@ -52,7 +52,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # TODO: Code the 307 away
   def is_post?(r)
-    r.match(/\/v(\?|\/)|\/c(\?|\/)/)
+    r.match(%r{\/v(\?|\/)|\/c(\?|\/)})
   end
 
   def freshdesk_redirect_url
