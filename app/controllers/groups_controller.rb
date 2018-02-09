@@ -4,9 +4,9 @@ class GroupsController < ServiceController
   def settings
     if tab! == 'members'
       @members = resource
-                 .group_memberships
-                 .includes(member: {profileable: :shortname})
-                 .page(params[:page])
+                   .group_memberships
+                   .includes(member: {profileable: :shortname})
+                   .page(params[:page])
     end
     render locals: {
       tab: tab!,

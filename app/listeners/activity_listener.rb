@@ -90,11 +90,12 @@ class ActivityListener
 
   # Deletes all other activities created within 6 hours of the new activity.
   def destroy_recent_similar_activities(resource, recipient, action)
-    ids = Activity.where('created_at >= :date', date: 6.hours.ago)
-                  .where(recipient_id: recipient.id,
-                         owner_id: @creator.id,
-                         key: "#{resource.model_name.singular}.#{action}")
-                  .pluck(:id)
+    ids = Activity
+            .where('created_at >= :date', date: 6.hours.ago)
+            .where(recipient_id: recipient.id,
+                   owner_id: @creator.id,
+                   key: "#{resource.model_name.singular}.#{action}")
+            .pluck(:id)
     Notification.where(activity_id: ids).destroy_all
     Activity.destroy ids
   end

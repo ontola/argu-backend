@@ -17,8 +17,8 @@ class ProjectsController < EdgeableController
 
     if policy(authenticated_resource!).show?
       @items = (questions + motions)
-               .sort_by(&:updated_at)
-               .reverse
+                 .sort_by(&:updated_at)
+                 .reverse
     end
 
     respond_to do |format|

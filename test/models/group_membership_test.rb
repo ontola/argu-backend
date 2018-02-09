@@ -88,12 +88,12 @@ class GroupMembershipTest < ActiveSupport::TestCase
 
   def create_group_membership(member: user.profile, group: custom_group, start_date: Time.current, end_date: nil)
     gm = GroupMembership
-      .create(
-        group_id: group.id,
-        member_id: member.id,
-        start_date: start_date,
-        end_date: end_date
-      )
+           .create(
+             group_id: group.id,
+             member_id: member.id,
+             start_date: start_date,
+             end_date: end_date
+           )
     @errors = gm.errors.full_messages
     gm.valid?
   end

@@ -13,9 +13,9 @@ module Argu
       def populated_forum
         3.times do
           service = CreateMotion
-                    .new(@resource.edge,
-                         attributes: attributes_for(:motion),
-                         options: service_options)
+                      .new(@resource.edge,
+                           attributes: attributes_for(:motion),
+                           options: service_options)
           service.commit
           reset_publication(service.resource.publications.last)
           CreateArgument
@@ -34,9 +34,9 @@ module Argu
         end
         3.times do
           service = CreateQuestion
-                    .new(@resource.edge,
-                         attributes: attributes_for(:question),
-                         options: service_options)
+                      .new(@resource.edge,
+                           attributes: attributes_for(:question),
+                           options: service_options)
           service.commit
           reset_publication(service.resource.publications.last)
         end

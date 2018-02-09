@@ -53,11 +53,11 @@ class Activity < PublicActivity::Activity
 
   def self.feed(relevant_only)
     scope = Activity
-      .includes(:owner)
-      .joins(:trackable_edge)
-      .loggings
-      .where('trackable_type != ?', 'Banner')
-      .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
+              .includes(:owner)
+              .joins(:trackable_edge)
+              .loggings
+              .where('trackable_type != ?', 'Banner')
+              .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
     return scope unless relevant_only
     scope
       .where('key IN (?)', RELEVANT_KEYS)

@@ -10,8 +10,8 @@ module HasLinks
   # TODO: escape content=(text)
   def supped_content
     ERB::Util.html_escape(content) \
-             .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
-             .gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\1">\2</a>')
+      .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
+      .gsub(/\[([^\]]+)\]\(([^)]+)\)/, '<a href="\1">\2</a>')
   end
 
   def truncate_preview(length, opts = {})

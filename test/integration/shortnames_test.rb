@@ -141,13 +141,13 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     put shortname_path(subject, shortname_attributes)
     assert_response response
     ch_method.call subject
-      .updated_at
-      .utc
-      .iso8601(6),
+                     .updated_at
+                     .utc
+                     .iso8601(6),
                    assigns(:resource)
-      .updated_at
-      .utc
-      .iso8601(6)
+                     .updated_at
+                     .utc
+                     .iso8601(6)
   end
 
   def general_destroy(response = 302, difference = 0)

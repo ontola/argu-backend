@@ -10,11 +10,11 @@ class DraftsController < ApplicationController
     motions = Motion.where(creator_id: @user.managed_profile_ids).unpublished.untrashed
     questions = Question.where(creator_id: @user.managed_profile_ids).unpublished.untrashed
     @items = Kaminari
-             .paginate_array((blog_posts + motions + questions)
+               .paginate_array((blog_posts + motions + questions)
                                  .sort_by(&:updated_at)
                                  .reverse)
-             .page(show_params[:page])
-             .per(30)
+               .page(show_params[:page])
+               .per(30)
   end
 
   private

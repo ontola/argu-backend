@@ -51,10 +51,10 @@ class ShortnamesController < ParentableController
 
   def permit_params
     attrs = policy(resource_by_id || new_resource_from_params)
-                .permitted_attributes
+              .permitted_attributes
     p = params
-            .require(:shortname)
-            .permit(*attrs)
+          .require(:shortname)
+          .permit(*attrs)
     p['owner_type'] = nil unless SAFE_OWNER_TYPES.include?(p['owner_type'])
     p
   end

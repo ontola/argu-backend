@@ -33,12 +33,12 @@ class VoteEvent < Edgeable::Base
                .group(:for)
                .to_a
     totals_confirmed = Vote
-                        .joins(:edge, publisher: :email_addresses)
-                        .where('email_addresses.confirmed_at IS NOT NULL')
-                        .where(edges: {parent_id: edge.id})
-                        .select('votes.for, count(DISTINCT votes.id) as count')
-                        .group(:for)
-                        .to_a
+                         .joins(:edge, publisher: :email_addresses)
+                         .where('email_addresses.confirmed_at IS NOT NULL')
+                         .where(edges: {parent_id: edge.id})
+                         .select('votes.for, count(DISTINCT votes.id) as count')
+                         .group(:for)
+                         .to_a
     totals_facebook = Vote
                         .joins(:edge, publisher: :identities)
                         .where(identities: {provider: 'facebook'})

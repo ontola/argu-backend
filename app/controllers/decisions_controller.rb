@@ -60,9 +60,9 @@ class DecisionsController < EdgeableController
     decision = parent_resource!.decisions.unpublished.where(publisher: current_user).first
     if decision.nil?
       decision = parent_edge
-                     .children
-                     .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)))
-                     .owner
+                   .children
+                   .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)))
+                   .owner
       decision.build_happening(happened_at: Time.current) if decision.happening.blank?
       decision.edge.build_argu_publication
     end

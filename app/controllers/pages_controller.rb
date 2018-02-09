@@ -149,10 +149,10 @@ class PagesController < EdgeableController
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = params
-                      .require(:page)
-                      .permit(*policy(@page).permitted_attributes)
-                      .to_h
-                      .merge(owner: current_user.profile)
+                        .require(:page)
+                        .permit(*policy(@page).permitted_attributes)
+                        .to_h
+                        .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)
     @_permit_params[:last_accepted] = Time.current if permit_params[:last_accepted] == '1'
     @_permit_params

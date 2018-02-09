@@ -74,12 +74,12 @@ module Argu
         assert_response results[:response]
         if assigns(:update_service).try(:resource).present?
           ch_method.call record
-            .updated_at
-            .iso8601(6),
+                           .updated_at
+                           .iso8601(6),
                          assigns(:update_service)
-            .try(:resource)
-            .try(:updated_at)
-            .try(:iso8601, 6)
+                           .try(:resource)
+                           .try(:updated_at)
+                           .try(:iso8601, 6)
         elsif results[:should]
           assert false, "can't be changed"
         end

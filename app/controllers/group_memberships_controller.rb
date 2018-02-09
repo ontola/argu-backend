@@ -55,10 +55,10 @@ class GroupMembershipsController < ServiceController
     return @existing_record if @existing_record.present?
     return if authenticated_resource.valid?
     duplicate_values = authenticated_resource
-      .errors
-      .details
-      .select { |_key, errors| errors.select { |error| error[:error] == :taken }.any? }
-      .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
+                         .errors
+                         .details
+                         .select { |_key, errors| errors.select { |error| error[:error] == :taken }.any? }
+                         .map { |key, errors| [key, errors.find { |error| error[:error] == :taken }[:value]] }
     @existing_record = controller_class
                          .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
   end

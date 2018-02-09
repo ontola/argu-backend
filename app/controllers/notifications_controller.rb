@@ -60,9 +60,9 @@ class NotificationsController < AuthorizedController
     end
     @from_time = from_time
     @notifications = policy_scope(Notification)
-                     .order(created_at: :desc)
-                     .since(from_time)
-                     .page params[:page]
+                       .order(created_at: :desc)
+                       .since(from_time)
+                       .page params[:page]
     @unread = unread_notification_count
   rescue ArgumentError
     head 400
