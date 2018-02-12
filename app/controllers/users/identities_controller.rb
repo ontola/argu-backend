@@ -4,17 +4,6 @@ class Users::IdentitiesController < AuthorizedController
   include RedisResourcesHelper
   skip_before_action :check_if_registered, only: %i[connect connect!]
 
-  def destroy
-    respond_to do |format|
-      if authenticated_resource.destroy
-        flash[:success] = t('devise.authentications.destroyed')
-      else
-        flash[:error] = t('devise.authentications.destroyed_failed')
-      end
-      format.html { redirect_to settings_user_path }
-    end
-  end
-
   def connect
     user = User.find_via_shortname_or_id! params[:id]
 
@@ -61,6 +50,10 @@ class Users::IdentitiesController < AuthorizedController
   def connection_valid?(user)
     user.email_addresses.where(email: authenticated_resource.email).exists? &&
       user.valid_password?(params[:user][:password])
+  end
+
+  def redirect_model_success(_resource)
+    settings_user_path(tab: :authentication)
   end
 
   def resource_id

@@ -78,9 +78,9 @@ en:
       attributes:
         user:
           login: "email or username"
-    authentications:
-      destroyed: "Account unlinked"
-      destroyed_failed: "Account could not be unlinked."
+  identities:
+    type: "Account"
+    plural: "Accounts"
   intro:
     initial:
       headers:

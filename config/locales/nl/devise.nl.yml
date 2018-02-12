@@ -78,9 +78,9 @@ nl:
       attributes:
         user:
           login: "email of gebruikersnaam"
-    authentications:
-      destroyed: "Account ontkoppeld"
-      destroyed_failed: "Account kon not ontkoppeld worden"
+  identities:
+    type: "Koppeling"
+    plural: "Koppelingen"
   intro:
     initial:
       headers:
