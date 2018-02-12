@@ -69,6 +69,17 @@ class NotificationsControllerTest < ActionController::TestCase
     assert_equal 4, parsed_body['notifications']['notifications'].count
   end
 
+  test 'user with notifications should get index json_api' do
+    sign_in user
+    followed_content(user)
+
+    get :index, format: :json_api
+
+    assert_response 200
+    expect_included(user.notifications.map(&:iri))
+    expect_included(user.notifications.first.actions(:read).first.iri)
+  end
+
   private
 
   def followed_content(user)

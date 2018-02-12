@@ -76,6 +76,17 @@ class NotificationsController < AuthorizedController
       .page params[:page]
   end
 
+  def include_index
+    [
+      member_sequence: {members: [operation: :target]},
+      view_sequence: [
+        members: {
+          member_sequence: {members: [operation: :target]}
+        }
+      ]
+    ]
+  end
+
   def index_respond_success_html
     head 204
   end
