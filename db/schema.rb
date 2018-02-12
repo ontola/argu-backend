@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20180209124354) do
   enable_extension "hstore"
   enable_extension "ltree"
   enable_extension "uuid-ossp"
-  enable_extension "pgcrypto"
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "trackable_id"

@@ -1,7 +1,5 @@
 class AlterLinkedRecords < ActiveRecord::Migration[5.1]
   def change
-    enable_extension 'pgcrypto'
-
     LinkedRecord.destroy_all
 
     remove_column :linked_records, :page_id
