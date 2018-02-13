@@ -34,7 +34,7 @@ class UsersController < AuthorizedController
     if current_user.url.blank?
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
-      if current_user.save
+      if current_user.update_without_password(permit_params)
         redirect_to setup_profiles_path
       else
         render 'setup_shortname'
