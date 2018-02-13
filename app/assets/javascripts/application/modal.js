@@ -50,7 +50,13 @@ export const modal = {
 
         $('body').addClass('modal-opened');
 
-        if ($('.modal-container').length === 0) {
+        if (modal.isOpen()) {
+            previousUrl = document.getElementsByClassName('modal-container')[0].dataset.previousUrl;
+
+            $('.modal-container').replaceWith(content);
+
+            history.replaceState({modal: true}, null, href);
+        } else {
             if (typeof window !== 'undefined') {
                 previousUrl = window.location.href;
             }
@@ -62,14 +68,12 @@ export const modal = {
             document.body.style.top = -bodyScrollTop + 'px';
 
             history.pushState({ modal: true }, null, href);
-        } else {
-            previousUrl = document.getElementsByClassName('modal-container')[0].dataset.previousUrl;
-
-            $('.modal-container').replaceWith(content);
-
-            history.replaceState({ modal: true }, null, href);
         }
         document.getElementsByClassName('modal-container')[0].setAttribute('data-previous-url', previousUrl)
+    },
+
+    isOpen: function () {
+        return ($('.modal-container').length > 0);
     }
 };
 

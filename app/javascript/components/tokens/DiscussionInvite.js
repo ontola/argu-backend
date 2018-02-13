@@ -65,11 +65,19 @@ export const DiscussionInvite = React.createClass({
             .then(json)
             .then(() => {
                 new Alert(I18n.t('tokens.email.success'), 'success', true);
-                modal.close();
+                if (modal.isOpen()) {
+                    modal.close();
+                } else {
+                    window.location = this.props.resource;
+                }
             }).catch(e => {
                 if (e.status === 504) {
                     new Alert(I18n.t('tokens.email.processing'), 'success', true);
-                    modal.close();
+                    if (modal.isOpen()) {
+                        modal.close();
+                    } else {
+                        window.location = this.props.resource;
+                    }
                 } else {
                     const message = errorMessageForStatus(e.status).fallback || I18n.t('errors.general');
                     new Alert(message, 'alert', true);
