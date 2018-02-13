@@ -2,7 +2,7 @@
   legend
     span= t('tokens.email.title')
   p= t('tokens.email.description')
-  =react_component_store 'tokens/EmailTokenInvite', props: {createTokenUrl: '/tokens', groupId: resource.id, indexTokenUrl: '/tokens/email', managedProfiles: managed_profiles_list, message: t('tokens.email.default_message', group: resource.display_name), currentActor: current_user.canonical_iri}
+  =react_component_store 'tokens/EmailTokenInvite', props: {createTokenUrl: '/tokens', groupId: resource.id, indexTokenUrl: '/tokens/email', managedProfiles: managed_profiles_list, message: t('tokens.email.default_message', group: resource.display_name), currentActor: current_user.iri}
 .bearer-token-management
   legend
     span= t('tokens.bearer.title')
