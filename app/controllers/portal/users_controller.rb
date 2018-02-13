@@ -8,7 +8,7 @@ module Portal
     private
 
     def authenticated_resource
-      @authenticated_resource ||= User.find_via_shortname(params[:id])
+      @authenticated_resource ||= User.find_via_shortname_or_id(params[:id])
     end
 
     def execute_destroy
