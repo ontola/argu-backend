@@ -35,6 +35,7 @@ FactoryGirl.define do
     trait :no_shortname do
       after(:create) do |user|
         user.shortname.destroy
+        user.shortname = nil
       end
     end
 
