@@ -29,7 +29,7 @@ module Menus
     def follow_menu_item(type, follow, follow_type)
       if type == :never
         method = follow && 'DELETE'
-        href = follow && follow_path(follow)
+        href = follow && follow_url(follow)
       else
         method = 'POST'
         href = follows_url(gid: resource.edge.id, follow_type: type)

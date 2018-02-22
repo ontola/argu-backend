@@ -102,7 +102,7 @@ class ApplicationMenuList < MenuList
       if resource.page_management?
         menu_item(:pages, label: I18n.t('pages.management.title'), href: pages_user_url(resource), image: 'fa-building')
       else
-        menu_item(:create_page, label: I18n.t('pages.create'), href: new_page_path, image: 'fa-building')
+        menu_item(:create_page, label: I18n.t('pages.create'), href: new_page_url, image: 'fa-building')
       end
     if resource.forum_management?
       items <<
