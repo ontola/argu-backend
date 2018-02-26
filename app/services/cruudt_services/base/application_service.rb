@@ -37,15 +37,12 @@ class ApplicationService
     ActiveRecord::Base.transaction do
       @actions[service_action] = resource.public_send(service_method) if resource.errors.empty?
       after_save if @actions[service_action]
-
-      publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
-      publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
-      publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
-
+      publish_successful
       broadcast_event
     end
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::ActiveRecordError => e
+  rescue ActiveRecord::ActiveRecordError => e
     raise(e) if e.is_a?(ActiveRecord::StatementInvalid)
+    Bugsnag.notify(e) unless e.is_a?(ActiveRecord::RecordInvalid)
     publish("#{signal_base}_failed".to_sym, resource)
   end
 
@@ -90,6 +87,12 @@ class ApplicationService
     attrs.to_h.each_value do |hash|
       hash.merge!(creator: @options[:creator], publisher: @options[:publisher])
     end
+  end
+
+  def publish_successful
+    publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
+    publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
+    publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
   end
 
   # The action that called this service.
