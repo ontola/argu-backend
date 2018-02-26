@@ -45,6 +45,7 @@ class GroupMembershipsController < ServiceController
     if existing_record
       render json: resource.errors, status: 304, location: existing_record
     else
+      Bugsnag.notify(resource.errors.full_messages)
       respond_with_422(resource, :json)
     end
   end
