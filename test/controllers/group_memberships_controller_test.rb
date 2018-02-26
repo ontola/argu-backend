@@ -239,19 +239,18 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   test 'administrator should not post create for staff group' do
-    staff_group = Group.find(Group::STAFF_ID)
-    sign_in create_administrator(staff_group.page)
+    sign_in administator
     user
     assert_difference 'GroupMembership.count', 0 do
       post :create,
            params: {
-             group_id: staff_group,
+             group_id: Group::STAFF_ID,
              shortname: user.url,
              r: settings_forum_path(freetown.url, tab: :groups)
            }
     end
 
-    assert_redirected_to settings_forum_path(freetown.url, tab: :groups)
+    assert_not_authorized
     assert_analytics_not_collected
   end
 
