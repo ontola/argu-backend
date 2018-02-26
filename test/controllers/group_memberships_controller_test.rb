@@ -173,6 +173,16 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_redirected_to forum_url(freetown)
   end
 
+  test 'member should not post create as json' do
+    validate_valid_bearer_token
+    sign_in member
+
+    assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
+      post :create, format: :json, params: {group_id: group, token: '1234567890'}
+      assert_redirected_to group.group_memberships.first
+    end
+  end
+
   test 'member should delete destroy own membership' do
     sign_in member
 
