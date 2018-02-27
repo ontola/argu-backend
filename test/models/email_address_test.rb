@@ -4,6 +4,22 @@ require 'test_helper'
 
 class EmailAddressTest < ActiveSupport::TestCase
   let(:user) { create(:user) }
+  let(:email_address) { EmailAddress.new(user: user) }
+
+  test 'with subdomain' do
+    email_address.email = 'test@ex.ample.com'
+    assert email_address.valid?
+  end
+
+  test 'without second level domain' do
+    email_address.email = 'test@example'
+    assert_not email_address.valid?
+  end
+
+  test 'with special character' do
+    email_address.email = 'tëst@example.nl'
+    assert_not email_address.valid?
+  end
 
   test 'should not set secondary email to primary on creation' do
     new_email = user.email_addresses.new(email: 'test@example.com', primary: true)

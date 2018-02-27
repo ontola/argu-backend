@@ -43,6 +43,7 @@ export const OpinionSignUp = React.createClass({
             name="user[email]"
             className="form-input-content"
             onChange={this.props.onSignupEmailChange}
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             placeholder={I18n.t('opinions.form.email.placeholder')}
             type="email"
             value={this.props.signupEmail}/>;

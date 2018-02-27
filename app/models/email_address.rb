@@ -16,7 +16,7 @@ class EmailAddress < ApplicationRecord
   validate :dont_update_confirmed_email
   validates :email,
             allow_blank: false,
-            format: {with: RFC822::EMAIL}
+            format: {with: RegexHelper::EMAIL}
   validate :newly_secondary_email_not_primary, on: :create
   delegate :greeting, to: :user
 
