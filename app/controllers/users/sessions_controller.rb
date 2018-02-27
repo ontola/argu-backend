@@ -89,8 +89,9 @@ class Users::SessionsController < Devise::SessionsController
     respond_to do |format|
       format.all { head :no_content }
       format.any(*navigational_formats) do
-        if params[:r].present? && argu_iri_or_relative?(params[:r])
-          redirect_to URI.parse(params[:r]).path
+        r = params.dig(:user, :r) || params[:r]
+        if r.present? && argu_iri_or_relative?(r)
+          redirect_to URI.parse(r).path
         else
           redirect_back(fallback_location: root_path)
         end
