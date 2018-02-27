@@ -14,6 +14,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   let!(:freetown2_grant) { create(:grant, edge: freetown2.edge, group: forum_group) }
   let!(:page_grant) { create(:grant, edge: argu.edge, group: page_group) }
   let!(:member) { create(:group_membership, parent: group).member.profileable }
+  let(:single_forum_group_member) { create(:group_membership, parent: single_forum_group).member.profileable }
 
   ####################################
   # As User not accepted terms
@@ -85,6 +86,19 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_not_authorized
+  end
+
+  test 'user with group_memberships should not post create as json' do
+    validate_valid_bearer_token
+    sign_in user
+    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:id)
+    forum_edge_ids.each do |forum_edge_id|
+      Favorite.create!(user: user, edge_id: forum_edge_id)
+    end
+    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 0], ['Follow.count', 0]] do
+      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890'}
+    end
+    assert_response :created
   end
 
   test 'user should post create with valid token for single_forum_group' do
@@ -180,6 +194,20 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
       post :create, format: :json, params: {group_id: group, token: '1234567890'}
       assert_redirected_to group.group_memberships.first
+    end
+  end
+
+  test 'member with group_memberships should post create as json' do
+    validate_valid_bearer_token
+    sign_in single_forum_group_member
+    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:id)
+    forum_edge_ids.each do |forum_edge_id|
+      Favorite.create!(user: member, edge_id: forum_edge_id)
+    end
+
+    assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
+      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890'}
+      assert_redirected_to single_forum_group.group_memberships.first
     end
   end
 
