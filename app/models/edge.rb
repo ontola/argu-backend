@@ -251,6 +251,7 @@ class Edge < ApplicationRecord
       update!(is_published: true)
       increment_counter_caches unless is_trashed?
     end
+    true
   end
 
   def root
@@ -270,6 +271,7 @@ class Edge < ApplicationRecord
       owner.destroy_notifications if owner.is_loggable?
       decrement_counter_caches if is_published?
     end
+    true
   end
 
   def trashed_ancestors
@@ -284,6 +286,7 @@ class Edge < ApplicationRecord
       update!(trashed_at: nil)
       increment_counter_caches if is_published?
     end
+    true
   end
 
   def decrement_counter_caches

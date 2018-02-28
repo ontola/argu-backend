@@ -29,6 +29,14 @@ class MotionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: question.edge)
   end
+  let(:draft_motion) do
+    create(
+      :motion,
+      publisher: creator,
+      parent: question.edge,
+      edge_attributes: {argu_publication_attributes: {draft: true}}
+    )
+  end
   let(:motion_with_placement) do
     create(:motion,
            edge_attributes: {
@@ -217,5 +225,15 @@ class MotionsTest < ActionDispatch::IntegrationTest
       },
       differences: [['Motion', 0], ['Placement', -1], ['Place', 0], ['Activity.loggings', 1]]
     )
+  end
+
+  let(:staff) { create(:user, :staff) }
+
+  test 'staff should trash draft' do
+    sign_in staff
+    draft_motion
+    assert_differences([['Motion.count', 0], ['Motion.trashed.count', 1], ['Activity.count', 1]]) do
+      delete motion_path(draft_motion)
+    end
   end
 end
