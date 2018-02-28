@@ -43,13 +43,13 @@ module Argu
         if defined?(cookies) && defined?(cookies.encrypted)
           set_argu_client_token_cookie(t.token)
         else
-          allow_any_instance_of(Doorkeeper::OAuth::Token::Methods)
+          allow(Doorkeeper::OAuth::Token)
             .to receive(:cookie_token_extractor).and_return(t.token)
         end
       end
 
       def sign_out
-        allow_any_instance_of(Doorkeeper::OAuth::Token::Methods)
+        allow(Doorkeeper::OAuth::Token)
           .to receive(:cookie_token_extractor).and_return(nil)
       end
 

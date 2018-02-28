@@ -14,7 +14,7 @@ module Doorkeeper
 
   module OAuth
     class Token
-      module Methods
+      class << self
         def cookie_token_extractor(req)
           req.cookie_jar.encrypted['argu_client_token']
         end

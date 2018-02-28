@@ -2,7 +2,6 @@
 
 module OauthHelper
   include LanguageHelper
-  include Doorkeeper::OAuth::Token::Methods
   include Doorkeeper::Rails::Helpers
   include Doorkeeper::Helpers::Controller
 
@@ -53,7 +52,7 @@ module OauthHelper
   end
 
   def doorkeeper_oauth_header?
-    from_bearer_authorization(request)
+    Doorkeeper::OAuth::Token.from_bearer_authorization(request)
   end
 
   def set_argu_client_token_cookie(token, expires = nil)
