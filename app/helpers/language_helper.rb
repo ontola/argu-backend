@@ -32,6 +32,13 @@ module LanguageHelper
       .compatible_language_from(I18n.available_locales)
   end
 
+  def language_from_r
+    resource = resource_from_iri(params[:r]) if params[:r].present?
+    return if resource.nil? || !resource.is_a?(Edgeable::Base)
+    language = resource.parent_model(:forum).language
+    I18n.available_locales.include?(language) ? language : :en
+  end
+
   def language_select_items
     I18n.available_locales.collect do |language_code|
       [I18n.t(:language, locale: language_code), language_code]
@@ -48,6 +55,6 @@ module LanguageHelper
   end
 
   def set_guest_language
-    cookies['locale'] ||= language_from_edge_tree || language_from_header || I18n.locale.to_s
+    cookies['locale'] ||= language_from_edge_tree || language_from_r || language_from_header || I18n.locale.to_s
   end
 end
