@@ -22,6 +22,12 @@ module SPI
       assert_response 200
     end
 
+    test 'guest should show motion as canonical' do
+      get spi_authorize_path(resource_iri: motion.canonical_iri, authorize_action: 'show')
+
+      assert_response 200
+    end
+
     test 'guest should not show non-existing motion' do
       get spi_authorize_path(resource_type: 'Motion', resource_id: 'non-existing', authorize_action: 'show')
 
@@ -34,8 +40,26 @@ module SPI
       assert_response 404
     end
 
+    test 'guest should not show non-existing motion as canonical' do
+      get spi_authorize_path(resource_iri: edge_url('non-existing'), authorize_action: 'show')
+
+      assert_response 404
+    end
+
     test 'guest should not update motion' do
       get spi_authorize_path(resource_type: 'Motion', resource_id: motion.id, authorize_action: 'update')
+
+      assert_response 403
+    end
+
+    test 'guest should not update motion as iri' do
+      get spi_authorize_path(resource_iri: motion.iri, authorize_action: 'update')
+
+      assert_response 403
+    end
+
+    test 'guest should not update motion as canonical' do
+      get spi_authorize_path(resource_iri: motion.canonical_iri, authorize_action: 'update')
 
       assert_response 403
     end

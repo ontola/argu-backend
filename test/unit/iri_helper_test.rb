@@ -11,7 +11,7 @@ class IriHelperTest < ActiveSupport::TestCase
   end
 
   test 'should find forum by its cannonical iri' do
-    assert_equal resource_from_iri(argu_url("/edges/#{freetown.edge.id}")), freetown.edge
+    assert_equal resource_from_iri(argu_url("/edges/#{freetown.edge.uuid}")), freetown.edge
   end
 
   test 'should not find forum by non existing iri' do
