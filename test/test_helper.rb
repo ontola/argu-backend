@@ -135,6 +135,10 @@ module ActionDispatch
     include Argu::TestHelpers::TestMocks
     include SidekiqMinitestSupport
 
+    setup do
+      I18n.locale = :en
+    end
+
     def follow_redirect!
       raise "not a redirect! #{status} #{status_message}" unless redirect?
       get(response.location)
