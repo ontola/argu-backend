@@ -33,7 +33,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/m/#{motion.id}/cons", page: 1, type: 'paginated'))
@@ -47,7 +47,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
@@ -65,7 +65,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     get :index, params: linked_record.iri_opts.merge(format: :json_api)
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 1
@@ -80,7 +80,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     get :index, params: linked_record.iri_opts.merge(format: :json_api, page: 1)
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
@@ -97,7 +97,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
     get :index, params: non_persisted_linked_record.iri_opts.merge(format: :json_api)
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 1

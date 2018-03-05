@@ -1,28 +1,28 @@
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
-  - if authenticated_resource.is_a?(Page)
-    =render partial: 'profiles/show', locals: {resource: authenticated_resource.profile}
-  - elsif authenticated_resource.is_a?(Forum)
-    =render partial: 'forums/cover', locals: {resource: authenticated_resource}
-  - elsif authenticated_resource.present?
+  - if authenticated_resource.parent.is_a?(Page)
+    =render partial: 'profiles/show', locals: {resource: authenticated_resource.parent}
+  - elsif authenticated_resource.parent.is_a?(Forum)
+    =render partial: 'forums/cover', locals: {resource: authenticated_resource.parent}
+  - elsif authenticated_resource.parent.present?
     .col-1
-      =to_parent(authenticated_resource)
+      =to_parent(authenticated_resource.parent)
   .col-1
-    - if policy(authenticated_resource).log?
+    - if policy(authenticated_resource.parent).log?
       div.align-right
         span.btn.btn-subtle[class="#{params[:complete] != 'true' ? 'btn--border' : ''}"]
-          =link_to url_for([authenticated_resource, :feed]) do
+          =link_to url_for([authenticated_resource.parent, :feed]) do
             span.fa.fa-bars
             span.icon-left
               =t('feed_filter.relevant')
         span.btn.btn-subtle[class="#{params[:complete] == 'true' ? 'btn--border' : ''}"]
-          =link_to url_for([authenticated_resource, :feed, complete: true]) do
+          =link_to url_for([authenticated_resource.parent, :feed, complete: true]) do
             span.fa.fa-align-justify
             span.icon-left
               =t('feed_filter.complete')
-        - if authenticated_resource&.is_loggable?
+        - if authenticated_resource.parent&.is_loggable?
             span.btn.btn-subtle
-              =link_to url_for([:log, edge_id: authenticated_edge.id]) do
+              =link_to url_for([:log, edge_id: authenticated_resource.parent.id]) do
                 span.fa.fa-history
                 span.icon-left
                   =t('log')
-    =render partial: 'activities/index', locals: {activities: @activities, complete_feed: complete_feed_param}
+    =render partial: 'activities/index', locals: {activities: activities, complete_feed: !relevant_only, feed_iri: url_for([authenticated_resource.parent, :feed, format: :js])}

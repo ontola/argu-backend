@@ -14,7 +14,7 @@ class QuestionsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: question.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
 
     expect_relationship('attachmentCollection', 1)
@@ -35,7 +35,7 @@ class QuestionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, forum_id: holland.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/#{holland.url}/q", page: 1, type: 'paginated'))
@@ -47,7 +47,7 @@ class QuestionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, forum_id: holland.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,

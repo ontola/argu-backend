@@ -19,13 +19,13 @@ class FeedTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
-  test 'guest should get motion/feed json' do
+  test 'guest should get motion/feed nt' do
     get motion_feed_path(subject),
-        params: {format: :json}
+        params: {format: :nt}
 
     assert_response 200
 
-    assert_activity_count(format: :json)
+    assert_activity_count(format: :nt)
   end
 
   test 'guest should get motion/feed html' do
@@ -41,7 +41,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should get forum/feed' do
+  test 'user should get forum/feed html' do
     sign_in user
     unpublished_motion
     trashed_motion
@@ -56,15 +56,15 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_select '.activity-feed .activity', 1
   end
 
-  test 'user should get motion/feed' do
+  test 'user should get motion/feed nt' do
     sign_in user
 
     get motion_feed_path(subject),
-        params: {format: :json}
+        params: {format: :nt}
 
     assert_response 200
 
-    assert_activity_count(format: :json)
+    assert_activity_count(format: :nt)
   end
 
   test 'user should get motion/feed html' do
@@ -82,15 +82,15 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  test 'staff should get motion/feed' do
+  test 'staff should get motion/feed nt' do
     sign_in staff
 
     get motion_feed_path(subject),
-        params: {format: :json}
+        params: {format: :nt}
 
     assert_response 200
 
-    assert_activity_count(format: :json, staff: true)
+    assert_activity_count(format: :nt, staff: true)
   end
 
   test 'staff should get motion/feed html' do
@@ -111,7 +111,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'staff should get additional activities for user/feed' do
+  test 'staff should get additional activities for user/feed js' do
     sign_in staff
     subject
 
@@ -120,7 +120,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
-  test 'staff should get additional activities for favorites/feed' do
+  test 'staff should get additional activities for favorites/feed js' do
     sign_in staff
     create(:favorite, edge: freetown.edge, user: staff)
     subject
@@ -138,8 +138,14 @@ class FeedTest < ActionDispatch::IntegrationTest
     case format
     when :html
       assert_select '.activity-feed .activity', count
-    when :json
-      assert_equal parsed_body['data'].count, count
+    when :nt
+      expect_triple(RDF::URI("#{feed(subject).iri}/feed?page=1&type=paginated"), NS::ARGU[:totalCount], count)
+    else
+      raise 'Wrong format'
     end
+  end
+
+  def feed(parent)
+    Feed.new(parent: parent)
   end
 end

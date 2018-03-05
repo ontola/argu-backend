@@ -8,8 +8,8 @@ module Users
       GrantTree::ANY_ROOT
     end
 
-    def feed
-      Activity.feed_for_profile(authenticated_resource.profile)
+    def feed_resource
+      parent_resource.profile
     end
   end
 end

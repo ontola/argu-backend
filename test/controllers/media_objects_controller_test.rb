@@ -23,7 +23,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(
@@ -36,7 +36,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,

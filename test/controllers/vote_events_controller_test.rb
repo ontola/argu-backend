@@ -27,7 +27,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, motion_id: motion.id, id: vote_event.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
@@ -51,7 +51,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     assert_response 200
 
     assert_equal parsed_body['data']['id'], motion.default_vote_event.iri
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
@@ -62,7 +62,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 2
 
@@ -113,7 +113,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: linked_record.iri_opts.merge(id: lr_vote_event.id, format: :json_api)
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
@@ -139,7 +139,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     assert_response 200
 
     assert_equal parsed_body['data']['id'], lr_vote_event.iri
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
@@ -150,7 +150,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: linked_record.iri_opts.merge(format: :json_api)
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 1
 
@@ -175,7 +175,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: non_persisted_linked_record.iri_opts.merge(format: :json_api)
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     assert_nil parsed_body.dig('data', 'relationships', 'memberSequence')
   end

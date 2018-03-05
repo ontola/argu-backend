@@ -2,8 +2,7 @@
 
 class Activity < PublicActivity::Activity
   include Iriable
-  RELEVANT_KEYS = %w[vote.create question.publish motion.publish argument.create pro_argument.create con_argument.create
-                     blog_post.publish decision.approved decision.rejected comment.create].freeze
+  include Ldable
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action
@@ -49,36 +48,6 @@ class Activity < PublicActivity::Activity
 
   def identifier
     "#{self.class.name.tableize}_#{id}"
-  end
-
-  def self.feed(relevant_only)
-    scope = Activity
-              .includes(:owner)
-              .joins(:trackable_edge)
-              .loggings
-              .where('trackable_type != ?', 'Banner')
-              .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
-    return scope unless relevant_only
-    scope
-      .where('key IN (?)', RELEVANT_KEYS)
-      .joins('LEFT JOIN votes ON votes.id = edges.owner_id AND edges.owner_type = \'Vote\'')
-      .where('votes.id IS NULL OR (votes.explanation IS NOT NULL AND votes.explanation != \'\')')
-  end
-
-  def self.feed_for_edge(edge, filter_relevant = true)
-    feed(filter_relevant)
-      .where('edges.path <@ ?', edge.path)
-  end
-
-  def self.feed_for_favorites(favorites, filter_relevant = true)
-    return Activity.none if favorites.empty?
-    feed(filter_relevant)
-      .where("edges.path ? #{Edge.path_array(Edge.where(id: favorites.pluck(:edge_id)))}")
-  end
-
-  def self.feed_for_profile(profile, filter_relevant = true)
-    feed(filter_relevant)
-      .where(owner_id: profile.id)
   end
 
   # Used to find followers for the notifications generated for this activity and to set the type of these notifications

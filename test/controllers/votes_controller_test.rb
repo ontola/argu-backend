@@ -19,7 +19,7 @@ class VotesControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: vote.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
   end
 
@@ -39,7 +39,7 @@ class VotesControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, motion_id: motion.id, vote_event_id: vote_event.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 3

@@ -16,7 +16,7 @@ class MotionsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: motion.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
 
     expect_relationship('proArgumentCollection', 1)
@@ -59,7 +59,7 @@ class MotionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, forum_id: holland.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/#{holland.url}/m", page: 1, type: 'paginated'))
@@ -72,7 +72,7 @@ class MotionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, forum_id: holland.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal holland.motions.where(question_id: nil).untrashed.count,
@@ -89,7 +89,7 @@ class MotionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, question_id: question.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
@@ -101,7 +101,7 @@ class MotionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, question_id: question.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('memberSequence', question.motions.untrashed.count)
     expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })

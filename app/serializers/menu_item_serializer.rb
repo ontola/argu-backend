@@ -5,7 +5,7 @@ class MenuItemSerializer < BaseSerializer
   attribute :href, predicate: NS::ARGU[:href]
   attribute :data
 
-  has_one :parent, predicate: NS::SCHEMA[:isPartOf]
+  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf]
 
   has_one :menu_sequence, predicate: NS::ARGU[:menuItems], if: :menus_present?
   has_one :image, predicate: NS::SCHEMA[:image]

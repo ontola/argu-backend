@@ -18,4 +18,4 @@
               span.icon-left=t('forums.show_open')
   .col-3-2
     h2= t('activities.news_feed.title')
-    =render partial: 'activities/index', locals: {activities: [], complete_feed: false}
+    =render partial: 'activities/index', locals: {activities: [], complete_feed: false, feed_iri: feed_url(format: :js)}

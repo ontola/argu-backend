@@ -23,7 +23,7 @@ class ActivityPolicy < RestrictivePolicy
       activities = Activity.arel_table
       profiles = Profile.arel_table
       scope
-        .joins(:owner)
+        .joins('INNER JOIN "profiles" ON "profiles"."id" = "activities"."owner_id"')
         .where(activities[:key].not_eq('vote.create').or(
                  profiles[:are_votes_public].eq(true)
         ))

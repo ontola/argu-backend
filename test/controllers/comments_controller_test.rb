@@ -18,7 +18,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: comment}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
     expect_relationship('creator', 1)
   end
 
@@ -29,7 +29,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, pro_argument_id: argument.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/pro/#{argument.id}/c", page: 1, type: 'paginated'))
@@ -41,7 +41,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, pro_argument_id: argument.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
@@ -57,7 +57,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, blog_post_id: blog_post.id}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(argu_url("/posts/#{blog_post.id}/c", page: 1, type: 'paginated'))
@@ -69,7 +69,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, blog_post_id: blog_post.id, page: 1}
     assert_response 200
 
-    expect_relationship('parent', 1)
+    expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,

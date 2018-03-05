@@ -5,25 +5,24 @@ class FeedController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_registered, only: %i[index]
 
-  alias resource_by_id parent_resource
-  helper_method :complete_feed_param
-
-  def index
-    index_handler_success(nil)
-  end
+  helper_method :activities, :relevant_only
 
   private
 
+  def activities
+    @activities ||=
+      policy_scope(authenticated_resource.activities)
+        .where('activities.created_at < ?', from_time)
+        .order('activities.created_at DESC')
+        .limit(10)
+  end
+
   def authorize_action
-    authorize authenticated_resource, :feed?
+    authorize authenticated_resource.parent, :feed?
   end
 
   def authenticated_edge
-    @resource_edge ||= authenticated_resource!&.edge
-  end
-
-  def authenticated_resource!
-    @resource ||= parent_resource
+    @resource_edge ||= authenticated_resource!&.parent&.edge
   end
 
   def tree_root_id
@@ -32,15 +31,8 @@ class FeedController < AuthorizedController
 
   def collect_banners; end
 
-  def complete_feed_param
-    params[:complete] == 'true' && policy(authenticated_resource).log?
-  end
-
-  def feed
-    Activity.feed_for_edge(
-      authenticated_edge,
-      !complete_feed_param
-    )
+  def feed_resource
+    parent_resource
   end
 
   def from_time
@@ -53,33 +45,17 @@ class FeedController < AuthorizedController
   end
 
   def index_response_association
-    @activities ||=
-      policy_scope(feed)
-        .where('activities.created_at < ?', from_time)
-        .order('activities.created_at DESC')
-        .limit(10)
-  end
-
-  def include_index
-    %w[recipient owner]
+    resource_by_id.activity_collection(collection_options)
   end
 
   def index_respond_success_html
-    preload_user_votes(vote_event_ids_from_activities(index_response_association))
+    preload_user_votes(vote_event_ids_from_activities(activities))
   end
 
   def index_respond_success_js
-    if index_response_association.present?
-      preload_user_votes(vote_event_ids_from_activities(index_response_association))
+    if activities.present?
+      preload_user_votes(vote_event_ids_from_activities(activities))
       render
-    else
-      respond_with_204(nil, :json)
-    end
-  end
-
-  def index_respond_success_json
-    if index_response_association.present?
-      render json: index_response_association, include: include_index
     else
       respond_with_204(nil, :json)
     end
@@ -88,5 +64,18 @@ class FeedController < AuthorizedController
   def index_respond_success_serializer(format)
     return super if index_response_association.present?
     respond_with_204(nil, :json)
+  end
+
+  def relevant_only
+    params[:complete] != 'true'
+  end
+
+  def resource_by_id
+    return nil if feed_resource.blank?
+    @resource_by_id ||=
+      Feed.new(
+        parent: feed_resource,
+        relevant_only: relevant_only
+      )
   end
 end

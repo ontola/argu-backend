@@ -45,10 +45,6 @@ class UserPolicy < RestrictivePolicy
     true
   end
 
-  def feed?
-    record.profile.are_votes_public? || Pundit.policy(context, record).update?
-  end
-
   def max_allowed_pages
     if staff?
       Float::INFINITY

@@ -85,7 +85,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
 
-    expect_relationship('parent')
+    expect_relationship('partOf')
     creator = expect_relationship('creator')
     assert_equal creator.dig('data', 'id'), "http://127.0.0.1:42000/sessions/#{session.id}"
   end
@@ -183,7 +183,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get motion_vote_event_vote_path(motion.id, vote_event, format: :json_api)
     assert_response 200
 
-    expect_relationship('parent')
+    expect_relationship('partOf')
     creator = expect_relationship('creator')
     assert_equal creator.dig('data', 'id'), "http://127.0.0.1:42000/u/#{unconfirmed.url}"
   end

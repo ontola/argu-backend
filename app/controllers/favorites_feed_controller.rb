@@ -8,11 +8,13 @@ class FavoritesFeedController < FeedController
     raise Argu::Errors::NotAuthorized.new(query: :feed?) unless current_user.is_staff?
   end
 
-  def feed
-    Activity.feed_for_favorites(current_user.favorites, !current_user.is_staff?)
+  def controller_class
+    Feed
   end
 
-  def resource_by_id; end
+  def feed_resource
+    current_user
+  end
 
   def tree_root_id
     GrantTree::ANY_ROOT
