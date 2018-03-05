@@ -17,7 +17,7 @@ module DropdownHelper
            end
     link_items = menu.menus.call.compact.map do |menu_item|
       item(
-        menu_item.type || 'link',
+        menu_item.item_type || 'link',
         menu_item.label,
         menu_item.href,
         menu_item.dropdown_options(trigger_opts)

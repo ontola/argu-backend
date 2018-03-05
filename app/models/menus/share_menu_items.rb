@@ -29,7 +29,7 @@ module Menus
     def copy_share_link(url)
       menu_item(
         :copy,
-        type: 'copy',
+        item_type: 'copy',
         image: 'fa-clipboard',
         href: url
       )
@@ -38,7 +38,7 @@ module Menus
     def facebook_share_link(url)
       menu_item(
         :facebook,
-        type: 'fb_share',
+        item_type: 'fb_share',
         image: 'fa-facebook',
         link_opts: {target: '_blank'},
         href: ShareHelper.facebook_share_url(url)
@@ -48,7 +48,7 @@ module Menus
     def twitter_share_link(url)
       menu_item(
         :twitter,
-        type: 'twitter_share',
+        item_type: 'twitter_share',
         image: 'fa-twitter',
         link_opts: {target: '_blank'},
         href: ShareHelper.twitter_share_url(url, title: resource.display_name)
@@ -56,13 +56,13 @@ module Menus
     end
 
     def no_social_media_notice
-      menu_item(:no_social_media, type: 'notice')
+      menu_item(:no_social_media, item_type: 'notice')
     end
 
     def linkedin_share_link(url)
       menu_item(
         :linked_in,
-        type: 'linked_in_share',
+        item_type: 'linked_in_share',
         image: 'fa-linkedin',
         link_opts: {target: '_blank'},
         href: ShareHelper.linkedin_share_url(url, title: resource.display_name)
@@ -80,7 +80,7 @@ module Menus
     def whatsapp_share_link(url)
       menu_item(
         :whatsapp,
-        type: 'mobile_link',
+        item_type: 'mobile_link',
         image: 'fa-whatsapp',
         href: ShareHelper.whatsapp_share_url(url)
       )
