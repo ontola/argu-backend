@@ -37,7 +37,7 @@ class ApplicationService
     ActiveRecord::Base.transaction do
       @actions[service_action] = resource.public_send(service_method) if resource.errors.empty?
       after_save if @actions[service_action]
-      publish_successful
+      publish_success_signals
       broadcast_event
     end
   rescue ActiveRecord::ActiveRecordError => e
@@ -70,8 +70,9 @@ class ApplicationService
   end
 
   def argu_publication_follow_type
-    mark_as_important = @attributes.delete(:mark_as_important)
-    %w[true 1].include?(mark_as_important.to_s) ? :news : :reactions
+    important = @attributes.delete(:mark_as_important)
+    return resource.edge.argu_publication.follow_type if important.nil? && resource.edge.argu_publication.present?
+    %w[true 1].include?(important.to_s) ? :news : :reactions
   end
 
   def assign_attributes
@@ -89,7 +90,7 @@ class ApplicationService
     end
   end
 
-  def publish_successful
+  def publish_success_signals
     publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
     publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
     publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
