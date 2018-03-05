@@ -9,10 +9,18 @@ const activityFeed = {
         $(document).on('click', '.activity-feed .load-more', activityFeed.loadMore);
 
         $(window).scroll(() => {
-            if (!loading && !reachedEnd && ($(window).scrollTop() >  $(document).height() - $(window).height() - 300)) {
-                $('.activity-feed .load-more').click();
+            if (!loading && !reachedEnd && ($(window).scrollTop() > $(document).height() - $(window).height() - 300)) {
+                activityFeed.triggerLoadMore();
             }
         });
+
+        $(document).on('turbolinks:load', activityFeed.triggerLoadMore);
+
+        window.setTimeout(activityFeed.triggerLoadMore, 0);
+    },
+
+    triggerLoadMore: function() {
+        $('.activity-feed .load-more').click();
     },
 
     loadMore: function () {

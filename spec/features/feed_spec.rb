@@ -17,7 +17,6 @@ RSpec.feature 'Feed', type: :feature do
       activity.update(created_at: i.minutes.ago)
     end
     visit(forum_feed_path(freetown))
-    expect(page).to have_selector('.activity-feed .activity', count: 10)
     page.find('.btn.load-more').click
     expect(page).to have_selector('.activity-feed .activity', count: 13)
   end
@@ -31,6 +30,7 @@ RSpec.feature 'Feed', type: :feature do
       activity.update(created_at: i.minutes.ago)
     end
     visit(user_path(user))
+    page.find('.btn.load-more').click
     expect(page).to have_selector('.activity-feed .activity', count: 10)
     page.find('.btn.load-more').click
     expect(page).to have_selector('.activity-feed .activity', count: 16)

@@ -4,7 +4,7 @@ class UsersController < AuthorizedController
   include VotesHelper
   include UrlHelper
   include NestedResourceHelper
-  helper_method :authenticated_resource, :complete_feed_param
+  helper_method :authenticated_resource
   skip_before_action :check_if_registered, only: :language
 
   def settings
@@ -88,8 +88,6 @@ class UsersController < AuthorizedController
               end
   end
 
-  def complete_feed_param; end
-
   def email_changed?
     return if permit_params[:email_addresses_attributes].blank?
     permit_params[:email_addresses_attributes].any? do |email|
@@ -135,11 +133,6 @@ class UsersController < AuthorizedController
   end
 
   def show_respond_success_html(resource)
-    @activities = policy_scope(Activity.feed_for_profile(resource.profile))
-                    .order(created_at: :desc)
-                    .limit(10)
-    preload_user_votes(vote_event_ids_from_activities(@activities))
-
     if (/[a-zA-Z]/i =~ params[:id]).nil? && resource.url.present?
       redirect_to resource.iri(only_path: true).to_s, status: 307
     else

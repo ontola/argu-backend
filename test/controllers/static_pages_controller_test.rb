@@ -76,7 +76,6 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 200
     assert_select '.activity-feed', 1
     assert_select '.landing__wrapper', 0
-    assert_equal activities, activities & assigns(:activities)
   end
 
   private

@@ -10,4 +10,4 @@
     - if current_user == authenticated_resource && !authenticated_resource.profile.are_votes_public?
       span.fa.fa-lock
       span.icon-left= t('profiles.votes_are_private')
-    =render partial: 'activities/index', locals: {activities: @activities}
+    =render partial: 'activities/index', locals: {activities: [], complete_feed: false}

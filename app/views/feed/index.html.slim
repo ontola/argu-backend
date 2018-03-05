@@ -25,4 +25,4 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                 span.fa.fa-history
                 span.icon-left
                   =t('log')
-    =render partial: 'activities/index', locals: {activities: @activities}
+    =render partial: 'activities/index', locals: {activities: @activities, complete_feed: complete_feed_param}

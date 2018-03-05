@@ -2,7 +2,6 @@
 
 class StaticPagesController < ApplicationController
   include VotesHelper
-  helper_method :complete_feed_param
 
   # geocode_ip_address
   VOCABULARIES = {
@@ -40,11 +39,6 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_page
     if current_user.is_staff?
-      @activities =
-        policy_scope(Activity.feed_for_favorites(current_user.favorites, !current_user.is_staff?))
-          .order(created_at: :desc)
-          .limit(10)
-      preload_user_votes(vote_event_ids_from_activities(@activities))
       render # stream: true
     else
       current_user.guest? ? about : redirect_to(preferred_forum)
@@ -104,8 +98,6 @@ class StaticPagesController < ApplicationController
   end
 
   private
-
-  def complete_feed_param; end
 
   def default_forum_path
     preferred_forum
