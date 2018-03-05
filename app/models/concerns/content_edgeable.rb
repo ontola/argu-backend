@@ -14,7 +14,8 @@ module ContentEdgeable
     belongs_to :publisher, class_name: 'User', inverse_of: class_name
 
     def capitalize_title
-      title.capitalize!
+      title[0] = title[0].upcase
+      title
     end
   end
 end
