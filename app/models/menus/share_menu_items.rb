@@ -41,7 +41,7 @@ module Menus
         item_type: 'fb_share',
         image: 'fa-facebook',
         link_opts: {target: '_blank'},
-        href: ShareHelper.facebook_share_url(url)
+        href: RDF::URI(ShareHelper.facebook_share_url(url))
       )
     end
 
@@ -51,7 +51,7 @@ module Menus
         item_type: 'twitter_share',
         image: 'fa-twitter',
         link_opts: {target: '_blank'},
-        href: ShareHelper.twitter_share_url(url, title: resource.display_name)
+        href: RDF::URI(ShareHelper.twitter_share_url(url, title: resource.display_name))
       )
     end
 
@@ -65,7 +65,7 @@ module Menus
         item_type: 'linked_in_share',
         image: 'fa-linkedin',
         link_opts: {target: '_blank'},
-        href: ShareHelper.linkedin_share_url(url, title: resource.display_name)
+        href: RDF::URI(ShareHelper.linkedin_share_url(url, title: resource.display_name))
       )
     end
 
@@ -73,7 +73,7 @@ module Menus
       menu_item(
         :email,
         image: 'fa-envelope',
-        href: ShareHelper.email_share_url(url, title: resource.display_name)
+        href: RDF::URI(ShareHelper.email_share_url(url, title: resource.display_name))
       )
     end
 
@@ -82,7 +82,7 @@ module Menus
         :whatsapp,
         item_type: 'mobile_link',
         image: 'fa-whatsapp',
-        href: ShareHelper.whatsapp_share_url(url)
+        href: RDF::URI(ShareHelper.whatsapp_share_url(url))
       )
     end
 
