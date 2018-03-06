@@ -24,35 +24,37 @@ const activityFeed = {
     },
 
     loadMore: function () {
-        var _this   = $(this),
-            feedDOM = $('.activity-feed .activities');
-        _this.text(I18n.t('activities.ui.loading'));
-        loading = true;
-        $.ajax(feedDOM.attr('data-feed-url'), {
-            data: {
-                'from_time': feedDOM.find('.activity:last time').attr('datetime'),
-                'complete': feedDOM.attr('data-feed-complete')
-            },
-            dataType: 'html',
-            cache: false,
-            success: (d, s, xhr) => {
-                if (xhr.status == 200 || xhr.status == 304) {
-                    feedDOM.append(d);
-                    ReactRailsUJS.mountComponents(".activity-feed");
-                    _this.text(I18n.t('activities.ui.load_more'));
-                    var bLazy = new Blazy({
-                        offset: 100 // Loads images 100px before they're visible
-                    });
-                } else if (xhr.status == 204) {
-                    _this.text(I18n.t('activities.ui.no_more_artivities'));
-                    reachedEnd = true;
-                    window.setTimeout(() => {
-                        reachedEnd = false;
-                    }, 30*1000);
+        if (loading === false) {
+            var _this   = $(this),
+                feedDOM = $('.activity-feed .activities');
+            _this.text(I18n.t('activities.ui.loading'));
+            loading = true;
+            $.ajax(feedDOM.attr('data-feed-url'), {
+                data: {
+                    'from_time': feedDOM.find('.activity:last time').attr('datetime'),
+                    'complete': feedDOM.attr('data-feed-complete')
+                },
+                dataType: 'html',
+                cache: false,
+                success: (d, s, xhr) => {
+                    if (xhr.status == 200 || xhr.status == 304) {
+                        feedDOM.append(d);
+                        ReactRailsUJS.mountComponents(".activity-feed");
+                        _this.text(I18n.t('activities.ui.load_more'));
+                        var bLazy = new Blazy({
+                            offset: 100 // Loads images 100px before they're visible
+                        });
+                    } else if (xhr.status == 204) {
+                        _this.text(I18n.t('activities.ui.no_more_artivities'));
+                        reachedEnd = true;
+                        window.setTimeout(() => {
+                            reachedEnd = false;
+                        }, 30*1000);
+                    }
+                    loading = false;
                 }
-                loading = false;
-            }
-        });
+            });
+        }
     }
 };
 
