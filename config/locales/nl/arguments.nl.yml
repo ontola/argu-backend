@@ -2,13 +2,13 @@
 
 nl:
   pro_arguments:
-    type: "Argument"
-    type_new: "Nieuw argument"
-    plural: "Argumenten"
+    type: "Voordeel"
+    type_new: "Nieuw voordeel"
+    plural: "Voordelen"
   con_arguments:
-    type: "Argument"
-    type_new: "Nieuw argument"
-    plural: "Argumenten"
+    type: "Nadeel"
+    type_new: "Nieuw nadeel"
+    plural: "Nadelen"
   arguments:
     type: "Argument"
     type_new: "Nieuw argument"

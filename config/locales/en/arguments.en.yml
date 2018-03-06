@@ -2,13 +2,13 @@
 
 en:
   pro_arguments:
-    type: "argument"
-    type_new: "new argument"
-    plural: "Arguments"
+    type: "pro"
+    type_new: "new pro"
+    plural: "Pros"
   con_arguments:
-    type: "argument"
-    type_new: "new argument"
-    plural: "Arguments"
+    type: "con"
+    type_new: "new con"
+    plural: "Cons"
   arguments:
     type: "argument"
     type_new: "new argument"
