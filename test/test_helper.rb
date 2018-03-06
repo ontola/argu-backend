@@ -111,6 +111,10 @@ module ActiveSupport
     include UrlHelper
     ActiveRecord::Migration.check_pending!
 
+    setup do
+      I18n.locale = :en
+    end
+
     teardown do
       keys = Argu::Redis.keys('temporary*')
       Argu::Redis.redis_instance.del(*keys) if keys.present?
