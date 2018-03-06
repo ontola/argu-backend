@@ -162,6 +162,15 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
+  test 'guest should delete destroy argument vote' do
+    get root_path
+    argument_guest_vote
+    assert_difference('Argu::Redis.keys("temporary.*").count', -1) do
+      delete polymorphic_url([argument, :vote], for: :pro)
+      assert_response 303
+    end
+  end
+
   ####################################
   # As Unconfirmed user
   ####################################
