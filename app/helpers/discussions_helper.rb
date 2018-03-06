@@ -34,7 +34,7 @@ module DiscussionsHelper
             .join(', ')
         {label: "#{group.name} (#{t('roles.may')} #{grant_sets_string})", value: group.id}
       end
-      .append(label: t('groups.new'), value: -1)
+      .append(label: "+ #{t('groups.new')}", value: -1)
   end
 
   def discussion_invite_props(resource)

@@ -161,7 +161,12 @@ export const DiscussionInvite = React.createClass({
                     onChange={this.handleMessageChange}
                     placeholder={I18n.t('tokens.email.input_placeholder')}
                     value={this.state.message}/>
-                <label>{I18n.t('tokens.discussion.group.label')}</label>
+                <label>
+                    {I18n.t('tokens.discussion.group.label')}
+                    <span data-title={I18n.t('tokens.discussion.group.tooltip')}>
+                        <span className="fa fa-info"/>
+                    </span>
+                </label>
                 <Select
                     className="Select-group"
                     clearable={false}

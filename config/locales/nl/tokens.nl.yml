@@ -40,6 +40,7 @@ nl:
         label: "Aan welke groep wil je deze mensen toevoegen?"
         placeholder: "Selecteer een groep"
         create: "Aanmaken"
+        tooltip: "Groepen binnen Argu hebben bepaalde rechten, zoals het kunnen bekijken of bewerken van items. Kies een geschikte groep voor de mensen die jij wilt uitnodigen of maak er een aan."
     errors:
       no_receivers: "Geef een of meerdere gebruikers of email-adressen op."
       not_found: "Dit token is niet gevonden"
