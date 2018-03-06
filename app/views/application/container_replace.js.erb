@@ -1,2 +1,2 @@
-$('.container').replaceWith('<%= escape_javascript(render template: view, locals: locals)%>');
+$('.container').replaceWith('<div class="container"><%= escape_javascript(render template: view, locals: locals)%></div>');
 ReactRailsUJS.mountComponents();
