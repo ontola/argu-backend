@@ -12,4 +12,12 @@ class Portal::ForumsController < EdgeableController
       page: parent_resource!
     )
   end
+
+  def respond_with_form_js(resource)
+    respond_js(
+      "portal/#{controller_name}/form",
+      resource: resource,
+      controller_name.singularize.to_sym => resource
+    )
+  end
 end
