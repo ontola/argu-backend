@@ -7,7 +7,7 @@ class GrantTreesController < AuthorizedController
   private
 
   def authorize_action
-    authorize parent_resource!, :index_children?, [:grants, edge: parent_resource!]
+    authorize parent_resource!, :index_children?, :grants
   end
 
   def include_show

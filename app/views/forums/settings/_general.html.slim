@@ -35,7 +35,7 @@
             td
               =link_to grant.group.group_memberships.count, settings_group_path(grant.group)
             td
-              - if policy(grant.group).create_child?(:group_memberships, group_id: grant.group.id)
+              - if policy(grant.group).create_child?(:group_memberships)
                 =link_to new_group_group_membership_path(grant.group), class: 'btn--light btn--smaller' do
                   span.fa.fa-plus
             td
@@ -44,7 +44,7 @@
                 =t('roles.list.remove_html', url: grant_path(grant))
               - else
                 =<"(#{t('grants.all_forums')})"
-    - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
+    - if policy(resource.edge).create_child?(:grants)
       =link_to new_page_grant_path(resource.page, edge_id: resource.edge), class: 'btn btn--mini btn--light margin-bottom' do
         span.fa.fa-plus
         span.icon-left= t('grants.new')

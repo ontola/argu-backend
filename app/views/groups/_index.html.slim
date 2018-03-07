@@ -13,7 +13,7 @@ table.styled
       td
         =link_to group.group_memberships.count, settings_group_path(group)
       td
-        - if policy(group).create_child?(:group_memberships, group_id: group.id)
+        - if policy(group).create_child?(:group_memberships)
           =link_to new_group_group_membership_path(group), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
       td
@@ -27,14 +27,14 @@ table.styled
                 =t("roles.types.#{grant.grant_set.title}")
                 = t('roles.list.remove_html', url: grant_path(grant))
       td
-        - if policy(resource.edge).create_child?(:grants, edge: resource.edge)
+        - if policy(resource.edge).create_child?(:grants)
           =link_to new_page_grant_path(page, edge_id: resource.edge, group_id: group.id), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
-- if policy(page).create_child?(:groups, page: page)
+- if policy(page).create_child?(:groups)
   =link_to new_page_group_path(page), class: 'btn margin-bottom margin-right' do
     span.fa.fa-plus
     span.icon-left= t('groups.new')
-- if policy(resource.edge).create_child?(:grants, edge: resource.edge)
+- if policy(resource.edge).create_child?(:grants)
   =link_to new_page_grant_path(page, edge_id: resource.edge), class: 'btn margin-bottom' do
     span.fa.fa-plus
     span.icon-left= t('grants.new')

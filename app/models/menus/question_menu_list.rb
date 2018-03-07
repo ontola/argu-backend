@@ -43,7 +43,7 @@ class QuestionMenuList < MenuList
       image: 'fa-link',
       href: new_question_answer_url(question_answer: {question_id: resource}),
       policy: :create_child?,
-      policy_arguments: [:question_answers, question: resource]
+      policy_arguments: %i[question_answers]
     )
   end
 end

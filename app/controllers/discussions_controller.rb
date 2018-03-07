@@ -7,7 +7,7 @@ class DiscussionsController < ParentableController
 
   def authorize_action
     return super unless action_name == 'index'
-    authorize parent_resource!, :index_children?, [controller_name, forum: parent_resource!]
+    authorize parent_resource!, :index_children?, controller_name
   end
 
   def collection_options
