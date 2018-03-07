@@ -49,5 +49,7 @@ class VoteMatchesController < ServiceController
     )
   end
 
-  def tree_root_id; end
+  def tree_root_id
+    GrantTree::ANY_ROOT
+  end
 end
