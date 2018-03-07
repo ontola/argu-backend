@@ -282,6 +282,7 @@ Rails.application.routes.draw do
   resources :follows, only: :create do
     delete :destroy, on: :member
     get :unsubscribe, action: :destroy, on: :member
+    post :unsubscribe, action: :destroy, on: :member
   end
 
   resources :shortnames, only: %i[edit update destroy]
