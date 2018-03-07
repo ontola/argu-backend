@@ -36,7 +36,6 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
       = link_to new_project_discussion_path(project), class: 'btn btn--pro new-discussion'
         span.fa.fa-plus
         span.icon-left= t('discussions.new.title')
-      =render partial: 'application/filter_and_sort'
   - else
     p.center.margin-bottom=t('discussions.new.first_project')
     .center = link_to new_project_discussion_path(project), class: 'btn btn--pro new-discussion'

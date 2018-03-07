@@ -106,18 +106,6 @@ module ApplicationHelper
     provide :title, title_string
   end
 
-  def sort_items
-    link_items = [
-      link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
-      link_item(t('filtersort.created_at'), nil, fa: 'clock-o', data: {'sort-value' => 'created_at'}),
-      link_item(t('filtersort.name'), nil, fa: 'sort-alpha-asc', data: {'sort-value' => 'name'}),
-      link_item(t('filtersort.vote_count'), nil, fa: 'check-square-o', data: {'sort-value' => 'vote_count'}),
-      link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
-    ]
-
-    dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
-  end
-
   def sort_items_param(record)
     link_items = [
       sort_item(record, :popular, 'check-square-o'),
@@ -134,16 +122,6 @@ module ApplicationHelper
 
   def sort_param_or_default
     params[:sort] || authenticated_resource.default_sorting
-  end
-
-  def filter_items
-    link_items = [
-      link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
-      link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter-value' => 'question'}),
-      link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter-value' => 'motion'})
-    ]
-
-    dropdown_options(t('filtersort.filter'), [{items: link_items}], fa: 'fa-filter')
   end
 
   def status_classes_for(resource)
@@ -169,16 +147,6 @@ module ApplicationHelper
 
   def visibility_icon(resource)
     visible_for_group_ids(resource).include?(-1) ? 'globe' : 'group'
-  end
-
-  def display_settings_items
-    link_items = [
-      link_item(t('info_bar'), nil, fa: 'info', data: {'display-setting' => 'info_bar'}),
-      link_item(t('images'), nil, fa: 'image', data: {'display-setting' => 'image'}),
-      link_item(t('columns'), nil, fa: 'columns', data: {'display-setting' => 'columns'})
-    ]
-
-    dropdown_options(t('display'), [{items: link_items}], fa: 'fa-columns')
   end
 
   # :nodoc:
