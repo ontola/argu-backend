@@ -22,4 +22,24 @@ RSpec.describe 'Favorites', type: :request do
   subject { create(:favorite, user: staff, edge: holland.edge) }
   it_behaves_like 'post create', skip: %i[create_invalid]
   it_behaves_like 'delete destroy'
+
+  context 'for motion iri' do
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.motions.first.iri]) }
+    it_behaves_like 'post create', skip: %i[create_invalid]
+  end
+
+  context 'for motion canonical' do
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.motions.first.canonical_iri]) }
+    it_behaves_like 'post create', skip: %i[create_invalid]
+  end
+
+  context 'for forum iri' do
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.iri]) }
+    it_behaves_like 'post create', skip: %i[create_invalid]
+  end
+
+  context 'for forum canonical' do
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.canonical_iri]) }
+    it_behaves_like 'post create', skip: %i[create_invalid]
+  end
 end

@@ -11,6 +11,10 @@ class FavoritesController < ParentableController
     current_user.favorites.find_or_initialize_by(edge: parent_edge!)
   end
 
+  def parent_resource
+    resource_from_iri(params[:iri])&.parent_model(:forum) || super
+  end
+
   def resource_by_id
     current_user.favorites.find_by(edge: parent_edge)
   end

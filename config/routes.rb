@@ -216,6 +216,8 @@ Rails.application.routes.draw do
 
   resources :direct_messages, path: :dm, only: [:create]
 
+  resources :favorites, only: [:create]
+
   resources :groups,
             path: 'g',
             only: %i[show update],
