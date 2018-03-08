@@ -3,15 +3,15 @@
 en:
   pro_arguments:
     type: "pro"
-    type_new: "new pro"
+    type_new: "New pro"
     plural: "Pros"
   con_arguments:
     type: "con"
-    type_new: "new con"
+    type_new: "New con"
     plural: "Cons"
   arguments:
     type: "argument"
-    type_new: "new argument"
+    type_new: "New argument"
     plural: "Arguments"
     vote: "vote"
     new_btn: "Add argument"

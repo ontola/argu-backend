@@ -3,7 +3,7 @@
 nl:
   grants:
     type: "recht"
-    type_new: "nieuw recht"
+    type_new: "Nieuw recht"
     plural: "rechten"
     empty: "Geen rechten"
     new: "Verleen nieuwe rechten"

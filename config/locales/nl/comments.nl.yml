@@ -1,7 +1,7 @@
 nl:
   comments:
     type: "reactie"
-    type_new: "nieuwe reactie"
+    type_new: "Nieuwe reactie"
     plural: "Reacties"
     show_all:
       zero: "Reageer"
