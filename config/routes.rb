@@ -41,8 +41,8 @@ Rails.application.routes.draw do
   end
   concern :argumentable do
     resources :arguments, only: %i[new create], path: 'a'
-    resources :pro_arguments, only: %i[new index], path: 'pros', defaults: {pro: 'pro'}
-    resources :con_arguments, only: %i[new index], path: 'cons', defaults: {pro: 'con'}
+    resources :pro_arguments, only: %i[new create index], path: 'pros', defaults: {pro: 'pro'}
+    resources :con_arguments, only: %i[new create index], path: 'cons', defaults: {pro: 'con'}
   end
   concern :blog_postable do
     resources :blog_posts,
