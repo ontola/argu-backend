@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-class User < ApplicationRecord
+class User < Edgeable::Base
   include RedirectHelper
   include Iriable
-  include Ldable
   include Placeable
   include Shortnameable
+  %w[comment page forum question motion notification argument project blog_post group edge].each do |model|
+    require_dependency model
+  end
 
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
@@ -55,6 +57,7 @@ class User < ApplicationRecord
   FAILED_LOGIN_ATTRS = %w[current_sign_in_at last_sign_in_at sign_in_count updated_at].freeze
 
   before_save :adjust_birthday, if: :birthday_changed?
+  before_validation :build_root_edge, on: :create
   before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
   after_commit :publish_data_event, if: :should_broadcast_changes
@@ -76,6 +79,8 @@ class User < ApplicationRecord
     daily_decisions_email: 2,
     direct_decisions_email: 3
   }
+
+  parentable
 
   validates :profile, presence: true
   validates :language,
@@ -287,6 +292,10 @@ class User < ApplicationRecord
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
+  def root_object?
+    true
+  end
+
   def salt
     if encrypted_password.presence
       ::BCrypt::Password.new(encrypted_password).salt
@@ -330,6 +339,10 @@ class User < ApplicationRecord
 
   def adjust_birthday
     self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
+  end
+
+  def build_root_edge
+    self.edge ||= build_edge(user: self)
   end
 
   # Sets the dependent foreign relations to the Community profile

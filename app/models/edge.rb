@@ -344,6 +344,6 @@ class Edge < ApplicationRecord
   end
 
   def set_user_id
-    self.user_id = owner.publisher.present? ? owner.publisher.id : 0
+    self.user_id ||= user.id || owner.publisher.present? ? owner.publisher.id : User::COMMUNITY_ID
   end
 end
