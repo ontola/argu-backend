@@ -43,7 +43,7 @@ class VotesController < EdgeableController
     authorize authenticated_resource, method
   end
 
-  def respond_with_201(resource, format)
+  def respond_with_201(resource, format, _opts = {})
     case format
     when :json
       render locals: {model: resource.parent_model, vote: resource}, status: :created, location: vote_url(resource)

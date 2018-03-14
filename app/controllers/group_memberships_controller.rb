@@ -99,7 +99,7 @@ class GroupMembershipsController < ServiceController
   alias redirect_model_failure redirect_url
   alias redirect_model_success redirect_url
 
-  def respond_with_201(resource, format)
+  def respond_with_201(resource, format, _opts = {})
     return super unless %i[json json_api].include?(format)
     render json: resource, status: :created, location: resource, include: :group
   end
