@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :authorize_current_actor
+  before_action :set_vary
   after_action :set_profile_forum, if: :format_html?
   around_action :time_zone
   after_action :set_version_header
@@ -152,6 +153,12 @@ class ApplicationController < ActionController::Base
   # @private
   def set_locale
     I18n.locale = current_user.language
+  end
+
+  def set_vary
+    response.set_header('Vary', 'Accept')
+    response.set_header('Vary', 'Content-Type')
+    response.set_header('Vary', 'Authorization')
   end
 
   # @private
