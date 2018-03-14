@@ -29,11 +29,9 @@ module Common
         format.js { index_respond_success_js }
         format.json { index_respond_success_json }
         format.json_api { index_respond_success_serializer(:json_api) }
-        format.n3 { index_respond_success_serializer(:n3) }
-        format.nt { index_respond_success_serializer(:nt) }
-        format.ttl { index_respond_success_serializer(:ttl) }
-        format.jsonld { index_respond_success_serializer(:jsonld) }
-        format.rdf { index_respond_success_serializer(:rdf) }
+        RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { index_respond_success_serializer(type) }
+        end
       end
 
       def index_response_association

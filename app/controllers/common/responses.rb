@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Common
+  RDF_CONTENT_TYPES = %i[n3 nt ttl jsonld rdf nq].freeze
+
   # The most commonly used response handlers per response format
   # Methods are named using their numbered counterpart for brevity
   #   and consistency.
@@ -25,7 +27,7 @@ module Common
       case format
       when :json, :json_api
         render opts.merge(json: resource)
-      when :n3, :nt, :ttl, :jsonld, :rdf
+      when *RDF_CONTENT_TYPES
         render opts.merge(format => resource, meta: meta)
       else
         raise_unknown_format
@@ -36,10 +38,10 @@ module Common
       case format
       when :json, :json_api
         render json: resource, status: :created, location: resource.iri.to_s
-      when :n3, :nt, :ttl, :jsonld, :rdf
-        render opts.merge(format => resource, status: :created, meta: meta)
       when :js
         head :created
+      when *RDF_CONTENT_TYPES
+        render opts.merge(format => resource, status: :created, meta: meta)
       else
         raise_unknown_format
       end
@@ -47,7 +49,7 @@ module Common
 
     def respond_with_204(_, format)
       case format
-      when :json, :json_api, :n3, :nt, :ttl, :jsonld, :rdf
+      when :json, :json_api, *RDF_CONTENT_TYPES
         head :no_content
       else
         raise_unknown_format
@@ -69,11 +71,11 @@ module Common
         render json: resource.errors, status: :bad_request
       when :json_api
         render json_api_error(400, resource.errors)
-      when :n3, :nt, :ttl, :jsonld, :rdf
-        render format => serializable_error(400, StandardError.new(resource.errors.full_messages.join("\n"))),
-               status: 400
       when :js
         head 400
+      when *RDF_CONTENT_TYPES
+        render format => serializable_error(400, StandardError.new(resource.errors.full_messages.join("\n"))),
+               status: 400
       else
         raise_unknown_format
       end
@@ -85,7 +87,7 @@ module Common
         render json_error(422, resource.errors)
       when :json_api
         render json_api_error(422, resource.errors)
-      when :n3, :nt, :ttl, :jsonld, :rdf
+      when *RDF_CONTENT_TYPES
         render format => serializable_error(422, StandardError.new(resource.errors.full_messages.join("\n"))),
                status: 422
       else

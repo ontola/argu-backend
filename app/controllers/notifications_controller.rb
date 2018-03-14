@@ -10,7 +10,9 @@ class NotificationsController < AuthorizedController
 
   def show
     respond_to do |format|
-      format.nt { render nt: authenticated_resource, include: :operation }
+      Common::RDF_CONTENT_TYPES.each do |type|
+        format.send(type) { render type => authenticated_resource, include: :operation }
+      end
       format.all { redirect_to authenticated_resource.activity.trackable.iri(only_path: true).to_s }
     end
   end
@@ -19,8 +21,14 @@ class NotificationsController < AuthorizedController
     respond_to do |format|
       if authenticated_resource.save
         format.json { head 201 }
+        Common::RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { head 201 }
+        end
       else
         format.json { respond_with_422(authenticated_resource, :json) }
+        Common::RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { respond_with_422(authenticated_resource, type) }
+        end
       end
     end
   end

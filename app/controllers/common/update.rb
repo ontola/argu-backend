@@ -15,11 +15,9 @@ module Common
         format.js { update_respond_failure_js(resource) }
         format.json { update_respond_failure_json(resource) }
         format.json_api { update_respond_failure_serializer(resource, :json_api) }
-        format.n3 { update_respond_failure_serializer(resource, :n3) }
-        format.nt { update_respond_failure_serializer(resource, :nt) }
-        format.ttl { update_respond_failure_serializer(resource, :ttl) }
-        format.jsonld { update_respond_failure_serializer(resource, :jsonld) }
-        format.rdf { update_respond_failure_serializer(resource, :rdf) }
+        RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { update_respond_failure_serializer(resource, type) }
+        end
       end
 
       # @!visibility public
@@ -28,11 +26,9 @@ module Common
         format.js { update_respond_success_js(resource) }
         format.json { update_respond_success_json(resource) }
         format.json_api { update_respond_success_serializer(resource, :json_api) }
-        format.n3 { update_respond_success_serializer(resource, :n3) }
-        format.nt { update_respond_success_serializer(resource, :nt) }
-        format.ttl { update_respond_success_serializer(resource, :ttl) }
-        format.jsonld { update_respond_success_serializer(resource, :jsonld) }
-        format.rdf { update_respond_success_serializer(resource, :rdf) }
+        RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { update_respond_success_serializer(resource, type) }
+        end
       end
 
       # @!visibility public

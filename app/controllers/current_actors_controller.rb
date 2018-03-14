@@ -5,8 +5,9 @@ class CurrentActorsController < ApplicationController
     respond_to do |format|
       format.json { respond_with_200(current_actor, :json) }
       format.json_api { render json: current_actor, include: include_show }
-      format.n3 { render n3: current_actor, include: include_show }
-      format.nt { render nt: current_actor, include: include_show }
+      Common::RDF_CONTENT_TYPES.each do |type|
+        format.send(type) { render type => current_actor, include: include_show }
+      end
     end
   end
 

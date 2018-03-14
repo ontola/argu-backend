@@ -6,4 +6,4 @@ opts = {
   prefixes: Hash[NS.constants.map { |const| [const.to_s.downcase.to_sym, NS.const_get(const)] }]
 }
 
-RDF::Serializers::Renderers.register(%i[n3 ntriples turtle jsonld rdf], opts)
+RDF::Serializers::Renderers.register(%i[n3 ntriples nquads turtle jsonld rdf], opts)

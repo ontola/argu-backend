@@ -20,11 +20,9 @@ module Argu
           format.js { render status: error_status(e), json: json_error_hash(e) }
           format.json { render json_error(error_status(e), json_error_hash(e)) }
           format.json_api { render json_api_error(error_status(e), json_error_hash(e)) }
-          format.n3 { render n3: serializable_error(error_status(e), e), status: error_status(e) }
-          format.nt { render nt: serializable_error(error_status(e), e), status: error_status(e) }
-          format.ttl { render ttl: serializable_error(error_status(e), e), status: error_status(e) }
-          format.jsonld { render jsonld: serializable_error(error_status(e), e), status: error_status(e) }
-          format.rdf { render rdf: serializable_error(error_status(e), e), status: error_status(e) }
+          Common::RDF_CONTENT_TYPES.each do |type|
+            format.send(type) { render type => serializable_error(error_status(e), e), status: error_status(e) }
+          end
         end
       end
 
@@ -64,11 +62,12 @@ module Argu
           format.html { error_response_html(e) }
           format.json { json_error(500, e.response.body) }
           format.json_api { render json_api_error(500, e.response.body) }
-          format.n3 { render n3: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
-          format.nt { render nt: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
-          format.ttl { render ttl: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
-          format.jsonld { render jsonld: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
-          format.rdf { render rdf: serializable_error(500, StandardError.new(e.response.body)), status: 500 }
+          Common::RDF_CONTENT_TYPES.each do |type|
+            format.send(type) do
+              render type => serializable_error(500, StandardError.new(e.response.body)),
+                     status: 500
+            end
+          end
         end
       end
 
@@ -140,11 +139,9 @@ module Argu
       respond_to do |format|
         format.json { respond_with_422(resources.first, :json) }
         format.json_api { respond_with_422(resources.first, :json_api) }
-        format.n3 { respond_with_422(resources.first, :n3) }
-        format.nt { respond_with_422(resources.first, :nt) }
-        format.ttl { respond_with_422(resources.first, :ttl) }
-        format.jsonld { respond_with_422(resources.first, :jsonld) }
-        format.rdf { respond_with_422(resources.first, :rdf) }
+        Common::RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { respond_with_422(resources.first, type) }
+        end
       end
     end
 

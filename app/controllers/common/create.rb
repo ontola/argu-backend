@@ -15,11 +15,9 @@ module Common
         format.js { create_respond_failure_js(resource) }
         format.json { create_respond_failure_json(resource) }
         format.json_api { respond_with_422(resource, :json_api) }
-        format.n3 { respond_with_422(resource, :n3) }
-        format.nt { respond_with_422(resource, :nt) }
-        format.ttl { respond_with_422(resource, :ttl) }
-        format.jsonld { respond_with_422(resource, :jsonld) }
-        format.rdf { respond_with_422(resource, :rdf) }
+        RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { respond_with_422(resource, type) }
+        end
       end
 
       # @!visibility public
@@ -28,11 +26,9 @@ module Common
         format.js { create_respond_success_js(resource) }
         format.json { create_respond_success_json(resource) }
         format.json_api { respond_with_201(resource, :json_api) }
-        format.n3 { respond_with_201(resource, :n3) }
-        format.nt { respond_with_201(resource, :nt) }
-        format.ttl { respond_with_201(resource, :ttl) }
-        format.jsonld { respond_with_201(resource, :jsonld) }
-        format.rdf { respond_with_201(resource, :rdf) }
+        RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { respond_with_201(resource, type) }
+        end
       end
 
       # @!visibility public

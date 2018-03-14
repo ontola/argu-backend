@@ -23,11 +23,9 @@ module Common
         format.js { show_respond_success_js(resource) }
         format.json { show_respond_success_json(resource) }
         format.json_api { show_respond_success_serializer(resource, :json_api) }
-        format.n3 { show_respond_success_serializer(resource, :n3) }
-        format.nt { show_respond_success_serializer(resource, :nt) }
-        format.ttl { show_respond_success_serializer(resource, :ttl) }
-        format.jsonld { show_respond_success_serializer(resource, :jsonld) }
-        format.rdf { show_respond_success_serializer(resource, :rdf) }
+        RDF_CONTENT_TYPES.each do |type|
+          format.send(type) { show_respond_success_serializer(resource, type) }
+        end
       end
 
       def show_respond_success_html(resource)
