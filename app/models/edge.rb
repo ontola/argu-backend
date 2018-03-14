@@ -97,6 +97,7 @@ class Edge < ApplicationRecord
 
   validates :parent, presence: true, unless: :root_object?
   validates :placements, presence: true, if: :requires_location?
+  validate :validate_parent_id_matches_path
 
   before_destroy :decrement_counter_caches, unless: :is_trashed?
   before_destroy :reset_persisted_edge
@@ -345,5 +346,10 @@ class Edge < ApplicationRecord
 
   def set_user_id
     self.user_id = owner.publisher.present? ? owner.publisher.id : 0
+  end
+
+  def validate_parent_id_matches_path
+    return if path.blank? || parent_id.blank? || path.split('.')[-2].to_i == parent_id
+    errors.add :parent_id, "Parent id #{parent_id} does not match path #{path}"
   end
 end
