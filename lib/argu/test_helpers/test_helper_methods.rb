@@ -158,7 +158,7 @@ module Argu
         def reset_publication(publication)
           return if publication.nil?
           publication.update(published_at: publication.published_at - 10.seconds) if publication.published_at.present?
-          if publication.published_at.present? && publication.published_at <= Time.current
+          if publication.publish_time_lapsed?
             Sidekiq::Testing.inline! do
               publication.send(:reset)
             end

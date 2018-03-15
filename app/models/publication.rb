@@ -23,6 +23,10 @@ class Publication < ApplicationRecord
     publish("publish_#{publishable.owner.model_name.singular}_successful", publishable.owner)
   end
 
+  def publish_time_lapsed?
+    published_at.present? && published_at <= 10.seconds.from_now
+  end
+
   def publish_type
     @publish_type ||=
       if published_at.nil?

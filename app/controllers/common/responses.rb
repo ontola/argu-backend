@@ -155,8 +155,12 @@ module Common
 
     # @param resource [ActiveRecord::Base] The resource to display the type for.
     # @param action [Symbol] The action to render the message for.
-    def message_success(resource, action)
-      t("type_#{action}_success", type: type_for(resource)).capitalize
+    def message_success(r, action)
+      if action.to_sym == :create && r.try(:argu_publication)&.publish_time_lapsed?
+        t('type_publish_success', type: type_for(r)).capitalize
+      else
+        t("type_#{action}_success", type: type_for(r)).capitalize
+      end
     end
   end
 end
