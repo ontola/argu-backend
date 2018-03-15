@@ -41,12 +41,13 @@ module VotesHelper
   end
 
   def toggle_vote_link_enabled(model, vote, classes, data)
-    url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :vote], for: :pro)
     data[:remote] = true
     if vote.present?
+      url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :vote], for: :pro)
       data[:method] = :delete
       data[:title] = t('tooltips.argument.vote_up_undo')
     else
+      url = polymorphic_url([model, :votes], for: :pro)
       data[:method] = :post
       data[:title] = t('tooltips.argument.vote_up')
     end
