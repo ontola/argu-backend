@@ -40,7 +40,7 @@ class Forum < Edgeable::Base
 
   validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
-  validates :page_id, presence: true
+  validates :page, presence: true
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
   validate :shortnames_count

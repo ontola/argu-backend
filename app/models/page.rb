@@ -18,7 +18,7 @@ class Page < Edgeable::Base
   delegate :description, to: :profile
 
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
-  validates :profile, :owner_id, :last_accepted, presence: true
+  validates :profile, :owner, :last_accepted, presence: true
   validates :base_color, css_hex_color: true
 
   after_create :create_default_groups
