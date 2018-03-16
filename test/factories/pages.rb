@@ -6,17 +6,16 @@ FactoryGirl.define do
   end
 
   factory :page do
-    association :profile,
-                strategy: :create
     association :shortname,
                 strategy: :build
-    owner { passed_in?(:owner) ? owner : create(:profile) }
+    owner { passed_in?(:owner) ? owner : build(:profile, profileable: build(:user)) }
     last_accepted Time.current
     visibility Page.visibilities[:open]
 
     before(:create) do |page|
-      page.edge = Edge.new(owner: page, user: page.publisher, is_published: true) if page.edge.blank?
-      page.profile.update name: generate(:page_name)
+      page.profile ||= build(:profile, profileable: page)
+      page.edge ||= Edge.new(owner: page, user: page.publisher, is_published: true)
+      page.profile.name = generate(:page_name)
     end
   end
 end

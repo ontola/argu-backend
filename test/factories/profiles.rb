@@ -5,7 +5,7 @@ FactoryGirl.define do
     are_votes_public true
     is_public true
     before(:create) do |profile|
-      profile.update profileable: build(:user) if profile.profileable.blank?
+      profile.profileable ||= build(:user, profile: profile)
     end
 
     after(:create) do |profile|
