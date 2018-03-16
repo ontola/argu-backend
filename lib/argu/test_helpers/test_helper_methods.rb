@@ -125,8 +125,10 @@ module Argu
         end
 
         def create_resource(klass, attributes = {}, options = {})
-          options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
-          options[:creator] = options[:publisher].profile if options[:creator].nil?
+          if klass < Edgeable::Base || klass < NewsBoy || klass == VoteMatch
+            options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
+            options[:creator] = options[:publisher].profile if options[:creator].nil?
+          end
 
           parent_edge = attributes.delete(:parent)
 
