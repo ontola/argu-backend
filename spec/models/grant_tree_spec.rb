@@ -68,7 +68,7 @@ RSpec.describe GrantTree, type: :model do
       let(:method_args) { hidden_motion.edge }
 
       context 'without filters' do
-        it { is_expected.to match_array [Group::STAFF_ID, root.groups.custom.first.id] }
+        it { is_expected.to match_array [Group::STAFF_ID, root.groups.custom.first.id, 111, 222] }
       end
     end
   end

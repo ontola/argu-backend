@@ -167,7 +167,7 @@ module Argu
           end
 
           # Users
-          let(:staff) { create(:user, :staff) }
+          let(:staff) { EmailAddress.find_by(email: 'staff@example.com').user }
           let(:authorized_user) { create_administrator(argu, create(:user)) }
           let(:authorized_user_update) { authorized_user }
           let(:authorized_user_destroy) { staff }

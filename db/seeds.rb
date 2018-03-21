@@ -3,6 +3,8 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
+load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
+
 community_profile =
   Profile.new(
     id: Profile::COMMUNITY_ID,
@@ -103,6 +105,8 @@ Doorkeeper::Application.create!(
   owner: community_profile,
   redirect_uri: 'https://argu.co/'
 )
+
+Notification.update_all(read_at: nil)
 
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')
 
