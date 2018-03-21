@@ -15,6 +15,12 @@ ADD Gemfile /usr/src/app/
 ADD Gemfile.lock /usr/src/app/
 RUN RAILS_ENV=production bundle install --deployment --frozen --clean --without development --path vendor/bundle
 
+ADD package.json /usr/src/app/
+ADD yarn.lock /usr/src/app/
+
+RUN npm install -g yarn
+RUN yarn
+
 COPY . /usr/src/app
 RUN rm -f /usr/src/app/config/database.yml
 RUN rm -f /usr/src/app/config/secrets.yml
@@ -47,9 +53,6 @@ ENV POSTGRESQL_ADDRESS = '192.168.99.100' \
     AWS_ID = '' \
     AWS_KEY = '' \
     FRESHDESK_SECRET = ''
-
-RUN npm install -g yarn
-RUN yarn
 
 ARG FRONTEND_HOSTNAME
 RUN yarn run build:production
