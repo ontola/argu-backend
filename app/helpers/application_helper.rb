@@ -58,6 +58,10 @@ module ApplicationHelper
     "dist/controllers/#{path.join('/')}_bundle.js"
   end
 
+  def form_authenticity_token(form_options: {})
+    request.headers['X-Client-Csrf-Token'] || super
+  end
+
   def image_tag(source, options = {})
     source = 'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=' if source.nil?
     super

@@ -79,7 +79,6 @@ export function _url (url, obj) {
 export function _authenticityHeader (options) {
     options = options || {};
     return Object.assign(options, {
-        'X-Argu-Back': 'true',
         'X-CSRF-Token': getAuthenticityToken(),
         'X-Requested-With': 'XMLHttpRequest'
     });
