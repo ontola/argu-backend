@@ -15,7 +15,7 @@ FactoryGirl.define do
     before(:create) do |page|
       page.profile ||= build(:profile, profileable: page)
       page.edge ||= Edge.new(owner: page, user: page.publisher, is_published: true)
-      page.profile.name = generate(:page_name)
+      page.profile.name = generate(:page_name) if page.profile.name.blank?
     end
   end
 end

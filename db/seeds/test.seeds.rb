@@ -23,7 +23,7 @@ page = FactorySeeder.create(
   :page,
   id: 0,
   last_accepted: Time.current,
-  profile: FactorySeeder.build(:profile, name: 'argu profile'),
+  profile: FactorySeeder.build(:profile, name: 'Argu page'),
   owner: staff.profile,
   shortname: FactorySeeder.build(:shortname, shortname: 'argu')
 )
@@ -86,6 +86,7 @@ token.update(
 freetown = FactorySeeder.create_forum(
   :with_follower,
   shortname_attributes: {shortname: 'freetown'},
+  name: 'Freetown',
   page: page,
   parent: page.edge,
   public_grant: 'participator'
@@ -95,13 +96,30 @@ holland = FactorySeeder.create_forum(
   page: page,
   parent: page.edge,
   shortname_attributes: {shortname: 'holland'},
+  name: 'Holland',
   discoverable: false,
   public_grant: 'none'
 )
+
+other_page = FactorySeeder.create(
+  :page,
+  shortname: FactorySeeder.build(:shortname, shortname: 'other_page'),
+  profile: FactorySeeder.build(:profile, name: 'Other page'),
+  base_color: '#800000'
+)
 FactorySeeder.create_forum(
-  parent: FactorySeeder.create(:page).edge,
+  parent: other_page.edge,
+  page: other_page,
   shortname_attributes: {shortname: 'other_page_forum'},
+  name: 'Other page forum',
   public_grant: 'participator'
+)
+FactorySeeder.create_forum(
+  parent: other_page.edge,
+  page: other_page,
+  shortname_attributes: {shortname: 'other_page_forum2'},
+  name: 'Other page forum2',
+  public_grant: 'spectator'
 )
 
 members_group =
@@ -160,3 +178,5 @@ unpublished_motion =
     edge_attributes: {argu_publication_attributes: {draft: true}}
   )
 FactorySeeder.create(:argument, parent: unpublished_motion.edge)
+
+Setting.set('suggested_forums', 'freetown,other_page_forum')
