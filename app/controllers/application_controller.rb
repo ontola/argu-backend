@@ -5,13 +5,13 @@ require 'argu/api'
 
 class ApplicationController < ActionController::Base
   include Argu::RuledIt
-  include Argu::ErrorHandling
   include Argu::Authorization
   include Argu::Announcements
+  include Argu::Controller::Common::Responses
+  include Argu::Controller::ErrorHandling
 
   include FrontendTransitionHelper
   include RedirectHelper
-  include Common::Responses
   include JsonApiHelper
   include NestedAttributesHelper
   include UsersHelper

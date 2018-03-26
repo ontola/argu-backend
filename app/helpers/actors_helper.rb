@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/errors/not_authorized'
-
 module ActorsHelper
   def managed_profiles_list
     @managed_profiles_list ||=

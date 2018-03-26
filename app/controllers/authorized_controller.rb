@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'argu/errors/not_a_user'
-
 class AuthorizedController < ApplicationController
   include Common::Setup
   include Common::Update
@@ -54,7 +52,7 @@ class AuthorizedController < ApplicationController
 
   def check_if_registered
     return unless current_user.guest?
-    raise Argu::Errors::NotAUser.new(r: redirect_url)
+    raise Argu::Errors::Unauthorized.new(r: redirect_url)
   end
 
   def collect_banners

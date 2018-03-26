@@ -8,8 +8,8 @@ module SPI
     include ActionController::Head
     include AbstractController::Logger
 
-    include Argu::ErrorHandling::DataStructures
-    include Argu::ErrorHandling::Helpers
+    include Argu::Controller::ErrorHandling::DataStructures
+    include Argu::Controller::ErrorHandling::Helpers
 
     def create
       return if doorkeeper_authorize! :service

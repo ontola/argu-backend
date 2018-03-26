@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'argu/errors/not_authorized'
+require 'argu/errors/forbidden'
 
 module Argu
   module RuledIt
@@ -12,7 +12,7 @@ module Argu
         policy = policy!(user, record)
 
         unless policy.public_send(query)
-          raise Argu::Errors::NotAuthorized.new(
+          raise Argu::Errors::Forbidden.new(
             query: query,
             record: record,
             policy: policy
@@ -31,7 +31,7 @@ module Argu
       policy = policy(record)
 
       unless policy.public_send(query, *opts)
-        raise Argu::Errors::NotAuthorized.new(
+        raise Argu::Errors::Forbidden.new(
           query: query,
           record: record,
           policy: policy

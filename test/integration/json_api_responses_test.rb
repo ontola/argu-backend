@@ -25,7 +25,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unauthorized',
-                   message: 'You must authenticate before you can continue.',
+                   message: 'Please sign in to continue',
                    code: 'NOT_A_USER'
                  )
   end
@@ -48,28 +48,28 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Forbidden',
-                   message: "You're not authorized for that action. (create)",
+                   message: "You're not authorized for this action. (create)",
                    code: 'NOT_AUTHORIZED'
                  )
   end
 
-  test 'user should get 400 with empty body' do
+  test 'user should get 422 with empty body' do
     sign_in user
     post motion_arguments_url(motion),
          params: {
            format: :json_api
          }
 
-    assert_response 400
+    assert_response 422
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   status: 'Bad Request',
+                   status: 'Unprocessable Entity',
                    message: 'param is missing or the value is empty: argument',
-                   code: 'BAD_REQUEST'
+                   code: 'PARAMETER_MISSING'
                  )
   end
 
-  test 'user should get 400 with empty data' do
+  test 'user should get 422 with empty data' do
     sign_in user
     post motion_arguments_url(motion),
          params: {
@@ -77,12 +77,12 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
            data: {}
          }
 
-    assert_response 400
+    assert_response 422
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   status: 'Bad Request',
+                   status: 'Unprocessable Entity',
                    message: 'param is missing or the value is empty: argument',
-                   code: 'BAD_REQUEST'
+                   code: 'PARAMETER_MISSING'
                  )
   end
 
@@ -99,12 +99,12 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
            }
          }
 
-    assert_response 400
+    assert_response 422
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   status: 'Bad Request',
+                   status: 'Unprocessable Entity',
                    message: 'param is missing or the value is empty: type',
-                   code: 'BAD_REQUEST'
+                   code: 'PARAMETER_MISSING'
                  )
   end
 
@@ -122,12 +122,12 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
            }
          }
 
-    assert_response 400
+    assert_response 422
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   status: 'Bad Request',
+                   status: 'Unprocessable Entity',
                    message: 'found unpermitted parameter: :type',
-                   code: 'BAD_REQUEST'
+                   code: 'UNPERMITTED_PARAMETERS'
                  )
   end
 
@@ -141,12 +141,12 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
            }
          }
 
-    assert_response 400
+    assert_response 422
     assert_equal parsed_body,
                  'errors' => json_api_errors(
-                   status: 'Bad Request',
+                   status: 'Unprocessable Entity',
                    message: 'param is missing or the value is empty: attributes',
-                   code: 'BAD_REQUEST'
+                   code: 'PARAMETER_MISSING'
                  )
   end
 

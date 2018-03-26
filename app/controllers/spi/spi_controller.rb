@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'argu'
+require 'argu/controller/error_handling/bad_credentials'
 
 module SPI
   class SPIController < ActionController::API
-    include Argu::ErrorHandling
+    include Argu::Controller::ErrorHandling
+    include Argu::Controller::ErrorHandling::BadCredentials
     include JsonApiHelper
     include Argu::RuledIt
     include OauthHelper
@@ -26,11 +28,8 @@ module SPI
 
     def handle_error(e)
       error_mode(e)
-      render json_api_error(error_status(e), json_error_hash(e))
+      error_response_json_api(e)
     end
-    alias handle_not_authorized_error handle_error
-    alias handle_bad_request handle_error
-    alias handle_record_not_found handle_error
 
     def set_guest_language; end
   end

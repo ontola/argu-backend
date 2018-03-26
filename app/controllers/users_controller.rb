@@ -82,7 +82,7 @@ class UsersController < AuthorizedController
               else
                 if current_user.guest?
                   flash[:error] = t('devise.failure.unauthenticated')
-                  raise Argu::Errors::NotAUser.new
+                  raise Argu::Errors::Unauthorized.new
                 end
                 current_user
               end

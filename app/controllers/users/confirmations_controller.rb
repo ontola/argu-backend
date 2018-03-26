@@ -30,7 +30,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       format.html do
         @original_token = params[resource_name].try(:[], :confirmation_token)
         self.resource = email_by_token!.user
-        raise Argu::Errors::NotAuthorized.new(query: :confirm?) if resource.encrypted_password.present?
+        raise Argu::Errors::Forbidden.new(query: :confirm?) if resource.encrypted_password.present?
 
         resource.assign_attributes(devise_parameter_sanitizer.sanitize(:sign_up))
 
@@ -41,7 +41,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
         end
       end
       format.json do
-        raise Argu::Errors::NotAuthorized.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
+        raise Argu::Errors::Forbidden.new(query: :confirm?) unless doorkeeper_scopes.include?('service')
         EmailAddress.find_by!(email: params[:email]).confirm
         head 200
       end

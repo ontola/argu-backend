@@ -38,7 +38,7 @@ class ShortnamesController < ParentableController
       end
   end
 
-  def handle_record_not_unique
+  def handle_record_not_unique_html
     authenticated_resource
       .errors
       .add(:owner, t('activerecord.errors.record_not_unique'))

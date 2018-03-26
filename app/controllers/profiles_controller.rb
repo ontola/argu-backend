@@ -50,7 +50,7 @@ class ProfilesController < ApplicationController
         end
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_204(resource, type) }
         end
       else
@@ -60,7 +60,7 @@ class ProfilesController < ApplicationController
         end
         format.json { respond_with_422(@profile, :json) }
         format.json_api { respond_with_422(@profile, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_422(@profile, type) }
         end
       end
@@ -109,7 +109,7 @@ class ProfilesController < ApplicationController
   end
 
   def user_or_redirect(redirect = nil)
-    raise Argu::Errors::NotAUser.new(r: redirect) if current_user.guest?
+    raise Argu::Errors::Unauthorized.new(r: redirect) if current_user.guest?
     current_user
   end
 end

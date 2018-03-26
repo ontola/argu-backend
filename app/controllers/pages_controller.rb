@@ -106,7 +106,7 @@ class PagesController < EdgeableController
     redirect_to(delete_page_path(resource))
   end
 
-  def handle_not_authorized_error(exception)
+  def handle_forbidden_html(_exception)
     us_po = policy(current_user) unless current_user.guest?
     return super unless us_po&.max_pages_reached? && request.format.html?
     errors = {}

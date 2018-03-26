@@ -86,7 +86,7 @@ class PolicyTest < ActiveSupport::TestCase
       result =
         begin
           policy(subject, send(user)).send("#{action}?")
-        rescue Argu::Errors::NotAuthorized
+        rescue Argu::Errors::Forbidden
           false
         end
       if expected

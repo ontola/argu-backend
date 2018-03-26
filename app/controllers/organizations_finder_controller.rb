@@ -7,7 +7,7 @@ class OrganizationsFinderController < AuthorizedController
   def show
     @organization = authenticated_resource.parent_model(:page) || raise(ActiveRecord::RecordNotFound)
     respond_to do |format|
-      Common::RDF_CONTENT_TYPES.each do |type|
+      RDF_CONTENT_TYPES.each do |type|
         format.send(type) { render type => Blank.new, meta: meta }
       end
     end

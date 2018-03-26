@@ -360,7 +360,7 @@ class VotesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_not_authorized
+    assert_response :forbidden
   end
 
   test 'user should post create pro json_api for linked record' do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'argu'
-require 'argu/controller/error_handling'
+require 'argu/controller/error_handling/bad_credentials'
 
 module Oauth
   class TokensController < Doorkeeper::TokensController
@@ -14,7 +14,8 @@ module Oauth
     include ActionController::Redirecting
     include ActionController::Rescue
     include Rails.application.routes.url_helpers
-    include Argu::ErrorHandling
+    include Argu::Controller::ErrorHandling
+    include Argu::Controller::ErrorHandling::BadCredentials
 
     ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
     FRONTEND_HOST = URI(Rails.configuration.frontend_url).host.freeze

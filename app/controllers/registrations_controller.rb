@@ -51,14 +51,14 @@ class RegistrationsController < Devise::RegistrationsController
         end
         format.json { respond_with_204(@user, :json) }
         format.json_api { respond_with_204(@user, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_204(@user, type) }
         end
       else
         format.html { render action: 'cancel' }
         format.json { respond_with_422(@user, :json) }
         format.json_api { respond_with_422(@user, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_422(@user, type) }
         end
       end

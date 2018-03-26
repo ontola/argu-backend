@@ -4,7 +4,7 @@ require 'argu'
 
 # app/controllers/oauth/applications_controller.rb
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
-  include Argu::ErrorHandling
+  include Argu::Controller::ErrorHandling
   include OauthHelper
   respond_to :html
 
@@ -27,6 +27,6 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   private
 
   def authenticate_admin!
-    raise Argu::Errors::NotAuthorized.new(query: "#{params[:action]}?") unless current_user&.is_staff?
+    raise Argu::Errors::Forbidden.new(query: "#{params[:action]}?") unless current_user&.is_staff?
   end
 end

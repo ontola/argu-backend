@@ -65,7 +65,7 @@ module Users
             format: :json,
             email: user.email
           }
-      assert_not_authorized
+      assert_response :forbidden
       assert_not user.reload.confirmed?
     end
 
@@ -181,7 +181,7 @@ module Users
             format: :json,
             email: user.email
           }
-      assert_not_authorized
+      assert_response :forbidden
       assert_not user.reload.confirmed?
     end
 

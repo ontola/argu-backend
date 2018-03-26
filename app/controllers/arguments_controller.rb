@@ -28,7 +28,7 @@ class ArgumentsController < EdgeableController
     format.html { render text: 'Bad request', status: 400 }
     format.json { respond_with_400(resource, :json) }
     format.json_api { respond_with_400(resource, :json_api) }
-    Common::RDF_CONTENT_TYPES.each do |type|
+    RDF_CONTENT_TYPES.each do |type|
       format.send(type) { respond_with_400(resource, type) }
     end
   end

@@ -111,8 +111,6 @@ nl:
     404: "Het item is niet gevonden, probeer de pagina te verversen."
     429: "Je maakt te veel verzoeken, probeer het over halve minuut nog eens."
     500: "Er ging iets aan onze kant fout, probeer het later nog eens."
-  errors:
-    general: "Er is iets fout gegaan herlaad de pagina of probeer het later nog eens."
   outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. Het kan zijn dat daarom niet alles op deze website werkt. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   view_settings: "Weergave"
   share_link:

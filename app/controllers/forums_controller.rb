@@ -43,12 +43,6 @@ class ForumsController < EdgeableController
 
   protected
 
-  def correct_stale_record_version
-    resource_by_id.reload.attributes = permit_params.reject do |attrb, _value|
-      attrb.to_sym == :lock_version
-    end
-  end
-
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
     render 'settings', locals: {

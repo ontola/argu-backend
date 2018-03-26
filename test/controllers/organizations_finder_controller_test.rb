@@ -61,7 +61,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'guest should get show organization of hidden motion' do
     get :show, params: {iri: helsinki_motion.iri, format: :nt}
 
-    assert_not_authorized
+    assert_response :forbidden
   end
 
   test 'guest should get show organization of deku iri' do
@@ -118,7 +118,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
 
     get :show, params: {iri: helsinki_motion.iri, format: :nt}
 
-    assert_not_authorized
+    assert_response :forbidden
   end
 
   test 'user should get show organization of deku iri' do

@@ -57,7 +57,7 @@ module EdgeTree
         format.html { respond_with_redirect_failure(resource, :trash) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_422(resource, type) }
         end
         format.js
@@ -68,7 +68,7 @@ module EdgeTree
         format.html { respond_with_redirect_success(resource, :trash) }
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_204(resource, type) }
         end
         format.js
@@ -79,7 +79,7 @@ module EdgeTree
         format.html { respond_with_redirect_failure(resource, :untrash) }
         format.json { respond_with_422(resource, :json) }
         format.json_api { respond_with_422(resource, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_422(resource, type) }
         end
         format.js
@@ -90,7 +90,7 @@ module EdgeTree
         format.html { respond_with_redirect_success(resource, :untrash) }
         format.json { respond_with_204(resource, :json) }
         format.json_api { respond_with_204(resource, :json_api) }
-        Common::RDF_CONTENT_TYPES.each do |type|
+        RDF_CONTENT_TYPES.each do |type|
           format.send(type) { respond_with_204(resource, type) }
         end
         format.js

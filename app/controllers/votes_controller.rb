@@ -28,7 +28,7 @@ class VotesController < EdgeableController
                locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
       end
       format.json_api { respond_with_304(create_service.resource, :json_api) }
-      Common::RDF_CONTENT_TYPES.each do |type|
+      RDF_CONTENT_TYPES.each do |type|
         format.send(type) { respond_with_304(create_service.resource, type) }
       end
       format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
