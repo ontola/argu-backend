@@ -10,6 +10,10 @@ class IriHelperTest < ActiveSupport::TestCase
     assert_equal resource_from_iri(argu_url('/freetown')), freetown
   end
 
+  test 'should find forum by a subview iri' do
+    assert_equal resource_from_iri(argu_url('/freetown/settings')), freetown
+  end
+
   test 'should find forum by its cannonical iri' do
     assert_equal resource_from_iri(argu_url("/edges/#{freetown.edge.uuid}")), freetown.edge
   end

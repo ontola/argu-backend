@@ -17,7 +17,7 @@ module IRIHelper
   def id_and_type_from_iri(iri)
     return {} unless argu_iri_or_relative?(iri)
     parent = Rails.application.routes.recognize_path(iri)
-    return {} unless parent[:action] == 'show' && parent[:id].present? && parent[:controller].present?
+    return {} unless parent[:id].present? && parent[:controller].present?
     {id: parent[:id], type: parent[:controller].singularize}
   rescue ActionController::RoutingError
     {}

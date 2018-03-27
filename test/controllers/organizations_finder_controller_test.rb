@@ -168,4 +168,27 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     assert_response 200
     assert_equal helsinki.page, assigns(:organization)
   end
+
+  ####################################
+  # As Administrator
+  ####################################
+  let(:administrator) { create_administrator(freetown) }
+
+  test 'administrator should get show organization of motion form' do
+    sign_in administrator
+
+    get :show, params: {iri: argu_url("/m/#{motion.id}/edit"), format: :nt}
+
+    assert_response 200
+    assert_equal argu, assigns(:organization)
+  end
+
+  test 'administrator should get show organization of forum settings' do
+    sign_in administrator
+
+    get :show, params: {iri: argu_url("/#{freetown.url}/settings"), format: :nt}
+
+    assert_response 200
+    assert_equal argu, assigns(:organization)
+  end
 end
