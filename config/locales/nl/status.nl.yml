@@ -13,6 +13,7 @@ nl:
     s_403:
       header: "Dit item is verborgen"
       sign_in: "Misschien lukt het wel als je eerst inlogt:"
+      iframe: "Probeer in te loggen"
     s_404:
       header: "Dit item is niet gevonden"
       body: "Misschien is het item dat je zoekt verwijderd of heeft het nooit bestaan."
