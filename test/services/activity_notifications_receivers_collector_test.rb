@@ -21,15 +21,16 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
   test 'should collect direct followers for notifications' do
     Follow.destroy_all
     # should be collected for direct mailing
-    create_follow_and_notification_pair(blog_post, :follows_reactions_directly, :follows_news_directly)
-    create_follow_and_notification_pair(argument, :follows_reactions_directly, :follows_news_directly)
-    create_follow_and_notification_pair(blog_post, :follows_reactions_weekly, :follows_news_directly)
-    create_follow_and_notification_pair(argument, :follows_reactions_directly, :follows_news_weekly)
+    follow_and_notification_pair(blog_post, :follows_reactions_directly, :follows_news_directly)
+    follow_and_notification_pair(argument, :follows_reactions_directly, :follows_news_directly)
+    follow_and_notification_pair(blog_post, :follows_reactions_weekly, :follows_news_directly)
+    follow_and_notification_pair(argument, :follows_reactions_directly, :follows_news_weekly)
     # should be collected for weekly mailing
-    create_follow_and_notification_pair(blog_post, :follows_reactions_weekly, :follows_news_weekly)
-    create_follow_and_notification_pair(argument, :follows_reactions_weekly, :follows_news_weekly)
-    create_follow_and_notification_pair(blog_post, :follows_reactions_directly, :follows_news_weekly)
-    create_follow_and_notification_pair(argument, :follows_reactions_weekly, :follows_news_directly)
+    follow_and_notification_pair(blog_post, :follows_reactions_weekly, :follows_news_weekly)
+    follow_and_notification_pair(argument, :follows_reactions_weekly, :follows_news_weekly)
+    follow_and_notification_pair(blog_post, :follows_reactions_directly, :follows_news_weekly)
+    follow_and_notification_pair(argument, :follows_reactions_weekly, :follows_news_directly)
+    follow_and_notification_pair(argument, :follows_reactions_directly, :follows_news_weekly, :not_accepted_terms)
 
     direct_user_ids = ActivityNotificationsReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call
     assert_equal 4, direct_user_ids.count
@@ -39,13 +40,13 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
   end
 
   test 'should not collect followers that have been mailed already' do
-    create_follow_and_notification_pair(
+    follow_and_notification_pair(
       blog_post,
       :follows_reactions_weekly,
       :follows_news_weekly,
       :viewed_notifications_now
     )
-    create_follow_and_notification_pair(
+    follow_and_notification_pair(
       argument,
       :follows_reactions_weekly,
       :follows_news_weekly,
@@ -58,8 +59,9 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
 
   private
 
-  def create_follow_and_notification_pair(trackable, reactions, news, viewed = :viewed_notifications_hour_ago)
-    user = create(:user, reactions, news, viewed)
+  def follow_and_notification_pair(trackable, *traits)
+    traits.append(:viewed_notifications_hour_ago) if traits.none? { |t| t.to_s.include?('viewed_notifications') }
+    user = create(:user, *(traits - [:not_accepted_terms]))
     create(:follow,
            followable: trackable.edge,
            follower: user)
@@ -73,5 +75,7 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
            activity: trackable.activities.first,
            user: user,
            created_at: 1.day.ago)
+
+    user.update!(last_accepted: nil) if traits.include?(:not_accepted_terms)
   end
 end
