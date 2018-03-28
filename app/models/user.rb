@@ -96,7 +96,7 @@ class User < ApplicationRecord
   end
 
   def accept_terms!(skip_set_password_mail = false)
-    update!(last_accepted: Time.current)
+    update!(last_accepted: Time.current, notifications_viewed_at: Time.current)
     return if skip_set_password_mail || encrypted_password.present?
     token = set_reset_password_token
     SendEmailWorker.perform_async(:set_password, id, passwordToken: token)
