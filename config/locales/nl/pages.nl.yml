@@ -4,6 +4,8 @@ nl:
     type: "Organisatie"
     plural: "Organisaties"
     show: "Organisatie weergeven"
+    discover: "Ontdek organisaties"
+    discover_header: "Ontdek"
     settings:
       title: "Organisatie instellingen"
       menu:

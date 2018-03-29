@@ -46,29 +46,23 @@ class ApplicationMenuList < MenuList
     menu_item(
       :discover,
       image: 'fa-compass',
-      label: I18n.t('forums.discover'),
-      href: discover_forums_url
+      label: I18n.t('pages.discover'),
+      href: pages_url(page: 1, type: :paginated)
     )
   end
 
-  def organizations_menu
-    menu_item(:organizations, image: 'fa-comments', menus: -> { page_links.append(discover_link) })
+  def favorite_pages
+    return Page.none if user.guest?
+    @favorite_pages ||=
+      Page
+        .joins(forums: {edge: :favorites})
+        .where(favorites: {user_id: user.id})
+        .includes(:shortname, profile: :default_profile_photo)
   end
 
-  def page_links
-    pages =
-      if user.guest?
-        Page
-          .joins(forums: :shortname)
-          .where(shortnames: {shortname: Setting.get('suggested_forums')&.split(',')&.map(&:strip)})
-          .includes(:shortname, profile: :default_profile_photo)
-      else
-        Page
-          .joins(forums: {edge: :favorites})
-          .where(favorites: {user_id: user.id})
-          .includes(:shortname, profile: :default_profile_photo)
-      end
-    policy_scope(pages)
+  def favorite_page_links
+    return if favorite_pages.blank?
+    policy_scope(favorite_pages)
       .distinct
       .map do |page|
       menu_item(
@@ -78,6 +72,50 @@ class ApplicationMenuList < MenuList
         href: page.iri
       )
     end
+  end
+
+  def organizations_menu
+    menu_item(
+      :organizations,
+      image: 'fa-comments',
+      menus: -> { [favorite_page_links, public_page_links, discover_link].flatten }
+    )
+  end
+
+  def public_pages
+    @public_pages ||=
+      Page
+        .joins(forums: [:shortname, edge: :grants])
+        .order('edges.follows_count DESC')
+        .where(
+          forums: {discoverable: true},
+          grants: {group_id: Group::PUBLIC_ID},
+          shortnames: {shortname: Setting.get('suggested_forums')&.split(',')&.map(&:strip)}
+        )
+        .includes(:shortname, profile: :default_profile_photo)
+  end
+
+  def public_page_links
+    return if favorite_pages.count > 20 || public_pages.blank?
+    menu_items = lambda {
+      (policy_scope(public_pages) - favorite_pages)
+        .uniq
+        .map do |page|
+        menu_item(
+          page.url,
+          image: page.profile.try(:default_profile_photo),
+          label: page.display_name,
+          href: page.iri
+        )
+      end
+    }
+    return menu_items.call if favorite_pages.count.zero?
+    menu_item(
+      :public_pages,
+      label: I18n.t('pages.discover_header'),
+      type: NS::ARGU[:MenuSection],
+      menus: menu_items
+    )
   end
 
   def user_links

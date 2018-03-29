@@ -4,6 +4,8 @@ en:
     type: "Organization"
     plural: "Organizations"
     show: "Show organization"
+    discover: "Discover organizations"
+    discover_header: "Discover"
     settings:
       title: "Organization settings"
       menu:

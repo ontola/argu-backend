@@ -58,12 +58,13 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path(format: :nt)
 
     assert_response 200
-    expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:OrganizationsMenu])
+    expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(RDF::URI(argu_url('/menus/user')), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(RDF::URI(argu_url('/menus/info')), RDF[:type], NS::ARGU[:MenuItem])
 
     sequence = expect_sequence(RDF::URI(argu_url('/menus/organizations')), NS::ARGU[:menuItems])
-    expect_sequence_member(sequence, 0, RDF::URI(argu_url('/menus/organizations', fragment: 'discover')))
-    expect_sequence_size(sequence, 1)
+    expect_sequence_member(sequence, 0, RDF::URI(argu_url('/menus/organizations', fragment: Page.last.url)))
+    expect_sequence_member(sequence, 1, RDF::URI(argu_url('/menus/organizations', fragment: 'discover')))
+    expect_sequence_size(sequence, 2)
   end
 end
