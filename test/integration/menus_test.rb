@@ -26,7 +26,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     get menus_path(format: :nt)
 
     assert_response 200
-    expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:OrganizationsMenu])
+    expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(RDF::URI(argu_url('/menus/user')), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(RDF::URI(argu_url('/menus/info')), RDF[:type], NS::ARGU[:MenuItem])
 
@@ -40,7 +40,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     get page_menus_path(argu, format: :nt)
 
     assert_response 200
-    expect_triple(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), RDF[:type], NS::ARGU[:NavigationsMenu])
+    expect_triple(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), RDF[:type], NS::ARGU[:MenuItem])
     sequence = expect_sequence(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), NS::ARGU[:menuItems])
     expect_sequence_member(sequence, 0, custom_menu_item.iri)
     forums = expect_sequence_member(sequence, 1, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums"))

@@ -20,8 +20,7 @@ class ApplicationMenuList < MenuList
           menu_item(:support, label: I18n.t('help_support'), href: 'https://argu.freshdesk.com/support/home'),
           menu_item(:contact, label: I18n.t('about.contact'), href: info_url(:contact))
         ]
-      },
-      type: NS::ARGU[:MenuItem]
+      }
     )
   end
 
@@ -35,8 +34,7 @@ class ApplicationMenuList < MenuList
       label: resource.display_name,
       image: resource.profile.default_profile_photo.thumbnail,
       link_opts: {triggerClass: 'navbar-item', defaultAction: user_url(user)},
-      menus: -> { user_links },
-      type: NS::ARGU[:MenuItem]
+      menus: -> { user_links }
     )
   end
 
