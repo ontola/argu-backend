@@ -73,7 +73,7 @@ module HeaderHelper
     Forum
       .public_forums
       .includes(:shortname)
-      .select { |f| suggested_forums.include?(f.shortname.shortname) }
+      .where(shortnames: {shortname: suggested_forums})
       .first(limit)
       .each do |forum|
       items << link_item(
