@@ -247,6 +247,7 @@ class Edge < ApplicationRecord
   end
 
   def publish!
+    return if is_published
     self.class.transaction do
       update!(is_published: true)
       increment_counter_caches unless is_trashed?
@@ -270,6 +271,7 @@ class Edge < ApplicationRecord
       update!(trashed_at: Time.current)
       owner.destroy_notifications if owner.is_loggable?
       decrement_counter_caches if is_published?
+      owner.run_callbacks :trash
     end
     true
   end
@@ -285,32 +287,9 @@ class Edge < ApplicationRecord
     self.class.transaction do
       update!(trashed_at: nil)
       increment_counter_caches if is_published?
+      owner.run_callbacks :untrash
     end
     true
-  end
-
-  def decrement_counter_caches
-    return unless owner&.class&.counter_cache_options
-    owner.counter_cache_names.each do |counter_cache_name|
-      decrement_counter_cache(counter_cache_name)
-    end
-  end
-
-  def decrement_counter_cache(counter_cache_name)
-    parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) - 1
-    parent.save
-  end
-
-  def increment_counter_caches
-    return unless owner&.class&.counter_cache_options
-    owner.counter_cache_names.each do |counter_cache_name|
-      increment_counter_cache(counter_cache_name)
-    end
-  end
-
-  def increment_counter_cache(counter_cache_name)
-    parent.children_counts[counter_cache_name] = (parent.children_counts[counter_cache_name].to_i || 0) + 1
-    parent.save
   end
 
   def self.path_array(relation)
@@ -323,7 +302,20 @@ class Edge < ApplicationRecord
     "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}]"
   end
 
+  def reload(_opts = {})
+    @is_trashed = nil
+    @persisted_edge = nil
+    super
+  end
+
   private
+
+  def decrement_counter_caches
+    return unless owner&.class&.counter_cache_options
+    owner.counter_cache_names.each do |counter_cache_name|
+      self.class.update_children_count_statement(parent.id, counter_cache_name, :-)
+    end
+  end
 
   def destroy_children
     return if owner_type == 'Page'
@@ -333,6 +325,13 @@ class Edge < ApplicationRecord
   def destroy_redis_children
     keys = RedisResource::Key.new(path: "#{path}.*").matched_keys.map(&:key)
     Argu::Redis.redis_instance.del(*keys) if keys.present?
+  end
+
+  def increment_counter_caches
+    return unless owner&.class&.counter_cache_options
+    owner.counter_cache_names.each do |counter_cache_name|
+      self.class.update_children_count_statement(parent.id, counter_cache_name, :+)
+    end
   end
 
   def requires_location?
@@ -345,5 +344,13 @@ class Edge < ApplicationRecord
 
   def set_user_id
     self.user_id = owner.publisher.present? ? owner.publisher.id : 0
+  end
+
+  class << self
+    def update_children_count_statement(id, name, operation)
+      query = 'children_counts = children_counts || hstore(?, (cast(COALESCE(children_counts -> ?, \'0\') AS int) '\
+              "#{operation} 1)::text)"
+      Edge.where(id: id).update_all(sanitize_sql([query, name, name]))
+    end
   end
 end

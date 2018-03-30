@@ -8,10 +8,14 @@ class Vote < Edgeable::Base
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id', inverse_of: :votes
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
-  before_save :decrement_previous_counter_cache, unless: :new_record?
+  before_create :trash_primary_votes
   before_save :sanitize_explanation, if: :explanation_changed?
   before_save :up_and_downvote_arguments
+  after_trash :remove_primary
+
   define_model_callbacks :redis_save, only: :before
+  before_redis_save :trash_primary_votes
+  before_redis_save :remove_other_temporary_votes
   before_redis_save :sanitize_explanation, if: :explanation_changed?
   before_redis_save :up_and_downvote_arguments
   before_redis_save :create_confirmation_reminder_notification
@@ -62,11 +66,6 @@ class Vote < Edgeable::Base
       end
   end
 
-  def decrement_previous_counter_cache
-    return unless for_changed? || explanation_changed?
-    edge.decrement_counter_cache("votes_#{for_was}")
-  end
-
   # Needed for ActivityListener#audit_data
   def display_name
     "#{self.for} vote for #{parent_model.display_name}"
@@ -102,9 +101,27 @@ class Vote < Edgeable::Base
 
   private
 
+  def remove_other_temporary_votes
+    key = RedisResource::Resource.new(resource: self).send(:key).key
+    Argu::Redis.delete_all(Argu::Redis.keys(key.gsub(".#{edge.id}.", '.*.')) - [key])
+  end
+
+  def remove_primary
+    update!(primary: false)
+  end
+
   def sanitize_explanation
     self.explanation = explanation.presence
     self.explained_at = explanation.present? ? Time.current : nil
+  end
+
+  def trash_primary_votes
+    creator
+      .votes
+      .untrashed
+      .where(voteable_id: voteable_id, voteable_type: voteable_type)
+      .where('? IS NULL OR votes.id != ?', id, id)
+      .find_each { |primary| primary.edge.trash }
   end
 
   def up_and_downvote_arguments

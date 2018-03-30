@@ -4,12 +4,12 @@ module VotesHelper
   def preload_user_votes(voteable_ids)
     @user_votes = if current_user.confirmed?
                     Edge
-                      .where_owner('Vote', creator: current_profile)
+                      .where_owner('Vote', creator: current_profile, primary: true)
                       .where(parent_id: voteable_ids)
                       .includes(owner: :creator)
                       .eager_load!
                   else
-                    Edge.where_owner('Vote', creator: current_profile)
+                    Edge.where_owner('Vote', primary: true, creator: current_profile)
                   end
   end
 

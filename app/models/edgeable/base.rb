@@ -5,6 +5,8 @@ module Edgeable
     self.abstract_class = true
     include Parentable
     include Ldable
+    define_model_callbacks :trash, only: :after
+    define_model_callbacks :untrash, only: :after
 
     has_one :edge,
             as: :owner,

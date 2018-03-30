@@ -41,7 +41,7 @@ class CounterCacheTest < ActiveSupport::TestCase
   end
 
   test 'fix counts for motion' do
-    assert_counts(motion, blog_posts: 1, arguments_pro: 3, arguments_con: 2)
+    assert_counts(motion, blog_posts: 1, arguments_pro: 2, arguments_con: 2)
     assert_counts(motion.default_vote_event, votes_pro: 3, votes_con: 3, votes_neutral: 3)
     assert_counts(other_motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
     assert_counts(other_motion.default_vote_event, votes_pro: 0, votes_con: 0, votes_neutral: 0)

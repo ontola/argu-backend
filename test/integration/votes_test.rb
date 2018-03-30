@@ -239,11 +239,13 @@ class VotesTest < ActionDispatch::IntegrationTest
     get motion_vote_event_vote_path(motion.id, vote_event.id, format: :json_api)
     assert_response 200
     assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
-    assert_differences([['Vote.pro.count', -1], ['Vote.con.count', 1], ['Argu::Redis.keys("temporary.*").count', 0]]) do
+    assert_differences([['Vote.untrashed.pro.count', -1],
+                        ['Argu::Redis.keys("temporary.*").count', 0]]) do
       assert vote.pro?
+      assert_not vote.edge.is_trashed?
       assert RedisResource::Relation.where(publisher: creator).first.resource.pro?
       post motion_vote_event_votes_path(motion.id, vote_event.id, format: :json_api, vote: {for: :con})
-      assert vote.reload.con?
+      assert vote.edge.reload.is_trashed?
       assert RedisResource::Relation.where(publisher: creator).first.resource.con?
     end
     assert_response 201
@@ -472,7 +474,8 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should post update side json' do
     sign_in creator
 
-    assert_differences([['Vote.count', 0],
+    assert_differences([['Vote.count', 1],
+                        ['Vote.untrashed.count', 0],
                         ['Activity.count', 0],
                         ['vote_event.reload.total_vote_count', 0],
                         ['vote_event.children_count(:votes_pro)', -1],
@@ -488,12 +491,13 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-    assert_analytics_collected('votes', 'update', 'con')
+    assert_analytics_collected('votes', 'create', 'con')
   end
 
   test 'creator should post update explanation json' do
     sign_in creator
     assert_differences([['Vote.count', 0],
+                        ['Vote.untrashed.count', 0],
                         ['vote_event.reload.total_vote_count', 0],
                         ['vote_event.children_count(:votes_pro)', 0],
                         ['vote_event.children_count(:votes_con)', 0]]) do
@@ -514,7 +518,8 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should post update json_api' do
     sign_in creator
 
-    assert_differences([['Vote.count', 0],
+    assert_differences([['Vote.count', 1],
+                        ['Vote.untrashed.count', 0],
                         ['vote_event.reload.total_vote_count', 0],
                         ['vote_event.children_count(:votes_pro)', -1],
                         ['vote_event.children_count(:votes_con)', 1]]) do

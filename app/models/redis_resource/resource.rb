@@ -10,6 +10,16 @@ module RedisResource
       remove_from_redis
     end
 
+    def key
+      @key ||= RedisResource::Key.new(
+        user_type: resource.publisher.class.name,
+        user_id: resource.publisher.id,
+        owner_type: resource.class.name,
+        edge_id: resource.edge.id,
+        path: resource.edge.parent.path
+      )
+    end
+
     def persist(user)
       if Edge.where(user: user, owner_type: resource.class.name, parent_id: resource.edge.parent_id).any?
         Argu::Redis.delete(key.key)
@@ -43,16 +53,6 @@ module RedisResource
     end
 
     private
-
-    def key
-      @key ||= RedisResource::Key.new(
-        user_type: resource.publisher.class.name,
-        user_id: resource.publisher.id,
-        owner_type: resource.class.name,
-        edge_id: resource.edge.id,
-        path: resource.edge.parent.path
-      )
-    end
 
     def remove_from_redis
       raise ActiveRecord::RecordNotFound if key.blank?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180209124354) do
+ActiveRecord::Schema.define(version: 20180330090345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -680,8 +680,10 @@ ActiveRecord::Schema.define(version: 20180209124354) do
     t.integer "publisher_id", null: false
     t.text "explanation"
     t.datetime "explained_at"
+    t.integer "comment_id"
+    t.boolean "primary", default: true, null: false
     t.index ["creator_id"], name: "index_votes_on_creator_id"
-    t.index ["voteable_id", "voteable_type", "creator_id"], name: "index_votes_on_voteable_id_and_voteable_type_and_creator_id", unique: true
+    t.index ["voteable_id", "voteable_type", "creator_id", "primary"], name: "index_votes_on_voteable_id_and_voteable_type_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type"
   end
 
@@ -765,6 +767,7 @@ ActiveRecord::Schema.define(version: 20180209124354) do
   add_foreign_key "vote_events", "users", column: "publisher_id"
   add_foreign_key "vote_matches", "profiles", column: "creator_id"
   add_foreign_key "vote_matches", "users", column: "publisher_id"
+  add_foreign_key "votes", "comments"
   add_foreign_key "votes", "profiles", column: "creator_id"
   add_foreign_key "votes", "users", column: "publisher_id"
 end

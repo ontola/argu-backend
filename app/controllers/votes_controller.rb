@@ -152,7 +152,8 @@ class VotesController < EdgeableController
   def resource_new_params
     HashWithIndifferentAccess.new(
       publisher: current_user,
-      for: for_param
+      for: for_param,
+      primary: true
     )
   end
 end

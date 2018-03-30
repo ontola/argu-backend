@@ -26,6 +26,12 @@ module Argu
       rescue_redis_connection_error(e)
     end
 
+    def self.delete_all(keys, redis = redis_instance)
+      redis.del(*keys) if keys.present?
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+    end
+
     def self.get(key, redis = redis_instance)
       redis.get(key)
     rescue ::Redis::CannotConnectError => e
