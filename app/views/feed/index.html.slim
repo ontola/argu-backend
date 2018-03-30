@@ -21,7 +21,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
               =t('feed_filter.complete')
         - if authenticated_resource.parent&.is_loggable?
             span.btn.btn-subtle
-              =link_to url_for([:log, edge_id: authenticated_resource.parent.id]) do
+              =link_to url_for([:log, edge_id: authenticated_resource.parent.edge.id]) do
                 span.fa.fa-history
                 span.icon-left
                   =t('log')
