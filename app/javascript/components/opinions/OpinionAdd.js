@@ -12,12 +12,12 @@ const OpinionAdd = props => {
             <section className="section--bottom">
                 <div>
                     {confirmHeader}
-                    <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
                     <div>
                         <textarea
                             name="opinion-body"
                             className="form-input-content"
                             onClick={onOpenOpinionForm}
+                            placeholder={I18n.t('opinions.form.placeholder')}
                             value={newExplanation}/>
                     </div>
                 </div>

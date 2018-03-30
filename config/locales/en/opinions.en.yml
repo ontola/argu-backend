@@ -3,9 +3,7 @@ en:
     plural: "Opinions"
     form:
       confirm_notice: "Please confirm your vote by clicking the link we've send to"
-      header:
-        confirmed: "Thanks for your vote. Would you like to comment on your opinion?"
-        unconfirmed: "Would you like to comment on your opinion?"
+      placeholder: "Explain your opinion (optional)"
       arguments: "Which arguments are important to you?"
       edit: "Edit"
       cancel: "Cancel"

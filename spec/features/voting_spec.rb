@@ -139,6 +139,8 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_css('.opinion-form')
 
     within('.opinion-form') do
+      expect(page).to have_field('opinion-body')
+
       fill_in 'opinion-body', with: 'This is my opinion'
 
       find('.opinion-form__arguments-selector .box-list-item--subtle a', text: 'Add pro').click
@@ -148,10 +150,9 @@ RSpec.feature 'Voting', type: :feature do
         fill_in 'argument-body', with: 'Argument body'
         click_button 'Save'
       end
-      expect(page).to have_content('Thanks for your vote')
       click_button 'Save'
     end
-    expect(page).not_to have_content('Thanks for your vote')
+    expect(page).not_to have_field('opinion-body')
 
     visit motion_path(motion)
     expect(page).to have_content('Comments')
@@ -164,7 +165,7 @@ RSpec.feature 'Voting', type: :feature do
       find('label.pro-t').click
       click_button 'Save'
     end
-    expect(page).not_to have_content('Thanks for your vote')
+    expect(page).not_to have_field('opinion-body')
 
     visit motion_path(motion)
     expect(page).to have_content('Comments')

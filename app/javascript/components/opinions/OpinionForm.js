@@ -78,13 +78,13 @@ const OpinionForm = React.createClass({
                     <div>
                         {confirmHeader}
                         {argumentSelection}
-                        <label>{I18n.t(`opinions.form.header.${actor.confirmed ? 'confirmed' : 'unconfirmed'}`)}</label>
                         <div>
                             <textarea
                                 name="opinion-body"
                                 autoFocus
                                 className="form-input-content"
                                 onChange={onExplanationChange}
+                                placeholder={I18n.t('opinions.form.placeholder')}
                                 value={newExplanation}/>
                         </div>
                     </div>
