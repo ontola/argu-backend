@@ -31,7 +31,7 @@ const OpinionMixin = {
     },
 
     argumentSelectionChangeHandler (e) {
-        this.setState({ newSelectedArguments: e });
+        this.setState({ selectedArguments: e });
     },
 
     argumentHandler (e) {
@@ -68,8 +68,6 @@ const OpinionMixin = {
                         });
                         const selectedArguments = this.state.selectedArguments.slice();
                         selectedArguments.push(id);
-                        const newSelectedArguments = this.state.newSelectedArguments.slice();
-                        newSelectedArguments.push(id);
                         this.setState({
                             argumentForm: false,
                             arguments: args,
@@ -80,8 +78,7 @@ const OpinionMixin = {
                                 body: ''
                             },
                             selectedArguments,
-                            submitting: false,
-                            newSelectedArguments
+                            submitting: false
                         });
                     }
                 }
@@ -223,13 +220,12 @@ const OpinionMixin = {
 
     opinionHandler (e) {
         e.preventDefault();
-        const { currentVote, newExplanation, newSelectedArguments } = this.state;
+        const { currentVote, newExplanation } = this.state;
         this.setState({ submitting: true });
         fetch(`${this.props.vote_path}.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
                 vote: {
-                    argument_ids: newSelectedArguments,
                     explanation: newExplanation,
                     for: currentVote
                 }
@@ -241,7 +237,6 @@ const OpinionMixin = {
                     this.setState(Object.assign({}, data.vote, {
                         opinionForm: false,
                         currentExplanation: { explanation: this.state.newExplanation, explained_at: new Date },
-                        selectedArguments: this.state.newSelectedArguments,
                         submitting: false
                     }));
                 } else {

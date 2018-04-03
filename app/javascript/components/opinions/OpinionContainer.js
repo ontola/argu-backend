@@ -29,7 +29,6 @@ const OpinionContainerProps = {
     forgotPassword: React.PropTypes.object.isRequired,
     newArgumentButtons: React.PropTypes.bool.isRequired,
     newExplanation: React.PropTypes.string,
-    newSelectedArguments: React.PropTypes.array.isRequired,
     onArgumentChange: React.PropTypes.func.isRequired,
     onArgumentSelectionChange: React.PropTypes.func.isRequired,
     onCloseOpinionForm: React.PropTypes.func.isRequired,

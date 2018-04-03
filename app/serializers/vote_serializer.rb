@@ -9,8 +9,6 @@ class VoteSerializer < BaseEdgeSerializer
     object.parent_model.voteable
   end
 
-  has_many :upvoted_arguments, predicate: NS::ARGU[:upvotedArguments]
-
   def option
     case object.for
     when 'pro'

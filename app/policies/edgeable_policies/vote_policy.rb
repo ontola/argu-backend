@@ -14,7 +14,7 @@ class VotePolicy < EdgeablePolicy
 
   def permitted_attributes
     attributes = super
-    attributes.concat [:explanation, argument_ids: []]
+    attributes.append :explanation
     attributes
   end
 

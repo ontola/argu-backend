@@ -10,17 +10,14 @@ class Vote < Edgeable::Base
   belongs_to :forum
   before_create :trash_primary_votes
   before_save :sanitize_explanation, if: :explanation_changed?
-  before_save :up_and_downvote_arguments
   after_trash :remove_primary
 
   define_model_callbacks :redis_save, only: :before
   before_redis_save :trash_primary_votes
   before_redis_save :remove_other_temporary_votes
   before_redis_save :sanitize_explanation, if: :explanation_changed?
-  before_redis_save :up_and_downvote_arguments
   before_redis_save :create_confirmation_reminder_notification
 
-  attr_writer :argument_ids
   parentable :argument, :vote_event, :linked_record
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
@@ -122,14 +119,5 @@ class Vote < Edgeable::Base
       .where(voteable_id: voteable_id, voteable_type: voteable_type)
       .where('? IS NULL OR votes.id != ?', id, id)
       .find_each { |primary| primary.edge.trash }
-  end
-
-  def up_and_downvote_arguments
-    (upvoted_arguments.pluck(:id) - argument_ids).each do |argument_id|
-      Argument.find(argument_id).remove_upvote(publisher, creator)
-    end
-    (argument_ids - upvoted_arguments.pluck(:id)).each do |argument_id|
-      Argument.find(argument_id).upvote(publisher, creator)
-    end
   end
 end

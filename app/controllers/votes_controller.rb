@@ -77,10 +77,6 @@ class VotesController < EdgeableController
     }
   end
 
-  def include_show
-    %i[upvoted_arguments]
-  end
-
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||= Edge
@@ -117,8 +113,7 @@ class VotesController < EdgeableController
   def unmodified?
     create_service.resource.persisted? &&
       !create_service.resource.for_changed? &&
-      !create_service.resource.explanation_changed? &&
-      create_service.resource.argument_ids == create_service.resource.upvoted_arguments.pluck(:id)
+      !create_service.resource.explanation_changed?
   end
 
   def deserialize_params_options

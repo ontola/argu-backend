@@ -64,7 +64,6 @@ export const VoteContainer = React.createClass({
             distribution: this.props.distribution,
             loginStep: 'initial',
             newExplanation: this.props.currentExplanation.explanation || '',
-            newSelectedArguments: this.props.selectedArguments,
             opinionForm: (highlightedId === this.props.objectId),
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
@@ -109,7 +108,6 @@ export const VoteContainer = React.createClass({
                                        loginStep={this.state.loginStep}
                                        newArgumentButtons={this.props.newArgumentButtons}
                                        newExplanation={this.state.newExplanation}
-                                       newSelectedArguments={this.state.newSelectedArguments}
                                        onArgumentChange={this.argumentChangeHandler}
                                        onArgumentSelectionChange={this.argumentSelectionChangeHandler}
                                        onCancelLogin={this.handleCancelLogin}

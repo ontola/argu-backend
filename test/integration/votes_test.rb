@@ -98,30 +98,22 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 404
   end
 
-  test 'guest should post create for motion with upvoted arguments json' do
+  test 'guest should post create for motion json' do
     get root_path
-    argument_guest_vote
-    argument_guest_vote3
-    argument2
-
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
+                        ['Argu::Redis.keys.count', 1],
                         ['vote_event.reload.children_count(:votes_pro)', 0]]) do
       Sidekiq::Testing.inline! do
         post motion_vote_event_votes_path(motion, vote_event.id),
              params: {
                format: :json,
-               vote: {
-                 for: :pro,
-                 argument_ids: [argument.id, argument2.id]
-               }
+               vote: {for: :pro}
              }
       end
     end
 
-    assert_redis_resource_count(0, owner_type: 'Vote', publisher: guest_user, parent: argument3.edge)
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: argument.edge)
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: argument2.edge)
+    assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: vote_event.edge)
     assert_response 201
   end
 
@@ -197,30 +189,22 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 404
   end
 
-  test 'unconfirmed should post create for motion with upvoted arguments json' do
+  test 'unconfirmed should post create for motion with json' do
     sign_in unconfirmed
     get root_path
-    argument_unconfirmed_vote
-    argument_unconfirmed_vote3
-    argument2
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument3.edge)
 
     assert_differences([['Vote.count', 0],
                         ['Edge.count', 0],
+                        ['Argu::Redis.keys.count', 1],
                         ['vote_event.reload.children_count(:votes_pro)', 0]]) do
       post motion_vote_event_votes_path(motion, vote_event.id),
            params: {
              format: :json,
-             vote: {
-               for: :pro,
-               argument_ids: [argument.id, argument2.id]
-             }
+             vote: {for: :pro}
            }
     end
 
-    assert_redis_resource_count(0, owner_type: 'Vote', publisher: unconfirmed, parent: argument3.edge)
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument.edge)
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: argument2.edge)
+    assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: vote_event.edge)
     assert_response 201
   end
 
@@ -257,28 +241,20 @@ class VotesTest < ActionDispatch::IntegrationTest
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should post create for motion with upvoted arguments json' do
+  test 'user should post create for motion json' do
     sign_in user
-    create(:vote, parent: argument.edge, creator: user.profile, publisher: user)
-    vote_to_remove = create(:vote, parent: argument3.edge, creator: user.profile, publisher: user)
-    argument2
-
+    vote_event
     assert_differences([['Vote.count', 1],
                         ['Edge.count', 1],
+                        ['Argu::Redis.keys.count', 0],
                         ['vote_event.reload.children_count(:votes_pro)', 1]]) do
       post motion_vote_event_votes_path(motion, vote_event),
            params: {
              format: :json,
-             vote: {
-               for: :pro,
-               argument_ids: [argument.id, argument2.id]
-             }
+             vote: {for: :pro}
            }
     end
 
-    assert Vote.find_by(id: vote_to_remove.id).nil?
-    assert Vote.find_by(voteable_id: argument.id, voteable_type: 'Argument').present?
-    assert Vote.find_by(voteable_id: argument2.id, voteable_type: 'Argument').present?
     assert_response 201
     assert_analytics_collected('votes', 'create', 'pro')
   end

@@ -16,7 +16,6 @@ const OpinionForm = React.createClass({
         currentVote: React.PropTypes.string.isRequired,
         newArgumentButtons: React.PropTypes.bool.isRequired,
         newExplanation: React.PropTypes.string,
-        newSelectedArguments: React.PropTypes.array.isRequired,
         onArgumentChange: React.PropTypes.func.isRequired,
         onArgumentSelectionChange: React.PropTypes.func.isRequired,
         onCloseOpinionForm: React.PropTypes.func.isRequired,
@@ -37,7 +36,7 @@ const OpinionForm = React.createClass({
     },
 
     render () {
-        const { actor, newExplanation, newSelectedArguments, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion, submitting } = this.props;
+        const { actor, newExplanation, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion, selectedArguments, submitting } = this.props;
         const argumentFields = {};
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
@@ -54,17 +53,19 @@ const OpinionForm = React.createClass({
             <div className="opinion-form__arguments-selector">
                 <CheckboxGroup
                     childClass="pro-t"
+                    inputOpts={{ 'data-side': 'pro' }}
                     onChange={onArgumentSelectionChange}
                     options={argumentFields['pro']}
-                    value={newSelectedArguments}/>
+                    value={selectedArguments}/>
                 {addArgumentProButton}
             </div>
             <div className="opinion-form__arguments-selector">
                 <CheckboxGroup
                     childClass="con-t"
+                    inputOpts={{ 'data-side': 'con' }}
                     onChange={onArgumentSelectionChange}
                     options={argumentFields['con']}
-                    value={newSelectedArguments}/>
+                    value={selectedArguments}/>
                 {addArgumentConButton}
             </div>
         </div>;
