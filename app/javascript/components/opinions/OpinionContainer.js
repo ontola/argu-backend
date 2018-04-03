@@ -24,7 +24,7 @@ const OpinionContainerProps = {
     buttonsType: React.PropTypes.string.isRequired,
     createArgument: React.PropTypes.object.isRequired,
     currentExplanation: React.PropTypes.object.isRequired,
-    currentVote: React.PropTypes.string.isRequired,
+    currentVote: React.PropTypes.object.isRequired,
     facebookUrl: React.PropTypes.string.isRequired,
     forgotPassword: React.PropTypes.object.isRequired,
     newArgumentButtons: React.PropTypes.bool.isRequired,
@@ -48,7 +48,7 @@ const OpinionContainer = props => {
     let component;
     if (argumentForm) {
         component = <ArgumentForm {...props}/>;
-    } else if ((createArgument.shouldSubmit === true || currentVote !== 'abstain') && actor.actor_type === 'GuestUser') {
+    } else if ((createArgument.shouldSubmit === true || currentVote.side !== 'abstain') && actor.actor_type === 'GuestUser') {
         component = <OpinionSignUp {...props}/>;
     } else if (opinionForm) {
         component = <OpinionForm {...props}/>;
@@ -59,7 +59,7 @@ const OpinionContainer = props => {
                                    onShowAllArguments={props.onShowAllArguments}
                                    onOpenArgumentForm={props.onOpenArgumentForm}/>
     }
-    return <div className={`opinion-form opinion-container-${props.currentVote}`}>{component}</div>;
+    return <div className={`opinion-form opinion-container-${props.currentVote.side}`}>{component}</div>;
 };
 OpinionContainer.propTypes = OpinionContainerProps;
 

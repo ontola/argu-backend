@@ -28,7 +28,7 @@ const OpinionAdd = props => {
 const opinionAddProps = {
     actor: React.PropTypes.object,
     newExplanation: React.PropTypes.string,
-    currentVote: React.PropTypes.string.isRequired,
+    currentVote: React.PropTypes.object.isRequired,
     onOpenOpinionForm: React.PropTypes.func.isRequired
 };
 OpinionAdd.propTypes = opinionAddProps;

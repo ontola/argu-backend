@@ -10,7 +10,7 @@ const OpinionShow = React.createClass({
             side: React.PropTypes.string
         })),
         currentExplanation: React.PropTypes.object.isRequired,
-        currentVote: React.PropTypes.string.isRequired,
+        currentVote: React.PropTypes.object.isRequired,
         onArgumentSelectionChange: React.PropTypes.func.isRequired,
         onCloseOpinionForm: React.PropTypes.func.isRequired,
         onExplanationChange: React.PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ const OpinionShow = React.createClass({
     },
 
     iconForSide () {
-        switch (this.props.currentVote) {
+        switch (this.props.currentVote.side) {
         case 'pro':
             return 'thumbs-up';
         case 'neutral':
@@ -46,7 +46,7 @@ const OpinionShow = React.createClass({
         }
         return (
             <div>
-                <span className={`fa fa-${this.iconForSide()} opinion-icon opinion-icon-${this.props.currentVote}`} />
+                <span className={`fa fa-${this.iconForSide()} opinion-icon opinion-icon-${this.props.currentVote.side}`} />
                 <section className="section--bottom">
                     {confirmHeader}
                     <div className="markdown" dangerouslySetInnerHTML={{ __html: explanation_html }} itemProp="text"/>

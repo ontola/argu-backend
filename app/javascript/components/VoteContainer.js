@@ -22,7 +22,7 @@ export const VoteContainer = React.createClass({
         argumentsDisabled: React.PropTypes.bool,
         buttonsType: React.PropTypes.string,
         currentExplanation: React.PropTypes.object,
-        currentVote: React.PropTypes.string,
+        currentVote: React.PropTypes.object,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,

@@ -227,7 +227,7 @@ const OpinionMixin = {
             body: JSON.stringify({
                 vote: {
                     explanation: newExplanation,
-                    for: currentVote
+                    for: currentVote.side
                 }
             })
         })).then(statusSuccess)

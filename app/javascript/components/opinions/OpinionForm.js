@@ -13,7 +13,7 @@ const OpinionForm = React.createClass({
             side: React.PropTypes.string
         })),
         currentExplanation: React.PropTypes.object.isRequired,
-        currentVote: React.PropTypes.string.isRequired,
+        currentVote: React.PropTypes.object.isRequired,
         newArgumentButtons: React.PropTypes.bool.isRequired,
         newExplanation: React.PropTypes.string,
         onArgumentChange: React.PropTypes.func.isRequired,

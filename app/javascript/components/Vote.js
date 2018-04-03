@@ -82,7 +82,7 @@ export const VoteButtons = React.createClass({
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
         currentExplanation: React.PropTypes.string,
-        currentVote: React.PropTypes.string,
+        currentVote: React.PropTypes.object,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
         distribution: React.PropTypes.object,
@@ -119,7 +119,7 @@ export const VoteButtons = React.createClass({
                 return <VoteButton actor={this.props.actor}
                                    clickHandler={this.props[`${side}Handler`]}
                                    count={this.props.distribution[side]}
-                                   current={this.props.currentVote === side}
+                                   current={this.props.currentVote.side === side}
                                    currentExplanation={this.props.currentExplanation}
                                    disabled={this.props.disabled}
                                    disabledMessage={this.props.disabledMessage}
@@ -132,7 +132,7 @@ export const VoteButtons = React.createClass({
             });
 
         return (
-            <ul className={this.buttonsClassName()} data-voted={(this.props.currentVote.length > 0 && this.props.currentVote !== 'abstain') || null}>
+            <ul className={this.buttonsClassName()} data-voted={(typeof this.props.currentVote.id !== 'undefined' && this.props.currentVote.side !== 'abstain') || null}>
                 {voteButtons}
             </ul>);
     }
