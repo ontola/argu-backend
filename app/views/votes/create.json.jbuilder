@@ -3,7 +3,7 @@
 json.vote do
   json.objectType model.class_name
   json.objectId model.id
-  json.currentVote vote.present? ? {id: vote.id, side: vote.for} : {side: 'abstain'}
+  json.currentVote current_vote_props(vote)
   json.distribution do
     json.pro model.children_count(:votes_pro)
     json.neutral model.children_count(:votes_neutral)

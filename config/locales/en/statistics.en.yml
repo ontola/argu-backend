@@ -24,4 +24,4 @@ en:
       tooltip: "The amount comments on arguments, ideas and challenges."
     contributions:
       label: "Contributions"
-      tooltip: "All items with text. These are comments, ideas, arguments en opinions combined."
+      tooltip: "All items with text. These are comments, ideas and arguments combined."

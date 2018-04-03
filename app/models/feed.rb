@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Feed
-  RELEVANT_KEYS = %w[vote.create question.publish motion.publish argument.create pro_argument.create con_argument.create
+  RELEVANT_KEYS = %w[question.publish motion.publish argument.create pro_argument.create con_argument.create
                      blog_post.publish decision.approved decision.rejected comment.create].freeze
 
   include ActiveModel::Model
@@ -42,10 +42,7 @@ class Feed
               .where('trackable_type != ?', 'Banner')
               .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
     return scope unless relevant_only
-    scope
-      .where('key IN (?)', RELEVANT_KEYS)
-      .joins('LEFT JOIN votes ON votes.id = edges.owner_id AND edges.owner_type = \'Vote\'')
-      .where('votes.id IS NULL OR (votes.explanation IS NOT NULL AND votes.explanation != \'\')')
+    scope.where('key IN (?)', RELEVANT_KEYS)
   end
 
   def edge_activities

@@ -43,8 +43,6 @@ RSpec.feature 'Voting', type: :feature do
 
     find_field('opinion-body').click
     within('.opinion-form') do
-      fill_in 'opinion-body', with: 'This is my opinion'
-
       find('.opinion-form__arguments-selector .box-list-item--subtle a', text: 'Add pro').click
 
       within('.argument-form') do
@@ -52,12 +50,14 @@ RSpec.feature 'Voting', type: :feature do
         fill_in 'argument-body', with: 'Argument body'
         click_button 'Save'
       end
+      fill_in 'opinion-body', with: 'This is my opinion'
+
       click_button 'Save'
     end
     expect(page).not_to have_content('Would you like to comment on your opinion?')
 
     visit motion_path(motion)
-    expect(page).not_to have_content('Comments')
+    expect(page).not_to have_css('.opinion-icon')
     find('span', text: 'Disagree').click
     within('.opinion-form') do
       expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
@@ -69,7 +69,7 @@ RSpec.feature 'Voting', type: :feature do
     end
 
     visit motion_path(motion)
-    expect(page).not_to have_content('Comments')
+    expect(page).not_to have_css('.opinion-icon')
 
     Sidekiq::Testing.inline! do
       visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
@@ -86,7 +86,7 @@ RSpec.feature 'Voting', type: :feature do
 
     visit motion_path(motion)
 
-    expect(page).to have_content('Comments')
+    expect(page).to have_css('.opinion-icon')
     within('.opinion-columns') do
       expect(page).to have_content('This is my new opinion')
       expect(page).not_to have_content('Argument title')
@@ -141,8 +141,6 @@ RSpec.feature 'Voting', type: :feature do
     within('.opinion-form') do
       expect(page).to have_field('opinion-body')
 
-      fill_in 'opinion-body', with: 'This is my opinion'
-
       find('.opinion-form__arguments-selector .box-list-item--subtle a', text: 'Add pro').click
 
       within('.argument-form') do
@@ -150,6 +148,8 @@ RSpec.feature 'Voting', type: :feature do
         fill_in 'argument-body', with: 'Argument body'
         click_button 'Save'
       end
+      fill_in 'opinion-body', with: 'This is my opinion'
+
       click_button 'Save'
     end
     expect(page).not_to have_field('opinion-body')

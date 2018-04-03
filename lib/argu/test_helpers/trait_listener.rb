@@ -155,19 +155,27 @@ module Argu
       private
 
       def create_normal_vote(edge, side)
-        CreateVote
-          .new(
+        service =
+          CreateVote.new(
             edge,
             attributes: vote_attrs(side),
             options: service_options
           )
-          .commit
+        service.commit
+        create_comment_for_vote(service.resource)
+      end
+
+      def create_comment_for_vote(vote)
+        CreateComment.new(
+          vote.voteable.edge,
+          attributes: {content: 'opinion'},
+          options: {creator: vote.creator, publisher: vote.publisher}
+        ).commit
       end
 
       def create_redis_vote(edge, side)
-        CreateVote
-          .new(edge, attributes: vote_attrs(side), options: guest_service_options)
-          .commit
+        service = CreateVote.new(edge, attributes: vote_attrs(side), options: guest_service_options)
+        service.commit
       end
 
       def create_redis_postgres_vote(edge, side)
@@ -186,13 +194,13 @@ module Argu
       end
 
       def create_hidden_vote(edge, side)
-        CreateVote
-          .new(
-            edge,
-            attributes: vote_attrs(side),
-            options: service_options(are_votes_public: false)
-          )
-          .commit
+        service = CreateVote.new(
+          edge,
+          attributes: vote_attrs(side),
+          options: service_options(are_votes_public: false)
+        )
+        service.commit
+        create_comment_for_vote(service.resource)
       end
 
       def guest_service_options(id: 'guest_id')
@@ -215,7 +223,6 @@ module Argu
         {
           voteable_id: @resource.id,
           voteable_type: @resource.class.name,
-          explanation: 'explanation',
           for: side
         }
       end

@@ -20,8 +20,8 @@ module Commentable
                       owner: {creator: :profileable}
                     ]
 
-    def mixed_comments(order = 'edges.created_at DESC')
-      @mixed_comments ||=
+    def comment_edges(order = 'edges.created_at DESC')
+      @comment_edges ||=
         Edge
           .joins("LEFT JOIN comments ON edges.owner_id = comments.id AND edges.owner_type = 'Comment'")
           .where(parent_id: edge.id, owner_type: 'Comment', comments: {parent_id: nil})
@@ -30,7 +30,7 @@ module Commentable
     end
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
-      i = mixed_comments(order).page(page)
+      i = comment_edges(order).page(page)
       unless show_trashed
         i.each do |edge|
           edge.owner.shallow_wipe if edge.owner_type == 'Comment'

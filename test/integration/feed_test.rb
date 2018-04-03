@@ -77,6 +77,28 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_activity_count
   end
 
+  test 'user should get complete motion/feed nt' do
+    sign_in user
+
+    get motion_feed_path(subject),
+        params: {format: :nt, complete: true}
+
+    assert_response 200
+
+    assert_activity_count(format: :nt, staff: true, complete: true)
+  end
+
+  test 'user should get complete motion/feed html' do
+    sign_in user
+
+    get motion_feed_path(subject),
+        params: {complete: true}
+
+    assert_response 200
+
+    assert_activity_count(staff: true, complete: true)
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -103,7 +125,28 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_activity_count(staff: true)
   end
 
-  test 'staff should get additional activities for motion/feed' do
+  test 'staff should get complete motion/feed nt' do
+    sign_in staff
+
+    get motion_feed_path(subject),
+        params: {format: :nt, complete: true}
+
+    assert_response 200
+
+    assert_activity_count(format: :nt, staff: true, complete: true)
+  end
+
+  test 'staff should get complete motion/feed html' do
+    sign_in staff
+
+    get motion_feed_path(subject), params: {complete: true}
+
+    assert_response 200
+
+    assert_activity_count(staff: true, complete: true)
+  end
+
+  test 'staff should get additional activities for motion/feed js' do
     sign_in staff
 
     get motion_feed_path(subject), params: {format: :js, from_time: 1.hour.from_now, complete: false}
@@ -132,9 +175,9 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   private
 
-  # Render activity of Motion#create, Motion#publish, 6 public votes and 2 private votes
-  def assert_activity_count(format: :html, staff: false)
-    count = staff ? 10 : 7
+  # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
+  def assert_activity_count(format: :html, staff: false, complete: false)
+    count = staff && complete ? 10 : 7
     case format
     when :html
       assert_select '.activity-feed .activity', count

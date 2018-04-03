@@ -1,4 +1,7 @@
 .comment[id=model.identifier class=status_classes_for(model) itemscope="itemscope" itemtype="http://schema.org/Comment"]
+  - if model.vote.present?
+    div[data-title=(model.vote.primary? ? nil : I18n.t("opinions.expired.#{model.vote.for}", user: model.creator.display_name))]
+      span[class="fa fa-#{icon_for_side(model.vote.for)} opinion-icon opinion-icon-#{model.vote.for}#{model.vote.primary? ? '' : ' opinion-icon-expired'}"]
   .box
     section
       - if model.is_trashed?

@@ -4,6 +4,9 @@ class Comment < Edgeable::Base
   include ContentEdgeable
   include TruncateHelper
 
+  has_one :vote, dependent: :nullify
+  after_commit :set_vote, on: :create
+
   acts_as_nested_set scope: %i[commentable_id commentable_type]
   counter_cache true
   paginates_per 30
@@ -13,7 +16,7 @@ class Comment < Edgeable::Base
   validates :creator, presence: true
   auto_strip_attributes :body
 
-  attr_accessor :is_processed
+  attr_accessor :is_processed, :vote_id
 
   alias_attribute :content, :body
 
@@ -88,5 +91,13 @@ class Comment < Edgeable::Base
       Comment.anonymize(Comment.where(id: id))
       update_column(:body, '')
     end
+  end
+
+  private
+
+  def set_vote
+    return if vote_id.nil?
+    vote = Edge.where_owner('Vote', creator: creator, id: vote_id).first&.owner || raise(ActiveRecord::RecordNotFound)
+    vote.update!(comment_id: id)
   end
 end

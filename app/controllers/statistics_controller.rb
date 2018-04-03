@@ -14,11 +14,6 @@ class StatisticsController < ParentableController
                .count,
       questions: counts['Question'] || 0,
       motions: counts['Motion'] || 0,
-      opinions: descendants
-                  .where(owner_type: 'Vote')
-                  .joins('INNER JOIN votes ON votes.id=edges.owner_id')
-                  .where('explained_at IS NOT NULL AND explanation != \'\'')
-                  .count,
       comments: counts['Comment'] || 0,
       arguments: counts['Argument'] || 0
     }
@@ -38,7 +33,7 @@ class StatisticsController < ParentableController
   end
 
   def contribution_keys
-    %i[motions opinions comments arguments]
+    %i[motions comments arguments]
   end
 
   def descendants

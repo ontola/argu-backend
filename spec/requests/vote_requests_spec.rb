@@ -11,7 +11,6 @@ RSpec.describe 'Votes', type: :request do
 
   let(:destroy_differences) { [['Vote.count', -1]] }
   let(:update_differences) { [['Vote.count', 0]] }
-  let(:update_params) { {vote: {explanation: 'explanation'}} }
   let(:show_path) { vote_path(subject) }
   let(:destroy_path) { show_path }
   let(:show_by_parent_path) do

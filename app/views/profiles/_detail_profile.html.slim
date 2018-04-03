@@ -1,7 +1,8 @@
 = link_to dual_profile_url(resource.creator) do
   .detail[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
     img.detail__icon[src=resource.creator.default_profile_photo.url(:icon) itemprop="image"]
-    -if resource.is_a?(Vote)
-      div[class="fa fa-#{icon_for_side(resource.for)} detail__vote opinion-icon opinion-icon-#{resource.for}"]
+    -if resource.is_a?(Comment) && resource.vote.present?
+      div[data-title=(resource.vote.primary? ? nil : I18n.t("opinions.expired.#{resource.vote.for}", user: resource.creator.display_name))]
+        div[class="fa fa-#{icon_for_side(resource.vote.for)} detail__vote opinion-icon opinion-icon-#{resource.vote.for}#{resource.vote.primary? ? '' : ' opinion-icon-expired'}"]
     .detail__text[itemprop="name"]
       .span = resource.creator.display_name

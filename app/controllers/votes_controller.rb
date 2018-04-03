@@ -111,9 +111,7 @@ class VotesController < EdgeableController
   end
 
   def unmodified?
-    create_service.resource.persisted? &&
-      !create_service.resource.for_changed? &&
-      !create_service.resource.explanation_changed?
+    create_service.resource.persisted? && !create_service.resource.for_changed?
   end
 
   def deserialize_params_options

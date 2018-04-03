@@ -1,6 +1,10 @@
 nl:
   opinions:
     plural: "Meningen"
+    expired:
+      pro: "%{user} was voor tijdens deze reactie"
+      con: "%{user} was tegen tijdens deze reactie"
+      neutral: "%{user} was neutraal tijdens deze reactie"
     form:
       confirm_notice: "Vergeet niet je stem te bevestigen door op de link te klikken die we je hebben gemaild naar"
       placeholder: "Mening toelichten (optioneel)"

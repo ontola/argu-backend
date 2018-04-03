@@ -15,17 +15,13 @@ module MotionsHelper
     }
   end
 
-  def current_explanation_props(vote)
-    {
-      explanation: vote&.explanation || '',
-      explanation_html: markdown_to_html(vote&.explanation),
-      explained_at: vote&.explained_at
-    }
-  end
-
   def current_vote_props(vote)
     return {side: 'abstain'} if vote.nil?
-    {id: vote.id, side: vote.for}
+    {
+      id: vote.id,
+      side: vote.for,
+      comment: {iri: vote.comment&.iri, id: vote.comment&.id, body: vote.comment&.body || ''}
+    }
   end
 
   def motion_vote_props(actor, motion, vote, opts = {})
@@ -36,8 +32,8 @@ module MotionsHelper
       arguments: motion_vote_arguments(motion),
       argumentsDisabled: !policy(motion).create_child?(:arguments),
       buttonsType: opts.fetch(:buttons_type, 'big'),
+      commentsUrl: motion_comments_path(motion),
       currentVote: current_vote_props(vote),
-      currentExplanation: current_explanation_props(vote),
       disabled: disabled_message.present?,
       disabledMessage: disabled_message,
       distribution: motion_vote_counts(motion),

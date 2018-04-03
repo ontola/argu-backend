@@ -75,7 +75,6 @@ nl:
   con: "tegen"
   search: "Zoeken"
   log: "Log"
-  statistics: "Statistieken"
   feed: "Activiteit"
   feed_filter:
     relevant: "Relevant"

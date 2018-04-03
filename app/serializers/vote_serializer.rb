@@ -2,8 +2,7 @@
 
 class VoteSerializer < BaseEdgeSerializer
   attribute :option, predicate: NS::SCHEMA[:option]
-  attribute :explanation, predicate: NS::SCHEMA[:text]
-  attribute :explained_at
+  has_one :comment, predicate: NS::ARGU[:explanation]
 
   has_one :voteable, predicate: NS::SCHEMA[:isPartOf] do
     object.parent_model.voteable

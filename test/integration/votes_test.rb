@@ -293,7 +293,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('votes', 'create', 'pro')
   end
 
-  test 'user should post create json_api with explanation' do
+  test 'user should post create json_api' do
     sign_in user
 
     assert_differences([['Vote.count', 1],
@@ -305,8 +305,7 @@ class VotesTest < ActionDispatch::IntegrationTest
              data: {
                type: 'votes',
                attributes: {
-                 side: :pro,
-                 explanation: 'Explanation'
+                 side: :pro
                }
              }
            }
@@ -315,8 +314,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 201
     assert assigns(:create_service).resource.valid?
     assert assigns(:create_service).resource.pro?
-    assert_equal 'Explanation', assigns(:create_service).resource.explanation
-    assert_not_nil assigns(:create_service).resource.explained_at
   end
 
   test 'user should not post create json_api on closed vote_event' do
@@ -470,27 +467,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('votes', 'create', 'con')
   end
 
-  test 'creator should post update explanation json' do
-    sign_in creator
-    assert_differences([['Vote.count', 0],
-                        ['Vote.untrashed.count', 0],
-                        ['vote_event.reload.total_vote_count', 0],
-                        ['vote_event.children_count(:votes_pro)', 0],
-                        ['vote_event.children_count(:votes_con)', 0]]) do
-      post motion_vote_event_votes_path(motion, vote_event),
-           params: {
-             vote: {
-               for: 'pro',
-               explanation: 'This is my opinion'
-             },
-             format: :json
-           }
-    end
-
-    assert_response 201
-    assert assigns(:create_service).resource.valid?
-  end
-
   test 'creator should post update json_api' do
     sign_in creator
 
@@ -538,25 +514,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 204
     assert assigns(:update_service).resource.valid?
     assert assigns(:update_service).resource.pro?
-  end
-
-  test 'creator should put update json_api explanation' do
-    sign_in creator
-
-    put vote_path(vote),
-        params: {
-          format: :json_api,
-          data: {
-            type: 'votes',
-            attributes: {
-              explanation: 'Updated explanation'
-            }
-          }
-        }
-
-    assert_response 204
-    assert_equal 'Updated explanation', vote.reload.explanation
-    assert_not_nil vote.reload.explained_at
   end
 
   test 'creator should not delete destroy vote for motion twice' do

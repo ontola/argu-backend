@@ -25,9 +25,9 @@ export const VoteButton = React.createClass({
         clickHandler: React.PropTypes.func,
         count: React.PropTypes.number,
         current: React.PropTypes.bool,
-        currentExplanation: React.PropTypes.string,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
+        hasExplanation: React.PropTypes.bool,
         objectId: React.PropTypes.number,
         r: React.PropTypes.string,
         side: React.PropTypes.string,
@@ -68,7 +68,7 @@ export const VoteButton = React.createClass({
                         {I18n.t(`votes.type.${side}`)}
                     </span>
                     {voteCountElem}
-                    {(this.props.currentExplanation.explanation !== '') && current &&
+                    {this.props.hasExplanation && current &&
                       <span className={'fa fa-commenting-o icon-left'} />
                     }
                 </a>
@@ -81,7 +81,6 @@ export const VoteButtons = React.createClass({
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
-        currentExplanation: React.PropTypes.string,
         currentVote: React.PropTypes.object,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
@@ -120,7 +119,7 @@ export const VoteButtons = React.createClass({
                                    clickHandler={this.props[`${side}Handler`]}
                                    count={this.props.distribution[side]}
                                    current={this.props.currentVote.side === side}
-                                   currentExplanation={this.props.currentExplanation}
+                                   hasExplanation={this.props.currentVote.comment && !!this.props.currentVote.comment.id}
                                    disabled={this.props.disabled}
                                    disabledMessage={this.props.disabledMessage}
                                    key={i}

@@ -12,12 +12,6 @@ class VotePolicy < EdgeablePolicy
     end
   end
 
-  def permitted_attributes
-    attributes = super
-    attributes.append :explanation
-    attributes
-  end
-
   def show?
     return show_unpublished? if has_unpublished_ancestors?
     (record.creator.are_votes_public && has_grant?(:show)) || is_creator? || staff? || service?

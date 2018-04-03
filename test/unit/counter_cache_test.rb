@@ -143,20 +143,6 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(motion, blog_posts: 2)
   end
 
-  test 'update opinion count' do
-    assert_counts(motion.default_vote_event, opinions: 9)
-    create(:vote, parent: motion.default_vote_event.edge)
-    create(:vote, parent: motion.default_vote_event.edge, explanation: '', explained_at: Time.current)
-    create(:vote, parent: motion.default_vote_event.edge, explained_at: Time.current)
-    opinion =
-      create(:vote, parent: motion.default_vote_event.edge, explanation: 'explanation', explained_at: Time.current)
-    assert_counts(motion.default_vote_event, opinions: 10)
-    opinion.update_column(:explanation, nil)
-    assert_counts(motion.default_vote_event, opinions: 10)
-    Vote.fix_counts
-    assert_counts(motion.default_vote_event, opinions: 9)
-  end
-
   private
 
   def assert_counts(record, counts)

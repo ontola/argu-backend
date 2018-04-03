@@ -1,6 +1,10 @@
 en:
   opinions:
     plural: "Opinions"
+    expired:
+      pro: "%{user} was in favour when posting this comment"
+      con: "%{user} was against when posting this comment"
+      neutral: "%{user} was neutral when posting this comment"
     form:
       confirm_notice: "Please confirm your vote by clicking the link we've send to"
       placeholder: "Explain your opinion (optional)"

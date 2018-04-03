@@ -12,19 +12,28 @@ const OpinionForm = React.createClass({
             displayName: React.PropTypes.string,
             side: React.PropTypes.string
         })),
-        currentExplanation: React.PropTypes.object.isRequired,
         currentVote: React.PropTypes.object.isRequired,
         newArgumentButtons: React.PropTypes.bool.isRequired,
-        newExplanation: React.PropTypes.string,
         onArgumentChange: React.PropTypes.func.isRequired,
         onArgumentSelectionChange: React.PropTypes.func.isRequired,
         onCloseOpinionForm: React.PropTypes.func.isRequired,
-        onExplanationChange: React.PropTypes.func.isRequired,
         onOpenArgumentForm: React.PropTypes.func.isRequired,
         onOpenOpinionForm: React.PropTypes.func.isRequired,
         onSubmitOpinion: React.PropTypes.func.isRequired,
         selectedArguments: React.PropTypes.array.isRequired,
         submitting: React.PropTypes.bool.isRequired
+    },
+
+    getInitialState () {
+        return {
+            comment: this.props.currentVote.comment && this.props.currentVote.comment.body || ''
+        }
+    },
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currentVote !== this.props.currentVote) {
+            this.setState({ comment: nextProps.currentVote.comment && nextProps.currentVote.comment.body || '' });
+        }
     },
 
     addArgumentButton (side) {
@@ -35,8 +44,25 @@ const OpinionForm = React.createClass({
         )
     },
 
+    changeHandler (e) {
+        this.setState({ comment: e.target.value });
+    },
+
+    invalid () {
+        return this.props.currentVote.comment.body !== '' && this.state.comment === '' || this.state.comment.length < 4;
+    },
+
+    onSubmitOpinion (e) {
+        e.preventDefault();
+        if (this.state.comment === '') {
+            this.props.onCloseOpinionForm(e);
+        } else {
+            this.props.onSubmitOpinion(this.state.comment);
+        }
+    },
+
     render () {
-        const { actor, newExplanation, onArgumentSelectionChange, onExplanationChange, onSubmitOpinion, selectedArguments, submitting } = this.props;
+        const { actor, onArgumentSelectionChange, selectedArguments, submitting } = this.props;
         const argumentFields = {};
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
@@ -74,7 +100,7 @@ const OpinionForm = React.createClass({
         }
         return (
             <form className={`formtastic formtastic--full-width ${submitting ? 'is-loading' : ''}`}
-                  onSubmit={onSubmitOpinion}>
+                  onSubmit={this.onSubmitOpinion}>
                 <section className="section--bottom">
                     <div>
                         {confirmHeader}
@@ -84,14 +110,14 @@ const OpinionForm = React.createClass({
                                 name="opinion-body"
                                 autoFocus
                                 className="form-input-content"
-                                onChange={onExplanationChange}
+                                onChange={this.changeHandler}
                                 placeholder={I18n.t('opinions.form.placeholder')}
-                                value={newExplanation}/>
+                                value={this.state.comment}/>
                         </div>
                     </div>
                 </section>
                 <Footer cancelButton={I18n.t('opinions.form.cancel')}
-                        disabled={submitting}
+                        disabled={submitting || this.invalid()}
                         onCancel={this.props.onCloseOpinionForm}
                         submitButton={I18n.t('opinions.form.submit')}/>
             </form>

@@ -12,7 +12,6 @@ import {
 const OpinionMixin = {
     propTypes: {
         arguments: React.PropTypes.array,
-        currentExplanation: React.PropTypes.object,
         selectedArguments: React.PropTypes.array
     },
 
@@ -106,10 +105,6 @@ const OpinionMixin = {
         this.setState({
             opinionForm: false
         });
-    },
-
-    explanationChangeHandler (e) {
-        this.setState({ newExplanation: e.target.value });
     },
 
     handleCancelLogin (e) {
@@ -218,29 +213,44 @@ const OpinionMixin = {
         this.setState({ opinionForm: true });
     },
 
-    opinionHandler (e) {
-        e.preventDefault();
-        const { currentVote, newExplanation } = this.state;
+    opinionHandler (comment) {
+        const { currentVote } = this.state;
         this.setState({ submitting: true });
-        fetch(`${this.props.vote_path}.json`, safeCredentials({
-            method: 'POST',
+        fetch(currentVote.comment && currentVote.comment.iri || this.props.commentsUrl, safeCredentials({
+            method: currentVote.comment && currentVote.comment.iri ? 'PUT' : 'POST',
             body: JSON.stringify({
-                vote: {
-                    explanation: newExplanation,
-                    for: currentVote.side
+                comment: {
+                    body: comment,
+                    vote_id: currentVote.id
                 }
             })
         })).then(statusSuccess)
             .then(json)
             .then(data => {
                 if (typeof data !== 'undefined') {
-                    this.setState(Object.assign({}, data.vote, {
+                    this.setState({
                         opinionForm: false,
-                        currentExplanation: { explanation: this.state.newExplanation, explained_at: new Date },
-                        submitting: false
-                    }));
+                        submitting: false,
+                        currentVote: Object.assign({}, this.state.currentVote, {
+                            comment: {
+                                iri: data.data.id,
+                                id: parseInt(data.data.id.split('/c/')[1]),
+                                body: data.data.attributes.content
+                            }
+                        })
+                    });
                 } else {
-                    this.setState({ opinionForm: false, submitting: false });
+                    this.setState({
+                        opinionForm: false,
+                        submitting: false ,
+                        currentVote: Object.assign({}, this.state.currentVote, {
+                            comment: {
+                                iri: this.state.currentVote.iri,
+                                id: this.state.currentVote.id,
+                                body: comment
+                            }
+                        })
+                    });
                 }
             }).catch(er => {
                 this.setState({ submitting: false });

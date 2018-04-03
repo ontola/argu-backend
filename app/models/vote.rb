@@ -8,14 +8,13 @@ class Vote < Edgeable::Base
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id', inverse_of: :votes
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :forum
+  belongs_to :comment
   before_create :trash_primary_votes
-  before_save :sanitize_explanation, if: :explanation_changed?
   after_trash :remove_primary
 
   define_model_callbacks :redis_save, only: :before
   before_redis_save :trash_primary_votes
   before_redis_save :remove_other_temporary_votes
-  before_redis_save :sanitize_explanation, if: :explanation_changed?
   before_redis_save :create_confirmation_reminder_notification
 
   parentable :argument, :vote_event, :linked_record
@@ -24,14 +23,11 @@ class Vote < Edgeable::Base
   filterable option: {key: 'votes.for', values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}}
   counter_cache votes_pro: {for: Vote.fors[:pro]},
                 votes_con: {for: Vote.fors[:con]},
-                votes_neutral: {for: Vote.fors[:neutral]},
-                opinions: {explanation: :present?, sql: "votes.explanation IS NOT NULL AND explanation != ''"}
+                votes_neutral: {for: Vote.fors[:neutral]}
   delegate :create_confirmation_reminder_notification, to: :publisher
   delegate :voteable, to: :parent_model
 
   validates :creator, :for, presence: true
-
-  alias_attribute :body, :explanation
 
   # #########methods###########
   def argument_ids
@@ -105,11 +101,6 @@ class Vote < Edgeable::Base
 
   def remove_primary
     update!(primary: false)
-  end
-
-  def sanitize_explanation
-    self.explanation = explanation.presence
-    self.explained_at = explanation.present? ? Time.current : nil
   end
 
   def trash_primary_votes

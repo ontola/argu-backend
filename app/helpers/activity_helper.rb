@@ -16,6 +16,6 @@ module ActivityHelper
 
   # Decide whether to include the body when rendering this Activity on the feed
   def render_body_on_feed?(activity)
-    activity.object == 'vote' ? activity.trackable&.explanation.present? : activity.new_content?
+    activity.new_content?
   end
 end

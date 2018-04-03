@@ -3,7 +3,7 @@
 class CommentPolicy < EdgeablePolicy
   def permitted_attributes
     attributes = super
-    attributes.concat %i[body parent_id]
+    attributes.concat %i[body parent_id vote_id]
     attributes
   end
 

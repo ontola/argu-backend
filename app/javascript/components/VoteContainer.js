@@ -21,7 +21,6 @@ export const VoteContainer = React.createClass({
         arguments: React.PropTypes.array,
         argumentsDisabled: React.PropTypes.bool,
         buttonsType: React.PropTypes.string,
-        currentExplanation: React.PropTypes.object,
         currentVote: React.PropTypes.object,
         disabled: React.PropTypes.bool,
         disabledMessage: React.PropTypes.string,
@@ -59,11 +58,9 @@ export const VoteContainer = React.createClass({
             },
             objectType: this.props.objectType,
             objectId: this.props.objectId,
-            currentExplanation: this.props.currentExplanation,
             currentVote: this.props.currentVote,
             distribution: this.props.distribution,
             loginStep: 'initial',
-            newExplanation: this.props.currentExplanation.explanation || '',
             opinionForm: (highlightedId === this.props.objectId),
             percent: this.props.percent,
             selectedArguments: this.props.selectedArguments,
@@ -82,7 +79,6 @@ export const VoteContainer = React.createClass({
                                         {...this.props}
                                         {...this.state}
                                         conHandler={this.conHandler}
-                                        currentExplanation={this.state.currentExplanation}
                                         neutralHandler={this.neutralHandler}
                                         proHandler={this.proHandler}/>;
         if (this.props.totalVotes > 0) {
@@ -100,20 +96,17 @@ export const VoteContainer = React.createClass({
                                        argumentsDisabled={this.props.argumentsDisabled}
                                        buttonsType={this.props.buttonsType}
                                        createArgument={this.state.createArgument}
-                                       currentExplanation={this.state.currentExplanation}
                                        currentVote={this.state.currentVote}
                                        errorMessage={this.state.errorMessage}
                                        facebookUrl={this.props.facebookUrl}
                                        forgotPassword={this.props.forgotPassword}
                                        loginStep={this.state.loginStep}
                                        newArgumentButtons={this.props.newArgumentButtons}
-                                       newExplanation={this.state.newExplanation}
                                        onArgumentChange={this.argumentChangeHandler}
                                        onArgumentSelectionChange={this.argumentSelectionChangeHandler}
                                        onCancelLogin={this.handleCancelLogin}
                                        onCloseArgumentForm={this.closeArgumentFormHandler}
                                        onCloseOpinionForm={this.closeOpinionFormHandler}
-                                       onExplanationChange={this.explanationChangeHandler}
                                        onOpenArgumentForm={this.openArgumentFormHandler}
                                        onOpenOpinionForm={this.openOpinionFormHandler}
                                        onSignupEmailChange={this.signupEmailChangeHandler}
