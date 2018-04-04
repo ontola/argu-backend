@@ -75,10 +75,6 @@ class AuthorizedController < ApplicationController
       .to_options
   end
 
-  def controller_class
-    controller_name.classify.constantize
-  end
-
   def current_forum; end
 
   def language_from_edge_tree

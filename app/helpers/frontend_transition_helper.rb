@@ -14,4 +14,8 @@ module FrontendTransitionHelper
   def iframe?
     params[:iframe] == 'true'
   end
+
+  def new_fe_request?
+    request.headers['X-Argu-Back']&.to_s == 'true'
+  end
 end

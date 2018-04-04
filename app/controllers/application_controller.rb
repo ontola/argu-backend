@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   include FrontendTransitionHelper
   include RedirectHelper
   include JsonApiHelper
+  include LinkedDataHelper
   include NestedAttributesHelper
   include UsersHelper
   include NamesHelper
@@ -60,20 +61,34 @@ class ApplicationController < ActionController::Base
     ].freeze
   ].freeze
 
-  # The params, deserialized when format is json_api and method is not safe
+  # The params, deserialized when format is json_api or LD and method is not safe
   # @example Resource params from json_api request
   #   params = {
   #     data: {type: 'motions', attributes: {body: 'body'}},
   #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
   #   }
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
+  # @example Resource params from LD request
+  #   POST "/m/1/c?page=1&type=paginated"
+  #   params = {
+  #     "https://argu.co/ns/core#graph" => #<ActionDispatch::Http::UploadedFile
+  #       @content_type="text/n3",
+  #       @headers="Content-Disposition: form-data; name=\"https://argu.co/ns/core#graph\">
+  #   }
+  #   params # => {comment: {content: 'body'}}
   # @return [Hash] The params
   def params
-    if request.format.json_api? && UNSAFE_METHODS.include?(request.method) && super[:data].present?
-      return json_api_params(super)
+    return @__params if instance_variable_defined?(:@__params)
+    p = HashWithIndifferentAccess.new
+    p[model_name] = super[:filter].permit!.to_h if controller_class&.try(:filter_options)&.present? && super[:filter]
+
+    if UNSAFE_METHODS.include?(request.method)
+      return @__params = super.merge(p.deep_merge(params_from_graph(super))) if new_fe_request?
+
+      return @__params = json_api_params(super) if request.format.json_api? && super[:data].present?
     end
 
-    super
+    @__params = super
   end
 
   private
@@ -106,6 +121,10 @@ class ApplicationController < ActionController::Base
 
   def authorize_current_actor
     authorize current_actor, :show?
+  end
+
+  def controller_class
+    controller_name.classify.safe_constantize
   end
 
   def current_forum; end
