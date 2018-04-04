@@ -42,16 +42,9 @@ module VotesHelper
 
   def toggle_vote_link_enabled(model, vote, classes, data)
     data[:remote] = true
-    if vote.present?
-      url = vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :vote], for: :pro)
-      data[:method] = :delete
-      data[:title] = t('tooltips.argument.vote_up_undo')
-    else
-      url = polymorphic_url([model, :votes], for: :pro)
-      data[:method] = :post
-      data[:title] = t('tooltips.argument.vote_up')
-    end
-    link_to url, rel: :nofollow, class: classes, data: data do
+    data[:method] = vote_method(vote)
+    data[:title] = vote.present? ? t('tooltips.argument.vote_up_undo') : t('tooltips.argument.vote_up')
+    link_to vote_iri(model, vote), rel: :nofollow, class: classes, data: data do
       yield
     end
   end
@@ -81,5 +74,17 @@ module VotesHelper
       .joins(trackable_edge: :children)
       .where(children_edges: {owner_type: 'VoteEvent'})
       .pluck('children_edges.id')
+  end
+
+  def vote_iri(model, vote)
+    if vote.present?
+      vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :vote], for: :pro)
+    else
+      polymorphic_url([model, :votes], for: :pro)
+    end
+  end
+
+  def vote_method(vote)
+    vote.present? ? :delete : :post
   end
 end
