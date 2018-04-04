@@ -26,9 +26,10 @@ class EdgeableCreateService < CreateService
   # @param [Edge, Integer] parent The instance or id of the parent edge of the new child
   # @option options [Hash] publisher The publisher of the new child
   # @option attributes [Hash] publisher The publisher of the new child
-  def initialize_edge(parent, options, _attributes)
+  def initialize_edge(parent, options, attributes)
     parent_edge = parent.is_a?(Edge) ? parent : Edge.find(parent)
     parent_edge.children.new(
+      created_at: attributes.with_indifferent_access[:created_at],
       user: options[:publisher],
       owner: resource_klass.new,
       parent: parent_edge

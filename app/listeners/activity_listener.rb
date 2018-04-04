@@ -74,6 +74,7 @@ class ActivityListener
     a = CreateActivity.new(
       Activity.new(silent: @silent),
       attributes: {
+        created_at: action == 'create' ? resource.created_at : nil,
         comment: @comment,
         trackable: resource,
         trackable_edge: resource.try(:edge)&.persisted? ? resource.try(:edge) : nil,

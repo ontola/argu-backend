@@ -100,6 +100,8 @@ module Users
           get user_confirmation_path(confirmation_token: user.confirmation_token)
         end
       end
+      assert_equal Vote.last.created_at.utc.iso8601(6), Vote.last.edge.created_at.utc.iso8601(6)
+
       assert_redirected_to new_user_session_path
       assert user.reload.confirmed?
       assert_equal [id1, edge1_id, id2, edge2_id],
