@@ -5,10 +5,12 @@ class ActivityListener
   # @option opts [User] publisher The person that made the action
   # @option opts [Profile] creator The Profile under whose name it was published
   # @option opts [String] comment An optional Comment to explain the action
+  # @option opts [Bool] silent Whether to create notifications and touch edges
   def initialize(opts = {})
     @publisher = opts[:publisher]
     @creator = opts[:creator]
     @comment = opts[:comment]
+    @silent = opts[:silent] || false
   end
 
   # Dynamically declare the listener publication methods
@@ -70,7 +72,7 @@ class ActivityListener
 
   def create_activity(resource, recipient, action, parameters: {})
     a = CreateActivity.new(
-      Activity.new,
+      Activity.new(silent: @silent),
       attributes: {
         comment: @comment,
         trackable: resource,
@@ -84,7 +86,7 @@ class ActivityListener
         parameters: parameters
       }
     )
-    a.subscribe(NotificationListener.new)
+    a.subscribe(NotificationListener.new) unless @silent
     a.commit
   end
 

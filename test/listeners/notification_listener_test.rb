@@ -18,6 +18,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
       forum: motion.forum
     )
   end
+  let(:user) { create(:user) }
 
   test 'should create notification on motion activity' do
     Notification.destroy_all
@@ -46,5 +47,31 @@ class NotificationListenerTest < ActiveSupport::TestCase
     assert_difference('Notification.count', 0) do
       subject.create_activity_successful(vote_activity)
     end
+  end
+
+  test 'service should create notifications for new argument' do
+    last_activity_at = motion.edge.last_activity_at
+    assert_differences([['Argument.count', 1], ['Notification.count', 1]]) do
+      service = CreateArgument.new(
+        motion.edge,
+        attributes: {title: 'argument title'},
+        options: {publisher: user, creator: user.profile}
+      )
+      service.commit
+    end
+    assert_not_equal last_activity_at, motion.edge.last_activity_at
+  end
+
+  test 'silent service should not create notifications for new argument' do
+    last_activity_at = motion.edge.last_activity_at
+    assert_differences([['Argument.count', 1], ['Notification.count', 0]]) do
+      service = CreateArgument.new(
+        motion.edge,
+        attributes: {title: 'argument title'},
+        options: {publisher: user, creator: user.profile, silent: true}
+      )
+      service.commit
+    end
+    assert_equal last_activity_at, motion.edge.last_activity_at
   end
 end

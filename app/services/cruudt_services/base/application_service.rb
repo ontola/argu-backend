@@ -15,10 +15,14 @@ class ApplicationService
     assign_attributes
     set_nested_associations
     unless resource.is_a?(Activity) || resource.is_a?(Grant)
-      subscribe(ActivityListener
-                  .new(comment: options[:comment],
-                       creator: options.fetch(:creator),
-                       publisher: options.fetch(:publisher)))
+      subscribe(
+        ActivityListener.new(
+          comment: options[:comment],
+          creator: options.fetch(:creator),
+          publisher: options.fetch(:publisher),
+          silent: options[:silent]
+        )
+      )
       subscribe(NotificationListener.new,
                 on: "update_#{resource.model_name.singular}_successful",
                 with: :update_successful)

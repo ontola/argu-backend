@@ -17,6 +17,7 @@ class Activity < PublicActivity::Activity
   belongs_to :forum
 
   alias_attribute :happened_at, :created_at
+  attr_accessor :silent
 
   validates :key, presence: true
   validates :trackable, :trackable_edge, :recipient, :recipient_edge, :owner,
@@ -74,7 +75,7 @@ class Activity < PublicActivity::Activity
   end
 
   def touch_edges
-    return if %w[destroy trash untrash].include?(action)
+    return if %w[destroy trash untrash].include?(action) || silent
     trackable_edge.touch(:last_activity_at) if trackable_edge&.persisted?
     recipient_edge.touch(:last_activity_at) if recipient_edge&.persisted? && !%w[Vote].include?(trackable_type)
   end
