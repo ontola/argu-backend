@@ -42,7 +42,7 @@ class ApplicationService
       @actions[service_action] = resource.public_send(service_method) if resource.errors.empty?
       after_save if @actions[service_action]
       publish_success_signals
-      broadcast_event
+      broadcast_event if @actions[service_action]
     end
   rescue ActiveRecord::ActiveRecordError => e
     raise(e) if e.is_a?(ActiveRecord::StatementInvalid)

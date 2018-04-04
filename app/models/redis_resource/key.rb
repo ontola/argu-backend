@@ -27,7 +27,7 @@ module RedisResource
       self.user_id ||= opts[:user]&.id || opts.fetch(:user_id, '*')
       self.user =
         opts[:user] ||
-        (user_type == 'user' && User.find(user_id)) ||
+        (user_type == 'user' && User.find_by(id: user_id)) ||
         (user_type == 'guest_user' && GuestUser.new(id: user_id)) ||
         nil
       self.owner_type ||= opts.fetch(:owner_type, '*')
@@ -49,7 +49,7 @@ module RedisResource
     def matched_keys
       @matched_keys ||=
         if has_wildcards?
-          keys = Argu::Redis.keys(key).map { |key| RedisResource::Key.parse(key, user) }
+          keys = Argu::Redis.keys(key).map { |key| RedisResource::Key.parse(key, user) }.compact
           parent_edges = Edge.where(id: keys.map(&:parent_id))
           keys.each { |key| key.parent = parent_edges.find { |edge| edge.id == key.parent_id.to_i } }
         else
@@ -83,10 +83,11 @@ module RedisResource
     class << self
       def parse(key, user = nil)
         values = key.split('.')
-        new(
+        key = new(
           Hash[%i[user_type user_id owner_type edge_id].map.with_index { |k, i| [k, values[i + 1]] }]
             .merge(user: user, path: values[5..values.length].join('.'))
         )
+        key if key.user.present?
       end
     end
   end
