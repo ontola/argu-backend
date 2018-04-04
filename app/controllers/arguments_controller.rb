@@ -5,6 +5,10 @@ class ArgumentsController < EdgeableController
 
   private
 
+  def argument_type
+    params[:argument][:pro].to_s == 'true' ? :pro : :con
+  end
+
   def authenticated_resource!
     return super unless params[:action] == 'index'
     parent_resource!
@@ -31,12 +35,6 @@ class ArgumentsController < EdgeableController
     RDF_CONTENT_TYPES.each do |type|
       format.send(type) { respond_with_400(resource, type) }
     end
-  end
-
-  def permit_params
-    params
-      .require(:argument)
-      .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
   end
 
   def prepare_view
@@ -72,13 +70,9 @@ class ArgumentsController < EdgeableController
     nil
   end
 
-  def service_klass
-    "#{action_name.classify}Argument".safe_constantize || "#{action_name.classify}Service".constantize
-  end
-
   def service_options(opts = {})
     super(opts.merge(auto_vote:
-                       params.dig(:argument, :auto_vote) == 'true' &&
+                       params.dig(model_name, :auto_vote) == 'true' &&
                          current_actor.actor == current_user.profile))
   end
 

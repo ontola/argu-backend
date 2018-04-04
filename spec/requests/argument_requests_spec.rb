@@ -22,6 +22,17 @@ RSpec.describe 'Arguments', type: :request do
   let(:non_existing_trash_path) { url_for([:pro_argument, id: -99, only_path: true]) }
   let(:non_existing_untrash_path) { url_for([:untrash, :pro_argument, id: -99, only_path: true]) }
   let(:created_resource_path) { url_for(subject.parent_model) }
+  let(:update_params) { {pro_argument: Hash[required_keys.map { |k| [k, '12345'] }]} }
+  let(:invalid_update_params) { {pro_argument: Hash[required_keys.map { |k| [k, '1'] }]} }
+  let(:expect_put_update_html) do
+    expect(response).to redirect_to(updated_resource_path)
+    subject.reload
+    update_params[:pro_argument].each { |k, v| expect(subject.send(k)).to eq(v) }
+  end
+  let(:expect_put_update_failed_html) do
+    expect_success
+    invalid_update_params[:pro_argument].each_value { |v| expect(response.body).to(include(v)) }
+  end
 
   context 'with motion parent' do
     subject { argument }
