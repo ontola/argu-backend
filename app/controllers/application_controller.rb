@@ -22,6 +22,9 @@ class ApplicationController < ActionController::Base
   include ActorsHelper
   helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
 
+  SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
+  UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
+
   protect_from_forgery with: :exception, prepend: true, unless: (lambda do
     headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
   end)
@@ -57,26 +60,20 @@ class ApplicationController < ActionController::Base
     ].freeze
   ].freeze
 
-  # The params, deserialized when format is json_api and method is not GET
-  # @return [Hash] The params
+  # The params, deserialized when format is json_api and method is not safe
   # @example Resource params from json_api request
   #   params = {
   #     data: {type: 'motions', attributes: {body: 'body'}},
   #     relationships: {relation: {data: {type: 'motions', id: motion.id}}}
   #   }
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
+  # @return [Hash] The params
   def params
-    return super unless request.format.json_api? && request.method != 'GET' && super[:data].present?
-    if super['data']['type'].present? && super['data']['type'] != controller_name.camelcase(:lower)
-      raise ActionController::UnpermittedParameters.new(%w[type])
+    if request.format.json_api? && UNSAFE_METHODS.include?(request.method) && super[:data].present?
+      return json_api_params(super)
     end
-    raise ActionController::ParameterMissing.new(:attributes) if super['data']['attributes'].blank?
-    ActionController::Parameters.new(
-      super.to_unsafe_h.merge(
-        super.require(:data).require(:type).singularize.underscore =>
-          ActiveModelSerializers::Deserialization.jsonapi_parse!(super, deserialize_params_options)
-      )
-    )
+
+    super
   end
 
   private
