@@ -16,6 +16,7 @@ en:
       pro: "Agree"
       neutral: "Other"
       con: "Disagree"
+    type_new: "New vote"
     plural: "Votes"
     confirm:
       headline: "Confirm vote"

@@ -16,6 +16,7 @@ nl:
       pro: "Voor"
       neutral: "Anders"
       con: "Tegen"
+    type_new: "Nieuwe stem"
     plural: "Stemmen"
     confirm:
       headline: "Bevestig stem"

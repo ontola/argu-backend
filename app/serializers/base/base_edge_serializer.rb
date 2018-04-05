@@ -19,4 +19,16 @@ class BaseEdgeSerializer < RecordSerializer
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
 
   delegate :is_publishable?, :is_trashable?, to: :object
+
+  triples :children_counts
+
+  def children_counts
+    object.edge.children_counts.map do |key, count|
+      [
+        object.iri,
+        NS::ARGU["#{key.camelcase(:lower)}Count".to_sym],
+        count.to_i
+      ]
+    end
+  end
 end
