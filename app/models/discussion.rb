@@ -10,6 +10,4 @@ class Discussion
   def self.default_per_page
     10
   end
-
-  def self.filter_options; end
 end

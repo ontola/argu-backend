@@ -14,6 +14,7 @@ RSpec.describe 'Follows', type: :request do
   let(:non_existing_create_path) { follows_path(gid: -99) }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }
+  let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
   let(:parent_path) { forum_path(subject.followable.owner) }
   let(:create_differences) { [['Follow.reactions.count', 1]] }
   let(:created_resource_path) { parent_path }

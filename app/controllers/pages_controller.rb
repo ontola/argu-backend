@@ -126,7 +126,7 @@ class PagesController < EdgeableController
       association_class: Page,
       user_context: user_context,
       association_scope: :open,
-      page: params[:page],
+      page: params[:page].is_a?(ActionController::Parameters) ? nil : params[:page],
       pagination: true
     )
   end

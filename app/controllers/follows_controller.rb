@@ -35,6 +35,8 @@ class FollowsController < AuthorizedController
     @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
   end
 
+  def index_collection_association; end
+
   def message_success(_resource, _action)
     t('notifications.changed_successfully')
   end

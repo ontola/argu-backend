@@ -17,6 +17,7 @@ RSpec.describe 'Banners', type: :request do
   let(:non_existing_destroy_path) { forum_banner_path(subject.forum, 'non_existing') }
   let(:non_existing_update_path) { forum_banner_path(subject.forum, 'non_existing') }
   let(:non_existing_edit_path) { edit_forum_banner_path(subject.forum, 'non_existing') }
+  let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
 
   let(:expect_delete_destroy_html) do
     expect(response.code).to eq('303')

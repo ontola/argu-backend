@@ -166,6 +166,20 @@ module ActionDispatch
         )
     end
 
+    def format_param(format = :nq)
+      {
+        format: format
+      }
+    end
+
+    def argu_headers(back: false, bearer: nil, host: nil)
+      headers = {}
+      headers['Authorization'] = "Bearer #{bearer}" if bearer
+      headers['X-Argu-Back'] = 'true' if back
+      headers['Host'] = host if host
+      headers
+    end
+
     def post(path, *args, **opts)
       super(
         path,

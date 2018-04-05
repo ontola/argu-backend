@@ -81,7 +81,8 @@ module Argu
             expect(response.code).to eq('303')
             expect(response).to redirect_to(parent_path)
           end
-          let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
+          let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
+          let(:expect_delete_destroy_serializer) { expect(response.code).to eq('200') }
 
           # Trash
           expectations_for(:delete_trash)

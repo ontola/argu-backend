@@ -19,6 +19,7 @@ RSpec.describe 'Grants', type: :request do
   let(:create_params) { {grant: attributes_for(:group).merge(group_id: create(:group, parent: freetown.page.edge).id)} }
   let(:create_failed_path) { settings_page_path(freetown.page, tab: :groups) }
   let(:update_failed_path) { settings_page_path(freetown.page, tab: :groups) }
+  let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
 
   context 'with page parent' do
     let(:subject) { create(:grant, edge: freetown.page.edge, group: group) }

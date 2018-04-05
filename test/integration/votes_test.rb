@@ -547,6 +547,84 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_analytics_collected('votes', 'destroy', 'pro')
   end
 
+  test 'creator should delete destroy vote for argument new fe' do
+    sign_in creator
+    vote_iri = argument_vote.iri
+
+    assert_differences([['Vote.count', -1],
+                        ['Edge.count', -1],
+                        ['argument.reload.children_count(:votes_pro)', -1]]) do
+      delete vote_path(argument_vote), params: format_param, headers: argu_headers(back: true)
+    end
+
+    expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::LL[:remove])
+    expect_triple(argument.vote_collection.iri, NS::ARGU[:totalCount], 0, NS::LL[:replace])
+    expect_triple(argument.vote_collection(filter: {option: :yes}).iri, NS::ARGU[:totalCount], 0, NS::LL[:replace])
+    assert_response 200
+    assert_analytics_collected('votes', 'destroy', 'pro')
+  end
+
+  test 'creator should delete destroy vote for argument n3' do
+    sign_in creator
+
+    assert_differences([['Vote.count', -1],
+                        ['Edge.count', -1],
+                        ['argument.reload.children_count(:votes_pro)', -1]]) do
+      delete vote_path(argument_vote), params: {format: :n3}
+    end
+
+    assert_response 200
+    assert_analytics_collected('votes', 'destroy', 'pro')
+  end
+
+  test 'user should post create for motion with new fe' do
+    sign_in user
+
+    expect(vote_event.votes.length).to be 1
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['vote_event.reload.children_count(:votes_con)', 1]]) do
+      Sidekiq::Testing.inline! do
+        post motion_vote_event_votes_path(motion, vote_event.id, filter: {option: :no}, type: :paginated),
+             params: format_param, headers: argu_headers(back: true)
+      end
+    end
+
+    expect_triple(vote_event.vote_collection.iri, NS::ARGU[:totalCount], 2, NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(filter: {option: :yes}).iri,
+                  NS::ARGU[:totalCount],
+                  1,
+                  NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(filter: {option: :other}).iri,
+                  NS::ARGU[:totalCount],
+                  0,
+                  NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(filter: {option: :no}).iri,
+                  NS::ARGU[:totalCount],
+                  1,
+                  NS::LL[:replace])
+
+    assert_response 201
+  end
+
+  test 'user should post create for motion n3' do
+    sign_in user
+
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
+                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
+      Sidekiq::Testing.inline! do
+        post motion_vote_event_votes_path(motion, vote_event.id),
+             params: {
+               format: :n3,
+               vote: {for: :pro}
+             }
+      end
+    end
+
+    assert_response 201
+  end
+
   private
 
   def assert_redis_resource_count(count, opts)

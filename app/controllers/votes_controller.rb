@@ -153,4 +153,25 @@ class VotesController < EdgeableController
       primary: true
     )
   end
+
+  def meta_destroy
+    data = super
+    data.push [
+      authenticated_resource.parent_iri,
+      NS::ARGU[:currentVote],
+      authenticated_resource.iri,
+      NS::LL[:remove]
+    ]
+    data.push [
+      authenticated_resource.parent_iri,
+      NS::HYDRA[:operation],
+      RDF::URI("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
+      NS::LL[:remove]
+    ]
+    data.push [
+      authenticated_resource.parent_iri,
+      NS::HYDRA[:operation],
+      RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote")
+    ]
+  end
 end

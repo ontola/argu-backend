@@ -25,7 +25,8 @@ RSpec.describe 'Votes', type: :request do
 
   shared_examples_for 'by parent' do |opts = {skip: []}|
     let(:show_path) { show_by_parent_path }
-    let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('204') }
+    let(:expect_delete_destroy_guest_json_api) { expect(response.code).to eq('204') }
+    let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('200') }
     let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
     let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
     let(:expect_get_show_unauthorized_serializer) { expect_not_found }

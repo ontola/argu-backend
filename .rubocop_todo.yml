@@ -57,6 +57,7 @@ Metrics/ClassLength:
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/pages_controller.rb'
     - 'app/controllers/users_controller.rb'
+    - 'app/controllers/votes_controller.rb'
     - 'app/models/edge.rb'
     - 'app/models/edgeable/base.rb'
     - 'app/models/profile.rb'

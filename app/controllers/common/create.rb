@@ -69,6 +69,30 @@ module Common
       def include_create
         []
       end
+
+      def meta_create
+        data = []
+        return data if index_collection.blank?
+        total_count = index_collection.total_count
+        if index_collection.views.present?
+          meta_increment_collection_count(data, index_collection.views.first.iri, total_count)
+        end
+        meta_increment_collection_count(data, index_collection.iri, total_count)
+      end
+
+      def meta_increment_collection_count(data, iri, total_count)
+        data.push [
+          iri,
+          NS::ARGU[:totalCount],
+          total_count - 1,
+          NS::LL[:remove]
+        ]
+        data.push [
+          iri,
+          NS::ARGU[:totalCount],
+          total_count
+        ]
+      end
     end
   end
 end

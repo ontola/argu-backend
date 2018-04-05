@@ -75,6 +75,30 @@ module Common
       def execute_destroy
         authenticated_resource.destroy
       end
+
+      def meta_destroy
+        data = []
+        return data if index_collection.blank?
+        total_count = index_collection.total_count
+        if index_collection.views.present?
+          meta_decrement_collection_count(data, index_collection.views.first.iri, total_count)
+        end
+        meta_decrement_collection_count(data, index_collection.iri, total_count)
+      end
+
+      def meta_decrement_collection_count(data, iri, total_count)
+        data.push [
+          iri,
+          NS::ARGU[:totalCount],
+          total_count + 1,
+          NS::LL[:remove]
+        ]
+        data.push [
+          iri,
+          NS::ARGU[:totalCount],
+          total_count
+        ]
+      end
     end
   end
 end

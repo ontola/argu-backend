@@ -29,6 +29,7 @@ class Page < Edgeable::Base
   with_collection :vote_matches,
                   association: :profile_vote_matches,
                   pagination: true
+  with_collection :forums, pagination: true
 
   parentable
 

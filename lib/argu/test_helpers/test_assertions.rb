@@ -68,16 +68,17 @@ module Argu
         last_match
       end
 
-      def expect_triple(subject, predicate, object)
-        match = rdf_body.query([subject, predicate, object])
-        assert match.present?,
-               "Expected to find #{RDF::Statement(subject, predicate, object)} in\n#{response.body}"
+      def expect_triple(subject, predicate, object, graph = nil)
+        match = rdf_body.query([subject, predicate, object, graph])
+        statement = RDF::Statement(subject, predicate, object, graph_name: graph)
+        assert match.present?, "Expected to find #{statement} in\n#{response.body}"
         match
       end
 
-      def expect_no_triple(subject, predicate, object)
-        assert_not rdf_body.query([subject, predicate, object]).present?,
-                   "Expected not to find #{RDF::Statement(subject, predicate, object)} in\n#{response.body}"
+      def expect_no_triple(subject, predicate, object, graph = nil)
+        statement = RDF::Statement(subject, predicate, object, graph_name: graph)
+        assert_not rdf_body.query([subject, predicate, object, graph]).present?,
+                   "Expected not to find #{statement} in\n#{response.body}"
       end
 
       def expect_sequence(subject, predicate)

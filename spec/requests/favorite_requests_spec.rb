@@ -18,6 +18,7 @@ RSpec.describe 'Favorites', type: :request do
   let(:authorized_user) { staff }
   let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
   let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
+  let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
 
   subject { create(:favorite, user: staff, edge: holland.edge) }
   it_behaves_like 'post create', skip: %i[create_invalid]

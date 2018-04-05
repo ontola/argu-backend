@@ -69,7 +69,7 @@ class AuthorizedController < ApplicationController
 
   def collection_options
     params
-      .permit(:page, filter: controller_class.filter_options.keys)
+      .permit(:page, filter: controller_class.try(:filter_options)&.keys)
       .to_h
       .merge(user_context: user_context)
       .to_options
