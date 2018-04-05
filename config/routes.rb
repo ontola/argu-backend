@@ -210,7 +210,7 @@ Rails.application.routes.draw do
     resources model,
               path: model == :pro_arguments ? 'pro' : 'con',
               except: %i[index new create],
-              concerns: %i[votable feedable trashable commentable menuable contactable]
+              concerns: %i[actionable votable feedable trashable commentable menuable contactable]
   end
 
   resources :direct_messages, path: :dm, only: [:create]
