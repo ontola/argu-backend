@@ -27,7 +27,7 @@ module Common
         format.json { create_respond_success_json(resource) }
         format.json_api { respond_with_201(resource, :json_api) }
         RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { respond_with_201(resource, type) }
+          format.send(type) { respond_with_201(resource, type, include: include_create) }
         end
       end
 
@@ -64,6 +64,10 @@ module Common
       # @!visibility public
       def execute_create
         authenticated_resource.save
+      end
+
+      def include_create
+        []
       end
     end
   end

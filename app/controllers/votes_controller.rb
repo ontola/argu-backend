@@ -77,6 +77,10 @@ class VotesController < EdgeableController
     }
   end
 
+  def include_create
+    [voteable: :actions]
+  end
+
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||= Edge
