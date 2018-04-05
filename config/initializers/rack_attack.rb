@@ -75,7 +75,7 @@ module Rack
     end
 
     def self.is_throttled_path(req)
-      %w[/oauth /actors /users /connect /setup /move /convert /v/ /c/].any? { |n| req.path.include?(n) }
+      %w[/oauth /actors /users /connect /setup /move /convert /votes/ /c/].any? { |n| req.path.include?(n) }
     end
   end
 end

@@ -11,7 +11,7 @@ class VotesController < EdgeableController
     }
   end
 
-  # POST /model/:model_id/v/:for
+  # POST /model/:model_id/votes/:for
   def create
     return super unless unmodified?
     respond_to do |format|

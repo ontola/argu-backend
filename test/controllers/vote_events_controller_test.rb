@@ -39,10 +39,10 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'no'}, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/votes/#{v.id}") }
     )
     expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/v/#{v.id}") }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/votes/#{v.id}") }
     )
   end
 
@@ -99,10 +99,10 @@ class VoteEventsControllerTest < ActionController::TestCase
         .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'no'}, page: 1, type: 'paginated') }
     )
     expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/votes/#{v.id}") }
     )
     expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/v/#{v.id}") }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/votes/#{v.id}") }
     )
   end
 
@@ -127,10 +127,17 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'no'}, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(
-      lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
+      lr_vote_event.votes
+        .joins(:creator)
+        .where(profiles: {are_votes_public: true})
+        .map { |v| argu_url("/votes/#{v.id}") }
     )
     expect_not_included(
-      lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/v/#{v.id}") }
+      lr_vote_event
+        .votes
+        .joins(:creator)
+        .where(profiles: {are_votes_public: false})
+        .map { |v| argu_url("/votes/#{v.id}") }
     )
   end
 
@@ -185,9 +192,9 @@ class VoteEventsControllerTest < ActionController::TestCase
   def vote_event_base_path(vote_event)
     case vote_event.voteable
     when Motion
-      "/m/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/v"
+      "/m/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/votes"
     when LinkedRecord
-      "#{vote_event.voteable.iri(only_path: true).to_s.gsub('/od/', '/lr/')}/vote_events/#{vote_event.id}/v"
+      "#{vote_event.voteable.iri(only_path: true).to_s.gsub('/od/', '/lr/')}/vote_events/#{vote_event.id}/votes"
     end
   end
 end

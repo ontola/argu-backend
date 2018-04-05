@@ -10,7 +10,7 @@ class VotesControllerTest < ActionController::TestCase
   let(:vote) { motion.votes.first }
   let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
   let(:user) { create(:user) }
-  let(:vote_event_base_path) { "/m/#{motion.id}/vote_events/#{vote_event.id}/v" }
+  let(:vote_event_base_path) { "/m/#{motion.id}/vote_events/#{vote_event.id}/votes" }
 
   ####################################
   # Show
@@ -50,10 +50,10 @@ class VotesControllerTest < ActionController::TestCase
     expect_included(argu_url(vote_event_base_path, filter: {option: 'no'}, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path, filter: {option: 'no'}, page: 1, type: 'paginated'))
     expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/v/#{v.id}") }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/votes/#{v.id}") }
     )
     expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/v/#{v.id}") }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/votes/#{v.id}") }
     )
   end
 end

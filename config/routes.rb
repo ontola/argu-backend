@@ -170,7 +170,7 @@ Rails.application.routes.draw do
 
   get :feed, controller: :favorites_feed, action: :index
 
-  resources :votes, only: %i[destroy update show], path: :v, as: :vote
+  resources :votes, only: %i[destroy update show], as: :vote
 
   resources :vote_matches, only: %i[index show create update destroy] do
     get :voteables, to: 'list_items#index', relationship: :voteables
