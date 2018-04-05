@@ -25,7 +25,7 @@ class GrantTree
           "@#{action}",
           node
             .permitted_parent_types(action: action, group_id: permission_group.group_id, resource_type: resource_type)
-            .map { |a| a == '*' ? NS::ARGU[:contentTreeClass] : a.constantize.type_iri }
+            .map { |a| a == '*' ? NS::ARGU[:contentTreeClass] : a.constantize.iri }
         )
       end
 
