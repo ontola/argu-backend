@@ -18,7 +18,7 @@ class VoteMatchesController < ServiceController
     inc_nested_collection
   end
 
-  def index_response_association
+  def index_collection
     if parent_id_from_params(params).present?
       parent_resource!.vote_match_collection(collection_options)
     else

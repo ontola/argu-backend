@@ -121,7 +121,7 @@ class PagesController < EdgeableController
     }
   end
 
-  def index_response_association
+  def index_collection
     EdgeableCollection.new(
       association_class: Page,
       user_context: user_context,

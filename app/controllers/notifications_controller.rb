@@ -109,7 +109,7 @@ class NotificationsController < AuthorizedController
     end
   end
 
-  def index_response_association
+  def index_collection
     @collection ||= Collection.new(
       association_class: Notification,
       before: params[:before],
@@ -124,15 +124,15 @@ class NotificationsController < AuthorizedController
   def meta
     m = []
     m <<
-      if index_response_association.parent_view_iri.present?
+      if index_collection.parent_view_iri.present?
         [
-          RDF::URI(index_response_association.parent_view_iri),
+          RDF::URI(index_collection.parent_view_iri),
           NS::ARGU[:views],
-          RDF::URI(index_response_association.iri)
+          RDF::URI(index_collection.iri)
         ]
       else
         [
-          RDF::URI(index_response_association.iri),
+          RDF::URI(index_collection.iri),
           NS::ARGU[:unreadCount],
           unread_notification_count
         ]

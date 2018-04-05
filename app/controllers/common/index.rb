@@ -18,9 +18,17 @@ module Common
         inc_nested_collection
       end
 
+      def index_collection
+        return if index_collection_association.blank?
+        parent_resource!.send(
+          index_collection_association,
+          collection_options
+        )
+      end
+
       # @!visibility public
       def index_collection_association
-        "#{model_name}_collection"
+        "#{model_name}_collection" if parent_resource!.respond_to?("#{model_name}_collection")
       end
 
       # @!visibility public
@@ -35,10 +43,7 @@ module Common
       end
 
       def index_response_association
-        parent_resource!.send(
-          index_collection_association,
-          collection_options
-        )
+        index_collection
       end
 
       def index_respond_success_html

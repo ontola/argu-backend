@@ -44,7 +44,7 @@ class FeedController < AuthorizedController
     end
   end
 
-  def index_response_association
+  def index_collection
     resource_by_id.activity_collection(collection_options)
   end
 
