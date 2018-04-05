@@ -10,6 +10,8 @@ class GrantSet < ApplicationRecord
   validates :page, presence: true
   validates :title, uniqueness: {scope: :page_id}
 
+  alias_attribute :display_name, :title
+
   scope :selectable, -> { where(title: %w[spectator participator initiator administrator]) }
 
   RESERVED_TITLES.each do |title|
@@ -25,10 +27,6 @@ class GrantSet < ApplicationRecord
     end
     cloned.save!
     cloned
-  end
-
-  def display_name
-    title
   end
 
   def self.for_one_action(resource_type, action)

@@ -7,7 +7,7 @@ class VoteMatchPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat [:name, voteables: %i[item_type item_iri], vote_comparables: %i[item_type item_iri]]
     attributes

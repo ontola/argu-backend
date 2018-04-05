@@ -16,7 +16,7 @@ class NotificationPolicy < RestrictivePolicy
     raise .new('must be logged in') unless user
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[user_id title url] if staff?
     attributes

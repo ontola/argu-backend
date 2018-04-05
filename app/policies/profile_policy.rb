@@ -7,7 +7,7 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[id name about are_votes_public is_public]
     append_default_photo_params(attributes)

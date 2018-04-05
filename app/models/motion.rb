@@ -20,6 +20,9 @@ class Motion < Edgeable::Base
 
   attr_accessor :current_vote
 
+  alias_attribute :description, :content
+  alias_attribute :display_name, :title
+
   before_save :capitalize_title
 
   convertible questions: %i[activities blog_posts media_objects comment_threads]
@@ -50,15 +53,6 @@ class Motion < Edgeable::Base
 
   def creator
     super || Profile.community
-  end
-
-  # http://schema.org/description
-  def description
-    content
-  end
-
-  def display_name
-    title
   end
 
   def self.edge_includes_for_index(full = false)

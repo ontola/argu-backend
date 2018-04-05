@@ -45,7 +45,7 @@ class ActivityPolicy < RestrictivePolicy
 
   delegate :show?, to: :edgeable_policy
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes
   end

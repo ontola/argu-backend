@@ -34,6 +34,9 @@ class Forum < Edgeable::Base
   attr_accessor :tab, :active, :confirmation_string
   attr_writer :public_grant
 
+  alias_attribute :display_name, :name
+  alias_attribute :description, :bio
+
   paginates_per 30
   parentable :page
 
@@ -79,15 +82,6 @@ class Forum < Edgeable::Base
 
   def default_decision_user
     nil
-  end
-
-  def display_name
-    name
-  end
-
-  # http://schema.org/description
-  def description
-    bio
   end
 
   def self.find(*ids)

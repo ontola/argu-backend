@@ -7,7 +7,7 @@ class ConversionPolicy < EdgeTreePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[klass]
     attributes

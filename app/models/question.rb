@@ -30,20 +30,14 @@ class Question < Edgeable::Base
 
   enum default_sorting: {popular: 0, created_at: 1, updated_at: 2}
 
+  alias_attribute :display_name, :title
+  alias_attribute :description, :content
+
   custom_grants_for :motions, :create
 
   # Might not be a good idea
   def creator
     super || Profile.community
-  end
-
-  def display_name
-    title
-  end
-
-  # http://schema.org/description
-  def description
-    content
   end
 
   def self.edge_includes_for_index

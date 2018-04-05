@@ -3,7 +3,7 @@
 class GrantPolicy < EdgeTreePolicy
   class Scope < EdgeTreePolicy::Scope; end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[group_id edge_id grant_set_id]
     attributes

@@ -12,7 +12,7 @@ class PagePolicy < EdgeablePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[bio last_accepted visibility confirmation_string]
     attributes.append(shortname_attributes: %i[shortname]) if new_record?

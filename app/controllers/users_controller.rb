@@ -110,7 +110,7 @@ class UsersController < AuthorizedController
   end
 
   def permit_params(password = false)
-    attrs = policy(authenticated_resource || User).permitted_attributes(password)
+    attrs = policy(authenticated_resource || User).permitted_attribute_names(password)
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp, authenticated_resource.class)
     merge_placement_params(pp, User)

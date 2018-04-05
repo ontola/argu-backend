@@ -7,7 +7,7 @@ class IdentityPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     super
   end
 

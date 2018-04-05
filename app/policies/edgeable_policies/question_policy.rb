@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class QuestionPolicy < EdgeablePolicy
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     if create?
       attributes.concat %i[id title content forum_id cover_photo

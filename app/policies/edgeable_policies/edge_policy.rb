@@ -10,7 +10,7 @@ class EdgePolicy < EdgeablePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     if %w[Motion Question].include?(record.owner_type) && (moderator? || administrator? || staff?)
       attributes.concat %i[id expires_at]

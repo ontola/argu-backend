@@ -64,7 +64,7 @@ class EdgeablePolicy < RestrictivePolicy
       .include?(grant_set.to_s)
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.append(:mark_as_important) if mark_as_important?
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)

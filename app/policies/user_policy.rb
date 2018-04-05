@@ -7,7 +7,7 @@ class UserPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes(password = false)
+  def permitted_attribute_names(password = false)
     attrs = super()
     if create?
       attrs.concat %i[password password_confirmation primary_email]

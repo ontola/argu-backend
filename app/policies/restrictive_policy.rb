@@ -41,10 +41,15 @@ class RestrictivePolicy
     @record = record
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = [:lock_version]
     attributes.append(shortname_attributes: %i[shortname id]) if shortname?
     attributes
+  end
+
+  def permitted_attributes
+    names = permitted_attribute_names
+    names + (record&.class&.try(:attribute_aliases)&.select { |_k, v| names.map(&:to_s).include?(v) }&.keys || [])
   end
 
   # @param parent_key [String, Symbol] Parent key of the wanted subset

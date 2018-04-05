@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MotionPolicy < EdgeablePolicy
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[title content votes question_id]
     attributes.concat %i[invert_arguments forum_id f_convert] if staff?

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DecisionPolicy < EdgeablePolicy
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[content]
     attributes.concat %i[state forwarded_user_id forwarded_group_id] if record.new_record?

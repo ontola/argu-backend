@@ -93,6 +93,7 @@ class CommentsController < EdgeableController
   end
 
   def resource_new_params
+    return super if new_fe_request?
     super.merge(body: comment_body)
   end
 

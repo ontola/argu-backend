@@ -9,7 +9,7 @@ class ForumPolicy < EdgeablePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[name bio bio_long profile_id locale public_grant page_id]
     attributes.append(:max_shortname_count) if max_shortname_count?

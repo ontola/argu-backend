@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DirectMessagePolicy < EdgeTreePolicy
-  def permitted_attributes
+  def permitted_attribute_names
     %i[body email resource_iri subject]
   end
 

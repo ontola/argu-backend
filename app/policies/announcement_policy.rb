@@ -16,7 +16,7 @@ class AnnouncementPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     if create?
       attributes.concat %i[title forum cited_profile content cited_name

@@ -11,7 +11,7 @@ class GroupPolicy < EdgeTreePolicy
     user&.profile&.is_group_member?(record.id)
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[name name_singular] if create?
     attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id])

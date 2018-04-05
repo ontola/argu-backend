@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ShortnamePolicy < EdgeTreePolicy
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = super
     attributes.concat %i[shortname owner_id owner_type]
     attributes

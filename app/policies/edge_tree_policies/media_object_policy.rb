@@ -21,7 +21,7 @@ class MediaObjectPolicy < EdgeTreePolicy
     edgeable_policy.show?
   end
 
-  def permitted_attributes
+  def permitted_attribute_names
     attributes = []
     attributes.concat %i[id used_as content remote_content_url remove_content content_cache content_aspect
                          content_attribution content_box_w content_crop_h content_crop_w content_crop_x content_crop_y
