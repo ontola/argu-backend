@@ -10,6 +10,7 @@ class NotificationActions < ActionList
     action_item(
       :read,
       target: read_entrypoint,
+      result: Notification,
       type: NS::SCHEMA[:ReadAction],
       policy: :read?
     )

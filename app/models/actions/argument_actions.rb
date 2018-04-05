@@ -15,6 +15,7 @@ class ArgumentActions < ActionList
       action_item(
         :create_vote,
         target: create_vote_entrypoint(vote),
+        result: Vote,
         type: [NS::ARGU[:VoteAction], NS::ARGU[:CreateVoteAction]],
         policy: :vote?
       )
@@ -22,6 +23,7 @@ class ArgumentActions < ActionList
       action_item(
         :destroy_vote,
         target: destroy_vote_entrypoint,
+        result: Vote,
         type: [NS::ARGU[:VoteAction], NS::ARGU[:DestroyVoteAction]],
         policy: :vote?
       )
