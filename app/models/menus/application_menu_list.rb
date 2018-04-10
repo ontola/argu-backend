@@ -29,6 +29,7 @@ class ApplicationMenuList < MenuList
   end
 
   def user_menu
+    return [] if user.guest?
     menu_item(
       :user,
       label: resource.display_name,

@@ -27,7 +27,6 @@ class MenusTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:MenuItem])
-    expect_triple(RDF::URI(argu_url('/menus/user')), RDF[:type], NS::ARGU[:MenuItem])
     expect_triple(RDF::URI(argu_url('/menus/info')), RDF[:type], NS::ARGU[:MenuItem])
 
     sequence = expect_sequence(RDF::URI(argu_url('/menus/organizations')), NS::ARGU[:menuItems])
