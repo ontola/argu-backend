@@ -16,10 +16,9 @@ module Discussable
 
   module Serializer
     extend ActiveSupport::Concern
+
     included do
-      # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :discussion_collection, predicate: NS::ARGU[:questions]
-      # rubocop:enable Rails/HasManyOrHasOneDependent
+      with_collection :discussions, predicate: NS::ARGU[:questions]
 
       def discussion_collection
         object.discussion_collection(user_context: scope)

@@ -9,7 +9,7 @@ class PageSerializer < RecordSerializer
   has_one :profile_photo, predicate: NS::SCHEMA[:image] do
     object.profile.default_profile_photo
   end
-  has_one :vote_match_collection, predicate: NS::ARGU[:voteMatches]
+  with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
 
   def about
     object.profile.about

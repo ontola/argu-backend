@@ -42,10 +42,9 @@ module Commentable
 
   module Serializer
     extend ActiveSupport::Concern
+
     included do
-      # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :comment_collection, predicate: NS::SCHEMA[:comments]
-      # rubocop:enable Rails/HasManyOrHasOneDependent
+      with_collection :comments, predicate: NS::SCHEMA[:comments]
 
       def comment_collection
         object.comment_collection(user_context: scope)

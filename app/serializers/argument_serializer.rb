@@ -4,8 +4,7 @@ class ArgumentSerializer < ContentEdgeSerializer
   include Commentable::Serializer
   include VotesHelper
 
-  has_one :vote_collection,
-          predicate: NS::ARGU[:votes]
+  with_collection :votes, predicate: NS::ARGU[:votes]
   has_one :current_vote,
           predicate: NS::ARGU[:currentVote],
           unless: :service_scope?

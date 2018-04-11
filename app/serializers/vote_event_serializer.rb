@@ -19,7 +19,7 @@ class VoteEventSerializer < BaseEdgeSerializer
     }
   end
 
-  has_one :vote_collection, predicate: NS::ARGU[:votes]
+  with_collection :votes, predicate: NS::ARGU[:votes]
 
   def ends_at
     object.edge.expires_at

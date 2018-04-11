@@ -49,10 +49,9 @@ module Decisionable
 
   module Serializer
     extend ActiveSupport::Concern
+
     included do
-      # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :decision_collection, predicate: NS::ARGU[:decisions]
-      # rubocop:enable Rails/HasManyOrHasOneDependent
+      with_collection :decisions, predicate: NS::ARGU[:decisions]
 
       def decision_collection
         object.decision_collection(user_context: scope)

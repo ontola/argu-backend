@@ -14,10 +14,9 @@ module BlogPostable
 
   module Serializer
     extend ActiveSupport::Concern
+
     included do
-      # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :blog_post_collection, predicate: NS::ARGU[:blogPosts]
-      # rubocop:enable Rails/HasManyOrHasOneDependent
+      with_collection :blog_posts, predicate: NS::ARGU[:blogPosts]
 
       def blog_post_collection
         object.blog_post_collection(user_context: scope)

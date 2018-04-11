@@ -15,7 +15,7 @@ class UserSerializer < RecordSerializer
     object.profile.default_profile_photo
   end
 
-  has_one :vote_match_collection, predicate: NS::ARGU[:voteMatches]
+  with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
 
   def vote_match_collection
     object.vote_match_collection(user_context: scope)
