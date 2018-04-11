@@ -102,6 +102,7 @@ module RedisResource
         else
           resource = Edge.new(
             id: key.edge_id,
+            user: user,
             owner: klass.new(attributes),
             parent: parent
           ).owner
