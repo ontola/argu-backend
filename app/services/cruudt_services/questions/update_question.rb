@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateQuestion < UpdateService
+class UpdateQuestion < EdgeableUpdateService
   private
 
   def object_attributes=(obj)

@@ -49,6 +49,11 @@ class EdgeableController < ServiceController
     resource
   end
 
+  def service_klass
+    "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
+      "Edgeable#{action_name.classify}Service".constantize
+  end
+
   # Prepares a memoized {TrashService} for the relevant model for use in controller#trash
   # @return [TrashService] The service, generally initialized with {resource_id}
   # @example

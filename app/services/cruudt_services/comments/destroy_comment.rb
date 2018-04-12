@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DestroyComment < DestroyService
+class DestroyComment < EdgeableDestroyService
   def initialize(comment, attributes: {}, options: {})
     super
   end

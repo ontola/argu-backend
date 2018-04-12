@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateArgument < UpdateService
+class UpdateArgument < EdgeableUpdateService
   private
 
   def assign_attributes

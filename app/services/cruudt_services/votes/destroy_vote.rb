@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DestroyVote < DestroyService
+class DestroyVote < EdgeableDestroyService
   include AnalyticsHelper
 
   private

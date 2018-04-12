@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DestroyPage < DestroyService
+class DestroyPage < EdgeableDestroyService
   private
 
   def confirmation_string

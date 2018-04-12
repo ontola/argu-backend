@@ -2,7 +2,7 @@
 
 # Service for updating blog posts.
 # @author Fletcher91 <thom@argu.co>
-class UpdateBlogPost < UpdateService
+class UpdateBlogPost < EdgeableUpdateService
   private
 
   def object_attributes=(obj)

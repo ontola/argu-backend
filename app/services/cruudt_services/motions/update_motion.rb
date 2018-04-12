@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateMotion < UpdateService
+class UpdateMotion < EdgeableUpdateService
   def initialize(resource, attributes: {}, options: {})
     super
     resource.edge.parent = resource.parent_edge(:forum) if resource.question_id_changed? && resource.question_id.nil?
