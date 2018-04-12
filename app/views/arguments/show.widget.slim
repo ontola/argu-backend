@@ -3,7 +3,7 @@
     span= (argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))
     /TODO: Add link to motion
   section
-    h1[class=(argument.pro ? 'pro-t' : 'con-t')]= argument.title
+    h1[class=(argument.pro ? 'pro-t' : 'con-t')]= argument.display_name
     =content_tag :p, raw(argument.supped_content)
     =print_references argument
   =render partial: argument.creator, formats: [:html], locals: {resource: argument}

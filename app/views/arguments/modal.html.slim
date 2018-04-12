@@ -6,7 +6,7 @@
     .modal-scroll-box
       .box
         section
-          h1[class=(argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= argument.title
+          h1[class=(argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= argument.display_name
           =render partial: 'arguments/shr', locals: {model: argument, vote: @vote}
           .markdown[itemprop="text"]
             =markdown_to_html(argument.content)

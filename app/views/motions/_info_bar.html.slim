@@ -12,7 +12,7 @@ section.section--details
           .detail__icon
             span.question-t.fa.fa-question
           .detail__text
-            span[itemprop="headline"]= truncate(motion.parent_model.title, length: 30)
+            span[itemprop="headline"]= truncate(motion.parent_model.display_name, length: 30)
     - if local_assigns[:show_vote_pie] && motion.default_vote_event.total_vote_count.positive?
       .detail[data-title=t('motions.percentage_in_favor', percentage: motion.default_vote_event.votes_pro_percentage, count: motion.default_vote_event.total_vote_count)]
         .detail__icon

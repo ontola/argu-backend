@@ -4,7 +4,7 @@
       =render partial: 'application/box_image', locals: {media_object: model.default_cover_photo}
   section
     =link_to question_path(model) do
-      h3.question-t[itemprop="headline"]= model.title
+      h3.question-t[itemprop="headline"]= model.display_name
   =render partial: 'questions/info_bar', locals: {question: model}
   section
     .markdown[itemprop="text"]

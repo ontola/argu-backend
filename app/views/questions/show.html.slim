@@ -10,7 +10,7 @@
   =render partial: 'contextualize/context_horizontal', locals: {item: question, type: 'question'}
   .box[class=status_classes_for(question) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
     section
-      h1.question-t[itemprop="headline"]= question.title
+      h1.question-t[itemprop="headline"]= question.display_name
     =render partial: 'questions/info_bar', locals: {question: question}
     section
       .markdown[itemprop="text"]

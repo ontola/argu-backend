@@ -1,7 +1,7 @@
 .box[class=status_classes_for(resource)]
   section
     =link_to resource
-      h3[itemprop="headline" class="blog-post-t"]= resource.title
+      h3[itemprop="headline" class="blog-post-t"]= resource.display_name
     .markdown[itemprop="text"]
       =markdown_to_html(resource.content)
   section.section--attachments

@@ -3,7 +3,7 @@ ul.box-list.box-list--icons
     li= link_to motion_path(motion) do
       h3.motion-t
         span[class='fa fa-#{motion_icon}']
-        span.icon-left= motion.title
+        span.icon-left= motion.display_name
   - if question.children_count(:motions) > 3
     li= link_to question_path(question)
       h3.motion-t

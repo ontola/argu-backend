@@ -1,7 +1,7 @@
 .box.box--extra-margin.motion
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =link_to model.record_iri
-    h3.motion-t[itemprop="headline"]= model.title
+    h3.motion-t[itemprop="headline"]= model.display_name
   section
     - if model.edge.arguments_pro.present? || model.edge.arguments_con.present?
       ul.box-list.box-list--arguments.box-list--icons
@@ -10,7 +10,7 @@
           h4[class="pro-t tooltip--wider"]
             span.fa.fa-plus
             .list-item.icon-left
-              span[title=safe_truncated_text(argument.content)]= argument.title
+              span[title=safe_truncated_text(argument.content)]= argument.display_name
               - if argument.children_count(:comments) > 0
                 .comments-counter.comments-counter--inline
                   .fa.fa-comment
@@ -23,7 +23,7 @@
           h4[class="con-t tooltip--wider"]
             span.fa.fa-minus
             .list-item.icon-left
-              span[title=safe_truncated_text(argument.content)]= argument.title
+              span[title=safe_truncated_text(argument.content)]= argument.display_name
               - if argument.children_count(:comments) > 0
                 .comments-counter.comments-counter--inline
                   .fa.fa-comment

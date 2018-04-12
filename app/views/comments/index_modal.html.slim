@@ -4,7 +4,7 @@
     .modal-scroll-box
       .box
         section
-          h1.motion-t= resource.title
+          h1.motion-t= resource.display_name
           .markdown[itemprop="text"]
             =markdown_to_html(resource.content)
       =render template: 'comments/show', locals: {resource: resource, comment: Comment.new, modal: true}

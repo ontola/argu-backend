@@ -3,10 +3,10 @@
 .context.context--horizontal
   - if previous.present? && item.previous != item
     =link_to previous, class: 'context--horizontal-button context--previous', remote: local_assigns[:modal] do
-      div[class="context-content tooltip--#{local_assigns[:modal] ? 'right' : 'left'}" data-title=previous.title]
+      div[class="context-content tooltip--#{local_assigns[:modal] ? 'right' : 'left'}" data-title=previous.display_name]
         span[class="fa fa-arrow-left #{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
   - if _next.present? && _next != item
     =link_to _next, class: 'context--horizontal-button context--next', remote: local_assigns[:modal] do
-      div[class="context-content tooltip--#{local_assigns[:modal] ? 'left' : 'right'}" data-title=_next.title]
+      div[class="context-content tooltip--#{local_assigns[:modal] ? 'left' : 'right'}" data-title=_next.display_name]
         span[class="fa fa-arrow-right #{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t"]
 .clear

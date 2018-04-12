@@ -1,7 +1,7 @@
 .box.box-with-btns.argument[id="#{model.identifier.present? ? model.identifier.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed?}"]
   section
     =link_to argument_path(model), remote: true
-      h4[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
+      h4[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.display_name
     =render partial: 'arguments/shr', locals: {model: model, vote: upvote_for(model, current_profile)}
     -if model.content.present?
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
