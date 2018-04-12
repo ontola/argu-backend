@@ -36,6 +36,7 @@ secrets.yml
 /public/banners
 /public/export
 /public/forums
+/public/media_objects
 /public/motions
 /public/organisations
 /public/o
