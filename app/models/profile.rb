@@ -136,19 +136,6 @@ class Profile < ApplicationRecord
   end
 
   # ######Methods########
-  def voted_on?(item)
-    Vote.where(creator_id: id,
-               voteable_id: item.id,
-               voteable_type: item.class.to_s)
-      .last
-      .try(:for) == 'pro'
-  end
-
-  # Warn: Doesn't check for parent deletion
-  def votes_questions_motions
-    votes.where("voteable_type = 'Question' OR voteable_type = 'Motion'")
-  end
-
   # Returns the last visted forum
   def last_forum
     forum_id = Argu::Redis.get("profile:#{id}:last_forum")

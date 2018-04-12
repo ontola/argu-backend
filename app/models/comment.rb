@@ -20,36 +20,8 @@ class Comment < Edgeable::Base
 
   alias_attribute :content, :body
 
-  # Helper class method to lookup all comments assigned
-  # to all commentable types for a given user.
-  # @return [ActiveRecord::Relation]
-  def self.find_comments_by_user(user)
-    where(creator_id: user.profile.id).order('created_at DESC')
-  end
-
-  # Helper class method to look up all comments for
-  # commentable class name and commentable id.
-  # @return [ActiveRecord::Relation]
-  def self.find_comments_for_commentable(commentable_str, commentable_id)
-    where(commentable_type: commentable_str.to_s,
-          commentable_id: commentable_id)
-      .order('created_at DESC')
-  end
-
   def abandoned?
     is_trashed? && children.length.zero?
-  end
-
-  # Helper class method that allows you to build a comment
-  # by passing a commentable object, a user_id, and comment text
-  # example in readme
-  def self.build_from(obj, profile_id, comment)
-    c = new
-    c.commentable_id = obj.id
-    c.commentable_type = obj.class.base_class.name
-    c.body = comment
-    c.creator_id = profile_id
-    c
   end
 
   def deleted?
@@ -58,12 +30,6 @@ class Comment < Edgeable::Base
 
   def display_name
     safe_truncated_text(body, 40)
-  end
-
-  # Helper class method to look up a commentable object
-  # given the commentable class name and id
-  def self.find_commentable(commentable_str, commentable_id)
-    commentable_str.constantize.find(commentable_id)
   end
 
   def subscribable
