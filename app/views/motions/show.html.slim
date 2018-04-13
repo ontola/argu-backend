@@ -17,16 +17,18 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
       = render partial: 'application/publish', locals: {resource: motion}
 =render partial: 'happenings/timeline',
         locals: { resource: motion, happenings: policy_scope(resource.happenings).includes(:trackable, trackable_edge: :published_publications) }
-.col-2
-  .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
-.argument-columns= render_columns(@arguments,
-                                  buttons_url: new_motion_argument_path(motion),
-                                  collection_model: Argument,
-                                  buttons_param: :pro,
-                                  buttons_form_on_empty: false,
-                                  buttons_options: {data: remote_unless_user},
-                                  buttons_text: {pro: t('add_type', type: argument_type).capitalize, con: t('add_type', type: argument_type).capitalize},
-                                  header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize},
-                                  show_new_buttons: policy(motion).create_child?(:arguments).present?)
-.opinion-columns
-  div.col-1= render template: 'comments/show', locals: {resource: motion, comment: Comment.new}
+- if policy(motion).index_children?(:arguments).present?
+  .col-2
+    .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
+  .argument-columns= render_columns(@arguments,
+                                    buttons_url: new_motion_argument_path(motion),
+                                    collection_model: Argument,
+                                    buttons_param: :pro,
+                                    buttons_form_on_empty: false,
+                                    buttons_options: {data: remote_unless_user},
+                                    buttons_text: {pro: t('add_type', type: argument_type).capitalize, con: t('add_type', type: argument_type).capitalize},
+                                    header_text: {pro: t('arguments.header.pro').capitalize, con: t('arguments.header.con').capitalize},
+                                    show_new_buttons: policy(motion).create_child?(:arguments).present?)
+- if policy(motion).index_children?(:comments).present?
+  .opinion-columns
+    div.col-1= render template: 'comments/show', locals: {resource: motion, comment: Comment.new}
