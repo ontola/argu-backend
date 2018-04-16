@@ -3,22 +3,6 @@
 class MotionsController < EdgeableController
   include EdgeTree::Move
   skip_before_action :check_if_registered, only: :index
-  skip_before_action :authorize_action, only: :search
-
-  def search
-    skip_verify_policy_authorized(true)
-    if params[:q].present? && params[:thing].present?
-      @motions = policy_scope(parent_resource!.motions).search(params[:q])
-      render json: @motions.presence || {data: []}
-    else
-      skip_verify_policy_scoped(true)
-      errors = []
-      errors << {title: 'Query parameter `q` not present'} if params[:q].blank?
-      errors << {title: 'Type parameter `thing` not present'} if params[:thing].blank?
-      render status: 400,
-             json: {errors: errors}
-    end
-  end
 
   # GET /motions/1
   # GET /motions/1.json
@@ -79,10 +63,5 @@ class MotionsController < EdgeableController
     return super unless action_name == 'create' && resource.persisted?
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)
-  end
-
-  def tree_root_id
-    return super unless action_name == 'search'
-    parent_edge.root_id
   end
 end

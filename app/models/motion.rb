@@ -36,14 +36,6 @@ class Motion < Edgeable::Base
 
   VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 
-  # @return [ActiveRecord::Relation]
-  def self.search(q)
-    where('lower(motions.title) SIMILAR TO lower(?) OR ' \
-            'lower(motions.content) LIKE lower(?)',
-          "%#{q}%",
-          "%#{q}%")
-  end
-
   def assert_tenant
     return unless parent_model.is_a?(Question) && parent_model.forum_id != forum_id
     errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
