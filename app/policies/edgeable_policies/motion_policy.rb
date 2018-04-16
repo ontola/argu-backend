@@ -4,7 +4,6 @@ class MotionPolicy < EdgeablePolicy
   def permitted_attributes
     attributes = super
     attributes.concat %i[title content votes question_id]
-    attributes.append(question_answers_attributes: %i[id question_id motion_id])
     attributes.concat %i[invert_arguments forum_id f_convert] if staff?
     attributes.concat %i[pinned] if moderator? || administrator? || staff?
     append_default_photo_params(attributes)

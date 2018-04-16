@@ -79,21 +79,6 @@ class Motion < Edgeable::Base
     )
   end
 
-  def move_to(forum, unlink_question = true)
-    Motion.transaction do
-      self.forum = forum.lock!
-      self.question_id = nil if unlink_question
-      edge.parent = forum.edge
-      save!
-      edge.descendants.lock(true).includes(:owner).find_each do |descendant|
-        descendant.owner.update_column(:forum_id, forum.id)
-      end
-      activities.lock(true).update_all(forum_id: forum.id)
-      activities.lock(true).update_all(recipient_id: forum.id, recipient_type: 'Forum') if question_id.nil?
-      true
-    end
-  end
-
   def next(show_trashed = false)
     sister_node(show_trashed)
       .where('motions.updated_at < :date', date: updated_at)

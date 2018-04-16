@@ -51,8 +51,7 @@
               - if policy(question).permitted_nested_attributes(:edge_attributes).include?(:expires_at)
                 =f.semantic_fields_for :edge do |ef|
                   =ef.input :expires_at, as: :datetime_picker
-              - if question.persisted? && policy(question).move?
-                =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
+              - if question.persisted? && policy(question).convert?
                 =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
         section.section--footer.footer-flex
           .footer-flex-element.footer-creator

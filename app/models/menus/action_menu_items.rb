@@ -69,6 +69,18 @@ module Menus
       )
     end
 
+    def move_link
+      menu_item(
+        :move,
+        image: 'fa-sitemap',
+        href: expand_uri_template('move_iri', parent_iri: resource.iri(only_path: true)),
+        policy: :move?,
+        link_opts: {
+          data: {remote: 'true'}
+        }
+      )
+    end
+
     def statistics_link
       menu_item(
         :statistics,

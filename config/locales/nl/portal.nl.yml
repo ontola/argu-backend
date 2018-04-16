@@ -47,6 +47,3 @@ nl:
   intro:
     initial:
       start_argu: "Begin met argu"
-  motions:
-    move:
-      header: "Verplaats idee"

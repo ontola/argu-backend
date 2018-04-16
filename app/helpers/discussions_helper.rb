@@ -57,4 +57,19 @@ module DiscussionsHelper
                .map { |title, id| {label: t("roles.types.#{title}").capitalize, title: title, value: id} }
     }
   end
+
+  def move_options(resource)
+    case resource
+    when Motion
+      resource.parent_model(:page).forums.includes(:edge).flat_map do |forum|
+        [["Forum #{forum.display_name}", forum.edge.id, style: 'font-weight: bold']].concat(
+          forum.questions.untrashed.includes(:edge).map { |question| ["- #{question.display_name}", question.edge.id] }
+        )
+      end
+    else
+      resource.parent_model(:page).forums.includes(:edge).map do |forum|
+        ["Forum #{forum.display_name}", forum.edge.id]
+      end
+    end
+  end
 end

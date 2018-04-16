@@ -151,9 +151,9 @@ module Argu
               end
             when Question
               subject.motions.pluck(:forum_id).each do |id|
-                assert_equal record.forum.id, id
+                assert_equal subject.forum.id, id
               end
-              assert subject.reload.motions.blank?
+              assert subject.reload.motions.present?
             end
             assert subject.activities.count.positive?
             subject.activities.pluck(:forum_id).each do |id|
@@ -192,7 +192,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, '1'] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {class_sym => {forum_id: other_page_forum.id}} }
+          let(:move_params) { {edge_id: other_page_forum.edge.id} }
           let(:destroy_params) { {} }
 
           # Paths

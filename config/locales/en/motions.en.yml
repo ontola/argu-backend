@@ -77,8 +77,6 @@ en:
     type_technological: "Technological"
     type_discussion: "In discussion"
     type_other: "Other"
-    move:
-      body: "All containing arguments will be moved along"
     convert:
       header: "Convert object"
       body: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."

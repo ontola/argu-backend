@@ -184,7 +184,6 @@ Rails.application.routes.draw do
     resources :motions, path: 'm', only: %i[index new create]
   end
 
-  resources :question_answers, path: 'qa', only: %i[new create]
   resources :edges, only: [:show] do
     get :statistics, to: 'statistics#show'
     resources :exports, only: %i[index create], concerns: %i[destroyable]

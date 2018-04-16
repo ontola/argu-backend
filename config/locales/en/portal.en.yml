@@ -46,6 +46,3 @@ en:
   intro:
     initial:
       start_argu: "Start with argu"
-  motions:
-    move:
-      header: "Move motion"

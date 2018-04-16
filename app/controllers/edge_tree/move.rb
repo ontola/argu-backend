@@ -12,13 +12,13 @@ module EdgeTree
       end
 
       def move
-        @forum = Forum.find permit_params[:forum_id]
-        user_context.with_root_id(@forum.edge.parent_id) do
-          authorize @forum, :update?
+        @edge = Edge.find params[:edge_id]
+        user_context.with_root_id(@edge.parent_edge(:page).id) do
+          authorize @edge.owner, :update?
         end
         moved = false
         authenticated_resource.with_lock do
-          moved = authenticated_resource.move_to @forum, *move_options
+          moved = authenticated_resource.move_to @edge, *move_options
         end
         if moved
           move_respond_blocks_success(authenticated_resource, nil)

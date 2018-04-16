@@ -23,10 +23,6 @@ class QuestionsController < EdgeableController
     ]
   end
 
-  def move_options
-    permit_params[:include_motions] == '1'
-  end
-
   def show_params
     params.permit(:page)
   end

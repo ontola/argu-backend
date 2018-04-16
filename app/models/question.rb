@@ -29,7 +29,6 @@ class Question < Edgeable::Base
   # TODO: validate expires_at
 
   enum default_sorting: {popular: 0, created_at: 1, updated_at: 2}
-  attr_accessor :include_motions
 
   custom_grants_for :motions, :create
 
@@ -55,27 +54,6 @@ class Question < Edgeable::Base
     expires_at.present? && expires_at < Time.current
   end
 
-  def move_to(forum, include_motions = false)
-    Question.transaction do
-      self.forum = forum.lock!
-      edge.parent = forum.edge
-      save!
-      votes.lock(true).update_all forum_id: forum.id
-      activities.lock(true).update_all(forum_id: forum.id, recipient_id: forum.id, recipient_type: 'Forum')
-      if include_motions
-        motions.lock(true).each do |m|
-          m.move_to forum, false
-        end
-      else
-        motions.each do |motion|
-          motion.edge.update!(parent: motion.forum.edge)
-          motion.update!(question_id: nil)
-        end
-      end
-    end
-    true
-  end
-
   def next(show_trashed = false)
     sister_node(show_trashed)
       .where('questions.updated_at < :date', date: updated_at)
@@ -85,10 +63,6 @@ class Question < Edgeable::Base
   def previous(show_trashed = false)
     sister_node(show_trashed)
       .find_by('questions.updated_at > :date', date: updated_at)
-  end
-
-  def question_answers
-    QuestionAnswer
   end
 
   scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }

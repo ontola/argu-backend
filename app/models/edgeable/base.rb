@@ -72,6 +72,26 @@ module Edgeable
       persisted? && edge.is_published?
     end
 
+    def move_to(new_parent)
+      self.class.transaction do
+        if self.class.columns.map(&:name).include?('question_id')
+          self.question_id = new_parent.owner_type == 'Question' ? new_parent.owner_id : nil
+        end
+        if self.class.columns.map(&:name).include?('forum_id') && new_parent.parent_model(:forum) != forum
+          self.forum = new_parent.parent_model(:forum).lock!
+          edge.descendants.lock(true).includes(:owner).find_each do |descendant|
+            descendant.owner.update_column(:forum_id, forum.id)
+          end
+          activities
+            .lock(true)
+            .update_all(forum_id: forum.id, recipient_id: new_parent.owner_id, recipient_type: new_parent.owner_type)
+        end
+        edge.parent = new_parent
+        save!
+      end
+      true
+    end
+
     def parent_edge(type = nil)
       type.nil? ? edge&.parent : edge&.parent_edge(type)
     end

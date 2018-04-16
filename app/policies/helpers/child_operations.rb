@@ -59,8 +59,6 @@ module ChildOperations
       {page: record}
     when 'MediaObject'
       {about: record}
-    when 'QuestionAnswer'
-      {question: record}
     else
       {}
     end

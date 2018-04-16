@@ -16,11 +16,11 @@ class QuestionMenuList < MenuList
       image: 'fa-ellipsis-v',
       menus: lambda {
         [
-          couple_motion_link,
           comments_link,
           activity_link,
           new_update_link,
           edit_link,
+          move_link,
           statistics_link,
           export_link,
           contact_link,
@@ -36,15 +36,5 @@ class QuestionMenuList < MenuList
 
   def share_menu
     share_menu_items
-  end
-
-  def couple_motion_link
-    menu_item(
-      :couple_motion,
-      image: 'fa-link',
-      href: new_question_answer_url(question_answer: {question_id: resource}),
-      policy: :create_child?,
-      policy_arguments: %i[question_answers]
-    )
   end
 end

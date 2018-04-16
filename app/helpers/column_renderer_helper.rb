@@ -12,7 +12,7 @@ module ColumnRendererHelper
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
     return if columns.nil?
-    included_models = [Motion, ProArgument, ConArgument, Vote, Question, QuestionAnswer,
+    included_models = [Motion, ProArgument, ConArgument, Vote, Question,
                        Comment, BlogPost, Decision, LinkedRecord]
     partial = if included_models.include?(columns.class)
                 "#{columns.class.base_class.name.tableize}/show"
