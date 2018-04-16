@@ -69,19 +69,36 @@ module Argu
       end
 
       def expect_triple(subject, predicate, object)
-        triple = RDF::Statement(subject, predicate, object).to_s
-        assert_includes response.body, triple, "Expected to find #{triple} in\n#{response.body}"
+        match = rdf_body.query([subject, predicate, object])
+        assert match.present?,
+               "Expected to find #{RDF::Statement(subject, predicate, object)} in\n#{response.body}"
+        match
+      end
+
+      def expect_no_triple(subject, predicate, object)
+        assert_not rdf_body.query([subject, predicate, object]).present?,
+                   "Expected not to find #{RDF::Statement(subject, predicate, object)} in\n#{response.body}"
       end
 
       def expect_sequence(subject, predicate)
-        m = response.body.match(/^#{Regexp.escape("<#{subject}> <#{predicate}>")} (.+).$/)
-        assert m, "Sequence for (#{subject} #{predicate}) not found"
-        RDF::Resource(m[1].strip)
+        expect_triple(subject, predicate, nil).first.object
       end
 
       def expect_sequence_member(subject, index, object)
         expect_triple(subject, RDF[:"_#{index}"], object)
         object
+      end
+
+      def expect_sequence_size(subject, expected_count)
+        count =
+          expect_triple(subject, nil, nil)
+            .select { |s| s.predicate.to_s.starts_with?('http://www.w3.org/1999/02/22-rdf-syntax-ns#_') }
+            .count
+        assert_equal expected_count, count
+      end
+
+      def rdf_body(format = :ntriples)
+        @rdf_body ||= RDF::Graph.new << RDF::Reader.for(format).new(response.body)
       end
     end
   end
