@@ -331,7 +331,7 @@ Rails.application.routes.draw do
     resources :forums,
               only: %i[show update],
               path: '',
-              concerns: %i[feedable discussable destroyable favorable invitable menuable] do
+              concerns: %i[feedable discussable destroyable favorable invitable menuable moveable] do
       resources :motions, path: :m, only: [] do
         get :search, to: 'motions#search', on: :collection
       end

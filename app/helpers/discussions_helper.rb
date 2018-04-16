@@ -66,6 +66,8 @@ module DiscussionsHelper
           forum.questions.untrashed.includes(:edge).map { |question| ["- #{question.display_name}", question.edge.id] }
         )
       end
+    when Forum
+      Page.includes(:edge).map { |page| [page.display_name, page.edge.id] }
     else
       resource.parent_model(:page).forums.includes(:edge).map do |forum|
         ["Forum #{forum.display_name}", forum.edge.id]

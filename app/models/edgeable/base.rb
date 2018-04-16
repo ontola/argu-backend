@@ -86,6 +86,7 @@ module Edgeable
             .lock(true)
             .update_all(forum_id: forum.id, recipient_id: new_parent.owner_id, recipient_type: new_parent.owner_type)
         end
+        yield if block_given?
         edge.parent = new_parent
         save!
       end

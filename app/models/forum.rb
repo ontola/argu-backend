@@ -52,7 +52,6 @@ class Forum < Edgeable::Base
   auto_strip_attributes :bio, nullify: false
 
   before_create :set_default_decision_group
-  before_update :transfer_page, if: :page_id_changed?
   after_save :reset_country
   after_save :reset_public_grant
 
@@ -136,10 +135,9 @@ class Forum < Edgeable::Base
     shortnames.count >= max_shortname_count
   end
 
-  def transfer_page
-    Forum.transaction do
+  def move_to(_new_parent)
+    super do
       edge.grants.where('group_id != ?', Group::PUBLIC_ID).destroy_all
-      edge.update(parent: page.edge)
     end
   end
 

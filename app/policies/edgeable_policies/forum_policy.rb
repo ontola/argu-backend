@@ -38,6 +38,10 @@ class ForumPolicy < EdgeablePolicy
     staff?
   end
 
+  def move?
+    staff?
+  end
+
   def settings?
     update?
   end

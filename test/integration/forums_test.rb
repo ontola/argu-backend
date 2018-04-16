@@ -322,12 +322,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland.edge,
            grant_set: GrantSet.participator)
     assert_equal holland.edge.grants.size, 2
-    put forum_path(holland),
-        params: {
-          forum: {
-            page_id: transfer_to.id
-          }
-        }
+    put forum_move_path(holland, edge_id: transfer_to.edge.id)
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
     assert_equal holland.edge.grants.size, 1
