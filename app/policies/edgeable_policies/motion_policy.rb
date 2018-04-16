@@ -16,7 +16,7 @@ class MotionPolicy < EdgeablePolicy
   end
 
   def move?
-    staff?
+    staff? || administrator? || moderator?
   end
 
   def decide?

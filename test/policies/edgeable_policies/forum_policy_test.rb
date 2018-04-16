@@ -14,6 +14,7 @@ class ForumPolicyTest < PolicyTest
   generate_edgeable_tests
 
   alias create_results staff_only_results
+  alias move_results staff_only_results
 
   private
 

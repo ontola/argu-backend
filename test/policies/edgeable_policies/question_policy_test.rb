@@ -15,7 +15,7 @@ class QuestionPolicyTest < PolicyTest
 
   private
 
-  alias move_results staff_only_results
+  alias move_results moderator_plus_results
   alias convert_results staff_only_results
 
   def create_results

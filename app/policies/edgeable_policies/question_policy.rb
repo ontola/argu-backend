@@ -22,7 +22,7 @@ class QuestionPolicy < EdgeablePolicy
   end
 
   def move?
-    staff?
+    staff? || administrator? || moderator?
   end
 
   def invite?
