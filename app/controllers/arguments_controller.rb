@@ -19,7 +19,7 @@ class ArgumentsController < EdgeableController
   end
 
   def include_show
-    [comment_collection: inc_nested_collection]
+    [operation: :target, comment_collection: inc_nested_collection]
   end
 
   def index_collection_association

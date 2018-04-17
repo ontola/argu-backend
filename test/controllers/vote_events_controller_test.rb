@@ -38,12 +38,8 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'other'}, page: 1, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'no'}, type: 'paginated'))
     expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'no'}, page: 1, type: 'paginated'))
-    expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/votes/#{v.id}") }
-    )
-    expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/votes/#{v.id}") }
-    )
+    expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
+    expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
 
   test 'should get show vote_event of motion with default id' do
@@ -98,12 +94,8 @@ class VoteEventsControllerTest < ActionController::TestCase
         .vote_events
         .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'no'}, page: 1, type: 'paginated') }
     )
-    expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/votes/#{v.id}") }
-    )
-    expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/votes/#{v.id}") }
-    )
+    expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
+    expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
 
   ####################################

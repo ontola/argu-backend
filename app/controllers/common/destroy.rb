@@ -90,13 +90,8 @@ module Common
         data.push [
           iri,
           NS::ARGU[:totalCount],
-          total_count + 1,
-          NS::LL[:remove]
-        ]
-        data.push [
-          iri,
-          NS::ARGU[:totalCount],
-          total_count
+          total_count,
+          NS::LL[:replace]
         ]
       end
     end

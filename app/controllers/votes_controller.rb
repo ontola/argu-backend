@@ -77,8 +77,21 @@ class VotesController < EdgeableController
     }
   end
 
+  def include_index
+    [
+      view_sequence: [
+        members:
+          [
+            member_sequence: :members,
+            operation: :target,
+            view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
+          ].freeze
+      ].freeze
+    ].freeze
+  end
+
   def include_create
-    [voteable: :actions]
+    [:partOf, voteable: :actions]
   end
 
   def resource_by_id
@@ -154,6 +167,24 @@ class VotesController < EdgeableController
     )
   end
 
+  def meta_create
+    data = []
+    if authenticated_resource.parent_model.is_a?(VoteEvent)
+      parent_collection = index_collection.send(:child_with_options, filter: nil)
+      meta_increment_collection_count(data, parent_collection.iri, parent_collection.total_count)
+      parent_collection.views.each do |view|
+        if view == index_collection
+          meta_increment_collection_count(data, view.iri, view.total_count)
+        else
+          meta_decrement_collection_count(data, view.iri, view.total_count)
+        end
+      end
+    else
+      data = super
+    end
+    data
+  end
+
   def meta_destroy
     data = super
     data.push [
@@ -162,6 +193,14 @@ class VotesController < EdgeableController
       authenticated_resource.iri,
       NS::LL[:remove]
     ]
+    if authenticated_resource.parent_model.is_a?(Argument)
+      data.push [
+        authenticated_resource.parent_iri,
+        NS::ARGU[:votesProCount],
+        authenticated_resource.parent_edge.children_counts['votes_pro'].to_i - 1,
+        NS::LL[:replace]
+      ]
+    end
     data.push [
       authenticated_resource.parent_iri,
       NS::HYDRA[:operation],
@@ -171,7 +210,8 @@ class VotesController < EdgeableController
     data.push [
       authenticated_resource.parent_iri,
       NS::HYDRA[:operation],
-      RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote")
+      RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
+      NS::LL[:add]
     ]
   end
 end

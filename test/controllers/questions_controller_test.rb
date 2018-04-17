@@ -23,8 +23,8 @@ class QuestionsControllerTest < ActionController::TestCase
 
     expect_relationship('motionCollection', 1)
     expect_included(argu_url("/q/#{question.id}/m", type: 'paginated'))
-    expect_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
-    expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_not_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
+    expect_not_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
     expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
   end
 

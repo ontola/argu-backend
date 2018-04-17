@@ -83,14 +83,15 @@ module Common
       def meta_increment_collection_count(data, iri, total_count)
         data.push [
           iri,
-          NS::ARGU[:totalCount],
-          total_count - 1,
+          NS::ARGU[:members],
+          nil,
           NS::LL[:remove]
         ]
         data.push [
           iri,
           NS::ARGU[:totalCount],
-          total_count
+          total_count,
+          NS::LL[:replace]
         ]
       end
     end

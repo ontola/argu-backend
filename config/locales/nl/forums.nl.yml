@@ -132,9 +132,9 @@ nl:
         visibility: "Zichtbaarheid"
         page: "Verplaatsen"
         locale: "Land en taal"
-  votes:
-    alerts:
-      not_modified: ""
+    votes:
+      alerts:
+        not_modified: ""
   pundit:
     membership_policy:
       destroy?: "Lidmaatschap mag niet opgezegd worden."

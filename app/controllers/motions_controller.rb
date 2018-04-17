@@ -24,13 +24,44 @@ class MotionsController < EdgeableController
 
   private
 
+  def include_index
+    members = [
+      members: [
+        comment_collection: inc_nested_collection,
+        con_argument_collection: inc_nested_collection,
+        voteable_vote_event: vote_event_without_votes,
+        pro_argument_collection: inc_nested_collection
+      ]
+    ].freeze
+
+    [
+      member_sequence: members,
+      operation: :target,
+      view_sequence: [
+        operation: :target,
+        members:
+          [
+            member_sequence: members,
+            operation: :target,
+            view_sequence: [members: [operation: :target].freeze].freeze
+          ].freeze
+      ].freeze
+    ].freeze
+  end
+
   def include_show
     [
+      :vote_event_collection,
       :default_cover_photo,
+      creator: :profile_photo,
+      operation: :target,
+      partOf: [widget_sequence: :members],
+      blog_posts_collection: inc_nested_collection,
+      comment_collection: inc_nested_collection,
       con_argument_collection: inc_nested_collection,
       pro_argument_collection: inc_nested_collection,
       attachment_collection: inc_nested_collection,
-      vote_event_collection: {member_sequence: {members: {vote_collection: inc_nested_collection}}}
+      voteable_vote_event: vote_event_without_votes
     ]
   end
 
@@ -63,5 +94,22 @@ class MotionsController < EdgeableController
     return super unless action_name == 'create' && resource.persisted?
     first = current_profile.motions.count == 1 || nil
     motion_path(resource, start_motion_tour: first)
+  end
+
+  def vote_event_without_votes
+    [
+      :current_vote,
+      vote_collection: {
+        operation: :target,
+        view_sequence: [
+          operation: :target,
+          members:
+            [
+              operation: :target,
+              view_sequence: [members: [operation: :target].freeze].freeze
+            ].freeze
+        ].freeze
+      }
+    ].freeze
   end
 end

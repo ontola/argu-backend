@@ -18,8 +18,12 @@ class QuestionsController < EdgeableController
   def include_show
     [
       :default_cover_photo,
+      creator: :profile_photo,
+      partOf: [widget_sequence: :members],
+      operation: :target,
       attachment_collection: inc_nested_collection,
-      motion_collection: inc_nested_collection
+      motion_collection: inc_shallow_collection,
+      comment_collection: inc_shallow_collection
     ]
   end
 

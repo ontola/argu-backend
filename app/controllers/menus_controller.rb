@@ -22,7 +22,7 @@ class MenusController < ParentableController
   end
 
   def include_show
-    [menu_sequence: [members: [menu_sequence: [members: [menu_sequence: :members]]]]]
+    [menu_sequence: [members: [:image, menu_sequence: [members: [:image, menu_sequence: [members: :image]]]]]]
   end
 
   def index_response_association

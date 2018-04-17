@@ -616,7 +616,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       Sidekiq::Testing.inline! do
         post motion_vote_event_votes_path(motion, vote_event.id),
              params: {
-               format: :n3,
+               format: :nq,
                vote: {for: :pro}
              }
       end

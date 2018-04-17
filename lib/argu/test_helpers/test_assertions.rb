@@ -69,8 +69,8 @@ module Argu
       end
 
       def expect_triple(subject, predicate, object, graph = nil)
-        match = rdf_body.query([subject, predicate, object, graph])
         statement = RDF::Statement(subject, predicate, object, graph_name: graph)
+        match = rdf_body.query(statement)
         assert match.present?, "Expected to find #{statement} in\n#{response.body}"
         match
       end
@@ -98,8 +98,10 @@ module Argu
         assert_equal expected_count, count
       end
 
-      def rdf_body(format = :ntriples)
-        @rdf_body ||= RDF::Graph.new << RDF::Reader.for(format).new(response.body)
+      def rdf_body
+        @rdf_body ||= RDF::Graph.new << RDF::Reader
+                                          .for(content_type: response.headers['Content-Type'])
+                                          .new(response.body)
       end
     end
   end

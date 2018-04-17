@@ -52,13 +52,20 @@ class ApplicationController < ActionController::Base
     member_sequence: :members,
     operation: :target,
     view_sequence: [
+      operation: :target,
       members:
         [
-          member_sequence: :members,
+          member_sequence: [members: [operation: :target]],
           operation: :target,
           view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
         ].freeze
     ].freeze
+  ].freeze
+  class_attribute :inc_shallow_collection
+  self.inc_shallow_collection = [
+    view_sequence: [operation: :target].freeze,
+    member_sequence: [operation: :target].freeze,
+    operation: :target
   ].freeze
 
   # The params, deserialized when format is json_api or LD and method is not safe
@@ -80,7 +87,7 @@ class ApplicationController < ActionController::Base
   def params
     return @__params if instance_variable_defined?(:@__params)
     p = HashWithIndifferentAccess.new
-    p[model_name] = super[:filter].permit!.to_h if controller_class&.try(:filter_options)&.present? && super[:filter]
+    p[model_name] = super[:filter].permit!.to_h if controller_class.try(:filter_options).present? && super[:filter]
 
     if UNSAFE_METHODS.include?(request.method)
       return @__params = super.merge(p.deep_merge(params_from_graph(super))) if new_fe_request?
