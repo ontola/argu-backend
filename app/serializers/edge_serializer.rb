@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class EdgeSerializer < BaseSerializer
+  include ActivePublishable::Serializer
+
   triples :owner_triples
 
   def owner_triples

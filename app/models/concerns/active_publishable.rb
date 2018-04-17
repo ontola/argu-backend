@@ -33,6 +33,17 @@ module ActivePublishable
     end
   end
 
+  module Serializer
+    extend ActiveSupport::Concern
+
+    included do
+      # rubocop:disable Rails/HasManyOrHasOneDependent
+      has_one :argu_publication,
+              predicate: NS::ARGU[:arguPublication]
+      # rubocop:enable Rails/HasManyOrHasOneDependent
+    end
+  end
+
   module ClassMethods
     def is_publishable?
       true
