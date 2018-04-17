@@ -30,6 +30,7 @@ nl:
                           </ul>"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
+      default_sorting:  'Standaard sortering van ideeën'
       helper:
         examples:
           title: "Voorbeelden"

@@ -46,7 +46,7 @@
               /TODO Hide expires_at input unless checkbox is checked.
               /TODO Use current datetime as default input.
               - if policy(question).permitted_attributes.include?(:default_sorting)
-                label= 'Standaard sortering van ideeën'
+                label= t('questions.form.default_sorting')
                 =f.input :default_sorting, as: :radio, label: false, wrapper_html: {class: 'radio-inline'}
               - if policy(question).permitted_nested_attributes(:edge_attributes).include?(:expires_at)
                 =f.semantic_fields_for :edge do |ef|

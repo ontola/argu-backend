@@ -30,6 +30,7 @@ en:
                           </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
+      default_sorting:  'Default sorting of ideas'
       helper:
         examples:
           title: "Examples"
