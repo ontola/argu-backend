@@ -2,7 +2,7 @@ en:
   statistics:
     header: "Statistics"
     users:
-      label: "Invloved users"
+      label: "Involved users"
       tooltip: "The amount of users that voted or made a contribution."
     votes:
       label: "Votes"
