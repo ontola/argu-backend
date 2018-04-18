@@ -10,7 +10,7 @@ RSpec.describe 'Forums', type: :request do
   let(:update_differences) { [['Forum.count', 0]] }
   let(:destroy_differences) { [['Forum.count', -1]] }
   let(:edit_path) { settings_forum_path(subject) }
-  let(:non_existing_edit_path) { settings_forum_path(-1) }
+  let(:non_existing_edit_path) { settings_forum_path(-99) }
   let(:expect_get_show_guest_html) { expect_not_found }
   let(:expect_get_show_guest_serializer) { expect_not_found }
   let(:updated_resource_path) { settings_forum_path(subject, tab: :general) }
@@ -29,10 +29,10 @@ RSpec.describe 'Forums', type: :request do
 
   context 'portal routes' do
     let(:expect_redirect_to_login) { expect_not_found }
-    let(:new_path) { new_portal_forum_path(forum: {page_id: -1}) }
-    let(:non_existing_new_path) { new_portal_forum_path(forum: {page_id: -1}) }
+    let(:new_path) { new_portal_forum_path(forum: {page_id: -99}) }
+    let(:non_existing_new_path) { new_portal_forum_path(forum: {page_id: -99}) }
     let(:create_path) { portal_forums_path }
-    let(:non_existing_create_path) { portal_forums_path(forum: {page_id: -1}) }
+    let(:non_existing_create_path) { portal_forums_path(forum: {page_id: -99}) }
     let(:create_params) do
       nominatim_netherlands
       {forum: {page_id: argu.id, name: 'name', shortname_attributes: {shortname: 'new_forum'}}}

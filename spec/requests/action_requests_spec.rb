@@ -22,7 +22,7 @@ RSpec.describe 'Actions', type: :request do
     subject { Notification.first }
     let(:unauthorized_user) { create(:user) }
     let(:authorized_user) { subject.user }
-    let(:non_existing_index_path) { url_for([:notification, :actions, notification_id: -1, only_path: true]) }
+    let(:non_existing_index_path) { url_for([:notification, :actions, notification_id: -99, only_path: true]) }
 
     it_behaves_like 'get show'
     it_behaves_like 'get index'

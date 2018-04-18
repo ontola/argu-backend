@@ -11,7 +11,7 @@ RSpec.describe 'Follows', type: :request do
   end
 
   let(:create_path) { follows_path(gid: freetown.edge.id) }
-  let(:non_existing_create_path) { follows_path(gid: -1) }
+  let(:non_existing_create_path) { follows_path(gid: -99) }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }
   let(:parent_path) { forum_path(subject.followable.owner) }
@@ -24,7 +24,7 @@ RSpec.describe 'Follows', type: :request do
     expect(response).to redirect_to(parent_path)
   end
   let(:unsubscribe_path) { unsubscribe_follow_path(subject) }
-  let(:non_existing_unsubscribe_path) { unsubscribe_follow_path(-1) }
+  let(:non_existing_unsubscribe_path) { unsubscribe_follow_path(-99) }
 
   subject { create(:follow, follower: staff, followable: freetown.edge) }
 

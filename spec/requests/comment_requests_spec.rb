@@ -60,7 +60,7 @@ RSpec.describe 'Comments', type: :request do
       linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: linked_record.deku_id)
     end
     let(:non_existing_index_path) do
-      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: -99)
     end
     it_behaves_like 'requests', skip: %i[html]
   end
@@ -73,7 +73,7 @@ RSpec.describe 'Comments', type: :request do
       linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: SecureRandom.uuid)
     end
     let(:non_existing_index_path) do
-      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+      linked_record_comments_path(organization: argu.url, forum: freetown.url, linked_record_id: -99)
     end
     it_behaves_like 'post create', skip: %i[html]
     it_behaves_like 'get index', skip: %i[html]

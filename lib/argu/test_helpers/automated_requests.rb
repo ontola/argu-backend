@@ -211,21 +211,23 @@ module Argu
 
           # Non existing paths
           let(:non_existing_new_path) do
-            url_for([:new, parent_class_sym, class_sym, "#{parent_class_sym}_id".to_sym => -1, only_path: true])
+            url_for([:new, parent_class_sym, class_sym, "#{parent_class_sym}_id".to_sym => -99, only_path: true])
           end
-          let(:non_existing_edit_path) { url_for([:edit, class_sym, id: -1, only_path: true]) }
-          let(:non_existing_shift_path) { url_for([class_sym, :move, "#{class_sym}_id".to_sym => -1, only_path: true]) }
+          let(:non_existing_edit_path) { url_for([:edit, class_sym, id: -99, only_path: true]) }
+          let(:non_existing_shift_path) do
+            url_for([class_sym, :move, "#{class_sym}_id".to_sym => -99, only_path: true])
+          end
           let(:non_existing_move_path) { non_existing_shift_path }
           let(:non_existing_index_path) do
-            url_for([parent_class_sym, table_sym, "#{parent_class_sym}_id".to_sym => -1, only_path: true])
+            url_for([parent_class_sym, table_sym, "#{parent_class_sym}_id".to_sym => -99, only_path: true])
           end
-          let(:non_existing_show_path) { url_for([class_sym, id: -1, only_path: true]) }
+          let(:non_existing_show_path) { url_for([class_sym, id: -99, only_path: true]) }
           let(:non_existing_create_path) { non_existing_index_path }
-          let(:non_existing_update_path) { url_for([class_sym, id: -1, only_path: true]) }
-          let(:non_existing_delete_path) { url_for([:delete, class_sym, id: -1, only_path: true]) }
-          let(:non_existing_destroy_path) { url_for([class_sym, id: -1, destroy: true, only_path: true]) }
-          let(:non_existing_trash_path) { url_for([class_sym, id: -1, only_path: true]) }
-          let(:non_existing_untrash_path) { url_for([:untrash, class_sym, id: -1, only_path: true]) }
+          let(:non_existing_update_path) { url_for([class_sym, id: -99, only_path: true]) }
+          let(:non_existing_delete_path) { url_for([:delete, class_sym, id: -99, only_path: true]) }
+          let(:non_existing_destroy_path) { url_for([class_sym, id: -99, destroy: true, only_path: true]) }
+          let(:non_existing_trash_path) { url_for([class_sym, id: -99, only_path: true]) }
+          let(:non_existing_untrash_path) { url_for([:untrash, class_sym, id: -99, only_path: true]) }
 
           # Result paths
           let(:parent_path) { url_for([subject.parent_model, only_path: true]) }

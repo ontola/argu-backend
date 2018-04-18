@@ -13,14 +13,14 @@ RSpec.describe 'Arguments', type: :request do
   let(:create_path) { url_for([subject.parent_model, :arguments, only_path: true]) }
   let(:index_path) { url_for([subject.parent_model, :pro_arguments, only_path: true]) }
   let(:non_existing_index_path) do
-    url_for([parent_class_sym, :pro_arguments, "#{parent_class_sym}_id".to_sym => -1, only_path: true])
+    url_for([parent_class_sym, :pro_arguments, "#{parent_class_sym}_id".to_sym => -99, only_path: true])
   end
-  let(:non_existing_edit_path) { url_for([:edit, :pro_argument, id: -1, only_path: true]) }
-  let(:non_existing_update_path) { url_for([:pro_argument, id: -1, only_path: true]) }
-  let(:non_existing_delete_path) { url_for([:delete, :pro_argument, id: -1, only_path: true]) }
-  let(:non_existing_destroy_path) { url_for([:pro_argument, id: -1, destroy: true, only_path: true]) }
-  let(:non_existing_trash_path) { url_for([:pro_argument, id: -1, only_path: true]) }
-  let(:non_existing_untrash_path) { url_for([:untrash, :pro_argument, id: -1, only_path: true]) }
+  let(:non_existing_edit_path) { url_for([:edit, :pro_argument, id: -99, only_path: true]) }
+  let(:non_existing_update_path) { url_for([:pro_argument, id: -99, only_path: true]) }
+  let(:non_existing_delete_path) { url_for([:delete, :pro_argument, id: -99, only_path: true]) }
+  let(:non_existing_destroy_path) { url_for([:pro_argument, id: -99, destroy: true, only_path: true]) }
+  let(:non_existing_trash_path) { url_for([:pro_argument, id: -99, only_path: true]) }
+  let(:non_existing_untrash_path) { url_for([:untrash, :pro_argument, id: -99, only_path: true]) }
   let(:created_resource_path) { url_for(subject.parent_model) }
 
   context 'with motion parent' do
@@ -39,7 +39,7 @@ RSpec.describe 'Arguments', type: :request do
       )
     end
     let(:non_existing_create_path) do
-      linked_record_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+      linked_record_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -99)
     end
     let(:index_path) do
       linked_record_pro_arguments_path(
@@ -49,7 +49,7 @@ RSpec.describe 'Arguments', type: :request do
       )
     end
     let(:non_existing_index_path) do
-      linked_record_pro_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+      linked_record_pro_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -99)
     end
     it_behaves_like 'requests', skip: %i[new html]
   end
@@ -64,13 +64,13 @@ RSpec.describe 'Arguments', type: :request do
       linked_record_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: SecureRandom.uuid)
     end
     let(:non_existing_create_path) do
-      linked_record_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+      linked_record_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -99)
     end
     let(:index_path) do
       linked_record_pro_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: SecureRandom.uuid)
     end
     let(:non_existing_index_path) do
-      linked_record_pro_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -1)
+      linked_record_pro_arguments_path(organization: argu.url, forum: freetown.url, linked_record_id: -99)
     end
     it_behaves_like 'post create', skip: %i[html]
     it_behaves_like 'get index', skip: %i[html]

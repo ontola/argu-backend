@@ -57,7 +57,7 @@ RSpec.describe 'Votes', type: :request do
     let(:show_by_parent_path) { url_for([subject.voteable, subject.parent_model, :vote, only_path: true]) }
     let(:update_path) { url_for([subject.voteable, subject.parent_model, :votes, only_path: true]) }
     let(:non_existing_new_path) do
-      url_for([:new, :motion, parent_class_sym, class_sym, vote_event_id: -1, motion_id: motion.id, only_path: true])
+      url_for([:new, :motion, parent_class_sym, class_sym, vote_event_id: -99, motion_id: motion.id, only_path: true])
     end
     let(:expect_delete_destroy_html) do
       expect(response.code).to eq('303')
@@ -75,7 +75,7 @@ RSpec.describe 'Votes', type: :request do
         new_motion_vote_event_vote_path(motion, motion.default_vote_event, confirm: true)
       end
       let(:non_existing_index_path) do
-        url_for([:motion, :vote_event, :votes, vote_event_id: -1, motion_id: motion.id, only_path: true])
+        url_for([:motion, :vote_event, :votes, vote_event_id: -99, motion_id: motion.id, only_path: true])
       end
       let(:created_resource_path) { motion_path(motion) }
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
@@ -113,7 +113,7 @@ RSpec.describe 'Votes', type: :request do
         linked_record_vote_event_votes_path(
           organization: argu.url,
           forum: freetown.url,
-          linked_record_id: -1,
+          linked_record_id: -99,
           vote_event_id: 'default'
         )
       end
@@ -140,7 +140,7 @@ RSpec.describe 'Votes', type: :request do
         linked_record_vote_event_votes_path(
           organization: argu.url,
           forum: freetown.url,
-          linked_record_id: -1,
+          linked_record_id: -99,
           vote_event_id: 'default'
         )
       end

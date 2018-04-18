@@ -13,8 +13,8 @@ RSpec.describe 'Pages', type: :request do
     nominatim_netherlands
     settings_page_path(subject)
   end
-  let(:non_existing_edit_path) { settings_page_path(-1) }
-  let(:non_existing_new_path) { new_page_path(-1) }
+  let(:non_existing_edit_path) { settings_page_path(-99) }
+  let(:non_existing_new_path) { new_page_path(-99) }
   let(:expect_get_show_unauthorized_serializer) { expect_success }
   let(:expect_get_show_unauthorized_html) { expect_success }
   let(:create_differences) { [['Page.count', 1]] }
@@ -57,7 +57,7 @@ RSpec.describe 'Pages', type: :request do
     ]
     context 'user pages' do
       let(:index_path) { pages_user_path(authorized_user) }
-      let(:non_existing_index_path) { pages_user_path(-1) }
+      let(:non_existing_index_path) { pages_user_path(-99) }
       let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
       let(:expect_get_index_guest_serializer) { expect(response.code).to eq('401') }
       it_behaves_like 'get index'

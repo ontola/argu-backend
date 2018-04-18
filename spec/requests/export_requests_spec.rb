@@ -7,8 +7,10 @@ RSpec.describe 'Exports', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:destroy_path) { url_for([:destroy, subject.edge, subject, destroy: true, only_path: true]) }
   let(:delete_path) { url_for([:delete, subject.edge, subject, destroy: true, only_path: true]) }
-  let(:non_existing_destroy_path) { url_for([:destroy, subject.edge, :export, id: -1, destroy: true, only_path: true]) }
-  let(:non_existing_delete_path) { url_for([:delete, subject.edge, :export, id: -1, destroy: true, only_path: true]) }
+  let(:non_existing_destroy_path) do
+    url_for([:destroy, subject.edge, :export, id: -99, destroy: true, only_path: true])
+  end
+  let(:non_existing_delete_path) { url_for([:delete, subject.edge, :export, id: -99, destroy: true, only_path: true]) }
   let(:index_path) { url_for([subject.edge, :exports, only_path: true]) }
   let(:parent_path) { index_path }
   let(:created_resource_path) { index_path }
