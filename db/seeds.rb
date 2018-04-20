@@ -14,7 +14,7 @@ community_profile =
           id: User::COMMUNITY_ID,
           shortname: Shortname.new(shortname: 'community'),
           email: 'community@argu.co',
-          password: SecureRandom.hex(64)
+          password: SecureRandom.hex(32)
         )
   )
 community_profile.save!(validate: false)
@@ -28,7 +28,7 @@ Profile.new(
         id: User::ANONYMOUS_ID,
         shortname: Shortname.new(shortname: 'anonymous'),
         email: 'anonymous@argu.co',
-        password: SecureRandom.hex(64)
+        password: SecureRandom.hex(32)
       )
 )
 

@@ -7,7 +7,7 @@ class CreateAnonymousUser < ActiveRecord::Migration[5.1]
       email: 'anonymous@argu.co',
       profile: Profile.new(id: Profile::ANONYMOUS_ID),
       shortname: Shortname.new(shortname: 'anonymous'),
-      password: SecureRandom.hex(64)
+      password: SecureRandom.hex(32)
     )
   end
 end
