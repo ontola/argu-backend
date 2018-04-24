@@ -194,9 +194,8 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in unconfirmed
     get root_path
 
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['Argu::Redis.keys.count', 1],
+    assert_differences([['Vote.count', 1],
+                        ['Edge.count', 1],
                         ['vote_event.reload.children_count(:votes_pro)', 0]]) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
@@ -205,38 +204,7 @@ class VotesTest < ActionDispatch::IntegrationTest
            headers: argu_headers(accept: :json)
     end
 
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: unconfirmed, parent: vote_event.edge)
     assert_response 201
-  end
-
-  test 'unconfirmed should post update vote that also exists in postgres' do
-    sign_in creator
-    get root_path
-    key = RedisResource::Key.new(
-      path: vote.parent_edge.path,
-      owner_type: 'Vote',
-      user: vote.publisher,
-      edge_id: vote.edge.id
-    ).key
-    Argu::Redis.set(key, vote.attributes.merge(persisted: true).to_json)
-    creator.primary_email_record.update(confirmed_at: nil)
-
-    get expand_uri_template(:vote_iri, parent_iri: vote_event.iri_path, only_path: true),
-        headers: argu_headers(accept: :json_api)
-    assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
-    assert_differences([['Vote.untrashed.pro.count', -1],
-                        ['Argu::Redis.keys("temporary.*").count', 0]]) do
-      assert vote.pro?
-      assert_not vote.edge.is_trashed?
-      assert RedisResource::Relation.where(publisher: creator).first.resource.pro?
-      post collection_iri_path(vote_event, :votes, for: :con),
-           headers: argu_headers(accept: :json_api)
-      assert vote.edge.reload.is_trashed?
-      assert RedisResource::Relation.where(publisher: creator).first.resource.con?
-    end
-    assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
   end
 
   ####################################

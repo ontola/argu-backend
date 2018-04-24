@@ -34,14 +34,18 @@ RSpec.feature 'Partial Voting', type: :feature do
         fill_in 'user[email]', with: user_attr[:email]
         click_button 'Continue'
 
+        expect(page).to have_content('By creating an Argu account you agree to our')
+
         click_button 'Confirm'
+
+        expect(page).not_to have_content('By creating an Argu account you agree to our')
       end
     end
 
     expect(page).to have_current_path(question.iri_path)
     expect(page).to have_css('.btn-con[data-voted-on=true]')
     expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
-    assert_email_sent
+    assert_email_sent(skip_sidekiq: true)
   end
 
   ####################################

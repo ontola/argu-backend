@@ -11,7 +11,7 @@ class RedisResourceWorker
     return if redis_relation.empty?
 
     new_user.create_confirmation_reminder_notification
-    new_user.confirmed? ? redis_relation.persist(new_user) : redis_relation.transfer(new_user)
+    redis_relation.persist(new_user)
   end
 
   private

@@ -66,20 +66,6 @@ module RedisResource
       )
     end
 
-    # Change the user_type and user_id in the key and saves
-    # Also remove the ttl
-    def transfer(user)
-      raise 'Cannot transfer a key with wildcards' if has_wildcards?
-      Argu::Redis.persist(key)
-      new_key = RedisResource::Key.new(
-        path: path,
-        owner_type: owner_type,
-        edge_id: edge_id,
-        user: user
-      )
-      Argu::Redis.rename(key, new_key.key)
-    end
-
     class << self
       def parse(key, user = nil)
         values = key.split('.')

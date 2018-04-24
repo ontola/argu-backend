@@ -10,12 +10,12 @@ class Vote < EdgeableBase
   belongs_to :forum
   belongs_to :comment
   before_create :trash_primary_votes
+  before_create :create_confirmation_reminder_notification
   after_trash :remove_primary
 
   define_model_callbacks :redis_save, only: :before
   before_redis_save :trash_primary_votes
   before_redis_save :remove_other_temporary_votes
-  before_redis_save :create_confirmation_reminder_notification
 
   parentable :argument, :vote_event, :linked_record
 
@@ -40,7 +40,7 @@ class Vote < EdgeableBase
 
   def upvoted_arguments
     @upvoted_arguments ||=
-      if creator.confirmed?
+      if !publisher.guest?
         Argument
           .untrashed
           .joins(:votes, :edge)
@@ -85,7 +85,7 @@ class Vote < EdgeableBase
   end
 
   def store_in_redis?(opts = {})
-    !opts[:skip_redis] && !publisher.confirmed? && !creator.confirmed?
+    !opts[:skip_redis] && publisher.guest?
   end
 
   delegate :is_trashed?, :trashed_at, to: :parent_model

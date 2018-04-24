@@ -32,12 +32,14 @@ RSpec.feature 'Voting', type: :feature do
         click_button 'Continue'
       end
 
-      assert_differences([['Vote.count', 0]]) do
+      assert_differences([['Vote.count', 1], ['Edge.where(confirmed: false).count', 1]]) do
         expect(page).to have_content('By creating an Argu account you agree to our')
 
         click_button 'Confirm'
 
         expect(page).to have_current_path motion.iri_path
+
+        expect(page).not_to have_content('By creating an Argu account you agree to our')
       end
     end
 
@@ -57,7 +59,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).not_to have_content('Would you like to comment on your opinion?')
 
     visit motion
-    expect(page).not_to have_css('.opinion-icon')
+    expect(page).not_to have_css('.vote-count')
     find('span', text: 'Disagree').click
     within('.opinion-form') do
       expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
@@ -69,7 +71,7 @@ RSpec.feature 'Voting', type: :feature do
     end
 
     visit motion
-    expect(page).not_to have_css('.opinion-icon')
+    expect(page).not_to have_css('.vote-count')
 
     Sidekiq::Testing.inline! do
       visit user_confirmation_path(confirmation_token: User.last.confirmation_token)
@@ -86,7 +88,7 @@ RSpec.feature 'Voting', type: :feature do
 
     visit motion
 
-    expect(page).to have_css('.opinion-icon')
+    expect(page).to have_css('.vote-count')
     within('.opinion-columns') do
       expect(page).to have_content('This is my new opinion')
       expect(page).not_to have_content('Argument title')

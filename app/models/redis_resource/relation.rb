@@ -39,11 +39,6 @@ module RedisResource
       redis_resources.each { |record| record.persist(user) }
     end
 
-    # Change the user id and type of all matched keys and remove the ttl
-    def transfer(user)
-      filtered_keys.each { |key| key.transfer(user) }
-    end
-
     # Adds filters to the current relation
     def where(opts)
       apply_filters(opts)

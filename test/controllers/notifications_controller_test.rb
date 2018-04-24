@@ -83,6 +83,7 @@ class NotificationsControllerTest < ActionController::TestCase
   private
 
   def followed_content(user)
+    user.follows.destroy_all
     parent = freetown
     create(:follow, followable: parent.edge, follower: user)
     %i[question motion argument comment].each do |type|

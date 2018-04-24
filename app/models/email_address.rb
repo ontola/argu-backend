@@ -22,6 +22,7 @@ class EmailAddress < ApplicationRecord
 
   def after_confirmation
     user.edges.update_all(confirmed: true)
+    Vote.fix_counts
   end
 
   def confirm

@@ -67,6 +67,7 @@ module Edgeable
       end
 
       def fix_counts_query(cache_name, conditions)
+        conditions = conditions.dup
         query =
           Edge
             .where(owner_type: base_class.name)

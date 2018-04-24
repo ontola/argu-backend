@@ -508,7 +508,10 @@ class TokensTest < ActionDispatch::IntegrationTest
     guest_vote
     other_guest_vote
 
-    assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
+    assert_differences([['Doorkeeper::AccessToken.count', 1],
+                        ['Vote.count', 1],
+                        ['Argu::Redis.keys("temporary*").count', -1],
+                        ['Favorite.count', 1]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
              headers: argu_headers(host: 'argu.co'),
@@ -522,7 +525,6 @@ class TokensTest < ActionDispatch::IntegrationTest
       end
     end
     assert_redirected_to freetown.iri_path
-    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
   end
 
   ####################################

@@ -95,39 +95,16 @@ module Users
 
       sign_in user
       assert_not user.confirmed?
-      assert_difference('Vote.count', 2) do
+      assert_differences([['Edge.where(confirmed: true).count', 2],
+                          ['motion.default_vote_event.reload.children_count(:votes_pro)', 1]]) do
         Sidekiq::Testing.inline! do
           get user_confirmation_path(confirmation_token: user.confirmation_token)
         end
       end
-      assert_equal Vote.last.created_at.utc.iso8601(6), Vote.last.edge.created_at.utc.iso8601(6)
 
       assert_redirected_to new_user_session_path
       assert user.reload.confirmed?
       assert_equal [id1, edge1_id, id2, edge2_id],
-                   [user.votes.first.id, user.votes.first.edge.id, user.votes.second.id, user.votes.second.edge.id]
-    end
-
-    test 'user should get show confirmation and persist temporary votes except if already present in postgres' do
-      unconfirmed_vote.id
-      unconfirmed_vote.edge.id
-      id2 = unconfirmed_vote2.id
-      edge2_id = unconfirmed_vote2.edge.id
-      other_unconfirmed_vote
-      other_unconfirmed_vote3
-      confirmed_vote.update(publisher_id: user.id, creator_id: user.profile.id)
-      confirmed_vote.edge.update(user_id: user.id)
-
-      sign_in user
-      assert_not user.confirmed?
-      assert_difference('Vote.count', 1) do
-        Sidekiq::Testing.inline! do
-          get user_confirmation_path(confirmation_token: user.confirmation_token)
-        end
-      end
-      assert_redirected_to new_user_session_path
-      assert user.reload.confirmed?
-      assert_equal [id2, edge2_id, confirmed_vote.id, confirmed_vote.edge.id],
                    [user.votes.first.id, user.votes.first.edge.id, user.votes.second.id, user.votes.second.edge.id]
     end
 

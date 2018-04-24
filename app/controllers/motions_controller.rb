@@ -15,6 +15,7 @@ class MotionsController < EdgeableController
       voteable_id: authenticated_resource.id,
       voteable_type: authenticated_resource.class.name,
       creator: current_profile,
+      publisher: current_user,
       edge: Edge.new(parent: authenticated_resource.default_vote_event.edge)
     )
     authenticated_resource.current_vote = @vote

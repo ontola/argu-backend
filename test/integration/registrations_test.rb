@@ -164,7 +164,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
-                          ['Favorite.count', 0],
+                          ['Favorite.count', 1],
+                          ['Vote.count', 3],
+                          ['Argu::Redis.keys("temporary*").count', -3],
                           ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
         post user_registration_path,
              params: {
@@ -177,12 +179,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
         assert_analytics_collected('registrations', 'create', 'email')
       end
     end
-    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
-    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
 
     delete destroy_user_session_path
 
-    assert_difference('EmailAddress.where(confirmed_at: nil).count', -1) do
+    assert_differences([['EmailAddress.where(confirmed_at: nil).count', -1],
+                        ['Edge.where(confirmed: true).count', 3]]) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_response 200
@@ -221,16 +222,15 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     Sidekiq::Testing.inline! do
       assert_differences([['User.count', 1],
-                          ['Vote.count', 0],
-                          ['Favorite.count', 0],
+                          ['Vote.count', 3],
+                          ['Argu::Redis.keys("temporary*").count', -3],
+                          ['Favorite.count', 1],
                           ['Notification.confirmation_reminder.count', 1]]) do
         post user_registration_path,
              params: {user: attrs}
       end
     end
     assert_redirected_to setup_users_path
-    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
-    assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion2.default_vote_event.edge.path}")
     assert_analytics_collected('registrations', 'create', 'email')
     assert_email_sent(skip_sidekiq: true)
 
