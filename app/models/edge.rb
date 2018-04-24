@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Edge < ApplicationRecord
+  include Edgeable::CounterCache
   include Placeable
   include Ldable
 
@@ -312,13 +313,6 @@ class Edge < ApplicationRecord
 
   private
 
-  def decrement_counter_caches
-    return unless owner&.class&.counter_cache_options
-    owner.counter_cache_names.each do |counter_cache_name|
-      self.class.update_children_count_statement(parent.id, counter_cache_name, :-)
-    end
-  end
-
   def destroy_children
     return if owner_type == 'Page'
     children.destroy_all
@@ -327,13 +321,6 @@ class Edge < ApplicationRecord
   def destroy_redis_children
     keys = RedisResource::Key.new(path: "#{path}.*").matched_keys.map(&:key)
     Argu::Redis.redis_instance.del(*keys) if keys.present?
-  end
-
-  def increment_counter_caches
-    return unless owner&.class&.counter_cache_options
-    owner.counter_cache_names.each do |counter_cache_name|
-      self.class.update_children_count_statement(parent.id, counter_cache_name, :+)
-    end
   end
 
   def requires_location?
@@ -346,13 +333,5 @@ class Edge < ApplicationRecord
 
   def set_user_id
     self.user_id = owner.publisher.present? ? owner.publisher.id : 0
-  end
-
-  class << self
-    def update_children_count_statement(id, name, operation)
-      query = 'children_counts = children_counts || hstore(?, (cast(COALESCE(children_counts -> ?, \'0\') AS int) '\
-              "#{operation} 1)::text)"
-      Edge.where(id: id).update_all(sanitize_sql([query, name, name]))
-    end
   end
 end
