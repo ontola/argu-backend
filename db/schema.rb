@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418113358) do
+ActiveRecord::Schema.define(version: 20180424083446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20180418113358) do
     t.integer "follows_count", default: 0, null: false
     t.datetime "expires_at"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.boolean "confirmed", default: false, null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
   end
 

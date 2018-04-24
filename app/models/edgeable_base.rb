@@ -36,7 +36,8 @@ class EdgeableBase < ApplicationRecord
   validate :validate_parent_type
 
   accepts_nested_attributes_for :edge
-  delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :expires_at, to: :edge
+  delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :expires_at,
+           :confirmed_before_type_cast, to: :edge
   delegate :potential_audience, to: :parent_edge
 
   def canonical_iri(only_path: false)

@@ -8,7 +8,7 @@ class VotePolicy < EdgeablePolicy
         .joins(:creator, edge: {parent: :parent})
         .where("edges.path ? #{Edge.path_array(granted_edges_within_tree)}")
         .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
-        .where(parents_edges_2: {is_published: true, trashed_at: nil})
+        .where(edges: {confirmed: true}, parents_edges_2: {is_published: true, trashed_at: nil})
     end
   end
 

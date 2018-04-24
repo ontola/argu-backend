@@ -25,9 +25,9 @@ class Vote < EdgeableBase
     key: 'votes.for',
     values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}
   }
-  counter_cache votes_pro: {primary: true, for: Vote.fors[:pro]},
-                votes_con: {primary: true, for: Vote.fors[:con]},
-                votes_neutral: {primary: true, for: Vote.fors[:neutral]}
+  counter_cache votes_pro: {primary: true, confirmed: true, for: Vote.fors[:pro]},
+                votes_con: {primary: true, confirmed: true, for: Vote.fors[:con]},
+                votes_neutral: {primary: true, confirmed: true, for: Vote.fors[:neutral]}
   delegate :create_confirmation_reminder_notification, to: :publisher
   delegate :voteable, to: :parent_model
 

@@ -104,6 +104,7 @@ class Edge < ApplicationRecord
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
   before_destroy :destroy_redis_children
+  before_create :set_confirmed
   before_save :set_user_id
 
   acts_as_followable
@@ -329,6 +330,10 @@ class Edge < ApplicationRecord
 
   def reset_persisted_edge
     @persisted_edge = nil
+  end
+
+  def set_confirmed
+    self.confirmed = user.confirmed?
   end
 
   def set_user_id

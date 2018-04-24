@@ -76,6 +76,7 @@ module Edgeable
                     "'0') AS integer) AS #{connection.quote_string(cache_name.to_s)}_count")
             .joins('LEFT JOIN edges parents_edges ON parents_edges.id = edges.parent_id')
             .reorder('parents_edges.id ASC')
+        query = query.where(edges: {confirmed: true}) if conditions&.delete(:confirmed)
         return query if conditions.nil?
         query = query.joins("INNER JOIN #{quoted_table_name} ON #{quoted_table_name}.id = edges.owner_id")
         if conditions.key?(:sql)

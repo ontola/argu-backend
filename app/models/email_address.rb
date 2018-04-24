@@ -21,7 +21,7 @@ class EmailAddress < ApplicationRecord
   delegate :greeting, to: :user
 
   def after_confirmation
-    schedule_redis_resource_worker(user, user)
+    user.edges.update_all(confirmed: true)
   end
 
   def confirm
