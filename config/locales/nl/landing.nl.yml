@@ -87,13 +87,9 @@ nl:
       branding:
         title: "Huisstijl"
         body: "Wijzig de vormgeving van Argu om bij uw huisstijl te passen."
-      api:
-        title: "Linked Data API"
-        body: "Blijf eigenaar van alle data, direct herbruikbaar via onze API."
-      export:
-        title: "Export"
-        body: "Sla hele discussies op als Excel, JSON of CSV."
-      # Not included in view, have no image
+      data:
+        title: "Data Export & API"
+        body: "Blijf eigenaar van de data. Exporteer als Excel, JSON, Linked Open Data of gebruik onze API."
       auditing:
         title: "Logboek"
         body: "Alle interacties worden opgeslagen en zijn controleerbaar."
@@ -149,4 +145,4 @@ nl:
         answer_html: 'Stuur een mail naar <a href="mailto:info@argu.co">info@argu.co</a> of bel <a href="tel:0031653962242">0653962242</a>.'
     c2a:
       contact_us: "Neem contact op"
-      ask_demo: "Vraag een demonstratie aan"
+      ask_demo: "Vraag een demo aan"

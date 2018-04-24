@@ -86,13 +86,9 @@ en:
       branding:
         title: "Branding"
         body: "Change how Argu looks to match your corporate identity."
-      api:
-        title: "Linked Data API"
-        body: "You own your data. Re-use it with our powerful API."
-      export:
-        title: "Export"
-        body: "Save discussions as Excel, JSON or CSV."
-      # Not included in view, have no image
+      data:
+        title: "Data export & API"
+        body: "You own your data. Access it through our API or export it as Excel, JSON or Linked Open Data."
       auditing:
         title: "Logging & auditing"
         body: "We log all interactions so you'll always know who did what."
