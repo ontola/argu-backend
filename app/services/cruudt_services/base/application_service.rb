@@ -140,7 +140,7 @@ class ApplicationService
   def object_attributes=(obj); end
 
   def prepare_attributes
-    return unless resource.is_a?(Edgeable::Base)
+    return unless resource.is_a?(EdgeableBase)
     prepare_edge_attributes
     prepare_argu_publication_attributes
     prepare_placement_attributes

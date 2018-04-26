@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Banner < NewsBoy
-  include Edgeable::Shallow
+  include EdgeableShallow
   include Loggable
   include ProfilePhotoable
   include Photoable

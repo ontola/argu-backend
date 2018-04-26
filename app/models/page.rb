@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Page < Edgeable::Base
+class Page < EdgeableBase
   has_many :groups, dependent: :destroy, inverse_of: :page
   has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
   include Shortnameable

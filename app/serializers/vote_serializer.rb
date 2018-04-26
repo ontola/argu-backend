@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VoteSerializer < BaseEdgeSerializer
+class VoteSerializer < EdgeableBaseSerializer
   has_one :comment, predicate: NS::ARGU[:explanation]
   has_one :creator, predicate: NS::SCHEMA[:creator] do
     object.creator.are_votes_public ? object.creator.profileable : User.anonymous

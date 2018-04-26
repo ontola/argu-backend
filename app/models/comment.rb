@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Comment < Edgeable::Base
+class Comment < EdgeableBase
   include ContentEdgeable
   include TruncateHelper
 

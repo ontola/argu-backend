@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vote < Edgeable::Base
+class Vote < EdgeableBase
   include PublicActivity::Model
   include Loggable
 

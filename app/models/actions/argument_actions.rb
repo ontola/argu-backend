@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ArgumentActions < ActionList
+class ArgumentActions < EdgeableBaseActions
   include VotesHelper
 
   cattr_accessor :defined_actions

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Question < Edgeable::Base
+class Question < EdgeableBase
   include ActivePublishable
   include Attachable
   include Commentable

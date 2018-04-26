@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class DecisionSerializer < BaseEdgeSerializer
+class DecisionSerializer < EdgeableBaseSerializer
   attribute :content, predicate: NS::SCHEMA[:text]
 end

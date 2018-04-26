@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContentEdgeSerializer < BaseEdgeSerializer
+class ContentEdgeSerializer < EdgeableBaseSerializer
   include Loggable::Serializer
   include Menuable::Serializer
 

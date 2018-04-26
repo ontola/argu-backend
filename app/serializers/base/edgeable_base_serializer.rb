@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BaseEdgeSerializer < RecordSerializer
+class EdgeableBaseSerializer < RecordSerializer
   include Actionable::Serializer
   has_one :edge, predicate: NS::ARGU[:edge]
   has_one :parent_model, key: :partOf, predicate: NS::SCHEMA[:isPartOf]

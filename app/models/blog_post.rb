@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BlogPost < Edgeable::Base
+class BlogPost < EdgeableBase
   include ContentEdgeable
   include Commentable
   include Happenable

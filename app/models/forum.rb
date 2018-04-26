@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Forum < Edgeable::Base
+class Forum < EdgeableBase
   include Discussable
   include Questionable
   include Motionable

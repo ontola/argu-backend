@@ -36,7 +36,7 @@ module ChildOperations
 
   def child_instance(klass)
     child = klass.new(child_attrs(klass))
-    if child.is_a?(Edgeable::Base)
+    if child.is_a?(EdgeableBase)
       child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
       child = record.edge.children.new(owner: child, is_published: true).owner
       child.edge.persisted_edge = persisted_edge
@@ -67,6 +67,6 @@ module ChildOperations
   def valid_parent?(klass)
     return false unless klass.respond_to?(:parent_classes)
     klass.parent_classes.include?(record.class.base_class.name.underscore.to_sym) ||
-      record.is_a?(Edgeable::Base) && klass.parent_classes.include?(:edge)
+      record.is_a?(EdgeableBase) && klass.parent_classes.include?(:edge)
   end
 end

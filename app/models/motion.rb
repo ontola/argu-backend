@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Motion < Edgeable::Base
+class Motion < EdgeableBase
   include ActionView::Helpers::NumberHelper
   include ActivePublishable
   include Argumentable

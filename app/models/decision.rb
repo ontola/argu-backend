@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Decision < Edgeable::Base
+class Decision < EdgeableBase
   include Loggable
   include Happenable
   include HasLinks

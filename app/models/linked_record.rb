@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LinkedRecord < Edgeable::Base
+class LinkedRecord < EdgeableBase
   include Commentable
   include Voteable
   include Argumentable

@@ -19,7 +19,7 @@ class Feed
       when User
         favorite_activities
       else
-        raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(Edgeable::Base)
+        raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(EdgeableBase)
         edge_activities
       end
   end
