@@ -9,7 +9,10 @@ module Voteable
             through: :edge,
             source: :children,
             class_name: 'Edge'
-    has_many :votes, as: :voteable, dependent: :destroy
+    has_many :votes,
+             -> { where(primary: true) },
+             as: :voteable,
+             dependent: :destroy
     edge_tree_has_many :vote_events
     with_collection :vote_events
 
