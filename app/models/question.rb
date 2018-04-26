@@ -3,7 +3,7 @@
 class Question < EdgeableBase
   include ActivePublishable
   include Attachable
-  include Commentable
+  concern Commentable
   include ContentEdgeable
   include HasLinks
   include Attribution
@@ -11,7 +11,7 @@ class Question < EdgeableBase
   include BlogPostable
   include Timelineable
   include Photoable
-  include Motionable
+  concern Motionable
   include CustomGrants
 
   has_many :votes, as: :voteable, dependent: :destroy

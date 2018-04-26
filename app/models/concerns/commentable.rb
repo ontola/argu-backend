@@ -40,6 +40,10 @@ module Commentable
     end
   end
 
+  module Actions
+    extend ActiveSupport::Concern
+  end
+
   module Serializer
     extend ActiveSupport::Concern
 

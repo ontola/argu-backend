@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class LinkedRecord < EdgeableBase
-  include Commentable
+  concern Commentable
   include Voteable
-  include Argumentable
+  concern Argumentable
   extend UriTemplateHelper
   extend UUIDHelper
 

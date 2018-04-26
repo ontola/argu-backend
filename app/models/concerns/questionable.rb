@@ -7,6 +7,10 @@ module Questionable
     with_collection :questions, pagination: true
   end
 
+  module Actions
+    extend ActiveSupport::Concern
+  end
+
   module Serializer
     extend ActiveSupport::Concern
 

@@ -2,6 +2,7 @@
 
 class EdgeableBase < ApplicationRecord
   self.abstract_class = true
+  concern Actionable
   include Parentable
   include Ldable
   define_model_callbacks :trash, only: :after

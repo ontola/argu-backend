@@ -7,6 +7,10 @@ module Motionable
     with_collection :motions, pagination: true
   end
 
+  module Actions
+    extend ActiveSupport::Concern
+  end
+
   module Serializer
     extend ActiveSupport::Concern
 

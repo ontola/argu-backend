@@ -3,10 +3,10 @@
 class Motion < EdgeableBase
   include ActionView::Helpers::NumberHelper
   include ActivePublishable
-  include Argumentable
+  concern Argumentable
   include Attachable
   include Photoable
-  include Commentable
+  concern Commentable
   include ContentEdgeable
   include Voteable
   include Attribution

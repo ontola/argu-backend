@@ -2,8 +2,8 @@
 
 class Forum < EdgeableBase
   include Discussable
-  include Questionable
-  include Motionable
+  concern Questionable
+  concern Motionable
   include ProfilePhotoable
   include Photoable
   include Shortnameable
