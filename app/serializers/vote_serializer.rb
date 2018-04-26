@@ -14,13 +14,6 @@ class VoteSerializer < EdgeableBaseSerializer
   attribute :display_name, predicate: NS::SCHEMA[:name], expect: :export?
 
   def option
-    case object.for
-    when 'pro'
-      NS::ARGU[:yes]
-    when 'con'
-      NS::ARGU[:no]
-    else
-      NS::ARGU[:other]
-    end
+    NS::ARGU[object.option]
   end
 end

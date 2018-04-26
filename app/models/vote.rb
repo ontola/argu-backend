@@ -20,10 +20,14 @@ class Vote < EdgeableBase
   parentable :argument, :vote_event, :linked_record
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
-  filterable option: {key: 'votes.for', values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}}
-  counter_cache votes_pro: {for: Vote.fors[:pro]},
-                votes_con: {for: Vote.fors[:con]},
-                votes_neutral: {for: Vote.fors[:neutral]}
+  filterable option: {
+    attr: :for,
+    key: 'votes.for',
+    values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}
+  }
+  counter_cache votes_pro: {primary: true, for: Vote.fors[:pro]},
+                votes_con: {primary: true, for: Vote.fors[:con]},
+                votes_neutral: {primary: true, for: Vote.fors[:neutral]}
   delegate :create_confirmation_reminder_notification, to: :publisher
   delegate :voteable, to: :parent_model
 
