@@ -9,6 +9,36 @@ module Questionable
 
   module Actions
     extend ActiveSupport::Concern
+
+    included do
+      include ActionableHelper
+
+      define_action :question
+
+      def question_action
+        action_item(
+          :create_question,
+          target: question_entrypoint,
+          resource: resource.question_collection,
+          result: Question,
+          type: [
+            NS::ARGU[:CreateAction],
+            NS::SCHEMA[:QuestionAction],
+            NS::ARGU[:CreateQuestion]
+          ],
+          policy: :question?
+        )
+      end
+
+      def question_entrypoint
+        entry_point_item(
+          :create_question,
+          image: 'fa-question',
+          url: collection_create_url(:question),
+          http_method: 'POST'
+        )
+      end
+    end
   end
 
   module Serializer

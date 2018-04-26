@@ -2,4 +2,6 @@
 nl:
   actions:
     default:
+      create_comment: "Reageer"
       read: "Markeer als gelezen"
+      upvote: "Upvote"

@@ -2,7 +2,7 @@
 
 class BlogPost < EdgeableBase
   include ContentEdgeable
-  include Commentable
+  concern Commentable
   include Happenable
   include ActivePublishable
   include HasLinks

@@ -179,7 +179,8 @@ Rails.application.routes.draw do
 
   resources :questions,
             path: 'q', except: %i[index new create],
-            concerns: %i[commentable blog_postable moveable feedable trashable invitable menuable contactable] do
+            concerns: %i[actionable commentable blog_postable moveable feedable
+                         trashable invitable menuable contactable] do
     resources :media_objects, only: :index
     resources :motions, path: 'm', only: %i[index new create]
   end
@@ -200,8 +201,8 @@ Rails.application.routes.draw do
   resources :motions,
             path: 'm',
             except: %i[index new create destroy],
-            concerns: %i[argumentable commentable blog_postable moveable vote_eventable contactable
-                         feedable trashable decisionable invitable menuable] do
+            concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable
+                         contactable feedable trashable decisionable invitable menuable] do
     resources :media_objects, only: :index
   end
 
@@ -267,7 +268,7 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-  resources :comments, concerns: [:trashable], only: %i[show edit update], path: 'c'
+  resources :comments, concerns: %i[actionable trashable], only: %i[show edit update], path: 'c'
   resources :comments, only: %i[show]
 
   resources :follows, only: :create do

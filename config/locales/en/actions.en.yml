@@ -2,4 +2,6 @@
 en:
   actions:
     default:
+      create_comment: "Comment"
       read: "Mark as read"
+      upvote: "Upvote"

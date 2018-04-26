@@ -4,7 +4,6 @@ module ContentEdgeable
   extend ActiveSupport::Concern
 
   included do
-    include Actionable
     include Loggable
     include Trashable
     include Menuable

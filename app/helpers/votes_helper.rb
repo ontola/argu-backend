@@ -51,11 +51,11 @@ module VotesHelper
 
   def icon_for_side(side)
     case side
-    when 'pro'
+    when 'pro', 'yes'
       'thumbs-up'
-    when 'neutral'
+    when 'neutral', 'other'
       'pause'
-    when 'con'
+    when 'con', 'no'
       'thumbs-down'
     end
   end

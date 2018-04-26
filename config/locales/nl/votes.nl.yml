@@ -9,13 +9,21 @@ nl:
       con: "Is tegen"
     tooltips:
       argument: "Belangrijk argument"
+    collection:
+      votes: "%{count} stemmen"
+      :yes: "%{count} stemmen voor"
+      :no: "%{count} stemmen tegen"
+      other: "%{count} stemmen geen van beide"
     alerts:
       success: "Bedankt voor je stem!"
       failed: "Er is iets fout gegaan, probeer het opnieuw."
     type:
       pro: "Voor"
+      :yes: "Voor"
       neutral: "Anders"
+      other: "Anders"
       con: "Tegen"
+      :no: "Tegen"
     type_new: "Nieuwe stem"
     plural: "Stemmen"
     confirm:

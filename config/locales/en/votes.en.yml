@@ -9,13 +9,21 @@ en:
       con: "Disagrees"
     tooltips:
       argument: "Important argument"
+    collection:
+      votes: "%{count} votes"
+      :yes: "%{count} agrees"
+      :no: "%{count} disagrees"
+      other: "%{count} other"
     alerts:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
     type:
       pro: "Agree"
+      :yes: "Agree"
       neutral: "Other"
+      other: "Other"
       con: "Disagree"
+      :no: "Disagree"
     type_new: "New vote"
     plural: "Votes"
     confirm:
