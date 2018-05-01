@@ -12,7 +12,7 @@ class CreateVote < PublishedCreateService
   def after_save
     super
     resource.publisher.follow(@edge, nil, :news)
-    @edge.parent.reload if @edge.parent.persisted?
+    @edge.parent.reload
   end
 
   def existing_edge(parent, options, attributes)

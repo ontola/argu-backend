@@ -48,6 +48,7 @@ module RedisResource
       resource.id ||= reserved_resource_id
       resource.created_at ||= Time.current
       store_in_redis
+      resource.parent_model.save! if resource.parent_model.new_record?
       resource.persisted? ? resource.save!(skip_redis: true) : resource.run_callbacks(:redis_save)
       DataEvent.publish(resource)
     end

@@ -26,6 +26,7 @@ module Argu
 
           # Differences
           let(:create_differences) { [["#{subject.class}.count", 1], ['Activity.loggings.count', 1]] }
+          let(:create_guest_differences) { [] }
           let(:update_differences) { [["#{subject.class}.count", 0], ['Activity.loggings.count', 1]] }
           let(:move_differences) do
             [

@@ -8,7 +8,9 @@ RSpec.shared_examples_for 'post create' do |opts = {skip: []}|
       unless opts[:skip].include?(:create_guest) || opts[:skip].include?(:guest)
         it 'as guest' do
           sign_out
-          post create_path, params: create_params.merge(format: format)
+          assert_differences(create_guest_differences) do
+            post create_path, params: create_params.merge(format: format)
+          end
           send("expect_post_create_guest_#{format}")
         end
       end

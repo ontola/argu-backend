@@ -123,6 +123,13 @@ RSpec.describe 'Votes', type: :request do
     end
 
     context 'with non-persisted linked_record parent' do
+      let(:create_guest_differences) do
+        [
+          ['Argu::Redis.keys("temporary.*").count', 1],
+          ['LinkedRecord.count', 1],
+          ['VoteEvent.count', 1]
+        ]
+      end
       let(:non_persisted_linked_record) do
         LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
       end
