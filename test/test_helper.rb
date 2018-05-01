@@ -152,6 +152,17 @@ module ActionDispatch
       I18n.locale = :en
     end
 
+    def argu_headers(accept: nil, back: false, bearer: nil, host: nil)
+      headers = {}
+      if accept
+        headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
+      end
+      headers['Authorization'] = "Bearer #{bearer}" if bearer
+      headers['X-Argu-Back'] = 'true' if back
+      headers['HTTP_HOST'] = host if host
+      headers
+    end
+
     def follow_redirect!
       raise "not a redirect! #{status} #{status_message}" unless redirect?
       get(response.location)
@@ -164,20 +175,6 @@ module ActionDispatch
         *args,
         merge_req_opts(opts)
         )
-    end
-
-    def format_param(format = :nq)
-      {
-        format: format
-      }
-    end
-
-    def argu_headers(back: false, bearer: nil, host: nil)
-      headers = {}
-      headers['Authorization'] = "Bearer #{bearer}" if bearer
-      headers['X-Argu-Back'] = 'true' if back
-      headers['Host'] = host if host
-      headers
     end
 
     def post(path, *args, **opts)
@@ -229,9 +226,7 @@ module ActionDispatch
         10.minutes,
         false
       )
-      @_argu_headers = (@_argu_headers || {}).merge(
-        'Authorization': "Bearer #{t.token}"
-      )
+      @_argu_headers = (@_argu_headers || {}).merge(argu_headers(bearer: t.token))
     end
     alias log_in_user sign_in
     deprecate :log_in_user

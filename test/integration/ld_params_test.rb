@@ -48,9 +48,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
              format: :nq,
              "<#{NS::LL[:graph]}>" => fixture_file_upload(fixture, 'text/n3')
            }.merge(params),
-           headers: {
-             'X-Argu-Back' => 'true'
-           }
+           headers: argu_headers(back: true)
     end
     assert_response 201
     assert_equal response.headers['Location'], klass.last.iri

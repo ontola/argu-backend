@@ -554,7 +554,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_differences([['Vote.count', -1],
                         ['Edge.count', -1],
                         ['argument.reload.children_count(:votes_pro)', -1]]) do
-      delete vote_path(argument_vote), params: format_param, headers: argu_headers(back: true)
+      delete vote_path(argument_vote), headers: argu_headers(accept: :nq, back: true)
     end
 
     expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::LL[:remove])
@@ -586,7 +586,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                         ['vote_event.reload.children_count(:votes_con)', 1]]) do
       Sidekiq::Testing.inline! do
         post motion_vote_event_votes_path(motion, vote_event.id, filter: {option: :no}, type: :paginated),
-             params: format_param, headers: argu_headers(back: true)
+             headers: argu_headers(accept: :nq, back: true)
       end
     end
 

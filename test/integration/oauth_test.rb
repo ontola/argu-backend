@@ -31,9 +31,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     )
     t.update(created_at: 2.minutes.ago)
     get forum_path('freetown'),
-        headers: {
-          'Authorization': "Bearer #{t.token}"
-        }
+        headers: argu_headers(bearer: t.token)
 
     assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
     assert_equal session.id, Doorkeeper::AccessToken.last.resource_owner_id
@@ -53,9 +51,7 @@ class OauthTest < ActionDispatch::IntegrationTest
              grant_type: 'password',
              scope: 'user'
            },
-           headers: {
-             HTTP_HOST: 'argu.co'
-           }
+           headers: argu_headers(host: 'argu.co')
     end
 
     assert_nil parsed_cookies['expires']
@@ -77,9 +73,7 @@ class OauthTest < ActionDispatch::IntegrationTest
              remember_me: 'true',
              scope: 'user'
            },
-           headers: {
-             HTTP_HOST: 'argu.co'
-           }
+           headers: argu_headers(host: 'argu.co')
     end
 
     assert_not_nil parsed_cookies['expires']
@@ -103,9 +97,7 @@ class OauthTest < ActionDispatch::IntegrationTest
              },
              scope: 'user'
            },
-           headers: {
-             HTTP_HOST: 'argu.co'
-           }
+           headers: argu_headers(host: 'argu.co')
     end
 
     at = Doorkeeper::AccessToken.last
@@ -125,9 +117,7 @@ class OauthTest < ActionDispatch::IntegrationTest
              grant_type: 'password',
              scope: 'user'
            },
-           headers: {
-             HTTP_HOST: '127.0.0.1:42000/'
-           }
+           headers: argu_headers(host: '127.0.0.1:42000/')
     end
 
     assert parsed_body['access_token'].present?

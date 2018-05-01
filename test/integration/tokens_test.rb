@@ -44,9 +44,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
-             headers: {
-               HTTP_HOST: 'other.example'
-             },
+             headers: argu_headers(host: 'other.example'),
              params: {
                email: user.email,
                password: user.password,
@@ -78,9 +76,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 1], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
-             headers: {
-               HTTP_HOST: 'argu.co'
-             },
+             headers: argu_headers(host: 'argu.co'),
              params: {
                email: user.email,
                password: user.password,
@@ -97,9 +93,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with username email for other domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              username: user.email,
              password: user.password,
@@ -113,9 +107,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with username username for other domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              username: user.url,
              password: user.password,
@@ -129,9 +121,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with username email for Argu domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              username: user.email,
              password: user.password,
@@ -145,9 +135,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with caps for other domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              username: user.email.capitalize,
              password: user.password,
@@ -161,9 +149,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with caps for Argu domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              username: user.email.capitalize,
              password: user.password,
@@ -177,9 +163,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with username username for Argu domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              username: user.url,
              password: user.password,
@@ -193,9 +177,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should post create token with r for Argu domain' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              username: user.url,
              password: user.password,
@@ -213,9 +195,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with credentials and empty password for other domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              email: user_without_password.email,
              password: '',
@@ -229,9 +209,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with credentials and empty password for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: Rails.application.config.host_name
-           },
+           headers: argu_headers(host: Rails.application.config.host_name),
            params: {
              email: user_without_password.email,
              password: '',
@@ -245,9 +223,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with credentials and empty password for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: Rails.application.config.host_name
-           },
+           headers: argu_headers(host: Rails.application.config.host_name),
            params: {
              format: :json,
              email: user_without_password.email,
@@ -265,9 +241,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with wrong password for other domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              email: user.email,
              password: 'wrong',
@@ -281,9 +255,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with wrong password for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              email: user.email,
              password: 'wrong',
@@ -297,9 +269,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with wrong password and r for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              email: user.email,
              password: 'wrong',
@@ -314,9 +284,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              format: :json,
              email: user.email,
@@ -335,9 +303,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email for other domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              email: 'wrong@example.com',
              password: 'wrong',
@@ -351,9 +317,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              email: 'wrong@example.com',
              password: 'wrong',
@@ -367,9 +331,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email and r for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              email: 'wrong@example.com',
              password: 'wrong',
@@ -384,9 +346,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email and r for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              format: :json,
              email: 'wrong@example.com',
@@ -405,9 +365,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username for other domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              username: 'wrong',
              password: 'wrong',
@@ -421,9 +379,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              username: 'wrong',
              password: 'wrong',
@@ -437,9 +393,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username and r for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              username: 'wrong',
              password: 'wrong',
@@ -454,9 +408,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              format: :json,
              username: 'wrong',
@@ -475,9 +427,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with service scope for other domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              email: user.email,
              password: user.password,
@@ -491,9 +441,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with service scope for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              email: user.email,
              password: user.password,
@@ -507,9 +455,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with user and service scope for other domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              email: user.email,
              password: user.password,
@@ -523,9 +469,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with user and service scope for Argu domain' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'argu.co'
-           },
+           headers: argu_headers(host: 'argu.co'),
            params: {
              email: user.email,
              password: user.password,
@@ -549,9 +493,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
-             headers: {
-               HTTP_HOST: 'other.example'
-             },
+             headers: argu_headers(host: 'other.example'),
              params: {
                username: unconfirmed_user.email,
                password: unconfirmed_user.password,
@@ -573,9 +515,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 0], ['Favorite.count', 0]]) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
-             headers: {
-               HTTP_HOST: 'argu.co'
-             },
+             headers: argu_headers(host: 'argu.co'),
              params: {
                username: unconfirmed_user.email,
                password: unconfirmed_user.password,
@@ -598,9 +538,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     user.update!(failed_attempts: 19)
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: {
-             HTTP_HOST: 'other.example'
-           },
+           headers: argu_headers(host: 'other.example'),
            params: {
              email: user.email,
              password: 'wrong',
