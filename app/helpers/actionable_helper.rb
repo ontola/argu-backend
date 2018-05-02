@@ -2,7 +2,7 @@
 
 module ActionableHelper
   def collection_create_url(col_name)
-    RDF::URI(create_url(resource.send("#{col_name}_collection".to_sym)))
+    RDF::URI(create_url(resource_collection(col_name)))
   end
 
   def create_url(resource)
@@ -12,5 +12,9 @@ module ActionableHelper
 
   def paged_resource?(resource)
     resource.is_a?(Collection) && resource.pagination && resource.page.present?
+  end
+
+  def resource_collection(col_name)
+    resource.send("#{col_name}_collection".to_sym, user_context: user_context)
   end
 end

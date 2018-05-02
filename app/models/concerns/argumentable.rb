@@ -55,7 +55,7 @@ module Argumentable
         action_item(
           :create_pro_argument,
           target: pro_argument_entrypoint,
-          resource: resource.pro_argument_collection,
+          resource: resource.pro_argument_collection(user_context: user_context),
           result: ProArgument,
           type: [
             NS::ARGU[:CreateAction],
@@ -78,7 +78,7 @@ module Argumentable
         action_item(
           :create_con_argument,
           target: con_argument_entrypoint,
-          resource: resource.con_argument_collection,
+          resource: resource_collection(:con_argument),
           result: ConArgument,
           type: [
             NS::ARGU[:CreateAction],
@@ -105,14 +105,6 @@ module Argumentable
     included do
       with_collection :pro_arguments, predicate: NS::ARGU[:proArguments]
       with_collection :con_arguments, predicate: NS::ARGU[:conArguments]
-
-      def pro_argument_collection
-        object.pro_argument_collection(user_context: scope)
-      end
-
-      def con_argument_collection
-        object.con_argument_collection(user_context: scope)
-      end
     end
   end
 end

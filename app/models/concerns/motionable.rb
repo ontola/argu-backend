@@ -19,7 +19,7 @@ module Motionable
         action_item(
           :create_motion,
           target: motion_entrypoint,
-          resource: resource.motion_collection,
+          resource: resource_collection(:motion),
           result: Motion,
           type: [
             NS::ARGU[:CreateAction],
@@ -46,10 +46,6 @@ module Motionable
 
     included do
       with_collection :motions, predicate: NS::ARGU[:motions]
-
-      def motion_collection
-        object.motion_collection(user_context: scope)
-      end
     end
   end
 end

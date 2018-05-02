@@ -19,7 +19,7 @@ module Questionable
         action_item(
           :create_question,
           target: question_entrypoint,
-          resource: resource.question_collection,
+          resource: resource_collection(:question),
           result: Question,
           type: [
             NS::ARGU[:CreateAction],
@@ -46,10 +46,6 @@ module Questionable
 
     included do
       with_collection :questions, predicate: NS::ARGU[:questions]
-
-      def question_collection
-        object.question_collection(user_context: scope)
-      end
     end
   end
 end

@@ -75,6 +75,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:creator) { create(:user) }
   let(:profile_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)).profile }
+  let(:context) { UserContext.new(doorkeeper_scopes: 'test') }
 
   ####################################
   # as Guest
@@ -558,8 +559,11 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::LL[:remove])
-    expect_triple(argument.vote_collection.iri, NS::ARGU[:totalCount], 0, NS::LL[:replace])
-    expect_triple(argument.vote_collection(filter: {option: :yes}).iri, NS::ARGU[:totalCount], 0, NS::LL[:replace])
+    expect_triple(argument.vote_collection(user_context: context).iri, NS::ARGU[:totalCount], 0, NS::LL[:replace])
+    expect_triple(argument.vote_collection(user_context: context, filter: {option: :yes}).iri,
+                  NS::ARGU[:totalCount],
+                  0,
+                  NS::LL[:replace])
     assert_response 200
     assert_analytics_collected('votes', 'destroy', 'pro')
   end
@@ -590,16 +594,16 @@ class VotesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    expect_triple(vote_event.vote_collection.iri, NS::ARGU[:totalCount], 2, NS::LL[:replace])
-    expect_triple(vote_event.vote_collection(filter: {option: :yes}).iri,
+    expect_triple(vote_event.vote_collection(user_context: context).iri, NS::ARGU[:totalCount], 2, NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :yes}).iri,
                   NS::ARGU[:totalCount],
                   1,
                   NS::LL[:replace])
-    expect_triple(vote_event.vote_collection(filter: {option: :other}).iri,
+    expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :other}).iri,
                   NS::ARGU[:totalCount],
                   0,
                   NS::LL[:replace])
-    expect_triple(vote_event.vote_collection(filter: {option: :no}).iri,
+    expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :no}).iri,
                   NS::ARGU[:totalCount],
                   1,
                   NS::LL[:replace])

@@ -28,10 +28,6 @@ module Attachable
 
     included do
       with_collection :attachments, predicate: NS::ARGU[:attachments]
-
-      def attachment_collection
-        object.attachment_collection(user_context: scope)
-      end
     end
   end
 end

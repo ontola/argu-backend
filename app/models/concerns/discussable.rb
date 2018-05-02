@@ -19,10 +19,6 @@ module Discussable
 
     included do
       with_collection :discussions, predicate: NS::ARGU[:questions]
-
-      def discussion_collection
-        object.discussion_collection(user_context: scope)
-      end
     end
   end
 end

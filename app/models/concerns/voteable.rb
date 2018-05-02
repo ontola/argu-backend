@@ -42,10 +42,6 @@ module Voteable
               key: :voteable_vote_event,
               predicate: NS::ARGU[:voteableVoteEvent]
       # rubocop:enable Rails/HasManyOrHasOneDependent
-
-      def vote_event_collection
-        object.vote_event_collection(user_context: scope)
-      end
     end
   end
 end

@@ -17,10 +17,6 @@ class UserSerializer < RecordSerializer
 
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
 
-  def vote_match_collection
-    object.vote_match_collection(user_context: scope)
-  end
-
   def about
     object.profile.about
   end

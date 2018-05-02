@@ -52,7 +52,7 @@ module Commentable
         action_item(
           :create_comment,
           target: comment_entrypoint,
-          resource: resource.comment_collection,
+          resource: resource_collection(:comment),
           result: Comment,
           type: [
             NS::ARGU[:CreateAction],
@@ -79,10 +79,6 @@ module Commentable
 
     included do
       with_collection :comments, predicate: NS::SCHEMA[:comments]
-
-      def comment_collection
-        object.comment_collection(user_context: scope)
-      end
     end
   end
 end

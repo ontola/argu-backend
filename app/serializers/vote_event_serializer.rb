@@ -35,8 +35,4 @@ class VoteEventSerializer < EdgeableBaseSerializer
   def ends_at
     object.edge.expires_at
   end
-
-  def vote_collection
-    object.vote_collection(user_context: scope)
-  end
 end
