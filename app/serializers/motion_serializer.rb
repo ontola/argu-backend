@@ -7,10 +7,10 @@ class MotionSerializer < ContentEdgeSerializer
   include Voteable::Serializer
   include Photoable::Serializer
 
-  attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :export?
-  attribute :pro_count, if: :export?
-  attribute :con_count, if: :export?
-  attribute :neutral_count, if: :export?
+  attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?
+  attribute :pro_count, if: :export_scope?
+  attribute :con_count, if: :export_scope?
+  attribute :neutral_count, if: :export_scope?
 
   include_menus
 

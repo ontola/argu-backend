@@ -5,7 +5,7 @@
 class UserContext
   attr_reader :user, :actor, :doorkeeper_scopes, :tree_root_id
 
-  def initialize(user, profile, doorkeeper_scopes, tree_root_id = nil)
+  def initialize(doorkeeper_scopes:, profile: nil, tree_root_id: nil, user: nil)
     unless tree_root_id.nil? || tree_root_id == GrantTree::ANY_ROOT || tree_root_id.is_a?(Integer)
       raise "tree_root_id should be an integer or the constant GrantTree::ANY_ROOT, but is #{tree_root_id}"
     end
@@ -49,6 +49,18 @@ class UserContext
       raise "Edge #{edge_id} lies outside the tree of root #{tree_root_id}"
     end
     @grant_trees[edge_id] ||= GrantTree.new(edge_id)
+  end
+
+  def export_scope?
+    doorkeeper_scopes&.include? 'export'
+  end
+
+  def service_scope?
+    doorkeeper_scopes&.include? 'service'
+  end
+
+  def system_scope?
+    service_scope? || export_scope?
   end
 
   def with_root_id(root_id)

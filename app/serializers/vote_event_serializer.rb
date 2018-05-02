@@ -5,7 +5,7 @@ class VoteEventSerializer < EdgeableBaseSerializer
   attribute :starts_at, predicate: NS::SCHEMA[:startDate]
   attribute :ends_at, predicate: NS::SCHEMA[:endDate]
   attribute :result
-  attribute :option_counts, unless: :export?
+  attribute :option_counts, unless: :export_scope?
   attribute :pro_count
   attribute :con_count
   attribute :neutral_count
@@ -13,7 +13,7 @@ class VoteEventSerializer < EdgeableBaseSerializer
 
   has_one :current_vote,
           predicate: NS::ARGU[:currentVote],
-          unless: :service_scope?
+          unless: :system_scope?
 
   with_collection :votes, predicate: NS::ARGU[:votes]
 

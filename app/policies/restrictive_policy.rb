@@ -14,6 +14,9 @@ class RestrictivePolicy
 
     delegate :user, to: :context
     delegate :actor, to: :context
+    delegate :export_scope?, :service_scope?, :system_scope?,
+             to: :scope,
+             allow_nil: true
 
     def resolve
       scope if staff?

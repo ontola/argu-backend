@@ -37,10 +37,10 @@ module Argu
     def user_context
       @user_context ||=
         UserContext.new(
-          current_user,
-          current_profile,
-          doorkeeper_scopes,
-          @_error_mode ? nil : tree_root_id
+          doorkeeper_scopes: doorkeeper_scopes,
+          profile: current_profile,
+          tree_root_id: @_error_mode ? nil : tree_root_id,
+          user: current_user
         )
     end
   end

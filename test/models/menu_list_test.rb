@@ -7,10 +7,24 @@ class MenuListTest < ActiveSupport::TestCase
   define_freetown('second', attributes: {public_grant: 'none'})
 
   let(:user) { create(:user) }
-  let(:user_context) { UserContext.new(user, user.profile, {}, GrantTree::ANY_ROOT) }
+  let(:user_context) do
+    UserContext.new(
+      doorkeeper_scopes: {},
+      profile: user.profile,
+      tree_root_id: GrantTree::ANY_ROOT,
+      user: user
+    )
+  end
 
   let(:administrator) { create_administrator(freetown.page) }
-  let(:administrator_context) { UserContext.new(administrator, administrator.profile, {}, GrantTree::ANY_ROOT) }
+  let(:administrator_context) do
+    UserContext.new(
+      doorkeeper_scopes: {},
+      profile: administrator.profile,
+      tree_root_id: GrantTree::ANY_ROOT,
+      user: administrator
+    )
+  end
 
   let!(:custom_menu_item) do
     CustomMenuItem.create(
