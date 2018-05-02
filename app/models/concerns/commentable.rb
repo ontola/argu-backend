@@ -46,31 +46,7 @@ module Commentable
     included do
       include ActionableHelper
 
-      define_action :comment
-
-      def comment_action
-        action_item(
-          :create_comment,
-          target: comment_entrypoint,
-          resource: resource_collection(:comment),
-          result: Comment,
-          type: [
-            NS::ARGU[:CreateAction],
-            NS::SCHEMA[:CommentAction],
-            NS::ARGU[:CreateComment]
-          ],
-          policy: :comment?
-        )
-      end
-
-      def comment_entrypoint
-        entry_point_item(
-          :create_comment,
-          image: 'fa-comment',
-          url: collection_create_url(:comment),
-          http_method: 'POST'
-        )
-      end
+      define_default_create_action :comment, image: 'fa-comment'
     end
   end
 

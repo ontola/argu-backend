@@ -13,31 +13,7 @@ module Motionable
     included do
       include ActionableHelper
 
-      define_action :motion
-
-      def motion_action
-        action_item(
-          :create_motion,
-          target: motion_entrypoint,
-          resource: resource_collection(:motion),
-          result: Motion,
-          type: [
-            NS::ARGU[:CreateAction],
-            NS::SCHEMA[:MotionAction],
-            NS::ARGU[:CreateMotion]
-          ],
-          policy: :motion?
-        )
-      end
-
-      def motion_entrypoint
-        entry_point_item(
-          :create_motion,
-          image: 'fa-motion',
-          url: collection_create_url(:motion),
-          http_method: 'POST'
-        )
-      end
+      define_default_create_action :motion, image: 'fa-motion'
     end
   end
 

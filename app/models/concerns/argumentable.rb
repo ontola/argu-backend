@@ -48,54 +48,8 @@ module Argumentable
     included do
       include ActionableHelper
 
-      define_action :pro_argument
-      define_action :con_argument
-
-      def pro_argument_action
-        action_item(
-          :create_pro_argument,
-          target: pro_argument_entrypoint,
-          resource: resource.pro_argument_collection(user_context: user_context),
-          result: ProArgument,
-          type: [
-            NS::ARGU[:CreateAction],
-            NS::ARGU[:CreateProArgument]
-          ],
-          policy: :pro_argument?
-        )
-      end
-
-      def pro_argument_entrypoint
-        entry_point_item(
-          :create_pro_argument,
-          image: 'fa-plus',
-          url: collection_create_url(:pro_argument),
-          http_method: 'POST'
-        )
-      end
-
-      def con_argument_action
-        action_item(
-          :create_con_argument,
-          target: con_argument_entrypoint,
-          resource: resource_collection(:con_argument),
-          result: ConArgument,
-          type: [
-            NS::ARGU[:CreateAction],
-            NS::ARGU[:CreateConArgument]
-          ],
-          policy: :con_argument?
-        )
-      end
-
-      def con_argument_entrypoint
-        entry_point_item(
-          :create_con_argument,
-          image: 'fa-plus',
-          url: collection_create_url(:con_argument),
-          http_method: 'POST'
-        )
-      end
+      define_default_create_action :pro_argument, image: 'fa-plus'
+      define_default_create_action :con_argument, image: 'fa-plus'
     end
   end
 

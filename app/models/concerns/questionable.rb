@@ -13,31 +13,7 @@ module Questionable
     included do
       include ActionableHelper
 
-      define_action :question
-
-      def question_action
-        action_item(
-          :create_question,
-          target: question_entrypoint,
-          resource: resource_collection(:question),
-          result: Question,
-          type: [
-            NS::ARGU[:CreateAction],
-            NS::SCHEMA[:QuestionAction],
-            NS::ARGU[:CreateQuestion]
-          ],
-          policy: :question?
-        )
-      end
-
-      def question_entrypoint
-        entry_point_item(
-          :create_question,
-          image: 'fa-question',
-          url: collection_create_url(:question),
-          http_method: 'POST'
-        )
-      end
+      define_default_create_action :question, image: 'fa-question'
     end
   end
 
