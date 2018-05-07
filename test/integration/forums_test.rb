@@ -321,11 +321,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
            group: create(:group, parent: holland.page.edge),
            edge: holland.edge,
            grant_set: GrantSet.participator)
-    assert_equal holland.edge.grants.size, 2
-    put forum_move_path(holland, edge_id: transfer_to.edge.id)
+    assert_differences([['transfer_to.forums.reload.count', 1], ['holland.edge.reload.grants.size', -1]]) do
+      put forum_move_path(holland, edge_id: transfer_to.edge.id)
+    end
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
-    assert_equal holland.edge.grants.size, 1
   end
 
   test 'staff should post create forum with latlon' do

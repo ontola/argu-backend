@@ -74,17 +74,11 @@ class EdgeableBase < ApplicationRecord
 
   def move_to(new_parent)
     self.class.transaction do
-      if self.class.columns.map(&:name).include?('question_id')
-        self.question_id = new_parent.owner_type == 'Question' ? new_parent.owner_id : nil
+      (self.class.columns.map(&:name) & %w[question_id page_id]).each do |column|
+        send("#{column}=", new_parent.owner_type == column[0...-3].classify ? new_parent.owner_id : nil)
       end
       if self.class.columns.map(&:name).include?('forum_id') && new_parent.parent_model(:forum) != forum
-        self.forum = new_parent.parent_model(:forum).lock!
-        edge.descendants.lock(true).includes(:owner).find_each do |descendant|
-          descendant.owner.update_column(:forum_id, forum.id)
-        end
-        activities
-          .lock(true)
-          .update_all(forum_id: forum.id, recipient_id: new_parent.owner_id, recipient_type: new_parent.owner_type)
+        move_update_forum(new_parent)
       end
       yield if block_given?
       edge.parent = new_parent
@@ -139,6 +133,16 @@ class EdgeableBase < ApplicationRecord
   end
 
   private
+
+  def move_update_forum(new_parent)
+    self.forum = new_parent.parent_model(:forum).lock!
+    edge.descendants.lock(true).includes(:owner).find_each do |descendant|
+      descendant.owner.update_column(:forum_id, forum.id)
+    end
+    activities
+      .lock(true)
+      .update_all(forum_id: forum.id, recipient_id: new_parent.owner_id, recipient_type: new_parent.owner_type)
+  end
 
   def remove_from_redis
     RedisResource::Resource.new(resource: self).destroy
