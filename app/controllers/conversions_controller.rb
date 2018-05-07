@@ -24,7 +24,7 @@ class ConversionsController < ServiceController
   def collect_banners; end
 
   def convertible_edge
-    @convertible_edge ||= Edge.find_by(id: params[:edge_id])
+    @convertible_edge ||= Edge.find_by(uuid: params[:edge_id])
   end
 
   def convertible_edge!

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
     resources :actions, only: %i[index show]
   end
   concern :argumentable do
-    resources :arguments, only: %i[new create], path: 'a'
+    resources :arguments, only: %i[new create]
     resources :pro_arguments, only: %i[new create index], path: 'pros', defaults: {pro: 'pro'}
     resources :con_arguments, only: %i[new create index], path: 'cons', defaults: {pro: 'con'}
   end
@@ -187,7 +187,7 @@ Rails.application.routes.draw do
 
   resources :edges, only: [:show] do
     get :statistics, to: 'statistics#show'
-    resources :exports, only: %i[index create], concerns: %i[destroyable]
+    resources :exports, only: %i[index create]
     resources :conversions, path: 'conversion', only: %i[new create]
     resource :grant_tree, only: %i[show], path: 'permissions'
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
@@ -195,6 +195,7 @@ Rails.application.routes.draw do
       resources edgeable, only: :index
     end
   end
+  resources :exports, only: [], concerns: %i[destroyable]
   resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log
 
@@ -258,6 +259,7 @@ Rails.application.routes.draw do
     get '/dismissals',
         to: 'static_pages#dismiss_announcement'
   end
+  resources :banners, except: %i[index show new create]
 
   resources :profiles, only: %i[index update] do
     post :index, action: :index, on: :collection
