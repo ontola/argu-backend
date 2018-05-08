@@ -186,10 +186,6 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
     get collection_iri_path(record, :decisions)
     assert_response response
-
-    # Temporary check to see if old urls still work
-    get collection_iri_path(record.edge, :decisions)
-    assert_response response
   end
 
   def general_decide(response = 302, changed = false, state = 'approved')

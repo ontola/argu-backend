@@ -43,10 +43,6 @@ class DecisionsController < EdgeableController
     respond_with_200(parent_resource!.last_decision, :json)
   end
 
-  def parent_from_params(opts = params)
-    super || Edge.find_by(owner_type: parent_resource_type(opts).camelcase, id: parent_id_from_params(opts))&.owner
-  end
-
   def message_success(resource, _)
     if resource.edge.argu_publication.published_at.present?
       parent_key = resource.parent_model.model_name.singular
