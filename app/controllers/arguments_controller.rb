@@ -64,7 +64,7 @@ class ArgumentsController < EdgeableController
 
   def resource_from_params
     return @resource_from_params if instance_variable_defined?('@resource_from_params')
-    @resource_from_params = Argument.find_by(id: resource_id)
+    @resource_from_params = Argument.find_by(id: resource_id, root_id: root_from_params&.edge&.uuid)
     return @resource_from_params if @resource_from_params.nil? || @resource_from_params.class == controller_class
     redirect_to @resource_from_params.iri_path
     nil

@@ -25,7 +25,8 @@ module Voteable
           starts_at: Time.current,
           creator_id: creator.id,
           publisher_id: publisher.id,
-          forum_id: try(:forum_id)
+          forum_id: try(:forum_id),
+          root_id: edge.root.uuid
         )
     end
 

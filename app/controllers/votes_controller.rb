@@ -96,10 +96,11 @@ class VotesController < EdgeableController
 
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
-    @_resource_by_id ||= Edge
-                           .where_owner('Vote', creator: current_profile)
-                           .find_by(parent: (parent_from_params || linked_record_parent)&.edge)
-                           &.owner
+    @_resource_by_id ||=
+      Edge
+        .where_owner('Vote', creator: current_profile, root_id: root_from_params&.uuid)
+        .find_by(parent: parent_resource&.edge)
+        &.owner
   end
 
   def show_respond_success_html(resource)

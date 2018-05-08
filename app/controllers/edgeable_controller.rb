@@ -50,7 +50,7 @@ class EdgeableController < ServiceController
   end
 
   def resource_from_params
-    @resource_from_params ||= controller_class.find_by(id: resource_id)
+    @resource_from_params ||= controller_class.find_by(id: resource_id, root_id: root_from_params&.edge&.uuid)
   end
 
   def service_klass

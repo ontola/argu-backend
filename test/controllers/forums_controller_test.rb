@@ -9,7 +9,7 @@ class ForumsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show forum' do
-    get :show, params: {format: :json_api, id: holland.id}
+    get :show, params: {format: :json_api, root_id: holland.page.id, id: holland.id}
     assert_response 200
 
     expect_relationship('motionCollection', 1)

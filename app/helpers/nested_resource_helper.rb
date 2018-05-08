@@ -8,7 +8,7 @@ module NestedResourceHelper
   include IRIHelper
 
   def parent_resource
-    @parent_resource ||= parent_from_params(params) if parent_id_from_params(params).present?
+    @parent_resource ||= parent_from_params(params)
   end
 
   def parent_resource!
@@ -30,6 +30,7 @@ module NestedResourceHelper
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord, nil] A resource model if found
   def parent_from_params(opts = params)
+    return if parent_id_from_params(opts).blank?
     if parent_resource_class(opts).try(:shortnameable?)
       parent_resource_class(opts)&.find_via_shortname_or_id(parent_id_from_params(opts))
     elsif parent_resource_class(opts) == Edge && uuid?(parent_id_from_params(opts))
@@ -104,7 +105,8 @@ module NestedResourceHelper
     if resource_params[:parent].present?
       id_and_type_from_iri(resource_params[:parent])[:type]
     else
-      parent_resource_key(opts)[0..-4]
+      key = parent_resource_key(opts)[0..-4]
+      key == 'root' ? 'page' : key
     end
   end
 

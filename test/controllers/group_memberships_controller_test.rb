@@ -335,7 +335,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
         params: {
           page_id: freetown.page.id,
           q: administator.first_name,
-          thing: 'o/fg_shortname26end'
+          thing: 'fg_shortname26end'
         }
 
     assert_equal parsed_body['data'].size, 1
@@ -349,7 +349,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
         params: {
           page_id: freetown.page.id,
           q: 'wrong',
-          thing: 'o/fg_shortname26end'
+          thing: 'fg_shortname26end'
         }
 
     assert_equal parsed_body['data'].size, 0

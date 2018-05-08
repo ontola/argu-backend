@@ -14,7 +14,8 @@ RSpec.describe 'Pages', type: :request do
     nominatim_netherlands
     settings_iri_path(subject)
   end
-  let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", id: 'non_existing', only_path: true) }
+  let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", root_id: 'non_existing', only_path: true) }
+  let(:non_existing_destroy_path) { non_existing_show_path }
   let(:non_existing_edit_path) { settings_iri_path(non_existing_show_path) }
   let(:parent_path) { subject }
   let(:updated_resource_path) { settings_iri_path(subject, tab: :profile) }

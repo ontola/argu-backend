@@ -7,11 +7,11 @@ class IriHelperTest < ActiveSupport::TestCase
   define_freetown
 
   test 'should find forum by its iri' do
-    assert_equal resource_from_iri(argu_url('/freetown')), freetown
+    assert_equal resource_from_iri(argu_url('/argu/freetown')), freetown
   end
 
   test 'should find forum by a subview iri' do
-    assert_equal resource_from_iri(argu_url('/freetown/settings')), freetown
+    assert_equal resource_from_iri(argu_url('/argu/freetown/settings')), freetown
   end
 
   test 'should find forum by its cannonical iri' do

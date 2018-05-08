@@ -2,7 +2,6 @@
 
 class ForumsController < EdgeableController
   include EdgeTree::Move
-  prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
   prepend_before_action :write_client_access_token, unless: :afe_request?
   skip_before_action :authorize_action, only: %i[discover index]
@@ -60,7 +59,7 @@ class ForumsController < EdgeableController
   end
 
   def authorize_action
-    authorize resource_by_id, :list?
+    authorize authenticated_resource, :list?
     return super unless action_name == 'show'
   end
 
@@ -122,16 +121,6 @@ class ForumsController < EdgeableController
     []
   end
 
-  def redirect_generic_shortnames
-    return if (/[a-zA-Z]/i =~ params[:id]).nil?
-    resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
-    return if resource.is_a?(Forum)
-    send_event category: 'short_url',
-               action: 'follow',
-               label: params[:id]
-    redirect_to resource.iri(only_path: true).to_s
-  end
-
   def redirect_model_success(resource)
     return super unless resource.persisted?
     settings_iri_path(resource, tab: tab)
@@ -139,7 +128,8 @@ class ForumsController < EdgeableController
 
   def resource_from_params
     return if action_name == 'index' || action_name == 'discover'
-    @forum ||= Forum.find_via_shortname_or_id(params[:id] || params[:forum_id])
+    @forum ||=
+      Forum.where(root_id: root_from_params&.uuid).find_via_shortname_or_id(params[:id] || params[:forum_id])
   end
 
   def respond_with_form(resource = resource_by_id)

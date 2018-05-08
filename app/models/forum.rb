@@ -94,7 +94,7 @@ class Forum < EdgeableBase
   end
 
   def iri_opts
-    {id: url}
+    {root_id: parent_model(:page).url, id: url}
   end
 
   def language

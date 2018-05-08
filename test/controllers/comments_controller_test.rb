@@ -15,7 +15,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show comment' do
-    get :show, params: {format: :json_api, id: comment}
+    get :show, params: {format: :json_api, id: comment, root_id: argu.id}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -26,7 +26,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for Argument
   ####################################
   test 'should get index comments of argument' do
-    get :index, params: {format: :json_api, pro_argument_id: argument.id}
+    get :index, params: {format: :json_api, root_id: argu.id, pro_argument_id: argument.id}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -38,7 +38,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index comments of argument with page=1' do
-    get :index, params: {format: :json_api, pro_argument_id: argument.id, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.id, pro_argument_id: argument.id, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -54,7 +54,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for BlogPost
   ####################################
   test 'should get index comments of blog_post' do
-    get :index, params: {format: :json_api, blog_post_id: blog_post.id}
+    get :index, params: {format: :json_api, root_id: argu.id, blog_post_id: blog_post.id}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -66,7 +66,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index comments of blog_post with page=1' do
-    get :index, params: {format: :json_api, blog_post_id: blog_post.id, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.id, blog_post_id: blog_post.id, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)

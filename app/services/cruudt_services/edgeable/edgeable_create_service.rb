@@ -31,7 +31,7 @@ class EdgeableCreateService < CreateService
     parent_edge.children.new(
       created_at: attributes.with_indifferent_access[:created_at],
       user: options[:publisher],
-      owner: resource_klass.new,
+      owner: resource_klass.new(root_id: parent_edge.root.uuid),
       parent: parent_edge
     )
   end

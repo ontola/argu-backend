@@ -30,7 +30,8 @@ class VoteTest < ActiveSupport::TestCase
       voteable_type: 'Motion',
       creator: user.profile,
       forum: motion.forum,
-      publisher: user
+      publisher: user,
+      root_id: motion.default_vote_event.root_id
     )
   end
 end

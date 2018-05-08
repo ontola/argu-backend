@@ -82,7 +82,8 @@ class DecisionsController < EdgeableController
   end
 
   def resource_by_id
-    parent_resource!.decisions.find_by(step: params[:id].to_i) unless action_name == 'new' || action_name == 'create'
+    return if action_name == 'new' || action_name == 'create'
+    parent_resource!.decisions.find_by(step: params[:id].to_i, root_id: root_from_params&.uuid)
   end
 
   def resource_by_id_parent; end

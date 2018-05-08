@@ -18,10 +18,6 @@ class GrantsController < ServiceController
            }
   end
 
-  def parent_resource_key(_url_params)
-    :page_id
-  end
-
   def new_respond_success_html(resource)
     render 'pages/settings',
            locals: {

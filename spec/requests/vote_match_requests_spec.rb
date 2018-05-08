@@ -25,6 +25,7 @@ RSpec.describe 'VoteMatches', type: :request do
 
   context 'with page parent' do
     subject { create(:vote_match, creator: create(:page).profile) }
-    it_behaves_like 'requests', skip: %i[trash untrash unauthorized new edit delete]
+    it_behaves_like 'requests',
+                    skip: %i[trash untrash unauthorized new edit delete create_non_existing index_non_existing]
   end
 end

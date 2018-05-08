@@ -326,6 +326,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
+    assert_equal holland.edge.root, transfer_to.edge
+    assert_equal holland.questions.first.root, transfer_to.edge
   end
 
   test 'staff should post create forum with latlon' do

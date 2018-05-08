@@ -2,7 +2,7 @@
 
 require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
-require 'argu/forums_constraint'
+require 'argu/pages_constraint'
 require 'argu/whitelist_constraint'
 ####
 # Routes
@@ -170,19 +170,9 @@ Rails.application.routes.draw do
 
   get :feed, controller: :favorites_feed, action: :index
 
-  resources :votes, only: %i[destroy update show], as: :vote
-
   resources :vote_matches, only: %i[index show create update destroy] do
     get :voteables, to: 'list_items#index', relationship: :voteables
     get :vote_comparables, to: 'list_items#index', relationship: :vote_comparables
-  end
-
-  resources :questions,
-            path: 'q', except: %i[index new create],
-            concerns: %i[actionable commentable blog_postable moveable feedable
-                         trashable invitable menuable contactable] do
-    resources :media_objects, only: :index
-    resources :motions, path: 'm', only: %i[index new create]
   end
 
   resources :edges, only: [:show] do
@@ -199,22 +189,6 @@ Rails.application.routes.draw do
   resources :grants, path: 'grants', only: [:destroy]
   get 'log/:edge_id', to: 'log#show', as: :log
 
-  resources :motions,
-            path: 'm',
-            except: %i[index new create destroy],
-            concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable
-                         contactable feedable trashable decisionable invitable menuable] do
-    resources :media_objects, only: :index
-  end
-
-  resources :arguments, only: %i[show], path: 'a'
-  %i[pro_arguments con_arguments].each do |model|
-    resources model,
-              path: model == :pro_arguments ? 'pro' : 'con',
-              except: %i[index new create],
-              concerns: %i[actionable votable feedable trashable commentable menuable contactable]
-  end
-
   resources :direct_messages, path: :dm, only: [:create]
 
   resources :favorites, only: [:create]
@@ -229,25 +203,6 @@ Rails.application.routes.draw do
   resources :group_memberships, only: %i[show destroy]
 
   get '/o/find', to: 'organizations_finder#show'
-  resources :pages,
-            path: 'o',
-            only: %i[new create show update index],
-            concerns: %i[feedable destroyable menuable] do
-    resources :discussions, only: %i[index]
-    resources :grants, path: 'grants', only: %i[new create]
-    resources :groups, path: 'g', only: %i[create new]
-    resources :group_memberships, only: :index do
-      post :index, action: :index, on: :collection
-    end
-    resources :vote_matches, only: %i[index show]
-    get :settings, on: :member
-    get :edit, to: 'profiles#edit', on: :member
-  end
-
-  resources :blog_posts,
-            path: 'posts',
-            only: %i[show edit update],
-            concerns: %i[trashable commentable menuable]
 
   resources :menus, only: %i[show index]
 
@@ -270,8 +225,6 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-  resources :comments, concerns: %i[actionable trashable], only: %i[show edit update], path: 'c'
-  resources :comments, only: %i[show]
 
   resources :follows, only: :create do
     delete :destroy, on: :member
@@ -280,11 +233,6 @@ Rails.application.routes.draw do
   end
 
   resources :shortnames, only: %i[edit update destroy]
-
-  resources :linked_records,
-            only: %i[show],
-            path: ':organization/:forum/lr',
-            concerns: %i[argumentable commentable vote_eventable]
 
   resources :grant_sets, only: :show
 
@@ -313,6 +261,8 @@ Rails.application.routes.draw do
 
   get '/quawonen_feedback', to: redirect('/quawonen')
 
+  get :discover, to: 'forums#discover', as: :discover_forums
+
   constraints(Argu::StaffConstraint) do
     resources :documents, only: %i[edit update index new create]
     resources :notifications, only: :create
@@ -329,22 +279,6 @@ Rails.application.routes.draw do
 
   get '/csrf', to: 'csrf#show'
 
-  get :discover, to: 'forums#discover', as: :discover_forums
-  constraints(Argu::ForumsConstraint) do
-    resources :forums,
-              only: %i[show update],
-              path: '',
-              concerns: %i[feedable discussable destroyable favorable invitable menuable moveable] do
-      resources :motions, path: :m, only: [] do
-        get :search, to: 'motions#search', on: :collection
-      end
-      get :settings, on: :member
-      get :statistics, on: :member
-      resources :shortnames, only: %i[new create]
-      resources :banners, except: %i[index show]
-    end
-  end
-
   get '/ns/core/:model', to: 'static_pages#context'
 
   get '/d/modern', to: 'static_pages#modern'
@@ -358,6 +292,71 @@ Rails.application.routes.draw do
       get 'current_user', to: 'users#current'
       scope :oauth do
         post :token, to: 'tokens#create'
+      end
+    end
+  end
+
+  resources :pages, path: 'o', only: %i[new create index]
+
+  constraints(Argu::PagesConstraint) do
+    resources :pages, path: '', only: %i[show update], concerns: %i[feedable destroyable menuable] do
+      resources :discussions, only: %i[index]
+      resources :grants, path: 'grants', only: %i[new create]
+      resources :group_memberships, only: :index do
+        post :index, action: :index, on: :collection
+      end
+      resources :groups, path: 'g', only: %i[create new]
+      resources :vote_matches, only: %i[index show]
+      get :settings, on: :member
+      get :edit, to: 'profiles#edit', on: :member
+    end
+
+    scope ':root_id' do
+      resources :questions,
+                path: 'q', except: %i[index new create],
+                concerns: %i[actionable commentable blog_postable moveable feedable
+                             trashable invitable menuable contactable] do
+        resources :media_objects, only: :index
+        resources :motions, path: 'm', only: %i[index new create]
+      end
+
+      resources :motions,
+                path: 'm',
+                except: %i[index new create destroy],
+                concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
+                             feedable trashable decisionable invitable menuable] do
+        resources :media_objects, only: :index
+      end
+      resources :arguments, only: %i[show], path: 'a'
+      %i[pro_arguments con_arguments].each do |model|
+        resources model,
+                  path: model == :pro_arguments ? 'pro' : 'con',
+                  except: %i[index new create],
+                  concerns: %i[actionable votable feedable trashable commentable menuable contactable]
+      end
+      resources :votes, only: %i[destroy update show], as: :vote
+      resources :blog_posts,
+                path: 'posts',
+                only: %i[show edit update],
+                concerns: %i[trashable commentable menuable]
+      resources :comments, concerns: %i[actionable trashable], only: %i[show edit update], path: 'c'
+      resources :comments, only: %i[show]
+
+      resources :forums,
+                only: %i[show update],
+                path: '',
+                concerns: %i[feedable discussable destroyable favorable invitable menuable moveable] do
+        resources :motions, path: :m, only: [] do
+          get :search, to: 'motions#search', on: :collection
+        end
+        get :settings, on: :member
+        get :statistics, on: :member
+        resources :shortnames, only: %i[new create]
+        resources :banners, only: %i[new create]
+        resources :linked_records,
+                  only: %i[show],
+                  path: :lr,
+                  concerns: %i[argumentable commentable vote_eventable]
       end
     end
   end

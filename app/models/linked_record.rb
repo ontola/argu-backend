@@ -24,7 +24,8 @@ class LinkedRecord < EdgeableBase
       edge: Edge.new(parent: edge, user: publisher, is_published: true),
       starts_at: Time.current,
       creator_id: creator.id,
-      publisher_id: publisher.id
+      publisher_id: publisher.id,
+      root_id: root_id
     )
   end
 
@@ -37,7 +38,7 @@ class LinkedRecord < EdgeableBase
   end
 
   def iri_opts
-    @iri_opts ||= {organization: parent_model(:page).url, forum: parent_model(:forum).url, linked_record_id: deku_id}
+    @iri_opts ||= {root_id: parent_model(:page).url, forum_id: parent_model(:forum).url, linked_record_id: deku_id}
   end
 
   def self.new_for_forum(organization_shortname, forum_shortname, id)
@@ -48,8 +49,9 @@ class LinkedRecord < EdgeableBase
         .forums
         .joins(:shortname)
         .find_by(shortnames: {shortname: forum_shortname})
-    edge = forum.edge.children.new(is_published: true, user_id: User::COMMUNITY_ID)
-    new(deku_id: id, edge: edge)
+    raise(ActiveRecord::RecordNotFound) if forum.nil?
+    edge = forum.edge.children.new(is_published: true, user_id: User::COMMUNITY_ID, root: forum.edge.root)
+    new(deku_id: id, edge: edge, root_id: forum.edge.root.uuid)
   end
 
   def self.create_for_forum(organization_shortname, forum_shortname, id)

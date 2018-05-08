@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < EdgeableController
+  prepend_before_action :redirect_generic_shortnames, only: :show
   skip_before_action :authorize_action, only: %i[settings index]
   skip_before_action :check_if_registered, only: :index
 
@@ -160,6 +161,16 @@ class PagesController < EdgeableController
     merge_photo_params(@_permit_params, Page)
     @_permit_params[:last_accepted] = Time.current if permit_params[:last_accepted] == '1'
     @_permit_params
+  end
+
+  def redirect_generic_shortnames
+    return if (/[a-zA-Z]/i =~ params[:id]).nil?
+    resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
+    return if resource.is_a?(Page)
+    send_event category: 'short_url',
+               action: 'follow',
+               label: params[:id]
+    redirect_to resource.iri_path
   end
 
   def respond_with_form(_resource)

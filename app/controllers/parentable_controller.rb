@@ -29,7 +29,7 @@ class ParentableController < AuthorizedController
     return unless parent_resource_param(opts) == 'linked_record_id'
     @linked_record_parent ||=
       LinkedRecord.find_by(deku_id: opts[:linked_record_id]) ||
-      LinkedRecord.new_for_forum(opts[:organization], opts[:forum], opts[:linked_record_id])
+      LinkedRecord.new_for_forum(opts[:root_id], opts[:forum_id], opts[:linked_record_id])
   end
 
   def parent_edge
@@ -63,6 +63,10 @@ class ParentableController < AuthorizedController
       forum: parent_resource!.is_a?(Forum) ? parent_resource! : parent_resource!.parent_model(:forum),
       publisher: current_user
     )
+  end
+
+  def root_from_params
+    @root_from_params ||= Page.find_via_shortname_or_id(params[:root_id] || params[:page_id])&.edge
   end
 
   # The scope of the item used for authorization

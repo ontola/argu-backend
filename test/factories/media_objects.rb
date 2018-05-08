@@ -3,7 +3,6 @@
 FactoryGirl.define do
   factory :media_object, traits: [:set_publisher] do
     used_as :attachment
-    association :forum
 
     content Rack::Test::UploadedFile.new(File.join(File.expand_path('test/fixtures/'), 'blank.pdf'), 'application/pdf')
 

@@ -97,7 +97,8 @@ module RedisResource
           creator: user.profile,
           publisher: user,
           for: :pro,
-          edge: Edge.new(parent: motion.default_vote_event.edge, user: user)
+          edge: Edge.new(parent: motion.default_vote_event.edge, user: user),
+          root_id: motion.root_id
         }.merge(attrs)
       )
     end

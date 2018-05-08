@@ -137,7 +137,7 @@ class Edge < ApplicationRecord
   end
 
   def iri_opts
-    {id: owner_id}
+    {id: owner_id, root_id: root.owner.url}
   end
 
   # @return [Array] The ids of (persisted) ancestors, excluding self
@@ -259,7 +259,7 @@ class Edge < ApplicationRecord
   end
 
   def root
-    return self if parent_id.nil?
+    return self if parent_id.nil? && parent.nil?
     @root ||= association_cached?(:parent) ? parent.root : super
   end
 

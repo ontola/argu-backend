@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.integer "forum_id"
     t.integer "publisher_id", null: false
     t.string "type", null: false
+    t.uuid "root_id", null: false
     t.index ["id"], name: "index_arguments_on_id"
     t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id"
     t.index ["motion_id"], name: "statement_id"
@@ -118,6 +119,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_published", default: false, null: false
+    t.uuid "root_id", null: false
     t.index ["forum_id", "is_published"], name: "index_blog_posts_on_forum_id_and_is_published"
     t.index ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id"
   end
@@ -136,6 +138,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.datetime "updated_at", null: false
     t.integer "publisher_id", null: false
     t.integer "forum_id"
+    t.uuid "root_id", null: false
     t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["creator_id"], name: "index_comments_on_creator_id"
   end
@@ -165,6 +168,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.boolean "is_published", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "root_id", null: false
   end
 
   create_table "documents", id: :serial, force: :cascade do |t|
@@ -273,6 +277,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.boolean "discoverable", default: true, null: false
     t.string "locale", default: "nl-NL"
     t.integer "default_decision_group_id", null: false
+    t.uuid "root_id", null: false
     t.index ["slug"], name: "index_forums_on_slug", unique: true
     t.index ["visibility"], name: "index_forums_on_visibility"
   end
@@ -343,6 +348,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "deku_id", null: false
+    t.uuid "root_id", null: false
     t.index ["deku_id"], name: "index_linked_records_on_deku_id", unique: true
   end
 
@@ -390,6 +396,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.integer "publisher_id", null: false
     t.integer "question_id"
     t.bigint "place_id"
+    t.uuid "root_id", null: false
     t.index ["forum_id"], name: "index_motions_on_forum_id"
     t.index ["id"], name: "index_motions_on_id"
   end
@@ -546,6 +553,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.bigint "place_id"
     t.boolean "require_location", default: false, null: false
     t.integer "default_sorting", default: 0, null: false
+    t.uuid "root_id", null: false
     t.index ["forum_id"], name: "index_questions_on_forum_id"
   end
 
@@ -665,6 +673,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.integer "forum_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "root_id", null: false
     t.index ["group_id"], name: "index_vote_events_on_group_id"
   end
 
@@ -692,6 +701,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.datetime "explained_at"
     t.integer "comment_id"
     t.boolean "primary", default: true, null: false
+    t.uuid "root_id", null: false
     t.index ["creator_id"], name: "index_votes_on_creator_id"
     t.index ["voteable_id", "voteable_type", "creator_id", "primary"], name: "index_votes_on_voteable_id_and_voteable_type_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type"

@@ -14,6 +14,7 @@ class EdgeableBase < ApplicationRecord
           inverse_of: :owner,
           dependent: :destroy,
           required: true
+  belongs_to :root, class_name: 'Edge', primary_key: :uuid
   has_many :edge_children, through: :edge, source: :children
   has_many :grants, through: :edge
   scope :published, lambda {
@@ -51,6 +52,7 @@ class EdgeableBase < ApplicationRecord
 
   def iri_opts
     super.merge(
+      root_id: parent_model(:page).url,
       parent_iri: parent_iri(only_path: true),
       :"#{parent_edge.owner_type.underscore}_id" => parent_edge.owner_id
     )
@@ -70,6 +72,10 @@ class EdgeableBase < ApplicationRecord
       end
       yield if block_given?
       edge.parent = new_parent
+      self.root_id = new_parent.root.uuid
+      edge.descendants.pluck('distinct owner_type').each do |klass|
+        klass.constantize.joins(:edge).where('edges.path <@ ?', edge.path).update_all(root_id: root_id)
+      end
       save!
     end
     true

@@ -21,7 +21,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should get forum' do
-    get "/#{freetown.url}"
+    get "/#{argu.url}/#{freetown.url}"
 
     assert_response 200
   end
