@@ -23,6 +23,6 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   test 'should get show argument' do
     get :show, params: {format: :json_api, id: argument}
-    assert_redirected_to pro_argument_path(argument, format: :json_api)
+    assert_redirected_to argument.iri_path
   end
 end

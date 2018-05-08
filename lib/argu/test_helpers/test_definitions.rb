@@ -130,19 +130,19 @@ module Argu
 
       # Paths
       def new_path(parent)
-        url_for([:new, parent, model_sym])
+        new_iri_path(parent, model_name.tableize)
       end
 
       def create_path(parent)
-        url_for([parent, model_class])
+        collection_iri_path(parent, model_name.tableize)
       end
 
       def record_path(record)
-        url_for([model_sym, id: record])
+        record.iri_path
       end
 
       def edit_path(record)
-        url_for([:edit, record])
+        edit_iri_path(record)
       end
 
       def update_path(record)
@@ -154,11 +154,11 @@ module Argu
       end
 
       def destroy_path(record)
-        url_for([record, destroy: true])
+        record.iri_path(destroy: true)
       end
 
       def move_path(record)
-        url_for([record, :move])
+        move_iri_path(record)
       end
 
       def request_format

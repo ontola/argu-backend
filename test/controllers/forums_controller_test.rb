@@ -13,16 +13,16 @@ class ForumsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('motionCollection', 1)
-    expect_included(argu_url("/#{holland.url}/m", type: 'paginated'))
-    expect_included(argu_url("/#{holland.url}/m", page: 1, type: 'paginated'))
-    expect_included(holland.motions.where(question_id: nil).untrashed.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(holland.motions.where('question_id IS NOT NULL').map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(collection_iri(holland, :motions, type: 'paginated'))
+    expect_included(collection_iri(holland, :motions, page: 1, type: 'paginated'))
+    expect_included(holland.motions.where(question_id: nil).untrashed.map(&:iri))
+    expect_not_included(holland.motions.where('question_id IS NOT NULL').map(&:iri))
+    expect_not_included(holland.motions.trashed.map(&:iri))
 
     expect_relationship('questionCollection', 1)
-    expect_included(argu_url("/#{holland.url}/q", type: 'paginated'))
-    expect_included(argu_url("/#{holland.url}/q", page: 1, type: 'paginated'))
-    expect_included(holland.questions.untrashed.map { |q| argu_url("/q/#{q.id}") })
-    expect_not_included(holland.questions.trashed.map { |q| argu_url("/q/#{q.id}") })
+    expect_included(collection_iri(holland, :questions, type: 'paginated'))
+    expect_included(collection_iri(holland, :questions, page: 1, type: 'paginated'))
+    expect_included(holland.questions.untrashed.map(&:iri))
+    expect_not_included(holland.questions.trashed.map(&:iri))
   end
 end

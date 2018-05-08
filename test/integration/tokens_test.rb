@@ -50,7 +50,7 @@ class TokensTest < ActionDispatch::IntegrationTest
                password: user.password,
                grant_type: 'password',
                scope: 'user',
-               user: {r: forum_path(freetown)}
+               user: {r: freetown.iri_path}
              }
       end
     end
@@ -82,12 +82,12 @@ class TokensTest < ActionDispatch::IntegrationTest
                password: user.password,
                grant_type: 'password',
                scope: 'user',
-               user: {r: forum_path(freetown)}
+               user: {r: freetown.iri_path}
              }
       end
     end
 
-    assert_redirected_to forum_path(freetown)
+    assert_redirected_to freetown.iri_path
   end
 
   test 'User should post create token with username email for other domain' do
@@ -183,10 +183,10 @@ class TokensTest < ActionDispatch::IntegrationTest
              password: user.password,
              grant_type: 'password',
              scope: 'user',
-             r: forum_path(freetown)
+             r: freetown.iri_path
            }
     end
-    assert_redirected_to forum_path(freetown)
+    assert_redirected_to freetown.iri_path
   end
 
   ####################################
@@ -274,10 +274,10 @@ class TokensTest < ActionDispatch::IntegrationTest
              password: 'wrong',
              grant_type: 'password',
              scope: 'user',
-             r: forum_path(freetown)
+             r: freetown.iri_path
            }
     end
-    assert_redirected_to new_user_session_path(r: forum_path(freetown), show_error: true)
+    assert_redirected_to new_user_session_path(r: freetown.iri_path, show_error: true)
   end
 
   test 'User should not post create token with unknown email for Argu domain JSON' do
@@ -335,10 +335,10 @@ class TokensTest < ActionDispatch::IntegrationTest
              password: 'wrong',
              grant_type: 'password',
              scope: 'user',
-             r: forum_path(freetown)
+             r: freetown.iri_path
            }
     end
-    assert_redirected_to new_user_session_path(r: forum_path(freetown), show_error: true)
+    assert_redirected_to new_user_session_path(r: freetown.iri_path, show_error: true)
   end
 
   test 'User should not post create token with unknown email and r for Argu domain JSON' do
@@ -396,10 +396,10 @@ class TokensTest < ActionDispatch::IntegrationTest
              password: 'wrong',
              grant_type: 'password',
              scope: 'user',
-             r: forum_path(freetown)
+             r: freetown.iri_path
            }
     end
-    assert_redirected_to new_user_session_path(r: forum_path(freetown), show_error: true)
+    assert_redirected_to new_user_session_path(r: freetown.iri_path, show_error: true)
   end
 
   test 'User should not post create token with unknown username for Argu domain JSON' do
@@ -517,11 +517,11 @@ class TokensTest < ActionDispatch::IntegrationTest
                password: unconfirmed_user.password,
                grant_type: 'password',
                scope: 'user',
-               user: {r: forum_path(freetown)}
+               user: {r: freetown.iri_path}
              }
       end
     end
-    assert_redirected_to forum_path(freetown)
+    assert_redirected_to freetown.iri_path
     assert_not_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
   end
 

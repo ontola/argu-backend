@@ -46,7 +46,7 @@ class VotesController < EdgeableController
   def respond_with_201(resource, format, _opts = {})
     case format
     when :json
-      render locals: {model: resource.parent_model, vote: resource}, status: :created, location: vote_url(resource)
+      render locals: {model: resource.parent_model, vote: resource}, status: :created, location: resource.iri_path
     else
       super
     end

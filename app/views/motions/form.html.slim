@@ -3,7 +3,7 @@
   .col-3-2
     =to_parent
     .box
-      =semantic_form_for((motion.new_record? ? [parent_resource, motion] : motion), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for(motion, url: (motion.new_record? ? collection_iri_path(parent_resource, :motions) : motion.iri_path), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
         =f.input :default_cover_photo, as: :react_cover, label: false
         section.section-info
           .details
@@ -40,7 +40,7 @@
                   =ef.input :expires_at, as: :datetime_picker
               - if motion.persisted? && policy(motion).convert?
                 =f.input :invert_arguments, as: :reverse_boolean
-                =f.input :f_convert, as: :link, url: new_edge_conversion_url(motion.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: new_edge_conversion_url(motion.edge.uuid), input_html: {data: {remote: true}, class: 'btn--warning'}
         section.section--footer.footer-flex
           .footer-flex-element.footer-creator
             =render partial: 'profiles/creator', locals: {resource: motion}

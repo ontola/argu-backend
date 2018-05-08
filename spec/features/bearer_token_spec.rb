@@ -10,7 +10,7 @@ RSpec.feature 'Bearer token', type: :feature do
   scenario 'Owner adds and retracts bearer token' do
     sign_in(administrator)
 
-    visit(settings_group_path(group, tab: :invite))
+    visit(settings_iri_path(group, tab: :invite))
 
     expect(page).to have_css '.bearer-token-management table tbody tr', count: 2
 

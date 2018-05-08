@@ -69,7 +69,7 @@ class GroupMembershipsController < ServiceController
   end
 
   def new_respond_success_html(resource)
-    redirect_to settings_group_path(resource.group, tab: :invite)
+    redirect_to settings_iri_path(resource.group, tab: :invite)
   end
 
   def parent_resource_key(opts)

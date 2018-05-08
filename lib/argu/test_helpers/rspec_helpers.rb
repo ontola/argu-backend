@@ -53,7 +53,7 @@ module Argu
           .to receive(:cookie_token_extractor).and_return(nil)
       end
 
-      def sign_in_manually(user = create(:user), navigate = true, redirect_to: forum_path(freetown))
+      def sign_in_manually(user = create(:user), navigate = true, redirect_to: freetown.iri_path)
         if navigate
           visit new_user_session_path
         else
@@ -67,6 +67,10 @@ module Argu
           end
           expect(page).to have_current_path redirect_to
         end.to change { Doorkeeper::AccessToken.last.id }.by(1)
+      end
+
+      def visit(url)
+        super url.try(:iri_path) || url
       end
     end
   end

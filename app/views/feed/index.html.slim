@@ -10,19 +10,19 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     - if policy(authenticated_resource.parent).log?
       div.align-right
         span.btn.btn-subtle[class="#{params[:complete] != 'true' ? 'btn--border' : ''}"]
-          =link_to url_for([authenticated_resource.parent, :feed]) do
+          =link_to feeds_iri_path(authenticated_resource.parent) do
             span.fa.fa-bars
             span.icon-left
               =t('feed_filter.relevant')
         span.btn.btn-subtle[class="#{params[:complete] == 'true' ? 'btn--border' : ''}"]
-          =link_to url_for([authenticated_resource.parent, :feed, complete: true]) do
+          =link_to feeds_iri_path(authenticated_resource.parent, complete: true) do
             span.fa.fa-align-justify
             span.icon-left
               =t('feed_filter.complete')
         - if authenticated_resource.parent&.is_loggable?
             span.btn.btn-subtle
-              =link_to url_for([:log, edge_id: authenticated_resource.parent.edge.id]) do
+              =link_to expand_uri_template(:logs_iri, edge_id: authenticated_resource.parent.edge.id) do
                 span.fa.fa-history
                 span.icon-left
                   =t('log')
-    =render partial: 'activities/index', locals: {activities: activities, complete_feed: !relevant_only, feed_iri: url_for([authenticated_resource.parent, :feed, format: :js])}
+    =render partial: 'activities/index', locals: {activities: activities, complete_feed: !relevant_only, feed_iri: "#{feeds_iri_path(authenticated_resource.parent)}.js"}

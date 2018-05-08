@@ -20,7 +20,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'guest should get motion/feed nt' do
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         headers: argu_headers(accept: :nt)
 
     assert_response 200
@@ -29,7 +29,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get motion/feed html' do
-    get motion_feed_path(subject)
+    get feeds_iri_path(subject)
 
     assert_response 200
 
@@ -46,7 +46,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     unpublished_motion
     trashed_motion
 
-    get forum_feed_path(freetown)
+    get feeds_iri_path(freetown)
 
     assert_response 200
 
@@ -59,7 +59,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get motion/feed nt' do
     sign_in user
 
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         headers: argu_headers(accept: :nt)
 
     assert_response 200
@@ -70,7 +70,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get motion/feed html' do
     sign_in user
 
-    get motion_feed_path(subject)
+    get feeds_iri_path(subject)
 
     assert_response 200
 
@@ -80,7 +80,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get complete motion/feed nt' do
     sign_in user
 
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         params: {complete: true},
         headers: argu_headers(accept: :nt)
 
@@ -92,7 +92,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get complete motion/feed html' do
     sign_in user
 
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         params: {complete: true}
 
     assert_response 200
@@ -108,7 +108,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get motion/feed nt' do
     sign_in staff
 
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         headers: argu_headers(accept: :nt)
 
     assert_response 200
@@ -119,7 +119,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get motion/feed html' do
     sign_in staff
 
-    get motion_feed_path(subject)
+    get feeds_iri_path(subject)
 
     assert_response 200
 
@@ -129,7 +129,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get complete motion/feed nt' do
     sign_in staff
 
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         params: {complete: true},
         headers: argu_headers(accept: :nt)
 
@@ -141,7 +141,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get complete motion/feed html' do
     sign_in staff
 
-    get motion_feed_path(subject), params: {complete: true}
+    get feeds_iri_path(subject), params: {complete: true}
 
     assert_response 200
 
@@ -151,7 +151,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get additional activities for motion/feed js' do
     sign_in staff
 
-    get motion_feed_path(subject),
+    get feeds_iri_path(subject),
         params: {from_time: 1.hour.from_now, complete: false},
         headers: argu_headers(accept: :js)
 

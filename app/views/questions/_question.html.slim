@@ -1,9 +1,9 @@
 .box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class=status_classes_for(question) data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
   - if question.default_cover_photo&.url.present?
-    =link_to question_path(question), 'aria-hidden': true, tabindex: '-1'  do
+    =link_to question, 'aria-hidden': true, tabindex: '-1'  do
       =render partial: 'application/box_image', locals: {media_object: question.default_cover_photo}
   section
-    =link_to question_path(question) do
+    =link_to question do
       h2.question-t[itemprop="headline"]= question.display_name
   =render partial: 'questions/info_bar', locals: {question: question, show_parent: true}
   section

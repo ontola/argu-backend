@@ -15,7 +15,7 @@ RSpec.feature 'Collapsible', type: :feature do
   end
 
   scenario 'User expands ' do
-    visit motion_path(motion)
+    visit motion
 
     val = page.evaluate_script("document.querySelector('##{argument.identifier}').clientHeight")
 

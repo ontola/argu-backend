@@ -32,7 +32,7 @@ RSpec.feature 'Pagination', type: :feature do
     last_con = c_args.last.display_name
     expect(m.arguments.where(type: 'ProArgument').length).to(be > 10)
 
-    visit motion_path(m)
+    visit m
     expect(page).to have_content(m.display_name)
 
     expect(page).to have_content(first_pro)

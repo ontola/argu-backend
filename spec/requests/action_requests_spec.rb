@@ -13,16 +13,26 @@ RSpec.describe 'Actions', type: :request do
     %i[nt json_api]
   end
 
-  let(:show_path) { url_for([subject, :action, id: :read, only_path: true]) }
-  let(:index_path) { url_for([subject, :actions, only_path: true]) }
+  let(:index_path) do
+    expand_uri_template(:action_items_iri, parent_iri: subject.parent.iri_path, only_path: true)
+  end
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
   let(:expect_get_index_guest_serializer) { expect_unauthorized }
 
   context 'for notification read' do
-    subject { Notification.first }
+    subject do
+      Actions::NotificationActions.new(
+        resource: notification,
+        user_context: UserContext.new(doorkeeper_scopes: {}, user: authorized_user, profile: authorized_user.profile)
+      ).actions.first
+    end
+    let(:notification) { Notification.first }
+    let(:non_existing_notification) { Notification.new(id: -99) }
     let(:unauthorized_user) { create(:user) }
-    let(:authorized_user) { subject.user }
-    let(:non_existing_index_path) { url_for([:notification, :actions, notification_id: -99, only_path: true]) }
+    let(:authorized_user) { notification.user }
+    let(:non_existing_index_path) do
+      expand_uri_template(:action_items_iri, parent_iri: non_existing_notification.iri_path, only_path: true)
+    end
 
     it_behaves_like 'get show'
     it_behaves_like 'get index'

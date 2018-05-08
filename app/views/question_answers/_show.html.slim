@@ -1,6 +1,6 @@
 =render layout: 'motions/show', locals: {model: model}
   - if policy(model).destroy?
     .outside-the-box
-      =link_to motion_move_path(model, edge_id: model.parent_edge(:forum).id),
+      =link_to move_iri_path(model, edge_id: model.parent_edge(:forum).id),
                data: {remote: false, method: :put, confirm: t('question_answers.destroy.confirmation')}
         span[class="fa fa-unlink"]

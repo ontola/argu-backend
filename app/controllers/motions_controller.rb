@@ -93,7 +93,7 @@ class MotionsController < EdgeableController
   def redirect_model_success(resource)
     return super unless action_name == 'create' && resource.persisted?
     first = current_profile.motions.count == 1 || nil
-    motion_path(resource, start_motion_tour: first)
+    resource.iri_path(start_motion_tour: first)
   end
 
   def vote_event_without_votes

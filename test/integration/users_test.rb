@@ -123,8 +123,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should sign out with r' do
     sign_in user
 
-    get destroy_user_session_path(r: forum_path(freetown))
-    assert_redirected_to forum_path(freetown)
+    get destroy_user_session_path(r: freetown.iri_path)
+    assert_redirected_to freetown.iri_path
   end
 
   test 'user should sign out with invalid r' do
@@ -370,19 +370,19 @@ class UsersTest < ActionDispatch::IntegrationTest
   # Language
   ####################################
   test 'guest should get language cookie' do
-    get forum_path(freetown)
+    get freetown
     assert_equal 'en', cookies['locale']
     assert_nil flash[:error]
   end
 
   test 'guest should get language cookie when visiting dutch forum' do
-    get forum_path(dutch_forum)
+    get dutch_forum
     assert_equal 'nl', cookies['locale']
     assert_nil flash[:error]
   end
 
   test 'guest should put language' do
-    get forum_path(freetown)
+    get freetown
     assert_equal 'en', cookies['locale']
     put language_users_path(:nl)
     assert_equal 'nl', cookies['locale']

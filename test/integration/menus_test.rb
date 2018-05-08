@@ -18,6 +18,7 @@ class MenusTest < ActionDispatch::IntegrationTest
   end
   let!(:settings) { Setting.set('suggested_forums', 'freetown,other_page_forum') }
   let(:user) { create(:user) }
+  let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
 
   ####################################
   # As Guest
@@ -39,14 +40,14 @@ class MenusTest < ActionDispatch::IntegrationTest
     get page_menus_path(argu), headers: argu_headers(accept: :nt)
 
     assert_response 200
-    expect_triple(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), RDF[:type], NS::ARGU[:MenuItem])
-    sequence = expect_sequence(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), NS::ARGU[:menuItems])
+    expect_triple(argu.menu(user_context, :navigations).iri, RDF[:type], NS::ARGU[:MenuItem])
+    sequence = expect_sequence(argu.menu(user_context, :navigations).iri, NS::ARGU[:menuItems])
     expect_sequence_member(sequence, 0, custom_menu_item.iri)
-    forums = expect_sequence_member(sequence, 1, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums"))
+    forums = expect_sequence_member(sequence, 1, argu.menu(user_context, :navigations).iri(fragment: 'forums'))
     items = expect_sequence(forums, NS::ARGU[:menuItems])
-    expect_sequence_member(items, 0, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums.overview"))
-    expect_sequence_member(items, 1, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums.new_discussion"))
-    expect_sequence_member(items, 2, RDF::URI("#{argu_url("/o/#{argu.url}/menus/navigations")}#forums.activity"))
+    expect_sequence_member(items, 0, argu.menu(user_context, :navigations).iri(fragment: 'forums.overview'))
+    expect_sequence_member(items, 1, argu.menu(user_context, :navigations).iri(fragment: 'forums.new_discussion'))
+    expect_sequence_member(items, 2, argu.menu(user_context, :navigations).iri(fragment: 'forums.activity'))
   end
 
   ####################################

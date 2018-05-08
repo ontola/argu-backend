@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
     if @resource.is_a? User
       redirect_to url_for([:settings, tab: :profile])
     else
-      redirect_to url_for([:settings, @resource, tab: :profile])
+      redirect_to settings_iri_path(@resource, tab: :profile)
     end
   end
 

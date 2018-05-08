@@ -83,7 +83,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'should not show statistics' do
     sign_in
 
-    get statistics_forum_path(freetown)
+    get statistics_iri_path(freetown)
     assert_response 403
     assert_not_authorized
   end
@@ -91,7 +91,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'user should not leak closed children to non-members' do
     sign_in
 
-    get forum_path(cologne)
+    get cologne
     assert_response 200
 
     assert cologne.motions.count.positive?
@@ -101,7 +101,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'user should not show hidden to non-members' do
     sign_in
 
-    get forum_path(helsinki)
+    get helsinki
     assert_response 404, 'Hidden forums are visible'
   end
 
@@ -133,7 +133,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'initiator should show closed children to members' do
     sign_in cologne_initiator
 
-    get forum_path(cologne)
+    get cologne
     assert_forum_shown(cologne)
 
     assert cologne.motions.count.positive?
@@ -143,7 +143,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'initiator should show hidden to members' do
     sign_in helsinki_initiator
 
-    get forum_path(helsinki)
+    get helsinki
     assert_forum_shown(helsinki)
   end
 
@@ -196,11 +196,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'administrator should only show general settings' do
     sign_in create_administrator(holland)
 
-    get settings_forum_path(holland)
+    get settings_iri_path(holland)
     assert_forum_settings_shown holland
 
     %i[shortnames banners].each do |tab|
-      get settings_forum_path(holland), params: {tab: tab}
+      get settings_iri_path(holland), params: {tab: tab}
       assert_not_authorized
     end
   end
@@ -208,7 +208,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'administrator should update settings' do
     sign_in create_administrator(holland)
     assert_difference('holland.reload.lock_version', 1) do
-      put forum_path(holland),
+      put holland,
           params: {
             forum: {
               name: 'new name',
@@ -226,7 +226,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to settings_forum_path(holland.url, tab: :general)
+    assert_redirected_to settings_iri_path(holland, tab: :general)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
     assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.content_identifier
@@ -239,7 +239,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in create_administrator(holland)
     assert_equal holland.edge.reload.places.first.country_code, 'GB'
     assert_differences([['holland.reload.lock_version', 1], ['Placement.count', 0]]) do
-      put forum_path(holland),
+      put holland,
           params: {
             forum: {
               locale: 'nl-NL'
@@ -253,7 +253,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'administrator should show statistics' do
     sign_in create_administrator(holland)
 
-    get statistics_forum_path(holland)
+    get statistics_iri_path(holland)
     assert_response 200
   end
 
@@ -287,11 +287,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should show settings and all tabs' do
     sign_in staff
 
-    get settings_forum_path(holland)
+    get settings_iri_path(holland)
     assert_forum_settings_shown holland
 
     %i[general shortnames banners].each do |tab|
-      get settings_forum_path(holland), params: {tab: tab}
+      get settings_iri_path(holland), params: {tab: tab}
       assert_forum_settings_shown holland
     end
   end
@@ -300,7 +300,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     inhabitants # Trigger
-    get statistics_forum_path(inhabited)
+    get statistics_iri_path(inhabited)
     assert_response 200
 
     counts = [['Den Haag', '2'], %w[Utrecht 1], %w[Unknown 1]]
@@ -322,7 +322,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland.edge,
            grant_set: GrantSet.participator)
     assert_differences([['transfer_to.forums.reload.count', 1], ['holland.edge.reload.grants.size', -1]]) do
-      put forum_move_path(holland, edge_id: transfer_to.edge.id)
+      put move_iri_path(holland, edge_id: transfer_to.edge.id)
     end
     holland.reload
     assert_equal holland.edge.parent, transfer_to.edge
@@ -360,7 +360,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     forum_with_placement
 
     assert_differences([['Placement.count', 0], ['Place.count', 1]]) do
-      put forum_path(forum_with_placement),
+      put forum_with_placement,
           params: {
             forum: {
               edge_attributes: {
@@ -386,7 +386,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     forum_with_placement
 
     assert_differences([['Motion.count', 0], ['Placement.count', -1], ['Place.count', 0]]) do
-      put forum_path(forum_with_placement),
+      put forum_with_placement,
           params: {
             forum: {
               edge_attributes: {
@@ -406,7 +406,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count', -1) do
-      delete forum_path(freetown),
+      delete freetown.iri_path,
              params: {forum: {confirmation_string: 'remove'}}
     end
   end
@@ -415,7 +415,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count', 0) do
-      delete forum_path(freetown),
+      delete freetown.iri_path,
              params: {
                forum: {}
              }
@@ -452,7 +452,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   # @param [Symbol] response The expected visibility in `%w(show list)`
   def general_show(record = freetown)
-    get forum_path(record)
+    get record
     assert_forum_shown(record)
     assert_not_nil assigns(:children)
 

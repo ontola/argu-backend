@@ -2,9 +2,9 @@
   section
     h3[class="header--decision--#{model.state}" itemprop="headline"]
       span[class="fa fa-#{decision_icon(model)}"]
-      span.icon-left= link_to model.display_name, motion_decisions_path(model.parent_model), class: 'decision-t'
+      span.icon-left= link_to model.display_name, collection_iri_path(model.parent_model, :decisions), class: 'decision-t'
     p[itemprop="text"]= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
-    =link_to motion_decisions_path(model.parent_model), class: 'btn-subtle sticky--bottom-right sticky--on-top' do
+    =link_to collection_iri_path(model.parent_model, :decisions), class: 'btn-subtle sticky--bottom-right sticky--on-top' do
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right
     .clearfix

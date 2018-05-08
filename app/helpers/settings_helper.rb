@@ -23,7 +23,7 @@ module SettingsHelper
   end
 
   def group_redirect_url(group)
-    settings_group_path(group, tab: :members)
+    settings_iri_path(group, tab: :members)
   end
 
   def render_settings_items_for(resource, active)
@@ -40,15 +40,6 @@ module SettingsHelper
   end
 
   def settings_url_for(resource, tab)
-    return portal_settings_path if resource == :Portal
-    for_resource = case resource
-                   when Symbol
-                     resource.downcase
-                   when User
-                     nil
-                   else
-                     resource
-                   end
-    url_for([:settings, for_resource, tab: tab].flatten)
+    settings_iri_path(resource, tab: tab)
   end
 end

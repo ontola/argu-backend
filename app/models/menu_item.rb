@@ -17,16 +17,18 @@ class MenuItem
     (link_opts || {}).merge(fa: image).merge(opts)
   end
 
-  def iri(only_path: false)
+  def iri(only_path: false, fragment: nil)
+    fragment = "##{fragment}" if fragment
     seperator =
       if parent.is_a?(MenuList)
         '/'
       elsif parent.iri.to_s.include?('#')
         '.'
       else
+        fragment = nil
         '#'
       end
-    RDF::URI("#{parent.iri(only_path: only_path)}#{seperator}#{tag}")
+    RDF::URI("#{parent.iri(only_path: only_path)}#{seperator}#{tag}#{fragment}")
   end
   alias id iri
 

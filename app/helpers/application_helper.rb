@@ -121,7 +121,7 @@ module ApplicationHelper
   end
 
   def sort_item(record, type, icon)
-    link_item(t("filtersort.#{type}"), url_for([record, sort: type]), fa: icon)
+    link_item(t("filtersort.#{type}"), record.iri_path(sort: type), fa: icon)
   end
 
   def sort_param_or_default

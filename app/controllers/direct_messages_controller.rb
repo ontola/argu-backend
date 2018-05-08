@@ -17,7 +17,7 @@ class DirectMessagesController < ParentableController
       raise Argu::Errors::Forbidden.new(record: resource, query: 'email?')
     end
     resource.send_email!
-    redirect_to resource.resource, notice: t('direct_messages.notice.success')
+    redirect_to resource.resource.iri_path, notice: t('direct_messages.notice.success')
   end
 
   def execute_create

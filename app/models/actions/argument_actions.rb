@@ -43,7 +43,7 @@ module Actions
       entry_point_item(
         :upvote,
         image: 'fa-arrow-up',
-        url: RDF::URI(resource.pro ? pro_argument_vote_url(resource) : con_argument_vote_url(resource)),
+        url: resource.iri,
         http_method: :delete
       )
     end

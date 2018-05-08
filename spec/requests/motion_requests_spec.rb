@@ -9,7 +9,7 @@ RSpec.describe 'Motions', type: :request do
     super - %i[html]
   end
 
-  let(:created_resource_path) { url_for([subject.class.last, start_motion_tour: true]) }
+  let(:created_resource_path) { subject.class.last.iri_path(start_motion_tour: true) }
 
   context 'with question parent' do
     subject { motion }
@@ -18,10 +18,6 @@ RSpec.describe 'Motions', type: :request do
 
   context 'with forum parent' do
     subject { forum_motion }
-    let(:non_existing_create_path) { forum_motions_path('non_existing') }
-    let(:non_existing_index_path) { forum_motions_path('non_existing') }
-    let(:non_existing_new_path) { new_forum_motion_path('non_existing') }
-
     it_behaves_like 'requests', move: true
   end
 end

@@ -18,7 +18,7 @@ RSpec.feature 'Comments', type: :feature do
   scenario 'Guest places a comment for an argument and signs up' do
     nominatim_netherlands
 
-    visit argument_path(argument)
+    visit argument.iri_path
 
     fill_in_and_submit_comment
 
@@ -31,7 +31,7 @@ RSpec.feature 'Comments', type: :feature do
   scenario 'Guest places a comment for a blog_post and signs up' do
     nominatim_netherlands
 
-    visit blog_post_path(blog_post)
+    visit blog_post.iri_path
 
     fill_in_and_submit_comment
 
@@ -44,7 +44,7 @@ RSpec.feature 'Comments', type: :feature do
   scenario 'Guest places a comment for a motion and signs up' do
     nominatim_netherlands
 
-    visit motion_comments_path(motion)
+    visit collection_iri_path(motion, :comments)
 
     fill_in_and_submit_comment
 
@@ -61,7 +61,7 @@ RSpec.feature 'Comments', type: :feature do
 
   scenario 'User places nested comments' do
     sign_in(user)
-    visit argument_path(argument)
+    visit argument.iri_path
 
     fill_in_and_submit_comment
     expect(page).to have_content 'Comment created successfully'
@@ -88,7 +88,7 @@ RSpec.feature 'Comments', type: :feature do
 
   scenario 'Initiator places a comment' do
     sign_in(initiator)
-    visit argument_path(argument)
+    visit argument.iri_path
 
     fill_in_and_submit_comment
 

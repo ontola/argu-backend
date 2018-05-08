@@ -28,8 +28,8 @@ class ForumMenuList < MenuList
       :navigations,
       menus: lambda {
         [
-          menu_item(:overview, image: 'fa-th-large', href: forum_url(resource)),
-          menu_item(:new_discussion, image: 'fa-plus', href: new_forum_discussion_url(resource)),
+          menu_item(:overview, image: 'fa-th-large', href: resource.iri),
+          menu_item(:new_discussion, image: 'fa-plus', href: new_iri(resource, :discussions)),
           activity_link,
           statistics_link,
           settings_link
@@ -41,7 +41,7 @@ class ForumMenuList < MenuList
   def settings_link
     menu_item(
       :settings,
-      href: settings_forum_url(resource),
+      href: settings_iri(resource),
       image: 'fa-gear',
       link_opts: {data: {turbolinks: 'true'}},
       policy: :update?

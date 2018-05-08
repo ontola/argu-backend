@@ -6,23 +6,27 @@ require 'argu/test_helpers/automated_requests'
 RSpec.describe 'Forums', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
+
   let(:invalid_create_params) { {forum: {page_id: argu.id, name: 'n1'}} }
-  let(:update_differences) { [['Forum.count', 0]] }
-  let(:destroy_differences) { [['Forum.count', -1]] }
-  let(:edit_path) { settings_forum_path(subject) }
-  let(:non_existing_edit_path) { settings_forum_path(-99) }
-  let(:expect_get_show_guest_html) { expect_not_found }
-  let(:expect_get_show_guest_serializer) { expect_not_found }
-  let(:updated_resource_path) { settings_forum_path(subject, tab: :general) }
-  let(:expect_unauthorized) { expect_not_found }
   let(:update_params) { {forum: {page_id: argu.id, name: 'name'}} }
   let(:invalid_update_params) { {forum: {page_id: argu.id, name: 'n1'}} }
+  let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
+
+  let(:edit_path) { settings_iri_path(subject) }
+  let(:non_existing_edit_path) { settings_iri_path(-99) }
+  let(:updated_resource_path) { settings_iri_path(subject, tab: :general) }
+
+  let(:expect_get_show_guest_html) { expect_not_found }
+  let(:expect_get_show_guest_serializer) { expect_not_found }
+  let(:expect_unauthorized) { expect_not_found }
   let(:expect_post_create_failed_html) do
     expect_success
     expect(response.body).to(include('n1'))
   end
   let(:expect_put_update_failed_html) { expect_post_create_failed_html }
-  let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
+
+  let(:update_differences) { [['Forum.count', 0]] }
+  let(:destroy_differences) { [['Forum.count', -1]] }
 
   subject { holland }
   it_behaves_like 'requests', skip: %i[trash untrash new create index]

@@ -40,7 +40,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'guest should get comment' do
     general_show(302, comment, comment_shortname) do
-      assert_redirected_to pro_argument_path(comment.parent_model, anchor: comment.identifier)
+      assert_redirected_to comment.parent_model.iri_path(fragment: comment.identifier)
     end
   end
 
@@ -119,7 +119,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   private
 
   def general_show(response, resource, shortname)
-    get url_for("/#{shortname.shortname}")
+    get "/#{shortname.shortname}"
     assert_redirected_to resource.iri(only_path: true).to_s
     follow_redirect!
 
@@ -131,7 +131,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   def general_create(response = 302, differences = [['Shortname.count', 1]])
     attrs = shortname_attributes
     assert_differences(differences) do
-      post forum_shortnames_path(freetown), params: attrs
+      post collection_iri_path(freetown, :shortnames), params: attrs
       assert_response response
     end
   end

@@ -34,9 +34,9 @@ class GrantsController < ServiceController
 
   def redirect_model_success(resource = nil)
     if resource.edge.owner_type == 'Forum'
-      settings_forum_path(resource.edge.owner)
+      settings_iri_path(resource.edge.owner)
     else
-      settings_page_path(resource.edge.owner, tab: :groups)
+      settings_iri_path(resource.edge.owner, tab: :groups)
     end
   end
 

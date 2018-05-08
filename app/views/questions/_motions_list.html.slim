@@ -1,11 +1,11 @@
 ul.box-list.box-list--icons
   - question.edge.active_motions[0..2].each do |motion|
-    li= link_to motion_path(motion) do
+    li= link_to motion do
       h3.motion-t
         span[class='fa fa-#{motion_icon}']
         span.icon-left= motion.display_name
   - if question.children_count(:motions) > 3
-    li= link_to question_path(question)
+    li= link_to question
       h3.motion-t
         span.fa.fa-chevron-right
         span.icon-left= t('questions.view_all_motions', amount: question.children_count(:motions))

@@ -60,7 +60,7 @@ class ShortnamesController < ParentableController
   end
 
   def redirect_model_success(_resource = nil)
-    settings_forum_path(parent_resource!, tab: 'shortnames')
+    settings_iri_path(parent_resource!, tab: 'shortnames')
   end
 
   def respond_with_form(resource)

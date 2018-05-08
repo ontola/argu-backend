@@ -5,6 +5,8 @@ Dir[Rails.root.join('spec', 'shared_examples', '*.rb')].each { |f| require f }
 module Argu
   module TestHelpers
     module AutomatedRequests
+      include UriTemplateHelper
+
       def self.included(base)
         base.extend(ClassMethods)
         base.define_spec_variables
@@ -113,7 +115,7 @@ module Argu
           let(:expect_put_untrash_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_put_untrash_unauthorized_html) { expect_unauthorized }
           let(:expect_put_untrash_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_put_untrash_html) { expect(response).to redirect_to(url_for(subject)) }
+          let(:expect_put_untrash_html) { expect(response).to redirect_to(subject.iri_path) }
           let(:expect_put_untrash_serializer) { expect(response.code).to eq('204') }
 
           # Update
@@ -141,7 +143,7 @@ module Argu
           let(:expect_put_move_unauthorized_html) { expect_unauthorized }
           let(:expect_put_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_move) do
-            expect(response).to redirect_to(show_path)
+            expect(response).to redirect_to(subject.reload.iri_path)
             subject.reload
             assert_equal other_page_forum, subject.forum
             assert_equal other_page_forum, subject.parent_model
@@ -186,6 +188,7 @@ module Argu
           let(:class_sym) { subject.class.name.underscore.to_sym }
           let(:table_sym) { subject.class.name.tableize.to_sym }
           let(:parent_class_sym) { subject.parent_model.class.name.underscore.to_sym }
+          let(:parent_table_sym) { subject.parent_model.class.name.tableize.to_sym }
 
           # Params
           let(:required_keys) { %w[title] }
@@ -198,42 +201,40 @@ module Argu
           let(:destroy_params) { {} }
 
           # Paths
-          let(:new_path) { url_for([:new, subject.parent_model, class_sym, only_path: true]) }
-          let(:edit_path) { url_for([:edit, subject, only_path: true]) }
-          let(:index_path) { url_for([subject.parent_model, table_sym, only_path: true]) }
-          let(:show_path) { url_for([subject, only_path: true]) }
+          let(:index_path) { collection_iri_path(subject.parent_model, table_sym) }
           let(:create_path) { index_path }
-          let(:update_path) { url_for([subject, only_path: true]) }
-          let(:delete_path) { url_for([:delete, subject, only_path: true]) }
-          let(:destroy_path) { url_for([subject, destroy: true, only_path: true]) }
-          let(:trash_path) { url_for([subject, only_path: true]) }
-          let(:untrash_path) { url_for([:untrash, subject, only_path: true]) }
-          let(:shift_path) { url_for([subject, :move, only_path: true]) }
+          let(:new_path) { new_iri_path(create_path) }
+          let(:show_path) { subject.iri_path }
+          let(:destroy_path) { subject.iri_path(destroy: true) }
+          let(:edit_path) { edit_iri_path(show_path) }
+          let(:shift_path) { move_iri_path(show_path) }
           let(:move_path) { shift_path }
+          let(:update_path) { show_path }
+          let(:delete_path) { delete_iri_path(show_path) }
+          let(:trash_path) { show_path }
+          let(:untrash_path) { untrash_iri_path(show_path) }
 
           # Non existing paths
-          let(:non_existing_new_path) do
-            url_for([:new, parent_class_sym, class_sym, "#{parent_class_sym}_id".to_sym => -99, only_path: true])
-          end
-          let(:non_existing_edit_path) { url_for([:edit, class_sym, id: -99, only_path: true]) }
-          let(:non_existing_shift_path) do
-            url_for([class_sym, :move, "#{class_sym}_id".to_sym => -99, only_path: true])
-          end
-          let(:non_existing_move_path) { non_existing_shift_path }
           let(:non_existing_index_path) do
-            url_for([parent_class_sym, table_sym, "#{parent_class_sym}_id".to_sym => -99, only_path: true])
+            collection_iri_path(expand_uri_template("#{parent_table_sym}_iri", id: -99, only_path: true), table_sym)
           end
-          let(:non_existing_show_path) { url_for([class_sym, id: -99, only_path: true]) }
           let(:non_existing_create_path) { non_existing_index_path }
-          let(:non_existing_update_path) { url_for([class_sym, id: -99, only_path: true]) }
-          let(:non_existing_delete_path) { url_for([:delete, class_sym, id: -99, only_path: true]) }
-          let(:non_existing_destroy_path) { url_for([class_sym, id: -99, destroy: true, only_path: true]) }
-          let(:non_existing_trash_path) { url_for([class_sym, id: -99, only_path: true]) }
-          let(:non_existing_untrash_path) { url_for([:untrash, class_sym, id: -99, only_path: true]) }
+          let(:non_existing_new_path) { new_iri_path(non_existing_create_path) }
+          let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", id: -99, only_path: true) }
+          let(:non_existing_destroy_path) do
+            expand_uri_template("#{table_sym}_iri", id: -99, only_path: true, destroy: true)
+          end
+          let(:non_existing_edit_path) { edit_iri_path(non_existing_show_path) }
+          let(:non_existing_shift_path) { move_iri_path(non_existing_show_path) }
+          let(:non_existing_move_path) { non_existing_shift_path }
+          let(:non_existing_update_path) { non_existing_show_path }
+          let(:non_existing_delete_path) { delete_iri_path(non_existing_show_path) }
+          let(:non_existing_trash_path) { non_existing_show_path }
+          let(:non_existing_untrash_path) { untrash_iri_path(non_existing_show_path) }
 
           # Result paths
-          let(:parent_path) { url_for([subject.parent_model, only_path: true]) }
-          let(:created_resource_path) { url_for([subject.class.last, only_path: true]) }
+          let(:parent_path) { subject.parent_model.iri_path }
+          let(:created_resource_path) { subject.class.last.iri_path }
           let(:updated_resource_path) { show_path }
           let(:create_failed_path) { parent_path }
           let(:update_failed_path) { updated_resource_path }

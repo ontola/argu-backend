@@ -5,12 +5,16 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Conversions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  let(:new_path) { url_for([:new, subject, :conversion, only_path: true]) }
-  let(:non_existing_new_path) { url_for([:new, :edge, :conversion, edge_id: -99, only_path: true]) }
-  let(:create_path) { url_for([subject, :conversions, only_path: true]) }
-  let(:non_existing_create_path) { url_for([:edge, :conversions, edge_id: -99, only_path: true]) }
+  let(:new_path) { new_iri_path(conversions_iri_path(subject.owner.canonical_iri(only_path: true))) }
+  let(:non_existing_new_path) do
+    new_iri_path(conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true)))
+  end
+  let(:create_path) { collection_iri_path(subject.owner.canonical_iri(only_path: true), :conversions) }
+  let(:non_existing_create_path) do
+    conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true))
+  end
   let(:invalid_create_params) { {conversion: {klass: 'arguments'}} }
-  let(:created_resource_path) { url_for([subject.reload.owner, only_path: true]) }
+  let(:created_resource_path) { subject.reload.owner.iri_path }
   let(:expect_post_create_failed_html) { expect_post_create_unauthorized_html }
   let(:expect_post_create_failed_serializer) { expect_post_create_unauthorized_serializer }
   let(:authorized_user) { staff }

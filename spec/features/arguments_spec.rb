@@ -14,7 +14,7 @@ RSpec.feature 'Voting', type: :feature do
   scenario 'Initiator should place comment without body' do
     sign_in initiator
 
-    visit motion_path(motion)
+    visit motion
     within('[page_param="page_arg_pro"]') do
       click_link 'Add argument'
     end
@@ -26,7 +26,7 @@ RSpec.feature 'Voting', type: :feature do
       click_button 'Save'
     end
 
-    expect(page).to have_current_path(motion_path(motion))
+    expect(page).to have_current_path(motion.iri_path)
     expect(page).to have_css('.btn-con')
     expect(page).not_to have_content argument_attributes[:title]
   end

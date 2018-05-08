@@ -35,8 +35,8 @@ RSpec.feature 'Authentication', type: :feature do
   describe 'login' do
     describe 'with credentials' do
       scenario 'from a Forum' do
-        visit(forum_path('holland'))
-        expect(page).to have_current_path forum_path('holland')
+        visit(holland.iri_path)
+        expect(page).to have_current_path holland.iri_path
         click_link('sign_in')
         expect do
           within('#new_user') do
@@ -44,7 +44,7 @@ RSpec.feature 'Authentication', type: :feature do
             fill_in 'user_password', with: 'password'
             click_button 'log_in'
           end
-          expect(page).to have_current_path forum_path('holland')
+          expect(page).to have_current_path holland.iri_path
         end.to change { Doorkeeper::AccessToken.count }.by(1)
       end
 
@@ -69,7 +69,7 @@ RSpec.feature 'Authentication', type: :feature do
         visit(new_user_session_path)
         expect do
           click_link 'Log in with Facebook'
-          expect(page).to have_current_path(forum_path(holland))
+          expect(page).to have_current_path(holland.iri_path)
         end.to change { Doorkeeper::AccessToken.count }.by(1)
       end
     end
@@ -77,12 +77,12 @@ RSpec.feature 'Authentication', type: :feature do
 
   describe 'logout' do
     scenario 'with credentials' do
-      visit(forum_path(holland))
-      sign_in_manually(user, false, redirect_to: forum_path(holland))
+      visit(holland.iri_path)
+      sign_in_manually(user, false, redirect_to: holland.iri_path)
       t = Doorkeeper::AccessToken.last
 
       expect(page).to have_selector('.dropdown-trigger.navbar-profile')
-      expect(page).to have_current_path forum_path(holland)
+      expect(page).to have_current_path holland.iri_path
       expect(t.expired?).to be_falsey
 
       within('.navbar-profile-selector') do
@@ -90,7 +90,7 @@ RSpec.feature 'Authentication', type: :feature do
         click_link 'Sign out'
       end
       expect(page).to have_content 'You have signed out successfully'
-      expect(page).to have_current_path forum_path(holland)
+      expect(page).to have_current_path holland.iri_path
       expect(Doorkeeper::AccessToken.find_by(id: t.id)).to be_falsey
     end
 
@@ -100,7 +100,7 @@ RSpec.feature 'Authentication', type: :feature do
       scenario 'directly' do
         visit(new_user_session_path)
         click_link 'Log in with Facebook'
-        expect(page).to have_current_path(forum_path(holland))
+        expect(page).to have_current_path(holland.iri_path)
         t = Doorkeeper::AccessToken.last
 
         visit(destroy_user_session_path)

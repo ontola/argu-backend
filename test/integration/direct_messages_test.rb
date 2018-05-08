@@ -12,7 +12,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'guest should not post create direct_message' do
     post direct_messages_path,
          params: {direct_message: valid_params}
-    assert_redirected_to new_user_session_path(r: motion_path(motion))
+    assert_redirected_to new_user_session_path(r: motion.iri_path)
   end
 
   ####################################
@@ -51,7 +51,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     sign_in administrator
     post direct_messages_path,
          params: {direct_message: valid_params, actor_iri: administrator.profile.iri}
-    assert_redirected_to motion_path(motion)
+    assert_redirected_to motion.iri_path
     assert_email_sent(skip_sidekiq: true)
   end
 

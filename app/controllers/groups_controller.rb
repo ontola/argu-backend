@@ -50,7 +50,7 @@ class GroupsController < ServiceController
   end
 
   def redirect_model_success(resource)
-    settings_page_path(resource.page, tab: :groups)
+    settings_iri_path(resource.page, tab: :groups)
   end
 
   def resource_new_params

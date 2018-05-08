@@ -5,6 +5,6 @@
         span.fa.fa-building
         span.icon-left= resource.display_name
       li[class=('tab--current' if local_assigns[:active] == :settings)]
-        = link_to url_for([:settings, resource])
+        = link_to settings_iri_path(resource)
           span.fa.fa-gear
           span.icon-left= t('pages.settings.title')

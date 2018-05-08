@@ -10,7 +10,7 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should get show' do
-    get motion_vote_event_path(motion, motion.default_vote_event), headers: argu_headers(accept: :json_api)
+    get motion.default_vote_event, headers: argu_headers(accept: :json_api)
     assert_response 200
   end
 
@@ -19,7 +19,7 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'user should get show' do
     sign_in
-    get motion_vote_event_path(motion, motion.default_vote_event), headers: argu_headers(accept: :json_api)
+    get motion.default_vote_event, headers: argu_headers(accept: :json_api)
     assert_response 200
   end
 
@@ -30,7 +30,7 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
 
   test 'initiator should get show' do
     sign_in initiator
-    get motion_vote_event_path(motion, motion.default_vote_event), headers: argu_headers(accept: :json_api)
+    get motion.default_vote_event, headers: argu_headers(accept: :json_api)
     assert_response 200
   end
 
@@ -41,7 +41,7 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
 
   test 'administrator should get show' do
     sign_in administrator
-    get motion_vote_event_path(motion, motion.default_vote_event), headers: argu_headers(accept: :json_api)
+    get motion.default_vote_event, headers: argu_headers(accept: :json_api)
     assert_response 200
   end
 
@@ -52,7 +52,7 @@ class VoteEventsTest < ActionDispatch::IntegrationTest
 
   test 'staff should get show' do
     sign_in staff
-    get motion_vote_event_path(motion, motion.default_vote_event), headers: argu_headers(accept: :json_api)
+    get motion.default_vote_event, headers: argu_headers(accept: :json_api)
     assert_response 200
   end
 end

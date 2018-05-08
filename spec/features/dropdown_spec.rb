@@ -9,7 +9,7 @@ RSpec.feature 'Dropdown', type: :feature do
 
   scenario 'User switches forum with forum dropdown' do
     Setting.set('suggested_forums', 'nederland, houten')
-    visit forum_path(nederland)
+    visit nederland.iri_path
 
     within('.navbar-forum-selector') do
       find('.navbar-forums').click
@@ -17,11 +17,11 @@ RSpec.feature 'Dropdown', type: :feature do
     end
 
     expect(page).to have_content houten.display_name
-    expect(page).to have_current_path forum_path(houten)
+    expect(page).to have_current_path houten.iri_path
   end
 
   # scenario 'Dropdown still works after navigating back and forth' do
-  #   visit forum_path(holland)
+  #   visit holland.iri_path
   #
   #   within('.cover-switcher') do
   #     find('.dropdown-trigger').hover
@@ -35,14 +35,14 @@ RSpec.feature 'Dropdown', type: :feature do
   #     click_link holland.name
   #   end
   #   expect(page).to have_content holland.display_name
-  #   expect(page).to have_current_path forum_path(holland)
+  #   expect(page).to have_current_path holland.iri_path
   #
   #   page.driver.go_back
   #   expect(page).to have_content other.display_name
   #   expect(page).to have_current_path forum_path(other)
   #   page.driver.go_back
   #   expect(page).to have_content holland.display_name
-  #   expect(current_path).to eq forum_path(holland)
+  #   expect(current_path).to eq holland.iri_path
   #
   #   within('.cover-switcher') do
   #     find('.dropdown-trigger').hover

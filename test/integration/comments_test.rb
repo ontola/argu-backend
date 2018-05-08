@@ -29,17 +29,14 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
       assert_difference 'Comment.trashed.count', 0 do
-        delete destroy_comment_path(subject)
+        delete subject
       end
       assert_differences([['Comment.trashed.count', 1], ['Comment.where(body: "").count', 1]]) do
-        delete destroy_comment_path(
-          subject,
-          destroy: 'true'
-        )
+        delete subject.iri_path(destroy: 'true')
       end
     end
 
-    assert_redirected_to pro_argument_path(argument)
+    assert_redirected_to argument.iri_path
   end
 
   ####################################
@@ -53,16 +50,13 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
       assert_difference 'Comment.trashed.count', 1 do
-        delete destroy_comment_path(subject)
+        delete subject
       end
       assert_difference 'Comment.where(body: "").count', 1 do
-        delete destroy_comment_path(
-          subject,
-          destroy: 'true'
-        )
+        delete subject.iri_path(destroy: 'true')
       end
     end
 
-    assert_redirected_to pro_argument_path(argument)
+    assert_redirected_to argument.iri_path
   end
 end

@@ -21,7 +21,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'user should not get new' do
     sign_in user
 
-    get new_page_group_path(freetown.page)
+    get new_iri_path(argu, :groups)
 
     assert_not_authorized
   end
@@ -29,7 +29,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'user should not get settings' do
     sign_in user
 
-    get settings_group_path(group)
+    get settings_iri_path(group)
 
     assert_not_authorized
   end
@@ -38,7 +38,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in user
 
     assert_no_difference 'Group.count' do
-      delete group_path(group)
+      delete group
     end
 
     assert_not_authorized
@@ -53,7 +53,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in moderator
 
     assert_difference('Group.count', 0) do
-      post page_groups_path(freetown.page),
+      post collection_iri_path(freetown.page, :groups),
            params: {
              group: {
                group_id: group.id,
@@ -67,7 +67,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'moderator should not get new' do
     sign_in moderator
 
-    get new_page_group_path(freetown.page)
+    get new_iri_path(argu, :groups)
 
     assert_not_authorized
   end
@@ -75,7 +75,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'moderator should not get settings' do
     sign_in moderator
 
-    get settings_group_path(group)
+    get settings_iri_path(group)
     assert_not_authorized
   end
 
@@ -83,7 +83,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in moderator
 
     assert_no_difference 'Group.count' do
-      delete group_path(group)
+      delete group
     end
 
     assert_response 403
@@ -98,7 +98,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_differences([['Group.count', 1], ['Grant.count', 0]]) do
-      post page_groups_path(freetown.page),
+      post collection_iri_path(freetown.page, :groups),
            params: {
              group: {
                name: 'Test group',
@@ -106,14 +106,14 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_page_path(freetown.page, tab: :groups)
+    assert_redirected_to settings_iri_path(freetown.page, tab: :groups)
   end
 
   test 'administrator should post create group with grant' do
     sign_in administrator
 
     assert_differences([['Group.count', 1], ['Grant.count', 1]]) do
-      post page_groups_path(freetown.page),
+      post collection_iri_path(freetown.page, :groups),
            params: {
              group: {
                name: 'Test group',
@@ -127,13 +127,13 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_page_path(freetown.page, tab: :groups)
+    assert_redirected_to settings_iri_path(freetown.page, tab: :groups)
   end
 
   test 'administrator should get new' do
     sign_in administrator
 
-    get new_page_group_path(freetown.page)
+    get new_iri_path(argu, :groups)
 
     assert_response 200
   end
@@ -141,11 +141,11 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'administrator should show settings and all tabs' do
     sign_in administrator
 
-    get settings_group_path(granted_group)
+    get settings_iri_path(granted_group)
     assert_response 200
 
     %i[general members invite grants].each do |tab|
-      get settings_group_path(granted_group, tab: tab)
+      get settings_iri_path(granted_group, tab: tab)
       assert_group_settings_shown group, tab
     end
   end
@@ -154,7 +154,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference 'Group.count', -1 do
-      delete group_path(group), params: {group: {confirmation_string: 'remove'}}
+      delete group, params: {group: {confirmation_string: 'remove'}}
     end
 
     assert_response 303
@@ -164,14 +164,14 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_difference 'Group.count', 0 do
-      delete group_path(group)
+      delete group
     end
   end
 
   test 'administrator should put update' do
     sign_in administrator
 
-    put group_path(group),
+    put group,
         params: {
           group: {
             name: 'new_name',
@@ -182,7 +182,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
 
     assert_equal group.reload.name, 'new_name'
     assert_equal group.reload.name_singular, 'new_singular'
-    assert_redirected_to settings_page_path(group.page, tab: :groups)
+    assert_redirected_to settings_iri_path(group.page, tab: :groups)
   end
 
   private

@@ -38,7 +38,7 @@
     .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
     header
       h2= t('motions.call_to_action.title')
-    =link_to polymorphic_url([:new, question, :motion])
+    =link_to new_iri_path(question, :motions)
       .box.box-link
         section
           h3
@@ -51,7 +51,7 @@
                   collection_model: Motion,
                   partial: 'question_answers/show',
                   show_new_buttons: policy(question).create_child?(:motions).present?,
-                  buttons_url: polymorphic_url([:new, question, :motion]),
+                  buttons_url: new_iri_path(question, :motions),
                   buttons_text: t('add_type', type: motion_type),
                   page_param: :page,
                   sort_buttons: sort_items_param(question),

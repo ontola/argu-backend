@@ -8,7 +8,7 @@ class IframeTest < ActionDispatch::IntegrationTest
   test 'it sets the meta tag' do
     csrf_token = SecureRandom.urlsafe_base64(20)
 
-    get forum_path(freetown, iframe: 'true'),
+    get "#{freetown.iri_path}?iframe=true",
         headers: {
           'X-Iframe-Csrf-Token': csrf_token
         }

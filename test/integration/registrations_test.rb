@@ -112,7 +112,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     cookies[:locale] = locale.to_s
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
-    get forum_path(freetown)
+    get freetown.iri_path
 
     assert_differences([['User.count', 1],
                         ['Favorite.count', 1],

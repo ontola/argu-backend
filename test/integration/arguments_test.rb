@@ -91,11 +91,10 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   private
 
   def general_create_json(parent, pro = true)
-    url = parent.is_a?(LinkedRecord) ? linked_record_arguments_path(parent.iri_opts) : url_for([parent, :arguments])
-    post url,
+    post collection_iri_path(parent, "#{pro ? 'pro' : 'con'}_arguments"),
          params: {
            data: {
-             type: 'arguments',
+             type: "#{pro ? 'pro' : 'con'}Arguments",
              attributes: {
                pro: pro,
                name: 'Argument title'

@@ -64,7 +64,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       }
     )
     assert_not_nil assigns(:create_service).resource
-    assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
+    assert_redirected_to assigns(:create_service).resource.iri_path(start_motion_tour: true)
     WebMock.reset!
     analytics_collect
 
@@ -78,7 +78,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     )
     assert_not_nil assigns(:create_service).resource
 
-    assert_redirected_to motion_path(assigns(:create_service).resource)
+    assert_redirected_to assigns(:create_service).resource.iri_path
   end
 
   test 'initiator should post create motion with latlon' do
@@ -218,7 +218,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in staff
     draft_motion
     assert_differences([['Motion.count', 0], ['Motion.trashed.count', 1], ['Activity.count', 1]]) do
-      delete motion_path(draft_motion)
+      delete draft_motion
     end
   end
 end

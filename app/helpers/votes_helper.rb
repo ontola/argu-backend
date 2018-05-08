@@ -44,7 +44,7 @@ module VotesHelper
     data[:remote] = true
     data[:method] = vote_method(vote)
     data[:title] = vote.present? ? t('tooltips.argument.vote_up_undo') : t('tooltips.argument.vote_up')
-    link_to vote_iri(model, vote), rel: :nofollow, class: classes, data: data do
+    link_to vote_iri_path(model, vote), rel: :nofollow, class: classes, data: data do
       yield
     end
   end
@@ -77,10 +77,15 @@ module VotesHelper
   end
 
   def vote_iri(model, vote)
-    if vote.present?
-      vote.try(:persisted?) ? vote_path(vote) : polymorphic_url([model, :vote], for: :pro)
+    RDF::URI(path_with_hostname(vote_iri_path(model, vote)))
+  end
+
+  def vote_iri_path(model, vote)
+    return collection_iri_path(model, :votes, for: :pro) if vote.blank?
+    if vote.try(:persisted?)
+      vote.iri_path
     else
-      polymorphic_url([model, :votes], for: :pro)
+      expand_uri_template(:vote_iri, parent_iri: model.iri_path, for: :pro, only_path: true)
     end
   end
 

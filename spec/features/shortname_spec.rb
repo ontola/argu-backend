@@ -12,12 +12,6 @@ RSpec.feature 'Shortname', type: :feature do
                             shortname: 'PAGE'))
   end
 
-  scenario 'should resolve uppercase shortnames' do
-    visit forum_path(upcase_page.url.downcase)
-    expect(page).to have_current_path page_path(upcase_page.url)
-    expect(page).to have_content(upcase_page.display_name)
-  end
-
   scenario 'staff creates a shortname' do
     sign_in staff
     general_create
@@ -37,7 +31,7 @@ RSpec.feature 'Shortname', type: :feature do
     expect(page).to have_content('0 out of 3')
 
     click_link 'New Argu URL'
-    expect(page).to have_current_path new_forum_shortname_path(freetown)
+    expect(page).to have_current_path new_iri_path(freetown, :shortnames)
 
     shortname_attrs = attributes_for(:shortname)
 
@@ -64,6 +58,6 @@ RSpec.feature 'Shortname', type: :feature do
   end
 
   def shortname_settings_path
-    settings_forum_path(freetown, tab: 'shortnames')
+    settings_iri_path(freetown, tab: 'shortnames')
   end
 end

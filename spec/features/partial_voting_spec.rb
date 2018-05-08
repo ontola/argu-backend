@@ -14,7 +14,7 @@ RSpec.feature 'Partial Voting', type: :feature do
   scenario 'Guest should vote on a motion' do
     nominatim_netherlands
 
-    visit question_path(question)
+    visit question
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
@@ -38,7 +38,7 @@ RSpec.feature 'Partial Voting', type: :feature do
       end
     end
 
-    expect(page).to have_current_path(question_path(question))
+    expect(page).to have_current_path(question.iri_path)
     expect(page).to have_css('.btn-con[data-voted-on=true]')
     expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     assert_email_sent
@@ -52,14 +52,14 @@ RSpec.feature 'Partial Voting', type: :feature do
   scenario 'User should vote on a motion' do
     sign_in(user)
 
-    visit question_path(question)
+    visit question
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     find('span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
-    visit question_path(question)
+    visit question
     expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 
@@ -71,14 +71,14 @@ RSpec.feature 'Partial Voting', type: :feature do
   scenario 'Initiator should vote on a motion' do
     sign_in(initiator)
 
-    visit question_path(question)
+    visit question
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
     find('span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
-    visit question_path(question)
+    visit question
     expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 end

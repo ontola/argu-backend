@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe "Iri's", type: :model do
   include Rails.application.routes.url_helpers
   include ActionDispatch::Routing::UrlFor
-  include DecisionsHelper
 
   define_spec_objects
   let(:url) { url_for([subject, protocol: :http]) }
@@ -53,6 +52,7 @@ RSpec.describe "Iri's", type: :model do
 
   context 'Decision' do
     subject { decision }
+    let(:url) { polymorphic_url([decision.parent_model, decision]) }
     it_behaves_like 'iri matches route'
   end
 

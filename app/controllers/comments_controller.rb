@@ -26,12 +26,8 @@ class CommentsController < EdgeableController
   end
 
   def create_respond_failure_html(c)
-    redirect_to polymorphic_url([c.parent_model],
-                                comment: {
-                                  body: c.body,
-                                  parent_id: c.parent_id
-                                }, anchor: c.id),
-                notice: c.errors.full_messages.first
+    url = "#{c.parent_model.iri_path}?#{{comment: {body: c.body, parent_id: c.parent_id}}.to_param}"
+    redirect_to url, notice: c.errors.full_messages.first
   end
 
   def create_respond_success_html(resource)
@@ -75,14 +71,10 @@ class CommentsController < EdgeableController
   end
 
   def redirect_model_success(resource)
-    return resource.parent_model.iri(only_path: true).to_s unless resource.persisted? && !resource.deleted?
+    return resource.parent_model.iri_path unless resource.persisted? && !resource.deleted?
     case resource.parent_model
-    when BlogPost
-      blog_post_path(resource.parent_model, anchor: resource.identifier)
-    when ProArgument
-      pro_argument_path(resource.parent_model, anchor: resource.identifier)
-    when ConArgument
-      con_argument_path(resource.parent_model, anchor: resource.identifier)
+    when BlogPost, ProArgument, ConArgument
+      resource.parent_model.iri_path(fragment: resource.identifier)
     else
       expand_uri_template(
         'comments_collection_iri',
@@ -105,7 +97,7 @@ class CommentsController < EdgeableController
 
   def redirect_url
     return super unless params[:action] == 'create'
-    redirect_url = URI.parse(url_for([:new, parent_resource!, :comment, only_path: true]))
+    redirect_url = URI.parse(new_iri_path(parent_resource!, :comments))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
   end
@@ -142,7 +134,7 @@ class CommentsController < EdgeableController
   end
 
   def update_respond_success_html(resource)
-    redirect_to comment_url(resource),
+    redirect_to resource.iri_path,
                 notice: t('comments.notices.updated')
   end
 

@@ -8,7 +8,7 @@ class MotionsControllerTest < ActionController::TestCase
   let(:question) { create(:question, :with_motions, parent: freetown.edge) }
   let(:question_motion) { create(:motion, :with_votes, parent: question.edge) }
   let(:motion) { create(:motion, :with_arguments, :with_votes, :with_attachments, parent: freetown.edge) }
-  let(:motion_votes_base_path) { "/m/#{motion.id}/vote_events/#{motion.default_vote_event.id}/votes" }
+  let(:vote_event) { motion.default_vote_event }
 
   ####################################
   # Show
@@ -22,30 +22,32 @@ class MotionsControllerTest < ActionController::TestCase
 
     expect_relationship('proArgumentCollection', 1)
     expect_relationship('conArgumentCollection', 1)
-    expect_included(argu_url("/m/#{motion.id}/pros", type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/pros", page: 1, type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/cons", type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/cons", page: 1, type: 'paginated'))
-    expect_included(motion.pro_arguments.untrashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_included(motion.con_arguments.untrashed.map { |a| argu_url("/con/#{a.id}") })
-    expect_not_included(motion.pro_arguments.trashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(motion.con_arguments.trashed.map { |a| argu_url("/con/#{a.id}") })
+    expect_included(collection_iri(motion, :pro_arguments, type: 'paginated'))
+    expect_included(collection_iri(motion, :pro_arguments, page: 1, type: 'paginated'))
+    expect_included(collection_iri(motion, :con_arguments, type: 'paginated'))
+    expect_included(collection_iri(motion, :con_arguments, page: 1, type: 'paginated'))
+    expect_included(motion.pro_arguments.untrashed.map(&:iri))
+    expect_included(motion.con_arguments.untrashed.map(&:iri))
+    expect_not_included(motion.pro_arguments.trashed.map(&:iri))
+    expect_not_included(motion.con_arguments.trashed.map(&:iri))
 
     expect_relationship('attachmentCollection', 1)
-    expect_included(argu_url("/m/#{motion.id}/media_objects", filter: {used_as: 'attachment'}, type: 'paginated'))
-    expect_included(motion.attachments.map { |r| argu_url("/media_objects/#{r.id}") })
+    expect_included(
+      collection_iri(motion, :media_objects, CGI.escape('filter[used_as]') => 'attachment', type: 'paginated')
+    )
+    expect_included(motion.attachments.map(&:iri))
 
     expect_relationship('voteEventCollection', 1)
-    expect_included(argu_url("/m/#{motion.id}/vote_events", type: 'paginated'))
-    expect_included(argu_url("/m/#{motion.id}/vote_events/#{motion.default_vote_event.id}"))
-    expect_included(argu_url(motion_votes_base_path, type: 'paginated'))
-    expect_included(argu_url(motion_votes_base_path, filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url(motion_votes_base_path, filter: {option: 'yes'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(motion_votes_base_path, filter: {option: 'other'}, type: 'paginated'))
-    expect_included(argu_url(motion_votes_base_path, filter: {option: 'other'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(motion_votes_base_path, filter: {option: 'no'}, type: 'paginated'))
-    expect_included(argu_url(motion_votes_base_path, filter: {option: 'no'}, page: 1, type: 'paginated'))
-    expect_not_included(motion.votes.joins(:creator).map { |v| argu_url("/votes/#{v.id}") })
+    expect_included(collection_iri(motion, :vote_events, type: 'paginated'))
+    expect_included(vote_event.iri)
+    expect_included(collection_iri(vote_event, :votes, type: 'paginated'))
+    %w[yes other no].each do |side|
+      expect_included(collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(
+        collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+      )
+    end
+    expect_not_included(motion.votes.map(&:iri))
   end
 
   ####################################
@@ -58,10 +60,10 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/#{holland.url}/m", page: 1, type: 'paginated'))
-    expect_included(holland.motions.where(question_id: nil).untrashed.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(question.motions.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(collection_iri(holland, :motions, page: 1, type: 'paginated'))
+    expect_included(holland.motions.where(question_id: nil).untrashed.map(&:iri))
+    expect_not_included(question.motions.map(&:iri))
+    expect_not_included(holland.motions.trashed.map(&:iri))
   end
 
   test 'should get index motions of forum page 1' do
@@ -73,9 +75,9 @@ class MotionsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal holland.motions.where(question_id: nil).untrashed.count,
                  expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count
-    expect_included(holland.motions.where(question_id: nil).untrashed.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(question.motions.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(holland.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(holland.motions.where(question_id: nil).untrashed.map(&:iri))
+    expect_not_included(question.motions.map(&:iri))
+    expect_not_included(holland.motions.trashed.map(&:iri))
   end
 
   ####################################
@@ -88,9 +90,9 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
-    expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(collection_iri(question, :motions, page: 1, type: 'paginated'))
+    expect_included(question.motions.untrashed.map(&:iri))
+    expect_not_included(question.motions.trashed.map(&:iri))
     expect_included(question.motions.untrashed.map { |m| m.default_vote_event.iri })
   end
 
@@ -101,11 +103,11 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('partOf', 1)
 
     expect_relationship('memberSequence', question.motions.untrashed.count)
-    expect_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(question.motions.untrashed.map(&:iri))
+    expect_not_included(question.motions.trashed.map(&:iri))
 
     expect_included(question.motions.untrashed.map { |m| m.default_vote_event.iri })
-    expect_not_included(question.motions.untrashed.map { |m| m.default_vote_event.votes }.map(&:iri))
+    expect_not_included(question.motions.trashed.map { |m| m.default_vote_event.votes }.map(&:iri))
   end
 
   test 'should include current_vote in get index motions of question page 1' do

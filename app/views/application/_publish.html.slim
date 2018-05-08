@@ -6,17 +6,17 @@
           =>t('publications.is_scheduled', date: date_for_publication(resource))
         - else
           =>t('publications.is_draft')
-        =link_to t('edit'), polymorphic_url([:edit, resource])
+        =link_to t('edit'), edit_iri_path(resource)
         - if resource.argu_publication.try(:published_at).present?
           .inline-button-form
-            =semantic_form_for(resource, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
+            =semantic_form_for(resource, url: resource.iri_path, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
               =f.semantic_fields_for :edge do |ef|
                 =ef.semantic_fields_for :argu_publication do |pf|
                   =pf.input :draft, as: :hidden, input_html: {value: true}
                   =pf.action :submit, as: :button, button_html: {class: 'btn--warning'}, label: t('cancel')
         - if resource.argu_publication.try(:published_at).nil? || resource.argu_publication.published_at > 1.minute.from_now
           .inline-button-form
-            =semantic_form_for(resource, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
+            =semantic_form_for(resource, url: resource.iri_path, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
               =f.semantic_fields_for :edge do |ef|
                 =ef.semantic_fields_for :argu_publication do |pf|
                   =pf.input :draft, as: :hidden, input_html: {value: false}

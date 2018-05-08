@@ -34,14 +34,14 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'guest should visit forum show' do
-    visit forum_path(freetown)
+    visit freetown.iri_path
 
     expect(page).to have_content(freetown.bio)
     expect(page).to have_content(question.display_name)
   end
 
   scenario 'guest should not see comment section' do
-    visit argument_path(argument)
+    visit argument.iri_path
 
     expect(page.body).not_to have_content('Reply')
     expect(page.body).not_to have_content('Comments')
@@ -50,7 +50,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'guest should vote on a motion' do
     nominatim_netherlands
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-neutral[data-voted-on=true]')
@@ -69,7 +69,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'guest should post a new motion' do
-    redirect_url = new_question_motion_path(question_id: question)
+    redirect_url = new_iri_path(question, :motions)
     create_motion_for_question do
       expect(page).to have_content 'Sign up'
 
@@ -112,7 +112,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should visit forum show' do
     sign_in(user)
 
-    visit forum_path(freetown)
+    visit freetown.iri_path
 
     expect(page).to have_content(freetown.bio)
     expect(page).to have_content(question.display_name)
@@ -121,7 +121,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should not see comment section' do
     sign_in(user)
 
-    visit argument_path(argument)
+    visit argument.iri_path
 
     expect(page).not_to have_content('Reply')
     expect(page).not_to have_content('Comments')
@@ -130,7 +130,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should vote on a motion' do
     sign_in(user)
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content(motion.content)
     expect(page).not_to have_content('New discussion')
 
@@ -139,7 +139,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(motion.display_name)
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
   end
 
@@ -164,17 +164,17 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'moderator should visit forum show' do
     sign_in(moderator)
 
-    visit forum_path(freetown)
+    visit freetown.iri_path
 
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
-    expect(page).to have_current_path(forum_path(freetown))
+    expect(page).to have_current_path(freetown.iri_path)
   end
 
   scenario 'moderator should see comment section' do
     sign_in(moderator)
 
-    visit argument_path(argument)
+    visit argument.iri_path
 
     expect(page.body).to have_content('Reply')
   end
@@ -182,7 +182,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'moderator should see motion new button' do
     sign_in(moderator)
 
-    visit question_path(question)
+    visit question
 
     expect(page).to have_content('Share your idea')
   end
@@ -190,7 +190,7 @@ RSpec.feature 'Adam west', type: :feature do
   private
 
   def create_motion_for_question
-    visit question_path(question)
+    visit question
     click_on 'Share your idea'
 
     yield if block_given?
@@ -203,10 +203,10 @@ RSpec.feature 'Adam west', type: :feature do
     end
 
     expect(page).to have_content(motion_attr[:title].capitalize)
-    expect(page).to have_current_path(motion_path(Motion.last, start_motion_tour: true))
+    expect(page).to have_current_path(Motion.last.iri_path(start_motion_tour: true))
     press_key :escape
     click_on question.title
-    expect(page).to have_current_path(question_path(question))
+    expect(page).to have_current_path(question.iri_path)
     expect(page).to have_content(question.content)
   end
 
@@ -229,25 +229,25 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   def walk_up_to_forum(role = nil)
-    visit argument_path(argument)
+    visit argument.iri_path
     expect(page).to have_css("img[src*='#{role.profile.default_profile_photo.url(:icon)}']") if role.present?
     expect(page).to have_content(argument.title)
     expect(page).to have_content(argument.content)
 
     click_link motion.title
-    expect(page).to have_current_path motion_path(motion)
+    expect(page).to have_current_path motion.iri_path
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
 
     click_link question.title
-    expect(page).to have_current_path question_path(question)
+    expect(page).to have_current_path question.iri_path
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
     within('.wrapper') do
       click_link freetown.display_name
     end
-    expect(page).to have_current_path forum_path(freetown)
+    expect(page).to have_current_path freetown.iri_path
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(question.display_name)
   end

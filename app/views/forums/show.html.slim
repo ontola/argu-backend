@@ -8,7 +8,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   - if policy(@forum).show?
     .btns-center-container
       -if can_start_discussion?(@forum)
-        =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
+        =link_to new_iri_path(@forum, :discussions), class: 'btn btn--pro new-discussion'
           span.fa.fa-plus
           span.icon-left= t('discussions.new.title')
     .grid

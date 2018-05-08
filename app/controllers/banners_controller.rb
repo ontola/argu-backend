@@ -16,11 +16,11 @@ class BannersController < ServiceController
   end
 
   def redirect_model_failure(resource)
-    settings_forum_path(resource.forum, tab: :banners)
+    settings_iri_path(resource.forum, tab: :banners)
   end
 
   def redirect_model_success(resource)
-    settings_forum_path(resource.forum, tab: :banners)
+    settings_iri_path(resource.forum, tab: :banners)
   end
 
   def render_settings(tab, banner, resource = nil)

@@ -78,7 +78,7 @@ module HeaderHelper
       .each do |forum|
       items << link_item(
         forum.display_name,
-        forum_path(forum),
+        forum.iri_path,
         data: {turbolinks: false_unless_iframe},
         image: forum.default_profile_photo.url(:icon)
       )
@@ -94,7 +94,7 @@ module HeaderHelper
       .map do |shortname|
         link_item(
           shortname.owner.display_name,
-          forum_path(shortname.shortname),
+          shortname.owner.iri_path,
           data: {turbolinks: false_unless_iframe},
           image: shortname.owner.default_profile_photo.url(:icon)
         )

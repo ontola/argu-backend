@@ -9,11 +9,11 @@
           p.danger= t('pages.settings.advanced.delete.forum_owner')
           ul
             - resource.forums.each do |forum|
-              li= link_to forum.display_name, forum_path(forum), data: {turbolinks: false_unless_iframe}
+              li= link_to forum.display_name, forum.iri_path, data: {turbolinks: false_unless_iframe}
         -else
           .form
             p= t('pages.settings.advanced.delete.confirm.body_html')
-          =semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
+          =semantic_form_for resource, url: resource.iri_path, method: :delete, html: {class: 'confirm'} do |f|
             p= t('pages.settings.advanced.delete.confirm.howto')
             =f.inputs do
               =f.input :confirmation_string, input_html: {class: 'confirm-text', :'confirm-text' => t('pages.settings.advanced.delete.confirm.string')}

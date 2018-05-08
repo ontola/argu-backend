@@ -10,7 +10,7 @@ h3= t('forums.plural')
     - resource.forums.joins(:edge).order('edges.follows_count ASC').each do |forum|
       tr
         td
-          =link_to forum.display_name, settings_forum_path(forum), data: {turbolinks: false_unless_iframe}
+          =link_to forum.display_name, settings_iri_path(forum), data: {turbolinks: false_unless_iframe}
         td
           =forum.url
         td

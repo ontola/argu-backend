@@ -66,7 +66,7 @@ class ArgumentsController < EdgeableController
     return @_resource_by_id if instance_variable_defined?('@_resource_by_id')
     @_resource_by_id = Argument.find_by(id: resource_id)
     return @_resource_by_id if @_resource_by_id.nil? || @_resource_by_id.class == controller_class
-    redirect_to request.original_url.gsub(%r{\/(con|pro|a)\/}, "/#{@_resource_by_id.type.remove('Argument').downcase}/")
+    redirect_to @_resource_by_id.iri_path
     nil
   end
 

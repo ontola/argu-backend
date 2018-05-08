@@ -25,6 +25,6 @@ module BlogPostsHelper
   end
 
   def url_for_blog_post(blog_post, only_path: false)
-    url_for([blog_post.parent_model, happening_id: blog_post.happening.id, only_path: only_path])
+    blog_post.parent_model.iri(happening_id: blog_post.happening.id, only_path: only_path).to_s
   end
 end

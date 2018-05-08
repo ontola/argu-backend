@@ -16,7 +16,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
     motion
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
-      delete motion_path(motion)
+      delete motion
     end
     assert_nil Activity.last.comment
     assert_equal Notification.last.title, "#{administrator.display_name} trashed #{motion.display_name}"
@@ -27,7 +27,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
     motion
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
-      delete motion_path(motion), params: {activity: {comment: 'Reason for trashing'}}
+      delete motion, params: {activity: {comment: 'Reason for trashing'}}
     end
 
     comment = motion.activities.last.comment
@@ -40,7 +40,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
     motion
 
     assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
-      delete motion_path(motion),
+      delete motion,
              params: {actor_iri: freetown.page.iri, activity: {comment: 'Reason for trashing'}}
     end
 

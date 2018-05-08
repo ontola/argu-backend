@@ -3,7 +3,7 @@
   .col-3-2
     =to_parent
     .box
-      =semantic_form_for((question.new_record? ? [parent_resource, question] : question), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for(question, url: question.new_record? ? collection_iri_path(parent_resource, :questions) : question.iri_path, html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
         =f.input :default_cover_photo, as: :react_cover, label: false
         section.section-info
           =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
@@ -52,7 +52,7 @@
                 =f.semantic_fields_for :edge do |ef|
                   =ef.input :expires_at, as: :datetime_picker
               - if question.persisted? && policy(question).convert?
-                =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge.uuid), input_html: {data: {remote: true}, class: 'btn--warning'}
         section.section--footer.footer-flex
           .footer-flex-element.footer-creator
             =render partial: 'profiles/creator', locals: {resource: question}

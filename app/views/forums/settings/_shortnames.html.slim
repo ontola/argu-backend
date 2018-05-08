@@ -1,7 +1,7 @@
 h3= t('shortnames.type').capitalize.pluralize
 p= t('shortnames.info')
 - if policy(resource).max_shortname_count?
-  =semantic_form_for resource, multipart: true, remote: true, authenticity_token: true do |f|
+  =semantic_form_for resource, url: resource.iri_path, multipart: true, remote: true, authenticity_token: true do |f|
     =f.input :max_shortname_count
     =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
     =f.actions do
@@ -23,4 +23,4 @@ table
           =link_to t('edit'), edit_shortname_url(shortname), class: 'btn'
           =link_to t('destroy'), shortname_url(shortname), class: 'btn btn--warning', data: {remote: true, method: :delete, confirm: t('destroy_confirmation')}
 - if policy(@forum.shortnames.new).create?
-  =link_to t('newe_type', type: t('shortnames.type')), new_forum_shortname_path(@forum), class: 'btn'
+  =link_to t('newe_type', type: t('shortnames.type')), new_iri_path(@forum, :shortnames), class: 'btn'

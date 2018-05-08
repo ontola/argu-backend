@@ -23,7 +23,7 @@ RSpec.feature 'Direct message', type: :feature do
     )
 
     sign_in administrator
-    visit(motion_path(motion))
+    visit(motion)
     page.find('.actions-menu a').click
     click_link('Contact poster')
     within '.modal' do

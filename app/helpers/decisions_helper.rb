@@ -22,22 +22,6 @@ module DecisionsHelper
     end
   end
 
-  def decision_url(decision, opts = {})
-    polymorphic_url([decision.parent_model, decision], opts)
-  end
-
-  def decision_path(decision, opts = {})
-    decision_url(decision, opts.merge(only_path: true))
-  end
-
-  def edit_decision_url(decision, opts = {})
-    polymorphic_url([:edit, decision.parent_model, decision], opts)
-  end
-
-  def edit_decision_path(decision, opts = {})
-    edit_decision_url(decision, opts.merge(only_path: true))
-  end
-
   # @return [String]
   def decision_state(decision)
     if decision.forwarded? && decision.persisted?

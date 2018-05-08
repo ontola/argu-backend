@@ -61,13 +61,13 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get show when public' do
-    get page_path(page)
+    get page
 
     assert_response 200
   end
 
   test 'guest should not get show when not public' do
-    get page_path(page_non_public)
+    get page_non_public
 
     assert_response 403
   end
@@ -107,7 +107,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_page_path(Page.last, tab: :profile)
+    assert_redirected_to settings_iri_path(Page.last, tab: :profile)
   end
 
   test 'user should not post create invalid' do
@@ -134,7 +134,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should get show when public' do
     sign_in user
 
-    get page_path(page)
+    get page
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -143,7 +143,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should not get show when not public' do
     sign_in user
 
-    get page_path(page_non_public)
+    get page_non_public
 
     assert_response 403
   end
@@ -155,7 +155,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should not get settings when not page owner' do
     sign_in user
 
-    get settings_page_path(page)
+    get settings_iri(page)
 
     assert_response 403
     assert_equal page, assigns(:page)
@@ -164,7 +164,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should not update settings when not page owner' do
     sign_in user
 
-    put page_path(page),
+    put page,
         params: {
           page: {
             profile_attributes: {
@@ -188,7 +188,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'forum_initiator should get show when public' do
     sign_in forum_initiator
 
-    get page_path(page)
+    get page
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -197,7 +197,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'forum_initiator should get show when not public' do
     sign_in non_public_forum_initiator
 
-    get page_path(page_non_public)
+    get page_non_public
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -210,12 +210,12 @@ class PagesTest < ActionDispatch::IntegrationTest
     create(:place, address: {country_code: 'nl'})
     sign_in page.owner.profileable
 
-    get settings_page_path(page)
+    get settings_iri(page)
     assert_response 200
     assert_equal page, assigns(:page)
 
     %i[profile groups forums advanced].each do |tab|
-      get settings_page_path(page, tab: tab)
+      get settings_iri(page, tab: tab)
       assert_response 200
       assert_equal page, assigns(:page)
     end
@@ -224,7 +224,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'administrator should update settings' do
     sign_in page.owner.profileable
 
-    put page_path(page),
+    put page,
         params: {
           id: page.url,
           page: {
@@ -247,7 +247,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 2, assigns(:page).profile.media_objects.count
     assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
-    assert_redirected_to settings_page_path(page, tab: :profile)
+    assert_redirected_to settings_iri_path(page, tab: :profile)
     assert_equal page, assigns(:page)
     assert_equal 'new_about', assigns(:page).profile.about
   end
@@ -257,7 +257,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in page.owner.profileable
 
     assert_differences([['Placement.count', 1], ['Place.count', 1]]) do
-      put page_path(page),
+      put page,
           params: {
             id: page.url,
             page: {
@@ -318,7 +318,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                         ['Argument.anonymous.count', 1],
                         ['Comment.anonymous.count', 1],
                         ['Motion.anonymous.count', 1]]) do
-      delete page_path(page),
+      delete page,
              params: {
                page: {
                  confirmation_string: 'remove'
@@ -331,7 +331,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     sign_in page.owner.profileable
 
     assert_difference('Page.count', -1) do
-      delete page_path(page),
+      delete page,
              params: {
                page: {
                  confirmation_string: 'remove'
@@ -345,7 +345,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     freetown
 
     assert_raises(ActiveRecord::InvalidForeignKey) do
-      delete page_path(page),
+      delete page,
              params: {
                page: {
                  confirmation_string: 'remove'
@@ -359,7 +359,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     freetown
 
     assert_difference('Page.count', 0) do
-      delete page_path(page),
+      delete page,
              params: {
                page: {}
              }

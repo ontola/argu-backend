@@ -10,7 +10,6 @@ class VotesControllerTest < ActionController::TestCase
   let(:vote) { motion.votes.first }
   let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
   let(:user) { create(:user) }
-  let(:vote_event_base_path) { "/m/#{motion.id}/vote_events/#{vote_event.id}/votes" }
 
   ####################################
   # Show
@@ -43,17 +42,13 @@ class VotesControllerTest < ActionController::TestCase
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 3
-    expect_included(argu_url(vote_event_base_path, filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path, filter: {option: 'yes'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path, filter: {option: 'other'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path, filter: {option: 'other'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path, filter: {option: 'no'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path, filter: {option: 'no'}, page: 1, type: 'paginated'))
-    expect_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map { |v| argu_url("/votes/#{v.id}") }
-    )
-    expect_not_included(
-      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map { |v| argu_url("/votes/#{v.id}") }
-    )
+    %w[yes other no].each do |side|
+      expect_included(collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(
+        collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+      )
+    end
+    expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
+    expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
 end

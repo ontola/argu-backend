@@ -13,7 +13,7 @@ RSpec.describe 'BlogPosts', type: :request do
     {blog_post: attributes_for(:blog_post).merge(happening_attributes: {happened_at: Time.current})}
   end
   let(:created_resource_path) do
-    url_for([subject.parent_model, happening_id: subject.class.last.happening.id, only_path: true])
+    subject.parent_model.iri_path(happening_id: subject.class.last.happening.id)
   end
 
   context 'with motion parent' do

@@ -7,7 +7,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/feed.rb",
-      "line": 57,
+      "line": 54,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "activity_base.where(\"edges.path ? #{Edge.path_array(Edge.where(:id => parent.favorites.pluck(:edge_id)))}\")",
       "render_path": null,
@@ -41,6 +41,26 @@
       "note": ""
     },
     {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "b503970de862376023e21740caab945f0db3d7658fc279e4350efa8d78c19e56",
+      "check_name": "Redirect",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/arguments_controller.rb",
+      "line": 69,
+      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Argument.find_by(:id => resource_id).iri_path)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ArgumentsController",
+        "method": "resource_from_params"
+      },
+      "user_input": "Argument.find_by(:id => resource_id).iri_path",
+      "confidence": "High",
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "e4338780aecbbffd4935872dfb1674828c6166a1f9e6c520e3906b5badbfacfe",
@@ -67,7 +87,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/controllers/forums_controller.rb",
-      "line": 15,
+      "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges(:grant_set => ([\"moderator\", \"administrator\"])))}\")",
       "render_path": null,
@@ -81,6 +101,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-03-05 16:47:29 +0100",
+  "updated": "2018-05-09 15:35:14 +0200",
   "brakeman_version": "4.1.1"
 }

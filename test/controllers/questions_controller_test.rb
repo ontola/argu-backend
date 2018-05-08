@@ -18,14 +18,16 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('attachmentCollection', 1)
-    expect_included(argu_url("/q/#{question.id}/media_objects", filter: {used_as: 'attachment'}, type: 'paginated'))
-    expect_included(question.attachments.map { |r| argu_url("/media_objects/#{r.id}") })
+    expect_included(
+      collection_iri(question, :media_objects, CGI.escape('filter[used_as]') => 'attachment', type: 'paginated')
+    )
+    expect_included(question.attachments.map(&:iri))
 
     expect_relationship('motionCollection', 1)
-    expect_included(argu_url("/q/#{question.id}/m", type: 'paginated'))
-    expect_not_included(argu_url("/q/#{question.id}/m", page: 1, type: 'paginated'))
-    expect_not_included(question.motions.untrashed.map { |m| argu_url("/m/#{m.id}") })
-    expect_not_included(question.motions.trashed.map { |m| argu_url("/m/#{m.id}") })
+    expect_included(collection_iri(question, :motions, type: 'paginated'))
+    expect_not_included(collection_iri(question, :motions, page: 1, type: 'paginated'))
+    expect_not_included(question.motions.untrashed.map(&:iri))
+    expect_not_included(question.motions.trashed.map(&:iri))
   end
 
   ####################################
@@ -38,9 +40,9 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/#{holland.url}/q", page: 1, type: 'paginated'))
-    expect_included(holland.questions.untrashed.map { |q| argu_url("/q/#{q.id}") })
-    expect_not_included(holland.questions.trashed.map { |q| argu_url("/q/#{q.id}") })
+    expect_included(collection_iri(holland, :questions, page: 1, type: 'paginated'))
+    expect_included(holland.questions.untrashed.map(&:iri))
+    expect_not_included(holland.questions.trashed.map(&:iri))
   end
 
   test 'should get index questions of forum page 1' do
@@ -52,7 +54,7 @@ class QuestionsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
                  holland.questions.untrashed.count
-    expect_included(holland.questions.untrashed.map { |q| argu_url("/q/#{q.id}") })
-    expect_not_included(holland.questions.trashed.map { |q| argu_url("/q/#{q.id}") })
+    expect_included(holland.questions.untrashed.map(&:iri))
+    expect_not_included(holland.questions.trashed.map(&:iri))
   end
 end

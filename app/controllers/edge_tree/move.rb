@@ -42,11 +42,7 @@ module EdgeTree
       end
 
       def redirect_model_failure(resource)
-        url_for(
-          controller: controller_name,
-          action: :edit,
-          id: resource.id
-        )
+        edit_iri_path(resource)
       end
 
       def shift_respond_blocks_success(_, format)

@@ -1,4 +1,4 @@
-=semantic_form_for resource, multipart: true, remote: false, authenticity_token: true do |f|
+=semantic_form_for resource, url: resource.iri_path, multipart: true, remote: false, authenticity_token: true do |f|
   =f.input :lock_version, as: :hidden
   =f.input :active, value: local_assigns[:active], as: :hidden
   - resource.errors.full_messages.each do |message|
@@ -31,9 +31,9 @@
         - @grants.each do |grant|
           tr
             td
-              =link_to grant.group.display_name, settings_group_path(grant.group)
+              =link_to grant.group.display_name, settings_iri_path(grant.group)
             td
-              =link_to grant.group.group_memberships.count, settings_group_path(grant.group)
+              =link_to grant.group.group_memberships.count, settings_iri_path(grant.group)
             td
               - if policy(grant.group).create_child?(:group_memberships)
                 =link_to new_group_group_membership_path(grant.group), class: 'btn--light btn--smaller' do
@@ -45,7 +45,7 @@
               - else
                 =<"(#{t('grants.all_forums')})"
     - if policy(resource.edge).create_child?(:grants)
-      =link_to new_page_grant_path(resource.page, edge_id: resource.edge), class: 'btn btn--mini btn--light margin-bottom' do
+      =link_to new_iri_path(resource.page, :grants, edge_id: resource.edge), class: 'btn btn--mini btn--light margin-bottom' do
         span.fa.fa-plus
         span.icon-left= t('grants.new')
     =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false, wrapper_html: {class: 'form-col-2'}
@@ -56,11 +56,11 @@
         =f.inputs :shortname, for: :shortname
         li.form-helper
           span= t('forums.shortname.warning')
-      =link_to t('forums.settings.shortnames'), settings_forum_path(tab: :shortnames), class: 'btn btn--light'
-      =link_to t('forums.settings.banners.title'), settings_forum_path(tab: :banners), class: 'btn btn--light'
-      =link_to t('forums.statistics.title'), statistics_forum_path(resource), class: 'btn btn--light'
-      =link_to t('formtastic.labels.f_move'), forum_move_url(resource), class: 'btn btn--light', remote: true
-      =link_to t('formtastic.labels.f_delete'), delete_forum_url(resource), class: 'btn btn--warning', remote: true
+      =link_to t('forums.settings.shortnames'), settings_iri_path(resource, tab: :shortnames), class: 'btn btn--light'
+      =link_to t('forums.settings.banners.title'), settings_iri_path(resource, tab: :banners), class: 'btn btn--light'
+      =link_to t('forums.statistics.title'), statistics_iri_path(resource), class: 'btn btn--light'
+      =link_to t('formtastic.labels.f_move'), move_iri_path(resource), class: 'btn btn--light', remote: true
+      =link_to t('formtastic.labels.f_delete'), delete_iri_path(resource), class: 'btn btn--warning', remote: true
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, as: :button

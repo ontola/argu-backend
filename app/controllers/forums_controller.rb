@@ -134,7 +134,7 @@ class ForumsController < EdgeableController
 
   def redirect_model_success(resource)
     return super unless resource.persisted?
-    settings_forum_path(resource, tab: tab)
+    settings_iri_path(resource, tab: tab)
   end
 
   def resource_by_id

@@ -19,11 +19,9 @@ module Menus
         :invite,
         image: 'fa-share',
         link_opts: {data: {remote: 'true'}},
-        href: url_for([resource, :invite]),
+        href: invites_iri(resource),
         policy: :invite?
       )
-    rescue NoMethodError
-      nil
     end
 
     def copy_share_link(url)

@@ -11,10 +11,9 @@ RSpec.describe 'Votes', type: :request do
 
   let(:destroy_differences) { [['Vote.count', -1]] }
   let(:update_differences) { [['Vote.count', 0]] }
-  let(:show_path) { vote_path(subject) }
   let(:destroy_path) { show_path }
   let(:show_by_parent_path) do
-    url_for([subject.voteable, subject.parent_model, :show, :vote, only_path: true])
+    expand_uri_template(:vote_iri, parent_iri: subject.parent_model.iri_path, only_path: true)
   end
   let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('403') }
   let(:expect_post_create_guest_serializer) { expect_created }
@@ -39,30 +38,21 @@ RSpec.describe 'Votes', type: :request do
     let!(:subject) { argument_vote }
     let!(:guest_subject) do
       get root_path
-      create(:vote, parent: argument.edge, creator: guest_user.profile, publisher: guest_user)
+      create(:vote, parent: subject.parent_model .edge, creator: guest_user.profile, publisher: guest_user)
     end
-    let(:show_by_parent_path) do
-      url_for([subject.parent_model, :vote, only_path: true])
-    end
-    let(:expect_get_show_html) { expect(response).to redirect_to(argument) }
-    let(:expect_redirect_to_login) { new_pro_argument_vote_path(argument, confirm: true) }
-    let(:created_resource_path) { pro_argument_path(argument) }
+    let(:expect_get_show_html) { expect(response).to redirect_to(subject.parent_model.iri_path) }
+    let(:expect_redirect_to_login) { new_iri_path(subject.parent_model, :votes, confirm: true) }
+    let(:created_resource_path) { subject.parent_model.iri_path }
     it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
     it_behaves_like 'by parent'
   end
 
   context 'with vote_event' do
-    let(:parent_path) { url_for([subject.voteable, subject.parent_model, only_path: true]) }
-    let(:index_path) { url_for([subject.voteable, subject.parent_model, table_sym, only_path: true]) }
-    let(:new_path) { url_for([:new, subject.voteable, subject.parent_model, class_sym, only_path: true]) }
-    let(:show_by_parent_path) { url_for([subject.voteable, subject.parent_model, :vote, only_path: true]) }
-    let(:update_path) { url_for([subject.voteable, subject.parent_model, :votes, only_path: true]) }
-    let(:non_existing_new_path) do
-      url_for([:new, :motion, parent_class_sym, class_sym, vote_event_id: -99, motion_id: motion.id, only_path: true])
-    end
+    let(:parent_path) { subject.parent_model.iri_path }
+    let(:update_path) { create_path }
     let(:expect_delete_destroy_html) do
       expect(response.code).to eq('303')
-      expect(response).to redirect_to(subject.voteable)
+      expect(response).to redirect_to(subject.voteable.iri_path)
     end
 
     context 'for motion' do
@@ -71,14 +61,9 @@ RSpec.describe 'Votes', type: :request do
         get root_path
         create(:vote, parent: motion.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
       end
-      let(:expect_get_show_html) { expect(response).to redirect_to(motion) }
-      let(:expect_redirect_to_login) do
-        new_motion_vote_event_vote_path(motion, motion.default_vote_event, confirm: true)
-      end
-      let(:non_existing_index_path) do
-        url_for([:motion, :vote_event, :votes, vote_event_id: -99, motion_id: motion.id, only_path: true])
-      end
-      let(:created_resource_path) { motion_path(motion) }
+      let(:expect_get_show_html) { expect(response).to redirect_to(motion.iri_path) }
+      let(:expect_redirect_to_login) { new_iri_path(motion.default_vote_event, :votes, confirm: true) }
+      let(:created_resource_path) { motion.iri_path }
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
       it_behaves_like 'by parent'
     end
@@ -90,35 +75,20 @@ RSpec.describe 'Votes', type: :request do
         get root_path
         create(:vote, parent: linked_record.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
       end
-      let(:expect_get_show_html) { expect(response).to redirect_to(linked_record) }
+      let(:expect_get_show_html) { expect(response).to linked_record.iri_path }
       let(:expect_redirect_to_login) do
-        new_linked_record_vote_event_vote_path(linked_record, linked_record.default_vote_event, confirm: true)
+        new_iri_path(linked_record.default_vote_event.iri_path(id: 'default'), confirm: true)
       end
       let(:show_by_parent_path) do
-        linked_record_vote_event_vote_path(
-          organization: argu.url,
-          forum: freetown.url,
-          linked_record_id: linked_record.deku_id,
-          vote_event_id: 'default'
-        )
+        expand_uri_template(:vote_iri, parent_iri: subject.parent_model.iri_path, only_path: true, id: 'default')
       end
       let(:index_path) do
-        linked_record_vote_event_votes_path(
-          organization: argu.url,
-          forum: freetown.url,
-          linked_record_id: linked_record.deku_id,
-          vote_event_id: 'default'
-        )
+        collection_iri(subject.parent_model.iri_path(id: 'default'), :votes)
       end
       let(:non_existing_index_path) do
-        linked_record_vote_event_votes_path(
-          organization: argu.url,
-          forum: freetown.url,
-          linked_record_id: -99,
-          vote_event_id: 'default'
-        )
+        collection_iri(subject.parent_model.iri_path(id: -99), :votes)
       end
-      let(:created_resource_path) { linked_record_path(linked_record) }
+      let(:created_resource_path) { linked_record.iri_path }
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid html]
       it_behaves_like 'by parent', skip: %i[html]
     end
@@ -137,19 +107,22 @@ RSpec.describe 'Votes', type: :request do
       subject { build(:vote, edge: Edge.new(parent: non_persisted_linked_record.edge)) }
       let(:parent_path) {}
       let(:index_path) do
-        linked_record_vote_event_votes_path(
-          organization: argu.url,
-          forum: freetown.url,
-          linked_record_id: SecureRandom.uuid,
-          vote_event_id: 'default'
-        )
+        collection_iri(non_persisted_linked_record.default_vote_event.iri_path(id: 'default'), :votes, only_path: true)
       end
       let(:non_existing_index_path) do
-        linked_record_vote_event_votes_path(
-          organization: argu.url,
-          forum: freetown.url,
-          linked_record_id: -99,
-          vote_event_id: 'default'
+        collection_iri(
+          expand_uri_template(
+            :vote_events_iri,
+            parent_iri: expand_uri_template(
+              :linked_records_iri,
+              organization: argu.url,
+              forum: freetown.url,
+              linked_record_id: -99
+            ),
+            id: 'default'
+          ),
+          :votes,
+          only_path: true
         )
       end
       it_behaves_like 'post create', skip: %i[html]

@@ -41,7 +41,7 @@ class StaticPagesController < ApplicationController
     if current_user.is_staff?
       render # stream: true
     else
-      current_user.guest? ? about : redirect_to(preferred_forum)
+      current_user.guest? ? about : redirect_to(preferred_forum.iri_path)
     end
   end
 

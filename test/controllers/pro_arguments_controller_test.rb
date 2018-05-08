@@ -15,8 +15,6 @@ class ProArgumentsControllerTest < ActionController::TestCase
     create(:argument, :with_comments, parent: lr.edge, edge_attributes: {trashed_at: Time.current})
     lr
   end
-  let(:non_persisted_linked_record_base) { non_persisted_linked_record.iri.to_s.gsub('/od/', '/lr/') }
-  let(:linked_record_base) { linked_record.iri.to_s.gsub('/od/', '/lr/') }
 
   ####################################
   # Show
@@ -29,10 +27,10 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('commentCollection', 1)
-    expect_included(argu_url("/pro/#{argument.id}/c", type: 'paginated'))
-    expect_included(argu_url("/pro/#{argument.id}/c", page: 1, type: 'paginated'))
-    expect_included(argument.comment_threads.untrashed.map { |c| argu_url("/c/#{c.id}") })
-    expect_not_included(argument.comment_threads.trashed.map { |c| argu_url("/c/#{c.id}") })
+    expect_included(collection_iri(argument, :comments, type: 'paginated'))
+    expect_included(collection_iri(argument, :comments, page: 1, type: 'paginated'))
+    expect_included(argument.comment_threads.untrashed.map(&:iri))
+    expect_not_included(argument.comment_threads.trashed.map(&:iri))
   end
 
   ####################################
@@ -45,11 +43,11 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/m/#{motion.id}/pros", page: 1, type: 'paginated'))
-    expect_included(motion.pro_arguments.untrashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(motion.pro_arguments.trashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(motion.con_arguments.trashed.map { |a| argu_url("/con/#{a.id}") })
-    expect_not_included(motion.con_arguments.map { |a| argu_url("/con/#{a.id}") })
+    expect_included(collection_iri(motion, :pro_arguments, page: 1, type: 'paginated'))
+    expect_included(motion.pro_arguments.untrashed.map(&:iri))
+    expect_not_included(motion.pro_arguments.trashed.map(&:iri))
+    expect_not_included(motion.con_arguments.trashed.map(&:iri))
+    expect_not_included(motion.con_arguments.map(&:iri))
   end
 
   test 'should get index arguments of motion with page=1' do
@@ -61,10 +59,10 @@ class ProArgumentsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
                  motion.pro_arguments.untrashed.count
-    expect_included(motion.pro_arguments.untrashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(motion.pro_arguments.trashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(motion.con_arguments.trashed.map { |a| argu_url("/con/#{a.id}") })
-    expect_not_included(motion.con_arguments.map { |a| argu_url("/con/#{a.id}") })
+    expect_included(motion.pro_arguments.untrashed.map(&:iri))
+    expect_not_included(motion.pro_arguments.trashed.map(&:iri))
+    expect_not_included(motion.con_arguments.trashed.map(&:iri))
+    expect_not_included(motion.con_arguments.map(&:iri))
   end
 
   ####################################
@@ -78,11 +76,11 @@ class ProArgumentsControllerTest < ActionController::TestCase
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 1
-    expect_included("#{linked_record_base}/pros?page=1&type=paginated")
-    expect_not_included("#{linked_record_base}/cons?page=1&type=paginated")
-    expect_included(linked_record.pro_arguments.untrashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(linked_record.pro_arguments.trashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(linked_record.con_arguments.map { |a| argu_url("/con/#{a.id}") })
+    expect_included(collection_iri(linked_record, :pro_arguments, page: 1, type: :paginated))
+    expect_not_included(collection_iri(linked_record, :con_arguments, page: 1, type: :paginated))
+    expect_included(linked_record.pro_arguments.untrashed.map(&:iri))
+    expect_not_included(linked_record.pro_arguments.trashed.map(&:iri))
+    expect_not_included(linked_record.con_arguments.map(&:iri))
   end
 
   test 'should get index arguments of linked_record with page=1' do
@@ -94,9 +92,9 @@ class ProArgumentsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
                  linked_record.con_arguments.untrashed.count
-    expect_included(linked_record.pro_arguments.untrashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(linked_record.pro_arguments.trashed.map { |a| argu_url("/pro/#{a.id}") })
-    expect_not_included(linked_record.con_arguments.map { |a| argu_url("/con/#{a.id}") })
+    expect_included(linked_record.pro_arguments.untrashed.map(&:iri))
+    expect_not_included(linked_record.pro_arguments.trashed.map(&:iri))
+    expect_not_included(linked_record.con_arguments.map(&:iri))
   end
 
   #######################################
@@ -110,7 +108,7 @@ class ProArgumentsControllerTest < ActionController::TestCase
 
     view_sequence = expect_relationship('viewSequence')
     assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 1
-    expect_included("#{non_persisted_linked_record_base}/pros?page=1&type=paginated")
-    expect_not_included("#{non_persisted_linked_record_base}/cons?page=1&type=paginated")
+    expect_included(collection_iri(non_persisted_linked_record, :pro_arguments, page: 1, type: :paginated))
+    expect_not_included(collection_iri(non_persisted_linked_record, :con_arguments, page: 1, type: :paginated))
   end
 end

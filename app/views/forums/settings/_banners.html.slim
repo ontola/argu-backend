@@ -1,6 +1,6 @@
 h3= t('forums.settings.banners.title')
 p= t('forums.settings.banners.about_banners')
-=link_to new_forum_banner_path(@forum), class: 'btn margin-bottom' do
+=link_to new_iri_path(@forum, :banners), class: 'btn margin-bottom' do
   span.fa.fa-plus
   span.icon-left= t('newe_type', type: t('banners.type'))
 #banners-published

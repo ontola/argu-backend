@@ -10,14 +10,14 @@ class OauthTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should assign guest token' do
     assert_difference('Doorkeeper::AccessToken.count', 1) do
-      get forum_path('freetown')
+      get freetown
     end
 
     assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
 
     assert_no_difference('Doorkeeper::AccessToken.count',
                          'Guest tokens should only be set when expired') do
-      get forum_path('freetown')
+      get freetown
     end
   end
 
@@ -30,7 +30,7 @@ class OauthTest < ActionDispatch::IntegrationTest
       false
     )
     t.update(created_at: 2.minutes.ago)
-    get forum_path('freetown'),
+    get freetown,
         headers: argu_headers(bearer: t.token)
 
     assert_equal %w[guest], Doorkeeper::AccessToken.last.scopes.to_a
@@ -93,7 +93,7 @@ class OauthTest < ActionDispatch::IntegrationTest
              password: user.password,
              grant_type: 'password',
              user: {
-               r: forum_path(freetown)
+               r: freetown.iri_path
              },
              scope: 'user'
            },
@@ -105,7 +105,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     assert_equal user.id, at.resource_owner_id.to_i
     assert response.cookies['argu_client_token'].present?
 
-    assert_redirected_to forum_path(freetown)
+    assert_redirected_to freetown.iri_path
   end
 
   test 'user should get access token when not from argu' do

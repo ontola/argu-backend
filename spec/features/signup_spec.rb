@@ -18,7 +18,7 @@ RSpec.feature 'Signup', type: :feature do
     expect(page).to have_content 'Involve people in decision making'
     expect(page).to have_current_path root_path
 
-    visit forum_path(freetown)
+    visit freetown.iri_path
     expect(page).to have_content 'freetown'
 
     click_link motion.title
@@ -31,7 +31,7 @@ RSpec.feature 'Signup', type: :feature do
         within('.opinion-form') do
           click_link 'Log in with Facebook'
         end
-        expect(page).to have_current_path motion_path(motion)
+        expect(page).to have_current_path motion.iri_path
         expect(page).to have_content motion.title
         expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
       end
@@ -44,7 +44,7 @@ RSpec.feature 'Signup', type: :feature do
     facebook_me(fields: {name: 'My Name'})
     u = create(:user, email: 'bpvjlwt_zuckersen_1467905538@tfbnw.net')
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content(motion.content)
 
     click_link 'Other'
@@ -61,7 +61,7 @@ RSpec.feature 'Signup', type: :feature do
       expect(u.reload.identities.count).to eq(1)
     end
 
-    visit motion_path(motion)
+    visit motion
 
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'

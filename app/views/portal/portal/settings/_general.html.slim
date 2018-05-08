@@ -38,7 +38,7 @@ h2= t('portal.pages')
           td= link_to new_portal_forum_path(page: f) do
             span.fa.fa-plus
             span.icon-left= t('forums.type_new')
-          td= link_to settings_page_path(f) do
+          td= link_to settings_iri_path(f) do
             span.fa.fa-gear
             span.icon-left= t('portal.settings.title')
   =paginate @pages, param_name: :pages_page
@@ -60,12 +60,12 @@ h2= t('portal.forums')
     tbody
       - @forums.each do |f|
         tr[id=f.identifier]
-          td= link_to f.name, forum_path(f), data: {turbolinks: false_unless_iframe}
+          td= link_to f.name, f.iri_path, data: {turbolinks: false_unless_iframe}
           td= f.url
           td= l f.created_at, format: :short
           /td= l f.updated_at, format: :short
           td= f.follows_count || '-'
           td= f.children_count(:questions) || '-'
           td= f.children_count(:motions) || '-'
-          td= link_to t('portal.settings.title'), settings_forum_path(f), data: {turbolinks: false_unless_iframe}
+          td= link_to t('portal.settings.title'), settings_iri_path(f), data: {turbolinks: false_unless_iframe}
   =paginate @forums, param_name: :forums_page

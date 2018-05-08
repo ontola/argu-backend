@@ -57,7 +57,7 @@ RSpec.feature 'Account deletion', type: :feature do
     [Comment, Argument, Motion, Question, BlogPost].each do |klass|
       expect(klass.anonymous.count).to eq(1)
     end
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content 'community'
   end
 

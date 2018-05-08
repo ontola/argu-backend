@@ -17,7 +17,7 @@ module SPI
     end
 
     test 'guest should show motion as iri' do
-      get spi_authorize_path(resource_iri: url_for(motion), authorize_action: 'show')
+      get spi_authorize_path(resource_iri: motion.iri, authorize_action: 'show')
 
       assert_response 200
     end
@@ -35,13 +35,19 @@ module SPI
     end
 
     test 'guest should not show non-existing motion as iri' do
-      get spi_authorize_path(resource_iri: motion_url('non-existing'), authorize_action: 'show')
+      get spi_authorize_path(
+        resource_iri: expand_uri_template(:motions_iri, id: 'non-existing'),
+        authorize_action: 'show'
+      )
 
       assert_response 404
     end
 
     test 'guest should not show non-existing motion as canonical' do
-      get spi_authorize_path(resource_iri: edge_url('non-existing'), authorize_action: 'show')
+      get spi_authorize_path(
+        resource_iri: expand_uri_template(:edges_iri, id: SecureRandom.uuid),
+        authorize_action: 'show'
+      )
 
       assert_response 404
     end

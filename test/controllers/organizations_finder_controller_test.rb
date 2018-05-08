@@ -27,7 +27,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   test 'guest should get show organization of new motion iri' do
-    get :show, params: {iri: new_forum_motion_path(freetown), format: :nt}
+    get :show, params: {iri: new_iri(freetown, :motions), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)

@@ -20,7 +20,7 @@ RSpec.feature 'Voting', type: :feature do
       motions: [{display_name: motion.display_name, option: 'con', url: motion.iri}]
     )
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
@@ -37,7 +37,7 @@ RSpec.feature 'Voting', type: :feature do
 
         click_button 'Confirm'
 
-        expect(page).to have_current_path motion_path(motion)
+        expect(page).to have_current_path motion.iri_path
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.feature 'Voting', type: :feature do
     end
     expect(page).not_to have_content('Would you like to comment on your opinion?')
 
-    visit motion_path(motion)
+    visit motion
     expect(page).not_to have_css('.opinion-icon')
     find('span', text: 'Disagree').click
     within('.opinion-form') do
@@ -68,7 +68,7 @@ RSpec.feature 'Voting', type: :feature do
       click_button 'Save'
     end
 
-    visit motion_path(motion)
+    visit motion
     expect(page).not_to have_css('.opinion-icon')
 
     Sidekiq::Testing.inline! do
@@ -84,7 +84,7 @@ RSpec.feature 'Voting', type: :feature do
 
     expect(page).to have_content('Your account has been confirmed. You are now logged in.')
 
-    visit motion_path(motion)
+    visit motion
 
     expect(page).to have_css('.opinion-icon')
     within('.opinion-columns') do
@@ -96,7 +96,7 @@ RSpec.feature 'Voting', type: :feature do
   end
 
   scenario 'Guest should vote and continue with existing email' do
-    visit motion_path(motion)
+    visit motion
     expect(page).not_to have_content('Comments')
     expect(page).to have_content(motion.content)
 
@@ -113,7 +113,7 @@ RSpec.feature 'Voting', type: :feature do
 
       fill_in 'user[password]', with: user.password
       click_button 'Login'
-      expect(page).to have_current_path motion_path(motion)
+      expect(page).to have_current_path motion.iri_path
     end
 
     expect(page).to have_css('.btn-con[data-voted-on=true]')
@@ -127,7 +127,7 @@ RSpec.feature 'Voting', type: :feature do
   scenario 'User should vote on a motion' do
     sign_in(user)
 
-    visit motion_path(motion)
+    visit motion
     expect(page).not_to have_content('Comments')
     expect(page).to have_content(motion.content)
 
@@ -154,7 +154,7 @@ RSpec.feature 'Voting', type: :feature do
     end
     expect(page).not_to have_field('opinion-body')
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content('Comments')
     within('.opinion-columns') do
       expect(page).to have_content('This is my opinion')
@@ -167,7 +167,7 @@ RSpec.feature 'Voting', type: :feature do
     end
     expect(page).not_to have_field('opinion-body')
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content('Comments')
     within('.opinion-columns') do
       expect(page).to have_content('This is my opinion')

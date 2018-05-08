@@ -9,10 +9,10 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'guest should get 401' do
-    post motion_arguments_url(motion),
+    post collection_iri_path(motion, :pro_arguments),
          params: {
            data: {
-             type: 'arguments',
+             type: 'proArguments',
              attributes: {
                pro: true,
                title: 'Argument title'
@@ -32,7 +32,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 404 when not allowed' do
     sign_in user
-    post forum_motions_url(cairo),
+    post collection_iri_path(cairo, :motions),
          params: {
            data: {
              type: 'motions',
@@ -55,21 +55,21 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with empty body' do
     sign_in user
-    post motion_arguments_url(motion),
+    post collection_iri_path(motion, :pro_arguments),
          headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: 'param is missing or the value is empty: argument',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end
 
   test 'user should get 422 with empty data' do
     sign_in user
-    post motion_arguments_url(motion),
+    post collection_iri_path(motion, :pro_arguments),
          params: {
            data: {}
          },
@@ -79,14 +79,14 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body,
                  'errors' => json_api_errors(
                    status: 'Unprocessable Entity',
-                   message: 'param is missing or the value is empty: argument',
+                   message: 'param is missing or the value is empty: pro_argument',
                    code: 'PARAMETER_MISSING'
                  )
   end
 
   test 'user should get 400 with missing type' do
     sign_in user
-    post motion_arguments_url(motion),
+    post collection_iri_path(motion, :pro_arguments),
          params: {
            data: {
              attributes: {
@@ -108,7 +108,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with wrong type' do
     sign_in user
-    post motion_arguments_url(motion),
+    post collection_iri_path(motion, :pro_arguments),
          params: {
            data: {
              type: 'motions',
@@ -131,10 +131,10 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with missing attributes' do
     sign_in user
-    post motion_arguments_url(motion),
+    post collection_iri_path(motion, :pro_arguments),
          params: {
            data: {
-             type: 'arguments'
+             type: 'proArguments'
            }
          },
          headers: argu_headers(accept: :json_api)
@@ -150,7 +150,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with multiple wrong fields' do
     sign_in user
-    post forum_motions_path(freetown),
+    post collection_iri_path(freetown, :motions),
          params: {
            data: {
              type: 'motions',

@@ -172,7 +172,7 @@ class PagesController < EdgeableController
 
   def redirect_model_success(resource)
     return new_page_path unless resource.persisted?
-    settings_page_path(resource, tab: tab)
+    settings_iri_path(resource, tab: tab)
   end
 
   def show_respond_success_html(resource)

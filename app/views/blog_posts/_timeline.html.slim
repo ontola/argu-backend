@@ -14,13 +14,13 @@
         ul= dropdown_menu(resource, :share, item_opts: {isMobile: browser.device.mobile?})
       - if resource.top_comment.present? && policy(resource).index_children?(:comments)
         li
-          =link_to blog_post_path(resource) + '#comments'
+          =link_to resource.iri_path(fragment: :comments)
             .dropdown
               span.fa.fa-comments
               span.icon-left= t('reply_count', comment_count: resource.children_count(:comments))
       - elsif policy(resource).create_child?(:comments)
         li
-          =link_to blog_post_path(resource) + '#comments'
+          =link_to resource.iri_path(fragment: :comments)
             .dropdown
               span.fa.fa-comments
               span.icon-left= t('reply')

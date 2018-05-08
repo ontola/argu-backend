@@ -10,7 +10,7 @@ RSpec.feature 'Motions', type: :feature do
   scenario 'user should post a new motion as organization' do
     sign_in(administrator)
 
-    visit new_question_motion_path(question)
+    visit new_iri_path(question, :motions)
 
     motion_attr = attributes_for(:motion)
 

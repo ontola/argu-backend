@@ -9,21 +9,20 @@ RSpec.describe 'Pages', type: :request do
     super - %i[html]
   end
 
+  let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:edit_path) do
     nominatim_netherlands
-    settings_page_path(subject)
+    settings_iri_path(subject)
   end
-  let(:non_existing_edit_path) { settings_page_path(-99) }
-  let(:non_existing_new_path) { new_page_path(-99) }
-  let(:expect_get_show_unauthorized_serializer) { expect_success }
-  let(:expect_get_show_unauthorized_html) { expect_success }
+  let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", id: 'non_existing', only_path: true) }
+  let(:non_existing_edit_path) { settings_iri_path(non_existing_show_path) }
+  let(:parent_path) { subject }
+  let(:updated_resource_path) { settings_iri_path(subject, tab: :profile) }
+  let(:created_resource_path) { settings_iri_path(Page.last, tab: :profile) }
+  let(:create_failed_path) { new_page_path }
   let(:create_differences) { [['Page.count', 1]] }
   let(:update_differences) { [['Page.count', 0]] }
   let(:destroy_differences) { [['Page.count', -1]] }
-  let(:updated_resource_path) { settings_page_path(subject, tab: :profile) }
-  let(:parent_path) { subject }
-  let(:created_resource_path) { settings_page_path(Page.last, tab: :profile) }
-  let(:create_failed_path) { new_page_path }
   let(:create_params) do
     {page: {profile_attributes: {name: 'name'}, shortname_attributes: {shortname: 'new_page'}, last_accepted: '1'}}
   end
@@ -33,6 +32,9 @@ RSpec.describe 'Pages', type: :request do
     nominatim_netherlands
     {page: {last_accepted: nil}}
   end
+  let(:destroy_params) { {page: {confirmation_string: 'remove'}} }
+  let(:expect_get_show_unauthorized_serializer) { expect_success }
+  let(:expect_get_show_unauthorized_html) { expect_success }
   let(:expect_put_update_html) do
     expect(response).to redirect_to(updated_resource_path)
     expect(subject.reload.display_name).to eq('new_name')
@@ -42,8 +44,6 @@ RSpec.describe 'Pages', type: :request do
     expect_success
     expect(response.body).to(include('new_name'))
   end
-  let(:destroy_params) { {page: {confirmation_string: 'remove'}} }
-  let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:expect_delete_destroy_html) do
     expect(response.code).to eq('303')
     expect(response).to redirect_to(root_path)

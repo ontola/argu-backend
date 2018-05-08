@@ -37,7 +37,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
     motion_attr = attributes_for(:motion)
     sign_in user
 
-    visit new_forum_motion_path(freetown)
+    visit new_iri_path(freetown, :motions)
 
     within('#new_motion') do
       fill_in 'motion[title]', with: motion_attr[:title]
@@ -49,14 +49,14 @@ RSpec.feature 'Accept terms spec', type: :feature do
     click_button 'Accept'
 
     expect(page).to have_content(motion_attr[:title].capitalize)
-    expect(page).to have_current_path(motion_path(Motion.last, start_motion_tour: true))
+    expect(page).to have_current_path(Motion.last.iri_path(start_motion_tour: true))
     expect(user.reload.accepted_terms?).to be_truthy
   end
 
   def accept_terms_before_voting(user)
     sign_in user
 
-    visit motion_path(motion)
+    visit motion
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')

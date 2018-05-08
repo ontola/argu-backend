@@ -31,13 +31,13 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
-    expect_included(argu_url(vote_event_base_path(vote_event), type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'yes'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'other'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'other'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'no'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(vote_event), filter: {option: 'no'}, page: 1, type: 'paginated'))
+    expect_included(collection_iri(vote_event, :votes, type: 'paginated'))
+    %w[yes other no].each do |side|
+      expect_included(collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(
+        collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+      )
+    end
     expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
     expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
@@ -51,7 +51,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
-    expect_included(argu_url(vote_event_base_path(motion.default_vote_event), type: 'paginated'))
+    expect_included(collection_iri(motion.default_vote_event, :votes, type: 'paginated'))
   end
 
   test 'should get index vote_events of motion' do
@@ -62,40 +62,26 @@ class VoteEventsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 2
 
-    expect_included(motion.vote_events.map { |ve| argu_url("/m/#{motion.id}/vote_events/#{ve.id}") })
-    expect_included(motion.vote_events.map { |ve| argu_url(vote_event_base_path(ve), type: 'paginated') })
+    expect_included(motion.vote_events.map(&:iri))
+    expect_included(motion.vote_events.map { |ve| collection_iri(ve, :votes, type: 'paginated') })
+    %w[yes other no].each do |side|
+      expect_included(
+        motion
+          .vote_events
+          .map { |ve| collection_iri(ve, :votes, CGI.escape('filter[option]') => side, type: 'paginated') }
+      )
+      expect_included(
+        motion
+          .vote_events
+          .map { |ve| collection_iri(ve, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated') }
+      )
+    end
     expect_included(
-      motion
-        .vote_events
-        .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'yes'}, type: 'paginated') }
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri)
     )
-    expect_included(
-      motion
-        .vote_events
-        .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'yes'}, page: 1, type: 'paginated') }
+    expect_not_included(
+      vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri)
     )
-    expect_included(
-      motion
-        .vote_events
-        .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'other'}, type: 'paginated') }
-    )
-    expect_included(
-      motion
-        .vote_events
-        .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'other'}, page: 1, type: 'paginated') }
-    )
-    expect_included(
-      motion
-        .vote_events
-        .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'no'}, type: 'paginated') }
-    )
-    expect_included(
-      motion
-        .vote_events
-        .map { |ve| argu_url(vote_event_base_path(ve), filter: {option: 'no'}, page: 1, type: 'paginated') }
-    )
-    expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
-    expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
 
   ####################################
@@ -109,28 +95,15 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'yes'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'other'}, type: 'paginated'))
-    expect_included(
-      argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'other'}, page: 1, type: 'paginated')
-    )
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'no'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'no'}, page: 1, type: 'paginated'))
-    expect_included(
-      lr_vote_event.votes
-        .joins(:creator)
-        .where(profiles: {are_votes_public: true})
-        .map { |v| argu_url("/votes/#{v.id}") }
-    )
-    expect_not_included(
-      lr_vote_event
-        .votes
-        .joins(:creator)
-        .where(profiles: {are_votes_public: false})
-        .map { |v| argu_url("/votes/#{v.id}") }
-    )
+    expect_included(collection_iri(lr_vote_event, :votes, type: 'paginated'))
+    %w[yes other no].each do |side|
+      expect_included(collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(
+        collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+      )
+    end
+    expect_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
+    expect_not_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
   end
 
   test 'should get show vote_event of linked_record with default id' do
@@ -142,7 +115,7 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('creator', 1)
 
     expect_relationship('voteCollection', 1)
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), type: 'paginated'))
+    expect_included(collection_iri(lr_vote_event, :votes, type: 'paginated'))
   end
 
   test 'should get index vote_events of linked_record' do
@@ -153,18 +126,14 @@ class VoteEventsControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 1
 
-    expect_included(
-      argu_url("#{linked_record.iri(only_path: true).to_s.gsub('/od/', '/lr/')}/vote_events/#{lr_vote_event.id}")
-    )
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'yes'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'yes'}, page: 1, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'other'}, type: 'paginated'))
-    expect_included(
-      argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'other'}, page: 1, type: 'paginated')
-    )
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'no'}, type: 'paginated'))
-    expect_included(argu_url(vote_event_base_path(lr_vote_event), filter: {option: 'no'}, page: 1, type: 'paginated'))
+    expect_included(lr_vote_event.iri)
+    expect_included(collection_iri(lr_vote_event, :votes, type: 'paginated'))
+    %w[yes other no].each do |side|
+      expect_included(collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(
+        collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+      )
+    end
   end
 
   ############################################
@@ -177,16 +146,5 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_relationship('partOf', 1)
 
     assert_nil parsed_body.dig('data', 'relationships', 'memberSequence')
-  end
-
-  private
-
-  def vote_event_base_path(vote_event)
-    case vote_event.voteable
-    when Motion
-      "/m/#{vote_event.voteable.id}/vote_events/#{vote_event.id}/votes"
-    when LinkedRecord
-      "#{vote_event.voteable.iri(only_path: true).to_s.gsub('/od/', '/lr/')}/vote_events/#{vote_event.id}/votes"
-    end
   end
 end

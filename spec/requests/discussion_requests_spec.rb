@@ -5,8 +5,6 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Discussions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  let(:non_existing_new_path) { new_forum_discussion_path(-99) }
-  let(:new_path) { new_forum_discussion_path(subject.parent_model) }
   def self.index_formats
     super - %i[html]
   end

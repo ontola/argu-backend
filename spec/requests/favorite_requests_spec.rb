@@ -6,14 +6,12 @@ require 'argu/test_helpers/automated_requests'
 RSpec.describe 'Favorites', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
-  let(:non_existing_create_path) { forum_favorites_path('non_existent') }
-  let(:non_existing_destroy_path) { forum_favorites_path('non_existent') }
-  let(:destroy_path) { forum_favorites_path(holland) }
-  let(:update_failed_path) { url_for([holland, :favorites, only_path: true]) }
-  let(:created_resource_path) { forum_path(holland) }
+  let(:non_existing_destroy_path) { non_existing_index_path }
+  let(:destroy_path) { index_path }
+  let(:update_failed_path) { index_path }
+  let(:created_resource_path) { holland.iri_path }
   let(:create_differences) { [['Favorite.count', 1]] }
   let(:destroy_differences) { [['Favorite.count', -1]] }
-  let(:create_path) { url_for([holland, :favorites, only_path: true]) }
   let(:create_params) { {} }
   let(:authorized_user) { staff }
   let(:expect_delete_destroy_unauthorized_html) { expect_not_found }

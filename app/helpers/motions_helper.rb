@@ -28,11 +28,11 @@ module MotionsHelper
     disabled_message = motion_vote_disabled_message(motion, vote)
     localized_react_component({
       actor: actor_props(actor),
-      argumentUrl: motion_arguments_path(motion),
+      argumentUrl: collection_iri_path(motion, :arguments),
       arguments: motion_vote_arguments(motion),
       argumentsDisabled: !policy(motion).create_child?(:arguments),
       buttonsType: opts.fetch(:buttons_type, 'big'),
-      commentsUrl: motion_comments_path(motion),
+      commentsUrl: collection_iri_path(motion, :comments),
       currentVote: current_vote_props(vote),
       disabled: disabled_message.present?,
       disabledMessage: disabled_message,
@@ -51,7 +51,7 @@ module MotionsHelper
       userRegistrationUrl: user_registration_url(r: request.env['PATH_INFO']),
       selectedArguments: vote&.argument_ids || [],
       totalVotes: motion.default_vote_event.total_vote_count,
-      vote_path: motion_vote_event_votes_path(motion, motion.default_vote_event)
+      vote_path: collection_iri_path(motion.default_vote_event, :votes)
     }.merge(opts))
   end
 

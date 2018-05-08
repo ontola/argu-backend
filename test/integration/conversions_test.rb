@@ -53,7 +53,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
                         ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0],
                         ['MediaObject.count', 0]]) do
-      post edge_conversions_path(motion.edge),
+      post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
                klass: 'questions'
@@ -61,7 +61,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_redirected_to edge.reload.owner
+    assert_redirected_to edge.reload.owner.iri_path
 
     assert Motion.where(id: motion.id).empty?
     assert_equal Question, edge.owner.class
@@ -84,7 +84,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
                         ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0]]) do
-      post edge_conversions_path(question_motion.edge),
+      post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
                klass: 'questions'
@@ -92,7 +92,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_redirected_to edge.reload.owner
+    assert_redirected_to edge.reload.owner.iri_path
 
     assert Motion.where(id: question_motion.id).empty?
     assert_equal Question, edge.owner.class
@@ -107,7 +107,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['VoteEvent.count', 1], ['Edge.count', 1],
                         ['Activity.count', 1], ['BlogPost.count', 0]]) do
-      post edge_conversions_path(question.edge),
+      post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
                klass: 'motions'
@@ -115,7 +115,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            }
     end
 
-    assert_redirected_to edge.reload.owner
+    assert_redirected_to edge.reload.owner.iri_path
 
     assert Question.where(id: question.id).empty?
     assert_equal Motion, edge.owner.class

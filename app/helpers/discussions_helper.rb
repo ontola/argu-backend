@@ -40,7 +40,7 @@ module DiscussionsHelper
   def discussion_invite_props(resource)
     {
       createTokenUrl: '/tokens',
-      createGroupUrl: page_groups_url(resource.parent_model(:page)),
+      createGroupUrl: collection_iri(resource.parent_model(:page), :groups),
       currentActor: current_user.iri,
       defaultRole: GrantSet.participator.id,
       forumEdge: resource.parent_edge(:forum).id,

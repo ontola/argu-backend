@@ -117,7 +117,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
     attributes[:mark_as_important] = mark unless mark.nil?
 
     assert_difference('Motion.count', 1) do
-      post forum_motions_path(freetown), params: {motion: attributes}
+      post collection_iri_path(freetown, :motions), params: {motion: attributes}
     end
     PublicationsWorker.drain
     assert_equal Motion.last.argu_publication.follow_type, follow_type
@@ -128,7 +128,7 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
     attributes = {title: 'New title'}
     attributes[:mark_as_important] = mark unless mark.nil?
 
-    put motion_path(motion), params: {motion: attributes}
+    put motion, params: {motion: attributes}
 
     PublicationsWorker.drain
 
