@@ -23,7 +23,7 @@ class MenusTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'Guest should get show application menu' do
-    get menus_path(format: :nt)
+    get menus_path, headers: argu_headers(accept: :nt)
 
     assert_response 200
     expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:MenuItem])
@@ -36,7 +36,7 @@ class MenusTest < ActionDispatch::IntegrationTest
   end
 
   test 'Guest should get show page menu with custom item' do
-    get page_menus_path(argu, format: :nt)
+    get page_menus_path(argu), headers: argu_headers(accept: :nt)
 
     assert_response 200
     expect_triple(RDF::URI(argu_url("/o/#{argu.url}/menus/navigations")), RDF[:type], NS::ARGU[:MenuItem])
@@ -54,7 +54,7 @@ class MenusTest < ActionDispatch::IntegrationTest
   ####################################
   test 'User should get show application menu' do
     sign_in user
-    get menus_path(format: :nt)
+    get menus_path, headers: argu_headers(accept: :nt)
 
     assert_response 200
     expect_triple(RDF::URI(argu_url('/menus/organizations')), RDF[:type], NS::ARGU[:MenuItem])

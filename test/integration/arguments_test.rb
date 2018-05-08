@@ -94,7 +94,6 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     url = parent.is_a?(LinkedRecord) ? linked_record_arguments_path(parent.iri_opts) : url_for([parent, :arguments])
     post url,
          params: {
-           format: :json_api,
            data: {
              type: 'arguments',
              attributes: {
@@ -102,6 +101,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
                name: 'Argument title'
              }
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
   end
 end

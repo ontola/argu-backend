@@ -25,7 +25,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should get index' do
     argument
-    get notifications_path, params: {format: :json}
+    get notifications_path, headers: argu_headers(accept: :json)
     assert_response 401
   end
 
@@ -45,7 +45,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should get index' do
     argument
     sign_in follower
-    get notifications_path, params: {format: :json}
+    get notifications_path, headers: argu_headers(accept: :json)
     assert_response 200
     assert_equal parsed_body['notifications']['unread'], 1
   end
@@ -53,7 +53,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should get index as nt' do
     argument
     sign_in follower
-    get notifications_path, params: {format: :nt}
+    get notifications_path, headers: argu_headers(accept: :nt)
     assert_response 200
     assert_includes response.body,
                     [
@@ -67,7 +67,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     argument
     sign_in follower
     assert_differences([['Notification.count', 0], ['Notification.where(read_at: nil).count', -1]]) do
-      patch read_notifications_path, params: {format: :json}
+      patch read_notifications_path, headers: argu_headers(accept: :json)
       assert_response 200
     end
   end

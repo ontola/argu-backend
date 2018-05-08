@@ -223,9 +223,8 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with credentials and empty password for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: Rails.application.config.host_name),
+           headers: argu_headers(accept: :json, host: Rails.application.config.host_name),
            params: {
-             format: :json,
              email: user_without_password.email,
              grant_type: 'password',
              scope: 'user'
@@ -284,9 +283,8 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(accept: :json, host: 'argu.co'),
            params: {
-             format: :json,
              email: user.email,
              password: 'wrong',
              grant_type: 'password',
@@ -346,9 +344,8 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown email and r for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(accept: :json, host: 'argu.co'),
            params: {
-             format: :json,
              email: 'wrong@example.com',
              password: 'wrong',
              grant_type: 'password',
@@ -408,9 +405,8 @@ class TokensTest < ActionDispatch::IntegrationTest
   test 'User should not post create token with unknown username for Argu domain JSON' do
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
-           headers: argu_headers(host: 'argu.co'),
+           headers: argu_headers(accept: :json, host: 'argu.co'),
            params: {
-             format: :json,
              username: 'wrong',
              password: 'wrong',
              grant_type: 'password',

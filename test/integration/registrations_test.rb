@@ -131,11 +131,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                         ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
       post user_registration_path,
            params: {
-             format: :json,
              user: {
                email: 'test@example.com'
              }
-           }
+           },
+           headers: argu_headers(accept: :json)
       assert_response 201
       assert_analytics_collected('registrations', 'create', 'email')
     end
@@ -168,11 +168,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                           ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
         post user_registration_path,
              params: {
-               format: :json,
                user: {
                  email: 'test@example.com'
                }
-             }
+             },
+             headers: argu_headers(accept: :json)
         assert_response 201
         assert_analytics_collected('registrations', 'create', 'email')
       end

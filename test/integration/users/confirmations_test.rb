@@ -62,9 +62,9 @@ module Users
     test 'guest should not put confirm email json' do
       put users_confirm_path,
           params: {
-            format: :json,
             email: user.email
-          }
+          },
+          headers: argu_headers(accept: :json)
       assert_response :forbidden
       assert_not user.reload.confirmed?
     end
@@ -180,9 +180,9 @@ module Users
       sign_in user
       put users_confirm_path,
           params: {
-            format: :json,
             email: user.email
-          }
+          },
+          headers: argu_headers(accept: :json)
       assert_response :forbidden
       assert_not user.reload.confirmed?
     end
@@ -195,9 +195,9 @@ module Users
 
       put users_confirm_path,
           params: {
-            format: :json,
             email: 'wrong@example.com'
-          }
+          },
+          headers: argu_headers(accept: :json)
       assert_response 404
       assert_not user.reload.confirmed?
     end
@@ -208,9 +208,9 @@ module Users
       assert_not user.confirmed?
       put users_confirm_path,
           params: {
-            format: :json,
             email: user.email
-          }
+          },
+          headers: argu_headers(accept: :json)
       assert_response 200
       assert user.reload.confirmed?
     end

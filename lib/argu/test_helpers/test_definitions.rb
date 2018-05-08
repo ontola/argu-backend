@@ -11,7 +11,7 @@ module Argu
       def general_new(results: {}, parent: nil)
         get new_path(send(parent)),
             params: {format: request_format},
-            headers: @_argu_headers
+            headers: argu_headers
 
         assert_response results[:response]
       end
@@ -28,7 +28,7 @@ module Argu
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           post create_path(parent),
-               headers: @_argu_headers,
+               headers: argu_headers,
                params: {format: request_format, actor_iri: actor_iri, model_sym => attributes}
 
           reset_publication(Publication.last)
@@ -43,7 +43,7 @@ module Argu
 
         get record_path(record),
             params: {format: request_format},
-            headers: @_argu_headers
+            headers: argu_headers
 
         assert_response results[:response]
       end
@@ -53,7 +53,7 @@ module Argu
 
         get edit_path(record),
             params: {format: request_format},
-            headers: @_argu_headers
+            headers: argu_headers
 
         assert_response results[:response]
       end
@@ -67,7 +67,7 @@ module Argu
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           patch update_path(record),
-                headers: @_argu_headers,
+                headers: argu_headers,
                 params: {format: request_format, model_sym => attributes}
         end
 
@@ -93,7 +93,7 @@ module Argu
                             ['Activity.count', difference.abs]]) do
           delete trash_path(record),
                  params: {format: request_format},
-                 headers: @_argu_headers
+                 headers: argu_headers
         end
 
         assert_response results[:response]
@@ -108,7 +108,7 @@ module Argu
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
           delete destroy_path(record),
                  params: {format: request_format},
-                 headers: @_argu_headers
+                 headers: argu_headers
         end
 
         assert_response results[:response]

@@ -21,11 +21,11 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   test 'guest should get motion/feed nt' do
     get motion_feed_path(subject),
-        params: {format: :nt}
+        headers: argu_headers(accept: :nt)
 
     assert_response 200
 
-    assert_activity_count(format: :nt)
+    assert_activity_count(accept: :nt)
   end
 
   test 'guest should get motion/feed html' do
@@ -60,11 +60,11 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in user
 
     get motion_feed_path(subject),
-        params: {format: :nt}
+        headers: argu_headers(accept: :nt)
 
     assert_response 200
 
-    assert_activity_count(format: :nt)
+    assert_activity_count(accept: :nt)
   end
 
   test 'user should get motion/feed html' do
@@ -81,11 +81,12 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in user
 
     get motion_feed_path(subject),
-        params: {format: :nt, complete: true}
+        params: {complete: true},
+        headers: argu_headers(accept: :nt)
 
     assert_response 200
 
-    assert_activity_count(format: :nt, staff: true, complete: true)
+    assert_activity_count(accept: :nt, staff: true, complete: true)
   end
 
   test 'user should get complete motion/feed html' do
@@ -108,11 +109,11 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     get motion_feed_path(subject),
-        params: {format: :nt}
+        headers: argu_headers(accept: :nt)
 
     assert_response 200
 
-    assert_activity_count(format: :nt, staff: true)
+    assert_activity_count(accept: :nt, staff: true)
   end
 
   test 'staff should get motion/feed html' do
@@ -129,11 +130,12 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     get motion_feed_path(subject),
-        params: {format: :nt, complete: true}
+        params: {complete: true},
+        headers: argu_headers(accept: :nt)
 
     assert_response 200
 
-    assert_activity_count(format: :nt, staff: true, complete: true)
+    assert_activity_count(accept: :nt, staff: true, complete: true)
   end
 
   test 'staff should get complete motion/feed html' do
@@ -149,7 +151,9 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get additional activities for motion/feed js' do
     sign_in staff
 
-    get motion_feed_path(subject), params: {format: :js, from_time: 1.hour.from_now, complete: false}
+    get motion_feed_path(subject),
+        params: {from_time: 1.hour.from_now, complete: false},
+        headers: argu_headers(accept: :js)
 
     assert_response 200
   end
@@ -158,7 +162,9 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in staff
     subject
 
-    get user_feed_path(publisher), params: {format: :js, from_time: 1.hour.from_now, complete: false}
+    get user_feed_path(publisher),
+        params: {from_time: 1.hour.from_now, complete: false},
+        headers: argu_headers(accept: :js)
 
     assert_response 200
   end
@@ -168,7 +174,9 @@ class FeedTest < ActionDispatch::IntegrationTest
     create(:favorite, edge: freetown.edge, user: staff)
     subject
 
-    get feed_path, params: {format: :js, from_time: 1.hour.from_now, complete: false}
+    get feed_path,
+        params: {from_time: 1.hour.from_now, complete: false},
+        headers: argu_headers(accept: :js)
 
     assert_response 200
   end
@@ -176,9 +184,9 @@ class FeedTest < ActionDispatch::IntegrationTest
   private
 
   # Render activity of Motion#create, Motion#publish, 6 comments, 6 public votes and 3 private votes
-  def assert_activity_count(format: :html, staff: false, complete: false)
+  def assert_activity_count(accept: :html, staff: false, complete: false)
     count = staff && complete ? 10 : 7
-    case format
+    case accept
     when :html
       assert_select '.activity-feed .activity', count
     when :nt

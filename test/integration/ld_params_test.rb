@@ -45,10 +45,9 @@ class LDParamsTest < ActionDispatch::IntegrationTest
     assert_differences(differences) do
       post path,
            params: {
-             format: :nq,
              "<#{NS::LL[:graph]}>" => fixture_file_upload(fixture, 'text/n3')
            }.merge(params),
-           headers: argu_headers(back: true)
+           headers: argu_headers(accept: :nq, back: true)
     end
     assert_response 201
     assert_equal response.headers['Location'], klass.last.iri

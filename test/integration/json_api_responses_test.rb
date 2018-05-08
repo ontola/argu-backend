@@ -11,7 +11,6 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
   test 'guest should get 401' do
     post motion_arguments_url(motion),
          params: {
-           format: :json_api,
            data: {
              type: 'arguments',
              attributes: {
@@ -19,7 +18,8 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
                title: 'Argument title'
              }
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 401
     assert_equal parsed_body,
@@ -34,7 +34,6 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post forum_motions_url(cairo),
          params: {
-           format: :json_api,
            data: {
              type: 'motions',
              attributes: {
@@ -42,7 +41,8 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
                content: 'Motion body'
              }
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 403
     assert_equal parsed_body,
@@ -56,9 +56,7 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
   test 'user should get 422 with empty body' do
     sign_in user
     post motion_arguments_url(motion),
-         params: {
-           format: :json_api
-         }
+         headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
@@ -73,9 +71,9 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post motion_arguments_url(motion),
          params: {
-           format: :json_api,
            data: {}
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
@@ -90,14 +88,14 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post motion_arguments_url(motion),
          params: {
-           format: :json_api,
            data: {
              attributes: {
                pro: true,
                title: 'Argument title'
              }
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
@@ -112,7 +110,6 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post motion_arguments_url(motion),
          params: {
-           format: :json_api,
            data: {
              type: 'motions',
              attributes: {
@@ -120,7 +117,8 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
                title: 'Argument title'
              }
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
@@ -135,11 +133,11 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post motion_arguments_url(motion),
          params: {
-           format: :json_api,
            data: {
              type: 'arguments'
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
@@ -154,14 +152,14 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
     sign_in user
     post forum_motions_path(freetown),
          params: {
-           format: :json_api,
            data: {
              type: 'motions',
              attributes: {
                bla: 'bla'
              }
            }
-         }
+         },
+         headers: argu_headers(accept: :json_api)
 
     assert_response 422
     assert_equal parsed_body,
