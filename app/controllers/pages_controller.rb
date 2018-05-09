@@ -78,7 +78,7 @@ class PagesController < EdgeableController
     GrantTree::ANY_ROOT
   end
 
-  def resource_by_id
+  def resource_from_params
     @page ||= Page.find_via_shortname_or_id params[:id]
   end
 

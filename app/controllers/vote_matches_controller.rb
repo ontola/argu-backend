@@ -41,8 +41,6 @@ class VoteMatchesController < ServiceController
     @_resource_by_id ||= VoteMatch.find_by(creator: parent_resource!.profile, shortname: params[:id])
   end
 
-  def resource_by_id_parent; end
-
   def resource_new_params
     HashWithIndifferentAccess.new(
       publisher: current_user

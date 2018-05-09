@@ -102,10 +102,14 @@ class AuthorizedController < ApplicationController
     end
   end
 
+  def resource_from_params
+    @resource_from_params ||= controller_class.try(:find_by, id: resource_id)
+  end
+
   # Searches the current primary resource by its id
   # @return [ActiveRecord::Base, nil] The resource by its id
   def resource_by_id
-    @_resource_by_id ||= controller_class.find_by(id: resource_id)
+    resource_from_params
   end
 
   # Searches the current primary resource by its id, raises if the record cannot be found

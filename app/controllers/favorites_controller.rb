@@ -19,8 +19,6 @@ class FavoritesController < ParentableController
     current_user.favorites.find_by(edge: parent_edge)
   end
 
-  def resource_by_id_parent; end
-
   def redirect_model_success(resource)
     resource.edge.owner.iri(only_path: true).to_s
   end

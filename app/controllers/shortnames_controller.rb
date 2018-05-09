@@ -77,7 +77,7 @@ class ShortnamesController < ParentableController
     redirect_to redirect_model_success, opts
   end
 
-  def resource_by_id
+  def resource_from_params
     @resource ||= Shortname.find_by(id: params[:id])
   end
 

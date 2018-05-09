@@ -49,6 +49,10 @@ class EdgeableController < ServiceController
     resource
   end
 
+  def resource_from_params
+    @resource_from_params ||= controller_class.find_by(id: resource_id)
+  end
+
   def service_klass
     "#{action_name.classify}#{controller_name.classify}".safe_constantize ||
       "Edgeable#{action_name.classify}Service".constantize

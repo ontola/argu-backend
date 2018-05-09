@@ -119,12 +119,12 @@ class VotesController < EdgeableController
 
   def parent_from_params(opts = params)
     return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
-    super&.default_vote_event if parent_resource_key(opts)
+    super(opts.except(:vote_event_id))&.default_vote_event if parent_resource_key(opts.except(:vote_event_id))
   end
 
-  def linked_record_parent
+  def linked_record_parent(opts = params)
     return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
-    super&.default_vote_event
+    super(opts.except(:vote_event_id))&.default_vote_event
   end
 
   def unmodified?

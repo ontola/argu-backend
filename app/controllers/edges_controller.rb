@@ -7,8 +7,8 @@ class EdgesController < AuthorizedController
 
   private
 
-  def resource_by_id
-    @_resource_by_id ||=
+  def resource_from_params
+    @resource_from_params ||=
       if uuid?(resource_id)
         Edge.find_by(uuid: resource_id)
       else
