@@ -94,7 +94,7 @@ class Forum < EdgeableBase
   end
 
   def iri_opts
-    {shortname: url}
+    {id: url}
   end
 
   def language

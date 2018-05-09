@@ -231,7 +231,7 @@ class User < ApplicationRecord
   end
 
   def iri_opts
-    {shortname: url || id}
+    {id: url || id}
   end
 
   def is_omni_only

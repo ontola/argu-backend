@@ -50,7 +50,7 @@ class Page < EdgeableBase
   end
 
   def iri_opts
-    {shortname: url}
+    {id: url}
   end
 
   def publisher
