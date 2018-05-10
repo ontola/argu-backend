@@ -25,7 +25,7 @@ class VoteTest < ActiveSupport::TestCase
 
   def create_vote
     Vote.create!(
-      edge: motion.default_vote_event.edge.children.new(user: user),
+      edge: motion.default_vote_event.edge.children.new(user: user, parent: motion.default_vote_event.edge),
       voteable_id: motion.id,
       voteable_type: 'Motion',
       creator: user.profile,

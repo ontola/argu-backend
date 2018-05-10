@@ -113,11 +113,11 @@ class GroupMembershipsController < ServiceController
     @tree_root_id ||=
       case action_name
       when 'new', 'create'
-        parent_resource&.page&.edge&.id
+        parent_resource&.page&.edge&.uuid
       when 'index'
-        parent_resource&.edge&.id
+        parent_resource&.edge&.uuid
       else
-        resource_by_id&.page&.edge&.id
+        resource_by_id&.page&.edge&.uuid
       end
   end
 end

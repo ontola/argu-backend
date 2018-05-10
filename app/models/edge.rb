@@ -104,6 +104,7 @@ class Edge < ApplicationRecord
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
   before_destroy :destroy_redis_children
+  after_initialize :set_root_id, if: :new_record?
   before_create :set_confirmed
   before_save :set_user_id
 
@@ -263,11 +264,6 @@ class Edge < ApplicationRecord
     @root ||= association_cached?(:parent) ? parent.root : super
   end
 
-  def root_id
-    return @root_id if @root_id.present?
-    @root_id ||= path&.split('.')&.first&.to_i || persisted_edge.root_id
-  end
-
   def trash
     return if trashed_at.present?
     self.class.transaction do
@@ -333,6 +329,16 @@ class Edge < ApplicationRecord
 
   def set_confirmed
     self.confirmed = user.confirmed?
+  end
+
+  def set_root_id
+    if root_object?
+      uuid = SecureRandom.uuid
+      self.uuid = uuid
+      self.root_id = uuid
+    else
+      self.root_id ||= parent.root_id
+    end
   end
 
   def set_user_id

@@ -38,7 +38,7 @@ module ChildOperations
     child = klass.new(child_attrs(klass))
     if child.is_a?(EdgeableBase)
       child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
-      child = record.edge.children.new(owner: child, is_published: true).owner
+      child = record.edge.children.new(owner: child, is_published: true, parent: record.edge).owner
       child.edge.persisted_edge = persisted_edge
       child.edge.parent = record.edge
       child.parent_model = record

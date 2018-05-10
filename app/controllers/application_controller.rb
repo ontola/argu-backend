@@ -164,7 +164,7 @@ class ApplicationController < ActionController::Base
         .compact
         .uniq
         .find do |forum|
-        user_context.with_root_id(forum.edge.parent_id) do
+        user_context.with_root_id(forum.edge.root_id) do
           policy(forum).show?
         end
       end

@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.datetime "expires_at"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.boolean "confirmed", default: false, null: false
+    t.uuid "root_id", null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
   end
 

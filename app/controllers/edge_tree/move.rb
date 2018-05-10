@@ -13,7 +13,7 @@ module EdgeTree
 
       def move
         @edge = Edge.find params[:edge_id]
-        user_context.with_root_id(@edge.parent_edge(:page).id) do
+        user_context.with_root_id(@edge.parent_edge(:page).uuid) do
           authorize @edge.owner, :update?
         end
         moved = false

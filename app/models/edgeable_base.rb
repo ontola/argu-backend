@@ -72,7 +72,8 @@ class EdgeableBase < ApplicationRecord
       end
       yield if block_given?
       edge.parent = new_parent
-      self.root_id = new_parent.root.uuid
+      self.root_id = new_parent.root_id
+      edge.root_id = new_parent.root_id
       edge.descendants.pluck('distinct owner_type').each do |klass|
         klass.constantize.joins(:edge).where('edges.path <@ ?', edge.path).update_all(root_id: root_id)
       end

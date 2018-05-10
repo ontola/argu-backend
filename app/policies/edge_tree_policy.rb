@@ -2,13 +2,15 @@
 
 class EdgeTreePolicy < RestrictivePolicy
   class Scope < RestrictivePolicy::Scope
+    include UUIDHelper
+
     def grant_tree
-      return unless context.tree_root_id.is_a?(Integer)
+      return unless uuid?(context.tree_root_id)
       @grant_tree ||= context.grant_tree_for_id(context.tree_root_id)
     end
 
     def granted_edges_within_tree
-      user.profile.granted_edges.where('path <@ ?', grant_tree.tree_root_id.to_s) if grant_tree.present?
+      user.profile.granted_edges.where(root_id: grant_tree.tree_root_id) if grant_tree.present?
     end
 
     def staff?

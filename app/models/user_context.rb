@@ -3,10 +3,12 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
+  include UUIDHelper
+
   attr_reader :user, :actor, :doorkeeper_scopes, :tree_root_id
 
   def initialize(doorkeeper_scopes:, profile: nil, tree_root_id: nil, user: nil)
-    unless tree_root_id.nil? || tree_root_id == GrantTree::ANY_ROOT || tree_root_id.is_a?(Integer)
+    unless tree_root_id.nil? || tree_root_id == GrantTree::ANY_ROOT || uuid?(tree_root_id)
       raise "tree_root_id should be an integer or the constant GrantTree::ANY_ROOT, but is #{tree_root_id}"
     end
     @user = user

@@ -50,7 +50,7 @@ class LinkedRecord < EdgeableBase
         .joins(:shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?
-    edge = forum.edge.children.new(is_published: true, user_id: User::COMMUNITY_ID, root: forum.edge.root)
+    edge = forum.edge.children.new(is_published: true, user_id: User::COMMUNITY_ID, parent: forum.edge)
     new(deku_id: id, edge: edge, root_id: forum.edge.root.uuid)
   end
 
