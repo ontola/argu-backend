@@ -198,7 +198,9 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.boolean "confirmed", default: false, null: false
     t.uuid "root_id", null: false
+    t.integer "fragment", null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
+    t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
   end
 
   create_table "edits", id: :serial, force: :cascade do |t|

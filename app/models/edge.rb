@@ -109,6 +109,7 @@ class Edge < ApplicationRecord
   before_save :set_user_id
 
   acts_as_followable
+  acts_as_sequenced scope: :root_id, column: :fragment
   has_ltree_hierarchy
   with_collection :exports, pagination: true
 

@@ -26,6 +26,7 @@ gem 'rdf-rdfa'
 gem 'rdf-rdfxml', git: 'https://github.com/ruby-rdf/rdf-rdfxml', ref: 'dd99a73'
 gem 'ebnf', git: 'https://github.com/dryruby/ebnf', ref: '3631273'
 gem 'erubis'
+gem 'sequenced'
 gem 'spreadsheet'
 
 ################## DB ########################

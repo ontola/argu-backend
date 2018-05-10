@@ -592,6 +592,9 @@ GEM
     selenium-webdriver (3.7.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    sequenced (3.1.1)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
     sidekiq (4.2.10)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
@@ -825,6 +828,7 @@ DEPENDENCIES
   sass (= 3.4.18)
   sass-rails (~> 5.0.6)
   selenium-webdriver (~> 3.7.0)
+  sequenced
   sidekiq (~> 4.2.2)
   sidekiq-logging-json!
   sidetiq (~> 0.7.2)
