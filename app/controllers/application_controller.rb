@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
 
   protect_from_forgery with: :exception, prepend: true, unless: (lambda do
-    headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
+    request.headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
   end)
   setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
