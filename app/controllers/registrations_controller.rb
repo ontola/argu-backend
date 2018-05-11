@@ -19,7 +19,12 @@ class RegistrationsController < Devise::RegistrationsController
                    label: 'failed'
       end
     end
-    session[:omniauth] = nil unless @user.new_record?
+    if aod_request?
+      t = Doorkeeper::AccessToken.where(resource_owner_id: resource.id).last
+      response.headers['New-Authorization'] = t.token
+    else
+      session[:omniauth] = nil unless @user.new_record?
+    end
   end
 
   def cancel
@@ -81,13 +86,15 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up(resource_name, resource)
     super
+    guest_user = GuestUser.new(id: session_id)
+
     mail_sent = send_confirmation_mail(
       resource,
       session.presence && RedisResource::Relation
-                            .where(publisher: GuestUser.new(id: session.id), voteable_type: 'Motion')
+                            .where(publisher: guest_user, voteable_type: 'Motion')
     )
     resource.accept_terms!(mail_sent) if accept_terms_param
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource, resource.r) if session.present?
+    schedule_redis_resource_worker(guest_user, resource, resource.r) if session_id.present?
     setup_favorites(resource)
     send_event user: resource,
                category: 'registrations',

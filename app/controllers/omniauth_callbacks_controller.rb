@@ -48,7 +48,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       identity_from_response,
       r_param(request.env)
     )
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), user, r_param(request.env))
+    schedule_redis_resource_worker(GuestUser.new(id: session_id), user, r_param(request.env))
     setup_favorites(user)
     set_flash_message(:notice, :success, kind: @provider.to_s.capitalize) if is_navigational_format?
     sign_in_and_redirect_with_r user
@@ -135,7 +135,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       else
         after_sign_in_path_for(resource_or_scope)
       end
-    schedule_redis_resource_worker(GuestUser.new(id: session.id), resource_or_scope, redirect)
+    schedule_redis_resource_worker(GuestUser.new(id: session_id), resource_or_scope, redirect)
     redirect_to redirect
   end
 end

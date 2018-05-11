@@ -183,7 +183,7 @@ class ApplicationController < ActionController::Base
   def set_profile_forum
     return if current_forum.blank?
     if current_user.guest?
-      Argu::Redis.setex("session:#{session.id}:last_forum", 1.day.seconds.to_i, current_forum.id)
+      Argu::Redis.setex("session:#{session_id}:last_forum", 1.day.seconds.to_i, current_forum.id)
     else
       Argu::Redis.set("profile:#{current_profile.id}:last_forum", current_forum.id)
     end

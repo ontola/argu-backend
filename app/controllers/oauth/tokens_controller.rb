@@ -6,6 +6,7 @@ require 'argu/controller/error_handling/bad_credentials'
 module Oauth
   class TokensController < Doorkeeper::TokensController
     include RedisResourcesHelper
+    include FrontendTransitionHelper
     include OauthHelper
     include JsonApiHelper
     include ActionController::RequestForgeryProtection
@@ -23,7 +24,7 @@ module Oauth
     def create
       return super unless argu_classic_frontend_request?
       r = r_with_authenticity_token
-      guest_session_id = session.id
+      guest_session_id = session_id
       response = authorize_response
       resource = sign_in_user_from_token(response)
       resource.update r: ''

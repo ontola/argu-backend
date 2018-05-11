@@ -5,6 +5,7 @@ require 'argu/controller/error_handling/bad_credentials'
 
 module SPI
   class SPIController < ActionController::API
+    include FrontendTransitionHelper
     include Argu::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling::BadCredentials
     include JsonApiHelper

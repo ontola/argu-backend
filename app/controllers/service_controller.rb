@@ -74,7 +74,7 @@ class ServiceController < ParentableController
       publisher: current_user,
       comment: params[:activity]&.permit(:comment).try(:[], :comment),
       uuid: a_uuid,
-      client_id: request.session.id
+      client_id: request_session_id
     }.merge(options)
   end
 

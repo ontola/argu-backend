@@ -20,7 +20,7 @@ class GuestUser < User
   end
 
   def id
-    @id ||= session.id
+    @id ||= session.try(:resource_owner_id) || session.id
   end
 
   def iri_opts
