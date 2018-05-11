@@ -3,6 +3,7 @@
 class Shortname < ApplicationRecord
   belongs_to :owner,
              polymorphic: true,
+             primary_key: :uuid,
              required: true
   belongs_to :forum,
              inverse_of: :shortnames
@@ -29,18 +30,6 @@ class Shortname < ApplicationRecord
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
-  def self.shortname_for(klass_name, id)
-    Shortname.where(owner_type: klass_name, owner_id: id).pluck(:shortname).first
-  end
-
-  def self.shortnames_for_klass(klass_name, ids)
-    Shortname.where(owner_type: klass_name, owner_id: ids).pluck(:shortname)
-  end
-
-  def self.shortname_owners_for_klass(klass_name, ids)
-    Shortname.where(owner_type: klass_name, owner_id: ids).includes(:owner)
-  end
-
   def self.find_resource(shortname)
     Shortname.find_by('lower(shortname) = lower(?)', shortname).try(:owner)
   end
@@ -53,7 +42,7 @@ class Shortname < ApplicationRecord
 
   def forum_id_matches_owner
     return if owner.is_a? Forum
-    return unless forum.present? && owner.present? && forum != owner.forum
+    return unless forum.present? && owner.present? && forum.id != owner.parent_model(:forum).id
     errors.add(:owner, I18n.t('activerecord.errors.different_owner_forum'))
   end
 end

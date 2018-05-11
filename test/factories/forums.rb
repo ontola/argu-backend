@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :forum do
-    association :shortname, strategy: :build
     association :page, strategy: :create
 
     sequence(:name) { |n| "fg_forum#{n}end" }

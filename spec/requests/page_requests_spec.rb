@@ -25,7 +25,13 @@ RSpec.describe 'Pages', type: :request do
   let(:update_differences) { [['Page.count', 0]] }
   let(:destroy_differences) { [['Page.count', -1]] }
   let(:create_params) do
-    {page: {profile_attributes: {name: 'name'}, shortname_attributes: {shortname: 'new_page'}, last_accepted: '1'}}
+    {
+      page: {
+        profile_attributes: {name: 'name'},
+        edge_attributes: {shortname_attributes: {shortname: 'new_page'}},
+        last_accepted: '1'
+      }
+    }
   end
   let(:invalid_create_params) { {page: {profile_attributes: {name: 'new_name'}}} }
   let(:update_params) { {page: {profile_attributes: {id: subject.profile.id, name: 'new_name'}}} }

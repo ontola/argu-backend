@@ -38,7 +38,7 @@ class LinkedRecord < EdgeableBase
   end
 
   def iri_opts
-    @iri_opts ||= {root_id: parent_model(:page).url, forum_id: parent_model(:forum).url, linked_record_id: deku_id}
+    @iri_opts ||= {root_id: edge.root.url, forum_id: parent_model(:forum).url, linked_record_id: deku_id}
   end
 
   def self.new_for_forum(organization_shortname, forum_shortname, id)
@@ -47,7 +47,7 @@ class LinkedRecord < EdgeableBase
       Page
         .find_via_shortname!(organization_shortname)
         .forums
-        .joins(:shortname)
+        .joins(edge: :shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?
     edge = forum.edge.children.new(is_published: true, user_id: User::COMMUNITY_ID, parent: forum.edge)

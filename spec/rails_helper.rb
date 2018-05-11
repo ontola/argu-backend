@@ -146,16 +146,17 @@ RSpec.configure do |config|
                profile: build(:profile, id: Profile::ANONYMOUS_ID))
       end
       if Page.find_by(id: Profile::COMMUNITY_ID).blank?
+        page_owner = User.create!(
+          shortname: Shortname.new(shortname: 'page_owner'),
+          profile: Profile.new,
+          email: 'page_owner@argu.co'
+        )
         create(:page,
                id: 0,
                last_accepted: Time.current,
                profile: Profile.new(name: 'public page profile'),
-               owner: User.create!(
-                 shortname: Shortname.new(shortname: 'page_owner'),
-                 profile: Profile.new,
-                 email: 'page_owner@argu.co'
-               ).profile,
-               shortname: Shortname.new(shortname: 'public_page'))
+               owner: page_owner.profile,
+               edge_attributes: {user: page_owner, shortname: Shortname.new(shortname: 'public_page')})
       end
       if Group.find_by(id: Group::PUBLIC_ID).blank?
         g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')

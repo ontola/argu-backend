@@ -12,6 +12,9 @@ class ForumTest < ActiveSupport::TestCase
   let(:page) { create(:page) }
   let(:group) { create(:group, parent: page.edge) }
   let(:user) { create(:user) }
+  let(:forum) do
+    create(:forum, parent: page.edge, edge_attributes: {shortname_attributes: {shortname: 'new_forum'}}, locale: 'nl')
+  end
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -19,11 +22,7 @@ class ForumTest < ActiveSupport::TestCase
 
   test 'default decision group' do
     group
-    assert create(:forum, parent: page.edge, shortname_attributes: {shortname: 'new_forum'}, locale: 'nl')
-             .default_decision_group
-             .grants
-             .administrator
-             .present?
+    assert forum.default_decision_group.grants.administrator.present?
   end
 
   test 'should reset public grant' do
@@ -70,15 +69,14 @@ class ForumTest < ActiveSupport::TestCase
 
     m = create(:motion, parent: subject.edge)
     create(:shortname,
-           forum: m.forum,
-           owner: m)
+           owner: m.edge)
     assert_equal false,
                  f.shortnames_depleted?,
                  'external shortname creation cross-affects tenants'
 
     s = create(:shortname,
                forum: f,
-               owner: f.motions.first)
+               owner: f.motions.first.edge)
     assert_equal true,
                  f.shortnames_depleted?,
                  "shortname count doesn't affect limit"

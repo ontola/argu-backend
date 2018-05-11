@@ -25,7 +25,7 @@ class VoteEvent < EdgeableBase
   end
 
   def iri_opts
-    super.merge(id: to_param)
+    super.merge(id: to_param, parent_iri: parent_iri(only_path: true))
   end
 
   def neutral_count

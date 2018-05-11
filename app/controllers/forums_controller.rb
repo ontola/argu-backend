@@ -19,7 +19,7 @@ class ForumsController < EdgeableController
   def discover
     @forums = policy_scope(Forum)
                 .public_forums
-                .includes(:default_cover_photo, :default_profile_photo, :shortname)
+                .includes(:default_cover_photo, :default_profile_photo, edge: :shortname)
                 .page show_params[:page]
     render
   end
@@ -79,6 +79,7 @@ class ForumsController < EdgeableController
       resource
         .edge
         .children
+        .includes(root: :shortname)
         .where(owner_type: %w[Motion Question])
         .order('edges.pinned_at DESC NULLS LAST, edges.last_activity_at DESC')
     )

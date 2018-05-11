@@ -35,8 +35,8 @@ class OrganizationsFinderController < AuthorizedController
     match = iri&.match(%r{#{Regexp.new argu_url}\/(.*)\/(.*)\/(lr|od)\/(.*)})
     return if match.nil?
     Page
-      .joins(:shortname, forums: :shortname)
-      .find_by(shortnames: {shortname: match[1]}, shortnames_forums: {shortname: match[2]})
+      .joins(edge: {shortname: {}, children: :shortname})
+      .find_by(shortnames: {shortname: match[1]}, shortnames_edges: {shortname: match[2]})
   end
 
   def resource_from_param

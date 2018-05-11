@@ -595,11 +595,11 @@ ActiveRecord::Schema.define(version: 20180515135129) do
 
   create_table "shortnames", id: :serial, force: :cascade do |t|
     t.string "shortname", null: false
-    t.integer "owner_id", null: false
     t.string "owner_type", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "forum_id"
+    t.uuid "owner_id", null: false
     t.index "lower((shortname)::text)", name: "index_shortnames_on_shortname", unique: true
     t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true
   end
@@ -663,8 +663,10 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.integer "decisions_email", default: 3, null: false
     t.integer "news_email", default: 3, null: false
     t.integer "reactions_email", default: 3, null: false
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
   create_table "vote_events", id: :serial, force: :cascade do |t|

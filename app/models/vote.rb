@@ -72,6 +72,10 @@ class Vote < EdgeableBase
     self.for.to_s == item.to_s
   end
 
+  def iri_opts
+    super.merge(parent_iri: parent_iri(only_path: true))
+  end
+
   def is_pro_con?
     true
   end

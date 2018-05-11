@@ -8,9 +8,14 @@ module Shortnameable
             as: 'owner',
             dependent: :destroy,
             inverse_of: :owner,
-            autosave: true
+            autosave: true,
+            primary_key: :uuid
     accepts_nested_attributes_for :shortname
-    after_initialize :build_shortname_if, if: :new_record?
+    after_initialize :build_shortname_if, if: :build_shortname?
+
+    def build_shortname?
+      new_record? && shortnameable?
+    end
 
     def build_shortname_if
       self.shortname ||= Shortname.new

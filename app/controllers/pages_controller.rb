@@ -19,7 +19,7 @@ class PagesController < EdgeableController
 
   def show
     @forums = policy_scope(authenticated_resource.forums)
-                .includes(:shortname, :default_cover_photo, :default_profile_photo, :edge)
+                .includes(:default_cover_photo, :default_profile_photo, edge: :shortname)
                 .joins(:edge)
                 .order('edges.follows_count DESC')
     @profile = authenticated_resource.profile
@@ -27,7 +27,7 @@ class PagesController < EdgeableController
   end
 
   def new
-    authenticated_resource.build_shortname
+    authenticated_resource.edge.build_shortname
     authenticated_resource.build_profile
 
     render locals: {
@@ -162,11 +162,11 @@ class PagesController < EdgeableController
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
-    return if resource.is_a?(Page)
+    return if resource.owner_type == 'Page'
     send_event category: 'short_url',
                action: 'follow',
                label: params[:id]
-    redirect_to resource.iri_path
+    redirect_to resource.owner.iri_path
   end
 
   def respond_with_form(_resource)

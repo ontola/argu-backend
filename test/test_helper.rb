@@ -40,7 +40,7 @@ module TestHelper
   GrantSet.delete_all
   load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
 
-  User.find_or_create_by(id: User::COMMUNITY_ID) do |user|
+  User.find_or_create_by!(id: User::COMMUNITY_ID) do |user|
     user.shortname = Shortname.new(shortname: 'community')
     user.email = 'community@argu.co'
     user.first_name = nil
@@ -58,8 +58,8 @@ module TestHelper
     user.profile = Profile.new(id: Profile::ANONYMOUS_ID)
   end
 
-  Page.find_or_create_by(id: 0) do |page|
-    page.edge = Edge.new(user: User.community, owner: page)
+  Page.find_or_create_by!(id: 0) do |page|
+    page.edge = Edge.new(user: User.community, owner: page, shortname: Shortname.new(shortname: 'public_page'))
     page.last_accepted = Time.current
     page.profile = Profile.new(name: 'public page profile')
     page.owner = User.create!(
@@ -67,16 +67,15 @@ module TestHelper
       profile: Profile.new,
       email: 'page_owner@argu.co'
     ).profile
-    page.shortname = Shortname.new(shortname: 'public_page')
   end
 
-  public_group = Group.find_or_create_by(id: Group::PUBLIC_ID) do |group|
+  public_group = Group.find_or_create_by!(id: Group::PUBLIC_ID) do |group|
     group.name = 'Public group'
     group.name_singular = 'User'
     group.page = Page.find(0)
   end
 
-  Group.find_or_create_by(id: Group::STAFF_ID) do |group|
+  Group.find_or_create_by!(id: Group::STAFF_ID) do |group|
     group.name = 'Staff group'
     group.name_singular = 'Staff'
     group.page = Page.find(0)
@@ -88,7 +87,7 @@ module TestHelper
       attributes: {member: Profile.community},
       options: {publisher: User.community, creator: Profile.community}
     ).resource
-  public_membership.save(validate: false)
+  public_membership.save!(validate: false)
 
   door_app = Doorkeeper::Application
   door_app.find_or_create_by(id: door_app::ARGU_ID) do |app|

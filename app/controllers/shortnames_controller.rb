@@ -3,8 +3,6 @@
 class ShortnamesController < ParentableController
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
 
-  SAFE_OWNER_TYPES = %w[Question Motion Argument Comment].freeze
-
   def create
     if execute_update
       create_handler_success(authenticated_resource)
@@ -25,7 +23,7 @@ class ShortnamesController < ParentableController
       when 'new', 'create', 'index'
         parent_edge.root_id
       else
-        resource_by_id&.owner&.edge&.root_id
+        resource_by_id&.owner&.root_id
       end
   end
 
@@ -46,17 +44,13 @@ class ShortnamesController < ParentableController
   end
 
   def resource_new_params
-    HashWithIndifferentAccess.new(forum: parent_resource!)
-  end
-
-  def permit_params
-    attrs = policy(resource_by_id || new_resource_from_params)
-              .permitted_attributes
-    p = params
-          .require(:shortname)
-          .permit(*attrs)
-    p['owner_type'] = nil unless SAFE_OWNER_TYPES.include?(p['owner_type'])
-    p
+    HashWithIndifferentAccess.new(
+      forum: parent_resource!,
+      owner: Edge.find_by(
+        owner_id: params[:shortname].try(:[], :owner_id),
+        owner_type: params[:shortname].try(:[], :owner_type)
+      )
+    )
   end
 
   def redirect_model_success(_resource = nil)

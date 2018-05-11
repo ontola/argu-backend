@@ -84,14 +84,14 @@ class ApplicationMenuList < MenuList
   def public_pages
     @public_pages ||=
       Page
-        .joins(forums: [:shortname, edge: :grants])
+        .joins(forums: {edge: %i[grants shortname]})
         .order('edges.follows_count DESC')
         .where(
           forums: {discoverable: true},
           grants: {group_id: Group::PUBLIC_ID},
           shortnames: {shortname: Setting.get('suggested_forums')&.split(',')&.map(&:strip)}
         )
-        .includes(:shortname, profile: :default_profile_photo)
+        .includes(edge: :shortname, profile: :default_profile_photo)
   end
 
   def public_page_links

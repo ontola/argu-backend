@@ -7,7 +7,7 @@ module Argu
         attributes = (args.pop if args.last.is_a?(Hash)) || {}
         page = attributes.delete(:page) || create(:page)
         attributes = {
-          shortname_attributes: attributes_for(:shortname),
+          edge_attributes: {shortname_attributes: attributes_for(:shortname)},
           parent: page.edge,
           page: page,
           options: {
@@ -38,7 +38,7 @@ module Argu
           create_forum(
             :with_follower,
             {
-              shortname_attributes: {shortname: name},
+              edge_attributes: {shortname_attributes: {shortname: name}},
               page: argu,
               parent: argu.edge,
               public_grant: 'initiator'
@@ -51,7 +51,7 @@ module Argu
         let(name) do
           forum = create_forum(
             {
-              shortname_attributes: {shortname: name}
+              edge_attributes: {shortname_attributes: {shortname: name}}
             }.merge(attributes)
           )
           create(:grant,
@@ -67,7 +67,7 @@ module Argu
           forum = create_forum(
             :populated_forum,
             {
-              shortname_attributes: {shortname: name}
+              edge_attributes: {shortname_attributes: {shortname: name}}
             }.merge(attributes)
           )
           create(:grant,
@@ -82,7 +82,7 @@ module Argu
         let(name) do
           forum = create_forum(
             {
-              shortname_attributes: {shortname: name},
+              edge_attributes: {shortname_attributes: {shortname: name}},
               discoverable: false
             }.merge(attributes)
           )
@@ -99,7 +99,7 @@ module Argu
           create_forum(
             :populated_forum,
             {
-              shortname_attributes: {shortname: name},
+              edge_attributes: {shortname_attributes: {shortname: name}},
               public_grant: 'initiator'
             }.merge(attributes)
           )
@@ -111,7 +111,7 @@ module Argu
           create_forum(
             :populated_forum,
             {
-              shortname_attributes: {shortname: name},
+              edge_attributes: {shortname_attributes: {shortname: name}},
               public_grant: 'spectator'
             }.merge(attributes)
           )

@@ -53,9 +53,7 @@ class EdgeableBase < ApplicationRecord
   def iri_opts
     super.merge(
       id: edge.fragment,
-      root_id: parent_model(:page).url,
-      parent_iri: parent_iri(only_path: true),
-      :"#{parent_edge.owner_type.underscore}_id" => parent_edge.owner_id
+      root_id: edge.root.url
     )
   end
 
@@ -101,6 +99,18 @@ class EdgeableBase < ApplicationRecord
 
   def save!(opts = {})
     store_in_redis?(opts) ? store_in_redis : super
+  end
+
+  # Makes sure that when included on models, the rails path helpers etc. use the object's shortname.
+  # If it hasn't got a shortname, it will fall back to its id.
+  # @return [String, Integer] The shortname of the model, or its id if not present.
+  def to_param
+    url.to_s.presence || super
+  end
+
+  # @return [String, nil] The shortname of the model or nil
+  def url
+    shortname&.shortname
   end
 
   def parent_model(type = nil)
@@ -170,6 +180,32 @@ class EdgeableBase < ApplicationRecord
     # Hands over ownership of a collection to the Community user
     def expropriate(collection)
       collection.update_all(publisher_id: User::COMMUNITY_ID)
+    end
+
+    # Finds an object via its shortname, throws an exception when not found
+    # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
+    def find_via_shortname!(url)
+      find_via_shortname(url) || raise(ActiveRecord::RecordNotFound)
+    end
+
+    # Finds an object via its shortname, returns nil when not found
+    def find_via_shortname(url)
+      Edge.where(owner_type: name).find_via_shortname(url)&.owner
+    end
+
+    # Finds an object via its shortname or id
+    def find_via_shortname_or_id(url)
+      if (/[a-zA-Z]/i =~ url).nil?
+        find_by(id: url)
+      else
+        find_via_shortname(url)
+      end
+    end
+
+    # Finds an object via its shortname or id, throws an exception when not found
+    # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
+    def find_via_shortname_or_id!(url)
+      find_via_shortname_or_id(url) || raise(ActiveRecord::RecordNotFound)
     end
 
     private

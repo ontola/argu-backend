@@ -10,11 +10,11 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
   let(:publication) { build(:publication) }
-  let(:comment_shortname) { create(:shortname, owner: comment, forum: freetown) }
+  let(:comment_shortname) { create(:shortname, owner: comment.edge, forum: freetown) }
   let(:subject) do
     create(:discussion_shortname,
            forum: freetown,
-           owner: motion)
+           owner: motion.edge)
   end
 
   ####################################
@@ -32,7 +32,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
       resource = create(klass, parent: parent.edge)
       parent = resource
 
-      shortname = create(:shortname, forum: freetown, owner: resource)
+      shortname = create(:shortname, forum: freetown, owner: resource.edge)
 
       general_show(200, resource, shortname)
     end
@@ -99,7 +99,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator post create should not overflow limit' do
-    create(:discussion_shortname, forum: freetown, owner: motion)
+    create(:discussion_shortname, forum: freetown, owner: motion.edge)
     assert freetown.max_shortname_count, freetown.shortnames.count
     sign_in administrator
     general_create 403, [['Shortname.count', 0]]
@@ -159,11 +159,11 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   # @return [Hash] Options to pass to the request
   def shortname_attributes
-    attrs = attributes_for(:discussion_shortname, forum: freetown, owner: motion)
+    attrs = attributes_for(:discussion_shortname, forum: freetown, owner: motion.edge)
     attrs.delete(:forum)
     owner = attrs.delete(:owner)
-    attrs[:owner_id] = owner.id
-    attrs[:owner_type] = owner.model_name.to_s
+    attrs[:owner_id] = owner.owner_id
+    attrs[:owner_type] = owner.owner_type
     {
       shortname: attrs
     }

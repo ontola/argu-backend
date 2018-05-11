@@ -6,7 +6,6 @@ class Forum < EdgeableBase
   concern Motionable
   include ProfilePhotoable
   include Photoable
-  include Shortnameable
   include Attribution
   include Menuable
   include Widgetable
@@ -94,7 +93,7 @@ class Forum < EdgeableBase
   end
 
   def iri_opts
-    {root_id: parent_model(:page).url, id: url}
+    {root_id: edge.root.url, id: url}
   end
 
   def language
@@ -120,6 +119,10 @@ class Forum < EdgeableBase
 
   def public_grant
     @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title || 'none'
+  end
+
+  def self.shortnameable?
+    true
   end
 
   # Is the forum out of its shortname limit

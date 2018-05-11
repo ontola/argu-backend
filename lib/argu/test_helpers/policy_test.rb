@@ -8,9 +8,22 @@ class PolicyTest < ActiveSupport::TestCase
   include DefaultPolicyResults
 
   define_automated_tests_objects
-  define_freetown(:expired_freetown, attributes: {edge_attributes: {expires_at: 1.minute.ago}})
-  define_freetown(:trashed_freetown, attributes: {edge_attributes: {trashed_at: 1.minute.ago}})
-  define_freetown(:unpublished_freetown, attributes: {edge_attributes: {is_published: false}})
+  define_freetown(
+    :expired_freetown,
+    attributes: {
+      edge_attributes: {shortname_attributes: FactoryGirl.attributes_for(:shortname), expires_at: 1.minute.ago}
+    }
+  )
+  define_freetown(
+    :trashed_freetown,
+    attributes: {
+      edge_attributes: {shortname_attributes: FactoryGirl.attributes_for(:shortname), trashed_at: 1.minute.ago}
+    }
+  )
+  define_freetown(
+    :unpublished_freetown,
+    attributes: {edge_attributes: {shortname_attributes: FactoryGirl.attributes_for(:shortname), is_published: false}}
+  )
   let(:moderator) { create_moderator(page, create(:user)) }
   let(:initiator) { create_initiator(page, create(:user)) }
   let(:participator) { create_participator(page, create(:user)) }

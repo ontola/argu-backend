@@ -4,7 +4,10 @@ class Edge < ApplicationRecord
   include Edgeable::CounterCache
   include Placeable
   include Ldable
+  include Shortnameable
+  include Uuidable
 
+  has_ltree_hierarchy
   belongs_to :owner,
              inverse_of: :edge,
              polymorphic: true,
@@ -15,6 +18,11 @@ class Edge < ApplicationRecord
              inverse_of: :children
   belongs_to :user,
              required: true
+  belongs_to :root,
+             -> { where(parent_id: nil) },
+             class_name: 'Edge',
+             foreign_key: :root_id,
+             primary_key: :root_id
   has_many :activities, foreign_key: :trackable_edge_id, inverse_of: :trackable_edge, dependent: :nullify
   has_many :recipient_activities, class_name: 'Activity', foreign_key: :recipient_edge_id, dependent: :nullify
   has_many :children,
@@ -110,7 +118,6 @@ class Edge < ApplicationRecord
 
   acts_as_followable
   acts_as_sequenced scope: :root_id, column: :fragment
-  has_ltree_hierarchy
   with_collection :exports, pagination: true
 
   attr_writer :root
@@ -150,6 +157,10 @@ class Edge < ApplicationRecord
   # @return [Array] The ids of (persisted) ancestors, including self if persisted
   def self_and_ancestor_ids
     persisted_edge.path.split('.').map(&:to_i)
+  end
+
+  def shortnameable?
+    %w[Forum Page].include?(owner_type)
   end
 
   # Selects edges of a certain type over persisted and transient models.
@@ -260,9 +271,9 @@ class Edge < ApplicationRecord
     true
   end
 
-  def root
+  def root(*args)
     return self if parent_id.nil? && parent.nil?
-    @root ||= association_cached?(:parent) ? parent.root : super
+    @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
   end
 
   def trash

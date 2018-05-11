@@ -39,7 +39,7 @@ RSpec.describe 'Forums', type: :request do
     let(:non_existing_create_path) { portal_forums_path(forum: {page_id: -99}) }
     let(:create_params) do
       nominatim_netherlands
-      {forum: {page_id: argu.id, name: 'name', shortname_attributes: {shortname: 'new_forum'}}}
+      {forum: {page_id: argu.id, name: 'name', edge_attributes: {shortname_attributes: {shortname: 'new_forum'}}}}
     end
     let(:create_differences) { [['Forum.count', 1]] }
     let(:expect_post_create_guest_serializer) { expect_not_found }

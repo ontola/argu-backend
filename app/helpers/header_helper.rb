@@ -72,7 +72,7 @@ module HeaderHelper
     items = []
     Forum
       .public_forums
-      .includes(:shortname)
+      .includes(:default_profile_photo, edge: [:shortname, root: :shortname])
       .where(shortnames: {shortname: suggested_forums})
       .first(limit)
       .each do |forum|
@@ -87,16 +87,16 @@ module HeaderHelper
   end
 
   def profile_favorite_items
-    ids = current_user.favorite_forum_ids
-    Shortname
-      .shortname_owners_for_klass('Forum', ids)
-      .includes(owner: :default_profile_photo)
-      .map do |shortname|
+    return [] if current_user.guest?
+    current_user
+      .favorite_forums
+      .includes(:default_profile_photo, edge: [:shortname, root: :shortname])
+      .map do |forum|
         link_item(
-          shortname.owner.display_name,
-          shortname.owner.iri_path,
+          forum.display_name,
+          forum.iri_path,
           data: {turbolinks: false_unless_iframe},
-          image: shortname.owner.default_profile_photo.url(:icon)
+          image: forum.default_profile_photo.url(:icon)
         )
       end
   end

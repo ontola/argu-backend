@@ -6,6 +6,7 @@ class User < ApplicationRecord
   include Ldable
   include Placeable
   include Shortnameable
+  include Uuidable
 
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place

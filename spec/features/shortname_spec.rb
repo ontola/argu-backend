@@ -7,9 +7,7 @@ RSpec.feature 'Shortname', type: :feature do
   let(:staff) { create(:user, :staff) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:upcase_page) do
-    create(:page,
-           shortname: build(:shortname,
-                            shortname: 'PAGE'))
+    create(:page, edge: Edge.new(user: staff, shortname_attributes: {shortname: 'PAGE'}))
   end
 
   scenario 'staff creates a shortname' do
@@ -18,7 +16,7 @@ RSpec.feature 'Shortname', type: :feature do
   end
 
   scenario 'staff destroys a shortname' do
-    create(:discussion_shortname, forum: freetown, owner: create(:motion, parent: freetown.edge))
+    create(:discussion_shortname, forum: freetown, owner: create(:motion, parent: freetown.edge).edge)
     sign_in staff
     general_destroy
   end

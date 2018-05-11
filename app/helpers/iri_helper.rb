@@ -35,10 +35,10 @@ module IRIHelper
 
   def resource_from_opts(opts)
     return if opts[:class].blank? || opts[:id].blank?
-    if opts[:class].try(:shortnameable?)
-      opts[:class]&.find_via_shortname_or_id(opts[:id])
-    elsif opts[:class] == Edge && uuid?(opts[:id])
+    if opts[:class] == Edge && uuid?(opts[:id])
       Edge.find_by(uuid: opts[:id])
+    elsif opts[:class].try(:shortnameable?)
+      opts[:class]&.find_via_shortname_or_id(opts[:id])
     elsif opts[:class] < EdgeableBase
       Edge.find_by(fragment: opts[:id], root_id: root_id_from_opts(opts))&.owner
     else

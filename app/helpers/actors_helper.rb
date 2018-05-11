@@ -4,7 +4,7 @@ module ActorsHelper
   def managed_profiles_list
     @managed_profiles_list ||=
       [managed_profiles_list_item(current_user.profile)].concat(
-        current_user.managed_pages.includes(:edge, :shortname, profile: :default_profile_photo).map do |page|
+        current_user.managed_pages.includes(edge: :shortname, profile: :default_profile_photo).map do |page|
           managed_profiles_list_item(page.profile)
         end
       )

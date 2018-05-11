@@ -5,7 +5,7 @@ require 'argu/test_helpers/policy_test'
 
 class ShortnamePolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:discussion_shortname, forum: freetown, owner: motion) }
+  let(:subject) { create(:discussion_shortname, forum: freetown, owner: motion.edge) }
 
   generate_crud_tests
 

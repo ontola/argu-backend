@@ -3,11 +3,11 @@
 class Page < EdgeableBase
   has_many :groups, dependent: :destroy, inverse_of: :page
   has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
-  include Shortnameable
   include Menuable
   include Discussable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
+  has_one :shortname, through: :edge
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
@@ -58,6 +58,10 @@ class Page < EdgeableBase
   end
 
   def root_object?
+    true
+  end
+
+  def self.shortnameable?
     true
   end
 

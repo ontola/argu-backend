@@ -50,8 +50,10 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'Utrecht Two',
                  about: 'Utrecht Two bio'
                },
-               shortname_attributes: {
-                 shortname: 'UtrechtNumberTwo'
+               edge_attributes: {
+                 shortname_attributes: {
+                   shortname: 'UtrechtNumberTwo'
+                 }
                },
                last_accepted: '1'
              }
@@ -100,8 +102,10 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'Utrecht Two',
                  about: 'Utrecht Two bio'
                },
-               shortname_attributes: {
-                 shortname: 'UtrechtNumberTwo'
+               edge_attributes: {
+                 shortname_attributes: {
+                   shortname: 'UtrechtNumberTwo'
+                 }
                },
                last_accepted: '1'
              }
@@ -121,8 +125,10 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'a',
                  about: 'bio'
                },
-               shortname_attributes: {
-                 shortname: 'shortnmae'
+               edge_attributes: {
+                 shortname_attributes: {
+                   shortname: 'shortnmae'
+                 }
                },
                last_accepted: '1'
              }
@@ -297,8 +303,10 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'Utrecht Two',
                  about: 'Utrecht Two bio'
                },
-               shortname_attributes: {
-                 shortname: 'UtrechtNumberTwo'
+               edge_attributes: {
+                 shortname_attributes: {
+                   shortname: 'UtrechtNumberTwo'
+                 }
                },
                last_accepted: '1'
              }
@@ -384,8 +392,10 @@ class PagesTest < ActionDispatch::IntegrationTest
                  content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
                }
              },
-             shortname_attributes: {
-               shortname: 'UtrechtNumberTwo'
+             edge_attributes: {
+               shortname_attributes: {
+                 shortname: 'UtrechtNumberTwo'
+               }
              },
              last_accepted: '1'
            }

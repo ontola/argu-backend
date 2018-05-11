@@ -11,6 +11,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     'forum_with_placement',
     attributes: {
       edge_attributes: {
+        shortname_attributes: {shortname: 'forum_with_placement'},
         placements_attributes: {
           '0' => {
             lat: 1.0,
@@ -339,8 +340,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
         forum: {
           name: 'New forum',
           locale: 'en-GB',
-          shortname_attributes: {shortname: 'new_forum'},
           edge_attributes: {
+            shortname_attributes: {shortname: 'new_forum'},
             placements_attributes: {
               '0' => {
                 lat: 1.0,
