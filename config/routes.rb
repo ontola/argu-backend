@@ -147,6 +147,19 @@ Rails.application.routes.draw do
     put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
+  {
+    q: 'Question',
+    m: 'Motion',
+    a: 'Argument',
+    pro: 'Argument',
+    con: 'Argument',
+    posts: 'BlogPost',
+    c: 'Comment'
+  }.each do |path, resource|
+    get "#{path}/:id", to: 'redirect#show', defaults: {resource: resource.to_s}
+  end
+  get 'm/:id/decision/:step', to: 'redirect#show', defaults: {resource: 'Decision'}
+
   resources :users,
             path: 'u',
             only: %i[show update] do
