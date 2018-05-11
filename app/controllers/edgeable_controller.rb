@@ -50,7 +50,10 @@ class EdgeableController < ServiceController
   end
 
   def resource_from_params
-    @resource_from_params ||= controller_class.find_by(id: resource_id, root_id: root_from_params&.edge&.uuid)
+    return @resource_from_params if instance_variable_defined?('@resource_from_params')
+    resource = super
+    redirect_to resource.iri_path if resource && resource.class != controller_class
+    resource
   end
 
   def service_klass

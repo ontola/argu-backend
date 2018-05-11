@@ -21,26 +21,6 @@
       "note": ""
     },
     {
-      "warning_type": "Redirect",
-      "warning_code": 18,
-      "fingerprint": "71b1df65e0d558a72c0266d0aa66cfccaabc72ac8beb91aee7dfc8e9a3f0a3d6",
-      "check_name": "Redirect",
-      "message": "Possible unprotected redirect",
-      "file": "app/controllers/arguments_controller.rb",
-      "line": 69,
-      "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
-      "code": "redirect_to(Argument.find_by(:id => resource_id, :root_id => root_from_params.edge.uuid).iri_path)",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ArgumentsController",
-        "method": "resource_from_params"
-      },
-      "user_input": "Argument.find_by(:id => resource_id, :root_id => root_from_params.edge.uuid).iri_path",
-      "confidence": "High",
-      "note": ""
-    },
-    {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
       "fingerprint": "9483deb3be0ad06e9585662f2d7417c06790420b1de3576b292ebcc879534337",
@@ -101,6 +81,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-05-10 09:59:09 +0200",
+  "updated": "2018-05-10 16:18:39 +0200",
   "brakeman_version": "4.1.1"
 }
