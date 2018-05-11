@@ -31,13 +31,7 @@ module NestedResourceHelper
   # @return [ApplicationRecord, nil] A resource model if found
   def parent_from_params(opts = params)
     return if parent_id_from_params(opts).blank?
-    if parent_resource_class(opts).try(:shortnameable?)
-      parent_resource_class(opts)&.find_via_shortname_or_id(parent_id_from_params(opts))
-    elsif parent_resource_class(opts) == Edge && uuid?(parent_id_from_params(opts))
-      Edge.find_by(uuid: parent_id_from_params(opts))
-    else
-      parent_resource_class(opts)&.find_by(id: parent_id_from_params(opts))
-    end
+    resource_from_opts(id: parent_id_from_params(opts), class: parent_resource_class(opts), root_id: opts[:root_id])
   end
 
   # Extracts the resource id from a params hash

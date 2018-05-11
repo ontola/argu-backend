@@ -126,12 +126,6 @@ class ForumsController < EdgeableController
     settings_iri_path(resource, tab: tab)
   end
 
-  def resource_from_params
-    return if action_name == 'index' || action_name == 'discover'
-    @forum ||=
-      Forum.where(root_id: root_from_params&.uuid).find_via_shortname_or_id(params[:id] || params[:forum_id])
-  end
-
   def respond_with_form(resource = resource_by_id)
     prepend_view_path 'app/views/forums'
     @grants = Grant

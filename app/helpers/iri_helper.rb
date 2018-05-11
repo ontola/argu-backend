@@ -2,6 +2,7 @@
 
 module IRIHelper
   include RedirectHelper
+  include UUIDHelper
 
   # Converts an Argu URI into a hash containing the type and id of the resource
   # @return [Hash] The id and type of the resource, or nil if the IRI is not found
@@ -26,11 +27,21 @@ module IRIHelper
   # Converts an Argu URI into a resource
   # @return [ApplicationRecord, nil] The resource corresponding to the iri, or nil if the IRI is not found
   def resource_from_iri(iri)
-    id, type = id_and_type_from_iri(iri).values
-    klass = ApplicationRecord.descendants.detect { |m| m.to_s == type.classify } if id.present? || type.present?
-    return if klass.nil?
-    return Edge.find_by(uuid: id) if klass == Edge
-    klass.shortnameable? ? klass.find_via_shortname_or_id(id) : klass.find_by(id: id)
+    opts = id_and_type_from_iri(iri)
+    return if opts[:type].blank? || opts[:id].blank?
+    opts[:class] = ApplicationRecord.descendants.detect { |m| m.to_s == opts[:type].classify }
+    resource_from_opts(opts)
+  end
+
+  def resource_from_opts(opts)
+    return if opts[:class].blank? || opts[:id].blank?
+    if opts[:class].try(:shortnameable?)
+      opts[:class]&.find_via_shortname_or_id(opts[:id])
+    elsif opts[:class] == Edge && uuid?(opts[:id])
+      Edge.find_by(uuid: opts[:id])
+    else
+      opts[:class]&.find_by(id: opts[:id])
+    end
   end
 
   def resource_from_iri!(iri)

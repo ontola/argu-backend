@@ -85,8 +85,8 @@ Rails.application.routes.draw do
     resources :menus, only: %i[index show]
   end
   concern :moveable do
-    get :move, action: :shift
-    put :move, action: :move
+    get :move, action: :shift, on: :member
+    put :move, action: :move, on: :member
   end
   concern :trashable do
     get :delete, action: :delete, as: :delete, on: :member

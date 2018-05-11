@@ -7,10 +7,6 @@ class LogController < ParentableController
     authorize authenticated_resource, :log?
   end
 
-  def resource_from_params
-    Edge.find_by(id: params[:edge_id]).owner
-  end
-
   def show_respond_success_html(resource)
     render 'log', locals: {resource: resource}
   end

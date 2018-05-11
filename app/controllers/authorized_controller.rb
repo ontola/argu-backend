@@ -103,7 +103,7 @@ class AuthorizedController < ApplicationController
   end
 
   def resource_from_params
-    @resource_from_params ||= controller_class.try(:find_by, id: resource_id)
+    @resource_from_params ||= resource_from_opts(params.merge(class: controller_class))
   end
 
   # Searches the current primary resource by its id

@@ -7,14 +7,6 @@ class QuestionsController < EdgeableController
 
   private
 
-  def authenticated_resource
-    if (%w[convert convert! shift move] & [params[:action]]).present?
-      @resource ||= Question.find(params[:question_id])
-    else
-      super
-    end
-  end
-
   def include_show
     [
       :default_cover_photo,

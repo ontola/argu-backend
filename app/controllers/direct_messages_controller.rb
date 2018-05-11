@@ -31,7 +31,7 @@ class DirectMessagesController < ParentableController
   end
 
   def parent_resource
-    @parent_resource ||= super || resource_from_iri(params[:direct_message][:resource_iri])
+    @parent_resource ||= super || resource_from_iri(params[:direct_message].try(:[], :resource_iri))
   end
 
   def resource_by_id; end

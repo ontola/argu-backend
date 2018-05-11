@@ -41,7 +41,7 @@ class ParentableController < AuthorizedController
   end
 
   def parent_resource
-    @parent_resource ||= linked_record_parent || super || resource_by_id_parent
+    @parent_resource ||= linked_record_parent || resource_by_id_parent || super
   end
 
   def redirect_edge_parent_requests

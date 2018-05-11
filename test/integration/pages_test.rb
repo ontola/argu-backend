@@ -158,11 +158,12 @@ class PagesTest < ActionDispatch::IntegrationTest
     get settings_iri(page)
 
     assert_response 403
-    assert_equal page, assigns(:page)
   end
 
   test 'user should not update settings when not page owner' do
     sign_in user
+
+    about = page.profile.about
 
     put page,
         params: {
@@ -175,8 +176,7 @@ class PagesTest < ActionDispatch::IntegrationTest
         }
 
     assert_response 403
-    assert_equal page, assigns(:page)
-    assert_equal page.profile.about, assigns(:page).profile.reload.about
+    assert_equal about, page.profile.reload.about
   end
 
   ####################################
@@ -212,12 +212,10 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get settings_iri(page)
     assert_response 200
-    assert_equal page, assigns(:page)
 
     %i[profile groups forums advanced].each do |tab|
       get settings_iri(page, tab: tab)
       assert_response 200
-      assert_equal page, assigns(:page)
     end
   end
 
@@ -243,13 +241,12 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assigns(:page).profile.reload
-    assert_equal 2, assigns(:page).profile.media_objects.count
-    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
-    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
+    page.reload
+    assert_equal 2, page.profile.media_objects.count
+    assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
+    assert_equal 'cover_photo.jpg', page.profile.default_cover_photo.content_identifier
     assert_redirected_to settings_iri_path(page, tab: :profile)
-    assert_equal page, assigns(:page)
-    assert_equal 'new_about', assigns(:page).profile.about
+    assert_equal 'new_about', page.profile.about
   end
 
   test 'administrator should put update page add latlon' do
@@ -394,12 +391,10 @@ class PagesTest < ActionDispatch::IntegrationTest
            }
          }
 
-    assigns(:page).profile.reload
+    page = Page.last
     assert_response 302
-    assert assigns(:page)
-    assert assigns(:page).persisted?
-    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.content_identifier
-    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.content_identifier
-    assert_equal 2, assigns(:page).profile.media_objects.count
+    assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
+    assert_equal 'cover_photo.jpg', page.profile.default_cover_photo.content_identifier
+    assert_equal 2, page.profile.media_objects.count
   end
 end

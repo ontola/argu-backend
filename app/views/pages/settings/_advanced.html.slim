@@ -1,18 +1,18 @@
-=semantic_form_for @page, url: @page.iri_path, remote: true, authenticity_token: true do |f|
-  - @page.errors.full_messages.each do |message|
+=semantic_form_for authenticated_resource, url: authenticated_resource.iri_path, remote: true, authenticity_token: true do |f|
+  - authenticated_resource.errors.full_messages.each do |message|
     =message
   =f.inputs do
-    - if policy(@page).permitted_attributes.include?(:visibility)
+    - if policy(authenticated_resource).permitted_attributes.include?(:visibility)
       =f.inputs name: t('forums.settings.privacy') do
         =f.input :visibility, as: :select, collection: Forum.visibilities.keys, required: false, include_blank: false
-    - if policy(@page).shortname? || policy(@page).delete?
+    - if policy(authenticated_resource).shortname? || policy(authenticated_resource).delete?
     =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-      - if policy(@page).shortname?
+      - if policy(authenticated_resource).shortname?
         =f.inputs :shortname, for: :shortname
         li.form-helper
           span= t('pages.shortname.warning')
-      - if policy(@page).delete?
-        =f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
+      - if policy(authenticated_resource).delete?
+        =f.input :f_delete, as: :link, url: delete_page_url(authenticated_resource), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, as: :button

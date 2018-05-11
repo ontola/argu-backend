@@ -56,7 +56,7 @@ class Users::IdentitiesController < AuthorizedController
     settings_user_path(tab: :authentication)
   end
 
-  def resource_id
+  def resource_by_id
     return super unless %w[connect connect!].include?(action_name)
     payload = decode_token params[:token]
     @identity = Identity.find payload['identity']

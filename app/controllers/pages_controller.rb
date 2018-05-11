@@ -37,15 +37,15 @@ class PagesController < EdgeableController
   end
 
   def create
-    @page.assign_attributes(permit_params)
+    authenticated_resource.assign_attributes(permit_params)
 
-    if @page.save
+    if authenticated_resource.save
       respond_to do |format|
-        create_respond_blocks_success(@page, format)
+        create_respond_blocks_success(authenticated_resource, format)
       end
     else
       respond_to do |format|
-        create_respond_blocks_failure(@page, format)
+        create_respond_blocks_failure(authenticated_resource, format)
       end
     end
   end
@@ -56,7 +56,7 @@ class PagesController < EdgeableController
     render locals: {
       tab: tab!,
       active: tab!,
-      resource: @page
+      resource: authenticated_resource
     }
   end
 
@@ -77,10 +77,6 @@ class PagesController < EdgeableController
   def tree_root_id
     return super unless %w[create new index].include?(action_name)
     GrantTree::ANY_ROOT
-  end
-
-  def resource_from_params
-    @page ||= Page.find_via_shortname_or_id params[:id]
   end
 
   private
@@ -144,7 +140,7 @@ class PagesController < EdgeableController
   end
 
   def new_resource_from_params
-    @page ||= Edge.new(
+    Edge.new(
       owner: Profile.new(profileable: Page.new).profileable,
       user: current_user,
       is_published: true
@@ -155,7 +151,7 @@ class PagesController < EdgeableController
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
     @_permit_params = params
                         .require(:page)
-                        .permit(*policy(@page).permitted_attributes)
+                        .permit(*policy(authenticated_resource).permitted_attributes)
                         .to_h
                         .merge(owner: current_user.profile)
     merge_photo_params(@_permit_params, Page)
@@ -195,7 +191,7 @@ class PagesController < EdgeableController
   end
 
   def tab!
-    @verified_tab ||= policy(@page || Page).verify_tab(tab)
+    @verified_tab ||= policy(authenticated_resource || Page).verify_tab(tab)
   end
 
   def tab

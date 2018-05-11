@@ -1,20 +1,20 @@
 h3= t('forums.settings.banners.title')
 p= t('forums.settings.banners.about_banners')
-=link_to new_iri_path(@forum, :banners), class: 'btn margin-bottom' do
+=link_to new_iri_path(authenticated_resource, :banners), class: 'btn margin-bottom' do
   span.fa.fa-plus
   span.icon-left= t('newe_type', type: t('banners.type'))
 #banners-published
   fieldset
     legend= t('published')
   table.styled
-    =render partial: 'settings/banners/banner', collection: @forum.banners.published
+    =render partial: 'settings/banners/banner', collection: authenticated_resource.banners.published
 #banners-drafts
   fieldset
     legend= t('drafts')
   table.styled
-    =render partial: 'settings/banners/banner', collection: @forum.banners.unpublished
+    =render partial: 'settings/banners/banner', collection: authenticated_resource.banners.unpublished
 #banners-ended
   fieldset
     legend= t('ended')
   table.styled
-    =render partial: 'settings/banners/banner', collection: @forum.banners.ended
+    =render partial: 'settings/banners/banner', collection: authenticated_resource.banners.ended

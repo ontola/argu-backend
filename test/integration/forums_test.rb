@@ -226,12 +226,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
     end
 
+    holland.reload
     assert_redirected_to settings_iri_path(holland, tab: :general)
-    assert_equal 'new name', assigns(:forum).reload.name
-    assert_equal 'new bio', assigns(:forum).reload.bio
-    assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.content_identifier
-    assert_equal 'cover_photo.jpg', assigns(:forum).default_cover_photo.content_identifier
-    assert_equal 2, assigns(:forum).media_objects.count
+    assert_equal 'new name', holland.reload.name
+    assert_equal 'new bio', holland.reload.bio
+    assert_equal 'profile_photo.png', holland.default_profile_photo.content_identifier
+    assert_equal 'cover_photo.jpg', holland.default_cover_photo.content_identifier
+    assert_equal 2, holland.media_objects.count
   end
 
   test 'administrator should update locale affecting placement' do
