@@ -19,7 +19,7 @@ module IRIHelper
     return {} unless argu_iri_or_relative?(iri)
     parent = Rails.application.routes.recognize_path(iri)
     return {} unless parent[:id].present? && parent[:controller].present?
-    {id: parent[:id], type: parent[:controller].singularize}
+    {id: parent[:id], type: parent[:controller].singularize, root_id: parent[:root_id]}
   rescue ActionController::RoutingError
     {}
   end
@@ -39,6 +39,8 @@ module IRIHelper
       opts[:class]&.find_via_shortname_or_id(opts[:id])
     elsif opts[:class] == Edge && uuid?(opts[:id])
       Edge.find_by(uuid: opts[:id])
+    elsif opts[:class] < EdgeableBase
+      Edge.find_by(fragment: opts[:id], root_id: root_id_from_opts(opts))&.owner
     else
       opts[:class]&.find_by(id: opts[:id])
     end
@@ -46,5 +48,10 @@ module IRIHelper
 
   def resource_from_iri!(iri)
     resource_from_iri(iri) || raise(ActiveRecord::RecordNotFound)
+  end
+
+  def root_id_from_opts(opts)
+    return opts[:root_id] if uuid?(opts[:root_id])
+    Page.find_via_shortname_or_id(opts[:root_id])&.edge&.uuid
   end
 end

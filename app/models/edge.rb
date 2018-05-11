@@ -139,7 +139,7 @@ class Edge < ApplicationRecord
   end
 
   def iri_opts
-    {id: owner_id, root_id: root.owner.url}
+    {id: fragment, root_id: root.owner.url}
   end
 
   # @return [Array] The ids of (persisted) ancestors, excluding self

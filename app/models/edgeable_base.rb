@@ -52,6 +52,7 @@ class EdgeableBase < ApplicationRecord
 
   def iri_opts
     super.merge(
+      id: edge.fragment,
       root_id: parent_model(:page).url,
       parent_iri: parent_iri(only_path: true),
       :"#{parent_edge.owner_type.underscore}_id" => parent_edge.owner_id

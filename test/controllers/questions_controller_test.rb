@@ -11,7 +11,7 @@ class QuestionsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show question' do
-    get :show, params: {format: :json_api, root_id: argu.id, id: question.id}
+    get :show, params: {format: :json_api, root_id: argu.id, id: question.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)

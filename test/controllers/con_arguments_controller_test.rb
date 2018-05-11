@@ -20,7 +20,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show argument' do
-    get :show, params: {format: :json_api, root_id: argu.id, id: argument}
+    get :show, params: {format: :json_api, root_id: argu.id, id: argument.edge.fragment}
     assert_redirected_to argument.iri_path
   end
 
@@ -28,7 +28,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   # Index for Motion
   ####################################
   test 'should get index arguments of motion with' do
-    get :index, params: {format: :json_api, root_id: argu.id, motion_id: motion.id}
+    get :index, params: {format: :json_api, root_id: argu.id, motion_id: motion.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -42,7 +42,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index arguments of motion with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.id, motion_id: motion.id, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.id, motion_id: motion.edge.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)

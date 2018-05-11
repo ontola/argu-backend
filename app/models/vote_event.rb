@@ -70,7 +70,7 @@ class VoteEvent < EdgeableBase
   end
 
   def to_param
-    id || 'default'
+    edge.fragment || 'default'
   end
 
   def total_vote_count
