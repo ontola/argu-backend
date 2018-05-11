@@ -39,6 +39,7 @@ class ApplicationService
   # @see {after_save}
   def commit
     ActiveRecord::Base.transaction do
+      persist_parents
       @actions[service_action] = resource.public_send(service_method) if resource.errors.empty?
       after_save if @actions[service_action]
       publish_success_signals
@@ -98,6 +99,17 @@ class ApplicationService
     publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
     publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
     publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
+  end
+
+  def persist_parents
+    return unless resource.try(:parent_model)
+    while resource.parent_model.new_record?
+      non_persisted = resource.parent_model
+      until non_persisted.parent_model.persisted? || non_persisted.parent_model.nil?
+        non_persisted = non_persisted.parent_model
+      end
+      non_persisted.save!
+    end
   end
 
   # The action that called this service.
