@@ -4,6 +4,9 @@ class CurrentActorSerializer < BaseSerializer
   attribute :actor_type, predicate: NS::ARGU[:actorType], key: :body
   attribute :shortname
   attribute :url
+  attribute :primary_email,
+            predicate: NS::ARGU[:primaryEmail],
+            if: :new_fe_request?
 
   has_one :profile_photo, predicate: NS::SCHEMA[:image] do
     object.actor&.default_profile_photo
@@ -13,7 +16,11 @@ class CurrentActorSerializer < BaseSerializer
     object.actor&.profileable
   end
 
+  def primary_email
+    object&.user&.primary_email_record&.email
+  end
+
   def type
-    NS::ARGU["#{object.actor_type}Actor"]
+    NS::ARGU[object.actor_type]
   end
 end

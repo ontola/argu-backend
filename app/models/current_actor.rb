@@ -14,9 +14,16 @@ class CurrentActor
 
   def actor_type
     if actor.present?
-      actor&.owner&.class&.name
+      owner = actor.owner
+      if owner.is_a?(GuestUser)
+        'GuestUser'
+      elsif owner.confirmed?
+        'ConfirmedUser'
+      else
+        'UnconfirmedUser'
+      end
     else
-      'Guest'
+      'GuestUser'
     end
   end
 
