@@ -35,20 +35,6 @@ module Loggable
     end
   end
 
-  module Serializer
-    extend ActiveSupport::Concern
-    included do
-      link(:log) do
-        {
-          href: log_url(object.edge),
-          meta: {
-            predicate: NS::ARGU[:log]
-          }
-        }
-      end
-    end
-  end
-
   module ActiveRecordExtension
     def self.included(base)
       base.class_eval do

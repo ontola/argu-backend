@@ -84,6 +84,9 @@ Rails.application.routes.draw do
   concern :invitable do
     get :invite, controller: :invites, action: :new
   end
+  concern :loggable do
+    resource :log, only: %i[show], on: :member
+  end
   concern :menuable do
     resources :menus, only: %i[index show]
   end
@@ -206,7 +209,6 @@ Rails.application.routes.draw do
   end
   resources :exports, only: [], concerns: %i[destroyable]
   resources :grants, path: 'grants', only: [:destroy]
-  get 'log/:edge_id', to: 'log#show', as: :log
 
   resources :direct_messages, path: :dm, only: [:create]
 
@@ -337,7 +339,7 @@ Rails.application.routes.draw do
       resources :questions,
                 path: 'q', except: %i[index new create],
                 concerns: %i[actionable commentable blog_postable moveable feedable exportable
-                             trashable invitable menuable contactable statable] do
+                             trashable invitable menuable contactable statable loggable] do
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]
       end
@@ -346,7 +348,7 @@ Rails.application.routes.draw do
                 path: 'm',
                 except: %i[index new create destroy],
                 concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
-                             feedable trashable decisionable invitable menuable statable exportable] do
+                             feedable trashable decisionable invitable menuable statable exportable loggable] do
         resources :media_objects, only: :index
       end
       resources :arguments, only: %i[show], path: 'a'
@@ -354,14 +356,14 @@ Rails.application.routes.draw do
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
                   except: %i[index new create],
-                  concerns: %i[actionable votable feedable trashable commentable menuable contactable statable]
+                  concerns: %i[actionable votable feedable trashable commentable menuable contactable statable loggable]
       end
       resources :votes, only: %i[destroy update show], as: :vote
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show edit update],
-                concerns: %i[trashable commentable menuable statable]
-      resources :comments, concerns: %i[actionable trashable], only: %i[show edit update], path: 'c'
+                concerns: %i[trashable commentable menuable statable loggable]
+      resources :comments, concerns: %i[actionable trashable loggable], only: %i[show edit update], path: 'c'
       resources :comments, only: %i[show]
 
       resources :forums,
