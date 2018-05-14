@@ -2,6 +2,7 @@
 
 require 'argu/test_helpers/default_policy_tests'
 require 'argu/test_helpers/default_policy_results'
+require 'argu/errors/forbidden'
 
 class PolicyTest < ActiveSupport::TestCase
   include DefaultPolicyResults

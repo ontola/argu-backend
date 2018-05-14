@@ -31,6 +31,7 @@ class CommentPolicy < EdgeablePolicy
   end
 
   def create_expired?
+    return super unless record.parent_model.is_a?(BlogPost)
     has_grant?(:create)
   end
 end
