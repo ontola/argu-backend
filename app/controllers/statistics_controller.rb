@@ -2,6 +2,7 @@
 
 class StatisticsController < ParentableController
   helper_method :contribution_keys
+  helper_method :additional_stats
 
   def show
     return unless stale?(last_modified: authenticated_edge.self_and_descendants.maximum(:updated_at))
@@ -28,8 +29,34 @@ class StatisticsController < ParentableController
 
   private
 
+  def additional_stats
+    case resource_by_id
+    when Forum
+      [
+        {
+          title: t('forums.statistics.cities.title'),
+          description: t('forums.statistics.cities.info'),
+          stats: city_count(resource_by_id)
+        }
+      ]
+    else
+      []
+    end
+  end
+
   def authorize_action
-    authorize resource_by_id, :statistics?
+    authorize resource_by_id!, :statistics?
+  end
+
+  def city_count(forum)
+    cities = Hash.new(0)
+    User
+      .joins(:follows)
+      .where(follows: {followable: forum.edge})
+      .includes(home_placement: :place)
+      .map { |u| u.home_placement&.place&.address.try(:[], 'city') || t('forums.statistics.cities.unknown') }
+      .each { |v| cities.store(v, cities[v] + 1) }
+    cities.sort { |x, y| y[1] <=> x[1] }
   end
 
   def contribution_keys
@@ -41,10 +68,6 @@ class StatisticsController < ParentableController
   end
 
   def resource_by_id
-    parent_resource
-  end
-
-  def parent_resource
-    @parent_resource ||= super&.owner
+    parent_resource.is_a?(Edge) ? parent_resource.owner : parent_resource
   end
 end

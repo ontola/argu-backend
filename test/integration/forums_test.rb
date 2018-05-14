@@ -306,12 +306,12 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     counts = [['Den Haag', '2'], %w[Utrecht 1], %w[Unknown 1]]
-    assert_select '.city-table' do |element|
-      assert_select element, '.city-row' do |rows|
+    assert_select '.additional-stats' do |element|
+      assert_select element, 'tr' do |rows|
         assert_equal 3, rows.count
         element.each_with_index do |row, i|
-          assert_select row, '.city', text: counts[i][0]
-          assert_select row, '.city-count', text: counts[i][1]
+          assert_select row, 'td:first', text: counts[i][0]
+          assert_select row, 'td:last', text: counts[i][1]
         end
       end
     end

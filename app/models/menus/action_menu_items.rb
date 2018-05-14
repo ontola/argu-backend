@@ -78,7 +78,7 @@ module Menus
       menu_item(
         :statistics,
         image: 'fa-bar-chart-o',
-        href: edge_statistics_url(resource.edge.id),
+        href: statistics_iri(resource),
         policy: :statistics?
       )
     end

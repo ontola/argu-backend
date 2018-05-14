@@ -33,14 +33,6 @@ class ForumsController < EdgeableController
     super
   end
 
-  def statistics
-    render :statistics,
-           locals: {
-             content_counts: content_count(resource_by_id),
-             city_counts: city_count(resource_by_id)
-           }
-  end
-
   protected
 
   def stale_record_recovery_action
@@ -63,17 +55,6 @@ class ForumsController < EdgeableController
     return super unless action_name == 'show'
   end
 
-  def city_count(forum)
-    cities = Hash.new(0)
-    User
-      .joins(:follows)
-      .where(follows: {followable: forum.edge})
-      .includes(home_placement: :place)
-      .map { |u| u.home_placement&.place&.address.try(:[], 'city') }
-      .each { |v| cities.store(v, cities[v] + 1) }
-    cities.sort { |x, y| y[1] <=> x[1] }
-  end
-
   def collect_children(resource)
     policy_scope(
       resource
@@ -86,16 +67,6 @@ class ForumsController < EdgeableController
       .includes(Question.edge_includes_for_index.deep_merge(Motion.edge_includes_for_index))
       .page(show_params[:page])
       .per(30)
-  end
-
-  def content_count(forum)
-    forum
-      .edge
-      .descendants
-      .where(owner_type: %w[Argument Vote Question Motion Comment])
-      .group(:owner_type)
-      .count
-      .sort { |x, y| y[1] <=> x[1] }
   end
 
   def current_forum

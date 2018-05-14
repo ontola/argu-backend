@@ -14,3 +14,12 @@
                   tr
                     td[data-title=t("statistics.#{key}.tooltip")]= t("statistics.#{key}.label")
                     td= value
+          - additional_stats.each do |stats|
+            h3= stats[:title]
+            p= stats[:description]
+            table.additional-stats
+              tbody
+                - stats[:stats].each do |row|
+                  tr
+                    - row.each do |value|
+                      td= value

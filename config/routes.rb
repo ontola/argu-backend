@@ -88,6 +88,9 @@ Rails.application.routes.draw do
     get :move, action: :shift, on: :member
     put :move, action: :move, on: :member
   end
+  concern :statable do
+    get :statistics, to: 'statistics#show'
+  end
   concern :trashable do
     get :delete, action: :delete, as: :delete, on: :member
     delete '', action: :destroy, on: :member, as: :destroy, constraints: Argu::DestroyConstraint
@@ -312,7 +315,10 @@ Rails.application.routes.draw do
   resources :pages, path: 'o', only: %i[new create index]
 
   constraints(Argu::PagesConstraint) do
-    resources :pages, path: '', only: %i[show update], concerns: %i[feedable destroyable menuable] do
+    resources :pages,
+              path: '',
+              only: %i[show update],
+              concerns: %i[feedable destroyable menuable statable] do
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
       resources :group_memberships, only: :index do
@@ -328,7 +334,7 @@ Rails.application.routes.draw do
       resources :questions,
                 path: 'q', except: %i[index new create],
                 concerns: %i[actionable commentable blog_postable moveable feedable
-                             trashable invitable menuable contactable] do
+                             trashable invitable menuable contactable statable] do
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]
       end
@@ -337,7 +343,7 @@ Rails.application.routes.draw do
                 path: 'm',
                 except: %i[index new create destroy],
                 concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
-                             feedable trashable decisionable invitable menuable] do
+                             feedable trashable decisionable invitable menuable statable] do
         resources :media_objects, only: :index
       end
       resources :arguments, only: %i[show], path: 'a'
@@ -345,25 +351,25 @@ Rails.application.routes.draw do
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
                   except: %i[index new create],
-                  concerns: %i[actionable votable feedable trashable commentable menuable contactable]
+                  concerns: %i[actionable votable feedable trashable commentable menuable contactable statable]
       end
       resources :votes, only: %i[destroy update show], as: :vote
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show edit update],
-                concerns: %i[trashable commentable menuable]
+                concerns: %i[trashable commentable menuable statable]
       resources :comments, concerns: %i[actionable trashable], only: %i[show edit update], path: 'c'
       resources :comments, only: %i[show]
 
       resources :forums,
                 only: %i[show update],
                 path: '',
-                concerns: %i[feedable discussable destroyable favorable invitable menuable moveable] do
+                concerns: %i[feedable discussable destroyable favorable invitable menuable
+                             moveable statable] do
         resources :motions, path: :m, only: [] do
           get :search, to: 'motions#search', on: :collection
         end
         get :settings, on: :member
-        get :statistics, on: :member
         resources :shortnames, only: %i[new create]
         resources :banners, only: %i[new create]
         resources :linked_records,
