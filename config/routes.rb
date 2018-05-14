@@ -71,6 +71,9 @@ Rails.application.routes.draw do
     resources :questions, path: 'q', only: %i[index new create]
     resources :motions, path: 'm', only: %i[index new create]
   end
+  concern :exportable do
+    resources :exports, only: %i[index create]
+  end
   concern :favorable do
     resources :favorites, only: [:create]
     delete 'favorites', to: 'favorites#destroy'
@@ -318,7 +321,7 @@ Rails.application.routes.draw do
     resources :pages,
               path: '',
               only: %i[show update],
-              concerns: %i[feedable destroyable menuable statable] do
+              concerns: %i[feedable destroyable menuable statable exportable] do
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
       resources :group_memberships, only: :index do
@@ -333,7 +336,7 @@ Rails.application.routes.draw do
     scope ':root_id' do
       resources :questions,
                 path: 'q', except: %i[index new create],
-                concerns: %i[actionable commentable blog_postable moveable feedable
+                concerns: %i[actionable commentable blog_postable moveable feedable exportable
                              trashable invitable menuable contactable statable] do
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]
@@ -343,7 +346,7 @@ Rails.application.routes.draw do
                 path: 'm',
                 except: %i[index new create destroy],
                 concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
-                             feedable trashable decisionable invitable menuable statable] do
+                             feedable trashable decisionable invitable menuable statable exportable] do
         resources :media_objects, only: :index
       end
       resources :arguments, only: %i[show], path: 'a'
@@ -365,7 +368,7 @@ Rails.application.routes.draw do
                 only: %i[show update],
                 path: '',
                 concerns: %i[feedable discussable destroyable favorable invitable menuable
-                             moveable statable] do
+                             moveable statable exportable] do
         resources :motions, path: :m, only: [] do
           get :search, to: 'motions#search', on: :collection
         end

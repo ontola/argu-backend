@@ -3,8 +3,6 @@
 require 'zip'
 
 class ExportsController < ServiceController
-  alias create_service_parent parent_resource!
-  alias parent_edge parent_resource
   skip_before_action :redirect_edge_parent_requests
 
   private
@@ -24,6 +22,10 @@ class ExportsController < ServiceController
     authorize parent_resource!, :index_children?, controller_name
   end
 
+  def index_collection
+    parent_edge!.export_collection(collection_options)
+  end
+
   def index_respond_success_html
     render locals: {parent_edge: parent_edge}
   end
@@ -32,12 +34,16 @@ class ExportsController < ServiceController
     render locals: {parent_edge: parent_edge}
   end
 
+  def parent_resource
+    super.is_a?(Edge) ? super.owner : super
+  end
+
   def permit_params
     {}
   end
 
   def redirect_model_success(resource)
-    url_for([resource.edge, :exports, only_path: true])
+    exports_iri_path(resource.edge.owner)
   end
 
   def resource_new_params
