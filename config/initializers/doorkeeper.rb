@@ -10,6 +10,11 @@ module Doorkeeper
     def self.argu
       Doorkeeper::Application.find(Doorkeeper::Application::ARGU_ID)
     end
+
+    AFE_ID = 1
+    def self.argu_front_end
+      Doorkeeper::Application.find(Doorkeeper::Application::AFE_ID)
+    end
   end
 
   module OAuth
@@ -92,8 +97,8 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  # default_scopes  :guest
-  optional_scopes :guest, :user
+  default_scopes  :guest, :user
+  optional_scopes :guest, :user, :afe
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then

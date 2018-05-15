@@ -75,6 +75,7 @@ Doorkeeper::Application.create!(
   name: 'Argu',
   owner: Profile.community,
   redirect_uri: 'https://argu.localdev/',
+  scopes: 'guest user',
   secret: 'secret',
   uid: 'uid'
 )
@@ -90,6 +91,29 @@ token.update(
   token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOiIyMDE4LTAzLTE2VDA5OjM0OjA3LjI0NDQ5WiIsInVzZXIiOnsidHlwZSI6InV'\
          'zZXIiLCJAaWQiOiJodHRwczovL2FyZ3UuY28vdS9jb21tdW5pdHkiLCJpZCI6MCwiZW1haWwiOiJjb21tdW5pdHlAYXJndS5jbyJ9fQ.YGpt'\
          '8CSkxtO7ZNgZtUns5-NO5l1yNoHDStSafqo9e2zNbPJD38QZYHbcbr4-bdOnl3O455b5g7wtjBjvvV7ADQ'
+)
+
+Doorkeeper::Application.create!(
+  id: Doorkeeper::Application::AFE_ID,
+  name: 'Argu Front End',
+  owner: Profile.community,
+  redirect_uri: 'https://argu.localdev/',
+  scopes: 'guest user afe',
+  secret: 'afe_secret',
+  uid: 'afe_uid'
+)
+
+afe_token = Doorkeeper::AccessToken.find_or_create_for(
+  Doorkeeper::Application.argu_front_end,
+  User::COMMUNITY_ID,
+  'service',
+  Doorkeeper.configuration.access_token_expires_in,
+  false
+)
+afe_token.update(
+  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOiIyMDE4LTAzLTE2VDA5OjM0OjA3LjI0NDQ5WiIsInVzZXIiOnsidHlwZSI6InV'\
+         'zZXIiLCJAaWQiOiJodHRwczovL2FyZ3UuY28vdS9jb21tdW5pdHkiLCJpZCI6MSwiZW1haWwiOiJjb21tdW5pdHlAYXJndS5jbyJ9fQ.r3Lp'\
+         '7TDGmCCdV5nlXWgjvCWmvEXYm4G7rjWmfoturzoNv73P9lyZN0Snyc6Tml_ZMMJHkm0kiFrJWEX1XdhZZg'
 )
 
 freetown = FactorySeeder.create_forum(

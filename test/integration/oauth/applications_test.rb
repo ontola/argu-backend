@@ -6,7 +6,7 @@ module Oauth
   class ApplicationsTest < ActionDispatch::IntegrationTest
     define_freetown
     subject do
-      Doorkeeper::Application.create(name: 'Name', owner: Profile.community, redirect_uri: 'https://example.com')
+      create(:application, name: 'Name', owner: Profile.community, redirect_uri: 'https://example.com/redirect')
     end
 
     ####################################
@@ -123,7 +123,7 @@ module Oauth
       sign_in staff
       assert_difference('Doorkeeper::Application.count') do
         post oauth_applications_path,
-             params: {doorkeeper_application: {name: 'Name', redirect_uri: 'https://example.com'}}
+             params: {doorkeeper_application: {name: 'Name', redirect_uri: 'https://example.org/redirect'}}
         assert_redirected_to oauth_application_path(Doorkeeper::Application.last)
       end
     end

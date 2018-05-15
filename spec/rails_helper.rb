@@ -175,7 +175,17 @@ RSpec.configure do |config|
           id: Doorkeeper::Application::ARGU_ID,
           name: 'Argu',
           owner: Profile.community,
-          redirect_uri: 'http://example.com/'
+          redirect_uri: 'http://example.com/',
+          scopes: 'guest user'
+        )
+      end
+      if Doorkeeper::Application.find_by(id: Doorkeeper::Application::AFE_ID).blank?
+        Doorkeeper::Application.create!(
+          id: Doorkeeper::Application::AFE_ID,
+          name: 'Argu Front End',
+          owner: Profile.community,
+          redirect_uri: 'http://example.com/',
+          scopes: 'guest user afe'
         )
       end
     end

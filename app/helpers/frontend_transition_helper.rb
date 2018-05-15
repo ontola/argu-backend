@@ -15,8 +15,9 @@ module FrontendTransitionHelper
     params[:iframe] == 'true'
   end
 
+  # Is the request being made by the argu front end?
   def afe_request?
-    request.headers['X-Argu-Back']&.to_s == 'true'
+    @_new_fe_request ||= doorkeeper_token&.scopes&.include?('afe')
   end
 
   def request_session_id

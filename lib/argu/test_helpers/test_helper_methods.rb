@@ -173,18 +173,19 @@ module Argu
           {category: category, action: action}
         end
 
-        def sign_in(resource = create(:user))
+        def sign_in(resource = create(:user), app = Doorkeeper::Application.argu)
+          additional_scope = app.id == Doorkeeper::Application::AFE_ID && 'afe'
           id, role =
             case resource
             when :service
               [0, 'service']
             when :guest
-              [SecureRandom.hex, 'guest']
+              [SecureRandom.hex, ['guest', additional_scope].join(' ')]
             else
-              [resource.id, 'user']
+              [resource.id, ['user', additional_scope].join(' ')]
             end
           t = Doorkeeper::AccessToken.find_or_create_for(
-            Doorkeeper::Application.argu,
+            app,
             id,
             role,
             10.minutes,

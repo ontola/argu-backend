@@ -115,7 +115,16 @@ Doorkeeper::Application.create!(
   id: Doorkeeper::Application::ARGU_ID,
   name: 'Argu',
   owner: community_profile,
-  redirect_uri: 'https://argu.co/'
+  redirect_uri: 'https://argu.co/',
+  scopes: 'user guest'
+)
+
+Doorkeeper::Application.create!(
+  id: Doorkeeper::Application::AFE_ID,
+  name: 'Argu Front End',
+  owner: community_profile,
+  redirect_uri: 'https://argu.co/',
+  scopes: 'user guest afe'
 )
 
 Notification.update_all(read_at: nil)

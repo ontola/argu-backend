@@ -32,11 +32,11 @@ module Argu
         end
       end
 
-      def sign_in(user)
+      def sign_in(user, app = Doorkeeper::Application.argu)
         t = Doorkeeper::AccessToken.find_or_create_for(
-          Doorkeeper::Application.argu,
+          app,
           user.id,
-          'user',
+          app.id == Doorkeeper::Application::AFE_ID ? 'user afe' : 'user',
           10.minutes,
           false
         )

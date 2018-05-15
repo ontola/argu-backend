@@ -2,6 +2,7 @@
 
 module OauthHelper
   include LanguageHelper
+  include FrontendTransitionHelper
   include Doorkeeper::Rails::Helpers
   include Doorkeeper::Helpers::Controller
 

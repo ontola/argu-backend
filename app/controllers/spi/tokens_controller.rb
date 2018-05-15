@@ -18,7 +18,7 @@ module SPI
       return if token.nil?
 
       res = Doorkeeper::OAuth::TokenResponse.new(token)
-      render json: res.body.to_json
+      render json: res.body.to_json, status: 201
     end
 
     private
@@ -27,11 +27,19 @@ module SPI
       false
     end
 
+    def current_application_id
+      doorkeeper_token.application_id
+    end
+
+    def current_application
+      doorkeeper_token.application
+    end
+
     def guest_token
       Doorkeeper::AccessToken.find_or_create_for(
-        Doorkeeper::Application.argu,
+        current_application,
         SecureRandom.hex,
-        'guest',
+        new_token_scopes(:guest),
         Doorkeeper.configuration.access_token_expires_in,
         false
       )
@@ -47,14 +55,19 @@ module SPI
       return handle(owner) if owner.is_a?(StandardError)
 
       Doorkeeper::AccessToken.find_or_create_for(
-        Doorkeeper::Application.argu,
+        current_application,
         owner.id,
-        'user',
+        new_token_scopes(:user),
         Doorkeeper.configuration.access_token_expires_in,
         false
       )
     end
 
     def r_with_authenticity_token; end
+
+    def new_token_scopes(requested_scope)
+      return requested_scope unless current_application_id == Doorkeeper::Application::AFE_ID
+      [requested_scope, :afe].join(' ')
+    end
   end
 end

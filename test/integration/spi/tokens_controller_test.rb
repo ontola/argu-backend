@@ -36,7 +36,7 @@ module SPI
              }
       end
 
-      assert_response 200
+      assert_response 201
 
       body = JSON.parse(response.body)
       assert_equal 'guest', body['scope']
@@ -66,7 +66,7 @@ module SPI
              }
       end
 
-      assert_response 200
+      assert_response 201
       validate_user_token user
     end
 
@@ -82,7 +82,7 @@ module SPI
              }
       end
 
-      assert_response 200
+      assert_response 201
       validate_user_token user
     end
 

@@ -26,9 +26,7 @@ class ApplicationController < ActionController::Base
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
 
-  protect_from_forgery with: :exception, prepend: true, unless: (lambda do
-    request.headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
-  end)
+  protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
   setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -90,7 +88,7 @@ class ApplicationController < ActionController::Base
     p[model_name] = super[:filter].permit!.to_h if controller_class.try(:filter_options).present? && super[:filter]
 
     if UNSAFE_METHODS.include?(request.method)
-      return @__params = super.merge(p.deep_merge(params_from_graph(super))) if afe_request?
+      return @__params = super.merge(p.deep_merge(params_from_graph(super))) if parse_graph_params?
 
       return @__params = json_api_params(super) if request.format.json_api? && super[:data].present?
     end
@@ -126,6 +124,10 @@ class ApplicationController < ActionController::Base
     )
   end
 
+  def api_request?
+    request.headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
+  end
+
   def authorize_current_actor
     authorize current_actor, :show?
   end
@@ -147,6 +149,10 @@ class ApplicationController < ActionController::Base
 
   def format_html?
     request.format.html?
+  end
+
+  def parse_graph_params?
+    vnext_request? && !request.format.json_api?
   end
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses
@@ -201,6 +207,10 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  def vnext_request?
+    afe_request? || api_request?
   end
 
   protected

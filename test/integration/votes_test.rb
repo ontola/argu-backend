@@ -75,7 +75,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:creator) { create(:user) }
   let(:profile_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)).profile }
-  let(:context) { UserContext.new(doorkeeper_scopes: 'test') }
+  let(:context) { UserContext.new(doorkeeper_scopes: 'test afe') }
 
   ####################################
   # as Guest
@@ -527,13 +527,13 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'creator should delete destroy vote for argument new fe' do
-    sign_in creator
+    sign_in creator, Doorkeeper::Application.argu_front_end
     vote_iri = argument_vote.iri
 
     assert_differences([['Vote.count', -1],
                         ['Edge.count', -1],
                         ['argument.reload.children_count(:votes_pro)', -1]]) do
-      delete argument_vote.iri_path, headers: argu_headers(accept: :nq, back: true)
+      delete argument_vote.iri_path, headers: argu_headers(accept: :nq)
     end
 
     expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::LL[:remove])
@@ -560,7 +560,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should post create for motion with new fe' do
-    sign_in user
+    sign_in user, Doorkeeper::Application.argu_front_end
 
     expect(vote_event.votes.length).to be 1
     assert_differences([['Vote.count', 1],
@@ -568,7 +568,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                         ['vote_event.reload.children_count(:votes_con)', 1]]) do
       Sidekiq::Testing.inline! do
         post collection_iri_path(vote_event, :votes, CGI.escape('filter[option]') => :no, type: :paginated),
-             headers: argu_headers(accept: :nq, back: true)
+             headers: argu_headers(accept: :nq)
       end
     end
 

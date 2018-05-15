@@ -95,7 +95,17 @@ module TestHelper
       id: Doorkeeper::Application::ARGU_ID,
       name: 'Argu',
       owner: Profile.community,
-      redirect_uri: 'http://example.com/'
+      redirect_uri: 'http://example.com/',
+      scopes: 'guest user'
+    )
+  end
+  if Doorkeeper::Application.find_by(id: Doorkeeper::Application::AFE_ID).blank?
+    Doorkeeper::Application.create!(
+      id: Doorkeeper::Application::AFE_ID,
+      name: 'Argu Front End',
+      owner: Profile.community,
+      redirect_uri: 'http://example.com/',
+      scopes: 'guest user afe'
     )
   end
 end
@@ -154,13 +164,12 @@ module ActionDispatch
       I18n.locale = :en
     end
 
-    def argu_headers(accept: nil, back: false, bearer: nil, host: nil)
+    def argu_headers(accept: nil, bearer: nil, host: nil)
       headers = {}
       if accept
         headers['Accept'] = accept.is_a?(Symbol) ? Mime::Type.lookup_by_extension(accept).to_s : accept
       end
       headers['Authorization'] = "Bearer #{bearer}" if bearer
-      headers['X-Argu-Back'] = 'true' if back
       headers['HTTP_HOST'] = host if host
       headers
     end
@@ -211,18 +220,19 @@ module ActionDispatch
         )
     end
 
-    def sign_in(resource = create(:user))
+    def sign_in(resource = create(:user), app = Doorkeeper::Application.argu)
+      additional_scope = app.id == Doorkeeper::Application::AFE_ID && 'afe'
       id, role =
         case resource
         when :service
           [0, 'service']
         when :guest
-          [SecureRandom.hex, 'guest']
+          [SecureRandom.hex, ['guest', additional_scope].join(' ')]
         else
-          [resource.id, 'user']
+          [resource.id, ['user', additional_scope].join(' ')]
         end
       t = Doorkeeper::AccessToken.find_or_create_for(
-        Doorkeeper::Application.argu,
+        app,
         id,
         role,
         10.minutes,

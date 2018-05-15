@@ -8,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
   skip_before_action :verify_authenticity_token,
-                     if: -> { headers['Authorization'].blank? && cookies[Rails.configuration.cookie_name].blank? }
+                     if: :api_request?
 
   def create
     super do |resource|

@@ -23,7 +23,11 @@ RSpec.describe 'Actions', type: :request do
     subject do
       Actions::NotificationActions.new(
         resource: notification,
-        user_context: UserContext.new(doorkeeper_scopes: {}, user: authorized_user, profile: authorized_user.profile)
+        user_context: UserContext.new(
+          doorkeeper_scopes: 'afe',
+          user: authorized_user,
+          profile: authorized_user.profile
+        )
       ).actions.first
     end
     let(:notification) { Notification.first }
