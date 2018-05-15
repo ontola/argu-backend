@@ -12,7 +12,7 @@ module OauthHelper
   def current_actor
     return @current_actor if @current_actor.present?
     user = current_resource_owner || GuestUser.new(
-      cookies: new_fe_request? ? nil : request.cookie_jar,
+      cookies: afe_request? ? nil : request.cookie_jar,
       headers: request.headers,
       language: set_guest_language,
       session: session
@@ -33,7 +33,7 @@ module OauthHelper
       Doorkeeper.configuration.access_token_expires_in,
       false
     )
-    set_argu_client_token_cookie(t.token) unless new_fe_request?
+    set_argu_client_token_cookie(t.token) unless afe_request?
     current_actor.user = resource
     set_layout
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource

@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
                    label: 'failed'
       end
     end
-    if aod_request?
+    if afe_request?
       t = Doorkeeper::AccessToken.where(resource_owner_id: resource.id).last
       response.headers['New-Authorization'] = t.token
     else

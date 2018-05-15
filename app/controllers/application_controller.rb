@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
     p[model_name] = super[:filter].permit!.to_h if controller_class.try(:filter_options).present? && super[:filter]
 
     if UNSAFE_METHODS.include?(request.method)
-      return @__params = super.merge(p.deep_merge(params_from_graph(super))) if new_fe_request?
+      return @__params = super.merge(p.deep_merge(params_from_graph(super))) if afe_request?
 
       return @__params = json_api_params(super) if request.format.json_api? && super[:data].present?
     end

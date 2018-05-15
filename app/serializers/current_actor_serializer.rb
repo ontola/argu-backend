@@ -6,7 +6,7 @@ class CurrentActorSerializer < BaseSerializer
   attribute :url
   attribute :primary_email,
             predicate: NS::ARGU[:primaryEmail],
-            if: :new_fe_request?
+            if: :afe_request?
 
   has_one :profile_photo, predicate: NS::SCHEMA[:image] do
     object.actor&.default_profile_photo
