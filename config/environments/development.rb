@@ -76,7 +76,7 @@ Rails.application.configure do
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
   config.after_initialize do
-    Bullet.enable = true
+    Bullet.enable = false
     Bullet.console = true
     Bullet.rails_logger = true
     Bullet.add_footer = true
