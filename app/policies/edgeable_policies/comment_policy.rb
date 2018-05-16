@@ -27,7 +27,7 @@ class CommentPolicy < EdgeablePolicy
   private
 
   def assert_siblings!
-    assert! record.parent_model == record.parent.parent_model, :siblings?
+    assert! record.parent_model == record.parent_comment.parent_model, :siblings?
   end
 
   def create_expired?

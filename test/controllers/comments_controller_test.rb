@@ -33,8 +33,8 @@ class CommentsControllerTest < ActionController::TestCase
 
     expect_relationship('viewSequence', 1)
     expect_included(collection_iri(argument, :comments, page: 1, type: 'paginated'))
-    expect_included(argument.comment_threads.untrashed.map(&:iri))
-    expect_not_included(argument.comment_threads.trashed.map(&:iri))
+    expect_included(argument.comments(:untrashed).map(&:iri))
+    expect_not_included(argument.comments(:trashed).map(&:iri))
   end
 
   test 'should get index comments of argument with page=1' do
@@ -45,9 +45,9 @@ class CommentsControllerTest < ActionController::TestCase
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 argument.comment_threads.untrashed.count
-    expect_included(argument.comment_threads.untrashed.map(&:iri))
-    expect_not_included(argument.comment_threads.trashed.map(&:iri))
+                 argument.comments(:untrashed).count
+    expect_included(argument.comments(:untrashed).map(&:iri))
+    expect_not_included(argument.comments(:trashed).map(&:iri))
   end
 
   ####################################
@@ -61,8 +61,8 @@ class CommentsControllerTest < ActionController::TestCase
 
     expect_relationship('viewSequence', 1)
     expect_included(collection_iri(blog_post, :comments, page: 1, type: 'paginated'))
-    expect_included(blog_post.comment_threads.untrashed.map(&:iri))
-    expect_not_included(blog_post.comment_threads.trashed.map(&:iri))
+    expect_included(blog_post.comments(:untrashed).map(&:iri))
+    expect_not_included(blog_post.comments(:trashed).map(&:iri))
   end
 
   test 'should get index comments of blog_post with page=1' do
@@ -73,8 +73,8 @@ class CommentsControllerTest < ActionController::TestCase
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 blog_post.comment_threads.untrashed.count
-    expect_included(blog_post.comment_threads.untrashed.map(&:iri))
-    expect_not_included(blog_post.comment_threads.trashed.map(&:iri))
+                 blog_post.comments(:untrashed).count
+    expect_included(blog_post.comments(:untrashed).map(&:iri))
+    expect_not_included(blog_post.comments(:trashed).map(&:iri))
   end
 end

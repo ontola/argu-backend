@@ -34,6 +34,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
   let(:question_blog_post) do
     create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
   end
+  let(:motion_comment) { create(:comment, parent: motion.edge) }
+  let(:question_comment) { create(:comment, parent: question.edge) }
 
   ####################################
   # As Staff
@@ -52,7 +54,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
                         ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['MediaObject.count', 0]]) do
+                        ['MediaObject.count', 0], ['Comment.count', 0]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -83,7 +85,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     edge = question_motion.edge
 
     assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0]]) do
+                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0],
+                        ['Comment.count', 0]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -106,7 +109,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     edge = question.edge
 
     assert_differences([['Question.count', -1], ['Motion.count', 1], ['VoteEvent.count', 1], ['Edge.count', 1],
-                        ['Activity.count', 1], ['BlogPost.count', 0]]) do
+                        ['Activity.count', 1], ['BlogPost.count', 0], ['Comment.count', 0]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {

@@ -17,7 +17,7 @@ class Question < EdgeableBase
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions, dependent: :nullify
 
-  convertible motions: %i[activities blog_posts media_objects comment_threads]
+  convertible motions: %i[activities blog_posts media_objects comments]
   counter_cache true
   parentable :forum
 

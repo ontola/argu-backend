@@ -68,10 +68,6 @@ class Argument < EdgeableBase
     service.commit
   end
 
-  def root_comments
-    comment_threads.untrashed.where(parent_id: nil)
-  end
-
   def upvote(user, profile)
     service = CreateVote.new(
       edge,

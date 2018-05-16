@@ -258,7 +258,7 @@ module Argu
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
           let(:linked_record_vote) { LinkedRecord.first.votes.first }
-          let(:linked_record_comment) { LinkedRecord.first.comment_threads.first }
+          let(:linked_record_comment) { LinkedRecord.first.comments.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }
           let(:motion) { question.motions.first }
@@ -268,11 +268,11 @@ module Argu
           let(:vote) { vote_event.votes.first }
           let(:argument) { motion.arguments.first }
           let(:argument_vote) { argument.votes.first }
-          let(:comment) { argument.comment_threads.first }
+          let(:comment) { argument.comments.first }
           let(:nested_comment) { comment.children.first }
-          let(:motion_comment) { motion.comment_threads.first }
+          let(:motion_comment) { motion.comments.first }
           let(:blog_post) { question.blog_posts.first }
-          let(:blog_post_comment) { blog_post.comment_threads.first }
+          let(:blog_post_comment) { blog_post.comments.first }
           let(:motion_blog_post) { motion.blog_posts.first }
           let(:trashed_motion) { question.motions.trashed.first }
           let(:unpublished_motion) { question.motions.unpublished.first }

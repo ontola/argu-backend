@@ -4,12 +4,12 @@ module Commentable
   extend ActiveSupport::Concern
 
   included do
-    acts_as_commentable
     has_one :top_comment,
             -> { untrashed.where(parent_id: nil).order('comments.created_at ASC') },
             class_name: 'Comment',
             as: :commentable,
             dependent: :destroy
+    has_many :comments, as: :commentable, dependent: :destroy
 
     with_collection :comments,
                     association: :filtered_threads,
@@ -27,6 +27,13 @@ module Commentable
           .where(parent_id: edge.id, owner_type: 'Comment', comments: {parent_id: nil})
           .includes(owner: {creator: Profile.includes_for_profileable})
           .order(order)
+    end
+
+    def comments(*scopes)
+      return @comments if scopes.blank? && @comments.present?
+      comments = scopes.reduce(comment_edges) { |relation, scope| relation.send(scope) }.includes(:owner).map(&:owner)
+      @comments = comments if scopes.blank?
+      comments
     end
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')

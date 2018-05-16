@@ -16,6 +16,6 @@
         span.icon-left= t('reply')
   =render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new, modal: local_assigns[:modal] }
   - if c.has_children?
-    - c.children.reject { |c| c.abandoned? }.each do |ch|
+    - c.comment_children.reject { |c| c.abandoned? }.each do |ch|
       =render partial: 'comments/comment', locals: { resource: resource, c: ch, modal: local_assigns[:modal] }
-    =link_to t('comments.more'), '/' if c.children.length > 40
+    =link_to t('comments.more'), '/' if c.comment_children.length > 40

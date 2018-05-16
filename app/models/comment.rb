@@ -5,9 +5,16 @@ class Comment < EdgeableBase
   include TruncateHelper
 
   has_one :vote, dependent: :nullify
+  has_many :comment_children,
+           foreign_key: :parent_id,
+           inverse_of: :parent_comment,
+           class_name: 'Comment',
+           dependent: :destroy
+  belongs_to :parent_comment, foreign_key: :parent_id, inverse_of: :comment_children, class_name: 'Comment'
+  belongs_to :commentable, polymorphic: true
+
   after_commit :set_vote, on: :create
 
-  acts_as_nested_set scope: %i[commentable_id commentable_type]
   counter_cache true
   paginates_per 30
   parentable :argument, :blog_post, :motion, :question, :linked_record
@@ -21,7 +28,7 @@ class Comment < EdgeableBase
   alias_attribute :content, :body
 
   def abandoned?
-    is_trashed? && children.length.zero?
+    is_trashed? && !has_children?
   end
 
   def deleted?
@@ -33,12 +40,12 @@ class Comment < EdgeableBase
   end
 
   def subscribable
-    parent || parent_model
+    parent_comment || parent_model
   end
 
   # helper method to check if a comment has children
   def has_children?
-    lft || rgt
+    comment_children.any?
   end
 
   def shallow_wipe
@@ -47,7 +54,7 @@ class Comment < EdgeableBase
       self.creator = nil
       self.is_processed = true
     end
-    children.each(&:shallow_wipe) if children.present?
+    comment_children.each(&:shallow_wipe) if comment_children.present?
   end
 
   # Comments can't be deleted since all comments below would be hidden as well
