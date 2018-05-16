@@ -31,12 +31,16 @@ class Comment < EdgeableBase
     is_trashed? && !has_children?
   end
 
+  def joined_body
+    [title, body].map(&:presence).compact.join("\n\n")
+  end
+
   def deleted?
     body.blank? || body == '[DELETED]'
   end
 
   def display_name
-    safe_truncated_text(body, 40)
+    title || safe_truncated_text(body, 40)
   end
 
   def subscribable

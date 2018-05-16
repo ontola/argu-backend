@@ -12,7 +12,6 @@ class Motion < EdgeableBase
   include Attribution
   include HasLinks
 
-  include Convertible
   include BlogPostable
   include Timelineable
 
@@ -25,7 +24,7 @@ class Motion < EdgeableBase
 
   before_save :capitalize_title
 
-  convertible questions: %i[activities blog_posts media_objects comments]
+  convertible questions: %i[activities blog_posts media_objects comments], comments: %i[activities]
   counter_cache true
   paginates_per 30
   parentable :question, :forum

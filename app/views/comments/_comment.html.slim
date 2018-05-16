@@ -8,7 +8,7 @@
         .detail__text
           time[datetime=c.created_at ]= awesome_time_ago_in_words c.created_at
   section
-    .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')
+    .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.joined_body) || I18n.t('deleted')
       =markdown_to_html(motion.content)
     - if !c.is_trashed? && policy(c.parent_model).create_child?(:comments)
       =link_to resource.iri_path(parent_id: c.id), {data: { comment_id: c.id, turbolinks: 'false' }, class: 'sticky--bottom-right btn-subtle btn--mini btn-reply'} do

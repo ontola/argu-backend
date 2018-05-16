@@ -7,6 +7,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
   let(:question) do
     create(:question,
            :with_follower,
+           :with_motions,
            parent: freetown.edge,
            options: {
              creator: create(:profile_direct_email)
@@ -25,17 +26,27 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            :with_votes,
            parent: question.edge)
   end
-  let(:argument) do
-    create(:argument, parent: motion.edge)
-  end
-  let(:motion_blog_post) do
-    create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
+  let(:question_content) do
+    motion_blog_post
+    question_nested_comment
   end
   let(:question_blog_post) do
     create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
   end
-  let(:motion_comment) { create(:comment, parent: motion.edge) }
   let(:question_comment) { create(:comment, parent: question.edge) }
+  let(:question_nested_comment) { create(:comment, parent: question.edge, parent_id: question_comment.id) }
+  let(:motion_content) do
+    motion_blog_post
+    motion_nested_comment
+    argument_comment
+    cover_photo
+  end
+  let(:motion_blog_post) do
+    create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
+  end
+  let(:motion_comment) { create(:comment, parent: motion.edge) }
+  let(:motion_nested_comment) { create(:comment, parent: motion.edge, parent_id: motion_comment.id) }
+  let(:argument_comment) { create(:comment, parent: motion.arguments.first.edge) }
 
   ####################################
   # As Staff
@@ -44,8 +55,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
   test 'staff should post convert motion' do
     sign_in staff
-    motion_blog_post
-    cover_photo
+    motion_content
 
     edge = motion.edge
     vote_count = motion.default_vote_event.edge.children.where(owner_type: 'Vote').count
@@ -53,8 +63,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            'no votes to test'
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['MediaObject.count', 0], ['Comment.count', 0]]) do
+                        ['Vote.count', -9], ['Activity.count', 1], ['BlogPost.count', 0],
+                        ['MediaObject.count', 0], ['Comment.count', 5], ['Edge.count', -11]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -80,13 +90,12 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
   test 'staff should post convert question motion' do
     sign_in staff
-    motion_blog_post
 
     edge = question_motion.edge
 
     assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Edge.count', -16], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['Comment.count', 0]]) do
+                        ['Vote.count', -9], ['Activity.count', 1], ['BlogPost.count', 0],
+                        ['Comment.count', 6], ['Edge.count', -10]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -104,12 +113,12 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
   test 'staff should post convert question' do
     sign_in staff
-    question_blog_post
+    question_content
 
     edge = question.edge
 
-    assert_differences([['Question.count', -1], ['Motion.count', 1], ['VoteEvent.count', 1], ['Edge.count', 1],
-                        ['Activity.count', 1], ['BlogPost.count', 0], ['Comment.count', 0]]) do
+    assert_differences([['Question.count', -1], ['Motion.count', -3], ['VoteEvent.count', -3],
+                        ['Activity.count', 1], ['BlogPost.count', 0], ['Comment.count', 3], ['Edge.count', -4]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {

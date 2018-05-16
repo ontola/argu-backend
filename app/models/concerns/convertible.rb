@@ -13,26 +13,25 @@ module Convertible
     true
   end
 
-  # Converts an item to another item, the convertible method was used,
-  # those relations will be assigned the newly created model
-  #
-  # TODO: check if the receiving model has the same associated_model names before sending them over (else, delete)
-  def convert_to(klass)
-    unless convertible_classes.include?(klass.class_name.to_sym)
-      raise ArgumentError.new("Conversion to #{klass.class_name} not allowed")
-    end
+  # Converts an item to another item
+  # Children of models that are not whitelisted will be converted to comments
+  def convert_to(klass, validate: true)
+    raise ArgumentError.new("Conversion to #{klass.class_name} not allowed") unless convert_to?(klass)
 
     ActiveRecord::Base.transaction do
-      shared_attributes = klass.column_names.reject { |n| !attribute_names.include?(n) || n == 'id' }
+      shared_attributes =
+        (klass.column_names + klass.attribute_aliases.keys)
+          .reject { |n| !(attribute_names + attribute_aliases.keys).include?(n) || n == 'id' }
 
-      edge.children.reject { |edge| edge.owner.parent_classes.include?(klass.name.underscore.to_sym) }.each(&:destroy!)
-
-      new_model = klass.new Hash[shared_attributes.map { |i| [i, attributes[i]] }]
+      new_model = klass.new Hash[shared_attributes.select { |i| attributes[i].present? }.map { |i| [i, attributes[i]] }]
       new_model.edge = edge
       until new_model.parent_classes.include?(new_model.edge.parent.owner_type.underscore.to_sym)
         new_model.edge.parent = new_model.edge.parent.parent
       end
-      new_model.save!
+      new_model.save!(validate: validate)
+
+      convert_or_destroy_children(new_model)
+
       convertible_classes[klass.class_name.to_sym].each do |association|
         klass_association = self.class.reflect_on_association(association)
         # Just to be sure
@@ -40,7 +39,7 @@ module Convertible
         send(association).each do |associated_model|
           associated_model.send("#{klass_association.foreign_key}=", new_model.id)
           associated_model.send("#{klass_association.type}=", new_model.class.name) if klass_association.type.present?
-          associated_model.save!
+          associated_model.save!(validate: false)
         end
         send(association).clear
       end
@@ -48,6 +47,32 @@ module Convertible
       reload
       {old: destroy, new: new_model}
     end
+  end
+
+  def convert_or_destroy_children(new_model)
+    new_model.displaced_children.each do |child|
+      if new_model.is_a?(Comment) && child.owner.is_a?(Comment)
+        child.owner.parent_comment = new_model
+        child.owner.commentable = new_model.parent_model
+        child.parent = new_model.parent_edge
+        child.owner.save!(validate: false)
+      elsif child.owner.convert_to?(Comment) && Comment.parent_classes.include?(class_name.singularize.to_sym)
+        child.owner.convert_to(Comment, validate: false)
+      else
+        child.destroy!
+      end
+    end
+  end
+
+  def convert_to?(klass)
+    return false unless respond_to?(:convertible_classes)
+    convertible_classes.include?(klass.class_name.to_sym)
+  end
+
+  # Find children that don't allow the new class as parent
+  # @return [Array<Edge>]
+  def displaced_children
+    edge.children.reject { |edge| edge.owner.parent_classes.include?(class_name.singularize.to_sym) }
   end
 
   module ClassMethods

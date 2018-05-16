@@ -7,7 +7,6 @@ class Question < EdgeableBase
   include ContentEdgeable
   include HasLinks
   include Attribution
-  include Convertible
   include BlogPostable
   include Timelineable
   include Photoable

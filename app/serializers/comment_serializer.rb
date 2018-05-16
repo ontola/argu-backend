@@ -3,5 +3,7 @@
 class CommentSerializer < ContentEdgeSerializer
   include_menus
 
-  def display_name; end
+  def display_name
+    object.title.presence
+  end
 end

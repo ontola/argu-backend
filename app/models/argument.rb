@@ -19,6 +19,7 @@ class Argument < EdgeableBase
 
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
+  convertible comments: %i[activities]
   counter_cache arguments_pro: {type: 'ProArgument'}, arguments_con: {type: 'ConArgument'}
   paginates_per 10
   parentable :motion, :linked_record

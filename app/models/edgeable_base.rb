@@ -6,6 +6,7 @@ class EdgeableBase < ApplicationRecord
   include Edgeable::CounterCache
   include Parentable
   include Ldable
+  include Convertible
   define_model_callbacks :trash, only: :after
   define_model_callbacks :untrash, only: :after
 
