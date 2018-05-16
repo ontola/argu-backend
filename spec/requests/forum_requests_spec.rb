@@ -13,7 +13,7 @@ RSpec.describe 'Forums', type: :request do
   let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
 
   let(:edit_path) { settings_iri_path(subject) }
-  let(:non_existing_edit_path) { settings_iri_path(-99) }
+  let(:non_existing_edit_path) { settings_iri_path(non_existing_id) }
   let(:updated_resource_path) { settings_iri_path(subject, tab: :general) }
 
   let(:expect_get_show_guest_html) { expect_not_found }
@@ -38,10 +38,10 @@ RSpec.describe 'Forums', type: :request do
 
   context 'portal routes' do
     let(:expect_redirect_to_login) { expect_not_found }
-    let(:new_path) { new_portal_forum_path(forum: {page_id: -99}) }
-    let(:non_existing_new_path) { new_portal_forum_path(forum: {page_id: -99}) }
+    let(:new_path) { new_portal_forum_path(forum: {page_id: non_existing_id}) }
+    let(:non_existing_new_path) { new_portal_forum_path(forum: {page_id: non_existing_id}) }
     let(:create_path) { portal_forums_path }
-    let(:non_existing_create_path) { portal_forums_path(forum: {page_id: -99}) }
+    let(:non_existing_create_path) { portal_forums_path(forum: {page_id: non_existing_id}) }
     let(:create_params) do
       nominatim_netherlands
       {forum: {page_id: argu.url, name: 'name', url: 'new_forum'}}

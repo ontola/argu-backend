@@ -13,6 +13,7 @@ RSpec.describe 'Exports', type: :request do
   let(:destroy_differences) { [['Export.count', -1]] }
   let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
+  let(:non_existing_id) { SecureRandom.uuid }
 
   context 'with forum parent' do
     subject { forum_export }

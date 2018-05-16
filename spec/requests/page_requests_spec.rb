@@ -64,7 +64,7 @@ RSpec.describe 'Pages', type: :request do
     ]
     context 'user pages' do
       let(:index_path) { pages_user_path(authorized_user) }
-      let(:non_existing_index_path) { pages_user_path(-99) }
+      let(:non_existing_index_path) { pages_user_path(non_existing_id) }
       let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
       let(:expect_get_index_guest_serializer) { expect(response.code).to eq('401') }
       it_behaves_like 'get index'
