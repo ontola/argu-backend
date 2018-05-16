@@ -2,6 +2,7 @@
 
 class ForumsController < EdgeableController
   include EdgeTree::Move
+  prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
   prepend_before_action :write_client_access_token, unless: :afe_request?
   skip_before_action :authorize_action, only: %i[discover index]
@@ -91,6 +92,16 @@ class ForumsController < EdgeableController
 
   def photo_params_nesting_path
     []
+  end
+
+  def redirect_generic_shortnames
+    return if (/[a-zA-Z]/i =~ params[:id]).nil?
+    resource = Shortname.find_resource(params[:id], root_from_params&.uuid) || raise(ActiveRecord::RecordNotFound)
+    return if resource.owner_type == 'Forum'
+    redirect_to resource.owner.iri_path
+    send_event category: 'short_url',
+               action: 'follow',
+               label: params[:id]
   end
 
   def redirect_model_success(resource)

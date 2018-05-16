@@ -1,15 +1,16 @@
 nl:
   shortnames:
-    type: 'Argu URL'
-    info: 'Een Argu URL is een link die je kan gebruiken om mensen naar bepaalde discussies door te sturen. Bijvoorbeeld: argu.co/mijn_discussie'
-    current_out_of_max: 'Er zijn %{current} van de %{max} Argu urls gebruikt.'
-    contact_argu: 'Neem contact op met Argu voor meer Argu urls'
-    errors:
-      max_reached: 'Je hebt het maximum aantal Argu urls bereikt, neem contact op met Argu voor extra Argu urls'
+    type: 'Redirect'
+    info: 'Als je een url aanpast, wordt er automatisch een redirect aangemaakt voor de oude url. Ook kan je zelf redirects toevoegen. Hier zie je een overzicht van de huidige redirects.'
+    contact_argu: 'Nog kortere urls? Neem contact op met Argu voor meer informatie'
+    labels:
+      from: "Van"
+      to: "Naar"
+      delete: "Verwijderen"
   activerecord:
     errors:
       models:
         shortname:
           attributes:
             owner:
-              blank: "Dit object bestaat niet of bevind zich in een ander forum"
+              blank: "Dit object bestaat niet of bevindt zich in een ander forum"

@@ -1,0 +1,11 @@
+=render partial: 'pages/settings/shortnames/form',
+        locals: {shortname: shortname,
+                 root: true,
+                 url: page_shortnames_path(page_id: parent_resource),
+                 input_name: t('newe_type', type: t('shortnames.type'))}
+- if current_user.is_staff?
+  =render partial: 'pages/settings/shortnames/form',
+          locals: {shortname: shortname,
+                   root: false,
+                   url: page_shortnames_path(page_id: parent_resource),
+                   input_name: t('newe_type', type: t('shortnames.type'))}

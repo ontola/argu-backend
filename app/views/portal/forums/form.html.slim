@@ -1,16 +1,15 @@
-=set_title "_Create forum for #{forum.page.profile.name}_"
+=set_title "_Create forum for #{forum.parent_model.profile.name}_"
 .col-1
   .box
     section
-      h1= "_Create forum for #{forum.page.profile.name}_"
-      = semantic_form_for [:portal, forum], remote: true, authenticity_token: true do |f|
-        = f.inputs do
-          = f.input :name
-          = f.inputs :shortname, for: :shortname
-          li.form-helper
-            span=t('forums.shortname_helper_html')
-          = f.input :page_id, as: :hidden
-
-        = f.actions do
-          = f.action :submit, :as => :button
-          = f.action :cancel, :as => :link
+      h1= "_Create forum for #{forum.parent_model.profile.name}_"
+      =semantic_form_for [:portal, forum], remote: false, authenticity_token: true do |f|
+        =f.inputs do
+          =f.input :name
+          =f.input :url, as: :shortname
+          =f.input :page_id, as: :hidden, input_html: { value: forum.parent_model.url }
+        - if forum.errors.present?
+          p.inline-errors.full-width= forum.errors.full_messages[0]
+        =f.actions do
+          =f.action :submit, :as => :button
+          =f.action :cancel, :as => :link

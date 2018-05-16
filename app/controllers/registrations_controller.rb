@@ -106,7 +106,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def build_resource(*args)
     super
-    resource.shortname = nil if resource.shortname.shortname.blank?
+    resource.shortname = nil if resource.shortname&.shortname&.blank?
     resource.build_profile
     resource.language = I18n.locale
     return unless session[:omniauth]

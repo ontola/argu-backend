@@ -68,6 +68,7 @@ class EdgeablePolicy < RestrictivePolicy
     attributes = super
     attributes.append(:mark_as_important) if mark_as_important?
     attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
+    attributes.concat([:url, shortname_attributes: %i[shortname id]]) if shortname?
     attributes
   end
 
@@ -135,6 +136,10 @@ class EdgeablePolicy < RestrictivePolicy
 
   def statistics?
     has_grant?(:update)
+  end
+
+  def shortname?
+    new_record? || update?
   end
 
   private

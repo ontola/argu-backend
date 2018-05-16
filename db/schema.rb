@@ -598,10 +598,12 @@ ActiveRecord::Schema.define(version: 20180515135129) do
     t.string "owner_type", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "forum_id"
     t.uuid "owner_id", null: false
-    t.index "lower((shortname)::text)", name: "index_shortnames_on_shortname", unique: true
-    t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true
+    t.uuid "root_id"
+    t.boolean "primary", default: true, null: false
+    t.index "lower((shortname)::text)", name: "index_shortnames_on_unscoped_shortname", unique: true, where: "(root_id IS NULL)"
+    t.index "lower((shortname)::text), root_id", name: "index_shortnames_on_scoped_shortname", unique: true
+    t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, where: "(\"primary\" IS TRUE)"
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
@@ -784,7 +786,6 @@ ActiveRecord::Schema.define(version: 20180515135129) do
   add_foreign_key "questions", "profiles", column: "creator_id"
   add_foreign_key "questions", "users", column: "publisher_id"
   add_foreign_key "rules", "edges", column: "branch_id"
-  add_foreign_key "shortnames", "forums"
   add_foreign_key "sources", "pages"
   add_foreign_key "sources", "profiles", column: "creator_id"
   add_foreign_key "sources", "users", column: "publisher_id"

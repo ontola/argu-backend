@@ -116,7 +116,7 @@ en:
       title: "A forum for your organisation?"
       body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
     shortname:
-      warning: "Warning! This changes the url of this forum. Some links will no longer be valid when changing this."
+      warning: "When setting a new url, the old one will remain valid until it is reused somewhere else."
     tooltips:
       members_count: "Followers of this forum"
     visit: "Visit forum"

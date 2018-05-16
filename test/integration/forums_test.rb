@@ -10,8 +10,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
   define_cairo(
     'forum_with_placement',
     attributes: {
+      url: 'forum_with_placement',
       edge_attributes: {
-        shortname_attributes: {shortname: 'forum_with_placement'},
         placements_attributes: {
           '0' => {
             lat: 1.0,
@@ -292,7 +292,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get settings_iri_path(holland)
     assert_forum_settings_shown holland
 
-    %i[general shortnames banners].each do |tab|
+    %i[general banners].each do |tab|
       get settings_iri_path(holland), params: {tab: tab}
       assert_forum_settings_shown holland
     end
@@ -336,12 +336,12 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_differences([['Forum.count', 1], ['Placement.count', 2], ['Place.count', 1]]) do
-      post portal_forums_path params: {
+      post portal_forums_path, params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
+          url: 'new_forum',
           edge_attributes: {
-            shortname_attributes: {shortname: 'new_forum'},
             placements_attributes: {
               '0' => {
                 lat: 1.0,
@@ -350,7 +350,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
               }
             }
           },
-          page_id: argu.id
+          page_id: argu.url
         }
       }
     end

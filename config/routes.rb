@@ -330,6 +330,7 @@ Rails.application.routes.draw do
         post :index, action: :index, on: :collection
       end
       resources :groups, path: 'g', only: %i[create new]
+      resources :shortnames, only: %i[new create]
       resources :vote_matches, only: %i[index show]
       get :settings, on: :member
       get :edit, to: 'profiles#edit', on: :member
@@ -375,7 +376,6 @@ Rails.application.routes.draw do
           get :search, to: 'motions#search', on: :collection
         end
         get :settings, on: :member
-        resources :shortnames, only: %i[new create]
         resources :banners, only: %i[new create]
         resources :linked_records,
                   only: %i[show],

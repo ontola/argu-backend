@@ -34,7 +34,8 @@ page = FactorySeeder.create(
   last_accepted: Time.current,
   profile: FactorySeeder.build(:profile, name: 'Argu page'),
   owner: staff.profile,
-  edge_attributes: {user: staff, shortname_attributes: {shortname: 'argu'}, is_published: true}
+  url: 'argu',
+  edge_attributes: {user: staff, is_published: true}
 )
 
 public_group = FactorySeeder.create(
@@ -128,7 +129,7 @@ Doorkeeper::Application.create!(
 
 freetown = FactorySeeder.create_forum(
   :with_follower,
-  edge_attributes: {shortname_attributes: {shortname: 'freetown'}},
+  url: 'freetown',
   name: 'Freetown',
   page: page,
   parent: page.edge,
@@ -138,7 +139,7 @@ holland = FactorySeeder.create_forum(
   :populated_forum,
   page: page,
   parent: page.edge,
-  edge_attributes: {shortname_attributes: {shortname: 'holland'}},
+  url: 'holland',
   name: 'Holland',
   discoverable: false,
   public_grant: 'none'
@@ -148,19 +149,20 @@ other_page = FactorySeeder.create(
   :page,
   profile: FactorySeeder.build(:profile, name: 'Other page'),
   base_color: '#800000',
-  edge_attributes: {user: staff, shortname_attributes: {shortname: 'other_page'}, is_published: true}
+  url: 'other_page',
+  edge_attributes: {user: staff, is_published: true}
 )
 FactorySeeder.create_forum(
   parent: other_page.edge,
   page: other_page,
-  edge_attributes: {shortname_attributes: {shortname: 'other_page_forum'}},
+  url: 'other_page_forum',
   name: 'Other page forum',
   public_grant: 'participator'
 )
 FactorySeeder.create_forum(
   parent: other_page.edge,
   page: other_page,
-  edge_attributes: {shortname_attributes: {shortname: 'other_page_forum2'}},
+  url: 'other_page_forum2',
   name: 'Other page forum2',
   public_grant: 'spectator'
 )

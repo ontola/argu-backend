@@ -73,6 +73,7 @@ en:
         naam: "Forum name"
         public_grant: "Everybody may"
         discoverable: "List in overviews"
+        shortname: "URL"
       group:
         name: "Name"
         name_singular: "Name singular"

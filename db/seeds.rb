@@ -46,7 +46,7 @@ staff = User
 argu = Page
          .new(
            owner: staff.profile,
-           edge_attributes: {shortname_attributes: {shortname: 'argu'}},
+           url: 'argu',
            last_accepted: Time.current
          )
 argu.build_profile(name: 'Argu', profileable: argu)
@@ -99,7 +99,7 @@ argu.update(owner: staff.profile)
 forum = Forum.new(name: 'Nederland',
                   page: argu,
                   public_grant: 'participator',
-                  edge_attributes: {shortname_attributes: {shortname: 'nederland'}})
+                  url: 'nederland')
 forum.edge = Edge.new(owner: forum,
                       user: User.find_via_shortname!('staff_account'),
                       parent: argu.edge)

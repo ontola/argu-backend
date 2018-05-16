@@ -16,8 +16,9 @@ class Page < EdgeableBase
   attr_accessor :confirmation_string, :tab, :active
 
   delegate :description, to: :profile
+  alias creator owner
 
-  validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
+  validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner, :last_accepted, presence: true
   validates :base_color, css_hex_color: true
 

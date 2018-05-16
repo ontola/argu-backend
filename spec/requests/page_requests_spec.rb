@@ -28,7 +28,7 @@ RSpec.describe 'Pages', type: :request do
     {
       page: {
         profile_attributes: {name: 'name'},
-        edge_attributes: {shortname_attributes: {shortname: 'new_page'}},
+        url: 'new_page',
         last_accepted: '1'
       }
     }

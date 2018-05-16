@@ -16,6 +16,7 @@ nl:
         groups: 'Groepen'
         grants: 'Rechten'
         forums: 'Forums'
+        shortnames: 'Redirects'
       managers:
         owner: "Eigenaar"
         about_owner: "Gebruikers zijn eigenaar van een organisatie. Gebruikers kunnen meerdere organisaties bezitten, maar een organisatie kan maar één eigenaar hebben."

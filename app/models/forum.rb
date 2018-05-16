@@ -13,7 +13,6 @@ class Forum < EdgeableBase
   belongs_to :page, inverse_of: :forums
   belongs_to :default_decision_group, class_name: 'Group'
   has_many :banners, inverse_of: :forum, dependent: :destroy
-  has_many :shortnames, inverse_of: :forum, dependent: :destroy
   has_many :votes, inverse_of: :forum, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :forum, dependent: :destroy
@@ -39,16 +38,11 @@ class Forum < EdgeableBase
   paginates_per 30
   parentable :page
 
-  validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
+  validates :url, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :page, presence: true
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
-  validate :shortnames_count
-
-  def shortnames_count
-    errors.add(:shortnames, 'bad') if shortnames.count > max_shortname_count
-  end
 
   auto_strip_attributes :name, :cover_photo_attribution, squish: true
   auto_strip_attributes :bio, nullify: false
@@ -100,10 +94,6 @@ class Forum < EdgeableBase
     locale.split('-').first.to_sym
   end
 
-  def page=(value)
-    super value.is_a?(Page) ? value : Page.find_via_shortname!(value)
-  end
-
   def publisher
     page.owner.profileable
   end
@@ -112,7 +102,7 @@ class Forum < EdgeableBase
   # the first Forum where {Forum#discoverable} is true and a {Grant} for the public {Group} is present
   def self.first_public
     if (setting = Setting.get(:default_forum))
-      forum = Forum.find_via_shortname!(setting)
+      forum = Forum.joins(edge: :shortnames).find_by!('lower(shortname) = lower(?)', setting)
     end
     forum || Forum.public_forums.first
   end
@@ -123,13 +113,6 @@ class Forum < EdgeableBase
 
   def self.shortnameable?
     true
-  end
-
-  # Is the forum out of its shortname limit
-  # @see {max_shortname_count}
-  # @return [Boolean] True if the forum has reached its maximum shortname count.
-  def shortnames_depleted?
-    shortnames.count >= max_shortname_count
   end
 
   def move_to(_new_parent)

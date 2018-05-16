@@ -50,11 +50,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'Utrecht Two',
                  about: 'Utrecht Two bio'
                },
-               edge_attributes: {
-                 shortname_attributes: {
-                   shortname: 'UtrechtNumberTwo'
-                 }
-               },
+               url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
            }
@@ -102,11 +98,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'Utrecht Two',
                  about: 'Utrecht Two bio'
                },
-               edge_attributes: {
-                 shortname_attributes: {
-                   shortname: 'UtrechtNumberTwo'
-                 }
-               },
+               url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
            }
@@ -125,11 +117,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'a',
                  about: 'bio'
                },
-               edge_attributes: {
-                 shortname_attributes: {
-                   shortname: 'shortnmae'
-                 }
-               },
+               url: 'shortnmae',
                last_accepted: '1'
              }
            }
@@ -219,7 +207,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     get settings_iri(page)
     assert_response 200
 
-    %i[profile groups forums advanced].each do |tab|
+    %i[profile groups forums advanced shortnames].each do |tab|
       get settings_iri(page, tab: tab)
       assert_response 200
     end
@@ -303,11 +291,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                  name: 'Utrecht Two',
                  about: 'Utrecht Two bio'
                },
-               edge_attributes: {
-                 shortname_attributes: {
-                   shortname: 'UtrechtNumberTwo'
-                 }
-               },
+               url: 'UtrechtNumberTwo',
                last_accepted: '1'
              }
            }
@@ -392,11 +376,7 @@ class PagesTest < ActionDispatch::IntegrationTest
                  content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg')
                }
              },
-             edge_attributes: {
-               shortname_attributes: {
-                 shortname: 'UtrechtNumberTwo'
-               }
-             },
+             url: 'UtrechtNumberTwo',
              last_accepted: '1'
            }
          }

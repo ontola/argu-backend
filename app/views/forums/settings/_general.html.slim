@@ -7,6 +7,10 @@
     =f.input :name
     =f.input :bio, input_html: { rows: 2, maxlength: 80}
     =f.input :bio_long, input_html: { rows: 4}
+    -if policy(resource).shortname?
+      =f.input :url, as: :shortname
+      li.form-helper
+        span= t('forums.shortname.warning')
     =f.input :locale, as: :react_select, collection: locale_select_items, required: false, include_blank: false, clearable: false, searchable: true
     =react_component_store 'MapPicker', props: map_picker_props(resource)
   =render partial: 'photos/form',
@@ -52,10 +56,6 @@
   -if current_user.is_staff?
     =f.inputs name: t('forms.staff_only'), class: 'danger-zone' do
       =f.input :discoverable, as: :boolean
-      -if policy(resource).shortname?
-        =f.inputs :shortname, for: :shortname
-        li.form-helper
-          span= t('forums.shortname.warning')
       =link_to t('forums.settings.shortnames'), settings_iri_path(resource, tab: :shortnames), class: 'btn btn--light'
       =link_to t('forums.settings.banners.title'), settings_iri_path(resource, tab: :banners), class: 'btn btn--light'
       =link_to t('formtastic.labels.f_move'), move_iri_path(resource), class: 'btn btn--light', remote: true

@@ -39,7 +39,7 @@ module ProfilePhotoable
         {publisher: profileable, creator: self, forum: nil}
       end
     when Forum
-      {publisher: page.owner.profileable, creator: creator, forum: self}
+      {publisher: parent_model.owner.profileable, creator: creator, forum: self}
     when Banner
       creator = publisher.is_a?(Page) ? publisher.owner : publisher.profile
       {publisher: publisher, creator: creator, forum: forum}

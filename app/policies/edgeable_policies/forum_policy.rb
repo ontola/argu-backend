@@ -11,8 +11,7 @@ class ForumPolicy < EdgeablePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[name bio bio_long profile_id locale public_grant page_id]
-    attributes.append(:max_shortname_count) if max_shortname_count?
+    attributes.concat %i[name bio bio_long profile_id locale public_grant page]
     attributes.concat %i[discoverable] if staff?
     append_default_photo_params(attributes)
     attributes
@@ -21,7 +20,7 @@ class ForumPolicy < EdgeablePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i[general]
-    tabs.concat %i[shortnames banners] if staff?
+    tabs.concat %i[banners] if staff?
     tabs
   end
 
@@ -32,10 +31,6 @@ class ForumPolicy < EdgeablePolicy
   def list?
     raise(ActiveRecord::RecordNotFound) unless record.discoverable? || show?
     true
-  end
-
-  def max_shortname_count?
-    staff?
   end
 
   def move?

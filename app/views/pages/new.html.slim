@@ -18,10 +18,9 @@
           =semantic_form_for page, url: page.iri_path, remote: true, authenticity_token: true do |f|
             =f.inputs do
               =f.inputs :name, for: :profile
-              -if policy(page).shortname?
-                =f.inputs :shortname, for: :shortname, placeholder: false
-                li.form-helper
-                  span=t('pages.shortname_helper_html')
+              =f.inputs :shortname, for: :shortname, placeholder: false
+              li.form-helper
+                span=t('pages.shortname_helper_html')
               =f.semantic_fields_for :profile do |p|
                 =p.input :about, as: :text, input_html: {rows: 4}
                 =render partial: 'photos/form',

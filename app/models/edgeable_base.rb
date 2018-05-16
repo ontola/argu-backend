@@ -110,7 +110,20 @@ class EdgeableBase < ApplicationRecord
 
   # @return [String, nil] The shortname of the model or nil
   def url
-    shortname&.shortname
+    @url || edge&.shortname&.shortname
+  end
+
+  def url=(value)
+    return if value == url
+    root_id = is_a?(Page) ? nil : edge.root_id
+    existing = Shortname.find_by(shortname: value, root_id: root_id)
+    if existing&.primary?
+      errors.add(:url, :taken)
+      return
+    end
+    existing.primary = true if existing
+    edge.shortnames << (existing || Shortname.new(shortname: value, root_id: root_id))
+    @url = value
   end
 
   def parent_model(type = nil)
@@ -164,6 +177,8 @@ class EdgeableBase < ApplicationRecord
   end
 
   class << self
+    include UUIDHelper
+
     # Hands over publication of a collection to the Community profile
     def anonymize(collection)
       collection.update_all(creator_id: Profile::COMMUNITY_ID)
@@ -184,28 +199,32 @@ class EdgeableBase < ApplicationRecord
 
     # Finds an object via its shortname, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname!(url)
-      find_via_shortname(url) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname!(url, root_id = nil)
+      find_via_shortname(url, root_id) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Finds an object via its shortname, returns nil when not found
-    def find_via_shortname(url)
-      Edge.where(owner_type: name).find_via_shortname(url)&.owner
+    def find_via_shortname(url, root_id = nil)
+      if root_id && !uuid?(root_id)
+        root_id = Page.find_via_shortname(root_id)&.edge&.uuid
+        return if root_id.blank?
+      end
+      joins(edge: :shortnames).where(shortnames: {root_id: root_id}).find_by('lower(shortname) = lower(?)', url)
     end
 
     # Finds an object via its shortname or id
-    def find_via_shortname_or_id(url)
+    def find_via_shortname_or_id(url, root_id = nil)
       if (/[a-zA-Z]/i =~ url).nil?
-        find_by(id: url)
+        joins(:edge).find_by(id: url, edges: {root_id: root_id})
       else
-        find_via_shortname(url)
+        find_via_shortname(url, root_id)
       end
     end
 
     # Finds an object via its shortname or id, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname_or_id!(url)
-      find_via_shortname_or_id(url) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname_or_id!(url, root_id = nil)
+      find_via_shortname_or_id(url, root_id) || raise(ActiveRecord::RecordNotFound)
     end
 
     private

@@ -24,7 +24,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   # VoteEvents of Motion
   ####################################
   test 'should get show vote_event of motion' do
-    get :show, params: {format: :json_api, root_id: argu.id, motion_id: motion.id, id: vote_event.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.id, id: vote_event.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -43,7 +43,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   end
 
   test 'should get show vote_event of motion with default id' do
-    get :show, params: {format: :json_api, root_id: argu.id, motion_id: motion.edge.fragment, id: 'default'}
+    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment, id: 'default'}
     assert_response 200
 
     assert_equal parsed_body['data']['id'], motion.default_vote_event.iri
@@ -55,7 +55,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   end
 
   test 'should get index vote_events of motion' do
-    get :index, params: {format: :json_api, root_id: argu.id, motion_id: motion.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -89,7 +89,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   ####################################
   test 'should get show vote_event of linked_record' do
     get :show,
-        params: linked_record.iri_opts.merge(root_id: argu.id, id: lr_vote_event.edge.fragment, format: :json_api)
+        params: linked_record.iri_opts.merge(root_id: argu.url, id: lr_vote_event.edge.fragment, format: :json_api)
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -108,7 +108,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   end
 
   test 'should get show vote_event of linked_record with default id' do
-    get :show, params: linked_record.iri_opts.merge(root_id: argu.id, id: 'default', format: :json_api)
+    get :show, params: linked_record.iri_opts.merge(root_id: argu.url, id: 'default', format: :json_api)
     assert_response 200
 
     assert_equal parsed_body['data']['id'], lr_vote_event.iri
@@ -120,7 +120,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   end
 
   test 'should get index vote_events of linked_record' do
-    get :index, params: linked_record.iri_opts.merge(format: :json_api, root_id: argu.id)
+    get :index, params: linked_record.iri_opts.merge(format: :json_api, root_id: argu.url)
     assert_response 200
 
     expect_relationship('partOf', 1)

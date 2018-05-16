@@ -15,7 +15,7 @@ class VotesControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show vote' do
-    get :show, params: {format: :json_api, root_id: argu.id, id: vote.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, id: vote.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -27,7 +27,7 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   test 'should post create vote for argument as JS' do
     sign_in user
-    post :create, params: {format: :js, root_id: argu.id, pro_argument_id: argument.edge.fragment, for: 'pro'}
+    post :create, params: {format: :js, root_id: argu.url, pro_argument_id: argument.edge.fragment, for: 'pro'}
     assert_response 200
   end
 
@@ -38,7 +38,7 @@ class VotesControllerTest < ActionController::TestCase
     get :index,
         params: {
           format: :json_api,
-          root_id: argu.id,
+          root_id: argu.url,
           motion_id: motion.edge.fragment,
           vote_event_id: vote_event.edge.fragment
         }

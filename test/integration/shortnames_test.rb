@@ -10,11 +10,9 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
   let(:publication) { build(:publication) }
-  let(:comment_shortname) { create(:shortname, owner: comment.edge, forum: freetown) }
+  let(:comment_shortname) { create(:shortname, owner: comment.edge) }
   let(:subject) do
-    create(:discussion_shortname,
-           forum: freetown,
-           owner: motion.edge)
+    create(:discussion_shortname, owner: motion.edge, primary: false, root_id: motion.edge.root_id)
   end
 
   ####################################
@@ -32,7 +30,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
       resource = create(klass, parent: parent.edge)
       parent = resource
 
-      shortname = create(:shortname, forum: freetown, owner: resource.edge)
+      shortname = create(:shortname, owner: resource.edge)
 
       general_show(200, resource, shortname)
     end
@@ -98,13 +96,6 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     general_create
   end
 
-  test 'administrator post create should not overflow limit' do
-    create(:discussion_shortname, forum: freetown, owner: motion.edge)
-    assert freetown.max_shortname_count, freetown.shortnames.count
-    sign_in administrator
-    general_create 403, [['Shortname.count', 0]]
-  end
-
   test 'administrator should put update' do
     sign_in administrator
     general_update 302, true
@@ -131,7 +122,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   def general_create(response = 302, differences = [['Shortname.count', 1]])
     attrs = shortname_attributes
     assert_differences(differences) do
-      post collection_iri_path(freetown, :shortnames), params: attrs
+      post collection_iri_path(argu, :shortnames), params: attrs
       assert_response response
     end
   end
@@ -159,7 +150,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   # @return [Hash] Options to pass to the request
   def shortname_attributes
-    attrs = attributes_for(:discussion_shortname, forum: freetown, owner: motion.edge)
+    attrs = attributes_for(:discussion_shortname, owner: motion.edge)
     attrs.delete(:forum)
     owner = attrs.delete(:owner)
     attrs[:owner_id] = owner.owner_id

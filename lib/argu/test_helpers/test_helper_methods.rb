@@ -246,14 +246,15 @@ module Argu
 
         def define_spec_objects
           let(:argu) { Page.find_via_shortname('argu') }
-          let(:other_page_forum) { Forum.find_via_shortname('other_page_forum') }
+          let(:other_page) { Page.find_via_shortname('other_page') }
+          let(:other_page_forum) { Forum.find_via_shortname('other_page_forum', other_page.edge.uuid) }
 
           define_freetown_spec_objects
           define_hidden_spec_objects
         end
 
         def define_freetown_spec_objects
-          let(:freetown) { Forum.find_via_shortname('freetown') }
+          let(:freetown) { Forum.find_via_shortname('freetown', argu.edge.uuid) }
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
           let(:linked_record_vote) { LinkedRecord.first.votes.first }
@@ -281,7 +282,7 @@ module Argu
         end
 
         def define_hidden_spec_objects
-          let(:holland) { Forum.find_via_shortname('holland') }
+          let(:holland) { Forum.find_via_shortname('holland', argu.edge.uuid) }
           let(:hidden_motion) { holland.edge.descendants.at_depth(4).where(owner_type: 'Motion').first.owner }
         end
 

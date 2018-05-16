@@ -7,9 +7,9 @@ RSpec.describe 'Forums', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 
-  let(:invalid_create_params) { {forum: {page_id: argu.id, name: 'n1'}} }
-  let(:update_params) { {forum: {page_id: argu.id, name: 'name'}} }
-  let(:invalid_update_params) { {forum: {page_id: argu.id, name: 'n1'}} }
+  let(:invalid_create_params) { {forum: {page_id: argu.url, name: 'n1'}} }
+  let(:update_params) { {forum: {page_id: argu.url, name: 'name'}} }
+  let(:invalid_update_params) { {forum: {page_id: argu.url, name: 'n1'}} }
   let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
 
   let(:edit_path) { settings_iri_path(subject) }
@@ -24,6 +24,11 @@ RSpec.describe 'Forums', type: :request do
     expect(response.body).to(include('n1'))
   end
   let(:expect_put_update_failed_html) { expect_post_create_failed_html }
+  let(:expect_put_update_html) do
+    expect(response).to redirect_to(updated_resource_path)
+    subject.reload
+    expect(subject.name).to eq('name')
+  end
 
   let(:update_differences) { [['Forum.count', 0]] }
   let(:destroy_differences) { [['Forum.count', -1]] }
@@ -39,7 +44,7 @@ RSpec.describe 'Forums', type: :request do
     let(:non_existing_create_path) { portal_forums_path(forum: {page_id: -99}) }
     let(:create_params) do
       nominatim_netherlands
-      {forum: {page_id: argu.id, name: 'name', edge_attributes: {shortname_attributes: {shortname: 'new_forum'}}}}
+      {forum: {page_id: argu.url, name: 'name', url: 'new_forum'}}
     end
     let(:create_differences) { [['Forum.count', 1]] }
     let(:expect_post_create_guest_serializer) { expect_not_found }

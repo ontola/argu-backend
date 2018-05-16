@@ -4,22 +4,21 @@ module Shortnameable
   extend ActiveSupport::Concern
 
   included do
+    extend UUIDHelper
+
     has_one :shortname,
+            -> { where(primary: true) },
             as: 'owner',
             dependent: :destroy,
             inverse_of: :owner,
             autosave: true,
             primary_key: :uuid
-    accepts_nested_attributes_for :shortname
-    after_initialize :build_shortname_if, if: :build_shortname?
-
-    def build_shortname?
-      new_record? && shortnameable?
-    end
-
-    def build_shortname_if
-      self.shortname ||= Shortname.new
-    end
+    has_many :shortnames,
+             as: 'owner',
+             dependent: :destroy,
+             inverse_of: :owner,
+             primary_key: :uuid
+    accepts_nested_attributes_for :shortname, :shortnames
 
     # Useful to test whether a model is shortnameable
     def shortnameable?
@@ -42,28 +41,32 @@ module Shortnameable
   module ClassMethods
     # Finds an object via its shortname, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname!(url)
-      find_via_shortname(url) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname!(url, root_id = nil)
+      find_via_shortname(url, root_id) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Finds an object via its shortname, returns nil when not found
-    def find_via_shortname(url)
-      joins(:shortname).find_by('lower(shortname) = lower(?)', url)
+    def find_via_shortname(url, root_id = nil)
+      if root_id && !uuid?(root_id)
+        root_id = Page.find_via_shortname(root_id)&.edge&.uuid
+        return if root_id.blank?
+      end
+      joins(:shortnames).where(shortnames: {root_id: root_id}).find_by('lower(shortname) = lower(?)', url)
     end
 
     # Finds an object via its shortname or id
-    def find_via_shortname_or_id(url)
+    def find_via_shortname_or_id(url, root_id = nil)
       if (/[a-zA-Z]/i =~ url.to_s).nil?
         find_by(id: url)
       else
-        find_via_shortname(url)
+        find_via_shortname(url, root_id)
       end
     end
 
     # Finds an object via its shortname or id, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname_or_id!(url)
-      find_via_shortname_or_id(url) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname_or_id!(url, root_id = nil)
+      find_via_shortname_or_id(url, root_id) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Useful to test whether a model is shortnameable

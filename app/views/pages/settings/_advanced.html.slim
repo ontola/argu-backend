@@ -8,7 +8,7 @@
     - if policy(authenticated_resource).shortname? || policy(authenticated_resource).delete?
     =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
       - if policy(authenticated_resource).shortname?
-        =f.inputs :shortname, for: :shortname
+        =f.input :url, as: :shortname
         li.form-helper
           span= t('pages.shortname.warning')
       - if policy(authenticated_resource).delete?

@@ -163,10 +163,10 @@ class PagesController < EdgeableController
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
     return if resource.owner_type == 'Page'
+    redirect_to resource.owner.iri_path
     send_event category: 'short_url',
                action: 'follow',
                label: params[:id]
-    redirect_to resource.owner.iri_path
   end
 
   def respond_with_form(_resource)

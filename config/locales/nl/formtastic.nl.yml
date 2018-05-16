@@ -73,6 +73,7 @@ nl:
         naam: "Naam van forum"
         public_grant: "Gebruikers zonder groep mogen"
         discoverable: "Toon in overzichten"
+        shortname: "URL"
       group:
         name: "Naam"
         name_singular: "Naam enkelvoud"

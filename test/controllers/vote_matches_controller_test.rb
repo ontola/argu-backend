@@ -60,7 +60,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
   end
 
   test 'should get index vote_matches for page' do
-    get :index, params: {page_id: page.id, format: :json_api}
+    get :index, params: {page_id: page.url, format: :json_api}
     assert_response 200
 
     expect_relationship('partOf', 1)

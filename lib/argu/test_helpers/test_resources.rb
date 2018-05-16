@@ -7,7 +7,7 @@ module Argu
         attributes = (args.pop if args.last.is_a?(Hash)) || {}
         page = attributes.delete(:page) || create(:page)
         attributes = {
-          edge_attributes: {shortname_attributes: attributes_for(:shortname)},
+          url: attributes_for(:shortname)[:shortname],
           parent: page.edge,
           page: page,
           options: {
@@ -38,7 +38,7 @@ module Argu
           create_forum(
             :with_follower,
             {
-              edge_attributes: {shortname_attributes: {shortname: name}},
+              url: name,
               page: argu,
               parent: argu.edge,
               public_grant: 'initiator'
@@ -49,11 +49,7 @@ module Argu
 
       def define_cairo(name = 'cairo', attributes: {})
         let(name) do
-          forum = create_forum(
-            {
-              edge_attributes: {shortname_attributes: {shortname: name}}
-            }.merge(attributes)
-          )
+          forum = create_forum({url: name}.merge(attributes))
           create(:grant,
                  edge: forum.edge,
                  group: create(:group, parent: forum.page.edge),
@@ -64,12 +60,7 @@ module Argu
 
       def define_cologne(name = 'cologne', attributes: {})
         let(name) do
-          forum = create_forum(
-            :populated_forum,
-            {
-              edge_attributes: {shortname_attributes: {shortname: name}}
-            }.merge(attributes)
-          )
+          forum = create_forum(:populated_forum, {url: name}.merge(attributes))
           create(:grant,
                  edge: forum.edge,
                  group: create(:group, parent: forum.page.edge),
@@ -82,7 +73,7 @@ module Argu
         let(name) do
           forum = create_forum(
             {
-              edge_attributes: {shortname_attributes: {shortname: name}},
+              url: name,
               discoverable: false
             }.merge(attributes)
           )
@@ -99,7 +90,7 @@ module Argu
           create_forum(
             :populated_forum,
             {
-              edge_attributes: {shortname_attributes: {shortname: name}},
+              url: name,
               public_grant: 'initiator'
             }.merge(attributes)
           )
@@ -111,7 +102,7 @@ module Argu
           create_forum(
             :populated_forum,
             {
-              edge_attributes: {shortname_attributes: {shortname: name}},
+              url: name,
               public_grant: 'spectator'
             }.merge(attributes)
           )

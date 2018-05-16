@@ -38,7 +38,7 @@ module IRIHelper
     if opts[:class] == Edge && uuid?(opts[:id])
       Edge.find_by(uuid: opts[:id])
     elsif opts[:class].try(:shortnameable?)
-      opts[:class]&.find_via_shortname_or_id(opts[:id])
+      shortnameable_from_opts(opts)
     elsif opts[:class] < EdgeableBase
       Edge.find_by(fragment: opts[:id], root_id: root_id_from_opts(opts))&.owner
     else
@@ -53,5 +53,13 @@ module IRIHelper
   def root_id_from_opts(opts)
     return opts[:root_id] if uuid?(opts[:root_id])
     Page.find_via_shortname_or_id(opts[:root_id])&.edge&.uuid
+  end
+
+  def shortnameable_from_opts(opts)
+    if root_id_from_opts(opts).present?
+      opts[:class]&.find_via_shortname_or_id(opts[:id], root_id_from_opts(opts))
+    else
+      opts[:class]&.find_via_shortname_or_id(opts[:id])
+    end
   end
 end

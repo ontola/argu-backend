@@ -13,7 +13,7 @@ class ForumTest < ActiveSupport::TestCase
   let(:group) { create(:group, parent: page.edge) }
   let(:user) { create(:user) }
   let(:forum) do
-    create(:forum, parent: page.edge, edge_attributes: {shortname_attributes: {shortname: 'new_forum'}}, locale: 'nl')
+    create(:forum, parent: page.edge, url: 'new_forum', locale: 'nl')
   end
 
   test 'valid' do
@@ -41,49 +41,5 @@ class ForumTest < ActiveSupport::TestCase
 
   test 'description should work' do
     assert_equal subject.description, subject.bio
-  end
-
-  test 'page should accept page or url' do
-    p1 = create(:page)
-    assert p1.id != subject.page.id
-    subject.page = p1
-    assert_equal p1.id, subject.page.id
-
-    p2 = create(:page)
-    assert p2.id != subject.page.id
-    subject.page = p2.url
-    assert_equal p2.id, subject.page.id
-  end
-
-  define_holland('shortname_forum', attributes: {max_shortname_count: 0})
-  test 'shortnames_depleted? should function correctly' do
-    f = shortname_forum
-    assert_equal true,
-                 f.shortnames_depleted?,
-                 'zero shortname allowance false negative'
-
-    f.max_shortname_count = 1
-    assert_equal false,
-                 f.shortnames_depleted?,
-                 'in bound shortname allowance false positive'
-
-    m = create(:motion, parent: subject.edge)
-    create(:shortname,
-           owner: m.edge)
-    assert_equal false,
-                 f.shortnames_depleted?,
-                 'external shortname creation cross-affects tenants'
-
-    s = create(:shortname,
-               forum: f,
-               owner: f.motions.first.edge)
-    assert_equal true,
-                 f.shortnames_depleted?,
-                 "shortname count doesn't affect limit"
-
-    s.destroy
-    assert_equal false,
-                 f.shortnames_depleted?,
-                 "shortname destruction doesn't free limit"
   end
 end

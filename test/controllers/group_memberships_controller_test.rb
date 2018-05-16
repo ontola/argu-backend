@@ -333,7 +333,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :index,
         params: {
-          page_id: freetown.page.id,
+          page_id: freetown.page.url,
           q: administator.first_name,
           thing: 'fg_shortname26end'
         }
@@ -347,7 +347,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :index,
         params: {
-          page_id: freetown.page.id,
+          page_id: freetown.page.url,
           q: 'wrong',
           thing: 'fg_shortname26end'
         }

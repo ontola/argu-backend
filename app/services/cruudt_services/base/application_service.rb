@@ -40,7 +40,8 @@ class ApplicationService
   def commit
     ActiveRecord::Base.transaction do
       persist_parents
-      @actions[service_action] = resource.public_send(service_method) if resource.errors.empty?
+      raise(ActiveRecord::RecordInvalid) if resource.errors.present?
+      @actions[service_action] = resource.public_send(service_method)
       after_save if @actions[service_action]
       publish_success_signals
       broadcast_event if @actions[service_action]

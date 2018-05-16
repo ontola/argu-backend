@@ -14,7 +14,7 @@ class MotionsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show motion' do
-    get :show, params: {format: :json_api, root_id: argu.id, id: motion.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, id: motion.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -54,7 +54,7 @@ class MotionsControllerTest < ActionController::TestCase
   # Index for Forum
   ####################################
   test 'should get index motions of forum' do
-    get :index, params: {format: :json_api, root_id: argu.id, forum_id: holland.id}
+    get :index, params: {format: :json_api, root_id: holland.page.url, forum_id: holland.url}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -67,7 +67,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'should get index motions of forum page 1' do
-    get :index, params: {format: :json_api, root_id: argu.id, forum_id: holland.id, page: 1}
+    get :index, params: {format: :json_api, root_id: holland.page.url, forum_id: holland.id, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -84,7 +84,7 @@ class MotionsControllerTest < ActionController::TestCase
   # Index for Question
   ####################################
   test 'should get index motions of question' do
-    get :index, params: {format: :json_api, root_id: argu.id, question_id: question.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.edge.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -97,7 +97,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'should get index motions of question page 1' do
-    get :index, params: {format: :json_api, root_id: argu.id, question_id: question.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.edge.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -116,7 +116,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     sign_in user
 
-    get :index, params: {format: :json_api, root_id: argu.id, question_id: question.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.edge.fragment, page: 1}
     assert_response 200
 
     expect_included(user_vote.iri)

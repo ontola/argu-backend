@@ -177,7 +177,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'administrator should get show organization of motion form' do
     sign_in administrator
 
-    get :show, params: {iri: argu_url("/#{argu.url}/m/#{motion.id}/edit"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/m/#{motion.edge.fragment}/edit"), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)

@@ -17,23 +17,10 @@ class ShortnamesController < ParentableController
     authenticated_resource.owner.edge
   end
 
-  def tree_root_id
-    @tree_root_id ||=
-      case action_name
-      when 'new', 'create', 'index'
-        parent_edge.root_id
-      else
-        resource_by_id&.owner&.root_id
-      end
-  end
-
-  def parent_resource
-    @parent_resource ||=
-      if %w[new create].include?(params[:action])
-        super
-      else
-        resource_by_id&.forum
-      end
+  def destination_param
+    return @destination_param if instance_variable_defined?(:@destination_param)
+    return if params[:shortname].try(:[], :destination).blank?
+    @destination_param = "#{parent_from_params.iri_path}/#{params[:shortname][:destination]}"
   end
 
   def handle_record_not_unique_html
@@ -43,27 +30,30 @@ class ShortnamesController < ParentableController
     respond_with_form(authenticated_resource)
   end
 
+  def parent_resource
+    return super if destination_param.blank?
+    @parent_resource ||= resource_from_iri(destination_param)
+  end
+
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: parent_resource!,
-      owner: Edge.find_by(
-        owner_id: params[:shortname].try(:[], :owner_id),
-        owner_type: params[:shortname].try(:[], :owner_type)
-      )
+      primary: false,
+      owner: parent_edge!,
+      root_id: unscoped_param ? nil : parent_edge.root_id
     )
   end
 
   def redirect_model_success(_resource = nil)
-    settings_iri_path(parent_resource!, tab: 'shortnames')
+    settings_iri_path(authenticated_resource.owner.root, tab: 'shortnames')
   end
 
   def respond_with_form(resource)
-    render 'forums/settings',
+    render 'pages/settings',
            locals: {
              tab: "shortnames/#{tab}",
              active: 'shortnames',
              shortname: resource,
-             resource: resource.forum
+             resource: resource.owner.parent_model(:page)
            }
   end
 
@@ -78,5 +68,19 @@ class ShortnamesController < ParentableController
     when 'edit', 'update'
       :edit
     end
+  end
+
+  def unscoped_param
+    params[:shortname].try(:[], :unscoped) if current_user.is_staff?
+  end
+
+  def tree_root_id
+    @tree_root_id ||=
+      case action_name
+      when 'new', 'create', 'index'
+        parent_edge&.root_id
+      else
+        resource_by_id&.owner&.root_id
+      end
   end
 end

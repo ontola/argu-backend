@@ -9,6 +9,7 @@ FactoryGirl.define do
     owner { passed_in?(:owner) ? owner : build(:profile, profileable: build(:user)) }
     last_accepted Time.current
     visibility Page.visibilities[:open]
+    edge { Edge.new(is_published: true, root_id: SecureRandom.uuid) }
 
     before(:create) do |page|
       page.profile ||= build(:profile, profileable: page)
@@ -16,13 +17,9 @@ FactoryGirl.define do
     end
 
     after(:build) do |page|
-      page.edge ||= Edge.new(
-        uuid: SecureRandom.uuid,
-        owner: page,
-        user: page.publisher,
-        is_published: true,
-        shortname: build(:shortname)
-      )
+      page.edge.root_id = page.edge.uuid
+      page.edge.user ||= page.publisher
+      page.url ||= build(:shortname).shortname
     end
   end
 end
