@@ -16,7 +16,7 @@ module RedisResource
         user_id: resource.publisher.id,
         owner_type: resource.class.name,
         edge_id: resource.edge.id,
-        path: resource.edge.parent.path
+        parent: resource.edge.parent
       )
     end
 

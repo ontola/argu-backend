@@ -55,7 +55,7 @@ class Vote < EdgeableBase
                 Edge.where_owner(
                   'Vote',
                   creator: creator,
-                  path: "#{parent_model&.edge&.parent&.path}.*",
+                  parent: parent_model&.edge&.parent,
                   voteable_type: 'Argument'
                 ).pluck(:parent_id)
             }

@@ -17,20 +17,18 @@ module RedisResource
       init_redis_votes(count: 2)
       init_redis_votes(user: other_guest_user, count: 1)
       assert_equal 2, relation.count
-      relation.where(path: Motion.first.default_vote_event.edge.path)
+      relation.where(parent_id: Motion.first.default_vote_event.edge.id)
       assert_equal 1, relation.count
       relation.where(parent: Motion.first.default_vote_event.edge)
       assert_equal 1, relation.count
-      relation.where(path: freetown.edge.path).count
+      relation.where(parent_id: freetown.edge.id).count
       assert_equal 0, relation.count
-      relation.where(path: "#{freetown.edge.path}.*").count
-      assert_equal 2, relation.count
     end
 
     test 'where' do
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
-      first_result = relation.where(path: Motion.first.default_vote_event.edge.path).to_a.first
+      first_result = relation.where(parent_id: Motion.first.default_vote_event.edge.id).to_a.first
       assert first_result.is_a?(RedisResource::Resource)
       assert first_result.resource.is_a?(Vote)
     end
@@ -38,7 +36,7 @@ module RedisResource
     test 'where edge_relation' do
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
-      first_result = edge_relation.where(path: Motion.first.default_vote_event.edge.path).to_a.first
+      first_result = edge_relation.where(parent_id: Motion.first.default_vote_event.edge.id).to_a.first
       assert first_result.is_a?(Edge)
       assert first_result.owner.is_a?(Vote)
     end

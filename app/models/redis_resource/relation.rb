@@ -4,7 +4,8 @@ module RedisResource
   class Relation
     include Enumerable
     include ActiveModel::Model
-    attr_accessor :where_clause, :user, :owner_type, :edge_id, :path
+    attr_accessor :where_clause, :user, :owner_type, :edge_id
+    attr_reader :parent, :parent_id
     delegate :count, :empty?, to: :filtered_keys
 
     # Clears the caches
@@ -48,10 +49,10 @@ module RedisResource
     private
 
     def apply_filters(opts)
-      clear_key if (opts.keys & %i[publisher creator parent path owner_type edge_id]).any?
+      clear_key if (opts.keys & %i[publisher creator parent parent_id owner_type edge_id]).any?
       self.user = opts.delete(:publisher) if opts[:publisher].present?
       self.user = opts.delete(:creator)&.profileable if opts[:creator].present?
-      %i[parent path owner_type edge_id].each do |attr|
+      %i[parent parent_id owner_type edge_id].each do |attr|
         send("#{attr}=", opts.delete(attr)) if opts[attr].present?
       end
       clear_filtered_keys if opts.present?
@@ -85,13 +86,19 @@ module RedisResource
         user: user,
         owner_type: owner_type,
         edge_id: edge_id,
-        path: path
+        parent: parent,
+        parent_id: parent_id
       )
     end
 
     def parent=(parent)
-      return if parent.nil?
-      self.path = parent.path
+      @parent = parent
+      @parent_id = parent&.id
+    end
+
+    def parent_id=(parent_id)
+      @parent = nil if parent_id && parent && parent.id != parent_id
+      @parent_id = parent_id
     end
 
     # @return [Hash<String => RedisResource::Resource>] The found redis resources based on the current filters

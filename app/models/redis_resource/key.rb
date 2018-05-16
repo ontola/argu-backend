@@ -2,7 +2,8 @@
 
 module RedisResource
   class Key
-    attr_accessor :key, :user, :user_type, :user_id, :owner_type, :edge_id, :path, :parent_id, :parent
+    attr_accessor :key, :user, :user_type, :user_id, :owner_type, :edge_id
+    attr_reader :parent, :parent_id
 
     # Returns the attributes stored in redis for this key
     # @return [Hash] The stored attributes
@@ -20,7 +21,8 @@ module RedisResource
     # @option opts [User] user
     # @option opts [String] owner_type
     # @option opts [Integer, String] edge_id
-    # @option opts [String] path
+    # @option opts [Edge] parent
+    # @option opts [Integer] parent_id
     def initialize(opts = {})
       opts.compact!
       self.user_type ||= opts[:user]&.class&.to_s&.underscore || opts.fetch(:user_type, '*')
@@ -32,9 +34,9 @@ module RedisResource
         nil
       self.owner_type ||= opts.fetch(:owner_type, '*')
       self.edge_id ||= opts.fetch(:edge_id, '*')
-      self.path ||= opts.fetch(:path, '*')
-      self.parent_id = self.path&.split('.')&.last
-      self.key = "temporary.#{user_type.underscore}.#{user_id}.#{owner_type.underscore}.#{edge_id}.#{path}"
+      self.parent ||= opts.fetch(:parent, nil)
+      self.parent_id ||= opts.fetch(:parent_id, '*')
+      self.key = "temporary.#{user_type.underscore}.#{user_id}.#{owner_type.underscore}.#{edge_id}.#{parent_id}"
     end
 
     def edge
@@ -57,6 +59,16 @@ module RedisResource
         end
     end
 
+    def parent=(parent)
+      @parent = parent
+      @parent_id = parent&.id
+    end
+
+    def parent_id=(parent_id)
+      @parent = nil if parent_id && parent && parent.id != parent_id
+      @parent_id = parent_id
+    end
+
     # @return [ApplicationRecord] The redis resource stored by this key
     def redis_resource
       @redis_resources ||= RedisResource::Resource.find(
@@ -70,8 +82,8 @@ module RedisResource
       def parse(key, user = nil)
         values = key.split('.')
         key = new(
-          Hash[%i[user_type user_id owner_type edge_id].map.with_index { |k, i| [k, values[i + 1]] }]
-            .merge(user: user, path: values[5..values.length].join('.'))
+          Hash[%i[user_type user_id owner_type edge_id parent_id].map.with_index { |k, i| [k, values[i + 1]] }]
+            .merge(user: user)
         )
         key if key.user.present?
       end
