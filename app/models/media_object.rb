@@ -24,6 +24,8 @@ class MediaObject < ApplicationRecord
   before_save :set_file_name
   before_save :set_publisher_and_creator
 
+  alias edgeable_record about
+
   parentable :forum, :question, :motion, :profile
   alias_attribute :display_name, :title
 

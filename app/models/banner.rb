@@ -13,6 +13,7 @@ class Banner < NewsBoy
 
   validates :forum, :audience, presence: true
   alias parent_model forum
+  alias edgeable_record forum
 
   def iri_opts
     super.merge(root_id: parent_model.root.url)

@@ -8,10 +8,4 @@ class DirectMessagePolicy < EdgeTreePolicy
   def create?
     edgeable_policy.contact?
   end
-
-  private
-
-  def edgeable_record
-    record.resource
-  end
 end

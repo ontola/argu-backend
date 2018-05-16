@@ -36,5 +36,7 @@ class EdgeTreePolicy < RestrictivePolicy
     @edgeable_policy ||= Pundit.policy(context, edgeable_record)
   end
 
-  def edgeable_record; end
+  def edgeable_record
+    record.try(:edgeable_record)
+  end
 end

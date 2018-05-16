@@ -6,10 +6,4 @@ class DiscussionPolicy < EdgeTreePolicy
     edgeable_policy.show?
   end
   alias create? show?
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.parent_model
-  end
 end

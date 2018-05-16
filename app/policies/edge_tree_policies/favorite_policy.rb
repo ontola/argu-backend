@@ -13,10 +13,6 @@ class FavoritePolicy < EdgeTreePolicy
 
   private
 
-  def edgeable_record
-    @edgeable_record ||= record.edge.owner
-  end
-
   def is_creator?
     record.user == user
   end

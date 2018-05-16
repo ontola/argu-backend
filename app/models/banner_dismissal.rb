@@ -30,6 +30,10 @@ class BannerDismissal
     @banner = @banner_class.find(value)
   end
 
+  def edgeable_record
+    @edgeable_record ||= banner.parent_model
+  end
+
   def persisted?
     !bd.changed? && stubborn_redis_hgetall(@banner_key)[@banner.identifier].present?
   end

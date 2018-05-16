@@ -19,10 +19,4 @@ class ConversionPolicy < EdgeTreePolicy
     assert! Pundit.policy(context, edgeable_record).convert?, :convert?
     true
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.edge.owner
-  end
 end

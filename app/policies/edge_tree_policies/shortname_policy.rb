@@ -30,10 +30,6 @@ class ShortnamePolicy < EdgeTreePolicy
 
   private
 
-  def edgeable_record
-    @edgeable_record ||= record.owner.is_a?(Edge) ? record.owner.parent_model(:page) : record.owner
-  end
-
   def valid_owner_type?
     record.owner.is_a?(Edge)
   end

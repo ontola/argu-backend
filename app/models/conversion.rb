@@ -10,6 +10,10 @@ class Conversion
 
   attr_accessor :edge, :klass
 
+  def edgeable_record
+    @edgeable_record ||= edge.owner
+  end
+
   def initialize(edge: nil, klass: nil)
     @edge = edge
     @klass = klass

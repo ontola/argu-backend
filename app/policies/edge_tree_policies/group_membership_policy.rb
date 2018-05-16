@@ -40,10 +40,6 @@ class GroupMembershipPolicy < EdgeTreePolicy
 
   private
 
-  def edgeable_record
-    @edgeable_record ||= record.page
-  end
-
   def group_member?
     record.member == user.profile
   end

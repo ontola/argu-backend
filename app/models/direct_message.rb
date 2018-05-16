@@ -15,6 +15,10 @@ class DirectMessage
   validates :resource_iri, presence: true
   validates :subject, presence: true
 
+  def edgeable_record
+    resource
+  end
+
   def new_record?
     true
   end

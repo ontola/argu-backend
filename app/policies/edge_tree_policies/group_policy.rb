@@ -46,10 +46,4 @@ class GroupPolicy < EdgeTreePolicy
   def default_tab
     'members'
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.parent_model
-  end
 end

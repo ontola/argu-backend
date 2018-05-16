@@ -29,10 +29,4 @@ class MediaObjectPolicy < EdgeTreePolicy
     attributes.append(content_attributes: %i[position_y])
     attributes
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.about
-  end
 end

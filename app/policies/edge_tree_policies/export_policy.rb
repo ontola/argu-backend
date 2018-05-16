@@ -18,10 +18,4 @@ class ExportPolicy < EdgeTreePolicy
   def show?
     administrator? || staff?
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.edge.owner
-  end
 end

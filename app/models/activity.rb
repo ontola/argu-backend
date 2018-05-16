@@ -23,6 +23,8 @@ class Activity < PublicActivity::Activity
   validates :trackable, :trackable_edge, :recipient, :recipient_edge, :owner,
             presence: {on: :create, if: proc { |a| a.trackable_type != 'Banner' && a.action != 'destroy' }}
 
+  alias edgeable_record trackable
+
   # Represents the physical event of the trackable.
   # @note A happening is an Activity with '*.happened' as key
   # @!attribute r created_at Indicates when the physical event took place.

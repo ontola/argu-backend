@@ -21,10 +21,4 @@ class GrantPolicy < EdgeTreePolicy
   def show?
     edgeable_policy.update?
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.page
-  end
 end

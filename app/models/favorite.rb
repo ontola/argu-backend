@@ -10,6 +10,10 @@ class Favorite < ApplicationRecord
 
   after_create :follow_edge
 
+  def edgeable_record
+    @edgeable_record ||= edge.owner
+  end
+
   def follow_edge
     user.follow(edge, :news)
   end

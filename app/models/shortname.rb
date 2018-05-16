@@ -32,6 +32,10 @@ class Shortname < ApplicationRecord
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
+  def edgeable_record
+    owner.is_a?(Edge) ? owner.parent_model(:page) : owner
+  end
+
   def self.find_resource(shortname, root_id = nil)
     Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
   end

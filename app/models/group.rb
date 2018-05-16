@@ -26,6 +26,7 @@ class Group < ApplicationRecord
   attr_accessor :confirmation_string
 
   parentable :page
+  alias edgeable_record parent_model
 
   PUBLIC_ID = -1
   STAFF_ID = -2

@@ -31,6 +31,8 @@ class GroupMembership < ApplicationRecord
   validates :group_id, exclusion: {in: [Group::STAFF_ID]}
   validates :member_id, exclusion: {in: [Profile::COMMUNITY_ID]}
 
+  alias edgeable_record page
+
   paginates_per 30
   parentable :group
 

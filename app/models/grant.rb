@@ -24,7 +24,6 @@ class Grant < ApplicationRecord
   validates :edge, presence: true, uniqueness: {scope: :group}
 
   parentable :edge
-
   %i[creator spectator participator initiator moderator administrator staff].each do |role|
     define_method "#{role}?" do
       grant_set.title == role
@@ -40,6 +39,10 @@ class Grant < ApplicationRecord
     else
       I18n.t('grants.other')
     end
+  end
+
+  def edgeable_record
+    @edgeable_record ||= edge.owner
   end
 
   def grant_set=(value)

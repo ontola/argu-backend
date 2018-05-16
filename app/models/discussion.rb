@@ -6,6 +6,7 @@ class Discussion
   include Parentable
   attr_accessor :forum, :page, :publisher
   parentable :forum, :page
+  alias edgeable_record parent_model
 
   def self.default_per_page
     10

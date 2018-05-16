@@ -34,10 +34,4 @@ class BannerPolicy < EdgeTreePolicy
   def destroy?
     edgeable_policy.update?
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.forum
-  end
 end

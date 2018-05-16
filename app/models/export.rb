@@ -15,6 +15,10 @@ class Export < ApplicationRecord
     "Export #{created_at}"
   end
 
+  def edgeable_record
+    @edgeable_record ||= edge.owner
+  end
+
   def iri_opts
     super.merge(root_id: parent_model.root.url)
   end

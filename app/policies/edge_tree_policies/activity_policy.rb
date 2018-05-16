@@ -49,10 +49,4 @@ class ActivityPolicy < RestrictivePolicy
     attributes = super
     attributes
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.trackable
-  end
 end

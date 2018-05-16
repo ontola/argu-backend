@@ -20,10 +20,4 @@ class BannerDismissalPolicy < EdgeTreePolicy
     when :everyone then true
     end
   end
-
-  private
-
-  def edgeable_record
-    @edgeable_record ||= record.banner.parent_model
-  end
 end
