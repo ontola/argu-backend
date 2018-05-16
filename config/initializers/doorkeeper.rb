@@ -15,6 +15,11 @@ module Doorkeeper
     def self.argu_front_end
       Doorkeeper::Application.find(Doorkeeper::Application::AFE_ID)
     end
+
+    SERVICE_ID = 2
+    def self.argu_service
+      Doorkeeper::Application.find(Doorkeeper::Application::SERVICE_ID)
+    end
   end
 
   module OAuth

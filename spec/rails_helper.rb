@@ -188,6 +188,15 @@ RSpec.configure do |config|
           scopes: 'guest user afe'
         )
       end
+      if Doorkeeper::Application.find_by(id: Doorkeeper::Application::SERVICE_ID).blank?
+        Doorkeeper::Application.create!(
+          id: Doorkeeper::Application::SERVICE_ID,
+          name: 'Argu Service',
+          owner: Profile.community,
+          redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+          scopes: 'service worker export'
+        )
+      end
     end
   end
 

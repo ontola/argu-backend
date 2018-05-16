@@ -116,6 +116,16 @@ afe_token.update(
          '7TDGmCCdV5nlXWgjvCWmvEXYm4G7rjWmfoturzoNv73P9lyZN0Snyc6Tml_ZMMJHkm0kiFrJWEX1XdhZZg'
 )
 
+Doorkeeper::Application.create!(
+  id: Doorkeeper::Application::SERVICE_ID,
+  name: 'Argu Service',
+  owner: Profile.community,
+  redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+  scopes: 'service worker export',
+  secret: 'service_secret',
+  uid: 'service_uid'
+)
+
 freetown = FactorySeeder.create_forum(
   :with_follower,
   shortname_attributes: {shortname: 'freetown'},

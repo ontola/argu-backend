@@ -127,6 +127,14 @@ Doorkeeper::Application.create!(
   scopes: 'user guest afe'
 )
 
+Doorkeeper::Application.create!(
+  id: Doorkeeper::Application::SERVICE_ID,
+  name: 'Argu Service',
+  owner: community_profile,
+  redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+  scopes: 'service worker export'
+)
+
 Notification.update_all(read_at: nil)
 
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')

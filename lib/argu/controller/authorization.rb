@@ -12,12 +12,16 @@ module Argu
       def setup_authorization
         skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?
         prepend_before_action :write_client_access_token, unless: :vnext_request?
-        before_action :doorkeeper_authorize!
+        before_action { doorkeeper_authorize!(*allowed_scopes) }
         after_action :verify_authorized, except: :index, unless: :devise_controller?
         after_action :verify_policy_scoped, only: :index
 
         alias_attribute :pundit_user, :user_context
       end
+    end
+
+    def allowed_scopes
+      %i[user guest service]
     end
 
     def tree_root_id; end

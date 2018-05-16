@@ -108,6 +108,15 @@ module TestHelper
       scopes: 'guest user afe'
     )
   end
+  if Doorkeeper::Application.find_by(id: Doorkeeper::Application::SERVICE_ID).blank?
+    Doorkeeper::Application.create!(
+      id: Doorkeeper::Application::SERVICE_ID,
+      name: 'Argu Service',
+      owner: Profile.community,
+      redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
+      scopes: 'service worker export'
+    )
+  end
 end
 
 module SidekiqMinitestSupport
@@ -220,16 +229,16 @@ module ActionDispatch
         )
     end
 
-    def sign_in(resource = create(:user), app = Doorkeeper::Application.argu)
-      additional_scope = app.id == Doorkeeper::Application::AFE_ID && 'afe'
-      id, role =
+    def sign_in(resource = create(:user), requested_app = Doorkeeper::Application.argu)
+      additional_scope = requested_app.id == Doorkeeper::Application::AFE_ID && 'afe'
+      id, role, app =
         case resource
         when :service
-          [0, 'service']
+          [0, 'service', Doorkeeper::Application.argu_service]
         when :guest
-          [SecureRandom.hex, ['guest', additional_scope].join(' ')]
+          [SecureRandom.hex, ['guest', additional_scope].join(' '), requested_app]
         else
-          [resource.id, ['user', additional_scope].join(' ')]
+          [resource.id, ['user', additional_scope].join(' '), requested_app]
         end
       t = Doorkeeper::AccessToken.find_or_create_for(
         app,
