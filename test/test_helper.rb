@@ -90,33 +90,29 @@ module TestHelper
     ).resource
   public_membership.save(validate: false)
 
-  if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
-    Doorkeeper::Application.create!(
-      id: Doorkeeper::Application::ARGU_ID,
-      name: 'Argu',
-      owner: Profile.community,
-      redirect_uri: 'http://example.com/',
-      scopes: 'guest user'
-    )
+  door_app = Doorkeeper::Application
+  door_app.find_or_create_by(id: door_app::ARGU_ID) do |app|
+    app.id = door_app::ARGU_ID
+    app.name = 'Argu'
+    app.owner = Profile.community
+    app.redirect_uri = 'http://example.com/'
+    app.scopes = 'guest user'
   end
-  if Doorkeeper::Application.find_by(id: Doorkeeper::Application::AFE_ID).blank?
-    Doorkeeper::Application.create!(
-      id: Doorkeeper::Application::AFE_ID,
-      name: 'Argu Front End',
-      owner: Profile.community,
-      redirect_uri: 'http://example.com/',
-      scopes: 'guest user afe'
-    )
+  door_app.find_or_create_by(id: door_app::AFE_ID) do |app|
+    app.id = door_app::AFE_ID
+    app.name = 'Argu Front End'
+    app.owner = Profile.community
+    app.redirect_uri = 'http://example.com/'
+    app.scopes = 'guest user afe'
   end
-  if Doorkeeper::Application.find_by(id: Doorkeeper::Application::SERVICE_ID).blank?
-    Doorkeeper::Application.create!(
-      id: Doorkeeper::Application::SERVICE_ID,
-      name: 'Argu Service',
-      owner: Profile.community,
-      redirect_uri: 'urn:ietf:wg:oauth:2.0:oob',
-      scopes: 'service worker export'
-    )
+  door_app.find_or_create_by(id: door_app::SERVICE_ID) do |app|
+    app.id = door_app::SERVICE_ID
+    app.name = 'Argu Service'
+    app.owner = Profile.community
+    app.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
+    app.scopes = 'service worker export'
   end
+  ActiveRecord::Base.connection.execute("ALTER SEQUENCE #{door_app.table_name}_id_seq RESTART WITH #{door_app.count}")
 end
 
 module SidekiqMinitestSupport
