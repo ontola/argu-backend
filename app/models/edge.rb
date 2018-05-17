@@ -3,6 +3,7 @@
 class Edge < ApplicationRecord
   self.inheritance_column = :owner_type
 
+  include Edgeable::ClassMethods
   include Edgeable::CounterCache
   include Placeable
   include Ldable
@@ -197,14 +198,6 @@ class Edge < ApplicationRecord
     {id: fragment, root_id: root.owner.url}
   end
 
-  def self.join_owner(klass)
-    joins(join_owner_query(klass))
-  end
-
-  def self.join_owner_query(klass)
-    "INNER JOIN #{klass.tableize} ON edges.owner_id = #{klass.tableize}.id AND edges.owner_type = '#{klass}'"
-  end
-
   # @return [Array] The ids of (persisted) ancestors, excluding self
   def persisted_ancestor_ids
     parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
@@ -361,16 +354,6 @@ class Edge < ApplicationRecord
       owner.run_callbacks :untrash
     end
     true
-  end
-
-  def self.path_array(relation)
-    return 'NULL' if relation.blank?
-    unless relation.is_a?(ActiveRecord::Relation)
-      raise "Relation should be a ActiveRecord relation, but is a #{relation.class.name}"
-    end
-    paths = relation.map(&:path)
-    paths.each { |path| paths.delete_if { |p| p.match(/^#{path}\./) } }
-    "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}]"
   end
 
   def reload(_opts = {})
