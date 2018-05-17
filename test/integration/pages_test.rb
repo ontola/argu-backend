@@ -290,13 +290,11 @@ class PagesTest < ActionDispatch::IntegrationTest
           params: {
             id: page.url,
             page: {
-              edge_attributes: {
-                placements_attributes: {
-                  '0' => {
-                    lat: 2.0,
-                    lon: 2.0,
-                    placement_type: 'custom'
-                  }
+              placements_attributes: {
+                '0' => {
+                  lat: 2.0,
+                  lon: 2.0,
+                  placement_type: 'custom'
                 }
               }
             }

@@ -19,13 +19,11 @@ class QuestionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
-        edge_attributes: {
-          placements_attributes: {
-            '0' => {
-              lat: 1,
-              lon: 1,
-              placement_type: 'custom'
-            }
+        placements_attributes: {
+          '0' => {
+            lat: 1,
+            lon: 1,
+            placement_type: 'custom'
           }
         }
       },

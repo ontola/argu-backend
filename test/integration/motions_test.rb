@@ -34,18 +34,16 @@ class MotionsTest < ActionDispatch::IntegrationTest
       :motion,
       publisher: creator,
       parent: question.edge,
-      edge_attributes: {argu_publication_attributes: {draft: true}}
+      argu_publication_attributes: {draft: true}
     )
   end
   let(:motion_with_placement) do
     create(:motion,
-           edge_attributes: {
-             placements_attributes: {
-               '0' => {
-                 lat: 1.0,
-                 lon: 1.0,
-                 placement_type: 'custom'
-               }
+           placements_attributes: {
+             '0' => {
+               lat: 1.0,
+               lon: 1.0,
+               placement_type: 'custom'
              }
            },
            publisher: creator,
@@ -89,14 +87,12 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
-        edge_attributes: {
-          placements_attributes: {
-            '0' => {
-              lat: 1.0,
-              lon: 1.0,
-              zoom_level: 1,
-              placement_type: 'custom'
-            }
+        placements_attributes: {
+          '0' => {
+            lat: 1.0,
+            lon: 1.0,
+            zoom_level: 1,
+            placement_type: 'custom'
           }
         }
       },
@@ -124,15 +120,13 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       attributes: {
-        edge_attributes: {
-          placements_attributes: {
-            '0' => {
-              id: '',
-              placement_type: 'custom',
-              lat: '',
-              lon: '',
-              zoom_level: '1'
-            }
+        placements_attributes: {
+          '0' => {
+            id: '',
+            placement_type: 'custom',
+            lat: '',
+            lon: '',
+            zoom_level: '1'
           }
         }
       },
@@ -148,15 +142,13 @@ class MotionsTest < ActionDispatch::IntegrationTest
 
     general_create(
       attributes: {
-        edge_attributes: {
-          placements_attributes: {
-            '0' => {
-              id: '',
-              placement_type: 'custom',
-              lat:  2.0,
-              lon:  2.0,
-              zoom_level: '1'
-            }
+        placements_attributes: {
+          '0' => {
+            id: '',
+            placement_type: 'custom',
+            lat:  2.0,
+            lon:  2.0,
+            zoom_level: '1'
           }
         }
       },
@@ -174,13 +166,11 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       record: :motion_with_placement,
       attributes: {
-        edge_attributes: {
-          placements_attributes: {
-            '0' => {
-              id: motion_with_placement.edge.placements.first.id,
-              lat: 2.0,
-              lon: 2.0
-            }
+        placements_attributes: {
+          '0' => {
+            id: motion_with_placement.edge.placements.first.id,
+            lat: 2.0,
+            lon: 2.0
           }
         }
       },
@@ -199,12 +189,10 @@ class MotionsTest < ActionDispatch::IntegrationTest
       results: {should: true, response: 302},
       record: :motion_with_placement,
       attributes: {
-        edge_attributes: {
-          placements_attributes: {
-            '0' => {
-              id: motion_with_placement.edge.placements.first.id,
-              _destroy: 'true'
-            }
+        placements_attributes: {
+          '0' => {
+            id: motion_with_placement.edge.placements.first.id,
+            _destroy: 'true'
           }
         }
       },

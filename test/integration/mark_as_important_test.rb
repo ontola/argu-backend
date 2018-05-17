@@ -9,11 +9,11 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
       :motion,
       parent: freetown.edge,
       mark_as_important: true,
-      edge_attributes: {argu_publication_attributes: {draft: true}}
+      argu_publication_attributes: {draft: true}
     )
   end
   let(:unmarked_draft) do
-    create(:motion, parent: freetown.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
+    create(:motion, parent: freetown.edge, argu_publication_attributes: {draft: true})
   end
   let(:marked_published) { create(:motion, parent: freetown.edge, mark_as_important: true) }
   let(:unmarked_published) { create(:motion, parent: freetown.edge) }

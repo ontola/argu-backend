@@ -156,7 +156,9 @@ RSpec.configure do |config|
                last_accepted: Time.current,
                profile: Profile.new(name: 'public page profile'),
                owner: page_owner.profile,
-               edge_attributes: {user: page_owner, shortname: Shortname.new(shortname: 'public_page')})
+               user: page_owner,
+               shortname: Shortname.new(shortname: 'public_page')
+        )
       end
       if Group.find_by(id: Group::PUBLIC_ID).blank?
         g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')

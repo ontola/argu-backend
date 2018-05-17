@@ -12,21 +12,21 @@ class PolicyTest < ActiveSupport::TestCase
     :expired_freetown,
     attributes: {
       url: FactoryGirl.attributes_for(:shortname)[:shortname],
-      edge_attributes: {expires_at: 1.minute.ago}
+      expires_at: 1.minute.ago
     }
   )
   define_freetown(
     :trashed_freetown,
     attributes: {
       url: FactoryGirl.attributes_for(:shortname)[:shortname],
-      edge_attributes: {trashed_at: 1.minute.ago}
+      trashed_at: 1.minute.ago
     }
   )
   define_freetown(
     :unpublished_freetown,
     attributes: {
       url: FactoryGirl.attributes_for(:shortname)[:shortname],
-      edge_attributes: {is_published: false}
+      is_published: false
     }
   )
   let(:moderator) { create_moderator(page, create(:user)) }

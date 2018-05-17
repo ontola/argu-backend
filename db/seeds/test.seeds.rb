@@ -35,7 +35,8 @@ page = FactorySeeder.create(
   profile: FactorySeeder.build(:profile, name: 'Argu page'),
   owner: staff.profile,
   url: 'argu',
-  edge_attributes: {user: staff, is_published: true}
+  user: staff,
+  is_published: true
 )
 
 public_group = FactorySeeder.create(
@@ -145,6 +146,8 @@ holland = FactorySeeder.create_forum(
 
 other_page = FactorySeeder.create(
   :page,
+  user: staff,
+  is_published: true,
   profile: FactorySeeder.build(:profile, name: 'Other page'),
   base_color: '#800000',
   url: 'other_page',
@@ -216,7 +219,7 @@ trashed_motion =
   FactorySeeder.create(
     :motion,
     parent: question.edge,
-    edge_attributes: {trashed_at: Time.current}
+    trashed_at: Time.current
   )
 FactorySeeder.create(:argument, parent: trashed_motion.edge)
 
@@ -224,7 +227,7 @@ unpublished_motion =
   FactorySeeder.create(
     :motion,
     parent: question.edge,
-    edge_attributes: {argu_publication_attributes: {draft: true}}
+    argu_publication_attributes: {draft: true}
   )
 FactorySeeder.create(:argument, parent: unpublished_motion.edge)
 

@@ -7,7 +7,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   define_cairo
   let(:guest_user) { GuestUser.new(session: session) }
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
-  let(:closed_question) { create(:question, edge_attributes: {expires_at: 1.day.ago}, parent: freetown.edge) }
+  let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown.edge) }
   let(:closed_question_motion) { create(:motion, parent: closed_question.edge) }
   let(:closed_question_argument) { create(:argument, parent: closed_question_motion.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
@@ -66,12 +66,12 @@ class VotesTest < ActionDispatch::IntegrationTest
   let(:vote_event) do
     create(:vote_event,
            parent: motion.edge,
-           edge_attributes: {expires_at: 1.day.from_now})
+           expires_at: 1.day.from_now)
   end
   let(:closed_vote_event) do
     create(:vote_event,
            parent: motion.edge,
-           edge_attributes: {expires_at: Time.current})
+           expires_at: Time.current)
   end
   let(:creator) { create(:user) }
   let(:profile_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)).profile }

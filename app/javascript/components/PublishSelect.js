@@ -71,15 +71,15 @@ export const PublishSelect = React.createClass({
         }
         if (this.state.publishType === 'schedule') {
             publishedAtField = <input type="hidden"
-                                      name={`${this.props.resourceType}[edge_attributes][argu_publication_attributes][published_at]`}
+                                      name={`${this.props.resourceType}[argu_publication_attributes][published_at]`}
                                       value={this.state.publishAt}/>;
         }
         return (
             <div>
                 {dateTime}
                 {publishedAtField}
-                <input type="hidden" name={`${this.props.resourceType}[edge_attributes][argu_publication_attributes][id]`} value={this.props.publicationId}/>
-                <input type="hidden" name={`${this.props.resourceType}[edge_attributes][argu_publication_attributes][draft]`} value={this.state.publishType === 'draft'}/>
+                <input type="hidden" name={`${this.props.resourceType}[argu_publication_attributes][id]`} value={this.props.publicationId}/>
+                <input type="hidden" name={`${this.props.resourceType}[argu_publication_attributes][draft]`} value={this.state.publishType === 'draft'}/>
                 <Select
                     className="schedule-select"
                     clearable={false}

@@ -39,7 +39,6 @@ module Argu
           options[:creator] ||= attributes.delete(:creator)
 
           attributes.merge!(attributes_for(model_type, attributes))
-          attributes[:edge_attributes] ||= {} if model_type.to_s.classify.constantize.is_publishable?
 
           if klass.nested_attributes_options?
             klass.nested_attributes_options.each_key do |association|

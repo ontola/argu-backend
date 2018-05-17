@@ -62,8 +62,8 @@ class ApplicationService
   end
 
   def argu_publication_attributes
-    pub_attrs = @attributes[:edge_attributes][:argu_publication_attributes] || {}
-    pub_attrs[:id] = resource.edge.argu_publication.id if resource.edge.argu_publication.present?
+    pub_attrs = @attributes[:argu_publication_attributes] || {}
+    pub_attrs[:id] = resource.argu_publication.id if resource.argu_publication.present?
     unless resource.is_published?
       pub_attrs[:published_at] ||= pub_attrs[:draft].to_s == 'true' ? nil : Time.current
       if resource.new_record?
@@ -90,7 +90,7 @@ class ApplicationService
   end
 
   def placements_attributes
-    attrs = @attributes[:edge_attributes][:placements_attributes]
+    attrs = @attributes[:placements_attributes]
     attrs.to_h.each_value do |hash|
       hash.merge!(creator: @options[:creator], publisher: @options[:publisher])
     end
@@ -153,8 +153,7 @@ class ApplicationService
   def object_attributes=(obj); end
 
   def prepare_attributes
-    return unless resource.is_a?(EdgeableBase)
-    prepare_edge_attributes
+    return unless resource < Edge
     prepare_argu_publication_attributes
     prepare_placement_attributes
     @attributes.permit! if @attributes.is_a?(ActionController::Parameters)
@@ -162,17 +161,12 @@ class ApplicationService
 
   def prepare_argu_publication_attributes
     return unless resource.is_publishable?
-    @attributes[:edge_attributes][:argu_publication_attributes] = argu_publication_attributes
-  end
-
-  def prepare_edge_attributes
-    @attributes[:edge_attributes] ||= {}
-    @attributes[:edge_attributes][:id] ||= resource.edge.id
+    @attributes[:argu_publication_attributes] = argu_publication_attributes
   end
 
   def prepare_placement_attributes
-    return if @attributes[:edge_attributes][:placements_attributes].blank?
-    @attributes[:edge_attributes][:placements_attributes] = placements_attributes
+    return if @attributes[:placements_attributes].blank?
+    @attributes[:placements_attributes] = placements_attributes
   end
 
   def signal_base

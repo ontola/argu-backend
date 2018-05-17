@@ -11,7 +11,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     lr = LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid)
     create(:argument, :with_comments, parent: lr.edge)
     create(:argument, :with_comments, parent: lr.edge, pro: false)
-    create(:argument, :with_comments, parent: lr.edge, edge_attributes: {trashed_at: Time.current})
+    create(:argument, :with_comments, parent: lr.edge, trashed_at: Time.current)
     lr
   end
   let(:non_persisted_linked_record_base) { non_persisted_linked_record.iri.to_s.gsub('/od/', '/lr/') }

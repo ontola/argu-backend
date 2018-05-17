@@ -11,7 +11,7 @@ RSpec.feature 'Show drafts', type: :feature do
            parent: motion.edge,
            happened_at: Time.current,
            publisher: user,
-           edge_attributes: {argu_publication_attributes: {draft: true}})
+           argu_publication_attributes: {draft: true})
   end
   let!(:published_blog_post) do
     create(:blog_post, parent: published_motion.edge, happened_at: Time.current, publisher: user)
@@ -20,7 +20,7 @@ RSpec.feature 'Show drafts', type: :feature do
     create(:motion,
            parent: freetown.edge,
            publisher: user,
-           edge_attributes: {argu_publication_attributes: {draft: true}})
+           argu_publication_attributes: {draft: true})
   end
   let!(:published_motion) do
     create(:motion,
@@ -31,7 +31,7 @@ RSpec.feature 'Show drafts', type: :feature do
     create(:question,
            parent: freetown.edge,
            publisher: user,
-           edge_attributes: {argu_publication_attributes: {draft: true}})
+           argu_publication_attributes: {draft: true})
   end
   let!(:published_question) do
     create(:question,

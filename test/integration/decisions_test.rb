@@ -60,10 +60,8 @@ class DecisionsTest < ActionDispatch::IntegrationTest
            happening_attributes: {
              happened_at: Time.current
            },
-           edge_attributes: {
-             argu_publication_attributes: {
-               draft: true
-             }
+           argu_publication_attributes: {
+             draft: true
            },
            publisher: creator,
            forwarded_user: actor,

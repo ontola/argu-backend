@@ -11,14 +11,12 @@ class ForumsTest < ActionDispatch::IntegrationTest
     'forum_with_placement',
     attributes: {
       url: 'forum_with_placement',
-      edge_attributes: {
-        shortname_attributes: {shortname: 'forum_with_placement'},
-        placements_attributes: {
-          '0' => {
-            lat: 1.0,
-            lon: 1.0,
-            placement_type: 'custom'
-          }
+      shortname_attributes: {shortname: 'forum_with_placement'},
+      placements_attributes: {
+        '0' => {
+          lat: 1.0,
+          lon: 1.0,
+          placement_type: 'custom'
         }
       }
     }
@@ -27,10 +25,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
   define_helsinki
 
   let(:draft_motion) do
-    create(:motion, parent: holland.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
+    create(:motion, parent: holland.edge, argu_publication_attributes: {draft: true})
   end
   let(:draft_question) do
-    create(:question, parent: holland.edge, edge_attributes: {argu_publication_attributes: {draft: true}})
+    create(:question, parent: holland.edge, argu_publication_attributes: {draft: true})
   end
   let(:motion_in_draft_question) { create(:motion, parent: draft_question.edge) }
 
@@ -38,11 +36,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: question.edge) }
   let(:motion_in_question) { create(:question, parent: holland.edge) }
 
-  let(:trashed_motion) { create(:motion, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
-  let(:trashed_question) { create(:question, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
+  let(:trashed_motion) { create(:motion, trashed_at: Time.current, parent: holland.edge) }
+  let(:trashed_question) { create(:question, trashed_at: Time.current, parent: holland.edge) }
 
-  let(:tm) { create(:motion, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
-  let(:tq) { create(:question, edge_attributes: {trashed_at: Time.current}, parent: holland.edge) }
+  let(:tm) { create(:motion, trashed_at: Time.current, parent: holland.edge) }
+  let(:tq) { create(:question, trashed_at: Time.current, parent: holland.edge) }
 
   ####################################
   # As Guest
@@ -215,16 +213,14 @@ class ForumsTest < ActionDispatch::IntegrationTest
             forum: {
               name: 'new name',
               bio: 'new bio',
-              edge_attributes: {
-                default_profile_photo_attributes: {
-                  id: holland.default_profile_photo.id,
-                  content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
-                  used_as: 'profile_photo'
-                },
-                default_cover_photo_attributes: {
-                  content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
-                  used_as: 'cover_photo'
-                }
+              default_profile_photo_attributes: {
+                id: holland.default_profile_photo.id,
+                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
+                used_as: 'profile_photo'
+              },
+              default_cover_photo_attributes: {
+                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
+                used_as: 'cover_photo'
               }
             }
           }
@@ -344,13 +340,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum',
-          edge_attributes: {
-            placements_attributes: {
-              '0' => {
-                lat: 1.0,
-                lon: 1.0,
-                placement_type: 'custom'
-              }
+          placements_attributes: {
+            '0' => {
+              lat: 1.0,
+              lon: 1.0,
+              placement_type: 'custom'
             }
           }
         },
@@ -370,13 +364,11 @@ class ForumsTest < ActionDispatch::IntegrationTest
       put forum_with_placement,
           params: {
             forum: {
-              edge_attributes: {
-                placements_attributes: {
-                  '0' => {
-                    id: forum_with_placement.edge.custom_placements.first.id,
-                    lat: 2.0,
-                    lon: 2.0
-                  }
+              placements_attributes: {
+                '0' => {
+                  id: forum_with_placement.edge.custom_placements.first.id,
+                  lat: 2.0,
+                  lon: 2.0
                 }
               }
             }
@@ -396,12 +388,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
       put forum_with_placement,
           params: {
             forum: {
-              edge_attributes: {
-                placements_attributes: {
-                  '0' => {
-                    id: forum_with_placement.edge.custom_placements.first.id,
-                    _destroy: 'true'
-                  }
+              placements_attributes: {
+                '0' => {
+                  id: forum_with_placement.edge.custom_placements.first.id,
+                  _destroy: 'true'
                 }
               }
             }

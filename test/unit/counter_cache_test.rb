@@ -19,24 +19,20 @@ class CounterCacheTest < ActiveSupport::TestCase
   let!(:unpublished_blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
-           edge_attributes: {argu_publication_attributes: {draft: true}},
+           argu_publication_attributes: {draft: true},
            parent: motion.edge)
   end
   let!(:trashed_blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
-           edge_attributes: {
-             trashed_at: Time.current
-           },
+           trashed_at: Time.current,
            parent: motion.edge)
   end
   let!(:trashed_unpublished_blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
-           edge_attributes: {
-             trashed_at: Time.current,
-             argu_publication_attributes: {draft: true}
-           },
+           trashed_at: Time.current,
+           argu_publication_attributes: {draft: true},
            parent: motion.edge)
   end
   let(:unconfirmed) { create(:user, :unconfirmed) }
@@ -95,7 +91,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(motion, blog_posts: 1)
     UpdateBlogPost.new(
       unpublished_blog_post,
-      attributes: {edge_attributes: {argu_publication_attributes: {draft: false}}},
+      attributes: {argu_publication_attributes: {draft: false}},
       options: service_options
     ).commit
     assert_difference('BlogPost.published.count', 1) do
@@ -108,7 +104,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(motion, blog_posts: 1)
     UpdateBlogPost.new(
       trashed_unpublished_blog_post,
-      attributes: {edge_attributes: {argu_publication_attributes: {draft: false}}},
+      attributes: {argu_publication_attributes: {draft: false}},
       options: service_options
     ).commit
     assert_difference('BlogPost.published.count', 1) do
@@ -122,7 +118,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     UpdateBlogPost.new(
       unpublished_blog_post,
       attributes: {
-        edge_attributes: {trashed_at: Time.current, argu_publication_attributes: {draft: false}}
+        trashed_at: Time.current, argu_publication_attributes: {draft: false}
       },
       options: service_options
     ).commit
@@ -137,7 +133,7 @@ class CounterCacheTest < ActiveSupport::TestCase
     UpdateBlogPost.new(
       trashed_unpublished_blog_post,
       attributes: {
-        edge_attributes: {trashed_at: nil, argu_publication_attributes: {draft: false}}
+        trashed_at: nil, argu_publication_attributes: {draft: false}
       },
       options: service_options
     ).commit
