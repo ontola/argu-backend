@@ -511,8 +511,8 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.boolean "is_public", default: true
     t.boolean "are_votes_public", default: true
     t.string "profileable_type"
-    t.integer "profileable_id"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "profileable_id", null: false
     t.index ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true
     t.index ["slug"], name: "index_profiles_on_slug", unique: true
     t.index ["uuid"], name: "index_profiles_on_uuid", unique: true

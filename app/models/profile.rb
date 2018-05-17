@@ -11,7 +11,8 @@ class Profile < ApplicationRecord
   # has_one :profileable, class_name: 'User'
   belongs_to :profileable,
              polymorphic: true,
-             inverse_of: :profile
+             inverse_of: :profile,
+             primary_key: :uuid
 
   before_destroy :anonymize_dependencies
   has_many :activities, -> { order(:created_at) }, as: :owner, dependent: :restrict_with_exception

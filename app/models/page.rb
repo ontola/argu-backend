@@ -9,7 +9,7 @@ class Page < Edge
   include Menuable
   include Discussable
 
-  has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
+  has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   has_one :shortname, through: :edge
   accepts_nested_attributes_for :profile
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
