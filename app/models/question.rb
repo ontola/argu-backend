@@ -29,15 +29,6 @@ class Question < Edge
 
   custom_grants_for :motions, :create
 
-  # Might not be a good idea
-  def creator
-    super || Profile.community
-  end
-
-  def self.edge_includes_for_index
-    super.deep_merge(motions: {})
-  end
-
   def expired?
     expires_at.present? && expires_at < Time.current
   end

@@ -25,7 +25,8 @@ class CreateDecision < PublishedCreateService
       obj.trackable_edge = obj.trackable.edge
     when Decision
       obj.edge ||= obj.build_edge(
-        user: resource.parent_model.publisher,
+        publisher: resource.parent_model.publisher,
+        creator: resource.parent_model.creator,
         parent: resource.parent_model.edge
       )
     end

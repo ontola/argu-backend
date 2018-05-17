@@ -35,14 +35,14 @@ module ProfilePhotoable
     case self
     when Profile
       if profileable.is_a?(Page)
-        {publisher: profileable.owner.profileable, creator: self, forum: nil}
+        {publisher: profileable.edge.publisher, creator: self, forum: nil}
       else
         {publisher: profileable, creator: self, forum: nil}
       end
     when Forum
-      {publisher: parent_model.owner.profileable, creator: creator, forum: self}
+      {publisher: publisher, creator: creator, forum: self}
     when Banner
-      creator = publisher.is_a?(Page) ? publisher.owner : publisher.profile
+      creator = publisher.is_a?(Page) ? publisher.creator : publisher.profile
       {publisher: publisher, creator: creator, forum: forum}
     end
   end

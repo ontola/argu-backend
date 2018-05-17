@@ -7,7 +7,7 @@ class PagePolicy < EdgePolicy
 
       cond = t[:visibility].eq_any([Page.visibilities[:open], Page.visibilities[:closed]])
       cond = cond.or(t[:id].in(user.profile.granted_record_ids(owner_type: 'Page')
-                                 .concat(user.profile.pages.pluck(:id))))
+                                 .concat(user.edges.where(owner_type: 'Page').pluck(:owner_id))))
       scope.where(cond)
     end
   end
@@ -55,6 +55,6 @@ class PagePolicy < EdgePolicy
 
   def pages_left?
     return if user.guest?
-    user.profile.pages.length < UserPolicy.new(context, user).max_allowed_pages
+    user.edges.where(owner_type: 'Page').length < UserPolicy.new(context, user).max_allowed_pages
   end
 end

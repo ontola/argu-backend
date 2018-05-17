@@ -47,9 +47,8 @@ module Edgeable
         if where_clause[:publisher]&.guest? || where_clause[:creator]&.profileable&.guest?
           RedisResource::EdgeRelation.where(where_clause.merge(owner_type: type))
         else
-          where_clause[:creator_id] ||= where_clause.delete(:creator).id if where_clause[:creator].present?
-          where_clause[:publisher_id] ||= where_clause.delete(:publisher).id if where_clause[:publisher].present?
-          where_owner_scope(type, where_clause)
+          where(where_clause.slice(:publisher, :creator))
+            .where_owner_scope(type, where_clause.except(:creator, :publisher))
         end
       end
 

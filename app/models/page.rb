@@ -12,7 +12,6 @@ class Page < Edge
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   has_one :shortname, through: :edge
   accepts_nested_attributes_for :profile
-  belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
   attr_accessor :confirmation_string, :tab, :active
@@ -21,7 +20,7 @@ class Page < Edge
   alias creator owner
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
-  validates :profile, :owner, :last_accepted, presence: true
+  validates :profile, :last_accepted, presence: true
   validates :base_color, css_hex_color: true
 
   after_create :create_default_groups
@@ -56,10 +55,6 @@ class Page < Edge
     {id: url, root_id: url}
   end
 
-  def publisher
-    owner.profileable
-  end
-
   def root_object?
     true
   end
@@ -82,8 +77,8 @@ class Page < Edge
 
     service = CreateGroupMembership.new(
       group,
-      attributes: {member: owner},
-      options: {publisher: owner.profileable, creator: owner}
+      attributes: {member: creator},
+      options: {publisher: publisher, creator: creator}
     )
     service.on(:create_group_membership_failed) do |gm|
       raise gm.errors.full_messages.join('\n')

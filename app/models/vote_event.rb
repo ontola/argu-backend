@@ -3,9 +3,6 @@
 class VoteEvent < Edge
   DEFAULT_ID = 'default'
 
-  belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events
-  belongs_to :publisher, class_name: 'User', required: true
-
   has_many_through_edge :votes, where: {primary: true}
 
   with_collection :votes, pagination: true

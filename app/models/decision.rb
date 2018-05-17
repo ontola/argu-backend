@@ -7,11 +7,9 @@ class Decision < Edge
   include ActivePublishable
   include Menuable
 
-  belongs_to :creator, class_name: 'Profile'
   belongs_to :forum
   belongs_to :forwarded_group, class_name: 'Group'
   belongs_to :forwarded_user, class_name: 'User'
-  belongs_to :publisher, inverse_of: :decisions, class_name: 'User'
   has_one :decision_activity,
           -> { where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
           foreign_key: :trackable_edge_id,

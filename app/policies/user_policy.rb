@@ -56,7 +56,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def max_pages_reached?
-    user.profile.pages.length >= max_allowed_pages
+    user.edges.where(owner_type: 'Page').length >= max_allowed_pages
   end
 
   def settings?

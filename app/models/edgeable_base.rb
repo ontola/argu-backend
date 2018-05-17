@@ -16,6 +16,8 @@ class EdgeableBase < ApplicationRecord
           dependent: :destroy,
           required: true
   belongs_to :root, class_name: 'Edge', primary_key: :uuid
+  has_one :publisher, through: :edge, source: :user
+  has_one :creator, through: :edge, source: :profile
   has_many :edge_children, through: :edge, source: :children
   has_many :grants, through: :edge
   has_many :media_objects, through: :edge
@@ -95,6 +97,10 @@ class EdgeableBase < ApplicationRecord
 
   def parent_iri(opts = {})
     parent_model&.iri(opts)
+  end
+
+  def publisher
+    super || edge.user
   end
 
   def root_object?

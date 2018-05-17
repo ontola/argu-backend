@@ -58,15 +58,18 @@ module TestHelper
     user.profile = Profile.new(id: Profile::ANONYMOUS_ID)
   end
 
+  page_owner = User.create!(
+    shortname: Shortname.new(shortname: 'page_owner'),
+    profile: Profile.new,
+    email: 'page_owner@argu.co'
+  )
+
   Page.find_or_create_by!(id: 0) do |page|
-    page.edge = Edge.new(user: User.community, owner: page, shortname: Shortname.new(shortname: 'public_page'))
+    page.publisher = page_owner
+    page.creator = page_owner.profile
+    page.url = 'public_page'
     page.last_accepted = Time.current
     page.profile = Profile.new(name: 'public page profile')
-    page.owner = User.create!(
-      shortname: Shortname.new(shortname: 'page_owner'),
-      profile: Profile.new,
-      email: 'page_owner@argu.co'
-    ).profile
   end
 
   public_group = Group.find_or_create_by!(id: Group::PUBLIC_ID) do |group|

@@ -8,7 +8,7 @@ class StatisticsController < ParentableController
     return unless stale?(last_modified: authenticated_edge.self_and_descendants.maximum(:updated_at))
     counts = descendants.group(:owner_type).count
     @statistics = {
-      users: descendants.select(:user_id).distinct.count,
+      users: descendants.select(:publisher_id).distinct.count,
       votes: descendants
                .joins(:parent)
                .where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'})

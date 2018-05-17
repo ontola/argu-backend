@@ -10,7 +10,7 @@ module Argu
           url: attributes_for(:shortname)[:shortname],
           parent: page.edge,
           options: {
-            publisher: page.owner.profileable
+            publisher: page.edge.user
           }
         }.merge(attributes)
         country_code = attributes[:locale]&.split('-')&.second&.downcase || 'gb'

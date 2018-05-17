@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "edges", id: :serial, force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "publisher_id", null: false
     t.integer "parent_id"
     t.integer "owner_id", null: false
     t.string "owner_type", null: false
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.boolean "confirmed", default: false, null: false
     t.uuid "root_id", null: false
     t.integer "fragment", null: false
+    t.integer "creator_id", null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
     t.index ["uuid"], name: "index_edges_on_uuid", unique: true
@@ -720,7 +721,8 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "decisions", "users", column: "forwarded_user_id"
   add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
-  add_foreign_key "edges", "users"
+  add_foreign_key "edges", "profiles", column: "creator_id"
+  add_foreign_key "edges", "users", column: "publisher_id"
   add_foreign_key "email_addresses", "users"
   add_foreign_key "exports", "edges", primary_key: "uuid"
   add_foreign_key "exports", "users"

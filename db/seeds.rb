@@ -43,16 +43,15 @@ staff = User
             profile: Profile.new
           )
 
-argu = Page
-         .new(
-           owner: staff.profile,
-           url: 'argu',
-           last_accepted: Time.current
-         )
-argu.build_profile(name: 'Argu', profileable: argu)
-argu.edge = Edge.new(owner: argu, user: argu.publisher)
-argu.save!
-argu.edge.publish!
+argu =
+  Page.create!(
+    publisher: staff,
+    creator: staff.profile,
+    profile_attributes: {name: 'Argu'},
+    url: 'argu',
+    last_accepted: Time.current,
+    is_published: true
+  )
 
 public_group = Group.new(
   id: Group::PUBLIC_ID,

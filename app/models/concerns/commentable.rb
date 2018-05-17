@@ -13,7 +13,7 @@ module Commentable
                     includes: {
                       default_vote_event: {},
                       parent: :owner,
-                      owner: {creator: :profileable}
+                      creator: :profileable
                     }
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')

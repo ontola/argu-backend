@@ -16,6 +16,7 @@ module Argu
                       .new(@resource.edge,
                            attributes: attributes_for(:motion),
                            options: service_options)
+          service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           reset_publication(service.resource.publications.last)
           CreateArgument
@@ -29,6 +30,7 @@ module Argu
                       .new(@resource.edge,
                            attributes: attributes_for(:motion),
                            options: service_options)
+          service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           TrashService.new(service.resource, options: service_options).commit
         end
@@ -37,6 +39,7 @@ module Argu
                       .new(@resource.edge,
                            attributes: attributes_for(:question),
                            options: service_options)
+          service.on(:create_question_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           reset_publication(service.resource.publications.last)
         end
@@ -45,6 +48,7 @@ module Argu
                       .new(@resource.edge,
                            attributes: attributes_for(:question),
                            options: service_options)
+          service.on(:create_question_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           TrashService.new(service.resource, options: service_options).commit
         end
@@ -52,9 +56,10 @@ module Argu
                     .new(Question.last.edge,
                          attributes: attributes_for(:motion),
                          options: service_options)
+        service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
         service.commit
         reset_publication(service.resource.publications.last)
-        @resource.parent_model(:page).owner.profileable.follow @resource.edge
+        @resource.parent_edge(:page).user.follow @resource.edge
       end
 
       # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource

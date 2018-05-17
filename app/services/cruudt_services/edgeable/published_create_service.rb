@@ -1,13 +1,6 @@
 # frozen_string_literal: true
 
 class PublishedCreateService < EdgeableCreateService
-  # @note Call super when overriding.
-  def initialize(parent, attributes: {}, options: {})
-    attributes[:publisher] = options.fetch(:publisher)
-    attributes[:creator] = options.fetch(:creator)
-    super
-  end
-
   private
 
   def after_save

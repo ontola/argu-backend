@@ -4,8 +4,6 @@ class Vote < Edge
   include PublicActivity::Model
   include Loggable
 
-  belongs_to :creator, class_name: 'Profile', inverse_of: :votes
-  belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id', inverse_of: :votes
   has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :comment
   before_save :set_voteable_id

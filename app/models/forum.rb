@@ -57,10 +57,6 @@ class Forum < Edge
     edge.descendants.published.untrashed.where(owner_type: 'Motion').count
   end
 
-  def creator
-    parent_model.owner
-  end
-
   def default_decision_user
     nil
   end
@@ -80,10 +76,6 @@ class Forum < Edge
 
   def language
     locale.split('-').first.to_sym
-  end
-
-  def publisher
-    parent_model.owner.profileable
   end
 
   # @return [Forum] based on the `:default_forum` {Setting}, if not present,

@@ -109,7 +109,7 @@ class PagesController < EdgeableController
     errors = {}
     errors[:max_allowed_pages] = {
       max: us_po.max_allowed_pages,
-      current: current_user.profile.pages.length,
+      current: current_user.edges.where(owner_type: 'Page').length,
       pages_url: pages_user_url(current_user)
     }
     render 'new', locals: {

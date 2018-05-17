@@ -16,13 +16,10 @@ class LinkedRecord < Edge
 
   VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 
-  def creator
-    Profile.community
-  end
-
   def default_vote_event
     @default_vote_event ||= edge.default_vote_event&.owner || VoteEvent.new(
-      edge: Edge.new(parent: edge, user: publisher, is_published: true),
+      parent: edge,
+      is_published: true,
       starts_at: Time.current,
       creator_id: creator.id,
       publisher_id: publisher.id,
@@ -51,7 +48,8 @@ class LinkedRecord < Edge
         .joins(edge: :shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?
-    edge = forum.edge.children.new(is_published: true, user_id: User::COMMUNITY_ID, parent: forum.edge)
+    edge =
+      forum.edge.children.new(is_published: true, publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID)
     new(deku_id: id, edge: edge, root_id: forum.edge.root.uuid)
   end
 
@@ -59,10 +57,6 @@ class LinkedRecord < Edge
     record = new_for_forum(organization_shortname, forum_shortname, id)
     record.save!
     record
-  end
-
-  def publisher
-    User.community
   end
 
   def to_param

@@ -42,10 +42,6 @@ class Motion < Edge
     ))
   end
 
-  def creator
-    super || Profile.community
-  end
-
   def self.edge_includes_for_index(full = false)
     includes = super().deep_merge(default_vote_event: {}, last_published_decision: {})
     return includes unless full

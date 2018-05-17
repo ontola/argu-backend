@@ -18,10 +18,9 @@ class Profile < ApplicationRecord
   has_many :group_memberships, -> { active }, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :unscoped_group_memberships, class_name: 'GroupMembership', foreign_key: :member_id, dependent: :destroy
   has_many :groups, through: :group_memberships
-  has_many :edges, through: :groups
+  has_many :edges, dependent: :restrict_with_exception, foreign_key: :creator_id
   has_many :grants, through: :groups
   has_many :granted_edges_scope, through: :grants, source: :edge, class_name: 'Edge'
-  has_many :pages, inverse_of: :owner, foreign_key: :owner_id, dependent: :restrict_with_exception
   has_many :votes, inverse_of: :creator, foreign_key: :creator_id, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception

@@ -23,13 +23,13 @@ class Edge < ApplicationRecord
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
-  belongs_to :user,
-             required: true
   belongs_to :root,
              -> { where(parent_id: nil) },
              class_name: 'Edge',
              foreign_key: :root_id,
              primary_key: :root_id
+  belongs_to :publisher, class_name: 'User', required: true, foreign_key: :publisher_id
+  belongs_to :creator, class_name: 'Profile', required: true, foreign_key: :creator_id
   has_many :activities,
            foreign_key: :trackable_edge_id,
            inverse_of: :trackable,
@@ -177,7 +177,7 @@ class Edge < ApplicationRecord
   with_collection :exports, pagination: true
 
   attr_writer :root
-  delegate :creator, :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
+  delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
 
   def content
     owner.try(:content) || owner.try(:body)
@@ -210,32 +210,6 @@ class Edge < ApplicationRecord
 
   def shortnameable?
     %w[Forum Page].include?(owner_type)
-  end
-
-  # Selects edges of a certain type over persisted and transient models.
-  # @param [String] type The (child) edges' #owner_type value
-  # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.
-  # @option where_clause [Integer, #confirmed?] :creator :publisher If the object is not `#confirmed?`,
-  #         the system will use transient resources.
-  # @return [ActiveRecord::Relation, RedisResource::Relation]
-  def self.where_owner(type, where_clause = {})
-    if where_clause[:publisher]&.guest? || where_clause[:creator]&.profileable&.guest?
-      RedisResource::EdgeRelation.where(where_clause.merge(owner_type: type))
-    else
-      where_clause[:creator_id] ||= where_clause.delete(:creator).id if where_clause[:creator].present?
-      where_clause[:publisher_id] ||= where_clause.delete(:publisher).id if where_clause[:publisher].present?
-      where_owner_scope(type, where_clause)
-    end
-  end
-
-  def self.where_owner_scope(type, where_clause)
-    table = ActiveRecord::Base.connection.quote_string(type.tableize)
-    join_cond = [
-      "INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = ?",
-      type
-    ]
-    scope = joins(sanitize_sql_for_conditions(join_cond))
-    where_clause.present? ? scope.where(type.tableize => where_clause) : scope
   end
 
   def children_count(association)

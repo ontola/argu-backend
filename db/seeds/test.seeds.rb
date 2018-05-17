@@ -33,9 +33,9 @@ page = FactorySeeder.create(
   id: 0,
   last_accepted: Time.current,
   profile: FactorySeeder.build(:profile, name: 'Argu page'),
-  owner: staff.profile,
   url: 'argu',
-  user: staff,
+  publisher: staff,
+  creator: staff.profile,
   is_published: true
 )
 
@@ -146,7 +146,8 @@ holland = FactorySeeder.create_forum(
 
 other_page = FactorySeeder.create(
   :page,
-  user: staff,
+  publisher: staff,
+  creator: staff.profile,
   is_published: true,
   profile: FactorySeeder.build(:profile, name: 'Other page'),
   base_color: '#800000',

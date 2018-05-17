@@ -11,7 +11,7 @@ class User < ApplicationRecord
   before_destroy :expropriate_dependencies
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
-  has_many :edges, dependent: :restrict_with_exception
+  has_many :edges, dependent: :restrict_with_exception, foreign_key: :publisher_id
   has_many :email_addresses, -> { order(primary: :desc) }, dependent: :destroy, inverse_of: :user
   has_many :favorites, dependent: :destroy
   has_many :identities, dependent: :destroy
@@ -225,7 +225,7 @@ class User < ApplicationRecord
   end
 
   def page_management?
-    profile.pages.present?
+    edges.where(owner_type: 'Page').any?
   end
 
   def has_favorite?(edge)
@@ -347,7 +347,7 @@ class User < ApplicationRecord
         .expropriate(send(association))
     end
     email_addresses.update_all(primary: false)
-    edges.update_all user_id: User::COMMUNITY_ID
+    edges.update_all publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID
   end
 
   def should_broadcast_changes
