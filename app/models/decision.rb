@@ -7,7 +7,6 @@ class Decision < Edge
   include ActivePublishable
   include Menuable
 
-  belongs_to :forum
   belongs_to :forwarded_group, class_name: 'Group'
   belongs_to :forwarded_user, class_name: 'User'
   has_one :decision_activity,

@@ -54,9 +54,9 @@ class ApplicationMenuList < MenuList
     return Page.none if user.guest?
     return @favorite_pages if instance_variable_defined?('@favorite_pages')
     page_ids =
-      Forum.joins(edge: %i[favorites parent]).where(favorites: {user_id: user.id}).pluck('parents_edges.owner_id')
+      Forum.joins(:favorites, :parent).where(favorites: {user_id: user.id}).pluck('parents_edges.uuid')
     @favorite_pages ||=
-      Page.where(id: page_ids).includes(:shortname, profile: :default_profile_photo)
+      Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo)
   end
 
   def favorite_page_links
@@ -85,11 +85,11 @@ class ApplicationMenuList < MenuList
     return @public_pages if instance_variable_defined?('@public_pages')
     page_ids =
       Forum
-        .joins(edge: :parent)
+        .joins(:parent)
         .where(edges: {uuid: Setting.get('suggested_forums')&.split(',')})
         .pluck('parents_edges.uuid')
     @public_pages ||=
-      Page.where(id: page_ids).includes(edge: :shortname, profile: :default_profile_photo)
+      Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo)
   end
 
   def public_page_links

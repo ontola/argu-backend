@@ -7,7 +7,7 @@ class Banner < NewsBoy
   include Photoable
   include Uuidable
 
-  belongs_to :forum
+  belongs_to :forum, primary_key: :uuid
   belongs_to :publisher, class_name: 'User'
 
   enum audience: {guests: 0, users: 1, everyone: 3}

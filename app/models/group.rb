@@ -11,8 +11,7 @@ class Group < ApplicationRecord
            foreign_key: :default_decision_group_id,
            class_name: 'Forum',
            dependent: :restrict_with_exception
-  belongs_to :page, required: true, inverse_of: :groups
-  belongs_to :forum
+  belongs_to :page, required: true, inverse_of: :groups, primary_key: :uuid
   has_many :decisions, foreign_key: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
 

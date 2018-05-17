@@ -22,7 +22,7 @@ class Activity < PublicActivity::Activity
              inverse_of: :recipient_activities,
              primary_key: :uuid,
              foreign_key: :recipient_edge_id
-  belongs_to :forum
+  belongs_to :forum, primary_key: :uuid
 
   alias_attribute :happened_at, :created_at
   attr_accessor :silent

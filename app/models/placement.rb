@@ -3,7 +3,7 @@
 class Placement < ApplicationRecord
   include DelegatedAttributes
 
-  belongs_to :forum
+  belongs_to :forum, primary_key: :uuid
   belongs_to :place
   belongs_to :placeable, polymorphic: true, primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'

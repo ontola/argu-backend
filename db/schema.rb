@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "trackable_id"
     t.string "trackable_type"
-    t.integer "forum_id"
     t.integer "owner_id"
     t.string "owner_type", default: "Profile"
     t.ltree "key"
@@ -35,6 +34,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.string "comment"
     t.uuid "trackable_edge_id"
     t.uuid "recipient_edge_id"
+    t.uuid "forum_id"
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type"
     t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable"
     t.index ["forum_id"], name: "index_activities_on_forum_id"
@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "banners", id: :serial, force: :cascade do |t|
     t.string "type"
-    t.integer "forum_id"
     t.integer "publisher_id"
     t.string "title"
     t.text "content"
@@ -100,6 +99,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "trashed_at"
     t.datetime "ends_at"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "forum_id"
     t.index ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at"
     t.index ["forum_id"], name: "index_banners_on_forum_id"
     t.index ["uuid"], name: "index_banners_on_uuid", unique: true
@@ -282,7 +282,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "grant_sets", force: :cascade do |t|
     t.string "title"
-    t.integer "page_id"
+    t.uuid "page_id"
     t.index ["title", "page_id"], name: "index_grant_sets_on_title_and_page_id", unique: true
   end
 
@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "updated_at"
     t.string "name_singular", null: false
     t.boolean "deletable", default: true
-    t.integer "page_id", null: false
+    t.uuid "page_id", null: false
   end
 
   create_table "identities", id: :serial, force: :cascade do |t|
@@ -353,7 +353,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "media_objects", id: :serial, force: :cascade do |t|
-    t.integer "forum_id"
     t.string "about_type", null: false
     t.integer "used_as", default: 0, null: false
     t.integer "creator_id", null: false
@@ -368,6 +367,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.hstore "content_attributes"
     t.string "remote_url"
     t.uuid "about_id", null: false
+    t.uuid "forum_id"
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type"
     t.index ["content_attributes"], name: "index_media_objects_on_content_attributes", using: :gin
     t.index ["forum_id"], name: "index_media_objects_on_forum_id"
@@ -465,7 +465,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "placements", id: :serial, force: :cascade do |t|
-    t.integer "forum_id"
     t.integer "place_id", null: false
     t.string "placeable_type", null: false
     t.string "title"
@@ -476,6 +475,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "updated_at"
     t.integer "placement_type", null: false
     t.uuid "placeable_id", null: false
+    t.uuid "forum_id"
     t.index ["forum_id"], name: "index_placements_on_forum_id"
     t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "((placement_type = 0) AND ((placeable_type)::text = 'User'::text))"
   end
@@ -707,11 +707,12 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 
+  add_foreign_key "activities", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "trackable_edge_id", primary_key: "uuid"
   add_foreign_key "arguments", "profiles", column: "creator_id"
   add_foreign_key "arguments", "users", column: "publisher_id"
-  add_foreign_key "banners", "forums", on_delete: :cascade
+  add_foreign_key "banners", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "blog_posts", "profiles", column: "creator_id"
   add_foreign_key "blog_posts", "users", column: "publisher_id"
   add_foreign_key "comments", "profiles", column: "creator_id"
@@ -733,7 +734,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "forums", "groups", column: "default_decision_group_id"
   add_foreign_key "forums", "places"
   add_foreign_key "grant_resets", "edges", primary_key: "uuid"
-  add_foreign_key "grant_sets", "pages"
+  add_foreign_key "grant_sets", "edges", column: "page_id", primary_key: "uuid"
   add_foreign_key "grant_sets_permitted_actions", "grant_sets"
   add_foreign_key "grant_sets_permitted_actions", "permitted_actions"
   add_foreign_key "grants", "edges", primary_key: "uuid"
@@ -741,9 +742,9 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "grants", "groups"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "profiles", column: "member_id"
-  add_foreign_key "groups", "pages"
+  add_foreign_key "groups", "edges", column: "page_id", primary_key: "uuid"
   add_foreign_key "identities", "users"
-  add_foreign_key "media_objects", "forums"
+  add_foreign_key "media_objects", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "media_objects", "profiles", column: "creator_id"
   add_foreign_key "media_objects", "users", column: "publisher_id"
   add_foreign_key "motions", "places"
@@ -752,7 +753,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "pages", "profiles", column: "owner_id"
-  add_foreign_key "placements", "forums"
+  add_foreign_key "placements", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"

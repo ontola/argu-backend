@@ -5,7 +5,7 @@ class GrantSet < ApplicationRecord
   has_many :grant_sets_permitted_actions, dependent: :destroy
   has_many :permitted_actions, through: :grant_sets_permitted_actions
   has_many :grants, dependent: :restrict_with_exception
-  belongs_to :page
+  belongs_to :page, primary_key: :uuid
 
   validates :page, presence: true
   validates :title, uniqueness: {scope: :page_id}

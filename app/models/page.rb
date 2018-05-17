@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Page < Edge
-  has_many :groups, dependent: :destroy, inverse_of: :page
   has_many :forum_edges, through: :edge, class_name: 'Edge', source: :children
+  has_many :groups, dependent: :destroy, inverse_of: :page, primary_key: :uuid
   has_many :discussions, through: :forum_edges
   has_many_through_edge :forums
 
