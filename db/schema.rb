@@ -170,8 +170,8 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "edges", id: :serial, force: :cascade do |t|
     t.integer "publisher_id", null: false
     t.integer "parent_id"
-    t.integer "owner_id", null: false
-    t.string "owner_type", null: false
+    t.integer "owner_id"
+    t.string "owner_type"
     t.ltree "path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
