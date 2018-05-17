@@ -36,7 +36,7 @@ module Menus
       menu_item(
         :new_update,
         image: 'fa-bullhorn',
-        href: new_iri_path(resource, :blog_posts),
+        href: new_iri(resource, :blog_posts),
         policy: :create_child?,
         policy_arguments: %i[blog_posts]
       )
