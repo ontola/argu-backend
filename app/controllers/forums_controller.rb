@@ -113,7 +113,7 @@ class ForumsController < EdgeableController
     prepend_view_path 'app/views/forums'
     @grants = Grant
                 .custom
-                .where(edge_id: [resource_by_id.edge.id, resource_by_id.edge.parent_id])
+                .where(edge_id: [resource_by_id.edge.uuid, resource_by_id.edge.parent.uuid])
                 .includes(group: {group_memberships: {member: {profileable: :shortname}}})
 
     render 'settings',

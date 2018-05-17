@@ -4,7 +4,7 @@ class Grant < ApplicationRecord
   include Parentable
 
   # The Edge this Grant is providing rules for
-  belongs_to :edge
+  belongs_to :edge, primary_key: :uuid
   belongs_to :group, inverse_of: :grants
   belongs_to :grant_set
   has_many :permitted_actions, through: :grant_set

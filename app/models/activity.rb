@@ -12,8 +12,16 @@ class Activity < PublicActivity::Activity
   #   Moderator updates Alice's argument
   #   activity.owner # => Moderator
   belongs_to :owner, class_name: 'Profile'
-  belongs_to :trackable_edge, class_name: 'Edge', inverse_of: :activities
-  belongs_to :recipient_edge, class_name: 'Edge', inverse_of: :recipient_activities
+  belongs_to :trackable,
+             class_name: 'Edge',
+             inverse_of: :activities,
+             primary_key: :uuid,
+             foreign_key: :trackable_edge_id
+  belongs_to :recipient,
+             class_name: 'Edge',
+             inverse_of: :recipient_activities,
+             primary_key: :uuid,
+             foreign_key: :recipient_edge_id
   belongs_to :forum
 
   alias_attribute :happened_at, :created_at

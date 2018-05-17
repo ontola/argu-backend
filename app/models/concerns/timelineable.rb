@@ -8,7 +8,8 @@ module Timelineable
     has_many :happenings,
              -> { where("key ~ '*.happened'").order(created_at: :asc) },
              class_name: 'Activity',
-             as: :recipient,
-             inverse_of: :recipient
+             foreign_key: :recipient_edge_id,
+             inverse_of: :recipient,
+             primary_key: :uuid
   end
 end

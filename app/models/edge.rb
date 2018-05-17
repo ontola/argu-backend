@@ -27,35 +27,47 @@ class Edge < ApplicationRecord
              class_name: 'Edge',
              foreign_key: :root_id,
              primary_key: :root_id
-  has_many :activities, foreign_key: :trackable_edge_id, inverse_of: :trackable_edge, dependent: :nullify
-  has_many :recipient_activities, class_name: 'Activity', foreign_key: :recipient_edge_id, dependent: :nullify
+  has_many :activities,
+           foreign_key: :trackable_edge_id,
+           inverse_of: :trackable,
+           dependent: :nullify,
+           primary_key: :uuid
+  has_many :recipient_activities,
+           class_name: 'Activity',
+           foreign_key: :recipient_edge_id,
+           dependent: :nullify,
+           primary_key: :uuid
   has_many :children,
            class_name: 'Edge',
            inverse_of: :parent,
            foreign_key: :parent_id,
            dependent: false
-  has_many :exports, dependent: :destroy
-  has_many :favorites, dependent: :destroy
+  has_many :exports, dependent: :destroy, primary_key: :uuid
+  has_many :favorites, dependent: :destroy, primary_key: :uuid
   has_many :follows,
            class_name: 'Follow',
            inverse_of: :followable,
            foreign_key: :followable_id,
-           dependent: :destroy
-  has_many :grants, dependent: :destroy
-  has_many :grant_resets, inverse_of: :edge, dependent: :destroy
+           dependent: :destroy,
+           primary_key: :uuid
+  has_many :grants, dependent: :destroy, primary_key: :uuid
+  has_many :grant_resets, inverse_of: :edge, dependent: :destroy, primary_key: :uuid
   has_many :groups, through: :grants
   has_many :group_memberships, -> { active }, through: :groups
   has_many :publications,
            foreign_key: :publishable_id,
-           dependent: :destroy
+           dependent: :destroy,
+           primary_key: :uuid
   has_many :published_publications,
            -> { where('publications.published_at IS NOT NULL') },
            class_name: 'Publication',
-           foreign_key: :publishable_id
+           foreign_key: :publishable_id,
+           primary_key: :uuid
   has_one :argu_publication,
           -> { where(channel: 'argu') },
           class_name: 'Publication',
-          foreign_key: :publishable_id
+          foreign_key: :publishable_id,
+          primary_key: :uuid
   # Children associations
   has_many :arguments,
            -> { where(owner_type: 'Argument') },

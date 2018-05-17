@@ -44,6 +44,7 @@ class User < ApplicationRecord
          :multi_email_confirmable, :lockable, :timeoutable,
          :omniauthable, omniauth_providers: [:facebook].freeze
   acts_as_follower
+
   with_collection :vote_matches,
                   association: :profile_vote_matches,
                   pagination: true
@@ -175,8 +176,8 @@ class User < ApplicationRecord
   def follow(followable, type = :reactions, ancestor_type = nil)
     return if self == followable || !accepted_terms?
     if type.present?
-      follow = follows.find_or_initialize_by(followable_id: followable.id,
-                                             followable_type: parent_class_name(followable))
+      follow = follows.find_or_initialize_by(followable_id: followable.uuid,
+                                             followable_type: 'Edge')
       if follow.new_record? || (!follow.never? && Follow.follow_types[type] > Follow.follow_types[follow.follow_type])
         follow.update!(follow_type: type)
       end
@@ -193,7 +194,7 @@ class User < ApplicationRecord
   # @param [Edge] followable The Edge to find the Follow for
   # @return [Follow, nil]
   def follow_for(followable)
-    Follow.unblocked.for_follower(self).find_by(followable_id: followable.id, followable_type: 'Edge')
+    Follow.unblocked.for_follower(self).find_by(followable_id: followable.uuid, followable_type: 'Edge')
   end
 
   # The follow_type for the followable

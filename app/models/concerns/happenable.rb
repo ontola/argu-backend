@@ -8,9 +8,10 @@ module Happenable
     has_one :happening,
             -> { where("key ~ '*.happened'") },
             class_name: 'Activity',
+            foreign_key: :trackable_edge_id,
             inverse_of: :trackable,
-            as: :trackable,
             dependent: :destroy,
+            primary_key: :uuid,
             autosave: true
     accepts_nested_attributes_for :happening
     attr_accessor :happened_at

@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json "audit_data"
-    t.integer "trackable_edge_id"
-    t.integer "recipient_edge_id"
     t.string "comment"
+    t.uuid "trackable_edge_id"
+    t.uuid "recipient_edge_id"
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type"
     t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable"
     t.index ["forum_id"], name: "index_activities_on_forum_id"
@@ -218,23 +218,22 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "exports", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "edge_id", null: false
     t.integer "status", default: 0, null: false
     t.string "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "edge_id", null: false
   end
 
   create_table "favorites", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "edge_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "edge_id", null: false
     t.index ["user_id", "edge_id"], name: "index_favorites_on_user_id_and_edge_id", unique: true
   end
 
   create_table "follows", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.integer "followable_id", null: false
     t.string "followable_type", default: "Edge", null: false
     t.integer "follower_id", null: false
     t.string "follower_type", default: "User", null: false
@@ -243,7 +242,8 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "updated_at"
     t.boolean "send_email", default: false
     t.integer "follow_type", default: 30, null: false
-    t.index ["followable_id", "followable_type"], name: "fk_followables"
+    t.uuid "followable_id", null: false
+    t.index ["followable_type", "followable_id"], name: "index_follows_on_followable_type_and_followable_id"
     t.index ["follower_id", "follower_type"], name: "fk_follows"
     t.index ["follower_type", "follower_id", "followable_type", "followable_id"], name: "index_follower_followable", unique: true
   end
@@ -273,9 +273,9 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "grant_resets", force: :cascade do |t|
-    t.integer "edge_id", null: false
     t.string "resource_type", null: false
     t.string "action", null: false
+    t.uuid "edge_id", null: false
     t.index ["edge_id", "resource_type", "action"], name: "index_grant_resets_on_edge_id_and_resource_type_and_action", unique: true
   end
 
@@ -292,11 +292,11 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "grants", id: :serial, force: :cascade do |t|
     t.integer "group_id", null: false
-    t.integer "edge_id", null: false
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "grant_set_id"
+    t.uuid "edge_id", null: false
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
   end
 
@@ -520,12 +520,11 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "publications", id: :serial, force: :cascade do |t|
     t.string "job_id"
     t.datetime "published_at"
-    t.integer "publishable_id"
-    t.string "publishable_type", default: "Edge"
     t.string "channel"
     t.integer "creator_id", null: false
     t.integer "publisher_id"
     t.integer "follow_type", default: 3, null: false
+    t.uuid "publishable_id"
   end
 
   create_table "questions", id: :serial, force: :cascade do |t|
@@ -707,8 +706,8 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 
-  add_foreign_key "activities", "edges", column: "recipient_edge_id"
-  add_foreign_key "activities", "edges", column: "trackable_edge_id"
+  add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
+  add_foreign_key "activities", "edges", column: "trackable_edge_id", primary_key: "uuid"
   add_foreign_key "arguments", "profiles", column: "creator_id"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade
@@ -723,19 +722,19 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
   add_foreign_key "email_addresses", "users"
-  add_foreign_key "exports", "edges"
+  add_foreign_key "exports", "edges", primary_key: "uuid"
   add_foreign_key "exports", "users"
-  add_foreign_key "favorites", "edges"
+  add_foreign_key "favorites", "edges", primary_key: "uuid"
   add_foreign_key "favorites", "users"
-  add_foreign_key "follows", "edges", column: "followable_id"
+  add_foreign_key "follows", "edges", column: "followable_id", primary_key: "uuid"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "forums", "groups", column: "default_decision_group_id"
   add_foreign_key "forums", "places"
-  add_foreign_key "grant_resets", "edges"
+  add_foreign_key "grant_resets", "edges", primary_key: "uuid"
   add_foreign_key "grant_sets", "pages"
   add_foreign_key "grant_sets_permitted_actions", "grant_sets"
   add_foreign_key "grant_sets_permitted_actions", "permitted_actions"
-  add_foreign_key "grants", "edges"
+  add_foreign_key "grants", "edges", primary_key: "uuid"
   add_foreign_key "grants", "grant_sets"
   add_foreign_key "grants", "groups"
   add_foreign_key "group_memberships", "groups"
@@ -755,6 +754,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
+  add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
   add_foreign_key "questions", "places"
   add_foreign_key "questions", "profiles", column: "creator_id"
   add_foreign_key "questions", "users", column: "publisher_id"

@@ -32,7 +32,7 @@ module Menus
         href = follow && follow_url(follow)
       else
         method = 'POST'
-        href = follows_url(gid: resource.edge.id, follow_type: type)
+        href = follows_url(gid: resource.edge.uuid, follow_type: type)
       end
       image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
       menu_item(type, href: href, image: image, link_opts: {data: {remote: true, method: method}})

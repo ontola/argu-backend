@@ -43,13 +43,13 @@ module DiscussionsHelper
       createGroupUrl: collection_iri(resource.parent_model(:page), :groups),
       currentActor: current_user.iri,
       defaultRole: GrantSet.participator.id,
-      forumEdge: resource.parent_edge(:forum).id,
+      forumEdge: resource.parent_edge(:forum).uuid,
       forumName: resource.parent_model(:forum).display_name,
       forumNames: resource.parent_model(:page).forums.pluck(:name).join(', '),
       groups: discussion_invite_groups(resource),
       managedProfiles: managed_profiles_list,
       message: t('tokens.discussion.default_message', resource: resource.display_name),
-      pageEdge: resource.parent_edge(:page).id,
+      pageEdge: resource.parent_edge(:page).uuid,
       resource: resource.canonical_iri,
       roles: GrantSet
                .selectable

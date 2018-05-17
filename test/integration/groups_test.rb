@@ -121,7 +121,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
                grants_attributes: {
                  '0': {
                    grant_set_id: GrantSet.participator.id,
-                   edge_id: argu.edge.id
+                   edge_id: argu.edge.uuid
                  }
                }
              }

@@ -10,7 +10,7 @@ RSpec.describe 'Follows', type: :request do
     default_formats
   end
 
-  let(:create_path) { follows_path(gid: freetown.edge.id) }
+  let(:create_path) { follows_path(gid: freetown.edge.uuid) }
   let(:non_existing_create_path) { follows_path(gid: non_existing_id) }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }

@@ -43,7 +43,7 @@ class FollowsController < AuthorizedController
 
   def new_resource_from_params
     @resource ||= current_user.follows.find_or_initialize_by(
-      followable_id: Edge.where(owner_type: PERMITTED_CLASSES).find(permit_params[:gid]).id,
+      followable_id: Edge.where(owner_type: PERMITTED_CLASSES).find_by!(uuid: permit_params[:gid]).uuid,
       followable_type: 'Edge'
     )
     @resource.follow_type = action_name == 'create' ? permit_params[:follow_type] || :reactions : :never

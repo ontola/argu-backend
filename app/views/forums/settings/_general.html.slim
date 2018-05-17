@@ -44,7 +44,7 @@
                   span.fa.fa-plus
             td
               =t("roles.types.#{grant.grant_set.title}")
-              - if grant.edge_id == resource.edge.id
+              - if grant.edge_id == resource.edge.uuid
                 =t('roles.list.remove_html', url: grant_path(grant))
               - else
                 =<"(#{t('grants.all_forums')})"

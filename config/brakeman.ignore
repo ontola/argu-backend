@@ -3,20 +3,20 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "55f11aa0c09ed82fd44ca54f555c04d805ccedbafbc40b5764b25c91c197f8e9",
+      "fingerprint": "70920fcfa44370e8c9d2f6a375c0b99cc9fcb1d31c13cc1b585ece61cfa99596",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/feed.rb",
       "line": 54,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "activity_base.where(\"edges.path ? #{Edge.path_array(Edge.where(:id => parent.favorites.pluck(:edge_id)))}\")",
+      "code": "activity_base.where(\"edges.path ? #{Edge.path_array(Edge.where(:uuid => parent.favorites.pluck(:edge_id)))}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "Feed",
         "method": "favorite_activities"
       },
-      "user_input": "Edge.path_array(Edge.where(:id => parent.favorites.pluck(:edge_id)))",
+      "user_input": "Edge.path_array(Edge.where(:uuid => parent.favorites.pluck(:edge_id)))",
       "confidence": "Medium",
       "note": ""
     },
@@ -67,7 +67,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/controllers/forums_controller.rb",
-      "line": 15,
+      "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Forum.joins(:edge).where(\"edges.path ? #{Edge.path_array(current_user.profile.granted_edges(:grant_set => ([\"moderator\", \"administrator\"])))}\")",
       "render_path": null,

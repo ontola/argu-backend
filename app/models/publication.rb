@@ -2,7 +2,7 @@
 
 class Publication < ApplicationRecord
   include Wisper::Publisher
-  belongs_to :publishable, class_name: 'Edge'
+  belongs_to :publishable, class_name: 'Edge', primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
@@ -55,8 +55,6 @@ class Publication < ApplicationRecord
 
   # Create a PublicationsWorker and save it's job id
   def schedule
-    self.job_id = PublicationsWorker.perform_at(published_at,
-                                                publishable.id,
-                                                publishable.model_name.name)
+    self.job_id = PublicationsWorker.perform_at(published_at, publishable.uuid)
   end
 end

@@ -5,7 +5,7 @@ class Export < ApplicationRecord
   include Ldable
 
   belongs_to :user
-  belongs_to :edge
+  belongs_to :edge, primary_key: :uuid
   after_commit :schedule_export_job, on: :create
   enum status: {pending: 0, processing: 1, done: 2, failed: -1}
   mount_uploader :zip, ExportUploader

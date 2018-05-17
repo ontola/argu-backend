@@ -14,8 +14,10 @@ class Decision < EdgeableBase
   belongs_to :publisher, inverse_of: :decisions, class_name: 'User'
   has_one :decision_activity,
           -> { where("key ~ '*.?'", Decision.actioned_keys.join('|').freeze) },
+          foreign_key: :trackable_edge_id,
           class_name: 'Activity',
-          as: :trackable
+          inverse_of: :trackable,
+          primary_key: :uuid
 
   enum state: {pending: 0, approved: 1, rejected: 2, forwarded: 3}
   validates :happening, presence: true, unless: :pending?

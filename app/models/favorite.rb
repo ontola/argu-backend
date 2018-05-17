@@ -3,8 +3,8 @@
 class Favorite < ApplicationRecord
   include Parentable
   belongs_to :user
-  belongs_to :edge
-  validates :edge, presence: true, uniqueness: {scope: :user}
+  belongs_to :edge, primary_key: :uuid
+  validates :edge_id, presence: true, uniqueness: {scope: :user}
 
   parentable :forum
 

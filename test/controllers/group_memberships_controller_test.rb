@@ -88,10 +88,10 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_not_authorized
   end
 
-  test 'user with group_memberships should not post create as json' do
+  test 'user with favorites should post create as json' do
     validate_valid_bearer_token
     sign_in user
-    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:id)
+    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
     forum_edge_ids.each do |forum_edge_id|
       Favorite.create!(user: user, edge_id: forum_edge_id)
     end
@@ -200,7 +200,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member with group_memberships should post create as json' do
     validate_valid_bearer_token
     sign_in single_forum_group_member
-    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:id)
+    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
     forum_edge_ids.each do |forum_edge_id|
       Favorite.create!(user: member, edge_id: forum_edge_id)
     end

@@ -5,16 +5,19 @@ module ActivePublishable
 
   included do
     has_many :publications,
-             through: :edge,
-             dependent: :destroy
+             foreign_key: :publishable_id,
+             dependent: :destroy,
+             primary_key: :uuid
     has_many :published_publications,
              -> { where('publications.published_at IS NOT NULL') },
-             through: :edge,
-             source: :publications
+             class_name: 'Publication',
+             foreign_key: :publishable_id,
+             primary_key: :uuid
     has_one :argu_publication,
             -> { where(channel: 'argu') },
             class_name: 'Publication',
-            through: :edge
+            foreign_key: :publishable_id,
+            primary_key: :uuid
 
     def is_draft?
       edge.published_publications.empty?

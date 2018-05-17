@@ -51,7 +51,7 @@ class Feed
 
   def favorite_activities
     return Activity.none if parent.favorites.empty?
-    activity_base.where("edges.path ? #{Edge.path_array(Edge.where(id: parent.favorites.pluck(:edge_id)))}")
+    activity_base.where("edges.path ? #{Edge.path_array(Edge.where(uuid: parent.favorites.pluck(:edge_id)))}")
   end
 
   def profile_activities
