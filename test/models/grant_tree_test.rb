@@ -17,7 +17,7 @@ class GrantTreeTest < ActiveSupport::TestCase
       member: user.profile,
       parent: create(
         :grant,
-        group: create(:group, parent: freetown.page.edge),
+        group: create(:group, parent: freetown.parent_edge),
         edge: freetown.edge,
         grant_set: GrantSet.administrator
       ).group
@@ -35,19 +35,19 @@ class GrantTreeTest < ActiveSupport::TestCase
 
   test 'administrator group should update Motion' do
     assert_equal group_ids(motion.edge, resource_type: 'Motion', action: 'update'),
-                 [Group::STAFF_ID, freetown.page.groups.first.id]
+                 [Group::STAFF_ID, argu.groups.first.id]
     forum_manager_group_membership
     assert_equal group_ids(motion.edge, resource_type: 'Motion', action: 'update'),
-                 [Group::STAFF_ID, freetown.page.groups.first.id, forum_manager_group_membership.group.id].sort
+                 [Group::STAFF_ID, argu.groups.first.id, forum_manager_group_membership.group.id].sort
   end
 
   test 'excluded group should not post Motion' do
     assert_equal group_ids(question.edge, resource_type: 'Motion', action: 'create'),
-                 [Group::STAFF_ID, Group::PUBLIC_ID, freetown.page.groups.first.id]
+                 [Group::STAFF_ID, Group::PUBLIC_ID, argu.groups.first.id]
     reset_motion_grants
     assert_empty group_ids(question.edge, resource_type: 'Motion', action: 'create')
     assert_equal group_ids(other_question.edge, resource_type: 'Motion', action: 'create'),
-                 [Group::STAFF_ID, Group::PUBLIC_ID, freetown.page.groups.first.id].sort
+                 [Group::STAFF_ID, Group::PUBLIC_ID, argu.groups.first.id].sort
     public_create_motion_grant
     assert_equal group_ids(question.edge, resource_type: 'Motion', action: 'create'),
                  [Group::PUBLIC_ID]

@@ -4,8 +4,8 @@ require 'test_helper'
 
 class GroupsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:group) { create(:group, parent: freetown.page.edge) }
-  let!(:granted_group) { create(:group, parent: freetown.page.edge) }
+  let!(:group) { create(:group, parent: argu.edge) }
+  let!(:granted_group) { create(:group, parent: argu.edge) }
   let!(:gg_grant) do
     create(:grant,
            edge: freetown.edge,
@@ -47,13 +47,13 @@ class GroupsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Moderator
   ####################################
-  let(:moderator) { create_moderator(freetown.page) }
+  let(:moderator) { create_moderator(argu) }
 
   test 'moderator should not post create group' do
     sign_in moderator
 
     assert_difference('Group.count', 0) do
-      post collection_iri_path(freetown.page, :groups),
+      post collection_iri_path(argu, :groups),
            params: {
              group: {
                group_id: group.id,
@@ -98,7 +98,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     assert_differences([['Group.count', 1], ['Grant.count', 0]]) do
-      post collection_iri_path(freetown.page, :groups),
+      post collection_iri_path(argu, :groups),
            params: {
              group: {
                name: 'Test group',
@@ -106,14 +106,14 @@ class GroupsTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_iri_path(freetown.page, tab: :groups)
+    assert_redirected_to settings_iri_path(argu, tab: :groups)
   end
 
   test 'administrator should post create group with grant' do
     sign_in administrator
 
     assert_differences([['Group.count', 1], ['Grant.count', 1]]) do
-      post collection_iri_path(freetown.page, :groups),
+      post collection_iri_path(argu, :groups),
            params: {
              group: {
                name: 'Test group',
@@ -121,13 +121,13 @@ class GroupsTest < ActionDispatch::IntegrationTest
                grants_attributes: {
                  '0': {
                    grant_set_id: GrantSet.participator.id,
-                   edge_id: freetown.page.edge.id
+                   edge_id: argu.edge.id
                  }
                }
              }
            }
     end
-    assert_redirected_to settings_iri_path(freetown.page, tab: :groups)
+    assert_redirected_to settings_iri_path(argu, tab: :groups)
   end
 
   test 'administrator should get new' do

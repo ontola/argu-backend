@@ -2,8 +2,6 @@
 
 class CreateBlogPost < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
-    attributes[:blog_postable_id] = parent.owner_id
-    attributes[:blog_postable_type] = parent.owner_type
     super
     build_happening if attributes[:happened_at].present?
   end
@@ -12,7 +10,7 @@ class CreateBlogPost < PublishedCreateService
 
   def build_happening
     resource.build_happening(
-      forum: resource.forum,
+      forum: resource.parent_model(:forum),
       created_at: @attributes[:happened_at],
       owner: resource.creator,
       key: 'blog_post.happened',
@@ -23,7 +21,6 @@ class CreateBlogPost < PublishedCreateService
   end
 
   def object_attributes=(obj)
-    obj.forum ||= resource.forum
     if obj.is_a?(Activity)
       obj.created_at || Time.current
       obj.owner ||= resource.creator

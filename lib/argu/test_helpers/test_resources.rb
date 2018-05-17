@@ -5,11 +5,10 @@ module Argu
     module InstanceMethods
       def create_forum(*args)
         attributes = (args.pop if args.last.is_a?(Hash)) || {}
-        page = attributes.delete(:page) || create(:page)
+        page = attributes[:parent]&.owner || create(:page)
         attributes = {
           url: attributes_for(:shortname)[:shortname],
           parent: page.edge,
-          page: page,
           options: {
             publisher: page.owner.profileable
           }
@@ -39,7 +38,6 @@ module Argu
             :with_follower,
             {
               url: name,
-              page: argu,
               parent: argu.edge,
               public_grant: 'initiator'
             }.merge(attributes)
@@ -52,7 +50,7 @@ module Argu
           forum = create_forum({url: name}.merge(attributes))
           create(:grant,
                  edge: forum.edge,
-                 group: create(:group, parent: forum.page.edge),
+                 group: create(:group, parent: forum.parent_model(:page).edge),
                  grant_set: GrantSet.initiator)
           forum
         end
@@ -63,7 +61,7 @@ module Argu
           forum = create_forum(:populated_forum, {url: name}.merge(attributes))
           create(:grant,
                  edge: forum.edge,
-                 group: create(:group, parent: forum.page.edge),
+                 group: create(:group, parent: forum.parent_model(:page).edge),
                  grant_set: GrantSet.initiator)
           forum
         end
@@ -79,7 +77,7 @@ module Argu
           )
           create(:grant,
                  edge: forum.edge,
-                 group: create(:group, parent: forum.page.edge),
+                 group: create(:group, parent: forum.parent_model(:page).edge),
                  grant_set: GrantSet.initiator)
           forum
         end

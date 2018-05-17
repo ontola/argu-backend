@@ -4,7 +4,7 @@ require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:group, parent: freetown.page.edge) }
+  subject { create(:group, parent: argu.edge) }
   let(:motion) { create(:motion, parent: freetown.edge) }
 
   test 'valid' do

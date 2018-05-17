@@ -4,16 +4,9 @@ module Voteable
   extend ActiveSupport::Concern
 
   included do
-    has_one :default_vote_event_edge,
-            -> { where(owner_type: 'VoteEvent') },
-            through: :edge,
-            source: :children,
-            class_name: 'Edge'
-    has_many :votes,
-             -> { where(primary: true) },
-             as: :voteable,
-             dependent: :destroy
-    edge_tree_has_many :vote_events
+    has_one_through_edge :default_vote_event
+    has_many_through_edge :votes, where: {primary: true}
+    has_many_through_edge :vote_events
     with_collection :vote_events
 
     after_create :create_default_vote_event
@@ -25,12 +18,9 @@ module Voteable
           starts_at: Time.current,
           creator_id: creator.id,
           publisher_id: publisher.id,
-          forum_id: try(:forum_id),
           root_id: edge.root.uuid
         )
     end
-
-    delegate :default_vote_event, to: :edge
   end
 
   module Serializer

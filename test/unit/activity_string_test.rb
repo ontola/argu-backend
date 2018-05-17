@@ -20,7 +20,7 @@ class ActivityStringTest < ActiveSupport::TestCase
            state: 'rejected',
            happening_attributes: {happened_at: Time.current})
   end
-  let(:group) { create(:group, parent: freetown.page.edge) }
+  let(:group) { create(:group, parent: argu.edge) }
   let!(:forwarded_decision) do
     create(:decision,
            parent: motion.edge,

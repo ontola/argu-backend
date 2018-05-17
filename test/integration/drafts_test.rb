@@ -14,7 +14,7 @@ class DraftsTest < ActionDispatch::IntegrationTest
   let!(:page_motion) do
     create(:motion,
            parent: freetown.edge,
-           creator: freetown.page.profile,
+           creator: argu.profile,
            edge_attributes: {argu_publication_attributes: {draft: true}})
   end
 
@@ -52,9 +52,9 @@ class DraftsTest < ActionDispatch::IntegrationTest
   # As administrator
   ####################################
   test 'administrator should get index' do
-    group = create(:group, parent: freetown.page.edge)
+    group = create(:group, parent: argu.edge)
     create(:group_membership, parent: group, shortname: user.url)
-    create(:grant, edge: freetown.page.edge, group: group, grant_set: GrantSet.administrator)
+    create(:grant, edge: argu.edge, group: group, grant_set: GrantSet.administrator)
     sign_in user
     get drafts_user_path(user)
     assert 200

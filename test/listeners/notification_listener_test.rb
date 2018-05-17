@@ -15,7 +15,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
     create(
       :activity,
       trackable: create(:vote, parent: motion.default_vote_event.edge),
-      forum: motion.forum
+      forum: motion.parent_model(:forum)
     )
   end
   let(:user) { create(:user) }

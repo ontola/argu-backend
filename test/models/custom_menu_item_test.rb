@@ -8,7 +8,7 @@ class CustomMenuItemTest < ActiveSupport::TestCase
     CustomMenuItem.create(
       menu_type: 'navigations',
       resource_type: 'Page',
-      resource_id: freetown.page_id,
+      resource_id: argu.id,
       order: 0,
       label: 'Custom label',
       label_translation: false,
@@ -20,7 +20,7 @@ class CustomMenuItemTest < ActiveSupport::TestCase
     CustomMenuItem.create(
       menu_type: 'navigations',
       resource_type: 'Page',
-      resource_id: freetown.page_id,
+      resource_id: argu.id,
       order: 0,
       label: 'about.team',
       label_translation: true,

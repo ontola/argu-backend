@@ -7,11 +7,11 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   let!(:administrator) { create_administrator(freetown) }
   let(:group_membership) do
     create(:group_membership,
-           parent: create(:group, parent: freetown.page.edge))
+           parent: create(:group, parent: argu.edge))
   end
   let(:actor_membership) do
     create(:group_membership,
-           parent: create(:group, parent: freetown.page.edge),
+           parent: create(:group, parent: argu.edge),
            member: actor.profile)
   end
   let!(:motion) do
@@ -81,7 +81,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   test 'actor should not post forward to user/group without membership' do
     sign_in actor
-    general_forward 200, false, create(:group, parent: freetown.page.edge).id, create(:user).id
+    general_forward 200, false, create(:group, parent: argu.edge).id, create(:user).id
   end
 
   test 'actor should post forward' do
@@ -101,7 +101,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   test 'group_member should post approve' do
     sign_in user
     create(:group_membership,
-           group_id: create(:group, parent: motion.forum.page.edge).id,
+           group_id: create(:group, parent: motion.parent_model(:page).edge).id,
            member: user.profile)
     create(:decision,
            parent: motion.edge,

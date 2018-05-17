@@ -33,17 +33,17 @@ class QuestionsController < EdgeableController
     @motion_edges =
       @all_motion_edges
         .includes(Motion.edge_includes_for_index(true))
-        .joins(:default_vote_event_edge)
+        .joins(:default_vote_event)
         .order(sort_from_param)
         .page(show_params[:page])
-    preload_user_votes(@motion_edges.map { |edge| edge.default_vote_event_edge.id })
+    preload_user_votes(@motion_edges.map { |edge| edge.default_vote_event.id })
     render locals: {question: resource}
   end
 
   def sort_from_param
     case sort_param_or_default
     when 'popular'
-      "cast(default_vote_event_edges_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST, created_at DESC"
+      "cast(default_vote_events_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST, created_at DESC"
     when 'created_at'
       {created_at: :desc}
     when 'updated_at'

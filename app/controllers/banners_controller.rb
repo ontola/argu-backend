@@ -34,6 +34,13 @@ class BannersController < ServiceController
            locals: locals
   end
 
+  def resource_new_params
+    HashWithIndifferentAccess.new(
+      forum: parent_resource!,
+      publisher: current_user
+    )
+  end
+
   def update_respond_failure_html(resource)
     render_settings(:edit, resource, resource.forum)
   end

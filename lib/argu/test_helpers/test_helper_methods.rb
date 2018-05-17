@@ -72,7 +72,7 @@ module Argu
 
         def create_moderator(record, user = nil)
           user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.page
+          page = record.is_a?(Page) ? record : record.parent_model(:page)
           group = create(:group, parent: page.edge)
           create(:group_membership,
                  parent: group,
@@ -94,7 +94,7 @@ module Argu
 
         def create_initiator(record, user = nil)
           user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.page
+          page = record.is_a?(Page) ? record : record.parent_model(:page)
           group = create(:group, parent: page.edge)
           create(:group_membership,
                  parent: group,
@@ -105,17 +105,9 @@ module Argu
 
         def create_administrator(record, user = nil)
           user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.page
+          page = record.is_a?(Page) ? record : record.parent_model(:page)
           create(:group_membership, parent: page.edge.groups.custom.first, member: user.profile)
           user
-        end
-
-        def create_forum_owner_pair(forum_opts = {}, manager_opts = {})
-          user = create(:user, manager_opts)
-          forum = create((forum_opts[:type] || :forum),
-                         page: create(:page,
-                                      owner: user.profile))
-          [forum, user]
         end
 
         def create_follower(item, user = nil)
@@ -257,7 +249,7 @@ module Argu
           let(:freetown) { Forum.find_via_shortname('freetown', argu.edge.uuid) }
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
-          let(:linked_record_vote) { LinkedRecord.first.votes.first }
+          let(:linked_record_vote) { LinkedRecord.first.default_vote_event.votes.first }
           let(:linked_record_comment) { LinkedRecord.first.comments.first }
           let(:forum_motion) { freetown.motions.first }
           let(:question) { freetown.questions.first }

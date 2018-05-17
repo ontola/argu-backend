@@ -6,7 +6,7 @@ section.section--details
           span[class="fa fa-#{motion_icon}"]
         .detail__text
             span= motion_type
-    - if local_assigns[:show_parent] && motion.question_id
+    - if local_assigns[:show_parent] && motion.parent_model.is_a?(Question)
       =link_to motion.parent_model
         .detail[data-title=t('questions.go_to_parent')]
           .detail__icon

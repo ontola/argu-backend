@@ -7,9 +7,9 @@ class ProArgumentsControllerTest < ActionController::TestCase
   define_holland
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
   let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
-  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record) do
-    lr = LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
+    lr = LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid)
     create(:argument, :with_comments, parent: lr.edge)
     create(:argument, :with_comments, parent: lr.edge, pro: false)
     create(:argument, :with_comments, parent: lr.edge, edge_attributes: {trashed_at: Time.current})
@@ -29,8 +29,8 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('commentCollection', 1)
     expect_included(collection_iri(argument, :comments, type: 'paginated'))
     expect_included(collection_iri(argument, :comments, page: 1, type: 'paginated'))
-    expect_included(argument.comments(:untrashed).map(&:iri))
-    expect_not_included(argument.comments(:trashed).map(&:iri))
+    expect_included(argument.comments.untrashed.map(&:iri))
+    expect_not_included(argument.comments.trashed.map(&:iri))
   end
 
   ####################################

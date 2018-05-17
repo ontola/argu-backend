@@ -7,7 +7,7 @@ class Portal::PortalController < Portal::PortalBaseController
     authorize :portal, :home?
     @forums = Forum.includes(edge: :shortname).order(name: :asc).page(params[:forums_page]).per(500)
     @pages = Page
-               .includes(:profile, :forums, edge: %i[children shortname])
+               .includes(:profile, edge: %i[children shortname])
                .order('profiles.name ASC')
                .page(params[:pages_page])
                .per(500)

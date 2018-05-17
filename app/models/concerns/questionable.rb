@@ -4,6 +4,7 @@ module Questionable
   extend ActiveSupport::Concern
 
   included do
+    has_many_through_edge :questions
     with_collection :questions, pagination: true
   end
 

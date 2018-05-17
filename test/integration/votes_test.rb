@@ -61,8 +61,8 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
   let(:cairo_motion) { create(:motion, parent: cairo.edge) }
   let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event.edge) }
-  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
-  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:vote_event) do
     create(:vote_event,
            parent: motion.edge,

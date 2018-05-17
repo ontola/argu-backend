@@ -47,35 +47,35 @@ class MotionsControllerTest < ActionController::TestCase
         collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
       )
     end
-    expect_not_included(motion.votes.map(&:iri))
+    expect_not_included(motion.default_vote_event.votes.map(&:iri))
   end
 
   ####################################
   # Index for Forum
   ####################################
   test 'should get index motions of forum' do
-    get :index, params: {format: :json_api, root_id: holland.page.url, forum_id: holland.url}
+    get :index, params: {format: :json_api, root_id: holland.parent_model.url, forum_id: holland.url}
     assert_response 200
 
     expect_relationship('partOf', 1)
 
     expect_relationship('viewSequence', 1)
     expect_included(collection_iri(holland, :motions, page: 1, type: 'paginated'))
-    expect_included(holland.motions.where(question_id: nil).untrashed.map(&:iri))
+    expect_included(holland.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
   end
 
   test 'should get index motions of forum page 1' do
-    get :index, params: {format: :json_api, root_id: holland.page.url, forum_id: holland.id, page: 1}
+    get :index, params: {format: :json_api, root_id: holland.parent_model.url, forum_id: holland.url, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)
 
     member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal holland.motions.where(question_id: nil).untrashed.count,
+    assert_equal holland.motions.untrashed.count,
                  expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count
-    expect_included(holland.motions.where(question_id: nil).untrashed.map(&:iri))
+    expect_included(holland.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
   end

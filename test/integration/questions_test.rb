@@ -5,7 +5,7 @@ require 'test_helper'
 class QuestionsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
   subject { create(:question, parent: freetown.edge) }
-  let(:group) { create(:group, parent: freetown.page.edge) }
+  let(:group) { create(:group, parent: argu.edge) }
   let(:reset_motion_grants) { create(:grant_reset, edge: subject.edge, resource_type: 'Motion', action: 'create') }
   let(:create_motion_grant) do
     create(:grant, edge: subject.edge, group_id: group.id, grant_set: GrantSet.for_one_action('Motion', 'create'))

@@ -10,21 +10,10 @@ class Forum < EdgeableBase
   include Menuable
   include Widgetable
 
-  belongs_to :page, inverse_of: :forums
   belongs_to :default_decision_group, class_name: 'Group'
   has_many :banners, inverse_of: :forum, dependent: :destroy
-  has_many :votes, inverse_of: :forum, dependent: :destroy
-  # User content
-  has_many :arguments, inverse_of: :forum, dependent: :destroy
-  has_many :blog_posts, inverse_of: :forum, dependent: :destroy
-  has_many :comments, inverse_of: :forum, dependent: :destroy
-  has_many :motions, inverse_of: :forum, dependent: :destroy
-  has_many :direct_motions, -> { where(question_id: nil) }, class_name: 'Motion', inverse_of: :forum
-  has_many :questions, inverse_of: :forum, dependent: :destroy
 
-  with_collection :motions,
-                  pagination: true,
-                  association: :direct_motions
+  with_collection :motions, pagination: true
 
   default_widgets :motions, :questions
 
@@ -40,7 +29,6 @@ class Forum < EdgeableBase
 
   validates :url, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
-  validates :page, presence: true
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
 
@@ -70,7 +58,7 @@ class Forum < EdgeableBase
   end
 
   def creator
-    page.owner
+    parent_model.owner
   end
 
   def default_decision_user
@@ -95,7 +83,7 @@ class Forum < EdgeableBase
   end
 
   def publisher
-    page.owner.profileable
+    parent_model.owner.profileable
   end
 
   # @return [Forum] based on the `:default_forum` {Setting}, if not present,
@@ -152,6 +140,6 @@ class Forum < EdgeableBase
 
   def set_default_decision_group
     self.default_decision_group =
-      page.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
+      parent_model.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
   end
 end

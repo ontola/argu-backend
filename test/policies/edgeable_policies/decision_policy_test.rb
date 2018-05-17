@@ -11,7 +11,7 @@ class DecisionPolicyTest < PolicyTest
   let(:unpublished_subject) { unpublished_decision }
   let(:direct_child) { nil }
 
-  let(:group) { create(:group, parent: freetown.page.edge) }
+  let(:group) { create(:group, parent: argu.edge) }
   let(:forwarded_user) { create(:group_membership, parent: group).member.profileable }
   let(:forwarded_subject) do
     create(:decision,

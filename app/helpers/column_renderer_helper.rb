@@ -12,14 +12,8 @@ module ColumnRendererHelper
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
     return if columns.nil?
-    included_models = [Motion, ProArgument, ConArgument, Vote, Question,
-                       Comment, BlogPost, Decision, LinkedRecord]
-    partial = if included_models.include?(columns.class)
-                "#{columns.class.base_class.name.tableize}/show"
-              else
-                'column_renderer/show'
-              end
-    partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
+    columns = columns.owner if columns&.is_a?(Edge)
+    partial = columns.is_a?(ActiveRecord::Base) && options[:partial] || column_partial(columns)
 
     if partial == 'column_renderer/show'
       columns.each do |k, v|
@@ -28,7 +22,17 @@ module ColumnRendererHelper
     end
 
     model = columns.is_a?(Edge) ? columns.owner : columns
-    render partial: partial, locals: {model: model}.merge(options: HashWithIndifferentAccess.new(options))
+    render partial: partial, locals: {model: model}.merge(options: options.with_indifferent_access)
+  end
+
+  def column_partial(columns)
+    included_models = [Motion, ProArgument, ConArgument, Vote, Question,
+                       Comment, BlogPost, Decision, LinkedRecord]
+    if included_models.include?(columns.class)
+      "#{columns.class.base_class.name.tableize}/show"
+    else
+      'column_renderer/show'
+    end
   end
 
   def button_box(params)

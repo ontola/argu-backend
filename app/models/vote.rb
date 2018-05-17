@@ -7,8 +7,8 @@ class Vote < EdgeableBase
   belongs_to :creator, class_name: 'Profile', inverse_of: :votes
   belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id', inverse_of: :votes
   has_many :activities, -> { order(:created_at) }, as: :trackable
-  belongs_to :forum
   belongs_to :comment
+  before_save :set_voteable_id
   before_create :trash_primary_votes
   before_create :create_confirmation_reminder_notification
   after_trash :remove_primary
@@ -43,8 +43,9 @@ class Vote < EdgeableBase
       if !publisher.guest?
         Argument
           .untrashed
-          .joins(:votes, :edge)
-          .where(votes: {creator: creator}, edges: {parent_id: parent_model&.edge&.parent_id})
+          .joins(edge: :votes)
+          .joins(Edge.join_owner_query('Vote'))
+          .where(votes: {creator_id: creator.id}, edges: {parent_id: parent_model&.edge&.parent_id})
       else
         Argument
           .untrashed
@@ -56,7 +57,7 @@ class Vote < EdgeableBase
                   'Vote',
                   creator: creator,
                   parent: parent_model&.edge&.parent,
-                  voteable_type: 'Argument'
+                  parent_edge: {owner_type: 'Argument'}
                 ).pluck(:parent_id)
             }
           )
@@ -115,11 +116,17 @@ class Vote < EdgeableBase
     update!(primary: false)
   end
 
+  def set_voteable_id
+    parent_edge.save! && parent_edge.reload if parent_edge.uuid.nil?
+    self.voteable_id = parent_edge.uuid
+  end
+
   def trash_primary_votes
     creator
       .votes
       .untrashed
-      .where(voteable_id: voteable_id, voteable_type: voteable_type)
+      .joins(:edge)
+      .where(edges: {parent_id: edge.parent_id})
       .where('? IS NULL OR votes.id != ?', id, id)
       .find_each { |primary| primary.edge.trash }
   end

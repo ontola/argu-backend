@@ -4,19 +4,9 @@ module Decisionable
   extend ActiveSupport::Concern
 
   included do
-    has_many :decisions,
-             -> { order(step: :asc) },
-             through: :edge
-    has_one :last_decision,
-            -> { order(step: :desc) },
-            through: :edge,
-            source: :decisions,
-            class_name: 'Decision'
-    has_one :last_published_decision,
-            -> { published.order(step: :desc) },
-            through: :edge,
-            source: :decisions,
-            class_name: 'Decision'
+    has_many_through_edge :decisions
+    has_one_through_edge :last_decision
+    has_one_through_edge :last_published_decision
     with_collection :decisions, pagination: true
 
     # @return [Boolean] Whether this Decision is assigned to the `to_user` or one of its groups
@@ -26,11 +16,19 @@ module Decisionable
     end
 
     def assigned_user
-      last_published_decision.present? ? last_published_decision.forwarded_user : forum.default_decision_user
+      if last_published_decision.present?
+        last_published_decision.forwarded_user
+      else
+        parent_model(:forum).default_decision_user
+      end
     end
 
     def assigned_group
-      last_published_decision.present? ? last_published_decision.forwarded_group : forum.default_decision_group
+      if last_published_decision.present?
+        last_published_decision.forwarded_group
+      else
+        parent_model(:forum).default_decision_group
+      end
     end
 
     def state
@@ -39,11 +37,11 @@ module Decisionable
 
     def last_or_new_decision(drafts = false)
       @last_or_new_decision ||= {}
-      @last_or_new_decision[drafts] ||= (drafts ? edge.last_decision : edge.last_published_decision) || new_decision
+      @last_or_new_decision[drafts] ||= (drafts ? last_decision : last_published_decision) || new_decision
     end
 
     def new_decision(state = :pending)
-      Edge.new(owner: Decision.new(forum_id: forum_id, state: state), parent: edge).owner
+      Edge.new(owner: Decision.new(state: state), parent: edge).owner
     end
   end
 

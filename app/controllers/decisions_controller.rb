@@ -58,7 +58,7 @@ class DecisionsController < EdgeableController
       decision =
         parent_edge
           .children
-          .new(owner: Decision.new(resource_new_params.merge(decisionable_id: parent_edge.id)), parent: parent_edge)
+          .new(owner: Decision.new(resource_new_params), parent: parent_edge)
           .owner
       decision.build_happening(happened_at: Time.current) if decision.happening.blank?
       decision.edge.build_argu_publication
@@ -87,7 +87,6 @@ class DecisionsController < EdgeableController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: parent_resource!.forum,
       state: params[:state]
     )
   end

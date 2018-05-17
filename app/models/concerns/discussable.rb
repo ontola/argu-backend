@@ -4,10 +4,7 @@ module Discussable
   extend ActiveSupport::Concern
 
   included do
-    has_many :discussions,
-             -> { where(owner_type: %w[Motion Question]) },
-             through: :edge,
-             source: :children
+    has_many :discussions, through: :edge
 
     with_collection :discussions,
                     includes: [:parent, :default_vote_event, owner: [:default_cover_photo, creator: :profileable]],

@@ -299,7 +299,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'user should delete destroy with group_membership' do
     sign_in user
-    group = create(:group, parent: freetown.page.edge)
+    group = create(:group, parent: argu.edge)
     create(:group_membership, parent: group, member: user.profile)
 
     assert_differences([['User.count', -1], ['GroupMembership.active.count', -2], ['GroupMembership.count', 0]]) do
@@ -340,7 +340,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     photo.save
     create(
       :group_membership,
-      parent: create(:group, parent: freetown.page.edge),
+      parent: create(:group, parent: argu.edge),
       member: user.profile,
       start_date: 2.minutes.ago,
       end_date: 1.minute.ago

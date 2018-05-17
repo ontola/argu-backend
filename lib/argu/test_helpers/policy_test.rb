@@ -34,7 +34,7 @@ class PolicyTest < ActiveSupport::TestCase
   let(:participator) { create_participator(page, create(:user)) }
   let(:guest) { GuestUser.new(id: 'my_id') }
 
-  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record_argument) { create(:argument, parent: linked_record.edge, publisher: creator) }
 
   ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|

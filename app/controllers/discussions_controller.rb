@@ -19,4 +19,8 @@ class DiscussionsController < ParentableController
   end
 
   def resource_by_id; end
+
+  def resource_new_params
+    HashWithIndifferentAccess.new(forum: parent_resource!)
+  end
 end

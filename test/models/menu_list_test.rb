@@ -16,7 +16,7 @@ class MenuListTest < ActiveSupport::TestCase
     )
   end
 
-  let(:administrator) { create_administrator(freetown.page) }
+  let(:administrator) { create_administrator(argu) }
   let(:administrator_context) do
     UserContext.new(
       doorkeeper_scopes: {},
@@ -30,7 +30,7 @@ class MenuListTest < ActiveSupport::TestCase
     CustomMenuItem.create(
       menu_type: 'navigations',
       resource_type: 'Page',
-      resource_id: freetown.page_id,
+      resource_id: argu.id,
       order: 0,
       label: 'Custom label',
       label_translation: false,
@@ -49,13 +49,13 @@ class MenuListTest < ActiveSupport::TestCase
 
   test 'Page menu for administrator should include hidden forum' do
     forums =
-      freetown.page.menu(administrator_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
+      argu.menu(administrator_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
     assert forums.menus.call.compact.map(&:tag).include?(:second)
   end
 
   test 'Page menu for user should not include hidden forum' do
     forums =
-      freetown.page.menu(user_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
+      argu.menu(user_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
     assert_not forums.menus.call.compact.map(&:tag).include?(:second)
   end
 
@@ -63,7 +63,7 @@ class MenuListTest < ActiveSupport::TestCase
     assert_equal(
       'Custom label',
       freetown
-        .page
+        .parent_model(:page)
         .menu(user_context, :navigations)
         .menus
         .call

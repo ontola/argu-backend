@@ -6,8 +6,8 @@ class GroupMembershipTest < ActiveSupport::TestCase
   define_freetown
   subject { create(:group_membership, parent: custom_group, member: user.profile) }
   let(:second_record) { create(:group_membership, parent: custom_group, member: moderator.profile) }
-  let(:custom_group) { create(:group, parent: freetown.page.edge) }
-  let(:second_group) { create(:group, parent: freetown.page.edge) }
+  let(:custom_group) { create(:group, parent: argu.edge) }
+  let(:second_group) { create(:group, parent: argu.edge) }
   let(:user) { create(:user) }
   let(:moderator) { create_moderator(freetown) }
 

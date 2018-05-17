@@ -13,16 +13,13 @@ class Question < EdgeableBase
   concern Motionable
   include CustomGrants
 
-  has_many :votes, as: :voteable, dependent: :destroy
-  has_many :motions, dependent: :nullify
-
-  convertible motions: %i[activities blog_posts media_objects comments]
+  convertible motions: %i[activities media_objects]
   counter_cache true
   parentable :forum
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 110}
-  validates :forum, :creator, presence: true
+  validates :creator, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
   # TODO: validate expires_at
@@ -40,7 +37,7 @@ class Question < EdgeableBase
   end
 
   def self.edge_includes_for_index
-    super.deep_merge(active_motions: {})
+    super.deep_merge(motions: {})
   end
 
   def expired?
@@ -49,13 +46,13 @@ class Question < EdgeableBase
 
   def next(show_trashed = false)
     sister_node(show_trashed)
-      .where('questions.updated_at < :date', date: updated_at)
+      .where('edges.updated_at < :date', date: updated_at)
       .last
   end
 
   def previous(show_trashed = false)
     sister_node(show_trashed)
-      .find_by('questions.updated_at > :date', date: updated_at)
+      .find_by('edges.updated_at > :date', date: updated_at)
   end
 
   scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }
@@ -63,10 +60,10 @@ class Question < EdgeableBase
   private
 
   def sister_node(show_trashed)
-    forum
+    parent_edge
       .questions
       .published
       .show_trashed(show_trashed)
-      .order('questions.updated_at')
+      .order('edges.updated_at')
   end
 end

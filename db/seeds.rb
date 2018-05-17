@@ -97,7 +97,6 @@ public_staff_membership.save!(validate: false)
 argu.update(owner: staff.profile)
 
 forum = Forum.new(name: 'Nederland',
-                  page: argu,
                   public_grant: 'participator',
                   url: 'nederland')
 forum.edge = Edge.new(owner: forum,

@@ -19,13 +19,13 @@ RSpec.feature 'Motions', type: :feature do
         fill_in 'motion[title]', with: motion_attr[:title]
         fill_in 'motion[content]', with: motion_attr[:content]
         within('.Select-profile') do
-          fill_in_select with: freetown.page.display_name
+          fill_in_select with: argu.display_name
         end
         click_button 'Save'
       end
       expect(page).to have_content(motion_attr[:title].capitalize)
     end
 
-    expect(Motion.last.creator).to eq(freetown.page.profile)
+    expect(Motion.last.creator).to eq(argu.profile)
   end
 end

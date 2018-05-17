@@ -53,7 +53,6 @@ module Convertible
     new_model.displaced_children.each do |child|
       if new_model.is_a?(Comment) && child.owner.is_a?(Comment)
         child.owner.parent_comment = new_model
-        child.owner.commentable = new_model.parent_model
         child.parent = new_model.parent_edge
         child.owner.save!(validate: false)
       elsif child.owner.convert_to?(Comment) && Comment.parent_classes.include?(class_name.singularize.to_sym)

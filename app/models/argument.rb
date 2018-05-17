@@ -8,11 +8,10 @@ class Argument < EdgeableBase
   include HasLinks
   include VotesHelper
 
-  has_many :votes, as: :voteable, dependent: :destroy
+  has_many_through_edge :votes
 
   before_save :capitalize_title
 
-  validate :assert_tenant
   validates :content, presence: false, length: {maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 75}
   validates :creator, presence: true
@@ -25,11 +24,9 @@ class Argument < EdgeableBase
   parentable :motion, :linked_record
   with_collection :votes, pagination: true
 
-  delegate :page, to: :forum
   attr_reader :pro
   alias_attribute :description, :content
   alias_attribute :display_name, :title
-  alias default_vote_event_edge edge
   alias pro? pro
 
   def con?
@@ -108,19 +105,14 @@ class Argument < EdgeableBase
 
   def adjacent(direction, _show_trashed = nil)
     return if is_trashed?
-    ids = parent_model
+    ids = parent_edge
             .arguments
             .untrashed
             .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-            .ids
+            .pluck(:owner_id)
     index = ids.index(self[:id])
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
     parent_model.arguments.find_by(id: p_id)
-  end
-
-  def assert_tenant
-    return if parent_model.is_a?(LinkedRecord) || forum == parent_model.forum
-    errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
   end
 end

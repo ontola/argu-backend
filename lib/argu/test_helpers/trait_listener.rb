@@ -54,7 +54,7 @@ module Argu
                          options: service_options)
         service.commit
         reset_publication(service.resource.publications.last)
-        @resource.page.owner.profileable.follow @resource.edge
+        @resource.parent_model(:page).owner.profileable.follow @resource.edge
       end
 
       # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource
@@ -78,7 +78,7 @@ module Argu
           profile = create(:profile)
           @resource.attachments.create(
             creator: profile,
-            forum: @resource.forum,
+            forum: @resource.parent_model(:forum),
             publisher: profile.profileable,
             content: Rack::Test::UploadedFile.new(
               Rails.root.join('test', 'fixtures', 'profile_photo.png')
@@ -221,8 +221,6 @@ module Argu
 
       def vote_attrs(side)
         {
-          voteable_id: @resource.id,
-          voteable_type: @resource.class.name,
           for: side
         }
       end

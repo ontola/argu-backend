@@ -9,7 +9,6 @@ module ContentEdgeable
     include Menuable
 
     belongs_to :creator, class_name: 'Profile', inverse_of: class_name
-    belongs_to :forum, inverse_of: class_name
     belongs_to :publisher, class_name: 'User', inverse_of: class_name
 
     def capitalize_title

@@ -72,7 +72,7 @@ module SPI
 
     test 'guest should not show page actor' do
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.profile.id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: argu.profile.id, authorize_action: 'show'
       )
 
       assert_response 403
@@ -80,7 +80,7 @@ module SPI
 
     test 'guest should not show page actor as iri' do
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
       )
 
       assert_response 403
@@ -127,7 +127,7 @@ module SPI
       sign_in user
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.profile.id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: argu.profile.id, authorize_action: 'show'
       )
 
       assert_response 403
@@ -137,7 +137,7 @@ module SPI
       sign_in user
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
       )
 
       assert_response 403
@@ -164,7 +164,7 @@ module SPI
 
       get spi_authorize_path(
         resource_type: 'Group',
-        resource_id: freetown.page.grants.administrator.first.group,
+        resource_id: argu.grants.administrator.first.group,
         authorize_action: 'is_member'
       )
 
@@ -195,13 +195,13 @@ module SPI
     ####################################
     # As Administrator
     ####################################
-    let(:administrator) { create_administrator(freetown.page) }
+    let(:administrator) { create_administrator(argu) }
 
     test 'administrator should show page actor' do
       sign_in administrator
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.profile.id, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: argu.profile.id, authorize_action: 'show'
       )
 
       assert_response 200
@@ -211,7 +211,7 @@ module SPI
       sign_in administrator
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: freetown.page.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
       )
 
       assert_response 200
@@ -238,7 +238,7 @@ module SPI
 
       get spi_authorize_path(
         resource_type: 'Group',
-        resource_id: freetown.page.grants.administrator.first.group,
+        resource_id: argu.grants.administrator.first.group,
         authorize_action: 'is_member'
       )
 

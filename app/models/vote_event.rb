@@ -4,9 +4,9 @@ class VoteEvent < EdgeableBase
   DEFAULT_ID = 'default'
 
   belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events
-  belongs_to :forum
   belongs_to :publisher, class_name: 'User', required: true
-  edge_tree_has_many :votes, -> { where(primary: true) }
+
+  has_many_through_edge :votes, where: {primary: true}
 
   with_collection :votes, pagination: true
 

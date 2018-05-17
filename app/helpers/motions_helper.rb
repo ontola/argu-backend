@@ -56,14 +56,14 @@ module MotionsHelper
   end
 
   def motion_vote_arguments(motion)
-    motion.edge.active_arguments.includes(edge: :parent).map do |argument|
+    motion.edge.arguments.active.includes(:parent, :owner).map do |argument|
       {
         id: argument.id,
         body: argument.description,
         commentCount: argument.children_count(:comments),
         displayName: argument.display_name,
         key: argument.identifier,
-        side: argument.key.to_s,
+        side: argument.owner.key.to_s,
         url: argument.iri
       }
     end

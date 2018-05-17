@@ -19,7 +19,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'user should not post create as page' do
     sign_in user
 
-    post_motion(false, freetown.page.iri)
+    post_motion(false, argu.iri)
   end
 
   ####################################
@@ -30,7 +30,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'unconfirmed administrator should not post create as page' do
     sign_in unconfirmed_administrator
 
-    post_motion(false, freetown.page.iri)
+    post_motion(false, argu.iri)
   end
 
   ####################################
@@ -41,7 +41,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'administrator should post create as page' do
     sign_in administrator
 
-    post_motion(true, freetown.page.iri)
+    post_motion(true, argu.iri)
   end
 
   ####################################
@@ -52,7 +52,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   test 'staff should post create as page' do
     sign_in staff
 
-    post_motion(true, freetown.page.iri)
+    post_motion(true, argu.iri)
   end
 
   private

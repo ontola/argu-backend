@@ -16,6 +16,8 @@ class VoteTest < ActiveSupport::TestCase
     first = create_vote
     second = create_vote
     assert motion.edge.save, motion.edge.errors.full_messages
+    assert_not first.reload.primary?
+    assert second.reload.primary?
     assert_raises ActiveRecord::RecordNotUnique do
       Vote.where(id: [first.id, second.id]).update_all(primary: true)
     end
@@ -26,10 +28,7 @@ class VoteTest < ActiveSupport::TestCase
   def create_vote
     Vote.create!(
       edge: motion.default_vote_event.edge.children.new(user: user, parent: motion.default_vote_event.edge),
-      voteable_id: motion.id,
-      voteable_type: 'Motion',
       creator: user.profile,
-      forum: motion.forum,
       publisher: user,
       root_id: motion.default_vote_event.root_id
     )

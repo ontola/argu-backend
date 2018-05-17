@@ -5,11 +5,11 @@ require 'test_helper'
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
-  let(:freetown) { create_forum(name: 'freetown', page: page) }
-  let(:second_freetown) { create_forum(name: 'second_freetown', page: page) }
-  let(:helsinki) { create_forum(name: 'second_freetown', page: page, discoverable: false) }
-  let(:cairo) { create_forum(name: 'cairo', page: page_non_public) }
-  let(:second_cairo) { create_forum(name: 'second_cairo', page: page_non_public) }
+  let(:freetown) { create_forum(name: 'freetown', page: page.edge) }
+  let(:second_freetown) { create_forum(name: 'second_freetown', page: page.edge) }
+  let(:helsinki) { create_forum(name: 'second_freetown', page: page.edge, discoverable: false) }
+  let(:cairo) { create_forum(name: 'cairo', page: page_non_public.edge) }
+  let(:second_cairo) { create_forum(name: 'second_cairo', page: page_non_public.edge) }
 
   let(:motion) do
     create(:motion,

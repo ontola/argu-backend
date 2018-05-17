@@ -39,9 +39,8 @@ class ArgumentsController < EdgeableController
 
   def prepare_view
     @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
-    @vote = Vote.find_by(
-      voteable_id: authenticated_resource.id,
-      voteable_type: 'Argument',
+    @vote = Vote.joins(:edge).find_by(
+      edges: {parent_id: authenticated_resource.id},
       creator: current_profile
     )
   end

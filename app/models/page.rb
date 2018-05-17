@@ -2,7 +2,10 @@
 
 class Page < EdgeableBase
   has_many :groups, dependent: :destroy, inverse_of: :page
-  has_many :forums, dependent: :restrict_with_exception, inverse_of: :page
+  has_many :forum_edges, through: :edge, class_name: 'Edge', source: :children
+  has_many :discussions, through: :forum_edges
+  has_many_through_edge :forums
+
   include Menuable
   include Discussable
 
@@ -11,7 +14,6 @@ class Page < EdgeableBase
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
-  has_many :discussions, through: :forums
 
   attr_accessor :confirmation_string, :tab, :active
 

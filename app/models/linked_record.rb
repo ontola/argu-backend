@@ -20,7 +20,7 @@ class LinkedRecord < EdgeableBase
   end
 
   def default_vote_event
-    @default_vote_event ||= edge.default_vote_event || VoteEvent.new(
+    @default_vote_event ||= edge.default_vote_event&.owner || VoteEvent.new(
       edge: Edge.new(parent: edge, user: publisher, is_published: true),
       starts_at: Time.current,
       creator_id: creator.id,

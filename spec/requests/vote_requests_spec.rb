@@ -102,7 +102,7 @@ RSpec.describe 'Votes', type: :request do
         ]
       end
       let(:non_persisted_linked_record) do
-        LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
+        LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid)
       end
       subject { build(:vote, edge: Edge.new(parent: non_persisted_linked_record.edge)) }
       let(:parent_path) {}

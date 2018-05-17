@@ -137,7 +137,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
           notifications: WebMock::Matchers::AnyArgMatcher.new(false),
           follow_id: user.follow_for(motion.edge)&.unsubscribe_iri,
           followable: {display_name: motion.display_name, id: motion.iri, pro: nil, type: 'Motion'},
-          organization: {display_name: motion.forum.page.display_name}
+          organization: {display_name: motion.parent_model(:page).display_name}
         }
       ]
     )

@@ -6,7 +6,7 @@ class ProfileTest < ActiveSupport::TestCase
   define_freetown
   let(:capetown) { create_forum(name: 'capetown') }
   subject { create_initiator(freetown).profile }
-  let(:moderator) { create_moderator(capetown.page, subject.profileable) }
+  let(:moderator) { create_moderator(capetown.parent_model(:page), subject.profileable) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -28,8 +28,8 @@ class ProfileTest < ActiveSupport::TestCase
     assert_equal subject.reload.granted_edges.pluck(:id).uniq, [freetown.edge.id]
     assert_equal subject.granted_edges(owner_type: nil, grant_set: :moderator).pluck(:id), []
     moderator
-    assert_equal subject.reload.granted_edges.pluck(:id).uniq.sort, [freetown.edge.id, capetown.page.edge.id].sort
+    assert_equal subject.reload.granted_edges.pluck(:id).uniq.sort, [freetown.edge.id, capetown.parent_edge.id].sort
     assert_equal subject.granted_edges(owner_type: nil, grant_set: :moderator).pluck(:id).uniq,
-                 [capetown.page.edge.id]
+                 [capetown.parent_edge.id]
   end
 end

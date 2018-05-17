@@ -64,11 +64,14 @@ class EdgeableBase < ApplicationRecord
 
   def move_to(new_parent)
     self.class.transaction do
-      (self.class.columns.map(&:name) & %w[question_id page_id]).each do |column|
-        send("#{column}=", new_parent.owner_type == column[0...-3].classify ? new_parent.owner_id : nil)
-      end
-      if self.class.columns.map(&:name).include?('forum_id') && new_parent.parent_model(:forum) != forum
-        move_update_forum(new_parent)
+      if is_loggable? && new_parent.parent_model(:forum) != parent_model(:forum)
+        activities
+          .lock(true)
+          .update_all(
+            forum_id: new_parent.parent_model(:forum).id,
+            recipient_id: new_parent.owner_id,
+            recipient_type: new_parent.owner_type
+          )
       end
       yield if block_given?
       edge.parent = new_parent
@@ -154,16 +157,6 @@ class EdgeableBase < ApplicationRecord
 
   private
 
-  def move_update_forum(new_parent)
-    self.forum = new_parent.parent_model(:forum).lock!
-    edge.descendants.lock(true).includes(:owner).find_each do |descendant|
-      descendant.owner.update_column(:forum_id, forum.id)
-    end
-    activities
-      .lock(true)
-      .update_all(forum_id: forum.id, recipient_id: new_parent.owner_id, recipient_type: new_parent.owner_type)
-  end
-
   def remove_from_redis
     RedisResource::Resource.new(resource: self).destroy
   end
@@ -179,7 +172,6 @@ class EdgeableBase < ApplicationRecord
 
   class << self
     include UUIDHelper
-
     # Hands over publication of a collection to the Community profile
     def anonymize(collection)
       collection.update_all(creator_id: Profile::COMMUNITY_ID)
@@ -228,6 +220,18 @@ class EdgeableBase < ApplicationRecord
       find_via_shortname_or_id(url, root_id) || raise(ActiveRecord::RecordNotFound)
     end
 
+    def has_one_through_edge(association)
+      define_method association do
+        edge.send(association)&.owner
+      end
+    end
+
+    def has_many_through_edge(association, where: nil)
+      define_method association do
+        association.to_s.classify.constantize.where(id: edge.send(association).pluck(:owner_id)).where(where)
+      end
+    end
+
     private
 
     def edge_join_alias
@@ -237,22 +241,6 @@ class EdgeableBase < ApplicationRecord
     def edge_join_string
       "INNER JOIN \"edges\" #{edge_join_alias} ON #{edge_join_alias}.\"owner_id\" = #{quoted_table_name}.\"id\" "\
       "AND #{edge_join_alias}.\"owner_type\" = '#{base_class.name}'"
-    end
-
-    # Adds an association for children through the edge tree
-    # Usage is the same as regular has_many
-    # @note The official relation name is suffixed with '_from_tree', to prevent join naming conflicts.
-    #       An alias with the original given name is added as well
-    # @example edge_tree_has_many :arguments
-    #   has_many :arguments_from_tree, through: :edge_children, source: :owner, source_type: 'Argument'
-    #   alias :arguments, :arguments_from_tree
-    #   arguments # => [ActiveRecord::Associations::CollectionProxy<Arguments>]
-    def edge_tree_has_many(name, scope = nil, options = {})
-      options[:through] = :edge_children
-      options[:source] = :owner
-      options[:source_type] ||= options[:class_name] || name.to_s.classify
-      has_many "#{name}_from_tree".to_sym, scope, options
-      alias_attribute name.to_sym, "#{name}_from_tree".to_sym
     end
 
     def with_collection(name, options = {})

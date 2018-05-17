@@ -12,8 +12,6 @@ class MotionsController < EdgeableController
               .find_by(parent: authenticated_resource.default_vote_event.edge)
               &.owner
     @vote ||= Vote.new(
-      voteable_id: authenticated_resource.id,
-      voteable_type: authenticated_resource.class.name,
       creator: current_profile,
       publisher: current_user,
       edge: Edge.new(parent: authenticated_resource.default_vote_event.edge)
@@ -70,15 +68,17 @@ class MotionsController < EdgeableController
     @arguments = Argument.ordered(
       policy_scope(
         resource
+          .edge
           .pro_arguments
           .show_trashed(show_trashed?)
-          .includes(:top_comment, edge: :votes)
+          .includes(:top_comment, :votes)
       ),
       policy_scope(
         resource
+          .edge
           .con_arguments
           .show_trashed(show_trashed?)
-          .includes(:top_comment, edge: :votes)
+          .includes(:top_comment, :votes)
       ),
       pro: show_params[:page_arg_pro],
       con: show_params[:page_arg_con]

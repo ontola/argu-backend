@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.feature 'Email token', type: :feature do
   define_freetown
   let!(:user) { create_initiator(freetown) }
-  let!(:group) { create(:group, parent: freetown.page.edge) }
+  let!(:group) { create(:group, parent: argu.edge) }
   let!(:administrator) { create_administrator(freetown) }
 
   scenario 'Owner adds and retracts email token' do

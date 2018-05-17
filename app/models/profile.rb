@@ -156,7 +156,7 @@ class Profile < ApplicationRecord
     return false if tenant.blank?
     case tenant
     when Forum
-      self == tenant.page.owner
+      self == tenant.parent_model(:page).owner
     when Page
       self == tenant.owner
     end

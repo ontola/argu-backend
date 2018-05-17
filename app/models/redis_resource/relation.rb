@@ -76,9 +76,18 @@ module RedisResource
       @filtered_keys ||= key.matched_keys.select do |key|
         resource = key.redis_resource.resource
         where_clause.all? do |k, v|
-          resource.send(k) == v
+          if v.is_a?(Hash)
+            v.all? { |nk, nv| filter_value(resource.send(k), nk) == nv }
+          else
+            filter_value(resource, k) == v
+          end
         end
       end
+    end
+
+    def filter_value(resource, key)
+      value = resource.send(key)
+      resource.defined_enums[key.to_s].try(:[], value) || value
     end
 
     def key

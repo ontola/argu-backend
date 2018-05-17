@@ -30,12 +30,6 @@ module Argu
           let(:create_differences) { [["#{subject.class}.count", 1], ['Activity.loggings.count', 1]] }
           let(:create_guest_differences) { [] }
           let(:update_differences) { [["#{subject.class}.count", 0], ['Activity.loggings.count', 1]] }
-          let(:move_differences) do
-            [
-              ["freetown.reload.#{subject.class_name}.count", -1],
-              ["other_page_forum.reload.#{subject.class_name}.count", 1]
-            ]
-          end
           let(:destroy_differences) { [["#{subject.class}.count", -1], ['Activity.loggings.count', 1]] }
           let(:trash_differences) { [["#{subject.class}.trashed.count", 1], ['Activity.loggings.count', 1]] }
           let(:untrash_differences) { [["#{subject.class}.trashed.count", -1], ['Activity.loggings.count', 1]] }
@@ -145,19 +139,12 @@ module Argu
           let(:expect_put_move) do
             expect(response).to redirect_to(subject.reload.iri_path)
             subject.reload
-            assert_equal other_page_forum, subject.forum
             assert_equal other_page_forum, subject.parent_model
             case subject
             when Motion
               assert subject.arguments.count.positive?
-              subject.arguments.pluck(:forum_id).each do |id|
-                assert_equal other_page_forum.id, id
-              end
             when Question
-              subject.motions.pluck(:forum_id).each do |id|
-                assert_equal subject.forum.id, id
-              end
-              assert subject.reload.motions.present?
+              assert subject.motions.count.positive?
             end
             assert subject.activities.count.positive?
             subject.activities.pluck(:forum_id).each do |id|

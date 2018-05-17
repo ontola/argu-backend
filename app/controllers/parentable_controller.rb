@@ -60,7 +60,6 @@ class ParentableController < AuthorizedController
 
   def resource_new_params
     HashWithIndifferentAccess.new(
-      forum: parent_resource!.is_a?(Forum) ? parent_resource! : parent_resource!.parent_model(:forum),
       publisher: current_user
     )
   end

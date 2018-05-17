@@ -69,7 +69,7 @@ RSpec.feature 'Page deletion', type: :feature do
     [argument, motion, question, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
-    freetown.update(page_id: forum_page.id)
+    freetown.move_to(forum_page.edge)
 
     sign_in(user)
     visit pages_user_path(user)

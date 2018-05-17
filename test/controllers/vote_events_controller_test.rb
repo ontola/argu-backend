@@ -6,9 +6,9 @@ class VoteEventsControllerTest < ActionController::TestCase
   define_freetown
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
   let(:vote_event) { create(:vote_event, parent: motion.edge) }
-  let(:linked_record) { LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:lr_vote_event) { linked_record.default_vote_event }
-  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
   let!(:public_vote) { create(:vote, parent: vote_event.edge) }
   let!(:hidden_vote) do

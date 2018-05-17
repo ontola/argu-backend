@@ -5,10 +5,10 @@ require 'test_helper'
 class GroupMembershipsControllerTest < ActionController::TestCase
   define_freetown
   define_freetown('freetown2')
-  let!(:group) { create(:group, parent: freetown.page.edge) }
-  let!(:forum_group) { create(:group, parent: freetown.page.edge) }
-  let!(:single_forum_group) { create(:group, parent: freetown.page.edge) }
-  let!(:page_group) { create(:group, parent: freetown.page.edge) }
+  let!(:group) { create(:group, parent: argu.edge) }
+  let!(:forum_group) { create(:group, parent: argu.edge) }
+  let!(:single_forum_group) { create(:group, parent: argu.edge) }
+  let!(:page_group) { create(:group, parent: argu.edge) }
   let!(:grant) { create(:grant, edge: freetown.edge, group: single_forum_group) }
   let!(:freetown_grant) { create(:grant, edge: freetown.edge, group: forum_group) }
   let!(:freetown2_grant) { create(:grant, edge: freetown2.edge, group: forum_group) }
@@ -158,7 +158,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
-    assert_redirected_to freetown.page.iri_path
+    assert_redirected_to argu.iri_path
   end
 
   test 'member should get show with forum grant' do
@@ -172,11 +172,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
   test 'member should get show with page grant' do
     sign_in member
-    create(:grant, edge: freetown.page.edge, group: group)
+    create(:grant, edge: argu.edge, group: group)
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
-    assert_redirected_to freetown.page.iri_path
+    assert_redirected_to argu.iri_path
   end
 
   test 'member should get show with r' do
@@ -218,7 +218,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       delete :destroy, params: {id: member.profile.group_memberships.second, root_id: argu.url}
     end
 
-    assert_redirected_to freetown.page.iri_path
+    assert_redirected_to argu.iri_path
   end
 
   ####################################
@@ -339,7 +339,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :index,
         params: {
-          page_id: freetown.page.url,
+          page_id: argu.url,
           q: administator.first_name,
           thing: 'fg_shortname26end'
         }
@@ -353,7 +353,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :index,
         params: {
-          page_id: freetown.page.url,
+          page_id: argu.url,
           q: 'wrong',
           thing: 'fg_shortname26end'
         }
@@ -371,7 +371,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_difference 'GroupMembership.count', 1 do
       post :create,
            params: {
-             actor_iri: freetown.page.iri,
+             actor_iri: argu.iri,
              group_id: group,
              shortname: user.url,
              r: settings_iri_path(freetown, tab: :groups),

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Decisions', type: :feature do
   define_freetown
-  let(:forwarded_to) { create(:group, parent: freetown.page.edge) }
+  let(:forwarded_to) { create(:group, parent: argu.edge) }
   let!(:motion) { create(:motion, parent: freetown.edge) }
 
   ####################################

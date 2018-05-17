@@ -10,7 +10,6 @@ class UpdateArgument < EdgeableUpdateService
   end
 
   def object_attributes=(obj)
-    obj.forum ||= resource.forum
     obj.creator ||= resource.creator
   end
 end

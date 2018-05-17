@@ -27,9 +27,7 @@ RSpec.shared_examples_for 'put move' do |opts = {skip: []}|
       unless opts[:skip].include?(:move_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           sign_in(authorized_user_update)
-          assert_differences(move_differences) do
-            put move_path, params: move_params.merge(format: format)
-          end
+          put move_path, params: move_params.merge(format: format)
           expect_put_move
         end
       end

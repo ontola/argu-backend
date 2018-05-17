@@ -131,13 +131,11 @@ freetown = FactorySeeder.create_forum(
   :with_follower,
   url: 'freetown',
   name: 'Freetown',
-  page: page,
   parent: page.edge,
   public_grant: 'participator'
 )
 holland = FactorySeeder.create_forum(
   :populated_forum,
-  page: page,
   parent: page.edge,
   url: 'holland',
   name: 'Holland',
@@ -154,27 +152,27 @@ other_page = FactorySeeder.create(
 )
 other_page_forum = FactorySeeder.create_forum(
   parent: other_page.edge,
-  page: other_page,
   url: 'other_page_forum',
   name: 'Other page forum',
   public_grant: 'participator'
 )
 FactorySeeder.create_forum(
   parent: other_page.edge,
-  page: other_page,
   url: 'other_page_forum2',
   name: 'Other page forum2',
   public_grant: 'spectator'
 )
 
 members_group =
-  FactorySeeder.create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.page.edge)
+  FactorySeeder
+    .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.parent_model(:page).edge)
 FactorySeeder.create(:grant, edge: holland.edge, group: members_group, grant_set: GrantSet.initiator)
 moderators_group =
-  FactorySeeder.create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.page.edge)
+  FactorySeeder
+    .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.parent_model(:page).edge)
 FactorySeeder.create(:grant, edge: holland.edge, group: moderators_group, grant_set: GrantSet.moderator)
 
-linked_record = LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
+linked_record = LinkedRecord.create_for_forum(page.url, freetown.url, SecureRandom.uuid)
 FactorySeeder.create(:argument, parent: linked_record.edge)
 FactorySeeder.create(:comment, parent: linked_record.edge)
 linked_record_vote_event = linked_record.default_vote_event
@@ -184,7 +182,7 @@ FactorySeeder.create(:argument, parent: forum_motion.edge)
 question = FactorySeeder.create(:question, parent: freetown.edge)
 motion = FactorySeeder.create(:motion, parent: question.edge)
 actor_membership =
-  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: freetown.page.edge))
+  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page.edge))
 FactorySeeder.create(
   :decision,
   parent: motion.edge,

@@ -4,7 +4,7 @@ module BlogPostable
   extend ActiveSupport::Concern
 
   included do
-    has_many :blog_posts, as: :blog_postable, dependent: :destroy
+    has_many_through_edge :blog_posts
 
     with_collection :blog_posts, pagination: true
   end

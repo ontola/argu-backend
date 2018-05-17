@@ -19,6 +19,6 @@ h3= t('grants.plural').capitalize
           td
             =t("roles.types.#{grant.grant_set.title}").capitalize
           td= t('roles.list.remove_html', url: grant_path(grant))
-=link_to new_iri_path(resource.page, :grants, group_id: resource.id), class: 'btn--light btn--smaller' do
+=link_to new_iri_path(resource.parent_model(:page), :grants, group_id: resource.id), class: 'btn--light btn--smaller' do
   span.fa.fa-plus
   span.icon-left= t('grants.new')

@@ -7,9 +7,9 @@ RSpec.describe 'Forums', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 
-  let(:invalid_create_params) { {forum: {page_id: argu.url, name: 'n1'}} }
-  let(:update_params) { {forum: {page_id: argu.url, name: 'name'}} }
-  let(:invalid_update_params) { {forum: {page_id: argu.url, name: 'n1'}} }
+  let(:invalid_create_params) { {page_id: argu.url, forum: {name: 'n1'}} }
+  let(:update_params) { {page_id: argu.url, forum: {name: 'name'}} }
+  let(:invalid_update_params) { {page_id: argu.url, forum: {name: 'n1'}} }
   let(:destroy_params) { {forum: {confirmation_string: 'remove'}} }
 
   let(:edit_path) { settings_iri_path(subject) }
@@ -39,12 +39,12 @@ RSpec.describe 'Forums', type: :request do
   context 'portal routes' do
     let(:expect_redirect_to_login) { expect_not_found }
     let(:new_path) { new_portal_forum_path(forum: {page_id: non_existing_id}) }
-    let(:non_existing_new_path) { new_portal_forum_path(forum: {page_id: non_existing_id}) }
+    let(:non_existing_new_path) { new_portal_forum_path(page_id: non_existing_id) }
     let(:create_path) { portal_forums_path }
-    let(:non_existing_create_path) { portal_forums_path(forum: {page_id: non_existing_id}) }
+    let(:non_existing_create_path) { portal_forums_path(page_id: non_existing_id) }
     let(:create_params) do
       nominatim_netherlands
-      {forum: {page_id: argu.url, name: 'name', url: 'new_forum'}}
+      {page_id: argu.url, forum: {name: 'name', url: 'new_forum'}}
     end
     let(:create_differences) { [['Forum.count', 1]] }
     let(:expect_post_create_guest_serializer) { expect_not_found }

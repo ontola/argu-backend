@@ -64,7 +64,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
                         ['Vote.count', -9], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['MediaObject.count', 0], ['Comment.count', 5], ['Edge.count', -11]]) do
+                        ['MediaObject.count', 0], ['Comment.count', 6], ['Edge.count', -10]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -80,9 +80,11 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_equal Forum, edge.parent.owner.class
 
     # Test direct relations
-    assert_equal 0, Argument.where(motion_id: motion.id).count
-    assert_equal 0, Vote.where(voteable_id: motion.id, voteable_type: 'Motion').count
     assert_equal 0, Activity.where(trackable: motion).count
+    assert_equal motion_blog_post.parent_model, Question.last
+    assert_equal motion_nested_comment.parent_model, Question.last
+    assert_equal motion_nested_comment.parent_comment, motion_comment
+    assert_equal argument_comment.parent_model, Question.last
 
     # Activity for Create, Publish and Convert
     assert_equal 3, edge.owner.activities.count
@@ -118,7 +120,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     edge = question.edge
 
     assert_differences([['Question.count', -1], ['Motion.count', -3], ['VoteEvent.count', -3],
-                        ['Activity.count', 1], ['BlogPost.count', 0], ['Comment.count', 3], ['Edge.count', -4]]) do
+                        ['Activity.count', 1], ['BlogPost.count', 0], ['Comment.count', 4], ['Edge.count', -3]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -135,7 +137,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     # Test direct relations
     assert_equal 0, Activity.where(trackable: question).count
-    assert_equal question_blog_post.reload.blog_postable_type, 'Motion'
+    assert_equal question_blog_post.reload.parent_model, Motion.last
 
     # Activity for Create, Publish and Convert
     assert_equal 3, edge.owner.activities.count

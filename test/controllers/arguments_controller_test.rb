@@ -6,9 +6,9 @@ class ArgumentsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
   let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
-  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid) }
+  let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record) do
-    lr = LinkedRecord.create_for_forum(freetown.page.url, freetown.url, SecureRandom.uuid)
+    lr = LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid)
     create(:argument, :with_comments, parent: lr.edge)
     create(:argument, :with_comments, parent: lr.edge, pro: false)
     create(:argument, :with_comments, parent: lr.edge, edge_attributes: {trashed_at: Time.current})

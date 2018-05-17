@@ -9,14 +9,14 @@ class ForumsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show forum' do
-    get :show, params: {format: :json_api, root_id: holland.page.edge.uuid, id: holland.id}
+    get :show, params: {format: :json_api, root_id: holland.parent_edge.url, id: holland.url}
     assert_response 200
 
     expect_relationship('motionCollection', 1)
     expect_included(collection_iri(holland, :motions, type: 'paginated'))
     expect_included(collection_iri(holland, :motions, page: 1, type: 'paginated'))
-    expect_included(holland.motions.where(question_id: nil).untrashed.map(&:iri))
-    expect_not_included(holland.motions.where('question_id IS NOT NULL').map(&:iri))
+    expect_included(holland.motions.untrashed.map(&:iri))
+    expect_not_included(holland.questions.last.motions.map(&:iri))
     expect_not_included(holland.motions.trashed.map(&:iri))
 
     expect_relationship('questionCollection', 1)

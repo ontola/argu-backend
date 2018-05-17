@@ -5,7 +5,6 @@ class EdgeableCreateService < CreateService
   # @param [Edge] parent The parent edge or its id
   def initialize(parent, attributes: {}, options: {})
     @edge = initialize_edge(parent, options, attributes)
-    walk_parents
     super
   end
 
@@ -39,17 +38,5 @@ class EdgeableCreateService < CreateService
   def notify
     conn = ActiveRecord::Base.connection
     conn.execute("NOTIFY edge_created, '#{@edge.id}'")
-  end
-
-  def parent_columns
-    %i[forum_id]
-  end
-
-  def walk_parents
-    @edge.parent.self_and_ancestors.each do |ancestor|
-      if parent_columns.include? ancestor.owner_type.foreign_key.to_sym
-        resource[ancestor.owner_type.foreign_key] = ancestor.owner_id
-      end
-    end
   end
 end

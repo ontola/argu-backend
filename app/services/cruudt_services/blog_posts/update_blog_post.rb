@@ -7,7 +7,6 @@ class UpdateBlogPost < EdgeableUpdateService
 
   def object_attributes=(obj)
     return unless obj.is_a?(Activity)
-    obj.forum ||= resource.forum
     obj.owner ||= resource.creator
   end
 end

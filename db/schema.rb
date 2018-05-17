@@ -61,18 +61,14 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "arguments", id: :serial, force: :cascade do |t|
     t.text "content"
-    t.integer "motion_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title", limit: 255
     t.integer "creator_id", null: false
-    t.integer "forum_id"
     t.integer "publisher_id", null: false
     t.string "type", null: false
     t.uuid "root_id", null: false
     t.index ["id"], name: "index_arguments_on_id"
-    t.index ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id"
-    t.index ["motion_id"], name: "statement_id"
   end
 
   create_table "authentications", id: :serial, force: :cascade do |t|
@@ -108,9 +104,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "blog_posts", id: :serial, force: :cascade do |t|
-    t.integer "forum_id", null: false
-    t.integer "blog_postable_id"
-    t.string "blog_postable_type"
     t.integer "creator_id", null: false
     t.integer "publisher_id", null: false
     t.integer "state", default: 0, null: false
@@ -120,13 +113,9 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "updated_at", null: false
     t.boolean "is_published", default: false, null: false
     t.uuid "root_id", null: false
-    t.index ["forum_id", "is_published"], name: "index_blog_posts_on_forum_id_and_is_published"
-    t.index ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id"
   end
 
   create_table "comments", id: :serial, force: :cascade do |t|
-    t.integer "commentable_id", default: 0
-    t.string "commentable_type", limit: 255, default: ""
     t.string "title", limit: 255, default: ""
     t.text "body", default: ""
     t.string "subject", limit: 255, default: ""
@@ -137,9 +126,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "publisher_id", null: false
-    t.integer "forum_id"
     t.uuid "root_id", null: false
-    t.index ["commentable_id"], name: "index_comments_on_commentable_id"
     t.index ["creator_id"], name: "index_comments_on_creator_id"
   end
 
@@ -156,8 +143,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "decisions", id: :serial, force: :cascade do |t|
-    t.integer "forum_id", null: false
-    t.integer "decisionable_id", null: false
     t.integer "forwarded_group_id"
     t.integer "forwarded_user_id"
     t.integer "publisher_id", null: false
@@ -201,6 +186,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.integer "fragment", null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
+    t.index ["uuid"], name: "index_edges_on_uuid", unique: true
   end
 
   create_table "edits", id: :serial, force: :cascade do |t|
@@ -262,7 +248,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "forums", id: :serial, force: :cascade do |t|
     t.string "name"
-    t.integer "page_id"
     t.string "profile_photo"
     t.string "cover_photo"
     t.datetime "created_at", null: false
@@ -392,15 +377,12 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "updated_at", null: false
     t.integer "pro_count", default: 0
     t.integer "con_count", default: 0
-    t.integer "forum_id"
     t.integer "creator_id", null: false
     t.string "cover_photo", default: ""
     t.string "cover_photo_attribution", default: ""
     t.integer "publisher_id", null: false
-    t.integer "question_id"
     t.bigint "place_id"
     t.uuid "root_id", null: false
-    t.index ["forum_id"], name: "index_motions_on_forum_id"
     t.index ["id"], name: "index_motions_on_id"
   end
 
@@ -545,7 +527,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "questions", id: :serial, force: :cascade do |t|
     t.string "title", limit: 255, default: ""
     t.text "content", default: ""
-    t.integer "forum_id"
     t.integer "creator_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -557,7 +538,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.boolean "require_location", default: false, null: false
     t.integer "default_sorting", default: 0, null: false
     t.uuid "root_id", null: false
-    t.index ["forum_id"], name: "index_questions_on_forum_id"
   end
 
   create_table "rules", id: :serial, force: :cascade do |t|
@@ -677,7 +657,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.integer "result", default: 0, null: false
     t.integer "creator_id", null: false
     t.integer "publisher_id", null: false
-    t.integer "forum_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "root_id", null: false
@@ -696,22 +675,19 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   end
 
   create_table "votes", id: :serial, force: :cascade do |t|
-    t.integer "voteable_id"
-    t.string "voteable_type", limit: 255
     t.integer "creator_id", null: false
     t.integer "for", default: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer "forum_id"
     t.integer "publisher_id", null: false
     t.text "explanation"
     t.datetime "explained_at"
     t.integer "comment_id"
     t.boolean "primary", default: true, null: false
     t.uuid "root_id", null: false
+    t.uuid "voteable_id", null: false
     t.index ["creator_id"], name: "index_votes_on_creator_id"
-    t.index ["voteable_id", "voteable_type", "creator_id", "primary"], name: "index_votes_on_voteable_id_and_voteable_type_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
-    t.index ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type"
+    t.index ["voteable_id", "creator_id", "primary"], name: "index_votes_on_voteable_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
   end
 
   create_table "widgets", force: :cascade do |t|
@@ -732,14 +708,10 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "arguments", "profiles", column: "creator_id"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade
-  add_foreign_key "blog_posts", "forums"
   add_foreign_key "blog_posts", "profiles", column: "creator_id"
   add_foreign_key "blog_posts", "users", column: "publisher_id"
-  add_foreign_key "comments", "forums"
   add_foreign_key "comments", "profiles", column: "creator_id"
   add_foreign_key "comments", "users", column: "publisher_id"
-  add_foreign_key "decisions", "edges", column: "decisionable_id"
-  add_foreign_key "decisions", "forums"
   add_foreign_key "decisions", "groups", column: "forwarded_group_id"
   add_foreign_key "decisions", "profiles", column: "creator_id"
   add_foreign_key "decisions", "users", column: "forwarded_user_id"
@@ -754,7 +726,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "follows", "edges", column: "followable_id"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "forums", "groups", column: "default_decision_group_id"
-  add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
   add_foreign_key "grant_resets", "edges"
   add_foreign_key "grant_sets", "pages"
@@ -770,10 +741,8 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "media_objects", "forums"
   add_foreign_key "media_objects", "profiles", column: "creator_id"
   add_foreign_key "media_objects", "users", column: "publisher_id"
-  add_foreign_key "motions", "forums"
   add_foreign_key "motions", "places"
   add_foreign_key "motions", "profiles", column: "creator_id"
-  add_foreign_key "motions", "questions"
   add_foreign_key "motions", "users", column: "publisher_id"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
@@ -789,13 +758,13 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   add_foreign_key "sources", "pages"
   add_foreign_key "sources", "profiles", column: "creator_id"
   add_foreign_key "sources", "users", column: "publisher_id"
-  add_foreign_key "vote_events", "forums"
   add_foreign_key "vote_events", "groups"
   add_foreign_key "vote_events", "profiles", column: "creator_id"
   add_foreign_key "vote_events", "users", column: "publisher_id"
   add_foreign_key "vote_matches", "profiles", column: "creator_id"
   add_foreign_key "vote_matches", "users", column: "publisher_id"
   add_foreign_key "votes", "comments"
+  add_foreign_key "votes", "edges", column: "voteable_id", primary_key: "uuid"
   add_foreign_key "votes", "profiles", column: "creator_id"
   add_foreign_key "votes", "users", column: "publisher_id"
 end

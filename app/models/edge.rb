@@ -30,16 +30,7 @@ class Edge < ApplicationRecord
            inverse_of: :parent,
            foreign_key: :parent_id,
            dependent: false
-  has_many :decisions, foreign_key: :decisionable_id, source: :decisionable, dependent: :destroy
   has_many :exports, dependent: :destroy
-  has_one :last_decision,
-          -> { order(step: :desc) },
-          foreign_key: :decisionable_id,
-          class_name: 'Decision'
-  has_one :last_published_decision,
-          -> { published.order(step: :desc) },
-          foreign_key: :decisionable_id,
-          class_name: 'Decision'
   has_many :favorites, dependent: :destroy
   has_many :follows,
            class_name: 'Follow',
@@ -61,48 +52,94 @@ class Edge < ApplicationRecord
           -> { where(channel: 'argu') },
           class_name: 'Publication',
           foreign_key: :publishable_id
-  has_one :default_vote_event_edge,
+  # Children associations
+  has_many :arguments,
+           -> { where(owner_type: 'Argument') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :pro_arguments,
+           -> { join_owner('Argument').where(arguments: {type: 'ProArgument'}) },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :con_arguments,
+           -> { join_owner('Argument').where(arguments: {type: 'ConArgument'}) },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :blog_posts,
+           -> { where(owner_type: 'BlogPost') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :comments,
+           -> { join_owner('Comment').where(comments: {parent_id: nil}) },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :discussions,
+           -> { where(owner_type: %w[Motion Question]) },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_one :top_comment,
+          -> { join_owner('Comment').active.where(parent_id: nil).order('comments.created_at ASC') },
+          class_name: 'Edge',
+          foreign_key: :parent_id,
+          inverse_of: :parent
+  has_many :decisions,
+           -> { where(owner_type: 'Decision') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_one :last_decision,
+          -> { join_owner('Decision').order('decisions.step DESC') },
+          class_name: 'Edge',
+          foreign_key: :parent_id,
+          inverse_of: :parent
+  has_one :last_published_decision,
+          -> { join_owner('Decision').published.order('decisions.step DESC') },
+          class_name: 'Edge',
+          foreign_key: :parent_id,
+          inverse_of: :parent
+  has_many :forums,
+           -> { where(owner_type: 'Forum') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :motions,
+           -> { where(owner_type: 'Motion') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :questions,
+           -> { where(owner_type: 'Question') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_many :vote_events,
+           -> { where(owner_type: 'VoteEvent') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
+  has_one :default_vote_event,
           -> { where(owner_type: 'VoteEvent') },
           foreign_key: :parent_id,
           class_name: 'Edge',
           inverse_of: :parent
-  has_one :default_vote_event,
-          through: :default_vote_event_edge,
-          source: :owner,
-          source_type: 'VoteEvent',
-          class_name: 'VoteEvent'
-  # Children associations
-  has_many :arguments,
-           through: :children,
-           source: :owner,
-           source_type: 'Argument'
-  has_many :active_arguments,
-           lambda {
-             published.untrashed.order("cast(edges_arguments.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-           },
-           through: :children,
-           source: :owner,
-           source_type: 'Argument'
-  has_many :motions,
-           through: :children,
-           source: :owner,
-           source_type: 'Motion'
-  has_many :active_motions,
-           -> { published.untrashed.order(updated_at: :desc) },
-           through: :children,
-           source: :owner,
-           source_type: 'Motion'
   has_many :votes,
-           through: :children,
-           source: :owner,
-           source_type: 'Vote'
+           -> { where(owner_type: 'Vote') },
+           class_name: 'Edge',
+           foreign_key: :parent_id,
+           inverse_of: :parent
 
   scope :published, -> { where('edges.is_published = true') }
   scope :unpublished, -> { where('edges.is_published = false') }
   scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }
   scope :untrashed, -> { where('edges.trashed_at IS NULL') }
   scope :expired, -> { where('edges.expires_at <= ?', Time.current) }
-
+  scope :active, -> { published.untrashed }
   accepts_nested_attributes_for :argu_publication
 
   validates :parent, presence: true, unless: :root_object?
@@ -123,17 +160,10 @@ class Edge < ApplicationRecord
   attr_writer :root
   delegate :creator, :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
 
-  def arguments_pro
-    @arguments_pro ||= active_arguments.select(&:pro?)
-  end
-
-  def arguments_con
-    @arguments_con ||= active_arguments.select(&:con?)
-  end
-
   def content
     owner.try(:content) || owner.try(:body)
   end
+  alias description content
 
   def expired?
     expires_at? && expires_at < Time.current
@@ -147,6 +177,14 @@ class Edge < ApplicationRecord
 
   def iri_opts
     {id: fragment, root_id: root.owner.url}
+  end
+
+  def self.join_owner(klass)
+    joins(join_owner_query(klass))
+  end
+
+  def self.join_owner_query(klass)
+    "INNER JOIN #{klass.tableize} ON edges.owner_id = #{klass.tableize}.id AND edges.owner_type = '#{klass}'"
   end
 
   # @return [Array] The ids of (persisted) ancestors, excluding self
@@ -274,6 +312,10 @@ class Edge < ApplicationRecord
   def root(*args)
     return self if parent_id.nil? && parent.nil?
     @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
+  end
+
+  def self.show_trashed(show_trashed = nil)
+    show_trashed ? where(nil) : untrashed
   end
 
   def trash
