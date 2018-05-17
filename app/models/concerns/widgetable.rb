@@ -4,7 +4,7 @@ module Widgetable
   extend ActiveSupport::Concern
 
   included do
-    has_many :widgets, -> { includes(:owner).order(position: :asc) }, as: :owner
+    has_many :widgets, -> { includes(:owner).order(position: :asc) }, as: :owner, primary_key: :uuid
 
     after_create :create_default_widgets
 
@@ -15,8 +15,9 @@ module Widgetable
     private
 
     def create_default_widgets
-      return unless self.class.class_variables.include?(:@@default_widgets)
-      self.class.default_widgets.each do |widget|
+      resource = is_a?(Edge) ? owner : self
+      return unless resource.class.class_variables.include?(:@@default_widgets)
+      resource.class.default_widgets.each do |widget|
         send("create_#{widget}_widget")
       end
     end

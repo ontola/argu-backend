@@ -13,7 +13,6 @@ class ForumPolicy < EdgeablePolicy
     attributes = super
     attributes.concat %i[name bio bio_long profile_id locale public_grant page]
     attributes.concat %i[discoverable] if staff?
-    append_default_photo_params(attributes)
     attributes
   end
 

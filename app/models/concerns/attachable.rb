@@ -4,12 +4,13 @@ module Attachable
   extend ActiveSupport::Concern
 
   included do
-    has_many :media_objects, as: :about, inverse_of: :about, dependent: :destroy
+    has_many :media_objects, as: :about, inverse_of: :about, dependent: :destroy, primary_key: :uuid
     has_many :attachments,
              -> { where(used_as: MediaObject.used_as[:attachment]) },
              class_name: 'MediaObject',
              as: :about,
-             inverse_of: :about
+             inverse_of: :about,
+             primary_key: :uuid
     accepts_nested_attributes_for :attachments,
                                   allow_destroy: true,
                                   reject_if: proc { |attrs|

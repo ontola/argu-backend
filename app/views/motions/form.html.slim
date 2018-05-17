@@ -4,7 +4,8 @@
     =to_parent
     .box
       =semantic_form_for(motion, url: (motion.new_record? ? collection_iri_path(parent_resource, :motions) : motion.iri_path), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
-        =f.input :default_cover_photo, as: :react_cover, label: false
+        =f.semantic_fields_for :edge do |ef|
+          =ef.input :default_cover_photo, as: :react_cover, label: false
         section.section-info
           .details
             .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
@@ -23,12 +24,13 @@
             =f.input :mark_as_important, as: :reverse_boolean
             li.form-helper
               span= t('publications.follow_type.helper', news_audience: resource.potential_audience(:news), reactions_audience: resource.potential_audience(:reactions))
-          =f.semantic_fields_for :attachments do |attachment|
-            =render 'attachment_fields', f: attachment
-          .links
-            =link_to_add_association f, :attachments, class: 'btn-subtle' do
-              span.fa.fa-plus
-              span.icon-left= t('attachments.add')
+          =f.semantic_fields_for :edge do |ef|
+            =ef.semantic_fields_for :attachments do |attachment|
+              =render 'attachment_fields', f: attachment
+            .links
+              =link_to_add_association ef, :attachments, class: 'btn-subtle' do
+                span.fa.fa-plus
+                span.icon-left= t('attachments.add')
           - if policy(motion).permitted_attributes.include?(:pinned) || policy(motion).permitted_nested_attributes(:edge_attributes).include?(:expires_at) || (motion.persisted? && policy(motion).move?)
             =f.inputs name: t('forms.advanced')
               - if policy(motion).permitted_attributes.include?(:pinned)

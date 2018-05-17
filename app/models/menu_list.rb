@@ -16,7 +16,7 @@ class MenuList
 
   def custom_menu_items(menu_type, resource)
     CustomMenuItem
-      .where(menu_type: menu_type, resource_type: resource.class.name, resource_id: resource.id)
+      .where(menu_type: menu_type, resource_type: resource.class.name, resource_id: resource.uuid)
       .order(:order)
       .map do |menu_item|
       menu_item(

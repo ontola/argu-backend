@@ -5,7 +5,11 @@ class Edge < ApplicationRecord
   include Placeable
   include Ldable
   include Shortnameable
+  include ProfilePhotoable
+  include Photoable
+  include Attachable
   include Uuidable
+  include Widgetable
 
   has_ltree_hierarchy
   belongs_to :owner,

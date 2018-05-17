@@ -19,7 +19,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            :with_votes,
            parent: freetown.edge)
   end
-  let(:cover_photo) { create(:image_object, about: motion, used_as: :cover_photo) }
+  let(:cover_photo) { create(:image_object, about: motion.edge, used_as: :cover_photo) }
   let(:question_motion) do
     create(:motion,
            :with_arguments,

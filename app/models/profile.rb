@@ -4,6 +4,7 @@ class Profile < ApplicationRecord
   include Ldable
   include ProfilePhotoable
   include Photoable
+  include Uuidable
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient

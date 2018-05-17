@@ -18,6 +18,10 @@ class EdgeableBase < ApplicationRecord
   belongs_to :root, class_name: 'Edge', primary_key: :uuid
   has_many :edge_children, through: :edge, source: :children
   has_many :grants, through: :edge
+  has_many :media_objects, through: :edge
+  has_many :attachments, through: :edge
+  has_one :default_cover_photo, through: :edge, class_name: 'MediaObject'
+  has_one :default_profile_photo, through: :edge, class_name: 'MediaObject'
   scope :published, lambda {
     joins(edge_join_string).where("#{connection.quote_table_name("edges_#{class_name}")}.is_published = true")
   }
@@ -38,8 +42,8 @@ class EdgeableBase < ApplicationRecord
   validate :validate_parent_type
 
   accepts_nested_attributes_for :edge
-  delegate :persisted_edge, :last_activity_at, :children_count, :follows_count, :expires_at,
-           :confirmed_before_type_cast, to: :edge
+  delegate :persisted_edge, :last_activity_at, :children_count, :confirmed_before_type_cast,
+           :follows_count, :expires_at, :widget_sequence, :attachment_collection, to: :edge
   delegate :potential_audience, to: :parent_edge
 
   def canonical_iri(only_path: false)

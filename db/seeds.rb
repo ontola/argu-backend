@@ -35,7 +35,7 @@ Profile.new(
 staff = User
           .create!(
             email: 'staff@argu.co',
-            shortname_attributes: {shortname: 'staff_account'},
+            edge_attributes: {shortname_attributes: {shortname: 'staff_account'}},
             password: 'arguargu',
             password_confirmation: 'arguargu',
             first_name: 'Douglas',

@@ -5,17 +5,17 @@ class Forum < EdgeableBase
   concern Questionable
   concern Motionable
   include ProfilePhotoable
-  include Photoable
   include Attribution
   include Menuable
-  include Widgetable
 
   belongs_to :default_decision_group, class_name: 'Group'
   has_many :banners, inverse_of: :forum, dependent: :destroy
 
   with_collection :motions, pagination: true
 
-  default_widgets :motions, :questions
+  cattr_accessor :default_widgets do
+    %i[motions questions]
+  end
 
   # @private
   attr_accessor :tab, :active, :confirmation_string

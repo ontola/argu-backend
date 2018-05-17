@@ -6,8 +6,6 @@ class MotionPolicy < EdgeablePolicy
     attributes.concat %i[title content votes question_id]
     attributes.concat %i[invert_arguments forum_id f_convert] if staff?
     attributes.concat %i[pinned] if moderator? || administrator? || staff?
-    append_default_photo_params(attributes)
-    append_attachment_params(attributes)
     attributes
   end
 

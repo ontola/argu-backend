@@ -12,12 +12,13 @@
               =f.input :mark_as_important, as: :reverse_boolean
               li.form-helper
                 span= t('publications.follow_type.helper', news_audience: resource.potential_audience(:news), reactions_audience: resource.potential_audience(:reactions))
-            =f.semantic_fields_for :attachments do |attachment|
-              =render 'attachment_fields', f: attachment
-            .links
-              =link_to_add_association f, :attachments, class: 'btn-subtle' do
-                span.fa.fa-plus
-                span.icon-left= t('attachments.add')
+            =f.semantic_fields_for :edge do |ef|
+              =ef.semantic_fields_for :attachments do |attachment|
+                =render 'attachment_fields', f: attachment
+              .links
+                =link_to_add_association ef, :attachments, class: 'btn-subtle' do
+                  span.fa.fa-plus
+                  span.icon-left= t('attachments.add')
             =f.inputs name: t('forms.advanced')
               =f.semantic_fields_for :happening do |hf|
                 =hf.input(:happened_at, as: :datetime_picker)

@@ -12,6 +12,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     attributes: {
       url: 'forum_with_placement',
       edge_attributes: {
+        shortname_attributes: {shortname: 'forum_with_placement'},
         placements_attributes: {
           '0' => {
             lat: 1.0,
@@ -214,14 +215,16 @@ class ForumsTest < ActionDispatch::IntegrationTest
             forum: {
               name: 'new name',
               bio: 'new bio',
-              default_profile_photo_attributes: {
-                id: holland.default_profile_photo.id,
-                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
-                used_as: 'profile_photo'
-              },
-              default_cover_photo_attributes: {
-                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
-                used_as: 'cover_photo'
+              edge_attributes: {
+                default_profile_photo_attributes: {
+                  id: holland.default_profile_photo.id,
+                  content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
+                  used_as: 'profile_photo'
+                },
+                default_cover_photo_attributes: {
+                  content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
+                  used_as: 'cover_photo'
+                }
               }
             }
           }
@@ -229,8 +232,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
     holland.reload
     assert_redirected_to settings_iri_path(holland, tab: :general)
-    assert_equal 'new name', holland.reload.name
-    assert_equal 'new bio', holland.reload.bio
+    assert_equal 'new name', holland.name
+    assert_equal 'new bio', holland.bio
     assert_equal 'profile_photo.png', holland.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', holland.default_cover_photo.content_identifier
     assert_equal 2, holland.media_objects.count

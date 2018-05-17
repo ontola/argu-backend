@@ -12,8 +12,6 @@ class QuestionPolicy < EdgeablePolicy
       attributes.concat %i[pinned require_location default_sorting reset_create_motion]
       attributes.concat [create_motion_group_ids: []]
     end
-    append_default_photo_params(attributes)
-    append_attachment_params(attributes)
     attributes
   end
 

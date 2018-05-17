@@ -6,8 +6,8 @@ class MediaObjectsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
   let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:media_object) { create(:media_object, about: motion) }
-  let(:image_object) { create(:image_object, about: motion) }
+  let(:media_object) { create(:media_object, about: motion.edge) }
+  let(:image_object) { create(:image_object, about: motion.edge) }
 
   ####################################
   # As Guest

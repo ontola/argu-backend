@@ -3,7 +3,7 @@
 class MediaObject < ApplicationRecord
   include Ldable
   include Parentable
-  belongs_to :about, polymorphic: true, inverse_of: :media_objects
+  belongs_to :about, polymorphic: true, inverse_of: :media_objects, primary_key: :uuid
   belongs_to :forum
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
@@ -104,7 +104,9 @@ class MediaObject < ApplicationRecord
   end
 
   def set_publisher_and_creator
-    self.creator = about if creator.nil? && creator_id.nil? && about.present?
+    if creator.nil? && creator_id.nil? && about.present?
+      self.creator = about.is_a?(Edge) ? about.user.profile : about
+    end
     self.publisher = creator.profileable if publisher.nil? && publisher_id.nil? && creator.profileable.present?
   end
 

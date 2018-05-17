@@ -7,8 +7,8 @@ class MenusTest < ActionDispatch::IntegrationTest
   let!(:custom_menu_item) do
     CustomMenuItem.create(
       menu_type: 'navigations',
-      resource_type: 'Page',
-      resource_id: argu.id,
+      resource_type: 'Edge',
+      resource_id: argu.edge.uuid,
       order: 0,
       label: 'Custom label',
       label_translation: false,

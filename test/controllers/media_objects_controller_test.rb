@@ -29,7 +29,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
     expect_included(
       collection_iri(motion, :media_objects, CGI.escape('filter[used_as]') => :attachment, page: 1, type: 'paginated')
     )
-    expect_included(motion.media_objects.map(&:iri))
+    expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 
   test 'should get index media_objects of motion page 1' do
@@ -40,7 +40,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
 
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 motion.media_objects.count
-    expect_included(motion.media_objects.map(&:iri))
+                 motion.media_objects.where(used_as: :attachment).count
+    expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 end

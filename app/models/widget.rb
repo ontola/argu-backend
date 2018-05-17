@@ -3,7 +3,7 @@
 require 'types/uri_type'
 
 class Widget < ApplicationRecord
-  belongs_to :owner, polymorphic: true
+  belongs_to :owner, polymorphic: true, primary_key: :uuid
 
   enum widget_type: {custom: 0, motions: 1, questions: 2}
   attribute :resource_iri, URIType.new

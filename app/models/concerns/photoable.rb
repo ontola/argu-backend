@@ -4,13 +4,14 @@ module Photoable
   extend ActiveSupport::Concern
 
   included do
-    has_many :media_objects, as: :about, inverse_of: :about, dependent: :destroy
+    has_many :media_objects, as: :about, inverse_of: :about, dependent: :destroy, primary_key: :uuid
     has_one :default_cover_photo,
             -> { where(used_as: MediaObject.used_as[:cover_photo]) },
             as: :about,
             dependent: :destroy,
             inverse_of: :about,
-            class_name: 'MediaObject'
+            class_name: 'MediaObject',
+            primary_key: :uuid
 
     accepts_nested_attributes_for :default_cover_photo,
                                   allow_destroy: true,

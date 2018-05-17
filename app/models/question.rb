@@ -2,14 +2,12 @@
 
 class Question < EdgeableBase
   include ActivePublishable
-  include Attachable
   concern Commentable
   include ContentEdgeable
   include HasLinks
   include Attribution
   include BlogPostable
   include Timelineable
-  include Photoable
   concern Motionable
   include CustomGrants
 

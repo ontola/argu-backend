@@ -11,7 +11,8 @@ module ProfilePhotoable
             dependent: :destroy,
             inverse_of: :about,
             required: true,
-            autosave: true
+            autosave: true,
+            primary_key: :uuid
 
     accepts_nested_attributes_for :default_profile_photo,
                                   allow_destroy: true,

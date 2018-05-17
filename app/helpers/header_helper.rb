@@ -72,7 +72,7 @@ module HeaderHelper
     items = []
     Forum
       .public_forums
-      .includes(:default_profile_photo, edge: [:shortname, root: :shortname])
+      .includes(edge: [:default_profile_photo, :shortname, root: :shortname])
       .where(edges: {uuid: suggested_forums})
       .first(limit)
       .each do |forum|
@@ -90,7 +90,7 @@ module HeaderHelper
     return [] if current_user.guest?
     current_user
       .favorite_forums
-      .includes(:default_profile_photo, edge: [:shortname, root: :shortname])
+      .includes(edge: [:default_profile_photo, :shortname, root: :shortname])
       .map do |forum|
         link_item(
           forum.display_name,

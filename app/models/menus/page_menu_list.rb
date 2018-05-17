@@ -20,7 +20,7 @@ class PageMenuList < MenuList
             href: settings_page_url(resource),
             policy: :update?
           ),
-          *custom_menu_items(:navigations, resource),
+          *custom_menu_items(:navigations, resource.edge),
           menu_item(
             :forums,
             label: forums.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),

@@ -76,7 +76,7 @@ module Argu
       def with_attachments
         3.times do
           profile = create(:profile)
-          @resource.attachments.create(
+          @resource.edge.attachments.create(
             creator: profile,
             forum: @resource.parent_model(:forum),
             publisher: profile.profileable,

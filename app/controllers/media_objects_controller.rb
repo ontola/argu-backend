@@ -24,7 +24,7 @@ class MediaObjectsController < ParentableController
       when 'new', 'create', 'index'
         parent_edge&.root_id
       else
-        resource_by_id&.about&.try(:edge)&.root_id
+        resource_by_id&.about&.try(:root_id)
       end
   end
 end

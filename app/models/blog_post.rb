@@ -6,7 +6,6 @@ class BlogPost < EdgeableBase
   include Happenable
   include ActivePublishable
   include HasLinks
-  include Attachable
 
   counter_cache true
   parentable :motion, :question

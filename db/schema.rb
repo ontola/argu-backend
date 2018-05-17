@@ -99,8 +99,10 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "updated_at", null: false
     t.datetime "trashed_at"
     t.datetime "ends_at"
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.index ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at"
     t.index ["forum_id"], name: "index_banners_on_forum_id"
+    t.index ["uuid"], name: "index_banners_on_uuid", unique: true
   end
 
   create_table "blog_posts", id: :serial, force: :cascade do |t|
@@ -133,13 +135,13 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "custom_menu_items", force: :cascade do |t|
     t.string "menu_type", null: false
     t.string "resource_type", null: false
-    t.integer "resource_id", null: false
     t.integer "order", null: false
     t.string "label"
     t.boolean "label_translation", default: false, null: false
     t.string "image"
     t.string "href", null: false
     t.string "policy"
+    t.uuid "resource_id", null: false
   end
 
   create_table "decisions", id: :serial, force: :cascade do |t|
@@ -351,7 +353,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "media_objects", id: :serial, force: :cascade do |t|
     t.integer "forum_id"
-    t.integer "about_id", null: false
     t.string "about_type", null: false
     t.integer "used_as", default: 0, null: false
     t.integer "creator_id", null: false
@@ -365,6 +366,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.string "filename"
     t.hstore "content_attributes"
     t.string "remote_url"
+    t.uuid "about_id", null: false
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type"
     t.index ["content_attributes"], name: "index_media_objects_on_content_attributes", using: :gin
     t.index ["forum_id"], name: "index_media_objects_on_forum_id"
@@ -464,7 +466,6 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "placements", id: :serial, force: :cascade do |t|
     t.integer "forum_id"
     t.integer "place_id", null: false
-    t.integer "placeable_id", null: false
     t.string "placeable_type", null: false
     t.string "title"
     t.text "about"
@@ -473,6 +474,7 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "placement_type", null: false
+    t.uuid "placeable_id", null: false
     t.index ["forum_id"], name: "index_placements_on_forum_id"
     t.index ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "((placement_type = 0) AND ((placeable_type)::text = 'User'::text))"
   end
@@ -509,8 +511,10 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.boolean "are_votes_public", default: true
     t.string "profileable_type"
     t.integer "profileable_id"
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.index ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true
     t.index ["slug"], name: "index_profiles_on_slug", unique: true
+    t.index ["uuid"], name: "index_profiles_on_uuid", unique: true
   end
 
   create_table "publications", id: :serial, force: :cascade do |t|
@@ -693,14 +697,14 @@ ActiveRecord::Schema.define(version: 20180529152704) do
   create_table "widgets", force: :cascade do |t|
     t.integer "widget_type", null: false
     t.string "owner_type", null: false
-    t.integer "owner_id", null: false
     t.string "resource_iri", null: false
     t.string "label"
     t.boolean "label_translation", default: false, null: false
     t.text "body"
     t.integer "size", default: 1, null: false
     t.integer "position", null: false
-    t.index ["owner_type", "owner_id"], name: "index_widgets_on_owner_type_and_owner_id"
+    t.uuid "owner_id", null: false
+    t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 
   add_foreign_key "activities", "edges", column: "recipient_edge_id"

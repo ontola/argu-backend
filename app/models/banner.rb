@@ -5,6 +5,7 @@ class Banner < NewsBoy
   include Loggable
   include ProfilePhotoable
   include Photoable
+  include Uuidable
 
   belongs_to :forum
   belongs_to :publisher, class_name: 'User'

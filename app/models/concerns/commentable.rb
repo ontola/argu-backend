@@ -10,11 +10,11 @@ module Commentable
     with_collection :comments,
                     association: :filtered_threads,
                     pagination: true,
-                    includes: [
-                      :default_vote_event,
+                    includes: {
+                      default_vote_event: {},
                       parent: :owner,
                       owner: {creator: :profileable}
-                    ]
+                    }
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
       i = edge.comments.order(order).page(page)
