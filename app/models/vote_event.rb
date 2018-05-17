@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VoteEvent < EdgeableBase
+class VoteEvent < Edge
   DEFAULT_ID = 'default'
 
   belongs_to :creator, class_name: 'Profile', inverse_of: :vote_events

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Edge < ApplicationRecord
+  self.inheritance_column = :owner_type
+
   include Edgeable::CounterCache
   include Placeable
   include Ldable

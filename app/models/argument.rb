@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Argument < EdgeableBase
+class Argument < Edge
   VOTE_OPTIONS = [:pro].freeze unless defined?(VOTE_OPTIONS)
 
   concern Commentable

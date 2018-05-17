@@ -249,7 +249,7 @@ class EdgeableBase < ApplicationRecord
 
     def with_collection(name, options = {})
       klass = options[:association_class] || name.to_s.classify.constantize
-      if klass < EdgeableBase
+      if klass < Edge
         options[:includes] ||= {
           creator: {profileable: :shortname},
           edge: [:default_vote_event, parent: :owner]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Question < EdgeableBase
+class Question < Edge
   include ActivePublishable
   concern Commentable
   include ContentEdgeable

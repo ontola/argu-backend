@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class LinkedRecord < EdgeableBase
+class LinkedRecord < Edge
   concern Commentable
+  include Commentable
   include Voteable
   concern Argumentable
   extend UriTemplateHelper
