@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VoteEventSerializer < EdgeableBaseSerializer
+class VoteEventSerializer < EdgeSerializer
   attribute :group_id
   attribute :starts_at, predicate: NS::SCHEMA[:startDate]
   attribute :ends_at, predicate: NS::SCHEMA[:endDate]
