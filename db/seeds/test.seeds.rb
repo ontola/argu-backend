@@ -206,7 +206,7 @@ FactorySeeder
 argument = FactorySeeder.create(:argument, parent: motion.edge)
 FactorySeeder.create(:vote, parent: argument.edge)
 comment = FactorySeeder.create(:comment, parent: argument.edge)
-FactorySeeder.create(:comment, parent: argument.edge, parent_id: comment.id)
+FactorySeeder.create(:comment, parent: argument.edge, in_reply_to_id: comment.uuid)
 FactorySeeder.create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
 blog_post =
   FactorySeeder.create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})

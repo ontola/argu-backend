@@ -8,8 +8,16 @@ class Forum < Edge
   include Attribution
   include Menuable
 
-  belongs_to :default_decision_group, class_name: 'Group'
-  has_many :banners, inverse_of: :forum, dependent: :destroy
+  property :display_name, :string, NS::SCHEMA[:name]
+  property :bio, :text, NS::SCHEMA[:description]
+  property :bio_long, :text, NS::SCHEMA[:text]
+  property :cover_photo_attribution, :string, NS::ARGU[:photoAttribution]
+  property :discoverable, :boolean, NS::ARGU[:discoverable], default: true
+  property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
+  property :default_decision_group_id, :boolean, NS::ARGU[:defaultDecisionGroupId]
+
+  has_many :banners, inverse_of: :forum, dependent: :destroy, primary_key: :uuid
+  belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
 
   with_collection :motions, pagination: true
 
@@ -20,8 +28,9 @@ class Forum < Edge
   # @private
   attr_accessor :tab, :active, :confirmation_string
   attr_writer :public_grant
+  alias_attribute :description, :bio
 
-  alias_attribute :display_name, :name
+  alias_attribute :name, :display_name
   alias_attribute :description, :bio
 
   paginates_per 30
@@ -38,10 +47,6 @@ class Forum < Edge
   before_create :set_default_decision_group
   after_save :reset_country
   after_save :reset_public_grant
-
-  # @!attribute visibility
-  # @return [Enum] The visibility of the {Forum}
-  enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
 
   scope :top_public_forums, lambda { |limit = 10|
     public_forums.first(limit)

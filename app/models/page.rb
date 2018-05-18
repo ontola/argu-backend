@@ -26,14 +26,15 @@ class Page < Edge
   after_create :create_default_groups
   after_create :create_staff_grant
 
-  enum visibility: {open: 1, closed: 2, hidden: 3} # unrestricted: 0,
-
   with_collection :vote_matches,
                   association: :profile_vote_matches,
                   pagination: true
   with_collection :forums, pagination: true
 
   parentable
+  property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {open: 1, closed: 2, hidden: 3}
+  property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
+  property :base_color, :string, NS::ARGU[:baseColor]
 
   def build_profile(*options)
     super(*options) if profile.nil?

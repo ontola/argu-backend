@@ -5,8 +5,8 @@
     =message
   =f.inputs name: t('forums.settings.title') do
     =f.input :name
-    =f.input :bio, input_html: { rows: 2, maxlength: 80}
-    =f.input :bio_long, input_html: { rows: 4}
+    =f.input :bio, as: :text, input_html: { rows: 2, maxlength: 80}
+    =f.input :bio_long, as: :text, input_html: { rows: 4}
     -if policy(resource).shortname?
       =f.input :url, as: :shortname
       li.form-helper

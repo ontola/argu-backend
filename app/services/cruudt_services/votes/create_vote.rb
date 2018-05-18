@@ -13,7 +13,7 @@ class CreateVote < PublishedCreateService
     Edge
       .where_owner(
         'Vote',
-        for: Vote.fors[attributes[:for]] || attributes[:for],
+        for: attributes[:for],
         creator: options[:creator],
         primary: true
       ).find_by(parent: parent)

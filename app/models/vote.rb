@@ -4,8 +4,13 @@ class Vote < Edge
   include PublicActivity::Model
   include Loggable
 
+  property :for, :integer, NS::SCHEMA[:option], default: 3, enum: {con: 0, pro: 1, neutral: 2, abstain: 3}
+  property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
+  attribute :primary, :boolean, default: true
+
   has_many :activities, -> { order(:created_at) }, as: :trackable
-  belongs_to :comment
+  belongs_to :comment, foreign_key_property: :comment_id
+
   before_save :set_voteable_id
   before_create :trash_primary_votes
   before_create :create_confirmation_reminder_notification
@@ -17,15 +22,12 @@ class Vote < Edge
 
   parentable :argument, :vote_event, :linked_record
 
-  enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
   filterable option: {
-    attr: :for,
-    key: 'votes.for',
-    values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}
+    attr: :for, key: :for, values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}
   }
-  counter_cache votes_pro: {primary: true, confirmed: true, for: Vote.fors[:pro]},
-                votes_con: {primary: true, confirmed: true, for: Vote.fors[:con]},
-                votes_neutral: {primary: true, confirmed: true, for: Vote.fors[:neutral]}
+  counter_cache votes_pro: {confirmed: true, for: Vote.fors[:pro]},
+                votes_con: {confirmed: true, for: Vote.fors[:con]},
+                votes_neutral: {confirmed: true, for: Vote.fors[:neutral]}
   delegate :create_confirmation_reminder_notification, to: :publisher
   delegate :voteable, to: :parent_model
 

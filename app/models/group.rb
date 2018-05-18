@@ -3,16 +3,17 @@
 class Group < ApplicationRecord
   include Ldable
   include Parentable
+  include Edgeable::PropertyAssociations
 
   has_many :group_memberships, -> { active }, dependent: :destroy
   has_many :grants, dependent: :destroy, inverse_of: :group
   has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :default_decision_forums,
-           foreign_key: :default_decision_group_id,
+           foreign_key_property: :default_decision_group_id,
            class_name: 'Forum',
            dependent: :restrict_with_exception
   belongs_to :page, required: true, inverse_of: :groups, primary_key: :uuid
-  has_many :decisions, foreign_key: :forwarded_group_id, dependent: :nullify
+  has_many :decisions, foreign_key_property: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}

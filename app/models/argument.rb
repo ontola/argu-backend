@@ -25,8 +25,6 @@ class Argument < Edge
   with_collection :votes, pagination: true
 
   attr_reader :pro
-  alias_attribute :description, :content
-  alias_attribute :display_name, :title
   alias pro? pro
 
   def con?

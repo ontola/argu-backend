@@ -5,6 +5,7 @@ class Edge < ApplicationRecord
 
   include Edgeable::ClassMethods
   include Edgeable::CounterCache
+  include Edgeable::Properties
   include Placeable
   include Ldable
   include Shortnameable
@@ -172,17 +173,17 @@ class Edge < ApplicationRecord
   before_create :set_confirmed
   before_save :set_user_id
 
+  alias_attribute :content, :description
+  alias_attribute :body, :description
+  alias_attribute :name, :display_name
+  alias_attribute :title, :display_name
+
   acts_as_followable
   acts_as_sequenced scope: :root_id, column: :fragment
   with_collection :exports, pagination: true
 
   attr_writer :root
   delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
-
-  def content
-    owner.try(:content) || owner.try(:body)
-  end
-  alias description content
 
   def expired?
     expires_at? && expires_at < Time.current

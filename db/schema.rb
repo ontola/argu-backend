@@ -518,6 +518,20 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.index ["uuid"], name: "index_profiles_on_uuid", unique: true
   end
 
+  create_table "properties", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "edge_id", null: false
+    t.string "predicate", null: false
+    t.boolean "boolean"
+    t.string "string"
+    t.datetime "datetime"
+    t.bigint "integer"
+    t.uuid "linked_edge_id"
+    t.text "text"
+    t.index ["edge_id"], name: "index_properties_on_edge_id"
+  end
+
   create_table "publications", id: :serial, force: :cascade do |t|
     t.string "job_id"
     t.datetime "published_at"

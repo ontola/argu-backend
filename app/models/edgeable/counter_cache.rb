@@ -105,6 +105,7 @@ module Edgeable
               right: count
             }
             Edge
+              .unscoped
               .where(id: model.id)
               .update_all([%(children_counts = children_counts || hstore(?,?)), cache_name, count.to_s])
           end

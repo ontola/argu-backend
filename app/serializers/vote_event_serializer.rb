@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class VoteEventSerializer < EdgeSerializer
-  attribute :group_id
   attribute :starts_at, predicate: NS::SCHEMA[:startDate]
   attribute :ends_at, predicate: NS::SCHEMA[:endDate]
-  attribute :result
   attribute :option_counts, unless: :export_scope?
   attribute :pro_count
   attribute :con_count

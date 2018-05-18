@@ -22,12 +22,14 @@ class Question < Edge
   auto_strip_attributes :content
   # TODO: validate expires_at
 
-  enum default_sorting: {popular: 0, created_at: 1, updated_at: 2}
-
-  alias_attribute :display_name, :title
-  alias_attribute :description, :content
-
   custom_grants_for :motions, :create
+
+  property :require_location, :boolean, NS::ARGU[:requireLocation], default: false
+  property :default_sorting,
+           :integer,
+           NS::ARGU[:defaultSorting],
+           default: 0,
+           enum: {popular: 0, created_at: 1, updated_at: 2}
 
   def expired?
     expires_at.present? && expires_at < Time.current

@@ -9,7 +9,7 @@ class VoteEvent < Edge
 
   parentable :motion, :linked_record
 
-  enum result: {pending: 0, pass: 1, fail: 2}
+  property :starts_at, :datetime, NS::SCHEMA[:startDate]
 
   delegate :is_trashed?, to: :parent_model
 

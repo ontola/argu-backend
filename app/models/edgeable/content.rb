@@ -11,7 +11,7 @@ module Edgeable
       include Menuable
 
       property :display_name, :string, NS::SCHEMA[:name]
-      property :description, :string, NS::SCHEMA[:text]
+      property :description, :text, NS::SCHEMA[:text]
 
       def capitalize_title
         title[0] = title[0].upcase

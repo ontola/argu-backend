@@ -54,7 +54,7 @@ class PolicyTest < ActiveSupport::TestCase
     let("#{prefix}comment") { create(:comment, parent: send("#{prefix}argument").edge, publisher: creator) }
     let("#{prefix}nested_comment") do
       parent = send("#{prefix}argument").edge
-      create(:comment, parent: parent, parent_id: send("#{prefix}comment").id, publisher: creator)
+      create(:comment, parent: parent, in_reply_to_id: send("#{prefix}comment").uuid, publisher: creator)
     end
     let("#{prefix}blog_post") do
       parent = send("#{prefix}question").edge

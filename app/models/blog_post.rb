@@ -14,8 +14,6 @@ class BlogPost < Edge
   validates :title, presence: true, length: {minimum: 2, maximum: 110}
   validates :creator, presence: true
 
-  alias_attribute :description, :content
-  alias_attribute :display_name, :title
   attr_accessor :happened_at
   delegate :happened_at, to: :happening, allow_nil: true
 end

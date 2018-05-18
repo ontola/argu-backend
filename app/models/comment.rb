@@ -4,28 +4,25 @@ class Comment < Edge
   include Edgeable::Content
   include TruncateHelper
 
-  has_one :vote, dependent: :nullify
-  has_many :comment_children,
-           foreign_key: :parent_id,
-           inverse_of: :parent_comment,
-           class_name: 'Comment',
-           dependent: :destroy
-  belongs_to :parent_comment, foreign_key: :parent_id, inverse_of: :comment_children, class_name: 'Comment'
+  property :in_reply_to_id, :linked_edge_id, NS::ARGU[:inReplyTo], default: nil
+
+  has_one :vote, foreign_key_property: :comment_id, dependent: false
+  belongs_to :parent_comment, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
+  has_many :comment_children, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
+
   belongs_to :commentable, polymorphic: true
 
   after_commit :set_vote, on: :create
 
   counter_cache true
   paginates_per 30
-  parentable :argument, :blog_post, :motion, :question, :linked_record
+  parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record
 
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true
   auto_strip_attributes :body
 
   attr_accessor :is_processed, :vote_id
-
-  alias_attribute :content, :body
 
   def abandoned?
     is_trashed? && !has_children?
@@ -37,10 +34,6 @@ class Comment < Edge
 
   def deleted?
     body.blank? || body == '[DELETED]'
-  end
-
-  def display_name
-    title || safe_truncated_text(body, 40)
   end
 
   def subscribable
@@ -66,7 +59,7 @@ class Comment < Edge
     Comment.transaction do
       trash unless is_trashed?
       Comment.anonymize(Comment.where(id: id))
-      update_column(:body, '')
+      update_attribute(:body, '')
     end
   end
 
@@ -74,7 +67,8 @@ class Comment < Edge
 
   def set_vote
     return if vote_id.nil?
-    vote = Edge.where_owner('Vote', creator: creator, id: vote_id).first&.owner || raise(ActiveRecord::RecordNotFound)
-    vote.update!(comment_id: id)
+    vote = Edge.where_owner('Vote', creator: creator, uuid: vote_id, root_id: root_id).first&.owner ||
+      raise(ActiveRecord::RecordNotFound)
+    vote.update!(comment_id: uuid)
   end
 end

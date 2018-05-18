@@ -3,12 +3,12 @@
 class CommentPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[body parent_id vote_id]
+    attributes.concat %i[body in_reply_to_id vote_id]
     attributes
   end
 
   def create?
-    assert_siblings! if record.try(:parent_id).present?
+    assert_siblings! if record.try(:parent_comment).present?
     super
   end
 

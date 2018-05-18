@@ -17,8 +17,8 @@ class Motion < Edge
 
   attr_accessor :current_vote
 
-  alias_attribute :description, :content
-  alias_attribute :display_name, :title
+  alias_attribute :content, :description
+  alias_attribute :title, :display_name
 
   before_save :capitalize_title
 

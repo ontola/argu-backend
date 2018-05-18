@@ -8,11 +8,11 @@ class LinkedRecord < Edge
   extend UriTemplateHelper
   extend UUIDHelper
 
-  alias_attribute :display_name, :identifier
-
   validates :deku_id, presence: true
 
   parentable :forum
+
+  property :deku_id, :string, NS::SCHEMA[:sameAs]
 
   VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 
