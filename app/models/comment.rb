@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Comment < Edge
-  include ContentEdgeable
+  include Edgeable::Content
   include TruncateHelper
 
   has_one :vote, dependent: :nullify

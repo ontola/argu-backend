@@ -3,7 +3,7 @@
 class Question < Edge
   include ActivePublishable
   concern Commentable
-  include ContentEdgeable
+  include Edgeable::Content
   include HasLinks
   include Attribution
   include BlogPostable

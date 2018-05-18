@@ -4,7 +4,7 @@ class Argument < Edge
   VOTE_OPTIONS = [:pro].freeze unless defined?(VOTE_OPTIONS)
 
   concern Commentable
-  include ContentEdgeable
+  include Edgeable::Content
   include HasLinks
   include VotesHelper
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BlogPost < Edge
-  include ContentEdgeable
+  include Edgeable::Content
   concern Commentable
   include Happenable
   include ActivePublishable

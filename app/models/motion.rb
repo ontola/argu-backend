@@ -5,7 +5,7 @@ class Motion < Edge
   include ActivePublishable
   concern Argumentable
   concern Commentable
-  include ContentEdgeable
+  include Edgeable::Content
   include Voteable
   include Attribution
   include HasLinks
