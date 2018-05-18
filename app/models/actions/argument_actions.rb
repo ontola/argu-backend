@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Actions
-  class ArgumentActions < EdgeableBaseActions
+  class ArgumentActions < EdgeActions
     include VotesHelper
 
     define_actions %i[vote]

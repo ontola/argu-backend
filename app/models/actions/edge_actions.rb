@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Actions
-  class EdgeableBaseActions < Base
+  class EdgeActions < Base
   end
 end
