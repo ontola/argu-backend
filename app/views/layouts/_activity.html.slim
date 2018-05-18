@@ -6,7 +6,7 @@
           img.profile-picture[src=activity.owner.default_profile_photo.url(:icon)]
         .info-block[style="padding: 0;"]
           p[style="margin-bottom: 0;"]
-            =markdown_to_html(activity_string_for(activity, current_user, true))
+            =markdown_to_html(activity_string_for(activity, current_user, render: :embedded_link))
           time[datetime=activity.created_at]
             small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
   - if render_body_on_feed?(activity)

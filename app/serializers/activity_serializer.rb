@@ -32,7 +32,7 @@ class ActivitySerializer < RecordSerializer
   end
 
   def display_name
-    activity_string_for(object, scope.user, false)
+    activity_string_for(object, scope.user, render: :template)
   end
 
   def published
@@ -40,7 +40,7 @@ class ActivitySerializer < RecordSerializer
   end
 
   def summary
-    markdown_to_html(activity_string_for(object, scope.user, true), no_paragraph: true)
+    markdown_to_html(activity_string_for(object, scope.user, render: :embedded_link), no_paragraph: true)
   end
 
   def type
