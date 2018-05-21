@@ -42,23 +42,8 @@ RSpec.describe "Iri's", type: :model do
     it_behaves_like 'iri matches route'
   end
 
-  context 'Group' do
-    subject { Group.first }
-    it_behaves_like 'iri matches route'
-  end
-
-  context 'GroupMembership' do
-    subject { GroupMembership.first }
-    it_behaves_like 'iri matches route'
-  end
-
   context 'MediaObject' do
     subject { MediaObject.first }
-    it_behaves_like 'iri matches route'
-  end
-
-  context 'Grant' do
-    subject { Grant.first }
     it_behaves_like 'iri matches route'
   end
 
@@ -131,6 +116,24 @@ RSpec.describe "Iri's", type: :model do
 
     context 'BlogPost' do
       subject { blog_post }
+      it_behaves_like 'iri matches route'
+    end
+
+    context 'Group' do
+      subject { Group.first }
+      let(:id) { subject.id }
+      it_behaves_like 'iri matches route'
+    end
+
+    context 'GroupMembership' do
+      subject { GroupMembership.first }
+      let(:id) { subject.id }
+      it_behaves_like 'iri matches route'
+    end
+
+    context 'Grant' do
+      subject { Grant.first }
+      let(:id) { subject.id }
       it_behaves_like 'iri matches route'
     end
   end

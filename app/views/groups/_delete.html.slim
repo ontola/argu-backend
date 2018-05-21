@@ -1,6 +1,6 @@
 - if resource.deletable?
   .form
-    =semantic_form_for resource, url: group_path(resource), method: :delete, html: {class: 'confirm'} do |f|
+    =semantic_form_for resource, url: resource.iri_path, method: :delete, html: {class: 'confirm'} do |f|
       p= t('groups.delete.info', group: resource.display_name)
       p= t('groups.delete.member_count', group_memberships_count: resource.group_memberships.count)
       p= t('groups.delete.howto', cancel_string: t('groups.delete.cancel_string'))

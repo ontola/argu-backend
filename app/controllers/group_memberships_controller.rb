@@ -43,7 +43,7 @@ class GroupMembershipsController < ServiceController
 
   def create_respond_failure_json(resource)
     if existing_record
-      render json: resource.errors, status: 304, location: existing_record
+      render json: resource.errors, status: 304, location: existing_record.iri.to_s
     else
       Bugsnag.notify(resource.errors.full_messages)
       respond_with_422(resource, :json)
@@ -93,15 +93,15 @@ class GroupMembershipsController < ServiceController
   def redirect_url(_ = nil)
     return redirect_param if redirect_param.present?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
-    return forum_grants.first.edge.owner.iri(only_path: true).to_s if forum_grants.count == 1
-    page_url(authenticated_resource!.page)
+    return forum_grants.first.edge.owner.iri_path if forum_grants.count == 1
+    authenticated_resource!.page.iri_path
   end
   alias redirect_model_failure redirect_url
   alias redirect_model_success redirect_url
 
   def respond_with_201(resource, format, _opts = {})
     return super unless %i[json json_api].include?(format)
-    render json: resource, status: :created, location: resource, include: :group
+    render json: resource, status: :created, location: resource.iri.to_s, include: :group
   end
 
   def show_respond_success_html(_resource)

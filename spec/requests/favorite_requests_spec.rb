@@ -17,28 +17,30 @@ RSpec.describe 'Favorites', type: :request do
   let(:expect_delete_destroy_unauthorized_html) { expect_not_found }
   let(:expect_delete_destroy_unauthorized_serializer) { expect_not_found }
   let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
-
+  let(:root_id) { holland.parent_model.url }
   subject { create(:favorite, user: staff, edge: holland.edge) }
   it_behaves_like 'post create', skip: %i[create_invalid]
   it_behaves_like 'delete destroy'
 
   context 'for motion iri' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.motions.first.iri]) }
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.motions.first.iri, root_id: root_id]) }
     it_behaves_like 'post create', skip: %i[create_invalid]
   end
 
   context 'for motion canonical' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.motions.first.canonical_iri]) }
+    let(:create_path) do
+      url_for([:favorites, only_path: true, iri: holland.motions.first.canonical_iri, root_id: root_id])
+    end
     it_behaves_like 'post create', skip: %i[create_invalid]
   end
 
   context 'for forum iri' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.iri]) }
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.iri, root_id: root_id]) }
     it_behaves_like 'post create', skip: %i[create_invalid]
   end
 
   context 'for forum canonical' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.canonical_iri]) }
+    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.canonical_iri, root_id: root_id]) }
     it_behaves_like 'post create', skip: %i[create_invalid]
   end
 end

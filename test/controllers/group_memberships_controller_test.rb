@@ -26,7 +26,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user_not_accepted
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
-      post :create, params: {group_id: single_forum_group, token: '1234567890'}
+      post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
 
     assert_redirected_to freetown.iri_path
@@ -37,7 +37,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user_not_accepted
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 0]] do
-      post :create, params: {group_id: forum_group, token: '1234567890'}
+      post :create, params: {group_id: forum_group, token: '1234567890', root_id: argu.url}
     end
 
     assert_redirected_to argu.iri_path
@@ -48,7 +48,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user_not_accepted
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 0]] do
-      post :create, params: {group_id: page_group, token: '1234567890'}
+      post :create, params: {group_id: page_group, token: '1234567890', root_id: argu.url}
     end
 
     assert_redirected_to argu.iri_path
@@ -62,7 +62,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'user should not get show' do
     sign_in user
 
-    get :show, params: {id: member.profile.group_memberships.second}
+    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
     assert_not_authorized
   end
@@ -71,7 +71,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: group}
+      post :create, params: {group_id: group, root_id: argu.url}
     end
 
     assert_not_authorized
@@ -82,7 +82,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
-      post :create, params: {group_id: group, token: '1234567890'}
+      post :create, params: {group_id: group, token: '1234567890', root_id: argu.url}
     end
 
     assert_not_authorized
@@ -96,7 +96,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       Favorite.create!(user: user, edge_id: forum_edge_id)
     end
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 0], ['Follow.count', 0]] do
-      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890'}
+      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
     assert_response :created
   end
@@ -106,7 +106,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 1]] do
-      post :create, params: {group_id: single_forum_group, token: '1234567890'}
+      post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
     assert_equal user.reload.following_type(freetown.edge), 'news'
 
@@ -121,7 +121,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_equal user.following_type(freetown.edge), 'never'
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
-      post :create, params: {group_id: single_forum_group, token: '1234567890'}
+      post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
     assert_equal user.reload.following_type(freetown.edge), 'never'
 
@@ -133,7 +133,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 2]] do
-      post :create, params: {group_id: forum_group, token: '1234567890'}
+      post :create, params: {group_id: forum_group, token: '1234567890', root_id: argu.url}
     end
 
     assert_redirected_to argu.iri_path
@@ -144,7 +144,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 2]] do
-      post :create, params: {group_id: page_group, token: '1234567890'}
+      post :create, params: {group_id: page_group, token: '1234567890', root_id: argu.url}
     end
 
     assert_redirected_to argu.iri_path
@@ -156,7 +156,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should get show' do
     sign_in member
 
-    get :show, params: {id: member.profile.group_memberships.second}
+    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
     assert_redirected_to freetown.page.iri_path
   end
@@ -165,7 +165,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
     create(:grant, edge: freetown.edge, group: group)
 
-    get :show, params: {id: member.profile.group_memberships.second}
+    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
     assert_redirected_to freetown.iri_path
   end
@@ -174,7 +174,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
     create(:grant, edge: freetown.page.edge, group: group)
 
-    get :show, params: {id: member.profile.group_memberships.second}
+    get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
     assert_redirected_to freetown.page.iri_path
   end
@@ -182,7 +182,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should get show with r' do
     sign_in member
 
-    get :show, params: {id: member.profile.group_memberships.second, r: freetown.iri_path}
+    get :show, params: {id: member.profile.group_memberships.second, r: freetown.iri_path, root_id: argu.url}
 
     assert_redirected_to freetown.iri_path
   end
@@ -192,8 +192,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
-      post :create, format: :json, params: {group_id: group, token: '1234567890'}
-      assert_redirected_to group.group_memberships.first
+      post :create, format: :json, params: {group_id: group, token: '1234567890', root_id: argu.url}
+      assert_redirected_to group.group_memberships.first.iri
     end
   end
 
@@ -206,8 +206,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
-      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890'}
-      assert_redirected_to single_forum_group.group_memberships.first
+      post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
+      assert_redirected_to single_forum_group.group_memberships.first.iri
     end
   end
 
@@ -215,7 +215,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_differences([['GroupMembership.count', 0], ['GroupMembership.active.count', -1]]) do
-      delete :destroy, params: {id: member.profile.group_memberships.second}
+      delete :destroy, params: {id: member.profile.group_memberships.second, root_id: argu.url}
     end
 
     assert_redirected_to freetown.page.iri_path
@@ -234,7 +234,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            params: {
              group_id: group,
              shortname: member.url,
-             r: settings_iri_path(freetown, tab: :groups)
+             r: settings_iri_path(freetown, tab: :groups),
+             root_id: argu.url
            }
     end
 
@@ -251,12 +252,13 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            params: {
              group_id: group,
              shortname: member.url,
-             r: settings_iri_path(freetown, tab: :groups)
+             r: settings_iri_path(freetown, tab: :groups),
+             root_id: argu.url
            }
     end
 
     assert_response 304
-    assert_equal response.headers['Location'], group_membership_url(member.profile.group_memberships.second)
+    assert_equal response.headers['Location'], member.profile.group_memberships.second.iri
     assert_analytics_not_collected
   end
 
@@ -268,7 +270,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            params: {
              group_id: group,
              shortname: user.url,
-             r: settings_iri_path(freetown, tab: :groups)
+             r: settings_iri_path(freetown, tab: :groups),
+             root_id: argu.url
            }
     end
 
@@ -284,7 +287,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            params: {
              group_id: Group::STAFF_ID,
              shortname: user.url,
-             r: settings_iri_path(freetown, tab: :groups)
+             r: settings_iri_path(freetown, tab: :groups),
+             root_id: argu.url
            }
     end
 
@@ -301,13 +305,14 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            params: {
              group_id: group,
              shortname: user.url,
-             r: settings_iri_path(freetown, tab: :groups)
+             r: settings_iri_path(freetown, tab: :groups),
+             root_id: argu.url
            }
     end
 
     assert_response 201
-    expect_included(argu_url("/g/#{group.id}"))
-    assert_equal response.headers['Location'], group_membership_url(GroupMembership.last)
+    expect_included(group.iri)
+    assert_equal response.headers['Location'], GroupMembership.last.iri
     assert_analytics_collected('memberships', 'create')
   end
 
@@ -320,7 +325,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       delete :destroy,
              params: {
                id: group_membership,
-               r: settings_iri_path(freetown, tab: :groups)
+               r: settings_iri_path(freetown, tab: :groups),
+               root_id: argu.url
              }
     end
 
@@ -368,7 +374,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
              actor_iri: freetown.page.iri,
              group_id: group,
              shortname: user.url,
-             r: settings_iri_path(freetown, tab: :groups)
+             r: settings_iri_path(freetown, tab: :groups),
+             root_id: argu.url
            }
     end
 

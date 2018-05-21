@@ -14,7 +14,7 @@ table.styled
         =link_to group.group_memberships.count, settings_iri_path(group)
       td
         - if policy(group).create_child?(:group_memberships)
-          =link_to new_group_group_membership_path(group), class: 'btn--light btn--smaller' do
+          =link_to new_iri_path(group, :group_memberships), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
       td
         - if group.grants.empty?
@@ -25,10 +25,10 @@ table.styled
               li
                 =>"#{grant.display_name}:"
                 =t("roles.types.#{grant.grant_set.title}")
-                = t('roles.list.remove_html', url: grant_path(grant))
+                = t('roles.list.remove_html', url: grant.iri_path)
       td
         - if policy(resource.edge).create_child?(:grants)
-          =link_to new_iri_path(page, :grants, edge_id: resource.edge, group_id: group.id), class: 'btn--light btn--smaller' do
+          =link_to new_iri_path(page, :grants, query: {edge_id: resource.edge.id, group_id: group.id}), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
 - if policy(page).create_child?(:groups)
   =link_to new_iri_path(page, :groups), class: 'btn margin-bottom margin-right' do

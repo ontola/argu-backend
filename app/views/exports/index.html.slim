@@ -19,7 +19,7 @@
                 td
                   -if export.done?
                     = link_to(t('exports.download'), export.zip.url)
-                td= link_to(t('delete'), export.iri_path, remote: 'true')
+                td= link_to(t('delete'), delete_iri_path(export), remote: 'true')
       -else
         p= t('exports.empty')
       =semantic_form_for([parent_edge, Export.new(edge: parent_edge)], remote: true, authenticity_token: true) do |f|
