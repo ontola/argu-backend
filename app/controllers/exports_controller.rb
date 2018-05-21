@@ -43,7 +43,7 @@ class ExportsController < ServiceController
   end
 
   def redirect_model_success(resource)
-    exports_iri_path(resource.edge.owner)
+    export_iri_path(resource.edge.owner)
   end
 
   def resource_new_params

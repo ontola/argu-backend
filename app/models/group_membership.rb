@@ -40,6 +40,10 @@ class GroupMembership < ApplicationRecord
     collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
   end
 
+  def iri_opts
+    super.merge(root_id: page.url)
+  end
+
   def publisher
     profile.profileable
   end

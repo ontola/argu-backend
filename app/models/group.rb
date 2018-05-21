@@ -44,6 +44,10 @@ class Group < ApplicationRecord
       .where(edges: {id: edge.self_and_ancestor_ids})
   end
 
+  def iri_opts
+    super.merge(root_id: parent_model.url)
+  end
+
   def name_singular
     id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
   end

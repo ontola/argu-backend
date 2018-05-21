@@ -119,6 +119,8 @@ Rails.application.routes.draw do
     health_check_routes
   end
 
+  root to: 'static_pages#home'
+
   use_doorkeeper do
     controllers applications: 'oauth/applications',
                 tokens: 'oauth/tokens'
@@ -207,21 +209,6 @@ Rails.application.routes.draw do
       resources edgeable, only: :index
     end
   end
-  resources :exports, only: [], concerns: %i[destroyable]
-  resources :grants, path: 'grants', only: [:destroy]
-
-  resources :direct_messages, path: :dm, only: [:create]
-
-  resources :favorites, only: [:create]
-
-  resources :groups,
-            path: 'g',
-            only: %i[show update],
-            concerns: [:destroyable] do
-    get :settings, on: :member
-    resources :group_memberships, path: 'memberships', only: %i[new create]
-  end
-  resources :group_memberships, only: %i[show destroy]
 
   get '/o/find', to: 'organizations_finder#show'
 
@@ -235,7 +222,6 @@ Rails.application.routes.draw do
     get '/dismissals',
         to: 'static_pages#dismiss_announcement'
   end
-  resources :banners, except: %i[index show new create]
 
   resources :profiles, only: %i[index update] do
     post :index, action: :index, on: :collection
@@ -304,9 +290,6 @@ Rails.application.routes.draw do
 
   get '/d/modern', to: 'static_pages#modern'
 
-  root to: 'static_pages#home'
-  get '/', to: 'static_pages#home'
-
   constraints(Argu::WhitelistConstraint) do
     namespace :spi do
       get 'authorize', to: 'authorize#show'
@@ -337,21 +320,6 @@ Rails.application.routes.draw do
     end
 
     scope ':root_id' do
-      resources :questions,
-                path: 'q', except: %i[index new create],
-                concerns: %i[actionable commentable blog_postable moveable feedable exportable
-                             trashable invitable menuable contactable statable loggable] do
-        resources :media_objects, only: :index
-        resources :motions, path: 'm', only: %i[index new create]
-      end
-
-      resources :motions,
-                path: 'm',
-                except: %i[index new create destroy],
-                concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
-                             feedable trashable decisionable invitable menuable statable exportable loggable] do
-        resources :media_objects, only: :index
-      end
       resources :arguments, only: %i[show], path: 'a'
       %i[pro_arguments con_arguments].each do |model|
         resources model,
@@ -359,13 +327,40 @@ Rails.application.routes.draw do
                   except: %i[index new create],
                   concerns: %i[actionable votable feedable trashable commentable menuable contactable statable loggable]
       end
-      resources :votes, only: %i[destroy update show], as: :vote
+      resources :banners, except: %i[index show new create]
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show edit update],
                 concerns: %i[trashable commentable menuable statable loggable]
       resources :comments, concerns: %i[actionable trashable loggable], only: %i[show edit update], path: 'c'
       resources :comments, only: %i[show]
+      resources :direct_messages, path: :dm, only: [:create]
+      resources :exports, only: [], concerns: %i[destroyable]
+      resources :favorites, only: [:create]
+      resources :grants, path: 'grants', only: [:destroy]
+      resources :group_memberships, only: %i[show destroy]
+      resources :groups,
+                path: 'g',
+                only: %i[show update],
+                concerns: [:destroyable] do
+        get :settings, on: :member
+        resources :group_memberships, only: %i[new create]
+      end
+      resources :motions,
+                path: 'm',
+                except: %i[index new create destroy],
+                concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
+                             feedable trashable decisionable invitable menuable statable exportable loggable] do
+        resources :media_objects, only: :index
+      end
+      resources :questions,
+                path: 'q', except: %i[index new create],
+                concerns: %i[actionable commentable blog_postable moveable feedable exportable
+                             trashable invitable menuable contactable statable loggable] do
+        resources :media_objects, only: :index
+        resources :motions, path: 'm', only: %i[index new create]
+      end
+      resources :votes, only: %i[destroy update show], as: :vote
 
       resources :forums,
                 only: %i[show update],

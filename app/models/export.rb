@@ -15,6 +15,10 @@ class Export < ApplicationRecord
     "Export #{created_at}"
   end
 
+  def iri_opts
+    super.merge(root_id: parent_model.root.url)
+  end
+
   private
 
   def schedule_export_job
