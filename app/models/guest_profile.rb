@@ -5,7 +5,7 @@ class GuestProfile < Profile
 
   def last_forum
     forum_id = Argu::Redis.get("session:#{profileable.id}:last_forum")
-    Forum.find_by(id: forum_id) if forum_id.present?
+    Forum.find_by(uuid: forum_id) if uuid?(forum_id)
   end
 
   def preferred_forum
