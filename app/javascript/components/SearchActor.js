@@ -68,7 +68,7 @@ export const SearchActor = React.createClass({
                 const pAttrs = data
                     .included
                     .find(obj => {
-                        return obj.type === 'schema:ImageObject' &&
+                        return obj.type === 'mediaObjects' &&
                             obj.id === user.relationships.profilePhoto.data.id;
                     })
                     .attributes;

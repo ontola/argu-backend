@@ -48,7 +48,7 @@ module Shortnameable
 
     # Finds an object via its shortname or id
     def find_via_shortname_or_id(url)
-      if (/[a-zA-Z]/i =~ url).nil?
+      if (/[a-zA-Z]/i =~ url.to_s).nil?
         find_by(id: url)
       else
         find_via_shortname(url)

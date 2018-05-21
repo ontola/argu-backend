@@ -59,6 +59,8 @@ module ChildOperations
       {page: record}
     when 'MediaObject'
       {about: record}
+    when 'Decision'
+      {state: 'forwarded'}
     else
       {}
     end
