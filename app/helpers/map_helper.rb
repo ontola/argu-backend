@@ -60,7 +60,7 @@ module MapHelper
 
   def map_question_props(resource)
     popup_link = new_iri(resource, :motions)
-    popup_link.query = 'lat={lat}&lon={lon}&zoom_level={zoom}'
+    popup_link.query = 'lat={lat}&lon={lon}&zoom_level={zoom}'.encode(Encoding::UTF_8)
     map_viewer_props(
       Placement
         .custom
