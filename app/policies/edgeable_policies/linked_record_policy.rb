@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LinkedRecordPolicy < EdgeablePolicy
+class LinkedRecordPolicy < EdgePolicy
   def destroy?
     false
   end

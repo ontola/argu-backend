@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EdgeablePolicy < RestrictivePolicy
+class EdgePolicy < RestrictivePolicy
   class Scope < EdgeTreePolicy::Scope
     def class_name
       self.class.name.split('Policy')[0]

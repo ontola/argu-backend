@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class VoteEventPolicy < EdgeablePolicy
-  class Scope < EdgeablePolicy::Scope
+class VoteEventPolicy < EdgePolicy
+  class Scope < EdgePolicy::Scope
     def resolve
       scope
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CommentPolicy < EdgeablePolicy
+class CommentPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[body parent_id vote_id]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuestionPolicy < EdgeablePolicy
+class QuestionPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     if create?

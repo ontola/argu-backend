@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DecisionPolicy < EdgeablePolicy
+class DecisionPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[content]

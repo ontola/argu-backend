@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PagePolicy < EdgeablePolicy
+class PagePolicy < EdgePolicy
   class Scope < Scope
     def resolve
       t = Page.arel_table

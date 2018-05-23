@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class VotePolicy < EdgeablePolicy
-  class Scope < EdgeablePolicy::Scope
+class VotePolicy < EdgePolicy
+  class Scope < EdgePolicy::Scope
     def resolve
       voter_ids = user.managed_profile_ids
       scope
