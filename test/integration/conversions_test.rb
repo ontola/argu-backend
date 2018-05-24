@@ -63,8 +63,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
            'no votes to test'
 
     assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['MediaObject.count', 0], ['Comment.count', 6], ['Edge.count', -10]]) do
+                        ['Vote.count', -6], ['Activity.count', 1], ['BlogPost.count', 0],
+                        ['MediaObject.count', 0], ['Comment.count', 6], ['Edge.count', -7]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {
@@ -96,8 +96,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     edge = question_motion.edge
 
     assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -9], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['Comment.count', 6], ['Edge.count', -10]]) do
+                        ['Vote.count', -6], ['Activity.count', 1], ['BlogPost.count', 0],
+                        ['Comment.count', 6], ['Edge.count', -7]]) do
       post conversions_iri_path(edge.owner.canonical_iri(only_path: true)),
            params: {
              conversion: {

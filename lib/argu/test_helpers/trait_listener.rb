@@ -153,7 +153,6 @@ module Argu
           create_normal_vote(@resource.default_vote_event.edge, side)
           create_hidden_vote(@resource.default_vote_event.edge, side)
           create_redis_vote(@resource.default_vote_event.edge, side)
-          create_redis_postgres_vote(@resource.default_vote_event.edge, side)
         end
       end
 
@@ -181,21 +180,6 @@ module Argu
       def create_redis_vote(edge, side)
         service = CreateVote.new(edge, attributes: vote_attrs(side), options: guest_service_options)
         service.commit
-      end
-
-      def create_redis_postgres_vote(edge, side)
-        guest_vote_postgres =
-          CreateVote
-            .new(edge, attributes: vote_attrs(side), options: service_options)
-        guest_vote_postgres.commit
-        key = RedisResource::Key.new(
-          path: guest_vote_postgres.resource.parent_edge.path,
-          owner_type: 'Vote',
-          user: guest_vote_postgres.resource.publisher,
-          edge_id: guest_vote_postgres.resource.edge.id
-        ).key
-        Argu::Redis.set(key, guest_vote_postgres.resource.attributes.merge(persisted: true).to_json)
-        guest_vote_postgres.resource.publisher.primary_email_record.update(confirmed_at: nil)
       end
 
       def create_hidden_vote(edge, side)
