@@ -5,6 +5,7 @@ class DocumentsController < SimpleText::DocumentsController
   after_action :verify_policy_scoped, only: :index
   after_action :make_authorized, except: :index
   after_action :make_scoped, only: :index
+  layout :set_layout
 
   def show
     super
