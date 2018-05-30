@@ -183,7 +183,9 @@ class PagesController < EdgeableController
   end
 
   def show_respond_success_html(resource)
-    if (/[a-zA-Z]/i =~ params[:id]).nil?
+    if @forums.count == 1 && !policy(resource).update?
+      redirect_to @forums.first.iri_path
+    elsif (/[a-zA-Z]/i =~ params[:id]).nil?
       redirect_to resource.iri(only_path: true).to_s, status: 307
     else
       render 'show'

@@ -6,7 +6,10 @@ class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
   let(:freetown) { create_forum(name: 'freetown', page: page) }
+  let(:second_freetown) { create_forum(name: 'second_freetown', page: page) }
+  let(:helsinki) { create_forum(name: 'second_freetown', page: page, discoverable: false) }
   let(:cairo) { create_forum(name: 'cairo', page: page_non_public) }
+  let(:second_cairo) { create_forum(name: 'second_cairo', page: page_non_public) }
 
   let(:motion) do
     create(:motion,
@@ -58,10 +61,23 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_not_a_user
   end
 
-  test 'guest should get show when public' do
+  test 'guest should get show when publi with multiple visible forums' do
+    helsinki
+    freetown
+    second_freetown
+
     get page
 
     assert_response 200
+  end
+
+  test 'guest should redirect when only one visible forum' do
+    helsinki
+    freetown
+
+    get page
+
+    assert_redirected_to freetown.iri_path
   end
 
   test 'guest should not get show when not public' do
@@ -179,7 +195,27 @@ class PagesTest < ActionDispatch::IntegrationTest
   let(:forum_initiator) { create_initiator(freetown) }
   let(:non_public_forum_initiator) { create_initiator(cairo) }
 
-  test 'forum_initiator should get show when public' do
+  test 'forum_initiator should get show when public when one forum' do
+    sign_in forum_initiator
+
+    get page
+
+    assert_redirected_to freetown.iri_path
+    assert_not_nil assigns(:profile)
+  end
+
+  test 'forum_initiator should get show when not public when one forum' do
+    sign_in non_public_forum_initiator
+
+    get page_non_public
+
+    assert_redirected_to cairo.iri_path
+    assert_not_nil assigns(:profile)
+  end
+
+  test 'forum_initiator should get show when public when multiple forums' do
+    second_freetown
+
     sign_in forum_initiator
 
     get page
@@ -188,7 +224,9 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_not_nil assigns(:profile)
   end
 
-  test 'forum_initiator should get show when not public' do
+  test 'forum_initiator should get show when not public when multiple forums' do
+    second_cairo
+
     sign_in non_public_forum_initiator
 
     get page_non_public
