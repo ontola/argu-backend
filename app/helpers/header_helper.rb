@@ -73,7 +73,7 @@ module HeaderHelper
     Forum
       .public_forums
       .includes(:default_profile_photo, edge: [:shortname, root: :shortname])
-      .where(shortnames: {shortname: suggested_forums})
+      .where(edges: {uuid: suggested_forums})
       .first(limit)
       .each do |forum|
       items << link_item(

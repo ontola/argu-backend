@@ -152,7 +152,7 @@ other_page = FactorySeeder.create(
   url: 'other_page',
   edge_attributes: {user: staff, is_published: true}
 )
-FactorySeeder.create_forum(
+other_page_forum = FactorySeeder.create_forum(
   parent: other_page.edge,
   page: other_page,
   url: 'other_page_forum',
@@ -233,4 +233,4 @@ FactorySeeder.create(:argument, parent: unpublished_motion.edge)
 FactorySeeder.create(:export, parent: freetown.edge, user: FactorySeeder.create(:user))
 FactorySeeder.create(:export, parent: motion.edge, user: FactorySeeder.create(:user))
 
-Setting.set('suggested_forums', 'freetown,other_page_forum')
+Setting.set('suggested_forums', [freetown.edge.uuid, other_page_forum.edge.uuid])

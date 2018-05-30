@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Page deletion', type: :feature do
-  let!(:default_forum) { create(:setting, key: 'default_forum', value: 'freetown') }
+  let!(:default_forum) { create(:setting, key: 'default_forum', value: freetown.edge.uuid) }
   define_freetown
   let(:user) { create(:user) }
   let(:motion) do

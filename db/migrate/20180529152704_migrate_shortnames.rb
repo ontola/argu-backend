@@ -28,6 +28,12 @@ class MigrateShortnames < ActiveRecord::Migration[5.1]
     Forum.find_via_shortname('nederland').edge.shortname.update!(shortname: 'forum', primary: true)
     Page.find_via_shortname('nld').update(url: 'nederland')
 
+    nederland_id = Forum.second.edge.uuid
+    hk_id = Edge.joins(:shortnames, parent: :shortnames).find_by(owner_type: 'Forum', shortnames_edges: {shortname: 'hollandskroon'}, shortnames: {shortname: 'forum'}).uuid
+    hoorn_id = Edge.joins(:shortnames, parent: :shortnames).find_by(owner_type: 'Forum', shortnames_edges: {shortname: 'hoorn'}, shortnames: {shortname: 'forum'}).uuid
+    roermond_id = Edge.joins(:shortnames, parent: :shortnames).find_by(owner_type: 'Forum', shortnames_edges: {shortname: 'roermond'}, shortnames: {shortname: 'forum'}).uuid
+    Setting.set('default_forum', nederland_id)
+    Setting.set('suggested_forums', [nederland_id, hk_id, hoorn_id, roermond_id].join(','))
   end
 end
 

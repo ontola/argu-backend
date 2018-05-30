@@ -16,7 +16,7 @@ class MenusTest < ActionDispatch::IntegrationTest
       image: 'fa-info'
     )
   end
-  let!(:settings) { Setting.set('suggested_forums', 'freetown,other_page_forum') }
+  let!(:settings) { Setting.set('suggested_forums', [freetown.edge.uuid, SecureRandom.uuid].join(',')) }
   let(:user) { create(:user) }
   let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
 
