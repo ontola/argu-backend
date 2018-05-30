@@ -37,7 +37,7 @@ Layout/MultilineMethodCallIndentation:
 Metrics/LineLength:
   Max: 120
 Metrics/ModuleLength:
-  Max: 300
+  Max: 225
 Metrics/BlockLength:
   Exclude:
     - '**/*.jbuilder'

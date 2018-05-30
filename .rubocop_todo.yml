@@ -26,19 +26,17 @@ Lint/UselessAssignment:
 # Offense count: 211
 # defaultMax: 15
 Metrics/AbcSize:
-  Max: 40
+  Max: 35
   Exclude:
-    - 'app/controllers/oauth/tokens_controller.rb'
     - 'app/controllers/registrations_controller.rb'
     - 'app/controllers/votes_controller.rb'
     - 'app/helpers/header_helper.rb'
-    - 'app/models/concerns/convertible.rb'
+    - 'app/helpers/motions_helper.rb'
     - 'app/models/grant_tree/node.rb'
     - 'app/models/menus/application_menu_list.rb'
     - 'app/models/redis_resource/resource.rb'
     - 'app/models/vote_event.rb'
     - 'app/services/activity_notifications_receivers_collector.rb'
-    - 'lib/argu/controller/error_handling/handlers.rb'
     - 'lib/argu/test_helpers/automated_requests.rb'
     - 'lib/argu/test_helpers/default_policy_tests.rb'
     - 'lib/argu/test_helpers/test_helper_methods.rb'
@@ -50,18 +48,21 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments.
 # defaultMax: 100
 Metrics/ClassLength:
-  Max: 140
+  Max: 120
   Exclude:
     - 'app/controllers/application_controller.rb'
-    - 'app/controllers/forums_controller.rb'
+    - 'app/controllers/comments_controller.rb'
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/pages_controller.rb'
     - 'app/controllers/users_controller.rb'
     - 'app/controllers/votes_controller.rb'
+    - 'app/models/menus/application_menu_list.rb'
+    - 'app/models/collection.rb'
     - 'app/models/edge.rb'
-    - 'app/models/edgeable_base.rb'
     - 'app/models/profile.rb'
     - 'app/models/user.rb'
+    - 'app/policies/edge_policy.rb'
+    - 'app/services/cruudt_services/base/application_service.rb'
     - 'lib/argu/test_helpers/trait_listener.rb'
     - 'test/controllers/*.rb'
     - 'test/integration/**/*.rb'
@@ -70,8 +71,15 @@ Metrics/ClassLength:
 # Offense count: 30
 # defaultMax: 6
 Metrics/CyclomaticComplexity:
-  Max: 8
+  Max: 7
   Exclude:
+    - 'app/helpers/users_helper.rb'
+    - 'app/controllers/application_controller.rb'
+    - 'app/models/decision.rb'
+    - 'app/models/media_object.rb'
+    - 'app/models/user.rb'
+    - 'app/models/edgeable/class_methods.rb'
+    - 'lib/argu/test_helpers/test_mocks.rb'
     - 'lib/argu/test_helpers/test_helper_methods.rb'
 
 # Offense count: 208
@@ -89,8 +97,20 @@ Metrics/MethodLength:
 # Offense count: 19
 # defaultMax: 7
 Metrics/PerceivedComplexity:
-  Max: 8
   Exclude:
+    - 'app/helpers/names_helper.rb'
+    - 'app/helpers/users_helper.rb'
+    - 'app/helpers/seo_helper.rb'
+    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/notifications_controller.rb'
+    - 'app/controllers/omniauth_callbacks_controller.rb'
+    - 'app/models/decision.rb'
+    - 'app/models/placement.rb'
+    - 'app/models/media_object.rb'
+    - 'app/models/user.rb'
+    - 'app/models/edgeable/class_methods.rb'
+    - 'app/workers/send_activity_notifications_worker.rb'
+    - 'lib/argu/test_helpers/test_mocks.rb'
     - 'lib/argu/test_helpers/test_helper_methods.rb'
 
 # Offense count: 7
