@@ -34,16 +34,6 @@ class ForumsController < EdgeableController
     super
   end
 
-  protected
-
-  def stale_record_recovery_action
-    flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
-    render 'settings', locals: {
-      tab: tab!,
-      active: tab!
-    }
-  end
-
   private
 
   def tree_root_id
