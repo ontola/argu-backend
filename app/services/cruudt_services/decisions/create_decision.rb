@@ -21,8 +21,8 @@ class CreateDecision < PublishedCreateService
       obj.owner ||= resource.creator
       obj.key ||= "#{resource.state}.happened"
       obj.recipient ||= resource.parent_model
-      obj.recipient_edge = obj.recipient.edge
-      obj.trackable_edge = obj.trackable.edge
+      obj.recipient_type ||= resource.parent.class.to_s
+      obj.trackable_type ||= resource.class.to_s
     when Decision
       obj.edge ||= obj.build_edge(
         publisher: resource.parent_model.publisher,

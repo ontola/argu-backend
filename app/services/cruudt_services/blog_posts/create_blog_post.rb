@@ -15,8 +15,9 @@ class CreateBlogPost < PublishedCreateService
       owner: resource.creator,
       key: 'blog_post.happened',
       recipient: resource.parent_model,
-      recipient_edge: resource.parent_model.edge,
-      trackable_edge: resource.edge
+      recipient_type: resource.parent_model.to_s,
+      trackable: resource,
+      trackable_type: resource.class.to_s
     )
   end
 
@@ -26,8 +27,8 @@ class CreateBlogPost < PublishedCreateService
       obj.owner ||= resource.creator
       obj.key ||= 'blog_post.happened'
       obj.recipient ||= resource.parent_model
-      obj.recipient_edge = obj.recipient.edge
-      obj.trackable_edge = obj.trackable.edge
+      obj.recipient_type ||= resource.parent.class.to_s
+      obj.trackable_type ||= resource.class.to_s
     else
       obj.creator ||= resource.creator
       obj.publisher ||= resource.publisher if obj.respond_to?(:publisher)

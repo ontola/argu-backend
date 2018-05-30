@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(version: 20180529152704) do
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.integer "trackable_id"
-    t.string "trackable_type"
+    t.string "trackable_type", null: false
     t.integer "owner_id"
     t.string "owner_type", default: "Profile"
     t.ltree "key"
     t.text "parameters"
     t.integer "recipient_id"
-    t.string "recipient_type"
+    t.string "recipient_type", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json "audit_data"

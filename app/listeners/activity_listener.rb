@@ -76,12 +76,12 @@ class ActivityListener
       attributes: {
         created_at: action == 'create' ? resource.created_at : nil,
         comment: @comment,
-        trackable: resource,
-        trackable_edge: resource.try(:edge)&.persisted? ? resource.try(:edge) : nil,
+        trackable: resource.destroyed? ? nil : resource,
+        trackable_type: resource.owner_type,
         key: "#{resource.model_name.singular}.#{action}",
         owner: @creator,
         recipient: recipient,
-        recipient_edge: recipient.edge,
+        recipient_type: recipient.owner_type,
         audit_data: audit_data(resource, recipient),
         parameters: parameters
       }

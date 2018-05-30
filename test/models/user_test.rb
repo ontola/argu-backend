@@ -8,7 +8,14 @@ class UserTest < ActiveSupport::TestCase
     user = create(:user)
     create(:notification,
            user: user,
-           activity: create(:activity, forum: freetown, trackable: create(:motion, parent: freetown.edge)),
+           activity: create(
+             :activity,
+             forum: freetown,
+             recipient: freetown.edge,
+             recipient_type: 'Forum',
+             trackable: create(:motion, parent: freetown.edge),
+             trackable_type: 'Motion'
+           ),
            forum: freetown)
     user
   end
