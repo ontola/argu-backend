@@ -14,7 +14,7 @@ RSpec.describe 'Conversions', type: :request do
     conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true))
   end
   let(:invalid_create_params) { {conversion: {klass: 'arguments'}} }
-  let(:created_resource_path) { subject.reload.owner.iri_path }
+  let(:created_resource_path) { Edge.find_by(uuid: subject.uuid).iri_path }
   let(:expect_post_create_failed_html) { expect_post_create_unauthorized_html }
   let(:expect_post_create_failed_serializer) { expect_post_create_unauthorized_serializer }
   let(:authorized_user) { staff }

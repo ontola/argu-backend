@@ -3,24 +3,26 @@
 class Edge < ApplicationRecord
   self.inheritance_column = :owner_type
 
+  define_model_callbacks :trash, only: :after
+  define_model_callbacks :untrash, only: :after
+  define_model_callbacks :convert
+
+  include Ldable
   include Edgeable::ClassMethods
   include Edgeable::CounterCache
   include Edgeable::Properties
+  include Edgeable::PropertyAssociations
+  include RedisResource::Concern
+  include Parentable
   include Placeable
-  include Ldable
   include Shortnameable
-  include ProfilePhotoable
-  include Photoable
   include Attachable
   include Uuidable
   include Widgetable
+  include Convertible
 
+  acts_as_followable
   has_ltree_hierarchy
-  belongs_to :owner,
-             inverse_of: :edge,
-             polymorphic: true,
-             required: true,
-             dependent: :destroy
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
@@ -32,6 +34,7 @@ class Edge < ApplicationRecord
   belongs_to :publisher, class_name: 'User', required: true, foreign_key: :publisher_id
   belongs_to :creator, class_name: 'Profile', required: true, foreign_key: :creator_id
   has_many :activities,
+           -> { order(:created_at) },
            foreign_key: :trackable_edge_id,
            inverse_of: :trackable,
            dependent: :nullify,
@@ -48,191 +51,109 @@ class Edge < ApplicationRecord
            dependent: false
   has_many :exports, dependent: :destroy, primary_key: :uuid
   has_many :favorites, dependent: :destroy, primary_key: :uuid
-  has_many :follows,
+  has_many :followings,
            class_name: 'Follow',
            inverse_of: :followable,
-           foreign_key: :followable_id,
            dependent: :destroy,
+           foreign_key: :followable_id,
            primary_key: :uuid
   has_many :grants, dependent: :destroy, primary_key: :uuid
   has_many :grant_resets, inverse_of: :edge, dependent: :destroy, primary_key: :uuid
   has_many :groups, through: :grants
   has_many :group_memberships, -> { active }, through: :groups
-  has_many :publications,
-           foreign_key: :publishable_id,
-           dependent: :destroy,
-           primary_key: :uuid
-  has_many :published_publications,
-           -> { where('publications.published_at IS NOT NULL') },
-           class_name: 'Publication',
-           foreign_key: :publishable_id,
-           primary_key: :uuid
-  has_one :argu_publication,
-          -> { where(channel: 'argu') },
-          class_name: 'Publication',
-          foreign_key: :publishable_id,
-          primary_key: :uuid
-  # Children associations
-  has_many :arguments,
-           -> { where(owner_type: 'Argument') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :pro_arguments,
-           -> { join_owner('Argument').where(arguments: {type: 'ProArgument'}) },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :con_arguments,
-           -> { join_owner('Argument').where(arguments: {type: 'ConArgument'}) },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :blog_posts,
-           -> { where(owner_type: 'BlogPost') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :comments,
-           -> { join_owner('Comment').where(comments: {parent_id: nil}) },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :discussions,
-           -> { where(owner_type: %w[Motion Question]) },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_one :top_comment,
-          -> { join_owner('Comment').active.where(parent_id: nil).order('comments.created_at ASC') },
-          class_name: 'Edge',
-          foreign_key: :parent_id,
-          inverse_of: :parent
-  has_many :decisions,
-           -> { where(owner_type: 'Decision') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_one :last_decision,
-          -> { join_owner('Decision').order('decisions.step DESC') },
-          class_name: 'Edge',
-          foreign_key: :parent_id,
-          inverse_of: :parent
-  has_one :last_published_decision,
-          -> { join_owner('Decision').published.order('decisions.step DESC') },
-          class_name: 'Edge',
-          foreign_key: :parent_id,
-          inverse_of: :parent
-  has_many :forums,
-           -> { where(owner_type: 'Forum') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :motions,
-           -> { where(owner_type: 'Motion') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :questions,
-           -> { where(owner_type: 'Question') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_many :vote_events,
-           -> { where(owner_type: 'VoteEvent') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
-  has_one :default_vote_event,
-          -> { where(owner_type: 'VoteEvent') },
-          foreign_key: :parent_id,
-          class_name: 'Edge',
-          inverse_of: :parent
-  has_many :votes,
-           -> { where(owner_type: 'Vote') },
-           class_name: 'Edge',
-           foreign_key: :parent_id,
-           inverse_of: :parent
 
+  has_many_children :arguments, order: "cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST"
+  has_many_children :pro_arguments
+  has_many_children :con_arguments
+  has_many_children :blog_posts
+  has_many_children :comments
+  has_many_children :decisions
+  has_many_children :forums, dependent: :restrict_with_exception
+  has_many_children :motions
+  has_many_children :questions
+  has_many_children :vote_events
+  has_many_children :votes
+
+  has_one :top_comment,
+          -> { active.order(created_at: :asc).includes(:properties) },
+          class_name: 'Comment',
+          foreign_key: :parent_id,
+          inverse_of: :parent,
+          dependent: :destroy
+  has_one :last_decision,
+          -> { order(created_at: :desc).includes(:properties) },
+          class_name: 'Decision',
+          foreign_key: :parent_id,
+          inverse_of: :parent,
+          dependent: :destroy
+  has_one :last_published_decision,
+          -> { published.order(created_at: :desc).includes(:properties) },
+          class_name: 'Decision',
+          foreign_key: :parent_id,
+          inverse_of: :parent,
+          dependent: :destroy
+  has_one :default_vote_event,
+          class_name: 'VoteEvent',
+          foreign_key: :parent_id,
+          inverse_of: :parent,
+          dependent: :destroy
+
+  default_scope -> { includes(:properties) }
   scope :published, -> { where('edges.is_published = true') }
   scope :unpublished, -> { where('edges.is_published = false') }
   scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }
   scope :untrashed, -> { where('edges.trashed_at IS NULL') }
   scope :expired, -> { where('edges.expires_at <= ?', Time.current) }
   scope :active, -> { published.untrashed }
-  accepts_nested_attributes_for :argu_publication
 
   validates :parent, presence: true, unless: :root_object?
   validates :placements, presence: true, if: :requires_location?
 
-  before_destroy :decrement_counter_caches, unless: :is_trashed?
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
   before_destroy :destroy_redis_children
   after_initialize :set_root_id, if: :new_record?
   before_create :set_confirmed
-  before_save :set_user_id
+  before_save :set_publisher_id
 
-  alias_attribute :content, :description
   alias_attribute :body, :description
+  alias_attribute :content, :description
   alias_attribute :name, :display_name
   alias_attribute :title, :display_name
 
-  acts_as_followable
   acts_as_sequenced scope: :root_id, column: :fragment
   with_collection :exports, pagination: true
 
   attr_writer :root
-  delegate :display_name, :root_object?, :is_trashable?, to: :owner, allow_nil: true
+  alias user publisher
+  alias profile creator
 
-  def expired?
-    expires_at? && expires_at < Time.current
+  def owner
+    self
   end
 
-  def iri(opts = {})
-    RDF::URI(
-      expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", iri_opts.merge(opts))
-    )
+  def edge
+    self
   end
 
-  def iri_opts
-    {id: fragment, root_id: root.owner.url}
-  end
-
-  # @return [Array] The ids of (persisted) ancestors, excluding self
-  def persisted_ancestor_ids
-    parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
-  end
-
-  # @return [Array] The ids of (persisted) ancestors, including self if persisted
-  def self_and_ancestor_ids
-    persisted_edge.path.split('.').map(&:to_i)
-  end
-
-  def shortnameable?
-    %w[Forum Page].include?(owner_type)
+  def children(*args)
+    association(:children).reader(*args)
   end
 
   def children_count(association)
     children_counts[association.to_s].to_i || 0
   end
 
-  def parent_edge(type)
-    return parent if type.nil?
-    return self if owner_type == type.to_s.classify
-    return persisted_edge&.parent_edge(type) unless persisted?
-    if type == :page
-      root
-    elsif type == :forum
-      tenant = Edge.find_by(id: self_and_ancestor_ids[1])
-      tenant&.owner_type == 'Forum' ? tenant : nil
-    else
-      ancestors.find_by(owner_type: type.to_s.classify)
-    end
+  def expired?
+    expires_at? && expires_at < Time.current
   end
 
-  def parent_model(type = nil)
-    parent_edge(type)&.owner
+  def self.filter_property(scope, key, value)
+    filtered = scope.references(:properties)
+    options = property_options(name: key)
+    filtered
+      .where(properties: {predicate: options[:predicate].to_s, options[:type] => value})
+      .or(filtered.where('properties.predicate != ?', options[:predicate].to_s))
   end
 
   def has_expired_ancestors?
@@ -253,6 +174,16 @@ class Edge < ApplicationRecord
       .present?
   end
 
+  def iri(opts = {})
+    RDF::URI(
+      expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", iri_opts.merge(opts))
+    )
+  end
+
+  def iri_opts
+    {id: fragment, root_id: root.owner.url}
+  end
+
   def is_child_of?(edge)
     ancestor_ids.include?(edge.id)
   end
@@ -261,6 +192,27 @@ class Edge < ApplicationRecord
     @is_trashed ||= trashed_at ? trashed_at <= Time.current : false
   end
   alias is_trashed is_trashed?
+
+  # @return [Array] The ids of (persisted) ancestors, excluding self
+  def persisted_ancestor_ids
+    parent&.persisted_edge&.path&.split('.')&.map(&:to_i)
+  end
+
+  def shortnameable?
+    %w[Forum Page].include?(owner_type)
+  end
+
+  def parent_edge(type = nil)
+    return self if owner_type == type.to_s.classify
+    return parent if type.nil?
+    return parent.parent_edge(type) if !root_object? && association_cached?(:parent)
+    return persisted_edge&.parent_edge(type) unless persisted?
+    parent_by_type(type)
+  end
+
+  def parent_model(type = nil)
+    parent_edge(type)
+  end
 
   def persisted_edge
     return @persisted_edge if @persisted_edge.present?
@@ -300,8 +252,21 @@ class Edge < ApplicationRecord
     @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
   end
 
-  def self.show_trashed(show_trashed = nil)
-    show_trashed ? where(nil) : untrashed
+  def root_comments
+    comments.where(in_reply_to_id: nil)
+  end
+
+  def root_object?
+    false
+  end
+
+  # @return [Array] The ids of (persisted) ancestors, including self if persisted
+  def self_and_ancestor_ids
+    persisted_edge.path.split('.').map(&:to_i)
+  end
+
+  def self.shortnameable?
+    false
   end
 
   def trash
@@ -334,6 +299,7 @@ class Edge < ApplicationRecord
   def reload(_opts = {})
     @is_trashed = nil
     @persisted_edge = nil
+    @root = nil
     super
   end
 
@@ -345,7 +311,7 @@ class Edge < ApplicationRecord
   end
 
   def destroy_redis_children
-    keys = RedisResource::Key.new(path: "#{path}.*").matched_keys.map(&:key)
+    keys = RedisResource::Key.new(parent: self, root_id: root_id).matched_keys.map(&:key)
     Argu::Redis.redis_instance.del(*keys) if keys.present?
   end
 
@@ -355,6 +321,17 @@ class Edge < ApplicationRecord
 
   def reset_persisted_edge
     @persisted_edge = nil
+  end
+
+  def parent_by_type(type)
+    if type == :page
+      root
+    elsif type == :forum
+      tenant = Edge.find_by(id: self_and_ancestor_ids[1])
+      tenant&.owner_type == 'Forum' ? tenant : nil
+    else
+      ancestors.find_by(owner_type: type.to_s.classify)
+    end
   end
 
   def set_confirmed
@@ -367,11 +344,11 @@ class Edge < ApplicationRecord
       self.uuid = uuid
       self.root_id = uuid
     else
-      self.root_id ||= parent.root_id
+      self.root_id ||= parent&.root_id
     end
   end
 
-  def set_user_id
-    self.user_id = owner.publisher.present? ? owner.publisher.id : 0
+  def set_publisher_id
+    self.publisher_id = owner.publisher.present? ? owner.publisher.id : 0
   end
 end

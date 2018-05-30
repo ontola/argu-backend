@@ -22,10 +22,6 @@ class ActivityListener
       end
     end
 
-    define_method "#{method}_banner_successful" do |resource|
-      create_activity(resource, resource.forum, method)
-    end
-
     define_method "#{method}_comment_successful" do |resource|
       create_activity(resource, resource.subscribable, method)
     end

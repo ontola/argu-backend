@@ -1,23 +1,20 @@
 # frozen_string_literal: true
 
 class Page < Edge
-  has_many :forum_edges, through: :edge, class_name: 'Edge', source: :children
   has_many :groups, dependent: :destroy, inverse_of: :page, primary_key: :uuid
   has_many :discussions, through: :forum_edges
-  has_many_through_edge :forums
 
   include Menuable
   include Discussable
+  include Photoable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
-  has_one :shortname, through: :edge
   accepts_nested_attributes_for :profile
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
   attr_accessor :confirmation_string, :tab, :active
 
   delegate :description, to: :profile
-  alias creator owner
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :last_accepted, presence: true

@@ -132,6 +132,14 @@ class ApplicationController < ActionController::Base
     authorize current_actor, :show?
   end
 
+  def authorize_forum(forum)
+    return if forum.nil?
+    return unless user_context.with_root_id(forum.root_id) do
+      policy(forum).show?
+    end
+    forum
+  end
+
   def controller_class
     controller_name.classify.safe_constantize
   end
@@ -160,14 +168,10 @@ class ApplicationController < ActionController::Base
   def preferred_forum(profile = nil)
     profile ||= current_profile
     @_preferred_forum ||=
-      [current_forum, profile.last_forum, profile.preferred_forum, Forum.first_public]
-        .compact
-        .uniq
-        .find do |forum|
-        user_context.with_root_id(forum.edge.root_id) do
-          policy(forum).show?
-        end
-      end
+      authorize_forum(current_forum) ||
+      authorize_forum(profile.last_forum) ||
+      authorize_forum(profile.preferred_forum) ||
+      authorize_forum(Forum.first_public)
   end
 
   # @private

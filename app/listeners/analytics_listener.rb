@@ -35,7 +35,7 @@ class AnalyticsListener
   end
 
   def create_vote_successful(resource)
-    method = resource.created_at == resource.updated_at ? 'create' : 'update'
+    method = resource.previous_changes.include?('is_published') ? 'create' : 'update'
     send_analytics_event method, 'votes', resource.for
   end
 

@@ -11,10 +11,10 @@
     .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.joined_body) || I18n.t('deleted')
       =markdown_to_html(motion.content)
     - if !c.is_trashed? && policy(c.parent_model).create_child?(:comments)
-      =link_to resource.iri_path(parent_id: c.id), {data: { comment_id: c.id, turbolinks: 'false' }, class: 'sticky--bottom-right btn-subtle btn--mini btn-reply'} do
+      =link_to resource.iri_path(parent_id: c.uuid), {data: { comment_id: c.uuid, turbolinks: 'false' }, class: 'sticky--bottom-right btn-subtle btn--mini btn-reply'} do
         span.fa.fa-reply
         span.icon-left= t('reply')
-  =render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new, modal: local_assigns[:modal] }
+  =render partial: 'comments/form', locals: { resource: resource, parent_id: c.uuid, visible: false, comment: Comment.new, modal: local_assigns[:modal] }
   - if c.has_children?
     - c.comment_children.reject { |c| c.abandoned? }.each do |ch|
       =render partial: 'comments/comment', locals: { resource: resource, c: ch, modal: local_assigns[:modal] }

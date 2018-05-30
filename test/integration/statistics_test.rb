@@ -15,7 +15,7 @@ class StatisticsTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not get statistics of motion' do
-    get edge_statistics_path(motion.edge)
+    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri(only_path: true))
     assert_not_authorized
   end
 
@@ -32,7 +32,7 @@ class StatisticsTest < ActionDispatch::IntegrationTest
 
   test 'user should not get statistics of motion' do
     sign_in user
-    get edge_statistics_path(motion.edge)
+    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri(only_path: true))
     assert_not_authorized
   end
 

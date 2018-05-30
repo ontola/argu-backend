@@ -34,7 +34,20 @@ module Shortnameable
 
     # @return [String, nil] The shortname of the model or nil
     def url
-      shortname&.shortname
+      @url || shortname&.shortname
+    end
+
+    def url=(value)
+      return if value == url
+      shortname_root_id = is_a?(Page) || !is_a?(Edge) ? nil : root_id
+      existing = Shortname.find_by(shortname: value, root_id: shortname_root_id)
+      if existing&.primary?
+        errors.add(:url, :taken)
+        return
+      end
+      existing.primary = true if existing
+      shortnames << (existing || Shortname.new(shortname: value, root_id: shortname_root_id))
+      @url = value
     end
   end
 

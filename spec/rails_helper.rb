@@ -151,13 +151,14 @@ RSpec.configure do |config|
           profile: Profile.new,
           email: 'page_owner@argu.co'
         )
-        create(:page,
-               id: 0,
-               last_accepted: Time.current,
-               profile: Profile.new(name: 'public page profile'),
-               owner: page_owner.profile,
-               user: page_owner,
-               shortname: Shortname.new(shortname: 'public_page')
+        create(
+          :page,
+          id: 0,
+          last_accepted: Time.current,
+          profile: Profile.new(name: 'public page profile'),
+          creator: page_owner.profile,
+          publisher: page_owner,
+          shortname: Shortname.new(shortname: 'public_page')
         )
       end
       if Group.find_by(id: Group::PUBLIC_ID).blank?

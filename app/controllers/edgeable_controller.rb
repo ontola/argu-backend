@@ -27,12 +27,8 @@ class EdgeableController < ServiceController
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
-    resource = parent_resource!
-                 .edge
-                 .children
-                 .new(owner: controller_class.new(resource_new_params),
-                      parent: parent_edge)
-                 .owner
+    resource = super
+    resource.parent = parent_resource!
     if resource.is_publishable?
       resource.edge.build_argu_publication(
         published_at: Time.current,

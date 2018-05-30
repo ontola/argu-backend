@@ -5,18 +5,12 @@ module EdgeableShallow
   extend ActiveSupport::Concern
 
   included do
-    attr_reader :edge
-
-    has_one :edge,
-            as: :owner,
-            inverse_of: :owner,
-            required: false,
-            dependent: :restrict_with_exception
-
-    before_validation :remove_edge
-
     def edge
-      @edge ||= Edge.new(parent: shallow_parent, owner: self)
+      self
+    end
+
+    def owner
+      self
     end
 
     def root_object?

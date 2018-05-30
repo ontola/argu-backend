@@ -4,7 +4,7 @@ class QuestionPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     if create?
-      attributes.concat %i[id title content forum_id cover_photo
+      attributes.concat %i[id display_name description forum_id cover_photo
                            remove_cover_photo cover_photo_attribution]
     end
     attributes.concat %i[f_convert] if staff?

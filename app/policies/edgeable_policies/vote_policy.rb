@@ -5,8 +5,8 @@ class VotePolicy < EdgePolicy
     def resolve
       voter_ids = user.managed_profile_ids
       scope
-        .joins(:creator, edge: {parent: :parent})
-        .where("edges.path ? #{Edge.path_array(granted_edges_within_tree)}")
+        .joins(:creator, parent: :parent)
+        .where("edges.path ? #{path_array}")
         .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
         .where(edges: {confirmed: true}, parents_edges_2: {is_published: true, trashed_at: nil})
     end
@@ -25,6 +25,6 @@ class VotePolicy < EdgePolicy
   private
 
   def is_creator?
-    record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
+    record.creator_id == actor.id || user.managed_profile_ids.include?(record.creator_id)
   end
 end

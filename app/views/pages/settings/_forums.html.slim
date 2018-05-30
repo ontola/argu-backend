@@ -7,7 +7,7 @@ h3= t('forums.plural')
         td= t('portal.shortname')
         td= t('portal.followers')
         td= t('groups.plural')
-    - resource.forums.joins(:edge).order('edges.follows_count ASC').each do |forum|
+    - resource.forums.order('edges.follows_count ASC').each do |forum|
       tr
         td
           =link_to forum.display_name, settings_iri_path(forum), data: {turbolinks: false_unless_iframe}

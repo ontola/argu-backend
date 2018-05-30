@@ -6,7 +6,7 @@ class CommentTest < ActiveSupport::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
-  let(:nested_comment) { create(:comment, parent: argument.edge, parent_id: subject.id) }
+  let(:nested_comment) { create(:comment, parent: argument.edge, in_reply_to_id: subject.uuid) }
   subject { create(:comment, parent: argument.edge) }
 
   def test_valid

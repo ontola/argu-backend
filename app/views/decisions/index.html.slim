@@ -28,7 +28,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                           class: 'btn btn--smaller btn--neutral')
                   span &nbsp;
               - else
-                =link_to(t('decisions.forward'),
+                =link_to(t('decisions.action.forwarded'),
                         new_iri_path(decisionable, :decisions, query: {state: 'forwarded'}),
                         class: 'btn btn--smaller btn--neutral')
     - if local_assigns[:new_decision]

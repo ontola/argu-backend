@@ -51,7 +51,7 @@ class ExportWorker
       export
         .edge
         .self_and_descendants
-        .includes(:activities, :publications, :parent, owner: {edge: :parent})
+        .includes(:activities, :parent)
         .flat_map(&method(:relations))
         .group_by { |m| m.class.name }
   end

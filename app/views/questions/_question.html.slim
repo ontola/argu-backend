@@ -7,5 +7,5 @@
       h2.question-t[itemprop="headline"]= question.display_name
   =render partial: 'questions/info_bar', locals: {question: question, show_parent: true}
   section
-    - if question.edge.motions.active.present?
+    - if question.active_motions.present?
       =render partial: 'questions/motions_list', locals: {question: question}

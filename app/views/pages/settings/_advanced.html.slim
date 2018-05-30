@@ -4,7 +4,7 @@
   =f.inputs do
     - if policy(authenticated_resource).permitted_attributes.include?(:visibility)
       =f.inputs name: t('forums.settings.privacy') do
-        =f.input :visibility, as: :select, collection: Forum.visibilities.keys, required: false, include_blank: false
+        =f.input :visibility, as: :select, collection: Page.visibilities.keys, required: false, include_blank: false
     - if policy(authenticated_resource).shortname? || policy(authenticated_resource).delete?
     =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
       - if policy(authenticated_resource).shortname?

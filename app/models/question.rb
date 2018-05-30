@@ -10,6 +10,8 @@ class Question < Edge
   include Timelineable
   concern Motionable
   include CustomGrants
+  include Moveable
+  include Photoable
 
   convertible motions: %i[activities media_objects]
   counter_cache true
@@ -20,6 +22,7 @@ class Question < Edge
   validates :creator, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
+  before_save :capitalize_title
   # TODO: validate expires_at
 
   custom_grants_for :motions, :create

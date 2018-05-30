@@ -10,7 +10,7 @@ class PagePolicyTest < PolicyTest
   let(:expired_subject) { nil }
   let(:unpublished_subject) { nil }
   let(:direct_child) { nil }
-  let(:creator) { page.owner.profileable }
+  let(:creator) { page.publisher }
 
   generate_edgeable_tests
 

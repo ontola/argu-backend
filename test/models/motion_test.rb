@@ -10,25 +10,25 @@ class MotionTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  test 'arguments_con should not include trashed motions' do
+  test 'active_arguments_con should not include trashed motions' do
     trashed_args = subject.arguments.trashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
-    assert_not((subject.edge.con_arguments.map(&:id) & trashed_args).present?)
+    assert_not((subject.edge.active_con_arguments.map(&:id) & trashed_args).present?)
   end
 
-  test 'arguments_pro should not include trashed motions' do
+  test 'active_arguments_pro should not include trashed motions' do
     trashed_args = subject.arguments.trashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
-    assert_not((subject.edge.pro_arguments.map(&:id) & trashed_args).present?)
+    assert_not((subject.edge.active_pro_arguments.map(&:id) & trashed_args).present?)
   end
 
   test 'convert to question' do
     result = subject.convert_to(Question)
     assert result[:new].is_a?(Question)
     assert result[:old].is_a?(Motion)
-    assert_not result[:old].persisted?
+    assert_equal result[:new].display_name, result[:old].display_name
   end
 
   test 'raise when converting to non-convertible class' do

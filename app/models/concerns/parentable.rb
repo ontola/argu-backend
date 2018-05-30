@@ -26,6 +26,10 @@ module Parentable
       end
     end
 
+    def parent_iri(opts = {})
+      parent_model&.iri(opts)
+    end
+
     def parent_edge(type = nil)
       parent_model(type).try(:edge)
     end

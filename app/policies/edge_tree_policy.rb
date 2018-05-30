@@ -9,8 +9,8 @@ class EdgeTreePolicy < RestrictivePolicy
       @grant_tree ||= context.grant_tree_for_id(context.tree_root_id)
     end
 
-    def granted_edges_within_tree
-      user.profile.granted_edges.where(root_id: grant_tree.tree_root_id) if grant_tree.present?
+    def path_array
+      @path_array ||= grant_tree.present? ? grant_tree.path_array(user) : Edge.path_array(user.profile.granted_edges)
     end
 
     def staff?

@@ -93,7 +93,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in user
     forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
     forum_edge_ids.each do |forum_edge_id|
-      Favorite.create!(user: user, edge_id: forum_edge_id)
+      Favorite.find_or_create_by!(user: user, edge_id: forum_edge_id)
     end
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 0], ['Follow.count', 0]] do
       post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
@@ -202,7 +202,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in single_forum_group_member
     forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
     forum_edge_ids.each do |forum_edge_id|
-      Favorite.create!(user: member, edge_id: forum_edge_id)
+      Favorite.find_or_create_by!(user: member, edge_id: forum_edge_id)
     end
 
     assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do

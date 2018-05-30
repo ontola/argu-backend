@@ -8,10 +8,8 @@ class Vote < Edge
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
   attribute :primary, :boolean, default: true
 
-  has_many :activities, -> { order(:created_at) }, as: :trackable
   belongs_to :comment, foreign_key_property: :comment_id
 
-  before_save :set_voteable_id
   before_create :trash_primary_votes
   before_create :create_confirmation_reminder_notification
   after_trash :remove_primary
@@ -20,7 +18,7 @@ class Vote < Edge
   before_redis_save :trash_primary_votes
   before_redis_save :remove_other_temporary_votes
 
-  parentable :argument, :vote_event, :linked_record
+  parentable :pro_argument, :con_argument, :vote_event, :linked_record
 
   filterable option: {
     attr: :for, key: :for, values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}
@@ -43,13 +41,11 @@ class Vote < Edge
       if !publisher.guest?
         Argument
           .untrashed
-          .joins(edge: :votes)
-          .joins(Edge.join_owner_query('Vote'))
-          .where(votes: {creator_id: creator.id}, edges: {parent_id: parent_model&.edge&.parent_id})
+          .joins(:votes)
+          .where(edges: {creator_id: creator_id}, parent_id: parent_model&.edge&.parent_id)
       else
         Argument
           .untrashed
-          .joins(:edge)
           .where(
             edges: {
               id:
@@ -116,18 +112,12 @@ class Vote < Edge
     update!(primary: false)
   end
 
-  def set_voteable_id
-    parent_edge.save! && parent_edge.reload if parent_edge.uuid.nil?
-    self.voteable_id = parent_edge.uuid
-  end
-
   def trash_primary_votes
     creator
       .votes
       .untrashed
-      .joins(:edge)
-      .where(edges: {parent_id: edge.parent_id})
-      .where('? IS NULL OR votes.id != ?', id, id)
+      .where(parent_id: edge.parent_id)
+      .where('? IS NULL OR uuid != ?', uuid, uuid)
       .find_each { |primary| primary.edge.trash }
   end
 end

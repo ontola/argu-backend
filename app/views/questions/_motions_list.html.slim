@@ -1,5 +1,5 @@
 ul.box-list.box-list--icons
-  - question.edge.motions.active[0..2].each do |motion|
+  - question.active_motions[0..2].each do |motion|
     li= link_to motion do
       h3.motion-t
         span[class='fa fa-#{motion_icon}']

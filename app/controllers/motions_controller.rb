@@ -8,13 +8,13 @@ class MotionsController < EdgeableController
   # GET /motions/1.json
   def show
     @vote = Edge
-              .where_owner('Vote', creator: current_profile, primary: true)
+              .where_owner('Vote', creator: current_profile, primary: true, root_id: root_from_params&.uuid)
               .find_by(parent: authenticated_resource.default_vote_event.edge)
               &.owner
     @vote ||= Vote.new(
       creator: current_profile,
       publisher: current_user,
-      edge: Edge.new(parent: authenticated_resource.default_vote_event.edge)
+      parent: authenticated_resource.default_vote_event
     )
     authenticated_resource.current_vote = @vote
 

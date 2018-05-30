@@ -18,7 +18,7 @@ module MotionsHelper
   def current_vote_props(vote)
     return {side: 'abstain'} if vote.nil?
     {
-      id: vote.id,
+      id: vote.uuid,
       side: vote.for,
       comment: {iri: vote.comment&.iri, id: vote.comment&.id, body: vote.comment&.body || ''}
     }
@@ -56,7 +56,7 @@ module MotionsHelper
   end
 
   def motion_vote_arguments(motion)
-    motion.edge.arguments.active.includes(:parent, :owner).map do |argument|
+    motion.active_arguments.includes(:parent).map do |argument|
       {
         id: argument.id,
         body: argument.description,
@@ -79,7 +79,7 @@ module MotionsHelper
 
   def motion_vote_disabled_message(motion, vote)
     return if policy(motion.default_vote_event).create_child?(:votes)
-    if policy(vote || Vote.new(edge: Edge.new(parent: motion.default_vote_event.edge))).has_expired_ancestors?
+    if policy(vote || Vote.new(parent: motion.default_vote_event.edge)).has_expired_ancestors?
       t('votes.disabled.expired')
     else
       t('votes.disabled.unauthorized')

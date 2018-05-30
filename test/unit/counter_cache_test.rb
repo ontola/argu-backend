@@ -148,7 +148,13 @@ class CounterCacheTest < ActiveSupport::TestCase
     CreateVote.new(
       motion.default_vote_event.edge,
       attributes: {for: :con},
-      options: service_options(motion.default_vote_event.votes.pro.first.publisher)
+      options: service_options(
+        motion
+          .default_vote_event
+          .votes
+          .find_by(properties: {predicate: NS::SCHEMA[:option].to_s, integer: 1})
+          .publisher
+      )
     ).commit
     assert_counts(motion.default_vote_event, votes_pro: 1, votes_con: 3, votes_neutral: 2)
     Vote.fix_counts
@@ -172,7 +178,7 @@ class CounterCacheTest < ActiveSupport::TestCase
   def assert_counts(record, counts)
     record.reload
     counts.each do |klass, count|
-      assert_equal count, record.children_count(klass)
+      assert_equal count, record.children_count(klass), "wrong #{klass} count: #{record.children_counts}"
     end
   end
 

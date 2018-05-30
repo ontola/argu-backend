@@ -9,7 +9,7 @@ class GrantTreeTest < ActiveSupport::TestCase
   let(:motion) { create(:motion, parent: question.edge) }
   let(:argument) { create(:argument, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
-  let(:nested_comment) { create(:comment, parent: argument.edge, parent_id: subject.id) }
+  let(:nested_comment) { create(:comment, parent: argument.edge, in_reply_to_id: subject.uuid) }
   let(:user) { create(:user) }
   let(:forum_manager_group_membership) do
     create(

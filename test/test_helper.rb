@@ -58,13 +58,13 @@ module TestHelper
     user.profile = Profile.new(id: Profile::ANONYMOUS_ID)
   end
 
-  page_owner = User.create!(
-    shortname: Shortname.new(shortname: 'page_owner'),
-    profile: Profile.new,
-    email: 'page_owner@argu.co'
-  )
+  page_owner = User.find_or_create_by!(first_name: 'page_owner') do |user|
+    user.shortname = Shortname.new(shortname: 'page_owner')
+    user.profile = Profile.new
+    user.email = 'page_owner@argu.co'
+  end
 
-  Page.find_or_create_by!(id: 0) do |page|
+  Page.find_or_create_by!(owner_id: 0) do |page|
     page.publisher = page_owner
     page.creator = page_owner.profile
     page.url = 'public_page'
@@ -75,13 +75,13 @@ module TestHelper
   public_group = Group.find_or_create_by!(id: Group::PUBLIC_ID) do |group|
     group.name = 'Public group'
     group.name_singular = 'User'
-    group.page = Page.find(0)
+    group.page = Page.find_by(owner_id: 0)
   end
 
   Group.find_or_create_by!(id: Group::STAFF_ID) do |group|
     group.name = 'Staff group'
     group.name_singular = 'Staff'
-    group.page = Page.find(0)
+    group.page = Page.find_by(owner_id: 0)
   end
 
   public_membership =

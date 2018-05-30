@@ -17,19 +17,11 @@ class ConversionsController < ServiceController
   end
 
   def authorize_action
-    authorize convertible_edge!.owner, :convert?
+    authorize parent_resource!.owner, :convert?
     authorize authenticated_resource, :new?
   end
 
   def collect_banners; end
-
-  def convertible_edge
-    @convertible_edge ||= Edge.find_by(uuid: params[:edge_id])
-  end
-
-  def convertible_edge!
-    convertible_edge || raise(ActiveRecord::RecordNotFound)
-  end
 
   def create_handler_success(resource)
     respond_to do |format|
@@ -41,19 +33,15 @@ class ConversionsController < ServiceController
   end
 
   def create_service_parent
-    Conversion.new(edge: convertible_edge!)
+    Conversion.new(edge: parent_resource!)
   end
 
   def current_forum
-    @current_forum ||= convertible_edge&.parent_model(:forum)
+    @current_forum ||= resource_by_id&.parent_model(:forum)
   end
 
   def new_respond_success_js(resource)
     render :form, locals: {conversion: resource}
-  end
-
-  def parent_resource
-    convertible_edge&.parent&.owner
   end
 
   def resource_by_id; end
@@ -64,8 +52,8 @@ class ConversionsController < ServiceController
 
   def resource_new_params
     {
-      edge: convertible_edge!,
-      klass: convertible_class_names(convertible_edge!.owner)&.first
+      edge: parent_resource!,
+      klass: convertible_class_names(parent_resource!)&.first
     }
   end
 
@@ -77,7 +65,7 @@ class ConversionsController < ServiceController
   end
 
   def verify_convertible_edge
-    return if convertible_edge!.owner.is_convertible?
+    return if parent_resource!.is_convertible?
     respond_to do |format|
       format.html { render 'status/422', status: 422 }
       format.json do
@@ -86,7 +74,7 @@ class ConversionsController < ServiceController
                  notifications: [
                    {
                      type: :error,
-                     message: "#{convertible_edge!.owner} is not convertible"
+                     message: "#{parent_resource!.owner} is not convertible"
                    }
                  ]
                }

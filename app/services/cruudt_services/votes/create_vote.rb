@@ -13,6 +13,7 @@ class CreateVote < PublishedCreateService
     Edge
       .where_owner(
         'Vote',
+        root_id: parent.root_id,
         for: attributes[:for],
         creator: options[:creator],
         primary: true
@@ -22,4 +23,6 @@ class CreateVote < PublishedCreateService
   def initialize_edge(parent, options, attributes)
     existing_edge(parent, options, attributes) || super
   end
+
+  def object_attributes=(_obj); end
 end

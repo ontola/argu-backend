@@ -59,7 +59,7 @@ module Argu
         service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
         service.commit
         reset_publication(service.resource.publications.last)
-        @resource.parent_edge(:page).user.follow @resource.edge
+        @resource.root.publisher.follow @resource.edge
       end
 
       # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource

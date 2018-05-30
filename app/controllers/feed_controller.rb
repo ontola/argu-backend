@@ -14,6 +14,7 @@ class FeedController < AuthorizedController
       policy_scope(authenticated_resource.activities)
         .where('activities.created_at < ?', from_time)
         .order('activities.created_at DESC')
+        .includes(trackable: :root)
         .limit(10)
   end
 

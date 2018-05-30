@@ -10,6 +10,12 @@ class CreateArgument < PublishedCreateService
 
   def assign_attributes
     super
-    @edge.owner = resource.becomes!(resource.pro ? ProArgument : ConArgument)
+    klass = resource.pro ? ProArgument : ConArgument
+    became = resource.becomes(klass)
+    became.owner_type = klass.sti_name
+    became.properties = resource.properties
+    became.parent = resource.parent
+    became.instance_variable_set(:@mutations_from_database, resource.send(:mutations_from_database))
+    @edge = became
   end
 end

@@ -7,11 +7,7 @@ class EdgePolicy < RestrictivePolicy
     end
 
     def resolve
-      scope
-        .joins(:edge)
-        .where("edges.path ? #{Edge.path_array(granted_edges_within_tree || user.profile.granted_edges)}")
-        .published
-        .untrashed
+      scope.where("edges.path ? #{path_array}").active
     end
   end
   include ChildOperations
@@ -67,8 +63,12 @@ class EdgePolicy < RestrictivePolicy
   def permitted_attribute_names
     attributes = super
     attributes.append(:mark_as_important) if mark_as_important?
-    attributes.append(edge_attributes: Pundit.policy(context, record.edge).permitted_attributes) if record.try(:edge)
+    attributes.concat %i[id expires_at] if expires_at?
     attributes.concat([:url, shortname_attributes: %i[shortname id]]) if shortname?
+    attributes.append(argu_publication_attributes: argu_publication_attributes) if record.owner.is_publishable?
+    attributes.append(placements_attributes: %i[id lat lon placement_type zoom_level _destroy])
+    append_default_photo_params(attributes) if %w[Forum Question Motion].include?(record.owner_type)
+    append_attachment_params(attributes) if %w[Question Motion BlogPost].include?(record.owner_type)
     attributes
   end
 
@@ -144,6 +144,12 @@ class EdgePolicy < RestrictivePolicy
 
   private
 
+  def argu_publication_attributes
+    argu_publication_attributes = %i[id draft]
+    argu_publication_attributes.append(:published_at) if moderator? || administrator? || staff?
+    argu_publication_attributes
+  end
+
   def cache_action(action, val)
     user_context.cache_key(edge.id, action, val)
   end
@@ -164,9 +170,13 @@ class EdgePolicy < RestrictivePolicy
     false
   end
 
+  def expires_at?
+    %w[Motion Question].include?(record.owner_type) && (moderator? || administrator? || staff?)
+  end
+
   def is_creator?
     return if record.creator.blank?
-    record.creator == actor || user.managed_profile_ids.include?(record.creator.id)
+    record.publisher_id == user.id || user.managed_profile_ids.include?(record.creator_id)
   end
 
   def mark_as_important?

@@ -19,8 +19,7 @@ class PagesController < EdgeableController
 
   def show
     @forums = policy_scope(authenticated_resource.forums)
-                .includes(:default_cover_photo, :default_profile_photo, edge: :shortname)
-                .joins(:edge)
+                .includes(:default_cover_photo, :default_profile_photo, :shortname)
                 .order('edges.follows_count DESC')
     @profile = authenticated_resource.profile
     show_handler_success(authenticated_resource)
@@ -125,8 +124,7 @@ class PagesController < EdgeableController
       association_scope: :open,
       page: params[:page].is_a?(ActionController::Parameters) ? nil : params[:page],
       pagination: true,
-      joins: 'INNER JOIN edges ON edges.owner_id = pages.id AND edges.owner_type = \'Page\' '\
-             'LEFT JOIN (SELECT parent_id, SUM(follows_count) AS total_follows FROM edges GROUP BY parent_id) '\
+      joins: 'LEFT JOIN (SELECT parent_id, SUM(follows_count) AS total_follows FROM edges GROUP BY parent_id) '\
              'AS forum_edges ON edges.id = forum_edges.parent_id',
       order: 'forum_edges.total_follows DESC NULLS LAST'
     )
@@ -140,21 +138,17 @@ class PagesController < EdgeableController
   end
 
   def new_resource_from_params
-    Edge.new(
-      owner: Profile.new(profileable: Page.new).profileable,
-      user: current_user,
+    Page.new(
+      creator: current_profile,
+      publisher: current_user,
       is_published: true
-    ).owner
+    )
   end
 
   def permit_params
     return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
-    @_permit_params = params
-                        .require(:page)
-                        .permit(*policy(authenticated_resource).permitted_attributes)
-                        .to_h
-                        .merge(owner: current_user.profile)
-    merge_photo_params(@_permit_params, Page)
+    @_permit_params = super
+    merge_photo_params(@_permit_params, Page.new)
     @_permit_params[:last_accepted] = Time.current if permit_params[:last_accepted] == '1'
     @_permit_params
   end

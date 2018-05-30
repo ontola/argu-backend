@@ -4,17 +4,16 @@ module Voteable
   extend ActiveSupport::Concern
 
   included do
-    has_one_through_edge :default_vote_event
-    has_many_through_edge :votes, where: {primary: true}
-    has_many_through_edge :vote_events
     with_collection :vote_events
 
     after_create :create_default_vote_event
+    after_convert :create_default_vote_event
 
     def create_default_vote_event
       @default_vote_event ||=
         VoteEvent.create!(
           parent: edge,
+          creator: creator,
           publisher: publisher,
           is_published: true,
           starts_at: Time.current,

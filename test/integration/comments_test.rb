@@ -6,6 +6,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
   let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:vote) { create(:vote, parent: motion.default_vote_event) }
   let(:argument) do
     create(:argument,
            :with_follower,
@@ -16,6 +17,24 @@ class CommentsTest < ActionDispatch::IntegrationTest
     create(:comment,
            publisher: creator,
            parent: argument.edge)
+  end
+
+  ####################################
+  # As user
+  ####################################
+  test 'user should post create comment for vote as json' do
+    sign_in vote.publisher
+    assert_differences([['Comment.count', 1],
+                        ['Property.where(predicate: "https://argu.co/ns/core#explanation").count', 1]]) do
+      post collection_iri(motion, :comments),
+           params: {comment: {body: 'My opinion', vote_id: vote.uuid}},
+           headers: argu_headers(accept: :json)
+    end
+
+    assert_response 201
+
+    assert_equal Comment.last, vote.reload.comment
+    assert_equal vote.reload.comment, Comment.last
   end
 
   ####################################
@@ -31,7 +50,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
       assert_difference 'Comment.trashed.count', 0 do
         delete subject
       end
-      assert_differences([['Comment.trashed.count', 1], ['Comment.where(body: "").count', 1]]) do
+      assert_differences([['Comment.trashed.count', 1], ['Comment.where(description: "").count', 1]]) do
         delete subject.iri_path(destroy: 'true')
       end
     end
@@ -52,7 +71,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
       assert_difference 'Comment.trashed.count', 1 do
         delete subject
       end
-      assert_difference 'Comment.where(body: "").count', 1 do
+      assert_difference 'Comment.where(description: "").count', 1 do
         delete subject.iri_path(destroy: 'true')
       end
     end

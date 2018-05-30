@@ -14,8 +14,8 @@ module Edgeable
       property :description, :text, NS::SCHEMA[:text]
 
       def capitalize_title
-        title[0] = title[0].upcase
-        title
+        display_name[0] = display_name[0].upcase
+        self.display_name = display_name
       end
 
       def pinned

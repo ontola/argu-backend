@@ -12,6 +12,7 @@ module RedisResource
 
     def key
       @key ||= RedisResource::Key.new(
+        root_id: resource.root_id,
         user_type: resource.publisher.class.name,
         user_id: resource.publisher.id,
         owner_type: resource.class.name,
@@ -21,13 +22,13 @@ module RedisResource
     end
 
     def persist(user)
-      if Edge.where(user: user, owner_type: resource.class.name, parent_id: resource.edge.parent_id).any?
+      if Edge.where(publisher: user, owner_type: resource.class.name, parent_id: resource.edge.parent_id).any?
         Argu::Redis.delete(key.key)
         return
       end
       service = "Create#{resource.class.name}".constantize.new(
         resource.edge.parent,
-        attributes: resource.attributes,
+        attributes: resource.attributes.except('publisher_id', 'creator_id'),
         options: {
           creator: user.profile,
           publisher: user
@@ -44,8 +45,6 @@ module RedisResource
     end
 
     def save
-      resource.edge.id ||= reserved_edge_id
-      resource.id ||= reserved_resource_id
       resource.created_at ||= Time.current
       store_in_redis
       resource.parent_model.save! if resource.parent_model.new_record?
@@ -59,21 +58,6 @@ module RedisResource
       raise ActiveRecord::RecordNotFound if key.blank?
       raise "Cannot destroy a key with wildcards: #{key.key}" if key.has_wildcards?
       Argu::Redis.delete(key.key)
-    end
-
-    def reserved_edge_id
-      ActiveRecord::Base
-        .connection
-        .execute("SELECT nextval('edges_id_seq'::regclass)")
-        .first['nextval']
-    end
-
-    def reserved_resource_id
-      resource_seq = ActiveRecord::Base.connection.quote_string("#{resource.class.name.tableize}_id_seq")
-      ActiveRecord::Base
-        .connection
-        .execute("SELECT nextval('#{resource_seq}'::regclass)")
-        .first['nextval']
     end
 
     def store_in_redis
@@ -92,24 +76,20 @@ module RedisResource
       # @return [RedisResource::Resource] The found record wrapped in a RedisResource::Persistence
       def find(key, user: nil, parent: nil)
         key = RedisResource::Key.parse(key) if key.is_a?(String)
-        attributes = key.attributes
-        parent ||= Edge.find(key.parent_id)
-        user ||= key.user
+        attributes = key.attributes&.except('publisher_id', 'creator_id')
         return if attributes.nil?
-        klass = ApplicationRecord.descendants.detect { |model| model.name == key.owner_type.classify }
-        if attributes['persisted']
-          resource = klass.find_by(id: attributes['id'])
-          resource.assign_attributes(attributes.except('persisted'))
-        else
-          resource = Edge.new(
-            id: key.edge_id,
-            user: user,
-            owner: klass.new(attributes),
+        parent ||= Edge.find_by(root_id: key.root_id, id: key.parent_id)
+        user ||= key.user
+        resource = Edge.new(
+          attributes.merge(
+            root_id: key.root_id,
+            publisher: user,
+            creator: user.profile,
+            owner_type: key.owner_type.classify,
             parent: parent
-          ).owner
-        end
-        resource.publisher = user
-        resource.creator = user.profile
+          )
+        )
+        resource.uuid = attributes['uuid']
         new(key: key, resource: resource)
       end
     end

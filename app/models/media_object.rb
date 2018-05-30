@@ -105,9 +105,10 @@ class MediaObject < ApplicationRecord
 
   def set_publisher_and_creator
     if creator.nil? && creator_id.nil? && about.present?
-      self.creator = about.is_a?(Edge) ? about.user.profile : about
+      self.creator = about.is_a?(Edge) ? about.creator : about
     end
-    self.publisher = creator.profileable if publisher.nil? && publisher_id.nil? && creator.profileable.present?
+    return if publisher.present? || publisher_id.present?
+    self.publisher = about.is_a?(Edge) ? about.publisher : creator.profileable
   end
 
   def url_for_environment(type)

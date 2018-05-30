@@ -26,7 +26,7 @@ class CommentsController < EdgeableController
   end
 
   def create_respond_failure_html(c)
-    url = "#{c.parent_model.iri_path}?#{{comment: {body: c.body, parent_id: c.parent_id}}.to_param}"
+    url = "#{c.parent_model.iri_path}?#{{comment: {body: c.body, parent_id: c.in_reply_to_id}}.to_param}"
     redirect_to url, notice: c.errors.full_messages.first
   end
 

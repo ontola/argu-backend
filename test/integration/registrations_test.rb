@@ -370,7 +370,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     sign_in user
 
-    assert_differences([['User.count', -1]]) do
+    assert_differences([['User.count', -1], ['Edge.count', -user.votes.count]]) do
       delete user_registration_path,
              params: {
                user: {

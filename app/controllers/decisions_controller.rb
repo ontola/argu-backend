@@ -54,15 +54,7 @@ class DecisionsController < EdgeableController
 
   def new_resource_from_params
     decision = parent_resource!.decisions.unpublished.where(publisher: current_user).first
-    if decision.nil?
-      decision =
-        parent_edge
-          .children
-          .new(owner: Decision.new(resource_new_params), parent: parent_edge)
-          .owner
-      decision.build_happening(happened_at: Time.current) if decision.happening.blank?
-      decision.edge.build_argu_publication
-    end
+    decision = super if decision.nil?
     decision
   end
 
@@ -86,7 +78,7 @@ class DecisionsController < EdgeableController
   def resource_by_id_parent; end
 
   def resource_new_params
-    HashWithIndifferentAccess.new(
+    super.merge(
       state: params[:state]
     )
   end

@@ -5,30 +5,30 @@ require 'test_helper'
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
-  let(:freetown) { create_forum(name: 'freetown', page: page.edge) }
-  let(:second_freetown) { create_forum(name: 'second_freetown', page: page.edge) }
-  let(:helsinki) { create_forum(name: 'second_freetown', page: page.edge, discoverable: false) }
-  let(:cairo) { create_forum(name: 'cairo', page: page_non_public.edge) }
-  let(:second_cairo) { create_forum(name: 'second_cairo', page: page_non_public.edge) }
+  let(:freetown) { create_forum(name: 'freetown', parent: page) }
+  let(:second_freetown) { create_forum(name: 'second_freetown', parent: page) }
+  let(:helsinki) { create_forum(name: 'second_freetown', parent: page, discoverable: false) }
+  let(:cairo) { create_forum(name: 'cairo', parent: page_non_public) }
+  let(:second_cairo) { create_forum(name: 'second_cairo', parent: page_non_public) }
 
   let(:motion) do
     create(:motion,
            parent: cairo.edge,
            creator: page.profile,
-           publisher: page.owner.profileable)
+           publisher: page.publisher)
   end
   let(:argument) do
     create(:argument,
            parent: motion.edge,
            creator: page.profile,
-           publisher: page.owner.profileable)
+           publisher: page.publisher)
   end
 
   let(:comment) do
     create(:comment,
            parent: argument.edge,
            creator: page.profile,
-           publisher: page.owner.profileable)
+           publisher: page.publisher)
   end
 
   def init_cairo_with_content
@@ -240,7 +240,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   test 'administrator should get settings and all tabs' do
     create(:place, address: {country_code: 'nl'})
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     get settings_iri(page)
     assert_response 200
@@ -252,7 +252,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should update settings' do
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     put page,
         params: {
@@ -283,7 +283,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should put update page add latlon' do
     create(:place, address: {country_code: 'nl'})
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     assert_differences([['Placement.count', 1], ['Place.count', 1]]) do
       put page,
@@ -307,7 +307,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should get new' do
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     get new_page_path
 
@@ -317,7 +317,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should not post create' do
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     assert_no_difference('Page.count') do
       post pages_path,
@@ -337,7 +337,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   test 'administrator should delete destroy and anonimize its content' do
     init_cairo_with_content
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     assert_differences([['Page.count', -1],
                         ['Argument.anonymous.count', 1],
@@ -353,7 +353,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should delete destroy when page not owns a forum' do
-    sign_in page.owner.profileable
+    sign_in page.publisher
 
     assert_difference('Page.count', -1) do
       delete page,
@@ -366,10 +366,10 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should not delete destroy when page owns a forum' do
-    sign_in page.owner.profileable
+    sign_in page.publisher
     freetown
 
-    assert_raises(ActiveRecord::InvalidForeignKey) do
+    assert_no_difference('Page.count') do
       delete page,
              params: {
                page: {
@@ -380,7 +380,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should not delete destroy page without confirmation' do
-    sign_in page.owner.profileable
+    sign_in page.publisher
     freetown
 
     assert_difference('Page.count', 0) do

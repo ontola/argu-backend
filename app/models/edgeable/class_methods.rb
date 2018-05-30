@@ -14,7 +14,8 @@ module Edgeable
         {
           published_publications: {},
           custom_placements: {place: {}},
-          default_cover_photo: {}
+          default_cover_photo: {},
+          active_motions: {}
         }
       end
 
@@ -47,21 +48,24 @@ module Edgeable
         if where_clause[:publisher]&.guest? || where_clause[:creator]&.profileable&.guest?
           RedisResource::EdgeRelation.where(where_clause.merge(owner_type: type))
         else
-          where(where_clause.slice(:publisher, :creator))
-            .where_owner_scope(type, where_clause.except(:creator, :publisher))
+          type.constantize.where(where_clause)
         end
       end
 
       private
 
-      def where_owner_scope(type, where_clause)
-        table = ActiveRecord::Base.connection.quote_string(type.tableize)
-        join_cond = [
-          "INNER JOIN #{table} ON #{table}.id = edges.owner_id AND edges.owner_type = ?",
-          type
-        ]
-        scope = joins(sanitize_sql_for_conditions(join_cond))
-        where_clause.present? ? scope.where(type.tableize => where_clause) : scope
+      def has_many_children(association, dependent: :destroy, order: {created_at: :asc})
+        has_many association,
+                 -> { order(order).includes(:properties) },
+                 foreign_key: :parent_id,
+                 inverse_of: :parent,
+                 dependent: dependent
+        has_many "active_#{association}".to_sym,
+                 -> { active.order(order).includes(:properties) },
+                 class_name: association.to_s.classify,
+                 foreign_key: :parent_id,
+                 inverse_of: :parent,
+                 dependent: dependent
       end
 
       def with_collection(name, options = {})
@@ -69,8 +73,12 @@ module Edgeable
         if klass < Edge
           options[:includes] ||= {
             creator: {profileable: :shortname},
-            edge: [:default_vote_event, parent: :owner]
+            parent: {}
           }
+          options[:includes][:votes] = {} if klass <= Argument
+          options[:includes][:comment_children] = {} if klass == Comment
+          options[:includes][:default_vote_event] = %i[creator] if klass == Motion
+          options[:includes][:published_publications] = {} if klass.reflect_on_association(:published_publications)
           options[:includes][:default_cover_photo] = {} if klass.reflect_on_association(:default_cover_photo)
           options[:collection_class] = EdgeableCollection
         end

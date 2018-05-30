@@ -14,7 +14,8 @@ nl:
       forwarded: "Doorsturen"
     explanation: "Licht het besluit toe"
     forward_to: "Groep of gebruiker"
-    forward_failed: "Doorsturen mislukt"
+    forward_group_missing: "Groep ontbreekt"
+    forward_failed: "Doorsturen naar user %{user_id} in groep %{group_id} mislukt"
     happened_at: "Besluit genomen op"
     motion:
       approved: "Idee is aangenomen"

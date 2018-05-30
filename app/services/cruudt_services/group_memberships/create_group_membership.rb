@@ -18,7 +18,7 @@ class CreateGroupMembership < CreateService
   def after_save
     if resource.member.profileable.is_a?(User)
       forum_edge_ids = resource.grants.joins(:edge).where(edges: {owner_type: 'Forum'}).pluck('edges.uuid').uniq
-      if forum_edge_ids.empty? && resource.grants.joins(:edge).where(edges: {owner: resource.page}).present?
+      if forum_edge_ids.empty? && resource.grants.joins(:edge).where(edge: resource.page).present?
         forum_edge_ids = resource.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
       end
       forum_edge_ids.each do |forum_edge_id|

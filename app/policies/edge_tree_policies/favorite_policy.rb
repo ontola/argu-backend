@@ -14,6 +14,6 @@ class FavoritePolicy < EdgeTreePolicy
   private
 
   def is_creator?
-    record.user == user
+    record.user_id == user.id
   end
 end

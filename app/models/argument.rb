@@ -8,8 +8,6 @@ class Argument < Edge
   include HasLinks
   include VotesHelper
 
-  has_many_through_edge :votes
-
   before_save :capitalize_title
 
   validates :content, presence: false, length: {maximum: 5000}
@@ -19,7 +17,7 @@ class Argument < Edge
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
   convertible comments: %i[activities]
-  counter_cache arguments_pro: {type: 'ProArgument'}, arguments_con: {type: 'ConArgument'}
+  counter_cache arguments_pro: {owner_type: 'ProArgument'}, arguments_con: {owner_type: 'ConArgument'}
   paginates_per 10
   parentable :motion, :linked_record
   with_collection :votes, pagination: true
@@ -107,10 +105,10 @@ class Argument < Edge
             .arguments
             .untrashed
             .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
-            .pluck(:owner_id)
-    index = ids.index(self[:id])
+            .pluck(:uuid)
+    index = ids.index(self[:uuid])
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
-    parent_model.arguments.find_by(id: p_id)
+    parent_model.arguments.find_by(uuid: p_id)
   end
 end

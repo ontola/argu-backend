@@ -45,7 +45,7 @@ class ParentableController < AuthorizedController
   end
 
   def redirect_edge_parent_requests
-    return unless parent_resource.is_a?(Edge)
+    return unless parent_resource == Edge
     path = expand_uri_template(
       "#{controller_name}_collection_iri",
       parent_iri: parent_resource.owner.iri(only_path: true),

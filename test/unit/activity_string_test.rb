@@ -61,6 +61,7 @@ class ActivityStringTest < ActiveSupport::TestCase
   end
 
   test 'string for activities of deleted question' do
+    display_name = question.display_name
     create_activity = question.activities.first
     update_activity = update_resource(question, {content: 'updated content'}, updater).activities.last
     trash_activity = trash_resource(question, updater).activities.last
@@ -70,17 +71,18 @@ class ActivityStringTest < ActiveSupport::TestCase
                   "posted a draft challenge in [#{freetown.display_name}](#{freetown.iri})",
                  Argu::ActivityString.new(create_activity, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
-                  "updated #{question.display_name}",
+                  "updated #{display_name}",
                  Argu::ActivityString.new(update_activity, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
-                  "trashed #{question.display_name}",
+                  "trashed #{display_name}",
                  Argu::ActivityString.new(trash_activity, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
-                  "deleted #{question.display_name}",
+                  "deleted #{display_name}",
                  Argu::ActivityString.new(destroy_activity, receiver, render: :embedded_link).to_s
   end
 
   test 'string for activities of motion of deleted question' do
+    display_name = motion.display_name
     create_activity = motion.activities.first
     update_activity = update_resource(motion, {content: 'updated content'}, updater).activities.last
     trash_activity = trash_resource(motion, updater).activities.last
@@ -89,10 +91,10 @@ class ActivityStringTest < ActiveSupport::TestCase
                   "posted a draft idea in #{question.display_name}",
                  Argu::ActivityString.new(create_activity, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
-                  "updated #{motion.display_name}",
+                  "updated #{display_name}",
                  Argu::ActivityString.new(update_activity, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
-                  "trashed #{motion.display_name}",
+                  "trashed #{display_name}",
                  Argu::ActivityString.new(trash_activity, receiver, render: :embedded_link).to_s
   end
 

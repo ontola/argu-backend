@@ -7,8 +7,6 @@ module Trashable
     scope :anonymous, -> { where(creator_id: Profile::COMMUNITY_ID) }
   end
 
-  delegate :trash, :untrash, :is_trashed?, :trashed_at, to: :edge
-
   def is_trashable?
     true
   end

@@ -7,6 +7,8 @@ class Forum < Edge
   include ProfilePhotoable
   include Attribution
   include Menuable
+  include Moveable
+  include Photoable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]
@@ -52,27 +54,18 @@ class Forum < Edge
     public_forums.first(limit)
   }
   scope :public_forums, lambda {
-    joins(edge: :grants)
+    joins(:grants)
       .where(discoverable: true, grants: {group_id: Group::PUBLIC_ID})
       .order('edges.follows_count DESC')
   }
 
   def children_count(association)
-    return edge.children_count(association) unless association == :motions
-    edge.descendants.published.untrashed.where(owner_type: 'Motion').count
+    return super unless association == :motions
+    descendants.active.where(owner_type: 'Motion').count
   end
 
   def default_decision_user
     nil
-  end
-
-  def self.find(*ids)
-    shortname = ids.length == 1 && ids.first.instance_of?(String) && ids.first
-    if shortname && shortname.to_i.zero?
-      find_via_shortname(shortname)
-    else
-      super(*ids)
-    end
   end
 
   def iri_opts

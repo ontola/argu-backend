@@ -58,7 +58,7 @@ module Portal
         ['VoteEvent.count', 0],
         ["VoteEvent.where(publisher_id: #{User::COMMUNITY_ID}).count", 1],
         ['Edge.count', 0],
-        ["Edge.where(user_id: #{User::COMMUNITY_ID}).count", 2]
+        ["Edge.where(publisher_id: #{User::COMMUNITY_ID}).count", 2]
       ]
       assert_differences(differences) do
         delete :destroy, params: {id: user.url, user: {confirmation_string: 'remove'}}
@@ -76,7 +76,7 @@ module Portal
         ['VoteEvent.count', -1],
         ["VoteEvent.where(publisher_id: #{User::COMMUNITY_ID}).count", 0],
         ['Edge.count', -2],
-        ["Edge.where(user_id: #{User::COMMUNITY_ID}).count", 0]
+        ["Edge.where(publisher_id: #{User::COMMUNITY_ID}).count", 0]
       ]
       assert_differences(differences) do
         delete :destroy, params: {id: user.url, user: {confirmation_string: 'remove', destroy_content: 'true'}}

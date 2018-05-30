@@ -7,12 +7,15 @@ module Loggable
   included do
     has_many :activities,
              -> { where("key ~ '*.!happened'") },
-             as: :trackable
+             foreign_key: :trackable_edge_id,
+             primary_key: :uuid,
+             dependent: :nullify
     has_one :trash_activity,
             -> { where("key ~ '*.trash'").order(created_at: :desc) },
             class_name: 'Activity',
-            as: :trackable
-    after_destroy :destroy_notifications
+            foreign_key: :trackable_edge_id,
+            primary_key: :uuid
+    before_destroy :destroy_notifications, prepend: true
 
     def destroy_notifications
       activities.each do |activity|

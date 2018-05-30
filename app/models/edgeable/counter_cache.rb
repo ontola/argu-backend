@@ -5,31 +5,29 @@ module Edgeable
     extend ActiveSupport::Concern
 
     included do
+      before_destroy :decrement_counter_caches, unless: :is_trashed?
+
+      private
+
       def counter_cache_names
         return [class_name] if self.class.counter_cache_options == true
         matches = self.class.counter_cache_options.select do |_, conditions|
-          conditions.except(:sql).all? do |key, value|
-            if value.is_a?(Symbol)
-              send("#{key}_before_type_cast").send(value)
-            else
-              send("#{key}_before_type_cast") == value
-            end
-          end
+          conditions.all? { |key, value| send("#{key}_before_type_cast") == value }
         end
         matches.map { |name, _options| name.to_s }
       end
 
       def decrement_counter_caches
         return unless owner&.class&.class_variable_defined?(:@@counter_cache_options)
-        owner.counter_cache_names.each do |counter_cache_name|
-          self.class.update_children_count_statement(parent.id, counter_cache_name, :-)
+        counter_cache_names.each do |counter_cache_name|
+          self.class.update_children_count_statement(parent_id, counter_cache_name, :-)
         end
       end
 
       def increment_counter_caches
         return unless owner&.class&.class_variable_defined?(:@@counter_cache_options)
-        owner.counter_cache_names.each do |counter_cache_name|
-          self.class.update_children_count_statement(parent.id, counter_cache_name, :+)
+        counter_cache_names.each do |counter_cache_name|
+          self.class.update_children_count_statement(parent_id, counter_cache_name, :+)
         end
       end
     end
@@ -51,7 +49,7 @@ module Edgeable
       def update_children_count_statement(id, name, operation)
         query = 'children_counts = children_counts || hstore(?, (cast(COALESCE(children_counts -> ?, \'0\') AS int) '\
                 "#{operation} 1)::text)"
-        Edge.where(id: id).update_all(sanitize_sql([query, name, name]))
+        Edge.unscoped.where(id: id).update_all(sanitize_sql([query, name, name]))
       end
 
       private
@@ -69,22 +67,16 @@ module Edgeable
       def fix_counts_query(cache_name, conditions)
         conditions = conditions.dup
         query =
-          Edge
-            .where(owner_type: base_class.name)
-            .where('edges.trashed_at IS NULL AND edges.is_published = true')
+          unscoped
+            .untrashed
+            .published
+            .joins(:parent)
             .select('parents_edges.id, parents_edges.parent_id, COUNT(parents_edges.id) AS count, ' \
                     "CAST(COALESCE(parents_edges.children_counts -> '#{connection.quote_string(cache_name.to_s)}', "\
                     "'0') AS integer) AS #{connection.quote_string(cache_name.to_s)}_count")
-            .joins('LEFT JOIN edges parents_edges ON parents_edges.id = edges.parent_id')
             .reorder('parents_edges.id ASC')
-        query = query.where(edges: {confirmed: true}) if conditions&.delete(:confirmed)
         return query if conditions.nil?
-        query = query.joins("INNER JOIN #{quoted_table_name} ON #{quoted_table_name}.id = edges.owner_id")
-        if conditions.key?(:sql)
-          query.where(conditions[:sql])
-        else
-          conditions.reduce(query) { |a, e| a.where(quoted_table_name => {e[0] => e[1]}) }
-        end
+        query.where(conditions)
       end
 
       def fix_counts_with_options(cache_name = nil, conditions = nil)

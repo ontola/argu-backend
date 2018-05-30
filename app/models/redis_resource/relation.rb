@@ -4,7 +4,7 @@ module RedisResource
   class Relation
     include Enumerable
     include ActiveModel::Model
-    attr_accessor :where_clause, :user, :owner_type, :edge_id
+    attr_accessor :where_clause, :user, :owner_type, :root_id
     attr_reader :parent, :parent_id
     delegate :count, :empty?, to: :filtered_keys
 
@@ -49,12 +49,13 @@ module RedisResource
     private
 
     def apply_filters(opts)
-      clear_key if (opts.keys & %i[publisher creator parent parent_id owner_type edge_id]).any?
+      clear_key if (opts.keys & %i[publisher creator parent parent_id owner_type root_id]).any?
       self.user = opts.delete(:publisher) if opts[:publisher].present?
       self.user = opts.delete(:creator)&.profileable if opts[:creator].present?
-      %i[parent parent_id owner_type edge_id].each do |attr|
+      %i[parent parent_id owner_type].each do |attr|
         send("#{attr}=", opts.delete(attr)) if opts[attr].present?
       end
+      self.root_id = parent&.root_id || opts.delete(:root_id)
       clear_filtered_keys if opts.present?
       where_clause.merge!(opts)
     end
@@ -94,7 +95,7 @@ module RedisResource
       @key ||= RedisResource::Key.new(
         user: user,
         owner_type: owner_type,
-        edge_id: edge_id,
+        root_id: root_id,
         parent: parent,
         parent_id: parent_id
       )

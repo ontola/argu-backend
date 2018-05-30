@@ -207,27 +207,25 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   test 'administrator should update settings' do
     sign_in create_administrator(holland)
-    assert_difference('holland.reload.lock_version', 1) do
-      put holland,
-          params: {
-            forum: {
-              name: 'new name',
-              bio: 'new bio',
-              default_profile_photo_attributes: {
-                id: holland.default_profile_photo.id,
-                content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
-                used_as: 'profile_photo'
-              },
-              default_cover_photo_attributes: {
-                content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
-                used_as: 'cover_photo'
-              }
+    put holland,
+        params: {
+          forum: {
+            name: 'new name',
+            bio: 'new bio',
+            default_profile_photo_attributes: {
+              id: holland.default_profile_photo.id,
+              content: fixture_file_upload(File.expand_path('test/fixtures/profile_photo.png'), 'image/png'),
+              used_as: 'profile_photo'
+            },
+            default_cover_photo_attributes: {
+              content: fixture_file_upload(File.expand_path('test/fixtures/cover_photo.jpg'), 'image/jpg'),
+              used_as: 'cover_photo'
             }
           }
-    end
+        }
 
-    holland.reload
     assert_redirected_to settings_iri_path(holland, tab: :general)
+    assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal 'new name', holland.name
     assert_equal 'new bio', holland.bio
     assert_equal 'profile_photo.png', holland.default_profile_photo.content_identifier
@@ -239,7 +237,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     nominatim_netherlands
     sign_in create_administrator(holland)
     assert_equal holland.edge.reload.places.first.country_code, 'GB'
-    assert_differences([['holland.reload.lock_version', 1], ['Placement.count', 0]]) do
+    assert_differences([['Placement.count', 0]]) do
       put holland,
           params: {
             forum: {
@@ -247,6 +245,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
             }
           }
     end
+    assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal holland.reload.locale, 'nl-NL'
     assert_equal holland.edge.reload.places.first.country_code, 'NL'
   end
@@ -323,12 +322,12 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland.edge,
            grant_set: GrantSet.participator)
     assert_differences([['transfer_to.forums.reload.count', 1], ['holland.edge.reload.grants.size', -1]]) do
-      put move_iri_path(holland, edge_id: transfer_to.edge.id)
+      put move_iri_path(holland, edge_id: transfer_to.uuid)
     end
-    holland.reload
-    assert_equal holland.edge.parent, transfer_to.edge
-    assert_equal holland.edge.root, transfer_to.edge
-    assert_equal holland.questions.first.root, transfer_to.edge
+    assert_equal holland.parent, transfer_to
+    holland.instance_variable_set('@root', nil)
+    assert_equal holland.root, transfer_to
+    assert_equal holland.questions.first.root, transfer_to
   end
 
   test 'staff should post create forum with latlon' do

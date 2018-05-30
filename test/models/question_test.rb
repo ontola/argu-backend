@@ -14,7 +14,7 @@ class QuestionTest < ActiveSupport::TestCase
     result = subject.convert_to(Motion)
     assert result[:new].is_a?(Motion)
     assert result[:old].is_a?(Question)
-    assert_not result[:old].persisted?
+    assert_equal result[:new].display_name, result[:old].display_name
   end
 
   test 'raise when converting to non-convertible class' do

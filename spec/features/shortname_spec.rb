@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Shortname', type: :feature do
-  define_freetown(attributes: {name: 'freetown', max_shortname_count: 3})
+  define_freetown(attributes: {name: 'freetown'})
   let(:administrator) { create_administrator(argu) }
   let(:motion) { create(:motion, parent: freetown.edge) }
   let!(:shortname) { create(:discussion_shortname, owner: create(:motion, parent: freetown.edge).edge, primary: false) }

@@ -28,13 +28,13 @@ table.styled
                 = t('roles.list.remove_html', url: grant.iri_path)
       td
         - if policy(resource.edge).create_child?(:grants)
-          =link_to new_iri_path(page, :grants, query: {edge_id: resource.edge.id, group_id: group.id}), class: 'btn--light btn--smaller' do
+          =link_to new_iri_path(page, :grants, query: {edge_id: resource.edge.uuid, group_id: group.id}), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
 - if policy(page).create_child?(:groups)
   =link_to new_iri_path(page, :groups), class: 'btn margin-bottom margin-right' do
     span.fa.fa-plus
     span.icon-left= t('groups.new')
 - if policy(resource.edge).create_child?(:grants)
-  =link_to new_iri_path(page, :grants, edge_id: resource.edge), class: 'btn margin-bottom' do
+  =link_to new_iri_path(page, :grants, query: {edge_id: resource.edge.uuid}), class: 'btn margin-bottom' do
     span.fa.fa-plus
     span.icon-left= t('grants.new')

@@ -73,7 +73,7 @@ RSpec.feature 'Comments', type: :feature do
       click_link 'Reply'
     end
 
-    within("#cf#{Comment.last.id}") do
+    within("#cf#{Comment.last.uuid}") do
       expect(page).to have_field('comment[body]')
       fill_in 'comment[body]', with: comment_args[:body]
       click_button 'Reply'

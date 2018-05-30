@@ -151,8 +151,7 @@ other_page = FactorySeeder.create(
   is_published: true,
   profile: FactorySeeder.build(:profile, name: 'Other page'),
   base_color: '#800000',
-  url: 'other_page',
-  edge_attributes: {user: staff, is_published: true}
+  url: 'other_page'
 )
 other_page_forum = FactorySeeder.create_forum(
   parent: other_page.edge,

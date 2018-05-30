@@ -19,7 +19,6 @@ class Profile < ApplicationRecord
   has_many :group_memberships, -> { active }, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :unscoped_group_memberships, class_name: 'GroupMembership', foreign_key: :member_id, dependent: :destroy
   has_many :groups, through: :group_memberships
-  has_many :edges, dependent: :restrict_with_exception, foreign_key: :creator_id
   has_many :grants, through: :groups
   has_many :granted_edges_scope, through: :grants, source: :edge, class_name: 'Edge'
   has_many :votes, inverse_of: :creator, foreign_key: :creator_id, dependent: :destroy
@@ -36,6 +35,7 @@ class Profile < ApplicationRecord
            inverse_of: :creator,
            foreign_key: 'creator_id',
            dependent: :restrict_with_exception
+  has_many :edges, dependent: :restrict_with_exception, foreign_key: :creator_id
 
   delegate :iri, to: :profileable
 
@@ -104,13 +104,10 @@ class Profile < ApplicationRecord
     end
     @granted_edges[owner_type][grant_set] = scope
   end
-
-  def granted_records(owner_type: nil, grant_set: nil)
-    owner_type.constantize.where(id: granted_record_ids(owner_type: owner_type, grant_set: grant_set))
-  end
+  alias granted_records granted_edges
 
   def granted_record_ids(owner_type: nil, grant_set: nil)
-    granted_edges(owner_type: owner_type, grant_set: grant_set).pluck(:owner_id)
+    granted_edges(owner_type: owner_type, grant_set: grant_set).pluck(:id)
   end
 
   def self.includes_for_profileable

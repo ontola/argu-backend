@@ -21,18 +21,12 @@ module ColumnRendererHelper
       end
     end
 
-    model = columns.is_a?(Edge) ? columns.owner : columns
-    render partial: partial, locals: {model: model}.merge(options: options.with_indifferent_access)
+    render partial: partial, locals: {model: columns}.merge(options: options.with_indifferent_access)
   end
 
   def column_partial(columns)
-    included_models = [Motion, ProArgument, ConArgument, Vote, Question,
-                       Comment, BlogPost, Decision, LinkedRecord]
-    if included_models.include?(columns.class)
-      "#{columns.class.base_class.name.tableize}/show"
-    else
-      'column_renderer/show'
-    end
+    return 'arguments/show' if columns.class.name.include?('Argument')
+    columns.class < Edge ? "#{columns.class_name}/show" : 'column_renderer/show'
   end
 
   def button_box(params)

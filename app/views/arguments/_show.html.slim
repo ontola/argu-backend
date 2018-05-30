@@ -12,4 +12,4 @@
   - if model.top_comment.present? && policy(model).index_children?(:comments)
     =link_to model, remote: true
       section.unpadded.section--bottom
-        =render 'comments/small_comment', resource: policy_scope(model.comments).first.owner, parent: model
+        =render 'comments/small_comment', resource: policy_scope(model.comments.reorder(created_at: :desc)).first, parent: model

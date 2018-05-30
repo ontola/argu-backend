@@ -45,11 +45,11 @@ module DiscussionsHelper
       defaultRole: GrantSet.participator.id,
       forumEdge: resource.parent_edge(:forum).uuid,
       forumName: resource.parent_model(:forum).display_name,
-      forumNames: resource.parent_model(:page).forums.pluck(:name).join(', '),
+      forumNames: resource.parent_model(:page).forums.map(&:name).join(', '),
       groups: discussion_invite_groups(resource),
       managedProfiles: managed_profiles_list,
       message: t('tokens.discussion.default_message', resource: resource.display_name),
-      pageEdge: resource.parent_edge(:page).uuid,
+      pageEdge: resource.root_id,
       resource: resource.canonical_iri,
       roles: GrantSet
                .selectable
@@ -61,16 +61,16 @@ module DiscussionsHelper
   def move_options(resource)
     case resource
     when Motion
-      resource.parent_model(:page).forums.includes(:edge).flat_map do |forum|
-        [["Forum #{forum.display_name}", forum.edge.id, style: 'font-weight: bold']].concat(
-          forum.questions.untrashed.includes(:edge).map { |question| ["- #{question.display_name}", question.edge.id] }
+      resource.parent_model(:page).forums.flat_map do |forum|
+        [["Forum #{forum.display_name}", forum.uuid, style: 'font-weight: bold']].concat(
+          forum.questions.untrashed.map { |question| ["- #{question.display_name}", question.uuid] }
         )
       end
     when Forum
-      Page.includes(:edge).map { |page| [page.display_name, page.edge.id] }
+      Page.map { |page| [page.display_name, page.uuid] }
     else
-      resource.parent_model(:page).forums.includes(:edge).map do |forum|
-        ["Forum #{forum.display_name}", forum.edge.id]
+      resource.parent_model(:page).forums.map do |forum|
+        ["Forum #{forum.display_name}", forum.uuid]
       end
     end
   end

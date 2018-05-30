@@ -14,7 +14,7 @@ class ApplicationService
     prepare_attributes
     assign_attributes
     set_nested_associations
-    unless resource.is_a?(Activity) || resource.is_a?(Grant)
+    unless resource.is_a?(Activity) || resource.is_a?(Grant) || options.fetch(:publisher)&.guest?
       subscribe(
         ActivityListener.new(
           comment: options[:comment],
@@ -153,7 +153,7 @@ class ApplicationService
   def object_attributes=(obj); end
 
   def prepare_attributes
-    return unless resource < Edge
+    return unless resource.is_a?(Edge)
     prepare_argu_publication_attributes
     prepare_placement_attributes
     @attributes.permit! if @attributes.is_a?(ActionController::Parameters)

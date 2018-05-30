@@ -4,8 +4,6 @@ module BlogPostable
   extend ActiveSupport::Concern
 
   included do
-    has_many_through_edge :blog_posts
-
     with_collection :blog_posts, pagination: true
   end
 

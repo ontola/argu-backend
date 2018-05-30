@@ -14,7 +14,7 @@ en:
         to_group: "%{owner} forwarded the decision on %{parent} to one of your groups"
         to_you: "%{owner} forwarded the decision on %{parent} to you"
       rejected: "%{owner} rejected %{parent}"
-      create: "%{owner} posted a concept decision in %{parent}"
+      create: "%{owner} posted a draft decision in %{parent}"
       update: "%{owner} updated a decision on %{parent}"
     default:
       convert: "%{owner} converted %{subject} into a %{type}"

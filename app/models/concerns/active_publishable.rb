@@ -18,6 +18,7 @@ module ActivePublishable
             class_name: 'Publication',
             foreign_key: :publishable_id,
             primary_key: :uuid
+    accepts_nested_attributes_for :argu_publication
 
     def is_draft?
       edge.published_publications.empty?

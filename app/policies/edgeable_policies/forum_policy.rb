@@ -4,14 +4,14 @@ class ForumPolicy < EdgePolicy
   class Scope < Scope
     def resolve
       scope
-        .joins(:edge)
-        .where("discoverable = true OR edges.path ? #{Edge.path_array(user.profile.granted_edges)}")
+        .property_join(:discoverable)
+        .where("discoverable_filter.value = true OR edges.path ? #{Edge.path_array(user.profile.granted_edges)}")
     end
   end
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[name bio bio_long profile_id locale public_grant page]
+    attributes.concat %i[display_name bio bio_long profile_id locale public_grant page]
     attributes.concat %i[discoverable] if staff?
     attributes
   end

@@ -124,7 +124,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
            created_at: 1.day.ago)
 
     create(:follow,
-           followable: argument.activities.first.recipient_edge,
+           followable: argument.activities.first.recipient,
            follower: user)
   end
 

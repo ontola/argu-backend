@@ -2,16 +2,11 @@
 
 class VoteEvent < Edge
   DEFAULT_ID = 'default'
-
-  has_many_through_edge :votes, where: {primary: true}
-
   with_collection :votes, pagination: true
 
   parentable :motion, :linked_record
 
   property :starts_at, :datetime, NS::SCHEMA[:startDate]
-
-  delegate :is_trashed?, to: :parent_model
 
   def con_count
     children_count(:votes_con)
@@ -36,22 +31,21 @@ class VoteEvent < Edge
   def stats
     return @stats if @stats.present?
     totals = Vote
-               .joins(:edge)
-               .where(edges: {parent_id: edge.id})
+               .where(parent_id: edge.id)
                .select('votes.for, count(*) as count')
                .group(:for)
                .to_a
     totals_confirmed = Vote
-                         .joins(:edge, publisher: :email_addresses)
+                         .joins(publisher: :email_addresses)
                          .where('email_addresses.confirmed_at IS NOT NULL')
-                         .where(edges: {parent_id: edge.id})
+                         .where(parent_id: edge.id)
                          .select('votes.for, count(DISTINCT votes.id) as count')
                          .group(:for)
                          .to_a
     totals_facebook = Vote
-                        .joins(:edge, publisher: :identities)
+                        .joins(publisher: :identities)
                         .where(identities: {provider: 'facebook'})
-                        .where(edges: {parent_id: edge.id})
+                        .where(parent_id: edge.id)
                         .select('votes.for, count(DISTINCT votes.id) as count')
                         .group(:for)
                         .to_a

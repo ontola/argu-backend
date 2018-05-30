@@ -4,7 +4,6 @@ module Motionable
   extend ActiveSupport::Concern
 
   included do
-    has_many_through_edge :motions
     with_collection :motions, pagination: true
   end
 

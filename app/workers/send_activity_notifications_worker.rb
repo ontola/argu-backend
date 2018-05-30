@@ -32,28 +32,28 @@ class SendActivityNotificationsWorker
 
   def add_prepared_notification(result, notification)
     activity = notification.activity
-    trackable_edge = activity.trackable_edge
-    followable_edge = activity.new_content? ? activity.recipient_edge : trackable_edge
-    return if followable_edge.nil?
+    trackable = activity.trackable
+    followable = activity.new_content? ? activity.recipient : trackable
+    return if followable.nil?
 
-    result[followable_edge.id] ||= Struct::Follow.new(
-      @user.follow_for(followable_edge)&.unsubscribe_iri,
-      {display_name: followable_edge.root.display_name},
+    result[followable.id] ||= Struct::Follow.new(
+      @user.follow_for(followable)&.unsubscribe_iri,
+      {display_name: followable.root.display_name},
       {
-        id: followable_edge.owner.iri,
-        display_name: followable_edge.display_name,
-        pro: followable_edge.owner.try(:pro),
-        type: followable_edge.owner_type
+        id: followable.owner.iri,
+        display_name: followable.display_name,
+        pro: followable.owner.try(:pro),
+        type: followable.owner_type
       },
       []
     )
-    result[followable_edge.id].notifications << {
+    result[followable.id].notifications << {
       action: activity.action,
-      content: activity.comment || trackable_edge.content,
-      id: trackable_edge.owner.iri,
-      display_name: trackable_edge.display_name,
-      pro: trackable_edge.owner.try(:pro),
-      type: trackable_edge.owner_type,
+      content: activity.comment || trackable.content,
+      id: trackable.iri,
+      display_name: trackable.display_name,
+      pro: trackable.owner.try(:pro),
+      type: trackable.owner_type,
       creator: {
         id: activity.owner.iri,
         thumbnail: activity.owner.default_profile_photo.thumbnail,
@@ -85,10 +85,9 @@ class SendActivityNotificationsWorker
     result = {}
     @notifications
       .includes(
-        activity: {
-          owner: %i[default_profile_photo profileable],
-          recipient_edge: :owner, trackable_edge: :owner
-        }
+        activity: [
+          :recipient, :trackable, owner: %i[default_profile_photo profileable]
+        ]
       )
       .each { |notification| add_prepared_notification(result, notification) }
     Hash[result.map { |k, v| [k, v.to_h] }]

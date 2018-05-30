@@ -8,7 +8,7 @@ module ArgumentsHelper
     %i[pro con].each do |side|
       is_checked = side == (model.pro ? :pro : :con)
       values << [
-        t("#{model.class.base_class.name.tableize}.form.side.#{side}"),
+        t("arguments.form.side.#{side}"),
         side,
         {checked: is_checked, class: ('checked' if is_checked).to_s}
       ]

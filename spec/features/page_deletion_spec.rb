@@ -37,7 +37,7 @@ RSpec.feature 'Page deletion', type: :feature do
            creator: forum_page.profile,
            publisher: user)
   end
-  let!(:forum_page) { create(:page, owner: user.profile) }
+  let!(:forum_page) { create(:page, publisher: user, creator: user.profile) }
   let(:nederland) { create(:place, address: {'country_code' => 'nl'}) }
 
   scenario 'user should delete destroy' do

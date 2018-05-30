@@ -57,6 +57,9 @@ Rails.application.routes.draw do
   concern :contactable do
     resources :direct_messages, path: :dm, only: [:new]
   end
+  concern :convertible do
+    resources :conversions, path: 'conversion', only: %i[new create]
+  end
   concern :destroyable do
     delete '', action: :destroy, on: :member, as: :destroy
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
@@ -328,7 +331,8 @@ Rails.application.routes.draw do
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
                   except: %i[index new create],
-                  concerns: %i[actionable votable feedable trashable commentable menuable contactable statable loggable]
+                  concerns: %i[actionable votable feedable trashable commentable menuable convertible
+                               contactable statable loggable]
       end
       resources :banners, except: %i[index show new create]
       resources :blog_posts,
@@ -353,12 +357,13 @@ Rails.application.routes.draw do
                 path: 'm',
                 except: %i[index new create destroy],
                 concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
-                             feedable trashable decisionable invitable menuable statable exportable loggable] do
+                             feedable trashable decisionable invitable menuable statable exportable loggable
+                             convertible] do
         resources :media_objects, only: :index
       end
       resources :questions,
                 path: 'q', except: %i[index new create],
-                concerns: %i[actionable commentable blog_postable moveable feedable exportable
+                concerns: %i[actionable commentable blog_postable moveable feedable exportable convertible
                              trashable invitable menuable contactable statable loggable] do
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]

@@ -38,7 +38,7 @@ RSpec.describe 'Forums', type: :request do
 
   context 'portal routes' do
     let(:expect_redirect_to_login) { expect_not_found }
-    let(:new_path) { new_portal_forum_path(forum: {page_id: non_existing_id}) }
+    let(:new_path) { new_portal_forum_path(page_id: argu.url) }
     let(:non_existing_new_path) { new_portal_forum_path(page_id: non_existing_id) }
     let(:create_path) { portal_forums_path }
     let(:non_existing_create_path) { portal_forums_path(page_id: non_existing_id) }
@@ -48,7 +48,6 @@ RSpec.describe 'Forums', type: :request do
     end
     let(:create_differences) { [['Forum.count', 1]] }
     let(:expect_post_create_guest_serializer) { expect_not_found }
-    let(:expect_get_new) { expect_not_found }
     it_behaves_like 'get new'
     it_behaves_like 'post create'
   end

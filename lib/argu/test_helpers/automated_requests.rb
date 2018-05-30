@@ -138,7 +138,6 @@ module Argu
           let(:expect_put_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_move) do
             expect(response).to redirect_to(subject.reload.iri_path)
-            subject.reload
             assert_equal other_page_forum, subject.parent_model
             case subject
             when Motion
@@ -148,7 +147,7 @@ module Argu
             end
             assert subject.activities.count.positive?
             subject.activities.pluck(:forum_id).each do |id|
-              assert_equal other_page_forum.id, id
+              assert_equal other_page_forum.uuid, id
             end
             subject.activities.pluck(:recipient_id).each do |id|
               assert_equal other_page_forum.id, id
@@ -184,7 +183,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, '1'] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {edge_id: other_page_forum.edge.id} }
+          let(:move_params) { {edge_id: other_page_forum.edge.uuid} }
           let(:destroy_params) { {} }
 
           # Paths

@@ -8,16 +8,18 @@ FactoryGirl.define do
   factory :page do
     last_accepted Time.current
     visibility Page.visibilities[:open]
-    edge { Edge.new(is_published: true, root_id: SecureRandom.uuid) }
+    is_published true
 
     before(:create) do |page|
+      page.publisher ||= build(:user)
+      page.creator ||= page.publisher.profile
       page.profile ||= build(:profile, profileable: page)
       page.profile.name = generate(:page_name) if page.profile.name.blank?
+      page.shortname = build(:shortname) if page.shortname&.shortname&.nil?
+      page.is_published = true
     end
 
     after(:build) do |page|
-      page.edge.root_id = page.edge.uuid
-      page.edge.user ||= page.publisher
       page.url ||= build(:shortname).shortname
     end
   end

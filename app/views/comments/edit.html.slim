@@ -4,4 +4,4 @@
   div[data-intro= t('intro.argument.back')]
     =to_parent
   .box
-    =render partial: 'comments/form', locals: {resource: resource, parent_id: @parent_id, visible: true, comment: comment, remote: false }
+    =render partial: 'comments/form', locals: {resource: resource, parent_id: comment.parent_comment&.uuid, visible: true, comment: comment, remote: false }

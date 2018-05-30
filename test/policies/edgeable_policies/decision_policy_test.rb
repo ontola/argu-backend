@@ -23,7 +23,7 @@ class DecisionPolicyTest < PolicyTest
            happening_attributes: {happened_at: Time.current})
   end
   let(:approve_forwarded_subject) do
-    Decision.approved.new(edge: motion.edge.children.new(user: creator, parent: motion.edge))
+    Decision.approved.new(parent: motion.edge, publisher: creator)
   end
 
   generate_edgeable_tests

@@ -4,10 +4,6 @@ module Argumentable
   extend ActiveSupport::Concern
 
   included do
-    has_many_through_edge :arguments
-    has_many_through_edge :pro_arguments
-    has_many_through_edge :con_arguments
-
     with_collection :pro_arguments, pagination: true
     with_collection :con_arguments, pagination: true
 

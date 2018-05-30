@@ -12,15 +12,20 @@ class ForumsController < EdgeableController
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
   def index
-    edges = current_user.profile.granted_edges(grant_set: %w[moderator administrator])
-    @forums = Forum.joins(:edge).where("edges.path ? #{Edge.path_array(edges)}")
+    edge_ids =
+      current_user
+        .profile
+        .granted_edges(grant_set: %w[moderator administrator])
+        .pluck(:uuid)
+        .uniq
+    @forums = Forum.joins(:parent).where('edges.uuid IN (?) OR parents_edges.uuid IN (?)', edge_ids, edge_ids)
     @_pundit_policy_scoped = true
   end
 
   def discover
     @forums = policy_scope(Forum)
                 .public_forums
-                .includes(:default_cover_photo, :default_profile_photo, edge: :shortname)
+                .includes(:default_cover_photo, :default_profile_photo, :shortname)
                 .page show_params[:page]
     render
   end
@@ -87,7 +92,7 @@ class ForumsController < EdgeableController
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id], root_from_params&.uuid) || raise(ActiveRecord::RecordNotFound)
-    return if resource.owner_type == 'Forum'
+    return if resource.owner.is_a?(Forum)
     redirect_to resource.owner.iri_path
     send_event category: 'short_url',
                action: 'follow',

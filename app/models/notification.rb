@@ -46,7 +46,7 @@ class Notification < ApplicationRecord
   def url_object
     href =
       if activity.present?
-        activity.trackable_type == 'BlogPost' ? url_for_blog_post(activity.trackable) : activity.trackable.iri
+        activity.trackable.owner_type == 'BlogPost' ? url_for_blog_post(activity.trackable) : activity.trackable.iri
       else
         url
       end

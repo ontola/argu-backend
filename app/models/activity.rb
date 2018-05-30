@@ -28,8 +28,8 @@ class Activity < PublicActivity::Activity
   attr_accessor :silent
 
   validates :key, presence: true
-  validates :trackable, :trackable_edge, :recipient, :recipient_edge, :owner,
-            presence: {on: :create, if: proc { |a| a.trackable_type != 'Banner' && a.action != 'destroy' }}
+  validates :trackable, :recipient, :owner,
+            presence: {on: :create, if: proc { |a| a.action != 'destroy' }}
 
   alias edgeable_record trackable
 
@@ -64,13 +64,13 @@ class Activity < PublicActivity::Activity
   # @note See Follow.follow_types, Publication.follow_types and Notification.notification_types
   # @return [String] The follow type
   def follow_type
-    new_content? && trackable_edge.try(:argu_publication)&.follow_type || 'reactions'
+    new_content? && trackable.try(:argu_publication)&.follow_type || 'reactions'
   end
 
   def new_content?
     case action
     when 'create'
-      %w[argument comment].include?(object)
+      %w[con_argument pro_argument comment].include?(object)
     when 'publish'
       %w[blog_post motion question].include?(object)
     when 'approved', 'rejected', 'forwarded'
@@ -86,7 +86,7 @@ class Activity < PublicActivity::Activity
 
   def touch_edges
     return if %w[destroy trash untrash].include?(action) || silent
-    trackable_edge.touch(:last_activity_at) if trackable_edge&.persisted?
-    recipient_edge.touch(:last_activity_at) if recipient_edge&.persisted? && !%w[Vote].include?(trackable_type)
+    trackable.touch(:last_activity_at) if trackable&.persisted?
+    recipient.touch(:last_activity_at) if recipient&.persisted? && !%w[Vote].include?(trackable_type)
   end
 end

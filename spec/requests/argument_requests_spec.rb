@@ -36,7 +36,7 @@ RSpec.describe 'Arguments', type: :request do
 
   context 'with non-persisted linked_record parent' do
     let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
-    subject { build(:argument, edge: Edge.new(parent: non_persisted_linked_record.edge)) }
+    subject { build(:argument, parent: non_persisted_linked_record) }
     let(:parent_path) {}
     it_behaves_like 'post create', skip: %i[html]
     it_behaves_like 'get index', skip: %i[html]

@@ -36,17 +36,17 @@ module ChildOperations
 
   def child_instance(klass)
     child = klass.new(child_attrs(klass))
-    if child.is_a?(EdgeableBase)
+    if child.is_a?(Edge)
       child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
-      child = record.edge.children.new(owner: child, is_published: true, parent: record.edge).owner
-      child.edge.persisted_edge = persisted_edge
-      child.edge.parent = record.edge
-      child.parent_model = record
+      child.persisted_edge = persisted_edge
       grant_tree.cache_node(persisted_edge)
+    else
+      child = klass.new(child_attrs(klass))
     end
     child
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def child_attrs(raw_klass)
     case raw_klass.to_s
     when 'Discussion'
@@ -60,15 +60,16 @@ module ChildOperations
     when 'MediaObject'
       {about: record}
     when 'Decision'
-      {state: 'forwarded'}
+      {state: 'forwarded', parent: record.edge}
     else
-      {}
+      raw_klass <= Edge ? {parent: record.edge} : {}
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def valid_parent?(klass)
     return false unless klass.respond_to?(:parent_classes)
-    klass.parent_classes.include?(record.class.base_class.name.underscore.to_sym) ||
-      record.is_a?(EdgeableBase) && klass.parent_classes.include?(:edge)
+    klass.parent_classes.include?(record.class.name.underscore.to_sym) ||
+      record.is_a?(Edge) && klass.parent_classes.include?(:edge)
   end
 end

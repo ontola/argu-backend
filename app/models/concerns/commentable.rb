@@ -4,20 +4,17 @@ module Commentable
   extend ActiveSupport::Concern
 
   included do
-    has_one_through_edge :top_comment
-    has_many_through_edge :comments
-
     with_collection :comments,
                     association: :filtered_threads,
                     pagination: true,
                     includes: {
                       default_vote_event: {},
-                      parent: :owner,
+                      parent: {},
                       creator: :profileable
                     }
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
-      i = edge.comments.order(order).page(page)
+      i = edge.root_comments.order(order).page(page)
       unless show_trashed
         i.each do |edge|
           edge.owner.shallow_wipe if edge.owner_type == 'Comment'

@@ -73,7 +73,13 @@ class TokensTest < ActionDispatch::IntegrationTest
     other_guest_vote
     vote
 
-    assert_differences([['Doorkeeper::AccessToken.count', 1], ['Vote.count', 1], ['Favorite.count', 0]]) do
+    differences = [
+      ['Doorkeeper::AccessToken.count', 1],
+      ['Vote.count', 1],
+      ['Favorite.count', 0],
+      ['Argu::Redis.keys("temp*").count', -2]
+    ]
+    assert_differences(differences) do
       Sidekiq::Testing.inline! do
         post oauth_token_path,
              headers: argu_headers(host: 'argu.co'),

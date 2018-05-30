@@ -2,7 +2,7 @@
 
 module RedisResource
   class Key
-    attr_accessor :key, :user, :user_type, :user_id, :owner_type, :edge_id
+    attr_accessor :key, :user, :user_type, :user_id, :owner_type, :root_id
     attr_reader :parent, :parent_id
 
     # Returns the attributes stored in redis for this key
@@ -20,23 +20,19 @@ module RedisResource
     # @option opts [Integer, String] user_id
     # @option opts [User] user
     # @option opts [String] owner_type
-    # @option opts [Integer, String] edge_id
+    # @option opts [Uuid] root_id
     # @option opts [Edge] parent
     # @option opts [Integer] parent_id
     def initialize(opts = {})
       opts.compact!
       self.user_type ||= opts[:user]&.class&.to_s&.underscore || opts.fetch(:user_type, '*')
       self.user_id ||= opts[:user]&.id || opts.fetch(:user_id, '*')
-      self.user =
-        opts[:user] ||
-        (user_type == 'user' && User.find_by(id: user_id)) ||
-        (user_type == 'guest_user' && GuestUser.new(id: user_id)) ||
-        nil
+      self.user = opts[:user] || load_user || nil
+      self.root_id ||= opts.fetch(:root_id, '*')
       self.owner_type ||= opts.fetch(:owner_type, '*')
-      self.edge_id ||= opts.fetch(:edge_id, '*')
       self.parent ||= opts.fetch(:parent, nil)
       self.parent_id ||= opts.fetch(:parent_id, '*')
-      self.key = "temporary.#{user_type.underscore}.#{user_id}.#{owner_type.underscore}.#{edge_id}.#{parent_id}"
+      self.key = "temporary.#{user_type.underscore}.#{user_id}.#{root_id}.#{owner_type.underscore}.#{parent_id}"
     end
 
     def edge
@@ -52,10 +48,14 @@ module RedisResource
       @matched_keys ||=
         if has_wildcards?
           keys = Argu::Redis.keys(key).map { |key| RedisResource::Key.parse(key, user) }.compact
-          parent_edges = Edge.where(id: keys.map(&:parent_id))
-          keys.each { |key| key.parent = parent_edges.find { |edge| edge.id == key.parent_id.to_i } }
+          keys.map(&:root_id).uniq.each do |root_id|
+            scoped_keys = keys.select { |k| k.root_id == root_id }
+            parent_edges = Edge.where(root_id: root_id, id: scoped_keys.map(&:parent_id))
+            scoped_keys.each { |key| key.parent = parent_edges.find { |edge| edge.id == key.parent_id.to_i } }
+          end
+          keys
         else
-          [self]
+          Argu::Redis.exists(key) ? [self] : []
         end
     end
 
@@ -78,11 +78,17 @@ module RedisResource
       )
     end
 
+    private
+
+    def load_user
+      (user_type == 'user' && User.find_by(id: user_id)) || (user_type == 'guest_user' && GuestUser.new(id: user_id))
+    end
+
     class << self
       def parse(key, user = nil)
         values = key.split('.')
         key = new(
-          Hash[%i[user_type user_id owner_type edge_id parent_id].map.with_index { |k, i| [k, values[i + 1]] }]
+          Hash[%i[user_type user_id root_id owner_type parent_id].map.with_index { |k, i| [k, values[i + 1]] }]
             .merge(user: user)
         )
         key if key.user.present?

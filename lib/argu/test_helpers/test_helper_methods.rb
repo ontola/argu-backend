@@ -105,7 +105,7 @@ module Argu
         def create_administrator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.parent_model(:page)
-          create(:group_membership, parent: page.edge.groups.custom.first, member: user.profile)
+          create(:group_membership, parent: page.groups.find_by(name: 'Admins'), member: user.profile)
           user
         end
 

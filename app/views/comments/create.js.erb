@@ -1,5 +1,5 @@
-var _parent = $('<%= @comment.parent.present? ? "##{@comment.parent.identifier}" : '.comments-container' %>');
-<% if @comment.parent.present? %>
+var _parent = $('<%= @comment.parent_comment.present? ? "##{@comment.parent_comment.identifier}" : '.comments-container' %>');
+<% if @comment.parent_comment.present? %>
 _parent.find('.comment_form').hide().find('textarea').val('');
 _parent.append('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.parent_model, c: @comment } %>');
 <% else %>

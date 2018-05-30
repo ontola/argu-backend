@@ -8,7 +8,9 @@ class Portal::ForumsController < EdgeableController
   end
 
   def resource_new_params
-    HashWithIndifferentAccess.new
+    HashWithIndifferentAccess.new(
+      parent: parent_resource!
+    )
   end
 
   def respond_with_form_js(resource)

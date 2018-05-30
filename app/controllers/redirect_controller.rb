@@ -14,10 +14,12 @@ class RedirectController < ApplicationController
         .find_by!(owner_id: params[:id], owner_type: 'Motion')
         .decisions
         .joins('LEFT JOIN decisions ON decisions.id = edges.owner_id AND edges.owner_type = \'Decision\'')
-        .find_by(decisions: {step: params[:step]})
-        .owner
+        .find_by(step: params[:step])
+    when 'Argument'
+      Edge.find_by(owner_id: params[:id], owner_type: 'ConArgument') ||
+        Edge.find_by!(owner_id: params[:id], owner_type: 'ProArgument')
     else
-      Edge.find_by!(owner_id: params[:id], owner_type: params[:resource]).owner
+      Edge.find_by!(owner_id: params[:id], owner_type: params[:resource])
     end
   end
 end

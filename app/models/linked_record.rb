@@ -8,6 +8,8 @@ class LinkedRecord < Edge
   extend UriTemplateHelper
   extend UUIDHelper
 
+  alias_attribute :display_name, :identifier
+
   validates :deku_id, presence: true
 
   parentable :forum
@@ -17,7 +19,7 @@ class LinkedRecord < Edge
   VOTE_OPTIONS = %i[pro neutral con].freeze unless defined?(VOTE_OPTIONS)
 
   def default_vote_event
-    @default_vote_event ||= edge.default_vote_event&.owner || VoteEvent.new(
+    @default_vote_event ||= super || VoteEvent.new(
       parent: edge,
       is_published: true,
       starts_at: Time.current,
@@ -45,12 +47,16 @@ class LinkedRecord < Edge
       Page
         .find_via_shortname!(organization_shortname)
         .forums
-        .joins(edge: :shortname)
+        .joins(:shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?
-    edge =
-      forum.edge.children.new(is_published: true, publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID)
-    new(deku_id: id, edge: edge, root_id: forum.edge.root.uuid)
+    forum.edge.children.new(
+      is_published: true,
+      publisher: User.community,
+      creator: Profile.community,
+      owner_type: name,
+      deku_id: id
+    )
   end
 
   def self.create_for_forum(organization_shortname, forum_shortname, id)

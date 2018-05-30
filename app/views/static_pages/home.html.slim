@@ -7,7 +7,7 @@
           h2= t('forums.my')
           .group
             ul.box-list-links
-              - current_user.favorite_forums.includes(:default_profile_photo, edge: :shortname).each do |o|
+              - current_user.favorite_forums.includes(:default_profile_photo, :shortname).each do |o|
                 li
                   =link_to o.iri_path, data: {turbolinks: false_unless_iframe}
                     =image_tag o.default_profile_photo.url(:icon), size: '16x16'

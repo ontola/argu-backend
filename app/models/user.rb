@@ -205,7 +205,7 @@ class User < ApplicationRecord
   end
 
   def favorite_forums
-    Forum.joins(edge: :favorites).where('favorites.user_id = ?', id)
+    @favorite_forums ||= Forum.joins(:favorites).where('favorites.user_id = ?', id).includes(:properties)
   end
 
   def favorite_forum_ids
@@ -250,13 +250,11 @@ class User < ApplicationRecord
 
   # @return [ActiveRecord::Relation] The pages managed by the user
   def managed_pages
-    return @managed_pages if @managed_pages.present?
-    page_ids = profile
-                 .grants
-                 .joins(:edge, grant_set: :permitted_actions)
-                 .where(edges: {owner_type: 'Page'}, permitted_actions: {resource_type: 'Page', action: 'update'})
-                 .pluck('DISTINCT edges.owner_id')
-    @managed_pages = page_ids.present? ? Page.where(id: page_ids) : Page.none
+    @managed_pages ||=
+      Page
+        .joins(grants: {group: :group_memberships, grant_set: :permitted_actions})
+        .where(group_memberships: {member_id: profile.id}, permitted_actions: {resource_type: 'Page', action: 'update'})
+        .distinct
   end
 
   # Find the ids of profiles managed by the user, both its own profile as profiles of pages it manages

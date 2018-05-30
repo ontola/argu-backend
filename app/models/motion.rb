@@ -9,6 +9,8 @@ class Motion < Edge
   include Voteable
   include Attribution
   include HasLinks
+  include Moveable
+  include Photoable
 
   include BlogPostable
   include Timelineable
@@ -43,10 +45,13 @@ class Motion < Edge
   end
 
   def self.edge_includes_for_index(full = false)
-    includes = super().deep_merge(default_vote_event: {}, last_published_decision: {})
+    includes = super().deep_merge(default_vote_event: {}, last_published_decision: :properties)
     return includes unless full
     includes.deep_merge(
-      owner: {attachments: {}, creator: Profile.includes_for_profileable}
+      attachments: {},
+      creator: Profile.includes_for_profileable,
+      top_comment: [vote: :properties, creator: Profile.includes_for_profileable],
+      active_arguments: {}
     )
   end
 

@@ -12,6 +12,7 @@ class GrantTree
     @tree_root = root if root.is_a?(Edge)
     raise ArgumentError.new("Edge expected as root, but got: #{root}") unless @tree_root_id || @tree_root
     @cached_nodes = {}
+    @path_array = {}
   end
 
   def as_json(_opts = {})
@@ -21,9 +22,9 @@ class GrantTree
   def cache_node(node)
     return cached_node(node) if cached?(node)
     edge = node.is_a?(Edge) ? node : Edge.find_by!(id: node)
-    ancestors =
-      Edge.where(root_id: tree_root_id, id: edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id])
-    (ancestors + [edge]).each do |ancestor|
+    ancestor_ids = edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id]
+    ancestors = ancestor_ids.present? ? Edge.where(root: tree_root, id: ancestor_ids) : []
+    (ancestors + [edge]).sort_by { |e| e.path.length }.each do |ancestor|
       cached_nodes[ancestor.id] =
         ancestor.parent_id.nil? ? root_node(ancestor) : find_or_cache_node(ancestor.parent_id).add_child(ancestor)
     end
@@ -84,6 +85,10 @@ class GrantTree
       .flatten
   end
 
+  def path_array(user)
+    @path_array[tree_root_id] ||= Edge.path_array(user.profile.granted_edges.where(root_id: tree_root_id))
+  end
+
   # Find the permitted parent_types for the given filters
   # @param [Edge] edge The edge to check
   # @param [Hash] filters The filters the grants should apply to
@@ -120,6 +125,7 @@ class GrantTree
   private
 
   def cached_node(edge)
+    raise 'UUID given' if uuid?(edge)
     cached_nodes[edge.is_a?(Edge) ? edge.id : edge]
   end
 
@@ -130,13 +136,13 @@ class GrantTree
   end
 
   def find_or_cache_node(edge)
-    cached_node(edge) || cache_node(edge)
+    cached_node(edge) || cache_node(edge) || raise('Edge not found')
   end
 
   def root_node(node = nil)
-    return cached_node(tree_root_id) if cached?(tree_root_id)
+    return cached_node(tree_root.id) if cached?(tree_root.id)
     raise SecurityError.new('Node with different root given') if node.root_id != tree_root_id
     @tree_root ||= node if node.present?
-    cached_nodes[tree_root_id] = Node.new(tree_root, nil, self)
+    cached_nodes[tree_root.id] = Node.new(tree_root, nil, self)
   end
 end

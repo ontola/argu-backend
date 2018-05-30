@@ -19,7 +19,7 @@ class Feed
       when User
         favorite_activities
       else
-        raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(EdgeableBase)
+        raise "#{parent.class} is not a valid parent type for generating a feed" unless parent.is_a?(Edge)
         edge_activities
       end
   end
@@ -37,10 +37,10 @@ class Feed
   def activity_base
     scope = Activity
               .includes(:owner)
-              .joins(:trackable_edge)
+              .joins(:trackable, :recipient)
               .loggings
-              .where('trackable_type != ?', 'Banner')
-              .where('trackable_type != ? OR recipient_type != ?', 'Vote', 'Argument')
+              .where('edges.owner_type != ?', 'Banner')
+              .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
     return scope unless relevant_only
     scope.where('key IN (?)', RELEVANT_KEYS)
   end

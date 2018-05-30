@@ -4,6 +4,14 @@ module IRIHelper
   include RedirectHelper
   include UUIDHelper
 
+  def edge_from_opts(opts)
+    if uuid?(opts[:id])
+      Edge.find_by(uuid: opts[:id])
+    else
+      Edge.find_by(fragment: opts[:id], root_id: root_id_from_opts(opts))
+    end
+  end
+
   # Converts an Argu URI into a hash containing the type and id of the resource
   # @return [Hash] The id and type of the resource, or nil if the IRI is not found
   # @example Valid IRI
@@ -35,12 +43,10 @@ module IRIHelper
 
   def resource_from_opts(opts)
     return if opts[:class].blank? || opts[:id].blank?
-    if opts[:class] == Edge && uuid?(opts[:id])
-      Edge.find_by(uuid: opts[:id])
-    elsif opts[:class].try(:shortnameable?)
+    if opts[:class].try(:shortnameable?) && (/[a-zA-Z]/i =~ opts[:id]).present?
       shortnameable_from_opts(opts)
-    elsif opts[:class] < EdgeableBase
-      Edge.find_by(fragment: opts[:id], root_id: root_id_from_opts(opts))&.owner
+    elsif opts[:class] <= Edge
+      edge_from_opts(opts)
     else
       opts[:class]&.find_by(id: opts[:id])
     end

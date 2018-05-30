@@ -9,8 +9,8 @@ module RedisResource
     let(:guest_user) { GuestUser.new(id: 'my_id') }
     let(:other_guest_user) { GuestUser.new(id: 'other_id') }
     let(:unconfirmed) { create(:user, :unconfirmed) }
-    let(:relation) { RedisResource::Relation.where(publisher: guest_user) }
-    let(:edge_relation) { RedisResource::EdgeRelation.where(publisher: guest_user) }
+    let(:relation) { RedisResource::Relation.where(root_id: argu.uuid, publisher: guest_user) }
+    let(:edge_relation) { RedisResource::EdgeRelation.where(root_id: argu.uuid, publisher: guest_user) }
     let(:motion) { create(:motion, parent: freetown.edge) }
 
     test 'count' do

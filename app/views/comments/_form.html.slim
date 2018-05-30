@@ -3,8 +3,8 @@
     =f.text_area :body, rows: 2, cols: 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom', required: true, minlength: '4', maxlength: '5000'
     -comment.errors.full_messages.each do |message|
       p.inline-errors.full-width= message
-    -if parent_id.present? || comment.parent_id.present?
-      input[type="hidden" class= "btn" name="comment[parent_id]" value ="#{parent_id.presence || comment.parent_id}"]
+    -if parent_id.present?
+      input[type="hidden" class= "btn" name="comment[in_reply_to_id]" value ="#{parent_id}"]
   section.section--footer
     =render partial: 'profiles/creator', locals: {resource: comment}
     ul.sticky--bottom-right.btns-horizontal.btns-list--subtle

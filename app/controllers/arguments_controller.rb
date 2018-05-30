@@ -39,8 +39,8 @@ class ArgumentsController < EdgeableController
 
   def prepare_view
     @comment_edges = authenticated_resource.filtered_threads(show_trashed?, params[:comments_page])
-    @vote = Vote.joins(:edge).find_by(
-      edges: {parent_id: authenticated_resource.id},
+    @vote = Vote.find_by(
+      parent_id: authenticated_resource.id,
       creator: current_profile
     )
   end
@@ -70,7 +70,7 @@ class ArgumentsController < EdgeableController
     prepare_view
     render locals: {
       argument: resource,
-      comment: Edge.new(owner: Comment.new, parent: resource.edge).owner
+      comment: Comment.new(parent: resource)
     }
   end
 
@@ -78,7 +78,7 @@ class ArgumentsController < EdgeableController
     prepare_view
     render locals: {
       argument: resource,
-      comment: Edge.new(owner: Comment.new, parent: resource.edge).owner
+      comment: Comment.new(parent: resource)
     }
   end
 
