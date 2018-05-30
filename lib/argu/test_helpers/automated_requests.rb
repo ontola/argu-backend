@@ -164,8 +164,8 @@ module Argu
           let(:authorized_user_destroy) { staff }
           let(:authorized_user_trash) { authorized_user_update }
           let(:unauthorized_user) do
-            holland.edge.grants.destroy_all
-            freetown.edge.grants.destroy_all
+            holland.grants.destroy_all
+            freetown.grants.destroy_all
             create_forum(public_grant: 'participator')
             create(:user)
           end
@@ -183,7 +183,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, '1'] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {edge_id: other_page_forum.edge.uuid} }
+          let(:move_params) { {edge_id: other_page_forum.uuid} }
           let(:destroy_params) { {} }
 
           # Paths

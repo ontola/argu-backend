@@ -5,7 +5,7 @@ require 'test_helper'
 module SPI
   class AuthorizeControllerTest < ActionDispatch::IntegrationTest
     define_freetown
-    let(:motion) { create(:motion, publisher: creator, parent: freetown.edge) }
+    let(:motion) { create(:motion, publisher: creator, parent: freetown) }
 
     ####################################
     # As Guest

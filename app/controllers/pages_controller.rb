@@ -26,7 +26,7 @@ class PagesController < EdgeableController
   end
 
   def new
-    authenticated_resource.edge.build_shortname
+    authenticated_resource.build_shortname
     authenticated_resource.build_profile
 
     render locals: {

@@ -11,14 +11,14 @@ RSpec.describe 'Grants', type: :request do
 
   let(:index_path) { collection_iri_path(subject.parent_model.root, table_sym) }
   let(:created_resource_path) { settings_iri_path(argu, tab: :groups) }
-  let(:group) { create(:group, parent: argu.edge) }
-  let(:create_params) { {grant: attributes_for(:group).merge(group_id: create(:group, parent: argu.edge).id)} }
+  let(:group) { create(:group, parent: argu) }
+  let(:create_params) { {grant: attributes_for(:group).merge(group_id: create(:group, parent: argu).id)} }
   let(:create_failed_path) { settings_iri_path(argu, tab: :groups) }
   let(:update_failed_path) { settings_iri_path(argu, tab: :groups) }
   let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
 
   context 'with page parent' do
-    let(:subject) { create(:grant, edge: argu.edge, group: group) }
+    let(:subject) { create(:grant, edge: argu, group: group) }
     let(:expect_delete_destroy_html) do
       expect(response.code).to eq('303')
       expect(response).to redirect_to(settings_iri_path(argu, tab: :groups))
@@ -27,7 +27,7 @@ RSpec.describe 'Grants', type: :request do
   end
 
   context 'with forum parent' do
-    let(:subject) { create(:grant, edge: freetown.edge, group: group) }
+    let(:subject) { create(:grant, edge: freetown, group: group) }
     let(:expect_delete_destroy_html) do
       expect(response.code).to eq('303')
       expect(response).to redirect_to(settings_iri_path(freetown))

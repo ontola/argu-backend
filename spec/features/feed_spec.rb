@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.feature 'Feed', type: :feature do
   define_freetown
-  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
   let(:user) { create(:user) }
-  let(:user_motions) { 8.times { create(:motion, parent: freetown.edge, publisher: user) } }
-  let(:user_questions) { 8.times { create(:question, parent: freetown.edge, publisher: user) } }
+  let(:user_motions) { 8.times { create(:motion, parent: freetown, publisher: user) } }
+  let(:user_questions) { 8.times { create(:question, parent: freetown, publisher: user) } }
 
   scenario 'Guest views feed of forum' do
     motion

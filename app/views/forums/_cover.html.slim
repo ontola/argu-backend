@@ -20,7 +20,7 @@
   .cover-buttons.cover-buttons--top
     .cover-buttons-container
       ul.btns-horizontal
-        - if !current_user.has_favorite?(resource.edge) && policy(resource).create_child?(:favorites)
+        - if !current_user.has_favorite?(resource) && policy(resource).create_child?(:favorites)
           li= link_to collection_iri_path(resource, :favorites), data: {remote: true, method: :post, turbolinks: 'false'}, rel: :nofollow, class: 'btn--transparant'
             span.fa.fa-plus
             span.icon-left= t('forums.join.title')

@@ -4,7 +4,7 @@ require 'test_helper'
 
 class VoteEventsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:motion) { create(:motion, parent: freetown.edge) }
+  let!(:motion) { create(:motion, parent: freetown) }
 
   ####################################
   # As Guest

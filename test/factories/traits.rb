@@ -5,7 +5,7 @@ FactoryGirl.define do
     after :create do |resource|
       create(:follow,
              follower: create(:user, :follows_reactions_directly),
-             followable: resource.edge)
+             followable: resource)
     end
   end
 end

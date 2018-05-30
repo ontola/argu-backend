@@ -162,7 +162,7 @@ RSpec.configure do |config|
         )
       end
       if Group.find_by(id: Group::PUBLIC_ID).blank?
-        g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0).edge, name: 'Public group', name_singular: 'User')
+        g = create(:group, id: Group::PUBLIC_ID, parent: Page.find(0), name: 'Public group', name_singular: 'User')
         public_membership =
           CreateGroupMembership.new(
             g,
@@ -172,7 +172,7 @@ RSpec.configure do |config|
         public_membership.save(validate: false)
       end
       if Group.find_by(id: Group::STAFF_ID).blank?
-        create(:group, id: Group::STAFF_ID, parent: Page.find(0).edge, name: 'Staff group', name_singular: 'Staff')
+        create(:group, id: Group::STAFF_ID, parent: Page.find(0), name: 'Staff group', name_singular: 'Staff')
       end
       if Doorkeeper::Application.find_by(id: Doorkeeper::Application::ARGU_ID).blank?
         Doorkeeper::Application.create!(

@@ -22,7 +22,7 @@ class DecisionsController < EdgeableController
   end
 
   def edit_respond_success_html(resource)
-    resource.edge.argu_publication.draft! if resource.edge.argu_publication.blank?
+    resource.argu_publication.draft! if resource.argu_publication.blank?
 
     render action: 'index',
            locals: {
@@ -44,7 +44,7 @@ class DecisionsController < EdgeableController
   end
 
   def message_success(resource, _)
-    if resource.edge.argu_publication.published_at.present?
+    if resource.argu_publication.published_at.present?
       parent_key = resource.parent_model.model_name.singular
       t("decisions.#{parent_key}.#{resource.state}")
     else

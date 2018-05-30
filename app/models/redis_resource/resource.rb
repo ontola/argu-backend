@@ -16,25 +16,25 @@ module RedisResource
         user_type: resource.publisher.class.name,
         user_id: resource.publisher.id,
         owner_type: resource.class.name,
-        edge_id: resource.edge.id,
-        parent: resource.edge.parent
+        edge_id: resource.id,
+        parent: resource.parent
       )
     end
 
     def persist(user)
-      if Edge.where(publisher: user, owner_type: resource.class.name, parent_id: resource.edge.parent_id).any?
+      if Edge.where(publisher: user, owner_type: resource.class.name, parent_id: resource.parent_id).any?
         Argu::Redis.delete(key.key)
         return
       end
       service = "Create#{resource.class.name}".constantize.new(
-        resource.edge.parent,
+        resource.parent,
         attributes: resource.attributes.except('publisher_id', 'creator_id'),
         options: {
           creator: user.profile,
           publisher: user
         }
       )
-      service.resource.edge.id = resource.edge.id
+      service.resource.id = resource.id
       service.on("create_#{resource.class.name.underscore}_failed") do |resource|
         raise StandardError.new(resource.errors.full_messages.join('\n'))
       end

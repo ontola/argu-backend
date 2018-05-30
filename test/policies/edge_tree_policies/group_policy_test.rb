@@ -5,8 +5,8 @@ require 'argu/test_helpers/policy_test'
 
 class GroupPolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:group, parent: page.edge) }
-  let(:undeletable_subject) { create(:group, parent: page.edge, deletable: false) }
+  let(:subject) { create(:group, parent: page) }
+  let(:undeletable_subject) { create(:group, parent: page, deletable: false) }
   let(:group_member) { create(:group_membership, parent: subject).member.profileable }
 
   generate_crud_tests

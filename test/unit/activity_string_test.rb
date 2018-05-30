@@ -6,24 +6,24 @@ class ActivityStringTest < ActiveSupport::TestCase
   define_freetown
   let(:updater) { create_initiator(freetown) }
   let(:receiver) { create_initiator(freetown) }
-  let!(:question) { create(:question, parent: freetown.edge) }
-  let!(:motion) { create(:motion, parent: question.edge) }
+  let!(:question) { create(:question, parent: freetown) }
+  let!(:motion) { create(:motion, parent: question) }
   let!(:approved_decision) do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            state: 'approved',
            happening_attributes: {happened_at: Time.current})
   end
   let!(:rejected_decision) do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            state: 'rejected',
            happening_attributes: {happened_at: Time.current})
   end
-  let(:group) { create(:group, parent: argu.edge) }
+  let(:group) { create(:group, parent: argu) }
   let!(:forwarded_decision) do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            state: 'forwarded',
            happening_attributes: {happened_at: Time.current},
            forwarded_user_id: create(:group_membership, parent: group).member.profileable.id,

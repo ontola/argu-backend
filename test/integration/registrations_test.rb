@@ -16,36 +16,36 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
   let(:place) { create(:place) }
   let(:argu) { create(:page) }
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:argument) { create(:argument, parent: motion.edge) }
-  let(:motion2) { create(:motion, parent: freetown.edge) }
-  let(:motion3) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let(:argument) { create(:argument, parent: motion) }
+  let(:motion2) { create(:motion, parent: freetown) }
+  let(:motion3) { create(:motion, parent: freetown) }
   let(:guest_vote) do
     create(:vote,
-           parent: motion.default_vote_event.edge,
+           parent: motion.default_vote_event,
            creator: guest_user.profile,
            publisher: guest_user)
   end
   let(:guest_vote2) do
     create(:vote,
-           parent: motion2.default_vote_event.edge,
+           parent: motion2.default_vote_event,
            creator: guest_user.profile,
            publisher: guest_user)
   end
   let(:other_guest_vote) do
     create(:vote,
-           parent: motion.default_vote_event.edge,
+           parent: motion.default_vote_event,
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
   let(:other_guest_vote3) do
     create(:vote,
-           parent: motion3.default_vote_event.edge,
+           parent: motion3.default_vote_event,
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
   let(:argument_guest_vote) do
-    create(:vote, parent: argument.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: argument, creator: guest_user.profile, publisher: guest_user)
   end
 
   ####################################
@@ -299,7 +299,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'user should delete destroy with group_membership' do
     sign_in user
-    group = create(:group, parent: argu.edge)
+    group = create(:group, parent: argu)
     create(:group_membership, parent: group, member: user.profile)
 
     assert_differences([['User.count', -1], ['GroupMembership.active.count', -2], ['GroupMembership.count', 0]]) do
@@ -336,11 +336,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do
     placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
-    photo = motion.edge.build_default_cover_photo(creator: user.profile, publisher: user)
+    photo = motion.build_default_cover_photo(creator: user.profile, publisher: user)
     photo.save
     create(
       :group_membership,
-      parent: create(:group, parent: argu.edge),
+      parent: create(:group, parent: argu),
       member: user.profile,
       start_date: 2.minutes.ago,
       end_date: 1.minute.ago
@@ -363,10 +363,10 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should delete destroy with content' do
-    motion = create :motion, publisher: user, creator: user.profile, parent: freetown.edge
-    create :vote, publisher: user, creator: user.profile, parent: motion.default_vote_event.edge
-    create :question, publisher: user, creator: user.profile, parent: freetown.edge
-    create :argument, parent: Motion.last.edge, publisher: user, creator: user.profile
+    motion = create :motion, publisher: user, creator: user.profile, parent: freetown
+    create :vote, publisher: user, creator: user.profile, parent: motion.default_vote_event
+    create :question, publisher: user, creator: user.profile, parent: freetown
+    create :argument, parent: Motion.last, publisher: user, creator: user.profile
 
     sign_in user
 
@@ -384,9 +384,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should delete destroy with content published by page' do
-    create :motion, publisher: user, creator: argu.profile, parent: freetown.edge
-    create :question, publisher: user, creator: argu.profile, parent: freetown.edge
-    create :argument, publisher: user, creator: argu.profile, parent: Motion.last.edge
+    create :motion, publisher: user, creator: argu.profile, parent: freetown
+    create :question, publisher: user, creator: argu.profile, parent: freetown
+    create :argument, publisher: user, creator: argu.profile, parent: Motion.last
 
     sign_in user
 

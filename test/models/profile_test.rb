@@ -25,10 +25,10 @@ class ProfileTest < ActiveSupport::TestCase
   test 'granted_edges' do
     capetown
 
-    assert_equal subject.reload.granted_edges.pluck(:id).uniq, [freetown.edge.id]
+    assert_equal subject.reload.granted_edges.pluck(:id).uniq, [freetown.id]
     assert_equal subject.granted_edges(owner_type: nil, grant_set: :moderator).pluck(:id), []
     moderator
-    assert_equal subject.reload.granted_edges.pluck(:id).uniq.sort, [freetown.edge.id, capetown.parent_edge.id].sort
+    assert_equal subject.reload.granted_edges.pluck(:id).uniq.sort, [freetown.id, capetown.parent_edge.id].sort
     assert_equal subject.granted_edges(owner_type: nil, grant_set: :moderator).pluck(:id).uniq,
                  [capetown.parent_edge.id]
   end

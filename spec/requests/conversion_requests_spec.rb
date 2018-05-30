@@ -21,7 +21,7 @@ RSpec.describe 'Conversions', type: :request do
   let(:create_failed_path) { created_resource_path }
 
   context 'motion to question' do
-    subject { motion.edge }
+    subject { motion }
     let(:create_params) { {conversion: {klass: 'questions'}} }
     let(:create_differences) { [['Question.count', 1], ['Motion.count', -1], ['Activity.loggings.count', 1]] }
     it_behaves_like 'get new'
@@ -29,7 +29,7 @@ RSpec.describe 'Conversions', type: :request do
   end
 
   context 'question_to_motion' do
-    subject { question.edge }
+    subject { question }
     let(:create_params) { {conversion: {klass: 'motions'}} }
     let(:create_differences) do
       [

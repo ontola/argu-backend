@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.feature 'Signup', type: :feature do
   include ApplicationHelper
   include UsersHelper
-  let!(:default_forum) { create(:setting, key: 'default_forum', value: default.edge.uuid) }
+  let!(:default_forum) { create(:setting, key: 'default_forum', value: default.uuid) }
   define_freetown('default', attributes: {name: 'default'})
   define_freetown(attributes: {name: 'freetown'})
-  let!(:motion) { create(:motion, parent: freetown.edge) }
+  let!(:motion) { create(:motion, parent: freetown) }
   let(:netherlands) { create(:place, address: {'country_code' => 'nl'}) }
 
   scenario 'should register w/ oauth and preserve vote on non-default forum' do

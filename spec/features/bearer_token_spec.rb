@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Bearer token', type: :feature do
   define_freetown
-  let!(:group) { create(:group, parent: argu.edge) }
+  let!(:group) { create(:group, parent: argu) }
   let!(:administrator) { create_administrator(freetown) }
 
   scenario 'Owner adds and retracts bearer token' do

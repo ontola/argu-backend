@@ -4,9 +4,9 @@ require 'test_helper'
 
 class VoteTest < ActiveSupport::TestCase
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:user) { create(:user) }
-  subject { create(:vote, parent: motion.default_vote_event.edge) }
+  subject { create(:vote, parent: motion.default_vote_event) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -15,7 +15,7 @@ class VoteTest < ActiveSupport::TestCase
   def test_duplicate_constraint
     first = create_vote
     second = create_vote
-    assert motion.edge.save, motion.edge.errors.full_messages
+    assert motion.save, motion.errors.full_messages
     assert_not first.reload.primary?
     assert second.reload.primary?
     assert_raises ActiveRecord::RecordNotUnique do

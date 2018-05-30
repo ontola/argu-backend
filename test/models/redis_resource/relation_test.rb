@@ -11,24 +11,24 @@ module RedisResource
     let(:unconfirmed) { create(:user, :unconfirmed) }
     let(:relation) { RedisResource::Relation.where(root_id: argu.uuid, publisher: guest_user) }
     let(:edge_relation) { RedisResource::EdgeRelation.where(root_id: argu.uuid, publisher: guest_user) }
-    let(:motion) { create(:motion, parent: freetown.edge) }
+    let(:motion) { create(:motion, parent: freetown) }
 
     test 'count' do
       init_redis_votes(count: 2)
       init_redis_votes(user: other_guest_user, count: 1)
       assert_equal 2, relation.count
-      relation.where(parent_id: Motion.first.default_vote_event.edge.id)
+      relation.where(parent_id: Motion.first.default_vote_event.id)
       assert_equal 1, relation.count
-      relation.where(parent: Motion.first.default_vote_event.edge)
+      relation.where(parent: Motion.first.default_vote_event)
       assert_equal 1, relation.count
-      relation.where(parent_id: freetown.edge.id).count
+      relation.where(parent_id: freetown.id).count
       assert_equal 0, relation.count
     end
 
     test 'where' do
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
-      first_result = relation.where(parent_id: Motion.first.default_vote_event.edge.id).to_a.first
+      first_result = relation.where(parent_id: Motion.first.default_vote_event.id).to_a.first
       assert first_result.is_a?(RedisResource::Resource)
       assert first_result.resource.is_a?(Vote)
     end
@@ -36,7 +36,7 @@ module RedisResource
     test 'where edge_relation' do
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
-      first_result = edge_relation.where(parent_id: Motion.first.default_vote_event.edge.id).to_a.first
+      first_result = edge_relation.where(parent_id: Motion.first.default_vote_event.id).to_a.first
       assert first_result.is_a?(Edge)
       assert first_result.owner.is_a?(Vote)
     end
@@ -74,7 +74,7 @@ module RedisResource
           creator: user.profile,
           publisher: user,
           for: :pro,
-          edge: Edge.new(parent: motion.default_vote_event.edge, user: user),
+          edge: Edge.new(parent: motion.default_vote_event, user: user),
           root_id: motion.root_id
         }.merge(attrs)
       )
@@ -84,7 +84,7 @@ module RedisResource
       count.times do
         create(
           :vote,
-          parent: create(:motion, parent: freetown.edge).default_vote_event.edge,
+          parent: create(:motion, parent: freetown).default_vote_event,
           creator: user.profile,
           publisher: user
         )

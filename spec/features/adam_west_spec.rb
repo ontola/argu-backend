@@ -11,19 +11,19 @@ RSpec.feature 'Adam west', type: :feature do
   define_freetown(attributes: {public_grant: 'adam_west_set'})
   let!(:question) do
     create(:question,
-           parent: freetown.edge)
+           parent: freetown)
   end
   let!(:motion) do
     create(:motion,
-           parent: question.edge)
+           parent: question)
   end
   let!(:argument) do
     create(:argument,
-           parent: motion.edge)
+           parent: motion)
   end
   let(:comment) do
     create :comment,
-           parent: argument.edge
+           parent: argument
   end
 
   ####################################

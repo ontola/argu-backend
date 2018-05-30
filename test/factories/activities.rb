@@ -5,36 +5,36 @@ FactoryGirl.define do
     transient do
       tenant { passed_in?(:forum) ? forum : build(:forum) }
     end
-    trackable { passed_in?(:trackable) ? trackable : create(:argument, parent: tenant.edge) }
+    trackable { passed_in?(:trackable) ? trackable : create(:argument, parent: tenant) }
 
     association :owner, factory: :profile
     recipient { passed_in?(:recipient) ? recipient : tenant }
     key :create
 
     trait :t_question do
-      trackable { create(:question, creator: owner, parent: tenant.edge) }
+      trackable { create(:question, creator: owner, parent: tenant) }
     end
 
     trait :t_motion do
-      trackable { create(:motion, creator: owner, parent: tenant.edge) }
+      trackable { create(:motion, creator: owner, parent: tenant) }
       recipient { passed_in?(:recipient) ? recipient : tenant }
     end
 
     trait :t_argument do
       trackable do
-        passed_in?(:trackable) ? trackable : create(:argument, parent: tenant.edge, creator: owner)
+        passed_in?(:trackable) ? trackable : create(:argument, parent: tenant, creator: owner)
       end
       recipient { passed_in?(:recipient) ? recipient : trackable.motion }
     end
 
     trait :t_comment do
       trackable { create(:comment, creator: owner) }
-      recipient { passed_in?(:recipient) ? recipient : create(:argument, parent: tenant.edge) }
+      recipient { passed_in?(:recipient) ? recipient : create(:argument, parent: tenant) }
     end
 
     trait :t_vote do
       trackable { create(:vote, creator: owner) }
-      recipient { passed_in?(:recipient) ? recipient : create(:motion, parent: tenant.edge) }
+      recipient { passed_in?(:recipient) ? recipient : create(:motion, parent: tenant) }
       parameters { passed_in?(:parameters) ? parameters : {for: trackable.for} }
     end
 

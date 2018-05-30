@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Direct message', type: :feature do
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:administrator) { create_administrator(freetown) }
 
   scenario 'Administrator send direct message' do

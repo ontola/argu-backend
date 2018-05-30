@@ -4,7 +4,7 @@ require 'test_helper'
 
 class MotionTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:motion, :with_arguments, parent: freetown.edge) }
+  subject { create(:motion, :with_arguments, parent: freetown) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -14,14 +14,14 @@ class MotionTest < ActiveSupport::TestCase
     trashed_args = subject.arguments.trashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
-    assert_not((subject.edge.active_con_arguments.map(&:id) & trashed_args).present?)
+    assert_not((subject.active_con_arguments.map(&:id) & trashed_args).present?)
   end
 
   test 'active_arguments_pro should not include trashed motions' do
     trashed_args = subject.arguments.trashed.pluck(:id)
     assert trashed_args.present?,
            'No trashed arguments exist, test is useless'
-    assert_not((subject.edge.active_pro_arguments.map(&:id) & trashed_args).present?)
+    assert_not((subject.active_pro_arguments.map(&:id) & trashed_args).present?)
   end
 
   test 'convert to question' do

@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.feature 'Collapsible', type: :feature do
   define_freetown
-  let!(:motion) { create(:motion, parent: freetown.edge) }
+  let!(:motion) { create(:motion, parent: freetown) }
   let!(:argument) do
     create(:argument,
-           parent: motion.edge,
+           parent: motion,
            content: 'This is a string that is long enough to make sure that the collapsible element is used in the vie'\
            'w. The content that should be visisble appears on the end of this string. First, we will just talk. How is'\
            " life, my friend? Are you happy with who you are? Now here's the important part: the content that should b"\

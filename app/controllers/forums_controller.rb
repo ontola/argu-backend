@@ -54,7 +54,6 @@ class ForumsController < EdgeableController
   def collect_children(resource)
     policy_scope(
       resource
-        .edge
         .children
         .includes(root: :shortname)
         .where(owner_type: %w[Motion Question])
@@ -108,7 +107,7 @@ class ForumsController < EdgeableController
     prepend_view_path 'app/views/forums'
     @grants = Grant
                 .custom
-                .where(edge_id: [resource_by_id.edge.uuid, resource_by_id.edge.parent.uuid])
+                .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
                 .includes(group: {group_memberships: {member: {profileable: :shortname}}})
 
     render 'settings',

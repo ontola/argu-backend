@@ -5,17 +5,17 @@ require 'test_helper'
 class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
   define_freetown
   let(:publisher) { create(:user, :follows_reactions_never, :follows_news_never) }
-  let(:question) { create(:question, parent: freetown.edge, publisher: publisher) }
+  let(:question) { create(:question, parent: freetown, publisher: publisher) }
   let(:argument) do
     create(:argument,
            publisher: publisher,
-           parent: create(:motion, parent: freetown.edge, publisher: publisher).edge)
+           parent: create(:motion, parent: freetown, publisher: publisher))
   end
   let(:blog_post) do
     create(:blog_post,
            publisher: publisher,
            happening_attributes: {happened_at: Time.current},
-           parent: question.edge)
+           parent: question)
   end
 
   test 'should collect direct followers for notifications' do
@@ -63,7 +63,7 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
     traits.append(:viewed_notifications_hour_ago) if traits.none? { |t| t.to_s.include?('viewed_notifications') }
     user = create(:user, *(traits - [:not_accepted_terms]))
     create(:follow,
-           followable: trackable.edge,
+           followable: trackable,
            follower: user)
 
     create(:notification,

@@ -10,7 +10,7 @@ class CommentPolicyTest < PolicyTest
   let(:expired_subject) { expired_comment }
   let(:unpublished_subject) { unpublished_comment }
   let(:direct_child) { nested_comment }
-  let(:expired_blog_post_comment) { create(:comment, parent: blog_post.edge, publisher: creator) }
+  let(:expired_blog_post_comment) { create(:comment, parent: blog_post, publisher: creator) }
 
   generate_edgeable_tests
 

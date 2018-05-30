@@ -14,7 +14,7 @@ class ShortnamesController < ParentableController
   private
 
   def authenticated_edge
-    authenticated_resource.owner.edge
+    authenticated_resource.owner
   end
 
   def destination_param

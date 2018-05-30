@@ -26,6 +26,6 @@ class UpdateService < ApplicationService
 
   def update_parent(parent)
     return unless parent
-    resource.edge.parent = parent.is_a?(Edge) ? parent : Edge.find(parent)
+    resource.parent = parent.is_a?(Edge) ? parent : Edge.find(parent)
   end
 end

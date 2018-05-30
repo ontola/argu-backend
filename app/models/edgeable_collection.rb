@@ -2,6 +2,6 @@
 
 class EdgeableCollection < Collection
   def members
-    super&.each { |m| m.is_a?(Edge) ? m.parent = parent&.edge : m.edge.parent = parent&.edge }
+    super&.each { |m| m.parent = parent }
   end
 end

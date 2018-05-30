@@ -8,7 +8,7 @@ RSpec.feature 'Dropdown', type: :feature do
   define_freetown('houten', attributes: {name: 'houten'})
 
   scenario 'User switches forum with forum dropdown' do
-    Setting.set('suggested_forums', [nederland.edge.uuid, houten.edge.uuid].join(','))
+    Setting.set('suggested_forums', [nederland.uuid, houten.uuid].join(','))
     visit nederland.iri_path
 
     within('.navbar-forum-selector') do

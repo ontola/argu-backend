@@ -5,10 +5,6 @@ module EdgeableShallow
   extend ActiveSupport::Concern
 
   included do
-    def edge
-      self
-    end
-
     def owner
       self
     end

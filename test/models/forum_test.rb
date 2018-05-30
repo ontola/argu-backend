@@ -10,10 +10,10 @@ class ForumTest < ActiveSupport::TestCase
   define_cairo('cairo2')
 
   let(:page) { create(:page) }
-  let(:group) { create(:group, parent: page.edge) }
+  let(:group) { create(:group, parent: page) }
   let(:user) { create(:user) }
   let(:forum) do
-    create(:forum, parent: page.edge, url: 'new_forum', locale: 'nl')
+    create(:forum, parent: page, url: 'new_forum', locale: 'nl')
   end
 
   test 'valid' do

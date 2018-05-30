@@ -12,14 +12,13 @@ class EdgePolicy < RestrictivePolicy
   end
   include ChildOperations
 
-  delegate :edge, to: :record
-  delegate :persisted_edge, to: :edge
+  delegate :persisted_edge, to: :record
   attr_reader :grant_tree
 
   def initialize(context, record)
     super
-    raise('No edge available in policy') unless edge
-    @grant_tree = context.grant_tree_for(edge)
+    raise('No edge available in policy') unless record
+    @grant_tree = context.grant_tree_for(record)
   end
 
   %i[spectator participator moderator administrator staff].each do |role|
@@ -48,7 +47,7 @@ class EdgePolicy < RestrictivePolicy
           persisted_edge,
           action: action,
           resource_type: class_name,
-          parent_type: edge&.parent&.owner_type
+          parent_type: record&.parent&.owner_type
         )
     (group_ids & user.profile.group_ids).any?
   end
@@ -114,7 +113,7 @@ class EdgePolicy < RestrictivePolicy
   end
 
   def destroy?
-    return super if edge.children_counts.values.map(&:to_i).sum.positive?
+    return super if record.children_counts.values.map(&:to_i).sum.positive?
     is_creator? || has_grant?(:destroy)
   end
 
@@ -151,11 +150,11 @@ class EdgePolicy < RestrictivePolicy
   end
 
   def cache_action(action, val)
-    user_context.cache_key(edge.id, action, val)
+    user_context.cache_key(record.id, action, val)
   end
 
   def check_action(action)
-    user_context.check_key(edge.id, action)
+    user_context.check_key(record.id, action)
   end
 
   def class_name

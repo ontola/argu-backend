@@ -25,22 +25,22 @@ class ForumsTest < ActionDispatch::IntegrationTest
   define_helsinki
 
   let(:draft_motion) do
-    create(:motion, parent: holland.edge, argu_publication_attributes: {draft: true})
+    create(:motion, parent: holland, argu_publication_attributes: {draft: true})
   end
   let(:draft_question) do
-    create(:question, parent: holland.edge, argu_publication_attributes: {draft: true})
+    create(:question, parent: holland, argu_publication_attributes: {draft: true})
   end
-  let(:motion_in_draft_question) { create(:motion, parent: draft_question.edge) }
+  let(:motion_in_draft_question) { create(:motion, parent: draft_question) }
 
-  let(:question) { create(:question, parent: holland.edge) }
-  let(:motion) { create(:motion, parent: question.edge) }
-  let(:motion_in_question) { create(:question, parent: holland.edge) }
+  let(:question) { create(:question, parent: holland) }
+  let(:motion) { create(:motion, parent: question) }
+  let(:motion_in_question) { create(:question, parent: holland) }
 
-  let(:trashed_motion) { create(:motion, trashed_at: Time.current, parent: holland.edge) }
-  let(:trashed_question) { create(:question, trashed_at: Time.current, parent: holland.edge) }
+  let(:trashed_motion) { create(:motion, trashed_at: Time.current, parent: holland) }
+  let(:trashed_question) { create(:question, trashed_at: Time.current, parent: holland) }
 
-  let(:tm) { create(:motion, trashed_at: Time.current, parent: holland.edge) }
-  let(:tq) { create(:question, trashed_at: Time.current, parent: holland.edge) }
+  let(:tm) { create(:motion, trashed_at: Time.current, parent: holland) }
+  let(:tq) { create(:question, trashed_at: Time.current, parent: holland) }
 
   ####################################
   # As Guest
@@ -236,7 +236,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'administrator should update locale affecting placement' do
     nominatim_netherlands
     sign_in create_administrator(holland)
-    assert_equal holland.edge.reload.places.first.country_code, 'GB'
+    assert_equal holland.reload.places.first.country_code, 'GB'
     assert_differences([['Placement.count', 0]]) do
       put holland,
           params: {
@@ -247,7 +247,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal holland.reload.locale, 'nl-NL'
-    assert_equal holland.edge.reload.places.first.country_code, 'NL'
+    assert_equal holland.reload.places.first.country_code, 'NL'
   end
 
   test 'administrator should show statistics' do
@@ -318,10 +318,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should transfer' do
     sign_in staff
     create(:grant,
-           group: create(:group, parent: holland.parent_model(:page).edge),
-           edge: holland.edge,
+           group: create(:group, parent: holland.parent_model(:page)),
+           edge: holland,
            grant_set: GrantSet.participator)
-    assert_differences([['transfer_to.forums.reload.count', 1], ['holland.edge.reload.grants.size', -1]]) do
+    assert_differences([['transfer_to.forums.reload.count', 1], ['holland.reload.grants.size', -1]]) do
       put move_iri_path(holland, edge_id: transfer_to.uuid)
     end
     assert_equal holland.parent, transfer_to
@@ -351,8 +351,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_equal 1, Forum.last.edge.placements.first.lat
-    assert_equal 1, Forum.last.edge.placements.first.lon
+    assert_equal 1, Forum.last.placements.first.lat
+    assert_equal 1, Forum.last.placements.first.lon
   end
 
   test 'creator should put update forum change latlon' do
@@ -365,7 +365,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
             forum: {
               placements_attributes: {
                 '0' => {
-                  id: forum_with_placement.edge.custom_placements.first.id,
+                  id: forum_with_placement.custom_placements.first.id,
                   lat: 2.0,
                   lon: 2.0
                 }
@@ -374,9 +374,9 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
     end
 
-    forum_with_placement.edge.reload
-    assert_equal 2, forum_with_placement.edge.custom_placements.first.lat
-    assert_equal 2, forum_with_placement.edge.custom_placements.first.lon
+    forum_with_placement.reload
+    assert_equal 2, forum_with_placement.custom_placements.first.lat
+    assert_equal 2, forum_with_placement.custom_placements.first.lon
   end
 
   test 'staff should put update motion remove latlon' do
@@ -389,7 +389,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
             forum: {
               placements_attributes: {
                 '0' => {
-                  id: forum_with_placement.edge.custom_placements.first.id,
+                  id: forum_with_placement.custom_placements.first.id,
                   _destroy: 'true'
                 }
               }
@@ -421,7 +421,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   private
 
   def included_in_items?(item)
-    assigns(:children).map(&:identifier).include?(item.edge.identifier)
+    assigns(:children).map(&:identifier).include?(item.identifier)
   end
 
   # Asserts that the forum is shown on a specific tab

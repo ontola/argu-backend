@@ -5,14 +5,14 @@ require 'test_helper'
 class ConArgumentsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
-  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
-  let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
+  let(:argument) { create(:argument, :with_comments, parent: motion) }
   let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record) do
     lr = LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid)
-    create(:argument, :with_comments, parent: lr.edge)
-    create(:argument, :with_comments, parent: lr.edge, pro: false)
-    create(:argument, :with_comments, parent: lr.edge, trashed_at: Time.current)
+    create(:argument, :with_comments, parent: lr)
+    create(:argument, :with_comments, parent: lr, pro: false)
+    create(:argument, :with_comments, parent: lr, trashed_at: Time.current)
     lr
   end
 
@@ -20,7 +20,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show argument' do
-    get :show, params: {format: :json_api, root_id: argu.url, id: argument.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, id: argument.fragment}
     assert_redirected_to argument.iri_path
   end
 
@@ -28,7 +28,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   # Index for Motion
   ####################################
   test 'should get index arguments of motion with' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -42,7 +42,7 @@ class ConArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index arguments of motion with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)

@@ -66,7 +66,7 @@ module UsersHelper
     return if user.favorites.present?
     begin
       forum = forum_from_r_action(user) || session.present? && GuestUser.new(id: session_id).profile.last_forum
-      Favorite.create!(user: user, edge: forum.edge) if forum.present?
+      Favorite.create!(user: user, edge: forum) if forum.present?
     rescue ActiveRecord::RecordNotFound => e
       Bugsnag.notify(e)
     end

@@ -18,7 +18,7 @@ class VoteEventSerializer < EdgeSerializer
   def current_vote
     @vote ||= Edge
                 .where_owner('Vote', creator: user_context.actor, primary: true, root_id: object.root_id)
-                .find_by(parent: object.edge)
+                .find_by(parent: object)
                 &.owner
   end
 
@@ -31,6 +31,6 @@ class VoteEventSerializer < EdgeSerializer
   end
 
   def ends_at
-    object.edge.expires_at
+    object.expires_at
   end
 end

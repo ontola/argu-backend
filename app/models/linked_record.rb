@@ -20,7 +20,7 @@ class LinkedRecord < Edge
 
   def default_vote_event
     @default_vote_event ||= super || VoteEvent.new(
-      parent: edge,
+      parent: self,
       is_published: true,
       starts_at: Time.current,
       creator_id: creator.id,
@@ -38,7 +38,7 @@ class LinkedRecord < Edge
   end
 
   def iri_opts
-    @iri_opts ||= {root_id: edge.root.url, forum_id: parent_model(:forum).url, linked_record_id: deku_id}
+    @iri_opts ||= {root_id: root.url, forum_id: parent_model(:forum).url, linked_record_id: deku_id}
   end
 
   def self.new_for_forum(organization_shortname, forum_shortname, id)
@@ -50,7 +50,7 @@ class LinkedRecord < Edge
         .joins(:shortname)
         .find_by(shortnames: {shortname: forum_shortname})
     raise(ActiveRecord::RecordNotFound) if forum.nil?
-    forum.edge.children.new(
+    forum.children.new(
       is_published: true,
       publisher: User.community,
       creator: Profile.community,

@@ -4,18 +4,18 @@ require 'test_helper'
 
 class CommentsControllerTest < ActionController::TestCase
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let(:argument) { create(:argument, :with_comments, parent: motion) }
   let(:blog_post) do
-    create(:blog_post, :with_comments, parent: motion.edge, happening_attributes: {happened_at: Time.current})
+    create(:blog_post, :with_comments, parent: motion, happening_attributes: {happened_at: Time.current})
   end
-  let(:comment) { create(:comment, parent: argument.edge) }
+  let(:comment) { create(:comment, parent: argument) }
 
   ####################################
   # Show
   ####################################
   test 'should get show comment' do
-    get :show, params: {format: :json_api, id: comment.edge.fragment, root_id: argu.url}
+    get :show, params: {format: :json_api, id: comment.fragment, root_id: argu.url}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -26,7 +26,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for Argument
   ####################################
   test 'should get index comments of argument' do
-    get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -38,7 +38,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index comments of argument with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -54,7 +54,7 @@ class CommentsControllerTest < ActionController::TestCase
   # Index for BlogPost
   ####################################
   test 'should get index comments of blog_post' do
-    get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -66,7 +66,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'should get index comments of blog_post with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)

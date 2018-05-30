@@ -4,11 +4,11 @@ require 'test_helper'
 
 class GroupsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let!(:group) { create(:group, parent: argu.edge) }
-  let!(:granted_group) { create(:group, parent: argu.edge) }
+  let!(:group) { create(:group, parent: argu) }
+  let!(:granted_group) { create(:group, parent: argu) }
   let!(:gg_grant) do
     create(:grant,
-           edge: freetown.edge,
+           edge: freetown,
            group: granted_group,
            grant_set: GrantSet.participator)
   end
@@ -121,7 +121,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
                grants_attributes: {
                  '0': {
                    grant_set_id: GrantSet.participator.id,
-                   edge_id: argu.edge.uuid
+                   edge_id: argu.uuid
                  }
                }
              }

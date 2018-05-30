@@ -3,37 +3,37 @@
 require 'rails_helper'
 
 RSpec.feature 'Page deletion', type: :feature do
-  let!(:default_forum) { create(:setting, key: 'default_forum', value: freetown.edge.uuid) }
+  let!(:default_forum) { create(:setting, key: 'default_forum', value: freetown.uuid) }
   define_freetown
   let(:user) { create(:user) }
   let(:motion) do
     create(:motion,
            creator: forum_page.profile,
-           parent: freetown.edge,
+           parent: freetown,
            publisher: user)
   end
   let(:question) do
     create(:question,
            creator: forum_page.profile,
-           parent: freetown.edge,
+           parent: freetown,
            publisher: user)
   end
   let(:argument) do
     create(:argument,
            creator: forum_page.profile,
-           parent: motion.edge,
+           parent: motion,
            publisher: user)
   end
   let(:blog_post) do
     create(:blog_post,
            creator: forum_page.profile,
-           parent: question.edge,
+           parent: question,
            publisher: user,
            happening_attributes: {happened_at: Time.current})
   end
   let(:comment) do
     create(:comment,
-           parent: argument.edge,
+           parent: argument,
            creator: forum_page.profile,
            publisher: user)
   end
@@ -69,7 +69,7 @@ RSpec.feature 'Page deletion', type: :feature do
     [argument, motion, question, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
-    freetown.move_to(forum_page.edge)
+    freetown.move_to(forum_page)
 
     sign_in(user)
     visit pages_user_path(user)

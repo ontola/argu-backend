@@ -5,14 +5,14 @@ require 'test_helper'
 class GroupMembershipsControllerTest < ActionController::TestCase
   define_freetown
   define_freetown('freetown2')
-  let!(:group) { create(:group, parent: argu.edge) }
-  let!(:forum_group) { create(:group, parent: argu.edge) }
-  let!(:single_forum_group) { create(:group, parent: argu.edge) }
-  let!(:page_group) { create(:group, parent: argu.edge) }
-  let!(:grant) { create(:grant, edge: freetown.edge, group: single_forum_group) }
-  let!(:freetown_grant) { create(:grant, edge: freetown.edge, group: forum_group) }
-  let!(:freetown2_grant) { create(:grant, edge: freetown2.edge, group: forum_group) }
-  let!(:page_grant) { create(:grant, edge: argu.edge, group: page_group) }
+  let!(:group) { create(:group, parent: argu) }
+  let!(:forum_group) { create(:group, parent: argu) }
+  let!(:single_forum_group) { create(:group, parent: argu) }
+  let!(:page_group) { create(:group, parent: argu) }
+  let!(:grant) { create(:grant, edge: freetown, group: single_forum_group) }
+  let!(:freetown_grant) { create(:grant, edge: freetown, group: forum_group) }
+  let!(:freetown2_grant) { create(:grant, edge: freetown2, group: forum_group) }
+  let!(:page_grant) { create(:grant, edge: argu, group: page_group) }
   let!(:member) { create(:group_membership, parent: group).member.profileable }
   let(:single_forum_group_member) { create(:group_membership, parent: single_forum_group).member.profileable }
 
@@ -91,7 +91,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'user with favorites should post create as json' do
     validate_valid_bearer_token
     sign_in user
-    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
+    forum_edge_ids = single_forum_group.page.children.where(owner_type: 'Forum').pluck(:uuid)
     forum_edge_ids.each do |forum_edge_id|
       Favorite.find_or_create_by!(user: user, edge_id: forum_edge_id)
     end
@@ -108,7 +108,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 1]] do
       post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
-    assert_equal user.reload.following_type(freetown.edge), 'news'
+    assert_equal user.reload.following_type(freetown), 'news'
 
     assert_redirected_to freetown.iri_path
   end
@@ -117,13 +117,13 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    create(:follow, followable: freetown.edge, follower: user, follow_type: 'never')
-    assert_equal user.following_type(freetown.edge), 'never'
+    create(:follow, followable: freetown, follower: user, follow_type: 'never')
+    assert_equal user.following_type(freetown), 'never'
 
     assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
       post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
-    assert_equal user.reload.following_type(freetown.edge), 'never'
+    assert_equal user.reload.following_type(freetown), 'never'
 
     assert_redirected_to freetown.iri_path
   end
@@ -163,7 +163,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
   test 'member should get show with forum grant' do
     sign_in member
-    create(:grant, edge: freetown.edge, group: group)
+    create(:grant, edge: freetown, group: group)
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
@@ -172,7 +172,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
   test 'member should get show with page grant' do
     sign_in member
-    create(:grant, edge: argu.edge, group: group)
+    create(:grant, edge: argu, group: group)
 
     get :show, params: {id: member.profile.group_memberships.second, root_id: argu.url}
 
@@ -200,7 +200,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member with group_memberships should post create as json' do
     validate_valid_bearer_token
     sign_in single_forum_group_member
-    forum_edge_ids = single_forum_group.page.edge.children.where(owner_type: 'Forum').pluck(:uuid)
+    forum_edge_ids = single_forum_group.page.children.where(owner_type: 'Forum').pluck(:uuid)
     forum_edge_ids.each do |forum_edge_id|
       Favorite.find_or_create_by!(user: member, edge_id: forum_edge_id)
     end

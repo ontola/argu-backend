@@ -23,7 +23,7 @@ class FeedController < AuthorizedController
   end
 
   def authenticated_edge
-    @resource_edge ||= authenticated_resource!&.parent&.edge
+    @resource_edge ||= authenticated_resource!&.parent
   end
 
   def tree_root_id

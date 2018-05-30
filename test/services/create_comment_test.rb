@@ -5,10 +5,10 @@ require 'test_helper'
 class CreateCommentTest < ActiveSupport::TestCase
   define_freetown
   let(:user) { create_initiator(freetown) }
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:commentable) do
     create(:argument,
-           parent: motion.edge)
+           parent: motion)
   end
   let(:comment_attributes) do
     attributes_for(:comment)
@@ -22,7 +22,7 @@ class CreateCommentTest < ActiveSupport::TestCase
 
   test 'it creates a comment' do
     c = CreateComment.new(
-      commentable.edge,
+      commentable,
       attributes: comment_attributes,
       options: comment_options
     )

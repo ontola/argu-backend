@@ -5,7 +5,7 @@ require 'argu/test_helpers/policy_test'
 
 class ExportPolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:export, parent: freetown.edge, user: create(:user)) }
+  let(:subject) { create(:export, parent: freetown, user: create(:user)) }
 
   generate_crud_tests
 

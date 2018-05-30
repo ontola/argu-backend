@@ -9,7 +9,7 @@ class MotionsController < EdgeableController
   def show
     @vote = Edge
               .where_owner('Vote', creator: current_profile, primary: true, root_id: root_from_params&.uuid)
-              .find_by(parent: authenticated_resource.default_vote_event.edge)
+              .find_by(parent: authenticated_resource.default_vote_event)
               &.owner
     @vote ||= Vote.new(
       creator: current_profile,
@@ -68,14 +68,12 @@ class MotionsController < EdgeableController
     @arguments = Argument.ordered(
       policy_scope(
         resource
-          .edge
           .pro_arguments
           .show_trashed(show_trashed?)
           .includes(:top_comment, :votes)
       ),
       policy_scope(
         resource
-          .edge
           .con_arguments
           .show_trashed(show_trashed?)
           .includes(:top_comment, :votes)

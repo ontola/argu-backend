@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     factory :discussion_shortname do
       owner do
-        passed_in?(:owner) ? owner : create(:motion, parent: forum.edge)
+        passed_in?(:owner) ? owner : create(:motion, parent: forum)
       end
     end
   end

@@ -8,34 +8,34 @@ RSpec.feature 'Show drafts', type: :feature do
   let(:user2) { create(:user) }
   let!(:blog_post) do
     create(:blog_post,
-           parent: motion.edge,
+           parent: motion,
            happened_at: Time.current,
            publisher: user,
            argu_publication_attributes: {draft: true})
   end
   let!(:published_blog_post) do
-    create(:blog_post, parent: published_motion.edge, happened_at: Time.current, publisher: user)
+    create(:blog_post, parent: published_motion, happened_at: Time.current, publisher: user)
   end
   let!(:motion) do
     create(:motion,
-           parent: freetown.edge,
+           parent: freetown,
            publisher: user,
            argu_publication_attributes: {draft: true})
   end
   let!(:published_motion) do
     create(:motion,
-           parent: freetown.edge,
+           parent: freetown,
            publisher: user)
   end
   let!(:question) do
     create(:question,
-           parent: freetown.edge,
+           parent: freetown,
            publisher: user,
            argu_publication_attributes: {draft: true})
   end
   let!(:published_question) do
     create(:question,
-           parent: freetown.edge,
+           parent: freetown,
            publisher: user)
   end
 

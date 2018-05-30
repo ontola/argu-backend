@@ -6,7 +6,7 @@ RSpec.describe 'Exports', type: :model do
   define_spec_objects
 
   context 'Page' do
-    subject { Export.create(edge: freetown.edge, user: User.first) }
+    subject { Export.create(edge: freetown, user: User.first) }
     let(:tmp_path) { Rails.root.join('tmp', 'file.tmp') }
 
     it 'exports data' do

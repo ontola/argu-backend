@@ -5,7 +5,7 @@ require 'argu/test_helpers/policy_test'
 
 class GroupMembershipPolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:group_membership, parent: create(:group, parent: page.edge), member: group_member.profile) }
+  let(:subject) { create(:group_membership, parent: create(:group, parent: page), member: group_member.profile) }
   let(:group_member) { create(:user) }
   let(:admin_membership) { page.grants.administrator.first.group.group_memberships.first }
   let(:second_admin_membership) { create(:group_membership, parent: page.grants.administrator.first.group) }

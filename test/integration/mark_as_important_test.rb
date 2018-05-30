@@ -7,18 +7,18 @@ class MarkAsImportantTest < ActionDispatch::IntegrationTest
   let(:marked_draft) do
     create(
       :motion,
-      parent: freetown.edge,
+      parent: freetown,
       mark_as_important: true,
       argu_publication_attributes: {draft: true}
     )
   end
   let(:unmarked_draft) do
-    create(:motion, parent: freetown.edge, argu_publication_attributes: {draft: true})
+    create(:motion, parent: freetown, argu_publication_attributes: {draft: true})
   end
-  let(:marked_published) { create(:motion, parent: freetown.edge, mark_as_important: true) }
-  let(:unmarked_published) { create(:motion, parent: freetown.edge) }
+  let(:marked_published) { create(:motion, parent: freetown, mark_as_important: true) }
+  let(:unmarked_published) { create(:motion, parent: freetown) }
   let(:moderator) { create_moderator(freetown) }
-  let!(:news_follow) { create(:news_follow, followable: freetown.edge, follower: create_initiator(freetown)) }
+  let!(:news_follow) { create(:news_follow, followable: freetown, follower: create_initiator(freetown)) }
 
   # New Motion
   test 'create with mark_as_important = 1' do

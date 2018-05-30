@@ -9,23 +9,23 @@ module Users
     let!(:user_without_password) { create(:user, :no_password) }
     let(:other_user) { create(:user, :unconfirmed) }
     let(:confirmed_user) { create(:user) }
-    let(:motion) { create(:motion, parent: freetown.edge) }
-    let(:motion2) { create(:motion, parent: freetown.edge) }
-    let(:motion3) { create(:motion, parent: freetown.edge) }
+    let(:motion) { create(:motion, parent: freetown) }
+    let(:motion2) { create(:motion, parent: freetown) }
+    let(:motion3) { create(:motion, parent: freetown) }
     let(:confirmed_vote) do
-      create(:vote, parent: motion.default_vote_event.edge, creator: confirmed_user.profile, publisher: confirmed_user)
+      create(:vote, parent: motion.default_vote_event, creator: confirmed_user.profile, publisher: confirmed_user)
     end
     let(:unconfirmed_vote) do
-      create(:vote, parent: motion.default_vote_event.edge, creator: user.profile, publisher: user)
+      create(:vote, parent: motion.default_vote_event, creator: user.profile, publisher: user)
     end
     let(:unconfirmed_vote2) do
-      create(:vote, parent: motion2.default_vote_event.edge, creator: user.profile, publisher: user)
+      create(:vote, parent: motion2.default_vote_event, creator: user.profile, publisher: user)
     end
     let(:other_unconfirmed_vote) do
-      create(:vote, parent: motion.default_vote_event.edge, creator: other_user.profile, publisher: other_user)
+      create(:vote, parent: motion.default_vote_event, creator: other_user.profile, publisher: other_user)
     end
     let(:other_unconfirmed_vote3) do
-      create(:vote, parent: motion3.default_vote_event.edge, creator: other_user.profile, publisher: other_user)
+      create(:vote, parent: motion3.default_vote_event, creator: other_user.profile, publisher: other_user)
     end
 
     ####################################
@@ -87,9 +87,9 @@ module Users
 
     test 'user should get show confirmation and persist temporary votes' do
       id1 = unconfirmed_vote.id
-      edge1_id = unconfirmed_vote.edge.id
+      edge1_id = unconfirmed_vote.id
       id2 = unconfirmed_vote2.id
-      edge2_id = unconfirmed_vote2.edge.id
+      edge2_id = unconfirmed_vote2.id
       other_unconfirmed_vote
       other_unconfirmed_vote3
 
@@ -105,7 +105,7 @@ module Users
       assert_redirected_to new_user_session_path
       assert user.reload.confirmed?
       assert_equal [id1, edge1_id, id2, edge2_id],
-                   [user.votes.first.id, user.votes.first.edge.id, user.votes.second.id, user.votes.second.edge.id]
+                   [user.votes.first.id, user.votes.first.id, user.votes.second.id, user.votes.second.id]
     end
 
     test 'user should post create confirmation' do

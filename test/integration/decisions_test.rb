@@ -7,20 +7,20 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   let!(:administrator) { create_administrator(freetown) }
   let(:group_membership) do
     create(:group_membership,
-           parent: create(:group, parent: argu.edge))
+           parent: create(:group, parent: argu))
   end
   let(:actor_membership) do
     create(:group_membership,
-           parent: create(:group, parent: argu.edge),
+           parent: create(:group, parent: argu),
            member: actor.profile)
   end
   let!(:motion) do
     create(:motion,
-           parent: freetown.edge)
+           parent: freetown)
   end
   let!(:forward) do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            happening_attributes: {
              happened_at: Time.current
            },
@@ -31,7 +31,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   end
   let(:approval) do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            happening_attributes: {
              happened_at: Time.current
            },
@@ -56,7 +56,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   test 'actor should not post approve when draft is present' do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            happening_attributes: {
              happened_at: Time.current
            },
@@ -79,7 +79,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
 
   test 'actor should not post forward to user/group without membership' do
     sign_in actor
-    general_forward 200, false, create(:group, parent: argu.edge).id, create(:user).id
+    general_forward 200, false, create(:group, parent: argu).id, create(:user).id
   end
 
   test 'actor should post forward' do
@@ -99,10 +99,10 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   test 'group_member should post approve' do
     sign_in user
     create(:group_membership,
-           group_id: create(:group, parent: motion.parent_model(:page).edge).id,
+           group_id: create(:group, parent: motion.parent_model(:page)).id,
            member: user.profile)
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            happening_attributes: {
              happened_at: Time.current
            },

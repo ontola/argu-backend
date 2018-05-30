@@ -31,21 +31,21 @@ class VoteEvent < Edge
   def stats
     return @stats if @stats.present?
     totals = Vote
-               .where(parent_id: edge.id)
+               .where(parent_id: id)
                .select('votes.for, count(*) as count')
                .group(:for)
                .to_a
     totals_confirmed = Vote
                          .joins(publisher: :email_addresses)
                          .where('email_addresses.confirmed_at IS NOT NULL')
-                         .where(parent_id: edge.id)
+                         .where(parent_id: id)
                          .select('votes.for, count(DISTINCT votes.id) as count')
                          .group(:for)
                          .to_a
     totals_facebook = Vote
                         .joins(publisher: :identities)
                         .where(identities: {provider: 'facebook'})
-                        .where(parent_id: edge.id)
+                        .where(parent_id: id)
                         .select('votes.for, count(DISTINCT votes.id) as count')
                         .group(:for)
                         .to_a
@@ -61,7 +61,7 @@ class VoteEvent < Edge
   end
 
   def to_param
-    edge.fragment || 'default'
+    fragment || 'default'
   end
 
   def total_vote_count

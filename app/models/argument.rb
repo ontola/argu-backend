@@ -64,7 +64,7 @@ class Argument < Edge
 
   def upvote(user, profile)
     service = CreateVote.new(
-      edge,
+      self,
       attributes: {
         for: :pro,
         creator: profile

@@ -54,7 +54,7 @@ module Convertible
   # Find children that don't allow the new class as parent
   # @return [Array<Edge>]
   def displaced_children
-    edge.children.reject { |edge| edge.owner.parent_classes.include?(class_name.singularize.to_sym) }
+    children.reject { |edge| edge.owner.parent_classes.include?(class_name.singularize.to_sym) }
   end
 
   module ClassMethods

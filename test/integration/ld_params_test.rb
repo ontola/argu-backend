@@ -4,7 +4,7 @@ require 'test_helper'
 
 class LDParamsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:administrator) { create_administrator(freetown) }
 
   test 'post create blog_post with nested fields as nquads' do

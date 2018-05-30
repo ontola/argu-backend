@@ -8,36 +8,36 @@ class CounterCacheTest < ActiveSupport::TestCase
     create(:motion,
            :with_arguments,
            :with_votes,
-           parent: freetown.edge)
+           parent: freetown)
   end
-  let!(:other_motion) { create(:motion, parent: freetown.edge) }
+  let!(:other_motion) { create(:motion, parent: freetown) }
   let!(:blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
-           parent: motion.edge)
+           parent: motion)
   end
   let!(:unpublished_blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
            argu_publication_attributes: {draft: true},
-           parent: motion.edge)
+           parent: motion)
   end
   let!(:trashed_blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
            trashed_at: Time.current,
-           parent: motion.edge)
+           parent: motion)
   end
   let!(:trashed_unpublished_blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
            trashed_at: Time.current,
            argu_publication_attributes: {draft: true},
-           parent: motion.edge)
+           parent: motion)
   end
   let(:unconfirmed) { create(:user, :unconfirmed) }
   let!(:unconfirmed_vote) do
-    create(:vote, parent: motion.default_vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: motion.default_vote_event, creator: unconfirmed.profile, publisher: unconfirmed)
   end
 
   test 'fix counts for motion' do
@@ -46,10 +46,10 @@ class CounterCacheTest < ActiveSupport::TestCase
     assert_counts(other_motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
     assert_counts(other_motion.default_vote_event, votes_pro: 0, votes_con: 0, votes_neutral: 0)
 
-    motion.edge.update(children_counts: {})
-    motion.default_vote_event.edge.update(children_counts: {})
-    other_motion.edge.update(children_counts: {})
-    other_motion.default_vote_event.edge.update(children_counts: {})
+    motion.update(children_counts: {})
+    motion.default_vote_event.update(children_counts: {})
+    other_motion.update(children_counts: {})
+    other_motion.default_vote_event.update(children_counts: {})
     assert_counts(motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
     assert_counts(motion.default_vote_event, votes_pro: 0, votes_con: 0, votes_neutral: 0)
     assert_counts(other_motion, blog_posts: 0, arguments_pro: 0, arguments_con: 0)
@@ -146,7 +146,7 @@ class CounterCacheTest < ActiveSupport::TestCase
   test 'update count when changing vote' do
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
     CreateVote.new(
-      motion.default_vote_event.edge,
+      motion.default_vote_event,
       attributes: {for: :con},
       options: service_options(
         motion
@@ -164,7 +164,7 @@ class CounterCacheTest < ActiveSupport::TestCase
   test 'dont update count when posting unconfirmed vote' do
     assert_counts(motion.default_vote_event, votes_pro: 2, votes_con: 2, votes_neutral: 2)
     CreateVote.new(
-      motion.default_vote_event.edge,
+      motion.default_vote_event,
       attributes: {for: :con},
       options: service_options(unconfirmed)
     ).commit

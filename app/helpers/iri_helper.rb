@@ -58,7 +58,7 @@ module IRIHelper
 
   def root_id_from_opts(opts)
     return opts[:root_id] if uuid?(opts[:root_id])
-    Page.find_via_shortname_or_id(opts[:root_id])&.edge&.uuid
+    Page.find_via_shortname_or_id(opts[:root_id])&.uuid
   end
 
   def shortnameable_from_opts(opts)

@@ -69,7 +69,7 @@ class Forum < Edge
   end
 
   def iri_opts
-    {root_id: edge.root.url, id: url}
+    {root_id: root.url, id: url}
   end
 
   def language
@@ -95,7 +95,7 @@ class Forum < Edge
 
   def move_to(_new_parent)
     super do
-      edge.grants.where('group_id != ?', Group::PUBLIC_ID).destroy_all
+      grants.where('group_id != ?', Group::PUBLIC_ID).destroy_all
     end
   end
 
@@ -103,11 +103,10 @@ class Forum < Edge
 
   def reset_country
     country_code = locale.split('-').second
-    return if edge.country_placement&.country_code == country_code
+    return if country_placement&.country_code == country_code
     place = Place.find_or_fetch_country(country_code)
     placement =
-      edge
-        .placements
+      placements
         .country
         .first_or_create do |p|
         p.creator = creator
@@ -123,7 +122,7 @@ class Forum < Edge
     else
       grants.joins(:grant_set).where('group_id = ? AND title != ?', Group::PUBLIC_ID, public_grant).destroy_all
       unless grants.joins(:grant_set).find_by(group_id: Group::PUBLIC_ID, grant_sets: {title: public_grant})
-        edge.grants.create!(group_id: Group::PUBLIC_ID, grant_set: GrantSet.find_by!(title: public_grant))
+        grants.create!(group_id: Group::PUBLIC_ID, grant_set: GrantSet.find_by!(title: public_grant))
       end
     end
   end

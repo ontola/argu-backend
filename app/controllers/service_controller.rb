@@ -46,7 +46,7 @@ class ServiceController < ParentableController
   end
 
   def create_service_parent
-    parent_resource!.edge
+    parent_resource!
   end
 
   # Prepares a memoized {DestroyService} for the relevant model for use in controller#destroy

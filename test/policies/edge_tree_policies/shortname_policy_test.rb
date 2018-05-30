@@ -5,9 +5,9 @@ require 'argu/test_helpers/policy_test'
 
 class ShortnamePolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:discussion_shortname, owner: motion.edge, root_id: motion.edge.root_id, primary: false) }
-  let(:unscoped_subject) { create(:discussion_shortname, owner: motion.edge, primary: false) }
-  let(:primary_subject) { create(:discussion_shortname, owner: motion.edge, root_id: motion.edge.root_id) }
+  let(:subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id, primary: false) }
+  let(:unscoped_subject) { create(:discussion_shortname, owner: motion, primary: false) }
+  let(:primary_subject) { create(:discussion_shortname, owner: motion, root_id: motion.root_id) }
 
   generate_crud_tests
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Invite', type: :feature do
   define_freetown
-  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
   let(:user) { create(:user) }
   let(:administrator) { create_administrator(freetown) }
 

@@ -5,16 +5,16 @@ require 'test_helper'
 class NotificationListenerTest < ActiveSupport::TestCase
   subject { NotificationListener.new }
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let!(:motion_activity) { motion.activities.second }
   let(:news_motion) do
-    create(:motion, parent: freetown.edge, mark_as_important: '1')
+    create(:motion, parent: freetown, mark_as_important: '1')
   end
   let!(:news_motion_activity) { news_motion.activities.second }
   let!(:vote_activity) do
     create(
       :activity,
-      trackable: create(:vote, parent: motion.default_vote_event.edge),
+      trackable: create(:vote, parent: motion.default_vote_event),
       trackable_type: 'Vote',
       recipient: motion.default_vote_event,
       recipient_type: 'VoteEvent',
@@ -53,10 +53,10 @@ class NotificationListenerTest < ActiveSupport::TestCase
   end
 
   test 'service should create notifications for new argument' do
-    last_activity_at = motion.edge.last_activity_at
+    last_activity_at = motion.last_activity_at
     assert_differences([['Argument.count', 1], ['Activity.count', 1], ['Notification.count', 1]]) do
       service = CreateArgument.new(
-        motion.edge,
+        motion,
         attributes: {title: 'argument title'},
         options: {publisher: user, creator: user.profile}
       )
@@ -66,15 +66,15 @@ class NotificationListenerTest < ActiveSupport::TestCase
   end
 
   test 'silent service should not create notifications for new argument' do
-    last_activity_at = motion.edge.last_activity_at
+    last_activity_at = motion.last_activity_at
     assert_differences([['Argument.count', 1], ['Notification.count', 0]]) do
       service = CreateArgument.new(
-        motion.edge,
+        motion,
         attributes: {title: 'argument title'},
         options: {publisher: user, creator: user.profile, silent: true}
       )
       service.commit
     end
-    assert_equal last_activity_at, motion.edge.last_activity_at
+    assert_equal last_activity_at, motion.last_activity_at
   end
 end

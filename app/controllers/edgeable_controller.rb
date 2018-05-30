@@ -30,14 +30,13 @@ class EdgeableController < ServiceController
     resource = super
     resource.parent = parent_resource!
     if resource.is_publishable?
-      resource.edge.build_argu_publication(
+      resource.build_argu_publication(
         published_at: Time.current,
         follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
       )
     end
     if params[:lat] && params[:lon]
       resource
-        .edge
         .custom_placements
         .new(params.permit(:lat, :lon, :zoom_level))
     end
@@ -67,6 +66,10 @@ class EdgeableController < ServiceController
       resource_by_id!,
       options: service_options
     )
+  end
+
+  def tree_root_id
+    (resource_from_params || parent_resource)&.root_id
   end
 
   # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash

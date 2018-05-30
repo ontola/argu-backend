@@ -17,7 +17,7 @@ class DecisionPolicy < EdgePolicy
   # Creating a Decision when a draft is present is not allowed
   # Managers and the Owner are allowed to forward a Decision when not assigned to him
   def create?
-    return nil if record.edge.parent.decisions.unpublished.present?
+    return nil if record.parent.decisions.unpublished.present?
     if record.forwarded?
       decision_is_assigned? || has_grant?(:create)
     else

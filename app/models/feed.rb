@@ -46,7 +46,7 @@ class Feed
   end
 
   def edge_activities
-    activity_base.where('edges.path <@ ?', parent.edge.path)
+    activity_base.where('edges.path <@ ?', parent.path)
   end
 
   def favorite_activities

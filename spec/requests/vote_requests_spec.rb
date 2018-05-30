@@ -38,7 +38,7 @@ RSpec.describe 'Votes', type: :request do
     let!(:subject) { argument_vote }
     let!(:guest_subject) do
       get root_path
-      create(:vote, parent: subject.parent_model .edge, creator: guest_user.profile, publisher: guest_user)
+      create(:vote, parent: subject.parent_model, creator: guest_user.profile, publisher: guest_user)
     end
     let(:expect_get_show_html) { expect(response).to redirect_to(subject.parent_model.iri_path) }
     let(:expect_redirect_to_login) { new_iri_path(subject.parent_model, :votes, confirm: true) }
@@ -59,7 +59,7 @@ RSpec.describe 'Votes', type: :request do
       let!(:subject) { vote }
       let!(:guest_subject) do
         get root_path
-        create(:vote, parent: motion.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+        create(:vote, parent: motion.default_vote_event, creator: guest_user.profile, publisher: guest_user)
       end
       let(:expect_get_show_html) { expect(response).to redirect_to(motion.iri_path) }
       let(:expect_redirect_to_login) { new_iri_path(motion.default_vote_event, :votes, confirm: true) }
@@ -73,7 +73,7 @@ RSpec.describe 'Votes', type: :request do
       let(:parent_path) {}
       let!(:guest_subject) do
         get root_path
-        create(:vote, parent: linked_record.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+        create(:vote, parent: linked_record.default_vote_event, creator: guest_user.profile, publisher: guest_user)
       end
       let(:expect_get_show_html) { expect(response).to linked_record.iri_path }
       let(:expect_redirect_to_login) do
@@ -104,7 +104,7 @@ RSpec.describe 'Votes', type: :request do
       let(:non_persisted_linked_record) do
         LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid)
       end
-      subject { build(:vote, parent: non_persisted_linked_record.edge) }
+      subject { build(:vote, parent: non_persisted_linked_record) }
       let(:parent_path) {}
       let(:index_path) do
         collection_iri(non_persisted_linked_record.default_vote_event.iri_path(id: 'default'), :votes, only_path: true)

@@ -9,7 +9,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   let(:motion) do
     create(:motion,
            :with_follower,
-           parent: freetown.edge,
+           parent: freetown,
            creator: create(:user,
                            :follows_reactions_directly,
                            :viewed_notifications_hour_ago)

@@ -5,7 +5,7 @@ require 'test_helper'
 class JSONApiResponsesTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:user) { create(:user) }
 
   test 'guest should get 401' do

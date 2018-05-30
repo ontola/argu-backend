@@ -51,7 +51,7 @@
               - if policy(question).permitted_attributes.include?(:expires_at)
                 =f.input :expires_at, as: :datetime_picker
               - if question.persisted? && policy(question).convert?
-                =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.edge.uuid), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: new_edge_conversion_url(question.uuid), input_html: {data: {remote: true}, class: 'btn--warning'}
         section.section--footer.footer-flex
           .footer-flex-element.footer-creator
             =render partial: 'profiles/creator', locals: {resource: question}

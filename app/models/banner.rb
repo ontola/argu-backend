@@ -20,6 +20,6 @@ class Banner < NewsBoy
   end
 
   def shallow_parent
-    forum.edge
+    forum
   end
 end

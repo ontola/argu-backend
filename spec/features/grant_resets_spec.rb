@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Grant resets', type: :feature do
   define_spain
-  let(:question) { create(:question, parent: spain.edge) }
+  let(:question) { create(:question, parent: spain) }
   let(:staff) { create(:user, :staff) }
 
   scenario 'set and revert grant reset' do

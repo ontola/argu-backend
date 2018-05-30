@@ -132,10 +132,6 @@ class Edge < ApplicationRecord
     self
   end
 
-  def edge
-    self
-  end
-
   def children(*args)
     association(:children).reader(*args)
   end

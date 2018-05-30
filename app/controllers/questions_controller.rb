@@ -26,7 +26,6 @@ class QuestionsController < EdgeableController
   def show_respond_success_html(resource)
     @all_motion_edges = policy_scope(
       resource
-        .edge
         .children
         .where(owner_type: 'Motion')
     )

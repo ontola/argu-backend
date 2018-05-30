@@ -7,8 +7,8 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
 
   define_freetown
   define_helsinki
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:helsinki_motion) { create(:motion, parent: helsinki.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let(:helsinki_motion) { create(:motion, parent: helsinki) }
 
   ####################################
   # As Guest
@@ -177,7 +177,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'administrator should get show organization of motion form' do
     sign_in administrator
 
-    get :show, params: {iri: argu_url("/#{argu.url}/m/#{motion.edge.fragment}/edit"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/m/#{motion.fragment}/edit"), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)

@@ -72,33 +72,33 @@ module Argu
         def create_moderator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.parent_model(:page)
-          group = create(:group, parent: page.edge)
+          group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, grant_set: GrantSet.moderator)
+          create(:grant, edge: record, group: group, grant_set: GrantSet.moderator)
           user
         end
 
         def create_participator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.page
-          group = create(:group, parent: page.edge)
+          group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, grant_set: GrantSet.participator)
+          create(:grant, edge: record, group: group, grant_set: GrantSet.participator)
           user
         end
 
         def create_initiator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.parent_model(:page)
-          group = create(:group, parent: page.edge)
+          group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
                  shortname: user.url)
-          create(:grant, edge: record.edge, group: group, grant_set: GrantSet.initiator)
+          create(:grant, edge: record, group: group, grant_set: GrantSet.initiator)
           user
         end
 
@@ -111,7 +111,7 @@ module Argu
 
         def create_follower(item, user = nil)
           user ||= create(:user)
-          create(:follow, followable: item.edge, follower: user)
+          create(:follow, followable: item, follower: user)
           user
         end
 
@@ -238,14 +238,14 @@ module Argu
         def define_spec_objects
           let(:argu) { Page.find_via_shortname('argu') }
           let(:other_page) { Page.find_via_shortname('other_page') }
-          let(:other_page_forum) { Forum.find_via_shortname('other_page_forum', other_page.edge.uuid) }
+          let(:other_page_forum) { Forum.find_via_shortname('other_page_forum', other_page.uuid) }
 
           define_freetown_spec_objects
           define_hidden_spec_objects
         end
 
         def define_freetown_spec_objects
-          let(:freetown) { Forum.find_via_shortname('freetown', argu.edge.uuid) }
+          let(:freetown) { Forum.find_via_shortname('freetown', argu.uuid) }
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
           let(:linked_record_vote) { LinkedRecord.first.default_vote_event.votes.first }
@@ -268,13 +268,13 @@ module Argu
           let(:trashed_motion) { question.motions.trashed.first }
           let(:unpublished_motion) { question.motions.unpublished.first }
           let(:argument_unpublished_child) { unpublished_motion.arguments.first }
-          let(:forum_export) { freetown.edge.exports.first }
-          let(:motion_export) { motion.edge.exports.first }
+          let(:forum_export) { freetown.exports.first }
+          let(:motion_export) { motion.exports.first }
         end
 
         def define_hidden_spec_objects
-          let(:holland) { Forum.find_via_shortname('holland', argu.edge.uuid) }
-          let(:hidden_motion) { holland.edge.descendants.at_depth(4).where(owner_type: 'Motion').first.owner }
+          let(:holland) { Forum.find_via_shortname('holland', argu.uuid) }
+          let(:hidden_motion) { holland.descendants.at_depth(4).where(owner_type: 'Motion').first.owner }
         end
 
         def define_model_spec_objects

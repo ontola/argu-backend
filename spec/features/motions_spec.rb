@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Motions', type: :feature do
   define_freetown
-  let(:question) { create(:question, parent: freetown.edge) }
+  let(:question) { create(:question, parent: freetown) }
   let(:administrator) { create_administrator(freetown) }
 
   scenario 'user should post a new motion as organization' do

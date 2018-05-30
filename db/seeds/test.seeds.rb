@@ -42,7 +42,7 @@ page = FactorySeeder.create(
 public_group = FactorySeeder.create(
   :group,
   id: Group::PUBLIC_ID,
-  parent: Page.find(0).edge,
+  parent: Page.find(0),
   name: 'Public group',
   name_singular: 'User'
 )
@@ -58,7 +58,7 @@ FactorySeeder.create(:group_membership, parent: public_group, member: staff.prof
 staff_group = FactorySeeder.create(
   :group,
   id: Group::STAFF_ID,
-  parent: Page.find(0).edge,
+  parent: Page.find(0),
   name: 'Staff group',
   name_singular: 'Staff'
 )
@@ -132,12 +132,12 @@ freetown = FactorySeeder.create_forum(
   :with_follower,
   url: 'freetown',
   name: 'Freetown',
-  parent: page.edge,
+  parent: page,
   public_grant: 'participator'
 )
 holland = FactorySeeder.create_forum(
   :populated_forum,
-  parent: page.edge,
+  parent: page,
   url: 'holland',
   name: 'Holland',
   discoverable: false,
@@ -154,13 +154,13 @@ other_page = FactorySeeder.create(
   url: 'other_page'
 )
 other_page_forum = FactorySeeder.create_forum(
-  parent: other_page.edge,
+  parent: other_page,
   url: 'other_page_forum',
   name: 'Other page forum',
   public_grant: 'participator'
 )
 FactorySeeder.create_forum(
-  parent: other_page.edge,
+  parent: other_page,
   url: 'other_page_forum2',
   name: 'Other page forum2',
   public_grant: 'spectator'
@@ -168,70 +168,70 @@ FactorySeeder.create_forum(
 
 members_group =
   FactorySeeder
-    .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.parent_model(:page).edge)
-FactorySeeder.create(:grant, edge: holland.edge, group: members_group, grant_set: GrantSet.initiator)
+    .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.parent_model(:page))
+FactorySeeder.create(:grant, edge: holland, group: members_group, grant_set: GrantSet.initiator)
 moderators_group =
   FactorySeeder
-    .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.parent_model(:page).edge)
-FactorySeeder.create(:grant, edge: holland.edge, group: moderators_group, grant_set: GrantSet.moderator)
+    .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.parent_model(:page))
+FactorySeeder.create(:grant, edge: holland, group: moderators_group, grant_set: GrantSet.moderator)
 
 linked_record = LinkedRecord.create_for_forum(page.url, freetown.url, SecureRandom.uuid)
-FactorySeeder.create(:argument, parent: linked_record.edge)
-FactorySeeder.create(:comment, parent: linked_record.edge)
+FactorySeeder.create(:argument, parent: linked_record)
+FactorySeeder.create(:comment, parent: linked_record)
 linked_record_vote_event = linked_record.default_vote_event
-FactorySeeder.create(:vote, parent: linked_record_vote_event.edge)
-forum_motion = FactorySeeder.create(:motion, parent: freetown.edge)
-FactorySeeder.create(:argument, parent: forum_motion.edge)
-question = FactorySeeder.create(:question, parent: freetown.edge)
-motion = FactorySeeder.create(:motion, parent: question.edge)
+FactorySeeder.create(:vote, parent: linked_record_vote_event)
+forum_motion = FactorySeeder.create(:motion, parent: freetown)
+FactorySeeder.create(:argument, parent: forum_motion)
+question = FactorySeeder.create(:question, parent: freetown)
+motion = FactorySeeder.create(:motion, parent: question)
 actor_membership =
-  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page.edge))
+  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page))
 FactorySeeder.create(
   :decision,
-  parent: motion.edge,
+  parent: motion,
   state: 'forwarded',
   forwarded_user: actor_membership.member.profileable,
   forwarded_group: actor_membership.group,
   happening_attributes: {happened_at: Time.current}
 )
 vote_event = motion.default_vote_event
-FactorySeeder.create(:vote, parent: vote_event.edge)
+FactorySeeder.create(:vote, parent: vote_event)
 
 profile_hidden_votes =
   FactorySeeder.create(:user, profile: FactorySeeder.build(:profile, are_votes_public: false)).profile
 FactorySeeder
-  .create(:vote, parent: vote_event.edge, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
+  .create(:vote, parent: vote_event, creator: profile_hidden_votes, publisher: profile_hidden_votes.profileable)
 
-argument = FactorySeeder.create(:argument, parent: motion.edge)
-FactorySeeder.create(:vote, parent: argument.edge)
-comment = FactorySeeder.create(:comment, parent: argument.edge)
-FactorySeeder.create(:comment, parent: argument.edge, in_reply_to_id: comment.uuid)
-FactorySeeder.create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current})
+argument = FactorySeeder.create(:argument, parent: motion)
+FactorySeeder.create(:vote, parent: argument)
+comment = FactorySeeder.create(:comment, parent: argument)
+FactorySeeder.create(:comment, parent: argument, in_reply_to_id: comment.uuid)
+FactorySeeder.create(:blog_post, parent: motion, happening_attributes: {happened_at: Time.current})
 blog_post =
-  FactorySeeder.create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
-FactorySeeder.create(:comment, parent: blog_post.edge)
-FactorySeeder.create(:comment, parent: motion.edge)
+  FactorySeeder.create(:blog_post, parent: question, happening_attributes: {happened_at: Time.current})
+FactorySeeder.create(:comment, parent: blog_post)
+FactorySeeder.create(:comment, parent: motion)
 
-hidden_question = FactorySeeder.create(:question, parent: holland.edge)
-FactorySeeder.create(:motion, parent: hidden_question.edge)
+hidden_question = FactorySeeder.create(:question, parent: holland)
+FactorySeeder.create(:motion, parent: hidden_question)
 
 trashed_motion =
   FactorySeeder.create(
     :motion,
-    parent: question.edge,
+    parent: question,
     trashed_at: Time.current
   )
-FactorySeeder.create(:argument, parent: trashed_motion.edge)
+FactorySeeder.create(:argument, parent: trashed_motion)
 
 unpublished_motion =
   FactorySeeder.create(
     :motion,
-    parent: question.edge,
+    parent: question,
     argu_publication_attributes: {draft: true}
   )
-FactorySeeder.create(:argument, parent: unpublished_motion.edge)
+FactorySeeder.create(:argument, parent: unpublished_motion)
 
-FactorySeeder.create(:export, parent: freetown.edge, user: FactorySeeder.create(:user))
-FactorySeeder.create(:export, parent: motion.edge, user: FactorySeeder.create(:user))
+FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
+FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
 
-Setting.set('suggested_forums', [freetown.edge.uuid, other_page_forum.edge.uuid])
+Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid])

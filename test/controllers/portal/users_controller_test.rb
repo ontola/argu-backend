@@ -5,7 +5,7 @@ require 'test_helper'
 module Portal
   class UsersControllerTest < ActionController::TestCase
     define_freetown
-    let!(:user) { create(:motion, parent: freetown.edge).publisher }
+    let!(:user) { create(:motion, parent: freetown).publisher }
 
     ####################################
     # As Guest

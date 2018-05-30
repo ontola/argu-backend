@@ -5,13 +5,13 @@ require 'test_helper'
 class QuestionsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
-  let(:question) { create(:question, :with_motions, :with_attachments, parent: freetown.edge) }
+  let(:question) { create(:question, :with_motions, :with_attachments, parent: freetown) }
 
   ####################################
   # Show
   ####################################
   test 'should get show question' do
-    get :show, params: {format: :json_api, root_id: argu.url, id: question.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, id: question.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)

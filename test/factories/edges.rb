@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :edge do
     association :user
     parent do
-      passed_in?(:parent) ? parent : owner.parent_model.edge
+      passed_in?(:parent) ? parent : owner.parent_model
     end
   end
 end

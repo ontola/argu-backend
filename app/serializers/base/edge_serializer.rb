@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class EdgeSerializer < RecordSerializer
-  has_one :edge, predicate: NS::ARGU[:edge]
   has_one :parent_model, key: :partOf, predicate: NS::SCHEMA[:isPartOf]
   has_one :organization, predicate: NS::SCHEMA[:organization] do
     object.parent_model(:page)
@@ -23,7 +22,7 @@ class EdgeSerializer < RecordSerializer
   triples :children_counts
 
   def children_counts
-    object.edge.children_counts.map do |key, count|
+    object.children_counts.map do |key, count|
       [
         object.iri,
         NS::ARGU["#{key.camelcase(:lower)}Count".to_sym],

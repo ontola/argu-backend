@@ -4,19 +4,19 @@ require 'test_helper'
 
 class RedirectssTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:question) { create(:question, owner_id: 1, parent: freetown.edge) }
-  let(:motion) { create(:motion, owner_id: 1, parent: freetown.edge) }
-  let(:pro_argument) { create(:argument, owner_id: 1, parent: motion.edge) }
-  let(:con_argument) { create(:argument, owner_id: 2, parent: motion.edge, pro: false) }
-  let(:comment) { create(:comment, owner_id: 1, parent: motion.edge) }
+  let(:question) { create(:question, owner_id: 1, parent: freetown) }
+  let(:motion) { create(:motion, owner_id: 1, parent: freetown) }
+  let(:pro_argument) { create(:argument, owner_id: 1, parent: motion) }
+  let(:con_argument) { create(:argument, owner_id: 2, parent: motion, pro: false) }
+  let(:comment) { create(:comment, owner_id: 1, parent: motion) }
   let(:blog_post) do
-    create(:blog_post, owner_id: 1, parent: motion.edge, happening_attributes: {happened_at: Time.current})
+    create(:blog_post, owner_id: 1, parent: motion, happening_attributes: {happened_at: Time.current})
   end
   let(:decision) do
     create(
       :decision,
       owner_id: 1,
-      parent: motion.edge,
+      parent: motion,
       state: 'approved',
       happening_attributes: {happened_at: Time.current}
     )

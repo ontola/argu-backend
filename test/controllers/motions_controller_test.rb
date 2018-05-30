@@ -5,16 +5,16 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
-  let(:question) { create(:question, :with_motions, parent: freetown.edge) }
-  let(:question_motion) { create(:motion, :with_votes, parent: question.edge) }
-  let(:motion) { create(:motion, :with_arguments, :with_votes, :with_attachments, parent: freetown.edge) }
+  let(:question) { create(:question, :with_motions, parent: freetown) }
+  let(:question_motion) { create(:motion, :with_votes, parent: question) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, :with_attachments, parent: freetown) }
   let(:vote_event) { motion.default_vote_event }
 
   ####################################
   # Show
   ####################################
   test 'should get show motion' do
-    get :show, params: {format: :json_api, root_id: argu.url, id: motion.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, id: motion.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -84,7 +84,7 @@ class MotionsControllerTest < ActionController::TestCase
   # Index for Question
   ####################################
   test 'should get index motions of question' do
-    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -97,7 +97,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'should get index motions of question page 1' do
-    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -116,7 +116,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     sign_in user
 
-    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, question_id: question.fragment, page: 1}
     assert_response 200
 
     expect_included(user_vote.iri)

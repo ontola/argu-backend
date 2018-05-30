@@ -55,7 +55,7 @@ module ForumsHelper
 
     sections << forum_membership_section unless current_user.guest?
     sections << forum_discover_section
-    sections << forum_current_section(resource) if current_user.has_favorite?(resource.edge)
+    sections << forum_current_section(resource) if current_user.has_favorite?(resource)
 
     {
       title: resource.name,
@@ -73,7 +73,7 @@ module ForumsHelper
   end
 
   def forum_membership_controls_items(resource)
-    return unless current_user.has_favorite?(resource.edge)
+    return unless current_user.has_favorite?(resource)
     items = []
     items << link_item(t('forums.leave'),
                        collection_iri_path(resource, :favorites),

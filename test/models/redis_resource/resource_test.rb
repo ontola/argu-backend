@@ -8,15 +8,15 @@ module RedisResource
     let(:guest_user) { GuestUser.new(id: 'my_id') }
     let(:unconfirmed) { create(:user, :unconfirmed) }
     let(:user) { create(:user) }
-    let(:motion) { create(:motion, parent: freetown.edge) }
-    let(:confirmed_vote) { create(:vote, publisher: user, parent: motion.default_vote_event.edge) }
-    let(:vote) { create(:vote, publisher: user, parent: motion.default_vote_event.edge) }
-    let(:guest_vote) { create(:vote, publisher: guest_user, parent: motion.default_vote_event.edge) }
+    let(:motion) { create(:motion, parent: freetown) }
+    let(:confirmed_vote) { create(:vote, publisher: user, parent: motion.default_vote_event) }
+    let(:vote) { create(:vote, publisher: user, parent: motion.default_vote_event) }
+    let(:guest_vote) { create(:vote, publisher: guest_user, parent: motion.default_vote_event) }
 
     test 'find by key string' do
       redis_resource =
         RedisResource::Resource
-          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.edge.parent.id}")
+          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
       assert redis_resource.is_a?(RedisResource::Resource)
       assert redis_resource.resource.uuid == guest_vote.uuid
       assert_not redis_resource.resource.persisted?
@@ -27,7 +27,7 @@ module RedisResource
         user: guest_user,
         owner_type: 'vote',
         root_id: guest_vote.root_id,
-        parent_id: motion.default_vote_event.edge.id
+        parent_id: motion.default_vote_event.id
       )
       redis_resource = RedisResource::Resource.find(key)
       assert redis_resource.is_a?(RedisResource::Resource)
@@ -72,7 +72,7 @@ module RedisResource
     test 'persist' do
       redis_resource =
         RedisResource::Resource
-          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.edge.parent.id}")
+          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
       assert_differences([['Vote.count', 1], ['Argu::Redis.keys("temporary*").count', -1]]) do
         redis_resource.persist(user)
       end
@@ -82,7 +82,7 @@ module RedisResource
       vote
       redis_resource =
         RedisResource::Resource
-          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.edge.parent.id}")
+          .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
       assert_differences([['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', -1]]) do
         redis_resource.persist(user)
       end

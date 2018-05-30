@@ -54,7 +54,7 @@ RSpec.describe 'Comments', type: :request do
 
   context 'with non-persisted linked_record parent' do
     let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
-    subject { build(:comment, parent: non_persisted_linked_record.edge) }
+    subject { build(:comment, parent: non_persisted_linked_record) }
     let(:parent_path) {}
     it_behaves_like 'post create', skip: %i[html]
     it_behaves_like 'get index', skip: %i[html]

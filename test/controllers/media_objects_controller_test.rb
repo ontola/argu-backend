@@ -5,7 +5,7 @@ require 'test_helper'
 class MediaObjectsControllerTest < ActionController::TestCase
   define_freetown
   define_holland
-  let(:motion) { create(:motion, :with_attachments, parent: freetown.edge) }
+  let(:motion) { create(:motion, :with_attachments, parent: freetown) }
   let(:media_object) { motion.attachments.first }
 
   ####################################
@@ -20,7 +20,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
   # Index for Motion
   ####################################
   test 'should get index media_objects of motion' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -33,7 +33,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
   end
 
   test 'should get index media_objects of motion page 1' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)

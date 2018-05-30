@@ -48,7 +48,7 @@ RSpec.describe "Iri's", type: :model do
   end
 
   context 'with root' do
-    let(:id) { subject.edge.fragment }
+    let(:id) { subject.fragment }
     let(:url) { url_for([subject.class_name.singularize, id: id, root_id: root_id, protocol: :http]) }
     let(:root_id) { argu.url }
 
@@ -94,7 +94,7 @@ RSpec.describe "Iri's", type: :model do
     context 'VoteEvent' do
       subject { vote_event }
       let(:url) do
-        motion_vote_event_url(subject.voteable.edge.fragment, subject.edge.fragment, root_id: root_id, protocol: :http)
+        motion_vote_event_url(subject.voteable.fragment, subject.fragment, root_id: root_id, protocol: :http)
       end
       it_behaves_like 'iri matches route'
     end

@@ -61,7 +61,7 @@ module Shortnameable
     # Finds an object via its shortname, returns nil when not found
     def find_via_shortname(url, root_id = nil)
       if root_id && !uuid?(root_id)
-        root_id = Page.find_via_shortname(root_id)&.edge&.uuid
+        root_id = Page.find_via_shortname(root_id)&.uuid
         return if root_id.blank?
       end
       joins(:shortnames).where(shortnames: {root_id: root_id}).find_by('lower(shortname) = lower(?)', url)

@@ -52,7 +52,7 @@ module ChildOperations
     when 'Discussion'
       {forum: record}
     when 'Export', 'Favorite', 'GrantTree', 'Grant'
-      {edge: record.is_a?(Edge) ? record : record.edge}
+      {edge: record}
     when 'GroupMembership'
       {group: record}
     when 'Group'
@@ -60,9 +60,9 @@ module ChildOperations
     when 'MediaObject'
       {about: record}
     when 'Decision'
-      {state: 'forwarded', parent: record.edge}
+      {state: 'forwarded', parent: record}
     else
-      raw_klass <= Edge ? {parent: record.edge} : {}
+      raw_klass <= Edge ? {parent: record} : {}
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity

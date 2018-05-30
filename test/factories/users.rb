@@ -104,7 +104,7 @@ FactoryGirl.define do
       after(:create) do |user|
         motion = Motion.untrashed.first
         CreateVote.new(
-          motion.default_vote_event.edge,
+          motion.default_vote_event,
           attributes: {for: :pro},
           options: {
             creator: user.profile,
@@ -113,7 +113,7 @@ FactoryGirl.define do
         ).commit
         trashed = Motion.trashed.first
         CreateVote.new(
-          trashed.default_vote_event.edge,
+          trashed.default_vote_event,
           attributes: {for: :pro},
           options: {
             creator: user.profile,

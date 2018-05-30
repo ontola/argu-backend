@@ -4,7 +4,7 @@ require 'test_helper'
 
 class VoteEventTest < ActiveSupport::TestCase
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:subject) { motion.default_vote_event }
 
   test 'valid' do

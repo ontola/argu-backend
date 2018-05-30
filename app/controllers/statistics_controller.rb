@@ -52,7 +52,7 @@ class StatisticsController < ParentableController
     cities = Hash.new(0)
     User
       .joins(:follows)
-      .where(follows: {followable: forum.edge})
+      .where(follows: {followable: forum})
       .includes(home_placement: :place)
       .map { |u| u.home_placement&.place&.address.try(:[], 'city') || t('forums.statistics.cities.unknown') }
       .each { |v| cities.store(v, cities[v] + 1) }

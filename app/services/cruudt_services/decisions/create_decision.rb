@@ -23,12 +23,6 @@ class CreateDecision < PublishedCreateService
       obj.recipient ||= resource.parent_model
       obj.recipient_type ||= resource.parent.class.to_s
       obj.trackable_type ||= resource.class.to_s
-    when Decision
-      obj.edge ||= obj.build_edge(
-        publisher: resource.parent_model.publisher,
-        creator: resource.parent_model.creator,
-        parent: resource.parent_model.edge
-      )
     end
   end
 

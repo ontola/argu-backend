@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.feature 'Shortname', type: :feature do
   define_freetown(attributes: {name: 'freetown'})
   let(:administrator) { create_administrator(argu) }
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let!(:shortname) { create(:discussion_shortname, owner: create(:motion, parent: freetown.edge).edge, primary: false) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let!(:shortname) { create(:discussion_shortname, owner: create(:motion, parent: freetown), primary: false) }
 
   scenario 'administrator creates a shortname' do
     sign_in administrator
@@ -32,7 +32,7 @@ RSpec.feature 'Shortname', type: :feature do
     expect do
       within('#new_shortname') do
         fill_in 'shortname_shortname', with: shortname_attrs[:shortname]
-        fill_in 'shortname_destination', with: "/m/#{motion.edge.fragment}"
+        fill_in 'shortname_destination', with: "/m/#{motion.fragment}"
         click_on 'Save'
       end
       expect(page).to have_current_path shortname_settings_path

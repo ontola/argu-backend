@@ -14,7 +14,7 @@ module Commentable
                     }
 
     def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
-      i = edge.root_comments.order(order).page(page)
+      i = root_comments.order(order).page(page)
       unless show_trashed
         i.each do |edge|
           edge.owner.shallow_wipe if edge.owner_type == 'Comment'

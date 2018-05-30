@@ -13,7 +13,7 @@ class MediaObjectPolicy < EdgeTreePolicy
   end
 
   def edge
-    record.about.try(:edge)
+    record.about if record.about.is_a?(Edge)
   end
 
   def show?

@@ -88,8 +88,8 @@ module Menus
 
     def is_public?
       user_context
-        .grant_tree_for(resource.edge)
-        .granted_group_ids(resource.edge)
+        .grant_tree_for(resource)
+        .granted_group_ids(resource)
         .include?(Group::PUBLIC_ID)
     end
 

@@ -6,18 +6,18 @@ class TokensTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:guest_user) { GuestUser.new(session: session) }
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:motion2) { create(:motion, parent: freetown.edge) }
-  let(:vote) { create(:vote, parent: motion2.default_vote_event.edge, publisher: user) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let(:motion2) { create(:motion, parent: freetown) }
+  let(:vote) { create(:vote, parent: motion2.default_vote_event, publisher: user) }
   let(:guest_vote) do
-    create(:vote, parent: motion.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: motion.default_vote_event, creator: guest_user.profile, publisher: guest_user)
   end
   let(:guest_vote2) do
-    create(:vote, parent: motion2.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: motion2.default_vote_event, creator: guest_user.profile, publisher: guest_user)
   end
   let(:other_guest_vote) do
     create(:vote,
-           parent: motion.default_vote_event.edge,
+           parent: motion.default_vote_event,
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
@@ -506,7 +506,7 @@ class TokensTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.edge.path}")
+    assert_empty Argu::Redis.keys("temporary.user.#{User.last.id}.vote.*.#{motion.default_vote_event.path}")
   end
 
   test 'Unconfirmed user should post create token for Argu domain transfering temp votes' do

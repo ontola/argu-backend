@@ -8,9 +8,9 @@ module Argu
         page = attributes[:parent]&.owner || create(:page)
         attributes = {
           url: attributes_for(:shortname)[:shortname],
-          parent: page.edge,
+          parent: page,
           options: {
-            publisher: page.edge.user
+            publisher: page.user
           }
         }.merge(attributes)
         country_code = attributes[:locale]&.split('-')&.second&.downcase || 'gb'
@@ -38,7 +38,7 @@ module Argu
             :with_follower,
             {
               url: name,
-              parent: argu.edge,
+              parent: argu,
               public_grant: 'initiator'
             }.merge(attributes)
           )
@@ -49,8 +49,8 @@ module Argu
         let(name) do
           forum = create_forum({url: name}.merge(attributes))
           create(:grant,
-                 edge: forum.edge,
-                 group: create(:group, parent: forum.parent_model(:page).edge),
+                 edge: forum,
+                 group: create(:group, parent: forum.parent_model(:page)),
                  grant_set: GrantSet.initiator)
           forum
         end
@@ -60,8 +60,8 @@ module Argu
         let(name) do
           forum = create_forum(:populated_forum, {url: name}.merge(attributes))
           create(:grant,
-                 edge: forum.edge,
-                 group: create(:group, parent: forum.parent_model(:page).edge),
+                 edge: forum,
+                 group: create(:group, parent: forum.parent_model(:page)),
                  grant_set: GrantSet.initiator)
           forum
         end
@@ -76,8 +76,8 @@ module Argu
             }.merge(attributes)
           )
           create(:grant,
-                 edge: forum.edge,
-                 group: create(:group, parent: forum.parent_model(:page).edge),
+                 edge: forum,
+                 group: create(:group, parent: forum.parent_model(:page)),
                  grant_set: GrantSet.initiator)
           forum
         end

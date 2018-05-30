@@ -36,7 +36,7 @@ module RedisResource
     end
 
     def edge
-      redis_resource.resource.edge
+      redis_resource.resource
     end
 
     # @return [Bool] Whether the key contains wildcards

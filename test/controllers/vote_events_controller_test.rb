@@ -4,19 +4,19 @@ require 'test_helper'
 
 class VoteEventsControllerTest < ActionController::TestCase
   define_freetown
-  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
-  let(:vote_event) { create(:vote_event, parent: motion.edge) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
+  let(:vote_event) { create(:vote_event, parent: motion) }
   let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:lr_vote_event) { linked_record.default_vote_event }
   let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
-  let(:argument) { create(:argument, :with_comments, parent: motion.edge) }
-  let!(:public_vote) { create(:vote, parent: vote_event.edge) }
+  let(:argument) { create(:argument, :with_comments, parent: motion) }
+  let!(:public_vote) { create(:vote, parent: vote_event) }
   let!(:hidden_vote) do
-    create(:vote, parent: vote_event.edge, creator: user_hidden_votes.profile, publisher: user_hidden_votes)
+    create(:vote, parent: vote_event, creator: user_hidden_votes.profile, publisher: user_hidden_votes)
   end
-  let!(:lr_public_vote) { create(:vote, parent: lr_vote_event.edge) }
+  let!(:lr_public_vote) { create(:vote, parent: lr_vote_event) }
   let!(:lr_hidden_vote) do
-    create(:vote, parent: lr_vote_event.edge, creator: user_hidden_votes.profile, publisher: user_hidden_votes)
+    create(:vote, parent: lr_vote_event, creator: user_hidden_votes.profile, publisher: user_hidden_votes)
   end
   let(:user_hidden_votes) { create(:user, profile: build(:profile, are_votes_public: false)) }
 
@@ -24,7 +24,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   # VoteEvents of Motion
   ####################################
   test 'should get show vote_event of motion' do
-    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.id, id: vote_event.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.id, id: vote_event.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -43,7 +43,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   end
 
   test 'should get show vote_event of motion with default id' do
-    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment, id: 'default'}
+    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, id: 'default'}
     assert_response 200
 
     assert_equal parsed_body['data']['id'], motion.default_vote_event.iri
@@ -55,7 +55,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   end
 
   test 'should get index vote_events of motion' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.edge.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -89,7 +89,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   ####################################
   test 'should get show vote_event of linked_record' do
     get :show,
-        params: linked_record.iri_opts.merge(root_id: argu.url, id: lr_vote_event.edge.fragment, format: :json_api)
+        params: linked_record.iri_opts.merge(root_id: argu.url, id: lr_vote_event.fragment, format: :json_api)
     assert_response 200
 
     expect_relationship('partOf', 1)

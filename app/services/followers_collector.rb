@@ -22,8 +22,8 @@ class FollowersCollector
   def followers
     User
       .joins(follows: :followable, profile: {grants: :edge})
-      .where(edges: {id: @resource.edge.id})
-      .where('edges_grants.path @> ?', @resource.edge.path)
+      .where(edges: {id: @resource.id})
+      .where('edges_grants.path @> ?', @resource.path)
       .where(
         'users.id NOT IN (?)',
         (@activity&.notifications&.pluck(:user_id) || []).append(@activity&.audit_data.try(:[], 'user_id') || 0)

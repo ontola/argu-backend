@@ -12,12 +12,12 @@ module Voteable
     def create_default_vote_event
       @default_vote_event ||=
         VoteEvent.create!(
-          parent: edge,
+          parent: self,
           creator: creator,
           publisher: publisher,
           is_published: true,
           starts_at: Time.current,
-          root_id: edge.root.uuid
+          root_id: root.uuid
         )
     end
   end

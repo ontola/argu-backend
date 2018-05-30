@@ -8,12 +8,12 @@ class StaticPagesControllerTest < ActionController::TestCase
 
   let(:user) { create(:user) }
   define_freetown
-  let(:question) { create(:question, parent: freetown.edge) }
-  let(:motion) { create(:motion, parent: question.edge) }
-  let(:blog_post) { create(:blog_post, parent: motion.edge, happening_attributes: {happened_at: Time.current}) }
-  let(:vote) { create(:vote, parent: motion.default_vote_event.edge) }
-  let(:argument) { create(:argument, parent: motion.edge) }
-  let(:comment) { create(:comment, parent: argument.edge) }
+  let(:question) { create(:question, parent: freetown) }
+  let(:motion) { create(:motion, parent: question) }
+  let(:blog_post) { create(:blog_post, parent: motion, happening_attributes: {happened_at: Time.current}) }
+  let(:vote) { create(:vote, parent: motion.default_vote_event) }
+  let(:argument) { create(:argument, parent: motion) }
+  let(:comment) { create(:comment, parent: argument) }
 
   ####################################
   # As Guest
@@ -69,7 +69,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   test 'staff should get activity feed' do
     trigger_activity_creation
     sign_in staff
-    create(:favorite, edge: freetown.edge, user: staff)
+    create(:favorite, edge: freetown, user: staff)
 
     get :home
 

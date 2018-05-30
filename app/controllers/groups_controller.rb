@@ -83,7 +83,7 @@ class GroupsController < ServiceController
       when 'new', 'create', 'index'
         parent_edge&.root_id
       else
-        resource_by_id&.page&.edge&.root_id
+        resource_by_id&.page&.root_id
       end
   end
 

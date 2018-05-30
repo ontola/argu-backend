@@ -9,30 +9,30 @@ RSpec.feature 'Account deletion', type: :feature do
     create(:motion,
            creator: user.profile,
            publisher: user,
-           parent: freetown.edge)
+           parent: freetown)
   end
   let(:question) do
     create(:question,
            creator: user.profile,
            publisher: user,
-           parent: freetown.edge)
+           parent: freetown)
   end
   let(:argument) do
     create(:argument,
            creator: user.profile,
-           parent: motion.edge,
+           parent: motion,
            publisher: user)
   end
   let(:blog_post) do
     create(:blog_post,
            creator: user.profile,
-           parent: question.edge,
+           parent: question,
            publisher: user,
            happening_attributes: {happened_at: Time.current})
   end
   let(:comment) do
     create(:comment,
-           parent: argument.edge,
+           parent: argument,
            creator: user.profile,
            publisher: user)
   end

@@ -13,20 +13,20 @@ class PagesTest < ActionDispatch::IntegrationTest
 
   let(:motion) do
     create(:motion,
-           parent: cairo.edge,
+           parent: cairo,
            creator: page.profile,
            publisher: page.publisher)
   end
   let(:argument) do
     create(:argument,
-           parent: motion.edge,
+           parent: motion,
            creator: page.profile,
            publisher: page.publisher)
   end
 
   let(:comment) do
     create(:comment,
-           parent: argument.edge,
+           parent: argument,
            creator: page.profile,
            publisher: page.publisher)
   end
@@ -301,9 +301,9 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
     end
 
-    page.edge.reload
-    assert_equal 2, page.edge.custom_placements.first.lat
-    assert_equal 2, page.edge.custom_placements.first.lon
+    page.reload
+    assert_equal 2, page.custom_placements.first.lat
+    assert_equal 2, page.custom_placements.first.lon
   end
 
   test 'administrator should get new' do

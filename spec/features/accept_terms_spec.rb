@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Accept terms spec', type: :feature do
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:user) { create(:user, :not_accepted_terms) }
   let(:user_without_password) { create(:user, :not_accepted_terms, :no_password) }
 

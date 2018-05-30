@@ -15,7 +15,7 @@ module Menus
 
     def follow_menu_items(opts = {})
       follow_types = opts.delete(:follow_types) || %i[news reactions never]
-      follow = user.follow_for(resource.edge)
+      follow = user.follow_for(resource)
       follow_type = follow&.follow_type || 'never'
       menu_item(
         :follow,
@@ -32,7 +32,7 @@ module Menus
         href = follow && follow_url(follow)
       else
         method = 'POST'
-        href = follows_url(gid: resource.edge.uuid, follow_type: type)
+        href = follows_url(gid: resource.uuid, follow_type: type)
       end
       image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
       menu_item(type, href: href, image: image, link_opts: {data: {remote: true, method: method}})

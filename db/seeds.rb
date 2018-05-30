@@ -98,16 +98,16 @@ argu.update(owner: staff.profile)
 forum = Forum.new(name: 'Nederland',
                   public_grant: 'participator',
                   url: 'nederland')
-forum.edge = Edge.new(owner: forum,
-                      user: User.find_via_shortname!('staff_account'),
-                      parent: argu.edge)
-forum.edge.grants.new(group: public_group, grant_set: GrantSet.participator)
+forum = Edge.new(owner: forum,
+                 user: User.find_via_shortname!('staff_account'),
+                 parent: argu)
+forum.grants.new(group: public_group, grant_set: GrantSet.participator)
 forum.save!
 
-g = forum.edge.grants.new(group: staff_group, grant_set: GrantSet.staff)
+g = forum.grants.new(group: staff_group, grant_set: GrantSet.staff)
 g.save!(validate: false)
 
-forum.edge.publish!
+forum.publish!
 
 Doorkeeper::Application.create!(
   id: Doorkeeper::Application::ARGU_ID,

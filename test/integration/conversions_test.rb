@@ -8,7 +8,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     create(:question,
            :with_follower,
            :with_motions,
-           parent: freetown.edge,
+           parent: freetown,
            options: {
              creator: create(:profile_direct_email)
            })
@@ -17,24 +17,24 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     create(:motion,
            :with_arguments,
            :with_votes,
-           parent: freetown.edge)
+           parent: freetown)
   end
-  let(:cover_photo) { create(:image_object, about: motion.edge, used_as: :cover_photo) }
+  let(:cover_photo) { create(:image_object, about: motion, used_as: :cover_photo) }
   let(:question_motion) do
     create(:motion,
            :with_arguments,
            :with_votes,
-           parent: question.edge)
+           parent: question)
   end
   let(:question_content) do
     motion_blog_post
     question_nested_comment
   end
   let(:question_blog_post) do
-    create(:blog_post, parent: question.edge, happening_attributes: {happened_at: Time.current})
+    create(:blog_post, parent: question, happening_attributes: {happened_at: Time.current})
   end
-  let(:question_comment) { create(:comment, parent: question.edge) }
-  let(:question_nested_comment) { create(:comment, parent: question.edge, in_reply_to_id: question_comment.uuid) }
+  let(:question_comment) { create(:comment, parent: question) }
+  let(:question_nested_comment) { create(:comment, parent: question, in_reply_to_id: question_comment.uuid) }
   let(:motion_content) do
     motion_blog_post
     motion_nested_comment
@@ -105,7 +105,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
   test 'staff should post convert question motion' do
     sign_in staff
 
-    record = question_motion.edge
+    record = question_motion
 
     assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
                         ['Vote.count', -6], ['Activity.count', 1], ['BlogPost.count', 0],

@@ -5,18 +5,18 @@ require 'test_helper'
 class CommentsTest < ActionDispatch::IntegrationTest
   define_automated_tests_objects
 
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:vote) { create(:vote, parent: motion.default_vote_event) }
   let(:argument) do
     create(:argument,
            :with_follower,
-           parent: motion.edge,
+           parent: motion,
            creator: create(:profile_direct_email))
   end
   let(:subject) do
     create(:comment,
            publisher: creator,
-           parent: argument.edge)
+           parent: argument)
   end
 
   ####################################

@@ -8,9 +8,9 @@ class ActivityTest < ActiveSupport::TestCase
     create(
       :activity,
       forum: freetown,
-      trackable: create(:motion, parent: freetown.edge),
+      trackable: create(:motion, parent: freetown),
       trackable_type: 'Motion',
-      recipient: freetown.edge,
+      recipient: freetown,
       recipient_type: 'Forum'
     )
   end

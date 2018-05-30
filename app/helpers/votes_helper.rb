@@ -30,7 +30,7 @@ module VotesHelper
   end
 
   def toggle_vote_link_disabled(model, vote, classes, data)
-    data[:title] = if policy(vote || Vote.new(parent: model.edge)).has_expired_ancestors?
+    data[:title] = if policy(vote || Vote.new(parent: model)).has_expired_ancestors?
                      t('votes.disabled.expired')
                    else
                      t('votes.disabled.unauthorized')
@@ -64,7 +64,7 @@ module VotesHelper
     if profile.confirmed?
       model.votes.detect { |vote| vote.creator_id == profile.id }
     else
-      Edge.where_owner('Vote', creator: profile, root_id: model.root_id).find_by(parent: model.edge)&.owner
+      Edge.where_owner('Vote', creator: profile, root_id: model.root_id).find_by(parent: model)&.owner
     end
   end
 

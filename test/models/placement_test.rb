@@ -4,8 +4,8 @@ require 'test_helper'
 
 class PlacementTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:placement, placeable: motion.edge) }
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  subject { create(:placement, placeable: motion) }
+  let(:motion) { create(:motion, parent: freetown) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

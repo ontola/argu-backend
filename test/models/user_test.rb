@@ -11,9 +11,9 @@ class UserTest < ActiveSupport::TestCase
            activity: create(
              :activity,
              forum: freetown,
-             recipient: freetown.edge,
+             recipient: freetown,
              recipient_type: 'Forum',
-             trackable: create(:motion, parent: freetown.edge),
+             trackable: create(:motion, parent: freetown),
              trackable_type: 'Motion'
            ),
            forum: freetown)

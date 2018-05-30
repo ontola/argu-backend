@@ -11,11 +11,11 @@ class DecisionPolicyTest < PolicyTest
   let(:unpublished_subject) { unpublished_decision }
   let(:direct_child) { nil }
 
-  let(:group) { create(:group, parent: argu.edge) }
+  let(:group) { create(:group, parent: argu) }
   let(:forwarded_user) { create(:group_membership, parent: group).member.profileable }
   let(:forwarded_subject) do
     create(:decision,
-           parent: motion.edge,
+           parent: motion,
            publisher: creator,
            state: 'forwarded',
            forwarded_user_id: forwarded_user.id,
@@ -23,7 +23,7 @@ class DecisionPolicyTest < PolicyTest
            happening_attributes: {happened_at: Time.current})
   end
   let(:approve_forwarded_subject) do
-    Decision.approved.new(parent: motion.edge, publisher: creator)
+    Decision.approved.new(parent: motion, publisher: creator)
   end
 
   generate_edgeable_tests

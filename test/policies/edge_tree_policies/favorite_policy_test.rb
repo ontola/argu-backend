@@ -5,7 +5,7 @@ require 'argu/test_helpers/policy_test'
 
 class FavoritePolicyTest < PolicyTest
   include DefaultPolicyTests
-  let(:subject) { create(:favorite, user: creator, edge: freetown.edge) }
+  let(:subject) { create(:favorite, user: creator, edge: freetown) }
 
   generate_crud_tests
 

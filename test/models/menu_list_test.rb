@@ -30,7 +30,7 @@ class MenuListTest < ActiveSupport::TestCase
     CustomMenuItem.create(
       menu_type: 'navigations',
       resource_type: 'Edge',
-      resource_id: argu.edge.uuid,
+      resource_id: argu.uuid,
       order: 0,
       label: 'Custom label',
       label_translation: false,

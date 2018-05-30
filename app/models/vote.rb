@@ -42,7 +42,7 @@ class Vote < Edge
         Argument
           .untrashed
           .joins(:votes)
-          .where(edges: {creator_id: creator_id}, parent_id: parent_model&.edge&.parent_id)
+          .where(edges: {creator_id: creator_id}, parent_id: parent_model&.parent_id)
       else
         Argument
           .untrashed
@@ -52,7 +52,7 @@ class Vote < Edge
                 Edge.where_owner(
                   'Vote',
                   creator: creator,
-                  parent: parent_model&.edge&.parent,
+                  parent: parent_model&.parent,
                   parent_edge: {owner_type: 'Argument'}
                 ).pluck(:parent_id)
             }
@@ -105,7 +105,7 @@ class Vote < Edge
 
   def remove_other_temporary_votes
     key = RedisResource::Resource.new(resource: self).send(:key).key
-    Argu::Redis.delete_all(Argu::Redis.keys(key.gsub(".#{edge.id}.", '.*.')) - [key])
+    Argu::Redis.delete_all(Argu::Redis.keys(key.gsub(".#{id}.", '.*.')) - [key])
   end
 
   def remove_primary
@@ -116,8 +116,8 @@ class Vote < Edge
     creator
       .votes
       .untrashed
-      .where(parent_id: edge.parent_id)
+      .where(parent_id: parent_id)
       .where('? IS NULL OR uuid != ?', uuid, uuid)
-      .find_each { |primary| primary.edge.trash }
+      .find_each(&:trash)
   end
 end

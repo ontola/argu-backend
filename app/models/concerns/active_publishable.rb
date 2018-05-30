@@ -21,7 +21,7 @@ module ActivePublishable
     accepts_nested_attributes_for :argu_publication
 
     def is_draft?
-      edge.published_publications.empty?
+      published_publications.empty?
     end
 
     def is_publishable?
@@ -29,7 +29,7 @@ module ActivePublishable
     end
 
     def mark_as_important
-      edge.argu_publication&.follow_type&.to_s == 'news'
+      argu_publication&.follow_type&.to_s == 'news'
     end
 
     def published_at

@@ -21,7 +21,7 @@ module DiscussionsHelper
     group_ids =
       user_context
         .grant_tree
-        .granted_group_ids(resource.edge, action: 'show', resource_type: resource.edge.owner_type)
+        .granted_group_ids(resource, action: 'show', resource_type: resource.owner_type)
         .select(&:positive?)
     Group
       .find(group_ids)
@@ -29,7 +29,7 @@ module DiscussionsHelper
         grant_sets_string =
           user_context
             .grant_tree
-            .grant_sets(resource.edge, group_ids: [group.id])
+            .grant_sets(resource, group_ids: [group.id])
             .map { |grant_set| t("roles.types.#{grant_set}") }
             .join(', ')
         {label: "#{group.name} (#{t('roles.may')} #{grant_sets_string})", value: group.id}

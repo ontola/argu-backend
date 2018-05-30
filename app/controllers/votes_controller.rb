@@ -99,7 +99,7 @@ class VotesController < EdgeableController
     @_resource_by_id ||=
       Edge
         .where_owner('Vote', creator: current_profile, root_id: root_from_params&.uuid)
-        .find_by(parent: parent_resource&.edge)
+        .find_by(parent: parent_resource)
         &.owner
   end
 

@@ -4,8 +4,8 @@ require 'test_helper'
 
 class ArgumentTest < ActiveSupport::TestCase
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  subject { create(:argument, parent: motion.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
+  subject { create(:argument, parent: motion) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

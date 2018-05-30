@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature 'Voting', type: :feature do
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
 
   ####################################
   # As Initiator

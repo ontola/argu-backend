@@ -31,7 +31,7 @@ module Parentable
     end
 
     def parent_edge(type = nil)
-      parent_model(type).try(:edge)
+      parent_model(type)
     end
   end
 

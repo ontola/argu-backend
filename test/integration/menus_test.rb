@@ -8,7 +8,7 @@ class MenusTest < ActionDispatch::IntegrationTest
     CustomMenuItem.create(
       menu_type: 'navigations',
       resource_type: 'Edge',
-      resource_id: argu.edge.uuid,
+      resource_id: argu.uuid,
       order: 0,
       label: 'Custom label',
       label_translation: false,
@@ -16,7 +16,7 @@ class MenusTest < ActionDispatch::IntegrationTest
       image: 'fa-info'
     )
   end
-  let!(:settings) { Setting.set('suggested_forums', [freetown.edge.uuid, SecureRandom.uuid].join(',')) }
+  let!(:settings) { Setting.set('suggested_forums', [freetown.uuid, SecureRandom.uuid].join(',')) }
   let(:user) { create(:user) }
   let(:user_context) { UserContext.new(user: user, profile: user.profile, doorkeeper_scopes: {}) }
 

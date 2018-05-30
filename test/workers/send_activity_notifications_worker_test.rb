@@ -4,12 +4,12 @@ require 'test_helper'
 
 class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
   define_freetown
-  let!(:motion) { create(:motion, parent: freetown.edge) }
-  let!(:argument) { create(:argument, parent: motion.edge) }
+  let!(:motion) { create(:motion, parent: freetown) }
+  let!(:argument) { create(:argument, parent: motion) }
 
   let!(:follow) do
     create(:follow,
-           followable: argument.edge,
+           followable: argument,
            follower: follower)
   end
 
@@ -135,7 +135,7 @@ class SendActivityNotificationsWorkerTest < ActiveSupport::TestCase
       follows: [
         {
           notifications: WebMock::Matchers::AnyArgMatcher.new(false),
-          follow_id: user.follow_for(motion.edge)&.unsubscribe_iri,
+          follow_id: user.follow_for(motion)&.unsubscribe_iri,
           followable: {display_name: motion.display_name, id: motion.iri, pro: nil, type: 'Motion'},
           organization: {display_name: motion.parent_model(:page).display_name}
         }

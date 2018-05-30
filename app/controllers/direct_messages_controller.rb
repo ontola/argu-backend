@@ -9,7 +9,7 @@ class DirectMessagesController < ParentableController
   private
 
   def authenticated_edge
-    @resource_edge ||= parent_resource&.edge
+    @resource_edge ||= parent_resource
   end
 
   def create_respond_success_html(resource)

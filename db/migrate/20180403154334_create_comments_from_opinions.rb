@@ -13,7 +13,7 @@ class CreateCommentsFromOpinions < ActiveRecord::Migration[5.1]
 
   def create_comment(vote)
     service = CreateComment.new(
-      vote.voteable.edge,
+      vote.voteable,
       attributes: {created_at: vote.explained_at, content: vote.explanation},
       options: {publisher: vote.publisher, creator: vote.creator, silent: true}
     )

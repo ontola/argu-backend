@@ -35,32 +35,32 @@ class PolicyTest < ActiveSupport::TestCase
   let(:guest) { GuestUser.new(id: 'my_id') }
 
   let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
-  let(:linked_record_argument) { create(:argument, parent: linked_record.edge, publisher: creator) }
+  let(:linked_record_argument) { create(:argument, parent: linked_record, publisher: creator) }
 
   ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
-    let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown").edge, publisher: creator) }
-    let("#{prefix}forum_motion") { create(:motion, parent: send("#{prefix}freetown").edge, publisher: creator) }
-    let("#{prefix}motion") { create(:motion, parent: send("#{prefix}question").edge, publisher: creator) }
+    let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown"), publisher: creator) }
+    let("#{prefix}forum_motion") { create(:motion, parent: send("#{prefix}freetown"), publisher: creator) }
+    let("#{prefix}motion") { create(:motion, parent: send("#{prefix}question"), publisher: creator) }
     let("#{prefix}decision") do
       create(:decision,
-             parent: send("#{prefix}motion").edge,
+             parent: send("#{prefix}motion"),
              publisher: creator,
              state: 'approved',
              happening_attributes: {happened_at: Time.current})
     end
     let("#{prefix}vote_event") { send("#{prefix}motion").default_vote_event }
-    let("#{prefix}vote") { create(:vote, parent: send("#{prefix}vote_event").edge, publisher: creator) }
-    let("#{prefix}argument") { create(:argument, parent: send("#{prefix}motion").edge, publisher: creator) }
-    let("#{prefix}comment") { create(:comment, parent: send("#{prefix}argument").edge, publisher: creator) }
+    let("#{prefix}vote") { create(:vote, parent: send("#{prefix}vote_event"), publisher: creator) }
+    let("#{prefix}argument") { create(:argument, parent: send("#{prefix}motion"), publisher: creator) }
+    let("#{prefix}comment") { create(:comment, parent: send("#{prefix}argument"), publisher: creator) }
     let("#{prefix}nested_comment") do
-      parent = send("#{prefix}argument").edge
+      parent = send("#{prefix}argument")
       create(:comment, parent: parent, in_reply_to_id: send("#{prefix}comment").uuid, publisher: creator)
     end
     let("#{prefix}blog_post") do
-      parent = send("#{prefix}question").edge
+      parent = send("#{prefix}question")
       create(:blog_post, parent: parent, publisher: creator, happening_attributes: {happened_at: Time.current})
     end
-    let("#{prefix}blog_post_comment") { create(:comment, parent: send("#{prefix}blog_post").edge, publisher: creator) }
+    let("#{prefix}blog_post_comment") { create(:comment, parent: send("#{prefix}blog_post"), publisher: creator) }
   end
 
   private

@@ -8,7 +8,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   let(:question) do
     create(:question,
            :with_follower,
-           parent: freetown.edge,
+           parent: freetown,
            options: {
              creator: create(:profile_direct_email)
            })
@@ -16,7 +16,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   let(:question_requires_location) do
     create(:question,
            :with_follower,
-           parent: freetown.edge,
+           parent: freetown,
            require_location: true,
            options: {
              creator: create(:profile_direct_email)
@@ -27,13 +27,13 @@ class MotionsTest < ActionDispatch::IntegrationTest
            :with_arguments,
            :with_votes,
            publisher: creator,
-           parent: question.edge)
+           parent: question)
   end
   let(:draft_motion) do
     create(
       :motion,
       publisher: creator,
-      parent: question.edge,
+      parent: question,
       argu_publication_attributes: {draft: true}
     )
   end
@@ -47,7 +47,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
              }
            },
            publisher: creator,
-           parent: question.edge)
+           parent: question)
   end
 
   test 'initiator should show tutorial only on first post create' do
@@ -99,9 +99,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
       differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity.loggings', 2]]
     )
 
-    assert_equal 1, Motion.last.edge.placements.first.lat
-    assert_equal 1, Motion.last.edge.placements.first.lon
-    assert_equal 1, Motion.last.edge.placements.first.zoom_level
+    assert_equal 1, Motion.last.placements.first.lat
+    assert_equal 1, Motion.last.placements.first.lon
+    assert_equal 1, Motion.last.placements.first.zoom_level
   end
 
   test 'initiator should not post create motion without latlon in question requiring location' do
@@ -168,7 +168,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       attributes: {
         placements_attributes: {
           '0' => {
-            id: motion_with_placement.edge.placements.first.id,
+            id: motion_with_placement.placements.first.id,
             lat: 2.0,
             lon: 2.0
           }
@@ -177,9 +177,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
       differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity.loggings', 1]]
     )
 
-    motion_with_placement.edge.reload
-    assert_equal 2, motion_with_placement.edge.placements.first.lat
-    assert_equal 2, motion_with_placement.edge.placements.first.lon
+    motion_with_placement.reload
+    assert_equal 2, motion_with_placement.placements.first.lat
+    assert_equal 2, motion_with_placement.placements.first.lon
   end
 
   test 'creator should put update motion remove latlon' do
@@ -191,7 +191,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       attributes: {
         placements_attributes: {
           '0' => {
-            id: motion_with_placement.edge.placements.first.id,
+            id: motion_with_placement.placements.first.id,
             _destroy: 'true'
           }
         }

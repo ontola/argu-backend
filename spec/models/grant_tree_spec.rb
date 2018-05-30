@@ -8,7 +8,7 @@ RSpec.describe GrantTree, type: :model do
 
   let(:constructor_args) { root.uuid }
   let(:described_instance) { described_class.new(constructor_args) }
-  let(:root) { argu.edge }
+  let(:root) { argu }
 
   subject do
     s = described_instance
@@ -51,21 +51,21 @@ RSpec.describe GrantTree, type: :model do
 
   describe '#granted_group_ids' do
     context 'with public ancestor' do
-      let(:method_args) { motion.edge }
+      let(:method_args) { motion }
 
       context 'without filters' do
         it { is_expected.to match_array [root.groups.custom.third.id, Group::STAFF_ID, Group::PUBLIC_ID] }
       end
 
       context 'with filters' do
-        let(:method_args) { [motion.edge, action: :destroy, resource_type: motion.edge.owner_type] }
+        let(:method_args) { [motion, action: :destroy, resource_type: motion.owner_type] }
 
         it { is_expected.to match_array [Group::STAFF_ID] }
       end
     end
 
     context 'with private ancestor' do
-      let(:method_args) { hidden_motion.edge }
+      let(:method_args) { hidden_motion }
 
       context 'without filters' do
         it { is_expected.to match_array [Group::STAFF_ID, root.groups.custom.third.id, 111, 222] }
@@ -77,13 +77,13 @@ RSpec.describe GrantTree, type: :model do
     let(:method_args) { edge }
 
     context 'with trashed self' do
-      let(:edge) { trashed_motion.edge }
+      let(:edge) { trashed_motion }
 
       it { is_expected.to eq true }
     end
 
     context 'without trashed self' do
-      let(:edge) { motion.edge }
+      let(:edge) { motion }
 
       it { is_expected.to eq false }
     end
@@ -119,19 +119,19 @@ RSpec.describe GrantTree, type: :model do
 
   describe '#unpublished?' do
     context 'with unpublished self' do
-      let(:method_args) { unpublished_motion.edge }
+      let(:method_args) { unpublished_motion }
 
       it { is_expected.to be true }
     end
 
     context 'with unpublished ancestor' do
-      let(:method_args) { argument_unpublished_child.edge }
+      let(:method_args) { argument_unpublished_child }
 
       it { is_expected.to be true }
     end
 
     context 'without unpublished  ancestor' do
-      let(:method_args) { argument.edge }
+      let(:method_args) { argument }
 
       it { is_expected.to be false }
     end
@@ -153,7 +153,7 @@ RSpec.describe GrantTree, type: :model do
   describe '#cached?' do
     context 'with edge in cache' do
       let(:method_args) { root.id }
-      let(:cache) { question.edge }
+      let(:cache) { question }
 
       it { is_expected.to be true }
     end
@@ -166,7 +166,7 @@ RSpec.describe GrantTree, type: :model do
 
     context 'with wrong root' do
       let(:method_args) { root }
-      let(:cache) { other_page_forum.edge }
+      let(:cache) { other_page_forum }
 
       it { expect { subject }.to raise_error SecurityError }
     end

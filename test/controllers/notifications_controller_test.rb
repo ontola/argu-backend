@@ -4,9 +4,9 @@ require 'test_helper'
 
 class NotificationsControllerTest < ActionController::TestCase
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
   let(:unconfirmed_vote) do
-    create(:vote, parent: motion.default_vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: motion.default_vote_event, creator: unconfirmed.profile, publisher: unconfirmed)
   end
 
   ####################################
@@ -85,14 +85,14 @@ class NotificationsControllerTest < ActionController::TestCase
   def followed_content(user)
     user.follows.destroy_all
     parent = freetown
-    create(:follow, followable: parent.edge, follower: user)
+    create(:follow, followable: parent, follower: user)
     %i[question motion argument comment].each do |type|
-      trackable = create(type, parent: parent.edge)
+      trackable = create(type, parent: parent)
       if %i[question motion argument].include?(type)
         parent = trackable
-        create(:follow, followable: parent.edge, follower: user)
+        create(:follow, followable: parent, follower: user)
       end
     end
-    create(:vote, parent: parent.default_vote_event.edge)
+    create(:vote, parent: parent.default_vote_event)
   end
 end

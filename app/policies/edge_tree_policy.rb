@@ -27,7 +27,7 @@ class EdgeTreePolicy < RestrictivePolicy
   def initialize(context, record)
     super
     raise('No edgeable record avaliable in policy') unless edgeable_record
-    @grant_tree = context.grant_tree_for(edgeable_record.edge)
+    @grant_tree = context.grant_tree_for(edgeable_record)
   end
 
   private

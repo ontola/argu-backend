@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
   define_freetown('holland')
-  let!(:motion) { create(:motion, parent: holland.edge) }
-  let!(:argument) { create(:argument, parent: motion.edge) }
+  let!(:motion) { create(:motion, parent: holland) }
+  let!(:argument) { create(:argument, parent: motion) }
   let!(:blog_post) do
     create(:blog_post,
            happening_attributes: {happened_at: Time.current},
-           parent: motion.edge)
+           parent: motion)
   end
 
   ####################################

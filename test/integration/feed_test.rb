@@ -4,13 +4,13 @@ require 'test_helper'
 
 class FeedTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:subject) { create(:motion, :with_votes, parent: freetown.edge, creator: publisher.profile) }
+  let(:subject) { create(:motion, :with_votes, parent: freetown, creator: publisher.profile) }
   let(:unpublished_motion) do
-    create(:motion, parent: freetown.edge, argu_publication_attributes: {draft: true})
+    create(:motion, parent: freetown, argu_publication_attributes: {draft: true})
   end
   let(:publisher) { create(:user) }
   let(:trashed_motion) do
-    m = create(:motion, parent: freetown.edge)
+    m = create(:motion, parent: freetown)
     TrashService.new(m, options: {creator: publisher.profile, publisher: publisher}).commit
     m
   end
@@ -171,7 +171,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   test 'staff should get additional activities for favorites/feed js' do
     sign_in staff
-    create(:favorite, edge: freetown.edge, user: staff)
+    create(:favorite, edge: freetown, user: staff)
     subject
 
     get feed_path,

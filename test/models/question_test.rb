@@ -4,7 +4,7 @@ require 'test_helper'
 
 class QuestionTest < ActiveSupport::TestCase
   define_freetown
-  subject { create(:question, parent: freetown.edge) }
+  subject { create(:question, parent: freetown) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

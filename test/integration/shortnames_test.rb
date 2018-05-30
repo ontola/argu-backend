@@ -6,13 +6,13 @@ require 'test_helper'
 # Additionally tests for shortnames to be routed correctly between forums and dynamic redirects.
 class ShortnamesTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:argument) { create(:argument, parent: motion.edge) }
-  let(:comment) { create(:comment, parent: argument.edge) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let(:argument) { create(:argument, parent: motion) }
+  let(:comment) { create(:comment, parent: argument) }
   let(:publication) { build(:publication) }
-  let(:comment_shortname) { create(:shortname, owner: comment.edge) }
+  let(:comment_shortname) { create(:shortname, owner: comment) }
   let(:subject) do
-    create(:discussion_shortname, owner: motion.edge, primary: false, root_id: motion.edge.root_id)
+    create(:discussion_shortname, owner: motion, primary: false, root_id: motion.root_id)
   end
 
   ####################################
@@ -27,10 +27,10 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   test 'guest should get resources' do
     parent = freetown
     %i[question motion argument].each do |klass|
-      resource = create(klass, parent: parent.edge)
+      resource = create(klass, parent: parent)
       parent = resource
 
-      shortname = create(:shortname, owner: resource.edge)
+      shortname = create(:shortname, owner: resource)
 
       general_show(200, resource, shortname)
     end
@@ -150,7 +150,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   # @return [Hash] Options to pass to the request
   def shortname_attributes
-    attrs = attributes_for(:discussion_shortname, owner: motion.edge)
+    attrs = attributes_for(:discussion_shortname, owner: motion)
     attrs.delete(:forum)
     owner = attrs.delete(:owner)
     attrs[:owner_id] = owner.owner_id

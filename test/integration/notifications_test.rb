@@ -5,19 +5,19 @@ require 'test_helper'
 class NotificationsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
-  let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown.edge) }
-  let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question.edge) }
-  let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion.edge) }
-  let(:comment) { create(:comment, parent: argument.edge) }
-  let(:group) { create(:group, parent: argu.edge) }
+  let(:question) { create(:question, :with_follower, :with_news_follower, parent: freetown) }
+  let(:motion) { create(:motion, :with_follower, :with_news_follower, parent: question) }
+  let(:argument) { create(:argument, :with_follower, :with_news_follower, parent: motion) }
+  let(:comment) { create(:comment, parent: argument) }
+  let(:group) { create(:group, parent: argu) }
   let(:group_membership) { create(:group_membership, parent: group, member: user.profile) }
-  let!(:random_follow) { create(:follow, followable: create_forum.edge) }
+  let!(:random_follow) { create(:follow, followable: create_forum) }
   let(:blog_post) do
     create(:blog_post,
            :with_follower,
            :with_news_follower,
            happening_attributes: {happened_at: Time.current},
-           parent: motion.edge)
+           parent: motion)
   end
 
   ####################################

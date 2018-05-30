@@ -35,7 +35,7 @@ module ProfilePhotoable
     case self
     when Profile
       if profileable.is_a?(Page)
-        {publisher: profileable.edge.publisher, creator: self, forum: nil}
+        {publisher: profileable.publisher, creator: self, forum: nil}
       else
         {publisher: profileable, creator: self, forum: nil}
       end

@@ -48,7 +48,7 @@ module CustomGrants
     def create_grants_for(resource_type, action, group_ids)
       group_ids.each do |group_id|
         Grant.create!(
-          edge: edge,
+          edge: self,
           group_id: group_id,
           grant_set: GrantSet.for_one_action(resource_type, action)
         )
@@ -73,11 +73,11 @@ module CustomGrants
       @grant_resets_for[action] ||= {}
       return @grant_resets_for[action][resource_type] if @grant_resets_for[action].key?(resource_type)
       @grant_resets_for[action][resource_type] =
-        edge.grant_resets.find_by(action: action, resource_type: resource_type)
+        grant_resets.find_by(action: action, resource_type: resource_type)
     end
 
     def remove_grants_for(resource_type, action, group_ids = nil)
-      scope = edge.grants.where(grant_set_id: GrantSet.for_one_action(resource_type, action).id)
+      scope = grants.where(grant_set_id: GrantSet.for_one_action(resource_type, action).id)
       group_ids.present? ? scope.where(group_id: group_ids).destroy_all : scope.destroy_all
     end
 
@@ -110,7 +110,7 @@ module CustomGrants
     def sync_grant_reset(action, singular)
       if send("reset_#{action}_#{singular}")
         if grant_reset_for(action, singular.classify).nil?
-          edge.grant_resets.create!(action: action, resource_type: singular.classify)
+          grant_resets.create!(action: action, resource_type: singular.classify)
         end
       else
         grant_reset_for(action, singular.classify)&.destroy!

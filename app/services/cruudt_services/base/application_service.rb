@@ -77,7 +77,7 @@ class ApplicationService
 
   def argu_publication_follow_type
     important = @attributes.delete(:mark_as_important)
-    return resource.edge.argu_publication.follow_type if important.nil? && resource.edge.argu_publication.present?
+    return resource.argu_publication.follow_type if important.nil? && resource.argu_publication.present?
     %w[true 1].include?(important.to_s) ? :news : :reactions
   end
 

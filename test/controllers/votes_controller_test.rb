@@ -4,7 +4,7 @@ require 'test_helper'
 
 class VotesControllerTest < ActionController::TestCase
   define_freetown
-  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown.edge) }
+  let(:motion) { create(:motion, :with_arguments, :with_votes, parent: freetown) }
   let(:argument) { motion.pro_arguments.untrashed.first }
   let(:vote_event) { motion.default_vote_event }
   let(:vote) { motion.default_vote_event.votes.first }
@@ -15,7 +15,7 @@ class VotesControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show vote' do
-    get :show, params: {format: :json_api, root_id: argu.url, id: vote.edge.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, id: vote.fragment}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -27,7 +27,7 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   test 'should post create vote for argument as JS' do
     sign_in user
-    post :create, params: {format: :js, root_id: argu.url, pro_argument_id: argument.edge.fragment, for: 'pro'}
+    post :create, params: {format: :js, root_id: argu.url, pro_argument_id: argument.fragment, for: 'pro'}
     assert_response 200
   end
 
@@ -39,8 +39,8 @@ class VotesControllerTest < ActionController::TestCase
         params: {
           format: :json_api,
           root_id: argu.url,
-          motion_id: motion.edge.fragment,
-          vote_event_id: vote_event.edge.fragment
+          motion_id: motion.fragment,
+          vote_event_id: vote_event.fragment
         }
     assert_response 200
 

@@ -13,7 +13,7 @@ class ParentableController < AuthorizedController
   private
 
   def authenticated_edge
-    @resource_edge ||= authenticated_resource!&.edge
+    @resource_edge ||= authenticated_resource!
   end
 
   def authorize_action
@@ -33,7 +33,7 @@ class ParentableController < AuthorizedController
   end
 
   def parent_edge
-    @parent_edge ||= parent_resource&.edge
+    @parent_edge ||= parent_resource
   end
 
   def parent_edge!
@@ -65,7 +65,7 @@ class ParentableController < AuthorizedController
   end
 
   def root_from_params
-    @root_from_params ||= Page.find_via_shortname_or_id(params[:root_id] || params[:page_id])&.edge
+    @root_from_params ||= Page.find_via_shortname_or_id(params[:root_id] || params[:page_id])
   end
 
   # The scope of the item used for authorization
@@ -76,7 +76,7 @@ class ParentableController < AuthorizedController
       when 'new', 'create', 'index'
         parent_edge&.root_id
       else
-        resource_by_id.try(:edge)&.root_id
+        (resource_by_id.is_a?(Edge) ? resource_by_id : resource_by_id.try(:edge))&.root_id
       end
   end
 end

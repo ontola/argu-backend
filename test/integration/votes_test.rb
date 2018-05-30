@@ -7,70 +7,70 @@ class VotesTest < ActionDispatch::IntegrationTest
   define_cairo
   let(:guest_user) { GuestUser.new(session: session) }
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
-  let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown.edge) }
-  let(:closed_question_motion) { create(:motion, parent: closed_question.edge) }
-  let(:closed_question_argument) { create(:argument, parent: closed_question_motion.edge) }
-  let(:motion) { create(:motion, parent: freetown.edge) }
-  let(:motion2) { create(:motion, parent: freetown.edge) }
-  let(:argument) { create(:argument, parent: motion.edge) }
-  let(:argument2) { create(:argument, parent: motion.edge) }
-  let(:argument3) { create(:argument, parent: motion.edge) }
-  let!(:vote) { create(:vote, parent: vote_event.edge, creator: creator.profile, publisher: creator) }
+  let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown) }
+  let(:closed_question_motion) { create(:motion, parent: closed_question) }
+  let(:closed_question_argument) { create(:argument, parent: closed_question_motion) }
+  let(:motion) { create(:motion, parent: freetown) }
+  let(:motion2) { create(:motion, parent: freetown) }
+  let(:argument) { create(:argument, parent: motion) }
+  let(:argument2) { create(:argument, parent: motion) }
+  let(:argument3) { create(:argument, parent: motion) }
+  let!(:vote) { create(:vote, parent: vote_event, creator: creator.profile, publisher: creator) }
   let(:guest_vote) do
-    create(:vote, parent: vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: vote_event, creator: guest_user.profile, publisher: guest_user)
   end
   let(:guest_vote2) do
-    create(:vote, parent: motion2.default_vote_event.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: motion2.default_vote_event, creator: guest_user.profile, publisher: guest_user)
   end
   let(:other_guest_vote) do
     create(:vote,
-           parent: vote_event.edge,
+           parent: vote_event,
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
   let(:other_guest_vote2) do
     create(:vote,
-           parent: motion2.default_vote_event.edge,
+           parent: motion2.default_vote_event,
            creator: other_guest_user.profile,
            publisher: other_guest_user)
   end
   let(:unconfirmed_vote) do
-    create(:vote, parent: vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: vote_event, creator: unconfirmed.profile, publisher: unconfirmed)
   end
   let(:unconfirmed_vote2) do
-    create(:vote, parent: motion2.default_vote_event.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: motion2.default_vote_event, creator: unconfirmed.profile, publisher: unconfirmed)
   end
   let(:hidden_vote) do
     create(:vote,
-           parent: vote_event.edge,
+           parent: vote_event,
            creator: profile_hidden_votes,
            publisher: profile_hidden_votes.profileable)
   end
-  let!(:argument_vote) { create(:vote, parent: argument.edge, creator: creator.profile, publisher: creator) }
+  let!(:argument_vote) { create(:vote, parent: argument, creator: creator.profile, publisher: creator) }
   let(:argument_guest_vote) do
-    create(:vote, parent: argument.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: argument, creator: guest_user.profile, publisher: guest_user)
   end
   let(:argument_guest_vote3) do
-    create(:vote, parent: argument3.edge, creator: guest_user.profile, publisher: guest_user)
+    create(:vote, parent: argument3, creator: guest_user.profile, publisher: guest_user)
   end
   let!(:argument_unconfirmed_vote) do
-    create(:vote, parent: argument.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: argument, creator: unconfirmed.profile, publisher: unconfirmed)
   end
   let!(:argument_unconfirmed_vote3) do
-    create(:vote, parent: argument3.edge, creator: unconfirmed.profile, publisher: unconfirmed)
+    create(:vote, parent: argument3, creator: unconfirmed.profile, publisher: unconfirmed)
   end
-  let(:cairo_motion) { create(:motion, parent: cairo.edge) }
-  let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event.edge) }
+  let(:cairo_motion) { create(:motion, parent: cairo) }
+  let!(:cairo_vote) { create(:vote, parent: cairo_motion.default_vote_event) }
   let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:non_persisted_linked_record) { LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:vote_event) do
     create(:vote_event,
-           parent: motion.edge,
+           parent: motion,
            expires_at: 1.day.from_now)
   end
   let(:closed_vote_event) do
     create(:vote_event,
-           parent: motion.edge,
+           parent: motion,
            expires_at: Time.current)
   end
   let(:creator) { create(:user) }
@@ -116,7 +116,7 @@ class VotesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: vote_event.edge)
+    assert_redis_resource_count(1, owner_type: 'Vote', publisher: guest_user, parent: vote_event)
     assert_response 201
   end
 

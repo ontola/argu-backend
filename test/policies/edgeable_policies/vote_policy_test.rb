@@ -12,7 +12,7 @@ class VotePolicyTest < PolicyTest
   let(:direct_child) { nil }
   let(:hidden_vote) do
     create(:vote,
-           parent: motion.default_vote_event.edge,
+           parent: motion.default_vote_event,
            creator: user_hidden_votes.profile,
            publisher: user_hidden_votes)
   end

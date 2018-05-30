@@ -13,21 +13,21 @@ module Argu
       def populated_forum
         3.times do
           service = CreateMotion
-                      .new(@resource.edge,
+                      .new(@resource,
                            attributes: attributes_for(:motion),
                            options: service_options)
           service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
           service.commit
           reset_publication(service.resource.publications.last)
           CreateArgument
-            .new(service.resource.edge,
+            .new(service.resource,
                  attributes: attributes_for(:argument),
                  options: service_options)
             .commit
         end
         3.times do
           service = CreateMotion
-                      .new(@resource.edge,
+                      .new(@resource,
                            attributes: attributes_for(:motion),
                            options: service_options)
           service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
@@ -36,7 +36,7 @@ module Argu
         end
         3.times do
           service = CreateQuestion
-                      .new(@resource.edge,
+                      .new(@resource,
                            attributes: attributes_for(:question),
                            options: service_options)
           service.on(:create_question_failed) { raise service.resource.errors.full_messages.join('. ') }
@@ -45,7 +45,7 @@ module Argu
         end
         3.times do
           service = CreateQuestion
-                      .new(@resource.edge,
+                      .new(@resource,
                            attributes: attributes_for(:question),
                            options: service_options)
           service.on(:create_question_failed) { raise service.resource.errors.full_messages.join('. ') }
@@ -53,13 +53,13 @@ module Argu
           TrashService.new(service.resource, options: service_options).commit
         end
         service = CreateMotion
-                    .new(Question.last.edge,
+                    .new(Question.last,
                          attributes: attributes_for(:motion),
                          options: service_options)
         service.on(:create_motion_failed) { raise service.resource.errors.full_messages.join('. ') }
         service.commit
         reset_publication(service.resource.publications.last)
-        @resource.root.publisher.follow @resource.edge
+        @resource.root.publisher.follow @resource
       end
 
       # Adds 3 pro (1 trashed) and 3 con (1 trashed) arguments to the resource
@@ -67,12 +67,12 @@ module Argu
         [true, false].each do |pro|
           3.times do
             CreateArgument
-              .new(@resource.edge,
+              .new(@resource,
                    attributes: attributes_for(:argument).merge(pro: pro),
                    options: service_options)
               .commit
           end
-          create_redis_vote(Argument.last.edge, :pro)
+          create_redis_vote(Argument.last, :pro)
           TrashService.new(Argument.last, options: service_options).commit
         end
       end
@@ -81,7 +81,7 @@ module Argu
       def with_attachments
         3.times do
           profile = create(:profile)
-          @resource.edge.attachments.create(
+          @resource.attachments.create(
             creator: profile,
             forum: @resource.parent_model(:forum),
             publisher: profile.profileable,
@@ -96,7 +96,7 @@ module Argu
       def with_comments
         3.times do
           CreateComment
-            .new(@resource.edge,
+            .new(@resource,
                  attributes: attributes_for(:comment),
                  options: service_options)
             .commit
@@ -111,7 +111,7 @@ module Argu
         FactoryGirl.create(
           :follow,
           follower: FactoryGirl.create(:user, :follows_reactions_directly),
-          followable: @resource.edge
+          followable: @resource
         )
       end
 
@@ -121,7 +121,7 @@ module Argu
         FactoryGirl.create(
           :news_follow,
           follower: FactoryGirl.create(:user, :follows_news_directly),
-          followable: @resource.edge
+          followable: @resource
         )
       end
 
@@ -130,7 +130,7 @@ module Argu
         2.times do
           service = CreateMotion
                       .new(
-                        @resource.edge,
+                        @resource,
                         attributes: attributes_for(:motion),
                         options: service_options
                       )
@@ -138,7 +138,7 @@ module Argu
           reset_publication(service.resource.publications.last)
           service = CreateMotion
                       .new(
-                        @resource.edge,
+                        @resource,
                         attributes: attributes_for(:motion),
                         options: service_options
                       )
@@ -150,9 +150,9 @@ module Argu
       # Adds 2 public and 1 hidden votes to the resource for pro, neutral and con
       def with_votes
         %i[pro neutral con].each do |side|
-          create_normal_vote(@resource.default_vote_event.edge, side)
-          create_hidden_vote(@resource.default_vote_event.edge, side)
-          create_redis_vote(@resource.default_vote_event.edge, side)
+          create_normal_vote(@resource.default_vote_event, side)
+          create_hidden_vote(@resource.default_vote_event, side)
+          create_redis_vote(@resource.default_vote_event, side)
         end
       end
 
@@ -171,7 +171,7 @@ module Argu
 
       def create_comment_for_vote(vote)
         CreateComment.new(
-          vote.voteable.edge,
+          vote.voteable,
           attributes: {content: 'opinion'},
           options: {creator: vote.creator, publisher: vote.publisher}
         ).commit

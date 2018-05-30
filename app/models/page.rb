@@ -70,7 +70,7 @@ class Page < Edge
       page: self,
       deletable: false
     )
-    group.grants << Grant.new(grant_set: GrantSet.administrator, edge: edge)
+    group.grants << Grant.new(grant_set: GrantSet.administrator, edge: self)
     group.save!
 
     service = CreateGroupMembership.new(
@@ -87,7 +87,7 @@ class Page < Edge
   def create_staff_grant
     staff_group = Group.find_by(id: Group::STAFF_ID)
     return if staff_group.nil?
-    grant = Grant.new(grant_set: GrantSet.staff, edge: edge, group: staff_group)
+    grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
     grant.save!(validate: false)
   end
 end
