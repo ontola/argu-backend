@@ -52,7 +52,7 @@ RSpec.feature 'Signup', type: :feature do
       within('.opinion-form') do
         click_link 'Log in with Facebook'
       end
-      expect(page).to have_current_path(connect_user_path(u), only_path: true)
+      expect(page).to have_current_path(connect_user_path(u), ignore_query: true)
 
       fill_in 'Argu password', with: 'password'
       click_button 'Save'
