@@ -2,7 +2,6 @@
 
 class Banner < NewsBoy
   include EdgeableShallow
-  include Loggable
   include ProfilePhotoable
   include Photoable
   include Uuidable

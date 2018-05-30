@@ -27,6 +27,18 @@ RSpec.describe 'Banners', type: :request do
   let(:invalid_create_params) { {banner: {audience: nil}} }
   let(:update_params) { {banner: {audience: 'guests'}} }
   let(:created_resource_path) { settings_iri_path(freetown, tab: :banners) }
+  let(:create_differences) do
+    subject
+    [['Banner.count', 1]]
+  end
+  let(:update_differences) do
+    subject
+    [['Banner.count', 0]]
+  end
+  let(:destroy_differences) do
+    subject
+    [['Banner.count', -1]]
+  end
 
   context 'with forum parent' do
     subject do
