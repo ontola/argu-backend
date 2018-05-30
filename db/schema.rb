@@ -187,7 +187,9 @@ ActiveRecord::Schema.define(version: 20180529152704) do
     t.uuid "root_id", null: false
     t.integer "fragment", null: false
     t.integer "creator_id", null: false
+    t.boolean "primary"
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
+    t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
     t.index ["uuid"], name: "index_edges_on_uuid", unique: true
   end
