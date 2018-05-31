@@ -142,7 +142,7 @@ class Profile < ApplicationRecord
 
   # Returns the preferred forum, based the first favorite or the first public forum
   def preferred_forum
-    profileable.try(:favorites)&.joins(:edge)&.where(edges: {owner_type: 'Forum'})&.first&.edge&.owner ||
+    profileable.try(:favorites)&.joins(:edge)&.where(edges: {owner_type: 'Forum'})&.first&.edge ||
       Forum.first_public
   end
 
@@ -154,9 +154,9 @@ class Profile < ApplicationRecord
     return false if tenant.blank?
     case tenant
     when Forum
-      self == tenant.parent_model(:page).owner
+      self == tenant.parent_model(:page)
     when Page
-      self == tenant.owner
+      self == tenant
     end
   end
 

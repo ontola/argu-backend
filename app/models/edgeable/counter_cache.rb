@@ -18,14 +18,14 @@ module Edgeable
       end
 
       def decrement_counter_caches
-        return unless owner&.class&.class_variable_defined?(:@@counter_cache_options)
+        return unless self.class.class_variable_defined?(:@@counter_cache_options)
         counter_cache_names.each do |counter_cache_name|
           self.class.update_children_count_statement(parent_id, counter_cache_name, :-)
         end
       end
 
       def increment_counter_caches
-        return unless owner&.class&.class_variable_defined?(:@@counter_cache_options)
+        return unless self.class.class_variable_defined?(:@@counter_cache_options)
         counter_cache_names.each do |counter_cache_name|
           self.class.update_children_count_statement(parent_id, counter_cache_name, :+)
         end

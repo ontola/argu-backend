@@ -128,10 +128,6 @@ class Edge < ApplicationRecord
   alias user publisher
   alias profile creator
 
-  def owner
-    self
-  end
-
   def children(*args)
     association(:children).reader(*args)
   end
@@ -177,7 +173,7 @@ class Edge < ApplicationRecord
   end
 
   def iri_opts
-    {id: fragment, root_id: root.owner.url}
+    {id: fragment, root_id: root.url}
   end
 
   def is_child_of?(edge)
@@ -231,7 +227,7 @@ class Edge < ApplicationRecord
   # @param [Symbol] level The lowest type of follower to include
   # @return [Integer] The number of followers
   def potential_audience(level = :reactions)
-    FollowersCollector.new(resource: owner, follow_type: level).count
+    FollowersCollector.new(resource: self, follow_type: level).count
   end
 
   def publish!
@@ -269,9 +265,9 @@ class Edge < ApplicationRecord
     return if trashed_at.present?
     self.class.transaction do
       update!(trashed_at: Time.current)
-      owner.destroy_notifications if owner.is_loggable?
+      destroy_notifications if is_loggable?
       decrement_counter_caches if is_published?
-      owner.run_callbacks :trash
+      run_callbacks :trash
     end
     true
   end
@@ -287,7 +283,7 @@ class Edge < ApplicationRecord
     self.class.transaction do
       update!(trashed_at: nil)
       increment_counter_caches if is_published?
-      owner.run_callbacks :untrash
+      run_callbacks :untrash
     end
     true
   end
@@ -312,7 +308,7 @@ class Edge < ApplicationRecord
   end
 
   def requires_location?
-    owner_type == 'Motion' && parent.owner_type == 'Question' && parent.owner.require_location
+    owner_type == 'Motion' && parent.owner_type == 'Question' && parent.require_location
   end
 
   def reset_persisted_edge
@@ -345,6 +341,6 @@ class Edge < ApplicationRecord
   end
 
   def set_publisher_id
-    self.publisher_id = owner.publisher.present? ? owner.publisher.id : 0
+    self.publisher_id = publisher.present? ? publisher.id : 0
   end
 end

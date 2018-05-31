@@ -14,7 +14,7 @@ class ShortnamesController < ParentableController
   private
 
   def authenticated_edge
-    authenticated_resource.owner
+    authenticated_resource
   end
 
   def destination_param
@@ -44,7 +44,7 @@ class ShortnamesController < ParentableController
   end
 
   def redirect_model_success(_resource = nil)
-    settings_iri_path(authenticated_resource.owner.root, tab: 'shortnames')
+    settings_iri_path(authenticated_resource.root, tab: 'shortnames')
   end
 
   def respond_with_form(resource)
@@ -53,7 +53,7 @@ class ShortnamesController < ParentableController
              tab: "shortnames/#{tab}",
              active: 'shortnames',
              shortname: resource,
-             resource: resource.owner.parent_model(:page)
+             resource: resource.parent_model(:page)
            }
   end
 

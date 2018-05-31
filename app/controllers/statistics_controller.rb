@@ -69,6 +69,6 @@ class StatisticsController < ParentableController
   end
 
   def resource_by_id
-    parent_resource.is_a?(Edge) ? parent_resource.owner : parent_resource
+    parent_resource
   end
 end

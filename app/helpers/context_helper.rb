@@ -8,7 +8,7 @@ module ContextHelper
         if authenticated_edge.owner_type == 'Forum'
           authenticated_edge
         else
-          authenticated_edge.parent.owner
+          authenticated_edge.parent
         end
     end
     return unless policy(parent).show?

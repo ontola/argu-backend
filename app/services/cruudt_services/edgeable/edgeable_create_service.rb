@@ -9,7 +9,7 @@ class EdgeableCreateService < CreateService
   end
 
   def resource
-    @edge.owner
+    @edge
   end
 
   protected

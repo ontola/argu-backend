@@ -55,7 +55,7 @@ class FollowsController < AuthorizedController
   end
 
   def redirect_model_success(resource)
-    resource.followable.owner.iri(only_path: true).to_s
+    resource.followable.iri(only_path: true).to_s
   end
 
   def unsubscribe?

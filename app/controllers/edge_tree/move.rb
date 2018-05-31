@@ -14,7 +14,7 @@ module EdgeTree
       def move
         @edge = Edge.find_by(uuid: params[:edge_id])
         user_context.with_root_id(@edge.root_id) do
-          authorize @edge.owner, :update?
+          authorize @edge, :update?
         end
         moved = false
         authenticated_resource.with_lock do

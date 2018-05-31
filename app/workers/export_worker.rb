@@ -86,10 +86,10 @@ class ExportWorker
 
   def relations(edge)
     [
-      edge.owner,
-      edge.owner.try(:default_profile_photo),
-      edge.owner.try(:media_objects).try(:to_a),
-      edge.owner.try(:placements).try(:to_a)
+      edge,
+      edge.try(:default_profile_photo),
+      edge.try(:media_objects).try(:to_a),
+      edge.try(:placements).try(:to_a)
     ].flatten.compact
   end
 

@@ -7,7 +7,7 @@ class CustomMenuItem < ApplicationRecord
     {
       id: id,
       menu_type: menu_type,
-      parent_iri: resource.owner.iri(only_path: true)
+      parent_iri: resource.iri(only_path: true)
     }
   end
 

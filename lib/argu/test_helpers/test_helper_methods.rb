@@ -274,7 +274,7 @@ module Argu
 
         def define_hidden_spec_objects
           let(:holland) { Forum.find_via_shortname('holland', argu.uuid) }
-          let(:hidden_motion) { holland.descendants.at_depth(4).where(owner_type: 'Motion').first.owner }
+          let(:hidden_motion) { holland.descendants.at_depth(4).where(owner_type: 'Motion').first }
         end
 
         def define_model_spec_objects

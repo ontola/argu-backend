@@ -63,7 +63,7 @@ module MotionsHelper
         commentCount: argument.children_count(:comments),
         displayName: argument.display_name,
         key: argument.identifier,
-        side: argument.owner.key.to_s,
+        side: argument.key.to_s,
         url: argument.iri
       }
     end
@@ -87,6 +87,6 @@ module MotionsHelper
   end
 
   def user_vote_for(motion)
-    @user_votes&.find { |v| v.parent_id == motion.default_vote_event.id }&.owner
+    @user_votes&.find { |v| v.parent_id == motion.default_vote_event.id }
   end
 end

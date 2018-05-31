@@ -34,7 +34,7 @@ module Loggable
     # Returns the first found trashed_activity of self and ancestors
     # @return [Activity, nil]
     def first_trashed_activity
-      trashed_ancestors.first&.owner&.trash_activity
+      trashed_ancestors.first&.trash_activity
     end
   end
 

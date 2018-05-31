@@ -100,7 +100,6 @@ class VotesController < EdgeableController
       Edge
         .where_owner('Vote', creator: current_profile, root_id: root_from_params&.uuid)
         .find_by(parent: parent_resource)
-        &.owner
   end
 
   def show_respond_success_html(resource)

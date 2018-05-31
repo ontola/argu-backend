@@ -12,7 +12,6 @@ module ColumnRendererHelper
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
     return if columns.nil?
-    columns = columns.owner if columns&.is_a?(Edge)
     partial = columns.is_a?(ActiveRecord::Base) && options[:partial] || column_partial(columns)
 
     if partial == 'column_renderer/show'

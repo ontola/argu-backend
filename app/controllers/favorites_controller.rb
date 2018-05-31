@@ -20,7 +20,7 @@ class FavoritesController < ParentableController
   end
 
   def redirect_model_success(resource)
-    resource.owner.iri(only_path: true).to_s
+    resource.is_a?(Edge) ? resource.iri_path : resource.edge.iri_path
   end
 
   def message_success(resource, action)

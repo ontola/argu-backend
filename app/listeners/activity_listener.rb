@@ -34,8 +34,8 @@ class ActivityListener
 
   def create_conversion_successful(resource)
     create_activity(
-      resource.edge.owner,
-      resource.edge.parent.owner,
+      resource.edge,
+      resource.edge.parent,
       :convert
     )
   end

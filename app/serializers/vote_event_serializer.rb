@@ -19,7 +19,6 @@ class VoteEventSerializer < EdgeSerializer
     @vote ||= Edge
                 .where_owner('Vote', creator: user_context.actor, primary: true, root_id: object.root_id)
                 .find_by(parent: object)
-                &.owner
   end
 
   def option_counts

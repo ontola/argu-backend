@@ -34,16 +34,12 @@ class ExportsController < ServiceController
     render locals: {parent_edge: parent_edge}
   end
 
-  def parent_resource
-    super.is_a?(Edge) ? super.owner : super
-  end
-
   def permit_params
     {}
   end
 
   def redirect_model_success(resource)
-    export_iri_path(resource.edge.owner)
+    export_iri_path(resource.edge)
   end
 
   def resource_new_params

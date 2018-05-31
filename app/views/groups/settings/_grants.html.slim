@@ -13,7 +13,7 @@ h3= t('grants.plural').capitalize
         tr
           td
             - if grant.edge.owner_type == 'Forum'
-              =link_to grant.display_name, grant.edge.owner
+              =link_to grant.display_name, grant.edge
             - else
               =grant.display_name
           td

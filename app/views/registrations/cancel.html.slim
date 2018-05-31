@@ -7,7 +7,7 @@
         p.danger= t('users_cancel_super_admin')
         ul
           - @user.profile.grants.administrator.each do |grant|
-            li=link_to grant.edge.owner.display_name, grant.edge.owner
+            li=link_to grant.edge.display_name, grant.edge
       - else
         =semantic_form_for @user, url: user_registration_path, remote: true, method: :delete, html: {class: 'confirm'} do |f|
           p= t('users_cancel_info')

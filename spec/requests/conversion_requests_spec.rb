@@ -5,11 +5,11 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Conversions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  let(:new_path) { new_iri_path(conversions_iri_path(subject.owner.canonical_iri(only_path: true))) }
+  let(:new_path) { new_iri_path(conversions_iri_path(subject.canonical_iri(only_path: true))) }
   let(:non_existing_new_path) do
     new_iri_path(conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true)))
   end
-  let(:create_path) { collection_iri_path(subject.owner.canonical_iri(only_path: true), :conversions) }
+  let(:create_path) { collection_iri_path(subject.canonical_iri(only_path: true), :conversions) }
   let(:non_existing_create_path) do
     conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true))
   end

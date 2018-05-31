@@ -15,9 +15,8 @@ module Widgetable
     private
 
     def create_default_widgets
-      resource = is_a?(Edge) ? owner : self
-      return unless resource.class.class_variables.include?(:@@default_widgets)
-      resource.class.default_widgets.each do |widget|
+      return unless self.class.class_variables.include?(:@@default_widgets)
+      self.class.default_widgets.each do |widget|
         send("create_#{widget}_widget")
       end
     end

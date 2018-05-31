@@ -16,7 +16,7 @@ class Export < ApplicationRecord
   end
 
   def edgeable_record
-    @edgeable_record ||= edge.owner
+    @edgeable_record ||= edge
   end
 
   def iri_opts

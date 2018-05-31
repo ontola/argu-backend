@@ -6,11 +6,11 @@
         h2#comments= t('comments.plural')
     .comments.box
       span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
-      - @comment_edges.reject { |edge| edge.owner_type == 'Comment'  && edge.owner.abandoned? }.each do |edge|
+      - @comment_edges.reject { |edge| edge.owner_type == 'Comment'  && edge.abandoned? }.each do |edge|
         - if edge.owner_type == 'Comment'
-          =render 'comments/comment', c: edge.owner, resource: resource
+          =render 'comments/comment', c: edge, resource: resource
         - else
-          =render 'votes/vote', model: edge.owner
+          =render 'votes/vote', model: edge
       =paginate @comment_edges, remote: local_assigns[:modal], params: {anchor: 'comments'}, param_name: :comments_page
   - if local_assigns[:comment] && policy(resource).create_child?(:comments)
     header

@@ -40,9 +40,9 @@ class SendActivityNotificationsWorker
       @user.follow_for(followable)&.unsubscribe_iri,
       {display_name: followable.root.display_name},
       {
-        id: followable.owner.iri,
+        id: followable.iri,
         display_name: followable.display_name,
-        pro: followable.owner.try(:pro),
+        pro: followable.try(:pro),
         type: followable.owner_type
       },
       []
@@ -52,7 +52,7 @@ class SendActivityNotificationsWorker
       content: activity.comment || trackable.content,
       id: trackable.iri,
       display_name: trackable.display_name,
-      pro: trackable.owner.try(:pro),
+      pro: trackable.try(:pro),
       type: trackable.owner_type,
       creator: {
         id: activity.owner.iri,

@@ -80,7 +80,7 @@ class Forum < Edge
   # the first Forum where {Forum#discoverable} is true and a {Grant} for the public {Group} is present
   def self.first_public
     if (setting = Setting.get(:default_forum))
-      forum = Edge.find_by!(uuid: setting).owner
+      forum = Edge.find_by!(uuid: setting)
     end
     forum || Forum.public_forums.first
   end

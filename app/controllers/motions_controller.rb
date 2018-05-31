@@ -10,7 +10,6 @@ class MotionsController < EdgeableController
     @vote = Edge
               .where_owner('Vote', creator: current_profile, primary: true, root_id: root_from_params&.uuid)
               .find_by(parent: authenticated_resource.default_vote_event)
-              &.owner
     @vote ||= Vote.new(
       creator: current_profile,
       publisher: current_user,

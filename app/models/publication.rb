@@ -20,7 +20,7 @@ class Publication < ApplicationRecord
     return if publishable.is_published?
     publishable.publish!
     return unless publishable.is_published
-    publish("publish_#{publishable.owner.model_name.singular}_successful", publishable.owner)
+    publish("publish_#{publishable.model_name.singular}_successful", publishable)
   end
 
   def publish_time_lapsed?

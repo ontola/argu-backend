@@ -93,14 +93,11 @@ public_staff_membership =
   ).resource
 public_staff_membership.save!(validate: false)
 
-argu.update(owner: staff.profile)
-
 forum = Forum.new(name: 'Nederland',
                   public_grant: 'participator',
-                  url: 'nederland')
-forum = Edge.new(owner: forum,
-                 user: User.find_via_shortname!('staff_account'),
-                 parent: argu)
+                  url: 'nederland',
+                  publisher: User.find_via_shortname!('staff_account'),
+                  parent: argu)
 forum.grants.new(group: public_group, grant_set: GrantSet.participator)
 forum.save!
 

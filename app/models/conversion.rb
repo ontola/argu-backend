@@ -11,7 +11,7 @@ class Conversion
   attr_accessor :edge, :klass
 
   def edgeable_record
-    @edgeable_record ||= edge.owner
+    @edgeable_record ||= edge
   end
 
   def initialize(edge: nil, klass: nil)
@@ -40,7 +40,7 @@ class Conversion
   end
 
   def save
-    edge.owner.convert_to(klass)
+    edge.convert_to(klass)
   end
   alias save! save
 

@@ -67,7 +67,7 @@ class Comment < Edge
 
   def set_vote
     return if vote_id.nil?
-    vote = Edge.where_owner('Vote', creator: creator, uuid: vote_id, root_id: root_id).first&.owner ||
+    vote = Edge.where_owner('Vote', creator: creator, uuid: vote_id, root_id: root_id).first ||
       raise(ActiveRecord::RecordNotFound)
     vote.update!(comment_id: uuid)
   end

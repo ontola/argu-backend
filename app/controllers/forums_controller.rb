@@ -91,8 +91,8 @@ class ForumsController < EdgeableController
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id], root_from_params&.uuid) || raise(ActiveRecord::RecordNotFound)
-    return if resource.owner.is_a?(Forum)
-    redirect_to resource.owner.iri_path
+    return if resource.is_a?(Forum)
+    redirect_to resource.iri_path
     send_event category: 'short_url',
                action: 'follow',
                label: params[:id]

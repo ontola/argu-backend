@@ -15,7 +15,7 @@ class ConversionPolicy < EdgeTreePolicy
 
   def create?
     klass = record.klass.is_a?(String) ? record.klass : record.klass.class_name
-    assert! record.edge.owner.try(:convertible_classes)&.include?(klass.to_sym), :convert_class?
+    assert! record.edge.try(:convertible_classes)&.include?(klass.to_sym), :convert_class?
     assert! Pundit.policy(context, edgeable_record).convert?, :convert?
     true
   end

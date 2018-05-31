@@ -5,7 +5,7 @@ module Argu
     module InstanceMethods
       def create_forum(*args)
         attributes = (args.pop if args.last.is_a?(Hash)) || {}
-        page = attributes[:parent]&.owner || create(:page)
+        page = attributes[:parent] || create(:page)
         attributes = {
           url: attributes_for(:shortname)[:shortname],
           parent: page,

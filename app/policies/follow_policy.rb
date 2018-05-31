@@ -2,7 +2,7 @@
 
 class FollowPolicy < RestrictivePolicy
   def create?
-    Pundit.policy(context, record.followable.owner).follow?
+    Pundit.policy(context, record.followable).follow?
   end
 
   def destroy?

@@ -17,7 +17,7 @@ class ConversionsController < ServiceController
   end
 
   def authorize_action
-    authorize parent_resource!.owner, :convert?
+    authorize parent_resource!, :convert?
     authorize authenticated_resource, :new?
   end
 
@@ -26,7 +26,7 @@ class ConversionsController < ServiceController
   def create_handler_success(resource)
     respond_to do |format|
       create_respond_blocks_success(
-        resource.edge.owner,
+        resource.edge,
         format
       )
     end
@@ -47,7 +47,7 @@ class ConversionsController < ServiceController
   def resource_by_id; end
 
   def redirect_model_success(resource)
-    resource.owner.iri(only_path: true).to_s
+    resource.is_a?(Edge) ? resource.iri_path : resource.edge.iri_path
   end
 
   def resource_new_params
@@ -74,7 +74,7 @@ class ConversionsController < ServiceController
                  notifications: [
                    {
                      type: :error,
-                     message: "#{parent_resource!.owner} is not convertible"
+                     message: "#{parent_resource!} is not convertible"
                    }
                  ]
                }

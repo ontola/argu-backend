@@ -33,7 +33,7 @@ class Grant < ApplicationRecord
   def display_name
     case edge.owner_type
     when 'Forum'
-      edge.owner.display_name
+      edge.display_name
     when 'Page'
       I18n.t('grants.all_forums')
     else
@@ -42,7 +42,7 @@ class Grant < ApplicationRecord
   end
 
   def edgeable_record
-    @edgeable_record ||= edge.owner
+    @edgeable_record ||= edge
   end
 
   def grant_set=(value)
@@ -55,6 +55,6 @@ class Grant < ApplicationRecord
   end
 
   def page
-    edge.root.owner
+    edge.root
   end
 end

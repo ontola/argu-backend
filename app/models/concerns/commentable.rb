@@ -17,7 +17,7 @@ module Commentable
       i = root_comments.order(order).page(page)
       unless show_trashed
         i.each do |edge|
-          edge.owner.shallow_wipe if edge.owner_type == 'Comment'
+          edge.shallow_wipe if edge.owner_type == 'Comment'
         end
       end
       i

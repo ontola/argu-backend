@@ -35,11 +35,11 @@ module Convertible
   def convert_or_destroy_children(new_model)
     new_model.displaced_children.each do |child|
       if new_model.is_a?(Comment) && child.is_a?(Comment)
-        child.owner.parent_comment ||= new_model
+        child.parent_comment ||= new_model
         child.parent = new_model.parent_edge
-        child.owner.save!(validate: false)
-      elsif child.owner.convert_to?(Comment) && Comment.parent_classes.include?(class_name.singularize.to_sym)
-        child.owner.convert_to(Comment, validate: false)
+        child.save!(validate: false)
+      elsif child.convert_to?(Comment) && Comment.parent_classes.include?(class_name.singularize.to_sym)
+        child.convert_to(Comment, validate: false)
       else
         child.destroy!
       end
@@ -54,7 +54,7 @@ module Convertible
   # Find children that don't allow the new class as parent
   # @return [Array<Edge>]
   def displaced_children
-    children.reject { |edge| edge.owner.parent_classes.include?(class_name.singularize.to_sym) }
+    children.reject { |edge| edge.parent_classes.include?(class_name.singularize.to_sym) }
   end
 
   module ClassMethods

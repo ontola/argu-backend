@@ -27,8 +27,8 @@ module MapHelper
       popup: {
         header: {
           class: "#{placement.placeable.try(:owner_type).underscore}-t",
-          href: placement.placeable.owner.iri,
-          text: placement.placeable.owner.display_name
+          href: placement.placeable.iri,
+          text: placement.placeable.display_name
         }
       }
     }

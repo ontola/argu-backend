@@ -11,7 +11,7 @@ class Favorite < ApplicationRecord
   after_create :follow_edge
 
   def edgeable_record
-    @edgeable_record ||= edge.owner
+    @edgeable_record ||= edge
   end
 
   def follow_edge
@@ -19,6 +19,6 @@ class Favorite < ApplicationRecord
   end
 
   def forum
-    edge.owner if edge.owner_type == 'Forum'
+    edge if edge.owner_type == 'Forum'
   end
 end

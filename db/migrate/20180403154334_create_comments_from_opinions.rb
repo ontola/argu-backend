@@ -1,6 +1,6 @@
 class CreateCommentsFromOpinions < ActiveRecord::Migration[5.1]
   def change
-    RedisResource::EdgeRelation.where(owner_type: 'Vote').select { |edge| edge.owner.explanation.present? }.map(&:owner).each do |vote|
+    RedisResource::EdgeRelation.where(owner_type: 'Vote').select { |edge| edge.explanation.present? }.map(&:owner).each do |vote|
       link_comment(vote)
     end
 

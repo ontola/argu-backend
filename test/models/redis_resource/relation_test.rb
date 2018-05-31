@@ -38,7 +38,7 @@ module RedisResource
       init_redis_votes(user: other_guest_user, count: 1)
       first_result = edge_relation.where(parent_id: Motion.first.default_vote_event.id).to_a.first
       assert first_result.is_a?(Edge)
-      assert first_result.owner.is_a?(Vote)
+      assert first_result.is_a?(Vote)
     end
 
     test 'find first' do
@@ -52,7 +52,7 @@ module RedisResource
       init_redis_votes(count: 5)
       init_redis_votes(user: other_guest_user, count: 1)
       assert edge_relation.first.is_a?(Edge)
-      assert edge_relation.first.owner.is_a?(Vote)
+      assert edge_relation.first.is_a?(Vote)
     end
 
     test 'persist' do

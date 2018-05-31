@@ -31,7 +31,7 @@ class GrantTree
       @expired ||=
         parent&.expired? ||
         edge.expires_at && edge.expires_at < Time.current ||
-        (edge.owner_type == 'VoteEvent' && edge.owner.starts_at > Time.current)
+        (edge.owner_type == 'VoteEvent' && edge.starts_at > Time.current)
     end
 
     def granted_group_ids(action: nil, resource_type: nil, parent_type: nil)

@@ -5,10 +5,6 @@ module EdgeableShallow
   extend ActiveSupport::Concern
 
   included do
-    def owner
-      self
-    end
-
     def root_object?
       false
     end
