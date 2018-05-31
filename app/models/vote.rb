@@ -37,27 +37,12 @@ class Vote < Edge
   end
 
   def upvoted_arguments
+    return [] if publisher.guest?
     @upvoted_arguments ||=
-      if !publisher.guest?
-        Argument
-          .untrashed
-          .joins(:votes)
-          .where(votes_edges: {creator_id: creator_id}, parent_id: parent&.parent_id)
-      else
-        Argument
-          .untrashed
-          .where(
-            edges: {
-              id:
-                Edge.where_owner(
-                  'Vote',
-                  creator: creator,
-                  parent: parent&.parent,
-                  parent: {owner_type: 'Argument'}
-                ).pluck(:parent_id)
-            }
-          )
-      end
+      Argument
+        .untrashed
+        .joins(:votes)
+        .where(votes_edges: {creator_id: creator_id}, parent_id: parent&.parent_id)
   end
 
   # Needed for ActivityListener#audit_data
