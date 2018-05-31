@@ -32,14 +32,6 @@ class ParentableController < AuthorizedController
       LinkedRecord.new_for_forum(opts[:root_id], opts[:forum_id], opts[:linked_record_id])
   end
 
-  def parent_edge
-    @parent_edge ||= parent_resource
-  end
-
-  def parent_edge!
-    parent_edge || raise(ActiveRecord::RecordNotFound)
-  end
-
   def parent_resource
     @parent_resource ||= linked_record_parent || resource_by_id_parent || super
   end
@@ -74,7 +66,7 @@ class ParentableController < AuthorizedController
     @tree_root_id ||=
       case action_name
       when 'new', 'create', 'index'
-        parent_edge&.root_id
+        parent_resource&.root_id
       else
         (resource_by_id.is_a?(Edge) ? resource_by_id : resource_by_id.try(:edge))&.root_id
       end

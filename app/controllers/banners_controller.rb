@@ -46,6 +46,6 @@ class BannersController < ServiceController
   end
 
   def tree_root_id
-    parent_edge&.root_id
+    parent_resource&.root_id
   end
 end

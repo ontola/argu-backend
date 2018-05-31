@@ -22,7 +22,7 @@ class MediaObjectsController < ParentableController
     @tree_root_id ||=
       case action_name
       when 'new', 'create', 'index'
-        parent_edge&.root_id
+        parent_resource&.root_id
       else
         resource_by_id&.about&.try(:root_id)
       end

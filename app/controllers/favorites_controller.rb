@@ -8,7 +8,7 @@ class FavoritesController < ParentableController
   private
 
   def new_resource_from_params
-    current_user.favorites.find_or_initialize_by(edge: parent_edge!)
+    current_user.favorites.find_or_initialize_by(edge: parent_resource!)
   end
 
   def parent_resource
@@ -16,7 +16,7 @@ class FavoritesController < ParentableController
   end
 
   def resource_by_id
-    current_user.favorites.find_by(edge: parent_edge)
+    current_user.favorites.find_by(edge: parent_resource)
   end
 
   def redirect_model_success(resource)

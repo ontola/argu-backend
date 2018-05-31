@@ -38,8 +38,8 @@ class ShortnamesController < ParentableController
   def resource_new_params
     HashWithIndifferentAccess.new(
       primary: false,
-      owner: parent_edge!,
-      root_id: unscoped_param ? nil : parent_edge.root_id
+      owner: parent_resource!,
+      root_id: unscoped_param ? nil : parent_resource.root_id
     )
   end
 
@@ -78,7 +78,7 @@ class ShortnamesController < ParentableController
     @tree_root_id ||=
       case action_name
       when 'new', 'create', 'index'
-        parent_edge&.root_id
+        parent_resource&.root_id
       else
         resource_by_id&.owner&.root_id
       end

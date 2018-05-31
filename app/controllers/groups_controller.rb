@@ -34,7 +34,7 @@ class GroupsController < ServiceController
   def new_resource_from_params
     resource = super
     resource.grants.build(
-      edge: parent_edge,
+      edge: parent_resource,
       grant_set: GrantSet.participator
     )
     resource
@@ -81,7 +81,7 @@ class GroupsController < ServiceController
     @tree_root_id ||=
       case action_name
       when 'new', 'create', 'index'
-        parent_edge&.root_id
+        parent_resource&.root_id
       else
         resource_by_id&.page&.root_id
       end

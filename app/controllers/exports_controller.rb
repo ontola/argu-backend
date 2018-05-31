@@ -11,7 +11,7 @@ class ExportsController < ServiceController
     @_tree ||=
       case action_name
       when 'new', 'create', 'index'
-        parent_edge&.self_and_ancestors
+        parent_resource&.self_and_ancestors
       else
         authenticated_edge&.self_and_ancestors
       end
@@ -23,15 +23,15 @@ class ExportsController < ServiceController
   end
 
   def index_collection
-    parent_edge!.export_collection(collection_options)
+    parent_resource!.export_collection(collection_options)
   end
 
   def index_respond_success_html
-    render locals: {parent_edge: parent_edge}
+    render locals: {parent_edge: parent_resource}
   end
 
   def index_respond_success_js
-    render locals: {parent_edge: parent_edge}
+    render locals: {parent_edge: parent_resource}
   end
 
   def permit_params
