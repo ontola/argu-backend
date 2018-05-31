@@ -32,6 +32,7 @@ class StatisticsController < ParentableController
   def additional_stats
     case resource_by_id
     when Forum
+      return [] unless current_user.is_staff?
       [
         {
           title: t('forums.statistics.cities.title'),
