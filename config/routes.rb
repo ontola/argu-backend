@@ -344,7 +344,7 @@ Rails.application.routes.draw do
       resources :direct_messages, path: :dm, only: [:create]
       resources :exports, only: [], concerns: %i[destroyable]
       resources :favorites, only: [:create]
-      resources :grants, path: 'grants', only: [:destroy]
+      resources :grants, path: 'grants', only: %i[destroy show]
       resources :group_memberships, only: %i[show destroy]
       resources :groups,
                 path: 'g',

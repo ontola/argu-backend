@@ -5,13 +5,18 @@ require 'rails_helper'
 RSpec.describe "Iri's", type: :model do
   include Rails.application.routes.url_helpers
   include ActionDispatch::Routing::UrlFor
+  include IRIHelper
 
   define_spec_objects
   let(:url) { url_for([subject, protocol: :http]) }
-
+  let(:iri_owner) { subject }
   RSpec.shared_examples_for 'iri matches route' do
     it 'matches #iri with route' do
       expect(subject.iri.to_s).to eq(url)
+    end
+
+    it 'can be found with resource_from_iri' do
+      expect(resource_from_iri(subject.iri)).to eq(iri_owner)
     end
   end
 
@@ -32,12 +37,14 @@ RSpec.describe "Iri's", type: :model do
 
   context 'User profile' do
     subject { create(:user).profile }
+    let(:iri_owner) { subject.profileable }
     let(:url) { url_for([subject.profileable, protocol: :http]) }
     it_behaves_like 'iri matches route'
   end
 
   context 'Page profile' do
     subject { argu.profile }
+    let(:iri_owner) { subject.profileable }
     let(:url) { url_for([subject.profileable, protocol: :http]) }
     it_behaves_like 'iri matches route'
   end

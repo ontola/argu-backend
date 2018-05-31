@@ -45,7 +45,7 @@ module NestedResourceHelper
   #   parent_id_from_params # => '1'
   def parent_id_from_params(opts = params)
     if resource_params[:parent].present?
-      id_and_type_from_iri(resource_params[:parent])[:id]
+      opts_from_iri(resource_params[:parent])[:id]
     else
       opts[parent_resource_param(opts)]
     end
@@ -57,17 +57,6 @@ module NestedResourceHelper
   # @see #parent_resource_klass
   def parent_resource_class(opts = params)
     parent_resource_klass(opts)
-  end
-
-  # Finds a 'resource key' from a params Hash
-  # @example Resource key from motion_id
-  #   params = {motion_id: 1}
-  #   parent_resource_key # => :motion_id
-  def parent_resource_key(hash)
-    hash
-      .keys
-      .reverse
-      .find { |k| /_id/ =~ k }
   end
 
   # Constantizes a class string from the params hash
@@ -97,10 +86,9 @@ module NestedResourceHelper
   #   parent_resource_type # => 'motion'
   def parent_resource_type(opts = params)
     if resource_params[:parent].present?
-      id_and_type_from_iri(resource_params[:parent])[:type]
+      opts_from_iri(resource_params[:parent])[:type]
     else
-      key = parent_resource_key(opts)[0..-4]
-      key == 'root' ? 'page' : key
+      parent_resource_key(opts)[0..-4]
     end
   end
 
