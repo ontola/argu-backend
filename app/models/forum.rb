@@ -129,6 +129,6 @@ class Forum < Edge
 
   def set_default_decision_group
     self.default_decision_group =
-      parent_model.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
+      parent.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EdgeSerializer < RecordSerializer
-  has_one :parent_model, key: :partOf, predicate: NS::SCHEMA[:isPartOf]
+  has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf]
   has_one :organization, predicate: NS::SCHEMA[:organization] do
     object.parent_model(:page)
   end

@@ -1,5 +1,5 @@
-$('#votebtn<%= vote.parent_model.id %>')
+$('#votebtn<%= vote.parent.id %>')
   .fadeOut()
-  .replaceWith('<%= escape_javascript(render(partial: "arguments/shr", locals: {model: vote.parent_model, vote: nil}))%>')
+  .replaceWith('<%= escape_javascript(render(partial: "arguments/shr", locals: {model: vote.parent, vote: nil}))%>')
   .hide()
   .fadeIn();

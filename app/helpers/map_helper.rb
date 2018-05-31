@@ -53,7 +53,7 @@ module MapHelper
       markerLat: marker&.lat,
       markerLon: marker&.lon,
       markerType: 'custom',
-      required: resource.is_a?(Motion) && resource.parent_model.try(:require_location?),
+      required: resource.is_a?(Motion) && resource.parent.try(:require_location?),
       resourceType: resource.class_name.singularize
     }
   end

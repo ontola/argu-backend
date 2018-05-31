@@ -8,7 +8,7 @@ class CommentsController < EdgeableController
     comment = params[:comment]
     render locals: {
       parent_id: comment.is_a?(Hash) ? comment[:parent_id] : nil,
-      resource: authenticated_resource.parent_model,
+      resource: authenticated_resource.parent,
       comment: authenticated_resource
     }
   end
@@ -26,7 +26,7 @@ class CommentsController < EdgeableController
   end
 
   def create_respond_failure_html(c)
-    url = "#{c.parent_model.iri_path}?#{{comment: {body: c.body, parent_id: c.in_reply_to_id}}.to_param}"
+    url = "#{c.parent.iri_path}?#{{comment: {body: c.body, parent_id: c.in_reply_to_id}}.to_param}"
     redirect_to url, notice: c.errors.full_messages.first
   end
 
@@ -46,14 +46,14 @@ class CommentsController < EdgeableController
 
   def edit_respond_success_html(resource)
     render locals: {
-      resource: resource.parent_model,
+      resource: resource.parent,
       comment: resource
     }
   end
 
   def edit_respond_success_js(resource)
     render locals: {
-      resource: resource.parent_model,
+      resource: resource.parent,
       comment: resource,
       parent_id: nil,
       visible: true
@@ -71,14 +71,14 @@ class CommentsController < EdgeableController
   end
 
   def redirect_model_success(resource)
-    return resource.parent_model.iri_path unless resource.persisted? && !resource.deleted?
-    case resource.parent_model
+    return resource.parent.iri_path unless resource.persisted? && !resource.deleted?
+    case resource.parent
     when BlogPost, ProArgument, ConArgument
-      resource.parent_model.iri_path(fragment: resource.identifier)
+      resource.parent.iri_path(fragment: resource.identifier)
     else
       expand_uri_template(
         'comments_collection_iri',
-        parent_iri: resource.parent_model.iri(only_path: true),
+        parent_iri: resource.parent.iri(only_path: true),
         only_path: true
       )
     end
@@ -106,7 +106,7 @@ class CommentsController < EdgeableController
     respond_js(
       'comments/new',
       parent_id: params[:comment][:parent_id],
-      resource: resource.parent_model,
+      resource: resource.parent,
       comment: resource
     )
   end
@@ -118,7 +118,7 @@ class CommentsController < EdgeableController
   def update_respond_failure_html(resource)
     render 'edit',
            locals: {
-             resource: resource.parent_model,
+             resource: resource.parent,
              comment: resource,
              parent_id: nil
            }
@@ -129,7 +129,7 @@ class CommentsController < EdgeableController
            status: 400,
            locals: {
              comment: resource,
-             commentable: resource.parent_model
+             commentable: resource.parent
            }
   end
 
@@ -141,7 +141,7 @@ class CommentsController < EdgeableController
   def update_respond_success_js(resource)
     render locals: {
       comment: resource,
-      commentable: resource.parent_model
+      commentable: resource.parent
     }
   end
 end

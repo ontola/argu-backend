@@ -18,7 +18,7 @@ class ActivityListener
   %w[create destroy trash untrash update publish].each do |method|
     %w[pro_argument con_argument blog_post motion question].each do |model|
       define_method "#{method}_#{model}_successful" do |resource|
-        create_activity(resource, resource.parent_model, method)
+        create_activity(resource, resource.parent, method)
       end
     end
 
@@ -28,7 +28,7 @@ class ActivityListener
 
     define_method "#{method}_decision_successful" do |resource|
       action = method == 'publish' ? resource.state : method
-      create_activity(resource, resource.parent_model, action)
+      create_activity(resource, resource.parent, action)
     end
   end
 
@@ -42,10 +42,10 @@ class ActivityListener
 
   def create_vote_successful(resource)
     ActiveRecord::Base.transaction do
-      destroy_recent_similar_activities(resource, resource.parent_model, 'create')
+      destroy_recent_similar_activities(resource, resource.parent, 'create')
       create_activity(
         resource,
-        resource.parent_model,
+        resource.parent,
         :create,
         parameters: {for: resource.for}
       )

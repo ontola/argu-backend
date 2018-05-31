@@ -194,16 +194,15 @@ class Edge < ApplicationRecord
     %w[Forum Page].include?(owner_type)
   end
 
-  def parent_edge(type = nil)
-    return self if owner_type == type.to_s.classify
-    return parent if type.nil?
-    return parent.parent_edge(type) if !root_object? && association_cached?(:parent)
-    return persisted_edge&.parent_edge(type) unless persisted?
-    parent_by_type(type)
+  def parent(*args)
+    association(:parent).reader(*args)
   end
 
-  def parent_model(type = nil)
-    parent_edge(type)
+  def parent_model(type)
+    return self if owner_type == type.to_s.classify
+    return parent.parent_model(type) if !root_object? && association_cached?(:parent)
+    return persisted_edge&.parent_model(type) unless persisted?
+    parent_by_type(type)
   end
 
   def persisted_edge

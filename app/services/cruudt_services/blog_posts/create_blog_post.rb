@@ -14,8 +14,8 @@ class CreateBlogPost < PublishedCreateService
       created_at: @attributes[:happened_at],
       owner: resource.creator,
       key: 'blog_post.happened',
-      recipient: resource.parent_model,
-      recipient_type: resource.parent_model.to_s,
+      recipient: resource.parent,
+      recipient_type: resource.parent.to_s,
       trackable: resource,
       trackable_type: resource.class.to_s
     )
@@ -26,7 +26,7 @@ class CreateBlogPost < PublishedCreateService
       obj.created_at || Time.current
       obj.owner ||= resource.creator
       obj.key ||= 'blog_post.happened'
-      obj.recipient ||= resource.parent_model
+      obj.recipient ||= resource.parent
       obj.recipient_type ||= resource.parent.class.to_s
       obj.trackable_type ||= resource.class.to_s
     else

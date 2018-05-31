@@ -65,7 +65,7 @@ module RedisResource
     test 'destroy parent' do
       guest_vote
       assert_differences([['Motion.count', -1], ['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', -1]]) do
-        guest_vote.parent_model.parent_model.destroy
+        guest_vote.parent.parent.destroy
       end
     end
 

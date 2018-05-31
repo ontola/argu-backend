@@ -101,7 +101,7 @@ class Argument < Edge
 
   def adjacent(direction, _show_trashed = nil)
     return if is_trashed?
-    ids = parent_edge
+    ids = parent
             .arguments
             .untrashed
             .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
@@ -109,6 +109,6 @@ class Argument < Edge
     index = ids.index(self[:uuid])
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
-    parent_model.arguments.find_by(uuid: p_id)
+    parent.arguments.find_by(uuid: p_id)
   end
 end

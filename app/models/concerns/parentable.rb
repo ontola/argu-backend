@@ -17,20 +17,17 @@ module Parentable
       true
     end
 
-    def parent_model(type = nil)
-      return unless type.nil? || self.class.parent_classes.include?(type)
-      if type.present?
-        send(type)
-      else
-        self.class.parent_classes.map { |t| send(t) }.compact.first
-      end
+    def parent
+      self.class.parent_classes.detect { |t| break send(t) if send(t) }
     end
+
+    delegate :parent_model, to: :parent
 
     def parent_iri(opts = {})
-      parent_model&.iri(opts)
+      parent&.iri(opts)
     end
 
-    def parent_edge(type = nil)
+    def parent_edge(type)
       parent_model(type)
     end
   end
@@ -49,7 +46,7 @@ module Parentable
     extend ActiveSupport::Concern
     included do
       # rubocop:disable Rails/HasManyOrHasOneDependent
-      has_one :parent_model, key: :parent, predicate: NS::SCHEMA[:isPartOf]
+      has_one :parent, key: :parent, predicate: NS::SCHEMA[:isPartOf]
       # rubocop:enable Rails/HasManyOrHasOneDependent
     end
   end

@@ -152,13 +152,4 @@ module ApplicationHelper
   def visibility_icon(resource)
     visible_for_group_ids(resource).include?(-1) ? 'globe' : 'group'
   end
-
-  # :nodoc:
-  def can_show_display_name?(preview)
-    if preview.respond_to?(:parent_model)
-      preview.parent_model.open?
-    elsif preview.class == Profile
-      true
-    end
-  end
 end

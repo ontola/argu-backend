@@ -26,7 +26,7 @@ class Group < ApplicationRecord
   attr_accessor :confirmation_string
 
   parentable :page
-  alias edgeable_record parent_model
+  alias edgeable_record parent
 
   PUBLIC_ID = -1
   STAFF_ID = -2
@@ -46,7 +46,7 @@ class Group < ApplicationRecord
   end
 
   def iri_opts
-    super.merge(root_id: parent_model.url)
+    super.merge(root_id: parent.url)
   end
 
   def name_singular

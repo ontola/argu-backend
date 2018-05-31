@@ -13,7 +13,7 @@ RSpec.describe 'Votes', type: :request do
   let(:update_differences) { [['Vote.count', 0]] }
   let(:destroy_path) { show_path }
   let(:show_by_parent_path) do
-    expand_uri_template(:vote_iri, parent_iri: subject.parent_model.iri_path, only_path: true)
+    expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path, only_path: true)
   end
   let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('403') }
   let(:expect_post_create_guest_serializer) { expect_created }
@@ -38,17 +38,17 @@ RSpec.describe 'Votes', type: :request do
     let!(:subject) { argument_vote }
     let!(:guest_subject) do
       get root_path
-      create(:vote, parent: subject.parent_model, creator: guest_user.profile, publisher: guest_user)
+      create(:vote, parent: subject.parent, creator: guest_user.profile, publisher: guest_user)
     end
-    let(:expect_get_show_html) { expect(response).to redirect_to(subject.parent_model.iri_path) }
-    let(:expect_redirect_to_login) { new_iri_path(subject.parent_model, :votes, confirm: true) }
-    let(:created_resource_path) { subject.parent_model.iri_path }
+    let(:expect_get_show_html) { expect(response).to redirect_to(subject.parent.iri_path) }
+    let(:expect_redirect_to_login) { new_iri_path(subject.parent, :votes, confirm: true) }
+    let(:created_resource_path) { subject.parent.iri_path }
     it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid]
     it_behaves_like 'by parent'
   end
 
   context 'with vote_event' do
-    let(:parent_path) { subject.parent_model.iri_path }
+    let(:parent_path) { subject.parent.iri_path }
     let(:update_path) { create_path }
     let(:expect_delete_destroy_html) do
       expect(response.code).to eq('303')
@@ -80,13 +80,13 @@ RSpec.describe 'Votes', type: :request do
         new_iri_path(linked_record.default_vote_event.iri_path(id: 'default'), confirm: true)
       end
       let(:show_by_parent_path) do
-        expand_uri_template(:vote_iri, parent_iri: subject.parent_model.iri_path, only_path: true, id: 'default')
+        expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path, only_path: true, id: 'default')
       end
       let(:index_path) do
-        collection_iri(subject.parent_model.iri_path(id: 'default'), :votes)
+        collection_iri(subject.parent.iri_path(id: 'default'), :votes)
       end
       let(:non_existing_index_path) do
-        collection_iri(subject.parent_model.iri_path(id: non_existing_id), :votes)
+        collection_iri(subject.parent.iri_path(id: non_existing_id), :votes)
       end
       let(:created_resource_path) { linked_record.iri_path }
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid html]

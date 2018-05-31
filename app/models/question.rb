@@ -54,7 +54,7 @@ class Question < Edge
   private
 
   def sister_node(show_trashed)
-    parent_edge
+    parent
       .questions
       .published
       .show_trashed(show_trashed)

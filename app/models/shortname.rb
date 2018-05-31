@@ -40,8 +40,7 @@ class Shortname < ApplicationRecord
     Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
   end
 
-  def parent_model(type = nil)
-    return owner.parent_model(type) if type.present? && owner_type == 'Edge' && type.to_s.classify != owner.owner_type
+  def parent
     owner
   end
 

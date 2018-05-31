@@ -18,7 +18,7 @@ class DecisionsController < EdgeableController
 
   def create_respond_failure_html(resource)
     render action: 'index',
-           locals: {decision: resource, decisionable: resource.parent_model}
+           locals: {decision: resource, decisionable: resource.parent}
   end
 
   def edit_respond_success_html(resource)
@@ -45,7 +45,7 @@ class DecisionsController < EdgeableController
 
   def message_success(resource, _)
     if resource.argu_publication.published_at.present?
-      parent_key = resource.parent_model.model_name.singular
+      parent_key = resource.parent.model_name.singular
       t("decisions.#{parent_key}.#{resource.state}")
     else
       t('type_save_success', type: t('decisions.type').capitalize)
@@ -67,7 +67,7 @@ class DecisionsController < EdgeableController
   end
 
   def redirect_model_success(resource)
-    resource.parent_model.iri(only_path: true).to_s
+    resource.parent.iri(only_path: true).to_s
   end
 
   def resource_by_id
@@ -84,7 +84,7 @@ class DecisionsController < EdgeableController
   end
 
   def show_respond_success_html(resource)
-    render action: 'index', locals: {decisionable: resource.parent_model}
+    render action: 'index', locals: {decisionable: resource.parent}
   end
 
   def show_respond_success_js(resource)
@@ -94,7 +94,7 @@ class DecisionsController < EdgeableController
   def update_respond_failure_html(resource)
     render action: 'index',
            locals: {
-             decisionable: resource.parent_model,
+             decisionable: resource.parent,
              decision: resource
            }
   end

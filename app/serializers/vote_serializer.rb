@@ -7,7 +7,7 @@ class VoteSerializer < EdgeSerializer
   end
 
   has_one :voteable, predicate: NS::SCHEMA[:isPartOf] do
-    object.parent_model.voteable
+    object.parent.voteable
   end
 
   attribute :option, predicate: NS::SCHEMA[:option]

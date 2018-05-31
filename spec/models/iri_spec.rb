@@ -93,7 +93,7 @@ RSpec.describe "Iri's", type: :model do
     context 'Decision' do
       subject { decision }
       let(:url) do
-        motion_decision_url(subject.parent_edge.fragment, subject.step, root_id: root_id, protocol: :http)
+        motion_decision_url(subject.parent.fragment, subject.step, root_id: root_id, protocol: :http)
       end
       it_behaves_like 'iri matches route'
     end

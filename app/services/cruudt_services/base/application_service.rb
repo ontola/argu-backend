@@ -103,12 +103,10 @@ class ApplicationService
   end
 
   def persist_parents
-    return unless resource.try(:parent_model)
-    while resource.parent_model.new_record?
-      non_persisted = resource.parent_model
-      until non_persisted.parent_model.persisted? || non_persisted.parent_model.nil?
-        non_persisted = non_persisted.parent_model
-      end
+    return unless resource.try(:parent)
+    while resource.parent.new_record?
+      non_persisted = resource.parent
+      non_persisted = non_persisted.parent until non_persisted.parent.persisted? || non_persisted.parent.nil?
       non_persisted.save!
     end
   end

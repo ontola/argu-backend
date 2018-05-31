@@ -48,12 +48,8 @@ class MediaObject < ApplicationRecord
 
   delegate :embed_url, to: :video_info, allow_nil: true
 
-  def parent_model(type = nil)
-    if type.nil? || type.to_s.classify == about_type
-      about
-    else
-      about.try(:parent_model, type)
-    end
+  def parent
+    about
   end
 
   def position_y

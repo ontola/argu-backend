@@ -62,7 +62,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     motion_content
 
     record = motion
-    argument = argument_comment.parent_model
+    argument = argument_comment.parent
     vote_count = motion.default_vote_event.children.where(owner_type: 'Vote').count
     assert vote_count.positive?,
            'no votes to test'
@@ -91,10 +91,10 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_equal Comment, argument.class
 
     # Test direct relations
-    assert_equal motion_blog_post.parent_model, Question.last
-    assert_equal motion_nested_comment.parent_model, Question.last
+    assert_equal motion_blog_post.parent, Question.last
+    assert_equal motion_nested_comment.parent, Question.last
     assert_equal motion_nested_comment.parent_comment, motion_comment
-    assert_equal argument_comment.parent_model, Question.last
+    assert_equal argument_comment.parent, Question.last
     assert_equal argument_comment.parent_comment, argument
     assert_equal argument_nested_comment.parent_comment, argument_comment
 
@@ -151,7 +151,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_equal Forum, record.parent.class
 
     # Test direct relations
-    assert_equal question_blog_post.reload.parent_model, Motion.last
+    assert_equal question_blog_post.reload.parent, Motion.last
 
     # Activity for Create, Publish and Convert
     assert_equal 3, record.activities.count

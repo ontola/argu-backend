@@ -27,11 +27,11 @@ class CommentPolicy < EdgePolicy
   private
 
   def assert_siblings!
-    assert! record.parent_model == record.parent_comment.parent_model, :siblings?
+    assert! record.parent == record.parent_comment.parent, :siblings?
   end
 
   def create_expired?
-    return super unless record.parent_model.is_a?(BlogPost)
+    return super unless record.parent.is_a?(BlogPost)
     has_grant?(:create)
   end
 end

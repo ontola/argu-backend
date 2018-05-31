@@ -51,7 +51,7 @@ class Grant < ApplicationRecord
   end
 
   def iri_opts
-    super.merge(root_id: parent_model.root.url)
+    super.merge(root_id: parent.root.url)
   end
 
   def page

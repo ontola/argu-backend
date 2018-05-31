@@ -34,7 +34,7 @@ class QuestionsControllerTest < ActionController::TestCase
   # Index for Forum
   ####################################
   test 'should get index questions of forum' do
-    get :index, params: {format: :json_api, root_id: holland.parent_model.url, forum_id: holland.url}
+    get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
     assert_response 200
 
     expect_relationship('partOf', 1)
@@ -46,7 +46,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   test 'should get index questions of forum page 1' do
-    get :index, params: {format: :json_api, root_id: holland.parent_model.url, forum_id: holland.url, page: 1}
+    get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, page: 1}
     assert_response 200
 
     expect_relationship('partOf', 1)

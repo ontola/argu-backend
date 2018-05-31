@@ -77,7 +77,7 @@ class Motion < Edge
   private
 
   def sister_node(show_trashed)
-    parent_edge
+    parent
       .motions
       .published
       .show_trashed(show_trashed)

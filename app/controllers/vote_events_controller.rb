@@ -19,6 +19,6 @@ class VoteEventsController < EdgeableController
   end
 
   def show_respond_success_html(resource)
-    redirect_to resource.parent_model
+    redirect_to resource.parent
   end
 end

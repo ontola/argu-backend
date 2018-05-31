@@ -37,7 +37,7 @@ class Comment < Edge
   end
 
   def subscribable
-    parent_comment || parent_model
+    parent_comment || parent
   end
 
   # helper method to check if a comment has children

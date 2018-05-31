@@ -13,7 +13,7 @@ RSpec.describe 'Grants', type: :request do
   let(:update_differences) { [["#{subject.class}.count", 0]] }
   let(:destroy_differences) { [["#{subject.class}.count", -1]] }
 
-  let(:index_path) { collection_iri_path(subject.parent_model.root, table_sym) }
+  let(:index_path) { collection_iri_path(subject.parent.root, table_sym) }
   let(:created_resource_path) { settings_iri_path(argu, tab: :groups) }
   let(:group) { create(:group, parent: argu) }
   let(:create_params) { {grant: attributes_for(:group).merge(group_id: create(:group, parent: argu).id)} }

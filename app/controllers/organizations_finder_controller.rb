@@ -16,7 +16,7 @@ class OrganizationsFinderController < AuthorizedController
   private
 
   def authenticated_resource!
-    @resource ||= resource_from_param if resource_from_param.respond_to?(:parent_model)
+    @resource ||= resource_from_param if resource_from_param.respond_to?(:parent)
   end
 
   def current_forum; end

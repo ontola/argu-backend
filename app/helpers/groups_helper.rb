@@ -12,7 +12,7 @@ module GroupsHelper
         user_context
           .grant_tree
           .granted_group_ids(
-            resource.parent_edge,
+            resource.parent,
             action: 'create',
             resource_type: resource_type.classify,
             parent_type: resource.class.name

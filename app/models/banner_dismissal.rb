@@ -31,7 +31,7 @@ class BannerDismissal
   end
 
   def edgeable_record
-    @edgeable_record ||= banner.parent_model
+    @edgeable_record ||= banner.parent
   end
 
   def persisted?

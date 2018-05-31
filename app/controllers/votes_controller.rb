@@ -19,19 +19,19 @@ class VotesController < EdgeableController
         if params[:vote].try(:[], :r).present?
           redirect_to redirect_param
         else
-          redirect_to create_service.resource.parent_model.voteable.iri(only_path: true).to_s,
+          redirect_to create_service.resource.parent.voteable.iri(only_path: true).to_s,
                       notice: t('votes.alerts.not_modified')
         end
       end
       format.json do
         render status: 304,
-               locals: {model: create_service.resource.parent_model.voteable, vote: create_service.resource}
+               locals: {model: create_service.resource.parent.voteable, vote: create_service.resource}
       end
       format.json_api { respond_with_304(create_service.resource, :json_api) }
       RDF_CONTENT_TYPES.each do |type|
         format.send(type) { respond_with_304(create_service.resource, type) }
       end
-      format.js { render locals: {model: create_service.resource.parent_model, vote: create_service.resource} }
+      format.js { render locals: {model: create_service.resource.parent, vote: create_service.resource} }
     end
   end
 
@@ -46,14 +46,14 @@ class VotesController < EdgeableController
   def respond_with_201(resource, format, _opts = {})
     case format
     when :json
-      render locals: {model: resource.parent_model, vote: resource}, status: :created, location: resource.iri_path
+      render locals: {model: resource.parent, vote: resource}, status: :created, location: resource.iri_path
     else
       super
     end
   end
 
   def create_respond_failure_html(resource)
-    redirect_to resource.parent_model.voteable.iri(only_path: true).to_s,
+    redirect_to resource.parent.voteable.iri(only_path: true).to_s,
                 notice: t('votes.alerts.failed')
   end
 
@@ -61,14 +61,14 @@ class VotesController < EdgeableController
     if params[:vote].try(:[], :r).present?
       redirect_to redirect_param
     else
-      redirect_to resource.parent_model.voteable.iri(only_path: true).to_s,
+      redirect_to resource.parent.voteable.iri(only_path: true).to_s,
                   notice: t('votes.alerts.success')
     end
   end
 
   def create_respond_success_js(resource)
-    return super(resource.parent_model.voteable) unless resource.parent_model.is_a?(Argument)
-    render locals: {model: resource.parent_model, vote: resource}
+    return super(resource.parent.voteable) unless resource.parent.is_a?(Argument)
+    render locals: {model: resource.parent, vote: resource}
   end
 
   def destroy_respond_success_js(resource)
@@ -168,7 +168,7 @@ class VotesController < EdgeableController
 
   def meta_create
     data = []
-    if authenticated_resource.parent_model.is_a?(VoteEvent)
+    if authenticated_resource.parent.is_a?(VoteEvent)
       parent_collection = index_collection.send(:child_with_options, filter: nil)
       meta_increment_collection_count(data, parent_collection.iri, parent_collection.total_count)
       parent_collection.views.each do |view|
@@ -192,11 +192,11 @@ class VotesController < EdgeableController
       authenticated_resource.iri,
       NS::LL[:remove]
     ]
-    if authenticated_resource.parent_model.is_a?(Argument)
+    if authenticated_resource.parent.is_a?(Argument)
       data.push [
         authenticated_resource.parent_iri,
         NS::ARGU[:votesProCount],
-        authenticated_resource.parent_edge.children_counts['votes_pro'].to_i - 1,
+        authenticated_resource.parent.children_counts['votes_pro'].to_i - 1,
         NS::LL[:replace]
       ]
     end

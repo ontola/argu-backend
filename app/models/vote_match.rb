@@ -28,7 +28,7 @@ class VoteMatch < ApplicationRecord
     collection.update_all(publisher_id: User::COMMUNITY_ID)
   end
 
-  def parent_model
+  def parent
     creator.profileable
   end
 end

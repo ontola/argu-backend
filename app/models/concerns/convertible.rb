@@ -36,7 +36,7 @@ module Convertible
     new_model.displaced_children.each do |child|
       if new_model.is_a?(Comment) && child.is_a?(Comment)
         child.parent_comment ||= new_model
-        child.parent = new_model.parent_edge
+        child.parent = new_model.parent
         child.save!(validate: false)
       elsif child.convert_to?(Comment) && Comment.parent_classes.include?(class_name.singularize.to_sym)
         child.convert_to(Comment, validate: false)

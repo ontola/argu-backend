@@ -20,7 +20,7 @@ class CreateDecision < PublishedCreateService
     when Activity
       obj.owner ||= resource.creator
       obj.key ||= "#{resource.state}.happened"
-      obj.recipient ||= resource.parent_model
+      obj.recipient ||= resource.parent
       obj.recipient_type ||= resource.parent.class.to_s
       obj.trackable_type ||= resource.class.to_s
     end

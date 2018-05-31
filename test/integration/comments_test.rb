@@ -43,9 +43,9 @@ class CommentsTest < ActionDispatch::IntegrationTest
   test 'creator should not delete wipe own comment twice affecting counter caches' do
     sign_in creator
 
-    assert_equal 1, subject.parent_model.children_count(:comments)
+    assert_equal 1, subject.parent.children_count(:comments)
 
-    assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
+    assert_differences([['subject.parent.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
       assert_difference 'Comment.trashed.count', 0 do
         delete subject
@@ -64,9 +64,9 @@ class CommentsTest < ActionDispatch::IntegrationTest
   test 'staff should not delete wipe other comment twice affecting counter caches' do
     sign_in staff
 
-    assert_equal 1, subject.parent_model.children_count(:comments)
+    assert_equal 1, subject.parent.children_count(:comments)
 
-    assert_differences([['subject.parent_model.reload.children_count(:comments)', -1],
+    assert_differences([['subject.parent.reload.children_count(:comments)', -1],
                         ['creator.profile.comments.count', -1]]) do
       assert_difference 'Comment.trashed.count', 1 do
         delete subject

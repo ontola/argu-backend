@@ -17,10 +17,10 @@ RSpec.feature 'Grant resets', type: :feature do
 
     expect(find_field('question[create_motion_group_ids][]', with: Group::PUBLIC_ID)).not_to be_checked
     expect(find_field('question[create_motion_group_ids][]', with: Group::STAFF_ID)).to be_checked
-    expect(find_field('question[create_motion_group_ids][]', with: spain.parent_model.groups.first.id)).to be_checked
+    expect(find_field('question[create_motion_group_ids][]', with: spain.parent.groups.first.id)).to be_checked
 
     find_field('question[create_motion_group_ids][]', with: '-1').click
-    find_field('question[create_motion_group_ids][]', with: spain.parent_model.groups.first.id).click
+    find_field('question[create_motion_group_ids][]', with: spain.parent.groups.first.id).click
 
     assert_differences([['GrantReset.count', 1], ['Grant.count', 2]]) do
       click_button 'Save'
@@ -35,7 +35,7 @@ RSpec.feature 'Grant resets', type: :feature do
     expect(find_field('question[create_motion_group_ids][]', with: Group::PUBLIC_ID)).to be_checked
     expect(find_field('question[create_motion_group_ids][]', with: Group::STAFF_ID)).to be_checked
     expect(
-      find_field('question[create_motion_group_ids][]', with: spain.parent_model.groups.first.id)
+      find_field('question[create_motion_group_ids][]', with: spain.parent.groups.first.id)
     ).not_to be_checked
 
     find_field('question[reset_create_motion]', with: 'false').click

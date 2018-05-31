@@ -47,7 +47,7 @@ class ParentableController < AuthorizedController
   end
 
   def resource_by_id_parent
-    resource_from_params&.parent_model
+    resource_from_params&.parent
   end
 
   def resource_new_params

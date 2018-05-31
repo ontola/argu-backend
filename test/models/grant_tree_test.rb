@@ -17,7 +17,7 @@ class GrantTreeTest < ActiveSupport::TestCase
       member: user.profile,
       parent: create(
         :grant,
-        group: create(:group, parent: freetown.parent_edge),
+        group: create(:group, parent: freetown.parent),
         edge: freetown,
         grant_set: GrantSet.administrator
       ).group

@@ -69,15 +69,15 @@ class VoteEvent < Edge
   end
 
   def vote_collection_iri_opts
-    if parent_model.is_a?(LinkedRecord)
-      parent_model.iri_opts.merge(vote_event_id: VoteEvent::DEFAULT_ID)
+    if parent.is_a?(LinkedRecord)
+      parent.iri_opts.merge(vote_event_id: VoteEvent::DEFAULT_ID)
     else
       iri_opts.slice(:vote_event_id, :motion_id, :linked_record_id)
     end
   end
 
   def voteable
-    parent_model
+    parent
   end
 
   def votes_pro_percentages

@@ -32,7 +32,7 @@ class VoteMatchesController < ServiceController
   end
 
   def redirect_model_success(resource)
-    return super if resource.persisted? || !resource.parent_model.is_a?(GuestUser)
+    return super if resource.persisted? || !resource.parent.is_a?(GuestUser)
     root_path
   end
 

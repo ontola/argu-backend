@@ -1,13 +1,13 @@
-=set_title "_Create forum for #{forum.parent_model.profile.name}_"
+=set_title "_Create forum for #{forum.parent.profile.name}_"
 .col-1
   .box
     section
-      h1= "_Create forum for #{forum.parent_model.profile.name}_"
+      h1= "_Create forum for #{forum.parent.profile.name}_"
       =semantic_form_for [:portal, forum], remote: false, authenticity_token: true do |f|
         =f.inputs do
           =f.input :name
           =f.input :url, as: :shortname
-          =f.input :page_id, as: :hidden, input_html: { value: forum.parent_model.url }
+          =f.input :page_id, as: :hidden, input_html: { value: forum.parent.url }
         - if forum.errors.present?
           p.inline-errors.full-width= forum.errors.full_messages[0]
         =f.actions do

@@ -27,13 +27,13 @@ class Vote < Edge
                 votes_con: {confirmed: true, for: Vote.fors[:con]},
                 votes_neutral: {confirmed: true, for: Vote.fors[:neutral]}
   delegate :create_confirmation_reminder_notification, to: :publisher
-  delegate :voteable, to: :parent_model
+  delegate :voteable, to: :parent
 
   validates :creator, :for, presence: true
 
   # #########methods###########
   def argument_ids
-    @argument_ids ||= upvoted_arguments.pluck(:id)
+    @argument_ids ||= upvoted_arguments.pluck(:id).uniq
   end
 
   def upvoted_arguments
@@ -42,7 +42,7 @@ class Vote < Edge
         Argument
           .untrashed
           .joins(:votes)
-          .where(edges: {creator_id: creator_id}, parent_id: parent_model&.parent_id)
+          .where(votes_edges: {creator_id: creator_id}, parent_id: parent&.parent_id)
       else
         Argument
           .untrashed
@@ -52,8 +52,8 @@ class Vote < Edge
                 Edge.where_owner(
                   'Vote',
                   creator: creator,
-                  parent: parent_model&.parent,
-                  parent_edge: {owner_type: 'Argument'}
+                  parent: parent&.parent,
+                  parent: {owner_type: 'Argument'}
                 ).pluck(:parent_id)
             }
           )
@@ -62,7 +62,7 @@ class Vote < Edge
 
   # Needed for ActivityListener#audit_data
   def display_name
-    "#{self.for} vote for #{parent_model.display_name}"
+    "#{self.for} vote for #{parent.display_name}"
   end
 
   def for?(item)
@@ -89,7 +89,7 @@ class Vote < Edge
     !opts[:skip_redis] && publisher.guest?
   end
 
-  delegate :is_trashed?, :trashed_at, to: :parent_model
+  delegate :is_trashed?, :trashed_at, to: :parent
 
   # #########Class methods###########
   def self.ordered(votes)

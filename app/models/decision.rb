@@ -34,7 +34,7 @@ class Decision < Edge
 
   def display_name
     return self[:display_name] if destroyed?
-    self[:display_name] = I18n.t("decisions.#{parent_model.model_name.i18n_key}.#{state}")
+    self[:display_name] = I18n.t("decisions.#{parent.model_name.i18n_key}.#{state}")
   end
 
   def iri_opts

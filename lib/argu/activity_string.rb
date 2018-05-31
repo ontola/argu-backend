@@ -55,7 +55,7 @@ module Argu
       end
     end
 
-    # @return [String, nil] Display name of activity.trackable.parent_edge, as link or bold text
+    # @return [String, nil] Display name of activity.trackable.parent, as link or bold text
     def parent_string
       recipient = @activity.recipient_type == 'VoteEvent' ? @activity.recipient&.voteable : @activity.recipient
       return @activity.audit_data.try(:[], 'recipient_name') if recipient.nil?

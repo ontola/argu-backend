@@ -50,10 +50,9 @@ module RedisResource
 
     def apply_filters(opts)
       clear_key if (opts.keys & %i[publisher creator parent parent_id owner_type root_id]).any?
-      self.user = opts.delete(:publisher) if opts[:publisher].present?
-      self.user = opts.delete(:creator)&.profileable if opts[:creator].present?
+      self.user = user_from_opts(opts)
       %i[parent parent_id owner_type].each do |attr|
-        send("#{attr}=", opts.delete(attr)) if opts[attr].present?
+        send("#{attr}=", opts.delete(attr)) if opts[attr].present? && !opts[attr].is_a?(Hash)
       end
       self.root_id = parent&.root_id || opts.delete(:root_id)
       clear_filtered_keys if opts.present?
@@ -114,6 +113,12 @@ module RedisResource
     # @return [Hash<String => RedisResource::Resource>] The found redis resources based on the current filters
     def redis_resources
       @redis_resources ||= filtered_keys.map(&:redis_resource)
+    end
+
+    def user_from_opts(opts)
+      return opts.delete(:publisher) if opts[:publisher].present?
+      return opts.delete(:creator)&.profileable if opts[:creator].present?
+      user
     end
 
     class << self
