@@ -39,13 +39,9 @@ class PagesController < EdgeableController
     authenticated_resource.assign_attributes(permit_params)
 
     if authenticated_resource.save
-      respond_to do |format|
-        create_respond_blocks_success(authenticated_resource, format)
-      end
+      create_handler_success(resource)
     else
-      respond_to do |format|
-        create_respond_blocks_failure(authenticated_resource, format)
-      end
+      create_handler_failure(resource)
     end
   end
 
@@ -73,12 +69,12 @@ class PagesController < EdgeableController
       end
   end
 
-  def tree_root_id
-    return super unless %w[create new index].include?(action_name)
-    GrantTree::ANY_ROOT
-  end
-
   private
+
+  def create_handler_success(resource)
+    user_context.tree_root_id = resource.uuid
+    super
+  end
 
   def create_respond_failure_html(resource)
     render 'new',
@@ -161,6 +157,11 @@ class PagesController < EdgeableController
     send_event category: 'short_url',
                action: 'follow',
                label: params[:id]
+  end
+
+  def policy(resource)
+    return super unless resource.is_a?(Page)
+    Pundit.policy(user_context, resource)
   end
 
   def respond_with_form(_resource)

@@ -83,6 +83,10 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def policy(resource)
+    user_context.tree_root_id.nil? && resource.is_a?(Edge) ? NoRootPolicy.new(user_context, resource) : super
+  end
+
   def remote_if_modern
     {remote: browser.modern?, turbolinks: false_unless_iframe}
   end

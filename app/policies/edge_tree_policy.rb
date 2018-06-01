@@ -10,7 +10,12 @@ class EdgeTreePolicy < RestrictivePolicy
     end
 
     def path_array
-      @path_array ||= grant_tree.present? ? grant_tree.path_array(user) : Edge.path_array(user.profile.granted_edges)
+      @path_array ||=
+        if grant_tree.present?
+          grant_tree.path_array(user)
+        else
+          Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id))
+        end
     end
 
     def staff?

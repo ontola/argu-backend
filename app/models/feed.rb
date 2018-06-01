@@ -46,12 +46,13 @@ class Feed
   end
 
   def edge_activities
-    activity_base.where('edges.path <@ ?', parent.path)
+    activity_base.where(edges: {root_id: parent.root_id}).where('edges.path <@ ?', parent.path)
   end
 
   def favorite_activities
+    raise 'Staff only' unless parent.is_staff?
     return Activity.none if parent.favorites.empty?
-    activity_base.where("edges.path ? #{Edge.path_array(Edge.where(uuid: parent.favorites.pluck(:edge_id)))}")
+    activity_base.where(edges: {root_id: parent.favorites.joins(:edge).pluck('edges.root_id')})
   end
 
   def profile_activities

@@ -45,11 +45,6 @@ class UsersController < AuthorizedController
     end
   end
 
-  def tree_root_id
-    return super unless action_name == 'show'
-    GrantTree::ANY_ROOT
-  end
-
   def wrong_email
     render locals: {email: params[:email], r: r_param}
   end

@@ -20,7 +20,7 @@ module SPI
         UserContext.new(
           doorkeeper_scopes: doorkeeper_scopes,
           profile: current_user.profile,
-          tree_root_id: GrantTree::ANY_ROOT,
+          tree_root_id: tree_root_id,
           user: current_user
         )
     end
@@ -33,5 +33,7 @@ module SPI
     end
 
     def set_guest_language; end
+
+    def tree_root_id; end
   end
 end

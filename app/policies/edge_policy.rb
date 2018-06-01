@@ -7,7 +7,7 @@ class EdgePolicy < RestrictivePolicy
     end
 
     def resolve
-      scope.where("edges.path ? #{path_array}").active
+      scope.where(root_id: grant_tree.tree_root_id).where("edges.path ? #{path_array}").active
     end
   end
   include ChildOperations

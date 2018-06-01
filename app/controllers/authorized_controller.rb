@@ -13,7 +13,7 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action
   before_action :verify_terms_accepted, only: %i[update create]
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_resource, :collect_banners, :user_context
+  helper_method :authenticated_resource, :collect_banners, :tree_root_id, :user_context
 
   private
 

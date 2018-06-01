@@ -11,9 +11,10 @@
   section.section--attachments
     =react_component_store 'Gallery', props: gallery_props(model)
   =yield
-  section.unpadded.section--opinion
-    - unless local_assigns[:hide_vote_buttons]
-      .motion-votes= react_component_store 'VoteContainer', props: motion_vote_props(current_profile, model, user_vote_for(model), buttonsType: 'bottom', r: request.env['PATH_INFO']), **prerender_options
-  - if model.children_count(:comments).positive? && model.top_comment.present?
-    section.unpadded.section--bottom
-      =render 'comments/small_comment', resource: model.top_comment, parent: model
+  - if tree_root_id
+    section.unpadded.section--opinion
+      - unless local_assigns[:hide_vote_buttons]
+        .motion-votes= react_component_store 'VoteContainer', props: motion_vote_props(current_profile, model, user_vote_for(model), buttonsType: 'bottom', r: request.env['PATH_INFO']), **prerender_options
+    - if model.children_count(:comments).positive? && model.top_comment.present?
+      section.unpadded.section--bottom
+        =render 'comments/small_comment', resource: model.top_comment, parent: model

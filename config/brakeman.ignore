@@ -7,7 +7,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/edgeable/properties.rb",
-      "line": 172,
+      "line": 168,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "q.joins(property_join_string((statement.keys.first or statement))).order(\"#{(statement.keys.first or statement)}_filter.value #{(statement.values.first or :asc).upcase}\")",
       "render_path": null,
@@ -23,40 +23,20 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "70920fcfa44370e8c9d2f6a375c0b99cc9fcb1d31c13cc1b585ece61cfa99596",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/feed.rb",
-      "line": 54,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "activity_base.where(\"edges.path ? #{Edge.path_array(Edge.where(:uuid => parent.favorites.pluck(:edge_id)))}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Feed",
-        "method": "favorite_activities"
-      },
-      "user_input": "Edge.path_array(Edge.where(:uuid => parent.favorites.pluck(:edge_id)))",
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "75bdd2cce2d6d48cd7479401c5eabd856ee9e7ba68906eb2a23fb0a0e16da9b5",
+      "fingerprint": "163a11d5eb3425133b2fa113b434b92eaffb66705cce10636e798833e58407be",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/menus/page_menu_list.rb",
-      "line": 12,
+      "line": 13,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "resource.forums.where(\"edges.path ? #{Edge.path_array(user.profile.granted_edges)}\")",
+      "code": "resource.forums.where(\"edges.path ? #{Edge.path_array(user.profile.granted_edges(:root_id => resource.uuid))}\")",
       "render_path": null,
       "location": {
         "type": "method",
         "class": "PageMenuList",
         "method": "navigations_menu"
       },
-      "user_input": "Edge.path_array(user.profile.granted_edges)",
+      "user_input": "Edge.path_array(user.profile.granted_edges(:root_id => resource.uuid))",
       "confidence": "Medium",
       "note": ""
     },
@@ -81,6 +61,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-05-25 10:21:03 +0200",
+  "updated": "2018-06-01 14:41:53 +0200",
   "brakeman_version": "4.1.1"
 }

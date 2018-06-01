@@ -5,12 +5,11 @@
 class UserContext
   include UUIDHelper
 
-  attr_reader :user, :actor, :doorkeeper_scopes, :tree_root_id
+  attr_accessor :tree_root_id
+  attr_reader :user, :actor, :doorkeeper_scopes
 
   def initialize(doorkeeper_scopes:, profile: nil, tree_root_id: nil, user: nil)
-    unless tree_root_id.nil? || tree_root_id == GrantTree::ANY_ROOT || uuid?(tree_root_id)
-      raise "tree_root_id should be an integer or the constant GrantTree::ANY_ROOT, but is #{tree_root_id}"
-    end
+    raise "tree_root_id should be a uuid but is #{tree_root_id}" unless tree_root_id.nil? || uuid?(tree_root_id)
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
@@ -38,7 +37,7 @@ class UserContext
   def grant_tree_for(edge)
     return unless edge&.persisted_edge&.present?
     raise 'No root is present' if tree_root_id.nil?
-    unless [GrantTree::ANY_ROOT, edge.persisted_edge.root_id].include?(tree_root_id)
+    unless edge.persisted_edge.root_id == tree_root_id
       raise "#{edge.owner_type} #{edge.owner_id} lies outside the tree of root #{tree_root_id}"
     end
     @grant_trees[edge.persisted_edge.root_id] ||= GrantTree.new(edge.persisted_edge.root)
@@ -47,9 +46,7 @@ class UserContext
   def grant_tree_for_id(edge_id)
     return unless edge_id&.present?
     raise 'No root is present' if tree_root_id.nil?
-    unless [GrantTree::ANY_ROOT, edge_id].include?(tree_root_id)
-      raise "Edge #{edge_id} lies outside the tree of root #{tree_root_id}"
-    end
+    raise "Edge #{edge_id} lies outside the tree of root #{tree_root_id}" unless edge_id == tree_root_id
     @grant_trees[edge_id] ||= GrantTree.new(edge_id)
   end
 

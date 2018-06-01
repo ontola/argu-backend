@@ -16,9 +16,7 @@ class FavoritesFeedController < FeedController
     current_user
   end
 
-  def tree_root_id
-    GrantTree::ANY_ROOT
-  end
+  def tree_root_id; end
 
   def parent_resource; end
 end

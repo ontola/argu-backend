@@ -73,7 +73,7 @@ class PolicyTest < ActiveSupport::TestCase
       .constantize
       .new(UserContext.new(doorkeeper_scopes: {},
                            profile: user.profile,
-                           tree_root_id: GrantTree::ANY_ROOT,
+                           tree_root_id: argu.uuid,
                            user: user), subject)
   end
 

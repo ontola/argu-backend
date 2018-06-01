@@ -31,7 +31,9 @@ module Edgeable
         end
         paths = relation.map(&:path)
         paths.each { |path| paths.delete_if { |p| p.match(/^#{path}\./) } }
-        "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}]"
+        root_id = relation.pluck(:root_id).uniq
+        raise 'Relation contains multiple roots' if root_id.count > 1
+        "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}] AND edges.root_id = '#{root_id.first}'"
       end
 
       def show_trashed(show_trashed = nil)

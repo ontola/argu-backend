@@ -15,7 +15,7 @@ class ActivityPolicy < RestrictivePolicy
     def filter_inaccessible_forums(scope)
       scope
         .joins(:trackable)
-        .where("edges.path ? #{Edge.path_array(user.profile.granted_edges)}")
+        .where("edges.path ? #{Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id))}")
     end
 
     # If trackable is a vote, its profile should have public votes
@@ -33,9 +33,11 @@ class ActivityPolicy < RestrictivePolicy
     def filter_unpublished_and_unmanaged(scope)
       scope
         .joins(:trackable)
-        .where('edges.is_published = true OR activities.owner_id IN (:profile_ids) OR edges.path ? '\
-               "#{Edge.path_array(user.profile.granted_edges(grant_set: 'moderator'))}",
-               profile_ids: user.managed_profile_ids)
+        .where(
+          'edges.is_published = true OR activities.owner_id IN (:profile_ids) OR edges.path ? '\
+          "#{Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id, grant_set: 'moderator'))}",
+          profile_ids: user.managed_profile_ids
+        )
     end
 
     def staff?

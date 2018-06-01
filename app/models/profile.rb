@@ -90,11 +90,13 @@ class Profile < ApplicationRecord
     granted_records('Forum')
   end
 
-  def granted_edges(owner_type: nil, grant_set: nil)
+  def granted_edges(root_id: nil, owner_type: nil, grant_set: nil)
     @granted_edges ||= {}
-    @granted_edges[owner_type] ||= {}
-    return @granted_edges[owner_type][grant_set] if @granted_edges[owner_type].key?(grant_set)
+    @granted_edges[root_id] ||= {}
+    @granted_edges[root_id][owner_type] ||= {}
+    return @granted_edges[root_id][owner_type][grant_set] if @granted_edges[root_id][owner_type].key?(grant_set)
     scope = granted_edges_scope
+    scope = scope.where(root_id: root_id) if root_id.present?
     scope = scope.where(owner_type: owner_type) if owner_type.present?
     if grant_set.present?
       scope =
@@ -102,12 +104,12 @@ class Profile < ApplicationRecord
           .joins('INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id')
           .where(grant_sets: {title: grant_set})
     end
-    @granted_edges[owner_type][grant_set] = scope
+    @granted_edges[root_id][owner_type][grant_set] = scope
   end
   alias granted_records granted_edges
 
-  def granted_record_ids(owner_type: nil, grant_set: nil)
-    granted_edges(owner_type: owner_type, grant_set: grant_set).pluck(:id)
+  def granted_record_ids(root_id: nil, owner_type: nil, grant_set: nil)
+    granted_edges(root_id: root_id, owner_type: owner_type, grant_set: grant_set).pluck(:id)
   end
 
   def self.includes_for_profileable

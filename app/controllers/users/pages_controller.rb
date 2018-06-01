@@ -25,10 +25,6 @@ module Users
           ).distinct
     end
 
-    def tree_root_id
-      GrantTree::ANY_ROOT
-    end
-
     def user
       return @user if @user.present?
       @user = User.find_via_shortname! params[:id]

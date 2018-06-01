@@ -46,8 +46,4 @@ class VoteMatchesController < ServiceController
       publisher: current_user
     )
   end
-
-  def tree_root_id
-    GrantTree::ANY_ROOT
-  end
 end

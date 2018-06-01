@@ -238,6 +238,14 @@ class PagesTest < ActionDispatch::IntegrationTest
   ####################################
   # As Administrator
   ####################################
+  test 'administrator should get index' do
+    sign_in page.publisher
+
+    get pages_user_path(page.publisher)
+    assert_response 200
+    assert_select '.profile-box', 1
+  end
+
   test 'administrator should get settings and all tabs' do
     create(:place, address: {country_code: 'nl'})
     sign_in page.publisher

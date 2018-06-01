@@ -42,8 +42,11 @@ class FollowsController < AuthorizedController
   end
 
   def new_resource_from_params
-    @resource ||= current_user.follows.find_or_initialize_by(
-      followable_id: Edge.where(owner_type: PERMITTED_CLASSES).find_by!(uuid: permit_params[:gid]).uuid,
+    return @resource if instance_variable_defined?(:@resource)
+    followable = Edge.where(owner_type: PERMITTED_CLASSES).find_by(uuid: permit_params[:gid])
+    return @resource = nil if followable.nil?
+    @resource = current_user.follows.find_or_initialize_by(
+      followable_id: followable.uuid,
       followable_type: 'Edge'
     )
     @resource.follow_type = action_name == 'create' ? permit_params[:follow_type] || :reactions : :never
@@ -63,6 +66,6 @@ class FollowsController < AuthorizedController
   end
 
   def tree_root_id
-    @tree_root_id ||= authenticated_resource.followable.root_id
+    @tree_root_id ||= authenticated_resource!&.followable&.root_id
   end
 end

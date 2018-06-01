@@ -94,7 +94,7 @@ class ExportWorker
   end
 
   def scope
-    @scope ||= UserContext.new(user: export.user, doorkeeper_scopes: %w[export])
+    @scope ||= UserContext.new(user: export.user, doorkeeper_scopes: %w[export], tree_root_id: export.edge.root_id)
   end
 
   def serializer_for(records, adapter)

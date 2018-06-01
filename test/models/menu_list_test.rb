@@ -5,13 +5,22 @@ require 'test_helper'
 class MenuListTest < ActiveSupport::TestCase
   define_freetown
   define_freetown('second', attributes: {public_grant: 'none'})
+  let(:other_page) { create(:page) }
 
   let(:user) { create(:user) }
   let(:user_context) do
     UserContext.new(
       doorkeeper_scopes: {},
       profile: user.profile,
-      tree_root_id: GrantTree::ANY_ROOT,
+      tree_root_id: argu.root_id,
+      user: user
+    )
+  end
+  let(:other_page_context) do
+    UserContext.new(
+      doorkeeper_scopes: {},
+      profile: user.profile,
+      tree_root_id: other_page.root_id,
       user: user
     )
   end
@@ -21,7 +30,7 @@ class MenuListTest < ActiveSupport::TestCase
     UserContext.new(
       doorkeeper_scopes: {},
       profile: administrator.profile,
-      tree_root_id: GrantTree::ANY_ROOT,
+      tree_root_id: argu.root_id,
       user: administrator
     )
   end
@@ -75,8 +84,8 @@ class MenuListTest < ActiveSupport::TestCase
 
   test 'Do not include custom menu items if other page' do
     assert_nil(
-      create(:page)
-        .menu(user_context, :navigations)
+      other_page
+        .menu(other_page_context, :navigations)
         .menus
         .call
         .compact

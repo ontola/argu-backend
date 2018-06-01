@@ -15,7 +15,7 @@ class ForumsController < EdgeableController
     edge_ids =
       current_user
         .profile
-        .granted_edges(grant_set: %w[moderator administrator])
+        .granted_edges(root_id: tree_root_id, grant_set: %w[moderator administrator])
         .pluck(:uuid)
         .uniq
     @forums = Forum.joins(:parent).where('edges.uuid IN (?) OR parents_edges.uuid IN (?)', edge_ids, edge_ids)
@@ -23,10 +23,11 @@ class ForumsController < EdgeableController
   end
 
   def discover
-    @forums = policy_scope(Forum)
+    @forums = Forum
                 .public_forums
                 .includes(:default_cover_photo, :default_profile_photo, :shortname)
                 .page show_params[:page]
+    skip_verify_policy_scoped(true)
     render
   end
 
@@ -40,11 +41,6 @@ class ForumsController < EdgeableController
   end
 
   private
-
-  def tree_root_id
-    return super unless %w[discover index].include?(action_name)
-    GrantTree::ANY_ROOT
-  end
 
   def authorize_action
     authorize authenticated_resource, :list?
