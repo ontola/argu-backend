@@ -6,7 +6,7 @@ class Publication < ApplicationRecord
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
 
-  before_save :reset
+  after_commit :reset
   before_destroy :cancel
   after_rollback :cancel
 
@@ -47,7 +47,7 @@ class Publication < ApplicationRecord
 
   # Cancel a previously scheduled job and schedule a new job if needed
   def reset
-    return if publishable.is_published?
+    return if destroyed? || publishable.is_published?
 
     cancel if job_id.present?
     schedule if published_at.present?
