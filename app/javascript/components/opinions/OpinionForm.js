@@ -67,7 +67,7 @@ const OpinionForm = React.createClass({
         argumentFields['pro'] = [];
         argumentFields['con'] = [];
         this.props.arguments.forEach(argument => {
-            argumentFields[argument.side].push({ label: argument.displayName, value: argument.id });
+            argumentFields[argument.side].push({ label: argument.displayName, value: argument.id, iri: argument.url });
         });
         let argumentSelection, addArgumentProButton, addArgumentConButton, confirmHeader;
         if (this.props.newArgumentButtons) {
@@ -79,7 +79,6 @@ const OpinionForm = React.createClass({
             <div className="opinion-form__arguments-selector">
                 <CheckboxGroup
                     childClass="pro-t"
-                    inputOpts={{ 'data-side': 'pro' }}
                     onChange={onArgumentSelectionChange}
                     options={argumentFields['pro']}
                     value={selectedArguments}/>
@@ -88,7 +87,6 @@ const OpinionForm = React.createClass({
             <div className="opinion-form__arguments-selector">
                 <CheckboxGroup
                     childClass="con-t"
-                    inputOpts={{ 'data-side': 'con' }}
                     onChange={onArgumentSelectionChange}
                     options={argumentFields['con']}
                     value={selectedArguments}/>

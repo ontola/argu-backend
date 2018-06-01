@@ -12,7 +12,6 @@ import Alert from "./Alert";
 export const CheckboxGroup = React.createClass({
     propTypes: {
         childClass: React.PropTypes.string,
-        inputOpts: React.PropTypes.object,
         onChange: React.PropTypes.func,
         options: React.PropTypes.array,
         value: React.PropTypes.array,
@@ -34,17 +33,17 @@ export const CheckboxGroup = React.createClass({
     },
 
     handleChange (event) {
-        const side = event.target.dataset.side;
+        const iri = event.target.dataset.iri;
         const argumentId = parseInt(event.target.value);
         this.addLoading(argumentId);
 
         if (this.valueChecked(argumentId)) {
             if (!event.target.checked) {
-                this.valueUncheck(side, argumentId);
+                this.valueUncheck(iri, argumentId);
             }
         } else {
             if (event.target.checked) {
-                this.valueCheck(side, argumentId);
+                this.valueCheck(iri, argumentId);
             }
         }
     },
@@ -62,8 +61,8 @@ export const CheckboxGroup = React.createClass({
         return (this.props.value.indexOf(value) >= 0);
     },
 
-    valueCheck (side, argumentId) {
-        fetch(`/${side}/${argumentId}/votes`, safeCredentials({
+    valueCheck (iri, argumentId) {
+        fetch(`${iri}/votes`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
                 vote: {
@@ -88,8 +87,8 @@ export const CheckboxGroup = React.createClass({
         });
     },
 
-    valueUncheck (side, argumentId) {
-        fetch(`/${side}/${argumentId}/vote`, safeCredentials({
+    valueUncheck (iri, argumentId) {
+        fetch(`${iri}/vote`, safeCredentials({
             method: 'DELETE',
             body: JSON.stringify({
                 vote: {
@@ -121,11 +120,11 @@ export const CheckboxGroup = React.createClass({
         }
         return <input
             checked={this.valueChecked(option.value)}
+            data-iri={option.iri}
             name={`checkbox[${option.value}]`}
             onChange={this.handleChange}
             type="checkbox"
-            value={option.value}
-            {...this.props.inputOpts}/>
+            value={option.value}/>
     },
 
     renderOption (option) {
