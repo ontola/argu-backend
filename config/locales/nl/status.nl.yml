@@ -27,3 +27,6 @@ nl:
       body: "Het item dat je probeert aan te maken kan niet worden verwerkt."
       reference_link_url: "https://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-responses"
       reference_link_body: "Klik hier om meer te leren over HTTP en status codes :)"
+    s_500:
+      header: "Fout in de server"
+      body: "Daar ging iets fout in de server. Foutgegevens zijn automatisch verzameld en naar ons verstuurd. We zullen het probleem zo snel mogelijk proberen op te lossen. Probeer het later nog eens."
