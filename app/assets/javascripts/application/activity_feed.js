@@ -7,6 +7,7 @@ let reachedEnd = false;
 const activityFeed = {
     init: () => {
         $(document).on('click', '.activity-feed .load-more', activityFeed.loadMore);
+        $(document).on('change', '#feed_page_id', activityFeed.changeIri);
 
         $(window).scroll(() => {
             if (!loading && !reachedEnd && ($(window).scrollTop() > $(document).height() - $(window).height() - 300)) {
@@ -17,6 +18,12 @@ const activityFeed = {
         $(document).on('turbolinks:load', activityFeed.triggerLoadMore);
 
         window.setTimeout(activityFeed.triggerLoadMore, 0);
+    },
+
+    changeIri: function () {
+        $('.activities .activity').remove();
+        $('.activities').attr('data-feed-url', this.value);
+        activityFeed.triggerLoadMore();
     },
 
     triggerLoadMore: function() {

@@ -53,6 +53,17 @@ class Profile < ApplicationRecord
     super(options.merge(except: %i[profileable profileable_type profileable_id], methods: %i[actor_type actor_id]))
   end
 
+  # Pages the profile has activities in
+  def active_pages(filter = nil)
+    page_ids = filter.nil? ? active_pages_ids : filter & active_pages_ids
+    Page.where(edges: {uuid: page_ids}).includes(:shortname)
+  end
+
+  def active_pages_ids
+    @active_page_ids ||=
+      activities.where('key IN (?)', Feed::RELEVANT_KEYS).joins(:trackable).pluck('edges.root_id').uniq
+  end
+
   def actor_type
     profileable_type
   end
@@ -112,6 +123,19 @@ class Profile < ApplicationRecord
     granted_edges(root_id: root_id, owner_type: owner_type, grant_set: grant_set).pluck(:id)
   end
 
+  def granted_root_ids(grant_set = :moderator)
+    @granted_root_ids ||= {}
+    return @granted_root_ids[grant_set] if @granted_root_ids.key?(grant_set)
+    scope = granted_edges_scope
+    if grant_set.present?
+      scope =
+        scope
+          .joins('INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id')
+          .where(grant_sets: {title: grant_set})
+    end
+    @granted_root_ids[grant_set] ||= scope.pluck(:root_id).uniq
+  end
+
   def self.includes_for_profileable
     {default_profile_photo: {}, profileable: :shortname}
   end
@@ -125,11 +149,6 @@ class Profile < ApplicationRecord
     profileable
   end
   deprecate :owner
-
-  def page_ids(grant_set = :moderator)
-    @page_ids ||= {}
-    @page_ids[role] ||= granted_record_ids(owner_type: 'Page', grant_set: grant_set)
-  end
 
   def url
     profileable.presence && profileable.url.presence

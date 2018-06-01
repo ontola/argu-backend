@@ -179,7 +179,6 @@ Rails.application.routes.draw do
             only: %i[show update] do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
-    get :feed, controller: 'users/feed', action: :index
 
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member
@@ -322,6 +321,9 @@ Rails.application.routes.draw do
       resources :vote_matches, only: %i[index show]
       get :settings, on: :member
       get :edit, to: 'profiles#edit', on: :member
+      resources :users, path: 'u', only: %i[] do
+        get :feed, controller: 'users/feed', action: :index
+      end
     end
 
     scope ':root_id' do

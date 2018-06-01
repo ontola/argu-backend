@@ -72,7 +72,8 @@ class FeedController < AuthorizedController
     @resource_by_id ||=
       Feed.new(
         parent: feed_resource,
-        relevant_only: relevant_only
+        relevant_only: relevant_only,
+        root_id: tree_root_id
       )
   end
 end

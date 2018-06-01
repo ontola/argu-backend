@@ -100,6 +100,15 @@ class FeedTest < ActionDispatch::IntegrationTest
     assert_activity_count(staff: true, complete: true)
   end
 
+  test 'user should get additional activities for user/feed js' do
+    sign_in user
+    subject
+
+    get page_user_feed_path(argu, publisher), params: {format: :js, from_time: 1.hour.from_now, complete: false}
+
+    assert_response 200
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -162,7 +171,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in staff
     subject
 
-    get user_feed_path(publisher),
+    get page_user_feed_path(argu, publisher),
         params: {from_time: 1.hour.from_now, complete: false},
         headers: argu_headers(accept: :js)
 

@@ -5,7 +5,8 @@ nl:
     type: "Profiel"
     about_me: "Over mij"
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
-    votes_are_private: "Je activiteit is alleen voor jou zichtbaar"
+    feed_is_private: "Je activiteit is alleen voor jou zichtbaar. "
+    feed_is_public: "Je activiteit is voor iedereen zichtbaar. "
     actor:
       create: "Plaatsen als"
       update: "Wijzigen als"

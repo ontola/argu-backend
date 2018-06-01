@@ -7,7 +7,7 @@ class Feed
   include ActiveModel::Model
   include Ldable
   include Iriable
-  attr_accessor :parent, :relevant_only
+  attr_accessor :parent, :relevant_only, :root_id
 
   with_collection :activities, pagination: true, part_of: :parent
 
@@ -41,6 +41,7 @@ class Feed
               .loggings
               .where('edges.owner_type != ?', 'Banner')
               .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
+    scope = scope.where(edges: {root_id: root_id}) if root_id
     return scope unless relevant_only
     scope.where('key IN (?)', RELEVANT_KEYS)
   end

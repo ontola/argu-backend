@@ -131,7 +131,16 @@ class UsersController < AuthorizedController
     if (/[a-zA-Z]/i =~ params[:id]).nil? && resource.url.present?
       redirect_to resource.iri(only_path: true).to_s, status: 307
     else
-      render 'show'
+      available_pages = authenticated_resource.profile.active_pages(current_profile.granted_root_ids(nil))
+      organization =
+        Page.find_via_shortname(params[:page_id]) ||
+        available_pages.first ||
+        Forum.first_public.parent
+      render 'show', locals: {
+        available_pages: available_pages,
+        organization_feed:
+          page_user_feed_url(organization.url, authenticated_resource, format: :js)
+      }
     end
   end
 

@@ -7,7 +7,15 @@
 =render partial: 'profiles/show', locals: {resource: authenticated_resource.profile}
 - if policy(authenticated_resource.profile).feed?
   .col-1
-    - if current_user == authenticated_resource && !authenticated_resource.profile.are_votes_public?
-      span.fa.fa-lock
-      span.icon-left= t('profiles.votes_are_private')
-    =render partial: 'activities/index', locals: {activities: [], complete_feed: false, feed_iri: user_feed_url(authenticated_resource, format: :js)}
+    p
+      = "Bekijk activiteit in "
+      =select_tag :feed_page_id, options_for_select(available_pages.map { |page| [page.display_name, page_user_feed_url(page.url, authenticated_resource, format: :js)] }, organization_feed)
+    - if current_user == authenticated_resource
+      -if !authenticated_resource.profile.are_votes_public?
+        span.fa.fa-lock
+        span.icon-left= t('profiles.feed_is_private')
+      -else
+        span.fa.fa-globe
+        span.icon-left= t('profiles.feed_is_public')
+      =link_to t('edit'), settings_user_path(tab: :privacy)
+    =render partial: 'activities/index', locals: {activities: [], complete_feed: false, feed_iri: organization_feed}

@@ -13,7 +13,7 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action
   before_action :verify_terms_accepted, only: %i[update create]
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_resource, :collect_banners, :tree_root_id, :user_context
+  helper_method :authenticated_resource, :collect_banners, :user_context, :tree_root_id, :tree_root
 
   private
 
@@ -131,8 +131,12 @@ class AuthorizedController < ApplicationController
     !%i[new create].include? params[:action]
   end
 
+  def tree_root
+    @tree_root ||= Edge.find_by!(uuid: tree_root_id) if tree_root_id.present?
+  end
+
   # The scope of the item used for authorization
-  # @return [number] The id of the root edge.
+  # @return [uuid] The uuid of the root edge.
   def tree_root_id; end
 
   def verify_terms_accepted
