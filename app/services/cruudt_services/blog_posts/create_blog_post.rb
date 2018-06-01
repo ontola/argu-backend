@@ -10,7 +10,7 @@ class CreateBlogPost < PublishedCreateService
 
   def build_happening
     resource.build_happening(
-      forum: resource.parent_model(:forum),
+      forum: resource.ancestor(:forum),
       created_at: @attributes[:happened_at],
       owner: resource.creator,
       key: 'blog_post.happened',

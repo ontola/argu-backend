@@ -71,7 +71,7 @@ module Argu
 
         def create_moderator(record, user = nil)
           user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.parent_model(:page)
+          page = record.is_a?(Page) ? record : record.ancestor(:page)
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,
@@ -93,7 +93,7 @@ module Argu
 
         def create_initiator(record, user = nil)
           user ||= create(:user)
-          page = record.is_a?(Page) ? record : record.parent_model(:page)
+          page = record.is_a?(Page) ? record : record.ancestor(:page)
           group = create(:group, parent: page)
           create(:group_membership,
                  parent: group,

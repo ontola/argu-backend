@@ -12,7 +12,7 @@ module UsersHelper
     resource = resource_from_iri(user.r)
     return if resource.nil? || resource.is_a?(Page) || !resource.is_fertile?
     return resource if resource.is_a?(Forum)
-    resource.parent_model(:forum)
+    resource.ancestor(:forum)
   end
 
   def identity_token(identity)

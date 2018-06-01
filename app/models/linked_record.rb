@@ -38,7 +38,7 @@ class LinkedRecord < Edge
   end
 
   def iri_opts
-    @iri_opts ||= {root_id: root.url, forum_id: parent_model(:forum).url, linked_record_id: deku_id}
+    @iri_opts ||= {root_id: root.url, forum_id: ancestor(:forum).url, linked_record_id: deku_id}
   end
 
   def self.new_for_forum(organization_shortname, forum_shortname, id)

@@ -8,7 +8,7 @@ class PublishedCreateService < EdgeableCreateService
     return if resource.store_in_redis?
     resource.publisher.follow(resource, :reactions, :news)
 
-    return if resource.parent_model(:forum).nil? || resource.publisher.has_favorite?(resource.parent_model(:forum))
-    resource.publisher.favorites.create(edge: resource.parent_model(:forum))
+    return if resource.ancestor(:forum).nil? || resource.publisher.has_favorite?(resource.ancestor(:forum))
+    resource.publisher.favorites.create(edge: resource.ancestor(:forum))
   end
 end

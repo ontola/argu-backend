@@ -34,8 +34,8 @@ module LanguageHelper
 
   def language_from_r
     resource = resource_from_iri(params[:r]) if params[:r].present?
-    return if resource.nil? || !resource.is_a?(Edge) || resource.parent_model(:forum).nil?
-    language = resource.parent_model(:forum).language
+    return if resource.nil? || !resource.is_a?(Edge) || resource.ancestor(:forum).nil?
+    language = resource.ancestor(:forum).language
     I18n.available_locales.include?(language) ? language : :en
   end
 

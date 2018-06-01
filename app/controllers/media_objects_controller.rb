@@ -11,7 +11,7 @@ class MediaObjectsController < ParentableController
   end
 
   def current_forum
-    @current_forum ||= parent_resource.try(:parent_model, :forum)
+    @current_forum ||= parent_resource.try(:ancestor, :forum)
   end
 
   def index_collection_association

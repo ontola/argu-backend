@@ -12,7 +12,7 @@ class FavoritesController < ParentableController
   end
 
   def parent_resource
-    resource_from_iri(params[:iri])&.parent_model(:forum) || super
+    resource_from_iri(params[:iri])&.ancestor(:forum) || super
   end
 
   def resource_by_id

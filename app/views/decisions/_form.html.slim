@@ -6,7 +6,7 @@ section
   - if decision.forwarded? && decision.state_was == 'pending'
     .forward
       =f.label t('decisions.forward_to')
-      =react_component 'SearchActor', thing: decision.parent_model(:page).url, groups: group_select_options(decision.parent_model(:forum))
+      =react_component 'SearchActor', thing: decision.ancestor(:page).url, groups: group_select_options(decision.ancestor(:forum))
       - if decision.errors.present?
         p.inline-errors.full-width=decision.errors.full_messages[0]
       =f.input :forwarded_group_id, as: :hidden

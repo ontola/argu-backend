@@ -50,7 +50,7 @@ module Argu
           forum = create_forum({url: name}.merge(attributes))
           create(:grant,
                  edge: forum,
-                 group: create(:group, parent: forum.parent_model(:page)),
+                 group: create(:group, parent: forum.ancestor(:page)),
                  grant_set: GrantSet.initiator)
           forum
         end
@@ -61,7 +61,7 @@ module Argu
           forum = create_forum(:populated_forum, {url: name}.merge(attributes))
           create(:grant,
                  edge: forum,
-                 group: create(:group, parent: forum.parent_model(:page)),
+                 group: create(:group, parent: forum.ancestor(:page)),
                  grant_set: GrantSet.initiator)
           forum
         end
@@ -77,7 +77,7 @@ module Argu
           )
           create(:grant,
                  edge: forum,
-                 group: create(:group, parent: forum.parent_model(:page)),
+                 group: create(:group, parent: forum.ancestor(:page)),
                  grant_set: GrantSet.initiator)
           forum
         end

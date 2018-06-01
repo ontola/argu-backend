@@ -37,7 +37,7 @@ class ConversionsController < ServiceController
   end
 
   def current_forum
-    @current_forum ||= resource_by_id&.parent_model(:forum)
+    @current_forum ||= resource_by_id&.ancestor(:forum)
   end
 
   def new_respond_success_js(resource)

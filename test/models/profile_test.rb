@@ -6,7 +6,7 @@ class ProfileTest < ActiveSupport::TestCase
   define_freetown
   let(:capetown) { create_forum(name: 'capetown') }
   subject { create_initiator(freetown).profile }
-  let(:moderator) { create_moderator(capetown.parent_model(:page), subject.profileable) }
+  let(:moderator) { create_moderator(capetown.ancestor(:page), subject.profileable) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

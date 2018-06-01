@@ -22,7 +22,7 @@ class ParentableController < AuthorizedController
   end
 
   def current_forum
-    @current_forum ||= parent_resource&.parent_model(:forum)
+    @current_forum ||= parent_resource&.ancestor(:forum)
   end
 
   def linked_record_parent(opts = params)

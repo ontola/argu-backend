@@ -21,14 +21,10 @@ module Parentable
       self.class.parent_classes.detect { |t| break send(t) if send(t) }
     end
 
-    delegate :parent_model, to: :parent
+    delegate :ancestor, to: :parent
 
     def parent_iri(opts = {})
       parent&.iri(opts)
-    end
-
-    def parent_edge(type)
-      parent_model(type)
     end
   end
 

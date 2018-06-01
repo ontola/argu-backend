@@ -19,11 +19,11 @@ module Moveable
   private
 
   def update_activities_on_move(new_parent)
-    return unless is_loggable? && new_parent.parent_model(:forum) != parent_model(:forum)
+    return unless is_loggable? && new_parent.ancestor(:forum) != ancestor(:forum)
     activities
       .lock(true)
       .update_all(
-        forum_id: new_parent.parent_model(:forum).uuid,
+        forum_id: new_parent.ancestor(:forum).uuid,
         recipient_id: new_parent.id,
         recipient_type: new_parent.owner_type
       )

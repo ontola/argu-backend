@@ -3,7 +3,7 @@
 class EdgeSerializer < RecordSerializer
   has_one :parent, key: :partOf, predicate: NS::SCHEMA[:isPartOf]
   has_one :organization, predicate: NS::SCHEMA[:organization] do
-    object.parent_model(:page)
+    object.ancestor(:page)
   end
   has_one :creator, predicate: NS::SCHEMA[:creator] do
     object.creator.profileable

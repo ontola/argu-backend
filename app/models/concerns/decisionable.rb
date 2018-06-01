@@ -16,7 +16,7 @@ module Decisionable
       if last_published_decision.present?
         last_published_decision.forwarded_user
       else
-        parent_model(:forum).default_decision_user
+        ancestor(:forum).default_decision_user
       end
     end
 
@@ -24,7 +24,7 @@ module Decisionable
       if last_published_decision.present?
         last_published_decision.forwarded_group
       else
-        parent_model(:forum).default_decision_group
+        ancestor(:forum).default_decision_group
       end
     end
 

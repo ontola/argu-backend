@@ -48,7 +48,7 @@
               - else
                 =<"(#{t('grants.all_forums')})"
     - if policy(resource).create_child?(:grants)
-      =link_to new_iri_path(resource.parent_model(:page), :grants, query: {edge_id: resource.uuid}), class: 'btn btn--mini btn--light margin-bottom' do
+      =link_to new_iri_path(resource.ancestor(:page), :grants, query: {edge_id: resource.uuid}), class: 'btn btn--mini btn--light margin-bottom' do
         span.fa.fa-plus
         span.icon-left= t('grants.new')
     =f.input :public_grant, as: :react_select, collection: options_for_public_grant, clearable: false, wrapper_html: {class: 'form-col-2'}

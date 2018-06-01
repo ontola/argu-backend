@@ -99,7 +99,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   test 'group_member should post approve' do
     sign_in user
     create(:group_membership,
-           group_id: create(:group, parent: motion.parent_model(:page)).id,
+           group_id: create(:group, parent: motion.ancestor(:page)).id,
            member: user.profile)
     create(:decision,
            parent: motion,

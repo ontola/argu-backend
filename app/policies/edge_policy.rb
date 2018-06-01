@@ -186,7 +186,7 @@ class EdgePolicy < RestrictivePolicy
   end
 
   def parent_policy(type = nil)
-    Pundit.policy(context, record.parent_model(type))
+    Pundit.policy(context, record.ancestor(type))
   end
 
   def show_unpublished?

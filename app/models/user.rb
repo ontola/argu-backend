@@ -121,6 +121,8 @@ class User < ApplicationRecord
     true
   end
 
+  def ancestor(_type); end
+
   def self.anonymous
     User.find(User::ANONYMOUS_ID)
   end

@@ -22,7 +22,7 @@ class ShortnameInput
 
   def base_url
     return Rails.application.config.origin if options[:root] == false || object.is_a?(Page)
-    return object.parent_model(:page).iri if object.is_a?(Shortname)
-    object.parent_model(:page).iri
+    return object.ancestor(:page).iri if object.is_a?(Shortname)
+    object.ancestor(:page).iri
   end
 end

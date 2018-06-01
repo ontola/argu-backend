@@ -198,10 +198,10 @@ class Edge < ApplicationRecord
     association(:parent).reader(*args)
   end
 
-  def parent_model(type)
+  def ancestor(type)
     return self if owner_type == type.to_s.classify
-    return parent.parent_model(type) if !root_object? && association_cached?(:parent)
-    return persisted_edge&.parent_model(type) unless persisted?
+    return parent.ancestor(type) if !root_object? && association_cached?(:parent)
+    return persisted_edge&.ancestor(type) unless persisted?
     parent_by_type(type)
   end
 

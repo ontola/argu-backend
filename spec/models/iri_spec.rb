@@ -70,9 +70,9 @@ RSpec.describe "Iri's", type: :model do
       let(:url) do
         url_for(
           [
-            subject.parent_model(:forum),
+            subject.ancestor(:forum),
             subject,
-            root_id: subject.parent_model(:page).url,
+            root_id: subject.ancestor(:page).url,
             protocol: :http
           ]
         )

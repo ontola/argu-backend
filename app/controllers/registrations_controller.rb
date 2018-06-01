@@ -121,7 +121,7 @@ class RegistrationsController < Devise::RegistrationsController
         user.id,
         confirmationToken: user.confirmation_token,
         motions: guest_votes.map do |guest_vote|
-          m = guest_vote.resource.parent_model(:motion)
+          m = guest_vote.resource.ancestor(:motion)
           {display_name: m.display_name, url: m.iri, option: guest_vote.resource.for}
         end
       )

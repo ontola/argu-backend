@@ -83,7 +83,7 @@ module Argu
           profile = create(:profile)
           @resource.attachments.create(
             creator: profile,
-            forum: @resource.parent_model(:forum),
+            forum: @resource.ancestor(:forum),
             publisher: profile.profileable,
             content: Rack::Test::UploadedFile.new(
               Rails.root.join('test', 'fixtures', 'profile_photo.png')

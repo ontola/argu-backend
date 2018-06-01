@@ -46,9 +46,16 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   test 'guest should get show organization of user profile_photo' do
-    get :show, params: {iri: media_object_path(Profile.last.default_profile_photo), format: :nt}
+    get :show, params: {iri: media_object_path(User.last.profile.default_profile_photo), format: :nt}
 
     assert_response 404
+  end
+
+  test 'guest should get show organization of page profile_photo' do
+    get :show, params: {iri: media_object_path(Page.last.profile.default_profile_photo), format: :nt}
+
+    assert_response 200
+    assert_equal argu, assigns(:organization)
   end
 
   test 'guest should get show organization of forum profile_photo' do
@@ -166,7 +173,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     get :show, params: {iri: helsinki_motion.iri, format: :nt}
 
     assert_response 200
-    assert_equal helsinki.parent_model(:page), assigns(:organization)
+    assert_equal helsinki.ancestor(:page), assigns(:organization)
   end
 
   ####################################
