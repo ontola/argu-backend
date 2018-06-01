@@ -6,6 +6,8 @@ module Argumentable
   included do
     with_collection :pro_arguments, pagination: true
     with_collection :con_arguments, pagination: true
+    accepts_nested_attributes_for :pro_arguments
+    accepts_nested_attributes_for :con_arguments
 
     def invert_arguments
       false
