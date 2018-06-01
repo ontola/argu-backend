@@ -14,7 +14,7 @@ class Page < Edge
 
   attr_accessor :confirmation_string, :tab, :active
 
-  delegate :description, to: :profile
+  delegate :description, :default_profile_photo, to: :profile
 
   validates :url, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :last_accepted, presence: true
