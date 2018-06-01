@@ -8,10 +8,6 @@ class DirectMessagesController < ParentableController
 
   private
 
-  def authenticated_edge
-    @resource_edge ||= parent_resource
-  end
-
   def create_respond_success_html(resource)
     unless current_user.email_addresses.confirmed.where(email: resource.email).exists?
       raise Argu::Errors::Forbidden.new(record: resource, query: 'email?')

@@ -5,7 +5,7 @@ class StatisticsController < ParentableController
   helper_method :additional_stats
 
   def show
-    return unless stale?(last_modified: authenticated_edge.self_and_descendants.maximum(:updated_at))
+    return unless stale?(last_modified: authenticated_resource.self_and_descendants.maximum(:updated_at))
     counts = descendants.group(:owner_type).count
     @statistics = {
       users: descendants.select(:publisher_id).distinct.count,
@@ -65,7 +65,7 @@ class StatisticsController < ParentableController
   end
 
   def descendants
-    authenticated_edge.descendants.published.untrashed
+    authenticated_resource.descendants.published.untrashed
   end
 
   def resource_by_id

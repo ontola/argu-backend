@@ -13,7 +13,7 @@ class ExportsController < ServiceController
       when 'new', 'create', 'index'
         parent_resource&.self_and_ancestors
       else
-        authenticated_edge&.self_and_ancestors
+        authenticated_resource&.self_and_ancestors
       end
   end
 

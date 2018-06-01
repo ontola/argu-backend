@@ -12,10 +12,6 @@ class ParentableController < AuthorizedController
 
   private
 
-  def authenticated_edge
-    @resource_edge ||= authenticated_resource!
-  end
-
   def authorize_action
     return super unless action_name == 'index'
     authorize parent_resource!, :index_children?, controller_name

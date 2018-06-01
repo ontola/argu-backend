@@ -13,7 +13,7 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action
   before_action :verify_terms_accepted, only: %i[update create]
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_edge, :authenticated_resource, :collect_banners, :user_context
+  helper_method :authenticated_resource, :collect_banners, :user_context
 
   private
 
@@ -25,8 +25,6 @@ class AuthorizedController < ApplicationController
   def authorize_action
     authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
   end
-
-  def authenticated_edge; end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found
   # @see {authenticated_resource!}

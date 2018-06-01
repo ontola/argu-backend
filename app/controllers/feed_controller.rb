@@ -19,15 +19,11 @@ class FeedController < AuthorizedController
   end
 
   def authorize_action
-    authorize authenticated_resource.parent, :feed?
-  end
-
-  def authenticated_edge
-    @resource_edge ||= authenticated_resource!&.parent
+    authorize feed_resource, :feed?
   end
 
   def tree_root_id
-    @tree_root_id ||= authenticated_edge&.root_id
+    @tree_root_id ||= feed_resource&.root_id
   end
 
   def collect_banners; end

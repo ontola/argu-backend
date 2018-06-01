@@ -13,10 +13,6 @@ class ShortnamesController < ParentableController
 
   private
 
-  def authenticated_edge
-    authenticated_resource
-  end
-
   def destination_param
     return @destination_param if instance_variable_defined?(:@destination_param)
     return if params[:shortname].try(:[], :destination).blank?
