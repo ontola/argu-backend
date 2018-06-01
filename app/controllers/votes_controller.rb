@@ -94,6 +94,10 @@ class VotesController < EdgeableController
     [:partOf, voteable: :actions]
   end
 
+  def index_respond_success_html
+    redirect_to parent_resource!.iri_path
+  end
+
   def resource_by_id
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||=
