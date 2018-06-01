@@ -18,11 +18,6 @@ RSpec.describe 'VoteMatches', type: :request do
 
   let(:create_path) { vote_matches_path }
 
-  context 'with user parent' do
-    subject { create(:vote_match) }
-    it_behaves_like 'requests', skip: %i[trash untrash unauthorized new edit delete]
-  end
-
   context 'with page parent' do
     subject { create(:vote_match, creator: create(:page).profile) }
     it_behaves_like 'requests',

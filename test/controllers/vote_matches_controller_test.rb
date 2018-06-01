@@ -47,18 +47,6 @@ class VoteMatchesControllerTest < ActionController::TestCase
     expect_included(VoteMatch.all.map(&:iri))
   end
 
-  test 'should get index vote_matches for user' do
-    get :index, params: {user_id: user.id, format: :json_api}
-    assert_response 200
-
-    expect_relationship('partOf', 1)
-
-    expect_relationship('viewSequence', 1)
-    expect_included(argu_url("/u/#{user.url}/vote_matches", page: 1, type: 'paginated'))
-    expect_included(VoteMatch.where(creator: user.profile).map(&:iri))
-    expect_not_included(VoteMatch.where('creator_id != ?', user.profile.id).map(&:iri))
-  end
-
   test 'should get index vote_matches for page' do
     get :index, params: {page_id: page.url, format: :json_api}
     assert_response 200
