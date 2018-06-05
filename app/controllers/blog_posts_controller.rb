@@ -11,6 +11,10 @@ class BlogPostsController < EdgeableController
 
   private
 
+  def index_respond_success_html
+    render locals: {blog_posts: parent_resource!.blog_posts.active.page(params[:page]).reorder(created_at: :desc)}
+  end
+
   def show_respond_success_html(resource)
     render locals: {blog_post: resource, comment: Comment.new}
   end

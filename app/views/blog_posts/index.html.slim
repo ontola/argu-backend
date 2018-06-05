@@ -1,0 +1,8 @@
+div
+  .col-1
+    =render_columns({'' => {collection: blog_posts}},
+                    buttons_url: new_iri_path(parent_resource, :blog_posts),
+                    collection_model: BlogPost,
+                    buttons_options: {class: 'btn--g4'},
+                    page_param: :page,
+                    show_new_buttons: policy(parent_resource).create_child?(:blog_posts).present?)

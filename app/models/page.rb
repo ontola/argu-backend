@@ -7,6 +7,7 @@ class Page < Edge
   include Menuable
   include Discussable
   include Photoable
+  include BlogPostable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   accepts_nested_attributes_for :profile

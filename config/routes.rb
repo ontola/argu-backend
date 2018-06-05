@@ -310,7 +310,7 @@ Rails.application.routes.draw do
     resources :pages,
               path: '',
               only: %i[show update],
-              concerns: %i[feedable destroyable menuable statable exportable] do
+              concerns: %i[feedable destroyable menuable statable exportable blog_postable] do
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
       resources :group_memberships, only: :index do

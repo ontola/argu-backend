@@ -9,3 +9,4 @@ en:
     tooltips:
       info: "An update is a message in which the progress of a project is shared."
       count: "Amount of updates"
+    header: "Blog"
