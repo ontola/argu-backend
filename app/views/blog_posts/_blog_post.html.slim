@@ -1,6 +1,6 @@
 .box.box-grid.blog_post[id=blog_post.identifier class="#{'trashed' if blog_post.is_trashed?}" data-created-at=blog_post.created_at data-updated-at=blog_post.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
-  =link_to blog_post.parent.iri.to_s do
-    section
+  section
+    =link_to blog_post.parent.iri.to_s do
       h3[itemprop="headline"]= blog_post.display_name
   =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
   -unless blog_post.is_published?
