@@ -1,10 +1,6 @@
 section.section--details
   .detailsBar
-    .detail[data-title=t('blog_posts.tooltips.info')]
-      .detail__icon.detail__icon--type
-        span[class="fa fa-#{blog_post_icon}"]
-      .detail__text
-        span= t('blog_posts.type')
+    =render partial: 'profiles/detail_profile', locals: {resource: blog_post}
     .detail
       .detail__icon
         .fa.fa-clock-o
