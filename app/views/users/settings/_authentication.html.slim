@@ -3,7 +3,7 @@
     =sf.input :shortname, required: false
   - if authenticated_resource.url.present?
     li.form-helper
-      span="#{t('profiles.edit.shortname_not_allowed')} #{link_to t('users.settings.menu.profile'), settings_url_for(authenticated_resource, :profile)}.".html_safe
+      span="#{t('profiles.edit.shortname_not_allowed')} #{link_to t('users.settings.menu.profile'), settings_iri_path(nil, tab: :profile)}.".html_safe
   - if login_providers_left(authenticated_resource).present?
     label= t('users_oauth_new')
     .form-item

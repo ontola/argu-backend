@@ -38,8 +38,4 @@ module SettingsHelper
       end
     end
   end
-
-  def settings_url_for(resource, tab)
-    settings_iri_path(resource, tab: tab)
-  end
 end
