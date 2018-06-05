@@ -5,6 +5,7 @@ class BlogPost < Edge
   concern Commentable
   include ActivePublishable
   include HasLinks
+  include Photoable
 
   counter_cache true
   parentable :motion, :question, :page

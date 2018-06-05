@@ -1,3 +1,4 @@
+=render partial: 'application/cover_behind', locals: {media_object: blog_post.default_cover_photo}
 .col-1
   - if blog_post.parent.is_a?(Page)
     .context.context--vertical[itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList"]

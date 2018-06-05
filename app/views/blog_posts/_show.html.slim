@@ -1,4 +1,7 @@
 .box.box--extra-margin[class=status_classes_for(model)]
+  - if model.default_cover_photo.present?
+    =link_to model, 'aria-hidden': true, tabindex: '-1'
+      =render partial: 'application/box_image', locals: {media_object: model.default_cover_photo}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Event"]
     =link_to model
       h3.blog-post-t[itemprop="headline"]= model.display_name

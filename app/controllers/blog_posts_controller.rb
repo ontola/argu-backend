@@ -15,6 +15,12 @@ class BlogPostsController < EdgeableController
     render locals: {blog_posts: parent_resource!.blog_posts.active.page(params[:page]).reorder(created_at: :desc)}
   end
 
+  def permit_params
+    pm = super
+    merge_photo_params(pm, BlogPost)
+    pm
+  end
+
   def show_respond_success_html(resource)
     render locals: {blog_post: resource, comment: Comment.new}
   end

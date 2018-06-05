@@ -66,7 +66,7 @@ class EdgePolicy < RestrictivePolicy
     attributes.concat([:url, shortname_attributes: %i[shortname id]]) if shortname?
     attributes.append(argu_publication_attributes: argu_publication_attributes) if record.is_publishable?
     attributes.append(placements_attributes: %i[id lat lon placement_type zoom_level _destroy])
-    append_default_photo_params(attributes) if %w[Forum Question Motion].include?(record.owner_type)
+    append_default_photo_params(attributes) if %w[Forum Question Motion BlogPost].include?(record.owner_type)
     append_attachment_params(attributes) if %w[Question Motion BlogPost].include?(record.owner_type)
     attributes
   end
