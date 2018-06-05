@@ -2,11 +2,7 @@
 
 module TimelineHelper
   def current_happening(happenings)
-    if params[:happening_id].present?
-      happenings.detect { |happening| happening.trackable.fragment.to_i == params[:happening_id].to_i }
-    else
-      happenings.last
-    end
+    happenings.last
   end
 
   def generate_timeline_point_class(happening, active)

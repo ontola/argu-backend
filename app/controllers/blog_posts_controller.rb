@@ -11,11 +11,6 @@ class BlogPostsController < EdgeableController
 
   private
 
-  def redirect_model_success(resource)
-    return super unless action_name == 'create' && resource.persisted?
-    url_for_blog_post(resource, only_path: true)
-  end
-
   def show_respond_success_html(resource)
     render locals: {blog_post: resource, comment: Comment.new}
   end

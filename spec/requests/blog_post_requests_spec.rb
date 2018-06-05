@@ -9,10 +9,6 @@ RSpec.describe 'BlogPosts', type: :request do
     super - %i[html]
   end
 
-  let(:created_resource_path) do
-    subject.parent.iri_path(happening_id: subject.class.last.fragment)
-  end
-
   context 'with motion parent' do
     subject { motion_blog_post }
     it_behaves_like 'requests'

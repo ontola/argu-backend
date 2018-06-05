@@ -44,12 +44,7 @@ class Notification < ApplicationRecord
   alias display_name title
 
   def url_object
-    href =
-      if activity.present?
-        activity.trackable.owner_type == 'BlogPost' ? url_for_blog_post(activity.trackable) : activity.trackable.iri
-      else
-        url
-      end
+    href = activity.present? ? activity.trackable.iri : url
     RDF::URI(href)
   end
 

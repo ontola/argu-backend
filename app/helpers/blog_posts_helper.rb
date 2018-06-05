@@ -23,8 +23,4 @@ module BlogPostsHelper
       l(resource.argu_publication.published_at, format: :dateline)
     end
   end
-
-  def url_for_blog_post(blog_post, only_path: false)
-    blog_post.parent.iri(happening_id: blog_post.fragment, only_path: only_path).to_s
-  end
 end
