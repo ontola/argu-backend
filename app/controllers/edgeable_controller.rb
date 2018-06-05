@@ -40,7 +40,6 @@ class EdgeableController < ServiceController
         .custom_placements
         .new(params.permit(:lat, :lon, :zoom_level))
     end
-    resource.build_happening(created_at: Time.current) if resource.is_happenable?
     resource
   end
 

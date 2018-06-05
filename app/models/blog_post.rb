@@ -3,7 +3,6 @@
 class BlogPost < Edge
   include Edgeable::Content
   concern Commentable
-  include Happenable
   include ActivePublishable
   include HasLinks
 
@@ -13,7 +12,4 @@ class BlogPost < Edge
   validates :content, presence: true, length: {minimum: 2}
   validates :title, presence: true, length: {minimum: 2, maximum: 110}
   validates :creator, presence: true
-
-  attr_accessor :happened_at
-  delegate :happened_at, to: :happening, allow_nil: true
 end

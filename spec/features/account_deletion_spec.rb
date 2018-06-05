@@ -27,8 +27,7 @@ RSpec.feature 'Account deletion', type: :feature do
     create(:blog_post,
            creator: user.profile,
            parent: question,
-           publisher: user,
-           happening_attributes: {happened_at: Time.current})
+           publisher: user)
   end
   let(:comment) do
     create(:comment,

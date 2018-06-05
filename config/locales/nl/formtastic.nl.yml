@@ -25,7 +25,6 @@ nl:
       dismissable: "Sluitbaar"
       ends_at: "Eindigen op"
       expires_at: "Verloopt op"
-      happened_at: "Vond plaats op"
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
       f_delete: "Verwijderen"

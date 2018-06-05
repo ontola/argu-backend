@@ -7,16 +7,6 @@ class LDParamsTest < ActionDispatch::IntegrationTest
   let(:motion) { create(:motion, parent: freetown) }
   let(:administrator) { create_administrator(freetown) }
 
-  test 'post create blog_post with nested fields as nquads' do
-    motion
-    create_with_ld_params(
-      collection_iri_path(motion, :blog_posts),
-      BlogPost,
-      [['BlogPost.count', 1], ['Activity.count', 2]],
-      'blog_post.n3'
-    )
-  end
-
   test 'post create motion with cover photo as nquads' do
     create_with_ld_params(
       collection_iri_path(freetown, :motions),

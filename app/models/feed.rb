@@ -38,7 +38,6 @@ class Feed
     scope = Activity
               .includes(:owner)
               .joins(:trackable, :recipient)
-              .loggings
               .where('edges.owner_type != ?', 'Banner')
               .where('edges.owner_type != ? OR recipients_activities.owner_type != ?', 'Vote', 'Argument')
     scope = scope.where(edges: {root_id: root_id}) if root_id

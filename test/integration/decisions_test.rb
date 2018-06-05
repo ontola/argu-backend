@@ -21,9 +21,6 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   let!(:forward) do
     create(:decision,
            parent: motion,
-           happening_attributes: {
-             happened_at: Time.current
-           },
            publisher: creator,
            forwarded_user: actor,
            forwarded_group: actor_membership.group,
@@ -32,9 +29,6 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   let(:approval) do
     create(:decision,
            parent: motion,
-           happening_attributes: {
-             happened_at: Time.current
-           },
            publisher: creator,
            state: Decision.states[:approved])
   end
@@ -57,9 +51,6 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   test 'actor should not post approve when draft is present' do
     create(:decision,
            parent: motion,
-           happening_attributes: {
-             happened_at: Time.current
-           },
            argu_publication_attributes: {
              draft: true
            },
@@ -103,9 +94,6 @@ class DecisionsTest < ActionDispatch::IntegrationTest
            member: user.profile)
     create(:decision,
            parent: motion,
-           happening_attributes: {
-             happened_at: Time.current
-           },
            publisher: creator,
            forwarded_user: nil,
            forwarded_group: Group.last,
@@ -187,13 +175,12 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   end
 
   def general_decide(response = 302, changed = false, state = 'approved')
-    assert_differences([['Activity.count', changed ? 2 : 0]]) do
+    assert_differences([['Activity.count', changed ? 1 : 0]]) do
       post  collection_iri_path(motion, :decisions),
             params: {
               decision: attributes_for(:decision,
                                        state: state,
-                                       content: 'Content',
-                                       happening_attributes: {happened_at: Time.current})
+                                       content: 'Content')
             }
     end
     reset_publication(Publication.last)
@@ -210,7 +197,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   end
 
   def general_forward(response = 302, changed = false, group_id = nil, user_id = nil)
-    assert_differences([['Activity.count', changed ? 2 : 0],
+    assert_differences([['Activity.count', changed ? 1 : 0],
                         ['Decision.count', changed ? 1 : 0]]) do
       post collection_iri_path(motion, :decisions),
            params: {
@@ -218,7 +205,6 @@ class DecisionsTest < ActionDispatch::IntegrationTest
                                       decisionable: motion,
                                       state: 'forwarded',
                                       content: 'Content',
-                                      happening_attributes: {happened_at: Time.current},
                                       forwarded_user_id: user_id,
                                       forwarded_group_id: group_id)
            }
@@ -237,11 +223,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
           params: {
             decision: attributes_for(:decision,
                                      decisionable: motion,
-                                     content: 'Changed content',
-                                     happening_attributes: {
-                                       id: decision.happening.id,
-                                       happened_at: Time.current
-                                     })
+                                     content: 'Changed content')
           }
     end
     motion.reload

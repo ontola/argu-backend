@@ -16,7 +16,6 @@ nl:
     forward_to: "Groep of gebruiker"
     forward_group_missing: "Groep ontbreekt"
     forward_failed: "Doorsturen naar user %{user_id} in groep %{group_id} mislukt"
-    happened_at: "Besluit genomen op"
     motion:
       approved: "Idee is aangenomen"
       rejected: "Idee is verworpen"

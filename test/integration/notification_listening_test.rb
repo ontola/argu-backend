@@ -16,7 +16,6 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            :with_news_follower,
-           happening_attributes: {happened_at: Time.current},
            parent: motion)
   end
   let(:staff) { create(:user, :staff) }
@@ -155,7 +154,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     assert_differences([['BlogPost.count', 1]]) do
       post collection_iri_path(question, :blog_posts),
            params: {
-             blog_post: attributes_for(:blog_post, happening_attributes: {happened_at: Time.current})
+             blog_post: attributes_for(:blog_post)
            }
     end
 
@@ -179,8 +178,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
                                       state: 'forwarded',
                                       forwarded_user_id: user.id,
                                       forwarded_group_id: group.id,
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
+                                      content: 'Content')
            }
     end
     # Notification for creator and follower of Motion and forwarded_to_user
@@ -198,8 +196,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
                                       state: 'forwarded',
                                       forwarded_user_id: staff.id,
                                       forwarded_group_id: group.id,
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
+                                      content: 'Content')
            }
     end
     # Notification for creator and follower of Motion
@@ -210,8 +207,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
            params: {
              decision: attributes_for(:decision,
                                       state: 'approved',
-                                      content: 'Content',
-                                      happening_attributes: {happened_at: Time.current})
+                                      content: 'Content')
            }
     end
     # Notification for creator, follower and news_follower of Motion

@@ -16,8 +16,7 @@ RSpec.describe 'Decisions', type: :request do
       decision: attributes_for(
         :decision,
         state: 'approved',
-        content: 'Content',
-        happening_attributes: {happened_at: Time.current}
+        content: 'Content'
       )
     }
   end

@@ -24,7 +24,6 @@ class Activity < PublicActivity::Activity
              foreign_key: :recipient_edge_id
   belongs_to :forum, primary_key: :uuid
 
-  alias_attribute :happened_at, :created_at
   attr_accessor :silent
 
   validates :key, presence: true
@@ -33,16 +32,6 @@ class Activity < PublicActivity::Activity
 
   alias edgeable_record trackable
 
-  # Represents the physical event of the trackable.
-  # @note A happening is an Activity with '*.happened' as key
-  # @!attribute r created_at Indicates when the physical event took place.
-  scope :happenings, -> { where("key ~ '*.happened'") }
-  # Represents an activity of a {User} on Argu.
-  # @!attribute r created_at Indicates when the {User}'s action was processed.
-  # @example
-  #     User created a {Motion}: key == 'motion.create'
-  #     User updated an {Argument}: key == 'argument.update'
-  scope :loggings, -> { where("key ~ '*.!happened'") }
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
 
   before_create :touch_edges

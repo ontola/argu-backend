@@ -13,24 +13,20 @@ class CounterCacheTest < ActiveSupport::TestCase
   let!(:other_motion) { create(:motion, parent: freetown) }
   let!(:blog_post) do
     create(:blog_post,
-           happening_attributes: {happened_at: Time.current},
            parent: motion)
   end
   let!(:unpublished_blog_post) do
     create(:blog_post,
-           happening_attributes: {happened_at: Time.current},
            argu_publication_attributes: {draft: true},
            parent: motion)
   end
   let!(:trashed_blog_post) do
     create(:blog_post,
-           happening_attributes: {happened_at: Time.current},
            trashed_at: Time.current,
            parent: motion)
   end
   let!(:trashed_unpublished_blog_post) do
     create(:blog_post,
-           happening_attributes: {happened_at: Time.current},
            trashed_at: Time.current,
            argu_publication_attributes: {draft: true},
            parent: motion)

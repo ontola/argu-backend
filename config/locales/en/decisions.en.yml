@@ -16,7 +16,6 @@ en:
     forward_to: "Group or user"
     forward_group_missing: "Group is missing"
     forward_failed: "Can't create forward for user %{user_id} in group %{group_id}"
-    happened_at: "Decision taken at"
     motion:
       approved: "Idea is approved"
       rejected: "Idea is rejected"

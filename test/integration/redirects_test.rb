@@ -10,15 +10,14 @@ class RedirectssTest < ActionDispatch::IntegrationTest
   let(:con_argument) { create(:argument, owner_id: 2, parent: motion, pro: false) }
   let(:comment) { create(:comment, owner_id: 1, parent: motion) }
   let(:blog_post) do
-    create(:blog_post, owner_id: 1, parent: motion, happening_attributes: {happened_at: Time.current})
+    create(:blog_post, owner_id: 1, parent: motion)
   end
   let(:decision) do
     create(
       :decision,
       owner_id: 1,
       parent: motion,
-      state: 'approved',
-      happening_attributes: {happened_at: Time.current}
+      state: 'approved'
     )
   end
 

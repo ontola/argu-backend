@@ -96,7 +96,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
           }
         }
       },
-      differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity.loggings', 2]]
+      differences: [['Motion', 1], ['Placement', 1], ['Place', 1], ['Activity', 2]]
     )
 
     assert_equal 1, Motion.last.placements.first.lat
@@ -111,7 +111,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_failed'),
       results: {should: false, response: 200},
       parent: :question_requires_location,
-      differences: [['Motion', 0], ['Activity.loggings', 0]]
+      differences: [['Motion', 0], ['Activity', 0]]
     )
   end
 
@@ -133,7 +133,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_failed'),
       results: {should: false, response: 200},
       parent: :question_requires_location,
-      differences: [['Motion', 0], ['Activity.loggings', 0]]
+      differences: [['Motion', 0], ['Activity', 0]]
     )
   end
 
@@ -155,7 +155,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       analytics: stats_opt('motions', 'create_success'),
       results: {should: true, response: 302},
       parent: :question_requires_location,
-      differences: [['Motion', 1], ['Activity.loggings', 2]]
+      differences: [['Motion', 1], ['Activity', 2]]
     )
   end
 
@@ -174,7 +174,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
           }
         }
       },
-      differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity.loggings', 1]]
+      differences: [['Motion', 0], ['Placement', 0], ['Place', 1], ['Activity', 1]]
     )
 
     motion_with_placement.reload
@@ -196,7 +196,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
           }
         }
       },
-      differences: [['Motion', 0], ['Placement', -1], ['Place', 0], ['Activity.loggings', 1]]
+      differences: [['Motion', 0], ['Placement', -1], ['Place', 0], ['Activity', 1]]
     )
   end
 

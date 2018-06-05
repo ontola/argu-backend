@@ -31,7 +31,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     question_nested_comment
   end
   let(:question_blog_post) do
-    create(:blog_post, parent: question, happening_attributes: {happened_at: Time.current})
+    create(:blog_post, parent: question)
   end
   let(:question_comment) { create(:comment, parent: question) }
   let(:question_nested_comment) { create(:comment, parent: question, in_reply_to_id: question_comment.uuid) }
@@ -43,7 +43,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     cover_photo
   end
   let(:motion_blog_post) do
-    create(:blog_post, parent: motion, happening_attributes: {happened_at: Time.current})
+    create(:blog_post, parent: motion)
   end
   let(:motion_comment) { create(:comment, parent: motion) }
   let(:motion_nested_comment) { create(:comment, parent: motion, in_reply_to_id: motion_comment.uuid) }

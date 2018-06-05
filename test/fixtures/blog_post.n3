@@ -1,4 +1,0 @@
-<http://purl.org/link-lib/targetResource> <http://schema.org/name> "Wat een update" .
-<http://purl.org/link-lib/targetResource> <http://schema.org/text> "Zowaar een heuze blogpost" .
-<http://purl.org/link-lib/targetResource> <https://argu.co/ns/core#happening> _:n106 .
-_:n106 <https://argu.co/ns/core#happenedAt> "vandaag natuurlijk" .

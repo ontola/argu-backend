@@ -2,7 +2,6 @@
 
 class Decision < Edge
   include Loggable
-  include Happenable
   include HasLinks
   include ActivePublishable
   include Menuable
@@ -23,7 +22,6 @@ class Decision < Edge
           inverse_of: :trackable,
           primary_key: :uuid
 
-  validates :happening, presence: true, unless: :pending?
   validate :correctly_forwarded, if: :forwarded?
   parentable :motion
 

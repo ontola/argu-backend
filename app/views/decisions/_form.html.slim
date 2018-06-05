@@ -13,11 +13,6 @@ section
       =f.input :forwarded_user_id, as: :hidden
   =f.label t('decisions.explanation')
   =f.input :content, as: :text, label: false, input_html: { class: 'input--full', rows: 5 }
-  =f.semantic_fields_for :happening do |hf|
-    - if decision.approved? || decision.rejected?
-      =hf.input :happened_at, as: :datetime_picker, label: t('decisions.happened_at')
-    - else
-      =hf.input :happened_at, as: :hidden
 section.section--footer.footer-flex
   .footer-flex-element.footer-creator
     =render partial: 'profiles/creator', locals: {resource: decision}

@@ -27,7 +27,7 @@ class QuestionsTest < ActionDispatch::IntegrationTest
           }
         }
       },
-      differences: [['Question', 1], ['Placement', 1], ['Place', 1], ['Activity.loggings', 2]]
+      differences: [['Question', 1], ['Placement', 1], ['Place', 1], ['Activity', 2]]
     )
   end
 

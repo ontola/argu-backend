@@ -20,7 +20,7 @@ module Argu
                          parent: nil,
                          attributes: {},
                          differences: [[model_class.to_s, 1],
-                                       ['Activity.loggings', model_class.is_publishable? ? 2 : 1]],
+                                       ['Activity', model_class.is_publishable? ? 2 : 1]],
                          **opts)
         parent = send(parent) if parent.is_a?(Symbol)
         attributes = default_create_attributes(parent: parent).merge(attributes)
@@ -58,7 +58,7 @@ module Argu
         assert_response results[:response]
       end
 
-      def general_update(results: {}, record: subject, attributes: {}, differences: [['Activity.loggings', 1]])
+      def general_update(results: {}, record: subject, attributes: {}, differences: [['Activity', 1]])
         record = record.is_a?(Symbol) ? send(record) : record.reload
 
         attributes = attributes_for(model_sym).merge(attributes)
@@ -101,7 +101,7 @@ module Argu
 
       def general_destroy(results: {}, analytics: nil, record: subject,
                           differences: [[model_class.to_s, -1],
-                                        ['Activity.loggings', 1]])
+                                        ['Activity', 1]])
         record = send(record) if record.is_a?(Symbol)
 
         assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do

@@ -191,8 +191,7 @@ FactorySeeder.create(
   parent: motion,
   state: 'forwarded',
   forwarded_user: actor_membership.member.profileable,
-  forwarded_group: actor_membership.group,
-  happening_attributes: {happened_at: Time.current}
+  forwarded_group: actor_membership.group
 )
 vote_event = motion.default_vote_event
 FactorySeeder.create(:vote, parent: vote_event)
@@ -206,9 +205,9 @@ argument = FactorySeeder.create(:argument, parent: motion)
 FactorySeeder.create(:vote, parent: argument)
 comment = FactorySeeder.create(:comment, parent: argument)
 FactorySeeder.create(:comment, parent: argument, in_reply_to_id: comment.uuid)
-FactorySeeder.create(:blog_post, parent: motion, happening_attributes: {happened_at: Time.current})
+FactorySeeder.create(:blog_post, parent: motion)
 blog_post =
-  FactorySeeder.create(:blog_post, parent: question, happening_attributes: {happened_at: Time.current})
+  FactorySeeder.create(:blog_post, parent: question)
 FactorySeeder.create(:comment, parent: blog_post)
 FactorySeeder.create(:comment, parent: motion)
 

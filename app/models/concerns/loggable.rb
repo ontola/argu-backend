@@ -6,7 +6,6 @@ module Loggable
 
   included do
     has_many :activities,
-             -> { where("key ~ '*.!happened'") },
              foreign_key: :trackable_edge_id,
              primary_key: :uuid,
              dependent: :nullify

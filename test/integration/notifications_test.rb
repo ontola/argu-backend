@@ -16,7 +16,6 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     create(:blog_post,
            :with_follower,
            :with_news_follower,
-           happening_attributes: {happened_at: Time.current},
            parent: motion)
   end
 

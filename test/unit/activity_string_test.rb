@@ -11,21 +11,18 @@ class ActivityStringTest < ActiveSupport::TestCase
   let!(:approved_decision) do
     create(:decision,
            parent: motion,
-           state: 'approved',
-           happening_attributes: {happened_at: Time.current})
+           state: 'approved')
   end
   let!(:rejected_decision) do
     create(:decision,
            parent: motion,
-           state: 'rejected',
-           happening_attributes: {happened_at: Time.current})
+           state: 'rejected')
   end
   let(:group) { create(:group, parent: argu) }
   let!(:forwarded_decision) do
     create(:decision,
            parent: motion,
            state: 'forwarded',
-           happening_attributes: {happened_at: Time.current},
            forwarded_user_id: create(:group_membership, parent: group).member.profileable.id,
            forwarded_group_id: group.id)
   end

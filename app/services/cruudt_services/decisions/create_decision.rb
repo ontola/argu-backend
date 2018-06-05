@@ -15,16 +15,7 @@ class CreateDecision < PublishedCreateService
     notify
   end
 
-  def object_attributes=(obj)
-    case obj
-    when Activity
-      obj.owner ||= resource.creator
-      obj.key ||= "#{resource.state}.happened"
-      obj.recipient ||= resource.parent
-      obj.recipient_type ||= resource.parent.class.to_s
-      obj.trackable_type ||= resource.class.to_s
-    end
-  end
+  def object_attributes=(obj); end
 
   def prepare_argu_publication_attributes
     super

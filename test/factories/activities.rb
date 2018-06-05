@@ -37,9 +37,5 @@ FactoryGirl.define do
       recipient { passed_in?(:recipient) ? recipient : create(:motion, parent: tenant) }
       parameters { passed_in?(:parameters) ? parameters : {for: trackable.for} }
     end
-
-    factory :happening do
-      key :happened
-    end
   end
 end

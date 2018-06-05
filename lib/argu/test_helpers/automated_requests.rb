@@ -27,13 +27,13 @@ module Argu
           let(:request_format) { :html }
 
           # Differences
-          let(:create_differences) { [["#{subject.class}.count", 1], ['Activity.loggings.count', 1]] }
+          let(:create_differences) { [["#{subject.class}.count", 1], ['Activity.count', 1]] }
           let(:create_guest_differences) { [] }
-          let(:update_differences) { [["#{subject.class}.count", 0], ['Activity.loggings.count', 1]] }
-          let(:destroy_differences) { [["#{subject.class}.count", -1], ['Activity.loggings.count', 1]] }
-          let(:trash_differences) { [["#{subject.class}.trashed.count", 1], ['Activity.loggings.count', 1]] }
-          let(:untrash_differences) { [["#{subject.class}.trashed.count", -1], ['Activity.loggings.count', 1]] }
-          let(:no_differences) { [["#{subject.class}.count", 0], ['Activity.loggings.count', 0]] }
+          let(:update_differences) { [["#{subject.class}.count", 0], ['Activity.count', 1]] }
+          let(:destroy_differences) { [["#{subject.class}.count", -1], ['Activity.count', 1]] }
+          let(:trash_differences) { [["#{subject.class}.trashed.count", 1], ['Activity.count', 1]] }
+          let(:untrash_differences) { [["#{subject.class}.trashed.count", -1], ['Activity.count', 1]] }
+          let(:no_differences) { [["#{subject.class}.count", 0], ['Activity.count', 0]] }
 
           # Expectations
           let(:expect_success) { expect(response.code).to eq('200') }

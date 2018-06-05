@@ -19,8 +19,7 @@ class DecisionPolicyTest < PolicyTest
            publisher: creator,
            state: 'forwarded',
            forwarded_user_id: forwarded_user.id,
-           forwarded_group_id: group.id,
-           happening_attributes: {happened_at: Time.current})
+           forwarded_group_id: group.id)
   end
   let(:approve_forwarded_subject) do
     Decision.approved.new(parent: motion, publisher: creator)

@@ -9,8 +9,8 @@ module BlogPostsHelper
   end
 
   def blog_post_dateline(blog_post)
-    if blog_post.happening.present?
-      l(blog_post.happening.created_at, format: :dateline)
+    if blog_post.published_at
+      l(blog_post.published_at, format: :dateline)
     else
       t('blog_posts.unpublished')
     end
@@ -25,6 +25,6 @@ module BlogPostsHelper
   end
 
   def url_for_blog_post(blog_post, only_path: false)
-    blog_post.parent.iri(happening_id: blog_post.happening.id, only_path: only_path).to_s
+    blog_post.parent.iri(happening_id: blog_post.fragment, only_path: only_path).to_s
   end
 end
