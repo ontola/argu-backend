@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   concern :blog_postable do
     resources :blog_posts,
               only: %i[index new create],
-              path: 'posts'
+              path: 'blog'
   end
   concern :commentable do
     resources :comments,
