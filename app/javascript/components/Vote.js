@@ -65,7 +65,7 @@ export const VoteButton = React.createClass({
                 rel="nofollow">
                     <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
-                        {I18n.t(`votes.type.${side}`)}
+                        {I18n.t(`votes.instance_type.${side}`)}
                     </span>
                     {voteCountElem}
                     {this.props.hasExplanation && current &&

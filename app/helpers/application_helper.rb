@@ -33,7 +33,7 @@ module ApplicationHelper
       else
         %i[direct draft]
       end
-    types.map { |type| {label: t("publications.type.#{type}"), value: type} }
+    types.map { |type| {label: t("publications.instance_type.#{type}"), value: type} }
   end
 
   def asset_present?(name)

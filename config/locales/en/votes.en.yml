@@ -17,7 +17,8 @@ en:
     alerts:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
-    type:
+    type: "Vote"
+    instance_type:
       pro: "Agree"
       :yes: "Agree"
       neutral: "Other"

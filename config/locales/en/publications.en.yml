@@ -2,7 +2,8 @@
 
 en:
   publications:
-    type:
+    type: "Publication"
+    instance_type:
       direct: 'Publish directly'
       draft: 'Save draft'
       schedule: 'Schedule'

@@ -2,7 +2,8 @@
 
 nl:
   publications:
-    type:
+    type: "Publicatie"
+    instance_type:
       direct: 'Publiceer direct'
       draft: 'Bewaar concept'
       schedule: 'Inplannen'

@@ -17,7 +17,8 @@ nl:
     alerts:
       success: "Bedankt voor je stem!"
       failed: "Er is iets fout gegaan, probeer het opnieuw."
-    type:
+    type: "Stem"
+    instance_type:
       pro: "Voor"
       :yes: "Voor"
       neutral: "Anders"
