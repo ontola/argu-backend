@@ -305,8 +305,8 @@ nl:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Discussieer mee.'
     blog_post:
-      name: 'Bekijk argumenten, discussieer mee en stem!'
-      description: 'Alle standpunten van %{title} in één overzicht.'
+      name: ''
+      description: ''
     forum:
       name: 'Forum voor inhoudelijke discussie'
       description: 'Argu is een discussieplatform waar argumenten centraal staan.'

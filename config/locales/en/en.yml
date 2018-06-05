@@ -303,8 +303,8 @@ en:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Join the debate.'
     blog_post:
-      name: 'Views & opinions'
-      description: 'All views & opinions of %{title}.'
+      name: ''
+      description: ''
     forum:
       name: 'Forum for substantive discussions.'
       description: ''
