@@ -210,7 +210,7 @@ Rails.application.routes.draw do
       resources edgeable, only: :index
     end
   end
-  resources :groups, path: 'g', only: %i[] do
+  resources :groups, path: 'g', only: %i[show] do
     resources :group_memberships, path: 'memberships', only: %i[create]
   end
 

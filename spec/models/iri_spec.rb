@@ -127,6 +127,7 @@ RSpec.describe "Iri's", type: :model do
     end
 
     context 'Group' do
+      let(:url) { destroy_group_url(argu.url, subject, protocol: :http) }
       subject { Group.first }
       let(:id) { subject.id }
       it_behaves_like 'iri matches route'
