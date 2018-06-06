@@ -18,6 +18,10 @@ class UserContext
     @grant_trees = {}
   end
 
+  def afe_request?
+    doorkeeper_scopes.include?('afe')
+  end
+
   def cache_key(ident, key, val)
     return val if ident.nil?
     @lookup_map[ident] ||= {}
