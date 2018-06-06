@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Forum < Edge
+  enhance Updateable
   include Discussable
   concern Questionable
   concern Motionable

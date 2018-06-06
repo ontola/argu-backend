@@ -2,10 +2,8 @@
 
 class AuthorizedController < ApplicationController
   include Common::Setup
-  include Common::Update
   include Common::New
   include Common::Index
-  include Common::Edit
   include Common::Destroy
   include Common::Create
   include Common::Show

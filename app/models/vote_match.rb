@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class VoteMatch < ApplicationRecord
+  enhance Updateable
   include Listable
   include Ldable
 

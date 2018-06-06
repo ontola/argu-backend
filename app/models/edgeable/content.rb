@@ -7,6 +7,7 @@ module Edgeable
     included do
       include Actionable
       include Loggable
+      enhance Updateable
       enhance Trashable
       include Menuable
 

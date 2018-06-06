@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Announcement < NewsBoy
+  enhance Updateable
   belongs_to :publisher, class_name: 'Profile'
 
   enum audience: {guests: 0, users: 1, everyone: 3}

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Shortname < ApplicationRecord
+  enhance Updateable
   include Parentable
 
   belongs_to :owner,

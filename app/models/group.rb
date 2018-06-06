@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
+  enhance Updateable
   include Ldable
   include Parentable
   include Edgeable::PropertyAssociations

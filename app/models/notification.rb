@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
+  enhance Updateable
   concern Actionable
   include BlogPostsHelper
   include Ldable
   include ActivityHelper
   include ActionView::Helpers
-  include Rails.application.routes.url_helpers
 
   belongs_to :user
   belongs_to :activity

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Banner < NewsBoy
+  enhance Updateable
   include EdgeableShallow
   include ProfilePhotoable
   include Photoable

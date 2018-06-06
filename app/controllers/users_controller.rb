@@ -17,12 +17,6 @@ class UsersController < AuthorizedController
     }
   end
 
-  # PUT /settings
-  def update
-    @email_changed = email_changed?
-    exec_action
-  end
-
   # When shortname isn't set yet
   def setup
     authenticated_resource.build_shortname if authenticated_resource.shortname.blank?
@@ -175,6 +169,7 @@ class UsersController < AuthorizedController
   end
 
   def execute_update
+    @email_changed = email_changed?
     if password_required
       bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params(true))
     else

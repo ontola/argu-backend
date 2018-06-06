@@ -3,7 +3,6 @@
 class RecordSerializer < BaseSerializer
   attribute :iri
   attribute :created_at, predicate: NS::SCHEMA[:dateCreated]
-  attribute :updated_at, predicate: NS::SCHEMA[:dateModified]
   attribute :display_name, predicate: NS::SCHEMA[:name]
 
   def export?
