@@ -23,6 +23,7 @@ class Decision < Edge
           primary_key: :uuid
 
   validate :correctly_forwarded, if: :forwarded?
+  validates :state, presence: true
   parentable :motion
 
   # @return [Array<Symbol>] States that indicate an action was taken on this decision
