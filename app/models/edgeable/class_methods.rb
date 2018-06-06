@@ -36,10 +36,6 @@ module Edgeable
         "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}] AND edges.root_id = '#{root_id.first}'"
       end
 
-      def show_trashed(show_trashed = nil)
-        show_trashed ? where(nil) : untrashed
-      end
-
       # Selects edges of a certain type over persisted and transient models.
       # @param [String] type The (child) edges' #owner_type value
       # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.

@@ -7,7 +7,7 @@ module Edgeable
     included do
       include Actionable
       include Loggable
-      include Trashable
+      enhance Trashable
       include Menuable
 
       property :display_name, :string, NS::SCHEMA[:name]

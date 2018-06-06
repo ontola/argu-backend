@@ -103,16 +103,6 @@ Rails.application.routes.draw do
   concern :statable do
     get :statistics, to: 'statistics#show'
   end
-  concern :trashable do
-    get :delete, action: :delete, as: :delete, on: :member
-    delete '', action: :destroy, on: :member, as: :destroy, constraints: Argu::DestroyConstraint
-
-    get :trash, action: :bin, as: :trash, on: :member
-    delete '', action: :trash, on: :member
-
-    get :untrash, action: :unbin, as: :untrash, on: :member
-    put :untrash, action: :untrash, on: :member
-  end
   concern :votable do
     resources :votes, only: %i[new create index]
     resource :vote, only: %i[destroy show]
@@ -344,7 +334,7 @@ Rails.application.routes.draw do
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
                   except: %i[index new create],
-                  concerns: %i[actionable votable feedable trashable commentable menuable convertible
+                  concerns: %i[actionable votable feedable commentable menuable convertible
                                contactable statable loggable] do
           include_route_concerns
         end
@@ -355,10 +345,10 @@ Rails.application.routes.draw do
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show edit update],
-                concerns: %i[trashable commentable menuable statable loggable] do
+                concerns: %i[commentable menuable statable loggable] do
         include_route_concerns
       end
-      resources :comments, concerns: %i[actionable trashable loggable], only: %i[show edit update], path: 'c' do
+      resources :comments, concerns: %i[actionable loggable], only: %i[show edit update], path: 'c' do
         include_route_concerns
       end
       resources :comments, only: %i[show]
@@ -387,7 +377,7 @@ Rails.application.routes.draw do
                 path: 'm',
                 except: %i[index new create destroy],
                 concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
-                             feedable trashable decisionable invitable menuable statable exportable loggable
+                             feedable decisionable invitable menuable statable exportable loggable
                              convertible] do
         include_route_concerns
         resources :media_objects, only: :index
@@ -395,7 +385,7 @@ Rails.application.routes.draw do
       resources :questions,
                 path: 'q', except: %i[index new create],
                 concerns: %i[actionable commentable blog_postable moveable feedable exportable convertible
-                             trashable invitable menuable contactable statable loggable] do
+                             invitable menuable contactable statable loggable] do
         include_route_concerns
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]

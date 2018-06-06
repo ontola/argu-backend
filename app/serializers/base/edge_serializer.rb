@@ -9,15 +9,12 @@ class EdgeSerializer < RecordSerializer
     object.creator.profileable
   end
 
-  attribute :trashed_at,
-            predicate: NS::ARGU[:trashedAt],
-            if: :is_trashable?
   attribute :is_draft?,
             predicate: NS::ARGU[:isDraft],
             if: :is_publishable?
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
 
-  delegate :is_publishable?, :is_trashable?, to: :object
+  delegate :is_publishable?, to: :object
 
   triples :children_counts
 

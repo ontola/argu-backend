@@ -8,8 +8,6 @@
 #
 # @see EdgeTree::Setup The interface for adjusting per-component behaviour.
 class EdgeableController < ServiceController
-  include EdgeTree::Trashing
-
   private
 
   def action_service
