@@ -43,6 +43,7 @@ Metrics/BlockLength:
     - '**/*.jbuilder'
     - 'spec/rails_helper.rb'
     - 'config/**/*.rb'
+    - 'db/seeds.rb'
     - 'spec/support/database_cleaner.rb'
     - 'spec/shared_examples/*.rb'
   ExcludedMethods:
