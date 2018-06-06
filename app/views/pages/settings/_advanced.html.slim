@@ -12,7 +12,7 @@
         li.form-helper
           span= t('pages.shortname.warning')
       - if policy(authenticated_resource).delete?
-        =f.input :f_delete, as: :link, url: delete_page_url(authenticated_resource), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
+        =f.input :f_delete, as: :link, url: delete_iri_path(authenticated_resource), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, as: :button

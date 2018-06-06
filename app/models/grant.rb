@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Grant < ApplicationRecord
+  enhance Destroyable
   include Parentable
 
   # The Edge this Grant is providing rules for

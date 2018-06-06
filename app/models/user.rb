@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  enhance Destroyable
   enhance Updateable
   include RedirectHelper
   include Iriable

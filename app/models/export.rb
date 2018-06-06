@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Export < ApplicationRecord
+  enhance Destroyable
   include Parentable
   include Ldable
 

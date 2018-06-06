@@ -3,7 +3,7 @@
 module Portal
   class UsersController < PortalBaseController
     include Common::Setup
-    include Common::Destroy
+    include Destroyable::Controller
 
     private
 

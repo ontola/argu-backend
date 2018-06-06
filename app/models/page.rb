@@ -4,6 +4,7 @@ class Page < Edge
   has_many :groups, dependent: :destroy, inverse_of: :page, primary_key: :uuid
   has_many :discussions, through: :forum_edges
 
+  enhance Destroyable
   enhance Updateable
   include Menuable
   include Discussable

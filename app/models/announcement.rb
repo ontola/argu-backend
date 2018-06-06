@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Announcement < NewsBoy
+  enhance Destroyable
   enhance Updateable
   belongs_to :publisher, class_name: 'Profile'
 

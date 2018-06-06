@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Vote < Edge
+  enhance Destroyable
   enhance Updateable
   include PublicActivity::Model
   include Loggable

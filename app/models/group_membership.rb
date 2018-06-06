@@ -2,6 +2,7 @@
 
 class GroupMembership < ApplicationRecord
   belongs_to :group
+  enhance Destroyable
   include Parentable
 
   belongs_to :member,

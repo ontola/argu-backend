@@ -62,10 +62,6 @@ Rails.application.routes.draw do
   concern :convertible do
     resources :conversions, path: 'conversion', only: %i[new create]
   end
-  concern :destroyable do
-    delete '', action: :destroy, on: :member, as: :destroy
-    get :delete, action: :delete, path: :delete, as: :delete, on: :member
-  end
   concern :decisionable do
     resources :decisions, path: 'decision', only: %i[show new create index], concerns: %i[menuable] do
       include_route_concerns
@@ -190,7 +186,7 @@ Rails.application.routes.draw do
 
   get :feed, controller: :favorites_feed, action: :index
 
-  resources :vote_matches, only: %i[index show create destroy] do
+  resources :vote_matches, only: %i[index show create] do
     include_route_concerns
     get :voteables, to: 'list_items#index', relationship: :voteables
     get :vote_comparables, to: 'list_items#index', relationship: :vote_comparables
@@ -240,7 +236,7 @@ Rails.application.routes.draw do
     post :unsubscribe, action: :destroy, on: :member
   end
 
-  resources :shortnames, only: %i[destroy] do
+  resources :shortnames do
     include_route_concerns
   end
 
@@ -280,7 +276,7 @@ Rails.application.routes.draw do
       get '/', to: 'portal#home'
       get :settings, to: 'portal#home'
       post 'setting', to: 'portal#setting!', as: :update_setting
-      resources :announcements, only: %i[show new create destroy] do
+      resources :announcements, only: %i[show new create] do
         include_route_concerns
       end
       resources :forums, only: %i[new create]
@@ -311,7 +307,7 @@ Rails.application.routes.draw do
     resources :pages,
               path: '',
               only: %i[show],
-              concerns: %i[feedable destroyable menuable statable exportable blog_postable] do
+              concerns: %i[feedable menuable statable exportable blog_postable] do
       include_route_concerns
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
@@ -333,7 +329,7 @@ Rails.application.routes.draw do
       %i[pro_arguments con_arguments].each do |model|
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
-                  only: %i[show destroy],
+                  only: %i[show],
                   concerns: %i[actionable votable feedable commentable menuable convertible
                                contactable statable loggable] do
           include_route_concerns
@@ -353,22 +349,21 @@ Rails.application.routes.draw do
       end
       resources :comments, only: %i[show]
       resources :direct_messages, path: :dm, only: [:create]
-      resources :exports, only: [], concerns: %i[destroyable] do
+      resources :exports, only: [] do
         include_route_concerns
       end
       resources :favorites, only: [:create] do
         include_route_concerns
       end
-      resources :grants, path: 'grants', only: %i[destroy show] do
+      resources :grants, path: 'grants', only: %i[show] do
         include_route_concerns
       end
-      resources :group_memberships, only: %i[show destroy] do
+      resources :group_memberships, only: %i[show] do
         include_route_concerns
       end
       resources :groups,
                 path: 'g',
-                only: %i[show],
-                concerns: [:destroyable] do
+                only: %i[show] do
         include_route_concerns
         get :settings, on: :member
         resources :group_memberships, only: %i[new create]
@@ -383,21 +378,21 @@ Rails.application.routes.draw do
         resources :media_objects, only: :index
       end
       resources :questions,
-                path: 'q', only: %i[destroy],
+                path: 'q',
                 concerns: %i[actionable commentable blog_postable moveable feedable exportable convertible
                              invitable menuable contactable statable loggable] do
         include_route_concerns
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]
       end
-      resources :votes, only: %i[destroy show], as: :vote do
+      resources :votes, only: %i[show], as: :vote do
         include_route_concerns
       end
 
       resources :forums,
                 only: %i[show],
                 path: '',
-                concerns: %i[feedable discussable destroyable favorable invitable menuable
+                concerns: %i[feedable discussable favorable invitable menuable
                              moveable statable exportable] do
         include_route_concerns
         resources :motions, path: :m, only: [] do
