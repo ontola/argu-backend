@@ -51,16 +51,9 @@ module Common
   #   Ruby to let the alias statement detect the `exec_action` method correctly.
   module Setup
     extend ActiveSupport::Concern
+    ACTION_NAMES = %i[new create edit update delete destroy show index shift move bin trash unbin untrash].freeze
 
     included do
-      # Sets up the action and handler methods.
-      def self.define_action_methods(action)
-        define_action(action)
-        define_handlers(action)
-      end
-
-      private
-
       def self.define_action(action)
         define_method(action, instance_method(:exec_action))
       end
@@ -83,6 +76,12 @@ module Common
           end
         )
       end
+
+      ACTION_NAMES.each do |action|
+        define_handlers(action)
+      end
+
+      private
 
       def exec_action
         if send("execute_#{action_name}")

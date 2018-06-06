@@ -29,6 +29,8 @@ module Argu
     config.autoload_paths += %W[#{config.root}/app/policies/edge_tree_policies]
     config.autoload_paths += %W[#{config.root}/app/policies/edgeable_policies]
     config.autoload_paths += %W[#{config.root}/app/policies/helpers]
+    config.autoload_paths += Dir["#{config.root}/app/enhancements/**/"]
+    Dir["#{config.root}/app/enhancements/**/*.rb"].each { |file| require_dependency file }
 
     config.paths['app/views'].unshift(Rails.root.join('lib', 'app', 'views'))
 

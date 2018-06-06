@@ -35,6 +35,8 @@ require 'argu/whitelist_constraint'
 # z:
 
 Rails.application.routes.draw do
+  concerns_from_enhancements
+
   concern :actionable do
     resources :actions, only: %i[index show]
   end
@@ -65,7 +67,8 @@ Rails.application.routes.draw do
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
   concern :decisionable do
-    resources :decisions, path: 'decision', except: [:destroy], concerns: [:menuable] do
+    resources :decisions, path: 'decision', except: [:destroy], concerns: %i[menuable] do
+      include_route_concerns
       get :log, action: :log
     end
   end
@@ -134,6 +137,7 @@ Rails.application.routes.draw do
             only: %i[index show update],
             path: 'n' do
     patch :read, on: :collection
+    include_route_concerns
   end
 
   require 'sidekiq/web'
@@ -191,11 +195,13 @@ Rails.application.routes.draw do
     get :drafts, to: 'drafts#index', on: :member
 
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
+    include_route_concerns
   end
 
   get :feed, controller: :favorites_feed, action: :index
 
   resources :vote_matches, only: %i[index show create update destroy] do
+    include_route_concerns
     get :voteables, to: 'list_items#index', relationship: :voteables
     get :vote_comparables, to: 'list_items#index', relationship: :vote_comparables
   end
@@ -238,12 +244,15 @@ Rails.application.routes.draw do
   get '/banner_dismissals', to: 'banner_dismissals#create'
 
   resources :follows, only: :create do
+    include_route_concerns
     delete :destroy, on: :member
     get :unsubscribe, action: :destroy, on: :member
     post :unsubscribe, action: :destroy, on: :member
   end
 
-  resources :shortnames, only: %i[edit update destroy]
+  resources :shortnames, only: %i[edit update destroy] do
+    include_route_concerns
+  end
 
   resources :grant_sets, only: :show
 
@@ -281,7 +290,9 @@ Rails.application.routes.draw do
       get '/', to: 'portal#home'
       get :settings, to: 'portal#home'
       post 'setting', to: 'portal#setting!', as: :update_setting
-      resources :announcements, except: :index
+      resources :announcements, except: :index do
+        include_route_concerns
+      end
       resources :forums, only: %i[new create]
       resources :users, only: [], concerns: %i[destroyable]
       mount Sidekiq::Web => '/sidekiq'
@@ -311,6 +322,7 @@ Rails.application.routes.draw do
               path: '',
               only: %i[show update],
               concerns: %i[feedable destroyable menuable statable exportable blog_postable] do
+      include_route_concerns
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
       resources :group_memberships, only: :index do
@@ -333,24 +345,41 @@ Rails.application.routes.draw do
                   path: model == :pro_arguments ? 'pro' : 'con',
                   except: %i[index new create],
                   concerns: %i[actionable votable feedable trashable commentable menuable convertible
-                               contactable statable loggable]
+                               contactable statable loggable] do
+          include_route_concerns
+        end
       end
-      resources :banners, except: %i[index show new create]
+      resources :banners, except: %i[index show new create] do
+        include_route_concerns
+      end
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show edit update],
-                concerns: %i[trashable commentable menuable statable loggable]
-      resources :comments, concerns: %i[actionable trashable loggable], only: %i[show edit update], path: 'c'
+                concerns: %i[trashable commentable menuable statable loggable] do
+        include_route_concerns
+      end
+      resources :comments, concerns: %i[actionable trashable loggable], only: %i[show edit update], path: 'c' do
+        include_route_concerns
+      end
       resources :comments, only: %i[show]
       resources :direct_messages, path: :dm, only: [:create]
-      resources :exports, only: [], concerns: %i[destroyable]
-      resources :favorites, only: [:create]
-      resources :grants, path: 'grants', only: %i[destroy show]
-      resources :group_memberships, only: %i[show destroy]
+      resources :exports, only: [], concerns: %i[destroyable] do
+        include_route_concerns
+      end
+      resources :favorites, only: [:create] do
+        include_route_concerns
+      end
+      resources :grants, path: 'grants', only: %i[destroy show] do
+        include_route_concerns
+      end
+      resources :group_memberships, only: %i[show destroy] do
+        include_route_concerns
+      end
       resources :groups,
                 path: 'g',
                 only: %i[show update],
                 concerns: [:destroyable] do
+        include_route_concerns
         get :settings, on: :member
         resources :group_memberships, only: %i[new create]
       end
@@ -360,22 +389,27 @@ Rails.application.routes.draw do
                 concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
                              feedable trashable decisionable invitable menuable statable exportable loggable
                              convertible] do
+        include_route_concerns
         resources :media_objects, only: :index
       end
       resources :questions,
                 path: 'q', except: %i[index new create],
                 concerns: %i[actionable commentable blog_postable moveable feedable exportable convertible
                              trashable invitable menuable contactable statable loggable] do
+        include_route_concerns
         resources :media_objects, only: :index
         resources :motions, path: 'm', only: %i[index new create]
       end
-      resources :votes, only: %i[destroy update show], as: :vote
+      resources :votes, only: %i[destroy update show], as: :vote do
+        include_route_concerns
+      end
 
       resources :forums,
                 only: %i[show update],
                 path: '',
                 concerns: %i[feedable discussable destroyable favorable invitable menuable
                              moveable statable exportable] do
+        include_route_concerns
         resources :motions, path: :m, only: [] do
           get :search, to: 'motions#search', on: :collection
         end

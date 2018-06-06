@@ -78,6 +78,10 @@ module Service
         )
       end
 
+      Common::Setup::ACTION_NAMES.each do |action|
+        define_registers(action)
+      end
+
       def exec_action
         send("#{action_name}_register_success")
         send("#{action_name}_register_failure")
