@@ -10,7 +10,7 @@ class Question < Edge
   include Timelineable
   concern Motionable
   include CustomGrants
-  include Moveable
+  enhance Moveable
   include Photoable
 
   convertible motions: %i[activities media_objects]

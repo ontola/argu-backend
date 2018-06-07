@@ -9,7 +9,7 @@ class Forum < Edge
   include ProfilePhotoable
   include Attribution
   include Menuable
-  include Moveable
+  enhance Moveable
   include Photoable
 
   property :display_name, :string, NS::SCHEMA[:name]

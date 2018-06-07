@@ -9,7 +9,7 @@ class Motion < Edge
   include Voteable
   include Attribution
   include HasLinks
-  include Moveable
+  enhance Moveable
   include Photoable
 
   include BlogPostable

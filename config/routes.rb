@@ -92,10 +92,6 @@ Rails.application.routes.draw do
   concern :menuable do
     resources :menus, only: %i[index show]
   end
-  concern :moveable do
-    get :move, action: :shift, on: :member
-    put :move, action: :move, on: :member
-  end
   concern :statable do
     get :statistics, to: 'statistics#show'
   end
@@ -371,7 +367,7 @@ Rails.application.routes.draw do
       resources :motions,
                 path: 'm',
                 only: %i[show],
-                concerns: %i[actionable argumentable commentable blog_postable moveable vote_eventable contactable
+                concerns: %i[actionable argumentable commentable blog_postable vote_eventable contactable
                              feedable decisionable invitable menuable statable exportable loggable
                              convertible] do
         include_route_concerns
@@ -379,7 +375,7 @@ Rails.application.routes.draw do
       end
       resources :questions,
                 path: 'q',
-                concerns: %i[actionable commentable blog_postable moveable feedable exportable convertible
+                concerns: %i[actionable commentable blog_postable feedable exportable convertible
                              invitable menuable contactable statable loggable] do
         include_route_concerns
         resources :media_objects, only: :index
@@ -393,7 +389,7 @@ Rails.application.routes.draw do
                 only: %i[show],
                 path: '',
                 concerns: %i[feedable discussable favorable invitable menuable
-                             moveable statable exportable] do
+                             statable exportable] do
         include_route_concerns
         resources :motions, path: :m, only: [] do
           get :search, to: 'motions#search', on: :collection
