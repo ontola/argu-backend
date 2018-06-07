@@ -72,6 +72,6 @@ nl:
       headers:
         profile: "Account afmaken"
       body:
-        profile: "Jouw profiel is zichtbaar voor alle bezoekers van Argu. Je hoeft niets in te vullen, maar met een volledige naam en een foto kom je betrouwbaarder over."
-        shortname: "Kies een gebruikersnaam. Deze moet uniek zijn en is te zien door andere gebruikers. Je kunt jouw gebruikersnaam later niet meer wijzigen."
+        header: "Alle instellingen hieronder zijn optioneel. Je kunt dit later nog wijzigen bij jouw instellingen."
+        profile: "Stel in hoe je zichtbaar bent voor anderen op Argu. De meesten mensen gebruiken hun echte voor- en achternaam. Je kunt deze altijd nog wijzigen, maar je gebruikersnaam staat vast."
         skip: "Profiel invullen overslaan."

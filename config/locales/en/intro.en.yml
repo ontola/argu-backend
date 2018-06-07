@@ -72,6 +72,6 @@ en:
       headers:
         profile: "Finish your account"
       body:
-        profile: "Your profile is visible for all visitors of Argu. You don't need to enter anything, but a complete name and a picture will make you appear more reliable to other users."
-        shortname: "Set a username. Your username is visible to other users and must be unique. You cannot change your username later on."
+        header: "The following settings are optional. You can always change them in your user settings."
+        profile: "Set how you will be visible to others on Argu. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."
         skip: "Skip profile setup."
