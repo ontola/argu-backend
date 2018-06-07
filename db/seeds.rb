@@ -96,6 +96,7 @@ ActiveRecord::Base.transaction do
 
   forum = Forum.new(name: 'Nederland',
                     public_grant: 'participator',
+                    root_id: argu.root_id,
                     url: 'nederland',
                     creator: User.find_via_shortname!('staff_account').profile,
                     publisher: User.find_via_shortname!('staff_account'),
