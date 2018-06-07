@@ -33,8 +33,8 @@
                 h3.motion-t
                   span.fa.fa-lightbulb-o
                   span.icon-left= t('discussions.new.question_motion2')
-      .btn--question.btn--huge[collection_model="Question"]
-        =link_to new_iri_path(parent_resource, :questions)
+      =link_to new_iri_path(parent_resource, :questions)
+        .btn--question.btn--huge[collection_model="Question"]
           h3
             span[class="fa fa-#{question_icon}"]
             span.icon-left= t('questions.type_new')
@@ -77,8 +77,8 @@
                 h3[class="con-t tooltip--wider"]
                   span.fa.fa-minus
                   span.icon-left= t('discussions.new.motion_argument3')
-      .btn--motion.btn--huge[collection_model="Motion"]
-        =link_to new_iri_path(parent_resource, :motions)
+      =link_to new_iri_path(parent_resource, :motions)
+        .btn--motion.btn--huge[collection_model="Motion"]
           h3
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= t('motions.type_new')
