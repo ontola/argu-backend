@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   concerns_from_enhancements
 
   concern :actionable do
-    resources :actions, only: %i[index show]
+    resources :action_items, path: 'actions', only: %i[index show]
   end
   concern :argumentable do
     resources :arguments, only: %i[new create]

@@ -1,1 +1,0 @@
-../../service_module/app/controllers/actions_controller.rb
