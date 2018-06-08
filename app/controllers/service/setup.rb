@@ -62,7 +62,7 @@ module Service
           "#{action}_register_failure",
           proc do
             action_service.on(
-              signal_failure,
+              *signals_failure,
               &method("#{action}_handler_failure".to_sym)
             )
           end
@@ -71,7 +71,7 @@ module Service
           "#{action}_register_success",
           proc do
             action_service.on(
-              signal_success,
+              *signals_success,
               &method("#{action}_handler_success".to_sym)
             )
           end

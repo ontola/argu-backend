@@ -45,14 +45,12 @@ class ArgumentsController < EdgeableController
     )
   end
 
-  def create_register_failure
-    action_service
-      .on(:create_pro_argument_failed, :create_con_argument_failed) { |r| create_handler_failure(r) }
+  def signals_failure
+    [:"#{action_name}_pro_argument_failed", :"#{action_name}_con_argument_failed"]
   end
 
-  def create_register_success
-    action_service
-      .on(:create_pro_argument_successful, :create_con_argument_successful) { |r| create_handler_success(r) }
+  def signals_success
+    [:"#{action_name}_pro_argument_successful", :"#{action_name}_con_argument_successful"]
   end
 
   def redirect_model_success(resource)
@@ -80,15 +78,5 @@ class ArgumentsController < EdgeableController
       argument: resource,
       comment: Comment.new(parent: resource)
     }
-  end
-
-  def update_register_failure
-    action_service
-      .on(:update_pro_argument_failed, :update_con_argument_failed) { |r| update_handler_failure(r) }
-  end
-
-  def update_register_success
-    action_service
-      .on(:update_pro_argument_successful, :update_con_argument_successful) { |r| update_handler_success(r) }
   end
 end

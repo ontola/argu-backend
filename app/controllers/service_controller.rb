@@ -76,13 +76,13 @@ class ServiceController < ParentableController
   end
 
   # The name of the failure signal as emitted from `action_service`
-  def signal_failure
-    "#{action_name}_#{model_name}_failed".to_sym
+  def signals_failure
+    [:"#{action_name}_#{model_name}_failed"]
   end
 
   # The name of the success signal as emitted from `action_service`
-  def signal_success
-    "#{action_name}_#{model_name}_successful".to_sym
+  def signals_success
+    [:"#{action_name}_#{model_name}_successful"]
   end
 
   # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
