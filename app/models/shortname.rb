@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Shortname < ApplicationRecord
+  enhance Createable
   enhance Destroyable
   enhance Updateable
   include Parentable

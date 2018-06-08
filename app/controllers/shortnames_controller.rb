@@ -3,20 +3,21 @@
 class ShortnamesController < ParentableController
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
 
-  def create
-    if execute_update
-      create_handler_success(authenticated_resource)
-    else
-      create_handler_failure(authenticated_resource)
-    end
-  end
-
   private
 
   def destination_param
     return @destination_param if instance_variable_defined?(:@destination_param)
     return if params[:shortname].try(:[], :destination).blank?
     @destination_param = "#{parent_from_params.iri_path}/#{params[:shortname][:destination]}"
+  end
+
+  def exec_action
+    return super unless action_name == 'create'
+    if execute_update
+      create_handler_success(authenticated_resource)
+    else
+      create_handler_failure(authenticated_resource)
+    end
   end
 
   def handle_record_not_unique_html

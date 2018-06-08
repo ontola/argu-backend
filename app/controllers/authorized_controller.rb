@@ -2,9 +2,7 @@
 
 class AuthorizedController < ApplicationController
   include Common::Setup
-  include Common::New
   include Common::Index
-  include Common::Create
   include Common::Show
   before_action :check_if_registered, except: %i[show]
   before_action :authorize_action

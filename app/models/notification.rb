@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Notification < ApplicationRecord
+  enhance Createable
   enhance Updateable
   concern Actionable
   include BlogPostsHelper

@@ -3,6 +3,7 @@
 class Follow < ApplicationRecord
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes
+  enhance Createable
   enhance Destroyable
 
   # NOTE: Follows belong to the "followable" interface, and also to followers

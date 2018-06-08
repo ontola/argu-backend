@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Favorite < ApplicationRecord
+  enhance Createable
   enhance Destroyable
   include Parentable
   belongs_to :user

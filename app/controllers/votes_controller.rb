@@ -4,37 +4,6 @@ class VotesController < EdgeableController
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: %i[index show create destroy]
 
-  def new
-    render locals: {
-      resource: parent_resource!,
-      vote: Vote.new
-    }
-  end
-
-  # POST /model/:model_id/votes/:for
-  def create
-    return super unless unmodified?
-    respond_to do |format|
-      format.html do
-        if params[:vote].try(:[], :r).present?
-          redirect_to redirect_param
-        else
-          redirect_to create_service.resource.parent.voteable.iri(only_path: true).to_s,
-                      notice: t('votes.alerts.not_modified')
-        end
-      end
-      format.json do
-        render status: 304,
-               locals: {model: create_service.resource.parent.voteable, vote: create_service.resource}
-      end
-      format.json_api { respond_with_304(create_service.resource, :json_api) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_304(create_service.resource, type) }
-      end
-      format.js { render locals: {model: create_service.resource.parent, vote: create_service.resource} }
-    end
-  end
-
   private
 
   def authorize_action
@@ -77,6 +46,30 @@ class VotesController < EdgeableController
     }
   end
 
+  def exec_action
+    return super unless action_name == 'create'
+    return super unless unmodified?
+    respond_to do |format|
+      format.html do
+        if params[:vote].try(:[], :r).present?
+          redirect_to redirect_param
+        else
+          redirect_to create_service.resource.parent.voteable.iri(only_path: true).to_s,
+                      notice: t('votes.alerts.not_modified')
+        end
+      end
+      format.json do
+        render status: 304,
+               locals: {model: create_service.resource.parent.voteable, vote: create_service.resource}
+      end
+      format.json_api { respond_with_304(create_service.resource, :json_api) }
+      RDF_CONTENT_TYPES.each do |type|
+        format.send(type) { respond_with_304(create_service.resource, type) }
+      end
+      format.js { render locals: {model: create_service.resource.parent, vote: create_service.resource} }
+    end
+  end
+
   def include_index
     [
       view_sequence: [
@@ -96,6 +89,13 @@ class VotesController < EdgeableController
 
   def index_respond_success_html
     redirect_to parent_resource!.iri_path
+  end
+
+  def new_respond_success_html(resource)
+    render locals: {
+      resource: resource.parent,
+      vote: resource
+    }
   end
 
   def resource_by_id

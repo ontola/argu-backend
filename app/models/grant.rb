@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Grant < ApplicationRecord
+  enhance Createable
   enhance Destroyable
   include Parentable
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Portal::ForumsController < EdgeableController
+  include Createable::Controller
+
   private
 
   def parent_resource

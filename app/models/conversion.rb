@@ -4,6 +4,8 @@ class Conversion
   extend ActiveModel::Naming
   include ActiveModel::Validations
   include ActiveRecord::AttributeAssignment
+  include ApplicationModel
+  enhance Createable
 
   validates :edge, presence: true
   validates :klass, presence: true

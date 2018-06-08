@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Forum < Edge
+  enhance Createable
   enhance Destroyable
   enhance Updateable
   include Discussable

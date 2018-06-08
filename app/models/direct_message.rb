@@ -5,6 +5,8 @@ require 'argu/api'
 class DirectMessage
   include ActiveModel::Model
   include IRIHelper
+  include ApplicationModel
+  enhance Createable
 
   attr_accessor :actor, :body, :email, :subject
   attr_writer :resource, :resource_iri

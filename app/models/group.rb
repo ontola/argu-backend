@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
+  enhance Createable
   enhance Destroyable
   enhance Updateable
   include Ldable

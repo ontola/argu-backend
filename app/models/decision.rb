@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Decision < Edge
+  enhance Createable
   enhance Updateable
   include Loggable
   include HasLinks

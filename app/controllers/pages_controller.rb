@@ -25,26 +25,6 @@ class PagesController < EdgeableController
     show_handler_success(authenticated_resource)
   end
 
-  def new
-    authenticated_resource.build_shortname
-    authenticated_resource.build_profile
-
-    render locals: {
-      page: authenticated_resource,
-      errors: {}
-    }
-  end
-
-  def create
-    authenticated_resource.assign_attributes(permit_params)
-
-    if authenticated_resource.save
-      create_handler_success(resource)
-    else
-      create_handler_failure(resource)
-    end
-  end
-
   def settings
     authorize authenticated_resource, :update?
 
@@ -98,6 +78,17 @@ class PagesController < EdgeableController
     redirect_to(delete_page_path(resource))
   end
 
+  def exec_action
+    return super unless action_name == 'create'
+    authenticated_resource.assign_attributes(permit_params)
+
+    if authenticated_resource.save
+      create_handler_success(resource)
+    else
+      create_handler_failure(resource)
+    end
+  end
+
   def handle_forbidden_html(_exception)
     us_po = policy(current_user) unless current_user.guest?
     return super unless us_po&.max_pages_reached? && request.format.html?
@@ -131,6 +122,16 @@ class PagesController < EdgeableController
       :profile_photo,
       vote_match_collection: inc_nested_collection
     ]
+  end
+
+  def new_respond_success_html(resource)
+    resource.build_shortname
+    resource.build_profile
+
+    render locals: {
+      page: resource,
+      errors: {}
+    }
   end
 
   def new_resource_from_params
