@@ -4,4 +4,9 @@ en:
     default:
       create_comment: "Comment"
       read: "Mark as read"
-      upvote: "Upvote"
+    pro_arguments:
+      create_vote: "Upvote"
+      destroy_vote: "Upvote"
+    con_arguments:
+      create_vote: "Upvote"
+      destroy_vote: "Upvote"

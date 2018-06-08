@@ -5,7 +5,7 @@ module Edgeable
     extend ActiveSupport::Concern
 
     included do
-      include Actionable
+      concern Actionable
       include Loggable
       enhance Createable
       enhance Updateable

@@ -11,8 +11,6 @@ module Motionable
     extend ActiveSupport::Concern
 
     included do
-      include ActionableHelper
-
       define_default_create_action :motion, image: 'fa-motion'
     end
   end

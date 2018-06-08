@@ -4,4 +4,9 @@ nl:
     default:
       create_comment: "Reageer"
       read: "Markeer als gelezen"
-      upvote: "Upvote"
+    pro_arguments:
+      create_vote: "Upvote"
+      destroy_vote: "Upvote"
+    con_arguments:
+      create_vote: "Upvote"
+      destroy_vote: "Upvote"

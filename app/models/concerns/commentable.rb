@@ -28,8 +28,6 @@ module Commentable
     extend ActiveSupport::Concern
 
     included do
-      include ActionableHelper
-
       define_default_create_action :comment, image: 'fa-comment'
     end
   end

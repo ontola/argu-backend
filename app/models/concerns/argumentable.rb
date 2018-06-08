@@ -27,8 +27,6 @@ module Argumentable
     extend ActiveSupport::Concern
 
     included do
-      include ActionableHelper
-
       define_default_create_action :pro_argument, image: 'fa-plus'
       define_default_create_action :con_argument, image: 'fa-plus'
     end

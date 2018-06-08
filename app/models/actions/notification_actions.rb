@@ -2,27 +2,14 @@
 
 module Actions
   class NotificationActions < Base
-    define_actions %i[read]
-
-    private
-
-    def read_action
-      action_item(
-        :read,
-        target: read_entrypoint,
-        result: Notification,
-        type: NS::SCHEMA[:ReadAction],
-        policy: :read?
-      )
-    end
-
-    def read_entrypoint
-      entry_point_item(
-        :read,
-        image: 'fa-check',
-        url: RDF::URI(notification_url(resource, type: :infinite)),
-        http_method: :put
-      )
-    end
+    define_action(
+      :read,
+      result: Notification,
+      type: NS::SCHEMA[:ReadAction],
+      policy: :read?,
+      image: 'fa-check',
+      url: -> { resource.iri },
+      http_method: :put
+    )
   end
 end
