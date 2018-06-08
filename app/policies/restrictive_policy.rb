@@ -99,6 +99,14 @@ class RestrictivePolicy
     update?
   end
 
+  def create_child?(_raw_klass)
+    false
+  end
+
+  def index_children?(_raw_klass)
+    false
+  end
+
   # Can the current user change the item shortname?
   def shortname?
     new_record?
