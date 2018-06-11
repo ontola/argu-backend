@@ -8,21 +8,9 @@ module Createable
       include Pundit
 
       define_action(
-        :new,
-        result: -> { association_class },
-        type: -> { [NS::ARGU["New#{association_class}"], NS::SCHEMA[:NewAction]] },
-        policy: :create_child?,
-        label: -> { new_label },
-        image: -> { new_image },
-        url: -> { new_url(resource) },
-        http_method: :get,
-        collection: true
-      )
-
-      define_action(
         :create,
         result: -> { association_class },
-        type: -> { [NS::ARGU["Create#{association_class}"], NS::ARGU[:CreateAction]] },
+        type: -> { [NS::ARGU["Create#{association_class}"], NS::SCHEMA[:CreateAction]] },
         policy: :create_child?,
         label: -> { new_label },
         image: -> { new_image },
@@ -40,15 +28,6 @@ module Createable
 
     def association_class
       resource.association_class
-    end
-
-    def new_url(resource)
-      col_iri = resource.iri(only_path: true)
-      query = col_iri.query
-      col_iri.query = nil
-      iri = RDF::URI(expand_uri_template('new_iri', collection_iri: col_iri))
-      iri.query = query if query.present?
-      iri
     end
 
     def new_image
