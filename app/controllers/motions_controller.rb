@@ -33,14 +33,14 @@ class MotionsController < EdgeableController
 
     [
       member_sequence: members,
-      operation: :target,
+      operation: inc_action_form,
       view_sequence: [
-        operation: :target,
+        operation: inc_action_form,
         members:
           [
             member_sequence: members,
-            operation: :target,
-            view_sequence: [members: [operation: :target].freeze].freeze
+            operation: inc_action_form,
+            view_sequence: [members: [operation: inc_action_form].freeze].freeze
           ].freeze
       ].freeze
     ].freeze
@@ -51,7 +51,7 @@ class MotionsController < EdgeableController
       :vote_event_collection,
       :default_cover_photo,
       creator: :profile_photo,
-      operation: :target,
+      operation: inc_action_form,
       partOf: [widget_sequence: :members],
       blog_posts_collection: inc_nested_collection,
       comment_collection: inc_nested_collection,
@@ -97,7 +97,7 @@ class MotionsController < EdgeableController
     [
       :current_vote,
       vote_collection: {
-        operation: :target,
+        operation: inc_action_form,
         view_sequence: [
           operation: :target,
           members:

@@ -22,6 +22,7 @@ nl:
       cover_photo_attribution: "Auteursrechten"
       cover_photo: "Omslagfoto"
       cover_photo_add: "Afbeelding toevoegen"
+      created_at: "Gemaakt op"
       dismissable: "Sluitbaar"
       ends_at: "Eindigen op"
       expires_at: "Verloopt op"
@@ -52,6 +53,7 @@ nl:
       shortname: "Argu URL"
       title: "Titel"
       time_zone: "Tijdzone"
+      updated_at: "Aangepast op"
       username: "Gebruikersnaam"
       visibility: "Zichtbaarheid"
       create_motion_group_ids: "Wie mogen ideeën plaatsen?"
@@ -117,11 +119,11 @@ nl:
         title: "Plaats de kern van de update"
         content: "Licht je update hier toe."
       motion:
-        title: "Plaats hier de kern van jouw %{type}"
-        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
+        title: "Plaats hier de kern van jouw idee"
+        content: "Plaats hier de details en achtergrondinformatie van jouw idee."
       question:
-        title: "Plaats hier de kern van jouw %{type}"
-        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
+        title: "Plaats hier de kern van jouw uitdaging"
+        content: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
       user:
         email: "email@example.com"
       group:

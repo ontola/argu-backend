@@ -52,7 +52,9 @@ class RestrictivePolicy
 
   def permitted_attributes
     names = permitted_attribute_names
-    names + (record&.class&.try(:attribute_aliases)&.select { |_k, v| names.map(&:to_s).include?(v) }&.keys || [])
+    aliases =
+      record&.class&.try(:attribute_aliases)&.select { |_k, v| names.map(&:to_s).include?(v) }&.keys&.map(&:to_sym)
+    names + (aliases || [])
   end
 
   # @param parent_key [String, Symbol] Parent key of the wanted subset

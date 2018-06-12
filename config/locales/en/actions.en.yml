@@ -3,7 +3,10 @@ en:
   actions:
     default:
       create_comment: "Comment"
+      destroy: "Destroy"
       read: "Mark as read"
+      trash: "Trash"
+      untrash: "Restore"
     pro_arguments:
       create_vote: "Upvote"
       destroy_vote: "Upvote"

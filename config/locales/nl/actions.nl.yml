@@ -3,7 +3,10 @@ nl:
   actions:
     default:
       create_comment: "Reageer"
+      destroy: "Vernietigen"
       read: "Markeer als gelezen"
+      trash: "Verwijderen"
+      untrash: "Terugplaatsen"
     pro_arguments:
       create_vote: "Upvote"
       destroy_vote: "Upvote"

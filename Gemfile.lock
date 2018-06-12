@@ -32,8 +32,8 @@ GIT
 
 GIT
   remote: https://github.com/argu-co/rdf-serializers
-  revision: d477c0968d742242e20a733f8eed303adac04a50
-  branch: master
+  revision: ddd9aa77e3f79d8e2126f887695dcd3c7091b686
+  ref: ddd9aa7
   specs:
     rdf-serializers (0.0.6)
       active_model_serializers (~> 0.10)
@@ -242,7 +242,7 @@ GEM
       sort_alphabetical (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    crass (1.0.3)
+    crass (1.0.4)
     database_cleaner (1.6.2)
     debug_inspector (0.0.3)
     devise (4.3.0)

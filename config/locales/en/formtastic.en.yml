@@ -22,6 +22,7 @@ en:
       cover_photo_attribution: "Copyright"
       cover_photo: "Cover photo"
       cover_photo_add: "Add image"
+      created_at: "Created at"
       dismissable: "Dismissable"
       ends_at: "Ends at"
       expires_at: "Expires at"
@@ -52,6 +53,7 @@ en:
       shortname: "Argu URL"
       title: "Title"
       time_zone: "Time zone"
+      updated_at: "Updated at"
       username: "Username"
       visibility: "Visibility"
       create_motion_group_ids: "Who may add ideas?"
@@ -117,10 +119,10 @@ en:
         title: "Enter the core of your update here"
         content: "Enter details and background information on your update here."
       motion:
-        title: "Enter the core of your %{type} here"
+        title: "Enter the core of your idea here"
       question:
-        title: "Enter the core of your %{type} here"
-        content: "Enter details and background information on your %{type} here."
+        title: "Enter the core of your challenge here"
+        content: "Enter details and background information on your challenge here."
       user:
         email: "email@example.com"
       group:

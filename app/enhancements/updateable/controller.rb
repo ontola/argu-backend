@@ -21,7 +21,7 @@ module Updateable
       format.json_api { respond_with_200(resource, :json_api) }
       format.js { edit_respond_success_js(resource) }
       RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_200(resource, type) }
+        format.send(type) { respond_with_200(resource.action(user_context, :update), type, include: inc_action_form) }
       end
     end
 

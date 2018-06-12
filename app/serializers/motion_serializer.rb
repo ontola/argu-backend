@@ -12,6 +12,9 @@ class MotionSerializer < ContentEdgeSerializer
   attribute :con_count, if: :export_scope?
   attribute :neutral_count, if: :export_scope?
 
+  attribute :invert_arguments,
+            predicate: NS::ARGU[:invertArguments]
+
   include_menus
 
   def current_vote

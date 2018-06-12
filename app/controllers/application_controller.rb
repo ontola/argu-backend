@@ -45,25 +45,34 @@ class ApplicationController < ActionController::Base
   layout :set_layout
   serialization_scope :user_context
 
+  class_attribute :inc_action_form
+  self.inc_action_form = [
+    target: {
+      action_body: [
+        referred_shapes: :property,
+        property: [referred_shapes: :property, property: [referred_shapes: :property]]
+      ]
+    }
+  ]
   class_attribute :inc_nested_collection
   self.inc_nested_collection = [
     member_sequence: :members,
-    operation: :target,
+    operation: inc_action_form,
     view_sequence: [
-      operation: :target,
+      operation: inc_action_form,
       members:
         [
-          member_sequence: [members: [operation: :target]],
-          operation: :target,
-          view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
+          member_sequence: [members: [operation: inc_action_form]],
+          operation: inc_action_form,
+          view_sequence: [members: [member_sequence: :members, operation: inc_action_form].freeze].freeze
         ].freeze
     ].freeze
   ].freeze
   class_attribute :inc_shallow_collection
   self.inc_shallow_collection = [
-    view_sequence: [operation: :target].freeze,
-    member_sequence: [operation: :target].freeze,
-    operation: :target
+    view_sequence: [operation: inc_action_form].freeze,
+    member_sequence: [operation: inc_action_form].freeze,
+    operation: inc_action_form
   ].freeze
 
   # The params, deserialized when format is json_api or LD and method is not safe

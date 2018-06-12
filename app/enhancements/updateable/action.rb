@@ -11,7 +11,9 @@ module Updateable
         policy: :update?,
         image: :update,
         url: -> { resource.iri },
-        http_method: :put
+        http_method: :put,
+        form: -> { "#{resource.class}Form".safe_constantize },
+        iri_template: :edit_iri
       )
     end
   end
