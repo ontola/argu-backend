@@ -107,7 +107,10 @@ module Createable
       format.json { respond_with_200(resource, :json) }
       format.json_api { respond_with_200(resource, :json_api) }
       RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_200(resource, type) }
+        format.send(type) do
+          collection = resource.parent.send("#{resource.class_name.singularize}_collection", user_context: user_context)
+          respond_with_200(collection.action(:create), type, include: inc_action_form)
+        end
       end
     end
 

@@ -16,7 +16,9 @@ module Createable
         image: -> { new_image },
         url: -> { create_url(resource) },
         http_method: :post,
-        collection: true
+        collection: true,
+        form: -> { "#{association_class}Form".safe_constantize },
+        iri_template: :new_iri
       )
     end
 

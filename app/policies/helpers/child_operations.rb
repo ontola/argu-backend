@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ChildOperations
+  include ChildHelper
+
   # Checks whether creating a child of a given class is allowed
   # Initialises a child with the given attributes and checks its policy for new?
   # @param raw_klass [Symbol] the class of the child
@@ -29,43 +31,10 @@ module ChildOperations
     c = check_action(cache_key)
     return c unless c.nil?
 
-    r = valid_parent?(klass) && Pundit.policy(context, child_instance(klass)).send(method) || false
+    r = valid_parent?(klass) && Pundit.policy(context, child_instance(record, klass)).send(method) || false
     cache_action(cache_key, r)
     r
   end
-
-  def child_instance(klass)
-    child = klass.new(child_attrs(klass))
-    if child.is_a?(Edge)
-      child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
-      child.persisted_edge = persisted_edge
-      grant_tree.cache_node(persisted_edge)
-    else
-      child = klass.new(child_attrs(klass))
-    end
-    child
-  end
-
-  # rubocop:disable Metrics/CyclomaticComplexity
-  def child_attrs(raw_klass)
-    case raw_klass.to_s
-    when 'Discussion'
-      {forum: record}
-    when 'Export', 'Favorite', 'GrantTree', 'Grant'
-      {edge: record}
-    when 'GroupMembership'
-      {group: record}
-    when 'Group'
-      {page: record}
-    when 'MediaObject'
-      {about: record}
-    when 'Decision'
-      {state: 'forwarded', parent: record}
-    else
-      raw_klass <= Edge ? {parent: record} : {}
-    end
-  end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   def valid_parent?(klass)
     return false unless klass.respond_to?(:parent_classes)
