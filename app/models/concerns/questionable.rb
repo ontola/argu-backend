@@ -7,14 +7,6 @@ module Questionable
     with_collection :questions, pagination: true
   end
 
-  module Actions
-    extend ActiveSupport::Concern
-
-    included do
-      define_default_create_action :question, image: 'fa-question'
-    end
-  end
-
   module Serializer
     extend ActiveSupport::Concern
 

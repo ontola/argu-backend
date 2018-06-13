@@ -23,15 +23,6 @@ module Argumentable
     end
   end
 
-  module Actions
-    extend ActiveSupport::Concern
-
-    included do
-      define_default_create_action :pro_argument, image: 'fa-plus'
-      define_default_create_action :con_argument, image: 'fa-plus'
-    end
-  end
-
   module Serializer
     extend ActiveSupport::Concern
 

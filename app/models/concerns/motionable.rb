@@ -7,14 +7,6 @@ module Motionable
     with_collection :motions, pagination: true
   end
 
-  module Actions
-    extend ActiveSupport::Concern
-
-    included do
-      define_default_create_action :motion, image: 'fa-motion'
-    end
-  end
-
   module Serializer
     extend ActiveSupport::Concern
 

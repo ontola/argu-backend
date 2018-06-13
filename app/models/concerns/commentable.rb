@@ -24,14 +24,6 @@ module Commentable
     end
   end
 
-  module Actions
-    extend ActiveSupport::Concern
-
-    included do
-      define_default_create_action :comment, image: 'fa-comment'
-    end
-  end
-
   module Serializer
     extend ActiveSupport::Concern
 
