@@ -14,13 +14,13 @@ class ActivitySerializer < RecordSerializer
     forwarded: NS::ARGU[:Forward],
     untrash: NS::AS[:Add],
     convert: NS::ARGU[:Convert]
-
   }.freeze
 
   attribute :published, predicate: NS::AS[:published]
   attribute :updated, predicate: NS::AS[:updated]
   attribute :summary, predicate: NS::AS[:summary]
   attribute :action_status
+  attribute :comment, predicate: NS::SCHEMA[:text]
 
   has_one :forum
   has_one :owner, predicate: NS::AS[:actor]

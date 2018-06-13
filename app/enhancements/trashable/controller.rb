@@ -25,6 +25,9 @@ module Trashable
     def bin_respond_blocks_success(resource, format)
       format.html { bin_respond_success_html(resource) }
       format.js { bin_respond_success_js(resource) }
+      RDF_CONTENT_TYPES.each do |type|
+        format.send(type) { respond_with_200(resource.action(user_context, :trash), type, include: inc_action_form) }
+      end
     end
 
     # @!visibility public
@@ -43,6 +46,9 @@ module Trashable
     def unbin_respond_blocks_success(resource, format)
       format.html { unbin_respond_success_html(resource) }
       format.js { unbin_respond_success_js(resource) }
+      RDF_CONTENT_TYPES.each do |type|
+        format.send(type) { respond_with_200(resource.action(user_context, :untrash), type, include: inc_action_form) }
+      end
     end
 
     # @!visibility public

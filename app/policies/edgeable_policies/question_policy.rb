@@ -12,6 +12,7 @@ class QuestionPolicy < EdgePolicy
       attributes.concat %i[pinned require_location default_sorting reset_create_motion]
       attributes.concat [create_motion_group_ids: []]
     end
+    attributes.concat %i[trash_activity untrash_activity]
     attributes
   end
 

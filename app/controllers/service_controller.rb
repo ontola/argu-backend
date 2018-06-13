@@ -19,6 +19,15 @@ class ServiceController < ParentableController
       end
   end
 
+  def activity_comment
+    if vnext_request?
+      activity_key = "#{action_name}_activity_attributes"
+      params.require(model_name).require(activity_key).require(:comment) if params.dig(model_name, activity_key)
+    else
+      params[:activity]&.permit(:comment).try(:[], :comment)
+    end
+  end
+
   def authenticated_resource!
     @resource ||=
       case action_name
@@ -69,7 +78,7 @@ class ServiceController < ParentableController
     {
       creator: current_actor.actor,
       publisher: current_user,
-      comment: params[:activity]&.permit(:comment).try(:[], :comment),
+      comment: activity_comment,
       uuid: a_uuid,
       client_id: request_session_id
     }.merge(options)

@@ -49,6 +49,7 @@ class ActivityPolicy < RestrictivePolicy
 
   def permitted_attribute_names
     attributes = super
+    attributes << :comment
     attributes
   end
 end

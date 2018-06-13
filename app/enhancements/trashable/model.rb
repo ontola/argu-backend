@@ -5,6 +5,19 @@ module Trashable
     extend ActiveSupport::Concern
 
     included do
+      has_one :trash_activity,
+              -> { where("key ~ '*.trash'").order(created_at: :desc) },
+              class_name: 'Activity',
+              foreign_key: :trackable_edge_id,
+              primary_key: :uuid
+      has_one :untrash_activity,
+              -> { where("key ~ '*.untrash'").order(created_at: :desc) },
+              class_name: 'Activity',
+              foreign_key: :trackable_edge_id,
+              primary_key: :uuid
+      accepts_nested_attributes_for :trash_activity
+      accepts_nested_attributes_for :untrash_activity
+
       scope :anonymous, -> { where(creator_id: Profile::COMMUNITY_ID) }
     end
 

@@ -13,7 +13,9 @@ module Trashable
         policy: :trash?,
         image: :trash,
         url: -> { resource.iri },
-        http_method: :delete
+        http_method: :delete,
+        form: TrashRequestForm,
+        iri_template: :trash_iri
       )
 
       define_action(
@@ -22,7 +24,9 @@ module Trashable
         policy: :untrash?,
         image: :eye,
         url: -> { untrash_iri(resource) },
-        http_method: :put
+        http_method: :put,
+        form: UntrashRequestForm,
+        iri_template: :untrash_iri
       )
     end
   end

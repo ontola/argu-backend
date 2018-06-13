@@ -9,11 +9,6 @@ module Loggable
              foreign_key: :trackable_edge_id,
              primary_key: :uuid,
              dependent: :nullify
-    has_one :trash_activity,
-            -> { where("key ~ '*.trash'").order(created_at: :desc) },
-            class_name: 'Activity',
-            foreign_key: :trackable_edge_id,
-            primary_key: :uuid
     before_destroy :destroy_notifications, prepend: true
 
     def destroy_notifications

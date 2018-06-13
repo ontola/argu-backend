@@ -11,6 +11,7 @@ class MotionPolicy < EdgePolicy
       pro_arguments_attributes: arguments_attributes,
       con_arguments_attributes: arguments_attributes
     )
+    attributes.concat %i[trash_activity untrash_activity]
     attributes
   end
 

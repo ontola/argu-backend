@@ -3,6 +3,7 @@
 class Activity < PublicActivity::Activity
   include Iriable
   include Ldable
+  include Enhanceable
   has_many :notifications, dependent: :destroy
   # The creator of the activity
   # @example Create action
