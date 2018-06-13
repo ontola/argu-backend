@@ -90,6 +90,8 @@ class FormsBase
         NS::XSD[:boolean]
       when :decimal
         decimal_data_type(name)
+      when :file
+        NS::LL[:blob]
       else
         NS::XSD[:string] if model_class.defined_enums.key?(name)
       end

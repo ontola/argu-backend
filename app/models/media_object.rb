@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'types/file_type'
+
 class MediaObject < ApplicationRecord
   include Ldable
   include Parentable
@@ -9,6 +11,8 @@ class MediaObject < ApplicationRecord
   belongs_to :publisher, class_name: 'User'
 
   mount_uploader :content, MediaObjectUploader, mount_on: :content_uid
+
+  attribute :content, FileType.new
 
   validates_integrity_of :content
   validates_processing_of :content
