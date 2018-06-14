@@ -134,7 +134,9 @@ class ApplicationController < ActionController::Base
   end
 
   def api_request?
-    request.headers['Authorization'].present? && cookies[Rails.configuration.cookie_name].blank?
+    request.headers['Authorization'].present? &&
+      cookies[Rails.configuration.cookie_name].blank? &&
+      !request.format.html?
   end
 
   def authorize_current_actor
