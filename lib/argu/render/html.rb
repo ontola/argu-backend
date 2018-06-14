@@ -13,19 +13,23 @@ module Argu
 
       def link(link, title, content)
         safe_content = content&.html_safe
+        type = link_get_type(link)
         content =
-          case link_get_type(link)
+          case type
           when 'u'
             content_tag :span, safe_content, class: 'markdown--profile'
           when 'm'
             content_with_detail_icon(safe_content, 'motion', 'lightbulb-o')
           when 'q'
             content_with_detail_icon(safe_content, 'question', 'question')
-          when 'a'
-            type, title = Argument.where(id: link.split('/').last).pluck(:type, :title).first
-            pro = type == 'ProArgument'
-            content_tag :span, class: "markdown--argument-#{pro ? 'pro' : 'con'}" do
-              safe_join([content_tag(:span, '', class: "argument-bg fa fa-#{pro ? 'plus' : 'minus'}"), safe_content])
+          when 'pro', 'con'
+            content_tag :span, class: "markdown--argument-#{type}" do
+              safe_join(
+                [
+                  content_tag(:span, '', class: "argument-bg fa fa-#{type == 'pro' ? 'plus' : 'minus'}"),
+                  safe_content
+                ]
+              )
             end
           else
             content
