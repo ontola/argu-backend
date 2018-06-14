@@ -2,13 +2,13 @@
 
 class Question < Edge
   include ActivePublishable
-  concern Commentable
+  enhance Commentable
   include Edgeable::Content
   include HasLinks
   include Attribution
   include BlogPostable
   include Timelineable
-  concern Motionable
+  enhance Motionable
   include CustomGrants
   enhance Moveable
   include Photoable

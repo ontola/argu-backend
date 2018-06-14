@@ -3,8 +3,8 @@
 class Motion < Edge
   include ActionView::Helpers::NumberHelper
   include ActivePublishable
-  concern Argumentable
-  concern Commentable
+  enhance Argumentable
+  enhance Commentable
   include Edgeable::Content
   include Voteable
   include Attribution

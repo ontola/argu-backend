@@ -2,7 +2,7 @@
 
 class BlogPost < Edge
   include Edgeable::Content
-  concern Commentable
+  enhance Commentable
   include ActivePublishable
   include HasLinks
   include Photoable

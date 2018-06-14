@@ -5,8 +5,8 @@ class Forum < Edge
   enhance Destroyable
   enhance Updateable
   include Discussable
-  concern Questionable
-  concern Motionable
+  enhance Questionable
+  enhance Motionable
   include ProfilePhotoable
   include Attribution
   include Menuable
