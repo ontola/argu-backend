@@ -2,7 +2,7 @@
 
 class Motion < Edge
   include ActionView::Helpers::NumberHelper
-  include ActivePublishable
+  enhance MarkAsImportant
   enhance Argumentable
   enhance Commentable
   include Edgeable::Content

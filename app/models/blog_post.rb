@@ -3,7 +3,7 @@
 class BlogPost < Edge
   include Edgeable::Content
   enhance Commentable
-  include ActivePublishable
+  enhance MarkAsImportant
   include HasLinks
   include Photoable
 

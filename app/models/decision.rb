@@ -5,7 +5,7 @@ class Decision < Edge
   enhance Updateable
   include Loggable
   include HasLinks
-  include ActivePublishable
+  enhance MarkAsImportant
   include Menuable
 
   attribute :display_name

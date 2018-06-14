@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Question < Edge
-  include ActivePublishable
+  enhance MarkAsImportant
   enhance Commentable
   include Edgeable::Content
   include HasLinks

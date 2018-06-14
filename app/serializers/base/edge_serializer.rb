@@ -9,9 +9,6 @@ class EdgeSerializer < RecordSerializer
     object.creator.profileable
   end
 
-  attribute :is_draft?,
-            predicate: NS::ARGU[:isDraft],
-            if: :is_publishable?
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
 
   delegate :is_publishable?, to: :object
