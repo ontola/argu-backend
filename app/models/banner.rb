@@ -5,8 +5,8 @@ class Banner < NewsBoy
   enhance Destroyable
   enhance Updateable
   include EdgeableShallow
-  include ProfilePhotoable
-  include Photoable
+  enhance ProfilePhotoable
+  enhance CoverPhotoable
   include Uuidable
 
   belongs_to :forum, primary_key: :uuid

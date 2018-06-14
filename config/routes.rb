@@ -354,14 +354,12 @@ Rails.application.routes.draw do
                              feedable decisionable invitable menuable statable exportable loggable
                              convertible] do
         include_route_concerns
-        resources :media_objects, only: :index
       end
       resources :questions,
                 path: 'q',
                 concerns: %i[blog_postable feedable exportable convertible
                              invitable menuable contactable statable loggable] do
         include_route_concerns
-        resources :media_objects, only: :index
       end
       resources :votes, only: %i[show], as: :vote do
         include_route_concerns

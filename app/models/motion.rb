@@ -2,6 +2,7 @@
 
 class Motion < Edge
   include ActionView::Helpers::NumberHelper
+  enhance Attachable
   enhance MarkAsImportant
   enhance Argumentable
   enhance Commentable
@@ -10,7 +11,7 @@ class Motion < Edge
   include Attribution
   include HasLinks
   enhance Moveable
-  include Photoable
+  enhance CoverPhotoable
 
   include BlogPostable
   include Timelineable

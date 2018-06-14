@@ -2,8 +2,8 @@
 
 class Profile < ApplicationRecord
   include Ldable
-  include ProfilePhotoable
-  include Photoable
+  enhance ProfilePhotoable
+  enhance CoverPhotoable
   include Uuidable
 
   # Currently hardcoded to User (whilst it can also be a Profile)

@@ -16,7 +16,6 @@ class Edge < ApplicationRecord
   include Parentable
   include Placeable
   include Shortnameable
-  include Attachable
   include Uuidable
   include Widgetable
   include Convertible

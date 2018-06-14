@@ -7,11 +7,11 @@ class Forum < Edge
   include Discussable
   enhance Questionable
   enhance Motionable
-  include ProfilePhotoable
+  enhance ProfilePhotoable
   include Attribution
   include Menuable
   enhance Moveable
-  include Photoable
+  enhance CoverPhotoable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

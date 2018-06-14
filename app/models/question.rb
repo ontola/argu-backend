@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Question < Edge
+  enhance Attachable
   enhance MarkAsImportant
   enhance Commentable
   include Edgeable::Content
@@ -11,7 +12,7 @@ class Question < Edge
   enhance Motionable
   include CustomGrants
   enhance Moveable
-  include Photoable
+  enhance CoverPhotoable
 
   convertible motions: %i[activities media_objects]
   counter_cache true

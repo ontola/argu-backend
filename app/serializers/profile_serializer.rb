@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 class ProfileSerializer < BaseSerializer
-  include Photoable::Serializer
+  include ProfilePhotoable::Serializer
   attribute :display_name, predicate: NS::SCHEMA[:name]
 end

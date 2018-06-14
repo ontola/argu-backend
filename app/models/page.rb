@@ -9,7 +9,7 @@ class Page < Edge
   enhance Updateable
   include Menuable
   include Discussable
-  include Photoable
+  enhance CoverPhotoable
   include BlogPostable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid

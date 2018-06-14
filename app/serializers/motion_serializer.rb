@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class MotionSerializer < ContentEdgeSerializer
-  include Attachable::Serializer
   include BlogPostable::Serializer
   include Decisionable::Serializer
   include Voteable::Serializer
-  include Photoable::Serializer
 
   attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?
   attribute :pro_count, if: :export_scope?

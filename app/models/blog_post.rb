@@ -2,10 +2,11 @@
 
 class BlogPost < Edge
   include Edgeable::Content
+  enhance Attachable
   enhance Commentable
   enhance MarkAsImportant
   include HasLinks
-  include Photoable
+  enhance CoverPhotoable
 
   counter_cache true
   parentable :motion, :question, :page
