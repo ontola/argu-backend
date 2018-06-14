@@ -3,7 +3,7 @@
 class Notification < ApplicationRecord
   enhance Createable
   enhance Updateable
-  concern Actionable
+  enhance Actionable
   include BlogPostsHelper
   include Ldable
   include ActivityHelper

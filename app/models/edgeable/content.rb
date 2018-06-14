@@ -5,11 +5,11 @@ module Edgeable
     extend ActiveSupport::Concern
 
     included do
-      concern Actionable
       include Loggable
       enhance Createable
       enhance Updateable
       enhance Trashable
+      enhance Actionable
       include Menuable
 
       property :display_name, :string, NS::SCHEMA[:name]
