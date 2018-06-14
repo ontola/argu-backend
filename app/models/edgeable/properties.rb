@@ -15,7 +15,7 @@ module Edgeable
 
     def preload_properties(force = false)
       return if !force && (properties_preloaded || !association_cached?(:properties))
-      defined_properties.each do |p|
+      defined_properties&.each do |p|
         property = properties.detect { |prop| prop.predicate == p[:predicate] }
         value = property.present? ? property.value : p[:default]
         send("#{p[:name]}=", value) unless value.nil?
