@@ -45,9 +45,6 @@ Rails.application.routes.draw do
   concern :contactable do
     resources :direct_messages, path: :dm, only: [:new]
   end
-  concern :convertible do
-    resources :conversions, path: 'conversion', only: %i[new create]
-  end
   concern :decisionable do
     resources :decisions, path: 'decision', only: %i[show new create index], concerns: %i[menuable] do
       include_route_concerns

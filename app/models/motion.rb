@@ -6,6 +6,7 @@ class Motion < Edge
   enhance MarkAsImportant
   enhance Argumentable
   enhance Commentable
+  enhance Convertible
   include Edgeable::Content
   include Voteable
   include Attribution

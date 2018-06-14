@@ -18,7 +18,6 @@ class Edge < ApplicationRecord
   include Shortnameable
   include Uuidable
   include Widgetable
-  include Convertible
 
   acts_as_followable
   has_ltree_hierarchy

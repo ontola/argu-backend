@@ -4,6 +4,7 @@ class Question < Edge
   enhance Attachable
   enhance MarkAsImportant
   enhance Commentable
+  enhance Convertible
   include Edgeable::Content
   include HasLinks
   include Attribution
