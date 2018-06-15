@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class MotionSerializer < ContentEdgeSerializer
-  include Decisionable::Serializer
   include Voteable::Serializer
 
   attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?

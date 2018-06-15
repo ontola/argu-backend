@@ -9,6 +9,7 @@ class Motion < Edge
   enhance Commentable
   enhance Convertible
   enhance CoverPhotoable
+  enhance Decisionable
   enhance MarkAsImportant
   enhance Moveable
 
@@ -17,7 +18,6 @@ class Motion < Edge
   include Attribution
   include HasLinks
   include Timelineable
-  include Decisionable
 
   attr_accessor :current_vote
 

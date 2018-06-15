@@ -40,12 +40,6 @@ Rails.application.routes.draw do
   concern :contactable do
     resources :direct_messages, path: :dm, only: [:new]
   end
-  concern :decisionable do
-    resources :decisions, path: 'decision', only: %i[show new create index], concerns: %i[menuable] do
-      include_route_concerns
-      get :log, action: :log
-    end
-  end
   concern :discussable do
     resources :discussions, only: %i[index new]
   end
@@ -343,7 +337,7 @@ Rails.application.routes.draw do
                 path: 'm',
                 only: %i[show],
                 concerns: %i[vote_eventable contactable
-                             feedable decisionable invitable menuable statable exportable loggable
+                             feedable invitable menuable statable exportable loggable
                              convertible] do
         include_route_concerns
       end
