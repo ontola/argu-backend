@@ -5,7 +5,7 @@ module Decisionable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :decisions, pagination: true
+      with_collection :decisions
 
       # @return [Boolean] Whether this Decision is assigned to the `to_user` or one of its groups
       def assigned_to_user?(to_user)

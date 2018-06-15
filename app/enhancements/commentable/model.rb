@@ -7,7 +7,6 @@ module Commentable
     included do
       with_collection :comments,
                       association: :filtered_threads,
-                      pagination: true,
                       includes: {
                         default_vote_event: {},
                         parent: {},

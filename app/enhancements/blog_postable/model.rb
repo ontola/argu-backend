@@ -5,7 +5,7 @@ module BlogPostable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :blog_posts, pagination: true
+      with_collection :blog_posts
     end
   end
 end

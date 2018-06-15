@@ -25,8 +25,7 @@ class VoteMatchesController < ServiceController
       Collection.new(
         association_class: VoteMatch,
         user_context: user_context,
-        page: params[:page],
-        pagination: true
+        page: params[:page]
       )
     end
   end

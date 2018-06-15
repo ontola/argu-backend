@@ -27,7 +27,7 @@ class Forum < Edge
   has_many :banners, inverse_of: :forum, dependent: :destroy, primary_key: :uuid
   belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
 
-  with_collection :motions, pagination: true
+  with_collection :motions
 
   cattr_accessor :default_widgets do
     %i[motions questions]

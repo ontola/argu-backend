@@ -23,7 +23,7 @@ class Argument < Edge
   counter_cache arguments_pro: {owner_type: 'ProArgument'}, arguments_con: {owner_type: 'ConArgument'}
   paginates_per 10
   parentable :motion, :linked_record
-  with_collection :votes, pagination: true
+  with_collection :votes
 
   attr_reader :pro
   alias pro? pro

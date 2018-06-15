@@ -2,7 +2,7 @@
 
 class VoteEvent < Edge
   DEFAULT_ID = 'default'
-  with_collection :votes, pagination: true
+  with_collection :votes
 
   parentable :motion, :linked_record
 

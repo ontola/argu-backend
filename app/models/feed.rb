@@ -9,7 +9,7 @@ class Feed
   include Iriable
   attr_accessor :parent, :relevant_only, :root_id
 
-  with_collection :activities, pagination: true, part_of: :parent
+  with_collection :activities, part_of: :parent
 
   def activities
     @activities ||=

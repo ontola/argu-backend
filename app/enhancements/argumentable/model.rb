@@ -5,8 +5,8 @@ module Argumentable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :pro_arguments, pagination: true
-      with_collection :con_arguments, pagination: true
+      with_collection :pro_arguments
+      with_collection :con_arguments
       accepts_nested_attributes_for :pro_arguments
       accepts_nested_attributes_for :con_arguments
       attribute :invert_arguments, :boolean

@@ -117,7 +117,7 @@ class Edge < ApplicationRecord
   alias_attribute :title, :display_name
 
   acts_as_sequenced scope: :root_id, column: :fragment
-  with_collection :exports, pagination: true
+  with_collection :exports
 
   attr_writer :root
   alias user publisher

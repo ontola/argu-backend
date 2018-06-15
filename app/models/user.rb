@@ -49,8 +49,7 @@ class User < ApplicationRecord
   acts_as_follower
 
   with_collection :vote_matches,
-                  association: :profile_vote_matches,
-                  pagination: true
+                  association: :profile_vote_matches
 
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1

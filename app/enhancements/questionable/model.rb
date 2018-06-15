@@ -5,7 +5,7 @@ module Questionable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :questions, pagination: true
+      with_collection :questions
     end
   end
 end

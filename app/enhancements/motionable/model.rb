@@ -5,7 +5,7 @@ module Motionable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :motions, pagination: true
+      with_collection :motions
     end
   end
 end

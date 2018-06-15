@@ -29,9 +29,8 @@ class Page < Edge
   after_create :create_staff_grant
 
   with_collection :vote_matches,
-                  association: :profile_vote_matches,
-                  pagination: true
-  with_collection :forums, pagination: true
+                  association: :profile_vote_matches
+  with_collection :forums
 
   parentable
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {open: 1, hidden: 3}

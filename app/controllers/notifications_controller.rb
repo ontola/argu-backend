@@ -115,7 +115,6 @@ class NotificationsController < AuthorizedController
       before: params[:before],
       user_context: user_context,
       type: params[:type],
-      pagination: true,
       parent: nil,
       includes: [:user, activity: [:trackable, :recipient, owner: [profileable: :shortname]]]
     )

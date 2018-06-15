@@ -21,7 +21,7 @@ module Attachable
                                         attrs['description'].blank?
                                     }
 
-      with_collection :attachments, pagination: true, association_class: MediaObject, filter: {used_as: :attachment}
+      with_collection :attachments, association_class: MediaObject, filter: {used_as: :attachment}
     end
   end
 end

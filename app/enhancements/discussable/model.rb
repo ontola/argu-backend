@@ -12,8 +12,7 @@ module Discussable
                inverse_of: :parent
 
       with_collection :discussions,
-                      includes: [:parent, :default_vote_event, :default_cover_photo, creator: :profileable],
-                      pagination: true
+                      includes: [:parent, :default_vote_event, :default_cover_photo, creator: :profileable]
     end
   end
 end
