@@ -12,12 +12,12 @@ class Motion < Edge
   enhance Decisionable
   enhance MarkAsImportant
   enhance Moveable
+  enhance Timelineable
 
   include Edgeable::Content
   include Voteable
   include Attribution
   include HasLinks
-  include Timelineable
 
   attr_accessor :current_vote
 

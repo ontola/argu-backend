@@ -9,11 +9,11 @@ class Question < Edge
   enhance MarkAsImportant
   enhance Motionable
   enhance Moveable
+  enhance Timelineable
 
   include Edgeable::Content
   include HasLinks
   include Attribution
-  include Timelineable
   include CustomGrants
 
   convertible motions: %i[activities media_objects]
