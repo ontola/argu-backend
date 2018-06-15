@@ -6,8 +6,6 @@ class MotionSerializer < ContentEdgeSerializer
   attribute :con_count, if: :export_scope?
   attribute :neutral_count, if: :export_scope?
 
-  include_menus
-
   def current_vote
     object.current_vote&.for
   end

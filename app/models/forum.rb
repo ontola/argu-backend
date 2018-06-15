@@ -5,6 +5,7 @@ class Forum < Edge
   enhance Createable
   enhance Destroyable
   enhance Discussable
+  enhance Menuable
   enhance Motionable
   enhance Moveable
   enhance Placeable
@@ -14,7 +15,6 @@ class Forum < Edge
   enhance Widgetable
 
   include Attribution
-  include Menuable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

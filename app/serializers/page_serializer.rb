@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class PageSerializer < RecordSerializer
-  include Menuable::Serializer
   include ProfilePhotoable::Serializer
 
   attribute :about, predicate: NS::SCHEMA[:description]
   attribute :base_color, predicate: NS::ARGU[:baseColor]
-  include_menus
 
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
 

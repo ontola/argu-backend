@@ -56,9 +56,6 @@ Rails.application.routes.draw do
   concern :loggable do
     resource :log, only: %i[show], on: :member
   end
-  concern :menuable do
-    resources :menus, only: %i[index show]
-  end
   concern :statable do
     get :statistics, to: 'statistics#show'
   end
@@ -266,7 +263,7 @@ Rails.application.routes.draw do
     resources :pages,
               path: '',
               only: %i[show],
-              concerns: %i[feedable menuable statable exportable] do
+              concerns: %i[feedable statable exportable] do
       include_route_concerns
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
@@ -289,7 +286,7 @@ Rails.application.routes.draw do
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
                   only: %i[show],
-                  concerns: %i[votable feedable menuable convertible
+                  concerns: %i[votable feedable convertible
                                contactable statable loggable] do
           include_route_concerns
         end
@@ -300,7 +297,7 @@ Rails.application.routes.draw do
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show],
-                concerns: %i[menuable statable loggable] do
+                concerns: %i[statable loggable] do
         include_route_concerns
       end
       resources :comments, concerns: %i[loggable], only: %i[show], path: 'c' do
@@ -331,14 +328,14 @@ Rails.application.routes.draw do
                 path: 'm',
                 only: %i[show],
                 concerns: %i[contactable
-                             feedable invitable menuable statable exportable loggable
+                             feedable invitable statable exportable loggable
                              convertible] do
         include_route_concerns
       end
       resources :questions,
                 path: 'q',
                 concerns: %i[feedable exportable convertible
-                             invitable menuable contactable statable loggable] do
+                             invitable contactable statable loggable] do
         include_route_concerns
       end
       resources :votes, only: %i[show], as: :vote do
@@ -348,7 +345,7 @@ Rails.application.routes.draw do
       resources :forums,
                 only: %i[show],
                 path: '',
-                concerns: %i[feedable favorable invitable menuable
+                concerns: %i[feedable favorable invitable
                              statable exportable] do
         include_route_concerns
         resources :motions, path: :m, only: [] do

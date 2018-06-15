@@ -3,11 +3,11 @@
 class Decision < Edge
   enhance Createable
   enhance MarkAsImportant
+  enhance Menuable
   enhance Updateable
 
   include Loggable
   include HasLinks
-  include Menuable
 
   attribute :display_name
   property :description, :text, NS::SCHEMA[:text]

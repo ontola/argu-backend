@@ -9,10 +9,9 @@ class Page < Edge
   enhance Createable
   enhance Destroyable
   enhance Discussable
+  enhance Menuable
   enhance Placeable
   enhance Updateable
-
-  include Menuable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   accepts_nested_attributes_for :profile

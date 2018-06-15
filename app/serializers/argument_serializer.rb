@@ -10,8 +10,6 @@ class ArgumentSerializer < ContentEdgeSerializer
 
   attribute :pro, predicate: NS::SCHEMA[:option]
 
-  include_menus
-
   def current_vote
     @current_vote ||= upvote_for(object, scope.user.profile)
   end
