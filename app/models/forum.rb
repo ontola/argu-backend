@@ -10,6 +10,7 @@ class Forum < Edge
   enhance ProfilePhotoable
   enhance Questionable
   enhance Updateable
+  enhance Widgetable
 
   include Attribution
   include Menuable
