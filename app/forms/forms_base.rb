@@ -126,9 +126,16 @@ class FormsBase
       attr_key = model_class.attribute_alias(attr.name) || attr.name
       model_name = model_class.model_name.i18n_key
       I18n.t("formtastic.placeholders.#{model_name}.#{attr_key}",
-             default: I18n.t("formtastic.hints.#{model_name}.#{attr_key}",
-                             default: I18n.t("formtastic.hints.#{attr_key}",
-                                             default: nil)))
+             default: I18n.t(
+               "formtastic.placeholders.#{attr_key}",
+               default: I18n.t(
+                 "formtastic.hints.#{model_name}.#{attr_key}",
+                 default: I18n.t(
+                   "formtastic.hints.#{attr_key}",
+                   default: nil
+                 )
+               )
+             ))
     end
 
     def fields(arr, group_iri = nil)

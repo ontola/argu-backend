@@ -15,6 +15,7 @@ en:
     labels:
       about: "About"
       are_votes_public: "Show my activity and my votes on my profile"
+      attachments: "Attachments"
       audience: "Audience"
       birthday: "Year of birth"
       content: "Content"
@@ -23,7 +24,9 @@ en:
       cover_photo: "Cover photo"
       cover_photo_add: "Add image"
       created_at: "Created at"
+      description: "Content"
       dismissable: "Dismissable"
+      display_name: "Title"
       ends_at: "Ends at"
       expires_at: "Expires at"
       f_move: "Move"
@@ -110,19 +113,30 @@ en:
       password_confirmation: "Same as above"
       expires_at: "Please fill in all fields if you want to set a deadline"
     placeholders:
+      description: "Enter a description"
+      display_name: "Enter your title"
       email: "email@example.com"
       login: "email or username"
       argument:
-        title: "Enter the core of your argument here"
         content: "Enter details and background information on your argument here."
+        description: "Enter details and background information on your argument here."
+        display_name: "Enter the core of your argument here"
+        title: "Enter the core of your argument here"
       blog_post:
-        title: "Enter the core of your update here"
         content: "Enter details and background information on your update here."
+        description: "Enter details and background information on your update here."
+        display_name: "Enter the core of your update here"
+        title: "Enter the core of your update here"
       motion:
+        content: "Enter details and background information on your idea here."
+        description: "Enter details and background information on your idea here."
+        display_name: "Enter the core of your idea here"
         title: "Enter the core of your idea here"
       question:
-        title: "Enter the core of your challenge here"
         content: "Enter details and background information on your challenge here."
+        description: "Enter details and background information on your challenge here."
+        display_name: "Enter the core of your challenge here"
+        title: "Enter the core of your challenge here"
       user:
         email: "email@example.com"
       group:

@@ -15,6 +15,7 @@ nl:
     labels:
       about: "Over"
       are_votes_public: "Toon mijn activiteit en mijn stemmen in mijn profiel"
+      attachments: "Bijlagen"
       audience: "Publiek"
       birthday: "Geboortejaar"
       content: "Inhoud"
@@ -23,7 +24,9 @@ nl:
       cover_photo: "Omslagfoto"
       cover_photo_add: "Afbeelding toevoegen"
       created_at: "Gemaakt op"
+      description: "Inhoud"
       dismissable: "Sluitbaar"
+      display_name: "Titel"
       ends_at: "Eindigen op"
       expires_at: "Verloopt op"
       f_move: "Verplaatsen"
@@ -110,20 +113,30 @@ nl:
       password_confirmation: "Zelfde als hierboven"
       expires_at: "Vul alle velden in als je een deadline in wil stellen"
     placeholders:
+      description: "Voer een beschrijving in"
+      display_name: "Voer een titel in"
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
       argument:
-        title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
+        description: "Plaats hier de details en achtergrondinformatie van jouw argument."
+        display_name: "Plaats hier de kern van jouw argument"
+        title: "Plaats hier de kern van jouw argument"
       blog_post:
-        title: "Plaats de kern van de update"
         content: "Licht je update hier toe."
+        description: "Licht je update hier toe."
+        display_name: "Plaats de kern van de update"
+        title: "Plaats de kern van de update"
       motion:
-        title: "Plaats hier de kern van jouw idee"
         content: "Plaats hier de details en achtergrondinformatie van jouw idee."
+        description: "Plaats hier de details en achtergrondinformatie van jouw idee."
+        display_name: "Plaats hier de kern van jouw idee"
+        title: "Plaats hier de kern van jouw idee"
       question:
-        title: "Plaats hier de kern van jouw uitdaging"
         content: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
+        description: "Plaats hier de details en achtergrondinformatie van jouw uitdaging."
+        display_name: "Plaats hier de kern van jouw uitdaging"
+        title: "Plaats hier de kern van jouw uitdaging"
       user:
         email: "email@example.com"
       group:
