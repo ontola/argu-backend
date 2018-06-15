@@ -66,16 +66,16 @@ class ActivityStringTest < ActiveSupport::TestCase
     destroy_activity = Activity.last
     assert_equal "[#{question.publisher.display_name}](#{question.publisher.iri}) "\
                   "posted a draft challenge in [#{freetown.display_name}](#{freetown.iri})",
-                 Argu::ActivityString.new(create_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(create_activity.reload, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
                   "updated #{display_name}",
-                 Argu::ActivityString.new(update_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(update_activity.reload, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
                   "trashed #{display_name}",
-                 Argu::ActivityString.new(trash_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(trash_activity.reload, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
                   "deleted #{display_name}",
-                 Argu::ActivityString.new(destroy_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(destroy_activity.reload, receiver, render: :embedded_link).to_s
   end
 
   test 'string for activities of motion of deleted question' do
@@ -86,13 +86,13 @@ class ActivityStringTest < ActiveSupport::TestCase
     destroy_resource(question)
     assert_equal "[#{motion.publisher.display_name}](#{motion.publisher.iri}) "\
                   "posted a draft idea in #{question.display_name}",
-                 Argu::ActivityString.new(create_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(create_activity.reload, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
                   "updated #{display_name}",
-                 Argu::ActivityString.new(update_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(update_activity.reload, receiver, render: :embedded_link).to_s
     assert_equal "[#{updater.display_name}](#{updater.iri}) "\
                   "trashed #{display_name}",
-                 Argu::ActivityString.new(trash_activity, receiver, render: :embedded_link).to_s
+                 Argu::ActivityString.new(trash_activity.reload, receiver, render: :embedded_link).to_s
   end
 
   test 'string for activities of question by deleted user' do

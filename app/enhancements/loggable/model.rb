@@ -2,14 +2,12 @@
 
 # Concern for Models that use Activities to keep a log of changes
 module Loggable
-  extend ActiveSupport::Concern
+  module Model
+    extend ActiveSupport::Concern
 
-  included do
-    has_many :activities,
-             foreign_key: :trackable_edge_id,
-             primary_key: :uuid,
-             dependent: :nullify
-    before_destroy :destroy_notifications, prepend: true
+    included do
+      before_destroy :destroy_notifications, prepend: true
+    end
 
     def destroy_notifications
       activities.each do |activity|

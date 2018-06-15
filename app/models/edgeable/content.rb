@@ -6,12 +6,11 @@ module Edgeable
 
     included do
       enhance Createable
+      enhance Loggable
       enhance Menuable
       enhance Trashable
       enhance Updateable
       enhance Actionable
-
-      include Loggable
 
       property :display_name, :string, NS::SCHEMA[:name]
       property :description, :text, NS::SCHEMA[:text]

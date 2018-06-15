@@ -2,11 +2,11 @@
 
 class Decision < Edge
   enhance Createable
+  enhance Loggable
   enhance MarkAsImportant
   enhance Menuable
   enhance Updateable
 
-  include Loggable
   include HasLinks
 
   attribute :display_name

@@ -53,9 +53,6 @@ Rails.application.routes.draw do
   concern :invitable do
     get :invite, controller: :invites, action: :new
   end
-  concern :loggable do
-    resource :log, only: %i[show], on: :member
-  end
   concern :statable do
     get :statistics, to: 'statistics#show'
   end
@@ -287,7 +284,7 @@ Rails.application.routes.draw do
                   path: model == :pro_arguments ? 'pro' : 'con',
                   only: %i[show],
                   concerns: %i[votable feedable convertible
-                               contactable statable loggable] do
+                               contactable statable] do
           include_route_concerns
         end
       end
@@ -297,10 +294,10 @@ Rails.application.routes.draw do
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show],
-                concerns: %i[statable loggable] do
+                concerns: %i[statable] do
         include_route_concerns
       end
-      resources :comments, concerns: %i[loggable], only: %i[show], path: 'c' do
+      resources :comments, only: %i[show], path: 'c' do
         include_route_concerns
       end
       resources :comments, only: %i[show]
@@ -328,14 +325,14 @@ Rails.application.routes.draw do
                 path: 'm',
                 only: %i[show],
                 concerns: %i[contactable
-                             feedable invitable statable exportable loggable
+                             feedable invitable statable exportable
                              convertible] do
         include_route_concerns
       end
       resources :questions,
                 path: 'q',
                 concerns: %i[feedable exportable convertible
-                             invitable contactable statable loggable] do
+                             invitable contactable statable] do
         include_route_concerns
       end
       resources :votes, only: %i[show], as: :vote do

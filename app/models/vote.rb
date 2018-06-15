@@ -3,10 +3,8 @@
 class Vote < Edge
   enhance Createable
   enhance Destroyable
+  enhance Loggable
   enhance Updateable
-
-  include PublicActivity::Model
-  include Loggable
 
   property :for, :integer, NS::SCHEMA[:option], default: 3, enum: {con: 0, pro: 1, neutral: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
