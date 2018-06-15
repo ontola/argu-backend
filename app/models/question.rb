@@ -9,6 +9,7 @@ class Question < Edge
   enhance MarkAsImportant
   enhance Motionable
   enhance Moveable
+  enhance Placeable
   enhance Timelineable
 
   include Edgeable::Content

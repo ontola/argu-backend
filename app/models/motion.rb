@@ -12,6 +12,7 @@ class Motion < Edge
   enhance Decisionable
   enhance MarkAsImportant
   enhance Moveable
+  enhance Placeable
   enhance Timelineable
   enhance VoteEventable
 

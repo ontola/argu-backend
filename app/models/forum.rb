@@ -7,6 +7,7 @@ class Forum < Edge
   enhance Discussable
   enhance Motionable
   enhance Moveable
+  enhance Placeable
   enhance ProfilePhotoable
   enhance Questionable
   enhance Updateable

@@ -9,6 +9,7 @@ class Page < Edge
   enhance Createable
   enhance Destroyable
   enhance Discussable
+  enhance Placeable
   enhance Updateable
 
   include Menuable

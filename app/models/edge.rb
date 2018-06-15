@@ -14,7 +14,6 @@ class Edge < ApplicationRecord
   include Edgeable::PropertyAssociations
   include RedisResource::Concern
   include Parentable
-  include Placeable
   include Shortnameable
   include Uuidable
 
@@ -104,7 +103,6 @@ class Edge < ApplicationRecord
   scope :active, -> { published.untrashed }
 
   validates :parent, presence: true, unless: :root_object?
-  validates :placements, presence: true, if: :requires_location?
 
   before_destroy :reset_persisted_edge
   before_destroy :destroy_children
@@ -301,10 +299,6 @@ class Edge < ApplicationRecord
   def destroy_redis_children
     keys = RedisResource::Key.new(parent: self, root_id: root_id).matched_keys.map(&:key)
     Argu::Redis.redis_instance.del(*keys) if keys.present?
-  end
-
-  def requires_location?
-    owner_type == 'Motion' && parent.owner_type == 'Question' && parent.require_location
   end
 
   def reset_persisted_edge

@@ -2,12 +2,12 @@
 
 class User < ApplicationRecord
   enhance Destroyable
+  enhance Placeable
   enhance Updateable
 
   include RedirectHelper
   include Iriable
   include Ldable
-  include Placeable
   include Shortnameable
   include Uuidable
 
