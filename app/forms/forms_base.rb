@@ -151,17 +151,24 @@ class FormsBase
     def literal_property(attr, pred, instance_props)
       enum = model_class.defined_enums[attr.name.to_s]&.keys
       datatype = attr.dig(:options, :datatype) || (enum ? NS::XSD[:string] : ar_attr_to_datatype(attr))
+      m_attr = model_attribute(attr)
+
       SHACL::PropertyShape.new(
         datatype: datatype,
         max_count: 1,
         description: description_for_attr(attr),
         group: instance_props[:group],
-        model_attribute: (model_class.attribute_alias(attr.name) || attr.name).to_sym,
+        model_attribute: m_attr,
         name: name_for_attr(attr.name),
         order: instance_props[:order],
         path: pred,
-        sh_in: enum && RDF::List(enum)
+        sh_in: enum && RDF::List(enum),
+        **validators_to_sh_props(validators(m_attr))
       )
+    end
+
+    def model_attribute(attr)
+      (model_class.attribute_alias(attr.name) || attr.name).to_sym
     end
 
     def model_class
@@ -177,6 +184,7 @@ class FormsBase
       name = attr.dig(:options, :association) || attr.name
       collection = model_class.try(:collections)&.find { |c| c[:name] == name }
       klass_name = model_class.try(:reflections).try(:[], name.to_s)&.class_name || name.to_s.classify
+      m_attr = model_attribute(attr)
 
       max_count = collection || attr.is_a?(ActiveModel::Serializer::HasManyReflection) ? nil : 1
 
@@ -184,12 +192,13 @@ class FormsBase
         description: description_for_attr(attr),
         group: instance_props[:group],
         max_count: max_count,
-        model_attribute: (model_class.attribute_alias(name) || name).to_sym,
+        model_attribute: m_attr,
         name: name_for_attr(name),
         order: instance_props[:order],
         path: pred,
         sh_class: klass_name.constantize.iri,
-        referred_shapes: ["#{klass_name}Form".safe_constantize]
+        referred_shapes: ["#{klass_name}Form".safe_constantize],
+        **validators_to_sh_props(validators(m_attr))
       )
     end
 
@@ -226,6 +235,23 @@ class FormsBase
 
     def serializer_reflections
       serializer_class._reflections
+    end
+
+    def validators(model_attribute)
+      model_class.validators.select { |v| v.attributes.include?(model_attribute) }
+    end
+
+    def validators_to_sh_props(validators)
+      opts = {}
+      validators.each do |validator|
+        if validator.is_a?(ActiveRecord::Validations::PresenceValidator)
+          opts[:min_count] = 1
+        elsif validator.is_a?(ActiveRecord::Validations::LengthValidator)
+          opts[:max_length] = validator.options[:maximum]
+          opts[:min_length] = validator.options[:minimum]
+        end
+      end
+      opts
     end
   end
 end

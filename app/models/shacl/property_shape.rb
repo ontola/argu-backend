@@ -11,13 +11,16 @@ module SHACL
                   :default_value,
                   :description,
                   :group,
+                  :min_count,
+                  :max_count,
+                  :min_length,
+                  :max_length,
                   :name,
                   :node,
                   :node_kind,
                   :order,
                   :path,
-                  :sh_in,
-                  :max_count
+                  :sh_in
 
     def self.iri
       NS::SH[:PropertyShape]
