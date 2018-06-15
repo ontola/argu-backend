@@ -2,6 +2,7 @@
 
 class Question < Edge
   enhance Attachable
+  enhance BlogPostable
   enhance Commentable
   enhance Convertible
   enhance CoverPhotoable
@@ -12,7 +13,6 @@ class Question < Edge
   include Edgeable::Content
   include HasLinks
   include Attribution
-  include BlogPostable
   include Timelineable
   include CustomGrants
 

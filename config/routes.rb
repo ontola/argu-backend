@@ -37,11 +37,6 @@ require 'argu/whitelist_constraint'
 Rails.application.routes.draw do
   concerns_from_enhancements
 
-  concern :blog_postable do
-    resources :blog_posts,
-              only: %i[index new create],
-              path: 'blog'
-  end
   concern :contactable do
     resources :direct_messages, path: :dm, only: [:new]
   end
@@ -283,7 +278,7 @@ Rails.application.routes.draw do
     resources :pages,
               path: '',
               only: %i[show],
-              concerns: %i[feedable menuable statable exportable blog_postable] do
+              concerns: %i[feedable menuable statable exportable] do
       include_route_concerns
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
@@ -347,14 +342,14 @@ Rails.application.routes.draw do
       resources :motions,
                 path: 'm',
                 only: %i[show],
-                concerns: %i[blog_postable vote_eventable contactable
+                concerns: %i[vote_eventable contactable
                              feedable decisionable invitable menuable statable exportable loggable
                              convertible] do
         include_route_concerns
       end
       resources :questions,
                 path: 'q',
-                concerns: %i[blog_postable feedable exportable convertible
+                concerns: %i[feedable exportable convertible
                              invitable menuable contactable statable loggable] do
         include_route_concerns
       end

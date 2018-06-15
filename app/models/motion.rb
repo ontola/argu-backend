@@ -5,6 +5,7 @@ class Motion < Edge
 
   enhance Argumentable
   enhance Attachable
+  enhance BlogPostable
   enhance Commentable
   enhance Convertible
   enhance CoverPhotoable
@@ -15,7 +16,6 @@ class Motion < Edge
   include Voteable
   include Attribution
   include HasLinks
-  include BlogPostable
   include Timelineable
   include Decisionable
 

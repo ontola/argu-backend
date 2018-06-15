@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class MotionSerializer < ContentEdgeSerializer
-  include BlogPostable::Serializer
   include Decisionable::Serializer
   include Voteable::Serializer
 

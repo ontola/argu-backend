@@ -4,6 +4,7 @@ class Page < Edge
   has_many :groups, dependent: :destroy, inverse_of: :page, primary_key: :uuid
   has_many :discussions, through: :forum_edges
 
+  enhance BlogPostable
   enhance CoverPhotoable
   enhance Createable
   enhance Destroyable
@@ -11,7 +12,6 @@ class Page < Edge
 
   include Menuable
   include Discussable
-  include BlogPostable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   accepts_nested_attributes_for :profile
