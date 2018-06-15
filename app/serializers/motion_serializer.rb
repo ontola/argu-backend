@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class MotionSerializer < ContentEdgeSerializer
-  include Voteable::Serializer
-
   attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?
   attribute :pro_count, if: :export_scope?
   attribute :con_count, if: :export_scope?

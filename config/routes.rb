@@ -66,9 +66,6 @@ Rails.application.routes.draw do
     resources :votes, only: %i[new create index]
     resource :vote, only: %i[destroy show]
   end
-  concern :vote_eventable do
-    resources :vote_events, only: %i[index show], concerns: %i[votable]
-  end
 
   constraints(Argu::WhitelistConstraint) do
     health_check_routes
@@ -333,7 +330,7 @@ Rails.application.routes.draw do
       resources :motions,
                 path: 'm',
                 only: %i[show],
-                concerns: %i[vote_eventable contactable
+                concerns: %i[contactable
                              feedable invitable menuable statable exportable loggable
                              convertible] do
         include_route_concerns
@@ -361,8 +358,7 @@ Rails.application.routes.draw do
         resources :banners, only: %i[new create]
         resources :linked_records,
                   only: %i[show],
-                  path: :lr,
-                  concerns: %i[vote_eventable] do
+                  path: :lr do
           include_route_concerns
         end
       end

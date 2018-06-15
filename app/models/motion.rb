@@ -13,9 +13,9 @@ class Motion < Edge
   enhance MarkAsImportant
   enhance Moveable
   enhance Timelineable
+  enhance VoteEventable
 
   include Edgeable::Content
-  include Voteable
   include Attribution
   include HasLinks
 
