@@ -4,13 +4,13 @@ class Forum < Edge
   enhance CoverPhotoable
   enhance Createable
   enhance Destroyable
+  enhance Discussable
   enhance Motionable
   enhance Moveable
   enhance ProfilePhotoable
   enhance Questionable
   enhance Updateable
 
-  include Discussable
   include Attribution
   include Menuable
 

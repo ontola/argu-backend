@@ -40,9 +40,6 @@ Rails.application.routes.draw do
   concern :contactable do
     resources :direct_messages, path: :dm, only: [:new]
   end
-  concern :discussable do
-    resources :discussions, only: %i[index new]
-  end
   concern :exportable do
     resources :exports, only: %i[index create]
   end
@@ -354,7 +351,7 @@ Rails.application.routes.draw do
       resources :forums,
                 only: %i[show],
                 path: '',
-                concerns: %i[feedable discussable favorable invitable menuable
+                concerns: %i[feedable favorable invitable menuable
                              statable exportable] do
         include_route_concerns
         resources :motions, path: :m, only: [] do
