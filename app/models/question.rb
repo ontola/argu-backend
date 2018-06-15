@@ -21,8 +21,8 @@ class Question < Edge
   counter_cache true
   parentable :forum
 
-  validates :content, presence: true, length: {minimum: 5, maximum: 5000}
-  validates :title, presence: true, length: {minimum: 5, maximum: 110}
+  validates :description, presence: true, length: {minimum: 5, maximum: 5000}
+  validates :display_name, presence: true, length: {minimum: 5, maximum: 110}
   validates :creator, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content

@@ -166,26 +166,26 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
                  'errors' => [
                    json_api_errors(
                      status: 'Unprocessable Entity',
-                     source: {'parameter' => 'content'},
-                     message: "Content can't be blank",
+                     source: {'parameter' => 'description'},
+                     message: "Description can't be blank",
                      code: 'VALUE_BLANK'
                    ),
                    json_api_errors(
                      status: 'Unprocessable Entity',
-                     source: {'parameter' => 'content'},
-                     message: 'Content is too short (minimum is 5 characters)',
+                     source: {'parameter' => 'description'},
+                     message: 'Description is too short (minimum is 5 characters)',
                      code: 'VALUE_TOO_SHORT'
                    ),
                    json_api_errors(
                      status: 'Unprocessable Entity',
-                     source: {'parameter' => 'title'},
-                     message: "Title can't be blank",
+                     source: {'parameter' => 'display_name'},
+                     message: "Display name can't be blank",
                      code: 'VALUE_BLANK'
                    ),
                    json_api_errors(
                      status: 'Unprocessable Entity',
-                     source: {'parameter' => 'title'},
-                     message: 'Title is too short (minimum is 5 characters)',
+                     source: {'parameter' => 'display_name'},
+                     message: 'Display name is too short (minimum is 5 characters)',
                      code: 'VALUE_TOO_SHORT'
                    )
                  ].flatten

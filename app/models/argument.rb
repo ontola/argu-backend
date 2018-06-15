@@ -13,8 +13,8 @@ class Argument < Edge
 
   before_save :capitalize_title
 
-  validates :content, presence: false, length: {maximum: 5000}
-  validates :title, presence: true, length: {minimum: 5, maximum: 75}
+  validates :description, presence: false, length: {maximum: 5000}
+  validates :display_name, presence: true, length: {minimum: 5, maximum: 75}
   validates :creator, presence: true
 
   auto_strip_attributes :title, squish: true

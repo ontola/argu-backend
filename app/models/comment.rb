@@ -20,7 +20,7 @@ class Comment < Edge
   paginates_per 30
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record
 
-  validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
+  validates :description, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :creator, presence: true
   auto_strip_attributes :body
 
