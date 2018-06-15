@@ -3,7 +3,9 @@
 class Favorite < ApplicationRecord
   enhance Createable
   enhance Destroyable
+
   include Parentable
+
   belongs_to :user
   belongs_to :edge, primary_key: :uuid
   validates :edge_id, presence: true, uniqueness: {scope: :user}

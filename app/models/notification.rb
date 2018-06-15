@@ -4,6 +4,7 @@ class Notification < ApplicationRecord
   enhance Createable
   enhance Updateable
   enhance Actionable
+
   include BlogPostsHelper
   include Ldable
   include ActivityHelper

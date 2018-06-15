@@ -2,8 +2,10 @@
 
 class LinkedRecord < Edge
   enhance Commentable
-  include Voteable
   enhance Argumentable
+  enhance Commentable
+
+  include Voteable
   extend UriTemplateHelper
   extend UUIDHelper
 

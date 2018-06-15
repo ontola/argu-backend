@@ -3,6 +3,7 @@
 class Grant < ApplicationRecord
   enhance Createable
   enhance Destroyable
+
   include Parentable
 
   # The Edge this Grant is providing rules for

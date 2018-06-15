@@ -2,21 +2,21 @@
 
 class Motion < Edge
   include ActionView::Helpers::NumberHelper
-  enhance Attachable
-  enhance MarkAsImportant
+
   enhance Argumentable
+  enhance Attachable
   enhance Commentable
   enhance Convertible
+  enhance CoverPhotoable
+  enhance MarkAsImportant
+  enhance Moveable
+
   include Edgeable::Content
   include Voteable
   include Attribution
   include HasLinks
-  enhance Moveable
-  enhance CoverPhotoable
-
   include BlogPostable
   include Timelineable
-
   include Decisionable
 
   attr_accessor :current_vote

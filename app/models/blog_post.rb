@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class BlogPost < Edge
-  include Edgeable::Content
   enhance Attachable
   enhance Commentable
   enhance MarkAsImportant
-  include HasLinks
   enhance CoverPhotoable
+
+  include Edgeable::Content
+  include HasLinks
 
   counter_cache true
   parentable :motion, :question, :page

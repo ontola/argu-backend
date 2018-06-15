@@ -6,6 +6,7 @@ class Argument < Edge
   enhance Createable
   enhance Commentable
   enhance Convertible
+
   include Edgeable::Content
   include HasLinks
   include VotesHelper

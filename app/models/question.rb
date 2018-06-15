@@ -2,18 +2,19 @@
 
 class Question < Edge
   enhance Attachable
-  enhance MarkAsImportant
   enhance Commentable
   enhance Convertible
+  enhance CoverPhotoable
+  enhance MarkAsImportant
+  enhance Motionable
+  enhance Moveable
+
   include Edgeable::Content
   include HasLinks
   include Attribution
   include BlogPostable
   include Timelineable
-  enhance Motionable
   include CustomGrants
-  enhance Moveable
-  enhance CoverPhotoable
 
   convertible motions: %i[activities media_objects]
   counter_cache true

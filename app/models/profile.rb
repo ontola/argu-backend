@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Profile < ApplicationRecord
-  include Ldable
   enhance ProfilePhotoable
   enhance CoverPhotoable
+
+  include Ldable
   include Uuidable
 
   # Currently hardcoded to User (whilst it can also be a Profile)

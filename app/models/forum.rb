@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 class Forum < Edge
+  enhance CoverPhotoable
   enhance Createable
   enhance Destroyable
-  enhance Updateable
-  include Discussable
-  enhance Questionable
   enhance Motionable
+  enhance Moveable
   enhance ProfilePhotoable
+  enhance Questionable
+  enhance Updateable
+
+  include Discussable
   include Attribution
   include Menuable
-  enhance Moveable
-  enhance CoverPhotoable
 
   property :display_name, :string, NS::SCHEMA[:name]
   property :bio, :text, NS::SCHEMA[:description]

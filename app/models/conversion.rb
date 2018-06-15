@@ -5,6 +5,7 @@ class Conversion
   include ActiveModel::Validations
   include ActiveRecord::AttributeAssignment
   include ApplicationModel
+
   enhance Createable
 
   validates :edge, presence: true

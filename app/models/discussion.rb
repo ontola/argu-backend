@@ -3,9 +3,11 @@
 class Discussion
   include ApplicationModel
   include ActiveModel::Model
+
+  enhance Createable
+
   include Iriable
   include Parentable
-  enhance Createable
 
   attr_accessor :forum, :page, :publisher
   parentable :forum, :page

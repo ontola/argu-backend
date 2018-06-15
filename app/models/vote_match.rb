@@ -4,6 +4,7 @@ class VoteMatch < ApplicationRecord
   enhance Createable
   enhance Destroyable
   enhance Updateable
+
   include Listable
   include Ldable
 

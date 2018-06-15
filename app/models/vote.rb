@@ -4,6 +4,7 @@ class Vote < Edge
   enhance Createable
   enhance Destroyable
   enhance Updateable
+
   include PublicActivity::Model
   include Loggable
 

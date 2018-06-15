@@ -4,6 +4,7 @@ class Shortname < ApplicationRecord
   enhance Createable
   enhance Destroyable
   enhance Updateable
+
   include Parentable
 
   belongs_to :owner,

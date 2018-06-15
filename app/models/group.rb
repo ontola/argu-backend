@@ -4,6 +4,7 @@ class Group < ApplicationRecord
   enhance Createable
   enhance Destroyable
   enhance Updateable
+
   include Ldable
   include Parentable
   include Edgeable::PropertyAssociations

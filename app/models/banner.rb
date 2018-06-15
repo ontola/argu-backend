@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Banner < NewsBoy
+  enhance CoverPhotoable
   enhance Createable
   enhance Destroyable
-  enhance Updateable
-  include EdgeableShallow
   enhance ProfilePhotoable
-  enhance CoverPhotoable
+  enhance Updateable
+
+  include EdgeableShallow
   include Uuidable
 
   belongs_to :forum, primary_key: :uuid
