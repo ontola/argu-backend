@@ -19,7 +19,7 @@ class FeedController < AuthorizedController
   end
 
   def authorize_action
-    authorize feed_resource, :feed?
+    authorize feed_resource!, :feed?
   end
 
   def tree_root_id
@@ -30,6 +30,10 @@ class FeedController < AuthorizedController
 
   def feed_resource
     parent_resource
+  end
+
+  def feed_resource!
+    feed_resource || raise(ActiveRecord::RecordNotFound)
   end
 
   def from_time
