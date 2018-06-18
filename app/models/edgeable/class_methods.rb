@@ -67,6 +67,7 @@ module Edgeable
       end
 
       def with_collection(name, options = {})
+        options[:association] ||= "active_#{name}"
         klass = options[:association_class] || name.to_s.classify.constantize
         if klass < Edge
           options[:includes] ||= {
