@@ -28,8 +28,7 @@ module Widgetable
           .create(
             resource_iri: expand_uri_template(
               'motions_collection_iri',
-              parent_iri: iri(only_path: true),
-              type: :paginated
+              parent_iri: iri(only_path: true)
             ),
             label: 'motions.plural',
             label_translation: true,
@@ -44,8 +43,7 @@ module Widgetable
           .create(
             resource_iri: expand_uri_template(
               'questions_collection_iri',
-              parent_iri: iri(only_path: true),
-              type: :paginated
+              parent_iri: iri(only_path: true)
             ),
             label: 'questions.plural',
             label_translation: true,
