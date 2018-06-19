@@ -22,5 +22,11 @@ module CoverPhotoable
                                         attrs['remote_content_url'].blank?
                                     }
     end
+
+    module ClassMethods
+      def includes_for_serializer
+        super.merge(default_cover_photo: {})
+      end
+    end
   end
 end

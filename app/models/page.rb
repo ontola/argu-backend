@@ -60,6 +60,10 @@ class Page < Edge
     'anonymous'
   end
 
+  def self.includes_for_serializer
+    super.merge(profile: :default_profile_photo)
+  end
+
   def iri_opts
     {id: url, root_id: url}
   end

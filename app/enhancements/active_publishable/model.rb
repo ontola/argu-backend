@@ -35,6 +35,10 @@ module ActivePublishable
     end
 
     module ClassMethods
+      def includes_for_serializer
+        super.merge(argu_publication: {}, published_publications: {})
+      end
+
       def is_publishable?
         true
       end

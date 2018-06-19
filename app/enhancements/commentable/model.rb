@@ -6,12 +6,7 @@ module Commentable
 
     included do
       with_collection :comments,
-                      association: :filtered_threads,
-                      includes: {
-                        default_vote_event: {},
-                        parent: {},
-                        creator: :profileable
-                      }
+                      association: :filtered_threads
 
       def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
         i = root_comments.order(order).page(page)

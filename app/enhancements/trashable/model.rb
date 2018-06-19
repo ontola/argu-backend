@@ -26,6 +26,10 @@ module Trashable
     end
 
     module ClassMethods
+      def includes_for_serializer
+        super.merge(trash_activity: {}, untrash_activity: {})
+      end
+
       def is_trashable?
         true
       end

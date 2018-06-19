@@ -11,8 +11,7 @@ module Discussable
                foreign_key: :parent_id,
                inverse_of: :parent
 
-      with_collection :discussions,
-                      includes: [:parent, :default_vote_event, :default_cover_photo, creator: :profileable]
+      with_collection :discussions
     end
   end
 end

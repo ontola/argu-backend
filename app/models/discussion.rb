@@ -16,4 +16,8 @@ class Discussion
   def self.default_per_page
     10
   end
+
+  def self.includes_for_serializer
+    [:parent, :default_vote_event, :default_cover_photo, creator: :profileable]
+  end
 end

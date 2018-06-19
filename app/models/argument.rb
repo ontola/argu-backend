@@ -36,6 +36,10 @@ class Argument < Edge
     self
   end
 
+  def self.includes_for_serializer
+    super.merge(votes: {})
+  end
+
   # @return [Argument, nil] The id of the next item or nil.
   def next(show_trashed = false)
     adjacent(false, show_trashed)

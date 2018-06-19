@@ -30,6 +30,10 @@ class Comment < Edge
     is_trashed? && !has_children?
   end
 
+  def self.includes_for_serializer
+    super.merge(comment_children: {})
+  end
+
   def joined_body
     [title, body].map(&:presence).compact.join("\n\n")
   end

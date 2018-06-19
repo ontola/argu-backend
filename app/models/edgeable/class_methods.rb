@@ -24,6 +24,13 @@ module Edgeable
         collection.update_all(publisher_id: User::COMMUNITY_ID)
       end
 
+      def includes_for_serializer
+        {
+          creator: {profileable: :shortname},
+          parent: {}
+        }
+      end
+
       def path_array(relation)
         return 'NULL' if relation.blank?
         unless relation.is_a?(ActiveRecord::Relation)
@@ -67,18 +74,9 @@ module Edgeable
       end
 
       def with_collection(name, options = {})
-        options[:association] ||= "active_#{name}"
         klass = options[:association_class] || name.to_s.classify.constantize
         if klass < Edge
-          options[:includes] ||= {
-            creator: {profileable: :shortname},
-            parent: {}
-          }
-          options[:includes][:votes] = {} if klass <= Argument
-          options[:includes][:comment_children] = {} if klass == Comment
-          options[:includes][:default_vote_event] = %i[creator] if klass == Motion
-          options[:includes][:published_publications] = {} if klass.reflect_on_association(:published_publications)
-          options[:includes][:default_cover_photo] = {} if klass.reflect_on_association(:default_cover_photo)
+          options[:association] ||= "active_#{name}"
           options[:collection_class] = EdgeableCollection
         end
         super
