@@ -21,7 +21,7 @@ class MotionsController < EdgeableController
 
   private
 
-  def include_index
+  def include_index_collection
     members = [
       members: [
         comment_collection: inc_nested_collection,
@@ -32,17 +32,8 @@ class MotionsController < EdgeableController
     ].freeze
 
     [
-      member_sequence: members,
-      operation: inc_action_form,
-      view_sequence: [
-        operation: inc_action_form,
-        members:
-          [
-            member_sequence: members,
-            operation: inc_action_form,
-            view_sequence: [members: [operation: inc_action_form].freeze].freeze
-          ].freeze
-      ].freeze
+      default_view: members,
+      operation: inc_action_form
     ].freeze
   end
 
@@ -58,7 +49,7 @@ class MotionsController < EdgeableController
       con_argument_collection: inc_nested_collection,
       pro_argument_collection: inc_nested_collection,
       attachment_collection: inc_nested_collection,
-      voteable_vote_event: vote_event_without_votes
+      default_vote_event: vote_event_without_votes
     ]
   end
 
@@ -98,15 +89,8 @@ class MotionsController < EdgeableController
       :current_vote,
       vote_collection: {
         operation: inc_action_form,
-        view_sequence: [
-          operation: :target,
-          members:
-            [
-              operation: :target,
-              view_sequence: [members: [operation: :target].freeze].freeze
-            ].freeze
-        ].freeze
-      }
+        default_filtered_collections: inc_shallow_collection
+      }.freeze
     ].freeze
   end
 end

@@ -56,22 +56,14 @@ class ApplicationController < ActionController::Base
   ]
   class_attribute :inc_nested_collection
   self.inc_nested_collection = [
-    member_sequence: :members,
-    operation: inc_action_form,
-    view_sequence: [
-      operation: inc_action_form,
-      members:
-        [
-          member_sequence: [members: [operation: inc_action_form]],
-          operation: inc_action_form,
-          view_sequence: [members: [member_sequence: :members, operation: inc_action_form].freeze].freeze
-        ].freeze
-    ].freeze
+    default_view: :members,
+    filters: [],
+    operation: inc_action_form
   ].freeze
   class_attribute :inc_shallow_collection
   self.inc_shallow_collection = [
-    view_sequence: [operation: inc_action_form].freeze,
-    member_sequence: [operation: inc_action_form].freeze,
+    default_view: [],
+    filters: [],
     operation: inc_action_form
   ].freeze
 

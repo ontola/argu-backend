@@ -70,19 +70,6 @@ class VotesController < EdgeableController
     end
   end
 
-  def include_index
-    [
-      view_sequence: [
-        members:
-          [
-            member_sequence: :members,
-            operation: :target,
-            view_sequence: [members: [member_sequence: :members, operation: :target].freeze].freeze
-          ].freeze
-      ].freeze
-    ].freeze
-  end
-
   def include_create
     [:partOf, voteable: :actions]
   end

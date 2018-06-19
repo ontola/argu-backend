@@ -14,10 +14,6 @@ class VoteMatchesController < ServiceController
     @current_forum ||= parent_resource.try(:ancestor, :forum)
   end
 
-  def include_index
-    inc_nested_collection
-  end
-
   def index_collection
     if parent_id_from_params(params).present?
       parent_resource!.vote_match_collection(collection_options)

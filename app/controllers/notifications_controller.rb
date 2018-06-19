@@ -84,14 +84,11 @@ class NotificationsController < AuthorizedController
       .page params[:page]
   end
 
-  def include_index
+  def include_index_collection
     [
-      member_sequence: {members: [operation: :target]},
-      view_sequence: [
-        members: {
-          member_sequence: {members: [operation: :target]}
-        }
-      ]
+      default_view: {members: [operation: :target]},
+      filters: [],
+      operation: inc_action_form
     ]
   end
 
@@ -114,7 +111,6 @@ class NotificationsController < AuthorizedController
       association_class: Notification,
       default_type: :infinite,
       user_context: user_context,
-      includes: [:user, activity: [:trackable, :recipient, owner: [profileable: :shortname]]],
       parent: nil
     )
   end

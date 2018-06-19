@@ -17,7 +17,7 @@ class MenusController < ParentableController
 
   def current_forum; end
 
-  def include_index
+  def include_index_collection
     [menu_sequence: [members: [menu_sequence: :members]]]
   end
 

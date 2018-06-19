@@ -19,7 +19,15 @@ module Common
       end
 
       def include_index
-        collection_view_params.present? ? :members : inc_nested_collection
+        collection_view_params.present? ? include_index_view : include_index_collection
+      end
+
+      def include_index_collection
+        inc_nested_collection
+      end
+
+      def include_index_view
+        {members: include_show}
       end
 
       def index_collection

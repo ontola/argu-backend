@@ -5,12 +5,12 @@ class VoteEventsController < EdgeableController
 
   private
 
-  def include_index
-    [member_sequence: {members: include_show}]
+  def include_index_collection
+    [default_view: {members: include_show}]
   end
 
   def include_show
-    [:current_vote, vote_collection: inc_nested_collection]
+    [:current_vote, vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]]
   end
 
   def resource_by_id
