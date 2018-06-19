@@ -46,7 +46,7 @@ class ApplicationMenuList < MenuList
       :discover,
       image: 'fa-compass',
       label: I18n.t('pages.discover'),
-      href: pages_url(page: 1, type: :paginated)
+      href: pages_url
     )
   end
 

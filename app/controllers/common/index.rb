@@ -14,8 +14,12 @@ module Common
 
       private
 
+      def collection_view_params
+        params.permit(:before, :page, :page_size, :type)
+      end
+
       def include_index
-        inc_nested_collection
+        collection_view_params.present? ? :members : inc_nested_collection
       end
 
       def index_collection
@@ -43,7 +47,7 @@ module Common
       end
 
       def index_response_association
-        index_collection
+        collection_view_params.present? ? index_collection&.view_with_opts(collection_view_params) : index_collection
       end
 
       def index_respond_success_html

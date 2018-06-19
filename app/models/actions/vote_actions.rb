@@ -7,7 +7,7 @@ module Actions
     private
 
     def filtered_resource?
-      resource.is_a?(Collection) && resource.filter.present?
+      resource.is_a?(Collection) && resource.filtered?
     end
 
     def new_image

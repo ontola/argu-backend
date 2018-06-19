@@ -112,20 +112,19 @@ class NotificationsController < AuthorizedController
   def index_collection
     @collection ||= Collection.new(
       association_class: Notification,
-      before: params[:before],
+      default_type: :infinite,
       user_context: user_context,
-      type: params[:type],
-      parent: nil,
-      includes: [:user, activity: [:trackable, :recipient, owner: [profileable: :shortname]]]
+      includes: [:user, activity: [:trackable, :recipient, owner: [profileable: :shortname]]],
+      parent: nil
     )
   end
 
   def meta
     m = []
     m <<
-      if index_collection.parent_view_iri.present?
+      if index_collection.is_a?(CollectionView)
         [
-          RDF::URI(index_collection.parent_view_iri),
+          RDF::URI(index_collection.collection.iri),
           NS::ARGU[:views],
           RDF::URI(index_collection.iri)
         ]

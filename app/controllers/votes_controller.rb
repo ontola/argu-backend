@@ -173,7 +173,7 @@ class VotesController < EdgeableController
   def meta_create
     data = []
     if authenticated_resource.parent.is_a?(VoteEvent)
-      parent_collection = index_collection.send(:child_with_options, filter: nil)
+      parent_collection = index_collection.filtered? ? index_collection.unfiltered_collection : index_collection
       meta_increment_collection_count(data, parent_collection.iri, parent_collection.total_count)
       parent_collection.views.each do |view|
         if view == index_collection

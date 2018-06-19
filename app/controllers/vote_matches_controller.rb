@@ -22,10 +22,9 @@ class VoteMatchesController < ServiceController
     if parent_id_from_params(params).present?
       parent_resource!.vote_match_collection(collection_options)
     else
-      Collection.new(
+      @collection ||= Collection.new(
         association_class: VoteMatch,
-        user_context: user_context,
-        page: params[:page]
+        user_context: user_context
       )
     end
   end

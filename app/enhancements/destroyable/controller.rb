@@ -80,9 +80,6 @@ module Destroyable
       data = []
       return data if index_collection.blank?
       total_count = index_collection.total_count
-      if index_collection.views.present?
-        meta_decrement_collection_count(data, index_collection.views.first.iri, total_count)
-      end
       meta_decrement_collection_count(data, index_collection.iri, total_count)
     end
 

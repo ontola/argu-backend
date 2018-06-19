@@ -110,14 +110,10 @@ class PagesController < EdgeableController
   end
 
   def index_collection
-    EdgeableCollection.new(
+    @collection ||= EdgeableCollection.new(
       association_class: Page,
       user_context: user_context,
-      association_scope: :open,
-      page: params[:page].is_a?(ActionController::Parameters) ? nil : params[:page],
-      joins: 'LEFT JOIN (SELECT parent_id, SUM(follows_count) AS total_follows FROM edges GROUP BY parent_id) '\
-             'AS forum_edges ON edges.id = forum_edges.parent_id',
-      order: 'forum_edges.total_follows DESC NULLS LAST'
+      association_scope: :discover
     )
   end
 

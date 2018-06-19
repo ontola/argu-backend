@@ -17,6 +17,13 @@ class Page < Edge
   accepts_nested_attributes_for :profile
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
+  scope :discover, lambda {
+    open
+      .joins('LEFT JOIN (SELECT parent_id, SUM(follows_count) AS total_follows FROM edges GROUP BY parent_id) '\
+             'AS forum_edges ON edges.id = forum_edges.parent_id')
+      .order('forum_edges.total_follows DESC NULLS LAST')
+  }
+
   attr_accessor :confirmation_string, :tab, :active
 
   delegate :description, :default_profile_photo, to: :profile
