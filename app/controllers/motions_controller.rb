@@ -26,7 +26,7 @@ class MotionsController < EdgeableController
       members: [
         comment_collection: inc_nested_collection,
         con_argument_collection: inc_nested_collection,
-        voteable_vote_event: vote_event_without_votes,
+        default_vote_event: vote_event_without_votes,
         pro_argument_collection: inc_nested_collection
       ]
     ].freeze
