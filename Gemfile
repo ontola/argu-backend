@@ -4,6 +4,7 @@ source 'https://rubygems.org/'
 ruby '2.4.1'
 ruby = '2.4.1'
 
+gem 'bootsnap', require: false
 gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.6'
