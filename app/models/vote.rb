@@ -6,6 +6,8 @@ class Vote < Edge
   enhance Loggable
   enhance Updateable
 
+  include RedisResource::Concern
+
   property :for, :integer, NS::SCHEMA[:option], default: 3, enum: {con: 0, pro: 1, neutral: 2, abstain: 3}
   property :comment_id, :linked_edge_id, NS::ARGU[:explanation]
   attribute :primary, :boolean, default: true

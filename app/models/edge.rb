@@ -12,7 +12,6 @@ class Edge < ApplicationRecord
   include Edgeable::CounterCache
   include Edgeable::Properties
   include Edgeable::PropertyAssociations
-  include RedisResource::Concern
   include Parentable
   include Shortnameable
   include Uuidable
