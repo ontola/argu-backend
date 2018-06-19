@@ -5,8 +5,9 @@ class MenuItem
   include ActiveModel::Serialization
   include Ldable
 
-  attr_accessor :label, :image, :parent, :tag, :menus, :href, :item_type,
+  attr_accessor :label, :parent, :tag, :menus, :href, :item_type,
                 :type, :description, :link_opts, :resource
+  attr_writer :image
 
   def as_json(_opts = {})
     {}
@@ -15,6 +16,11 @@ class MenuItem
   # Return options used by DropdownHelper#dropdown_options
   def dropdown_options(opts)
     (link_opts || {}).merge(fa: image).merge(opts)
+  end
+
+  def image
+    @image = @image.call if @image.respond_to?(:call)
+    @image
   end
 
   def iri(only_path: false, fragment: nil)

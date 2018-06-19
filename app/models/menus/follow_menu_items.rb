@@ -2,6 +2,16 @@
 
 module Menus
   module FollowMenuItems
+    private
+
+    def follow
+      @follow ||= user.follow_for(resource)
+    end
+
+    def follow_type
+      @follow_type ||= follow&.follow_type || 'never'
+    end
+
     def follow_menu_icon(follow_type)
       case follow_type
       when 'never'
@@ -15,12 +25,10 @@ module Menus
 
     def follow_menu_items(opts = {})
       follow_types = opts.delete(:follow_types) || %i[news reactions never]
-      follow = user.follow_for(resource)
-      follow_type = follow&.follow_type || 'never'
       menu_item(
         :follow,
         description: I18n.t('notifications.receive.title'),
-        image: follow_menu_icon(follow_type),
+        image: -> { follow_menu_icon(follow_type) },
         link_opts: opts,
         menus: -> { follow_types.map { |type| follow_menu_item(type, follow, follow_type) } }
       )

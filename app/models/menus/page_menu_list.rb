@@ -8,9 +8,12 @@ class PageMenuList < MenuList
 
   private
 
-  def navigations_menu
-    forums =
+  def forums
+    @forums ||=
       resource.forums.where("edges.path ? #{Edge.path_array(user.profile.granted_edges(root_id: resource.uuid))}")
+  end
+
+  def navigations_menu
     menu_item(
       :navigations,
       menus: lambda {
