@@ -73,6 +73,8 @@ class NotificationsControllerTest < ActionController::TestCase
     sign_in user
     followed_content(user)
 
+    sleep(1.second)
+
     get :index, format: :json_api
 
     assert_response 200
