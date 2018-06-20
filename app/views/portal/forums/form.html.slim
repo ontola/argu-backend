@@ -7,7 +7,7 @@
         =f.inputs do
           =f.input :name
           =f.input :url, as: :shortname
-          =f.input :page_id, as: :hidden, input_html: { value: forum.parent.url }
+          =hidden_field_tag :page_id, forum.parent.url
         - if forum.errors.present?
           p.inline-errors.full-width= forum.errors.full_messages[0]
         =f.actions do
