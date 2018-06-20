@@ -47,7 +47,7 @@ module Edgeable
       end
 
       def property?(name)
-        property_options(name: name).present?
+        property_options(name: name.to_sym).present?
       end
 
       def property_join(key)
@@ -139,7 +139,7 @@ module ActiveRecord
         return super
       end
       properties.reduce(where(opts.except(*properties.keys), *rest)) do |q, condition|
-        key = condition.first
+        key = condition.first.to_sym
         value = condition.second
         q.joins(target_class.property_join_string(key)).where(target_class.property_filter_string(key, value))
       end

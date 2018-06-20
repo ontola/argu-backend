@@ -5,7 +5,7 @@ module Edgeable
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def belongs_to(name, scope = nil, options = {})
+      def belongs_to(name, scope = nil, **options)
         opts = options.presence || scope
         return super unless opts.key?(:foreign_key_property)
         klass_name = (opts[:class_name] || name).to_s.classify
@@ -22,7 +22,7 @@ module Edgeable
         has_one name, through: "#{name}_reference".to_sym, class_name: klass_name, source: source
       end
 
-      def has_one(name, scope = nil, options = {})
+      def has_one(name, scope = nil, **options)
         opts = options.presence || scope
         return super unless opts.key?(:foreign_key_property)
         klass_name = (opts[:class_name] || name).to_s.classify
@@ -38,7 +38,7 @@ module Edgeable
         has_one name, through: "#{name}_reference".to_sym, class_name: klass_name, source: :edge
       end
 
-      def has_many(name, scope = nil, options = {})
+      def has_many(name, scope = nil, **options)
         opts = options.presence || scope
         return super unless opts.key?(:foreign_key_property)
         klass_name = (opts[:class_name] || name).to_s.classify

@@ -9,7 +9,7 @@ gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.6'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>5.1.3'
+gem 'rails', '~>5.2.0'
 gem 'active_model_serializers', '~> 0.10.7'
 
 gem 'simple_text', '~> 0.0.23'
@@ -111,8 +111,8 @@ gem 'redcarpet', '~> 3.3.4'
 gem 'video_info'
 
 ################## User management ########################
-gem 'devise', '~> 4.3.0'
-gem 'devise-multi_email', '~> 2.0.1', git: 'https://github.com/ArthurWD/devise-multi_email', ref: '25ae8'
+gem 'devise'
+gem 'devise-multi_email', '~> 2.0.1', git: 'https://github.com/allenwq/devise-multi_email', ref: 'c3823'
 gem 'omniauth', '~> 1.6.1'
 gem 'omniauth-oauth2', '~> 1.4.0'
 gem 'omniauth-facebook', '~> 4.0.0', git: 'https://github.com/ArthurWD/omniauth-facebook', ref: '90671'
@@ -127,8 +127,9 @@ gem 'react-rails', '~> 2.2.1'
 gem 'webpacker', '~> 2.0'
 
 group :test do
+  gem 'minitest', '5.10.3'
   gem 'minitest-rails', '~> 3.0.0'
-  gem 'minitest-reporters', '~> 1.1.8'
+  gem 'minitest-reporters', '~> 1.3.0'
   gem 'minitest-bang'
   gem 'minitest-have_tag', '~> 0.1.0'
   gem 'rspec-rails', '~> 3.7.2'
@@ -148,7 +149,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'webmock', '~> 2.3.2'
   gem 'rails-controller-testing'
-  gem 'rack-test', '~> 0.6.2'
+  gem 'rack-test'
 end
 
 group :development, :test do
@@ -165,7 +166,7 @@ group :development do
   gem 'pry'
   # gem 'byebug'
   # gem 'pry-byebug'
-  gem 'meta_request', '~> 0.4.3'
+  gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1' # ##!
   gem 'coffee-rails', '~> 4.2.2'
