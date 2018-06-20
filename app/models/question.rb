@@ -53,8 +53,6 @@ class Question < Edge
       .find_by('edges.updated_at > :date', date: updated_at)
   end
 
-  scope :index, ->(trashed, page) { show_trashed(trashed).page(page) }
-
   private
 
   def sister_node(show_trashed)
