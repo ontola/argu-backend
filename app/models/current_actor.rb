@@ -14,7 +14,7 @@ class CurrentActor
 
   def actor_type
     if actor.present?
-      owner = actor.owner
+      owner = actor.profileable
       if owner.is_a?(GuestUser)
         'GuestUser'
       elsif owner.confirmed?
