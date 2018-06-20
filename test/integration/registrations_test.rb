@@ -58,9 +58,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create_email_mock('confirmation', 'test@example.com', confirmationToken: /.+/)
 
     Sidekiq::Testing.inline! do
-      assert_differences([['User.count', 1],
-                          ['Favorite.count', 0],
-                          ['Notification.confirmation_reminder.count', 0]]) do
+      assert_difference('User.count' => 1,
+                        'Favorite.count' => 0,
+                        'Notification.confirmation_reminder.count' => 0) do
         post user_registration_path,
              params: {
                user: {
@@ -83,7 +83,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    assert_difference('EmailAddress.where(confirmed_at: nil).count', -1) do
+    assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_redirected_to new_user_session_path
@@ -96,9 +96,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
 
-    assert_differences([['User.count', 1],
-                        ['Favorite.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 2]]) do
+    assert_difference('User.count' => 1,
+                      'Favorite.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 2) do
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path
@@ -114,9 +114,9 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
     get freetown.iri_path
 
-    assert_differences([['User.count', 1],
-                        ['Favorite.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 2]]) do
+    assert_difference('User.count' => 1,
+                      'Favorite.count' => 1,
+                      'Sidekiq::Worker.jobs.count' => 2) do
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path
@@ -127,8 +127,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create without password' do
-    assert_differences([['User.count', 1],
-                        ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
+    assert_difference('User.count' => 1,
+                      'EmailAddress.where(confirmed_at: nil).count' => 1) do
       post user_registration_path,
            params: {
              user: {
@@ -163,11 +163,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     cookies[:locale] = locale.to_s
 
     Sidekiq::Testing.inline! do
-      assert_differences([['User.count', 1],
-                          ['Favorite.count', 1],
-                          ['Vote.count', 3],
-                          ['Argu::Redis.keys("temporary*").count', -3],
-                          ['EmailAddress.where(confirmed_at: nil).count', 1]]) do
+      assert_difference('User.count' => 1,
+                        'Favorite.count' => 1,
+                        'Vote.count' => 3,
+                        'Argu::Redis.keys("temporary*").count' => -3,
+                        'EmailAddress.where(confirmed_at: nil).count' => 1) do
         post user_registration_path,
              params: {
                user: {
@@ -182,8 +182,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     delete destroy_user_session_path
 
-    assert_differences([['EmailAddress.where(confirmed_at: nil).count', -1],
-                        ['Edge.where(confirmed: true).count', 3]]) do
+    assert_difference('EmailAddress.where(confirmed_at: nil).count' => -1,
+                      'Edge.where(confirmed: true).count' => 3) do
       get user_confirmation_path(confirmation_token: User.last.confirmation_token)
     end
     assert_response 200
@@ -221,11 +221,11 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     )
 
     Sidekiq::Testing.inline! do
-      assert_differences([['User.count', 1],
-                          ['Vote.count', 3],
-                          ['Argu::Redis.keys("temporary*").count', -3],
-                          ['Favorite.count', 1],
-                          ['Notification.confirmation_reminder.count', 1]]) do
+      assert_difference('User.count' => 1,
+                        'Vote.count' => 3,
+                        'Argu::Redis.keys("temporary*").count' => -3,
+                        'Favorite.count' => 1,
+                        'Notification.confirmation_reminder.count' => 1) do
         post user_registration_path,
              params: {user: attrs}
       end
@@ -251,8 +251,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test "guest should not post create when passwords don't match" do
     user_params = attributes_for(:user)
 
-    assert_differences([['User.count', 0],
-                        ['ActionMailer::Base.deliveries.count', 0]]) do
+    assert_difference('User.count' => 0,
+                      'ActionMailer::Base.deliveries.count' => 0) do
       post user_registration_path,
            params: {
              user: {
@@ -273,7 +273,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'user should delete destroy' do
     sign_in user
 
-    assert_difference('User.count', -1) do
+    assert_difference('User.count' => -1) do
       delete user_registration_path,
              params: {
                user: {
@@ -289,7 +289,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'user should not delete destroy without confirmation' do
     sign_in user
 
-    assert_difference('User.count', 0) do
+    assert_difference('User.count' => 0) do
       delete user_registration_path,
              params: {
                user: {}
@@ -302,7 +302,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     group = create(:group, parent: argu)
     create(:group_membership, parent: group, member: user.profile)
 
-    assert_differences([['User.count', -1], ['GroupMembership.active.count', -2], ['GroupMembership.count', 0]]) do
+    assert_difference('User.count' => -1, 'GroupMembership.active.count' => -2, 'GroupMembership.count' => 0) do
       delete user_registration_path,
              params: {
                user: {
@@ -320,7 +320,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'user without name and shortname should delete destroy' do
     sign_in user_no_shortname
 
-    assert_difference('User.count', -1) do
+    assert_difference('User.count' => -1) do
       delete user_registration_path,
              params: {
                user: {
@@ -348,8 +348,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     sign_in user
 
-    assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0],
-                        ['MediaObject.count', -1], ['MediaObject.where(publisher_id: 0, creator_id: 0).count', 1]]) do
+    assert_difference('User.count' => -1, 'Placement.count' => -1, 'Place.count' => 0,
+                      'MediaObject.count' => -1, 'MediaObject.where(publisher_id: 0, creator_id: 0).count' => 1) do
       delete user_registration_path,
              params: {
                user: {
@@ -370,7 +370,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     sign_in user
 
-    assert_differences([['User.count', -1], ['Edge.count', -user.votes.count]]) do
+    assert_difference('User.count' => -1, 'Edge.count' => -user.votes.count) do
       delete user_registration_path,
              params: {
                user: {
@@ -390,7 +390,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
     sign_in user
 
-    assert_differences([['User.count', -1]]) do
+    assert_difference('User.count' => -1) do
       delete user_registration_path,
              params: {
                user: {
@@ -411,7 +411,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   test 'administrator should not delete destroy' do
     sign_in administrator
 
-    assert_differences([['User.count', 0]]) do
+    assert_difference('User.count' => 0) do
       delete user_registration_path,
              params: {
                user: {

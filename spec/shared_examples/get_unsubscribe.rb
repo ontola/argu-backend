@@ -14,7 +14,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
 
       it 'as unauthorized' do
         sign_in(unauthorized_user)
-        assert_differences(no_differences) do
+        assert_difference(no_differences) do
           get unsubscribe_path, params: {format: format}
         end
         expect(response.code).to eq(format == :html ? '200' : '204')
@@ -23,7 +23,7 @@ RSpec.shared_examples_for 'get unsubscribe' do
       it 'as authorized' do
         parent_path # touch path because subject be deleted
         sign_in(authorized_user)
-        assert_differences(destroy_differences) do
+        assert_difference(destroy_differences) do
           get unsubscribe_path, params: {format: format}
         end
         expect(response.code).to eq(format == :html ? '200' : '204')

@@ -67,9 +67,9 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert vote_count.positive?,
            'no votes to test'
 
-    assert_differences([['Motion.count', -1], ['Question.count', 1], ['VoteEvent.count', -1], ['Argument.count', -6],
-                        ['Vote.count', -6], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['MediaObject.count', 0], ['Comment.count', 6], ['Edge.count', -7]]) do
+    assert_difference('Motion.count' => -1, 'Question.count' => 1, 'VoteEvent.count' => -1, 'Argument.count' => -6,
+                      'Vote.count' => -6, 'Activity.count' => 1, 'BlogPost.count' => 0,
+                      'MediaObject.count' => 0, 'Comment.count' => 6, 'Edge.count' => -7) do
       post conversions_iri_path(record),
            params: {
              conversion: {
@@ -107,9 +107,9 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     record = question_motion
 
-    assert_differences([['Motion.count', -1], ['VoteEvent.count', -1], ['Question.count', 1], ['Argument.count', -6],
-                        ['Vote.count', -6], ['Activity.count', 1], ['BlogPost.count', 0],
-                        ['Comment.count', 6], ['Edge.count', -7]]) do
+    assert_difference('Motion.count' => -1, 'VoteEvent.count' => -1, 'Question.count' => 1, 'Argument.count' => -6,
+                      'Vote.count' => -6, 'Activity.count' => 1, 'BlogPost.count' => 0,
+                      'Comment.count' => 6, 'Edge.count' => -7) do
       post conversions_iri_path(record),
            params: {
              conversion: {
@@ -132,8 +132,8 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     record = question
 
-    assert_differences([['Question.count', -1], ['Motion.count', -3], ['VoteEvent.count', -3],
-                        ['Activity.count', 1], ['BlogPost.count', 0], ['Comment.count', 4], ['Edge.count', -3]]) do
+    assert_difference('Question.count' => -1, 'Motion.count' => -3, 'VoteEvent.count' => -3,
+                      'Activity.count' => 1, 'BlogPost.count' => 0, 'Comment.count' => 4, 'Edge.count' => -3) do
       post conversions_iri_path(record),
            params: {
              conversion: {

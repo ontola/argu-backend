@@ -17,7 +17,7 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
         it 'as unauthorized' do
           subject.trash
           sign_in(unauthorized_user)
-          assert_differences(no_differences) do
+          assert_difference(no_differences) do
             put untrash_path, params: {format: format}
           end
           send("expect_put_untrash_unauthorized_#{format}")
@@ -28,7 +28,7 @@ RSpec.shared_examples_for 'put untrash' do |opts = {skip: []}|
         it 'as authorized' do
           subject.trash
           sign_in(authorized_user_trash)
-          assert_differences(untrash_differences) do
+          assert_difference(untrash_differences) do
             put untrash_path, params: {format: format}
           end
           send("expect_put_untrash_#{format}")

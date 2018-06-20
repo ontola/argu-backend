@@ -16,7 +16,7 @@ RSpec.shared_examples_for 'delete trash' do |opts = {skip: []}|
       unless opts[:skip].include?(:trash_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
           sign_in(unauthorized_user)
-          assert_differences(no_differences) do
+          assert_difference(no_differences) do
             delete trash_path, params: {format: format}
           end
           send("expect_delete_trash_unauthorized_#{format}")
@@ -26,7 +26,7 @@ RSpec.shared_examples_for 'delete trash' do |opts = {skip: []}|
       unless opts[:skip].include?(:trash_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           sign_in(authorized_user_trash)
-          assert_differences(trash_differences) do
+          assert_difference(trash_differences) do
             delete trash_path, params: {format: format}
           end
           send("expect_delete_trash_#{format}")

@@ -24,8 +24,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'user should post create comment for vote as json' do
     sign_in vote.publisher
-    assert_differences([['Comment.count', 1],
-                        ['Property.where(predicate: "https://argu.co/ns/core#explanation").count', 1]]) do
+    assert_difference('Comment.count' => 1,
+                      'Property.where(predicate: "https://argu.co/ns/core#explanation").count' => 1) do
       post collection_iri(motion, :comments),
            params: {comment: {body: 'My opinion', vote_id: vote.uuid}},
            headers: argu_headers(accept: :json)
@@ -45,12 +45,12 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, subject.parent.children_count(:comments)
 
-    assert_differences([['subject.parent.reload.children_count(:comments)', -1],
-                        ['creator.profile.comments.count', -1]]) do
+    assert_difference('subject.parent.reload.children_count(:comments)' => -1,
+                      'creator.profile.comments.count' => -1) do
       assert_difference 'Comment.trashed.count', 0 do
         delete subject
       end
-      assert_differences([['Comment.trashed.count', 1], ['Comment.where(description: "").count', 1]]) do
+      assert_difference('Comment.trashed.count' => 1, 'Comment.where(description: "").count' => 1) do
         delete subject.iri_path(destroy: 'true')
       end
     end
@@ -66,8 +66,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
 
     assert_equal 1, subject.parent.children_count(:comments)
 
-    assert_differences([['subject.parent.reload.children_count(:comments)', -1],
-                        ['creator.profile.comments.count', -1]]) do
+    assert_difference('subject.parent.reload.children_count(:comments)' => -1,
+                      'creator.profile.comments.count' => -1) do
       assert_difference 'Comment.trashed.count', 1 do
         delete subject
       end

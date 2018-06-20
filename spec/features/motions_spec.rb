@@ -14,7 +14,7 @@ RSpec.feature 'Motions', type: :feature do
 
     motion_attr = attributes_for(:motion)
 
-    assert_differences([['Motion.count', 1]]) do
+    assert_difference('Motion.count' => 1) do
       within('#new_motion') do
         fill_in 'motion[title]', with: motion_attr[:title]
         fill_in 'motion[content]', with: motion_attr[:content]

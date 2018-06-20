@@ -54,7 +54,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
 
   test 'service should create notifications for new argument' do
     last_activity_at = motion.last_activity_at
-    assert_differences([['Argument.count', 1], ['Activity.count', 1], ['Notification.count', 1]]) do
+    assert_difference('Argument.count' => 1, 'Activity.count' => 1, 'Notification.count' => 1) do
       service = CreateArgument.new(
         motion,
         attributes: {title: 'argument title'},
@@ -67,7 +67,7 @@ class NotificationListenerTest < ActiveSupport::TestCase
 
   test 'silent service should not create notifications for new argument' do
     last_activity_at = motion.last_activity_at
-    assert_differences([['Argument.count', 1], ['Notification.count', 0]]) do
+    assert_difference('Argument.count' => 1, 'Notification.count' => 0) do
       service = CreateArgument.new(
         motion,
         attributes: {title: 'argument title'},

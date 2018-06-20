@@ -15,7 +15,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
     sign_in administrator
     motion
 
-    assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
+    assert_difference('Motion.trashed.count' => 1, 'Notification.last.id' => 1) do
       delete motion
     end
     assert_nil Activity.last.comment
@@ -26,7 +26,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
     sign_in administrator
     motion
 
-    assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
+    assert_difference('Motion.trashed.count' => 1, 'Notification.last.id' => 1) do
       delete motion, params: {activity: {comment: 'Reason for trashing'}}
     end
 
@@ -39,7 +39,7 @@ class ActivityCommentsTest < ActionDispatch::IntegrationTest
     sign_in administrator
     motion
 
-    assert_differences([['Motion.trashed.count', 1], ['Notification.last.id', 1]]) do
+    assert_difference('Motion.trashed.count' => 1, 'Notification.last.id' => 1) do
       delete motion,
              params: {actor_iri: argu.iri, activity: {comment: 'Reason for trashing'}}
     end

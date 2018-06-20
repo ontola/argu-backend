@@ -16,7 +16,7 @@ RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
       unless opts[:skip].include?(:destroy_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
           sign_in(unauthorized_user)
-          assert_differences(no_differences) do
+          assert_difference(no_differences) do
             delete destroy_path, params: {format: format}
           end
           send("expect_delete_destroy_unauthorized_#{format}")
@@ -27,7 +27,7 @@ RSpec.shared_examples_for 'delete destroy' do |opts = {skip: []}|
         it 'as authorized' do
           parent_path # touch path because subject be deleted
           sign_in(authorized_user_destroy)
-          assert_differences(destroy_differences) do
+          assert_difference(destroy_differences) do
             delete destroy_path, params: destroy_params.merge(format: format)
           end
           send("expect_delete_destroy_#{format}")

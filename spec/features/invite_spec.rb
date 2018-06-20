@@ -39,7 +39,7 @@ RSpec.feature 'Invite', type: :feature do
       within('.Select-group') do
         fill_in_select with: 'Add group'
       end
-      assert_differences([['Group.count', 1]]) do
+      assert_difference('Group.count' => 1) do
         within('.form-small') do
           fill_in 'group-name', with: 'Civilians'
           fill_in 'group-name-singular', with: 'Civilian'

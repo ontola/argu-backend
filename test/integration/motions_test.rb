@@ -205,7 +205,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   test 'staff should trash draft' do
     sign_in staff
     draft_motion
-    assert_differences([['Motion.count', 0], ['Motion.trashed.count', 1], ['Activity.count', 1]]) do
+    assert_difference('Motion.count' => 0, 'Motion.trashed.count' => 1, 'Activity.count' => 1) do
       delete draft_motion
     end
   end

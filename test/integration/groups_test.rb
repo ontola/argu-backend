@@ -97,7 +97,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'administrator should post create group' do
     sign_in administrator
 
-    assert_differences([['Group.count', 1], ['Grant.count', 0]]) do
+    assert_difference('Group.count' => 1, 'Grant.count' => 0) do
       post collection_iri_path(argu, :groups),
            params: {
              group: {
@@ -112,7 +112,7 @@ class GroupsTest < ActionDispatch::IntegrationTest
   test 'administrator should post create group with grant' do
     sign_in administrator
 
-    assert_differences([['Group.count', 1], ['Grant.count', 1]]) do
+    assert_difference('Group.count' => 1, 'Grant.count' => 1) do
       post collection_iri_path(argu, :groups),
            params: {
              group: {

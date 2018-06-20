@@ -30,8 +30,8 @@ RSpec.describe 'Forums', type: :request do
     expect(subject.name).to eq('name')
   end
 
-  let(:update_differences) { [['Forum.count', 0]] }
-  let(:destroy_differences) { [['Forum.count', -1]] }
+  let(:update_differences) { {'Forum.count' => 0} }
+  let(:destroy_differences) { {'Forum.count' => -1} }
 
   subject { holland }
   it_behaves_like 'requests', skip: %i[trash untrash new create index]
@@ -46,7 +46,7 @@ RSpec.describe 'Forums', type: :request do
       nominatim_netherlands
       {page_id: argu.url, forum: {name: 'name', url: 'new_forum'}}
     end
-    let(:create_differences) { [['Forum.count', 1]] }
+    let(:create_differences) { {'Forum.count' => 1} }
     let(:expect_post_create_guest_serializer) { expect_not_found }
     it_behaves_like 'get new'
     it_behaves_like 'post create'

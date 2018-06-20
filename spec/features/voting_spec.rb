@@ -32,7 +32,7 @@ RSpec.feature 'Voting', type: :feature do
         click_button 'Continue'
       end
 
-      assert_differences([['Vote.count', 1], ['Edge.where(confirmed: false).count', 1]]) do
+      assert_difference('Vote.count' => 1, 'Edge.where(confirmed: false).count' => 1) do
         expect(page).to have_content('By creating an Argu account you agree to our')
 
         click_button 'Confirm'

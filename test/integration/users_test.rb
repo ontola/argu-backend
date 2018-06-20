@@ -146,8 +146,8 @@ class UsersTest < ActionDispatch::IntegrationTest
       confirmationToken: /.+/
     )
 
-    assert_differences([['EmailAddress.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
+    assert_difference('EmailAddress.count' => 1,
+                      'Sidekiq::Worker.jobs.count' => 1) do
       put user_path(user),
           params: {
             user: {
@@ -174,8 +174,8 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_not_equal user.primary_email_record.email, second_email.email
 
-    assert_differences([['EmailAddress.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 0]]) do
+    assert_difference('EmailAddress.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 0) do
       put user_path(user),
           params: {
             user: {
@@ -200,8 +200,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     second_email
 
-    assert_differences([['EmailAddress.count', -1],
-                        ['Sidekiq::Worker.jobs.count', 0]]) do
+    assert_difference('EmailAddress.count' => -1,
+                      'Sidekiq::Worker.jobs.count' => 0) do
       put user_path(user),
           params: {
             user: {
@@ -221,8 +221,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     second_email
 
-    assert_differences([['EmailAddress.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 0]]) do
+    assert_difference('EmailAddress.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 0) do
       put user_path(user),
           params: {
             user: {
@@ -253,8 +253,8 @@ class UsersTest < ActionDispatch::IntegrationTest
       confirmationToken: /.+/,
       email: 'changed@argu.co'
     )
-    assert_differences([['EmailAddress.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
+    assert_difference('EmailAddress.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 1) do
       put user_path(user),
           params: {
             user: {
@@ -276,8 +276,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should not change confirmed email' do
     sign_in user
     second_email
-    assert_differences([['EmailAddress.count', 0],
-                        ['Sidekiq::Worker.jobs.count', 0]]) do
+    assert_difference('EmailAddress.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 0) do
       put user_path(user),
           params: {
             user: {
@@ -453,8 +453,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     nominatim_postal_code_valid
     sign_in user
 
-    assert_differences [['Place.count', 1],
-                        ['Placement.count', 1]] do
+    assert_difference 'Place.count' => 1,
+                      'Placement.count' => 1 do
       put user_path(user),
           params: {
             user: {
@@ -473,8 +473,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     nominatim_country_code_only
     sign_in user
 
-    assert_differences [['Place.count', 1],
-                        ['Placement.count', 1]] do
+    assert_difference 'Place.count' => 1,
+                      'Placement.count' => 1 do
       put user_path(user),
           params: {
             user: {
@@ -492,8 +492,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should not create place and placement on update with only postal code' do
     sign_in user
 
-    assert_differences [['Place.count', 0],
-                        ['Placement.count', 0]] do
+    assert_difference 'Place.count' => 0,
+                      'Placement.count' => 0 do
       put user_path(user),
           params: {
             user: {
@@ -512,8 +512,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     nominatim_postal_code_wrong
     sign_in user
 
-    assert_differences [['Place.count', 0],
-                        ['Placement.count', 0]] do
+    assert_difference 'Place.count' => 0,
+                      'Placement.count' => 0 do
       put user_path(user),
           params: {
             user: {
@@ -532,8 +532,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     sign_in user
     place
 
-    assert_differences [['Place.count', 0],
-                        ['Placement.count', 1]] do
+    assert_difference 'Place.count' => 0,
+                      'Placement.count' => 1 do
       put user_path(user),
           params: {
             user: {
@@ -554,8 +554,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
 
-    assert_differences [['Place.count', 0],
-                        ['Placement.count', -1]] do
+    assert_difference 'Place.count' => 0,
+                      'Placement.count' => -1 do
       put user_path(user),
           params: {
             user: {

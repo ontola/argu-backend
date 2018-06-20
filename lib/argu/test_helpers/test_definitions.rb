@@ -26,7 +26,7 @@ module Argu
         attributes = default_create_attributes(parent: parent).merge(attributes)
         actor_iri = send(opts[:actor])&.iri if opts[:actor].present?
 
-        assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
+        assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
           post create_path(parent),
                headers: argu_headers,
                params: {format: request_format, actor_iri: actor_iri, model_sym => attributes}
@@ -64,7 +64,7 @@ module Argu
         attributes = attributes_for(model_sym).merge(attributes)
         ch_method = method(results[:should] ? :assert_not_equal : :assert_equal)
 
-        assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
+        assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
           patch update_path(record),
                 headers: argu_headers,
                 params: {format: request_format, model_sym => attributes}
@@ -88,8 +88,8 @@ module Argu
         record = send(record) if record.is_a?(Symbol)
 
         difference = results[:should] ? 1 : 0
-        assert_differences([["#{model_class}.trashed.count", difference],
-                            ['Activity.count', difference.abs]]) do
+        assert_difference("#{model_class}.trashed.count" => difference,
+                          'Activity.count' => difference.abs) do
           delete trash_path(record),
                  params: {format: request_format},
                  headers: argu_headers
@@ -104,7 +104,7 @@ module Argu
                                         ['Activity', 1]])
         record = send(record) if record.is_a?(Symbol)
 
-        assert_differences(differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }) do
+        assert_difference(Hash[differences.map { |a, b| ["#{a}.count", results[:should] ? b : 0] }]) do
           delete destroy_path(record),
                  params: {format: request_format},
                  headers: argu_headers

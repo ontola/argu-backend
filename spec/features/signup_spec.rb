@@ -26,7 +26,7 @@ RSpec.feature 'Signup', type: :feature do
 
     click_link 'Other'
 
-    assert_differences [['User.count', 1], ['Vote.count', 1], ['Favorite.count', 1]] do
+    assert_difference 'User.count' => 1, 'Vote.count' => 1, 'Favorite.count' => 1 do
       Sidekiq::Testing.inline! do
         within('.opinion-form') do
           click_link 'Log in with Facebook'

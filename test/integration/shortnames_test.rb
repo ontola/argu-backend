@@ -49,7 +49,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'initiator should not post create' do
     sign_in initiator
-    general_create(403, [['Shortname.count', 0]])
+    general_create(403, 'Shortname.count' => 0)
     assert_not_authorized
   end
 
@@ -71,7 +71,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   test 'moderator should not post create' do
     sign_in moderator
-    general_create(403, [['Shortname.count', 0]])
+    general_create(403, 'Shortname.count' => 0)
     assert_not_authorized
   end
 
@@ -119,9 +119,9 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     yield if block_given?
   end
 
-  def general_create(response = 302, differences = [['Shortname.count', 1]])
+  def general_create(response = 302, differences = {'Shortname.count' => 1})
     attrs = shortname_attributes
-    assert_differences(differences) do
+    assert_difference(differences) do
       post collection_iri_path(argu, :shortnames), params: attrs
       assert_response response
     end

@@ -237,7 +237,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     nominatim_netherlands
     sign_in create_administrator(holland)
     assert_equal holland.reload.places.first.country_code, 'GB'
-    assert_differences([['Placement.count', 0]]) do
+    assert_difference('Placement.count' => 0) do
       put holland,
           params: {
             forum: {
@@ -321,7 +321,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
            group: create(:group, parent: holland.ancestor(:page)),
            edge: holland,
            grant_set: GrantSet.participator)
-    assert_differences([['transfer_to.forums.reload.count', 1], ['holland.reload.grants.size', -1]]) do
+    assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
       put move_iri_path(holland, edge_id: transfer_to.uuid)
     end
     assert_equal holland.parent, transfer_to
@@ -333,7 +333,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should post create forum with latlon' do
     sign_in staff
 
-    assert_differences([['Forum.count', 1], ['Placement.count', 2], ['Place.count', 1]]) do
+    assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1) do
       post portal_forums_path, params: {
         forum: {
           name: 'New forum',
@@ -359,7 +359,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
     forum_with_placement
 
-    assert_differences([['Placement.count', 0], ['Place.count', 1]]) do
+    assert_difference('Placement.count' => 0, 'Place.count' => 1) do
       put forum_with_placement,
           params: {
             forum: {
@@ -383,7 +383,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
     forum_with_placement
 
-    assert_differences([['Motion.count', 0], ['Placement.count', -1], ['Place.count', 0]]) do
+    assert_difference('Motion.count' => 0, 'Placement.count' => -1, 'Place.count' => 0) do
       put forum_with_placement,
           params: {
             forum: {

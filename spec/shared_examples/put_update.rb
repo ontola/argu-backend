@@ -16,7 +16,7 @@ RSpec.shared_examples_for 'put update' do |opts = {skip: []}|
       unless opts[:skip].include?(:update_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
           sign_in(unauthorized_user)
-          assert_differences(no_differences) do
+          assert_difference(no_differences) do
             put update_path, params: update_params.merge(format: format)
           end
           send("expect_put_update_unauthorized_#{format}")
@@ -26,7 +26,7 @@ RSpec.shared_examples_for 'put update' do |opts = {skip: []}|
       unless opts[:skip].include?(:update_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           sign_in(authorized_user_update)
-          assert_differences(update_differences) do
+          assert_difference(update_differences) do
             put update_path, params: update_params.merge(format: format)
           end
           send("expect_put_update_#{format}")
@@ -36,7 +36,7 @@ RSpec.shared_examples_for 'put update' do |opts = {skip: []}|
       unless opts[:skip].include?(:update_invalid) || opts[:skip].include?(:invalid)
         it 'as authorized invalid' do
           sign_in(authorized_user_update)
-          assert_differences(no_differences) do
+          assert_difference(no_differences) do
             put update_path, params: invalid_update_params.merge(format: format)
           end
           send("expect_put_update_failed_#{format}")

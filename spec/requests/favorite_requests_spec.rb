@@ -10,8 +10,8 @@ RSpec.describe 'Favorites', type: :request do
   let(:destroy_path) { index_path }
   let(:update_failed_path) { index_path }
   let(:created_resource_path) { holland.iri_path }
-  let(:create_differences) { [['Favorite.count', 1]] }
-  let(:destroy_differences) { [['Favorite.count', -1]] }
+  let(:create_differences) { {'Favorite.count' => 1} }
+  let(:destroy_differences) { {'Favorite.count' => -1} }
   let(:create_params) { {} }
   let(:authorized_user) { staff }
   let(:expect_delete_destroy_unauthorized_html) { expect_not_found }

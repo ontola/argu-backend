@@ -46,6 +46,7 @@ RSpec.configure do |config|
   config.include BrowserWrapper
   config.include UriTemplateHelper
   config.include UrlHelper
+  config.include ActiveSupport::Testing::Assertions
 
   Sidekiq::Testing.fake!
 

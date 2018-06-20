@@ -61,7 +61,7 @@ module RedisResource
       assert_equal 1, relation.count
 
       # persist votes
-      assert_differences([['Vote.count', 1], ['Edge.where(confirmed: true).count', 0]]) do
+      assert_difference('Vote.count' => 1, 'Edge.where(confirmed: true).count' => 0) do
         relation.persist(unconfirmed)
       end
     end

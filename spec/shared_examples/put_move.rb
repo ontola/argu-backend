@@ -17,7 +17,7 @@ RSpec.shared_examples_for 'put move' do |opts = {skip: []}|
       unless opts[:skip].include?(:move_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
           sign_in(unauthorized_user)
-          assert_differences(no_differences) do
+          assert_difference(no_differences) do
             put move_path, params: move_params.merge(format: format)
           end
           send("expect_put_move_unauthorized_#{format}")

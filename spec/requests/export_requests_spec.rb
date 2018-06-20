@@ -9,8 +9,8 @@ RSpec.describe 'Exports', type: :request do
   let(:parent_path) { index_path }
   let(:created_resource_path) { parent_path }
   let(:destroy_failed_path) { parent_path }
-  let(:create_differences) { [['Export.count', 1]] }
-  let(:destroy_differences) { [['Export.count', -1]] }
+  let(:create_differences) { {'Export.count' => 1} }
+  let(:destroy_differences) { {'Export.count' => -1} }
   let(:expect_get_index_guest_html) { expect(response.code).to eq('302') }
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:non_existing_id) { SecureRandom.uuid }

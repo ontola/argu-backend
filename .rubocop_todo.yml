@@ -13,11 +13,6 @@ Lint/AssignmentInCondition:
   Exclude:
     - 'spec/support/wait_for_ajax.rb'
 
-# Offense count: 6
-Security/Eval:
-  Exclude:
-    - 'lib/argu/test_helpers/test_assertions.rb'
-
 # Offense count: 1
 Lint/UselessAssignment:
   Exclude:

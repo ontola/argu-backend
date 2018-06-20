@@ -104,8 +104,8 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should post create' do
     sign_in user
 
-    assert_differences(
-      [['Page.count', 1], ["Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count", 1]]
+    assert_difference(
+      'Page.count' => 1, "Grant.where(group_id: #{Group::STAFF_ID}, grant_set: GrantSet.staff).count" => 1
     ) do
       post pages_path,
            params: {
@@ -293,7 +293,7 @@ class PagesTest < ActionDispatch::IntegrationTest
     create(:place, address: {country_code: 'nl'})
     sign_in page.publisher
 
-    assert_differences([['Placement.count', 1], ['Place.count', 1]]) do
+    assert_difference('Placement.count' => 1, 'Place.count' => 1) do
       put page,
           params: {
             id: page.url,
@@ -347,10 +347,10 @@ class PagesTest < ActionDispatch::IntegrationTest
     init_cairo_with_content
     sign_in page.publisher
 
-    assert_differences([['Page.count', -1],
-                        ['Argument.anonymous.count', 1],
-                        ['Comment.anonymous.count', 1],
-                        ['Motion.anonymous.count', 1]]) do
+    assert_difference('Page.count' => -1,
+                      'Argument.anonymous.count' => 1,
+                      'Comment.anonymous.count' => 1,
+                      'Motion.anonymous.count' => 1) do
       delete page,
              params: {
                page: {

@@ -175,7 +175,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   end
 
   def general_decide(response = 302, changed = false, state = 'approved')
-    assert_differences([['Activity.count', changed ? 1 : 0]]) do
+    assert_difference('Activity.count' => changed ? 1 : 0) do
       post  collection_iri_path(motion, :decisions),
             params: {
               decision: attributes_for(:decision,
@@ -197,8 +197,8 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   end
 
   def general_forward(response = 302, changed = false, group_id = nil, user_id = nil)
-    assert_differences([['Activity.count', changed ? 1 : 0],
-                        ['Decision.count', changed ? 1 : 0]]) do
+    assert_difference('Activity.count' => changed ? 1 : 0,
+                      'Decision.count' => changed ? 1 : 0) do
       post collection_iri_path(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
@@ -218,7 +218,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
     approval
     decision = motion.reload.last_decision
-    assert_differences([['Decision.count', 0], ['Activity.count', changed ? 1 : 0]]) do
+    assert_difference('Decision.count' => 0, 'Activity.count' => changed ? 1 : 0) do
       put decision.iri_path,
           params: {
             decision: attributes_for(:decision,

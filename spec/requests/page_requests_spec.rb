@@ -21,9 +21,9 @@ RSpec.describe 'Pages', type: :request do
   let(:updated_resource_path) { settings_iri_path(subject, tab: :profile) }
   let(:created_resource_path) { settings_iri_path(Page.last, tab: :profile) }
   let(:create_failed_path) { new_page_path }
-  let(:create_differences) { [['Page.count', 1]] }
-  let(:update_differences) { [['Page.count', 0]] }
-  let(:destroy_differences) { [['Page.count', -1]] }
+  let(:create_differences) { {'Page.count' => 1} }
+  let(:update_differences) { {'Page.count' => 0} }
+  let(:destroy_differences) { {'Page.count' => -1} }
   let(:create_params) do
     {
       page: {

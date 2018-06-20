@@ -25,7 +25,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user_not_accepted
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 1, 'Follow.count' => 0 do
       post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
 
@@ -36,7 +36,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user_not_accepted
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 2, 'Follow.count' => 0 do
       post :create, params: {group_id: forum_group, token: '1234567890', root_id: argu.url}
     end
 
@@ -47,7 +47,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user_not_accepted
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 2, 'Follow.count' => 0 do
       post :create, params: {group_id: page_group, token: '1234567890', root_id: argu.url}
     end
 
@@ -95,7 +95,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     forum_edge_ids.each do |forum_edge_id|
       Favorite.find_or_create_by!(user: user, edge_id: forum_edge_id)
     end
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 0], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 0, 'Follow.count' => 0 do
       post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
     assert_response :created
@@ -105,7 +105,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 1]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 1, 'Follow.count' => 1 do
       post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
     assert_equal user.reload.following_type(freetown), 'news'
@@ -120,7 +120,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     create(:follow, followable: freetown, follower: user, follow_type: 'never')
     assert_equal user.following_type(freetown), 'never'
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 1], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 1, 'Follow.count' => 0 do
       post :create, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
     end
     assert_equal user.reload.following_type(freetown), 'never'
@@ -132,7 +132,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 2]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 2, 'Follow.count' => 2 do
       post :create, params: {group_id: forum_group, token: '1234567890', root_id: argu.url}
     end
 
@@ -143,7 +143,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in user
 
-    assert_differences [['GroupMembership.count', 1], ['Favorite.count', 2], ['Follow.count', 2]] do
+    assert_difference 'GroupMembership.count' => 1, 'Favorite.count' => 2, 'Follow.count' => 2 do
       post :create, params: {group_id: page_group, token: '1234567890', root_id: argu.url}
     end
 
@@ -191,7 +191,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     validate_valid_bearer_token
     sign_in member
 
-    assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 0, 'Favorite.count' => 0, 'Follow.count' => 0 do
       post :create, format: :json, params: {group_id: group, token: '1234567890', root_id: argu.url}
       assert_redirected_to group.group_memberships.first.iri
     end
@@ -205,7 +205,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       Favorite.find_or_create_by!(user: member, edge_id: forum_edge_id)
     end
 
-    assert_differences [['GroupMembership.count', 0], ['Favorite.count', 0], ['Follow.count', 0]] do
+    assert_difference 'GroupMembership.count' => 0, 'Favorite.count' => 0, 'Follow.count' => 0 do
       post :create, format: :json, params: {group_id: single_forum_group, token: '1234567890', root_id: argu.url}
       assert_redirected_to single_forum_group.group_memberships.first.iri
     end
@@ -214,7 +214,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'member should delete destroy own membership' do
     sign_in member
 
-    assert_differences([['GroupMembership.count', 0], ['GroupMembership.active.count', -1]]) do
+    assert_difference 'GroupMembership.count' => 0, 'GroupMembership.active.count' => -1 do
       delete :destroy, params: {id: member.profile.group_memberships.second, root_id: argu.url}
     end
 
@@ -321,7 +321,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     group_membership = create(:group_membership, parent: group)
 
-    assert_differences([['GroupMembership.count', 0], ['GroupMembership.active.count', -1]]) do
+    assert_difference 'GroupMembership.count' => 0, 'GroupMembership.active.count' => -1 do
       delete :destroy,
              params: {
                id: group_membership,

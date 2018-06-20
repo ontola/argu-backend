@@ -16,9 +16,9 @@ RSpec.describe 'Follows', type: :request do
   let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }
   let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
   let(:parent_path) { subject.followable.iri_path }
-  let(:create_differences) { [['Follow.reactions.count', 1]] }
+  let(:create_differences) { {'Follow.reactions.count' => 1} }
   let(:created_resource_path) { parent_path }
-  let(:destroy_differences) { [['Follow.reactions.count', -1], ['Follow.never.count', 1]] }
+  let(:destroy_differences) { {'Follow.reactions.count' => -1, 'Follow.never.count' => 1} }
   let(:update_failed_path) { parent_path }
   let(:expect_delete_destroy_html) do
     expect(response.code).to eq('303')

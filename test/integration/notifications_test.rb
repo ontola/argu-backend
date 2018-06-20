@@ -30,7 +30,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'guest should not mark as read' do
     argument
-    assert_differences([['Notification.count', 0], ['Notification.where(read_at: nil).count', 0]]) do
+    assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => 0) do
       patch read_notifications_path
       assert_response 302
     end
@@ -60,7 +60,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should mark as read' do
     argument
     sign_in follower
-    assert_differences([['Notification.count', 0], ['Notification.where(read_at: nil).count', -1]]) do
+    assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
       patch read_notifications_path, headers: argu_headers(accept: :json)
       assert_response 200
     end

@@ -9,9 +9,9 @@ RSpec.describe 'VoteMatches', type: :request do
     super - %i[html]
   end
 
-  let(:create_differences) { [["#{subject.class}.count", 1]] }
-  let(:update_differences) { [["#{subject.class}.count", 0]] }
-  let(:destroy_differences) { [["#{subject.class}.count", -1]] }
+  let(:create_differences) { {"#{subject.class}.count" => 1} }
+  let(:update_differences) { {"#{subject.class}.count" => 0} }
+  let(:destroy_differences) { {"#{subject.class}.count" => -1} }
 
   let(:authorized_user) { subject.publisher }
   let(:required_keys) { %w[name] }

@@ -9,8 +9,8 @@ RSpec.describe 'Votes', type: :request do
     super - %i[html]
   end
 
-  let(:destroy_differences) { [['Vote.count', -1]] }
-  let(:update_differences) { [['Vote.count', 0]] }
+  let(:destroy_differences) { {'Vote.count' => -1} }
+  let(:update_differences) { {'Vote.count' => 0} }
   let(:destroy_path) { show_path }
   let(:show_by_parent_path) do
     expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path, only_path: true)
@@ -95,11 +95,11 @@ RSpec.describe 'Votes', type: :request do
 
     context 'with non-persisted linked_record parent' do
       let(:create_guest_differences) do
-        [
-          ['Argu::Redis.keys("temporary.*").count', 1],
-          ['LinkedRecord.count', 1],
-          ['VoteEvent.count', 1]
-        ]
+        {
+          'Argu::Redis.keys("temporary.*").count' => 1,
+          'LinkedRecord.count' => 1,
+          'VoteEvent.count' => 1
+        }
       end
       let(:non_persisted_linked_record) do
         LinkedRecord.new_for_forum(argu.url, freetown.url, SecureRandom.uuid)

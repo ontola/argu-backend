@@ -103,10 +103,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
   test 'guest should post create for motion json' do
     get root_path
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['Argu::Redis.keys.count', 1],
-                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
+    assert_difference('Vote.count' => 0,
+                      'Edge.count' => 0,
+                      'Argu::Redis.keys.count' => 1,
+                      'vote_event.reload.children_count(:votes_pro)' => 0) do
       Sidekiq::Testing.inline! do
         post collection_iri_path(vote_event, :votes),
              params: {
@@ -194,9 +194,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in unconfirmed
     get root_path
 
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'vote_event.reload.children_count(:votes_pro)' => 0) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              vote: {for: :pro}
@@ -215,10 +215,10 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'user should post create for motion json' do
     sign_in user
     vote_event
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['Argu::Redis.keys.count', 0],
-                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'Argu::Redis.keys.count' => 0,
+                      'vote_event.reload.children_count(:votes_pro)' => 1) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              vote: {for: :pro}
@@ -235,7 +235,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     motion
     default_iri = motion.default_vote_event.iri_path(id: 'default')
     assert default_iri.include?('default')
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
       post collection_iri_path(default_iri, :votes, canonical: true),
            params: {
              vote: {
@@ -251,9 +251,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in user
     argument
 
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['argument.reload.children_count(:votes_pro)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'argument.reload.children_count(:votes_pro)' => 1) do
       post collection_iri_path(argument, :votes, canonical: true),
            params: {
              for: :pro
@@ -269,9 +269,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'user should post create json_api' do
     sign_in user
 
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'vote_event.reload.children_count(:votes_pro)' => 1) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              data: {
@@ -293,10 +293,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in user
     closed_vote_event
 
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['vote_event.reload.children_count(:votes_pro)', 0],
-                        ['closed_vote_event.reload.children_count(:votes_pro)', 0]]) do
+    assert_difference('Vote.count' => 0,
+                      'Edge.count' => 0,
+                      'vote_event.reload.children_count(:votes_pro)' => 0,
+                      'closed_vote_event.reload.children_count(:votes_pro)' => 0) do
       post collection_iri_path(closed_vote_event, :votes, canonical: true),
            params: {
              data: {
@@ -315,7 +315,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     linked_record
     sign_in user
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
       vote_event = linked_record.default_vote_event
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
@@ -341,7 +341,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     default_iri = linked_record.default_vote_event.iri_path(id: 'default')
     assert default_iri.include?('default')
 
-    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
+    assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
       post collection_iri_path(default_iri, :votes, canonical: true),
            params: {
              data: {
@@ -365,7 +365,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     default_iri = non_persisted_linked_record.default_vote_event.iri_path(id: 'default')
     assert default_iri.include?('default')
 
-    assert_differences([['Vote.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]) do
+    assert_difference('Vote.count' => 1, 'LinkedRecord.count' => 1, 'VoteEvent.count' => 1, 'Edge.count' => 3) do
       post collection_iri_path(default_iri, :votes, canonical: true),
            params: {
              data: {
@@ -389,9 +389,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should not create unchanged vote for motion json' do
     sign_in creator
 
-    assert_differences([['Vote.count', 0],
-                        ['vote_event.reload.total_vote_count', 0],
-                        ['vote_event.children_count(:votes_pro)', 0]]) do
+    assert_difference('Vote.count' => 0,
+                      'vote_event.reload.total_vote_count' => 0,
+                      'vote_event.children_count(:votes_pro)' => 0) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              vote: {
@@ -408,9 +408,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should not create new vote html' do
     sign_in creator
 
-    assert_differences([['Vote.count', 0],
-                        ['vote_event.reload.total_vote_count', 0],
-                        ['vote_event.children_count(:votes_pro)', 0]]) do
+    assert_difference('Vote.count' => 0,
+                      'vote_event.reload.total_vote_count' => 0,
+                      'vote_event.children_count(:votes_pro)' => 0) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              vote: {
@@ -426,12 +426,12 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should post update side json' do
     sign_in creator
 
-    assert_differences([['Vote.count', 1],
-                        ['Vote.untrashed.count', 0],
-                        ['Activity.count', 0],
-                        ['vote_event.reload.total_vote_count', 0],
-                        ['vote_event.children_count(:votes_pro)', -1],
-                        ['vote_event.children_count(:votes_con)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Vote.untrashed.count' => 0,
+                      'Activity.count' => 0,
+                      'vote_event.reload.total_vote_count' => 0,
+                      'vote_event.children_count(:votes_pro)' => -1,
+                      'vote_event.children_count(:votes_con)' => 1) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              vote: {
@@ -449,11 +449,11 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should post update json_api' do
     sign_in creator
 
-    assert_differences([['Vote.count', 1],
-                        ['Vote.untrashed.count', 0],
-                        ['vote_event.reload.total_vote_count', 0],
-                        ['vote_event.children_count(:votes_pro)', -1],
-                        ['vote_event.children_count(:votes_con)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Vote.untrashed.count' => 0,
+                      'vote_event.reload.total_vote_count' => 0,
+                      'vote_event.children_count(:votes_pro)' => -1,
+                      'vote_event.children_count(:votes_con)' => 1) do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {
              data: {
@@ -474,10 +474,10 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should not put update json_api side' do
     sign_in creator
 
-    assert_differences([['Vote.count', 0],
-                        ['vote_event.reload.total_vote_count', 0],
-                        ['vote_event.children_count(:votes_pro)', 0],
-                        ['vote_event.children_count(:votes_con)', 0]]) do
+    assert_difference('Vote.count' => 0,
+                      'vote_event.reload.total_vote_count' => 0,
+                      'vote_event.children_count(:votes_pro)' => 0,
+                      'vote_event.children_count(:votes_con)' => 0) do
       put vote,
           params: {
             data: {
@@ -498,15 +498,15 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should not delete destroy vote for motion twice' do
     sign_in creator
 
-    assert_differences([['Vote.count', -1],
-                        ['Edge.count', -1],
-                        ['vote_event.reload.children_count(:votes_pro)', -1]]) do
+    assert_difference('Vote.count' => -1,
+                      'Edge.count' => -1,
+                      'vote_event.reload.children_count(:votes_pro)' => -1) do
       delete vote, headers: argu_headers(accept: :json)
     end
 
-    assert_differences([['Vote.count', 0],
-                        ['Edge.count', 0],
-                        ['vote_event.reload.children_count(:votes_pro)', 0]]) do
+    assert_difference('Vote.count' => 0,
+                      'Edge.count' => 0,
+                      'vote_event.reload.children_count(:votes_pro)' => 0) do
       delete vote, headers: argu_headers(accept: :json)
     end
 
@@ -516,9 +516,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should delete destroy vote for argument' do
     sign_in creator
 
-    assert_differences([['Vote.count', -1],
-                        ['Edge.count', -1],
-                        ['argument.reload.children_count(:votes_pro)', -1]]) do
+    assert_difference('Vote.count' => -1,
+                      'Edge.count' => -1,
+                      'argument.reload.children_count(:votes_pro)' => -1) do
       delete argument_vote, headers: argu_headers(accept: :json)
     end
 
@@ -530,9 +530,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in creator, Doorkeeper::Application.argu_front_end
     vote_iri = argument_vote.iri
 
-    assert_differences([['Vote.count', -1],
-                        ['Edge.count', -1],
-                        ['argument.reload.children_count(:votes_pro)', -1]]) do
+    assert_difference('Vote.count' => -1,
+                      'Edge.count' => -1,
+                      'argument.reload.children_count(:votes_pro)' => -1) do
       delete argument_vote.iri_path, headers: argu_headers(accept: :nq)
     end
 
@@ -548,9 +548,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'creator should delete destroy vote for argument n3' do
     sign_in creator
 
-    assert_differences([['Vote.count', -1],
-                        ['Edge.count', -1],
-                        ['argument.reload.children_count(:votes_pro)', -1]]) do
+    assert_difference('Vote.count' => -1,
+                      'Edge.count' => -1,
+                      'argument.reload.children_count(:votes_pro)' => -1) do
       delete argument_vote.iri_path, headers: argu_headers(accept: :n3)
     end
 
@@ -562,9 +562,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     sign_in user, Doorkeeper::Application.argu_front_end
 
     expect(vote_event.votes.length).to be 1
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['vote_event.reload.children_count(:votes_con)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'vote_event.reload.children_count(:votes_con)' => 1) do
       Sidekiq::Testing.inline! do
         post collection_iri_path(vote_event, :votes, 'filter%5B%5D' => 'option=no', type: :paginated),
              headers: argu_headers(accept: :nq)
@@ -591,9 +591,9 @@ class VotesTest < ActionDispatch::IntegrationTest
   test 'user should post create for motion n3' do
     sign_in user
 
-    assert_differences([['Vote.count', 1],
-                        ['Edge.count', 1],
-                        ['vote_event.reload.children_count(:votes_pro)', 1]]) do
+    assert_difference('Vote.count' => 1,
+                      'Edge.count' => 1,
+                      'vote_event.reload.children_count(:votes_pro)' => 1) do
       Sidekiq::Testing.inline! do
         post collection_iri_path(vote_event, :votes),
              params: {vote: {for: :pro}},

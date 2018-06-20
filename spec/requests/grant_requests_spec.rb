@@ -9,9 +9,9 @@ RSpec.describe 'Grants', type: :request do
     super - %i[html]
   end
 
-  let(:create_differences) { [["#{subject.class}.count", 1]] }
-  let(:update_differences) { [["#{subject.class}.count", 0]] }
-  let(:destroy_differences) { [["#{subject.class}.count", -1]] }
+  let(:create_differences) { {"#{subject.class}.count" => 1} }
+  let(:update_differences) { {"#{subject.class}.count" => 0} }
+  let(:destroy_differences) { {"#{subject.class}.count" => -1} }
 
   let(:index_path) { collection_iri_path(subject.parent.root, table_sym) }
   let(:created_resource_path) { settings_iri_path(argu, tab: :groups) }

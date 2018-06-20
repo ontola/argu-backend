@@ -21,8 +21,8 @@ module Portal
       assert_response response
     end
 
-    def general_create(response = 302, differences = [['Announcement.count', 0]])
-      assert_differences(differences) do
+    def general_create(response = 302, differences = {'Announcement.count' => 0})
+      assert_difference(differences) do
         post :create,
              params: {announcement: attributes_for(:announcement)}
       end
@@ -59,9 +59,9 @@ module Portal
       end
     end
 
-    def general_destroy(response = 302, differences = [['Announcement.count', 0]])
+    def general_destroy(response = 302, differences = {'Announcement.count' => 0})
       subject # Trigger
-      assert_differences(differences) do
+      assert_difference(differences) do
         delete :destroy,
                params: {id: subject}
       end
@@ -145,13 +145,13 @@ module Portal
     test 'staff should post create' do
       sign_in staff
 
-      general_create 302, [['Announcement.count', 1]]
+      general_create 302, 'Announcement.count' => 1
     end
 
     test 'staff should delete destroy' do
       sign_in staff
 
-      general_destroy 303, [['Announcement.count', -1]]
+      general_destroy 303, 'Announcement.count' => -1
     end
   end
 end

@@ -24,14 +24,14 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     # Notification for follower of Forum
-    assert_differences([['Motion.count', 1], ['Notification.count', 0]]) do
+    assert_difference('Motion.count' => 1, 'Notification.count' => 0) do
       post collection_iri_path(freetown, :motions),
            params: {motion: attributes_for(:motion)}
     end
 
-    assert_notifications(1, 'reaction', ['Motion.published.count', 1])
+    assert_notifications(1, 'reaction', 'Motion.published.count' => 1)
 
-    assert_differences([['Motion.trashed.count', 1], [create_notification_count, -1]]) do
+    assert_difference('Motion.trashed.count' => 1, create_notification_count => -1) do
       delete Motion.last
     end
   end
@@ -41,7 +41,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     motion
 
-    assert_differences([['Motion.count', -1], [create_notification_count, -2]]) do
+    assert_difference('Motion.count' => -1, create_notification_count => -2) do
       delete motion.iri_path(destroy: true)
     end
   end
@@ -50,14 +50,14 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     # Notification for follower of Forum
-    assert_differences([['Question.count', 1], ['Notification.count', 0]]) do
+    assert_difference('Question.count' => 1, 'Notification.count' => 0) do
       post collection_iri_path(freetown, :questions),
            params: {question: attributes_for(:question)}
     end
 
-    assert_notifications(1, 'reaction', ['Question.published.count', 1])
+    assert_notifications(1, 'reaction', 'Question.published.count' => 1)
 
-    assert_differences([['Question.trashed.count', 1], [create_notification_count, -1]]) do
+    assert_difference('Question.trashed.count' => 1, create_notification_count => -1) do
       delete Question.last
     end
   end
@@ -67,7 +67,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     question
 
-    assert_differences([['Question.count', -1], [create_notification_count, -1]]) do
+    assert_difference('Question.count' => -1, create_notification_count => -1) do
       delete question.iri_path(destroy: true)
     end
   end
@@ -77,7 +77,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     motion
 
     # Notification for creator and follower of Motion
-    assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
+    assert_difference('Argument.count' => 1, 'Notification.count' => 2) do
       post collection_iri_path(motion, :pro_arguments),
            params: {
              pro_argument: attributes_for(:argument)
@@ -85,7 +85,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Argument.trashed.count', 1], [create_notification_count, -2]]) do
+    assert_difference('Argument.trashed.count' => 1, create_notification_count => -2) do
       delete Argument.last
     end
   end
@@ -95,7 +95,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     argument
 
-    assert_differences([['Argument.count', -1], [create_notification_count, -2]]) do
+    assert_difference('Argument.count' => -1, create_notification_count => -2) do
       delete argument.iri_path(destroy: true)
     end
   end
@@ -105,13 +105,13 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     argument
 
     # Notification for creator and follower of Argument
-    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
+    assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
       post collection_iri_path(argument, :comments),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Comment.trashed.count', 1], [create_notification_count, -2]]) do
+    assert_difference('Comment.trashed.count' => 1, create_notification_count => -2) do
       delete Comment.last
     end
   end
@@ -121,13 +121,13 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     blog_post
 
     # Notification for creator and follower of BlogPost
-    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
+    assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
       post collection_iri_path(blog_post, :comments),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Comment.trashed.count', 1], [create_notification_count, -2]]) do
+    assert_difference('Comment.trashed.count' => 1, create_notification_count => -2) do
       delete Comment.last
     end
   end
@@ -137,13 +137,13 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     motion
 
     # Notification for creator and follower of Motion
-    assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
+    assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
       post collection_iri_path(motion, :comments),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
 
-    assert_differences([['Comment.trashed.count', 1], [create_notification_count, -2]]) do
+    assert_difference('Comment.trashed.count' => 1, create_notification_count => -2) do
       delete Comment.last
     end
   end
@@ -151,7 +151,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
   test 'staff should create and trash blog_post with notifications' do
     sign_in staff
 
-    assert_differences([['BlogPost.count', 1]]) do
+    assert_difference('BlogPost.count' => 1) do
       post collection_iri_path(question, :blog_posts),
            params: {
              blog_post: attributes_for(:blog_post)
@@ -161,7 +161,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator, follower and news_follower of Question
     assert_notifications(3, 'news')
 
-    assert_differences([['BlogPost.trashed.count', 1], [create_notification_count, -3]]) do
+    assert_difference('BlogPost.trashed.count' => 1, create_notification_count => -3) do
       delete BlogPost.last
     end
   end
@@ -171,7 +171,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     motion
     group_membership
 
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
+    assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
       post collection_iri_path(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
@@ -189,7 +189,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
     motion
     create(:group_membership, parent: group, member: staff.profile)
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
+    assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
       post collection_iri_path(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
@@ -202,7 +202,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     # Notification for creator and follower of Motion
     assert_notifications(2, 'reaction')
 
-    assert_differences([['Decision.count', 1], ['Notification.count', 0]]) do
+    assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
       post collection_iri_path(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
@@ -220,8 +220,8 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     'Notification.joins(:activity).where("key ~ \'*.create|publish\'").count'
   end
 
-  def assert_notifications(count, type, *differences)
-    assert_differences(differences.append(['Notification.count', count])) do
+  def assert_notifications(count, type, differences = {})
+    assert_difference(differences.merge('Notification.count' => count)) do
       reset_publication(Publication.last)
     end
     assert_equal Notification.last.notification_type, type

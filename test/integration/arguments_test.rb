@@ -20,7 +20,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     sign_in user
     motion
 
-    assert_differences([['ProArgument.count', 1], ['Edge.count', 1]]) do
+    assert_difference('ProArgument.count' => 1, 'Edge.count' => 1) do
       general_create_json(motion)
     end
 
@@ -32,7 +32,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     sign_in user
     motion
 
-    assert_differences([['ConArgument.count', 1], ['Edge.count', 1]]) do
+    assert_difference('ConArgument.count' => 1, 'Edge.count' => 1) do
       general_create_json(motion, false)
     end
 
@@ -44,7 +44,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     linked_record
     sign_in user
 
-    assert_differences([['ProArgument.count', 1], ['Edge.count', 1]]) do
+    assert_difference('ProArgument.count' => 1, 'Edge.count' => 1) do
       general_create_json(linked_record)
     end
 
@@ -56,7 +56,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
     linked_record
     sign_in user
 
-    assert_differences([['ConArgument.count', 1], ['Edge.count', 1]]) do
+    assert_difference('ConArgument.count' => 1, 'Edge.count' => 1) do
       general_create_json(linked_record, false)
     end
 
@@ -67,8 +67,8 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   test 'user should post create pro json_api for non-persisted linked record' do
     sign_in user
 
-    diff = [['ProArgument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]
-    assert_differences(diff) do
+    diff = {'ProArgument.count' => 1, 'LinkedRecord.count' => 1, 'VoteEvent.count' => 1, 'Edge.count' => 3}
+    assert_difference(diff) do
       general_create_json(non_persisted_linked_record)
     end
 
@@ -79,8 +79,8 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   test 'user should post create con json_api for non-persisted linked record' do
     sign_in user
 
-    diff = [['ConArgument.count', 1], ['LinkedRecord.count', 1], ['VoteEvent.count', 1], ['Edge.count', 3]]
-    assert_differences(diff) do
+    diff = {'ConArgument.count' => 1, 'LinkedRecord.count' => 1, 'VoteEvent.count' => 1, 'Edge.count' => 3}
+    assert_difference(diff) do
       general_create_json(non_persisted_linked_record, false)
     end
 

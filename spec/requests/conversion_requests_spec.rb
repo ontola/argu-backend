@@ -23,7 +23,7 @@ RSpec.describe 'Conversions', type: :request do
   context 'motion to question' do
     subject { motion }
     let(:create_params) { {conversion: {klass: 'questions'}} }
-    let(:create_differences) { [['Question.count', 1], ['Motion.count', -1], ['Activity.count', 1]] }
+    let(:create_differences) { {'Question.count' => 1, 'Motion.count' => -1, 'Activity.count' => 1} }
     it_behaves_like 'get new'
     it_behaves_like 'post create'
   end
@@ -32,11 +32,11 @@ RSpec.describe 'Conversions', type: :request do
     subject { question }
     let(:create_params) { {conversion: {klass: 'motions'}} }
     let(:create_differences) do
-      [
-        ['Question.count', -1],
-        ['Motion.count', -2],
-        ['Activity.count', 1]
-      ]
+      {
+        'Question.count' => -1,
+        'Motion.count' => -2,
+        'Activity.count' => 1
+      }
     end
     it_behaves_like 'get new'
     it_behaves_like 'post create'

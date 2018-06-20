@@ -22,7 +22,7 @@ RSpec.feature 'Grant resets', type: :feature do
     find_field('question[create_motion_group_ids][]', with: '-1').click
     find_field('question[create_motion_group_ids][]', with: spain.parent.groups.first.id).click
 
-    assert_differences([['GrantReset.count', 1], ['Grant.count', 2]]) do
+    assert_difference('GrantReset.count' => 1, 'Grant.count' => 2) do
       click_button 'Save'
       expect(page).to have_content 'Challenge saved successfully'
     end
@@ -40,7 +40,7 @@ RSpec.feature 'Grant resets', type: :feature do
 
     find_field('question[reset_create_motion]', with: 'false').click
 
-    assert_differences([['GrantReset.count', -1], ['Grant.count', -2]]) do
+    assert_difference('GrantReset.count' => -1, 'Grant.count' => -2) do
       click_button 'Save'
       expect(page).to have_content 'Challenge saved successfully'
     end

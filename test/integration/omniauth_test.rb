@@ -280,15 +280,15 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     guest_vote
     other_guest_vote
 
-    differences = [
-      ['EmailAddress.count', opts[:emails] || 0],
-      ['Favorite.count', opts[:favorites] || 0],
-      ['Identity.count', opts[:identities] || 0],
-      ['User.count', opts[:users] || 0],
-      ['Vote.count', opts[:votes] || 0]
-    ]
+    differences = {
+      'EmailAddress.count' => opts[:emails] || 0,
+      'Favorite.count' => opts[:favorites] || 0,
+      'Identity.count' => opts[:identities] || 0,
+      'User.count' => opts[:users] || 0,
+      'Vote.count' => opts[:votes] || 0
+    }
 
-    assert_differences(differences) do
+    assert_difference(differences) do
       Sidekiq::Testing.inline! do
         follow_redirect!
         assert_redirected_to opts[:expected_r]

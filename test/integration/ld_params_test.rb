@@ -11,7 +11,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
     create_with_ld_params(
       collection_iri_path(freetown, :motions),
       Motion,
-      [['Motion.count', 1], ['MediaObject.count', 1]],
+      {'Motion.count' => 1, 'MediaObject.count' => 1},
       'motion_with_cover.n3',
       "<#{NS::LL['blobs/randomString']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg')
     )
@@ -21,7 +21,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
     create_with_ld_params(
       collection_iri_path(freetown, :motions),
       Motion,
-      [['Motion.count', 1], ['MediaObject.count', 2]],
+      {'Motion.count' => 1, 'MediaObject.count' => 2},
       'motion_with_attachments.n3',
       "<#{NS::LL['blobs/randomString1']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg'),
       "<#{NS::LL['blobs/randomString2']}>" => fixture_file_upload('profile_photo.png', 'image/png')
@@ -32,7 +32,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
     create_with_ld_params(
       collection_iri_path(freetown, :motions),
       Motion,
-      [['Motion.count', 1], ['Argument.count', 3]],
+      {'Motion.count' => 1, 'Argument.count' => 3},
       'motion_with_arguments.n3'
     )
   end
@@ -41,7 +41,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   def create_with_ld_params(path, klass, differences, fixture, params = {})
     sign_in administrator
-    assert_differences(differences) do
+    assert_difference(differences) do
       post path,
            params: {
              "<#{NS::LL[:graph]}>" => fixture_file_upload(fixture, 'text/n3')

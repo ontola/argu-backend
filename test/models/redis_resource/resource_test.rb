@@ -36,35 +36,35 @@ module RedisResource
     end
 
     test 'save' do
-      assert_differences([['Vote.count', 1], ['Argu::Redis.keys("temporary*").count', 0]]) do
+      assert_difference('Vote.count' => 1, 'Argu::Redis.keys("temporary*").count' => 0) do
         create_vote(user)
       end
-      assert_differences([['Vote.count', 1], ['Argu::Redis.keys("temporary*").count', 0]]) do
+      assert_difference('Vote.count' => 1, 'Argu::Redis.keys("temporary*").count' => 0) do
         create_vote(unconfirmed)
       end
-      assert_differences([['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', 1]]) do
+      assert_difference('Vote.count' => 0, 'Argu::Redis.keys("temporary*").count' => 1) do
         create_vote(guest_user)
       end
     end
 
     test 'destroy' do
       guest_vote
-      assert_differences([['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', -1]]) do
+      assert_difference('Vote.count' => 0, 'Argu::Redis.keys("temporary*").count' => -1) do
         guest_vote.destroy
       end
       vote = create_vote(user)
-      assert_differences([['Vote.count', -1], ['Argu::Redis.keys("temporary*").count', 0]]) do
+      assert_difference('Vote.count' => -1, 'Argu::Redis.keys("temporary*").count' => 0) do
         vote.destroy
       end
       unconfirmed_vote = create_vote(unconfirmed)
-      assert_differences([['Vote.count', -1], ['Argu::Redis.keys("temporary*").count', 0]]) do
+      assert_difference('Vote.count' => -1, 'Argu::Redis.keys("temporary*").count' => 0) do
         unconfirmed_vote.destroy
       end
     end
 
     test 'destroy parent' do
       guest_vote
-      assert_differences([['Motion.count', -1], ['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', -1]]) do
+      assert_difference('Motion.count' => -1, 'Vote.count' => 0, 'Argu::Redis.keys("temporary*").count' => -1) do
         guest_vote.parent.parent.destroy
       end
     end
@@ -73,7 +73,7 @@ module RedisResource
       redis_resource =
         RedisResource::Resource
           .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
-      assert_differences([['Vote.count', 1], ['Argu::Redis.keys("temporary*").count', -1]]) do
+      assert_difference('Vote.count' => 1, 'Argu::Redis.keys("temporary*").count' => -1) do
         redis_resource.persist(user)
       end
     end
@@ -83,7 +83,7 @@ module RedisResource
       redis_resource =
         RedisResource::Resource
           .find("temporary.guest_user.#{guest_user.id}.#{guest_vote.root_id}.vote.#{guest_vote.parent.id}")
-      assert_differences([['Vote.count', 0], ['Argu::Redis.keys("temporary*").count', -1]]) do
+      assert_difference('Vote.count' => 0, 'Argu::Redis.keys("temporary*").count' => -1) do
         redis_resource.persist(user)
       end
     end
