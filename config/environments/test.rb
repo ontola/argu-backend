@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
+  Minitest::Rails::TestUnit = Rails::TestUnit
+
   config.host_name = '127.0.0.1:42000'
   config.token_url = 'http://127.0.0.1:42000/tokens'
   config.origin = "http://#{config.host_name}"
