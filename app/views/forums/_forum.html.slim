@@ -2,7 +2,7 @@
   section.unpadded.cover--small
     = link_to forum.iri_path, data: {turbolinks: false_unless_iframe} do
       .cover-image[style="background-image: url('#{forum.default_cover_photo&.url(:box)}'); "]
-        =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
+        =image_tag forum.default_profile_photo.url(:avatar).to_s, class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
     - if !current_user.has_favorite?(forum) && tree_root_id && policy(forum).create_child?(:favorites)

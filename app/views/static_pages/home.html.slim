@@ -10,7 +10,7 @@
               - current_user.favorite_forums.includes(:default_profile_photo, :shortname).each do |o|
                 li
                   =link_to o.iri_path, data: {turbolinks: false_unless_iframe}
-                    =image_tag o.default_profile_photo.url(:icon), size: '16x16'
+                    =image_tag o.default_profile_photo.url(:icon).to_s, size: '16x16'
                     =o.name
           .group
             =link_to discover_forums_url, class: 'btn--argu' do

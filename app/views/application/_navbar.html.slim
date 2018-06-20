@@ -7,7 +7,7 @@ nav#navbar.navbar[data-turbolinks-permanent role="navigation"]
     ul.navbar-links
       li
         =link_to(preferred_forum.iri_path, class: 'navbar-item navbar-current-forum', alt: 'home')
-          =image_tag(preferred_forum.default_profile_photo.url(:avatar), class: 'profile-picture--navbar profile-picture--navbar--forum')
+          =image_tag(preferred_forum.default_profile_photo.url(:avatar).to_s, class: 'profile-picture--navbar profile-picture--navbar--forum')
           span= preferred_forum.display_name
       li=react_component_store 'HyperDropdown', props: forum_selector_items
     ul.navbar-links.navbar-links-right
