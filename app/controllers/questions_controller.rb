@@ -41,11 +41,14 @@ class QuestionsController < EdgeableController
   def sort_from_param
     case sort_param_or_default
     when 'popular'
-      "cast(default_vote_events_edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST, created_at DESC"
+      [
+        Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges'),
+        {created_at: :desc}
+      ]
     when 'created_at'
       {created_at: :desc}
     when 'updated_at'
-      'edges.last_activity_at DESC'
+      Edge.arel_table['last_activity_at'].desc
     end
   end
 end

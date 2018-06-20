@@ -57,7 +57,7 @@ class Edge < ApplicationRecord
   has_many :groups, through: :grants
   has_many :group_memberships, -> { active }, through: :groups
 
-  has_many_children :arguments, order: "cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST"
+  has_many_children :arguments, order: order_child_count_sql(:votes_pro)
   has_many_children :pro_arguments
   has_many_children :con_arguments
   has_many_children :blog_posts

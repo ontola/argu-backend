@@ -31,6 +31,14 @@ module Edgeable
         }
       end
 
+      def order_child_count_sql(type, direction: :desc, as: 'edges')
+        column =
+          Arel::Nodes::InfixOperation
+            .new('->', Edge.arel_table.alias(as)[:children_counts], Arel::Nodes::SqlLiteral.new("'#{type}'"))
+        casted = Arel::Nodes::NamedFunction.new('CAST', [column.as('INT')])
+        Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
+      end
+
       def path_array(relation)
         return 'NULL' if relation.blank?
         unless relation.is_a?(ActiveRecord::Relation)

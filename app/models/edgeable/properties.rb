@@ -165,12 +165,22 @@ module ActiveRecord
         order_key = statement
         order_predicate = :asc
       end
-      q.joins(property_join_string(order_key)).order("#{order_key}_filter.value #{order_predicate.upcase}")
+      q
+        .joins(property_join_string(order_key))
+        .order(arel_table.alias("#{order_key}_filter")[:value].send(order_predicate))
     end
 
     def order_property?(arg)
       return false if arg.is_a?(String)
-      key = arg.is_a?(Hash) ? arg.keys.first : arg
+      key =
+        case arg
+        when Hash
+          arg.keys.first
+        when Arel::Nodes::Ordering
+          arg.expr.name
+        else
+          arg
+        end
       target_class.property?(key)
     end
 

@@ -210,7 +210,11 @@ class User < ApplicationRecord
 
   def favorite_forums
     @favorite_forums ||=
-      Forum.joins(:favorites).where('favorites.user_id = ?', id).order('favorites.created_at ASC').includes(:properties)
+      Forum
+        .joins(:favorites)
+        .where('favorites.user_id = ?', id)
+        .order(Favorite.arel_table[:created_at].asc)
+        .includes(:properties)
   end
 
   def favorite_forum_ids

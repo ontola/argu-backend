@@ -111,7 +111,7 @@ class Argument < Edge
     ids = parent
             .arguments
             .untrashed
-            .order("cast(edges.children_counts -> 'votes_pro' AS int) DESC NULLS LAST")
+            .order(Edge.order_child_count_sql(:votes_pro))
             .pluck(:uuid)
     index = ids.index(self[:uuid])
     return nil if ids.length < 2
