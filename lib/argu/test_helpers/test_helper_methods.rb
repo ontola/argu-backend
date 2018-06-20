@@ -26,7 +26,7 @@ module Argu
           if SERVICE_MODELS.include?(model_type)
             create_with_service(model_type, args, attributes)
           else
-            FactoryGirl.create(model_type, *args, attributes)
+            FactoryBot.create(model_type, *args, attributes)
           end
         end
 

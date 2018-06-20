@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :question do
     association :forum, strategy: :create
     sequence(:title) { |n| "fg question title #{n}end" }

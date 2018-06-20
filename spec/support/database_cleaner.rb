@@ -7,7 +7,7 @@ RSpec.configure do |config|
 
       DatabaseCleaner.strategy = :transaction
 
-      extend FactoryGirl::Syntax::Methods
+      extend FactoryBot::Syntax::Methods
       extend Argu::TestHelpers::TestHelperMethods::InstanceMethods
 
       load(Dir[Rails.root.join('db', 'seeds', 'test.seeds.rb')][0])

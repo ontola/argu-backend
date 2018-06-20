@@ -4,7 +4,7 @@ module Argu
   module TestHelpers
     class TraitListener
       include Argu::TestHelpers::TestHelperMethods
-      include FactoryGirl::Syntax::Methods
+      include FactoryBot::Syntax::Methods
 
       def initialize(resource)
         @resource = resource
@@ -108,9 +108,9 @@ module Argu
       # @see Follow#follow_type
       # @note Adds an extra {Notification} on associated resource creation
       def with_follower
-        FactoryGirl.create(
+        FactoryBot.create(
           :follow,
-          follower: FactoryGirl.create(:user, :follows_reactions_directly),
+          follower: FactoryBot.create(:user, :follows_reactions_directly),
           followable: @resource
         )
       end
@@ -118,9 +118,9 @@ module Argu
       # Adds a news_follower to the edge of the resource
       # @see Follow#follow_type
       def with_news_follower
-        FactoryGirl.create(
+        FactoryBot.create(
           :news_follow,
-          follower: FactoryGirl.create(:user, :follows_news_directly),
+          follower: FactoryBot.create(:user, :follows_news_directly),
           followable: @resource
         )
       end

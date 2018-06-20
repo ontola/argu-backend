@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'factory_girl'
-require 'factory_girl_rails'
+require 'factory_bot'
+require 'factory_bot_rails'
 require 'argu/test_helpers/test_helper_methods'
 require 'argu/test_helpers/trait_listener'
 require 'sidekiq/testing'
 
-module FactoryGirl
+module FactoryBot
   class Evaluator
     def passed_in?(name)
       # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
@@ -17,6 +17,6 @@ module FactoryGirl
 end
 
 class FactorySeeder
-  extend FactoryGirl::Syntax::Methods
+  extend FactoryBot::Syntax::Methods
   extend Argu::TestHelpers::TestHelperMethods::InstanceMethods
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :announcement do
     sequence(:title) { |n| "Announcement title #{n}" }
     sequence(:content) { |n| "Announcement content #{n}" }

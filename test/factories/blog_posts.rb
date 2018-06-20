@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :blog_post do
     association :forum
     sequence(:title) { |n| "fg blog post #{n}end" }

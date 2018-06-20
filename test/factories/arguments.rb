@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :argument do
     pro true
     sequence(:title) { |i| "fg argument title #{i}end" }

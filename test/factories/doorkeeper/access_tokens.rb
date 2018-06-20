@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :access_token, class: Doorkeeper::AccessToken do
     association :application, factory: :application
     association :resource_owner_id, factory: :user

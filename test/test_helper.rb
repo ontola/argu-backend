@@ -127,7 +127,7 @@ end
 module ActiveSupport
   class TestCase
     include TestHelper
-    include FactoryGirl::Syntax::Methods
+    include FactoryBot::Syntax::Methods
     include SidekiqMinitestSupport
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
@@ -147,7 +147,7 @@ module ActiveSupport
       Argu::Redis.redis_instance.del(*keys) if keys.present?
     end
 
-    # FactoryGirl.lint
+    # FactoryBot.lint
     # Add more helper methods to be used by all tests here...
 
     def initialize(*args)
@@ -268,7 +268,7 @@ module ActionDispatch
   end
 end
 
-module FactoryGirl
+module FactoryBot
   class Evaluator
     def passed_in?(name)
       # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :group_membership do
     member { passed_in?(:member) ? member : create(:profile) }
     start_date Time.current

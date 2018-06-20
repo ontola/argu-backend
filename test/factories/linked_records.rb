@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :linked_record do
     trait :with_votes do
       after(:create) do |resource|

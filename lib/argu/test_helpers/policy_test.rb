@@ -11,21 +11,21 @@ class PolicyTest < ActiveSupport::TestCase
   define_freetown(
     :expired_freetown,
     attributes: {
-      url: FactoryGirl.attributes_for(:shortname)[:shortname],
+      url: FactoryBot.attributes_for(:shortname)[:shortname],
       expires_at: 1.minute.ago
     }
   )
   define_freetown(
     :trashed_freetown,
     attributes: {
-      url: FactoryGirl.attributes_for(:shortname)[:shortname],
+      url: FactoryBot.attributes_for(:shortname)[:shortname],
       trashed_at: 1.minute.ago
     }
   )
   define_freetown(
     :unpublished_freetown,
     attributes: {
-      url: FactoryGirl.attributes_for(:shortname)[:shortname],
+      url: FactoryBot.attributes_for(:shortname)[:shortname],
       is_published: false
     }
   )

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   trait :with_follower do
     after :create do |resource|
       create(:follow,

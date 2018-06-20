@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :banner do
     association :forum
     sequence(:title) { |n| "Banner title #{n}" }

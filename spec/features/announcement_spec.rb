@@ -78,7 +78,7 @@ RSpec.feature 'Announcements', type: :feature do
   # As User
   ####################################
   scenario 'User sees correct announcements' do
-    sign_in(FactoryGirl.create(:user))
+    sign_in(FactoryBot.create(:user))
     question = holland.questions.first
     visit question
     expect(page).to have_content(question.title),
@@ -93,7 +93,7 @@ RSpec.feature 'Announcements', type: :feature do
   end
 
   scenario 'announcement dismissal is persisted across logins' do
-    user = FactoryGirl.create(:user)
+    user = FactoryBot.create(:user)
     sign_in_manually(user, redirect_to: holland.iri_path)
     question = holland.questions.first
     visit question

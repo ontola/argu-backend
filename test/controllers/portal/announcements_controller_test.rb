@@ -140,7 +140,7 @@ module Portal
     ####################################
     # As Staff
     ####################################
-    let(:staff) { FactoryGirl.create(:user, :staff) }
+    let(:staff) { FactoryBot.create(:user, :staff) }
 
     test 'staff should post create' do
       sign_in staff
