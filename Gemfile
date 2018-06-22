@@ -141,7 +141,7 @@ group :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'license_finder'
-  gem 'database_cleaner', '~> 1.6.1'
+  gem 'database_cleaner'
   gem 'bundler-audit', '~> 0.5.0'
   gem 'wisper-minitest', '~> 0.0.3', require: false
   gem 'wisper-rspec', require: false
