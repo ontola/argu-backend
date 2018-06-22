@@ -27,15 +27,15 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.id, id: vote_event.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    expect_relationship('partOf')
+    expect_relationship('creator')
 
-    expect_relationship('voteCollection', 1)
-    expect_included(collection_iri(vote_event, :votes, type: 'paginated'))
+    expect_relationship('voteCollection', size: 1)
+    expect_included(collection_iri(vote_event, :votes))
     %w[yes other no].each do |side|
-      expect_included(collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
       expect_included(
-        collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+        collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
       )
     end
     expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
@@ -46,34 +46,33 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, id: 'default'}
     assert_response 200
 
-    assert_equal parsed_body['data']['id'], motion.default_vote_event.iri
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    assert_equal primary_resource['id'], motion.default_vote_event.iri
+    expect_relationship('partOf')
+    expect_relationship('creator')
 
-    expect_relationship('voteCollection', 1)
-    expect_included(collection_iri(motion.default_vote_event, :votes, type: 'paginated'))
+    expect_relationship('voteCollection', size: 1)
+    expect_included(collection_iri(motion.default_vote_event, :votes))
   end
 
   test 'should get index vote_events of motion' do
     get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 2
+    expect_relationship('partOf')
+    expect_view_members(expect_default_view, 2)
 
     expect_included(motion.vote_events.map(&:iri))
-    expect_included(motion.vote_events.map { |ve| collection_iri(ve, :votes, type: 'paginated') })
+    expect_included(motion.vote_events.map { |ve| collection_iri(ve, :votes) })
     %w[yes other no].each do |side|
       expect_included(
         motion
           .vote_events
-          .map { |ve| collection_iri(ve, :votes, CGI.escape('filter[option]') => side, type: 'paginated') }
+          .map { |ve| collection_iri(ve, :votes, 'filter%5B%5D' => "option=#{side}") }
       )
       expect_included(
         motion
           .vote_events
-          .map { |ve| collection_iri(ve, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated') }
+          .map { |ve| collection_iri(ve, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated') }
       )
     end
     expect_included(
@@ -92,15 +91,15 @@ class VoteEventsControllerTest < ActionController::TestCase
         params: linked_record.iri_opts.merge(root_id: argu.url, id: lr_vote_event.fragment, format: :json_api)
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    expect_relationship('partOf')
+    expect_relationship('creator')
 
-    expect_relationship('voteCollection', 1)
-    expect_included(collection_iri(lr_vote_event, :votes, type: 'paginated'))
+    expect_relationship('voteCollection', size: 1)
+    expect_included(collection_iri(lr_vote_event, :votes))
     %w[yes other no].each do |side|
-      expect_included(collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
       expect_included(
-        collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+        collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
       )
     end
     expect_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
@@ -111,28 +110,27 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :show, params: linked_record.iri_opts.merge(root_id: argu.url, id: 'default', format: :json_api)
     assert_response 200
 
-    assert_equal parsed_body['data']['id'], lr_vote_event.iri
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    assert_equal primary_resource['id'], lr_vote_event.iri
+    expect_relationship('partOf')
+    expect_relationship('creator')
 
-    expect_relationship('voteCollection', 1)
-    expect_included(collection_iri(lr_vote_event, :votes, type: 'paginated'))
+    expect_relationship('voteCollection', size: 1)
+    expect_included(collection_iri(lr_vote_event, :votes))
   end
 
   test 'should get index vote_events of linked_record' do
     get :index, params: linked_record.iri_opts.merge(format: :json_api, root_id: argu.url)
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 1
+    expect_relationship('partOf')
+    expect_view_members(expect_default_view, 1)
 
     expect_included(lr_vote_event.iri)
-    expect_included(collection_iri(lr_vote_event, :votes, type: 'paginated'))
+    expect_included(collection_iri(lr_vote_event, :votes))
     %w[yes other no].each do |side|
-      expect_included(collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
+      expect_included(collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
       expect_included(
-        collection_iri(lr_vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
+        collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
       )
     end
   end
@@ -144,8 +142,8 @@ class VoteEventsControllerTest < ActionController::TestCase
     get :index, params: non_persisted_linked_record.iri_opts.merge(format: :json_api, root_id: argu.url)
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    assert_nil parsed_body.dig('data', 'relationships', 'memberSequence')
+    expect_view_members(primary_resource, 0)
   end
 end

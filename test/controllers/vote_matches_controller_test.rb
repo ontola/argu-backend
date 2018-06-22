@@ -15,10 +15,10 @@ class VoteMatchesControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: user_vote_match.id}
     assert_response 200
 
-    expect_relationship('creator', 1)
+    expect_relationship('creator')
 
-    expect_relationship('voteables', 2)
-    expect_relationship('voteComparables', 0)
+    expect_relationship('voteables', size: 2)
+    expect_no_relationship('voteComparables')
   end
 
   ####################################
@@ -28,22 +28,20 @@ class VoteMatchesControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api}
     assert_response 200
 
-    expect_relationship('partOf', 0)
+    expect_no_relationship('partOf')
 
-    expect_relationship('viewSequence', 1)
+    expect_default_view
     expect_included(argu_url('/vote_matches', page: 1, type: 'paginated'))
     expect_included(VoteMatch.all.map(&:iri))
   end
 
   test 'should get index vote_matches page 1' do
-    get :index, params: {format: :json_api, page: 1}
+    get :index, params: {format: :json_api, type: 'paginated', page: 1}
     assert_response 200
 
-    expect_relationship('partOf', 0)
+    expect_relationship('collection')
 
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 VoteMatch.count
+    expect_view_members(primary_resource, VoteMatch.count)
     expect_included(VoteMatch.all.map(&:iri))
   end
 
@@ -51,9 +49,9 @@ class VoteMatchesControllerTest < ActionController::TestCase
     get :index, params: {page_id: page.url, format: :json_api}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    expect_relationship('viewSequence', 1)
+    expect_default_view
     expect_included(argu_url("/#{page.url}/vote_matches", page: 1, type: 'paginated'))
     expect_included(VoteMatch.where(creator: page.profile).map(&:iri))
     expect_not_included(VoteMatch.where('creator_id != ?', page.profile.id).map(&:iri))

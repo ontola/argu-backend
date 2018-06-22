@@ -54,12 +54,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     sign_in follower
     get notifications_path, headers: argu_headers(accept: :nt)
     assert_response 200
-    assert_includes response.body,
-                    [
-                      "<#{argu_url('/n', type: :paginated)}>",
-                      '<https://argu.co/ns/core#unreadCount>',
-                      '"1"^^<http://www.w3.org/2001/XMLSchema#integer> .'
-                    ].join(' ')
+    expect_triple(RDF::URI(argu_url('/n')), NS::ARGU[:unreadCount], 1)
   end
 
   test 'follower should mark as read' do

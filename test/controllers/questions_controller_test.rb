@@ -14,18 +14,18 @@ class QuestionsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, id: question.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    expect_relationship('partOf')
+    expect_relationship('creator')
 
-    expect_relationship('attachmentCollection', 1)
+    expect_relationship('attachmentCollection', size: 1)
     expect_included(
-      collection_iri(question, :media_objects, CGI.escape('filter[used_as]') => 'attachment', type: 'paginated')
+      collection_iri(question, :media_objects, 'filter%5B%5D' => 'used_as=attachment')
     )
     expect_included(question.attachments.map(&:iri))
 
-    expect_relationship('motionCollection', 1)
-    expect_included(collection_iri(question, :motions, type: 'paginated'))
-    expect_not_included(collection_iri(question, :motions, page: 1, type: 'paginated'))
+    expect_relationship('motionCollection', size: 1)
+    expect_included(collection_iri(question, :motions))
+    expect_included(collection_iri(question, :motions, page: 1, type: 'paginated'))
     expect_not_included(question.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.trashed.map(&:iri))
   end
@@ -37,23 +37,22 @@ class QuestionsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    expect_relationship('viewSequence', 1)
+    expect_default_view
     expect_included(collection_iri(holland, :questions, page: 1, type: 'paginated'))
     expect_included(holland.questions.untrashed.map(&:iri))
     expect_not_included(holland.questions.trashed.map(&:iri))
   end
 
   test 'should get index questions of forum page 1' do
-    get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, page: 1}
+    get :index,
+        params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, type: 'paginated', page: 1}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('collection')
 
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 holland.questions.untrashed.count
+    expect_view_members(primary_resource, holland.questions.untrashed.count)
     expect_included(holland.questions.untrashed.map(&:iri))
     expect_not_included(holland.questions.trashed.map(&:iri))
   end

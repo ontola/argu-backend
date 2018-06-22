@@ -139,18 +139,18 @@ class VotesTest < ActionDispatch::IntegrationTest
     get expand_uri_template(:vote_iri, parent_iri: vote_event.iri_path, only_path: true),
         headers: argu_headers(accept: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:yes]
+    assert_equal primary_resource['attributes']['option'], NS::ARGU[:yes]
     assert_no_difference('Argu::Redis.keys("temporary.*").count') do
       post collection_iri_path(vote_event, :votes, canonical: true),
            params: {vote: {for: :con}},
            headers: argu_headers(accept: :json_api)
     end
     assert_response 201
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
+    assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
     get expand_uri_template(:vote_iri, parent_iri: vote_event.iri_path, only_path: true),
         headers: argu_headers(accept: :json_api)
     assert_response 200
-    assert_equal parsed_body['data']['attributes']['option'], NS::ARGU[:no]
+    assert_equal primary_resource['attributes']['option'], NS::ARGU[:no]
   end
 
   test 'guest should delete destroy argument vote' do
@@ -537,11 +537,10 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::LL[:remove])
-    expect_triple(argument.vote_collection(user_context: context).iri, NS::ARGU[:totalCount], 0, NS::LL[:replace])
-    expect_triple(argument.vote_collection(user_context: context, filter: {option: :yes}).iri,
-                  NS::ARGU[:totalCount],
-                  0,
-                  NS::LL[:replace])
+    expect_triple(collection_iri(argument, :votes), NS::ARGU[:totalCount], 0, NS::LL[:replace])
+    expect_triple(
+      collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::ARGU[:totalCount], 0, NS::LL[:replace]
+    )
     assert_response 200
     assert_analytics_collected('votes', 'destroy', 'pro')
   end
@@ -567,7 +566,7 @@ class VotesTest < ActionDispatch::IntegrationTest
                         ['Edge.count', 1],
                         ['vote_event.reload.children_count(:votes_con)', 1]]) do
       Sidekiq::Testing.inline! do
-        post collection_iri_path(vote_event, :votes, CGI.escape('filter[option]') => :no, type: :paginated),
+        post collection_iri_path(vote_event, :votes, 'filter%5B%5D' => 'option=no', type: :paginated),
              headers: argu_headers(accept: :nq)
       end
     end

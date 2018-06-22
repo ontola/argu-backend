@@ -18,8 +18,8 @@ class VotesControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, root_id: argu.url, id: vote.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    expect_relationship('partOf')
+    expect_relationship('creator')
   end
 
   ####################################
@@ -44,17 +44,32 @@ class VotesControllerTest < ActionController::TestCase
         }
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    view_sequence = expect_relationship('viewSequence')
-    assert_equal expect_included(view_sequence['data']['id'])['relationships']['members']['data'].count, 3
-    %w[yes other no].each do |side|
-      expect_included(collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, type: 'paginated'))
-      expect_included(
-        collection_iri(vote_event, :votes, CGI.escape('filter[option]') => side, page: 1, type: 'paginated')
-      )
-    end
-    expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
+    expect_relationship('defaultFilteredCollections', size: 3)
+
+    included_votes = vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true})
+    expect_view_members(expect_default_view, included_votes.count)
+    expect_included(included_votes.map(&:iri))
     expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
+  end
+
+  test 'should get index votes of vote_event with filter' do
+    get :index,
+        params: {
+          format: :json_api,
+          root_id: argu.url,
+          motion_id: motion.fragment,
+          vote_event_id: vote_event.fragment,
+          'filter[]' => 'option=yes'
+        }
+    assert_response 200
+
+    expect_relationship('unfilteredCollection')
+
+    included_votes = vote_event.votes.joins(:creator).where(for: :pro, profiles: {are_votes_public: true})
+    expect_view_members(expect_default_view, included_votes.count)
+    expect_included(included_votes.map(&:iri))
+    expect_not_included(vote_event.votes.where(for: :con))
   end
 end

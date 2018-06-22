@@ -18,8 +18,8 @@ class CommentsControllerTest < ActionController::TestCase
     get :show, params: {format: :json_api, id: comment.fragment, root_id: argu.url}
     assert_response 200
 
-    expect_relationship('partOf', 1)
-    expect_relationship('creator', 1)
+    expect_relationship('partOf')
+    expect_relationship('creator')
   end
 
   ####################################
@@ -29,23 +29,22 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    expect_relationship('viewSequence', 1)
+    expect_default_view
     expect_included(collection_iri(argument, :comments, page: 1, type: 'paginated'))
     expect_included(argument.comments.untrashed.map(&:iri))
     expect_not_included(argument.comments.trashed.map(&:iri))
   end
 
   test 'should get index comments of argument with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment, page: 1}
+    get :index,
+        params: {format: :json_api, root_id: argu.url, pro_argument_id: argument.fragment, type: 'paginated', page: 1}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('collection')
 
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 argument.comments.untrashed.count
+    expect_view_members(primary_resource, argument.comments.untrashed.count)
     expect_included(argument.comments.untrashed.map(&:iri))
     expect_not_included(argument.comments.trashed.map(&:iri))
   end
@@ -57,23 +56,22 @@ class CommentsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    expect_relationship('viewSequence', 1)
+    expect_default_view
     expect_included(collection_iri(blog_post, :comments, page: 1, type: 'paginated'))
     expect_included(blog_post.comments.untrashed.map(&:iri))
     expect_not_included(blog_post.comments.trashed.map(&:iri))
   end
 
   test 'should get index comments of blog_post with page=1' do
-    get :index, params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment, page: 1}
+    get :index,
+        params: {format: :json_api, root_id: argu.url, blog_post_id: blog_post.fragment, type: 'paginated', page: 1}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('collection')
 
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 blog_post.comments.untrashed.count
+    expect_view_members(primary_resource, blog_post.comments.untrashed.count)
     expect_included(blog_post.comments.untrashed.map(&:iri))
     expect_not_included(blog_post.comments.trashed.map(&:iri))
   end

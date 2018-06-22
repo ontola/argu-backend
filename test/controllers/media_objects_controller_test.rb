@@ -23,24 +23,22 @@ class MediaObjectsControllerTest < ActionController::TestCase
     get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('partOf')
 
-    expect_relationship('viewSequence', 1)
+    expect_default_view
     expect_included(
-      collection_iri(motion, :media_objects, CGI.escape('filter[used_as]') => :attachment, page: 1, type: 'paginated')
+      collection_iri(motion, :media_objects, 'filter%5B%5D' => 'used_as=attachment', page: 1, type: 'paginated')
     )
     expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 
   test 'should get index media_objects of motion page 1' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, page: 1}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, type: 'paginated', page: 1}
     assert_response 200
 
-    expect_relationship('partOf', 1)
+    expect_relationship('collection')
 
-    member_sequence = expect_relationship('memberSequence', 1)
-    assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count,
-                 motion.media_objects.where(used_as: :attachment).count
+    expect_view_members(primary_resource, motion.media_objects.where(used_as: :attachment).count)
     expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 end
