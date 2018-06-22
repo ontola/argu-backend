@@ -85,11 +85,13 @@ class ApplicationController < ActionController::Base
   # @return [Hash] The params
   def params
     return @__params if instance_variable_defined?(:@__params)
-    p = HashWithIndifferentAccess.new
-    p[model_name] = super[:filter].permit!.to_h if controller_class.try(:filter_options).present? && super[:filter]
 
     if UNSAFE_METHODS.include?(request.method)
-      return @__params = super.merge(p.deep_merge(params_from_graph(super))) if parse_graph_params?
+      if parse_graph_params?
+        p = HashWithIndifferentAccess.new
+        p[model_name] = parse_filter(super[:filter], controller_class.try(:filter_options)) if super[:filter]
+        return @__params = super.merge(p.deep_merge(params_from_graph(super)))
+      end
 
       return @__params = json_api_params(super) if request.format.json_api? && super[:data].present?
     end
@@ -160,6 +162,11 @@ class ApplicationController < ActionController::Base
 
   def format_html?
     request.format.html?
+  end
+
+  def parse_filter(array, whitelist)
+    return {} if array.blank? || whitelist.blank?
+    Hash[array&.map { |f| f.split('=') }].slice(*whitelist.keys)
   end
 
   def parse_graph_params?

@@ -61,13 +61,11 @@ class AuthorizedController < ApplicationController
   end
 
   def collection_options
-    params
-      .permit(filter: controller_class.try(:filter_options)&.keys)
-      .to_h
-      .merge(
-        user_context: user_context,
-        include_map: JSONAPI::IncludeDirective::Parser.parse_include_args(include_index)
-      ).to_options
+    {
+      filter: parse_filter(params[:filter], controller_class.try(:filter_options)),
+      user_context: user_context,
+      include_map: JSONAPI::IncludeDirective::Parser.parse_include_args(include_index)
+    }
   end
 
   def current_forum; end
