@@ -78,23 +78,11 @@ module Createable
     def meta_create
       data = []
       return data if index_collection.blank?
-      total_count = index_collection.total_count
-      meta_increment_collection_count(data, index_collection.iri, total_count)
-    end
-
-    def meta_increment_collection_count(data, iri, total_count)
-      data.push [
-        iri,
-        NS::ARGU[:members],
-        nil,
-        NS::LL[:remove]
-      ]
-      data.push [
-        iri,
-        NS::ARGU[:totalCount],
-        total_count,
-        NS::LL[:replace]
-      ]
+      meta_replace_collection_count(data, index_collection.unfiltered)
+      authenticated_resource.applicable_filters.each do |key, value|
+        meta_replace_collection_count(data, index_collection.unfiltered.new_child(filter: {key => value}))
+      end
+      data
     end
 
     # @!visibility public

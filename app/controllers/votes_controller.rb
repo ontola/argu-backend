@@ -160,18 +160,20 @@ class VotesController < EdgeableController
   def meta_create
     data = []
     if authenticated_resource.parent.is_a?(VoteEvent)
-      parent_collection = index_collection.filtered? ? index_collection.unfiltered_collection : index_collection
-      meta_increment_collection_count(data, parent_collection.iri, parent_collection.total_count)
-      parent_collection.views.each do |view|
-        if view == index_collection
-          meta_increment_collection_count(data, view.iri, view.total_count)
-        else
-          meta_decrement_collection_count(data, view.iri, view.total_count)
-        end
+      parent_collection = index_collection.unfiltered
+      meta_replace_collection_count(data, index_collection.unfiltered)
+      parent_collection.default_filtered_collections.each do |filtered_collection|
+        meta_replace_collection_count(data, filtered_collection)
       end
     else
       data = super
     end
+    data.push [
+      authenticated_resource.parent_iri,
+      NS::SCHEMA[:potentialAction],
+      RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
+      NS::LL[:remove]
+    ]
     data
   end
 
