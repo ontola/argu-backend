@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605095447) do
+ActiveRecord::Schema.define(version: 20180622151547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,18 +59,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.index ["published_at"], name: "index_announcements_on_published_at"
   end
 
-  create_table "arguments", id: :serial, force: :cascade do |t|
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "title", limit: 255
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
-    t.string "type", null: false
-    t.uuid "root_id", null: false
-    t.index ["id"], name: "index_arguments_on_id"
-  end
-
   create_table "authentications", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "provider", limit: 255, null: false
@@ -105,33 +93,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.index ["uuid"], name: "index_banners_on_uuid", unique: true
   end
 
-  create_table "blog_posts", id: :serial, force: :cascade do |t|
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
-    t.integer "state", default: 0, null: false
-    t.string "title", null: false
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "is_published", default: false, null: false
-    t.uuid "root_id", null: false
-  end
-
-  create_table "comments", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255, default: ""
-    t.text "body", default: ""
-    t.string "subject", limit: 255, default: ""
-    t.integer "creator_id", default: 0, null: false
-    t.integer "parent_id"
-    t.integer "lft"
-    t.integer "rgt"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "publisher_id", null: false
-    t.uuid "root_id", null: false
-    t.index ["creator_id"], name: "index_comments_on_creator_id"
-  end
-
   create_table "custom_menu_items", force: :cascade do |t|
     t.string "menu_type", null: false
     t.string "resource_type", null: false
@@ -142,20 +103,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.string "href", null: false
     t.string "policy"
     t.uuid "resource_id", null: false
-  end
-
-  create_table "decisions", id: :serial, force: :cascade do |t|
-    t.integer "forwarded_group_id"
-    t.integer "forwarded_user_id"
-    t.integer "publisher_id", null: false
-    t.integer "creator_id", null: false
-    t.integer "step", default: 0, null: false
-    t.text "content", default: "", null: false
-    t.integer "state", default: 0, null: false
-    t.boolean "is_published", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "root_id", null: false
   end
 
   create_table "documents", id: :serial, force: :cascade do |t|
@@ -251,30 +198,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.index ["follower_type", "follower_id", "followable_type", "followable_id"], name: "index_follower_followable", unique: true
   end
 
-  create_table "forums", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "profile_photo"
-    t.string "cover_photo"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "slug"
-    t.text "bio", default: "", null: false
-    t.integer "visibility", default: 2
-    t.string "cover_photo_attribution", default: ""
-    t.boolean "visible_with_a_link", default: false
-    t.boolean "signup_with_token?", default: false
-    t.text "bio_long", default: ""
-    t.integer "lock_version", default: 0
-    t.bigint "place_id"
-    t.integer "max_shortname_count", default: 0, null: false
-    t.boolean "discoverable", default: true, null: false
-    t.string "locale", default: "nl-NL"
-    t.integer "default_decision_group_id", null: false
-    t.uuid "root_id", null: false
-    t.index ["slug"], name: "index_forums_on_slug", unique: true
-    t.index ["visibility"], name: "index_forums_on_visibility"
-  end
-
   create_table "grant_resets", force: :cascade do |t|
     t.string "resource_type", null: false
     t.string "action", null: false
@@ -337,14 +260,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
-  create_table "linked_records", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "deku_id", null: false
-    t.uuid "root_id", null: false
-    t.index ["deku_id"], name: "index_linked_records_on_deku_id", unique: true
-  end
-
   create_table "list_items", id: :serial, force: :cascade do |t|
     t.uuid "listable_id", null: false
     t.string "listable_type", null: false
@@ -373,22 +288,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.index ["about_id", "about_type"], name: "index_media_objects_on_about_id_and_about_type"
     t.index ["content_attributes"], name: "index_media_objects_on_content_attributes", using: :gin
     t.index ["forum_id"], name: "index_media_objects_on_forum_id"
-  end
-
-  create_table "motions", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255, null: false
-    t.text "content", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "pro_count", default: 0
-    t.integer "con_count", default: 0
-    t.integer "creator_id", null: false
-    t.string "cover_photo", default: ""
-    t.string "cover_photo_attribution", default: ""
-    t.integer "publisher_id", null: false
-    t.bigint "place_id"
-    t.uuid "root_id", null: false
-    t.index ["id"], name: "index_motions_on_id"
   end
 
   create_table "notifications", id: :serial, force: :cascade do |t|
@@ -444,18 +343,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.string "owner_type"
     t.index ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type"
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
-  end
-
-  create_table "pages", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "slug"
-    t.integer "visibility", default: 1
-    t.integer "owner_id"
-    t.datetime "last_accepted"
-    t.string "base_color"
-    t.index ["owner_id"], name: "index_pages_on_owner_id"
-    t.index ["slug"], name: "index_pages_on_slug", unique: true
   end
 
   create_table "permitted_actions", force: :cascade do |t|
@@ -542,22 +429,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.integer "publisher_id"
     t.integer "follow_type", default: 3, null: false
     t.uuid "publishable_id"
-  end
-
-  create_table "questions", id: :serial, force: :cascade do |t|
-    t.string "title", limit: 255, default: ""
-    t.text "content", default: ""
-    t.integer "creator_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string "cover_photo", default: ""
-    t.string "cover_photo_attribution", default: ""
-    t.datetime "expires_at"
-    t.integer "publisher_id", null: false
-    t.bigint "place_id"
-    t.boolean "require_location", default: false, null: false
-    t.integer "default_sorting", default: 0, null: false
-    t.uuid "root_id", null: false
   end
 
   create_table "rules", id: :serial, force: :cascade do |t|
@@ -671,18 +542,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
-  create_table "vote_events", id: :serial, force: :cascade do |t|
-    t.integer "group_id", default: -1, null: false
-    t.datetime "starts_at"
-    t.integer "result", default: 0, null: false
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.uuid "root_id", null: false
-    t.index ["group_id"], name: "index_vote_events_on_group_id"
-  end
-
   create_table "vote_matches", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "shortname"
     t.string "name", null: false
@@ -692,22 +551,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id", "shortname"], name: "index_vote_matches_on_creator_id_and_shortname", unique: true
-  end
-
-  create_table "votes", id: :serial, force: :cascade do |t|
-    t.integer "creator_id", null: false
-    t.integer "for", default: 3, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer "publisher_id", null: false
-    t.text "explanation"
-    t.datetime "explained_at"
-    t.integer "comment_id"
-    t.boolean "primary", default: true, null: false
-    t.uuid "root_id", null: false
-    t.uuid "voteable_id", null: false
-    t.index ["creator_id"], name: "index_votes_on_creator_id"
-    t.index ["voteable_id", "creator_id", "primary"], name: "index_votes_on_voteable_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
   end
 
   create_table "widgets", force: :cascade do |t|
@@ -726,17 +569,7 @@ ActiveRecord::Schema.define(version: 20180605095447) do
   add_foreign_key "activities", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "trackable_edge_id", primary_key: "uuid"
-  add_foreign_key "arguments", "profiles", column: "creator_id"
-  add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "edges", column: "forum_id", primary_key: "uuid"
-  add_foreign_key "blog_posts", "profiles", column: "creator_id"
-  add_foreign_key "blog_posts", "users", column: "publisher_id"
-  add_foreign_key "comments", "profiles", column: "creator_id"
-  add_foreign_key "comments", "users", column: "publisher_id"
-  add_foreign_key "decisions", "groups", column: "forwarded_group_id"
-  add_foreign_key "decisions", "profiles", column: "creator_id"
-  add_foreign_key "decisions", "users", column: "forwarded_user_id"
-  add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "profiles", column: "creator_id"
   add_foreign_key "edges", "users", column: "publisher_id"
@@ -747,8 +580,6 @@ ActiveRecord::Schema.define(version: 20180605095447) do
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "edges", column: "followable_id", primary_key: "uuid"
   add_foreign_key "follows", "users", column: "follower_id"
-  add_foreign_key "forums", "groups", column: "default_decision_group_id"
-  add_foreign_key "forums", "places"
   add_foreign_key "grant_resets", "edges", primary_key: "uuid"
   add_foreign_key "grant_sets", "edges", column: "page_id", primary_key: "uuid"
   add_foreign_key "grant_sets_permitted_actions", "grant_sets"
@@ -763,31 +594,16 @@ ActiveRecord::Schema.define(version: 20180605095447) do
   add_foreign_key "media_objects", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "media_objects", "profiles", column: "creator_id"
   add_foreign_key "media_objects", "users", column: "publisher_id"
-  add_foreign_key "motions", "places"
-  add_foreign_key "motions", "profiles", column: "creator_id"
-  add_foreign_key "motions", "users", column: "publisher_id"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
-  add_foreign_key "pages", "profiles", column: "owner_id"
   add_foreign_key "placements", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "placements", "places"
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
-  add_foreign_key "questions", "places"
-  add_foreign_key "questions", "profiles", column: "creator_id"
-  add_foreign_key "questions", "users", column: "publisher_id"
   add_foreign_key "rules", "edges", column: "branch_id"
-  add_foreign_key "sources", "pages"
   add_foreign_key "sources", "profiles", column: "creator_id"
   add_foreign_key "sources", "users", column: "publisher_id"
-  add_foreign_key "vote_events", "groups"
-  add_foreign_key "vote_events", "profiles", column: "creator_id"
-  add_foreign_key "vote_events", "users", column: "publisher_id"
   add_foreign_key "vote_matches", "profiles", column: "creator_id"
   add_foreign_key "vote_matches", "users", column: "publisher_id"
-  add_foreign_key "votes", "comments"
-  add_foreign_key "votes", "edges", column: "voteable_id", primary_key: "uuid"
-  add_foreign_key "votes", "profiles", column: "creator_id"
-  add_foreign_key "votes", "users", column: "publisher_id"
 end
