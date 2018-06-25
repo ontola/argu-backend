@@ -5,8 +5,11 @@ en:
       label: "Involved users"
       tooltip: "The amount of users that voted or made a contribution."
     votes:
-      label: "Votes"
+      label: "Confirmed votes"
       tooltip: "The amount of votes for or against an idea."
+    unconfirmed_votes:
+      label: "Unconfirmed votes"
+      tooltip: "The amount of votes for or against an idea that are unconfirmed."
     questions:
       label: "Challenges"
       tooltip: "The amount of submitted challenges."

@@ -5,8 +5,11 @@ nl:
       label: "Betrokken gebruikers"
       tooltip: "Het aantal gebruikers dat heeft gestemd en/of een bijdrage heeft geleverd."
     votes:
-      label: "Stemmen"
+      label: "Bevestigde stemmen"
       tooltip: "Het aantal stemmen voor of tegen een idee."
+    unconfirmed_votes:
+      label: "Onbevestigde stemmen"
+      tooltip: "Het aantal stemmen voor of tegen een idee die niet zijn bevestigd."
     questions:
       label: "Uitdagingen"
       tooltip: "Het aantal ingediende uitdagingen."

@@ -7,12 +7,11 @@ class StatisticsController < ParentableController
   def show
     return unless stale?(last_modified: authenticated_resource.self_and_descendants.maximum(:updated_at))
     counts = descendants.group(:owner_type).count
+    votes = descendants.joins(:parent).where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'})
     @statistics = {
       users: descendants.select(:publisher_id).distinct.count,
-      votes: descendants
-               .joins(:parent)
-               .where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'})
-               .count,
+      votes: votes.where(confirmed: true).count,
+      unconfirmed_votes: votes.where(confirmed: false).count,
       questions: counts['Question'] || 0,
       motions: counts['Motion'] || 0,
       comments: counts['Comment'] || 0,
