@@ -5,7 +5,6 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   let!(:page1) { create(:page) }
   let!(:page2) { create(:page) }
-  let!(:closed_page) { create(:page, visibility: Page.visibilities[:closed]) }
   let!(:hidden_page) { create(:page, visibility: Page.visibilities[:hidden]) }
 
   ####################################
@@ -20,7 +19,6 @@ class PagesControllerTest < ActionController::TestCase
     expect_relationship('viewSequence', 1)
     expect_included(argu_url('/o', page: 1, type: 'paginated'))
     expect_included(Page.open.map(&:iri))
-    expect_not_included(closed_page.iri)
     expect_not_included(hidden_page.iri)
   end
 
@@ -33,7 +31,6 @@ class PagesControllerTest < ActionController::TestCase
     member_sequence = expect_relationship('memberSequence', 1)
     assert_equal expect_included(member_sequence['data']['id'])['relationships']['members']['data'].count, 3
     expect_included(Page.open.map(&:iri))
-    expect_not_included(closed_page.iri)
     expect_not_included(hidden_page.iri)
   end
 end

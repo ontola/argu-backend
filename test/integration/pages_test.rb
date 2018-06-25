@@ -4,12 +4,12 @@ require 'test_helper'
 
 class PagesTest < ActionDispatch::IntegrationTest
   let!(:page) { create(:page) }
-  let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
+  let(:hidden_page) { create(:page, visibility: Page.visibilities[:hidden]) }
   let(:freetown) { create_forum(name: 'freetown', parent: page) }
   let(:second_freetown) { create_forum(name: 'second_freetown', parent: page) }
   let(:helsinki) { create_forum(name: 'second_freetown', parent: page, discoverable: false) }
-  let(:cairo) { create_forum(name: 'cairo', parent: page_non_public) }
-  let(:second_cairo) { create_forum(name: 'second_cairo', parent: page_non_public) }
+  let(:cairo) { create_forum(name: 'cairo', parent: hidden_page) }
+  let(:second_cairo) { create_forum(name: 'second_cairo', parent: hidden_page) }
 
   let(:motion) do
     create(:motion,
@@ -81,9 +81,9 @@ class PagesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not get show when not public' do
-    get page_non_public
+    get hidden_page
 
-    assert_response 403
+    assert_response 404
   end
 
   ####################################
@@ -153,9 +153,9 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'user should not get show when not public' do
     sign_in user
 
-    get page_non_public
+    get hidden_page
 
-    assert_response 403
+    assert_response 404
   end
 
   define_freetown('amsterdam')
@@ -207,7 +207,7 @@ class PagesTest < ActionDispatch::IntegrationTest
   test 'forum_initiator should get show when not public when one forum' do
     sign_in non_public_forum_initiator
 
-    get page_non_public
+    get hidden_page
 
     assert_redirected_to cairo.iri_path
     assert_not_nil assigns(:profile)
@@ -229,7 +229,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     sign_in non_public_forum_initiator
 
-    get page_non_public
+    get hidden_page
 
     assert_response 200
     assert_not_nil assigns(:profile)

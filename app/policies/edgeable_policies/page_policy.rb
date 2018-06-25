@@ -8,9 +8,8 @@ class PagePolicy < EdgePolicy
       scope
         .property_join(:visibility)
         .where(
-          'visibility_filter.value IN (?, ?) OR edges.id IN (?)',
+          'visibility_filter.value IN (?) OR edges.id IN (?)',
           Page.visibilities[:open],
-          Page.visibilities[:closed],
           page_ids
         )
     end

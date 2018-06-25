@@ -34,7 +34,7 @@ class Page < Edge
   with_collection :forums, pagination: true
 
   parentable
-  property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {open: 1, closed: 2, hidden: 3}
+  property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {open: 1, hidden: 3}
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :base_color, :string, NS::ARGU[:baseColor]
 
