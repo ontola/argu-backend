@@ -51,6 +51,11 @@ class PagesController < EdgeableController
 
   private
 
+  def authorize_action
+    authorize authenticated_resource, :list?
+    return super unless action_name == 'show'
+  end
+
   def create_handler_success(resource)
     user_context.tree_root_id = resource.uuid
     super

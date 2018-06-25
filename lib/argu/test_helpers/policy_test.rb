@@ -91,7 +91,7 @@ class PolicyTest < ActiveSupport::TestCase
       [freetown, expired_freetown].each do |record|
         record.public_grant = 'none'
       end
-      subject.closed! if subject.is_a?(Page)
+      subject.hidden! if subject.is_a?(Page)
     end
     [freetown, expired_freetown].each do |record|
       record.send(:reset_public_grant)

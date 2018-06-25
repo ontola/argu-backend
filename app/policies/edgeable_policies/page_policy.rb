@@ -38,7 +38,7 @@ class PagePolicy < EdgePolicy
   end
 
   def list?
-    raise(ActiveRecord::RecordNotFound) if record.hidden?
+    raise(ActiveRecord::RecordNotFound) if record.hidden? && !show?
     true
   end
 
