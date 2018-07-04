@@ -55,6 +55,7 @@ en:
     features:
       header: "Features"
       body: "We host Argu and will continue to develop it, so you can always use the latest features."
+      soon: "Soon"
       locations:
         title: "Maps"
         body: "See where discussions take place."
@@ -82,7 +83,6 @@ en:
       deadlines:
         title: "Deadlines"
         body: "Create urgency by automatically closing discussions."
-      # Unreleased features, have an image
       branding:
         title: "Branding"
         body: "Change how Argu looks to match your corporate identity."
@@ -110,6 +110,18 @@ en:
       visibility:
         title: "Closed or open"
         body: "Set the privacy settings of your forum."
+      opendata:
+        title: "Open Meeting Data"
+        body: "Show documents from your meeting system and make them interactive."
+      blogging:
+        title: "Blogging"
+        body: "Post and share articles."
+      blockchain:
+        title: "Blockchain voting"
+        body: "Transparent, anonymous and secure voting using decentralized storage."
+      sso:
+        title: "Single-sign-on"
+        body: "Use your existing SAML or OAUTH sign in system."
     method:
       header: "Our method"
       body: "We're experienced with civic engagement and we'd love to help you successfully engage your audience. Working with us might look like this:"

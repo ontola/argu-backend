@@ -56,6 +56,7 @@ nl:
     features:
       header: "Functionaliteiten"
       body: "Wij hosten Argu en blijven het ontwikkelen, zodat u altijd over de nieuwste mogelijkheden beschikt."
+      soon: "Binnenkort"
       locations:
         title: "Kaarten"
         body: "Krijg te zien waar discussies plaats vinden."
@@ -83,9 +84,8 @@ nl:
       deadlines:
         title: "Deadlines"
         body: "Creëer urgentie door discussies automatisch te laten sluiten."
-      # Unreleased features, have an image
       branding:
-        title: "Huisstijl"
+        title: "Eigen huisstijl"
         body: "Wijzig de vormgeving van Argu om bij uw huisstijl te passen."
       data:
         title: "Data Export & API"
@@ -111,6 +111,18 @@ nl:
       visibility:
         title: "Gesloten of open"
         body: "Bepaal wie er toegang hebben tot uw discussie-omgeving."
+      opendata:
+        title: "Open Raadsinformatie"
+        body: "Documenten uit jouw vergadersysteem worden doorzoekbaar en interactief."
+      blogging:
+        title: "Blogging"
+        body: "Plaats nieuwsberichten, blogs of artikelen."
+      blockchain:
+        title: "Blockchain voting"
+        body: "Sla stemmen volledig transparant, anoniem en gedecentraliseerd op."
+      sso:
+        title: "Single-sign-on"
+        body: "Gebruik jouw bestaande inlogsysteem, waaronder SAML of OAUTH."
     method:
       header: "Werkwijze"
       body: "Wij hebben veel ervaring opgedaan over hoe mensen effectief zijn te betrekken met online tools en wij helpen u daarom graag. Een dergelijk traject ziet er als volgt uit:"

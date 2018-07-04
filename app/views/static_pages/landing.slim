@@ -137,10 +137,15 @@
           =render partial: 'static_pages/components/feature', locals: {type: 'locations'}
           =render partial: 'static_pages/components/feature', locals: {type: 'notifications'}
           =render partial: 'static_pages/components/feature', locals: {type: 'manage'}
-          / =render partial: 'static_pages/components/feature', locals: {type: 'branding'}
           =render partial: 'static_pages/components/feature', locals: {type: 'attachments'}
           =render partial: 'static_pages/components/feature', locals: {type: 'deadlines'}
           =render partial: 'static_pages/components/feature', locals: {type: 'data'}
+          / =render partial: 'static_pages/components/feature', locals: {type: 'auditing'}
+          =render partial: 'static_pages/components/feature', locals: {type: 'branding', soon: true}
+          =render partial: 'static_pages/components/feature', locals: {type: 'opendata', soon: true}
+          =render partial: 'static_pages/components/feature', locals: {type: 'blockchain', soon: true}
+          =render partial: 'static_pages/components/feature', locals: {type: 'blogging', soon: true}
+          =render partial: 'static_pages/components/feature', locals: {type: 'sso', soon: true}
         .landing__button-wrapper
           a.landing__button[href="mailto:info@argu.co"]= t('landing.c2a.ask_demo')
   .landing__block.landing__block--grey
