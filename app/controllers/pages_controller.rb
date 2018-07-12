@@ -104,7 +104,7 @@ class PagesController < EdgeableController
   end
 
   def index_collection
-    @collection ||= EdgeableCollection.new(
+    @collection ||= Collection.new(
       association_class: Page,
       user_context: user_context,
       association_scope: :discover
