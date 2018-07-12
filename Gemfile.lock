@@ -411,7 +411,7 @@ GEM
     net_http_timeout_errors (0.3.0)
     netrc (0.11.0)
     nio4r (2.2.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.4)
     oauth2 (1.2.0)
@@ -781,7 +781,7 @@ DEPENDENCIES
   minitest-reporters (~> 1.1.8)
   mocha
   multimap!
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.8.3)
   oauth2 (~> 1.2.0)
   omniauth (~> 1.6.1)
   omniauth-facebook (~> 4.0.0)!
