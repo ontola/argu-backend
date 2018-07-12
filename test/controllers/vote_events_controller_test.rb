@@ -34,9 +34,6 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_included(collection_iri(vote_event, :votes))
     %w[yes other no].each do |side|
       expect_included(collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
-      expect_included(
-        collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
-      )
     end
     expect_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
     expect_not_included(vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
@@ -69,11 +66,6 @@ class VoteEventsControllerTest < ActionController::TestCase
           .vote_events
           .map { |ve| collection_iri(ve, :votes, 'filter%5B%5D' => "option=#{side}") }
       )
-      expect_included(
-        motion
-          .vote_events
-          .map { |ve| collection_iri(ve, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated') }
-      )
     end
     expect_included(
       vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri)
@@ -98,9 +90,6 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_included(collection_iri(lr_vote_event, :votes))
     %w[yes other no].each do |side|
       expect_included(collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
-      expect_included(
-        collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
-      )
     end
     expect_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: true}).map(&:iri))
     expect_not_included(lr_vote_event.votes.joins(:creator).where(profiles: {are_votes_public: false}).map(&:iri))
@@ -129,9 +118,6 @@ class VoteEventsControllerTest < ActionController::TestCase
     expect_included(collection_iri(lr_vote_event, :votes))
     %w[yes other no].each do |side|
       expect_included(collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
-      expect_included(
-        collection_iri(lr_vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
-      )
     end
   end
 

@@ -43,9 +43,6 @@ class MotionsControllerTest < ActionController::TestCase
     expect_included(collection_iri(vote_event, :votes))
     %w[yes other no].each do |side|
       expect_included(collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}"))
-      expect_included(
-        collection_iri(vote_event, :votes, 'filter%5B%5D' => "option=#{side}", page: 1, type: 'paginated')
-      )
     end
     expect_not_included(motion.default_vote_event.votes.map(&:iri))
   end

@@ -25,7 +25,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
     expect_relationship('motionCollection', size: 1)
     expect_included(collection_iri(question, :motions))
-    expect_included(collection_iri(question, :motions, page: 1, type: 'paginated'))
     expect_not_included(question.motions.untrashed.map(&:iri))
     expect_not_included(question.motions.trashed.map(&:iri))
   end

@@ -47,6 +47,7 @@ class ApplicationController < ActionController::Base
 
   class_attribute :inc_action_form
   self.inc_action_form = [
+    :resource,
     target: {
       action_body: [
         referred_shapes: :property,
@@ -62,7 +63,6 @@ class ApplicationController < ActionController::Base
   ].freeze
   class_attribute :inc_shallow_collection
   self.inc_shallow_collection = [
-    default_view: [],
     filters: [],
     operation: inc_action_form
   ].freeze
