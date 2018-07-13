@@ -32,8 +32,8 @@ GIT
 
 GIT
   remote: https://github.com/argu-co/rdf-serializers
-  revision: ddd9aa77e3f79d8e2126f887695dcd3c7091b686
-  ref: ddd9aa7
+  revision: 71b62229e9afcd47042217428e01672b5f8632c9
+  ref: 71b6222
   specs:
     rdf-serializers (0.0.6)
       active_model_serializers (~> 0.10)
