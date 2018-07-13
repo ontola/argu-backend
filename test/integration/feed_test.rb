@@ -199,7 +199,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     when :html
       assert_select '.activity-feed .activity', count
     when :nt
-      expect_triple(RDF::URI("#{feed(subject).iri}/feed?page=1&type=paginated"), NS::ARGU[:totalCount], count)
+      expect_triple(RDF::URI("#{feed(subject).iri}/feed?page=1&type=paginated"), NS::AS[:totalItems], count)
     else
       raise 'Wrong format'
     end

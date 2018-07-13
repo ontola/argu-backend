@@ -195,13 +195,13 @@ class VotesController < EdgeableController
     end
     data.push [
       authenticated_resource.parent_iri,
-      NS::HYDRA[:operation],
+      NS::SCHEMA[:potentialAction],
       RDF::URI("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
       NS::LL[:remove]
     ]
     data.push [
       authenticated_resource.parent_iri,
-      NS::HYDRA[:operation],
+      NS::SCHEMA[:potentialAction],
       RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
       NS::LL[:add]
     ]

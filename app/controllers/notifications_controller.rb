@@ -121,7 +121,7 @@ class NotificationsController < AuthorizedController
       if index_collection.is_a?(CollectionView)
         [
           RDF::URI(index_collection.collection.iri),
-          NS::ARGU[:views],
+          NS::AS[:page],
           RDF::URI(index_collection.iri)
         ]
       else
