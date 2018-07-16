@@ -32,7 +32,7 @@ page = FactorySeeder.create(
   :page,
   id: 0,
   last_accepted: Time.current,
-  profile: FactorySeeder.build(:profile, name: 'Argu page'),
+  profile_attributes: {name: 'Argu page'},
   url: 'argu',
   publisher: staff,
   creator: staff.profile,
@@ -149,7 +149,7 @@ other_page = FactorySeeder.create(
   publisher: staff,
   creator: staff.profile,
   is_published: true,
-  profile: FactorySeeder.build(:profile, name: 'Other page'),
+  profile_attributes: {name: 'Other page'},
   base_color: '#800000',
   url: 'other_page'
 )
