@@ -29,31 +29,6 @@ COPY ./config/secrets.docker.yml /usr/src/app/config/secrets.yml
 
 RUN RAILS_ENV=production DEVISE_SECRET=dummy bundle exec rake i18n:js:export
 
-ENV POSTGRESQL_ADDRESS = '192.168.99.100' \
-    POSTGRESQL_PORT = '5432' \
-    POSTGRESQL_USERNAME = 'argu' \
-    POSTGRESQL_PASSWORD = '' \
-    POSTGRESQL_DATABASE = 'argu_production' \
-    RAILS_ENV = 'production' \
-    REDIS_ADDRESS = '192.168.99.100' \
-    REDIS_PORT = '6379' \
-    SECRET_KEY_BASE = '' \
-    SECRET_KEY = '' \
-    DEVISE_SECRET = '' \
-    DEVISE_PEPPER = '' \
-    JWT_ENCRYPTION_TOKEN = '' \
-    FACEBOOK_KEY = '' \
-    FACEBOOK_SECRET = '' \
-    FRESHDESK_SECRET = '' \
-    FRESHDESK_URL = '' \
-    MAILGUN_API_TOKEN = '' \
-    MAILGUN_DOMAIN = '' \
-    MAILGUN_SENDER = '' \
-    OPENCAGE_GEOCODER_KEY = '' \
-    AWS_ID = '' \
-    AWS_KEY = '' \
-    FRESHDESK_SECRET = ''
-
 ARG FRONTEND_HOSTNAME
 RUN yarn run build:production
 
