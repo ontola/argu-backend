@@ -5,21 +5,17 @@ module Actionable
     extend ActiveSupport::Concern
 
     included do
-      include_actions
+      has_many :actions,
+               key: :operation,
+               unless: :system_scope?,
+               predicate: NS::SCHEMA[:potentialAction],
+               graph: NS::LL[:add] do
+        object.actions(scope) if scope.is_a?(UserContext)
+      end
+      define_action_methods
     end
 
     module ClassMethods
-      def include_actions
-        has_many :actions,
-                 key: :operation,
-                 unless: :system_scope?,
-                 predicate: NS::SCHEMA[:potentialAction],
-                 graph: NS::LL[:add] do
-          object.actions(scope) if scope.is_a?(UserContext)
-        end
-        define_action_methods
-      end
-
       def define_action_methods
         actions_class.defined_actions.each do |action|
           method_name = "#{action}_action"
