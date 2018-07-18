@@ -17,7 +17,7 @@ module Actionable
 
     module ClassMethods
       def define_action_methods
-        actions_class.defined_actions.each do |action|
+        actions_class.defined_actions.each_key do |action|
           method_name = "#{action}_action"
           define_method method_name do
             object.action(scope, action) if scope.is_a?(UserContext)

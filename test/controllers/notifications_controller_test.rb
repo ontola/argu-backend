@@ -82,6 +82,18 @@ class NotificationsControllerTest < ActionController::TestCase
     expect_included(user.notifications.first.actions(:read).first.iri)
   end
 
+  test 'user with notifications should get index nq' do
+    sign_in user
+    followed_content(user)
+
+    sleep(1.second)
+
+    get :index, format: :nq
+
+    assert_response 200
+    user.notifications.each { |n| expect_triple(n.iri, NS::ARGU[:readAction], nil) }
+  end
+
   private
 
   def followed_content(user)
