@@ -130,6 +130,6 @@ class VoteEventsControllerTest < ActionController::TestCase
 
     expect_relationship('partOf')
 
-    expect_view_members(primary_resource, 0)
+    expect_no_relationship('memberSequence', parent: primary_resource)
   end
 end

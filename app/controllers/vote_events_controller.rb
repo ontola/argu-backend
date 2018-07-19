@@ -6,7 +6,7 @@ class VoteEventsController < EdgeableController
   private
 
   def include_index_collection
-    [default_view: {members: include_show}]
+    [default_view: {member_sequence: {members: include_show}}]
   end
 
   def include_show

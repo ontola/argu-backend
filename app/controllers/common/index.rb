@@ -27,7 +27,7 @@ module Common
       end
 
       def include_index_view
-        {members: include_show}
+        {member_sequence: {members: include_show}}
       end
 
       def index_collection

@@ -86,7 +86,7 @@ class NotificationsController < AuthorizedController
 
   def include_index_collection
     [
-      default_view: {members: [operation: :target]},
+      default_view: {member_sequence: {members: [operation: :target]}},
       filters: [],
       operation: inc_action_form
     ]

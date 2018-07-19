@@ -6,7 +6,7 @@ class PagesController < EdgeableController
   skip_before_action :check_if_registered, only: :index
 
   self.inc_nested_collection = [
-    default_view: {members: :default_profile_photo},
+    default_view: {member_sequence: {members: :default_profile_photo}},
     filters: [],
     operation: inc_action_form
   ].freeze

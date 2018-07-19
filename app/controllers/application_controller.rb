@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   ]
   class_attribute :inc_nested_collection
   self.inc_nested_collection = [
-    default_view: :members,
+    default_view: {member_sequence: :members},
     filters: [],
     operation: inc_action_form
   ].freeze

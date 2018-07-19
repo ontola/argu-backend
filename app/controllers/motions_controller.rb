@@ -32,7 +32,7 @@ class MotionsController < EdgeableController
     ].freeze
 
     [
-      default_view: members,
+      default_view: {member_sequence: members},
       operation: inc_action_form
     ].freeze
   end
