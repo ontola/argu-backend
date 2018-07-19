@@ -61,7 +61,7 @@ services:
     volumes:
       - neodata:/data
     environment:
-      - "NEO4J_AUTH=neo4j/abc"
+      - "NEO4J_AUTH=none"
 volumes:
   data:
     external: true
