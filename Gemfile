@@ -4,6 +4,7 @@ source 'https://rubygems.org/'
 ruby '2.4.1'
 ruby = '2.4.1'
 
+gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
 gem 'bootsnap', require: false
 gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'
@@ -20,7 +21,7 @@ gem 'health_check'
 gem 'nokogiri', '~> 1.8.3'
 gem 'rdf'
 gem 'rdf-n3'
-gem 'rdf-serializers', git: 'https://github.com/argu-co/rdf-serializers', ref: '71b6222'
+gem 'rdf-serializers', git: 'https://github.com/ontola/rdf-serializers', ref: '71b6222'
 gem 'rdf-turtle'
 gem 'json-ld'
 gem 'rdf-rdfa'

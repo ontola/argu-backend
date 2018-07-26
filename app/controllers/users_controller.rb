@@ -86,7 +86,7 @@ class UsersController < AuthorizedController
     end
   end
 
-  def include_show
+  def show_includes
     [
       :profile_photo,
       :email_addresses,
@@ -107,23 +107,28 @@ class UsersController < AuthorizedController
     pp.except(:primary_email)
   end
 
-  def redirect_model_success(_)
+  def redirect_location
     r_param || settings_user_path(tab: tab)
   end
 
-  def respond_with_form_js(resource)
-    respond_js(
-      'users/settings',
-      resource: resource,
-      profile: resource.profile,
+  def settings_view
+    'settings'
+  end
+  alias edit_view settings_view
+
+  def settings_view_locals
+    {
+      resource: authenticated_resource,
+      profile: authenticated_resource.profile,
       tab: tab!,
       active: tab!
-    )
+    }
   end
+  alias edit_view_locals settings_view_locals
 
-  def show_respond_success_html(resource)
-    if (/[a-zA-Z]/i =~ params[:id]).nil? && resource.url.present?
-      redirect_to resource.iri(only_path: true).to_s, status: 307
+  def show_success_html
+    if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
+      redirect_to authenticated_resource.iri(only_path: true).to_s, status: 307
     else
       available_pages = authenticated_resource.profile.active_pages(current_profile.granted_root_ids(nil))
       organization =
@@ -146,7 +151,7 @@ class UsersController < AuthorizedController
     params[:tab] || params[:user].try(:[], :tab) || policy(authenticated_resource || User).default_tab
   end
 
-  def update_respond_failure_html(resource)
+  def update_failure_html
     if params[:user][:form] == 'wrong_email'
       email = params[:user][:email_addresses_attributes]['99999'][:email]
       if current_user.email_addresses.any? { |e| e.email == email }
@@ -156,11 +161,11 @@ class UsersController < AuthorizedController
       end
     else
       render 'settings',
-             locals: {tab: tab!, active: tab!, profile: resource.profile}
+             locals: {tab: tab!, active: tab!, profile: authenticated_resource.profile}
     end
   end
 
-  def message_success(_resource, _action)
+  def active_response_success_message
     if @email_changed
       t('users.registrations.confirm_mail_change_notice')
     else
@@ -168,7 +173,7 @@ class UsersController < AuthorizedController
     end
   end
 
-  def execute_update
+  def update_execute
     @email_changed = email_changed?
     if password_required
       bypass_sign_in(authenticated_resource) if authenticated_resource.update_with_password(permit_params(true))

@@ -11,15 +11,19 @@ class LogsController < ParentableController
     parent_resource
   end
 
-  def show_respond_success_html(resource)
-    render 'log', locals: {resource: resource}
+  def show_success_html
+    render 'log', locals: {resource: authenticated_resource}
   end
 
-  def show_respond_success_json(resource)
-    respond_with_200(resource.activities, :json)
+  def show_success_json
+    respond_with_collection(collection: authenticated_resource.activities)
   end
 
-  def show_respond_success_serializer(resource, format)
-    respond_with_200(resource.activities, format)
+  def show_success_json_api
+    respond_with_collection(collection: authenticated_resource.activities)
+  end
+
+  def show_success_rdf
+    respond_with_collection(collection: authenticated_resource.activities)
   end
 end

@@ -17,15 +17,15 @@ class MenusController < ParentableController
 
   def current_forum; end
 
-  def include_index_collection
+  def index_includes
     [menu_sequence: [members: [menu_sequence: :members]]]
   end
 
-  def include_show
+  def show_includes
     [menu_sequence: [members: [:image, menu_sequence: [members: [:image, menu_sequence: [members: :image]]]]]]
   end
 
-  def index_response_association
+  def index_association
     if parent_resource.present?
       parent_resource.menus(user_context)
     else
@@ -34,11 +34,12 @@ class MenusController < ParentableController
   end
 
   def resource_by_id
-    if parent_resource.present?
-      parent_resource.menu(user_context, params[:id].to_sym)
-    else
-      ApplicationMenuList.new(resource: current_user, user_context: user_context).menu[params[:id].to_sym]
-    end
+    @_resource_by_id ||=
+      if parent_resource.present?
+        parent_resource.menu(user_context, params[:id].to_sym)
+      else
+        ApplicationMenuList.new(resource: current_user, user_context: user_context).menu[params[:id].to_sym]
+      end
   end
 
   def resource_by_id_parent; end

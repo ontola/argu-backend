@@ -18,11 +18,11 @@ class ArgumentsController < EdgeableController
     {keys: {name: :title, text: :content}}
   end
 
-  def include_show
-    [operation: inc_action_form, comment_collection: inc_nested_collection]
+  def show_includes
+    [operation: ACTION_FORM_INCLUDES, comment_collection: inc_nested_collection]
   end
 
-  def index_collection_association
+  def index_collection_name
     "#{argument_type}_argument_collection"
   end
 
@@ -53,9 +53,9 @@ class ArgumentsController < EdgeableController
     [:"#{action_name}_pro_argument_successful", :"#{action_name}_con_argument_successful"]
   end
 
-  def redirect_model_success(resource)
-    return super unless action_name == 'create' && resource.persisted?
-    resource.parent.iri(only_path: true).to_s
+  def redirect_location
+    return super unless action_name == 'create' && authenticated_resource.persisted?
+    authenticated_resource.parent.iri(only_path: true).to_s
   end
 
   def service_options(opts = {})
@@ -64,19 +64,19 @@ class ArgumentsController < EdgeableController
                          current_actor.actor == current_user.profile))
   end
 
-  def show_respond_success_html(resource)
+  def show_success_html
     prepare_view
     render locals: {
-      argument: resource,
-      comment: Comment.new(parent: resource)
+      argument: authenticated_resource,
+      comment: Comment.new(parent: authenticated_resource)
     }
   end
 
-  def show_respond_success_js(resource)
+  def show_success_js
     prepare_view
     render locals: {
-      argument: resource,
-      comment: Comment.new(parent: resource)
+      argument: authenticated_resource,
+      comment: Comment.new(parent: authenticated_resource)
     }
   end
 end

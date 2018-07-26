@@ -49,23 +49,25 @@ class FeedController < AuthorizedController
     resource_by_id.activity_collection(collection_options)
   end
 
-  def index_respond_success_html
+  def index_success_html
     preload_user_votes(vote_event_ids_from_activities(activities))
   end
 
-  def index_respond_success_js
+  def index_success_js
     if activities.present?
       preload_user_votes(vote_event_ids_from_activities(activities))
       render
     else
-      respond_with_204(nil, :json)
+      head 204
     end
   end
 
-  def index_respond_success_serializer(format)
-    return super if index_response_association.present?
-    respond_with_204(nil, :json)
+  def index_success_serializer
+    return respond_with_collection(active_response_options) if index_collection_or_view.present?
+    head 204
   end
+  alias index_success_rdf index_success_serializer
+  alias index_success_json_api index_success_serializer
 
   def relevant_only
     params[:complete] != 'true'

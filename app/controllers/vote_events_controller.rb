@@ -5,11 +5,7 @@ class VoteEventsController < EdgeableController
 
   private
 
-  def include_index_collection
-    [default_view: {member_sequence: {members: include_show}}]
-  end
-
-  def include_show
+  def show_includes
     [:current_vote, vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]]
   end
 
@@ -18,7 +14,7 @@ class VoteEventsController < EdgeableController
     parent_resource.default_vote_event
   end
 
-  def show_respond_success_html(resource)
+  def show_success_html(resource)
     redirect_to resource.parent
   end
 end

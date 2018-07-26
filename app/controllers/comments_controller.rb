@@ -25,63 +25,51 @@ class CommentsController < EdgeableController
     params[:comment].try(:[], :body)
   end
 
-  def create_respond_failure_html(c)
+  def create_failure_html
+    c = authenticated_resource
     url = "#{c.parent.iri_path}?#{{comment: {body: c.body, parent_id: c.in_reply_to_id}}.to_param}"
     redirect_to url, notice: c.errors.full_messages.first
   end
 
-  def create_respond_success_html(resource)
-    respond_with_redirect_success(resource, :create)
+  def create_success_html
+    respond_with_redirect(location: redirect_location)
   end
 
-  def create_respond_success_js(resource)
-    return super if params[:modal].blank?
-    flash.now[:notice] = message_success(resource, :create)
+  def create_success_js
+    return create_success if params[:modal].blank?
+    flash.now[:notice] = message_success(authenticated_resource, :create)
     render 'alert'
   end
 
-  def destroy_respond_failure_js
+  def destroy_failure_js
     render
   end
 
-  def edit_respond_success_html(resource)
-    render locals: {
-      resource: resource.parent,
-      comment: resource
-    }
-  end
-
-  def edit_respond_success_js(resource)
-    render locals: {
-      resource: resource.parent,
-      comment: resource,
-      parent_id: nil,
-      visible: true
-    }
-  end
-
-  def index_respond_success_html
-    @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
+  def index_success_html
+    @comment_edges = policy_scope(parent_resource!.filtered_threads(show_trashed?, params[:comments_page]))
     render locals: {comment: Comment.new}
   end
 
-  def index_respond_success_js
-    @comment_edges = parent_resource!.filtered_threads(show_trashed?, params[:comments_page])
+  def index_success_js
+    @comment_edges = policy_scope(parent_resource!.filtered_threads(show_trashed?, params[:comments_page]))
     render locals: {resource: parent_resource!}
   end
 
-  def redirect_model_success(resource)
-    return resource.parent.iri_path unless resource.persisted? && !resource.deleted?
-    case resource.parent
+  def redirect_location
+    case authenticated_resource.parent
     when BlogPost, ProArgument, ConArgument
-      resource.parent.iri_path(fragment: resource.identifier)
+      authenticated_resource.parent.iri_path(fragment: authenticated_resource.identifier)
     else
       expand_uri_template(
         'comments_collection_iri',
-        parent_iri: resource.parent.iri(only_path: true),
+        parent_iri: authenticated_resource.parent.iri(only_path: true),
         only_path: true
       )
     end
+  end
+
+  def destroy_success_location
+    authenticated_resource.parent.iri_path
   end
 
   def resource_new_params
@@ -95,53 +83,53 @@ class CommentsController < EdgeableController
     query.to_query
   end
 
-  def redirect_url
+  def after_login_location
     return super unless params[:action] == 'create'
     redirect_url = URI.parse(new_iri_path(parent_resource!, :comments))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
   end
 
-  def respond_with_form_js(resource)
-    respond_js(
-      'comments/new',
-      parent_id: params[:comment][:parent_id],
-      resource: resource.parent,
-      comment: resource
-    )
+  def default_form_view_locals(_action)
+    {
+      comment: authenticated_resource,
+      parent_id: params[:comment].try(:[], :parent_id),
+      resource: authenticated_resource.parent,
+      visible: true
+    }
   end
 
-  def show_respond_success_html(resource)
-    redirect_to redirect_model_success(resource)
+  def show_success_html
+    redirect_to redirect_location
   end
 
-  def update_respond_failure_html(resource)
+  def update_failure_html
     render 'edit',
            locals: {
-             resource: resource.parent,
-             comment: resource,
+             resource: authenticated_resource.parent,
+             comment: authenticated_resource,
              parent_id: nil
            }
   end
 
-  def update_respond_failure_js(resource)
+  def update_failure_js
     render 'failed',
            status: 400,
            locals: {
-             comment: resource,
-             commentable: resource.parent
+             comment: authenticated_resource,
+             commentable: authenticated_resource.parent
            }
   end
 
-  def update_respond_success_html(resource)
-    redirect_to resource.iri_path,
+  def update_success_html
+    redirect_to authenticated_resource.iri_path,
                 notice: t('comments.notices.updated')
   end
 
-  def update_respond_success_js(resource)
+  def update_success_js
     render locals: {
-      comment: resource,
-      commentable: resource.parent
+      comment: authenticated_resource,
+      commentable: authenticated_resource.parent
     }
   end
 end

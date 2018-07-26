@@ -26,20 +26,16 @@ class ExportsController < ServiceController
     parent_resource!.export_collection(collection_options)
   end
 
-  def index_respond_success_html
-    render locals: {parent_edge: parent_resource}
-  end
-
-  def index_respond_success_js
-    render locals: {parent_edge: parent_resource}
+  def index_locals
+    {parent_edge: parent_resource}
   end
 
   def permit_params
     {}
   end
 
-  def redirect_model_success(resource)
-    export_iri_path(resource.edge)
+  def redirect_location
+    export_iri_path(authenticated_resource.edge)
   end
 
   def resource_new_params

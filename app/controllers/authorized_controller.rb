@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
 class AuthorizedController < ApplicationController
-  include Common::Setup
-  include Common::Index
-  include Common::Show
   before_action :check_if_registered, except: %i[show]
   before_action :authorize_action
   before_action :verify_terms_accepted, only: %i[update create]
   before_bugsnag_notify :add_errors_tab
   helper_method :authenticated_resource, :collect_banners, :user_context, :tree_root_id, :tree_root
 
+  active_response :index, :show
+
   private
 
   def add_errors_tab(notification)
     return if authenticated_resource&.errors.blank?
     notification.add_tab(:errors, authenticated_resource.errors.to_h)
+  end
+
+  def after_login_location
+    return redirect_location if authenticated_resource!.present? && request.method != 'GET'
+    [request.path, request.query_string].reject(&:blank?).join('?')
   end
 
   def authorize_action
@@ -42,10 +46,11 @@ class AuthorizedController < ApplicationController
         resource_by_id
       end
   end
+  alias current_resource authenticated_resource!
 
   def check_if_registered
     return unless current_user.guest?
-    raise Argu::Errors::Unauthorized.new(r: redirect_url)
+    raise Argu::Errors::Unauthorized.new(r: after_login_location)
   end
 
   def collect_banners
@@ -64,7 +69,7 @@ class AuthorizedController < ApplicationController
     {
       filter: parse_filter(params[:filter], controller_class.try(:filter_options)),
       user_context: user_context,
-      include_map: JSONAPI::IncludeDirective::Parser.parse_include_args(include_index)
+      include_map: JSONAPI::IncludeDirective::Parser.parse_include_args(show_includes)
     }
   end
 
@@ -85,14 +90,6 @@ class AuthorizedController < ApplicationController
     params
       .require(model_name)
       .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
-  end
-
-  def redirect_url
-    if request.method == 'GET' || authenticated_resource!.nil?
-      [request.path, request.query_string].reject(&:blank?).join('?')
-    else
-      redirect_model_success(authenticated_resource)
-    end
   end
 
   def resource_from_params

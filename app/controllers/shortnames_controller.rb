@@ -11,20 +11,15 @@ class ShortnamesController < ParentableController
     @destination_param = "#{parent_from_params.iri_path}/#{params[:shortname][:destination]}"
   end
 
-  def exec_action
-    return super unless action_name == 'create'
-    if execute_update
-      create_handler_success(authenticated_resource)
-    else
-      create_handler_failure(authenticated_resource)
-    end
+  def create_execute
+    update_execute
   end
 
   def handle_record_not_unique_html
     authenticated_resource
       .errors
       .add(:owner, t('activerecord.errors.record_not_unique'))
-    respond_with_form(authenticated_resource)
+    respond_with_form(default_form_options(nil))
   end
 
   def parent_resource
@@ -40,22 +35,21 @@ class ShortnamesController < ParentableController
     )
   end
 
-  def redirect_model_success(_resource = nil)
+  def redirect_location
     settings_iri_path(authenticated_resource.root, tab: 'shortnames')
   end
 
-  def respond_with_form(resource)
-    render 'pages/settings',
-           locals: {
-             tab: "shortnames/#{tab}",
-             active: 'shortnames',
-             shortname: resource,
-             resource: resource.root
-           }
+  def default_form_view(_action)
+    'pages/settings'
   end
 
-  def respond_with_redirect_success(_resource = nil, _action = nil, opts = {})
-    redirect_to redirect_model_success, opts
+  def default_form_view_locals(_action)
+    {
+      tab: "shortnames/#{tab}",
+      active: 'shortnames',
+      shortname: authenticated_resource,
+      resource: authenticated_resource.root
+    }
   end
 
   def tab

@@ -7,104 +7,57 @@ module Trashable
     included do
       include Destroyable::Controller
 
-      define_action(:trash)
-      define_action(:untrash)
-    end
-
-    def bin
-      bin_handler_success(authenticated_resource)
-    end
-
-    def unbin
-      unbin_handler_success(authenticated_resource)
+      active_response :bin, :trash, :unbin, :untrash
     end
 
     private
 
-    # @!visibility public
-    def bin_respond_blocks_success(resource, format)
-      format.html { bin_respond_success_html(resource) }
-      format.js { bin_respond_success_js(resource) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_200(resource.action(user_context, :trash), type, include: inc_action_form) }
-      end
+    def bin_success
+      respond_with_form(bin_success_options)
     end
 
-    # @!visibility public
-    def bin_respond_success_html(resource)
-      render 'bin', locals: {resource: resource}
+    def bin_success_options
+      default_form_options(:bin)
     end
 
-    # @!visibility public
-    def bin_respond_success_js(resource)
-      render 'bin.js',
-             layout: false,
-             locals: {template: lookup_template('bin'), resource: resource}
+    def unbin_success
+      respond_with_form(unbin_success_options)
     end
 
-    # @!visibility public
-    def unbin_respond_blocks_success(resource, format)
-      format.html { unbin_respond_success_html(resource) }
-      format.js { unbin_respond_success_js(resource) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_200(resource.action(user_context, :untrash), type, include: inc_action_form) }
-      end
+    def unbin_success_options
+      default_form_options(:unbin)
     end
 
-    # @!visibility public
-    def unbin_respond_success_html(resource)
-      render 'unbin', locals: {resource: resource}
+    def trash_failure
+      redirect_with_invalid_resource(trash_failure_options)
     end
 
-    # @!visibility public
-    def unbin_respond_success_js(resource)
-      render 'unbin.js',
-             layout: false,
-             locals: {template: lookup_template('unbin'), resource: resource}
+    def trash_failure_options
+      update_failure_options
     end
 
-    # @!visibility public
-    def trash_respond_blocks_failure(resource, format)
-      format.html { respond_with_redirect_failure(resource, :trash) }
-      format.json { respond_with_422(resource, :json) }
-      format.json_api { respond_with_422(resource, :json_api) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_422(resource, type) }
-      end
-      format.js
+    def trash_success
+      respond_with_updated_resource(trash_success_options)
     end
 
-    # @!visibility public
-    def trash_respond_blocks_success(resource, format)
-      format.html { respond_with_redirect_success(resource, :trash) }
-      format.json { respond_with_204(resource, :json) }
-      format.json_api { respond_with_204(resource, :json_api) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_204(resource, type) }
-      end
-      format.js
+    def trash_success_options
+      update_success_options
     end
 
-    # @!visibility public
-    def untrash_respond_blocks_failure(resource, format)
-      format.html { respond_with_redirect_failure(resource, :untrash) }
-      format.json { respond_with_422(resource, :json) }
-      format.json_api { respond_with_422(resource, :json_api) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_422(resource, type) }
-      end
-      format.js
+    def untrash_failure
+      redirect_with_invalid_resource(untrash_failure_options)
     end
 
-    # @!visibility public
-    def untrash_respond_blocks_success(resource, format)
-      format.html { respond_with_redirect_success(resource, :untrash) }
-      format.json { respond_with_204(resource, :json) }
-      format.json_api { respond_with_204(resource, :json_api) }
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_204(resource, type) }
-      end
-      format.js
+    def untrash_failure_options
+      update_failure_options
+    end
+
+    def untrash_success
+      respond_with_updated_resource(untrash_success_options)
+    end
+
+    def untrash_success_options
+      update_success_options
     end
   end
 end

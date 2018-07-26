@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class DecisionsController < EdgeableController
-  include Common::Show
   include DecisionsHelper
   skip_before_action :check_if_registered, only: :index
 
@@ -16,37 +15,37 @@ class DecisionsController < EdgeableController
     end
   end
 
-  def create_respond_failure_html(resource)
+  def create_failure_html
     render action: 'index',
-           locals: {decision: resource, decisionable: resource.parent}
+           locals: {decision: authenticated_resource, decisionable: authenticated_resource.parent}
   end
 
-  def edit_respond_success_html(resource)
-    resource.argu_publication.draft! if resource.argu_publication.blank?
+  def edit_success_html
+    authenticated_resource.argu_publication.draft! if authenticated_resource.argu_publication.blank?
 
     render action: 'index',
            locals: {
              decisionable: parent_resource!,
-             edit_decision: resource
+             edit_decision: authenticated_resource
            }
   end
 
-  def index_respond_success_html
+  def index_success_html
     render locals: {decisionable: parent_resource!}
   end
 
-  def index_respond_success_js
+  def index_success_js
     render 'show', locals: {decision: parent_resource!.last_decision}
   end
 
-  def index_respond_success_json
-    respond_with_200(parent_resource!.last_decision, :json)
+  def index_success_json
+    respond_with_resource(resource: parent_resource!.last_decision)
   end
 
-  def message_success(resource, _)
-    if resource.argu_publication.published_at.present?
-      parent_key = resource.parent.model_name.singular
-      t("decisions.#{parent_key}.#{resource.state}")
+  def active_response_success_message
+    if authenticated_resource.argu_publication.published_at.present?
+      parent_key = authenticated_resource.parent.model_name.singular
+      t("decisions.#{parent_key}.#{authenticated_resource.state}")
     else
       t('type_save_success', type: t('decisions.type').capitalize)
     end
@@ -58,16 +57,16 @@ class DecisionsController < EdgeableController
     decision
   end
 
-  def new_respond_success_html(resource)
+  def new_success_html
     render action: 'index',
            locals: {
              decisionable: parent_resource!,
-             new_decision: resource
+             new_decision: authenticated_resource
            }
   end
 
-  def redirect_model_success(resource)
-    resource.parent.iri(only_path: true).to_s
+  def redirect_location
+    authenticated_resource.parent.iri(only_path: true).to_s
   end
 
   def resource_by_id
@@ -83,19 +82,19 @@ class DecisionsController < EdgeableController
     )
   end
 
-  def show_respond_success_html(resource)
-    render action: 'index', locals: {decisionable: resource.parent}
+  def show_success_html
+    render action: 'index', locals: {decisionable: authenticated_resource.parent}
   end
 
-  def show_respond_success_js(resource)
-    render 'show', locals: {decision: resource}
+  def show_success_js
+    render 'show', locals: {decision: authenticated_resource}
   end
 
-  def update_respond_failure_html(resource)
+  def update_failure_html
     render action: 'index',
            locals: {
              decisionable: resource.parent,
-             decision: resource
+             decision: authenticated_resource
            }
   end
 end

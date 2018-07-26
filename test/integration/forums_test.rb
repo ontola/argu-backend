@@ -407,7 +407,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'staff should not delete destory forum without confirmation string' do
+  test 'staff should not delete destroy forum without confirmation string' do
     sign_in staff
 
     assert_difference('Forum.count', 0) do

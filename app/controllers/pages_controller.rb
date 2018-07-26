@@ -8,16 +8,14 @@ class PagesController < EdgeableController
   self.inc_nested_collection = [
     default_view: {member_sequence: {members: :default_profile_photo}},
     filters: [],
-    operation: inc_action_form
+    operation: ACTION_FORM_INCLUDES
   ].freeze
 
-  def show
-    @forums = policy_scope(authenticated_resource.forums)
-                .includes(:default_cover_photo, :default_profile_photo, :shortname)
-                .order('edges.follows_count DESC')
-    @profile = authenticated_resource.profile
-    show_handler_success(authenticated_resource)
-  end
+  self.inc_nested_collection = [
+    default_view: {member_sequence: :members},
+    filters: [],
+    operation: ACTION_FORM_INCLUDES
+  ].freeze
 
   def settings
     authorize authenticated_resource, :update?
@@ -50,41 +48,41 @@ class PagesController < EdgeableController
     return super unless action_name == 'show'
   end
 
-  def create_handler_success(resource)
-    user_context.tree_root_id = resource.uuid
+  def create_success
+    user_context.tree_root_id = authenticated_resource.uuid
     super
   end
 
-  def create_respond_failure_html(resource)
+  def create_failure_html
     render 'new',
            locals: {
-             page: resource,
-             errors: resource.errors
+             page: authenticated_resource,
+             errors: authenticated_resource.errors
            },
            notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
   end
 
-  def create_respond_failure_js(resource)
-    respond_js('pages/new', page: resource, errors: resource.errors)
+  def create_failure_js
+    respond_js('pages/new', page: authenticated_resource, errors: authenticated_resource.errors)
   end
 
-  def destroy_respond_success_html(_resource)
+  def destroy_success_html
     redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
   end
 
-  def destroy_respond_failure_html(resource)
+  def destroy_failure_html
     flash[:error] = t('errors.general')
-    redirect_to(delete_page_path(resource))
+    redirect_to(delete_page_path(authenticated_resource))
   end
 
-  def exec_action
+  def execute_action
     return super unless action_name == 'create'
     authenticated_resource.assign_attributes(permit_params)
 
     if authenticated_resource.save
-      create_handler_success(resource)
+      active_response_handle_success
     else
-      create_handler_failure(resource)
+      active_response_handle_failure
     end
   end
 
@@ -104,26 +102,28 @@ class PagesController < EdgeableController
   end
 
   def index_collection
-    @collection ||= Collection.new(
+    @collection ||= ::Collection.new(
       association_class: Page,
       user_context: user_context,
       association_scope: :discover
     )
   end
 
-  def include_show
+  def show_includes
     [
       :profile_photo,
       vote_match_collection: inc_nested_collection
     ]
   end
 
-  def new_respond_success_html(resource)
-    resource.build_shortname
-    resource.build_profile
+  def new_execute_html
+    authenticated_resource.build_shortname
+    authenticated_resource.build_profile
+  end
 
-    render locals: {
-      page: resource,
+  def new_view_locals
+    {
+      page: authenticated_resource,
       errors: {}
     }
   end
@@ -159,24 +159,31 @@ class PagesController < EdgeableController
     Pundit.policy(user_context, resource)
   end
 
-  def respond_with_form(_resource)
-    render :settings, locals: {tab: tab!, active: tab!}
+  def settings_view
+    'settings'
+  end
+  alias edit_view settings_view
+
+  def settings_view_locals
+    {resource: authenticated_resource, tab: tab!, active: tab!}
+  end
+  alias edit_view_locals settings_view_locals
+
+  def redirect_location
+    return new_page_path unless authenticated_resource.persisted?
+    settings_iri_path(authenticated_resource, tab: tab)
   end
 
-  def respond_with_form_js(_resource)
-    respond_js('pages/settings', tab: tab!, active: tab!)
-  end
+  def show_success_html
+    @forums = policy_scope(authenticated_resource.forums)
+                .includes(:default_cover_photo, :default_profile_photo, :shortname)
+                .order('edges.follows_count DESC')
+    @profile = authenticated_resource.profile
 
-  def redirect_model_success(resource)
-    return new_page_path unless resource.persisted?
-    settings_iri_path(resource, tab: tab)
-  end
-
-  def show_respond_success_html(resource)
-    if @forums.count == 1 && !policy(resource).update?
+    if @forums.count == 1 && !policy(authenticated_resource).update?
       redirect_to @forums.first.iri_path
     elsif (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to resource.iri(only_path: true).to_s, status: 307
+      redirect_to authenticated_resource.iri(only_path: true).to_s, status: 307
     else
       render 'show'
     end

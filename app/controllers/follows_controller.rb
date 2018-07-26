@@ -7,37 +7,37 @@ class FollowsController < AuthorizedController
 
   private
 
-  def create_handler_success(_resource)
+  def create_handler_success
     send_event category: 'follows',
                action: permit_params[:follow_type],
                label: authenticated_resource.followable.model_name.collection
     super
   end
 
-  def destroy_handler_success(_resource)
+  def destroy_handler_success
     send_event category: 'follows',
                action: permit_params[:follow_type],
                label: authenticated_resource.followable.model_name.collection
     super
   end
 
-  def destroy_respond_failure_html(resource)
-    return super unless request.method == 'GET'
+  def destroy_failure_html
+    return destroy_failure unless request.method == 'GET'
     render 'destroy', locals: {unsubscribed: false}
   end
 
-  def destroy_respond_success_html(resource)
-    return super unless request.method == 'GET'
+  def destroy_success_html
+    return destroy_success unless request.method == 'GET'
     render 'destroy', locals: {unsubscribed: true}
   end
 
-  def execute_destroy
+  def destroy_execute
     @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
   end
 
-  def index_collection_association; end
+  def index_collection_name; end
 
-  def message_success(_resource, _action)
+  def active_response_success_message
     t('notifications.changed_successfully')
   end
 
@@ -57,8 +57,8 @@ class FollowsController < AuthorizedController
     params.permit %i[follow_type gid]
   end
 
-  def redirect_model_success(resource)
-    resource.followable.iri(only_path: true).to_s
+  def redirect_location
+    authenticated_resource.followable.iri(only_path: true).to_s
   end
 
   def unsubscribe?

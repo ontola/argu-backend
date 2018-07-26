@@ -5,14 +5,12 @@ module Moveable
     extend ActiveSupport::Concern
 
     included do
-      define_handlers(:shift)
+      active_response :shift, :move
     end
 
-    def shift
-      shift_handler_success(authenticated_resource)
-    end
+    private
 
-    def move
+    def move_execute
       @edge = Edge.find_by(uuid: params[:edge_id])
       user_context.with_root_id(@edge.root_id) do
         authorize @edge, :update?
@@ -21,34 +19,27 @@ module Moveable
       authenticated_resource.with_lock do
         moved = authenticated_resource.move_to @edge, *move_options
       end
-      if moved
-        move_respond_blocks_success(authenticated_resource, nil)
-      else
-        move_respond_blocks_failure(authenticated_resource, nil)
-      end
+      moved
     end
-
-    private
 
     def move_options
       nil
     end
 
-    def move_respond_blocks_failure(resource, _)
-      respond_with_redirect_failure(resource, :move)
+    def move_failure
+      respond_with_redirect(location: edit_iri_path(authenticated_resource))
     end
 
-    def move_respond_blocks_success(resource, _)
-      respond_with_redirect_success(resource, :move)
+    def move_success
+      respond_with_redirect(location: authenticated_resource.iri_path)
     end
 
-    def redirect_model_failure(resource)
-      edit_iri_path(resource)
+    def shift_success
+      respond_with_form(shift_success_options)
     end
 
-    def shift_respond_blocks_success(_, format)
-      format.html { render :move, locals: {resource: authenticated_resource} }
-      format.js { render :move, locals: {resource: authenticated_resource} }
+    def shift_success_options
+      default_form_options(:shift)
     end
   end
 end

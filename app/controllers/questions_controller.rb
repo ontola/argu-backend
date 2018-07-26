@@ -6,12 +6,12 @@ class QuestionsController < EdgeableController
 
   private
 
-  def include_show
+  def show_includes
     [
       :default_cover_photo,
       creator: :profile_photo,
       partOf: [widget_sequence: :members],
-      operation: inc_action_form,
+      operation: ACTION_FORM_INCLUDES,
       attachment_collection: inc_nested_collection,
       motion_collection: inc_shallow_collection,
       comment_collection: inc_shallow_collection
@@ -22,9 +22,9 @@ class QuestionsController < EdgeableController
     params.permit(:page)
   end
 
-  def show_respond_success_html(resource)
+  def show_success_html
     @all_motion_edges = policy_scope(
-      resource
+      authenticated_resource
         .children
         .where(owner_type: 'Motion')
     )
@@ -35,7 +35,7 @@ class QuestionsController < EdgeableController
         .order(sort_from_param)
         .page(show_params[:page])
     preload_user_votes(@motion_edges.map { |edge| edge.default_vote_event.id })
-    render locals: {question: resource}
+    render locals: {question: authenticated_resource}
   end
 
   def sort_from_param

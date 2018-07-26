@@ -2,25 +2,24 @@
 
 module Portal
   class UsersController < PortalBaseController
-    include Common::Setup
     include Destroyable::Controller
 
     private
 
-    def authenticated_resource
-      @authenticated_resource ||= User.find_via_shortname_or_id(params[:id])
+    def requested_resource
+      @requested_resource ||= User.find_via_shortname_or_id(params[:id])
     end
 
-    def execute_destroy
-      authorize authenticated_resource, :destroy?
+    def destroy_execute
+      authorize requested_resource, :destroy?
 
       ApplicationRecord.transaction do
-        authenticated_resource.edges.destroy_all if params.require(:user)['destroy_content'].to_s == 'true'
-        authenticated_resource.destroy
+        requested_resource.edges.destroy_all if params.require(:user)['destroy_content'].to_s == 'true'
+        requested_resource.destroy
       end
     end
 
-    def redirect_model_success(_resource)
+    def destroy_success_location
       root_path
     end
   end

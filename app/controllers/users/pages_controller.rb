@@ -6,17 +6,18 @@ module Users
 
     private
 
-    def index_respond_success_html
-      render locals: {
-        pages: index_response_association,
+    def index_locals
+      {
+        pages: index_association,
         current: current_user.edges.where(owner_type: 'Page').length,
         max: policy(current_user).max_allowed_pages
       }
     end
 
-    def index_response_association
+    def index_association
       @pages =
         policy_scope(Page)
+          .includes(:shortname, profile: %i[default_profile_photo default_cover_photo])
           .where(
             id: user
                   .profile
@@ -24,6 +25,8 @@ module Users
                   .concat(user.edges.where(owner_type: 'Page').pluck(:owner_id))
           ).distinct
     end
+
+    def index_collection_name; end
 
     def user
       return @user if @user.present?

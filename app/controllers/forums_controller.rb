@@ -10,7 +10,9 @@ class ForumsController < EdgeableController
 
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
-  def index
+  active_response :settings
+
+  def index_success_html
     edge_ids =
       current_user
         .profile
@@ -28,10 +30,6 @@ class ForumsController < EdgeableController
                 .page show_params[:page]
     skip_verify_policy_scoped(true)
     render
-  end
-
-  def settings
-    respond_with_form
   end
 
   def show
@@ -62,15 +60,6 @@ class ForumsController < EdgeableController
     resource_by_id
   end
 
-  def include_show
-    [
-      :default_cover_photo,
-      widget_sequence: :members,
-      motion_collection: inc_nested_collection,
-      question_collection: inc_nested_collection
-    ]
-  end
-
   def permit_params
     attrs = policy(resource_by_id).permitted_attributes
     pm = params.require(:forum).permit(*attrs).to_h
@@ -92,40 +81,53 @@ class ForumsController < EdgeableController
                label: params[:id]
   end
 
-  def redirect_model_success(resource)
-    return super unless resource.persisted?
-    settings_iri_path(resource, tab: tab)
+  def redirect_location
+    return super unless authenticated_resource.persisted?
+    settings_iri_path(authenticated_resource, tab: tab)
   end
 
-  def respond_with_form(resource = resource_by_id)
-    prepend_view_path 'app/views/forums'
-    @grants = Grant
-                .custom
-                .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
-                .includes(group: {group_memberships: {member: :profileable}})
-
-    render 'settings',
-           locals: {
-             tab: tab!,
-             active: tab!,
-             resource: resource
-           }
+  def settings_success
+    respond_with_form(default_form_options(:settings))
   end
 
-  def respond_with_form_js(_)
-    respond_js('forums/settings', tab: tab!, active: tab!)
+  def settings_view
+    @grants =
+      Grant
+        .custom
+        .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
+        .includes(group: {group_memberships: {member: :profileable}})
+    'forums/settings'
+  end
+  alias edit_view settings_view
+
+  def settings_view_locals
+    {
+      active: tab!,
+      resource: authenticated_resource,
+      tab: tab!
+    }
+  end
+  alias edit_view_locals settings_view_locals
+
+  def show_includes
+    [
+      :default_cover_photo,
+      widget_sequence: :members,
+      motion_collection: inc_nested_collection,
+      question_collection: inc_nested_collection
+    ]
   end
 
   def show_params
     params.permit(:page)
   end
 
-  def show_respond_success_html(resource)
+  def show_success_html
     if (/[a-zA-Z]/i =~ params[:id]).nil?
       redirect_to resource.iri(only_path: true).to_s, status: 307
     else
-      @children = collect_children(resource)
-      render
+      @children = collect_children(authenticated_resource)
+      respond_with_resource(show_success_options)
     end
   end
 

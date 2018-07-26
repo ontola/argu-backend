@@ -23,31 +23,24 @@ class ConversionsController < ServiceController
 
   def collect_banners; end
 
-  def create_handler_success(resource)
-    respond_to do |format|
-      create_respond_blocks_success(
-        resource.edge,
-        format
-      )
-    end
-  end
-
   def create_service_parent
     Conversion.new(edge: parent_resource!)
+  end
+
+  def create_success_options
+    opts = super
+    opts[:resource] = authenticated_resource.edge
+    opts
   end
 
   def current_forum
     @current_forum ||= resource_by_id&.ancestor(:forum)
   end
 
-  def new_respond_success_js(resource)
-    render :form, locals: {conversion: resource}
-  end
-
   def resource_by_id; end
 
-  def redirect_model_success(resource)
-    resource.is_a?(Edge) ? resource.iri_path : resource.edge.iri_path
+  def redirect_location
+    authenticated_resource.is_a?(Edge) ? authenticated_resource.iri_path : authenticated_resource.edge.iri_path
   end
 
   def resource_new_params

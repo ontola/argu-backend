@@ -26,28 +26,24 @@ class GroupMembershipsController < ServiceController
 
   private
 
-  def create_handler_success(resouce)
-    if params[:redirect] == 'false'
-      warn '[DEPRECATED] Using redirect = false in GroupMembership#create is deprecated.'
-      head 201
-    else
-      respond_to do |format|
-        create_respond_blocks_success(resouce, format)
-      end
-    end
-  end
-
-  def create_respond_failure_html(_resource)
-    redirect_to redirect_url, notice: t('errors.general')
-  end
-
-  def create_respond_failure_json(resource)
+  def create_failure
     if existing_record
-      render json: resource.errors, status: 304, location: existing_record.iri.to_s
+      respond_with_invalid_resource(resource: authenticated_resource, status: 304, location: existing_record.iri.to_s)
     else
-      Bugsnag.notify(resource.errors.full_messages)
-      respond_with_422(resource, :json)
+      Bugsnag.notify(authenticated_resource.errors.full_messages)
+      super
     end
+  end
+
+  def create_failure_html
+    redirect_to redirect_location, notice: t('errors.general')
+  end
+
+  def create_success_options_json
+    opts = create_success_options
+    opts[:include] = :group
+    opts[:location] = authenticated_resource!.iri.to_s
+    opts
   end
 
   alias create_service_parent parent_resource!
@@ -64,12 +60,12 @@ class GroupMembershipsController < ServiceController
                          .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
   end
 
-  def include_show
+  def show_includes
     %i[organization]
   end
 
-  def new_respond_success_html(resource)
-    redirect_to settings_iri_path(resource.group, tab: :invite)
+  def new_success_html(resource)
+    respond_with_redirect location: settings_iri_path(resource.group, tab: :invite)
   end
 
   def parent_resource_key(opts)
@@ -90,23 +86,17 @@ class GroupMembershipsController < ServiceController
     params.permit(:r)[:r]
   end
 
-  def redirect_url(_ = nil)
+  def redirect_location
     return redirect_param if redirect_param.present?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
     return forum_grants.first.edge.iri_path if forum_grants.count == 1
     authenticated_resource!.page.iri_path
   end
-  alias redirect_model_failure redirect_url
-  alias redirect_model_success redirect_url
+  alias destroy_success_location redirect_location
 
-  def respond_with_201(resource, format, _opts = {})
-    return super unless %i[json json_api].include?(format)
-    render json: resource, status: :created, location: resource.iri.to_s, include: :group
-  end
-
-  def show_respond_success_html(_resource)
+  def show_success
     flash.keep
-    redirect_to redirect_url
+    respond_with_redirect(location: redirect_location)
   end
 
   def tree_root_id

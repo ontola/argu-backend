@@ -17,22 +17,6 @@ class NotificationsController < AuthorizedController
     end
   end
 
-  def create
-    respond_to do |format|
-      if authenticated_resource.save
-        format.json { head 201 }
-        RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { head 201 }
-        end
-      else
-        format.json { respond_with_422(authenticated_resource, :json) }
-        RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { respond_with_422(authenticated_resource, type) }
-        end
-      end
-    end
-  end
-
   def read
     if policy_scope(Notification)
          .where(read_at: nil, permanent: false)
@@ -84,19 +68,15 @@ class NotificationsController < AuthorizedController
       .page params[:page]
   end
 
-  def include_index_collection
-    [
-      default_view: {member_sequence: {members: [operation: :target]}},
-      filters: [],
-      operation: inc_action_form
-    ]
+  def show_includes
+    [operation: :target]
   end
 
-  def index_respond_success_html
+  def index_success_html
     head 204
   end
 
-  def index_respond_success_json
+  def index_success_json
     if current_user.guest?
       head 204
     elsif params[:from_time].present?
@@ -107,7 +87,7 @@ class NotificationsController < AuthorizedController
   end
 
   def index_collection
-    @collection ||= Collection.new(
+    @collection ||= ::Collection.new(
       association_class: Notification,
       default_type: :infinite,
       user_context: user_context,
@@ -115,18 +95,18 @@ class NotificationsController < AuthorizedController
     )
   end
 
-  def meta
+  def index_meta
     m = []
     m <<
       if index_collection.is_a?(CollectionView)
         [
-          RDF::URI(index_collection.collection.iri),
+          ::RDF::URI(index_collection.collection.iri),
           NS::AS[:page],
-          RDF::URI(index_collection.iri)
+          ::RDF::URI(index_collection.iri)
         ]
       else
         [
-          RDF::URI(index_collection.iri),
+          ::RDF::URI(index_collection.iri),
           NS::ARGU[:unreadCount],
           unread_notification_count
         ]
@@ -162,8 +142,8 @@ class NotificationsController < AuthorizedController
     head 400
   end
 
-  def update_respond_success_serializer(resource, format)
-    respond_with_200(resource, format, include: include_show, meta: meta)
+  def update_success_serializer
+    respond_with_resource(resource: authenticated_resource, include: show_includes, meta: index_meta)
   end
 
   def update_respond_success_html(_resource)
@@ -172,19 +152,7 @@ class NotificationsController < AuthorizedController
     render 'index'
   end
 
-  def update_respond_failure_html(_resource)
-    head 400
-  end
-
-  def update_respond_failure_js(_resource)
-    head 400
-  end
-
-  def update_respond_failure_json(_resource)
-    head 400
-  end
-
-  def update_respond_failure_serializer(_resource, _format)
+  def update_failure
     head 400
   end
 

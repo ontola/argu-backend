@@ -31,16 +31,6 @@ GIT
     multimap (1.1.4)
 
 GIT
-  remote: https://github.com/argu-co/rdf-serializers
-  revision: 71b62229e9afcd47042217428e01672b5f8632c9
-  ref: 71b6222
-  specs:
-    rdf-serializers (0.0.6)
-      active_model_serializers (~> 0.10)
-      railties (>= 4.2.0, < 6)
-      rdf (~> 3.0)
-
-GIT
   remote: https://github.com/dryruby/ebnf
   revision: 3631273e2c87ceed4f685ce2eaa3df89f8a47d45
   ref: 3631273
@@ -48,6 +38,25 @@ GIT
     ebnf (1.1.2)
       rdf (~> 3.0)
       sxp (~> 1.0)
+
+GIT
+  remote: https://github.com/ontola/active_response
+  revision: d1da229a5bef5d49ec4333e7c12e3c23afe5dc2c
+  branch: master
+  specs:
+    active_response (0.0.1)
+      active_model_serializers (~> 0.10)
+      railties (>= 4.2.0, < 6)
+
+GIT
+  remote: https://github.com/ontola/rdf-serializers
+  revision: 71b62229e9afcd47042217428e01672b5f8632c9
+  ref: 71b6222
+  specs:
+    rdf-serializers (0.0.6)
+      active_model_serializers (~> 0.10)
+      railties (>= 4.2.0, < 6)
+      rdf (~> 3.0)
 
 GIT
   remote: https://github.com/ruby-rdf/rdf-rdfxml
@@ -726,6 +735,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.10.7)
   active_record-postgres-constraints!
   active_record_query_trace
+  active_response!
   acts_as_follower!
   acts_as_list
   addressable (~> 2.3.8)

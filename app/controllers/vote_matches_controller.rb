@@ -18,15 +18,15 @@ class VoteMatchesController < ServiceController
     if parent_id_from_params(params).present?
       parent_resource!.vote_match_collection(collection_options)
     else
-      @collection ||= Collection.new(
+      @collection ||= ::Collection.new(
         association_class: VoteMatch,
         user_context: user_context
       )
     end
   end
 
-  def redirect_model_success(resource)
-    return super if resource.persisted? || !resource.parent.is_a?(GuestUser)
+  def redirect_location
+    return super if authenticated_resource.persisted? || !authenticated_resource.parent.is_a?(GuestUser)
     root_path
   end
 

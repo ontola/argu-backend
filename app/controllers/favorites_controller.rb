@@ -19,21 +19,21 @@ class FavoritesController < ParentableController
     current_user.favorites.find_by(edge: parent_resource)
   end
 
-  def redirect_model_success(resource)
-    resource.is_a?(Edge) ? resource.iri_path : resource.edge.iri_path
+  def redirect_location
+    authenticated_resource.is_a?(Edge) ? authenticated_resource.iri_path : authenticated_resource.edge.iri_path
   end
 
-  def message_success(resource, action)
-    if action == :destroy
-      t('type_destroy_success', type: type_for(resource)).capitalize
-    elsif action == :save
-      t('type_create_success', type: type_for(resource)).capitalize
+  def active_response_success_message
+    if action_name == :destroy
+      t('type_destroy_success', type: type_for(authenticated_resource)).capitalize
+    elsif action_name == :save
+      t('type_create_success', type: type_for(authenticated_resource)).capitalize
     end
   end
 
-  def create_respond_failure_html(_resource)
+  def create_failure_html(_resource)
     flash[:error] = t('errors.general')
     redirect_back(fallback_location: root_path)
   end
-  alias destroy_respond_failure_html create_respond_failure_html
+  alias destroy_failure_html create_failure_html
 end

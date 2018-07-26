@@ -7,9 +7,10 @@ class ApplicationController < ActionController::Base
   include Argu::RuledIt
   include Argu::Authorization
   include Argu::Announcements
-  include Argu::Controller::Common::Responses
   include Argu::Controller::ErrorHandling
 
+  include ActiveResponse::Controller
+  include ActiveResponseHelper
   include FrontendTransitionHelper
   include RedirectHelper
   include JsonApiHelper
@@ -45,26 +46,16 @@ class ApplicationController < ActionController::Base
   layout :set_layout
   serialization_scope :user_context
 
-  class_attribute :inc_action_form
-  self.inc_action_form = [
-    :resource,
-    target: {
-      action_body: [
-        referred_shapes: :property,
-        property: [referred_shapes: :property, property: [referred_shapes: :property]]
-      ]
-    }
-  ]
   class_attribute :inc_nested_collection
   self.inc_nested_collection = [
     default_view: {member_sequence: :members},
     filters: [],
-    operation: inc_action_form
+    operation: ACTION_FORM_INCLUDES
   ].freeze
   class_attribute :inc_shallow_collection
   self.inc_shallow_collection = [
     filters: [],
-    operation: inc_action_form
+    operation: ACTION_FORM_INCLUDES
   ].freeze
 
   # The params, deserialized when format is json_api or LD and method is not safe

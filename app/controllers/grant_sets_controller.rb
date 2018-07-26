@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class GrantSetsController < AuthorizedController
-  include Common::Show
-
   private
 
   def resource_by_id

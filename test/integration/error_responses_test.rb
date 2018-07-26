@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class JSONApiResponsesTest < ActionDispatch::IntegrationTest
+class ErrorResponsesTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
   let(:motion) { create(:motion, parent: freetown) }
@@ -191,7 +191,47 @@ class JSONApiResponsesTest < ActionDispatch::IntegrationTest
                  ].flatten
   end
 
+  test 'user should get 404' do
+    sign_in user
+    test_error(
+      :get,
+      '/non_existing',
+      {},
+      404,
+      status: 'Not Found',
+      message: 'ActiveRecord::RecordNotFound',
+      code: 'NOT_FOUND',
+      error: 'RecordNotFound'
+    )
+  end
+
   private
+
+  def test_error(method, url, params, status, opts)
+    test_error_json_api(method, url, params, status, opts)
+    test_error_n3(method, url, params, status, opts)
+  end
+
+  def test_error_json_api(method, url, params, status, opts)
+    send(method, url, params: params, headers: argu_headers(accept: :json_api))
+
+    errors = json_api_errors(opts.except(:error))
+
+    assert_response status
+    assert_equal parsed_body, 'errors' => errors
+  end
+
+  def test_error_n3(method, path, params, status, opts)
+    send(method, path, params: params, headers: argu_headers(accept: :n3))
+
+    assert_response status
+
+    subject = RDF::URI("http://www.example.com#{path}")
+
+    expect_triple(subject, RDF[:type], NS::ONTOLA["errors/#{opts[:error]}Error"])
+    expect_triple(subject, NS::SCHEMA[:name], I18n.t('status')[status])
+    expect_triple(subject, NS::SCHEMA[:text], opts[:message])
+  end
 
   def json_api_errors(code: nil, message: nil, source: nil, status: nil)
     errors = {}

@@ -12,41 +12,40 @@ class VotesController < EdgeableController
     authorize authenticated_resource, method
   end
 
-  def respond_with_201(resource, format, _opts = {})
-    case format
-    when :json
-      render locals: {model: resource.parent, vote: resource}, status: :created, location: resource.iri_path
-    else
-      super
-    end
+  def create_success_json
+    render locals: {model: authenticated_resource.parent, vote: authenticated_resource},
+           status: :created,
+           location: authenticated_resource.iri_path
   end
 
-  def create_respond_failure_html(resource)
-    redirect_to resource.parent.voteable.iri(only_path: true).to_s,
+  def create_failure_html
+    redirect_to authenticated_resource.parent.voteable.iri(only_path: true).to_s,
                 notice: t('votes.alerts.failed')
   end
 
-  def create_respond_success_html(resource)
+  def create_success_html
     if params[:vote].try(:[], :r).present?
       redirect_to redirect_param
     else
-      redirect_to resource.parent.voteable.iri(only_path: true).to_s,
+      redirect_to authenticated_resource.parent.voteable.iri(only_path: true).to_s,
                   notice: t('votes.alerts.success')
     end
   end
 
-  def create_respond_success_js(resource)
-    return super(resource.parent.voteable) unless resource.parent.is_a?(Argument)
-    render locals: {model: resource.parent, vote: resource}
+  def create_success_js
+    unless authenticated_resource.parent.is_a?(Argument)
+      return respond_with_redirect(location: authenticated_resource.parent.voteable.iri)
+    end
+    render locals: {model: authenticated_resource.parent, vote: authenticated_resource}
   end
 
-  def destroy_respond_success_js(resource)
+  def destroy_success_js
     render locals: {
-      vote: resource
+      vote: authenticated_resource
     }
   end
 
-  def exec_action
+  def execute_action
     return super unless action_name == 'create'
     return super unless unmodified?
     respond_to do |format|
@@ -62,24 +61,24 @@ class VotesController < EdgeableController
         render status: 304,
                locals: {model: create_service.resource.parent.voteable, vote: create_service.resource}
       end
-      format.json_api { respond_with_304(create_service.resource, :json_api) }
+      format.json_api { head 304 }
       RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { respond_with_304(create_service.resource, type) }
+        format.send(type) { head 304 }
       end
       format.js { render locals: {model: create_service.resource.parent, vote: create_service.resource} }
     end
   end
 
-  def include_create
+  def create_includes
     [:partOf, voteable: :actions]
   end
 
-  def index_respond_success_html
+  def index_success_html
     redirect_to parent_resource!.iri_path
   end
 
-  def new_respond_success_html(resource)
-    render locals: {
+  def new_form_locals
+    {
       resource: resource.parent,
       vote: resource
     }
@@ -93,8 +92,8 @@ class VotesController < EdgeableController
         .find_by(parent: parent_resource)
   end
 
-  def show_respond_success_html(resource)
-    redirect_to resource.voteable.iri(only_path: true).to_s
+  def show_success_html
+    redirect_to authenticated_resource.voteable.iri(only_path: true).to_s
   end
 
   def for_param
@@ -135,11 +134,15 @@ class VotesController < EdgeableController
     params.require(:vote).permit(:r)[:r]
   end
 
-  def redirect_model_success(resource)
-    resource.persisted? ? resource.iri(only_path: true).to_s : resource.voteable.iri(only_path: true).to_s
+  def redirect_location
+    if authenticated_resource.persisted?
+      authenticated_resource.iri(only_path: true).to_s
+    else
+      authenticated_resource.voteable.iri(only_path: true).to_s
+    end
   end
 
-  def redirect_url
+  def after_login_location
     expand_uri_template(
       :new_vote,
       voteable_path: parent_resource!.iri(only_path: true).to_s.split('/').select(&:present?),
@@ -157,7 +160,7 @@ class VotesController < EdgeableController
     )
   end
 
-  def meta_create
+  def create_meta
     data = []
     if authenticated_resource.parent.is_a?(VoteEvent)
       parent_collection = index_collection.unfiltered
@@ -171,13 +174,13 @@ class VotesController < EdgeableController
     data.push [
       authenticated_resource.parent_iri,
       NS::SCHEMA[:potentialAction],
-      RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
+      ::RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
       NS::LL[:remove]
     ]
     data
   end
 
-  def meta_destroy
+  def destroy_meta
     data = super
     data.push [
       authenticated_resource.parent_iri,
@@ -196,13 +199,13 @@ class VotesController < EdgeableController
     data.push [
       authenticated_resource.parent_iri,
       NS::SCHEMA[:potentialAction],
-      RDF::URI("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
+      ::RDF::URI("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
       NS::LL[:remove]
     ]
     data.push [
       authenticated_resource.parent_iri,
       NS::SCHEMA[:potentialAction],
-      RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
+      ::RDF::URI("#{authenticated_resource.parent_iri}/actions/create_vote"),
       NS::LL[:add]
     ]
   end

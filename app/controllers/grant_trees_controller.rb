@@ -2,7 +2,6 @@
 
 class GrantTreesController < AuthorizedController
   include NestedResourceHelper
-  include Common::Show
 
   private
 
@@ -10,7 +9,7 @@ class GrantTreesController < AuthorizedController
     authorize parent_resource!, :index_children?, :grants
   end
 
-  def include_show
+  def show_includes
     [permission_groups: :permissions]
   end
 

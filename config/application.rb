@@ -22,6 +22,7 @@ module Argu
     config.autoload_paths += %W[#{config.root}/app/models/actions]
     config.autoload_paths += %W[#{config.root}/app/models/banners]
     config.autoload_paths += %W[#{config.root}/app/models/menus]
+    config.autoload_paths += %W[#{config.root}/app/responders]
     config.autoload_paths += %W[#{config.root}/app/services]
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
     config.autoload_paths += %W[#{config.root}/app/listeners]

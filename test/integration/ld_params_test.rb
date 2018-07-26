@@ -4,7 +4,7 @@ require 'test_helper'
 
 class LDParamsTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:motion) { create(:motion, parent: freetown) }
+  let!(:motion) { create(:motion, parent: freetown, creator: administrator.profile) }
   let(:administrator) { create_administrator(freetown) }
 
   test 'post create motion with cover photo as nquads' do
@@ -49,6 +49,6 @@ class LDParamsTest < ActionDispatch::IntegrationTest
            headers: argu_headers(accept: :nq)
     end
     assert_response 201
-    assert_equal response.headers['Location'], klass.last.iri
+    assert_equal response.headers['Location'], klass.last.iri_path
   end
 end

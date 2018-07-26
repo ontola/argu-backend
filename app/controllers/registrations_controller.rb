@@ -2,6 +2,7 @@
 
 class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
+  include Destroyable::Controller
   include RedisResourcesHelper
   include OauthHelper
   include NestedResourceHelper
@@ -24,49 +25,6 @@ class RegistrationsController < Devise::RegistrationsController
       response.headers['New-Authorization'] = t.token
     else
       session[:omniauth] = nil unless @user.new_record?
-    end
-  end
-
-  def cancel
-    if current_user.guest?
-      flash[:error] = 'Not signed in'
-      redirect_to root_path
-    else
-      @user = current_user
-      render 'cancel'
-    end
-  end
-
-  def destroy
-    @user = User.find current_user.id
-    authorize @user, :destroy?
-    unless params[:user].try(:[], :confirmation_string) == t('users_cancel_string')
-      @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
-    end
-    respond_to do |format|
-      if @user.errors.empty? && @user.destroy
-        Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-        send_event category: 'registrations',
-                   action: 'destroy',
-                   label: @user.id
-        format.html { redirect_to root_path, status: 303, notice: t('type_destroy_success', type: 'Account') }
-        format.js do
-          flash[:notice] = t('type_destroy_success', type: 'Account')
-          render 'turbolinks_redirect', locals: {location: root_url}
-        end
-        format.json { respond_with_204(@user, :json) }
-        format.json_api { respond_with_204(@user, :json_api) }
-        RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { respond_with_204(@user, type) }
-        end
-      else
-        format.html { render action: 'cancel' }
-        format.json { respond_with_422(@user, :json) }
-        format.json_api { respond_with_422(@user, :json_api) }
-        RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { respond_with_422(@user, type) }
-        end
-      end
     end
   end
 
@@ -104,6 +62,11 @@ class RegistrationsController < Devise::RegistrationsController
 
   private
 
+  def active_response_success_message
+    return super unless action_name == 'destroy'
+    t('type_destroy_success', type: 'Account')
+  end
+
   def build_resource(*args)
     super
     resource.shortname = nil if resource.shortname&.shortname&.blank?
@@ -112,6 +75,39 @@ class RegistrationsController < Devise::RegistrationsController
     return unless session[:omniauth]
     @user.apply_omniauth(session[:omniauth])
     @user.valid?
+  end
+
+  def current_resource
+    @user
+  end
+
+  def delete_execute
+    if current_user.guest?
+      flash[:error] = 'Not signed in'
+      redirect_to root_path
+      false
+    else
+      @user = current_user
+    end
+  end
+
+  def destroy_execute
+    @user = User.find current_user.id
+    authorize @user, :destroy?
+    unless params[:user].try(:[], :confirmation_string) == t('users_cancel_string')
+      @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
+    end
+    return false if @user.errors.present? || !@user.destroy
+
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    send_event category: 'registrations',
+               action: 'destroy',
+               label: @user.id
+    true
+  end
+
+  def destroy_success_location
+    root_path
   end
 
   def send_confirmation_mail(user, guest_votes)

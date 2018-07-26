@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class AnnouncementsController < ApplicationController
-  include Common::Setup
-  include Common::Index
-  include Common::Show
   before_action :authorize_action
 
   private

@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class ServiceController < ParentableController
-  include Service::Setup
-  # The action creators have to be re-included since they have to be called
-  # with the new setup method.
-
   private
 
   def action_service
@@ -65,6 +61,13 @@ class ServiceController < ParentableController
       resource_by_id!,
       options: service_options.merge(confirmation_string: params[model_name].try(:[], :confirmation_string))
     )
+  end
+
+  def execute_action
+    return super if action_service.blank?
+    action_service.on(*signals_success, &method(:active_response_handle_success))
+    action_service.on(*signals_failure, &method(:active_response_handle_failure))
+    action_service.commit
   end
 
   def service_klass

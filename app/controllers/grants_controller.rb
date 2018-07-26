@@ -7,32 +7,32 @@ class GrantsController < ServiceController
     nil
   end
 
-  def create_respond_failure_html(resource)
+  def create_failure_html
     owner_path = authenticated_resource.edge.owner_type.pluralize.underscore
     render "#{owner_path}/settings",
            locals: {
              tab: 'grants/new',
              active: 'grants',
-             page: resource.group&.page,
+             page: authenticated_resource.group&.page,
              resource: authenticated_resource.edge
            }
   end
 
-  def new_respond_success_html(resource)
+  def new_success_html
     render 'pages/settings',
            locals: {
              tab: 'grants/new',
              active: 'groups',
-             resource: resource.page,
-             grant: resource
+             resource: authenticated_resource.page,
+             grant: authenticated_resource
            }
   end
 
-  def redirect_model_success(resource = nil)
-    if resource.edge.owner_type == 'Forum'
-      settings_iri_path(resource.edge)
+  def redirect_location
+    if authenticated_resource.edge.owner_type == 'Forum'
+      settings_iri_path(authenticated_resource.edge)
     else
-      settings_iri_path(resource.edge, tab: :groups)
+      settings_iri_path(authenticated_resource.edge, tab: :groups)
     end
   end
 
@@ -44,8 +44,17 @@ class GrantsController < ServiceController
     )
   end
 
-  def respond_with_form_js(resource)
-    respond_js('pages/settings', tab: 'grants/new', active: 'groups', resource: resource.page, grant: resource)
+  def default_form_view(_action)
+    'pages/settings'
+  end
+
+  def default_form_view_locals(_action)
+    {
+      tab: 'grants/new',
+      active: 'groups',
+      grant: authenticated_resource,
+      resource: authenticated_resource.root
+    }
   end
 
   def service_options

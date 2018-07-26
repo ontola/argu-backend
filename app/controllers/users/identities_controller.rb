@@ -52,7 +52,7 @@ class Users::IdentitiesController < AuthorizedController
       user.valid_password?(params[:user][:password])
   end
 
-  def redirect_model_success(_resource)
+  def redirect_location
     settings_user_path(tab: :authentication)
   end
 

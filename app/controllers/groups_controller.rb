@@ -3,7 +3,7 @@
 class GroupsController < ServiceController
   def settings
     if tab! == 'members'
-      @members = resource
+      @members = authenticated_resource
                    .group_memberships
                    .includes(member: {profileable: :shortname})
                    .page(params[:page])
@@ -11,23 +11,34 @@ class GroupsController < ServiceController
     render locals: {
       tab: tab!,
       active: tab!,
-      resource: resource_by_id
+      resource: authenticated_resource
     }
   end
 
   private
 
-  def create_respond_failure_html(resource)
-    render 'pages/settings',
-           locals: {
-             tab: 'groups/new',
-             active: 'groups',
-             group: resource,
-             resource: resource.page
-           }
+  def default_form_view(_action)
+    'pages/settings'
   end
 
-  def include_show
+  def default_form_view_locals(_action)
+    {
+      tab: tab!,
+      active: tab!,
+      resource: authenticated_resource.page
+    }
+  end
+
+  def new_view_locals
+    {
+      tab: 'groups/new',
+      active: 'groups',
+      group: authenticated_resource,
+      resource: authenticated_resource.page
+    }
+  end
+
+  def show_includes
     %i[organization]
   end
 
@@ -40,32 +51,13 @@ class GroupsController < ServiceController
     resource
   end
 
-  def new_respond_success_html(resource)
-    render 'pages/settings', locals: {
-      tab: 'groups/new',
-      active: 'groups',
-      group: resource,
-      resource: resource.page
-    }
-  end
-
-  def redirect_model_success(resource)
-    settings_iri_path(resource.page, tab: :groups)
+  def redirect_location
+    settings_iri_path(authenticated_resource.page, tab: :groups)
   end
 
   def resource_new_params
     HashWithIndifferentAccess.new(
       page: parent_resource!
-    )
-  end
-
-  def respond_with_form_js(_)
-    respond_js(
-      'pages/settings',
-      tab: 'groups/new',
-      active: 'groups',
-      group: resource,
-      resource: resource.page
     )
   end
 
@@ -85,14 +77,5 @@ class GroupsController < ServiceController
       else
         resource_by_id&.page&.root_id
       end
-  end
-
-  def update_respond_failure_html(resource)
-    render 'settings',
-           locals: {
-             tab: tab!,
-             active: tab!,
-             resource: resource
-           }
   end
 end

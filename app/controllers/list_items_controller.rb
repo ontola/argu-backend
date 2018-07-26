@@ -5,7 +5,7 @@ class ListItemsController < ParentableController
 
   private
 
-  def index_collection_association
+  def index_collection_name
     "#{params[:relationship].to_s.singularize}_collection"
   end
 end

@@ -48,20 +48,10 @@ class ProfilesController < ApplicationController
         format.html do
           redirect_to redirect_url || dual_profile_url(@profile), notice: 'Profile was successfully updated.'
         end
-        format.json { respond_with_204(resource, :json) }
-        format.json_api { respond_with_204(resource, :json_api) }
-        RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { respond_with_204(resource, type) }
-        end
       else
         format.html do
           render 'users/profiles/setup',
                  locals: {profile: @profile, resource: @resource}
-        end
-        format.json { respond_with_422(@profile, :json) }
-        format.json_api { respond_with_422(@profile, :json_api) }
-        RDF_CONTENT_TYPES.each do |type|
-          format.send(type) { respond_with_422(@profile, type) }
         end
       end
     end
