@@ -18,7 +18,8 @@ class NotificationListenerTest < ActiveSupport::TestCase
       trackable_type: 'Vote',
       recipient: motion.default_vote_event,
       recipient_type: 'VoteEvent',
-      forum: motion.ancestor(:forum)
+      forum: motion.ancestor(:forum),
+      root_id: freetown.root_id
     )
   end
   let(:user) { create(:user) }

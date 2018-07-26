@@ -3,6 +3,7 @@
 class ActivityPolicy < RestrictivePolicy
   class Scope < EdgeTreePolicy::Scope
     def resolve
+      @scope = @scope.where(root_id: grant_tree.tree_root_id) if grant_tree&.tree_root_id&.present?
       return @scope if staff?
       s = filter_unpublished_and_unmanaged(@scope)
       s = filter_inaccessible_forums(s)

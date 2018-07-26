@@ -11,7 +11,8 @@ class ActivityTest < ActiveSupport::TestCase
       trackable: create(:motion, parent: freetown),
       trackable_type: 'Motion',
       recipient: freetown,
-      recipient_type: 'Forum'
+      recipient_type: 'Forum',
+      root_id: freetown.root_id
     )
   end
 

@@ -78,6 +78,7 @@ class ActivityListener
         owner: @creator,
         recipient: recipient,
         recipient_type: recipient.owner_type,
+        root_id: resource.root_id,
         audit_data: audit_data(resource, recipient),
         parameters: parameters
       }

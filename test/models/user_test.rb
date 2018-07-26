@@ -14,7 +14,8 @@ class UserTest < ActiveSupport::TestCase
              recipient: freetown,
              recipient_type: 'Forum',
              trackable: create(:motion, parent: freetown),
-             trackable_type: 'Motion'
+             trackable_type: 'Motion',
+             root_id: freetown.root_id
            ),
            forum: freetown)
     user

@@ -35,12 +35,14 @@ ActiveRecord::Schema.define(version: 20180730071912) do
     t.uuid "trackable_edge_id"
     t.uuid "recipient_edge_id"
     t.uuid "forum_id"
+    t.uuid "root_id", null: false
     t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type"
     t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable"
     t.index ["forum_id"], name: "index_activities_on_forum_id"
     t.index ["key"], name: "index_activities_on_key", using: :gist
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["root_id"], name: "index_activities_on_root_id"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
 
@@ -415,10 +417,10 @@ ActiveRecord::Schema.define(version: 20180730071912) do
     t.string "predicate", null: false
     t.boolean "boolean"
     t.string "string"
+    t.text "text"
     t.datetime "datetime"
     t.bigint "integer"
     t.uuid "linked_edge_id"
-    t.text "text"
     t.index ["edge_id"], name: "index_properties_on_edge_id"
   end
 

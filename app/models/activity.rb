@@ -12,6 +12,7 @@ class Activity < PublicActivity::Activity
   # @example Update
   #   Moderator updates Alice's argument
   #   activity.owner # => Moderator
+  belongs_to :root, class_name: 'Edge', primary_key: :uuid
   belongs_to :owner, class_name: 'Profile'
   belongs_to :trackable,
              class_name: 'Edge',
