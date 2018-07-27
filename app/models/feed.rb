@@ -9,7 +9,7 @@ class Feed
   include Iriable
   attr_accessor :parent, :relevant_only, :root_id
 
-  with_collection :activities, part_of: :parent
+  with_collection :activities, part_of: :parent, default_type: :infinite
 
   def activities
     @activities ||=
@@ -25,11 +25,11 @@ class Feed
   end
 
   def canonical_iri(opts)
-    parent&.canonical_iri(opts)
+    parent.is_a?(User) ? RDF::URI(Rails.application.config.origin) : parent&.canonical_iri(opts)
   end
 
   def iri(opts = {})
-    parent&.iri(opts)
+    parent.is_a?(User) ? RDF::URI(Rails.application.config.origin) : parent&.iri(opts)
   end
 
   private

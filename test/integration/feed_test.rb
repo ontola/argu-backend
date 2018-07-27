@@ -20,6 +20,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'guest should get motion/feed nt' do
+    init_content
     get feeds_iri_path(subject),
         headers: argu_headers(accept: :nt)
 
@@ -57,6 +58,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get motion/feed nt' do
+    init_content
     sign_in user
 
     get feeds_iri_path(subject),
@@ -78,6 +80,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get complete motion/feed nt' do
+    init_content
     sign_in user
 
     get feeds_iri_path(subject),
@@ -115,6 +118,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   let(:staff) { create(:user, :staff) }
 
   test 'staff should get motion/feed nt' do
+    init_content
     sign_in staff
 
     get feeds_iri_path(subject),
@@ -136,6 +140,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'staff should get complete motion/feed nt' do
+    init_content
     sign_in staff
 
     get feeds_iri_path(subject),
@@ -199,10 +204,17 @@ class FeedTest < ActionDispatch::IntegrationTest
     when :html
       assert_select '.activity-feed .activity', count
     when :nt
-      expect_triple(RDF::URI("#{feed(subject).iri}/feed?page=1&type=paginated"), NS::AS[:totalItems], count)
+      collection = RDF::URI("#{feed(subject).iri}/feed")
+      view = rdf_body.query([collection, NS::AS[:pages]]).first.object
+      expect_triple(view, NS::AS[:totalItems], count)
     else
       raise 'Wrong format'
     end
+  end
+
+  def init_content
+    subject
+    travel_to 1.minute.from_now
   end
 
   def feed(parent)
