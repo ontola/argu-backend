@@ -34,6 +34,10 @@ class LinkedRecord < Edge
     self
   end
 
+  def canonical_iri(opts = {})
+    RDF::URI(super.to_s.sub('/od/', '/lr/'))
+  end
+
   def iri(opts = {})
     RDF::URI(super.to_s.sub('/od/', '/lr/'))
   end
