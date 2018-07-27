@@ -6,10 +6,10 @@ module Commentable
 
     included do
       with_collection :comments,
-                      association: :filtered_threads
+                      association: :threads
 
-      def filtered_threads(show_trashed = nil, page = nil, order = 'edges.created_at ASC')
-        i = root_comments.order(order).page(page)
+      def filtered_threads(show_trashed = nil, page = nil)
+        i = threads.page(page)
         unless show_trashed
           i.each do |edge|
             edge.shallow_wipe if edge.owner_type == 'Comment'

@@ -68,7 +68,11 @@ class Edge < ApplicationRecord
   has_many_children :questions
   has_many_children :vote_events
   has_many_children :votes
-
+  has_many :threads,
+           -> { where(in_reply_to_id: nil).includes(:properties).order('edges.created_at ASC') },
+           class_name: 'Comment',
+           foreign_key: :parent_id,
+           inverse_of: :parent
   has_one :top_comment,
           -> { active.order(created_at: :asc).includes(:properties) },
           class_name: 'Comment',
@@ -239,10 +243,6 @@ class Edge < ApplicationRecord
   def root(*args)
     return self if parent_id.nil? && parent.nil?
     @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
-  end
-
-  def root_comments
-    comments.where(in_reply_to_id: nil)
   end
 
   def root_object?
