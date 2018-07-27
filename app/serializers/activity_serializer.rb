@@ -48,6 +48,6 @@ class ActivitySerializer < RecordSerializer
   end
 
   def updated
-    object.trackable.updated_at
+    object.trackable&.updated_at
   end
 end
