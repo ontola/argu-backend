@@ -6,6 +6,6 @@ class CurrentActorsController < ApplicationController
   private
 
   def show_includes
-    %i[profile_photo user actor]
+    %i[default_profile_photo user actor]
   end
 end

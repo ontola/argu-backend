@@ -23,13 +23,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_relationship('proArgumentCollection')
     expect_relationship('conArgumentCollection')
     expect_included(collection_iri(motion, :pro_arguments))
-    expect_included(collection_iri(motion, :pro_arguments, page: 1, type: 'paginated'))
     expect_included(collection_iri(motion, :con_arguments))
-    expect_included(collection_iri(motion, :con_arguments, page: 1, type: 'paginated'))
-    expect_included(motion.pro_arguments.untrashed.map(&:iri))
-    expect_included(motion.con_arguments.untrashed.map(&:iri))
-    expect_not_included(motion.pro_arguments.trashed.map(&:iri))
-    expect_not_included(motion.con_arguments.trashed.map(&:iri))
 
     expect_relationship('attachmentCollection')
     expect_included(

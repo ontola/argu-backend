@@ -99,6 +99,13 @@ class CommentsController < EdgeableController
     }
   end
 
+  def show_includes
+    [
+      creator: :default_profile_photo,
+      comment_collection: inc_shallow_collection
+    ]
+  end
+
   def show_success_html
     redirect_to redirect_location
   end

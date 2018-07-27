@@ -9,7 +9,7 @@ class QuestionsController < EdgeableController
   def show_includes
     [
       :default_cover_photo,
-      creator: :profile_photo,
+      creator: :default_profile_photo,
       partOf: [widget_sequence: :members],
       operation: ACTION_FORM_INCLUDES,
       attachment_collection: inc_nested_collection,

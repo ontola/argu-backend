@@ -82,4 +82,8 @@ class FeedController < AuthorizedController
         root_id: tree_root_id
       )
   end
+
+  def show_includes
+    [:trackable, :recipient, owner: [:default_profile_photo]]
+  end
 end

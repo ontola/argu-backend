@@ -18,6 +18,10 @@ class DiscussionsController < ParentableController
       .to_options
   end
 
+  def show_includes
+    {default_cover_photo: {}, creator: :default_profile_photo}
+  end
+
   def resource_by_id; end
 
   def resource_new_params

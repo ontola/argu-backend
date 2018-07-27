@@ -9,13 +9,13 @@ class MotionsController < EdgeableController
     [
       :vote_event_collection,
       :default_cover_photo,
-      creator: :profile_photo,
+      creator: :default_profile_photo,
       operation: ACTION_FORM_INCLUDES,
       partOf: [widget_sequence: :members],
-      blog_posts_collection: inc_nested_collection,
-      comment_collection: inc_nested_collection,
-      con_argument_collection: inc_nested_collection,
-      pro_argument_collection: inc_nested_collection,
+      blog_post_collection: inc_shallow_collection,
+      comment_collection: inc_shallow_collection,
+      con_argument_collection: inc_shallow_collection,
+      pro_argument_collection: inc_shallow_collection,
       attachment_collection: inc_nested_collection,
       default_vote_event: vote_event_without_votes
     ]
