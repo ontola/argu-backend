@@ -19,6 +19,7 @@ module Argu
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
 
+    config.autoload_paths += %w[lib]
     config.autoload_paths += %W[#{config.root}/app/models/actions]
     config.autoload_paths += %W[#{config.root}/app/models/banners]
     config.autoload_paths += %W[#{config.root}/app/models/menus]

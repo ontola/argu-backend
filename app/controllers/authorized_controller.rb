@@ -69,7 +69,7 @@ class AuthorizedController < ApplicationController
     {
       filter: parse_filter(params[:filter], controller_class.try(:filter_options)),
       user_context: user_context,
-      include_map: JSONAPI::IncludeDirective::Parser.parse_include_args(show_includes)
+      include_map: JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
     }
   end
 
