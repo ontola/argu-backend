@@ -26,7 +26,7 @@ module Edgeable
 
       def includes_for_serializer
         {
-          creator: {profileable: :shortname},
+          creator: :profileable,
           parent: {}
         }
       end

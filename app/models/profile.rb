@@ -138,7 +138,7 @@ class Profile < ApplicationRecord
   end
 
   def self.includes_for_profileable
-    {default_profile_photo: {}, profileable: :shortname}
+    {default_profile_photo: {}, profileable: {}}
   end
 
   # @return [Boolean] Whether the user has a group_membership for the provided group_id

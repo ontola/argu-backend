@@ -82,10 +82,6 @@ module Shortnameable
       find_via_shortname_or_id(url, root_id) || raise(ActiveRecord::RecordNotFound)
     end
 
-    def includes_for_serializer
-      super.merge(shortname: {})
-    end
-
     # Useful to test whether a model is shortnameable
     def shortnameable?
       true

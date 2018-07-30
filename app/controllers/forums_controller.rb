@@ -24,7 +24,7 @@ class ForumsController < EdgeableController
   def discover
     @forums = Forum
                 .public_forums
-                .includes(:default_cover_photo, :default_profile_photo, :shortname)
+                .includes(:default_cover_photo, :default_profile_photo)
                 .page show_params[:page]
     skip_verify_policy_scoped(true)
     render
@@ -50,7 +50,6 @@ class ForumsController < EdgeableController
     policy_scope(
       resource
         .children
-        .includes(root: :shortname)
         .where(owner_type: %w[Motion Question])
         .order('edges.pinned_at DESC NULLS LAST, edges.last_activity_at DESC')
     )
@@ -103,7 +102,7 @@ class ForumsController < EdgeableController
     @grants = Grant
                 .custom
                 .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
-                .includes(group: {group_memberships: {member: {profileable: :shortname}}})
+                .includes(group: {group_memberships: {member: :profileable}})
 
     render 'settings',
            locals: {

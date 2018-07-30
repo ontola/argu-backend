@@ -74,6 +74,6 @@ class Notification < ApplicationRecord
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
 
   def self.includes_for_serializer
-    [:user, activity: {recipient: {}, trackable: {root: :shortname}, owner: [profileable: :shortname]}]
+    [:user, activity: {recipient: {}, trackable: :root, owner: :profileable}]
   end
 end
