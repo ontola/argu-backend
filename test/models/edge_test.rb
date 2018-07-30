@@ -18,7 +18,12 @@ class EdgeTest < ActiveSupport::TestCase
     assert_equal Edge.path_array([]), 'NULL'
     assert_equal Edge.path_array(argu.self_and_descendants),
                  "ARRAY['#{argu.id}.*'::lquery] AND edges.root_id = '#{argu.root_id}'"
-    assert_equal Edge.path_array(argu.descendants),
-                 "ARRAY['#{freetown.path}.*'::lquery,'#{second.path}.*'::lquery] AND edges.root_id = '#{argu.root_id}'"
+    assert_includes(
+      [
+        "ARRAY['#{freetown.path}.*'::lquery,'#{second.path}.*'::lquery] AND edges.root_id = '#{argu.root_id}'",
+        "ARRAY['#{second.path}.*'::lquery,'#{freetown.path}.*'::lquery] AND edges.root_id = '#{argu.root_id}'"
+      ],
+      Edge.path_array(argu.descendants)
+    )
   end
 end
