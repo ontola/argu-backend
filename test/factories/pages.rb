@@ -7,7 +7,7 @@ FactoryBot.define do
 
   factory :page do
     last_accepted Time.current
-    visibility Page.visibilities[:open]
+    visibility Page.visibilities[:visible]
     is_published true
 
     before(:create) do |page|

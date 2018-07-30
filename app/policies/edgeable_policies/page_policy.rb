@@ -9,7 +9,7 @@ class PagePolicy < EdgePolicy
         .property_join(:visibility)
         .where(
           'visibility_filter.value IN (?) OR edges.id IN (?)',
-          Page.visibilities[:open],
+          Page.visibilities[:visible],
           page_ids
         )
     end
@@ -34,7 +34,7 @@ class PagePolicy < EdgePolicy
   def is_creator?; end
 
   def show?
-    record.open? || group_member? || service?
+    record.visible? || group_member? || service?
   end
 
   def list?

@@ -18,7 +18,7 @@ class Page < Edge
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
   scope :discover, lambda {
-    open
+    visible
       .joins('LEFT JOIN (SELECT parent_id, SUM(follows_count) AS total_follows FROM edges GROUP BY parent_id) '\
              'AS forum_edges ON edges.id = forum_edges.parent_id')
       .order('forum_edges.total_follows DESC NULLS LAST')
@@ -40,7 +40,7 @@ class Page < Edge
   with_collection :forums
 
   parentable
-  property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {open: 1, hidden: 3}
+  property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}
   property :last_accepted, :datetime, NS::ARGU[:lastAccepted]
   property :base_color, :string, NS::ARGU[:baseColor]
 

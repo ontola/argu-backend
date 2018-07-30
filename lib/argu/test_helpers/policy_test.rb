@@ -77,7 +77,7 @@ class PolicyTest < ActiveSupport::TestCase
   end
 
   def reset_grants(subject, user_type)
-    subject.open! if subject.is_a?(Page)
+    subject.visible! if subject.is_a?(Page)
     case user_type
     when :spectator
       [freetown, expired_freetown].each do |record|

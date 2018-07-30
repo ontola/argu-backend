@@ -18,7 +18,7 @@ class PagesControllerTest < ActionController::TestCase
 
     expect_default_view
     expect_included(argu_url('/o', page: 1, type: 'paginated'))
-    expect_included(Page.open.map(&:iri))
+    expect_included(Page.visible.map(&:iri))
     expect_not_included(hidden_page.iri)
   end
 
@@ -29,7 +29,7 @@ class PagesControllerTest < ActionController::TestCase
     expect_no_relationship('partOf')
 
     expect_view_members(primary_resource, 3)
-    expect_included(Page.open.map(&:iri))
+    expect_included(Page.visible.map(&:iri))
     expect_not_included(hidden_page.iri)
   end
 end
