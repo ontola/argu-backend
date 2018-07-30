@@ -15,6 +15,8 @@ class Shortname < ApplicationRecord
              primary_key: :uuid,
              class_name: 'Edge'
   before_save :remove_primary_shortname, if: :primary?
+  after_save :cache_iri!, if: :primary?
+  after_destroy :cache_iri!, if: :primary?
 
   # Uniqueness is done in the database (since rails lowercase support sucks,
   # and this is a point where data consistency is critical)
@@ -74,5 +76,9 @@ class Shortname < ApplicationRecord
 
   def remove_primary_shortname
     owner.shortnames.update_all(primary: false)
+  end
+
+  def cache_iri!
+    owner.cache_iri!
   end
 end

@@ -48,6 +48,10 @@ class Page < Edge
     super(*options) if profile.nil?
   end
 
+  def clear_children_iri_cache
+    descendants.update_all(iri_cache: nil)
+  end
+
   def display_name
     if profile.present?
       profile.name || url
@@ -74,6 +78,12 @@ class Page < Edge
 
   def self.shortnameable?
     true
+  end
+
+  def cache_iri!
+    super
+    clear_children_iri_cache
+    iri_cache
   end
 
   private
