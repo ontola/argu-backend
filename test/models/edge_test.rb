@@ -5,6 +5,12 @@ require 'test_helper'
 class EdgeTest < ActiveSupport::TestCase
   define_freetown
   define_freetown('second')
+  let(:motion) { create(:motion, parent: freetown) }
+
+  test 'iri' do
+    assert_equal motion.canonical_iri(only_path: true), "/edges/#{motion.uuid}"
+    assert_equal motion.iri_path, "/#{argu.url}/m/#{motion.fragment}"
+  end
 
   test 'Ltree path' do
     assert_raises(RuntimeError) { Edge.path_array('1.2.3') }

@@ -122,6 +122,10 @@ class Edge < ApplicationRecord
   alias user publisher
   alias profile creator
 
+  def canonical_iri(only_path: false)
+    RDF::URI(expand_uri_template(:edges_iri, id: uuid, only_path: only_path))
+  end
+
   def children(*args)
     association(:children).reader(*args)
   end
