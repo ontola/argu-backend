@@ -31,7 +31,7 @@ gem 'sequenced'
 gem 'spreadsheet'
 
 ################## DB ########################
-gem 'pg', '0.18.2'
+gem 'pg'
 
 gem 'active_record-postgres-constraints',
     git: 'https://github.com/ArthurWD/active_record-postgres-constraints',

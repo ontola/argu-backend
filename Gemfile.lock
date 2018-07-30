@@ -449,7 +449,7 @@ GEM
     parser (2.4.0.2)
       ast (~> 2.3)
     parslet (1.8.1)
-    pg (0.18.2)
+    pg (1.0.0)
     powerpack (0.1.1)
     progress (3.4.0)
     pry (0.11.3)
@@ -799,7 +799,7 @@ DEPENDENCIES
   omniauth-facebook (~> 4.0.0)!
   omniauth-oauth2 (~> 1.4.0)
   omniauth-twitter (~> 1.2.0)
-  pg (= 0.18.2)
+  pg
   pry
   public_activity (~> 1.5)
   puma
