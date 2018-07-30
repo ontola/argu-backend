@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class CurrentActorSerializer < BaseSerializer
+  include AnalyticsHelper
   include ProfilePhotoable::Serializer
 
+  attribute :a_uuid, predicate: NS::ARGU[:anonymousID]
   attribute :actor_type, predicate: NS::ARGU[:actorType], key: :body
+  attribute :has_analytics?, predicate: NS::ARGU[:hasAnalytics]
   attribute :shortname
   attribute :url
   attribute :primary_email,
@@ -15,8 +18,16 @@ class CurrentActorSerializer < BaseSerializer
     object.actor&.profileable
   end
 
+  def a_uuid
+    super(object.user)
+  end
+
   def default_profile_photo
     object.actor&.default_profile_photo
+  end
+
+  def has_analytics?
+    object.user.has_analytics?
   end
 
   def primary_email
