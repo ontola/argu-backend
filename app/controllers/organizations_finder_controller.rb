@@ -5,7 +5,7 @@ class OrganizationsFinderController < AuthorizedController
   include UrlHelper
 
   def show
-    @organization = authenticated_resource.ancestor(:page) || raise(ActiveRecord::RecordNotFound)
+    @organization = authenticated_resource.root || raise(ActiveRecord::RecordNotFound)
     respond_to do |format|
       RDF_CONTENT_TYPES.each do |type|
         format.send(type) { render type => Blank.new, meta: meta }

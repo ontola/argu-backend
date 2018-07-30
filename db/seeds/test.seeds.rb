@@ -168,11 +168,11 @@ FactorySeeder.create_forum(
 
 members_group =
   FactorySeeder
-    .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.ancestor(:page))
+    .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.root)
 FactorySeeder.create(:grant, edge: holland, group: members_group, grant_set: GrantSet.initiator)
 moderators_group =
   FactorySeeder
-    .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.ancestor(:page))
+    .create(:group, id: 222, name: 'Moderators', name_singular: 'Moderator', parent: holland.root)
 FactorySeeder.create(:grant, edge: holland, group: moderators_group, grant_set: GrantSet.moderator)
 
 linked_record = LinkedRecord.create_for_forum(page.url, freetown.url, SecureRandom.uuid)

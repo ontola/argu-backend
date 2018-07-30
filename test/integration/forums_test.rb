@@ -318,7 +318,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'staff should transfer' do
     sign_in staff
     create(:grant,
-           group: create(:group, parent: holland.ancestor(:page)),
+           group: create(:group, parent: holland.root),
            edge: holland,
            grant_set: GrantSet.participator)
     assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
@@ -430,7 +430,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert_have_tag response.body,
                     '.tabs-container li:first-child span.icon-left',
-                    forum.ancestor(:page).display_name
+                    forum.root.display_name
     assert_have_tag response.body,
                     '.tabs-container li:nth-child(2) span.icon-left',
                     I18n.t('pages.settings.title')

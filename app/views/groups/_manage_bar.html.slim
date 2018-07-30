@@ -3,8 +3,8 @@
     ul.tabs
       li= link_to resource.page.iri_path, data: {intro: t('intro.pages.settings.home')}
         span.fa.fa-building
-        span.icon-left= resource.ancestor(:page).display_name
-      li= link_to settings_iri_path(resource.ancestor(:page), tab: :groups)
+        span.icon-left= resource.root.display_name
+      li= link_to settings_iri_path(resource.root, tab: :groups)
         span.fa.fa-gear
         span.icon-left= t('pages.settings.title')
       li[class=('tab--current' if local_assigns[:active] == :settings)]

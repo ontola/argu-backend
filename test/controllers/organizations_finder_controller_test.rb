@@ -173,7 +173,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     get :show, params: {iri: helsinki_motion.iri, format: :nt}
 
     assert_response 200
-    assert_equal helsinki.ancestor(:page), assigns(:organization)
+    assert_equal helsinki.root, assigns(:organization)
   end
 
   ####################################

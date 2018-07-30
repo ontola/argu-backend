@@ -72,7 +72,7 @@ RSpec.describe "Iri's", type: :model do
           [
             subject.ancestor(:forum),
             subject,
-            root_id: subject.ancestor(:page).url,
+            root_id: subject.root.url,
             protocol: :http
           ]
         )

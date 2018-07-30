@@ -50,7 +50,7 @@ class ShortnamesController < ParentableController
              tab: "shortnames/#{tab}",
              active: 'shortnames',
              shortname: resource,
-             resource: resource.ancestor(:page)
+             resource: resource.root
            }
   end
 

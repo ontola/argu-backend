@@ -72,7 +72,7 @@ class MenuListTest < ActiveSupport::TestCase
     assert_equal(
       'Custom label',
       freetown
-        .ancestor(:page)
+        .root
         .menu(user_context, :navigations)
         .menus
         .call

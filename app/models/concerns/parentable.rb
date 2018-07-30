@@ -23,6 +23,10 @@ module Parentable
 
     delegate :ancestor, to: :parent
 
+    def root
+      parent.try(:root) || ancestor(:page)
+    end
+
     def parent_iri(opts = {})
       parent&.iri(opts)
     end
