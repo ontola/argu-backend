@@ -26,7 +26,7 @@ RUN rm -f /usr/src/app/config/secrets.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml
 COPY ./config/secrets.docker.yml /usr/src/app/config/secrets.yml
 
-RUN RAILS_ENV=production DEVISE_SECRET=dummy bundle exec rake i18n:js:export
+RUN RAILS_ENV=production SECRET_KEY_BASE=dummy DEVISE_SECRET=dummy bundle exec rake i18n:js:export
 
 ARG HOSTNAME
 
@@ -38,7 +38,7 @@ ENV ARGU_API_URL "https://$HOSTNAME"
 
 RUN yarn run build:production
 
-RUN bundle exec rake RAILS_ENV=production DEVISE_SECRET=dummy assets:precompile
+RUN bundle exec rake RAILS_ENV=production SECRET_KEY_BASE=dummy DEVISE_SECRET=dummy assets:precompile
 
 ARG RAILS_ENV=production
 ENV RAILS_ENV $RAILS_ENV
