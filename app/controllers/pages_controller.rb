@@ -111,8 +111,7 @@ class PagesController < EdgeableController
 
   def show_includes
     [
-      :default_profile_photo,
-      vote_match_collection: inc_nested_collection
+      :default_profile_photo
     ]
   end
 
