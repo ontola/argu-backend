@@ -11,7 +11,7 @@ const Profile = props => {
     const { profile, resource } = props;
     const url = profile.get('url');
     const displayName = profile.get('displayName');
-    const profilePhoto = profile.get('profilePhoto');
+    const profilePhoto = profile.get('defaultProfilePhoto');
     const createdAt = resource.get('createdAt');
     const edited = resource.get('edited');
 
