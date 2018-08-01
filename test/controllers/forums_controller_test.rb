@@ -13,16 +13,8 @@ class ForumsControllerTest < ActionController::TestCase
     assert_response 200
 
     expect_relationship('motionCollection')
-    expect_included(collection_iri(holland, :motions))
-    expect_included(collection_iri(holland, :motions, page: 1, type: 'paginated'))
-    expect_included(holland.motions.untrashed.map(&:iri))
-    expect_not_included(holland.questions.last.motions.map(&:iri))
-    expect_not_included(holland.motions.trashed.map(&:iri))
-
     expect_relationship('questionCollection')
-    expect_included(collection_iri(holland, :questions))
-    expect_included(collection_iri(holland, :questions, page: 1, type: 'paginated'))
-    expect_included(holland.questions.untrashed.map(&:iri))
-    expect_not_included(holland.questions.trashed.map(&:iri))
+    expect_relationship('widgetSequence')
+    holland.widgets.each { |w| expect_included(w.iri) }
   end
 end

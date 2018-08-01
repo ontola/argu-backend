@@ -112,9 +112,7 @@ class ForumsController < EdgeableController
   def show_includes
     [
       :default_cover_photo,
-      widget_sequence: :members,
-      motion_collection: inc_nested_collection,
-      question_collection: inc_nested_collection
+      widget_sequence: :members
     ]
   end
 
