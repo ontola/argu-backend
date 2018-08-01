@@ -81,9 +81,7 @@ class ServiceController < ParentableController
     {
       creator: current_actor.actor,
       publisher: current_user,
-      comment: activity_comment,
-      uuid: a_uuid,
-      client_id: request_session_id
+      comment: activity_comment
     }.merge(options)
   end
 

@@ -35,7 +35,6 @@ module Argu
         end
 
         assert_response results[:response]
-        analytics_collection_check(opts[:analytics], results[:analytics])
       end
 
       def general_show(results: {}, record: subject)
@@ -84,7 +83,7 @@ module Argu
         end
       end
 
-      def general_trash(results: {}, analytics: nil, record: subject)
+      def general_trash(results: {}, record: subject)
         record = send(record) if record.is_a?(Symbol)
 
         difference = results[:should] ? 1 : 0
@@ -96,10 +95,9 @@ module Argu
         end
 
         assert_response results[:response]
-        analytics_collection_check(analytics, results[:analytics])
       end
 
-      def general_destroy(results: {}, analytics: nil, record: subject,
+      def general_destroy(results: {}, record: subject,
                           differences: [[model_class.to_s, -1],
                                         ['Activity', 1]])
         record = send(record) if record.is_a?(Symbol)
@@ -111,7 +109,6 @@ module Argu
         end
 
         assert_response results[:response]
-        analytics_collection_check(analytics, results[:analytics])
       end
 
       # Model names
@@ -162,16 +159,6 @@ module Argu
 
       def request_format
         :html
-      end
-
-      private
-
-      def analytics_collection_check(analytics, results)
-        if analytics.present? && results != false
-          assert_analytics_collected(**analytics)
-        else
-          assert_analytics_not_collected
-        end
       end
     end
   end

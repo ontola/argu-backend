@@ -240,7 +240,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_iri_path(freetown, tab: :groups)
-    assert_analytics_not_collected
   end
 
   test 'administrator should not post create member json' do
@@ -259,7 +258,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_response 304
     assert_equal response.headers['Location'], member.profile.group_memberships.second.iri
-    assert_analytics_not_collected
   end
 
   test 'administrator should post create other' do
@@ -276,7 +274,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_iri_path(freetown, tab: :groups)
-    assert_analytics_collected('memberships', 'create')
   end
 
   test 'administrator should not post create for staff group' do
@@ -293,7 +290,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_not_authorized
-    assert_analytics_not_collected
   end
 
   test 'administrator should post create other json' do
@@ -313,7 +309,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_response 201
     expect_included(group.iri)
     assert_equal response.headers['Location'], GroupMembership.last.iri
-    assert_analytics_collected('memberships', 'create')
   end
 
   test 'administrator should delete expire' do
@@ -331,7 +326,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_iri_path(freetown, tab: :groups)
-    assert_analytics_collected('memberships', 'destroy')
   end
 
   test 'administrator should get index' do
@@ -380,6 +374,5 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to settings_iri_path(freetown, tab: :groups)
-    assert_analytics_collected('memberships', 'create')
   end
 end

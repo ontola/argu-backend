@@ -152,7 +152,6 @@ module ActiveSupport
 
     def initialize(*args)
       super
-      analytics_collect
       mapbox_mock
     end
   end

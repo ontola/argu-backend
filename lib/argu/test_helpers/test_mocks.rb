@@ -3,11 +3,6 @@
 module Argu
   module TestHelpers
     module TestMocks
-      def analytics_collect
-        stub_request(:post, 'https://ssl.google-analytics.com/collect')
-          .to_return(status: 200)
-      end
-
       def create_email_mock(template, email, options)
         stub_request(:post, argu_url('/email/spi/emails'))
           .with(

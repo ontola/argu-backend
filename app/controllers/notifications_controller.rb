@@ -24,8 +24,6 @@ class NotificationsController < AuthorizedController
       @notifications = get_notifications
       @unread = unread_notification_count
       render 'notifications/index'
-      send_event category: 'notifications',
-                 action: 'read_all'
     else
       head 400
     end
@@ -131,12 +129,6 @@ class NotificationsController < AuthorizedController
       render
     else
       head 204
-    end
-    if last_notification && since < 20.years.ago
-      send_event category: 'notifications',
-                 action: 'open_menu',
-                 label: 'count',
-                 value: @unread
     end
   rescue ArgumentError
     head 400

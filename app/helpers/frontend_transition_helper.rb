@@ -20,10 +20,6 @@ module FrontendTransitionHelper
     @_new_fe_request ||= doorkeeper_token&.scopes&.include?('afe')
   end
 
-  def request_session_id
-    @_session_id ||= afe_request? ? doorkeeper_token.resource_owner_id : request.session.id
-  end
-
   def session
     afe_request? ? doorkeeper_token : super
   end

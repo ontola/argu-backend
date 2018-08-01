@@ -36,8 +36,6 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    send_event category: 'sessions',
-               action: 'sign_out'
     doorkeeper_token.update!(expires_in: 0.seconds)
     sign_out
     set_flash_message! :notice, :signed_out

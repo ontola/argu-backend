@@ -143,7 +143,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     facebook_mock
 
     visit_facebook_oauth_path(emails: 1, expected_r: setup_users_path, favorites: 1, identities: 1, users: 1, votes: 1)
-    assert_analytics_collected('registrations', 'create', 'facebook')
 
     assert User.last.confirmed?
     assert User.last.accepted_terms?
@@ -177,7 +176,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
       users: 1,
       votes: 1
     )
-    assert_analytics_collected('registrations', 'create', 'facebook')
   end
 
   test 'guest should sign up with facebook with wrong r' do
@@ -192,7 +190,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
       users: 1,
       votes: 1
     )
-    assert_analytics_collected('registrations', 'create', 'facebook')
   end
 
   test 'guest should not sign up with facebook without email' do

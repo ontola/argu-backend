@@ -7,20 +7,6 @@ class FollowsController < AuthorizedController
 
   private
 
-  def create_handler_success
-    send_event category: 'follows',
-               action: permit_params[:follow_type],
-               label: authenticated_resource.followable.model_name.collection
-    super
-  end
-
-  def destroy_handler_success
-    send_event category: 'follows',
-               action: permit_params[:follow_type],
-               label: authenticated_resource.followable.model_name.collection
-    super
-  end
-
   def destroy_failure_html
     return destroy_failure unless request.method == 'GET'
     render 'destroy', locals: {unsubscribed: false}

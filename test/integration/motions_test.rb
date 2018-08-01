@@ -54,7 +54,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      analytics: stats_opt('motions', 'create_success'),
       parent: :freetown,
       results: {
         should: true,
@@ -64,10 +63,8 @@ class MotionsTest < ActionDispatch::IntegrationTest
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to assigns(:create_service).resource.iri_path(start_motion_tour: true)
     WebMock.reset!
-    analytics_collect
 
     general_create(
-      analytics: stats_opt('motions', 'create_success'),
       parent: :freetown,
       results: {
         should: true,
@@ -83,7 +80,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      analytics: stats_opt('motions', 'create_success'),
       results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
@@ -108,7 +104,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      analytics: stats_opt('motions', 'create_failed'),
       results: {should: false, response: 200},
       parent: :question_requires_location,
       differences: [['Motion', 0], ['Activity', 0]]
@@ -130,7 +125,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
           }
         }
       },
-      analytics: stats_opt('motions', 'create_failed'),
       results: {should: false, response: 200},
       parent: :question_requires_location,
       differences: [['Motion', 0], ['Activity', 0]]
@@ -152,7 +146,6 @@ class MotionsTest < ActionDispatch::IntegrationTest
           }
         }
       },
-      analytics: stats_opt('motions', 'create_success'),
       results: {should: true, response: 302},
       parent: :question_requires_location,
       differences: [['Motion', 1], ['Activity', 2]]

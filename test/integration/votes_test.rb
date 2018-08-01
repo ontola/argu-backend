@@ -227,7 +227,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 201
-    assert_analytics_collected('votes', 'create', 'pro')
   end
 
   test 'user should post create for motion with default id' do
@@ -263,7 +262,6 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-    assert_analytics_collected('votes', 'create', 'pro')
   end
 
   test 'user should post create json_api' do
@@ -443,7 +441,6 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     assert_response 201
     assert assigns(:create_service).resource.valid?
-    assert_analytics_collected('votes', 'create', 'con')
   end
 
   test 'creator should post update json_api' do
@@ -523,7 +520,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 204
-    assert_analytics_collected('votes', 'destroy', 'pro')
   end
 
   test 'creator should delete destroy vote for argument new fe' do
@@ -542,7 +538,6 @@ class VotesTest < ActionDispatch::IntegrationTest
       collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::AS[:totalItems], 0, NS::LL[:replace]
     )
     assert_response 200
-    assert_analytics_collected('votes', 'destroy', 'pro')
   end
 
   test 'creator should delete destroy vote for argument n3' do
@@ -555,7 +550,6 @@ class VotesTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert_analytics_collected('votes', 'destroy', 'pro')
   end
 
   test 'user should post create for motion with new fe' do

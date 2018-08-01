@@ -15,7 +15,6 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     sign_in initiator
 
     general_create(
-      analytics: stats_opt('questions', 'create_success'),
       results: {should: true, response: 302},
       parent: :freetown,
       attributes: {
@@ -35,7 +34,6 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     general_create(
-      analytics: stats_opt('questions', 'create_success'),
       parent: freetown,
       results: {should: true, response: 302},
       attributes: {
@@ -50,7 +48,6 @@ class QuestionsTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     general_create(
-      analytics: stats_opt('questions', 'create_success'),
       parent: freetown,
       results: {should: true, response: 302},
       attributes: {

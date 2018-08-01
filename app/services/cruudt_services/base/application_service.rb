@@ -14,24 +14,18 @@ class ApplicationService
     prepare_attributes
     assign_attributes
     set_nested_associations
-    unless resource.is_a?(Activity) || resource.is_a?(Grant) || options.fetch(:publisher)&.guest?
-      subscribe(
-        ActivityListener.new(
-          comment: options[:comment],
-          creator: options.fetch(:creator),
-          publisher: options.fetch(:publisher),
-          silent: options[:silent]
-        )
+    return if resource.is_a?(Activity) || resource.is_a?(Grant) || options.fetch(:publisher)&.guest?
+    subscribe(
+      ActivityListener.new(
+        comment: options[:comment],
+        creator: options.fetch(:creator),
+        publisher: options.fetch(:publisher),
+        silent: options[:silent]
       )
-      subscribe(NotificationListener.new,
-                on: "update_#{resource.model_name.singular}_successful",
-                with: :update_successful)
-    end
-    return if options[:uuid].blank?
-    subscribe(AnalyticsListener.new(
-                uuid: options[:uuid],
-                client_id: options[:client_id]
-    ))
+    )
+    subscribe(NotificationListener.new,
+              on: "update_#{resource.model_name.singular}_successful",
+              with: :update_successful)
   end
   attr_reader :resource
 

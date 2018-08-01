@@ -5,10 +5,6 @@ require 'test_helper'
 class RegistrationsTest < ActionDispatch::IntegrationTest
   include TestHelper
 
-  setup do
-    analytics_collect
-  end
-
   define_freetown
   let(:user) { create(:user) }
   let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
@@ -71,7 +67,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
                accept_terms: true
              }
         assert_redirected_to setup_users_path
-        assert_analytics_collected('registrations', 'create', 'email')
       end
     end
     assert_equal locale, User.last.language.to_sym
@@ -102,7 +97,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
   end
@@ -120,7 +114,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       post user_registration_path,
            params: {user: attrs}
       assert_redirected_to setup_users_path
-      assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_equal locale, User.last.language.to_sym
     assert_email_sent
@@ -137,7 +130,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
            },
            headers: argu_headers(accept: :json)
       assert_response 201
-      assert_analytics_collected('registrations', 'create', 'email')
     end
     assert_not User.last.accepted_terms?
   end
@@ -176,7 +168,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              },
              headers: argu_headers(accept: :json)
         assert_response 201
-        assert_analytics_collected('registrations', 'create', 'email')
       end
     end
 
@@ -231,7 +222,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       end
     end
     assert_redirected_to setup_users_path
-    assert_analytics_collected('registrations', 'create', 'email')
     assert_email_sent(skip_sidekiq: true)
 
     create_email_mock('confirmation_reminder', attrs[:email], token: /.+/)
@@ -264,7 +254,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_response 200
-    assert_analytics_collected('registrations', 'create', 'failed')
   end
 
   ####################################
@@ -283,7 +272,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to root_path
-    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user should not delete destroy without confirmation' do
@@ -314,7 +302,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_not Profile.community.is_group_member?(group.id)
 
     assert_redirected_to root_path
-    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user without name and shortname should delete destroy' do
@@ -330,7 +317,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to root_path
-    assert_analytics_collected('registrations', 'destroy', user_no_shortname.id)
   end
 
   test 'user should delete destroy with placement, uploaded_photo and expired group_membership' do
@@ -359,7 +345,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to root_path
-    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user should delete destroy with content' do
@@ -380,7 +365,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to root_path
-    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   test 'user should delete destroy with content published by page' do
@@ -400,7 +384,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to root_path
-    assert_analytics_collected('registrations', 'destroy', user.id)
   end
 
   ####################################
@@ -420,6 +403,5 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
              }
     end
     assert_not_authorized
-    assert_analytics_not_collected
   end
 end

@@ -12,14 +12,7 @@ class RegistrationsController < Devise::RegistrationsController
                      if: :api_request?
 
   def create
-    super do |resource|
-      unless resource.persisted?
-        send_event user: resource,
-                   category: 'registrations',
-                   action: 'create',
-                   label: 'failed'
-      end
-    end
+    super
     if afe_request?
       t = Doorkeeper::AccessToken.where(resource_owner_id: resource.id).last
       response.headers['New-Authorization'] = t.token
@@ -54,10 +47,6 @@ class RegistrationsController < Devise::RegistrationsController
     resource.accept_terms!(mail_sent) if accept_terms_param
     schedule_redis_resource_worker(guest_user, resource, resource.r) if session_id.present?
     setup_favorites(resource)
-    send_event user: resource,
-               category: 'registrations',
-               action: 'create',
-               label: 'email'
   end
 
   private
@@ -100,9 +89,6 @@ class RegistrationsController < Devise::RegistrationsController
     return false if @user.errors.present? || !@user.destroy
 
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    send_event category: 'registrations',
-               action: 'destroy',
-               label: @user.id
     true
   end
 
