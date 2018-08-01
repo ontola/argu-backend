@@ -36,7 +36,7 @@ gem 'pg'
 
 gem 'active_record-postgres-constraints',
     git: 'https://github.com/ArthurWD/active_record-postgres-constraints',
-    ref: 'f607364'
+    ref: '34e3495'
 gem 'jbuilder', '~> 2.6.0'
 gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.1'

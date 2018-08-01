@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/ArthurWD/active_record-postgres-constraints
-  revision: f6073641cde135e3a49d9599d82d375e51ac2331
-  ref: f607364
+  revision: 34e3495a73965d183359cf131681d302eef7c198
+  ref: 34e3495
   specs:
     active_record-postgres-constraints (0.1.2)
       pg
