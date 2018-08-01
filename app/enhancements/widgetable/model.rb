@@ -22,30 +22,12 @@ module Widgetable
         end
       end
 
-      def create_motions_widget
+      def create_discussions_widget
         widgets
-          .motions
+          .discussions
           .create(
-            resource_iri: expand_uri_template(
-              'motions_collection_iri',
-              parent_iri: iri(only_path: true)
-            ),
-            label: 'motions.plural',
-            label_translation: true,
-            body: '',
-            size: 3
-          )
-      end
-
-      def create_questions_widget
-        widgets
-          .questions
-          .create(
-            resource_iri: expand_uri_template(
-              'questions_collection_iri',
-              parent_iri: iri(only_path: true)
-            ),
-            label: 'questions.plural',
+            resource_iri: collection_iri(self, :discussions),
+            label: 'discussions.plural',
             label_translation: true,
             body: '',
             size: 3

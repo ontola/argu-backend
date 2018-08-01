@@ -30,7 +30,7 @@ class Forum < Edge
   with_collection :motions
 
   cattr_accessor :default_widgets do
-    %i[motions questions]
+    %i[discussions]
   end
 
   # @private
