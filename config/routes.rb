@@ -264,6 +264,7 @@ Rails.application.routes.draw do
               only: %i[show],
               concerns: %i[feedable statable exportable] do
       include_route_concerns
+      resources :forums, only: %i[index]
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
       resources :group_memberships, only: :index do
