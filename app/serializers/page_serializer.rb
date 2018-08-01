@@ -7,6 +7,7 @@ class PageSerializer < RecordSerializer
   attribute :base_color, predicate: NS::ARGU[:baseColor]
 
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
+  with_collection :forums, predicate: NS::ARGU[:forums]
 
   def about
     object.profile.about
