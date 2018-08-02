@@ -16,7 +16,6 @@ module Edgeable
                 -> { where(predicate: property_options[:predicate].to_s) },
                 class_name: 'Property',
                 foreign_key: :edge_id,
-                dependent: :destroy,
                 primary_key: :uuid
         source = property_options[:type] == :linked_edge_id ? :linked_edge : klass_name.underscore
         has_one name, through: "#{name}_reference".to_sym, class_name: klass_name, source: source
@@ -33,7 +32,6 @@ module Edgeable
                 -> { where(predicate: property_options[:predicate].to_s) },
                 class_name: 'Property',
                 foreign_key: :linked_edge_id,
-                dependent: :destroy,
                 primary_key: :uuid
         has_one name, through: "#{name}_reference".to_sym, class_name: klass_name, source: :edge
       end
@@ -49,7 +47,6 @@ module Edgeable
                  -> { where(predicate: property_options[:predicate].to_s) },
                  class_name: 'Property',
                  foreign_key: :linked_edge_id,
-                 dependent: :destroy,
                  primary_key: :uuid
         has_many name, through: "#{name}_references".to_sym, class_name: klass_name, source: :edge
       end
