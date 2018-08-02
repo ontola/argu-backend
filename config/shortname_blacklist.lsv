@@ -675,7 +675,6 @@ select
 selector
 self
 send
-service
 sessie
 session
 setting

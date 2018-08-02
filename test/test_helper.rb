@@ -58,6 +58,16 @@ module TestHelper
     user.profile = Profile.new(id: Profile::ANONYMOUS_ID)
   end
 
+  User.find_or_create_by!(id: User::SERVICE_ID) do |user|
+    user.shortname = Shortname.new(shortname: 'service')
+    user.email = 'service_user@argu.co'
+    user.last_accepted = Time.current
+    user.first_name = nil
+    user.last_name = nil
+    user.password = 'password'
+    user.profile = Profile.new(id: Profile::SERVICE_ID)
+  end
+
   page_owner = User.find_or_create_by!(first_name: 'page_owner') do |user|
     user.shortname = Shortname.new(shortname: 'page_owner')
     user.profile = Profile.new
@@ -231,7 +241,7 @@ module ActionDispatch
       id, role, app =
         case resource
         when :service
-          [0, 'service', Doorkeeper::Application.argu_service]
+          [User::SERVICE_ID, 'service', Doorkeeper::Application.argu_service]
         when :guest
           [SecureRandom.hex, ['guest', additional_scope].join(' '), requested_app]
         else

@@ -56,6 +56,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
+  SERVICE_ID = -2
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
   LOGIN_ATTRS = %w[updated_at failed_attempts].freeze
@@ -328,6 +329,14 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     else
       raise "Trying to send a Devise #{notification} mail"
     end
+  end
+
+  def self.service
+    User.find(User::SERVICE_ID)
+  end
+
+  def service?
+    id == User::SERVICE_ID
   end
 
   def sync_notification_count

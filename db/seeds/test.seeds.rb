@@ -22,6 +22,16 @@ FactorySeeder.create(
   last_name: nil,
   profile: FactorySeeder.build(:profile, id: Profile::ANONYMOUS_ID)
 )
+FactorySeeder.create(
+  :user,
+  id: User::SERVICE_ID,
+  shortname: FactorySeeder.build(:shortname, shortname: 'service'),
+  email: 'service@argu.co',
+  first_name: nil,
+  last_name: nil,
+  profile: FactorySeeder.build(:profile, id: Profile::SERVICE_ID),
+  last_accepted: Time.current
+)
 
 staff = FactorySeeder.create(
   :user,

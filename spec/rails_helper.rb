@@ -145,6 +145,17 @@ RSpec.configure do |config|
                last_name: nil,
                profile: build(:profile, id: Profile::ANONYMOUS_ID))
       end
+      if User.find_by(id: User::SERVICE_ID).blank?
+        create(:user,
+               id: User::SERVICE_ID,
+               shortname: build(:shortname, shortname: 'service'),
+               email: 'service_user@argu.co',
+               password: 'password',
+               last_accepted: Time.current,
+               first_name: nil,
+               last_name: nil,
+               profile: build(:profile, id: Profile::SERVICE_ID))
+      end
       if Page.find_by(id: Profile::COMMUNITY_ID).blank?
         page_owner = User.create!(
           shortname: Shortname.new(shortname: 'page_owner'),

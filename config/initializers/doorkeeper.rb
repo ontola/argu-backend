@@ -41,7 +41,11 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    User.find_by(id: doorkeeper_token.resource_owner_id) if doorkeeper_token&.acceptable?('user')
+    if doorkeeper_token&.acceptable?('user')
+      User.find_by(id: doorkeeper_token.resource_owner_id)
+    elsif doorkeeper_token&.acceptable?('service') && doorkeeper_token.resource_owner_id.to_i == User::SERVICE_ID
+      User.service
+    end
   end
 
   resource_owner_from_credentials do

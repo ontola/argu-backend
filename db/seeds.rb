@@ -21,6 +21,22 @@ ActiveRecord::Base.transaction do
   community_profile.save!(validate: false)
   community_profile.profileable.update(encrypted_password: '')
 
+  service_profile =
+    Profile.new(
+      id: Profile::SERVICE_ID,
+      profileable:
+        User
+          .new(
+            id: User::SERVICE_ID,
+            shortname: Shortname.new(shortname: 'service'),
+            email: 'service_user@argu.co',
+            password: SecureRandom.hex(32),
+            last_accepted: Time.current
+          )
+    )
+  service_profile.save!(validate: false)
+  service_profile.profileable.update(encrypted_password: '')
+
   Profile.new(
     id: Profile::ANONYMOUS_ID,
     profileable:

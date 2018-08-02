@@ -50,6 +50,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
+  SERVICE_ID = -2
 
   def as_json(options = {})
     # Hide profileable for the more friendly actor
@@ -152,6 +153,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     profileable
   end
   deprecate :owner
+
+  def self.service
+    Profile.find(Profile::SERVICE_ID)
+  end
 
   def url
     profileable.presence && profileable.url.presence
