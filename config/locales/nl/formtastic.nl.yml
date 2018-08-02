@@ -122,6 +122,18 @@ nl:
         description: "Plaats hier de details en achtergrondinformatie van jouw argument."
         display_name: "Plaats hier de kern van jouw argument"
         title: "Plaats hier de kern van jouw argument"
+      pro_argument:
+        content: "Details en achtergrondinformatie van jouw argument."
+        description: "Details en achtergrondinformatie van jouw argument."
+        display_name: "De kern van het voordeel"
+        title:  "De kern van het voordeel"
+      con_argument:
+        content: "Details en achtergrondinformatie van jouw argument."
+        description: "Details en achtergrondinformatie van jouw argument."
+        display_name:  "De kern van het nadeel"
+        title:  "De kern van het nadeel"
+      comment:
+        description: "Plaats een reactie"
       blog_post:
         content: "Licht je update hier toe."
         description: "Licht je update hier toe."

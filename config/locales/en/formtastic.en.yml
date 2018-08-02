@@ -122,6 +122,18 @@ en:
         description: "Enter details and background information on your argument here."
         display_name: "Enter the core of your argument here"
         title: "Enter the core of your argument here"
+      pro_argument:
+        content: "Details and background information."
+        description: "Details and background information."
+        display_name: "Summary of your pro"
+        title: "Summary of your pro"
+      con_argument:
+        content: "Details and background information."
+        description: "Details and background information."
+        display_name: "Summary of your con"
+        title: "Summary of your con"
+      comment:
+        description: "Enter your comment"
       blog_post:
         content: "Enter details and background information on your update here."
         description: "Enter details and background information on your update here."
