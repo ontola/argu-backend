@@ -43,7 +43,7 @@ class PagePolicy < EdgePolicy
   end
 
   def create?
-    pages_left?
+    pages_left? || service?
   end
 
   def default_tab
