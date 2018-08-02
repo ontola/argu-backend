@@ -305,8 +305,6 @@ GEM
       tilt
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
-    has_secure_token (1.0.0)
-      activerecord (>= 3.0)
     hashdiff (0.3.7)
     hashie (3.5.7)
     health_check (2.7.0)
@@ -775,7 +773,6 @@ DEPENDENCIES
   flamegraph
   font-awesome-rails (~> 4.7.0.2)
   formtastic (~> 3.1.4)
-  has_secure_token
   health_check
   html_truncator (~> 0.2)
   http_accept_language

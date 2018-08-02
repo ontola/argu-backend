@@ -48,7 +48,6 @@ gem 'tzinfo-data'
 gem 'rack-cors', '~> 0.4.1', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.4'
 gem 'redis', '~> 3.3.5'
-gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap',
     git: 'https://github.com/apalmblad/multimap.git',
