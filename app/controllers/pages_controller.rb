@@ -106,8 +106,8 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def new_resource_from_params
     Page.new(
-      creator: current_profile,
-      publisher: current_user,
+      creator: service_creator,
+      publisher: service_publisher,
       is_published: true
     )
   end
