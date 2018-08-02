@@ -100,6 +100,7 @@ class Page < Edge
     )
     group.grants << Grant.new(grant_set: GrantSet.administrator, edge: self)
     group.save!
+    return if creator.reserved?
 
     service = CreateGroupMembership.new(
       group,

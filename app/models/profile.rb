@@ -179,6 +179,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     profileable.class == Page
   end
 
+  def reserved?
+    id <= 0
+  end
+
   def serializer_class
     "#{profileable.class}Serializer".constantize
   end

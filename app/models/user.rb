@@ -309,6 +309,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
+  def reserved?
+    id <= 0
+  end
+
   def salt
     if encrypted_password.presence
       ::BCrypt::Password.new(encrypted_password).salt
