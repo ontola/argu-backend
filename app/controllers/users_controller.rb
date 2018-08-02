@@ -88,7 +88,7 @@ class UsersController < AuthorizedController
 
   def show_includes
     [
-      :profile_photo,
+      :default_profile_photo,
       :email_addresses,
       vote_match_collection: inc_nested_collection
     ]
