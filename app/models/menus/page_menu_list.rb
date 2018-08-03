@@ -10,7 +10,10 @@ class PageMenuList < MenuList
 
   def forums
     @forums ||=
-      resource.forums.where("edges.path ? #{Edge.path_array(user.profile.granted_edges(root_id: resource.uuid))}")
+      resource
+        .forums
+        .where("edges.path ? #{Edge.path_array(user.profile.granted_edges(root_id: resource.uuid))}")
+        .includes(:default_profile_photo, :shortname)
   end
 
   def navigations_menu

@@ -174,7 +174,7 @@ class EdgePolicy < RestrictivePolicy
   end
 
   def is_creator?
-    return if record.creator.blank?
+    return if record.creator_id.blank?
     record.publisher_id == user.id || user.managed_profile_ids.include?(record.creator_id)
   end
 
