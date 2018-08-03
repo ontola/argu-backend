@@ -38,10 +38,17 @@ class StaticPagesController < ApplicationController
 
   def home
     authorize :static_page
-    if current_user.is_staff?
-      render # stream: true
-    else
-      current_user.guest? ? about : redirect_to(preferred_forum.iri_path)
+    respond_to do |format|
+      format.html do
+        if current_user.is_staff?
+          render # stream: true
+        else
+          current_user.guest? ? about : redirect_to(preferred_forum.iri_path)
+        end
+      end
+      RDF_CONTENT_TYPES.each do |type|
+        format.send(type) { render type => home_graph }
+      end
     end
   end
 
@@ -101,5 +108,13 @@ class StaticPagesController < ApplicationController
 
   def default_forum_path
     preferred_forum
+  end
+
+  def home_graph
+    graph = ::RDF::Graph.new
+    graph << [::RDF::URI("#{Rails.application.config.origin}/"), ::RDF[:type], NS::ARGU[:WebSite]]
+    graph << [::RDF::URI("#{Rails.application.config.origin}/"), NS::SCHEMA[:name], t('name')]
+    graph << [::RDF::URI("#{Rails.application.config.origin}/"), NS::SCHEMA[:text], t('site.description')]
+    graph
   end
 end
