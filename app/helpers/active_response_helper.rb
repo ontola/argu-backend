@@ -33,7 +33,7 @@ module ActiveResponseHelper
   def default_form_options(action)
     return super unless active_responder.is_a?(RDFResponder)
     super_opts = super
-    action_resource = super_opts[:resource].new_record? ? index_collection : super_opts[:resource]
+    action_resource = super_opts[:resource].try(:new_record?) ? index_collection : super_opts[:resource]
     form = super_opts[:view] == 'form' ? action_name : super_opts[:view]
     {
       action: action_resource.action(user_context, ACTION_MAP[form.to_sym] || form),
