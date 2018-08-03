@@ -64,8 +64,8 @@ class GroupMembershipsController < ServiceController
     %i[organization]
   end
 
-  def new_success_html(resource)
-    respond_with_redirect location: settings_iri_path(resource.group, tab: :invite)
+  def new_success_html
+    respond_with_redirect location: settings_iri_path(authenticated_resource.group, tab: :invite)
   end
 
   def parent_resource_key(opts)
