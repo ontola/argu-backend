@@ -9,7 +9,7 @@ class BetaController < ApplicationController
   private
 
   def redirect_from_param
-    return unless argu_iri_or_relative?(params[:r])
+    return unless params[:r].present? && argu_iri_or_relative?(params[:r])
     params[:r].starts_with?('/') ? params[:r] : "/#{params[:r]}"
   end
 end
