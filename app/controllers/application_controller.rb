@@ -97,6 +97,7 @@ class ApplicationController < ActionController::Base
       confirmed: current_user.confirmed?,
       id: current_user.id,
       ip: notification.user_id,
+      responder_type: active_response_type,
       scopes: doorkeeper_scopes,
       shortname: current_user.url
     }
