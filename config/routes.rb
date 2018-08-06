@@ -195,8 +195,6 @@ Rails.application.routes.draw do
 
   resources :grant_sets, only: :show
 
-  match '/search/' => 'search#show', as: 'search', via: %i[get post]
-
   get '/settings', to: 'users#settings', as: 'settings_user'
   put '/settings', to: 'users#update'
   get '/c_a', to: 'current_actors#show', as: 'current_actor'
