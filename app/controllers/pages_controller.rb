@@ -146,7 +146,7 @@ class PagesController < EdgeableController
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
-    return if resource.owner_type == 'Page'
+    return if resource.is_a?(Page)
     redirect_to resource.iri_path
   end
 
