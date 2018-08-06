@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class BannerPolicy < EdgeTreePolicy
+  include ProfilePhotoable::Policy
+
   class Scope < Scope
     def resolve
       audience = [Banner.audiences[:everyone]]
@@ -20,7 +22,6 @@ class BannerPolicy < EdgeTreePolicy
       attributes.concat %i[title forum cited_profile content cited_name audience
                            cited_function published_at ends_at]
     end
-    append_default_photo_params(attributes)
     attributes.append :id if staff?
     attributes
   end

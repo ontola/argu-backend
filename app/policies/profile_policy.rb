@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ProfilePolicy < RestrictivePolicy
+  include ProfilePhotoable::Policy
+
   class Scope < Scope
     def resolve
       scope
@@ -10,7 +12,6 @@ class ProfilePolicy < RestrictivePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[id name about are_votes_public is_public]
-    append_default_photo_params(attributes)
     attributes
   end
 

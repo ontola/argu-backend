@@ -137,21 +137,6 @@ class RestrictivePolicy
     raise Argu::Errors::Forbidden.new(record: record, query: query) unless assertion
   end
 
-  def append_default_photo_params(attributes)
-    attributes.append(
-      default_cover_photo_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
-    )
-    attributes.append(
-      default_profile_photo_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
-    )
-  end
-
-  def append_attachment_params(attributes)
-    attributes.append(
-      attachments_attributes: Pundit.policy(context, MediaObject.new(about: record)).permitted_attributes
-    )
-  end
-
   def cache_action(action, val)
     user_context.cache_key(record.identifier, action, val)
   end

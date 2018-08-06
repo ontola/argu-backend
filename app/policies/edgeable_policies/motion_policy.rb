@@ -4,13 +4,8 @@ class MotionPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[display_name description votes question_id]
-    attributes.concat %i[invert_arguments forum_id f_convert] if staff?
+    attributes.concat %i[forum_id f_convert] if staff?
     attributes.concat %i[pinned] if moderator? || administrator? || staff?
-    arguments_attributes = Pundit.policy(context, Argument.new(parent: record)).permitted_attributes
-    attributes.append(
-      pro_arguments_attributes: arguments_attributes,
-      con_arguments_attributes: arguments_attributes
-    )
     attributes.concat %i[trash_activity untrash_activity]
     attributes
   end
