@@ -13,6 +13,10 @@ class PageSerializer < RecordSerializer
     object.profile.about
   end
 
+  def object
+    super.is_a?(Profile) ? super.profileable : super
+  end
+
   def default_profile_photo
     object.profile.default_profile_photo
   end

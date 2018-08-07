@@ -172,6 +172,10 @@ class Profile < ApplicationRecord
     profileable.class == Page
   end
 
+  def serializer_class
+    "#{profileable.class}Serializer".constantize
+  end
+
   private
 
   # Sets the dependent foreign relations to the Community profile

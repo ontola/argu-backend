@@ -23,6 +23,10 @@ class UserSerializer < RecordSerializer
     object.profile.default_profile_photo
   end
 
+  def object
+    super.is_a?(Profile) ? super.profileable : super
+  end
+
   def shortname
     object.url
   end
