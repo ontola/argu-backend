@@ -25,10 +25,8 @@ module SHACL
     attr_accessor :sh_class,
                   :datatype,
                   :default_value,
-                  :description,
                   :group,
                   :model_class,
-                  :name,
                   :node,
                   :node_kind,
                   :node_shape,
@@ -42,6 +40,28 @@ module SHACL
                 [:max_length, ActiveRecord::Validations::LengthValidator, :maximum],
                 [:pattern, ActiveModel::Validations::FormatValidator, :with],
                 [:sh_in, ActiveModel::Validations::InclusionValidator, :in]
+
+    # The placeholder of the property.
+    # Translations are currently all-over-the-place, so we need some nesting, though
+    # doesn't include a generic fallback mechanism yet.
+    def description
+      I18n.t("formtastic.placeholders.#{model_name}.#{model_attribute}",
+             default: [
+               :"formtastic.placeholders.#{model_attribute}",
+               :"formtastic.hints.#{model_name}.#{model_attribute}",
+               :"formtastic.hints.#{model_attribute}",
+               ''
+             ]).presence
+    end
+
+    def model_name
+      @model_name ||= form.target.model_name.i18n_key
+    end
+
+    def name
+      I18n.t("#{model_name}.form.#{model_attribute}_heading",
+             default: I18n.t("formtastic.labels.#{model_attribute}", default: nil))
+    end
 
     def validator_option(klass, option_key)
       option = validators&.detect { |validator| validator.is_a?(klass) }&.options.try(:[], option_key)

@@ -2,14 +2,26 @@
 en:
   actions:
     default:
-      create_comment: "Comment"
-      destroy: "Destroy"
-      read: "Mark as read"
-      trash: "Trash"
-      untrash: "Restore"
+      create_comment:
+        label: "Comment"
+      destroy:
+        label: "Destroy"
+        description: "This object and all related data will be permanently removed. This cannot be undone."
+      read:
+        label: "Mark as read"
+      trash:
+        label: "Trash"
+        description: "This item will no longer be visible in public discussion. This can be undone."
+      untrash:
+        label: "Restore"
+        description: "This item will be visible again in public discussion."
     pro_arguments:
-      create_vote: "Upvote"
-      destroy_vote: "Upvote"
+      create_vote:
+        label: "Upvote"
+      destroy_vote:
+        label: "Upvote"
     con_arguments:
-      create_vote: "Upvote"
-      destroy_vote: "Upvote"
+      create_vote:
+        label: "Upvote"
+      destroy_vote:
+        label: "Upvote"

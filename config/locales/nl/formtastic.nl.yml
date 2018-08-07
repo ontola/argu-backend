@@ -118,6 +118,8 @@ nl:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
       confirmation_string: "Type 'verwijder' om te bevestigen"
+      activity:
+        comment: "Toelichting voor deze actie (optioneel)"
       argument:
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
         description: "Plaats hier de details en achtergrondinformatie van jouw argument."

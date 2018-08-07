@@ -118,6 +118,8 @@ en:
       email: "email@example.com"
       login: "email or username"
       confirmation_string: "Type 'remove' to confirm"
+      activity:
+        comment: "Explanation for this action (optional)"
       argument:
         content: "Enter details and background information on your argument here."
         description: "Enter details and background information on your argument here."

@@ -2,14 +2,26 @@
 nl:
   actions:
     default:
-      create_comment: "Reageer"
-      destroy: "Vernietigen"
-      read: "Markeer als gelezen"
-      trash: "Verwijderen"
-      untrash: "Terugplaatsen"
+      create_comment:
+        label: "Reageer"
+      destroy:
+        label: "Vernietigen"
+        description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+      read:
+        label: "Markeer als gelezen"
+      trash:
+        label: "Verwijderen"
+        description: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
+      untrash:
+        label: "Terugplaatsen"
+        description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
     pro_arguments:
-      create_vote: "Upvote"
-      destroy_vote: "Upvote"
+      create_vote:
+        label: "Upvote"
+      destroy_vote:
+        label: "Upvote"
     con_arguments:
-      create_vote: "Upvote"
-      destroy_vote: "Upvote"
+      create_vote:
+        label: "Upvote"
+      destroy_vote:
+        label: "Upvote"

@@ -116,25 +116,6 @@ class FormsBase
       end
     end
 
-    # The placeholder of the property.
-    # Translations are currently all-over-the-place, so we need some nesting, though
-    # doesn't include a generic fallback mechanism yet.
-    def description_for_attr(attr)
-      attr_key = model_class.attribute_alias(attr.name) || attr.name
-      model_name = model_class.model_name.i18n_key
-      I18n.t("formtastic.placeholders.#{model_name}.#{attr_key}",
-             default: I18n.t(
-               "formtastic.placeholders.#{attr_key}",
-               default: I18n.t(
-                 "formtastic.hints.#{model_name}.#{attr_key}",
-                 default: I18n.t(
-                   "formtastic.hints.#{attr_key}",
-                   default: nil
-                 )
-               )
-             ))
-    end
-
     def fields(arr, group_iri = nil)
       arr.each { |f| field(f, group: group_iri) }
     end
@@ -165,18 +146,11 @@ class FormsBase
       model_class.try(:defined_enums) || {}
     end
 
-    def name_for_attr(attr_key)
-      I18n.t("#{model_class.model_name.plural}.form.#{attr_key}_heading",
-             default: I18n.t("formtastic.labels.#{attr_key}", default: nil))
-    end
-
     def node_property_attrs(attr, attrs)
       name = attr.dig(:options, :association) || attr.name
       collection = model_class.try(:collections)&.find { |c| c[:name] == name }
       klass_name = model_class.try(:reflections).try(:[], name.to_s)&.class_name || name.to_s.classify
 
-      attrs[:description] ||= description_for_attr(attr.name)
-      attrs[:name] ||= name_for_attr(attr.name)
       attrs[:max_count] ||= collection || attr.is_a?(ActiveModel::Serializer::HasManyReflection) ? nil : 1
       attrs[:sh_class] ||= klass_name.constantize.iri
       attrs[:referred_shapes] ||= ["#{klass_name}Form".safe_constantize]
