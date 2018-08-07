@@ -6,7 +6,8 @@ module ActiveResponseHelper
     bin: :trash,
     unbin: :untrash,
     delete: :destroy,
-    new: :create
+    new: :create,
+    shift: :move
   }.freeze
 
   def active_response_action(opts)

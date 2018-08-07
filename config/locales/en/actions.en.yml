@@ -7,6 +7,9 @@ en:
       destroy:
         label: "Destroy"
         description: "This object and all related data will be permanently removed. This cannot be undone."
+      move:
+        label: "Move"
+        description: "All children will be moved along."
       read:
         label: "Mark as read"
       trash:

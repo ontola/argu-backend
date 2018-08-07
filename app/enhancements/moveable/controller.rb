@@ -39,7 +39,7 @@ module Moveable
     end
 
     def shift_success_options
-      default_form_options(:shift)
+      default_form_options(:move)
     end
   end
 end

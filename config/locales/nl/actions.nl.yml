@@ -7,6 +7,9 @@ nl:
       destroy:
         label: "Vernietigen"
         description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+      move:
+        label: "Verplaatsen"
+        description: "Alle onderliggende items zullen mee verplaatst worden."
       read:
         label: "Markeer als gelezen"
       trash:
