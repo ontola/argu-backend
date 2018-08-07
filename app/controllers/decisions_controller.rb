@@ -31,10 +31,12 @@ class DecisionsController < EdgeableController
   end
 
   def index_success_html
+    skip_verify_policy_scoped(true)
     render locals: {decisionable: parent_resource!}
   end
 
   def index_success_js
+    skip_verify_policy_scoped(true)
     render 'show', locals: {decision: parent_resource!.last_decision}
   end
 

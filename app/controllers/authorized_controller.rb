@@ -61,7 +61,7 @@ class AuthorizedController < ApplicationController
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
     forum = current_forum
     return if forum.blank?
-    @banners = policy_scope(forum.banners.published)
+    @banners = pundit_policy_scope(forum.banners.published)
                  .reject { |b| banners[b.identifier] == 'hidden' }
   end
 
