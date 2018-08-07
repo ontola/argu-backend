@@ -26,7 +26,7 @@ class FormsBase
       iri:  iri,
       target_class: klass&.iri,
       target_node: klass ? nil : target.iri,
-      property: properties,
+      property: permitted_properties,
       referred_shapes: _property_groups.values
     )
   end
@@ -52,8 +52,8 @@ class FormsBase
     end
   end
 
-  def properties
-    @properties ||= self.class.property_shapes.select(&method(:permit_attribute))
+  def permitted_properties
+    @permitted_properties ||= self.class.property_shapes.select(&method(:permit_attribute))
   end
 
   def target_class
