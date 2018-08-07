@@ -9,28 +9,30 @@ module Actionable
                key: :operation,
                unless: :system_scope?,
                predicate: NS::SCHEMA[:potentialAction],
-               graph: NS::LL[:add] do
+               graph: NS::LL[:add]
+
+      triples :action_methods
+
+      def actions
         object.actions(scope) if scope.is_a?(UserContext)
       end
-      define_action_methods
-    end
 
-    module ClassMethods
-      def define_action_methods
-        actions_class.defined_actions.each_key do |action|
-          method_name = "#{action}_action"
-          define_method method_name do
-            object.action(scope, action) if scope.is_a?(UserContext)
-          end
-
-          has_one method_name,
-                  predicate: NS::ARGU[method_name.camelize(:lower)],
-                  unless: :system_scope?
-        end
+      def action_methods
+        triples = []
+        actions&.each { |action| triples.append(action_triples(action)) }
+        triples
       end
 
-      def actions_class
-        name.gsub('Serializer', '').constantize.actions_class!
+      private
+
+      def action_triples(action)
+        action_triple(object, NS::ARGU["#{action.tag}_action".camelize(:lower)], action.iri, NS::LL[:add])
+      end
+
+      def action_triple(subject, predicate, iri, graph = nil)
+        subject_iri = subject.iri
+        subject_iri = RDF::URI(subject_iri.to_s.sub('/lr/', '/od/'))
+        [subject_iri, predicate, iri, graph]
       end
     end
   end
