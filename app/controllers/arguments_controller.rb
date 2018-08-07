@@ -18,10 +18,6 @@ class ArgumentsController < EdgeableController
     {keys: {name: :title, text: :content}}
   end
 
-  def show_includes
-    [operation: ACTION_FORM_INCLUDES, comment_collection: inc_nested_collection]
-  end
-
   def index_collection_name
     "#{argument_type}_argument_collection"
   end
@@ -56,6 +52,14 @@ class ArgumentsController < EdgeableController
     super(opts.merge(auto_vote:
                        params.dig(model_name, :auto_vote) == 'true' &&
                          current_actor.actor == current_user.profile))
+  end
+
+  def show_includes
+    [
+      creator: :default_profile_photo,
+      operation: ACTION_FORM_INCLUDES,
+      comment_collection: inc_shallow_collection
+    ]
   end
 
   def show_success_html

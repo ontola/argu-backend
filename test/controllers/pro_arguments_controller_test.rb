@@ -28,9 +28,6 @@ class ProArgumentsControllerTest < ActionController::TestCase
 
     expect_relationship('commentCollection')
     expect_included(collection_iri(argument, :comments))
-    expect_included(collection_iri(argument, :comments, page: 1, type: 'paginated'))
-    expect_included(argument.comments.untrashed.map(&:iri))
-    expect_not_included(argument.comments.trashed.map(&:iri))
   end
 
   ####################################
