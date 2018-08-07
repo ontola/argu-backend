@@ -161,7 +161,7 @@ class User < ApplicationRecord
   end
 
   def create_finish_intro_notification
-    return if url.present?
+    return if url.present? || notifications.finish_intro.any?
     Notification.finish_intro.create(
       user: self,
       url: Rails.application.routes.url_helpers.setup_users_path,
