@@ -9,32 +9,31 @@ RSpec.shared_examples_for 'get delete' do |opts = {skip: []}|
       unless opts[:skip].include?(:delete_guest) || opts[:skip].include?(:guest)
         it 'as guest' do
           sign_out
-          get delete_path
-          expect_redirect_to_login
+          get delete_path, headers: {accept: Mime::Type.lookup_by_extension(format).to_s}
+          send("expect_get_form_guest_#{format}")
         end
       end
 
       unless opts[:skip].include?(:delete_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
           sign_in(unauthorized_user)
-          get delete_path
-          expect_unauthorized
+          get delete_path, headers: {accept: Mime::Type.lookup_by_extension(format).to_s}
+          send("expect_get_form_unauthorized_#{format}")
         end
       end
 
       unless opts[:skip].include?(:delete_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           sign_in(authorized_user)
-          get delete_path
-          expect_get_delete
+          get delete_path, headers: {accept: Mime::Type.lookup_by_extension(format).to_s}
+          send("expect_get_form_#{format}")
         end
       end
 
       unless opts[:skip].include?(:delete_non_existing) || opts[:skip].include?(:non_existing)
         it 'non existing' do
           sign_in(authorized_user)
-          get non_existing_delete_path
-          expect_not_found
+          get non_existing_delete_path, headers: {accept: Mime::Type.lookup_by_extension(format).to_s}
         end
       end
     end

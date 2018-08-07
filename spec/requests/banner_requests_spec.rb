@@ -6,6 +6,10 @@ require 'argu/test_helpers/automated_requests'
 RSpec.describe 'Banners', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
+  def self.new_formats
+    %i[html]
+  end
+
   let(:expect_delete_destroy_html) do
     expect(response.code).to eq('303')
     expect(response).to redirect_to(settings_iri_path(freetown, tab: :banners))

@@ -89,7 +89,7 @@ RSpec.describe 'Votes', type: :request do
         collection_iri(subject.parent.iri_path(id: non_existing_id), :votes)
       end
       let(:created_resource_path) { linked_record.iri_path }
-      it_behaves_like 'requests', skip: %i[trash untrash edit delete update create_invalid html]
+      it_behaves_like 'requests', skip: %i[trash untrash edit delete update new create_invalid html]
       it_behaves_like 'by parent', skip: %i[html]
     end
 

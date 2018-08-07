@@ -43,12 +43,6 @@ module Argu
           let(:expect_not_found) { expect(response.code).to eq('404') }
           let(:expect_redirect_to_login) { expect(response).to redirect_to(new_user_session_path(r: r_param)) }
 
-          let(:expect_get_index) { expect_success }
-          let(:expect_get_new) { expect_success }
-          let(:expect_get_edit) { expect_success }
-          let(:expect_get_delete) { expect_success }
-          let(:expect_get_shift) { expect_success }
-
           # Show
           expectations_for(:get_show)
           let(:expect_get_show_guest_html) { expect_get_show_html }
@@ -156,6 +150,15 @@ module Argu
               assert_equal 'Forum', type
             end
           end
+
+          # Forms
+          expectations_for(:get_form)
+          let(:expect_get_form_guest_html) { expect_redirect_to_login }
+          let(:expect_get_form_guest_serializer) { expect(response.code).to eq('401') }
+          let(:expect_get_form_unauthorized_html) { expect_unauthorized }
+          let(:expect_get_form_unauthorized_serializer) { expect_unauthorized }
+          let(:expect_get_form_html) { expect_success }
+          let(:expect_get_form_serializer) { expect_success }
 
           # Users
           let(:staff) { EmailAddress.find_by(email: 'staff@example.com').user }
@@ -265,23 +268,23 @@ module Argu
         end
 
         def new_formats
-          %i[html]
+          default_formats - [:json_api]
         end
 
         def edit_formats
-          %i[html]
+          default_formats - [:json_api]
         end
 
         def delete_formats
-          %i[html]
+          default_formats - [:json_api]
         end
 
         def move_formats
-          %i[html]
+          default_formats - [:json_api]
         end
 
         def shift_formats
-          %i[html]
+          default_formats - [:json_api]
         end
       end
     end

@@ -4,6 +4,10 @@ require 'rails_helper'
 require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Forums', type: :request do
+  def self.edit_formats
+    %i[html]
+  end
+
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 
@@ -48,6 +52,7 @@ RSpec.describe 'Forums', type: :request do
     end
     let(:create_differences) { {'Forum.count' => 1} }
     let(:expect_post_create_guest_serializer) { expect_not_found }
+    let(:expect_get_form_guest_serializer) { expect_not_found }
     it_behaves_like 'get new'
     it_behaves_like 'post create'
   end

@@ -4,6 +4,10 @@ require 'rails_helper'
 require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Exports', type: :request do
+  def self.new_formats
+    default_formats - %i[json_api html]
+  end
+
   include Argu::TestHelpers::AutomatedRequests
   let(:index_path) { collection_iri_path(subject.parent.iri_path, table_sym) }
   let(:parent_path) { index_path }
@@ -17,11 +21,11 @@ RSpec.describe 'Exports', type: :request do
 
   context 'with forum parent' do
     subject { forum_export }
-    it_behaves_like 'requests', skip: %i[new edit update trash untrash show invalid]
+    it_behaves_like 'requests', skip: %i[edit update trash untrash show invalid]
   end
 
   context 'with motion parent' do
     subject { motion_export }
-    it_behaves_like 'requests', skip: %i[new edit update trash untrash show invalid]
+    it_behaves_like 'requests', skip: %i[edit update trash untrash show invalid]
   end
 end

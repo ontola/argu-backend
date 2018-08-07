@@ -9,6 +9,10 @@ RSpec.describe 'Grants', type: :request do
     super - %i[html]
   end
 
+  def self.new_formats
+    %i[html]
+  end
+
   let(:create_differences) { {"#{subject.class}.count" => 1} }
   let(:update_differences) { {"#{subject.class}.count" => 0} }
   let(:destroy_differences) { {"#{subject.class}.count" => -1} }
