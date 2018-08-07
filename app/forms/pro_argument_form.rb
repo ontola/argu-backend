@@ -10,6 +10,5 @@ class ProArgumentForm < FormsBase
   property_group :footer,
                  properties: %i[
                    creator
-                   publication_form
                  ]
 end

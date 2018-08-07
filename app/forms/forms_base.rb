@@ -202,6 +202,7 @@ class FormsBase
       return if _property_groups.key?(attr_key)
       serializer_attr = serializer_attribute(attr_key)
       attrs[:path] ||= predicate_from_serializer(serializer_attr)
+      raise "No predicate found for #{attr_key} in #{name}" if attrs[:path].blank?
 
       attrs[:model_attribute] ||= model_attribute(attr_key)
       attrs[:validators] ||= validators(attrs[:model_attribute])
