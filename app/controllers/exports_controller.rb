@@ -39,6 +39,6 @@ class ExportsController < ServiceController
   end
 
   def resource_new_params
-    {user: current_user}
+    {user: current_user, edge: parent_resource!}
   end
 end

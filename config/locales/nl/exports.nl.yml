@@ -2,6 +2,7 @@ nl:
   exports:
     type: "Export"
     plural: "Exports"
+    type_new: "Nieuwe export"
     empty: "Er zijn nog geen exports gemaakt"
     create: "Maak export aan"
     download: "Download"

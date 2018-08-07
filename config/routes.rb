@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     resources :direct_messages, path: :dm, only: [:new]
   end
   concern :exportable do
-    resources :exports, only: %i[index create]
+    resources :exports, only: %i[index create new]
   end
   concern :favorable do
     resources :favorites, only: [:create]

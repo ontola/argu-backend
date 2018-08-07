@@ -9,6 +9,7 @@ module Createable
 
       define_action(
         :create,
+        description: -> { create_description },
         result: -> { association_class },
         type: -> { [NS::ARGU["Create#{association_class}"], NS::SCHEMA[:CreateAction]] },
         policy: -> { create_policy },
@@ -31,6 +32,8 @@ module Createable
     def association_class
       resource.association_class
     end
+
+    def create_description; end
 
     def create_on_collection?
       true
