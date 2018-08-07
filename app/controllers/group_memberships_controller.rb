@@ -21,7 +21,7 @@ class GroupMembershipsController < ServiceController
         .references(:groups, :users)
     )
 
-    render json: @results, include: [:group, user: :profile_photo]
+    render json: @results, include: [:group, user: :default_profile_photo]
   end
 
   private
