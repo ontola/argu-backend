@@ -11,6 +11,6 @@ class NotificationSerializer < RecordSerializer
   end
 
   has_one :creator, predicate: NS::SCHEMA[:creator] do
-    object.activity.owner
+    object.activity&.owner
   end
 end
