@@ -9,7 +9,7 @@ module Updateable
         :update,
         type: NS::SCHEMA[:UpdateAction],
         policy: :update?,
-        image: :update,
+        image: 'fa-update',
         url: -> { resource.iri },
         http_method: :put,
         form: -> { "#{resource.class}Form".safe_constantize },
