@@ -6,6 +6,7 @@ class Decision < Edge
   enhance MarkAsImportant
   enhance Menuable
   enhance Updateable
+  enhance Actionable
 
   include HasLinks
 

@@ -2,6 +2,9 @@
 
 class VoteEvent < Edge
   DEFAULT_ID = 'default'
+
+  enhance Actionable
+
   with_collection :votes, default_filters: [{'option' => 'no'}, {'option' => 'other'}, 'option' => 'yes']
 
   parentable :motion, :linked_record

@@ -3,6 +3,7 @@
 class Export < ApplicationRecord
   enhance Createable
   enhance Destroyable
+  enhance Actionable
   include Parentable
   include Ldable
 

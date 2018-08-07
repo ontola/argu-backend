@@ -3,6 +3,7 @@
 class Grant < ApplicationRecord
   enhance Createable
   enhance Destroyable
+  enhance Actionable
 
   include Parentable
 

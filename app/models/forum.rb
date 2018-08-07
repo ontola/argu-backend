@@ -13,6 +13,7 @@ class Forum < Edge
   enhance Questionable
   enhance Updateable
   enhance Widgetable
+  enhance Actionable
 
   include Attribution
 

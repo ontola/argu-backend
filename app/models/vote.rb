@@ -5,6 +5,7 @@ class Vote < Edge
   enhance Destroyable
   enhance Loggable
   enhance Updateable
+  enhance Actionable
 
   include RedisResource::Concern
 

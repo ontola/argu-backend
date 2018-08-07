@@ -6,6 +6,7 @@ class Banner < NewsBoy
   enhance Destroyable
   enhance ProfilePhotoable
   enhance Updateable
+  enhance Actionable
 
   include EdgeableShallow
   include Uuidable
