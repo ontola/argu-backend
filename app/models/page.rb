@@ -19,7 +19,8 @@ class Page < Edge
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
   scope :discover, lambda {
-    visible
+    joins(children: %i[properties grants])
+      .where(grants: {group_id: Group::PUBLIC_ID}, properties: {predicate: NS::ARGU[:discoverable].to_s, boolean: true})
       .joins('LEFT JOIN (SELECT parent_id, SUM(follows_count) AS total_follows FROM edges GROUP BY parent_id) '\
              'AS forum_edges ON edges.id = forum_edges.parent_id')
       .order('forum_edges.total_follows DESC NULLS LAST')
