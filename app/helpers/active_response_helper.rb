@@ -5,6 +5,7 @@ module ActiveResponseHelper
     edit: :update,
     bin: :trash,
     unbin: :untrash,
+    delete: :destroy,
     new: :create
   }.freeze
 
