@@ -19,7 +19,6 @@ class Resource
   end
 
   def statements
-    # fasd
     [
       RDF::Statement(iri, NS::ARGU[:test], NS::ARGU[:duce])
     ]
