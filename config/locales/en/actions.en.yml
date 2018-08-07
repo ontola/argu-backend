@@ -15,6 +15,10 @@ en:
       untrash:
         label: "Restore"
         description: "This item will be visible again in public discussion."
+    conversions:
+      convert:
+        label: "Convert"
+        description: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
     pro_arguments:
       create_vote:
         label: "Upvote"

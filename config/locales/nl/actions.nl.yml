@@ -15,6 +15,10 @@ nl:
       untrash:
         label: "Terugplaatsen"
         description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
+    conversions:
+      create:
+        label: "Omzetten"
+        description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
     pro_arguments:
       create_vote:
         label: "Upvote"

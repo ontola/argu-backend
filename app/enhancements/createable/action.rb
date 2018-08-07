@@ -11,12 +11,12 @@ module Createable
         :create,
         result: -> { association_class },
         type: -> { [NS::ARGU["Create#{association_class}"], NS::SCHEMA[:CreateAction]] },
-        policy: :create_child?,
+        policy: -> { create_policy },
         label: -> { new_label },
         image: -> { new_image },
         url: -> { create_url(resource) },
         http_method: :post,
-        collection: true,
+        collection: -> { create_on_collection? },
         form: -> { "#{association_class}Form".safe_constantize },
         iri_template: :new_iri
       )
@@ -30,6 +30,14 @@ module Createable
 
     def association_class
       resource.association_class
+    end
+
+    def create_on_collection?
+      true
+    end
+
+    def create_policy
+      :create_child?
     end
 
     def create_url(resource)

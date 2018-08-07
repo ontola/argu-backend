@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
 class ConversionsController < ServiceController
+  active_response :new, :create
+
   include ConvertibleHelper
   before_action :verify_convertible_edge
 
   private
+
+  def active_response_action(opts)
+    opts[:resource].action(user_context, :create)
+  end
 
   def authenticated_resource!
     @resource ||=
