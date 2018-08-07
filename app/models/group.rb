@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
+  enhance ConfirmedDestroyable
   enhance Createable
-  enhance Destroyable
   enhance Updateable
 
   include Ldable
@@ -27,7 +27,6 @@ class Group < ApplicationRecord
 
   delegate :publisher, to: :page
   delegate :include?, to: :members
-  attr_accessor :confirmation_string
 
   parentable :page
   alias edgeable_record parent

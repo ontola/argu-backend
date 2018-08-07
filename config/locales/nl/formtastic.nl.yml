@@ -117,6 +117,7 @@ nl:
       display_name: "Voer een titel in"
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
+      confirmation_string: "Type 'verwijder' om te bevestigen"
       argument:
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
         description: "Plaats hier de details en achtergrondinformatie van jouw argument."

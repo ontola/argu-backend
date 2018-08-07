@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Forum < Edge
+  enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance Createable
-  enhance Destroyable
   enhance Discussable
   enhance Menuable
   enhance Motionable
@@ -34,7 +34,7 @@ class Forum < Edge
   end
 
   # @private
-  attr_accessor :tab, :active, :confirmation_string
+  attr_accessor :tab, :active
   attr_writer :public_grant
   alias_attribute :description, :bio
 

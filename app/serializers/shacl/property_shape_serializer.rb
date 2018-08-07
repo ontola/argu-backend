@@ -14,6 +14,7 @@ module SHACL
     attribute :node, predicate: NS::SH[:node]
     attribute :node_kind, predicate: NS::SH[:nodeKind]
     attribute :order, predicate: NS::SH[:order]
+    attribute :pattern, predicate: NS::SH[:pattern]
     attribute :sh_class, predicate: NS::SH[:class]
     attribute :sh_in, predicate: NS::SH[:in]
 

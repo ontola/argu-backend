@@ -16,7 +16,7 @@
           =semantic_form_for resource, url: resource.iri_path, method: :delete, html: {class: 'confirm'} do |f|
             p= t('pages.settings.advanced.delete.confirm.howto')
             =f.inputs do
-              =f.input :confirmation_string, input_html: {class: 'confirm-text', :'confirm-text' => t('pages.settings.advanced.delete.confirm.string')}
+              =f.input :confirmation_string, input_html: {class: 'confirm-text', :'confirm-text' => t('destroy_confirm_string')}
             =f.actions do
               =f.action :submit, :as => :button, label: t('pages.settings.advanced.delete.confirm.understand'), button_html: { class: 'confirm-action', disabled: true }
     .overlay.overlay-bottom

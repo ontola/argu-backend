@@ -117,6 +117,7 @@ en:
       display_name: "Enter your title"
       email: "email@example.com"
       login: "email or username"
+      confirmation_string: "Type 'remove' to confirm"
       argument:
         content: "Enter details and background information on your argument here."
         description: "Enter details and background information on your argument here."

@@ -4,13 +4,14 @@ class Page < Edge
   has_many :groups, dependent: :destroy, inverse_of: :page, primary_key: :uuid
 
   enhance BlogPostable
+  enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance Createable
-  enhance Destroyable
   enhance Discussable
   enhance Menuable
   enhance Placeable
   enhance Updateable
+  enhance Actionable
 
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
@@ -24,7 +25,7 @@ class Page < Edge
       .order('forum_edges.total_follows DESC NULLS LAST')
   }
 
-  attr_accessor :confirmation_string, :tab, :active
+  attr_accessor :tab, :active
 
   delegate :description, :default_profile_photo, to: :profile
 

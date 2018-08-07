@@ -102,6 +102,7 @@ nl:
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
   untrash_confirmation: "Dit object zal weer zichtbaar zijn in de publieke discussie."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+  destroy_confirm_string: 'verwijder'
   not_allowed: "Actie niet toegestaan."
   error: "Fout"
   error_prohibited: " bij het opslaan:"

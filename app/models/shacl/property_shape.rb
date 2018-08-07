@@ -40,6 +40,7 @@ module SHACL
     validations [:min_count, ActiveRecord::Validations::PresenceValidator, :min_count],
                 [:min_length, ActiveRecord::Validations::LengthValidator, :minimum],
                 [:max_length, ActiveRecord::Validations::LengthValidator, :maximum],
+                [:pattern, ActiveModel::Validations::FormatValidator, :with],
                 [:sh_in, ActiveModel::Validations::InclusionValidator, :in]
 
     def validator_option(klass, option_key)
