@@ -25,11 +25,25 @@ class Feed
   end
 
   def canonical_iri(opts)
-    parent.is_a?(User) ? RDF::URI(Rails.application.config.origin) : parent&.canonical_iri(opts)
+    case parent
+    when User
+      RDF::URI(Rails.application.config.origin)
+    when Profile
+      parent&.canonical_iri(opts.merge(root: root.url))
+    else
+      parent&.canonical_iri(opts)
+    end
   end
 
   def iri(opts = {})
-    parent.is_a?(User) ? RDF::URI(Rails.application.config.origin) : parent&.iri(opts)
+    case parent
+    when User
+      RDF::URI(Rails.application.config.origin)
+    when Profile
+      parent&.iri(opts.merge(root: root.url))
+    else
+      parent&.iri(opts)
+    end
   end
 
   private
@@ -57,5 +71,9 @@ class Feed
 
   def profile_activities
     activity_base.where(owner_id: parent.id)
+  end
+
+  def root
+    @root ||= Page.find_by(uuid: root_id)
   end
 end
