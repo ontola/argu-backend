@@ -115,6 +115,14 @@ class ApplicationMenuList < MenuList
     )
   end
 
+  def sign_out_menu_item
+    menu_item(:signout,
+              action: NS::ONTOLA['actions/logout'],
+              label: I18n.t('sign_out'),
+              href: destroy_user_session_url,
+              image: 'fa-sign-out')
+  end
+
   def user_links
     items =
       if resource.url.present?
@@ -143,7 +151,7 @@ class ApplicationMenuList < MenuList
       items <<
         menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-group')
     end
-    items << menu_item(:signout, label: I18n.t('sign_out'), href: destroy_user_session_url, image: 'fa-sign-out')
+    items << sign_out_menu_item
     items
   end
 end

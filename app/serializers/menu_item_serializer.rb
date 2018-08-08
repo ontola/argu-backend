@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MenuItemSerializer < BaseSerializer
+  attribute :action, predicate: NS::ARGU[:action]
   attribute :label, predicate: NS::ARGU[:label]
   attribute :href, predicate: NS::ARGU[:href]
   attribute :data

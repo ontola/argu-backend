@@ -5,7 +5,7 @@ class MenuItem
   include ActiveModel::Serialization
   include Ldable
 
-  attr_accessor :label, :parent, :tag, :menus, :href, :item_type,
+  attr_accessor :action, :label, :parent, :tag, :menus, :href, :item_type,
                 :type, :description, :link_opts, :resource
   attr_writer :image
 

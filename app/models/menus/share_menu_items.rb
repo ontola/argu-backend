@@ -27,6 +27,7 @@ module Menus
     def copy_share_link(url)
       menu_item(
         :copy,
+        action: NS::ONTOLA["actions/copyToClipboard?value=#{url}"],
         item_type: 'copy',
         image: 'fa-clipboard',
         href: url
