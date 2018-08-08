@@ -37,7 +37,7 @@ class CommentsController < EdgeableController
 
   def create_success_js
     return create_success if params[:modal].blank?
-    flash.now[:notice] = message_success(authenticated_resource, :create)
+    flash.now[:notice] = active_response_success_message
     render 'alert'
   end
 
