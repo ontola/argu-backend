@@ -41,7 +41,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/active_response
-  revision: d1da229a5bef5d49ec4333e7c12e3c23afe5dc2c
+  revision: 63d073446bbc3ef29839a4c75665836f30562fa3
   branch: master
   specs:
     active_response (0.0.1)
