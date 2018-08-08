@@ -19,7 +19,7 @@ module Actionable
 
       def action_methods
         triples = []
-        actions&.each { |action| triples.append(action_triples(action)) }
+        actions&.each { |action| triples.append(action_triples(action)) } unless system_scope?
         triples
       end
 
