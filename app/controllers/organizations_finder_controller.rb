@@ -44,6 +44,10 @@ class OrganizationsFinderController < AuthorizedController
   end
 
   def tree_root_id
-    authenticated_resource!.is_a?(Edge) ? authenticated_resource!.root_id : authenticated_resource!.try(:edge)&.root_id
+    edge =
+      authenticated_resource!.is_a?(Edge) && authenticated_resource! ||
+      authenticated_resource!.try(:edge) ||
+      authenticated_resource!.try(:parent).is_a?(Edge) && authenticated_resource!.try(:parent)
+    edge.presence&.root_id
   end
 end
