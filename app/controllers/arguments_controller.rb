@@ -26,15 +26,9 @@ class ArgumentsController < EdgeableController
     "#{argument_type}_argument_collection"
   end
 
-  def new_respond_blocks_success(resource, format)
-    resource.pro = %w[pro yes].include?(params[:pro] || params[:filter].try(:[], :option))
-    return super if params[:motion_id].present?
-    format.html { render text: 'Bad request', status: 400 }
-    format.json { respond_with_400(resource, :json) }
-    format.json_api { respond_with_400(resource, :json_api) }
-    RDF_CONTENT_TYPES.each do |type|
-      format.send(type) { respond_with_400(resource, type) }
-    end
+  def new_success_html
+    authenticated_resource.pro = %w[pro yes].include?(params[:pro] || params[:filter].try(:[], :option))
+    new_success
   end
 
   def prepare_view
