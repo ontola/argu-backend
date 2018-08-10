@@ -41,7 +41,7 @@ class FormsBase
   end
 
   def permit_attribute(attr)
-    return true if _property_groups[attr[:model_attribute]]
+    return true if _property_groups[attr[:model_attribute]] || attr[:model_attribute] == :type
     permitted_attributes.find do |p_a|
       if p_a.is_a?(Hash)
         p_a.keys.include?("#{attr[:model_attribute]}_attributes".to_sym)
@@ -68,6 +68,9 @@ class FormsBase
     def inherited(target)
       target._fields = {}
       target._property_groups = {}
+      return if target.send(:model_class).blank?
+      target.send(:field, :hidden)
+      target.send(:hidden_fields)
     end
 
     def property_shapes_attrs
@@ -121,14 +124,29 @@ class FormsBase
     end
 
     def field(key, opts = {})
-      raise "Resource field '#{field}' defined twice" if _fields[key].present?
+      raise "Resource field '#{key}' defined twice" if _fields[key].present?
       opts[:order] = _fields.keys.length
       _fields[key.try(:to_sym)] = opts
     end
 
+    def hidden_fields
+      field :type,
+            default_value: model_class.iri,
+            path: RDF[:type],
+            datatype: NS::XSD[:string],
+            group: hidden_group.iri
+    end
+
+    def hidden_group
+      @hidden_group ||= property_group(:hidden, label: 'hidden')
+    end
+
     def literal_property_attrs(attr, attrs)
       enum = model_enums[attr.name.to_s]
-      attrs[:datatype] = attr.dig(:options, :datatype) || (enum ? NS::XSD[:string] : attr_to_datatype(attr))
+      attrs[:datatype] ||=
+        attr.dig(:options, :datatype) ||
+        (enum ? NS::XSD[:string] : attr_to_datatype(attr)) ||
+        raise("No datatype found for #{attr.name}")
       attrs[:max_count] = 1
       attrs[:sh_in] = enum && RDF::List(enum)
       attrs
@@ -169,7 +187,8 @@ class FormsBase
       )
       _fields[name][:is_group] = true
       _property_groups[name] = group
-      fields opts[:properties], group.iri
+      fields opts[:properties], group.iri if opts[:properties]
+      group
     end
 
     def property_shape_attrs(attr_key, attrs = {})

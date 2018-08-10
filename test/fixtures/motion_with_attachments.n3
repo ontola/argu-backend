@@ -1,6 +1,7 @@
 <http://purl.org/link-lib/targetResource> <http://schema.org/name> "Wat een motie" .
 <http://purl.org/link-lib/targetResource> <http://schema.org/text> "Zowaar een heus idee" .
 <http://purl.org/link-lib/targetResource> <https://argu.co/ns/core#attachments> _:n2 .
+<http://purl.org/link-lib/targetResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://argu.co/ns/core#Motion> .
 
 _:n2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:n10 .
 _:n2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:n3 .

@@ -45,6 +45,7 @@ module SHACL
     # Translations are currently all-over-the-place, so we need some nesting, though
     # doesn't include a generic fallback mechanism yet.
     def description
+      return if model_attribute.blank?
       I18n.t("formtastic.placeholders.#{model_name}.#{model_attribute}",
              default: [
                :"formtastic.placeholders.#{model_attribute}",
@@ -59,6 +60,7 @@ module SHACL
     end
 
     def name
+      return if model_attribute.blank?
       I18n.t("#{model_name}.form.#{model_attribute}_heading",
              default: I18n.t("formtastic.labels.#{model_attribute}", default: nil))
     end
