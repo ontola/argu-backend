@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   include FrontendTransitionHelper
   include RedirectHelper
   include JsonApiHelper
-  include LinkedDataHelper
   include NestedAttributesHelper
   include UsersHelper
   include NamesHelper
@@ -66,13 +65,6 @@ class ApplicationController < ActionController::Base
   #   }
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
   # @example Resource params from LD request
-  #   POST "/m/1/c?page=1&type=paginated"
-  #   params = {
-  #     "https://argu.co/ns/core#graph" => #<ActionDispatch::Http::UploadedFile
-  #       @content_type="text/n3",
-  #       @headers="Content-Disposition: form-data; name=\"https://argu.co/ns/core#graph\">
-  #   }
-  #   params # => {comment: {content: 'body'}}
   # @return [Hash] The params
   def params
     return @__params if instance_variable_defined?(:@__params)
@@ -81,7 +73,7 @@ class ApplicationController < ActionController::Base
       if parse_graph_params?
         p = HashWithIndifferentAccess.new
         p[model_name] = parse_filter(super[:filter], controller_class.try(:filter_options)) if super[:filter]
-        return @__params = super.merge(p.deep_merge(params_from_graph(super)))
+        return @__params = ActionController::Parameters.new(super.to_unsafe_h.deep_merge(p))
       end
 
       return @__params = json_api_params(super) if request.format.json_api? && super[:data].present?
