@@ -67,7 +67,7 @@ module DiscussionsHelper
         )
       end
     when Forum
-      Page.map { |page| [page.display_name, page.uuid] }
+      Page.all.includes(:profile).map { |page| [page.display_name, page.uuid] }
     else
       resource.root.forums.map do |forum|
         ["Forum #{forum.display_name}", forum.uuid]
