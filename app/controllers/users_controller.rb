@@ -7,16 +7,6 @@ class UsersController < AuthorizedController
   helper_method :authenticated_resource
   skip_before_action :check_if_registered, only: :language
 
-  def settings
-    authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
-    authenticated_resource.build_shortname if authenticated_resource.shortname.nil?
-    render 'settings', locals: {
-      tab: tab!,
-      active: tab!,
-      profile: authenticated_resource.profile
-    }
-  end
-
   # When shortname isn't set yet
   def setup
     authenticated_resource.build_shortname if authenticated_resource.shortname.blank?
@@ -111,20 +101,15 @@ class UsersController < AuthorizedController
     r_param || settings_user_path(tab: tab)
   end
 
-  def settings_view
-    'settings'
+  def settings_success_html
+    authenticated_resource.build_home_placement if authenticated_resource.home_placement.nil?
+    authenticated_resource.build_shortname if authenticated_resource.shortname.nil?
+    super
   end
-  alias edit_view settings_view
 
   def settings_view_locals
-    {
-      resource: authenticated_resource,
-      profile: authenticated_resource.profile,
-      tab: tab!,
-      active: tab!
-    }
+    super.merge(profile: authenticated_resource.profile)
   end
-  alias edit_view_locals settings_view_locals
 
   def show_success_html
     if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
@@ -141,14 +126,6 @@ class UsersController < AuthorizedController
           page_user_feed_url(organization.url, authenticated_resource, format: :js)
       }
     end
-  end
-
-  def tab!
-    policy(authenticated_resource || User).verify_tab(tab)
-  end
-
-  def tab
-    params[:tab] || params[:user].try(:[], :tab) || policy(authenticated_resource || User).default_tab
   end
 
   def update_failure_html

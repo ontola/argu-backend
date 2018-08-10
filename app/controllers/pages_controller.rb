@@ -2,7 +2,7 @@
 
 class PagesController < EdgeableController
   prepend_before_action :redirect_generic_shortnames, only: :show
-  skip_before_action :authorize_action, only: %i[settings index]
+  skip_before_action :authorize_action, only: %i[index]
   skip_before_action :check_if_registered, only: :index
 
   self.inc_nested_collection = [
@@ -16,16 +16,6 @@ class PagesController < EdgeableController
     filters: [],
     operation: ACTION_FORM_INCLUDES
   ].freeze
-
-  def settings
-    authorize authenticated_resource, :update?
-
-    render locals: {
-      tab: tab!,
-      active: tab!,
-      resource: authenticated_resource
-    }
-  end
 
   protected
 
@@ -142,16 +132,6 @@ class PagesController < EdgeableController
     Pundit.policy(user_context, resource)
   end
 
-  def settings_view
-    'settings'
-  end
-  alias edit_view settings_view
-
-  def settings_view_locals
-    {resource: authenticated_resource, tab: tab!, active: tab!}
-  end
-  alias edit_view_locals settings_view_locals
-
   def redirect_location
     return new_page_path unless authenticated_resource.persisted?
     settings_iri_path(authenticated_resource, tab: tab)
@@ -170,13 +150,5 @@ class PagesController < EdgeableController
     else
       render 'show'
     end
-  end
-
-  def tab!
-    @verified_tab ||= policy(authenticated_resource || Page).verify_tab(tab)
-  end
-
-  def tab
-    @tab ||= params[:tab] || policy(authenticated_resource).default_tab
   end
 end

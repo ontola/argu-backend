@@ -4,6 +4,7 @@ class User < ApplicationRecord
   enhance ConfirmedDestroyable
   enhance Placeable
   enhance Updateable
+  enhance Settingable
 
   include RedirectHelper
   include Iriable
@@ -63,7 +64,7 @@ class User < ApplicationRecord
   before_create :build_public_group_membership
   after_commit :publish_data_event, if: :should_broadcast_changes
 
-  attr_accessor :current_password, :tab
+  attr_accessor :current_password
 
   delegate :description, to: :profile
 

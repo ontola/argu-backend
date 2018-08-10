@@ -59,10 +59,6 @@ class UserPolicy < RestrictivePolicy
     user.edges.where(owner_type: 'Page').length >= max_allowed_pages
   end
 
-  def settings?
-    current_user?
-  end
-
   def update?
     current_user? || super
   end

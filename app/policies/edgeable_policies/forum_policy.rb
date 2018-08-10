@@ -36,8 +36,4 @@ class ForumPolicy < EdgePolicy
   def move?
     staff?
   end
-
-  def settings?
-    update?
-  end
 end

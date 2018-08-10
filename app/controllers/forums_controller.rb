@@ -10,8 +10,6 @@ class ForumsController < EdgeableController
 
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
 
-  active_response :settings
-
   def index_success_html
     edge_ids =
       current_user
@@ -83,10 +81,6 @@ class ForumsController < EdgeableController
     settings_iri_path(authenticated_resource, tab: tab)
   end
 
-  def settings_success
-    respond_with_form(default_form_options(:settings))
-  end
-
   def settings_view
     @grants =
       Grant
@@ -95,16 +89,6 @@ class ForumsController < EdgeableController
         .includes(group: {group_memberships: {member: :profileable}})
     'forums/settings'
   end
-  alias edit_view settings_view
-
-  def settings_view_locals
-    {
-      active: tab!,
-      resource: authenticated_resource,
-      tab: tab!
-    }
-  end
-  alias edit_view_locals settings_view_locals
 
   def show_includes
     [

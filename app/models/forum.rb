@@ -14,6 +14,7 @@ class Forum < Edge
   enhance Updateable
   enhance Widgetable
   enhance Actionable
+  enhance Settingable
 
   include Attribution
 
@@ -35,7 +36,6 @@ class Forum < Edge
   end
 
   # @private
-  attr_accessor :tab, :active
   attr_writer :public_grant
   alias_attribute :description, :bio
 

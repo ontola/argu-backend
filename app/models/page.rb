@@ -12,6 +12,7 @@ class Page < Edge
   enhance Placeable
   enhance Updateable
   enhance Actionable
+  enhance Settingable
 
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
@@ -25,8 +26,6 @@ class Page < Edge
              'AS forum_edges ON edges.id = forum_edges.parent_id')
       .order('forum_edges.total_follows DESC NULLS LAST')
   }
-
-  attr_accessor :tab, :active
 
   delegate :description, :default_profile_photo, to: :profile
 

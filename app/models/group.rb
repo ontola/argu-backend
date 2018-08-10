@@ -4,6 +4,7 @@ class Group < ApplicationRecord
   enhance ConfirmedDestroyable
   enhance Createable
   enhance Updateable
+  enhance Settingable
 
   include Ldable
   include Parentable

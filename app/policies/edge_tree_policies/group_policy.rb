@@ -39,10 +39,6 @@ class GroupPolicy < EdgeTreePolicy
     edgeable_policy.update?
   end
 
-  def settings?
-    update?
-  end
-
   def default_tab
     'members'
   end
