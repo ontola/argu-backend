@@ -16,8 +16,8 @@ RSpec.feature 'Motions', type: :feature do
 
     assert_difference('Motion.count' => 1) do
       within('#new_motion') do
-        fill_in 'motion[title]', with: motion_attr[:title]
-        fill_in 'motion[content]', with: motion_attr[:content]
+        fill_in 'motion[display_name]', with: motion_attr[:title]
+        fill_in 'motion[description]', with: motion_attr[:content]
         within('.Select-profile') do
           fill_in_select with: argu.display_name
         end

@@ -8,8 +8,8 @@
           =f.input :default_cover_photo, as: :react_cover, label: false
         section.smallpadded.form-filled
           =f.inputs
-            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'blog-post-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(blog_post, :title, motion_type.downcase)
-            =f.input :content, as: :text, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(blog_post, :content, motion_type.downcase)
+            =f.input :display_name, as: :text, input_html: {size: '2', maxlength: '110', class: 'blog-post-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(blog_post, :title, motion_type.downcase)
+            =f.input :description, as: :text, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(blog_post, :content, motion_type.downcase)
             - if policy(resource).permitted_attributes.include?(:mark_as_important)
               =f.input :mark_as_important, as: :reverse_boolean
               li.form-helper

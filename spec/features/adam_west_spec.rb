@@ -197,8 +197,8 @@ RSpec.feature 'Adam west', type: :feature do
 
     motion_attr = attributes_for(:motion)
     within('#new_motion') do
-      fill_in 'motion[title]', with: motion_attr[:title]
-      fill_in 'motion[content]', with: motion_attr[:content]
+      fill_in 'motion[display_name]', with: motion_attr[:title]
+      fill_in 'motion[description]', with: motion_attr[:content]
       click_button 'Save'
     end
 

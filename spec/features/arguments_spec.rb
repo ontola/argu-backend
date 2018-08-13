@@ -22,7 +22,7 @@ RSpec.feature 'Voting', type: :feature do
     argument_attributes = attributes_for(:argument)
 
     within('#new_argument') do
-      fill_in 'argument_title', with: argument_attributes[:title]
+      fill_in 'argument_display_name', with: argument_attributes[:title]
       click_button 'Save'
     end
 
