@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class ForumSerializer < RecordSerializer
+class ForumSerializer < EdgeSerializer
 end
