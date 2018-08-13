@@ -3,7 +3,7 @@
 class MenuItemSerializer < BaseSerializer
   attribute :action, predicate: NS::ARGU[:action]
   attribute :label, predicate: NS::SCHEMA[:name]
-  attribute :href, predicate: NS::SCHEMA[:url]
+  attribute :href, predicate: NS::ARGU[:href]
   attribute :data
 
   has_one :parent, predicate: NS::ARGU[:parentMenu], if: :has_parent_menu?
