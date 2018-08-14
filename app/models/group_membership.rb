@@ -46,6 +46,14 @@ class GroupMembership < ApplicationRecord
     collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
   end
 
+  def self.includes_for_serializer
+    [user: {}, group: {}]
+  end
+
+  def self.iri
+    [super, NS::ORG['Membership']]
+  end
+
   def iri_opts
     super.merge(root_id: page.url)
   end

@@ -28,6 +28,7 @@ class Group < ApplicationRecord
   alias_attribute :display_name, :name
 
   with_collection :grants
+  with_collection :group_memberships
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
@@ -60,6 +61,10 @@ class Group < ApplicationRecord
 
   def name_singular
     id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
+  end
+
+  def self.iri
+    [super, NS::ORG['Organization']]
   end
 
   def self.public

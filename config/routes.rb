@@ -316,9 +316,9 @@ Rails.application.routes.draw do
       resources :groups,
                 path: 'g',
                 only: %i[show] do
+        resources :group_memberships, only: %i[new create index]
         include_route_concerns
         get :settings, on: :member
-        resources :group_memberships, only: %i[new create]
         resources :grants, only: %i[index]
       end
       resources :motions,

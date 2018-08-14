@@ -5,6 +5,7 @@ class GroupMembershipsController < ServiceController
   skip_before_action :verify_terms_accepted
 
   def index
+    return super if params[:group_id].present?
     return if params[:q].nil?
     q = params[:q].tr(' ', '|')
     # Matched groups with members
@@ -105,7 +106,7 @@ class GroupMembershipsController < ServiceController
       when 'new', 'create'
         parent_resource&.page&.uuid
       when 'index'
-        parent_resource&.uuid
+        parent_resource.is_a?(Page) ? parent_resource.uuid : parent_resource&.page&.uuid
       else
         resource_by_id&.page&.uuid
       end

@@ -2,6 +2,6 @@
 
 class GroupMembershipSerializer < BaseSerializer
   include Parentable::Serializer
-  has_one :group
-  has_one :user
+  has_one :group, predicate: NS::ORG[:memberOf]
+  has_one :user, predicate: NS::ORG[:member]
 end
