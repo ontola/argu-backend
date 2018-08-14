@@ -120,7 +120,7 @@ class ApplicationMenuList < MenuList
               action: NS::ONTOLA['actions/logout'],
               label: I18n.t('sign_out'),
               href: destroy_user_session_url,
-              image: 'fa-sign-out')
+              image: 'fa-sign-out-alt')
   end
 
   def user_links
@@ -131,15 +131,15 @@ class ApplicationMenuList < MenuList
             :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user), image: 'fa-user'
           ),
           menu_item(
-            :profile, label: I18n.t('profiles.edit.title'), href: settings_user_url(tab: :profile), image: 'fa-pencil'
+            :profile, label: I18n.t('profiles.edit.title'), href: settings_user_url(tab: :profile), image: 'fa-pencil-alt'
           )
         ]
       else
         [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url, image: 'fa-user')]
       end
-    items << menu_item(:settings, label: I18n.t('users.settings.title'), href: settings_user_url, image: 'fa-gear')
+    items << menu_item(:settings, label: I18n.t('users.settings.title'), href: settings_user_url, image: 'fa-cog')
     items << menu_item(
-      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource), image: 'fa-pencil-square-o'
+      :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource), image: 'fa-edit'
     )
     items <<
       if resource.page_management?
@@ -149,7 +149,7 @@ class ApplicationMenuList < MenuList
       end
     if resource.forum_management?
       items <<
-        menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-group')
+        menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-users')
     end
     items << sign_out_menu_item
     items

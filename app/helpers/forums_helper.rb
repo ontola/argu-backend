@@ -77,7 +77,7 @@ module ForumsHelper
     items = []
     items << link_item(t('forums.leave'),
                        collection_iri_path(resource, :favorites),
-                       fa: 'sign-out',
+                       fa: 'sign-out-alt',
                        data: {method: :delete, remote: true, confirm: t('forums.leave_confirmation')})
   end
 

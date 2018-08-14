@@ -42,7 +42,7 @@ class ForumMenuList < MenuList
     menu_item(
       :settings,
       href: settings_iri(resource),
-      image: 'fa-gear',
+      image: 'fa-cog',
       link_opts: {data: {turbolinks: 'true'}},
       policy: :update?
     )

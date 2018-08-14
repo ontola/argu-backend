@@ -9,7 +9,7 @@ module Destroyable
         :destroy,
         type: [NS::SCHEMA[:Action], NS::ARGU[:DestroyAction]],
         policy: :destroy?,
-        image: 'fa-close',
+        image: 'fa-times',
         url: -> { resource.iri(destroy: true) },
         http_method: :delete,
         iri_template: :delete_iri

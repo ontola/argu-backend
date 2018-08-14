@@ -23,7 +23,7 @@ class PageMenuList < MenuList
         [
           menu_item(
             :settings,
-            image: 'fa-gear',
+            image: 'fa-cog',
             href: settings_page_url(resource),
             policy: :update?
           ),

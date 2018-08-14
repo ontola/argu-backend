@@ -3,10 +3,10 @@
 module SettingsHelper
   def tab_icons
     {
-      general: 'gear',
-      advanced: 'gears',
+      general: 'cog',
+      advanced: 'cogs',
       grants: 'suitcase',
-      groups: 'group',
+      groups: 'users',
       forums: 'comments',
       privacy: 'lock',
       shortnames: 'external-link',

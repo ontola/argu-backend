@@ -13,7 +13,7 @@
     - if policy(forum).update?
       .sticky--top-right
         =link_to settings_iri_path(forum), class: ('btn--transparant'), data: {turbolinks: false_unless_iframe}
-          span.fa.fa-gear
+          span.fa.fa-cog
           span.icon-left= t('settings')
   =render partial: 'forums/info_bar', locals: {forum: forum}
   - if forum.bio.presence

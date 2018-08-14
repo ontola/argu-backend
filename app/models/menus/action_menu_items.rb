@@ -6,7 +6,7 @@ module Menus
       menu_item(
         :comments,
         label_params: {count: resource.children_count(:comments)},
-        image: 'fa-comments-o',
+        image: 'fa-comments',
         href: collection_iri(resource, :comments),
         policy: :index_children?,
         policy_arguments: %i[comments]
@@ -16,7 +16,7 @@ module Menus
     def contact_link
       menu_item(
         :contact,
-        image: 'fa-send-o',
+        image: 'fa-paper-plane',
         link_opts: {data: {remote: 'true'}},
         href: new_iri(resource, :direct_messages),
         policy: :contact?
@@ -26,7 +26,7 @@ module Menus
     def activity_link
       menu_item(
         :activity,
-        image: 'fa-feed',
+        image: 'fa-rss',
         href: feeds_iri(resource),
         policy: :feed?
       )
@@ -55,7 +55,7 @@ module Menus
       menu_item(
         :export,
         href: export_iri(resource),
-        image: 'fa-cloud-download',
+        image: 'fa-cloud-download-alt',
         link_opts: {data: {remote: 'true'}},
         policy: :create_child?,
         policy_arguments: [:exports]
@@ -77,7 +77,7 @@ module Menus
     def statistics_link
       menu_item(
         :statistics,
-        image: 'fa-bar-chart-o',
+        image: 'fa-chart-bar',
         href: statistics_iri(resource),
         policy: :statistics?
       )
@@ -91,7 +91,7 @@ module Menus
       menu_item(
         :destroy,
         href: delete_iri(resource),
-        image: 'fa-close',
+        image: 'fa-times',
         link_opts: {
           data: {remote: 'true'}
         },

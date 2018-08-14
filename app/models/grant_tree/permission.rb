@@ -30,7 +30,7 @@ class GrantTree
       end
 
       define_method "#{action}_icon" do
-        return 'fa-close' if send(action).blank?
+        return 'fa-times' if send(action).blank?
         send(action).include?(NS::ARGU[:contentTreeClass]) ? 'fa-check' : 'fa-question'
       end
 

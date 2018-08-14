@@ -122,7 +122,7 @@ export const InvitedSelection = React.createClass({
             <div>
                 {img}
                 {obj.label}
-                <a href="#" onClick={this.props.handleRemoveInvited}><span className="fa fa-close" data-value={obj.value} /></a>
+                <a href="#" onClick={this.props.handleRemoveInvited}><span className="fa fa-times" data-value={obj.value} /></a>
             </div>
         );
     },

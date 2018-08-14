@@ -42,7 +42,7 @@ export default class Alert {
     }
 
     render () {
-        (this._alert = $(`<div class='alert-container'><div class='alert alert-${this.messageType}'><div class='alert-close'><span class='fa fa-close'></span></div>${this.message}</div></div>`));
+        (this._alert = $(`<div class='alert-container'><div class='alert alert-${this.messageType}'><div class='alert-close'><span class='fa fa-times'></span></div>${this.message}</div></div>`));
         $(this.prependSelector).prepend(this._alert);
         return this._alert;
     }

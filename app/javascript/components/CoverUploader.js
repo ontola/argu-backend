@@ -61,7 +61,7 @@ export const CoverUploader = React.createClass({
                 <div
                   className='dropzone--cover-delete-image'
                   onClick={this.removeImage}>
-                    <span className='fa fa-close' />
+                    <span className='fa fa-times' />
                     <span>{I18n.t('formtastic.labels.remove_image')}</span>
                 </div>
             );

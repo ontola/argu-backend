@@ -5,9 +5,9 @@
         span.fa.fa-building
         span.icon-left= resource.root.display_name
       li= link_to settings_iri_path(resource.root, tab: :groups)
-        span.fa.fa-gear
+        span.fa.fa-cog
         span.icon-left= t('pages.settings.title')
       li[class=('tab--current' if local_assigns[:active] == :settings)]
         =link_to settings_iri_path(resource)
-          span.fa.fa-gear
+          span.fa.fa-cog
           span.icon-left= t('groups.settings.title')

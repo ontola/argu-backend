@@ -37,7 +37,7 @@ class GrantSetsTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert_select '.fa-check.permitted-icon', {count: opts[:should] || 0},
                   "#{title} should have #{opts[:should] || 0} permitted"
-    assert_select '.fa-close.permitted-icon', {count: opts[:should_not] || 0},
+    assert_select '.fa-times.permitted-icon', {count: opts[:should_not] || 0},
                   "#{title} should have #{opts[:should_not] || 0} not permitted"
     assert_select '.fa-question.permitted-icon', {count: opts[:conditional] || 0},
                   "#{title} should have #{opts[:conditional] || 0} conditionals"

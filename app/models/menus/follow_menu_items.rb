@@ -42,7 +42,7 @@ module Menus
         method = 'POST'
         href = follows_url(gid: resource.uuid, follow_type: type)
       end
-      image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
+      image = follow_type == type.to_s ? 'fa-check-square' : 'fa-square-o'
       menu_item(type, href: href, image: image, link_opts: {data: {remote: true, method: method}})
     end
   end
