@@ -152,7 +152,7 @@ class FormsBase
         (enum ? NS::XSD[:string] : attr_to_datatype(attr)) ||
         raise("No datatype found for #{attr.name}")
       attrs[:max_count] = 1
-      attrs[:sh_in] = enum && RDF::List(enum)
+      attrs[:sh_in] = enum && enum.is_a?(Hash) ? enum.keys : enum
       attrs
     end
 

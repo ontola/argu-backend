@@ -27,5 +27,9 @@ module SHACL
     def path
       object.path.respond_to?(:each) ? object.path : [Resource.for(object.path)]
     end
+
+    def sh_in
+      object.sh_in && RDF::List[*object.sh_in]
+    end
   end
 end
