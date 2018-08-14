@@ -18,7 +18,7 @@ module SHACL
     def referred_shapes
       object.referred_shapes&.map do |shape|
         if shape.is_a?(Class) && shape < FormsBase
-          shape.new(user_context, shape.to_s.gsub('Form', '').constantize.new).shape
+          shape.new(user_context, shape.model_class.new).shape
         else
           shape
         end

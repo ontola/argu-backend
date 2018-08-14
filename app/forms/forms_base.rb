@@ -73,6 +73,10 @@ class FormsBase
       target.send(:hidden_fields)
     end
 
+    def model_class
+      @model_class ||= (name.deconstantize.presence&.singularize || name.sub(/Form$/, '')).safe_constantize
+    end
+
     def property_shapes_attrs
       @property_shapes_attrs ||=
         _fields
@@ -154,10 +158,6 @@ class FormsBase
 
     def model_attribute(attr)
       (model_class.attribute_alias(attr) || attr).to_sym
-    end
-
-    def model_class
-      @model_class ||= name.sub(/Form$/, '').safe_constantize
     end
 
     def model_enums

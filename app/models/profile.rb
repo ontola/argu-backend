@@ -3,6 +3,8 @@
 class Profile < ApplicationRecord
   enhance ProfilePhotoable
   enhance CoverPhotoable
+  enhance Updateable
+  enhance Actionable
 
   include Ldable
   include Uuidable

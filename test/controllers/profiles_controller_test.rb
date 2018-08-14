@@ -61,7 +61,6 @@ class ProfilesControllerTest < ActionController::TestCase
     get :edit, params: {id: user.url}
 
     assert_redirected_to settings_user_path(tab: :profile)
-    assert_equal user, assigns(:resource), ''
   end
 
   test 'user should not get edit profile with other profile' do
@@ -70,6 +69,5 @@ class ProfilesControllerTest < ActionController::TestCase
     get :edit, params: {id: user2.url}
 
     assert_redirected_to settings_user_path(tab: :profile)
-    assert_equal user2, assigns(:resource)
   end
 end

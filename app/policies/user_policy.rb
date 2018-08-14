@@ -10,10 +10,13 @@ class UserPolicy < RestrictivePolicy
   def permitted_attribute_names(password = false)
     attrs = super()
     if create?
-      attrs.concat %i[password password_confirmation primary_email]
+      attrs.concat %i[password password_confirmation primary_email current_password]
       attrs.append(profile_attributes: %i[name profile_photo])
     end
-    attrs.append(home_placement_attributes: %i[postal_code country_code id])
+    attrs.append(
+      home_placement_attributes:
+        PlacementPolicy.new(context, record.home_placement || Placement.new(placeable: record)).permitted_attributes
+    )
     attrs.append(email_addresses_attributes: %i[email _destroy id])
     attrs.append(shortname_attributes: %i[shortname]) if record.url.nil?
     attrs.concat %i[first_name middle_name last_name]
@@ -33,8 +36,9 @@ class UserPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[general profile authentication notifications privacy
-                   advanced]
+    tabs.concat %i[general profile authentication notifications privacy advanced]
+    tabs.append :delete if vnext?
+    tabs
   end
 
   def show?

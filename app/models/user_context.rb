@@ -6,14 +6,15 @@ class UserContext
   include UUIDHelper
 
   attr_accessor :tree_root_id
-  attr_reader :user, :actor, :doorkeeper_scopes
+  attr_reader :user, :actor, :doorkeeper_scopes, :vnext
 
-  def initialize(doorkeeper_scopes:, profile: nil, tree_root_id: nil, user: nil)
+  def initialize(doorkeeper_scopes:, profile: nil, tree_root_id: nil, user: nil, vnext: nil)
     raise "tree_root_id should be a uuid but is #{tree_root_id}" unless tree_root_id.nil? || uuid?(tree_root_id)
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
     @tree_root_id = tree_root_id
+    @vnext = vnext
     @lookup_map = {}
     @grant_trees = {}
   end

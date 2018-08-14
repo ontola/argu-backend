@@ -17,6 +17,7 @@ class Placement < ApplicationRecord
   delegated_attribute :lon, :string, to: :place
   delegated_attribute :postal_code, :string, to: :place
   delegated_attribute :zoom_level, :integer, to: :place, default: 13
+  alias_attribute :display_name, :title
 
   # Returns a {Placement} in a #path
   # Sorted first ascending on the order of the #title given in #sort

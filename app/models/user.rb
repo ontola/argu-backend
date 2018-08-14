@@ -5,6 +5,8 @@ class User < ApplicationRecord
   enhance Placeable
   enhance Updateable
   enhance Settingable
+  enhance Menuable
+  enhance Actionable
 
   include RedirectHelper
   include Iriable
@@ -87,6 +89,11 @@ class User < ApplicationRecord
             inclusion: {
               in: I18n.available_locales.map(&:to_s),
               message: '%<value> is not a valid locale'
+            }
+  validates :time_zone,
+            inclusion: {
+              in: ActiveSupport::TimeZone::MAPPING.keys,
+              message: '%<value> is not a valid timezone'
             }
   validate :r, :validate_r
   validate :validate_public_group_membership
@@ -374,6 +381,10 @@ class User < ApplicationRecord
       # Get the identity and user if they exist
       identity = Identity.find_for_oauth(auth)
       identity&.user
+    end
+
+    def iri
+      NS::SCHEMA[:Person]
     end
 
     private

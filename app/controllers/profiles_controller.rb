@@ -2,6 +2,8 @@
 
 class ProfilesController < ApplicationController
   include SettingsHelper
+  include UriTemplateHelper
+  active_response :edit, :show
 
   def index
     return if current_user.guest? || params[:q].blank?
@@ -10,16 +12,6 @@ class ProfilesController < ApplicationController
     return unless params[:things]&.split(',')&.include?('pages')
     @profiles += policy_scope(Profile)
                    .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
-  end
-
-  # GET /p/shortname/edit
-  def edit
-    @resource = Shortname.find_resource(params[:id])
-    if @resource.is_a? User
-      redirect_to url_for([:settings, tab: :profile])
-    else
-      redirect_to settings_iri_path(@resource, tab: :profile)
-    end
   end
 
   # GET /profiles/setup
@@ -59,8 +51,20 @@ class ProfilesController < ApplicationController
 
   private
 
+  def current_resource
+    @current_resource ||= Shortname.find_resource(params[:id])&.profile || Profile.find_by(id: params[:id])
+  end
+
+  def edit_success_html
+    if current_resource.profileable.is_a? User
+      redirect_to url_for([:settings, tab: :profile])
+    else
+      redirect_to settings_iri_path(current_resource.profileable, tab: :profile)
+    end
+  end
+
   def permit_params
-    pm = params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes).to_h
+    pm = params.require(:profile).permit(*policy(@profile || current_resource).permitted_attributes).to_h
     merge_photo_params(pm, @resource.class)
     pm
   end
@@ -101,5 +105,9 @@ class ProfilesController < ApplicationController
   def user_or_redirect(redirect = nil)
     raise Argu::Errors::Unauthorized.new(r: redirect) if current_user.guest?
     current_user
+  end
+
+  def tree_root_id
+    current_resource.profileable.root_id if current_resource&.profileable&.is_a?(Edge)
   end
 end

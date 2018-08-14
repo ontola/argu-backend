@@ -32,3 +32,6 @@ en:
         label: "Upvote"
       destroy_vote:
         label: "Upvote"
+    users:
+      notifications:
+        description: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."

@@ -5,6 +5,7 @@ module SettingsHelper
     {
       general: 'gear',
       advanced: 'gears',
+      delete: 'trash',
       grants: 'suitcase',
       groups: 'group',
       forums: 'comments',
@@ -37,5 +38,12 @@ module SettingsHelper
                       }
       end
     end
+  end
+
+  def setting_item(tag, opts)
+    opts[:image] ||= "fa-#{tab_icons[tag]}"
+    opts[:policy] ||= :tab?
+    opts[:policy_arguments] ||= [tag]
+    menu_item(tag, opts)
   end
 end

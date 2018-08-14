@@ -12,8 +12,9 @@ module ActiveResponseHelper
 
   def active_response_action(opts)
     action_resource = opts[:resource].try(:new_record?) ? index_collection : opts[:resource]
-    form = opts[:view] == 'form' ? action_name : opts[:view]
-    action_resource.action(user_context, ACTION_MAP[form.to_sym] || form)
+    form = params[:form]
+    form ||= opts[:view] == 'form' ? action_name : opts[:view]
+    action_resource.action(user_context, ACTION_MAP[form.to_sym] || form.to_sym)
   end
 
   def active_response_success_message

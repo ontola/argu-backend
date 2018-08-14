@@ -119,9 +119,8 @@ Rails.application.routes.draw do
 
   resources :users,
             path: 'u',
-            only: %i[show] do
+            only: %i[show edit] do
     resources :identities, only: :destroy, controller: 'users/identities'
-    get :edit, to: 'profiles#edit', on: :member
 
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member
@@ -172,7 +171,7 @@ Rails.application.routes.draw do
         to: 'static_pages#dismiss_announcement'
   end
 
-  resources :profiles, only: %i[index update] do
+  resources :profiles, only: %i[index update show edit] do
     post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     get :setup, to: 'profiles#setup', on: :collection

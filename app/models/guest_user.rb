@@ -57,4 +57,8 @@ class GuestUser < User
     @profile.profileable = self
     @profile
   end
+
+  def self.iri
+    NS::ARGU[:GuestUser]
+  end
 end

@@ -7,7 +7,7 @@ class MenuItem
 
   attr_accessor :action, :label, :parent, :tag, :menus, :href, :item_type,
                 :type, :description, :link_opts, :resource
-  attr_writer :image
+  attr_writer :image, :iri_base, :iri_tag
 
   def as_json(_opts = {})
     {}
@@ -34,11 +34,21 @@ class MenuItem
         fragment = nil
         '#'
       end
-    RDF::URI("#{parent.iri(only_path: only_path)}#{seperator}#{tag}#{fragment}")
+    RDF::URI("#{iri_base(only_path)}#{seperator}#{iri_tag}#{fragment}")
   end
   alias id iri
 
   def menu_sequence
     @menu_sequence ||= RDF::Sequence.new(menus&.call&.compact&.each { |menu| menu.parent = self })
+  end
+
+  private
+
+  def iri_base(only_path)
+    @iri_base&.call(only_path) || parent.iri(only_path: only_path)
+  end
+
+  def iri_tag
+    @iri_tag || tag
   end
 end
