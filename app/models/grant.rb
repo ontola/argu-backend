@@ -5,6 +5,7 @@ class Grant < ApplicationRecord
   enhance Destroyable
   enhance Actionable
 
+  include Ldable
   include Parentable
 
   # The Edge this Grant is providing rules for
@@ -52,6 +53,10 @@ class Grant < ApplicationRecord
   def grant_set=(value)
     value = GrantSet.find_by!(title: value) if value.is_a?(String)
     super
+  end
+
+  def self.includes_for_serializer
+    {}
   end
 
   def iri_opts

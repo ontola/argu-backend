@@ -2,9 +2,9 @@
 
 nl:
   grants:
-    type: "recht"
+    type: "Recht"
     type_new: "Nieuw recht"
-    plural: "rechten"
+    plural: "Rechten"
     empty: "Geen rechten"
     new: "Verleen nieuwe rechten"
     inherited: "Deze rol is geërfd van bovenliggend %{type}"
@@ -17,8 +17,8 @@ nl:
     errors:
       taken: "Deze groep heeft al rechten in dit forum. Verwijder dit recht eerst voordat je een nieuwe aanmaakt."
   roles:
-    type: "recht"
-    plural: "rechten"
+    type: "Recht"
+    plural: "Rechten"
     description: "Rechten gelden voor ook voor onderliggen items."
     label: "Leden van deze groep mogen:"
     in_current_forum: "In forum %{forum}"

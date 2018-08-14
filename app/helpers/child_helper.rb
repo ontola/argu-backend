@@ -18,8 +18,14 @@ module ChildHelper
     case raw_klass.to_s
     when 'Discussion'
       {forum: parent}
-    when 'Export', 'Favorite', 'GrantTree', 'Grant'
+    when 'Export', 'Favorite', 'GrantTree'
       {edge: parent}
+    when 'Grant'
+      if parent.is_a?(Group)
+        {edge: parent.page, group: parent}
+      else
+        {edge: parent}
+      end
     when 'GroupMembership'
       {group: parent}
     when 'Group'

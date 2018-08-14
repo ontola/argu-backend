@@ -2,9 +2,9 @@
 
 en:
   grants:
-    type: "grant"
+    type: "Grant"
     type_new: "New grant"
-    plural: "grants"
+    plural: "Grants"
     empty: "No grants"
     new: "Assign new grants"
     inherited: "This role is inherited from the %{type}"
@@ -17,8 +17,8 @@ en:
     errors:
       taken: "This group already has a grant on this forum. Please remove this grant before creating a new one."
   roles:
-    type: "grant"
-    plural: "grants"
+    type: "Grant"
+    plural: "Grants"
     description: "Grants also apply to the underlying content."
     label: "Members of this group may:"
     in_current_forum: "In forum %{forum}"

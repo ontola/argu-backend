@@ -60,4 +60,9 @@ class GrantsController < ServiceController
   def service_options
     super.except(:publisher, :creator)
   end
+
+  def tree_root_id
+    return super unless %w[new create index].include?(action_name)
+    @tree_root_id ||= parent_resource.is_a?(Edge) ? parent_resource.root_id : parent_resource&.page&.root_id
+  end
 end

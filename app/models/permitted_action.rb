@@ -14,4 +14,8 @@ class PermittedAction < ApplicationRecord
   def tooltip
     parent_type unless parent_type == '*'
   end
+
+  def to_param
+    title
+  end
 end

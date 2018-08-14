@@ -27,6 +27,8 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name
 
+  with_collection :grants
+
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
 

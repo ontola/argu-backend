@@ -319,6 +319,7 @@ Rails.application.routes.draw do
         include_route_concerns
         get :settings, on: :member
         resources :group_memberships, only: %i[new create]
+        resources :grants, only: %i[index]
       end
       resources :motions,
                 path: 'm',
