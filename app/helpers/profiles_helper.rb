@@ -7,9 +7,9 @@ module ProfilesHelper
     profile = Profile.community if profile.profileable.blank?
     url =
       if canonical
-        profile.canonical_iri(only_path: only_path)
+        profile.profileable.canonical_iri(only_path: only_path)
       else
-        profile.iri(only_path: only_path)
+        profile.profileable.iri(only_path: only_path)
       end
     respond_to?(:tree_root_id) && tree_root_id.present? ? "#{url}?page_id=#{tree_root.url}" : url.to_s
   end

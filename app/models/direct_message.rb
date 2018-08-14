@@ -41,7 +41,7 @@ class DirectMessage
       resource.publisher,
       actor: {
         display_name: actor.display_name,
-        iri: actor.iri,
+        iri: actor.profileable.iri,
         thumbnail: actor.default_profile_photo.thumbnail
       },
       body: body,

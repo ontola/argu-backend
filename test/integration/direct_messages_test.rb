@@ -23,7 +23,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'user should not post create direct_message' do
     sign_in user
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params, actor_iri: administrator.profile.iri}
+         params: {direct_message: valid_params, actor_iri: administrator.iri}
     assert_not_authorized
   end
 
@@ -50,7 +50,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
 
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params, actor_iri: administrator.profile.iri}
+         params: {direct_message: valid_params, actor_iri: administrator.iri}
     assert_redirected_to motion.iri_path
     assert_email_sent(skip_sidekiq: true)
   end
@@ -60,7 +60,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     post direct_messages_path(root_id: argu.url),
          params: {
            direct_message: valid_params.merge(email: unconfirmed_email.email),
-           actor_iri: administrator.profile.iri
+           actor_iri: administrator.iri
          }
     assert_not_authorized
   end
@@ -68,7 +68,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'administrator should not post create direct_message with other email' do
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params.merge(email: user.email), actor_iri: administrator.profile.iri}
+         params: {direct_message: valid_params.merge(email: user.email), actor_iri: administrator.iri}
     assert_not_authorized
   end
 
@@ -76,21 +76,21 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params.except(:body), actor_iri: administrator.profile.iri}
+         params: {direct_message: valid_params.except(:body), actor_iri: administrator.iri}
     assert_response :success
   end
 
   test 'administrator should not post create direct_message with missing subject' do
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params.except(:subject), actor_iri: administrator.profile.iri}
+         params: {direct_message: valid_params.except(:subject), actor_iri: administrator.iri}
     assert_response :success
   end
 
   test 'administrator should not post create direct_message with unpermitted actor' do
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params, actor_iri: user.profile.iri}
+         params: {direct_message: valid_params, actor_iri: user.iri}
     assert_not_authorized
   end
 

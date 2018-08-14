@@ -37,15 +37,15 @@ RSpec.describe "Iri's", type: :model do
 
   context 'User profile' do
     subject { create(:user).profile }
-    let(:iri_owner) { subject.profileable }
-    let(:url) { url_for([subject.profileable, protocol: :http]) }
+    let(:iri_owner) { subject }
+    let(:url) { url_for([subject, protocol: :http]) }
     it_behaves_like 'iri matches route'
   end
 
   context 'Page profile' do
     subject { argu.profile }
-    let(:iri_owner) { subject.profileable }
-    let(:url) { url_for([subject.profileable, protocol: :http]) }
+    let(:iri_owner) { subject }
+    let(:url) { url_for([subject, protocol: :http]) }
     it_behaves_like 'iri matches route'
   end
 

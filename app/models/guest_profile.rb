@@ -11,4 +11,10 @@ class GuestProfile < Profile
   def preferred_forum
     Forum.first_public
   end
+
+  private
+
+  def iri_template_name
+    :profiles_iri
+  end
 end

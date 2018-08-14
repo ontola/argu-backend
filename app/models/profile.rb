@@ -40,7 +40,7 @@ class Profile < ApplicationRecord
            dependent: :restrict_with_exception
   has_many :edges, dependent: :restrict_with_exception, foreign_key: :creator_id
 
-  delegate :ancestor, :iri, to: :profileable
+  delegate :ancestor, to: :profileable
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
