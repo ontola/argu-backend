@@ -13,7 +13,7 @@ class GroupPolicy < EdgeTreePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[name name_singular] if create?
+    attributes.concat %i[name display_name name_singular] if create?
     attributes.append(grants_attributes: %i[id grant_set_id edge_id group_id])
     attributes.append :id if staff?
     attributes
@@ -22,6 +22,7 @@ class GroupPolicy < EdgeTreePolicy
   def permitted_tabs
     tabs = []
     tabs.concat %i[members invite general grants advanced] if edgeable_policy.update?
+    tabs.concat %i[delete] if vnext? && edgeable_policy.update?
     tabs
   end
   delegate :update?, :show?, to: :edgeable_policy

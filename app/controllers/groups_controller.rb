@@ -1,31 +1,18 @@
 # frozen_string_literal: true
 
 class GroupsController < ServiceController
-  def settings
-    if tab! == 'members'
-      @members = authenticated_resource
-                   .group_memberships
-                   .includes(member: {profileable: :shortname})
-                   .page(params[:page])
-    end
-    render locals: {
-      tab: tab!,
-      active: tab!,
-      resource: authenticated_resource
-    }
-  end
-
   private
 
-  def default_form_view(_action)
-    'pages/settings'
+  def default_form_view(action)
+    return super unless active_response_type == :html
+    action.to_sym == :new ? 'pages/settings' : 'settings'
   end
 
   def default_form_view_locals(_action)
     {
       tab: tab!,
       active: tab!,
-      resource: authenticated_resource.page
+      resource: authenticated_resource
     }
   end
 
@@ -59,6 +46,16 @@ class GroupsController < ServiceController
     HashWithIndifferentAccess.new(
       page: parent_resource!
     )
+  end
+
+  def settings_success_html
+    if tab! == 'members'
+      @members = authenticated_resource
+                   .group_memberships
+                   .includes(member: {profileable: :shortname})
+                   .page(params[:page])
+    end
+    respond_with_form(default_form_options(:settings))
   end
 
   def tab

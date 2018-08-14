@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
+  PUBLIC_ID = -1
+  STAFF_ID = -2
+
+  enhance Actionable
   enhance ConfirmedDestroyable
   enhance Createable
-  enhance Updateable
+  enhance Menuable
   enhance Settingable
+  enhance Updateable
 
   include Ldable
   include Parentable
@@ -20,6 +25,7 @@ class Group < ApplicationRecord
   belongs_to :page, required: true, inverse_of: :groups, primary_key: :uuid
   has_many :decisions, foreign_key_property: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
+  alias_attribute :display_name, :name
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
   validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
@@ -31,9 +37,6 @@ class Group < ApplicationRecord
 
   parentable :page
   alias edgeable_record parent
-
-  PUBLIC_ID = -1
-  STAFF_ID = -2
 
   def as_json(options = {})
     super(options.merge(except: %i[created_at updated_at]))
