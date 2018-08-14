@@ -6,7 +6,7 @@ class ForumMenuList < MenuList
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
   cattr_accessor :defined_menus
-  has_menus %i[actions follow navigations share settings]
+  has_menus %i[actions follow navigations share settings discussions]
 
   private
 
@@ -16,6 +16,32 @@ class ForumMenuList < MenuList
       image: 'fa-ellipsis-v',
       menus: -> { [activity_link, statistics_link, export_link, settings_link] },
       link_opts: {triggerClass: 'btn--transparant'}
+    )
+  end
+
+  def discussions_menu
+    menu_item(
+      :discussions,
+      iri_base: ->(only_path) { collection_iri(resource, :discussions, only_path: only_path) },
+      iri_tag: :new,
+      menus: lambda {
+        [
+          menu_item(
+            :new_question,
+            image: 'fa-question',
+            href: new_iri(resource, :questions),
+            policy: :create_child?,
+            policy_arguments: %i[questions]
+          ),
+          menu_item(
+            :new_motion,
+            image: 'fa-lightbulb-o',
+            href: new_iri(resource, :motions),
+            policy: :create_child?,
+            policy_arguments: %i[motions]
+          )
+        ]
+      }
     )
   end
 
