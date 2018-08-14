@@ -3,14 +3,23 @@
 class PageSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
 
+  attribute :name, predicate: NS::SCHEMA[:name]
   attribute :about, predicate: NS::SCHEMA[:description]
   attribute :base_color, predicate: NS::ARGU[:baseColor]
+  attribute :visibility, predicate: NS::ARGU[:visibility]
+  attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
+
+  has_one :profile, predicate: NS::ARGU[:profile]
 
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
   with_collection :forums, predicate: NS::ARGU[:forums]
 
   def about
     object.profile.about
+  end
+
+  def name
+    object.profile.name
   end
 
   def object

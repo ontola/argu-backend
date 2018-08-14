@@ -9,10 +9,6 @@ RSpec.describe 'Pages', type: :request do
     super - %i[html]
   end
 
-  def self.edit_formats
-    %i[html]
-  end
-
   let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:edit_path) do
     nominatim_netherlands

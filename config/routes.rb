@@ -258,7 +258,7 @@ Rails.application.routes.draw do
   constraints(Argu::PagesConstraint) do
     resources :pages,
               path: '',
-              only: %i[show],
+              only: %i[show edit],
               concerns: %i[feedable statable exportable] do
       include_route_concerns
       resources :forums, only: %i[index]
@@ -271,7 +271,6 @@ Rails.application.routes.draw do
       resources :shortnames, only: %i[new create]
       resources :vote_matches, only: %i[index show]
       get :settings, on: :member
-      get :edit, to: 'profiles#edit', on: :member
       resources :users, path: 'u', only: %i[] do
         get :feed, controller: 'users/feed', action: :index
       end
