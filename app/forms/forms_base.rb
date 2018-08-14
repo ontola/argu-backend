@@ -138,7 +138,7 @@ class FormsBase
     end
 
     def hidden_group
-      @hidden_group ||= property_group(:hidden, label: 'hidden')
+      @hidden_group ||= property_group(:hidden, iri: NS::ONTOLA[:hiddenGroup])
     end
 
     def literal_property_attrs(attr, attrs)
@@ -183,7 +183,8 @@ class FormsBase
       raise "Property group '#{name}' defined twice" if _property_groups[name].present?
       raise "Property group '#{name}' not available in fields" if _fields[name].nil?
       group = SHACL::PropertyGroup.new(
-        label: opts[:label]
+        label: opts[:label],
+        iri: opts[:iri]
       )
       _fields[name][:is_group] = true
       _property_groups[name] = group

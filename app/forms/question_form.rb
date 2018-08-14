@@ -20,6 +20,7 @@ class QuestionForm < FormsBase
                  ]
 
   property_group :footer,
+                 iri: NS::ONTOLA[:footerGroup],
                  properties: %i[
                    creator
                  ]
