@@ -14,7 +14,7 @@ class Discussion
   alias edgeable_record parent
 
   def self.default_per_page
-    10
+    12
   end
 
   def self.includes_for_serializer
