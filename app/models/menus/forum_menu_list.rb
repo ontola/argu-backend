@@ -6,7 +6,7 @@ class ForumMenuList < MenuList
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
   cattr_accessor :defined_menus
-  has_menus %i[actions follow navigations share]
+  has_menus %i[actions follow navigations share settings]
 
   private
 
@@ -50,5 +50,36 @@ class ForumMenuList < MenuList
 
   def share_menu
     share_menu_items(triggerClass: 'btn--transparant')
+  end
+
+  def settings_menu
+    menu_item(
+      :settings,
+      iri_base: ->(only_path) { resource.iri(only_path: only_path) },
+      menus: lambda {
+        [
+          setting_item(
+            :general,
+            label: I18n.t('forums.settings.menu.general'),
+            href: edit_iri(resource)
+          ),
+          setting_item(
+            :grants,
+            label: I18n.t('forums.settings.menu.grants'),
+            href: collection_iri(resource, :grants)
+          ),
+          setting_item(
+            :move,
+            image: 'fa-sitemap',
+            href: move_iri(resource)
+          ),
+          setting_item(
+            :delete,
+            image: 'fa-trash',
+            href: delete_iri(resource)
+          )
+        ]
+      }
+    )
   end
 end

@@ -348,6 +348,7 @@ Rails.application.routes.draw do
         resources :motions, path: :m, only: [] do
           get :search, to: 'motions#search', on: :collection
         end
+        resources :grants, only: :index
         get :settings, on: :member
         resources :banners, only: %i[new create]
         resources :linked_records,

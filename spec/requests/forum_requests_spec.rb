@@ -4,10 +4,6 @@ require 'rails_helper'
 require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Forums', type: :request do
-  def self.edit_formats
-    %i[html]
-  end
-
   include Argu::TestHelpers::AutomatedRequests
   let(:authorized_user) { staff }
 

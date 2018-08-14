@@ -21,6 +21,7 @@ class ForumPolicy < EdgePolicy
     tabs = []
     tabs.concat %i[general]
     tabs.concat %i[banners] if staff?
+    tabs.concat %i[grants move delete] if vnext?
     tabs
   end
 
