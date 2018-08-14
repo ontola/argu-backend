@@ -109,7 +109,7 @@ class EdgePolicy < RestrictivePolicy
   end
 
   def destroy?
-    return super if record.children_counts.values.map(&:to_i).sum.positive?
+    return super if has_content_children?
     is_creator? || has_grant?(:destroy)
   end
 
@@ -161,6 +161,10 @@ class EdgePolicy < RestrictivePolicy
 
   def expires_at?
     %w[Motion Question].include?(record.owner_type) && (moderator? || administrator? || staff?)
+  end
+
+  def has_content_children?
+    record.children_counts.except('votes_con', 'votes_neutral', 'votes_pro').values.map(&:to_i).sum.positive?
   end
 
   def is_creator?
