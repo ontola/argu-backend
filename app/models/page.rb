@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Page < Edge
-  has_many :groups, dependent: :destroy, inverse_of: :page, primary_key: :uuid
+  has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid
 
   enhance BlogPostable
   enhance ConfirmedDestroyable
@@ -39,6 +39,7 @@ class Page < Edge
   with_collection :vote_matches,
                   association: :profile_vote_matches
   with_collection :forums
+  with_collection :groups
 
   parentable
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}

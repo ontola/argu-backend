@@ -4,6 +4,7 @@ nl:
   groups:
     type: "Groep"
     plural: "Groepen"
+    type_new: "Groep toevoegen"
     new: "Groep toevoegen"
     public:
       name: "Publiek"

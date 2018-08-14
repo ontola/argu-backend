@@ -16,7 +16,7 @@ h3= t('forums.plural')
         td
           =forum.follows_count
         td
-          =forum.groups.count
+          =forum.granted_groups.count
 - if policy(resource).create_child?(:forums)
   =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom', data: {turbolinks: false_unless_iframe} do
       span.fa.fa-plus

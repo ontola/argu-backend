@@ -54,8 +54,8 @@ class Edge < ApplicationRecord
            primary_key: :uuid
   has_many :grants, dependent: :destroy, primary_key: :uuid
   has_many :grant_resets, inverse_of: :edge, dependent: :destroy, primary_key: :uuid
-  has_many :groups, through: :grants
-  has_many :group_memberships, -> { active }, through: :groups
+  has_many :granted_groups, through: :grants, class_name: 'Group'
+  has_many :group_memberships, -> { active }, through: :granted_groups
 
   has_many_children :arguments, order: order_child_count_sql(:votes_pro)
   has_many_children :pro_arguments

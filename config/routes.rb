@@ -267,7 +267,7 @@ Rails.application.routes.draw do
       resources :group_memberships, only: :index do
         post :index, action: :index, on: :collection
       end
-      resources :groups, path: 'g', only: %i[create new]
+      resources :groups, path: 'g', only: %i[create new index]
       resources :shortnames, only: %i[new create]
       resources :vote_matches, only: %i[index show]
       get :settings, on: :member
