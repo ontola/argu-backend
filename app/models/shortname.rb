@@ -37,6 +37,7 @@ class Shortname < ApplicationRecord
 
   after_create :destroy_finish_intro_notification
   attr_reader :destination
+  alias_attribute :display_name, :shortname
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
@@ -46,6 +47,10 @@ class Shortname < ApplicationRecord
 
   def self.find_resource(shortname, root_id = nil)
     Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
+  end
+
+  def self.includes_for_serializer
+    [owner: {}]
   end
 
   def parent

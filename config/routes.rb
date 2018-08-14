@@ -188,7 +188,7 @@ Rails.application.routes.draw do
     post :unsubscribe, action: :destroy, on: :member
   end
 
-  resources :shortnames do
+  resources :shortnames, only: [] do
     include_route_concerns
   end
 
@@ -268,7 +268,7 @@ Rails.application.routes.draw do
         post :index, action: :index, on: :collection
       end
       resources :groups, path: 'g', only: %i[create new index]
-      resources :shortnames, only: %i[new create]
+      resources :shortnames, only: %i[new create index]
       resources :vote_matches, only: %i[index show]
       get :settings, on: :member
       resources :users, path: 'u', only: %i[] do

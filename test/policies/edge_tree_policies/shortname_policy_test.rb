@@ -36,7 +36,7 @@ class ShortnamePolicyTest < PolicyTest
   end
 
   def show_results
-    nobody_results
+    nobody_results.merge(administrator: true, staff: true)
   end
 
   def update_results

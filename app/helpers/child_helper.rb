@@ -28,6 +28,8 @@ module ChildHelper
       {about: parent}
     when 'Decision'
       {state: 'forwarded', parent: parent}
+    when 'Shortname'
+      {owner: parent}
     else
       raw_klass <= Edge ? {parent: parent} : {}
     end

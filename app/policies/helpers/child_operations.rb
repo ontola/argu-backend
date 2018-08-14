@@ -31,12 +31,12 @@ module ChildOperations
     c = check_action(cache_key)
     return c unless c.nil?
 
-    r = valid_parent?(klass) && Pundit.policy(context, child_instance(record, klass)).send(method) || false
+    r = valid_child?(klass) && Pundit.policy(context, child_instance(record, klass)).send(method) || false
     cache_action(cache_key, r)
     r
   end
 
-  def valid_parent?(klass)
+  def valid_child?(klass)
     return false unless klass.respond_to?(:parent_classes)
     klass.parent_classes.include?(record.class.name.underscore.to_sym) ||
       record.is_a?(Edge) && klass.parent_classes.include?(:edge)

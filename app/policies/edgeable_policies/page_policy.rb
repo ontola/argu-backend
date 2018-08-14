@@ -60,4 +60,9 @@ class PagePolicy < EdgePolicy
     return if user.guest?
     user.edges.where(owner_type: 'Page').length < UserPolicy.new(context, user).max_allowed_pages
   end
+
+  def valid_child?(klass)
+    return true if klass == Shortname
+    super
+  end
 end

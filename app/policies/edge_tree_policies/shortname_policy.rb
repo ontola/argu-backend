@@ -25,7 +25,7 @@ class ShortnamePolicy < EdgeTreePolicy
   end
 
   def show?
-    false
+    edgeable_policy.update?
   end
 
   private

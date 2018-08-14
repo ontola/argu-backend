@@ -40,6 +40,7 @@ class Page < Edge
                   association: :profile_vote_matches
   with_collection :forums
   with_collection :groups
+  with_collection :shortnames
 
   parentable
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}
