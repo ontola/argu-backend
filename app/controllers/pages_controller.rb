@@ -53,19 +53,6 @@ class PagesController < EdgeableController
     super
   end
 
-  def create_failure_html
-    render 'new',
-           locals: {
-             page: authenticated_resource,
-             errors: authenticated_resource.errors
-           },
-           notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
-  end
-
-  def create_failure_js
-    respond_js('pages/new', page: authenticated_resource, errors: authenticated_resource.errors)
-  end
-
   def destroy_success_html
     redirect_to root_path, status: 303, notice: t('type_destroy_success', type: t('pages.type'))
   end
@@ -115,7 +102,7 @@ class PagesController < EdgeableController
     ]
   end
 
-  def new_execute_html
+  def new_execute
     authenticated_resource.build_shortname
     authenticated_resource.build_profile
   end
