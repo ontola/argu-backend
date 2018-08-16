@@ -11,7 +11,7 @@ module Test
           id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}),
           type: 'collections',
           attributes: {
-            type: 'https://argu.co/ns/core#Collection',
+            type: 'https://argu.co/ns/core#FilteredCollection',
             pageSize: 50,
             title: 'Tokens',
             totalCount: 2,
@@ -19,37 +19,22 @@ module Test
             last: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1)
           },
           relationships: {
-            viewSequence: {
+            defaultView: {
               data: {
-                id: '_:g70345879532200',
-                type: 'rdfSequences'
+                id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1),
+                type: 'railsLdPaginatedCollectionViews'
               }
             }
           }
         },
         included: [
           {
-            id: '_:g70345879532200',
-            type: 'rdfSequences',
-            relationships: {
-              members: {
-                data: [
-                  {
-                    id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1),
-                    type: 'collections'
-                  }
-                ]
-              }
-            }
-          },
-          {
             id: argu_url('/tokens/email/g/1', filter: {group_id: 1, type: 'email'}, page: 1),
-            type: 'collections',
+            type: 'railsLdPaginatedCollectionViews',
             attributes: {
               type: 'https://argu.co/ns/core#Collection',
-              pageSize: 50,
-              title: 'Tokens',
-              totalCount: 2
+              count: 50,
+              title: 'Tokens'
             },
             relationships: {
               memberSequence: {

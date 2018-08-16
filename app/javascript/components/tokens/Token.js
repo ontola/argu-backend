@@ -1,6 +1,6 @@
 import React from 'react';
 import I18n from 'i18n-js';
-import { safeCredentials, statusSuccess } from '../lib/helpers';
+import { safeCredentialsJsonApi, statusSuccess } from '../lib/helpers';
 
 export const Token = React.createClass({
     propTypes: {
@@ -13,7 +13,7 @@ export const Token = React.createClass({
         e.preventDefault();
         if (window.confirm(I18n.t('tokens.retract.confirm')) === true) {
             fetch(this.props.token.links.self,
-                safeCredentials({
+                safeCredentialsJsonApi({
                     method: 'DELETE'
                 }))
                 .then(statusSuccess)

@@ -1,7 +1,7 @@
 import Alert from '../Alert';
 import React from 'react';
 import I18n from 'i18n-js';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { safeCredentialsJsonApi, statusSuccess, json } from '../lib/helpers';
 import Select from 'react-select';
 import TokenList from './TokenList';
 import InvitedSelection from './InvitedSelection';
@@ -36,7 +36,7 @@ export const EmailTokenInvite = React.createClass({
         const emails = this.state.values.map(email => { return email.value; });
         this.setState({ submitting: true });
         fetch(createTokenUrl,
-            safeCredentials({
+            safeCredentialsJsonApi({
                 method: 'POST',
                 body: JSON.stringify({
                     data: {

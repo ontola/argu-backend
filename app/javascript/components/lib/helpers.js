@@ -157,6 +157,14 @@ export function jsonHeader (options) {
     });
 }
 
+export function jsonApiHeader (options) {
+    options = options || {};
+    return Object.assign(options, {
+        'Accept': 'application/vnd.api+json',
+        'Content-Type': 'application/json'
+    });
+}
+
 /**
  * Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
  * Note: Never use for requests across (untrusted) domains.
@@ -169,6 +177,15 @@ export function safeCredentials (options) {
         credentials: 'include',
         mode: 'same-origin',
         headers: Object.assign((options['headers'] || {}), _authenticityHeader(), jsonHeader())
+    });
+}
+
+export function safeCredentialsJsonApi (options) {
+    options = options || {};
+    return Object.assign(options, {
+        credentials: 'include',
+        mode: 'same-origin',
+        headers: Object.assign((options['headers'] || {}), _authenticityHeader(), jsonApiHeader())
     });
 }
 

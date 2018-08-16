@@ -1,6 +1,6 @@
 import React from 'react';
 import I18n from 'i18n-js';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { safeCredentialsJsonApi, statusSuccess, json } from '../lib/helpers';
 import TokenList from './TokenList';
 import 'whatwg-fetch';
 
@@ -26,7 +26,7 @@ export const BearerTokens = React.createClass({
         const { createTokenUrl, groupId } = this.props;
         this.setState({ submitting: true });
         fetch(createTokenUrl,
-              safeCredentials({
+              safeCredentialsJsonApi({
                   method: 'POST',
                   body: JSON.stringify({
                       data: {

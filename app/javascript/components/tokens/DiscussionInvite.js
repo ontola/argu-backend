@@ -6,7 +6,7 @@ import Select from 'react-select';
 import Alert from '../Alert';
 import GroupForm from '../GroupForm';
 import { modal } from '../../../assets/javascripts/application/modal';
-import { errorMessageForStatus, safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { errorMessageForStatus, safeCredentialsJsonApi, statusSuccess, json } from '../lib/helpers';
 
 import InvitedSelection from './InvitedSelection';
 
@@ -45,7 +45,7 @@ export const DiscussionInvite = React.createClass({
         const emails = this.state.values.map(email => { return email.value; });
         this.setState({ submitting: true });
         fetch(createTokenUrl,
-            safeCredentials({
+            safeCredentialsJsonApi({
                 method: 'POST',
                 body: JSON.stringify({
                     data: {

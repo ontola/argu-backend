@@ -1,6 +1,6 @@
 import Pagination from 'react-js-pagination';
 import React from 'react';
-import { safeCredentials, statusSuccess, json } from './lib/helpers';
+import { safeCredentialsJsonApi, statusSuccess, json } from './lib/helpers';
 import 'whatwg-fetch';
 
 export const Collection = React.createClass({
@@ -29,21 +29,20 @@ export const Collection = React.createClass({
 
     handlePageChange (pageNumber) {
         this.setState({ page: pageNumber });
-        this.fetchPage(`${this.props.iri}?page=${pageNumber}`);
+        this.fetchPage(`${this.props.iri}?type=paginated&page=${pageNumber}`);
     },
 
     fetchPage (iri) {
         this.setState({ loading: true });
-        fetch(iri, safeCredentials())
+        fetch(iri, safeCredentialsJsonApi())
             .then(statusSuccess)
             .then(json)
             .then(data => {
                 let memberSequence = data.data.relationships.memberSequence;
                 if (!memberSequence) {
-                    this.setState({ itemsCountPerPage: data.data.attributes.pageSize, totalItemsCount: data.data.attributes.totalCount });
-                    const viewSequenceId = data.data.relationships.viewSequence.data.id;
-                    const pageViews = this.includedResources(data, viewSequenceId)[0].relationships.members;
-                    memberSequence = pageViews && this.includedResources(data, pageViews.data[0].id)[0].relationships.memberSequence;
+                    const defaultView = this.includedResources(data, data.data.relationships.defaultView.data.id)[0];
+                    this.setState({ itemsCountPerPage: defaultView.attributes.count, totalItemsCount: data.data.attributes.totalCount });
+                    memberSequence = defaultView.relationships.memberSequence;
                 }
                 const members = memberSequence && this.includedResources(data, memberSequence.data.id)[0].relationships.members;
                 if (members && members.data.length > 0) {
