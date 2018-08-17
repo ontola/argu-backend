@@ -9,6 +9,7 @@ class ArgumentSerializer < ContentEdgeSerializer
           unless: :system_scope?
 
   attribute :pro, predicate: NS::SCHEMA[:option]
+  count_attribute :votes_pro
 
   def current_vote
     @current_vote ||= upvote_for(object, scope.user.profile)

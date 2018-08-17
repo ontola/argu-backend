@@ -13,15 +13,9 @@ class EdgeSerializer < RecordSerializer
 
   delegate :is_publishable?, to: :object
 
-  triples :children_counts
-
-  def children_counts
-    object.children_counts.map do |key, count|
-      [
-        object.iri,
-        NS::ARGU["#{key.camelcase(:lower)}Count".to_sym],
-        count.to_i
-      ]
+  def self.count_attribute(type)
+    attribute "#{type}_count", predicate: NS::ARGU["#{type.to_s.camelcase(:lower)}Count".to_sym] do
+      object.children_count(type)
     end
   end
 end
