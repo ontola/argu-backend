@@ -16,6 +16,8 @@ nl:
       reactions: 'Alle items'
       news: 'Belangrijke items'
       invite: "Uitnodigen"
+      email_invite: "Uitnodigen via email"
+      bearer_invite: "Uitnodigen via link"
       meetings: "Vergaderingen"
       questions: "Vraagstukken"
       motions: "Ideeën"

@@ -19,7 +19,9 @@ module SettingsHelper
       notifications: 'bell',
       authentication: 'shield',
       members: 'users',
-      invite: 'user-plus'
+      invite: 'user-plus',
+      bearer_invite: 'link',
+      email_invite: 'send'
     }
   end
 

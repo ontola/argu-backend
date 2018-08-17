@@ -16,6 +16,8 @@ en:
       reactions: 'All items'
       news: 'Important items'
       invite: "Invite"
+      email_invite: "Invite by email"
+      bearer_invite: "Invite by link"
       meetings: "Meetings"
       questions: "Questions"
       motions: "Motions"
