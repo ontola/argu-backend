@@ -10,6 +10,8 @@ class EdgeSerializer < RecordSerializer
   end
 
   attribute :expires_at, predicate: NS::ARGU[:expiresAt]
+  attribute :last_activity_at, predicate: NS::ARGU[:lastActivityAt]
+  attribute :pinned_at, predicate: NS::ARGU[:pinnedAt]
 
   delegate :is_publishable?, to: :object
 

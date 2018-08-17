@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class LinkedRecordSerializer < RecordSerializer
+class LinkedRecordSerializer < EdgeSerializer
   attribute :deku_id, predicate: NS::SCHEMA[:isRelatedTo]
 end

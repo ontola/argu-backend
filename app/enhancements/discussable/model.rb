@@ -11,7 +11,11 @@ module Discussable
                foreign_key: :parent_id,
                inverse_of: :parent
 
-      with_collection :discussions
+      with_collection :discussions,
+                      default_sortings: [
+                        {key: NS::ARGU[:pinnedAt], direction: :asc},
+                        {key: NS::ARGU[:lastActivityAt], direction: :desc}
+                      ]
     end
   end
 end
