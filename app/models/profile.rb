@@ -187,6 +187,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     "#{profileable.class}Serializer".constantize
   end
 
+  def vote_cache
+    @vote_cache ||= VoteCache.new(self)
+  end
+
   private
 
   # Sets the dependent foreign relations to the Community profile

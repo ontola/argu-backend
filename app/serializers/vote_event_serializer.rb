@@ -16,9 +16,7 @@ class VoteEventSerializer < EdgeSerializer
   with_collection :votes, predicate: NS::ARGU[:votes]
 
   def current_vote
-    @vote ||= Edge
-                .where_owner('Vote', creator: user_context.actor, primary: true, root_id: object.root_id)
-                .find_by(parent: object)
+    @vote ||= scope.actor.vote_cache.by_parent(object)
   end
 
   def option_counts

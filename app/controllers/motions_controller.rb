@@ -5,6 +5,11 @@ class MotionsController < EdgeableController
 
   private
 
+  def index_includes_collection
+    current_profile.vote_cache.cache!(parent_resource)
+    super
+  end
+
   def show_includes
     [
       :vote_event_collection,
