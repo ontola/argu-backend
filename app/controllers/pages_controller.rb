@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PagesController < EdgeableController
+class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   prepend_before_action :redirect_generic_shortnames, only: :show
   skip_before_action :authorize_action, only: %i[index]
   skip_before_action :check_if_registered, only: :index

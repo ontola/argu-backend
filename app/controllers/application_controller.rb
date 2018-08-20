@@ -3,7 +3,7 @@
 require 'argu'
 require 'argu/api'
 
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   include Argu::RuledIt
   include Argu::Authorization
   include Argu::Announcements

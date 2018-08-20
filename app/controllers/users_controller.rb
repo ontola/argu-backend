@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < AuthorizedController
+class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLength
   include VotesHelper
   include UrlHelper
   include NestedResourceHelper

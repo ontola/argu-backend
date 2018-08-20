@@ -2,7 +2,7 @@
 
 module Argu
   module TestHelpers
-    class TraitListener
+    class TraitListener # rubocop:disable Metrics/ClassLength
       include Argu::TestHelpers::TestHelperMethods
       include FactoryBot::Syntax::Methods
 

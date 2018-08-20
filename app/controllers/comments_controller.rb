@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CommentsController < EdgeableController
+class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLength
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: :index
 

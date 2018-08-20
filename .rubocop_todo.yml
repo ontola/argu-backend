@@ -39,27 +39,9 @@ Metrics/AbcSize:
     - 'spec/features/adam_west_spec.rb'
     - 'test/integration/decisions_test.rb'
 
-# Offense count: 47
 # Configuration parameters: CountComments.
-# defaultMax: 100
 Metrics/ClassLength:
-  Max: 120
   Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/comments_controller.rb'
-    - 'app/controllers/notifications_controller.rb'
-    - 'app/controllers/pages_controller.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'app/controllers/votes_controller.rb'
-    - 'app/forms/forms_base.rb'
-    - 'app/models/menus/application_menu_list.rb'
-    - 'app/models/collection.rb'
-    - 'app/models/edge.rb'
-    - 'app/models/profile.rb'
-    - 'app/models/user.rb'
-    - 'app/policies/edge_policy.rb'
-    - 'app/services/cruudt_services/base/application_service.rb'
-    - 'lib/argu/test_helpers/trait_listener.rb'
     - 'test/controllers/*.rb'
     - 'test/integration/**/*.rb'
     - 'test/unit/*.rb'

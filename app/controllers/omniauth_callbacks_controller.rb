@@ -2,7 +2,7 @@
 
 require 'omniauth/omniauth_facebook'
 
-class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class OmniauthCallbacksController < Devise::OmniauthCallbacksController # rubocop:disable Metrics/ClassLength
   include RedisResourcesHelper
   include OauthHelper
   include NestedResourceHelper

@@ -2,7 +2,7 @@
 
 # Superclass for all the services in the system
 # @author Fletcher91 <thom@argu.co>
-class ApplicationService
+class ApplicationService # rubocop:disable Metrics/ClassLength
   include Pundit
   include Wisper::Publisher
 

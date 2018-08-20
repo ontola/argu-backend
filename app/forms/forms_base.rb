@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FormsBase
+class FormsBase # rubocop:disable Metrics/ClassLength
   class_attribute :_fields, :_property_groups
   attr_accessor :user_context, :target
 

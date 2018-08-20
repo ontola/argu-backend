@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Portal
-  class AnnouncementsController < PortalBaseController
+  class AnnouncementsController < PortalBaseController # rubocop:disable Metrics/ClassLength
     before_action :set_settings_view_path
 
     def new

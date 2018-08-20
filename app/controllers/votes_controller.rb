@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VotesController < EdgeableController
+class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   include UriTemplateHelper
   skip_before_action :check_if_registered, only: %i[index show create destroy]
 

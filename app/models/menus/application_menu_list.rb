@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationMenuList < MenuList
+class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   include SettingsHelper
   cattr_accessor :defined_menus
   has_menus %i[organizations info user]

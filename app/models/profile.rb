@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Profile < ApplicationRecord
+class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance ProfilePhotoable
   enhance CoverPhotoable
   enhance Updateable

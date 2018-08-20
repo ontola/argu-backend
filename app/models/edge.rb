@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Edge < ApplicationRecord
+class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   self.inheritance_column = :owner_type
 
   define_model_callbacks :trash, only: :after

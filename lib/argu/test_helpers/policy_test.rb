@@ -4,7 +4,7 @@ require 'argu/test_helpers/default_policy_tests'
 require 'argu/test_helpers/default_policy_results'
 require 'argu/errors/forbidden'
 
-class PolicyTest < ActiveSupport::TestCase
+class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
   include DefaultPolicyResults
 
   define_automated_tests_objects

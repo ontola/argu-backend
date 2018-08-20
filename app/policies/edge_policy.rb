@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EdgePolicy < RestrictivePolicy
+class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   class Scope < EdgeTreePolicy::Scope
     def class_name
       self.class.name.split('Policy')[0]

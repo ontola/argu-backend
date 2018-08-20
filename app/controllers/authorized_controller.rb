@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AuthorizedController < ApplicationController
+class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :check_if_registered, except: %i[show]
   before_action :authorize_action
   before_action :verify_terms_accepted, only: %i[update create]

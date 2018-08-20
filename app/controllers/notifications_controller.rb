@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # @note: Common create ready
-class NotificationsController < AuthorizedController
+class NotificationsController < AuthorizedController # rubocop:disable Metrics/ClassLength
   include NotificationsHelper
 
   skip_before_action :authorize_action, only: :index
