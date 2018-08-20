@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FormsBase # rubocop:disable Metrics/ClassLength
-  class_attribute :_fields, :_property_groups
+  class_attribute :_fields, :_property_groups, :_referred_resources
   attr_accessor :user_context, :target
 
   def initialize(user_context, target)
@@ -68,6 +68,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     def inherited(target)
       target._fields = {}
       target._property_groups = {}
+      target._referred_resources = []
       return if target.send(:model_class).blank?
       target.send(:field, :hidden)
       target.send(:hidden_fields)
@@ -82,6 +83,11 @@ class FormsBase # rubocop:disable Metrics/ClassLength
         _fields
           .map { |k, attr| property_shape_attrs(k, attr || {}) }
           .compact
+    end
+
+    def referred_resources
+      property_shapes_attrs
+      _referred_resources
     end
 
     private
@@ -166,6 +172,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
 
     def node_property_attrs(attr, attrs)
       name = attr.dig(:options, :association) || attr.name
+      _referred_resources << name
       collection = model_class.try(:collections)&.find { |c| c[:name] == name }
       klass_name = model_class.try(:reflections).try(:[], name.to_s)&.class_name || name.to_s.classify
 
