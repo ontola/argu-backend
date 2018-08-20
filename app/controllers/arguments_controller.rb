@@ -57,7 +57,7 @@ class ArgumentsController < EdgeableController
   def show_includes
     [
       creator: :default_profile_photo,
-      operation: ACTION_FORM_INCLUDES,
+      operation: action_form_includes,
       comment_collection: inc_shallow_collection
     ]
   end

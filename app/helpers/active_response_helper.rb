@@ -1,21 +1,7 @@
 # frozen_string_literal: true
 
 module ActiveResponseHelper
-  ACTION_MAP = {
-    edit: :update,
-    bin: :trash,
-    unbin: :untrash,
-    delete: :destroy,
-    new: :create,
-    shift: :move
-  }.freeze
-
-  def active_response_action(opts)
-    action_resource = opts[:resource].try(:new_record?) ? index_collection : opts[:resource]
-    form = params[:form]
-    form ||= opts[:view] == 'form' ? action_name : opts[:view]
-    action_resource.action(user_context, ACTION_MAP[form.to_sym] || form.to_sym)
-  end
+  include RailsLD::ActiveResponse::Controller::CrudDefaults
 
   def active_response_success_message
     if action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?
@@ -37,14 +23,6 @@ module ActiveResponseHelper
 
   def create_success_location
     redirect_location
-  end
-
-  def default_form_options(action)
-    return super unless active_responder.is_a?(RDFResponder)
-    {
-      action: active_response_action(super) || raise("No action found for #{action_name}"),
-      include: ActiveResponse::Controller::RDF::Collections::ACTION_FORM_INCLUDES
-    }
   end
 
   def default_form_view(action)

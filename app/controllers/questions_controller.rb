@@ -11,7 +11,7 @@ class QuestionsController < EdgeableController
       :default_cover_photo,
       creator: :default_profile_photo,
       partOf: [widget_sequence: :members],
-      operation: ACTION_FORM_INCLUDES,
+      operation: action_form_includes,
       attachment_collection: inc_nested_collection,
       motion_collection: inc_shallow_collection,
       comment_collection: inc_shallow_collection

@@ -10,7 +10,7 @@ class MotionsController < EdgeableController
       :vote_event_collection,
       :default_cover_photo,
       creator: :default_profile_photo,
-      operation: ACTION_FORM_INCLUDES,
+      operation: action_form_includes,
       partOf: [widget_sequence: :members],
       blog_post_collection: inc_shallow_collection,
       comment_collection: inc_shallow_collection,
@@ -68,7 +68,7 @@ class MotionsController < EdgeableController
     [
       :current_vote,
       vote_collection: {
-        operation: ACTION_FORM_INCLUDES,
+        operation: action_form_includes,
         default_filtered_collections: inc_shallow_collection
       }.freeze
     ].freeze
