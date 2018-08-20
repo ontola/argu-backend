@@ -63,6 +63,11 @@ class Vote < Edge
     super.merge(parent_iri: parent_iri(only_path: true))
   end
 
+  def iri_template_name
+    return super unless store_in_redis?
+    :vote_iri
+  end
+
   def is_pro_con?
     true
   end
