@@ -2,7 +2,7 @@
 
 module GroupsHelper
   def grant_edge_items(page)
-    [[t('grants.all_forums'), page.id]].concat(page.forums.map { |f| [f.display_name, f.id] })
+    [[t('grants.all_forums'), page.uuid]].concat(page.forums.map { |f| [f.display_name, f.uuid] })
   end
 
   def custom_grant_props(resource, resource_type, action)
