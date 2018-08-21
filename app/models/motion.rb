@@ -37,7 +37,7 @@ class Motion < Edge
   paginates_per 30
   parentable :question, :forum
 
-  validates :description, presence: true, length: {minimum: 5, maximum: 5000}
+  validates :description, presence: true, length: {maximum: 5000}
   validates :display_name, presence: true, length: {minimum: 5, maximum: 110}
   validates :creator, presence: true
   auto_strip_attributes :title, squish: true

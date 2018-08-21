@@ -150,10 +150,10 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with multiple wrong fields' do
     sign_in user
-    post collection_iri_path(freetown, :motions),
+    post collection_iri_path(freetown, :questions),
          params: {
            data: {
-             type: 'motions',
+             type: 'questions',
              attributes: {
                bla: 'bla'
              }
