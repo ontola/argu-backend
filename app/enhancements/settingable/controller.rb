@@ -11,22 +11,24 @@ module Settingable
     private
 
     def edit_success
-      return respond_with_redirect location: settings_iri_path(authenticated_resource) if active_response_type == :html
+      if %i[html js].include?(active_response_type)
+        return respond_with_redirect location: settings_iri_path(authenticated_resource)
+      end
       respond_with_form(default_form_options(:edit))
     end
 
     def edit_view
-      return default_form_view(:edit) unless active_response_type == :html
+      return default_form_view(:edit) unless %i[html js].include?(active_response_type)
       form_view_for(:settings)
     end
 
     def edit_view_locals
-      return default_form_view_locals(:edit) unless active_response_type == :html
+      return default_form_view_locals(:edit) unless %i[html js].include?(active_response_type)
       form_view_locals_for(:settings)
     end
 
     def settings_success
-      return settings_success_html if active_response_type == :html
+      return settings_success_html if %i[html js].include?(active_response_type)
       respond_with_resource(
         resource: authenticated_resource!.menu(user_context, :settings),
         include: [menu_sequence: [members: [:image, menu_sequence: [members: [:image]]]]]

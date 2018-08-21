@@ -4,7 +4,7 @@ class GroupsController < ServiceController
   private
 
   def default_form_view(action)
-    return super unless active_response_type == :html
+    return super unless %i[html js].include?(active_response_type)
     action.to_sym == :new ? 'pages/settings' : 'settings'
   end
 
