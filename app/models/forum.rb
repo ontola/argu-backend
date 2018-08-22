@@ -32,9 +32,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   with_collection :grants
   with_collection :motions
 
-  cattr_accessor :default_widgets do
-    %i[discussions]
-  end
+  self.default_widgets = %i[discussions]
 
   # @private
   attr_writer :public_grant

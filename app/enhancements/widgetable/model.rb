@@ -9,6 +9,8 @@ module Widgetable
 
       after_create :create_default_widgets
 
+      class_attribute :default_widgets
+
       def widget_sequence
         @widget_sequence ||= RDF::Sequence.new(widgets)
       end
@@ -16,8 +18,8 @@ module Widgetable
       private
 
       def create_default_widgets
-        return unless self.class.class_variables.include?(:@@default_widgets)
-        self.class.default_widgets.each do |widget|
+        return unless default_widgets.is_a?(Array)
+        default_widgets.each do |widget|
           send("create_#{widget}_widget")
         end
       end
