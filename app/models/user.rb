@@ -196,7 +196,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       end
     end
     if ancestor_type.present?
-      followable.ancestors.where(owner_type: %w[Motion Question Forum]).find_each do |ancestor|
+      followable.ancestors.where(owner_type: %w[Motion Question Forum Page]).find_each do |ancestor|
         follow(ancestor, ancestor_type)
       end
     end
