@@ -14,6 +14,7 @@ class ForumPolicy < EdgePolicy
     attributes = super
     attributes.concat %i[display_name bio bio_long profile_id locale public_grant page]
     attributes.concat %i[discoverable] if staff?
+    attributes.concat %i[owner_type] if service?
     attributes
   end
 

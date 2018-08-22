@@ -6,15 +6,20 @@ module Menuable
 
     included do
       def menus(user_context)
-        @menus ||= "#{self.class}MenuList"
-                     .constantize
+        @menus ||= self.class.menu_class
                      .new(resource: self, user_context: user_context)
                      .menus
       end
 
       def menu(user_context, tag)
         menus(user_context).find { |menu| menu.tag == tag } ||
-          raise("Menu '#{tag}' not available for #{self.class.name}")
+          raise("Menu '#{tag}' not avadilable for #{self.class.name}")
+      end
+    end
+
+    module ClassMethods
+      def menu_class
+        @menu_class ||= "#{name}MenuList".safe_constantize || "#{superclass.name}MenuList".safe_constantize
       end
     end
   end

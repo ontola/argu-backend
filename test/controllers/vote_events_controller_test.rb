@@ -24,7 +24,7 @@ class VoteEventsControllerTest < ActionController::TestCase
   # VoteEvents of Motion
   ####################################
   test 'should get show vote_event of motion' do
-    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.id, id: vote_event.fragment}
+    get :show, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, id: vote_event.fragment}
     assert_response 200
 
     expect_relationship('partOf')

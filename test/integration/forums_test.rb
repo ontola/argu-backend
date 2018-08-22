@@ -418,6 +418,40 @@ class ForumsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  ####################################
+  # As Service
+  ####################################
+  test 'service should post create forum' do
+    sign_in :service
+
+    assert_difference('Forum.count' => 1, 'Widget.discussions.count' => 1) do
+      post portal_forums_path, params: {
+        forum: {
+          name: 'New forum',
+          locale: 'en-GB',
+          url: 'new_forum'
+        },
+        page_id: argu.url
+      }
+    end
+  end
+
+  test 'service should post create ori forum' do
+    sign_in :service
+
+    assert_difference('ORIForum.count' => 1, 'Widget.discussions.count' => 0) do
+      post portal_forums_path, params: {
+        forum: {
+          name: 'New forum',
+          locale: 'en-GB',
+          url: 'new_forum',
+          owner_type: 'ORIForum'
+        },
+        page_id: argu.url
+      }
+    end
+  end
+
   private
 
   def included_in_items?(item)

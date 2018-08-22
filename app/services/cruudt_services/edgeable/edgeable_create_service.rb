@@ -27,7 +27,7 @@ class EdgeableCreateService < CreateService
   # @option attributes [Hash] publisher The publisher of the new child
   def initialize_edge(parent, options, attributes)
     parent_edge = parent.is_a?(Edge) ? parent : Edge.find(parent)
-    resource_klass.new(
+    resource_klass(attributes).new(
       created_at: attributes.with_indifferent_access[:created_at],
       publisher: options[:publisher],
       creator: options[:creator],
@@ -38,5 +38,9 @@ class EdgeableCreateService < CreateService
   def notify
     conn = ActiveRecord::Base.connection
     conn.execute("NOTIFY edge_created, '#{@edge.id}'")
+  end
+
+  def resource_klass(attributes = @attributes)
+    attributes[:owner_type]&.constantize || super()
   end
 end

@@ -22,6 +22,10 @@ class EdgeableController < ServiceController
       end
   end
 
+  def redirect_current_resource?(resource)
+    resource && !request.path.include?(resource.iri_path)
+  end
+
   # Instantiates a new record of the current controller type initialized with {resource_new_params}
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
@@ -44,7 +48,7 @@ class EdgeableController < ServiceController
   def resource_from_params
     return @resource_from_params if instance_variable_defined?('@resource_from_params')
     resource = super
-    redirect_to resource.iri_path if resource && resource.class != controller_class
+    redirect_to resource.iri_path if redirect_current_resource?(resource)
     resource
   end
 

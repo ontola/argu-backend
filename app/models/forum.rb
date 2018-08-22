@@ -91,6 +91,10 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
     forum || Forum.public_forums.first
   end
 
+  def self.policy_class
+    ForumPolicy
+  end
+
   def public_grant
     @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title || 'none'
   end
@@ -138,3 +142,5 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
       parent.grants.joins(:group).find_by(grant_set: GrantSet.administrator, groups: {deletable: false}).group
   end
 end
+
+Dir["#{Rails.application.config.root}/app/models/forums/*.rb"].each { |file| require_dependency file }
