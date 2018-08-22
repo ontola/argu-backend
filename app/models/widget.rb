@@ -5,12 +5,18 @@ require 'types/uri_type'
 class Widget < ApplicationRecord
   extend UriTemplateHelper
 
+  enhance Createable
+
   belongs_to :owner, polymorphic: true, primary_key: :uuid
 
-  enum widget_type: {custom: 0, discussions: 1}
+  enum widget_type: {custom: 0, discussions: 1, deku: 2}
   attribute :resource_iri, URIType.new
 
   acts_as_list scope: :owner
+
+  def edgeable_record
+    @edgeable_record ||= owner
+  end
 
   def label
     label_translation ? I18n.t(super) : super
