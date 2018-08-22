@@ -8,11 +8,14 @@ class Page < Edge
   enhance CoverPhotoable
   enhance Createable
   enhance Discussable
+  enhance Exportable
+  enhance Feedable
   enhance Menuable
   enhance Placeable
   enhance Updateable
   enhance Actionable
   enhance Settingable
+  enhance Statable
 
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid

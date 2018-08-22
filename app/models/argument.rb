@@ -6,6 +6,9 @@ class Argument < Edge
   enhance Createable
   enhance Commentable
   enhance Convertible
+  enhance Contactable
+  enhance Feedable
+  enhance Statable
 
   include Edgeable::Content
   include HasLinks

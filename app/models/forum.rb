@@ -5,6 +5,10 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   enhance CoverPhotoable
   enhance Createable
   enhance Discussable
+  enhance Exportable
+  enhance Favorable
+  enhance Feedable
+  enhance Inviteable
   enhance Menuable
   enhance Motionable
   enhance Moveable
@@ -15,6 +19,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   enhance Widgetable
   enhance Actionable
   enhance Settingable
+  enhance Statable
 
   include Attribution
 

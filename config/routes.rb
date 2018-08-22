@@ -37,25 +37,6 @@ require 'argu/whitelist_constraint'
 Rails.application.routes.draw do
   concerns_from_enhancements
 
-  concern :contactable do
-    resources :direct_messages, path: :dm, only: [:new]
-  end
-  concern :exportable do
-    resources :exports, only: %i[index create new]
-  end
-  concern :favorable do
-    resources :favorites, only: [:create]
-    delete 'favorites', to: 'favorites#destroy'
-  end
-  concern :feedable do
-    get :feed, controller: :feed, action: :index
-  end
-  concern :invitable do
-    get :invite, controller: :invites, action: :new
-  end
-  concern :statable do
-    get :statistics, to: 'statistics#show'
-  end
   concern :votable do
     resources :votes, only: %i[new create index]
     resource :vote, only: %i[destroy show]
@@ -258,8 +239,7 @@ Rails.application.routes.draw do
   constraints(Argu::PagesConstraint) do
     resources :pages,
               path: '',
-              only: %i[show edit],
-              concerns: %i[feedable statable exportable] do
+              only: %i[show edit] do
       include_route_concerns
       resources :forums, only: %i[index]
       resources :discussions, only: %i[index]
@@ -282,8 +262,7 @@ Rails.application.routes.draw do
         resources model,
                   path: model == :pro_arguments ? 'pro' : 'con',
                   only: %i[show],
-                  concerns: %i[votable feedable convertible
-                               contactable statable] do
+                  concerns: %i[votable] do
           include_route_concerns
         end
       end
@@ -292,8 +271,7 @@ Rails.application.routes.draw do
       end
       resources :blog_posts,
                 path: 'posts',
-                only: %i[show],
-                concerns: %i[statable] do
+                only: %i[show] do
         include_route_concerns
       end
       resources :comments, only: %i[show], path: 'c' do
@@ -323,16 +301,11 @@ Rails.application.routes.draw do
       end
       resources :motions,
                 path: 'm',
-                only: %i[show],
-                concerns: %i[contactable
-                             feedable invitable statable exportable
-                             convertible] do
+                only: %i[show] do
         include_route_concerns
       end
       resources :questions,
-                path: 'q',
-                concerns: %i[feedable exportable convertible
-                             invitable contactable statable] do
+                path: 'q' do
         include_route_concerns
       end
       resources :votes, only: %i[show], as: :vote do
@@ -341,9 +314,7 @@ Rails.application.routes.draw do
 
       resources :forums,
                 only: %i[show],
-                path: '',
-                concerns: %i[feedable favorable invitable
-                             statable exportable] do
+                path: '' do
         include_route_concerns
         resources :motions, path: :m, only: [] do
           get :search, to: 'motions#search', on: :collection

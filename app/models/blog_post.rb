@@ -5,6 +5,7 @@ class BlogPost < Edge
   enhance Commentable
   enhance MarkAsImportant
   enhance CoverPhotoable
+  enhance Statable
 
   include Edgeable::Content
   include HasLinks

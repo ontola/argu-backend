@@ -7,12 +7,17 @@ class Motion < Edge
   enhance Attachable
   enhance BlogPostable
   enhance Commentable
+  enhance Contactable
   enhance Convertible
   enhance CoverPhotoable
   enhance Decisionable
+  enhance Exportable
+  enhance Feedable
+  enhance Inviteable
   enhance MarkAsImportant
   enhance Moveable
   enhance Placeable
+  enhance Statable
   enhance Timelineable
   enhance VoteEventable
 

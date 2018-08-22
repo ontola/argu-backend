@@ -5,11 +5,16 @@ class Question < Edge
   enhance BlogPostable
   enhance Commentable
   enhance Convertible
+  enhance Contactable
   enhance CoverPhotoable
+  enhance Exportable
+  enhance Feedable
+  enhance Inviteable
   enhance MarkAsImportant
   enhance Motionable
   enhance Moveable
   enhance Placeable
+  enhance Statable
   enhance Timelineable
 
   include Edgeable::Content
