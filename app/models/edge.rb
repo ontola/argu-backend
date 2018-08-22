@@ -168,10 +168,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
       .present?
   end
 
-  def iri_from_template(opts = {})
-    RDF::URI(
-      expand_uri_template("#{owner_type.constantize.model_name.route_key}_iri", iri_opts.merge(opts))
-    )
+  def iri_template_name
+    "#{owner_type.constantize.model_name.route_key}_iri"
   end
 
   def iri_opts
