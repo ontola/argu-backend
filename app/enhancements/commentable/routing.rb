@@ -3,6 +3,10 @@
 module Commentable
   module Routing
     class << self
+      def dependent_classes
+        [Comment]
+      end
+
       def route_concerns(mapper)
         mapper.concern :commentable do
           mapper.resources :comments, path: 'c', only: %i[new index show create]

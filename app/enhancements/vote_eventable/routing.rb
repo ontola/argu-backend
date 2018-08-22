@@ -3,6 +3,10 @@
 module VoteEventable
   module Routing
     class << self
+      def dependent_classes
+        [VoteEvent]
+      end
+
       def route_concerns(mapper)
         mapper.concern :vote_eventable do
           mapper.resources :vote_events, only: %i[index show], concerns: %i[votable]

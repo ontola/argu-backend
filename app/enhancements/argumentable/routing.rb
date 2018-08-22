@@ -3,6 +3,10 @@
 module Argumentable
   module Routing
     class << self
+      def dependent_classes
+        [Argument]
+      end
+
       def route_concerns(mapper)
         mapper.concern :argumentable do
           mapper.resources :arguments, only: %i[new create]

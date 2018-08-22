@@ -28,3 +28,5 @@ class Banner < NewsBoy
     forum
   end
 end
+
+require_dependency 'banner_dismissal'

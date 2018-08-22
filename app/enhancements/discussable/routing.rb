@@ -3,6 +3,10 @@
 module Discussable
   module Routing
     class << self
+      def dependent_classes
+        [Discussion]
+      end
+
       def route_concerns(mapper)
         mapper.concern :discussable do
           mapper.concern :discussable do
