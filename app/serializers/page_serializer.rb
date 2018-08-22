@@ -8,6 +8,7 @@ class PageSerializer < RecordSerializer
   attribute :base_color, predicate: NS::ARGU[:baseColor]
   attribute :visibility, predicate: NS::ARGU[:visibility]
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
+  attribute :follows_count, predicate: NS::ARGU[:followsCount]
 
   has_one :profile, predicate: NS::ARGU[:profile]
 
