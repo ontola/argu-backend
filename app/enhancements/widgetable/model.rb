@@ -20,20 +20,8 @@ module Widgetable
       def create_default_widgets
         return unless default_widgets.is_a?(Array)
         default_widgets.each do |widget|
-          send("create_#{widget}_widget")
+          Widget.send("create_#{widget}", self)
         end
-      end
-
-      def create_discussions_widget
-        widgets
-          .discussions
-          .create(
-            resource_iri: collection_iri(self, :discussions),
-            label: 'discussions.plural',
-            label_translation: true,
-            body: '',
-            size: 3
-          )
       end
     end
 
