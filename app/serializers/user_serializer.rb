@@ -13,7 +13,7 @@ class UserSerializer < RecordSerializer
 
   has_one :profile, predicate: NS::ARGU[:profile]
   attribute :about, predicate: NS::SCHEMA[:description]
-  attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string]
+  attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string], if: :self?
 
   has_many :email_addresses, predicate: NS::ARGU[:emails], if: :service_or_self?
   attribute :language, predicate: NS::SCHEMA[:language], if: :service_or_self?
