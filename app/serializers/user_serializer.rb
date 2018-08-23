@@ -4,7 +4,7 @@ class UserSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
 
   def service_or_self?
-    service_scope? || self
+    service_scope? || self?
   end
 
   def self?
