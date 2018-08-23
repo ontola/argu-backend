@@ -69,9 +69,6 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       target._fields = {}
       target._property_groups = {}
       target._referred_resources = []
-      return if target.send(:model_class).blank?
-      target.send(:field, :hidden)
-      target.send(:hidden_fields)
     end
 
     def model_class
@@ -137,18 +134,6 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       raise "Resource field '#{key}' defined twice" if _fields[key].present?
       opts[:order] = _fields.keys.length
       _fields[key.try(:to_sym)] = opts
-    end
-
-    def hidden_fields
-      field :type,
-            default_value: model_class.iri,
-            path: RDF[:type],
-            datatype: NS::XSD[:string],
-            group: hidden_group.iri
-    end
-
-    def hidden_group
-      @hidden_group ||= property_group(:hidden, iri: NS::ONTOLA[:hiddenGroup])
     end
 
     def literal_property_attrs(attr, attrs)
