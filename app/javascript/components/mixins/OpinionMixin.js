@@ -62,7 +62,7 @@ const OpinionMixin = {
                             id,
                             key: `arguments_${id}`,
                             url: data.data.id,
-                            body: data.data.attributes.content,
+                            body: data.data.attributes.description,
                             side: data.data.attributes.pro ? 'pro' : 'con'
                         });
                         const selectedArguments = this.state.selectedArguments.slice();
