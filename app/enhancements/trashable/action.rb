@@ -14,7 +14,7 @@ module Trashable
         image: 'fa-trash',
         url: -> { resource.iri },
         http_method: :delete,
-        form: TrashRequestForm,
+        form: Request::TrashRequestForm,
         iri_template: :trash_iri
       )
 
@@ -25,7 +25,7 @@ module Trashable
         image: 'fa-eye',
         url: -> { untrash_iri(resource) },
         http_method: :put,
-        form: UntrashRequestForm,
+        form: Request::UntrashRequestForm,
         iri_template: :untrash_iri
       )
     end

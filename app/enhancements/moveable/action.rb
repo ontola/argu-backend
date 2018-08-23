@@ -12,7 +12,7 @@ module Moveable
         image: 'fa-sitemap',
         url: -> { move_iri(resource) },
         http_method: :put,
-        form: MoveRequestForm,
+        form: Request::MoveRequestForm,
         iri_template: :move_iri
       )
     end

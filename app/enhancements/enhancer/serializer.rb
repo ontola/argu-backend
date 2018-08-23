@@ -27,7 +27,7 @@ module Enhancer
         end
 
         def define_serializer_class
-          Kernel.const_set("#{name}Serializer", Class.new(serializer_superclass))
+          namespace_class.const_set("#{name.demodulize}Serializer", Class.new(serializer_superclass))
         end
       end
     end

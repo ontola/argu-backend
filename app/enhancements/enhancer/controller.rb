@@ -27,7 +27,7 @@ module Enhancer
         end
 
         def define_controller_class
-          Kernel.const_set("#{name.pluralize}Controller", Class.new(controller_superclass))
+          namespace_class.const_set("#{name.demodulize.pluralize}Controller", Class.new(controller_superclass))
         end
       end
     end

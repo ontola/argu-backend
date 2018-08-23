@@ -75,7 +75,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     end
 
     def model_class
-      @model_class ||= (name.deconstantize.presence&.singularize || name.sub(/Form$/, '')).safe_constantize
+      @model_class ||= name.sub(/Form$/, '').safe_constantize
     end
 
     def property_shapes_attrs

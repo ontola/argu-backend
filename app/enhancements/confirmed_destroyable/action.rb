@@ -12,7 +12,7 @@ module ConfirmedDestroyable
         image: 'fa-close',
         url: -> { resource.iri(destroy: true) },
         http_method: :delete,
-        form: ConfirmedDestroyRequestForm,
+        form: Request::ConfirmedDestroyRequestForm,
         iri_template: :delete_iri
       )
     end
