@@ -93,11 +93,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
               in: I18n.available_locales.map(&:to_s),
               message: '%<value> is not a valid locale'
             }
-  validates :time_zone,
-            inclusion: {
-              in: ActiveSupport::TimeZone::MAPPING.keys,
-              message: '%<value> is not a valid timezone'
-            }
   validate :r, :validate_r
   validate :validate_public_group_membership
 

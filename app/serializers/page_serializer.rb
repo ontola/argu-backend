@@ -12,6 +12,8 @@ class PageSerializer < RecordSerializer
 
   has_one :profile, predicate: NS::ARGU[:profile]
 
+  enum :visibility
+
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
   with_collection :forums, predicate: NS::ARGU[:forums]
 

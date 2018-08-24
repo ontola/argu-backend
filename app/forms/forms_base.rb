@@ -148,23 +148,25 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       _fields[key.try(:to_sym)] = opts
     end
 
+    def form_options(attr, opts)
+      opts[:options].map do |key, values|
+        FormOption.new({key: key, attr: attr, klass: model_class, type: opts[:type]}.merge(values))
+      end
+    end
+
     def literal_property_attrs(attr, attrs)
-      enum = model_enums[attr.name.to_s]
+      enum = serializer_enum(attr.name.to_sym)
       attrs[:datatype] ||=
         attr.dig(:options, :datatype) ||
         (enum ? NS::XSD[:string] : attr_to_datatype(attr)) ||
         raise("No datatype found for #{attr.name}")
       attrs[:max_count] ||= 1
-      attrs[:sh_in] ||= enum && enum.is_a?(Hash) ? enum.keys : enum
+      attrs[:sh_in] ||= enum && form_options(attr.name.to_s, enum)
       attrs
     end
 
     def model_attribute(attr)
       (model_class.attribute_alias(attr) || attr).to_sym
-    end
-
-    def model_enums
-      model_class.try(:defined_enums) || {}
     end
 
     def node_property_attrs(attr, attrs)
@@ -226,6 +228,11 @@ class FormsBase # rubocop:disable Metrics/ClassLength
 
     def serializer_attributes
       serializer_class&._attributes_data || {}
+    end
+
+    def serializer_enum(attr)
+      return if serializer_class.blank?
+      serializer_class.enum_options(attr)
     end
 
     def serializer_reflections

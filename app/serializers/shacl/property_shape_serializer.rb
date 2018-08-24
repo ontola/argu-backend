@@ -19,6 +19,7 @@ module SHACL
     attribute :sh_in, predicate: NS::SH[:in]
 
     has_many :path, predicate: NS::SH[:path]
+    has_many :sh_in_options
 
     def type
       NS::SH[:PropertyShape]
@@ -32,7 +33,11 @@ module SHACL
       options = object.sh_in
       return if options.blank?
       options = options.call(object) if options.respond_to?(:call)
-      options.is_a?(Array) ? RDF::List[*options] : options
+      options.is_a?(Array) ? RDF::List[*options.map { |option| option.try(:iri) || option }] : options
+    end
+
+    def sh_in_options
+      object.sh_in
     end
   end
 end

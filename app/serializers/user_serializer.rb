@@ -38,6 +38,45 @@ class UserSerializer < RecordSerializer
             datatype: NS::ONTOLA['datatype/password'],
             if: :never
 
+  enum :reactions_email,
+       type: NS::SCHEMA[:Thing],
+       options: {
+         never_reactions_email: {iri: NS::ARGU[:never]},
+         weekly_reactions_email: {iri: NS::ARGU[:weekly]},
+         daily_reactions_email: {iri: NS::ARGU[:daily]},
+         direct_reactions_email: {iri: NS::ARGU[:direct]}
+       }
+  enum :news_email,
+       type: NS::SCHEMA[:Thing],
+       options: {
+         never_news_email: {iri: NS::ARGU[:never]},
+         weekly_news_email: {iri: NS::ARGU[:weekly]},
+         daily_news_email: {iri: NS::ARGU[:daily]},
+         direct_news_email: {iri: NS::ARGU[:direct]}
+       }
+  enum :decisions_email,
+       type: NS::SCHEMA[:Thing],
+       options: {
+         never_decisions_email: {iri: NS::ARGU[:never]},
+         weekly_decisions_email: {iri: NS::ARGU[:weekly]},
+         daily_decisions_email: {iri: NS::ARGU[:daily]},
+         direct_decisions_email: {iri: NS::ARGU[:direct]}
+       }
+  enum :language,
+       type: NS::SCHEMA[:Thing],
+       options: Hash[
+         I18n
+           .available_locales
+           .map { |l| [l.to_sym, {iri: NS::ARGU["locale/#{l}"], label: I18n.t(:language, locale: l)}] }
+       ]
+  enum :time_zone,
+       type: NS::SCHEMA[:Thing],
+       options: Hash[
+         ActiveSupport::TimeZone.all.uniq(&:tzinfo).map do |value|
+           [value.name.to_sym, {iri: NS::DBPEDIA[value.tzinfo.name.gsub(%r{Etc\/([A-Z]+)}, 'UTC')], label: value.to_s}]
+         end
+       ]
+
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
 
   def about
