@@ -16,7 +16,8 @@ class Comment < Edge
 
   after_commit :set_vote, on: :create
 
-  counter_cache true
+  counter_cache comments: {}, threads: {in_reply_to_id: nil}
+
   paginates_per 30
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record
 
