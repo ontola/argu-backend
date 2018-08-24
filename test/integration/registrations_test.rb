@@ -48,6 +48,21 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
+  test 'should not post create existing' do
+    user
+    assert_difference('User.count' => 0,
+                      'Favorite.count' => 0,
+                      'Notification.confirmation_reminder.count' => 0) do
+      post user_registration_path,
+           params: {
+             user: {
+               email: user.email
+             }
+           }, headers: argu_headers(accept: :json)
+    end
+    assert_response 422
+  end
+
   test 'should post create en' do
     locale = :en
     cookies[:locale] = locale.to_s
