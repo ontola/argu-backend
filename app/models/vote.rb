@@ -26,11 +26,15 @@ class Vote < Edge
   parentable :pro_argument, :con_argument, :vote_event, :linked_record
 
   filterable option: {
-    attr: :for, key: :for, values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]}
+    attr: :for,
+    key: :for,
+    values: {yes: Vote.fors[:pro], other: Vote.fors[:neutral], no: Vote.fors[:con]},
+    counter_cache: {yes: :votes_pro, other: :votes_neutral, no: :votes_con}
   }
   counter_cache votes_pro: {confirmed: true, for: Vote.fors[:pro]},
                 votes_con: {confirmed: true, for: Vote.fors[:con]},
-                votes_neutral: {confirmed: true, for: Vote.fors[:neutral]}
+                votes_neutral: {confirmed: true, for: Vote.fors[:neutral]},
+                votes: {confirmed: true}
   delegate :create_confirmation_reminder_notification, to: :publisher
   delegate :voteable, to: :parent
 
