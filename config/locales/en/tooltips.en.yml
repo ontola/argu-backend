@@ -7,8 +7,8 @@ en:
       vote_con_count: "Amount of votes against"
       vote_neutral_count: "Amount of neutral votes"
       vote_abstain_count: "Amount of neutral votes"
-      arguments_pro_count: "Amount of arguments pro"
-      arguments_con_count: "Amount of arguments con"
+      pro_arguments_count: "Amount of arguments pro"
+      con_arguments_count: "Amount of arguments con"
       date: "Placed on"
     question:
       create: "Ask a question to all members and gather new motions."

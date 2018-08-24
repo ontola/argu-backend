@@ -9,8 +9,8 @@ module Argumentable
       with_collection :con_arguments, predicate: NS::ARGU[:conArguments]
       attribute :invert_arguments, predicate: NS::ARGU[:invertArguments]
 
-      count_attribute :arguments_pro
-      count_attribute :arguments_con
+      count_attribute :pro_arguments
+      count_attribute :con_arguments
     end
   end
 end

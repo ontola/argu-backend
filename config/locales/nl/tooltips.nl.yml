@@ -7,8 +7,8 @@ nl:
       vote_con_count: "Aantal stemmen tegen"
       vote_neutral_count: "Aantal 'geen van beiden' stemmen"
       vote_abstain_count: "Aantal neutrale stemmen"
-      arguments_pro_count: "Aantal argumenten voor"
-      arguments_con_count: "Aantal argumenten tegen"
+      pro_arguments_count: "Aantal argumenten voor"
+      con_arguments_count: "Aantal argumenten tegen"
       date: "Geplaatst op"
     question:
       create: "Stel een vraag aan alle leden en verzamel nieuwe ideeën."

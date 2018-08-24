@@ -23,7 +23,7 @@ class Argument < Edge
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
   convertible comments: %i[activities]
-  counter_cache arguments_pro: {owner_type: 'ProArgument'}, arguments_con: {owner_type: 'ConArgument'}
+  counter_cache true
   paginates_per 10
   parentable :motion, :linked_record
   with_collection :votes
