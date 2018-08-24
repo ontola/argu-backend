@@ -77,11 +77,11 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def self.anonymous
-    Profile.find(Profile::ANONYMOUS_ID)
+    @anonymous ||= Profile.find(Profile::ANONYMOUS_ID)
   end
 
   def self.community
-    Profile.find(Profile::COMMUNITY_ID)
+    @community ||= Profile.find(Profile::COMMUNITY_ID)
   end
 
   def confirmed?

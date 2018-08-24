@@ -68,10 +68,10 @@ class Group < ApplicationRecord
   end
 
   def self.public
-    Group.find_by(id: Group::PUBLIC_ID)
+    @public ||= Group.find_by(id: Group::PUBLIC_ID)
   end
 
   def self.staff
-    Group.find_by(id: Group::STAFF_ID)
+    @staff ||= Group.find_by(id: Group::STAFF_ID)
   end
 end

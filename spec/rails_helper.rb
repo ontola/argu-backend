@@ -124,7 +124,9 @@ RSpec.configure do |config|
   unless ENV['RSPEC_TRANSACTION']
     config.before(:each) do
       load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0]) if GrantSet.count == 0
-
+      {Group => %w[public staff], User => %w[anonymous community], Profile => %w[anonymous community]}.each do |k, v|
+        v.each { |var| k.instance_variable_set("@#{var}", nil) }
+      end
       if User.find_by(id: User::COMMUNITY_ID).blank?
         create(:user,
                id: User::COMMUNITY_ID,
