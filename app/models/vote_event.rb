@@ -7,8 +7,8 @@ class VoteEvent < Edge
 
   with_collection :votes, default_filters: [{'option' => 'no'}, {'option' => 'other'}, 'option' => 'yes']
 
+  counter_cache true
   parentable :motion, :linked_record
-
   property :starts_at, :datetime, NS::SCHEMA[:startDate]
 
   def con_count

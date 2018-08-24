@@ -4,7 +4,8 @@ namespace :counter_culture do
   desc 'Reset the counter_culture columns'
   task reset: :environment do
     puts_result Follow.counter_culture_fix_counts
-    [Motion, Question, ProArgument, ConArgument, BlogPost, Vote, Comment].each { |c| puts_result(c.fix_counts) }
+    [Motion, Question, ProArgument, ConArgument, BlogPost, Vote, VoteEvent, Comment]
+      .each { |c| puts_result(c.fix_counts) }
     puts 'CounterCulture columns are reset'
   end
 
