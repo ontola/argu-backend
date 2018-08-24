@@ -129,7 +129,7 @@ Rails.application.routes.draw do
     put :setup, to: 'users#setup!', on: :collection
 
     get :pages, to: 'users/pages#index', on: :member
-    get :forums, to: 'forums#index', on: :member
+    get :forums, to: 'users/forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
 
     put 'language/:locale', to: 'users#language', on: :collection, as: :language

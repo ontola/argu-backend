@@ -61,6 +61,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   ####################################
   # As User
   ####################################
+  let(:user) { create(:user) }
 
   test 'user should get discover' do
     secondary_forums
@@ -71,8 +72,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get index' do
-    sign_in
-    get forums_user_path(holland_moderator)
+    sign_in user
+    get forums_user_path(user)
     assert_response 200
 
     refute_have_tag response.body,
@@ -122,7 +123,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   test 'initiator should get index' do
     sign_in holland_initiator
-    get forums_user_path(holland_moderator)
+    get forums_user_path(holland_initiator)
     assert_response 200
 
     refute_have_tag response.body,
@@ -174,18 +175,19 @@ class ForumsTest < ActionDispatch::IntegrationTest
   # As Administrator
   ####################################
   let(:forum_pair) { create_forum_administrator_pair(type: :populated_forum) }
+  let(:holland_administrator) { create_administrator(holland) }
 
   test 'administrator should get discover' do
     secondary_forums
-    sign_in create_administrator(holland)
+    sign_in holland_administrator
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
   end
 
   test 'administrator should get index' do
-    sign_in create_administrator(holland)
-    get forums_user_path(holland_moderator)
+    sign_in holland_administrator
+    get forums_user_path(holland_administrator)
     assert_response 200
 
     assert_have_tag response.body,
@@ -194,7 +196,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should only show general settings' do
-    sign_in create_administrator(holland)
+    sign_in holland_administrator
 
     get settings_iri_path(holland)
     assert_forum_settings_shown holland
@@ -206,7 +208,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should update settings' do
-    sign_in create_administrator(holland)
+    sign_in holland_administrator
     put holland,
         params: {
           forum: {
@@ -235,7 +237,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   test 'administrator should update locale affecting placement' do
     nominatim_netherlands
-    sign_in create_administrator(holland)
+    sign_in holland_administrator
     assert_equal holland.reload.places.first.country_code, 'GB'
     assert_difference('Placement.count' => 0) do
       put holland,
@@ -251,7 +253,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   end
 
   test 'administrator should show statistics' do
-    sign_in create_administrator(holland)
+    sign_in holland_administrator
 
     get statistics_iri_path(holland)
     assert_response 200

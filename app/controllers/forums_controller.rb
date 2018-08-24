@@ -5,21 +5,10 @@ class ForumsController < EdgeableController
   prepend_before_action :set_layout
   prepend_before_action :write_client_access_token, unless: :afe_request?
   skip_before_action :authorize_action, only: %i[discover index]
-  skip_before_action :check_if_registered, only: :discover
+  skip_before_action :check_if_registered, only: %i[discover index]
   skip_after_action :verify_authorized, only: :discover
 
   BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
-
-  def index_success_html
-    edge_ids =
-      current_user
-        .profile
-        .granted_edges(root_id: tree_root_id, grant_set: %w[moderator administrator])
-        .pluck(:uuid)
-        .uniq
-    @forums = Forum.joins(:parent).where('edges.uuid IN (?) OR parents_edges.uuid IN (?)', edge_ids, edge_ids)
-    @_pundit_policy_scoped = true
-  end
 
   def discover
     @forums = Forum
