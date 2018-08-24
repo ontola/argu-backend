@@ -139,6 +139,10 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     end
 
     def field(key, opts = {})
+      if key.is_a?(Hash)
+        opts.merge!(key.values.first)
+        key = key.keys.first
+      end
       raise "Resource field '#{key}' defined twice" if _fields[key].present?
       opts[:order] = _fields.keys.length
       _fields[key.try(:to_sym)] = opts
@@ -150,8 +154,8 @@ class FormsBase # rubocop:disable Metrics/ClassLength
         attr.dig(:options, :datatype) ||
         (enum ? NS::XSD[:string] : attr_to_datatype(attr)) ||
         raise("No datatype found for #{attr.name}")
-      attrs[:max_count] = 1
-      attrs[:sh_in] = enum && enum.is_a?(Hash) ? enum.keys : enum
+      attrs[:max_count] ||= 1
+      attrs[:sh_in] ||= enum && enum.is_a?(Hash) ? enum.keys : enum
       attrs
     end
 
