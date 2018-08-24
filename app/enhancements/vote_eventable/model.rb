@@ -25,7 +25,7 @@ module VoteEventable
 
     module ClassMethods
       def includes_for_serializer
-        super.merge(default_vote_event: {})
+        super.merge(default_vote_event: {creator: :profileable})
       end
     end
   end

@@ -59,6 +59,10 @@ class Vote < Edge
     self.for.to_s == item.to_s
   end
 
+  def self.includes_for_serializer
+    super.merge(publisher: {}, comment: {})
+  end
+
   def iri_opts
     super.merge(parent_iri: parent_iri(only_path: true))
   end
