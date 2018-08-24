@@ -431,4 +431,22 @@ class PagesTest < ActionDispatch::IntegrationTest
     assert_equal 'cover_photo.jpg', page.profile.default_cover_photo.content_identifier
     assert_equal 2, page.profile.media_objects.count
   end
+
+  test 'staff should not post create a page with existing url' do
+    sign_in staff
+
+    assert_difference('Page.count' => 0) do
+      post pages_path,
+           params: {
+             page: {
+               profile_attributes: {
+                 name: 'Name'
+               },
+               url: staff.url,
+               last_accepted: '1'
+             }
+           }, headers: argu_headers(accept: :n3)
+    end
+    assert_response 422
+  end
 end

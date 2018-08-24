@@ -19,6 +19,7 @@ module Shortnameable
              inverse_of: :owner,
              primary_key: :uuid
     accepts_nested_attributes_for :shortname, :shortnames
+    validate :validate_no_duplicate_shortname
 
     # Useful to test whether a model is shortnameable
     def shortnameable?
@@ -43,11 +44,17 @@ module Shortnameable
       shortname_root_id = is_a?(Page) || !is_a?(Edge) ? nil : root_id
       existing = Shortname.find_by(shortname: value, root_id: shortname_root_id)
       if existing&.primary?
-        errors.add(:url, :taken)
+        @duplicate_shortname = true
         return
       end
       existing.primary = true if existing
       shortnames << (existing || Shortname.new(shortname: value, root_id: shortname_root_id))
+    end
+
+    private
+
+    def validate_no_duplicate_shortname
+      errors.add(:url, :taken) if @duplicate_shortname
     end
   end
 
