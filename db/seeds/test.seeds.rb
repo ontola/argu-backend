@@ -243,4 +243,4 @@ FactorySeeder.create(:argument, parent: unpublished_motion)
 FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
 FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))
 
-Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid])
+Setting.set('suggested_forums', [freetown.uuid, other_page_forum.uuid].join(','))
