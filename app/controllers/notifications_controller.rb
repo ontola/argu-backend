@@ -36,7 +36,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     authorize Notification, :read?
   end
 
-  def execute_update
+  def update_execute
     n = authenticated_resource
     read_before = n.read_at.present?
     read_before || n.permanent? || n.update(read_at: Time.current)
