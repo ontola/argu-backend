@@ -13,8 +13,8 @@ class Placement < ApplicationRecord
 
   enum placement_type: {home: 0, country: 1, custom: 2}
   delegated_attribute :country_code, :string, to: :place
-  delegated_attribute :lat, :string, to: :place
-  delegated_attribute :lon, :string, to: :place
+  delegated_attribute :lat, :decimal, to: :place
+  delegated_attribute :lon, :decimal, to: :place
   delegated_attribute :postal_code, :string, to: :place
   delegated_attribute :zoom_level, :integer, to: :place, default: 13
   alias_attribute :display_name, :title

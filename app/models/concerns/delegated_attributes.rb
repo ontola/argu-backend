@@ -5,10 +5,8 @@ module DelegatedAttributes
 
   included do
     def self.delegated_attribute(attr, type, opts = {})
-      attribute attr, type, opts.except(:default, :to)
-      define_method attr do
-        attributes[attr.to_s] || send(opts[:to])&.send(attr) || opts[:default]
-      end
+      to = opts.delete(:to)
+      virtual_attribute attr, type, value: ->(r) { r.send(to)&.send(attr) }
     end
   end
 end
