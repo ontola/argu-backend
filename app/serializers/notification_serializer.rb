@@ -6,9 +6,7 @@ class NotificationSerializer < RecordSerializer
 
   attribute :url_object, key: :target, predicate: NS::SCHEMA[:target]
   attribute :read_at, predicate: NS::SCHEMA[:dateRead]
-  attribute :unread, predicate: NS::ARGU[:unread] do
-    RDF::Literal.new(object.read_at.blank?)
-  end
+  attribute :unread, predicate: NS::ARGU[:unread]
 
   has_one :creator, predicate: NS::SCHEMA[:creator] do
     object.activity&.owner
