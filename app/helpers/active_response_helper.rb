@@ -88,6 +88,12 @@ module ActiveResponseHelper
     }
   end
 
+  def update_meta
+    current_resource.previous_changes_by_predicate.map do |predicate, changes|
+      [current_resource.iri, predicate, changes[1], NS::LL[:replace]]
+    end
+  end
+
   def update_success_location
     redirect_location
   end

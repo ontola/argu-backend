@@ -36,12 +36,6 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     authorize Notification, :read?
   end
 
-  def update_execute
-    n = authenticated_resource
-    read_before = n.read_at.present?
-    read_before || n.permanent? || n.update(read_at: Time.current)
-  end
-
   def fetch_more
     begin
       from_time = Time.parse(params[:from_time]).utc.to_s
@@ -132,6 +126,16 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     end
   rescue ArgumentError
     head 400
+  end
+
+  def update_execute
+    n = authenticated_resource
+    read_before = n.read_at.present?
+    read_before || n.permanent? || n.update(read_at: Time.current)
+  end
+
+  def update_meta
+    index_meta + super
   end
 
   def update_success_serializer

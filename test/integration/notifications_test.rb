@@ -60,10 +60,14 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should put update as nt' do
     argument
     sign_in follower
+    notification = follower.notifications.where(read_at: nil).first
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
-      put notification_path(follower.notifications.where(read_at: nil).first), headers: argu_headers(accept: :nt)
+      put notification_path(notification), headers: argu_headers(accept: :nq)
     end
-    assert_response 204
+    assert_response 200
+    notification.reload
+    expect_triple(RDF::URI(argu_url('/n')), NS::ARGU[:unreadCount], 0)
+    expect_triple(notification.iri, NS::SCHEMA[:dateRead], notification.updated_at.to_datetime, NS::LL[:replace])
   end
 
   test 'follower should mark as read' do

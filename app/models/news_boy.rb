@@ -2,6 +2,8 @@
 
 # TODO: Write class docs
 class NewsBoy < ApplicationRecord
+  include Ldable
+
   self.abstract_class = true
   alias_attribute :display_name, :title
 

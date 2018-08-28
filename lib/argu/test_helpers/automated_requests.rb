@@ -117,7 +117,8 @@ module Argu
             subject.reload
             update_params[class_sym].each { |k, v| expect(subject.send(k)).to eq(v) }
           end
-          let(:expect_put_update_serializer) { expect(response.code).to eq('204') }
+          let(:expect_put_update_serializer) { expect(response.code).to eq('200') }
+          let(:expect_put_update_json_api) { expect(response.code).to eq('204') }
           let(:expect_put_update_failed_html) do
             expect_success
             invalid_update_params[class_sym].each_value { |v| expect(response.body).to(include(v)) }
