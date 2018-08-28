@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class GroupMembershipsController < ServiceController
-  skip_before_action :authorize_action, only: :index
   skip_before_action :verify_terms_accepted
 
   def index
@@ -26,6 +25,10 @@ class GroupMembershipsController < ServiceController
   end
 
   private
+
+  def authorize_action
+    super unless action_name == 'index' && params[:group_id].blank?
+  end
 
   def create_failure
     if existing_record
@@ -95,7 +98,7 @@ class GroupMembershipsController < ServiceController
   end
   alias destroy_success_location redirect_location
 
-  def show_success
+  def show_success_html
     flash.keep
     respond_with_redirect(location: redirect_location)
   end

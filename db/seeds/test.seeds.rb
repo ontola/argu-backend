@@ -195,7 +195,7 @@ FactorySeeder.create(:argument, parent: forum_motion)
 question = FactorySeeder.create(:question, parent: freetown)
 motion = FactorySeeder.create(:motion, parent: question)
 actor_membership =
-  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page))
+  FactorySeeder.create(:group_membership, parent: FactorySeeder.create(:group, parent: page, name: 'custom'))
 FactorySeeder.create(
   :decision,
   parent: motion,

@@ -246,6 +246,8 @@ module Argu
 
         def define_freetown_spec_objects
           let(:freetown) { Forum.find_via_shortname('freetown', argu.uuid) }
+          let(:group) { Group.find_by(name: 'custom') }
+          let(:group_membership) { group.group_memberships.first }
           let(:linked_record) { LinkedRecord.first }
           let(:linked_record_argument) { LinkedRecord.first.arguments.first }
           let(:linked_record_vote) { LinkedRecord.first.default_vote_event.votes.first }

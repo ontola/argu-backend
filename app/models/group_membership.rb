@@ -3,9 +3,11 @@
 class GroupMembership < ApplicationRecord
   belongs_to :group
 
+  enhance Actionable
   enhance Createable
   enhance Destroyable
 
+  include Ldable
   include Parentable
 
   belongs_to :member,
