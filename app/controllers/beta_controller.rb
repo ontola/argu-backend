@@ -3,7 +3,7 @@
 class BetaController < ApplicationController
   def show
     cookies[:beta] = true
-    redirect_to redirect_from_param || root_path
+    redirect_to "https://app.#{Rails.application.config.host_name}#{redirect_from_param}"
   end
 
   private
