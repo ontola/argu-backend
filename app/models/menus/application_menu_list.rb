@@ -25,7 +25,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   end
 
   def iri(opts = {})
-    RDF::URI(expand_uri_template('menus_iri', opts))
+    RDF::DynamicURI(expand_uri_template('menus_iri', opts))
   end
 
   def user_menu

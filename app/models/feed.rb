@@ -27,7 +27,7 @@ class Feed
   def canonical_iri(opts)
     case parent
     when User
-      RDF::URI(Rails.application.config.origin)
+      RDF::DynamicURI(Rails.application.config.origin)
     when Profile
       parent&.canonical_iri(opts.merge(root: root.url))
     else
@@ -38,7 +38,7 @@ class Feed
   def iri(opts = {})
     case parent
     when User
-      RDF::URI(Rails.application.config.origin)
+      RDF::DynamicURI(Rails.application.config.origin)
     when Profile
       parent&.iri(opts.merge(root: root.url))
     else

@@ -24,9 +24,9 @@ class OrganizationsFinderController < AuthorizedController
   def meta
     [
       [
-        ::RDF::URI(Rails.application.routes.url_helpers.o_find_url(iri: params[:iri])),
+        ::RDF::DynamicURI(Rails.application.routes.url_helpers.o_find_url(iri: params[:iri])),
         NS::ARGU[:contains],
-        ::RDF::URI(@organization.iri)
+        ::RDF::DynamicURI(@organization.iri)
       ]
     ]
   end

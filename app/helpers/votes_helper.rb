@@ -77,7 +77,7 @@ module VotesHelper
   end
 
   def vote_iri(model, vote)
-    RDF::URI(path_with_hostname(vote_iri_path(model, vote)))
+    RDF::DynamicURI(path_with_hostname(vote_iri_path(model, vote)))
   end
 
   def vote_iri_path(model, vote)

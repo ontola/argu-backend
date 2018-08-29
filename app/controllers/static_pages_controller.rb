@@ -112,9 +112,9 @@ class StaticPagesController < ApplicationController
 
   def home_graph
     graph = ::RDF::Graph.new
-    graph << [::RDF::URI("#{Rails.application.config.origin}/"), ::RDF[:type], NS::ARGU[:WebSite]]
-    graph << [::RDF::URI("#{Rails.application.config.origin}/"), NS::SCHEMA[:name], t('name')]
-    graph << [::RDF::URI("#{Rails.application.config.origin}/"), NS::SCHEMA[:text], t('site.description')]
+    graph << [::RDF::DynamicURI("#{Rails.application.config.origin}/"), ::RDF[:type], NS::ARGU[:WebSite]]
+    graph << [::RDF::DynamicURI("#{Rails.application.config.origin}/"), NS::SCHEMA[:name], t('name')]
+    graph << [::RDF::DynamicURI("#{Rails.application.config.origin}/"), NS::SCHEMA[:text], t('site.description')]
     graph
   end
 end

@@ -66,7 +66,7 @@ class ExportWorker
       elsif value[:iri].present?
         Spreadsheet::Link.new(value[:iri].to_s)
       end
-    when RDF::URI
+    when RDF::URI, RDF::DynamicURI
       Spreadsheet::Link.new(value.to_s)
     else
       value

@@ -34,7 +34,7 @@ class MenuItem
         fragment = nil
         '#'
       end
-    RDF::URI("#{iri_base(only_path)}#{seperator}#{iri_tag}#{fragment}")
+    RDF::DynamicURI("#{iri_base(only_path)}#{seperator}#{iri_tag}#{fragment}")
   end
   alias id iri
 
