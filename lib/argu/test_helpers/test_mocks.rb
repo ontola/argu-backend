@@ -4,7 +4,7 @@ module Argu
   module TestHelpers
     module TestMocks
       def create_email_mock(template, email, options)
-        stub_request(:post, argu_url('/email/spi/emails'))
+        stub_request(:post, expand_service_url(:email, '/email/spi/emails'))
           .with(
             body: {
               email: {
@@ -172,13 +172,13 @@ module Argu
 
       def validate_valid_bearer_token
         stub_request(:get,
-                     Addressable::Template.new("#{Rails.configuration.token_url}/verify{?jwt}"))
+                     Addressable::Template.new("#{service_url(:token)}/tokens/verify{?jwt}"))
           .to_return(status: 200)
       end
 
       def validate_invalid_bearer_token
         stub_request(:get,
-                     Addressable::Template.new("#{Rails.configuration.token_url}/verify{?jwt}"))
+                     Addressable::Template.new("#{service_url(:token)}/tokens/verify{?jwt}"))
           .to_return(status: 404)
       end
     end

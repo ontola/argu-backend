@@ -15,7 +15,6 @@ Bundler.require(*Rails.groups)
 
 module Argu
   class Application < Rails::Application
-    config.token_url = ENV['TOKEN_SERVICE_URL']
     config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || 'argu.co'}"
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"

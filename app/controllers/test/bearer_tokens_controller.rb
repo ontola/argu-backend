@@ -88,7 +88,7 @@ module Test
           retractedAt: nil
         },
         links: {
-          self: "#{Rails.configuration.token_url}/#{id}"
+          self: id
         }
       }
     end

@@ -17,13 +17,13 @@ module Argu
           SendEmailWorker.drain
         end
 
-        assert_requested :post, argu_url('/email/spi/emails'), times: count
+        assert_requested :post, expand_service_url(:email, '/email/spi/emails'), times: count
         last_match = WebMock::RequestRegistry
                        .instance
                        .requested_signatures
                        .hash
                        .keys
-                       .detect { |r| r.uri.to_s == argu_url('/email/spi/emails') }
+                       .detect { |r| r.uri.to_s == expand_service_url(:email, '/email/spi/emails') }
         WebMock.reset!
         last_match
       end
