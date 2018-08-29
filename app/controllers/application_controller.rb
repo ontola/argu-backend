@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
 
+  force_ssl unless: :internal_request?
   protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
   setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
@@ -146,6 +147,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def format_html?
     request.format.html?
+  end
+
+  def internal_request?
+    Argu::WhitelistConstraint.matches?(request)
   end
 
   def parse_filter(array, whitelist)
