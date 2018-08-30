@@ -436,6 +436,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
         page_id: argu.url
       }
     end
+    assert_equal Forum.last.widgets.first.resource_iri, "#{Forum.last.iri}/discussions"
   end
 
   test 'service should post create ori forum' do
