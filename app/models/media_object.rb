@@ -46,7 +46,7 @@ class MediaObject < ApplicationRecord
   def content_type
     content&.content_type
   rescue Aws::S3::Errors::NotFound
-    Bugsnag.notify(RuntimeError.new("Aws::S3::Errors::NotFound: #{id}"))
+    Bugsnag.notify(RuntimeError.new("Aws::S3::Errors::NotFound: #{id}")) unless Rails.env.staging?
     nil
   end
 
