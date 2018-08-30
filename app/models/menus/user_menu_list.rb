@@ -12,7 +12,7 @@ class UserMenuList < MenuList
   def settings_menu
     menu_item(
       :settings,
-      iri_base: ->(only_path) { root_iri(only_path: only_path) },
+      iri_base: -> { '' },
       menus: lambda {
         [
           setting_item(:general, href: edit_iri(resource)),

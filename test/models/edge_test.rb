@@ -9,7 +9,7 @@ class EdgeTest < ActiveSupport::TestCase
   let(:motion) { create(:motion, parent: freetown) }
 
   test 'iri' do
-    assert_equal motion.canonical_iri(only_path: true), "/edges/#{motion.uuid}"
+    assert_equal motion.canonical_iri_path, "/edges/#{motion.uuid}"
     assert_equal motion.iri_path, "/#{argu.url}/m/#{motion.fragment}"
   end
 

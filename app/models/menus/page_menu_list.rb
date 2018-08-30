@@ -59,7 +59,7 @@ class PageMenuList < MenuList
   def settings_menu
     menu_item(
       :settings,
-      iri_base: ->(only_path) { resource.iri(only_path: only_path) },
+      iri_base: -> { resource.iri_path },
       menus: lambda {
         [
           setting_item(:profile, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource.profile)),

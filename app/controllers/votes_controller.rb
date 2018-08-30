@@ -19,7 +19,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def create_failure_html
-    redirect_to authenticated_resource.parent.voteable.iri(only_path: true).to_s,
+    redirect_to authenticated_resource.parent.voteable.iri_path,
                 notice: t('votes.alerts.failed')
   end
 
@@ -27,7 +27,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     if params[:vote].try(:[], :r).present?
       redirect_to redirect_param
     else
-      redirect_to authenticated_resource.parent.voteable.iri(only_path: true).to_s,
+      redirect_to authenticated_resource.parent.voteable.iri_path,
                   notice: t('votes.alerts.success')
     end
   end
@@ -53,7 +53,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         if params[:vote].try(:[], :r).present?
           redirect_to redirect_param
         else
-          redirect_to create_service.resource.parent.voteable.iri(only_path: true).to_s,
+          redirect_to create_service.resource.parent.voteable.iri_path,
                       notice: t('votes.alerts.not_modified')
         end
       end
@@ -94,7 +94,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def show_success_html
-    redirect_to authenticated_resource.voteable.iri(only_path: true).to_s
+    redirect_to authenticated_resource.voteable.iri_path
   end
 
   def for_param
@@ -137,16 +137,16 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def redirect_location
     if authenticated_resource.persisted?
-      authenticated_resource.iri(only_path: true).to_s
+      authenticated_resource.iri_path
     else
-      authenticated_resource.voteable.iri(only_path: true).to_s
+      authenticated_resource.voteable.iri_path
     end
   end
 
   def after_login_location
     expand_uri_template(
       :new_vote,
-      voteable_path: parent_resource!.iri(only_path: true).to_s.split('/').select(&:present?),
+      voteable_path: parent_resource!.iri_path.split('/').select(&:present?),
       confirm: true,
       r: params[:r],
       'vote%5Bfor%5D' => for_param,

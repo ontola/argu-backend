@@ -29,8 +29,8 @@ class MenuList
     end
   end
 
-  def iri(opts = {})
-    RDF::DynamicURI(expand_uri_template('menu_lists_iri', opts.merge(parent_iri: resource.iri(only_path: true))))
+  def iri_path(opts = {})
+    expand_uri_template('menu_lists_iri', opts.merge(parent_iri: resource.iri_path, only_path: true))
   end
 
   def self.has_menus(menus)

@@ -147,7 +147,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     if @forums.count == 1 && !policy(authenticated_resource).update?
       redirect_to @forums.first.iri_path
     elsif (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to authenticated_resource.iri(only_path: true).to_s, status: 307
+      redirect_to authenticated_resource.iri_path, status: 307
     else
       render 'show'
     end

@@ -2,7 +2,7 @@
 
 class EdgesController < AuthorizedController
   def show
-    redirect_to authenticated_resource.iri(only_path: true).to_s
+    redirect_to authenticated_resource.iri_path
   end
 
   private

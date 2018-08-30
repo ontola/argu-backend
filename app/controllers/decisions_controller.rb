@@ -68,7 +68,7 @@ class DecisionsController < EdgeableController
   end
 
   def redirect_location
-    authenticated_resource.parent.iri(only_path: true).to_s
+    authenticated_resource.parent.iri_path
   end
 
   def resource_by_id

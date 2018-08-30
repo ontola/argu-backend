@@ -92,7 +92,7 @@ class ForumsController < EdgeableController
 
   def show_success_html
     if (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to resource.iri(only_path: true).to_s, status: 307
+      redirect_to resource.iri_path, status: 307
     else
       @children = collect_children(authenticated_resource)
       respond_with_resource(show_success_options)

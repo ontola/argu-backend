@@ -22,7 +22,7 @@ class ForumMenuList < MenuList
   def discussions_menu
     menu_item(
       :discussions,
-      iri_base: ->(only_path) { collection_iri(resource, :discussions, only_path: only_path) },
+      iri_base: -> { collection_iri_path(resource, :discussions) },
       iri_tag: :new,
       menus: lambda {
         [
@@ -81,7 +81,7 @@ class ForumMenuList < MenuList
   def settings_menu
     menu_item(
       :settings,
-      iri_base: ->(only_path) { resource.iri(only_path: only_path) },
+      iri_base: -> { resource.iri_path },
       menus: lambda {
         [
           setting_item(

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FormsBase # rubocop:disable Metrics/ClassLength
+  include Iriable
+
   class_attribute :_fields, :_property_groups, :_referred_resources
   attr_accessor :user_context, :target
 
@@ -9,10 +11,10 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     @target = target
   end
 
-  def iri
-    iri = target.iri.dup
+  def iri_path(_opts = {})
+    iri = URI(target.iri_path)
     iri.fragment = self.class.name
-    iri
+    iri.to_s
   end
 
   def shape

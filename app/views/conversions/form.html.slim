@@ -7,7 +7,7 @@
       section
         .form
           p= t('motions.convert.body')
-          =semantic_form_for conversion, url: conversions_iri_path(conversion.edge.canonical_iri(only_path: true)), method: :post, remote: true, authenticity_token: true do |f|
+          =semantic_form_for conversion, url: conversions_iri_path(conversion.edge.canonical_iri_path), method: :post, remote: true, authenticity_token: true do |f|
             p= "#{t('conversions.current_class')} #{conversion.edge.owner_type}"
             =f.inputs do
               =f.input :klass, as: :select, collection: convertible_class_names(conversion.edge), required: false, include_blank: false

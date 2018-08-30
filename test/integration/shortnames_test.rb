@@ -111,7 +111,7 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
 
   def general_show(response, resource, shortname)
     get "/#{shortname.shortname}"
-    assert_redirected_to resource.iri(only_path: true).to_s
+    assert_redirected_to resource.iri_path
     follow_redirect!
 
     assert_response response

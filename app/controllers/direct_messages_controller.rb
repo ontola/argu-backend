@@ -26,7 +26,7 @@ class DirectMessagesController < ParentableController
   def resource_by_id; end
 
   def redirect_location
-    authenticated_resource.resource.iri(only_path: true).to_s
+    authenticated_resource.resource.iri_path
   end
 
   def resource_new_params

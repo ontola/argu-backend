@@ -157,7 +157,7 @@ class VotesTest < ActionDispatch::IntegrationTest
     get root_path
     argument_guest_vote
     assert_difference('Argu::Redis.keys("temporary.*").count', -1) do
-      delete expand_uri_template(:vote_iri, parent_iri: argument.iri(only_path: true), for: :pro, only_path: true)
+      delete expand_uri_template(:vote_iri, parent_iri: argument.iri_path, for: :pro, only_path: true)
       assert_response 303
     end
   end

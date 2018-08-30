@@ -20,7 +20,7 @@ class VoteEvent < Edge
   end
 
   def iri_opts
-    super.merge(id: to_param, parent_iri: parent_iri(only_path: true))
+    super.merge(id: to_param, parent_iri: parent_iri_path)
   end
 
   def neutral_count

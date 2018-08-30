@@ -36,7 +36,7 @@ class ParentableController < AuthorizedController
     return unless parent_resource == Edge
     path = expand_uri_template(
       "#{controller_name}_collection_iri",
-      parent_iri: parent_resource.iri(only_path: true),
+      parent_iri: parent_resource.iri_path,
       only_path: true
     )
     redirect_to request.original_url.gsub(URI(request.original_url).path, path)

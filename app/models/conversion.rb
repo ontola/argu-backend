@@ -38,8 +38,8 @@ class Conversion
     false
   end
 
-  def iri(opts = {})
-    conversions_iri(edge.canonical_iri(only_path: true), opts)
+  def iri_path(opts = {})
+    conversions_iri_path(edge.canonical_iri_path, opts)
   end
 
   def nested_attributes_options?

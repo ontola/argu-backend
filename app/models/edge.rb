@@ -126,8 +126,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias user publisher
   alias profile creator
 
-  def canonical_iri(only_path: false)
-    RDF::DynamicURI(expand_uri_template(:edges_iri, id: uuid, only_path: only_path))
+  def canonical_iri_path(_opts = {})
+    expand_uri_template(:edges_iri, id: uuid, only_path: true)
   end
 
   def children(*args)

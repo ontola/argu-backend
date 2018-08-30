@@ -10,7 +10,7 @@ class GroupMenuList < MenuList
   def settings_menu
     menu_item(
       :settings,
-      iri_base: ->(only_path) { resource.iri(only_path: only_path) },
+      iri_base: -> { resource.iri_path },
       menus: lambda {
         [
           setting_item(:members, href: collection_iri(resource, :group_memberships)),

@@ -41,7 +41,7 @@ class Decision < Edge
   end
 
   def iri_opts
-    {parent_iri: parent_iri(only_path: true), id: step}
+    {parent_iri: parent_iri_path, id: step}
   end
 
   def to_param

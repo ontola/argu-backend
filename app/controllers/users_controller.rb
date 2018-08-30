@@ -113,7 +113,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
 
   def show_success_html
     if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
-      redirect_to authenticated_resource.iri(only_path: true).to_s, status: 307
+      redirect_to authenticated_resource.iri_path, status: 307
     else
       available_pages = authenticated_resource.profile.active_pages(current_profile.granted_root_ids(nil))
       organization =

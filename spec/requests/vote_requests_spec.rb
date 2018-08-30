@@ -107,10 +107,10 @@ RSpec.describe 'Votes', type: :request do
       subject { build(:vote, parent: non_persisted_linked_record) }
       let(:parent_path) {}
       let(:index_path) do
-        collection_iri(non_persisted_linked_record.default_vote_event.iri_path(id: 'default'), :votes, only_path: true)
+        collection_iri_path(non_persisted_linked_record.default_vote_event.iri_path(id: 'default'), :votes)
       end
       let(:non_existing_index_path) do
-        collection_iri(
+        collection_iri_path(
           expand_uri_template(
             :vote_events_iri,
             parent_iri: expand_uri_template(
@@ -121,8 +121,7 @@ RSpec.describe 'Votes', type: :request do
             ),
             id: 'default'
           ),
-          :votes,
-          only_path: true
+          :votes
         )
       end
       it_behaves_like 'post create', skip: %i[html]

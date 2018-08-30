@@ -24,25 +24,25 @@ class Feed
       end
   end
 
-  def canonical_iri(opts)
+  def canonical_iri_path(opts = {})
     case parent
     when User
-      RDF::DynamicURI(Rails.application.config.origin)
+      ''
     when Profile
-      parent&.canonical_iri(opts.merge(root: root.url))
+      parent&.canonical_iri_path(opts.merge(root: root.url))
     else
-      parent&.canonical_iri(opts)
+      parent&.canonical_iri_path(opts)
     end
   end
 
-  def iri(opts = {})
+  def iri_path(opts = {})
     case parent
     when User
-      RDF::DynamicURI(Rails.application.config.origin)
+      ''
     when Profile
-      parent&.iri(opts.merge(root: root.url))
+      parent&.iri_path(opts.merge(root: root.url))
     else
-      parent&.iri(opts)
+      parent&.iri_path(opts)
     end
   end
 

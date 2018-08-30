@@ -13,7 +13,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
       RDF_CONTENT_TYPES.each do |type|
         format.send(type) { render type => authenticated_resource, include: :operation }
       end
-      format.all { redirect_to authenticated_resource.activity.trackable.iri(only_path: true).to_s }
+      format.all { redirect_to authenticated_resource.activity.trackable.iri_path }
     end
   end
 

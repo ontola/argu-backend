@@ -84,7 +84,7 @@ class Page < Edge
     true
   end
 
-  def cache_iri!
+  def cache_iri_path!
     super
     clear_children_iri_cache
     iri_cache

@@ -4,6 +4,7 @@ class MenuItem
   include ActiveModel::Model
   include ActiveModel::Serialization
   include Ldable
+  include Iriable
 
   attr_accessor :action, :label, :parent, :tag, :menus, :href, :item_type,
                 :type, :description, :link_opts, :resource
@@ -23,7 +24,7 @@ class MenuItem
     @image
   end
 
-  def iri(only_path: false, fragment: nil)
+  def iri_path(fragment: nil)
     fragment = "##{fragment}" if fragment
     seperator =
       if parent.is_a?(MenuList)
@@ -34,7 +35,7 @@ class MenuItem
         fragment = nil
         '#'
       end
-    RDF::DynamicURI("#{iri_base(only_path)}#{seperator}#{iri_tag}#{fragment}")
+    "#{iri_base}#{seperator}#{iri_tag}#{fragment}"
   end
   alias id iri
 
@@ -44,8 +45,8 @@ class MenuItem
 
   private
 
-  def iri_base(only_path)
-    @iri_base&.call(only_path) || parent.iri(only_path: only_path)
+  def iri_base
+    @iri_base&.call || parent.iri_path
   end
 
   def iri_tag

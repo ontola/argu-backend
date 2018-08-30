@@ -44,7 +44,7 @@ class FollowsController < AuthorizedController
   end
 
   def redirect_location
-    authenticated_resource.followable.iri(only_path: true).to_s
+    authenticated_resource.followable.iri_path
   end
 
   def unsubscribe?

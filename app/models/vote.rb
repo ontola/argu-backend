@@ -68,7 +68,7 @@ class Vote < Edge
   end
 
   def iri_opts
-    super.merge(parent_iri: parent_iri(only_path: true))
+    super.merge(parent_iri: parent_iri_path)
   end
 
   def iri_template_name

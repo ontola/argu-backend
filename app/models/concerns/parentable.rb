@@ -30,6 +30,10 @@ module Parentable
     def parent_iri(opts = {})
       parent&.iri(opts)
     end
+
+    def parent_iri_path(opts = {})
+      parent&.iri_path(opts)
+    end
   end
 
   module ClassMethods
