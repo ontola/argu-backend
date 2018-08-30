@@ -1,4 +1,3 @@
 pre#staff_sign
-  =select 'rails', 'beta', [['productie', false], ['beta', true]], {include_blank: false, selected: cookies[:beta]}, onchange: "document.cookie='beta='+$('#rails_beta').val()+';path=/'; location.reload();"
   =link_to t('users.logged_in_banner_text', name: current_user.url), portal_path
   span= "v#{::VERSION}/#{::BUILD}"
