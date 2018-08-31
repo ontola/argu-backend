@@ -10,6 +10,11 @@ class MotionsController < EdgeableController
     super
   end
 
+  def index_success_html
+    skip_verify_policy_scoped(true)
+    redirect_to parent_resource.iri_path
+  end
+
   def show_includes
     [
       :vote_event_collection,
