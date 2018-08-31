@@ -102,6 +102,10 @@ class ProfilesController < ApplicationController
     pp
   end
 
+  def show_success_html
+    redirect_to current_resource.profileable
+  end
+
   def user_or_redirect(redirect = nil)
     raise Argu::Errors::Unauthorized.new(r: redirect) if current_user.guest?
     current_user
