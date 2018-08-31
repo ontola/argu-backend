@@ -147,7 +147,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
       else
         menu_item(:create_page, label: I18n.t('pages.create'), href: new_page_url, image: 'fa-building')
       end
-    if resource.forum_management?
+    if !user_context.vnext && resource.forum_management?
       items <<
         menu_item(:forums, label: I18n.t('forums.management.title'), href: forums_user_url(resource), image: 'fa-group')
     end
