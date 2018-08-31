@@ -235,6 +235,19 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal 2, holland.media_objects.count
   end
 
+  test 'administrator should update shortname' do
+    sign_in holland_administrator
+    put holland,
+        params: {
+          forum: {
+            url: 'new_url'
+          }
+        }
+    assert_redirected_to settings_iri_path(holland.reload, tab: :general)
+    assert_equal 'new_url', Forum.find_by(uuid: holland.uuid).url
+    assert_equal "#{holland.parent.iri}/new_url", holland.iri
+  end
+
   test 'administrator should update locale affecting placement' do
     nominatim_netherlands
     sign_in holland_administrator

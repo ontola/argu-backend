@@ -80,7 +80,9 @@ class Shortname < ApplicationRecord
   end
 
   def remove_primary_shortname
-    owner.shortnames.update_all(primary: false)
+    scope = owner.shortnames
+    scope = scope.where('id != ?', id) if id
+    scope.update_all(primary: false)
   end
 
   def cache_iri!
