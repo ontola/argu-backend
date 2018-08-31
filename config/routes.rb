@@ -109,7 +109,7 @@ Rails.application.routes.draw do
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
 
-    get :pages, to: 'users/pages#index', on: :member
+    get :pages, to: 'users/pages#index', on: :member, path: :o
     get :forums, to: 'users/forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
 

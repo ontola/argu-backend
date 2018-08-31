@@ -26,6 +26,10 @@ module Users
           ).distinct
     end
 
+    def index_collection
+      @index_collection ||= current_user.managed_page_collection(collection_options)
+    end
+
     def index_collection_name; end
 
     def user

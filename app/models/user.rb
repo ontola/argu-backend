@@ -53,6 +53,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   with_collection :vote_matches,
                   association: :profile_vote_matches
+  with_collection :managed_pages, association_class: Page
 
   COMMUNITY_ID = 0
   ANONYMOUS_ID = -1
