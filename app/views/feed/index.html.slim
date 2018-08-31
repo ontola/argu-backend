@@ -3,11 +3,11 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =render partial: 'profiles/show', locals: {resource: authenticated_resource.parent.profile}
   - elsif authenticated_resource.parent.is_a?(Forum)
     =render partial: 'forums/cover', locals: {resource: authenticated_resource.parent}
-  - elsif authenticated_resource.parent.present?
+  - elsif authenticated_resource.parent.is_a?(Edge)
     .col-1
       =to_parent(authenticated_resource.parent)
   .col-1
-    - if policy(authenticated_resource.parent).log?
+    - if authenticated_resource.parent.is_a?(Edge) && policy(authenticated_resource.parent).log?
       div.align-right
         span.btn.btn-subtle[class="#{params[:complete] != 'true' ? 'btn--border' : ''}"]
           =link_to feeds_iri_path(authenticated_resource.parent) do
