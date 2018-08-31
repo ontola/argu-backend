@@ -149,7 +149,7 @@ module ApplicationHelper
 
   def visible_for_string(resource)
     groups = visible_for_group_ids(resource)
-    return t('groups.visible_for_everybody') if groups.include?(-1)
+    return t('groups.visible_for_everybody') if groups.include?(Group::PUBLIC_ID)
     t('groups.visible_for', groups: Group.find(groups).pluck(:name).to_sentence)
   end
 
