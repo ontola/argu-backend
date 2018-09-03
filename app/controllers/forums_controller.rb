@@ -8,8 +8,6 @@ class ForumsController < EdgeableController
   skip_before_action :check_if_registered, only: %i[discover index]
   skip_after_action :verify_authorized, only: :discover
 
-  BEARER_TOKEN_TEMPLATE = URITemplate.new("#{Rails.configuration.token_url}/{access_token}")
-
   def discover
     @forums = Forum
                 .public_forums
