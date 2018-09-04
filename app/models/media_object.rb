@@ -113,7 +113,7 @@ class MediaObject < ApplicationRecord
 
   def url_for_environment(type)
     url = content.url(type)
-    return RDF::DynamicURI(url) if Rails.env.production? || Rails.env.staging? || url&.to_s&.include?('gravatar.com')
+    return RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?
     if File.exist?(content.file.path)
       content.url(:icon)

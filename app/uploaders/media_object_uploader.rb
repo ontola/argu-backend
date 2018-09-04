@@ -19,7 +19,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
                          text/comma-separated-values application/vnd.oasis.opendocument.spreadsheet].freeze
   VIDEO_TYPES = %w[video/mp4].freeze
 
-  if Rails.env.development? || Rails.env.test?
+  if ENV['AWS_ID'].blank?
     storage :file
   else
     storage :aws
@@ -51,7 +51,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   end
 
   def aws_signer
-    return if Rails.env.development? || Rails.env.test? || public_content?
+    return if ENV['AWS_ID'].blank? || public_content?
     lambda do |unsigned_url, _options|
       signer = Aws::S3::Presigner.new
       key = URI.parse(unsigned_url).path
