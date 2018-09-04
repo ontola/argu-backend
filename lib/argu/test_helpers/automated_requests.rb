@@ -208,15 +208,15 @@ module Argu
           let(:non_existing_id) { -99 }
           let(:non_existing_index_path) do
             collection_iri_path(
-              expand_uri_template("#{parent_table_sym}_iri", id: non_existing_id, only_path: true),
+              expand_uri_template("#{parent_table_sym}_iri", id: non_existing_id),
               table_sym
             )
           end
           let(:non_existing_create_path) { non_existing_index_path }
           let(:non_existing_new_path) { new_iri_path(non_existing_create_path) }
-          let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", id: non_existing_id, only_path: true) }
+          let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", id: non_existing_id) }
           let(:non_existing_destroy_path) do
-            expand_uri_template("#{table_sym}_iri", id: -99, only_path: true, destroy: true)
+            expand_uri_template("#{table_sym}_iri", id: -99, destroy: true)
           end
           let(:non_existing_edit_path) { edit_iri_path(non_existing_show_path) }
           let(:non_existing_shift_path) { move_iri_path(non_existing_show_path) }

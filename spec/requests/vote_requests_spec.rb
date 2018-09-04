@@ -13,7 +13,7 @@ RSpec.describe 'Votes', type: :request do
   let(:update_differences) { {'Vote.count' => 0} }
   let(:destroy_path) { show_path }
   let(:show_by_parent_path) do
-    expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path, only_path: true)
+    expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path)
   end
   let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('403') }
   let(:expect_post_create_guest_serializer) { expect_created }
@@ -80,7 +80,7 @@ RSpec.describe 'Votes', type: :request do
         new_iri_path(linked_record.default_vote_event.iri_path(id: 'default'), confirm: true)
       end
       let(:show_by_parent_path) do
-        expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path, only_path: true, id: 'default')
+        expand_uri_template(:vote_iri, parent_iri: subject.parent.iri_path, id: 'default')
       end
       let(:index_path) do
         collection_iri(subject.parent.iri_path(id: 'default'), :votes)

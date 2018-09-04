@@ -149,8 +149,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       voteable_path: parent_resource!.iri_path.split('/').select(&:present?),
       confirm: true,
       r: params[:r],
-      'vote%5Bfor%5D' => for_param,
-      only_path: true
+      'vote%5Bfor%5D' => for_param
     )
   end
 

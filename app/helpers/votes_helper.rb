@@ -85,7 +85,7 @@ module VotesHelper
     if vote.try(:persisted?)
       vote.iri_path
     else
-      expand_uri_template(:vote_iri, parent_iri: model.iri_path, for: :pro, only_path: true)
+      expand_uri_template(:vote_iri, parent_iri: model.iri_path, for: :pro)
     end
   end
 

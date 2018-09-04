@@ -127,7 +127,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   alias profile creator
 
   def canonical_iri_path(_opts = {})
-    expand_uri_template(:edges_iri, id: uuid, only_path: true)
+    expand_uri_template(:edges_iri, id: uuid)
   end
 
   def children(*args)

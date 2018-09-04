@@ -25,7 +25,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   end
 
   def iri_path(opts = {})
-    expand_uri_template('menus_iri', opts.merge(only_path: true))
+    expand_uri_template('menus_iri', opts)
   end
 
   def user_menu

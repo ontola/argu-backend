@@ -7,11 +7,11 @@ RSpec.describe 'Conversions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:new_path) { new_iri_path(conversions_iri_path(subject.canonical_iri_path)) }
   let(:non_existing_new_path) do
-    new_iri_path(conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true)))
+    new_iri_path(conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid)))
   end
   let(:create_path) { collection_iri_path(subject.canonical_iri_path, :conversions) }
   let(:non_existing_create_path) do
-    conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid, only_path: true))
+    conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid))
   end
   let(:invalid_create_params) { {conversion: {klass: 'arguments'}} }
   let(:created_resource_path) { Edge.find_by(uuid: subject.uuid).iri_path }
