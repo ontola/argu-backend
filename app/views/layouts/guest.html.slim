@@ -19,7 +19,7 @@ html[class="no-js"]
       =render partial: 'analytics'
     - if Rails.env.test?
       =stylesheet_link_tag 'testing'
-  body
+  body[class=organization_class]
     #fb-root
     =render 'guest/navbar', permanent: 'navbar'
     .wrapper#start-of-content[tabindex='-1']

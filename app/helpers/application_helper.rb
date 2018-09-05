@@ -83,6 +83,11 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def organization_class
+    return if try(:tree_root).blank?
+    "organization-#{tree_root.url}"
+  end
+
   def policy(resource)
     user_context.tree_root_id.nil? && resource.is_a?(Edge) ? NoRootPolicy.new(user_context, resource) : super
   end
