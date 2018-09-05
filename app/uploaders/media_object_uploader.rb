@@ -9,7 +9,7 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
 
   ARCHIVE_TYPES = %w[application/zip].freeze
   DOCUMENT_TYPES = %w[application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document
-                      application/vnd.oasis.opendocument.text application/epub+zip].freeze
+                      application/vnd.oasis.opendocument.text application/epub+zip text/plain].freeze
   IMAGE_TYPES = %w[image/jpeg image/png image/webp].freeze
   PORTABLE_DOCUMENT_TYPES = %w[application/pdf].freeze
   PRESENTATION_TYPES = %w[application/vnd.oasis.opendocument.presentation application/powerpoint
