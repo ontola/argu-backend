@@ -6,6 +6,11 @@ class BlogPostsController < EdgeableController
 
   private
 
+  def default_publication_follow_type
+    return super if parent_resource!.is_a?(Page)
+    'news'
+  end
+
   def index_locals
     {blog_posts: parent_resource!.blog_posts.active.page(params[:page]).reorder(created_at: :desc)}
   end

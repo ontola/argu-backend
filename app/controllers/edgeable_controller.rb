@@ -22,6 +22,10 @@ class EdgeableController < ServiceController
       end
   end
 
+  def default_publication_follow_type
+    'reactions'
+  end
+
   def redirect_current_resource?(resource)
     resource && !request.path.include?(resource.iri_path)
   end
@@ -34,7 +38,7 @@ class EdgeableController < ServiceController
     if resource.is_publishable?
       resource.build_argu_publication(
         published_at: Time.current,
-        follow_type: resource.is_a?(BlogPost) ? 'news' : 'reactions'
+        follow_type: default_publication_follow_type
       )
     end
     if params[:lat] && params[:lon]
