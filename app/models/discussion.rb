@@ -4,8 +4,6 @@ class Discussion
   include ApplicationModel
   include ActiveModel::Model
 
-  enhance Createable
-
   include Ldable
   include Iriable
   include Parentable

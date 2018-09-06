@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class DiscussionsController < ParentableController
+  active_response :new
   skip_before_action :check_if_registered
 
   private
