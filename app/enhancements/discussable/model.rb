@@ -10,6 +10,11 @@ module Discussable
                class_name: 'Edge',
                foreign_key: :parent_id,
                inverse_of: :parent
+      has_many :active_discussions,
+               -> { active.where(owner_type: %w[Motion Question]) },
+               class_name: 'Edge',
+               foreign_key: :parent_id,
+               inverse_of: :parent
 
       with_collection :discussions,
                       default_sortings: [
