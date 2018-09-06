@@ -26,9 +26,7 @@ class MotionsControllerTest < ActionController::TestCase
     expect_included(collection_iri(motion, :con_arguments))
 
     expect_relationship('attachmentCollection')
-    expect_included(
-      collection_iri(motion, :media_objects, 'filter%5B%5D' => 'used_as=attachment')
-    )
+    expect_included(collection_iri(motion, :attachments))
     expect_included(motion.attachments.map(&:iri))
 
     expect_relationship('voteEventCollection')

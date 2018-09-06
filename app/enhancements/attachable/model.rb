@@ -21,7 +21,11 @@ module Attachable
                                         attrs['description'].blank?
                                     }
 
-      with_collection :attachments, association_class: MediaObject, filter: {used_as: :attachment}
+      with_collection :attachments,
+                      association: :attachments,
+                      association_class: MediaObject,
+                      parent_uri_template: :attachments_collection_iri,
+                      parent_uri_template_canonical: :attachments_collection_canonical
     end
   end
 end

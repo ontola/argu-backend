@@ -20,20 +20,25 @@ class MediaObjectsControllerTest < ActionController::TestCase
   # Index for Motion
   ####################################
   test 'should get index media_objects of motion' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment}
+    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, used_as: :attachment}
     assert_response 200
 
     expect_relationship('partOf')
 
     expect_default_view
-    expect_included(
-      collection_iri(motion, :media_objects, 'filter%5B%5D' => 'used_as=attachment', page: 1, type: 'paginated')
-    )
+    expect_included(collection_iri(motion, :attachments, page: 1, type: 'paginated'))
     expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 
   test 'should get index media_objects of motion page 1' do
-    get :index, params: {format: :json_api, root_id: argu.url, motion_id: motion.fragment, type: 'paginated', page: 1}
+    get :index, params: {
+      format: :json_api,
+      root_id: argu.url,
+      motion_id: motion.fragment,
+      used_as: :attachment,
+      type: 'paginated',
+      page: 1
+    }
     assert_response 200
 
     expect_relationship('collection')

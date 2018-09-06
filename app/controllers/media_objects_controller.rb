@@ -15,7 +15,8 @@ class MediaObjectsController < ParentableController
   end
 
   def index_collection_name
-    'attachment_collection'
+    return super if params[:used_as].blank?
+    "#{params[:used_as]}_collection"
   end
 
   def tree_root_id

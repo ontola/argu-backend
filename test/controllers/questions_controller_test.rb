@@ -18,9 +18,7 @@ class QuestionsControllerTest < ActionController::TestCase
     expect_relationship('creator')
 
     expect_relationship('attachmentCollection', size: 1)
-    expect_included(
-      collection_iri(question, :media_objects, 'filter%5B%5D' => 'used_as=attachment')
-    )
+    expect_included(collection_iri(question, :attachments))
     expect_included(question.attachments.map(&:iri))
 
     expect_relationship('motionCollection', size: 1)
