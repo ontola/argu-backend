@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
 
-  force_ssl unless: :internal_request?
+  force_ssl unless: :internal_request?, host: Rails.application.config.frontend_url
   protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
   setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
