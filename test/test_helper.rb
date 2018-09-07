@@ -178,6 +178,7 @@ module ActionDispatch
 
     setup do
       I18n.locale = :en
+      self.host = Rails.application.config.host_name
     end
 
     def argu_headers(accept: nil, bearer: nil, host: nil)
@@ -263,6 +264,15 @@ module ActionDispatch
 
     def merge_req_opts(**opts)
       opts.merge(headers: (@_argu_headers || {}).merge(opts[:headers] || {}))
+    end
+  end
+end
+
+module ActionController
+  class TestCase
+    setup do
+      I18n.locale = :en
+      request.host = Rails.application.config.host_name
     end
   end
 end

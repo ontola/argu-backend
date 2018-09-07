@@ -229,3 +229,20 @@ module FactoryBot
     end
   end
 end
+
+module ActionDispatch
+  module Assertions
+    module ResponseAssertions
+      def normalize_argument_to_redirection(fragment)
+        case fragment
+        when %r{\A([a-z][a-z\d\-+\.]*:|\/\/).*}i
+          fragment
+        when String
+          @request.protocol + Rails.application.config.host_name + fragment
+        else
+          super
+        end
+      end
+    end
+  end
+end

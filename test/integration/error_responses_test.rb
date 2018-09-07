@@ -226,7 +226,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
     assert_response status
 
-    subject = RDF::URI("http://www.example.com#{path}")
+    subject = RDF::URI("http://127.0.0.1:42000#{path}")
 
     expect_triple(subject, RDF[:type], NS::ONTOLA["errors/#{opts[:error]}Error"])
     expect_triple(subject, NS::SCHEMA[:name], I18n.t('status')[status])
