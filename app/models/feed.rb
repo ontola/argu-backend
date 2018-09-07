@@ -29,7 +29,7 @@ class Feed
     when User
       ''
     when Profile
-      parent&.canonical_iri_path(opts.merge(root: root.url))
+      parent&.profileable&.canonical_iri_path(opts.merge(root: root.url))
     else
       parent&.canonical_iri_path(opts)
     end
@@ -40,7 +40,7 @@ class Feed
     when User
       ''
     when Profile
-      parent&.iri_path(opts.merge(root: root.url))
+      parent&.profileable&.iri_path(opts.merge(root: root.url))
     else
       parent&.iri_path(opts)
     end
