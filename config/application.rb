@@ -15,7 +15,7 @@ Bundler.require(*Rails.groups)
 
 module Argu
   class Application < Rails::Application
-    config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || 'argu.co'}"
+    config.frontend_url = "https://#{ENV['FRONTEND_HOSTNAME'] || "app.#{ENV['HOSTNAME']}"}"
     config.host_name = ENV['HOSTNAME']
     config.origin = "https://#{Rails.application.config.host_name}"
 
