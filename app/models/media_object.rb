@@ -2,7 +2,7 @@
 
 require 'types/file_type'
 
-class MediaObject < ApplicationRecord
+class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Ldable
   include Parentable
   belongs_to :about, polymorphic: true, inverse_of: :media_objects, primary_key: :uuid
@@ -66,10 +66,14 @@ class MediaObject < ApplicationRecord
   end
 
   def thumbnail
-    return url_for_environment(:icon) if file.nil?
+    url_for_environment(:icon)
+  end
+
+  def thumbnail_or_icon
+    return thumbnail if file.nil?
     case content_type
     when *(MediaObjectUploader::IMAGE_TYPES + MediaObjectUploader::VIDEO_TYPES)
-      url_for_environment(:icon)
+      thumbnail
     when *MediaObjectUploader::PORTABLE_DOCUMENT_TYPES
       'file-pdf-o'
     when *MediaObjectUploader::DOCUMENT_TYPES
@@ -116,7 +120,7 @@ class MediaObject < ApplicationRecord
     return RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?
     if File.exist?(content.file.path)
-      content.url(:icon)
+      RDF::DynamicURI(content.url(:icon))
     else
       path = icon.path.gsub(File.expand_path(content.root), '')
       RDF::DynamicURI("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{path}")

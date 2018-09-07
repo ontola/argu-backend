@@ -6,7 +6,13 @@ module DiscussionsHelper
       resource
         .attachments
         .map do |a|
-        {src: a.url, caption: a.description.presence, thumbnail: a.thumbnail, type: a.type, embed_url: a.embed_url}
+        {
+          src: a.url,
+          caption: a.description.presence,
+          thumbnail: a.thumbnail_or_icon,
+          type: a.type,
+          embed_url: a.embed_url
+        }
       end
     {files: files}
   end
