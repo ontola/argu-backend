@@ -22,7 +22,7 @@
                 td= link_to(t('delete'), delete_iri_path(export), remote: 'true')
       -else
         p= t('exports.empty')
-      =semantic_form_for([parent_edge, Export.new(edge: parent_edge)], remote: true, authenticity_token: true) do |f|
+      =semantic_form_for(Export.new(edge: parent_edge), url: export_iri_path(parent_edge), remote: true, authenticity_token: true) do |f|
         =f.actions do
           =f.action :submit, as: :button, label: t('exports.create')
           p= t('exports.create_helper')
