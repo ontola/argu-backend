@@ -46,7 +46,7 @@ module Menus
       menu_item(
         :edit,
         image: 'fa-edit',
-        href: expand_uri_template('edit_iri', parent_iri: resource.iri_path),
+        href: edit_iri(resource),
         policy: :update?
       )
     end
