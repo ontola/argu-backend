@@ -26,9 +26,9 @@ class UserSerializer < RecordSerializer
   attribute :news_email, predicate: NS::ARGU[:newsEmails], if: :self?
   attribute :reactions_email, predicate: NS::ARGU[:reactionsEmails], if: :self?
 
-  attribute :password, predicate: NS::ARGU[:password], datatype: NS::XSD[:string], only: false
-  attribute :password_confirmation, predicate: NS::ARGU[:passwordConfirmation], datatype: NS::XSD[:string], only: false
-  attribute :current_password, predicate: NS::ARGU[:currentPassword], datatype: NS::XSD[:string], only: false
+  attribute :password, predicate: NS::ARGU[:password], datatype: NS::XSD[:string], if: :never
+  attribute :password_confirmation, predicate: NS::ARGU[:passwordConfirmation], datatype: NS::XSD[:string], if: :never
+  attribute :current_password, predicate: NS::ARGU[:currentPassword], datatype: NS::XSD[:string], if: :never
 
   with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
 
