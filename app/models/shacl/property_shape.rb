@@ -46,13 +46,15 @@ module SHACL
     # doesn't include a generic fallback mechanism yet.
     def description
       return if model_attribute.blank?
-      I18n.t("formtastic.placeholders.#{model_name}.#{model_attribute}",
-             default: [
-               :"formtastic.placeholders.#{model_attribute}",
-               :"formtastic.hints.#{model_name}.#{model_attribute}",
-               :"formtastic.hints.#{model_attribute}",
-               ''
-             ]).presence
+      description =
+        I18n.t("formtastic.placeholders.#{model_name}.#{model_attribute}",
+               default: [
+                 :"formtastic.placeholders.#{model_attribute}",
+                 :"formtastic.hints.#{model_name}.#{model_attribute}",
+                 :"formtastic.hints.#{model_attribute}",
+                 ''
+               ]).presence
+      description unless description.is_a?(Hash)
     end
 
     def model_name
@@ -61,8 +63,14 @@ module SHACL
 
     def name
       return if model_attribute.blank?
-      I18n.t("#{model_name}.form.#{model_attribute}_heading",
-             default: I18n.t("formtastic.labels.#{model_attribute}", default: nil))
+      name =
+        I18n.t("#{model_name}.form.#{model_attribute}_heading",
+               default: [
+                 :"formtastic.labels.#{model_name}.#{model_attribute}",
+                 :"formtastic.labels.#{model_attribute}",
+                 ''
+               ])
+      name unless name.is_a?(Hash)
     end
 
     def validator_option(klass, option_key)
