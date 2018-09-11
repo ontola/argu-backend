@@ -19,16 +19,6 @@ module Edgeable
         }
       end
 
-      def edgeable_classes
-        klass = self
-        klasses = []
-        while klass != Edge
-          klasses << klass
-          klass = klass.superclass
-        end
-        klasses
-      end
-
       # Hands over ownership of a collection to the Community user
       def expropriate(collection)
         collection.update_all(publisher_id: User::COMMUNITY_ID)
@@ -39,10 +29,6 @@ module Edgeable
           creator: :profileable,
           parent: {}
         }
-      end
-
-      def iri
-        edgeable_classes.map { |klass| NS::ARGU[klass.name.demodulize] }
       end
 
       def order_child_count_sql(type, direction: :desc, as: 'edges')
