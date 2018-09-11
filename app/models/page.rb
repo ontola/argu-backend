@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Page < Edge
-  has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid
+  has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
   enhance BlogPostable
   enhance ConfirmedDestroyable

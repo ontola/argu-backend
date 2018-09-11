@@ -5,7 +5,7 @@ class GrantSet < ApplicationRecord
   has_many :grant_sets_permitted_actions, dependent: :destroy
   has_many :permitted_actions, through: :grant_sets_permitted_actions
   has_many :grants, dependent: :restrict_with_exception
-  belongs_to :page, primary_key: :uuid
+  belongs_to :page, primary_key: :uuid, foreign_key: :root_id
 
   validates :page, presence: true
   validates :title, uniqueness: {scope: :page_id}
@@ -16,7 +16,7 @@ class GrantSet < ApplicationRecord
 
   RESERVED_TITLES.each do |title|
     define_singleton_method title do
-      find_by(title: title, page_id: nil)
+      find_by(title: title, root_id: nil)
     end
   end
 

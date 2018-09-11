@@ -22,7 +22,7 @@ class Group < ApplicationRecord
            foreign_key_property: :default_decision_group_id,
            class_name: 'Forum',
            dependent: :restrict_with_exception
-  belongs_to :page, required: true, inverse_of: :groups, primary_key: :uuid
+  belongs_to :page, required: true, inverse_of: :groups, primary_key: :uuid, foreign_key: :root_id
   has_many :decisions, foreign_key_property: :forwarded_group_id, dependent: :nullify
   accepts_nested_attributes_for :grants, reject_if: :all_blank
   alias_attribute :display_name, :name
@@ -30,8 +30,8 @@ class Group < ApplicationRecord
   with_collection :grants
   with_collection :group_memberships
 
-  validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
-  validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :page_id}
+  validates :name, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
+  validates :name_singular, presence: true, length: {minimum: 3, maximum: 75}, uniqueness: {scope: :root_id}
 
   scope :custom, -> { where('groups.id > 0') }
 

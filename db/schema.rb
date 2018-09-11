@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_22_131623) do
+ActiveRecord::Schema.define(version: 2018_09_11_144743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,8 +210,8 @@ ActiveRecord::Schema.define(version: 2018_08_22_131623) do
 
   create_table "grant_sets", force: :cascade do |t|
     t.string "title"
-    t.uuid "page_id"
-    t.index ["title", "page_id"], name: "index_grant_sets_on_title_and_page_id", unique: true
+    t.uuid "root_id"
+    t.index ["title", "root_id"], name: "index_grant_sets_on_title_and_root_id", unique: true
   end
 
   create_table "grant_sets_permitted_actions", force: :cascade do |t|
@@ -247,7 +247,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_131623) do
     t.datetime "updated_at"
     t.string "name_singular", null: false
     t.boolean "deletable", default: true
-    t.uuid "page_id", null: false
+    t.uuid "root_id", null: false
   end
 
   create_table "identities", id: :serial, force: :cascade do |t|
@@ -586,7 +586,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_131623) do
   add_foreign_key "follows", "edges", column: "followable_id", primary_key: "uuid"
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "grant_resets", "edges", primary_key: "uuid"
-  add_foreign_key "grant_sets", "edges", column: "page_id", primary_key: "uuid"
+  add_foreign_key "grant_sets", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "grant_sets_permitted_actions", "grant_sets"
   add_foreign_key "grant_sets_permitted_actions", "permitted_actions"
   add_foreign_key "grants", "edges", primary_key: "uuid"
@@ -594,7 +594,7 @@ ActiveRecord::Schema.define(version: 2018_08_22_131623) do
   add_foreign_key "grants", "groups"
   add_foreign_key "group_memberships", "groups"
   add_foreign_key "group_memberships", "profiles", column: "member_id"
-  add_foreign_key "groups", "edges", column: "page_id", primary_key: "uuid"
+  add_foreign_key "groups", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "identities", "users"
   add_foreign_key "media_objects", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "media_objects", "profiles", column: "creator_id"

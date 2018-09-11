@@ -53,7 +53,7 @@ class PagePolicy < EdgePolicy
   private
 
   def group_member?
-    user.profile.group_memberships.joins(:group).where(groups: {page_id: record.uuid}).present?
+    user.profile.group_memberships.joins(:group).where(groups: {root_id: record.uuid}).present?
   end
 
   def pages_left?
