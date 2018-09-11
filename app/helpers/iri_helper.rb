@@ -29,6 +29,10 @@ module IRIHelper
     opts[:class] == Decision
   end
 
+  def find_resource_by_root?(opts)
+    opts[:class].has_attribute?(:root_id)
+  end
+
   def linked_record_from_opts(opts)
     LinkedRecord.find_by(deku_id: opts[:id])
   end
@@ -70,6 +74,14 @@ module IRIHelper
       .find { |k| /_id/ =~ k }
   end
 
+  def resource_by_id_from_opts(opts)
+    if find_resource_by_root?(opts)
+      opts[:class]&.find_by(id: opts[:id], root_id: root_id_from_opts(opts))
+    else
+      opts[:class]&.find_by(id: opts[:id])
+    end
+  end
+
   # Converts an Argu URI into a resource
   # @return [ApplicationRecord, nil] The resource corresponding to the iri, or nil if the IRI is not found
   def resource_from_iri(iri)
@@ -85,7 +97,7 @@ module IRIHelper
     return linked_record_from_opts(opts) if linked_record_from_opts?(opts)
     return decision_from_opts(opts) if decision_from_opts?(opts)
     return edge_from_opts(opts) if edge_from_opts?(opts)
-    opts[:class]&.find_by(id: opts[:id])
+    resource_by_id_from_opts(opts)
   end
 
   def resource_from_iri!(iri)

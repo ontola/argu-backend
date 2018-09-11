@@ -8,7 +8,7 @@ class GrantSet < ApplicationRecord
   belongs_to :page, primary_key: :uuid, foreign_key: :root_id
 
   validates :page, presence: true
-  validates :title, uniqueness: {scope: :page_id}
+  validates :title, uniqueness: {scope: :root_id}
 
   alias_attribute :display_name, :title
 

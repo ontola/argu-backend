@@ -285,7 +285,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
              group_id: Group::STAFF_ID,
              shortname: user.url,
              r: settings_iri_path(freetown, tab: :groups),
-             root_id: argu.url
+             root_id: Group.staff.page.url
            }
     end
 
