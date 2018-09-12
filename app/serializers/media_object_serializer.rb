@@ -19,7 +19,7 @@ class MediaObjectSerializer < RecordSerializer
   end
 
   def type
-    if object.type == 'image' || object.profile_photo?
+    if object.type == 'image' || object.profile_photo? || object.cover_photo?
       NS::SCHEMA[:ImageObject]
     elsif object.type == 'video'
       NS::SCHEMA[:VideoObject]
