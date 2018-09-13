@@ -1,26 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "0be95767d5de2c032e857f731028e84f3f49c7f27994f34fb81254903ffbf1b2",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/edgeable/properties.rb",
-      "line": 168,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "q.joins(property_join_string((statement.keys.first or statement))).order(\"#{(statement.keys.first or statement)}_filter.value #{(statement.values.first or :asc).upcase}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ActiveRecord::Relation",
-        "method": "order_by_property"
-      },
-      "user_input": "statement.keys.first",
-      "confidence": "Weak",
-      "note": ""
-    },
-    {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
       "fingerprint": "9483deb3be0ad06e9585662f2d7417c06790420b1de3576b292ebcc879534337",
