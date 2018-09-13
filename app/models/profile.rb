@@ -102,7 +102,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def forums
-    granted_records('Forum')
+    granted_edges('Forum')
   end
 
   def granted_edges(root_id: nil, owner_type: nil, grant_set: nil)
@@ -121,7 +121,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     @granted_edges[root_id][owner_type][grant_set] = scope
   end
-  alias granted_records granted_edges
 
   def granted_record_ids(root_id: nil, owner_type: nil, grant_set: nil)
     granted_edges(root_id: root_id, owner_type: owner_type, grant_set: grant_set).pluck(:id)
