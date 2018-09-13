@@ -3,12 +3,12 @@
 class PagePolicy < EdgePolicy
   class Scope < Scope
     def resolve
-      page_ids = user.profile.granted_record_ids(owner_type: 'Page')
-                   .concat(user.edges.where(owner_type: 'Page').pluck(:id))
+      page_ids = user.profile.granted_root_ids(nil)
+                   .concat(user.edges.where(owner_type: 'Page').pluck(:uuid))
       scope
         .property_join(:visibility)
         .where(
-          'visibility_filter.value IN (?) OR edges.id IN (?)',
+          'visibility_filter.value IN (?) OR edges.uuid IN (?)',
           Page.visibilities[:visible],
           page_ids
         )

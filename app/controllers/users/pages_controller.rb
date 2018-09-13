@@ -19,10 +19,10 @@ module Users
         policy_scope(Page)
           .includes(:shortname, profile: %i[default_profile_photo default_cover_photo])
           .where(
-            id: user
+            uuid: user
                   .profile
-                  .granted_record_ids(owner_type: 'Page')
-                  .concat(user.edges.where(owner_type: 'Page').pluck(:owner_id))
+                  .granted_root_ids(%w[moderator administrator])
+                  .concat(user.edges.where(owner_type: 'Page').pluck(:uuid))
           ).distinct
     end
 

@@ -106,6 +106,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def granted_edges(root_id: nil, owner_type: nil, grant_set: nil)
+    grant_set ||= %w[spectator participator initiator moderator administrator]
     @granted_edges ||= {}
     @granted_edges[root_id] ||= {}
     @granted_edges[root_id][owner_type] ||= {}
@@ -113,17 +114,12 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     scope = granted_edges_scope
     scope = scope.where(root_id: root_id) if root_id.present?
     scope = scope.where(owner_type: owner_type) if owner_type.present?
-    if grant_set.present?
-      scope =
-        scope
-          .joins('INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id')
-          .where(grant_sets: {title: grant_set})
-    end
+    raise 'not grant_set given' if grant_set.blank?
+    scope =
+      scope
+        .joins('INNER JOIN grant_sets ON grants.grant_set_id = grant_sets.id')
+        .where(grant_sets: {title: grant_set})
     @granted_edges[root_id][owner_type][grant_set] = scope
-  end
-
-  def granted_record_ids(root_id: nil, owner_type: nil, grant_set: nil)
-    granted_edges(root_id: root_id, owner_type: owner_type, grant_set: grant_set).pluck(:id)
   end
 
   def granted_root_ids(grant_set = :moderator)
