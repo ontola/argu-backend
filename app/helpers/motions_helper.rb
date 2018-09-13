@@ -30,7 +30,7 @@ module MotionsHelper
       actor: actor_props(actor),
       argumentUrl: collection_iri_path(motion, :arguments),
       arguments: motion_vote_arguments(motion),
-      argumentsDisabled: !policy(motion).create_child?(:arguments),
+      argumentsDisabled: !policy(motion).create_child?(:pro_arguments),
       buttonsType: opts.fetch(:buttons_type, 'big'),
       commentsUrl: collection_iri_path(motion, :comments),
       currentVote: current_vote_props(vote),
@@ -42,7 +42,7 @@ module MotionsHelper
         href: new_user_password_path,
         text: t('forgot_password')
       },
-      newArgumentButtons: policy(motion).create_child?(:arguments).present?,
+      newArgumentButtons: policy(motion).create_child?(:pro_arguments).present?,
       oauthTokenUrl: oauth_token_url,
       objectId: motion.id,
       objectType: 'motion',

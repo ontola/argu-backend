@@ -8,16 +8,16 @@ module Argumentable
       attributes = super
       attributes.append(:invert_arguments)
       attributes.append(
-        pro_arguments_attributes: arguments_attributes,
-        con_arguments_attributes: arguments_attributes
+        pro_arguments_attributes: arguments_attributes(ProArgument),
+        con_arguments_attributes: arguments_attributes(ConArgument)
       )
       attributes
     end
 
     private
 
-    def arguments_attributes
-      Pundit.policy(context, Argument.new(parent: record)).permitted_attributes
+    def arguments_attributes(klass)
+      Pundit.policy(context, klass.new(parent: record)).permitted_attributes
     end
   end
 end

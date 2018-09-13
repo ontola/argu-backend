@@ -7,11 +7,11 @@ FactoryBot.define do
     sequence(:content) { |i| "fg argument content #{i}end" }
 
     factory :pro_argument do
-      type 'ProArgument'
+      owner_type 'ProArgument'
     end
 
     factory :con_argument do
-      type 'ConArgument'
+      owner_type 'ConArgument'
     end
   end
 end

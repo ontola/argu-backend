@@ -49,10 +49,12 @@ class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
     end
     let("#{prefix}vote_event") { send("#{prefix}motion").default_vote_event }
     let("#{prefix}vote") { create(:vote, parent: send("#{prefix}vote_event"), publisher: creator) }
-    let("#{prefix}argument") { create(:argument, parent: send("#{prefix}motion"), publisher: creator) }
-    let("#{prefix}comment") { create(:comment, parent: send("#{prefix}argument"), publisher: creator) }
+    let("#{prefix}pro_argument") { create(:pro_argument, parent: send("#{prefix}motion"), publisher: creator) }
+    let("#{prefix}con_argument") { create(:con_argument, parent: send("#{prefix}motion"), publisher: creator) }
+    let("#{prefix}comment") { create(:comment, parent: send("#{prefix}pro_argument"), publisher: creator) }
+    let("#{prefix}con_argument_comment") { create(:comment, parent: send("#{prefix}con_argument"), publisher: creator) }
     let("#{prefix}nested_comment") do
-      parent = send("#{prefix}argument")
+      parent = send("#{prefix}pro_argument")
       create(:comment, parent: parent, in_reply_to_id: send("#{prefix}comment").uuid, publisher: creator)
     end
     let("#{prefix}blog_post") do

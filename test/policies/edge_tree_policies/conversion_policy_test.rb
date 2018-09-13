@@ -5,7 +5,7 @@ require 'argu/test_helpers/policy_test'
 
 class ConversionPolicyTest < PolicyTest
   subject { Conversion.new(edge: motion, klass: Question) }
-  let(:invalid_edge_subject) { Conversion.new(edge: argument, klass: Motion) }
+  let(:invalid_edge_subject) { Conversion.new(edge: pro_argument, klass: Motion) }
   let(:invalid_klass_subject) { Conversion.new(edge: motion, klass: Argument) }
 
   test 'create valid conversion' do
