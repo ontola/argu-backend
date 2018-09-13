@@ -10,9 +10,8 @@ class PageMenuList < MenuList
 
   def forums
     @forums ||=
-      resource
-        .forums
-        .where("edges.path ? #{Edge.path_array(user.profile.granted_edges(root_id: resource.uuid))}")
+      EdgePolicy::Scope.new(user_context, resource.forums)
+        .resolve
         .includes(:default_profile_photo, :shortname)
   end
 

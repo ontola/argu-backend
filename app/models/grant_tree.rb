@@ -12,7 +12,6 @@ class GrantTree
     @tree_root = root if root.is_a?(Edge)
     raise ArgumentError.new("Edge expected as root, but got: #{root}") unless @tree_root_id || @tree_root
     @cached_nodes = {}
-    @path_array = {}
   end
 
   def as_json(_opts = {})
@@ -83,10 +82,6 @@ class GrantTree
       .slice(*group_ids)
       .values
       .flatten
-  end
-
-  def path_array(user)
-    @path_array[tree_root_id] ||= Edge.path_array(user.profile.granted_edges.where(root_id: tree_root_id))
   end
 
   # Find the permitted parent_types for the given filters

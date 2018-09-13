@@ -39,26 +39,6 @@
       "user_input": "(params[:action].to_s + \"?\")",
       "confidence": "High",
       "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "b5c1368afee3c533d28576573d6ef475f4ec1d89f2ec4720ccba65cc8c4d4fc7",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/menus/page_menu_list.rb",
-      "line": 13,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "resource.forums.where(\"edges.path ? #{Edge.path_array(user.profile.granted_edges(:root_id => resource.uuid))}\")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "PageMenuList",
-        "method": "forums"
-      },
-      "user_input": "Edge.path_array(user.profile.granted_edges(:root_id => resource.uuid))",
-      "confidence": "Medium",
-      "note": ""
     }
   ],
   "updated": "2018-06-19 14:52:15 +0200",

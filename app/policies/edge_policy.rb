@@ -7,7 +7,12 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
     end
 
     def resolve
-      scope.where(root_id: grant_tree.tree_root_id).where("edges.path ? #{path_array}").active
+      scope
+        .active
+        .joins(:parent)
+        .with(granted_paths)
+        .where(root_id: grant_tree.tree_root_id)
+        .where(granted_path_type_filter)
     end
   end
   include ChildOperations

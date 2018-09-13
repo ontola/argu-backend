@@ -4,9 +4,8 @@ class VotePolicy < EdgePolicy
   class Scope < EdgePolicy::Scope
     def resolve
       voter_ids = user.managed_profile_ids
-      scope
+      super
         .joins(:creator, parent: :parent)
-        .where("edges.path ? #{path_array}")
         .where('profiles.are_votes_public = true OR profiles.id IN (?)', voter_ids)
         .where(edges: {confirmed: true}, parents_edges_2: {is_published: true, trashed_at: nil})
     end

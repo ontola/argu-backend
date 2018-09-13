@@ -15,8 +15,9 @@ class ActivityPolicy < RestrictivePolicy
     # Trackable should be placed in one of the forums available to the current user
     def filter_inaccessible_forums(scope)
       scope
-        .joins(:trackable)
-        .where("edges.path ? #{Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id))}")
+        .joins(:trackable, :recipient)
+        .with(granted_paths)
+        .where(granted_path_type_filter(:recipients_activities))
     end
 
     # If trackable is a vote, its profile should have public votes
@@ -34,9 +35,10 @@ class ActivityPolicy < RestrictivePolicy
     def filter_unpublished_and_unmanaged(scope)
       scope
         .joins(:trackable)
+        .with(managed_forum_paths)
         .where(
-          'edges.is_published = true OR activities.owner_id IN (:profile_ids) OR edges.path ? '\
-          "#{Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id, grant_set: 'moderator'))}",
+          'edges.is_published = true OR activities.owner_id IN (:profile_ids) OR '\
+          '(SELECT array_agg(path) FROM managed_forum_paths) @> edges.path',
           profile_ids: user.managed_profile_ids
         )
     end

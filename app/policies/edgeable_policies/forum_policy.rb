@@ -5,8 +5,9 @@ class ForumPolicy < EdgePolicy
     def resolve
       scope
         .property_join(:discoverable)
-        .where('discoverable_filter.value = true OR edges.path ? '\
-               "#{Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id))}")
+        .with(granted_paths)
+        .where(root_id: grant_tree.tree_root_id)
+        .where("discoverable_filter.value = true OR #{granted_path_type_filter(parent_type: 'Page')}")
     end
   end
 

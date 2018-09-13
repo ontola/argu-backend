@@ -39,18 +39,6 @@ module Edgeable
         Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
       end
 
-      def path_array(relation)
-        return 'NULL' if relation.blank?
-        unless relation.is_a?(ActiveRecord::Relation)
-          raise "Relation should be a ActiveRecord relation, but is a #{relation.class.name}"
-        end
-        paths = relation.map(&:path)
-        paths.each { |path| paths.delete_if { |p| p.match(/^#{path}\./) } }
-        root_id = relation.pluck(:root_id).uniq
-        raise 'Relation contains multiple roots' if root_id.count > 1
-        "ARRAY[#{paths.map { |path| "'#{path}.*'::lquery" }.join(',')}] AND edges.root_id = '#{root_id.first}'"
-      end
-
       # Selects edges of a certain type over persisted and transient models.
       # @param [String] type The (child) edges' #owner_type value
       # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.

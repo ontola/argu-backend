@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
+  define_page
   let!(:grant_set) do
-    grant_set = GrantSet.participator.clone('adam_west_set', create(:page))
+    grant_set = GrantSet.participator.clone('adam_west_set', argu)
     grant_set.grant_sets_permitted_actions.joins(:permitted_action).where('title LIKE ?', 'comment_%').destroy_all
     grant_set
   end

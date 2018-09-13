@@ -9,19 +9,71 @@ class EdgeTreePolicy < RestrictivePolicy
       @grant_tree ||= context.grant_tree_for_id(context.tree_root_id)
     end
 
-    def path_array
-      @path_array ||=
-        if grant_tree.present?
-          grant_tree.path_array(user)
-        else
-          Edge.path_array(user.profile.granted_edges(root_id: grant_tree.tree_root_id))
-        end
-    end
-
     def staff?
       grant_tree
         .grant_sets(grant_tree.tree_root, group_ids: user.profile.group_ids)
         .include?('staff')
+    end
+
+    private
+
+    %i[edges grant_sets grant_sets_permitted_actions granted_paths grants
+       managed_forum_paths permitted_actions].each do |table_name|
+      define_method "#{table_name}_table" do
+        instance_variable_get(:"@#{table_name}_table") ||
+          instance_variable_set(:"@#{table_name}_table", Arel::Table.new(table_name))
+      end
+    end
+
+    def filtered_edge_table
+      table = joined_edge_table.where(grants_table[:group_id].in(user.profile.group_ids))
+      return table if grant_tree.tree_root_id.nil?
+      table
+        .where(edges_table[:root_id].eq(grant_tree.tree_root_id))
+    end
+
+    def granted_path_type_filter(parent_alias = :parents_edges, parent_type: nil)
+      filter =
+        granted_paths_table
+          .where(granted_paths_table[:resource_type].eq(edges_table[:owner_type]))
+          .where(
+            granted_paths_table[:parent_type].eq(parent_type || Arel::Table.new(parent_alias)[:owner_type])
+              .or(granted_paths_table[:parent_type].eq('*'))
+          ).project('array_agg(path)').to_sql
+      "(#{filter}) @> edges.path"
+    end
+
+    def granted_paths
+      @granted_paths ||=
+        Arel::Nodes::As.new(
+          granted_paths_table,
+          filtered_edge_table
+            .where(permitted_actions_table[:action].eq(:show))
+            .project(
+              'path, permitted_actions.resource_type AS resource_type, permitted_actions.parent_type AS parent_type'
+            )
+        )
+    end
+
+    def joined_edge_table
+      edges_table
+        .join(grants_table).on(edges_table[:uuid].eq(grants_table[:edge_id]))
+        .join(grant_sets_table).on(grant_sets_table[:id].eq(grants_table[:grant_set_id]))
+        .join(grant_sets_permitted_actions_table)
+        .on(grant_sets_table[:id].eq(grant_sets_permitted_actions_table[:grant_set_id]))
+        .join(permitted_actions_table)
+        .on(permitted_actions_table[:id].eq(grant_sets_permitted_actions_table[:permitted_action_id]))
+    end
+
+    def managed_forum_paths
+      @managed_forum_paths ||=
+        Arel::Nodes::As.new(
+          managed_forum_paths_table,
+          filtered_edge_table
+            .where(permitted_actions_table[:action].eq(:update))
+            .where(permitted_actions_table[:resource_type].eq('Forum'))
+            .project('path')
+        )
     end
   end
   include ChildOperations
