@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_11_144743) do
+ActiveRecord::Schema.define(version: 2018_09_12_132049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,8 +41,12 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.index ["forum_id"], name: "index_activities_on_forum_id"
     t.index ["key"], name: "index_activities_on_key", using: :gist
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["recipient_edge_id"], name: "index_activities_on_recipient_edge_id"
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["root_id", "key"], name: "index_activities_on_root_id_and_key"
+    t.index ["root_id", "trackable_id"], name: "index_activities_on_root_id_and_trackable_id"
     t.index ["root_id"], name: "index_activities_on_root_id"
+    t.index ["trackable_edge_id"], name: "index_activities_on_trackable_edge_id"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
   end
 
@@ -141,6 +145,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
+    t.index ["root_id"], name: "index_edges_on_root_id"
     t.index ["uuid"], name: "index_edges_on_uuid", unique: true
   end
 
@@ -176,6 +181,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "edge_id", null: false
+    t.index ["edge_id"], name: "index_exports_on_edge_id"
   end
 
   create_table "favorites", id: :serial, force: :cascade do |t|
@@ -211,6 +217,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
   create_table "grant_sets", force: :cascade do |t|
     t.string "title"
     t.uuid "root_id"
+    t.index ["root_id"], name: "index_grant_sets_on_root_id"
     t.index ["title", "root_id"], name: "index_grant_sets_on_title_and_root_id", unique: true
   end
 
@@ -226,6 +233,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.datetime "updated_at", null: false
     t.integer "grant_set_id"
     t.uuid "edge_id", null: false
+    t.index ["edge_id"], name: "index_grants_on_edge_id"
     t.index ["group_id", "edge_id"], name: "index_grants_on_group_id_and_edge_id", unique: true
   end
 
@@ -248,6 +256,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.string "name_singular", null: false
     t.boolean "deletable", default: true
     t.uuid "root_id", null: false
+    t.index ["root_id"], name: "index_groups_on_root_id"
   end
 
   create_table "identities", id: :serial, force: :cascade do |t|
@@ -433,6 +442,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.integer "publisher_id"
     t.integer "follow_type", default: 3, null: false
     t.uuid "publishable_id"
+    t.index ["publishable_id"], name: "index_publications_on_publishable_id"
   end
 
   create_table "rules", id: :serial, force: :cascade do |t|
@@ -479,6 +489,7 @@ ActiveRecord::Schema.define(version: 2018_09_11_144743) do
     t.index "lower((shortname)::text)", name: "index_shortnames_on_unscoped_shortname", unique: true, where: "(root_id IS NULL)"
     t.index "lower((shortname)::text), root_id", name: "index_shortnames_on_scoped_shortname", unique: true
     t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, where: "(\"primary\" IS TRUE)"
+    t.index ["root_id"], name: "index_shortnames_on_root_id"
   end
 
   create_table "sources", id: :serial, force: :cascade do |t|
