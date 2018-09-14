@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_095955) do
+ActiveRecord::Schema.define(version: 2018_09_14_113610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2018_09_13_095955) do
     t.datetime "ends_at"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.uuid "forum_id"
+    t.integer "attachments_count", default: 0, null: false
     t.index ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at"
     t.index ["forum_id"], name: "index_banners_on_forum_id"
     t.index ["uuid"], name: "index_banners_on_uuid", unique: true
@@ -142,6 +143,7 @@ ActiveRecord::Schema.define(version: 2018_09_13_095955) do
     t.integer "creator_id", null: false
     t.boolean "primary"
     t.string "iri_cache"
+    t.integer "attachments_count", default: 0, null: false
     t.index ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true
     t.index ["parent_id", "creator_id"], name: "index_edges_on_parent_id_and_creator_id", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["root_id", "fragment"], name: "index_edges_on_root_id_and_fragment", unique: true
@@ -415,6 +417,7 @@ ActiveRecord::Schema.define(version: 2018_09_13_095955) do
     t.string "profileable_type"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.uuid "profileable_id", null: false
+    t.integer "attachments_count", default: 0, null: false
     t.index ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true
     t.index ["slug"], name: "index_profiles_on_slug", unique: true
     t.index ["uuid"], name: "index_profiles_on_uuid", unique: true

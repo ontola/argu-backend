@@ -20,6 +20,11 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   enum used_as: {content_photo: 0, cover_photo: 1, profile_photo: 2, attachment: 3}
   filterable used_as: {values: MediaObject.used_as}
+  counter_culture :about,
+                  column_name: proc { |model|
+                    !model.attachment? ? 'attachments_count' : nil
+                  },
+                  column_names: {['media_objects.used_as = ?', MediaObject.used_as[:attachment]] => 'attachments_count'}
 
   delegate :file, :icon, :avatar, :is_image?, to: :content
 
