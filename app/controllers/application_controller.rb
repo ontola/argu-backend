@@ -85,6 +85,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def redirect_to(*args)
     args[0] = path_with_hostname(args[0]) if args[0].is_a?(String) && args[0].starts_with?('/')
+    args[0] = args[0].dup.gsub("https://#{ENV['HOSTNAME']}", "https://app.#{ENV['HOSTNAME']}") if afe_request?
     super
   end
 
