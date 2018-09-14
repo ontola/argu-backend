@@ -99,7 +99,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def url(*args)
-    RDF::DynamicURI(type == 'video' ? remote_url : content.url(*args)).presence
+    RDF::DynamicURI.intern(type == 'video' ? remote_url : content.url(*args)).presence
   end
 
   private
@@ -122,13 +122,13 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def url_for_environment(type)
     url = content.url(type)
-    return RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
+    return RDF::DynamicURI.intern(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?
     if File.exist?(content.file.path)
-      RDF::DynamicURI(content.url(:icon))
+      RDF::DynamicURI.intern(content.url(:icon))
     else
       path = icon.path.gsub(File.expand_path(content.root), '')
-      RDF::DynamicURI("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{path}")
+      RDF::DynamicURI.intern("https://#{ENV['AWS_BUCKET'] || 'argu-logos'}.s3.amazonaws.com#{path}")
     end
   end
 

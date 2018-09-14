@@ -48,7 +48,7 @@ class Notification < ApplicationRecord
 
   def url_object
     href = activity.present? ? activity.trackable.iri : url
-    RDF::DynamicURI(href)
+    RDF::DynamicURI.intern(href)
   end
 
   def image

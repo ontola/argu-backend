@@ -9,6 +9,6 @@ module ProfilesHelper
     profile = Profile.community if profile.profileable.blank?
     path = canonical ? URI(profile.profileable.canonical_iri_path) : URI(profile.profileable.iri_path)
     path.query = "page_id=#{tree_root.url}" if respond_to?(:tree_root_id) && tree_root_id.present?
-    only_path ? path.to_s : RDF::DynamicURI(path_with_hostname(path))
+    only_path ? path.to_s : RDF::DynamicURI.intern(path_with_hostname(path))
   end
 end

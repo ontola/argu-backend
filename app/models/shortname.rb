@@ -72,7 +72,7 @@ class Shortname < ApplicationRecord
   end
 
   def base_url
-    root_id.present? ? root.iri : RDF::DynamicURI(Rails.application.config.origin)
+    root_id.present? ? root.iri : RDF::DynamicURI.intern(Rails.application.config.origin)
   end
 
   def destroy_finish_intro_notification

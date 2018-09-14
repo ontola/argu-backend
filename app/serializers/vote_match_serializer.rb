@@ -12,7 +12,7 @@ class VoteMatchSerializer < RecordSerializer
   end
   has_one :vote_compare_result, predicate: NS::ARGU[:voteCompareResult] do
     {
-      id: RDF::DynamicURI("https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}"),
+      id: RDF::DynamicURI.intern("https://#{Rails.application.config.host_name}/compare/votes?vote_match=#{object.id}"),
       type: NS::ARGU[:voteCompareResults]
     }
   end

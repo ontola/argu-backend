@@ -9,7 +9,7 @@ module Actions
       result: Vote,
       type: -> { [NS::ARGU[:VoteAction], NS::ARGU[:"#{vote_action.to_s.camelize}VoteAction"]] },
       image: 'fa-arrow-up',
-      url: -> { RDF::DynamicURI(vote_iri(resource, vote_action == :create ? current_vote : Vote.new)) },
+      url: -> { RDF::DynamicURI.intern(vote_iri(resource, vote_action == :create ? current_vote : Vote.new)) },
       action_tag: -> { :"#{vote_action}_vote" },
       http_method: -> { vote_action == :create ? :post : :delete }
     )

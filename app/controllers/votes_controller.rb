@@ -174,7 +174,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data.push [
       authenticated_resource.parent_iri,
       NS::SCHEMA[:potentialAction],
-      ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/create_vote"),
+      ::RDF::DynamicURI.intern("#{authenticated_resource.parent_iri}/actions/create_vote"),
       NS::LL[:remove]
     ]
     data
@@ -199,13 +199,13 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data.push [
       authenticated_resource.parent_iri,
       NS::SCHEMA[:potentialAction],
-      ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
+      ::RDF::DynamicURI.intern("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
       NS::LL[:remove]
     ]
     data.push [
       authenticated_resource.parent_iri,
       NS::SCHEMA[:potentialAction],
-      ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/create_vote"),
+      ::RDF::DynamicURI.intern("#{authenticated_resource.parent_iri}/actions/create_vote"),
       NS::LL[:add]
     ]
   end

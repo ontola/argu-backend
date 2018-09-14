@@ -6,8 +6,8 @@ class URIType < ActiveRecord::Type::Value
   end
 
   def cast(value)
-    return RDF::DynamicURI(value) if Rails.env.production?
-    RDF::DynamicURI(value&.to_s&.gsub('https://argu.co', Rails.application.config.origin))
+    return RDF::DynamicURI.intern(value) if Rails.env.production?
+    RDF::DynamicURI.intern(value&.to_s&.gsub('https://argu.co', Rails.application.config.origin))
   end
 
   def serialize(value)

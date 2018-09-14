@@ -2,6 +2,6 @@
 
 class ListItemSerializer < BaseSerializer
   def type
-    RDF::DynamicURI(object.item_type)
+    RDF::DynamicURI.intern(object.item_type)
   end
 end

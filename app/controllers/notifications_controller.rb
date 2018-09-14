@@ -92,13 +92,13 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     m <<
       if index_collection.is_a?(CollectionView)
         [
-          ::RDF::DynamicURI(index_collection.collection.iri),
+          ::RDF::DynamicURI.intern(index_collection.collection.iri),
           NS::AS[:page],
-          ::RDF::DynamicURI(index_collection.iri)
+          ::RDF::DynamicURI.intern(index_collection.iri)
         ]
       else
         [
-          ::RDF::DynamicURI(index_collection.iri),
+          ::RDF::DynamicURI.intern(index_collection.iri),
           NS::ARGU[:unreadCount],
           unread_notification_count
         ]
