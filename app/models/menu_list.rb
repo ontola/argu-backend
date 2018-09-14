@@ -9,7 +9,7 @@ class MenuList
   include Pundit
 
   attr_accessor :resource, :label, :user_context
-  delegate :user, to: :user_context
+  delegate :user, :afe_request?, to: :user_context
 
   alias read_attribute_for_serialization send
   alias current_user user_context

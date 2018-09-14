@@ -75,6 +75,7 @@ module Menus
     end
 
     def statistics_link
+      return if afe_request?
       menu_item(
         :statistics,
         image: 'fa-bar-chart-o',
