@@ -30,6 +30,11 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 200
   end
 
+  test 'guest n3 should redirect on home' do
+    get :home, format: :n3
+    assert_redirected_to freetown.iri_path
+  end
+
   ####################################
   # As User
   ####################################
@@ -61,6 +66,12 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 200
   end
 
+  test 'user n3 should redirect on home' do
+    sign_in user
+    get :home, format: :n3
+    assert_redirected_to freetown.iri_path
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -76,6 +87,12 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 200
     assert_select '.activity-feed', 1
     assert_select '.landing__wrapper', 0
+  end
+
+  test 'staff n3 should redirect on home' do
+    sign_in staff
+    get :home, format: :n3
+    assert_redirected_to '/feed'
   end
 
   private

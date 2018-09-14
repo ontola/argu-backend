@@ -47,7 +47,7 @@ class StaticPagesController < ApplicationController
         end
       end
       RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { render type => home_graph }
+        format.send(type) { redirect_to(current_user.is_staff? ? feeds_iri_path(nil) : preferred_forum.iri_path) }
       end
     end
   end
@@ -108,13 +108,5 @@ class StaticPagesController < ApplicationController
 
   def default_forum_path
     preferred_forum
-  end
-
-  def home_graph
-    graph = ::RDF::Graph.new
-    graph << [::RDF::DynamicURI("#{Rails.application.config.origin}/"), ::RDF[:type], NS::ARGU[:WebSite]]
-    graph << [::RDF::DynamicURI("#{Rails.application.config.origin}/"), NS::SCHEMA[:name], t('name')]
-    graph << [::RDF::DynamicURI("#{Rails.application.config.origin}/"), NS::SCHEMA[:text], t('site.description')]
-    graph
   end
 end
