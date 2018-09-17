@@ -30,7 +30,7 @@ module IRIHelper
   end
 
   def find_resource_by_root?(opts)
-    opts[:class].has_attribute?(:root_id)
+    opts[:class].has_attribute?(:root_id) && opts.key?(:root_id)
   end
 
   def linked_record_from_opts(opts)
