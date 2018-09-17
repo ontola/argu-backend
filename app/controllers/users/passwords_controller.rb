@@ -2,7 +2,7 @@
 
 class Users::PasswordsController < Devise::PasswordsController
   skip_before_action :require_no_authentication, only: :create, if: :no_password_required?
-  active_response :new
+  active_response :new, :edit
 
   def create
     if no_password_required?
@@ -48,6 +48,12 @@ class Users::PasswordsController < Devise::PasswordsController
 
   def default_form_view(action)
     action
+  end
+
+  def edit_execute
+    self.resource = resource_class.new
+    set_minimum_password_length
+    resource.reset_password_token = params[:reset_password_token]
   end
 
   def new_execute

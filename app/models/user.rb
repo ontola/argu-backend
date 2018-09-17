@@ -359,7 +359,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def validate_public_group_membership
-    profile.group_memberships.where(group_id: Group::PUBLIC_ID).present?
+    profile&.group_memberships&.where(group_id: Group::PUBLIC_ID)&.present?
   end
 
   private

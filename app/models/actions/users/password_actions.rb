@@ -20,6 +20,20 @@ module Actions
       def new_label
         I18n.t('devise.passwords.new.header')
       end
+
+      def update_label
+        I18n.t("devise.passwords.#{resource.user.encrypted_password.present? ? :edit : :set}.header")
+      end
+
+      def update_template_opts
+        {
+          reset_password_token: resource.reset_password_token
+        }
+      end
+
+      def update_url
+        RDF::DynamicURI(expand_uri_template(:passwords_iri, with_hostname: true))
+      end
     end
   end
 end

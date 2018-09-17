@@ -6,7 +6,8 @@ module Users
     include Iriable
     enhance Actionable
     enhance Createable, except: %i[Controller]
-    attr_accessor :email
+    enhance Updateable, except: %i[Controller Serializer]
+    attr_accessor :email, :password, :password_confirmation, :user, :reset_password_token
 
     def iri_template_name
       :passwords_iri
