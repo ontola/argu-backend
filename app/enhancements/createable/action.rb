@@ -10,15 +10,15 @@ module Createable
       define_action(
         :create,
         description: -> { create_description },
-        result: -> { association_class },
-        type: -> { [NS::ARGU["Create#{association_class}"], NS::SCHEMA[:CreateAction]] },
+        result: -> { result_class },
+        type: -> { [NS::ARGU["Create#{result_class}"], NS::SCHEMA[:CreateAction]] },
         policy: -> { create_policy },
         label: -> { new_label },
         image: -> { new_image },
         url: -> { create_url(resource) },
         http_method: :post,
         collection: -> { create_on_collection? },
-        form: -> { "#{association_class}Form".safe_constantize },
+        form: -> { "#{result_class}Form".safe_constantize },
         iri_template: :new_iri
       )
     end
@@ -26,11 +26,7 @@ module Createable
     private
 
     def association
-      @association ||= association_class.to_s.tableize
-    end
-
-    def association_class
-      resource.association_class
+      @association ||= result_class.to_s.tableize
     end
 
     def create_description; end
@@ -53,6 +49,10 @@ module Createable
 
     def new_label
       I18n.t("#{association}.type_new")
+    end
+
+    def result_class
+      create_on_collection? ? resource.association_class : self.class.name.gsub('Actions', '').constantize
     end
   end
 end

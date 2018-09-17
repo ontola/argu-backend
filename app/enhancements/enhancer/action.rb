@@ -22,12 +22,20 @@ module Enhancer
           "::Actions::#{name}Actions".safe_constantize
         end
 
+        def actions_module
+          if parent != Object
+            "::Actions::#{parent}".safe_constantize || ::Actions.const_set(parent_name, Module.new)
+          else
+            ::Actions
+          end
+        end
+
         def action_superclass
           "::Actions::#{superclass.name}Actions".safe_constantize || ::Actions::Base
         end
 
         def define_actions_class
-          ::Actions.const_set("#{name}Actions", Class.new(action_superclass))
+          actions_module.const_set("#{name.demodulize}Actions", Class.new(action_superclass))
         end
       end
     end

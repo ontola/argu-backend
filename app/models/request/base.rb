@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Request
-  class Base
-    include ActiveModel::Model
-    include ActiveModel::AttributeMethods
+  class Base < VirtualResource
     include ActiveRecord::Core
     include ActiveRecord::DefineCallbacks
     include ActiveRecord::Associations
@@ -12,7 +10,6 @@ module Request
     include ActiveRecord::AutosaveAssociation
     include ActiveRecord::Reflection
     include ActiveRecord::NestedAttributes
-    include Enhanceable
 
     class << self
       def pluralize_table_names
