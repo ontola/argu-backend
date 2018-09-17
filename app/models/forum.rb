@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Forum < Edge # rubocop:disable Metrics/ClassLength
+  enhance BlogPostable
   enhance ConfirmedDestroyable
   enhance CoverPhotoable
   enhance Createable
