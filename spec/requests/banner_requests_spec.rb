@@ -22,7 +22,7 @@ RSpec.describe 'Banners', type: :request do
   let(:expect_delete_destroy_guest_html) do
     expect(response).to redirect_to(new_user_session_path(r: settings_iri_path(freetown, tab: :banners)))
   end
-  let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
+  let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
 
   let(:update_path) { destroy_path }
   let(:create_failed_path) { settings_iri_path(freetown, tab: :banners) }

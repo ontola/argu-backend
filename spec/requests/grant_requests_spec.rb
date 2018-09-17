@@ -27,7 +27,7 @@ RSpec.describe 'Grants', type: :request do
 
   context 'with page parent' do
     let(:subject) { create(:grant, edge: argu, group: group) }
-    let(:expect_delete_destroy_serializer) { expect(response.code).to eq('204') }
+    let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
     let(:expect_delete_destroy_html) do
       expect(response.code).to eq('303')
       expect(response).to redirect_to(settings_iri_path(argu, tab: :groups))

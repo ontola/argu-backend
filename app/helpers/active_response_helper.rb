@@ -70,7 +70,8 @@ module ActiveResponseHelper
   end
 
   def redirect_location
-    current_resource.persisted? ? current_resource.iri_path : current_resource.parent.iri_path
+    return current_resource.iri_path if current_resource.persisted? || !current_resource.respond_to?(:parent)
+    current_resource.parent.iri_path
   end
 
   def redirect_message
@@ -79,6 +80,49 @@ module ActiveResponseHelper
     else
       t("type_#{action_name}_success", type: type_for(current_resource)).capitalize
     end
+  end
+
+  def respond_with(*resources, &_block)
+    return super if format_html?
+    opts = resources.size == 1 ? {} : resources.extract_options!
+    resource = resources.first
+    active_response_block do
+      if active_response_type == :html
+        super
+      elsif respond_with_422?(resources)
+        respond_with_block_failure(resource, opts)
+      else
+        respond_with_block_success(resource, opts)
+      end
+    end
+  end
+
+  def respond_with_block_failure(resource, opts)
+    respond_with_failure!
+    respond_with_invalid_resource(respond_with_block_options(resource, opts))
+  end
+
+  def respond_with_block_success(resource, opts)
+    respond_with_success!
+    response_options = respond_with_block_options(resource, opts)
+    case action_name
+    when 'create'
+      respond_with_new_resource(response_options)
+    when 'destroy'
+      respond_with_destroyed(response_options)
+    when 'update'
+      respond_with_updated_resource(response_options)
+    when 'show'
+      respond_with_resource(response_options)
+    else
+      head(200)
+    end
+  end
+
+  def respond_with_block_options(resource, opts)
+    active_response_options
+      .merge(opts)
+      .merge(resource: resource.presence, notice: flash[:notice] || flash[:success])
   end
 
   def show_view_locals

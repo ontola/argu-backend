@@ -236,6 +236,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     devise_parameter_sanitizer.permit(:sign_in, keys: [:r])
   end
 
+  def is_flashing_format?
+    true
+  end
+
   # The name of the current model.
   # This is used primarily to wire data from the generic actions to their
   # resource-specific view variable names.

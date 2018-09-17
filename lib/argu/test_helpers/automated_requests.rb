@@ -13,7 +13,7 @@ module Argu
         base.define_spec_objects
       end
 
-      module ClassMethods
+      module ClassMethods # rubocop:disable Metrics/ModuleLength
         def expectations_for(action)
           %i[json_api].concat(RDF_CONTENT_TYPES) .each do |format|
             let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
@@ -81,7 +81,8 @@ module Argu
           let(:expect_delete_trash_unauthorized_html) { expect_unauthorized }
           let(:expect_delete_trash_unauthorized_serializer) { expect_unauthorized }
           let(:expect_delete_trash_html) { expect(response).to redirect_to(show_path) }
-          let(:expect_delete_trash_serializer) { expect(response.code).to eq('204') }
+          let(:expect_delete_trash_json_api) { expect(response.code).to eq('204') }
+          let(:expect_delete_trash_serializer) { expect(response.code).to eq('200') }
 
           # Create
           expectations_for(:post_create)
@@ -104,7 +105,8 @@ module Argu
           let(:expect_put_untrash_unauthorized_html) { expect_unauthorized }
           let(:expect_put_untrash_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_untrash_html) { expect(response).to redirect_to(subject.iri_path) }
-          let(:expect_put_untrash_serializer) { expect(response.code).to eq('204') }
+          let(:expect_put_untrash_json_api) { expect(response.code).to eq('204') }
+          let(:expect_put_untrash_serializer) { expect(response.code).to eq('200') }
 
           # Update
           expectations_for(:put_update)
@@ -132,7 +134,7 @@ module Argu
           let(:expect_put_move_unauthorized_html) { expect_unauthorized }
           let(:expect_put_move_unauthorized_serializer) { expect_unauthorized }
           let(:expect_put_move) do
-            expect(response).to redirect_to(subject.reload.iri_path)
+            subject.reload
             assert_equal other_page_forum, subject.parent
             case subject
             when Motion

@@ -47,7 +47,7 @@ RSpec.describe 'Pages', type: :request do
     expect(subject.reload.display_name).to eq('new_name')
   end
   let(:expect_put_update_failed_html) { expect_success }
-  let(:expect_put_update_serializer) { expect(response.code).to eq('204') }
+  let(:expect_put_update_json_api) { expect(response.code).to eq('204') }
   let(:expect_post_create_failed_html) do
     expect_success
     expect(response.body).to(include('new_name'))
