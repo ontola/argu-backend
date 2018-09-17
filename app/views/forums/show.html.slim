@@ -5,6 +5,9 @@
                image: authenticated_resource.default_cover_photo&.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   =render partial: 'cover', locals: {resource: authenticated_resource}
+  - if authenticated_resource.children_count(:blog_posts) > 0
+    .col-1
+      =render partial: 'blog_posts/show', locals: {model: authenticated_resource.blog_posts.last}
   - if policy(authenticated_resource).show?
     .btns-center-container
       -if can_start_discussion?(authenticated_resource)
