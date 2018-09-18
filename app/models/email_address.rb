@@ -72,7 +72,7 @@ class EmailAddress < ApplicationRecord
     return if primary?
     SendEmailWorker.perform_async(
       :confirm_secondary,
-      user.id,
+      user.guest? ? nil : user.id,
       confirmationToken: confirmation_token,
       email: email
     )

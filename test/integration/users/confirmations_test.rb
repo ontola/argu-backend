@@ -69,6 +69,23 @@ module Users
       assert_not user.reload.confirmed?
     end
 
+    test 'guest should post create confirmation' do
+      create_email_mock(
+        'requested_confirmation',
+        user.email,
+        email: user.email,
+        confirmationToken: /.+/,
+        email_only: true
+      )
+      post user_confirmation_path(user: {email: user.email})
+      assert_equal user.primary_email_record.confirmation_sent_at.iso8601(6),
+                   user.primary_email_record.reload.confirmation_sent_at.iso8601(6)
+      assert_redirected_to settings_path(tab: :authentication)
+      assert_equal flash[:notice],
+                   'You\'ll receive a mail containing instructions to confirm your account within a few minutes.'
+      assert_email_sent
+    end
+
     ####################################
     # As user
     ####################################

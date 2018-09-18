@@ -4,10 +4,10 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   include OauthHelper
 
   def create
-    email = current_user.email_addresses.find_by!(email: resource_params[:email])
+    email = email_for_user
     create_email = SendEmailWorker.perform_async(
       :requested_confirmation,
-      current_user.id,
+      current_user.guest? ? {email: email.email, language: I18n.locale} : current_user.id,
       confirmationToken: email.confirmation_token,
       email: email.email
     )
@@ -73,5 +73,10 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   def email_by_token!
     email_by_token || raise(ActiveRecord::RecordNotFound)
+  end
+
+  def email_for_user
+    return EmailAddress.find_by!(email: resource_params[:email]) if current_user.guest?
+    current_user.email_addresses.find_by!(email: resource_params[:email])
   end
 end

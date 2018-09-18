@@ -4,12 +4,15 @@ module Argu
   module TestHelpers
     module TestMocks
       def create_email_mock(template, email, options)
+        email_only = options.delete(:email_only)
+        recipient =
+          email_only ? {email: email, language: /.+/} : {display_name: /.+/, id: /.+/, language: /.+/, email: email}
         stub_request(:post, expand_service_url(:email, '/email/spi/emails'))
           .with(
             body: {
               email: {
                 template: template,
-                recipient: {display_name: /.+/, id: /.+/, language: /.+/, email: email},
+                recipient: recipient,
                 options: options
               }
             }
