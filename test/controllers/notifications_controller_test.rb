@@ -22,7 +22,7 @@ class NotificationsControllerTest < ActionController::TestCase
   ####################################
   # As unconfirmed user
   ####################################
-  let(:unconfirmed) { create(:user, :unconfirmed) }
+  let(:unconfirmed) { create(:unconfirmed_user) }
 
   test 'unconfirmed user with notifications should get index' do
     sign_in unconfirmed

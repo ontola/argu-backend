@@ -31,7 +31,7 @@ class CounterCacheTest < ActiveSupport::TestCase
            argu_publication_attributes: {draft: true},
            parent: motion)
   end
-  let(:unconfirmed) { create(:user, :unconfirmed) }
+  let(:unconfirmed) { create(:unconfirmed_user) }
   let!(:unconfirmed_vote) do
     create(:vote, parent: motion.default_vote_event, creator: unconfirmed.profile, publisher: unconfirmed)
   end

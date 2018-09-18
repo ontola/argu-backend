@@ -84,6 +84,11 @@ staff_membership.save(validate: false)
 
 page.send(:create_staff_grant)
 
+FactorySeeder.create(
+  :unconfirmed_user,
+  email: 'unconfirmed@example.com'
+)
+
 Doorkeeper::Application.create!(
   id: Doorkeeper::Application::ARGU_ID,
   name: 'Argu',

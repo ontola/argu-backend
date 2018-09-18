@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user do
+  factory :unconfirmed_user, class: User do
     association :profile, strategy: :build
     association :shortname, strategy: :build
 
@@ -17,10 +17,6 @@ FactoryBot.define do
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
     last_accepted Time.current
-
-    after(:create) do |user|
-      user.primary_email_record.update(confirmed_at: Time.current)
-    end
 
     trait :not_accepted_terms do
       last_accepted nil
@@ -47,16 +43,6 @@ FactoryBot.define do
           start_date: Time.current
         )
         gm.save!(validate: false)
-      end
-    end
-
-    trait :unconfirmed do
-      after(:create) do |user|
-        user.primary_email_record.update(
-          confirmed_at: nil,
-          confirmation_sent_at: 1.year.ago,
-          unconfirmed_email: user.email
-        )
       end
     end
 
@@ -120,6 +106,12 @@ FactoryBot.define do
             publisher: user
           }
         ).commit
+      end
+    end
+
+    factory :user do
+      after(:create) do |user|
+        user.primary_email_record.update(confirmed_at: Time.current)
       end
     end
   end

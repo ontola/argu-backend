@@ -25,7 +25,7 @@ class ActorIRITest < ActionDispatch::IntegrationTest
   ####################################
   # As Unconfirmed Administrator
   ####################################
-  let(:unconfirmed_administrator) { create_administrator(freetown, create(:user, :unconfirmed)) }
+  let(:unconfirmed_administrator) { create_administrator(freetown, create(:unconfirmed_user)) }
 
   test 'unconfirmed administrator should not post create as page' do
     sign_in unconfirmed_administrator

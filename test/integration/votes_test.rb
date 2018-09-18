@@ -193,7 +193,7 @@ class VotesTest < ActionDispatch::IntegrationTest
   ####################################
   # As Unconfirmed user
   ####################################
-  let(:unconfirmed) { create(:user, :unconfirmed) }
+  let(:unconfirmed) { create(:unconfirmed_user) }
 
   test 'unconfirmed should get show vote' do
     sign_in unconfirmed

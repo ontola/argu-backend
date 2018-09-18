@@ -6,7 +6,7 @@ module RedisResource
   class ResourceTest < ActiveSupport::TestCase
     define_freetown
     let(:guest_user) { GuestUser.new(id: 'my_id') }
-    let(:unconfirmed) { create(:user, :unconfirmed) }
+    let(:unconfirmed) { create(:unconfirmed_user) }
     let(:user) { create(:user) }
     let(:motion) { create(:motion, parent: freetown) }
     let(:confirmed_vote) { create(:vote, publisher: user, parent: motion.default_vote_event) }

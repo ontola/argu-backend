@@ -485,7 +485,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   ####################################
   # As Unconfirmed User
   ####################################
-  let(:unconfirmed_user) { create(:user, :unconfirmed) }
+  let(:unconfirmed_user) { create(:unconfirmed_user) }
 
   test 'Unconfirmed user should post create token for other domain not transfering temp votes' do
     get root_path

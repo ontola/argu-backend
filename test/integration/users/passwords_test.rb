@@ -5,7 +5,7 @@ require 'test_helper'
 module Users
   class PasswordsTest < ActionDispatch::IntegrationTest
     define_freetown
-    let(:user) { create(:user, :unconfirmed) }
+    let(:user) { create(:unconfirmed_user) }
     let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
 
     ####################################

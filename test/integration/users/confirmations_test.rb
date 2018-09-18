@@ -5,9 +5,9 @@ require 'test_helper'
 module Users
   class ConfirmationsTest < ActionDispatch::IntegrationTest
     define_freetown
-    let(:user) { create(:user, :unconfirmed) }
+    let(:user) { create(:unconfirmed_user) }
     let!(:user_without_password) { create(:user, :no_password) }
-    let(:other_user) { create(:user, :unconfirmed) }
+    let(:other_user) { create(:unconfirmed_user) }
     let(:confirmed_user) { create(:user) }
     let(:motion) { create(:motion, parent: freetown) }
     let(:motion2) { create(:motion, parent: freetown) }
@@ -89,7 +89,7 @@ module Users
     ####################################
     # As user
     ####################################
-    let(:user) { create(:user, :unconfirmed) }
+    let(:user) { create(:unconfirmed_user) }
 
     test 'user without shortname should get show confirmation' do
       sign_in user
