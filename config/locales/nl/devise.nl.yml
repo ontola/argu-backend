@@ -49,7 +49,8 @@ nl:
       send: 'Verstuur bevestigingsmail'
       send_instructions: 'Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.'
       send_paranoid_instructions: 'Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw account te bevestigen.'
-      confirmed: 'Jouw account is bevestigd. Je bent nu ingelogd.'
+      confirmed: 'Jouw account is bevestigd.'
+      invalid_email: '%{email} bestaat niet of is van een andere gebruiker.'
       set_password:
         header: "Kies een wachtwoord"
         button: "Wachtwoord instellen"

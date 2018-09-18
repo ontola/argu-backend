@@ -2,6 +2,7 @@
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
   include OauthHelper
+  active_response :new
 
   def create
     email = email_for_user
@@ -12,7 +13,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
       email: email.email
     )
     set_flash_message :notice, :send_instructions if create_email
-    redirect_back(fallback_location: settings_path(tab: :authentication))
+    respond_with({}, location: after_resending_confirmation_instructions_path_for(resource))
   end
 
   def show
@@ -50,11 +51,15 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 
   protected
 
-  def after_resending_confirmation_instructions_path_for(resource)
-    if correct_mail
-      request.headers['Referer']
+  def active_response_action(opts = {})
+    opts[:resource].action(user_context, ACTION_MAP[action_name.to_sym] || action_name)
+  end
+
+  def after_resending_confirmation_instructions_path_for(_resource)
+    if correct_mail && !current_user.guest?
+      settings_path(tab: :authentication)
     else
-      super
+      afe_request? ? '/u/sign_in' : new_user_session_path
     end
   end
 
@@ -64,7 +69,21 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def correct_mail
-    current_user.guest? ? true : params[:user][:email] == current_user.email
+    current_user.guest? ? true : resource_params[:email] == current_user.email
+  end
+
+  def current_resource
+    @current_resource ||= Users::Confirmation.new(user: current_user)
+  end
+
+  def default_form_view_locals(_action)
+    {
+      resource: resource
+    }
+  end
+
+  def default_form_view(action)
+    action
   end
 
   def email_by_token
@@ -76,7 +95,18 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   end
 
   def email_for_user
-    return EmailAddress.find_by!(email: resource_params[:email]) if current_user.guest?
-    current_user.email_addresses.find_by!(email: resource_params[:email])
+    email = resource_params[:email]
+    return EmailAddress.find_by!(email: email) if current_user.guest?
+    current_user.email_addresses.find_by(email: email) ||
+      raise(ActiveRecord::RecordNotFound.new(I18n.t('devise.confirmations.invalid_email', email: email)))
+  end
+
+  def new_execute
+    self.resource = resource_class.new
+  end
+
+  def resource_params
+    params.fetch(resource_name, nil) ||
+      params.fetch("#{resource_name.to_s.pluralize}/#{controller_name.singularize}", {})
   end
 end

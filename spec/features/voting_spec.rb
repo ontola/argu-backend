@@ -84,7 +84,7 @@ RSpec.feature 'Voting', type: :feature do
       click_button 'Set password'
     end
 
-    expect(page).to have_content('Your account has been confirmed. You are now logged in.')
+    expect(page).to have_content('Your account has been confirmed.')
 
     visit motion
 
