@@ -2,6 +2,7 @@ tmp/*
 .git
 log/*
 .env
+node_modules/
 
 doc/
 jsdoc/
@@ -15,10 +16,16 @@ secrets.yml
 /config/database.yml
 
 # Ignore image uploads
-/public/uploads
-/public/profiles
+/public/exports
 /public/forums
+/public/media_objects
 /public/motions
-/public/questions
 /public/organisations
+/public/packs
+/public/packs-test
+/public/photos
+/public/profile_photos
+/public/profiles
+/public/questions
 /public/system
+/public/uploads
