@@ -26,24 +26,17 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
   end
 
   # Create different versions of your uploaded files:
-  version :box, if: :is_image? do
-    process convert: 'jpeg'
-    process resize_to_limit: [568, 400]
-  end
-
-  version :cover, if: :cover_photo? do
-    process convert: 'jpeg'
-    process resize_to_limit: [1500, 600]
-  end
-
-  version :avatar, if: :is_image? do
-    process convert: 'jpeg'
-    process resize_to_fill: [256, 256]
-  end
-
-  version :icon, if: :is_image? do
-    process convert: 'jpeg'
-    process resize_to_fill: [64, 64]
+  VERSIONS = {
+    icon: {if: :is_image?, w: 64, h: 64, strategy: :resize_to_fill},
+    avatar: {if: :is_image?, w: 256, h: 256, strategy: :resize_to_fill},
+    box: {if: :is_image?, w: 568, h: 400, strategy: :resize_to_limit},
+    cover: {if: :cover_photo?, w: 1500, h: 600, strategy: :resize_to_limit}
+  }
+  VERSIONS.each do |type, opts|
+    version type, if: opts[:if] do
+      process convert: 'jpeg'
+      process opts[:strategy] => [opts[:w], opts[:h]]
+    end
   end
 
   def aws_acl

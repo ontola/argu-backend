@@ -14,6 +14,15 @@ class MediaObjectSerializer < RecordSerializer
   attribute :position_y, predicate: NS::ARGU[:imagePositionY]
   attribute :used_as
 
+  MediaObjectUploader::VERSIONS.each do |format, opts|
+    attribute format, predicate: NS::ARGU[:"imgUrl#{opts[:w]}x#{opts[:h]}"]
+
+    define_method format do
+      url = object.content.url(format)
+      url && RDF::DynamicURI(url)
+    end
+  end
+
   def content_type
     object.content_type unless object.type == 'video'
   end
