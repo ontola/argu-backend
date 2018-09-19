@@ -9,9 +9,9 @@ module Actions
       image: 'fa-update',
       url: -> { resource.iri },
       http_method: :put,
-      form: -> { Users::PrivacyForm },
+      form: Users::PrivacyForm,
       iri_template: :edit_iri,
-      iri_template_opts: -> { {form: :privacy} }
+      iri_template_opts: {form: :privacy}
     )
 
     define_action(
@@ -21,9 +21,9 @@ module Actions
       image: 'fa-update',
       url: -> { resource.iri },
       http_method: :put,
-      form: -> { Users::NotificationsForm },
+      form: Users::NotificationsForm,
       iri_template: :edit_iri,
-      iri_template_opts: -> { {form: :notifications} }
+      iri_template_opts: {form: :notifications}
     )
 
     define_action(
@@ -33,9 +33,9 @@ module Actions
       image: 'fa-update',
       url: -> { resource.iri },
       http_method: :put,
-      form: -> { Users::AuthenticationForm },
+      form: Users::AuthenticationForm,
       iri_template: :edit_iri,
-      iri_template_opts: -> { {form: :authentication} }
+      iri_template_opts: {form: :authentication}
     )
   end
 end
