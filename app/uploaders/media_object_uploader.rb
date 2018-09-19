@@ -19,22 +19,27 @@ class MediaObjectUploader < CarrierWave::Uploader::Base
                          text/comma-separated-values application/vnd.oasis.opendocument.spreadsheet].freeze
   VIDEO_TYPES = %w[video/mp4].freeze
 
-  if ENV['AWS_ID'].blank?
-    storage :file
-  else
-    storage :aws
-  end
+  storage ENV['AWS_ID'].present? ? :aws : :file
 
   # Create different versions of your uploaded files:
+  CONVERSION_OPTIONS = {
+    interlace: true,
+    optimize_coding: true,
+    trellis_quant: true,
+    optimize_scans: true,
+    overshoot_deringing: true,
+    quant_table: 3,
+    quality: 75
+  }.freeze
   VERSIONS = {
-    icon: {if: :is_image?, w: 64, h: 64, strategy: :resize_to_fill},
+    icon: {if: :is_image?, w: 64, h: 64, strategy: :resize_to_fill, conversion_opts: {quant_table: 0, quality: 90}},
     avatar: {if: :is_image?, w: 256, h: 256, strategy: :resize_to_fill},
     box: {if: :is_image?, w: 568, h: 400, strategy: :resize_to_limit},
     cover: {if: :cover_photo?, w: 1500, h: 600, strategy: :resize_to_limit}
-  }
+  }.freeze
   VERSIONS.each do |type, opts|
     version type, if: opts[:if] do
-      process convert: 'jpeg'
+      process convert: ['jpeg', CONVERSION_OPTIONS.merge(opts[:conversion_opts] || {})]
       process opts[:strategy] => [opts[:w], opts[:h]]
     end
   end
