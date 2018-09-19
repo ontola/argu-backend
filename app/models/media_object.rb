@@ -122,7 +122,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def url_for_environment(type)
     url = content.url(type)
-    return RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
+    return url && RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?
     if File.exist?(content.file.path)
       RDF::DynamicURI(content.url(:icon))
