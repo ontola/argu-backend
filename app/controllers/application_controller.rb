@@ -105,6 +105,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
       freshdesk_redirect_url
+    elsif params[:r] && argu_iri_or_relative?(params[:r])
+      params[:r]
     else
       super(resource || current_resource_owner)
     end
