@@ -8,7 +8,8 @@ export const BearerTokens = React.createClass({
     propTypes: {
         createTokenUrl: React.PropTypes.string,
         groupId: React.PropTypes.number,
-        indexTokenUrl: React.PropTypes.string
+        indexTokenUrl: React.PropTypes.string,
+        rootId: React.PropTypes.number
     },
 
     getInitialState () {
@@ -23,7 +24,7 @@ export const BearerTokens = React.createClass({
     },
 
     handleCreateToken () {
-        const { createTokenUrl, groupId } = this.props;
+        const { createTokenUrl, groupId, rootId } = this.props;
         this.setState({ submitting: true });
         fetch(createTokenUrl,
               safeCredentialsJsonApi({
@@ -32,7 +33,8 @@ export const BearerTokens = React.createClass({
                       data: {
                           type: 'bearerToken',
                           attributes: {
-                              group_id: groupId
+                              group_id: groupId,
+                              root_id: rootId
                           }
                       }
                   })

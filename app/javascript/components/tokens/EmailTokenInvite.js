@@ -14,7 +14,8 @@ export const EmailTokenInvite = React.createClass({
         groupId: React.PropTypes.number,
         indexTokenUrl: React.PropTypes.string,
         managedProfiles: React.PropTypes.array,
-        message: React.PropTypes.string
+        message: React.PropTypes.string,
+        rootId: React.PropTypes.number
     },
 
     getInitialState () {
@@ -32,7 +33,7 @@ export const EmailTokenInvite = React.createClass({
     },
 
     createTokens () {
-        const { createTokenUrl, groupId } = this.props;
+        const { createTokenUrl, groupId, rootId } = this.props;
         const emails = this.state.values.map(email => { return email.value; });
         this.setState({ submitting: true });
         fetch(createTokenUrl,
@@ -46,6 +47,7 @@ export const EmailTokenInvite = React.createClass({
                             group_id: groupId,
                             message: this.state.message,
                             actor_iri: this.state.currentActor,
+                            root_id: rootId,
                             send_mail: true
                         }
                     }
