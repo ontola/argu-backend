@@ -46,7 +46,9 @@ page = FactorySeeder.create(
   url: 'argu',
   publisher: staff,
   creator: staff.profile,
-  is_published: true
+  is_published: true,
+  uuid: 'deadbeef-bfc5-4e68-993f-430037bd5bd3',
+  root_id: 'deadbeef-bfc5-4e68-993f-430037bd5bd3'
 )
 
 public_group = FactorySeeder.create(
@@ -179,6 +181,9 @@ FactorySeeder.create_forum(
 members_group =
   FactorySeeder
     .create(:group, id: 111, name: 'Members', name_singular: 'Member', parent: holland.root)
+group_member = FactorySeeder.create(:user, email: 'member@example.com')
+FactorySeeder.create(:group_membership, parent: members_group, member: group_member.profile)
+
 FactorySeeder.create(:grant, edge: holland, group: members_group, grant_set: GrantSet.initiator)
 moderators_group =
   FactorySeeder
