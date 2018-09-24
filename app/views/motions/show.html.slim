@@ -31,4 +31,4 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                                     show_new_buttons: policy(motion).create_child?(:pro_arguments).present?)
 - if policy(motion).index_children?(:comments).present?
   .opinion-columns
-    div.col-1= render template: 'comments/show', locals: {resource: motion, comment: motion.comments.new}
+    div.col-1= render template: 'comments/show', locals: {commentable: motion, comment: motion.comments.new}

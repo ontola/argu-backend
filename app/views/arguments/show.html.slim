@@ -11,4 +11,4 @@
   .intro-filler[data-intro= t('intro.argument.body')]
   =render partial: 'body', locals: {argument: argument}
   -if policy(argument).index_children?(:comments)
-    =render template: 'comments/show', locals: { resource: argument, comment: comment }
+    =render template: 'comments/show', locals: { commentable: argument, comment: comment }

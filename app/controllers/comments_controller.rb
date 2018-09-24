@@ -8,7 +8,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     comment = params[:comment]
     render locals: {
       parent_id: comment.is_a?(Hash) ? comment[:parent_id] : nil,
-      resource: authenticated_resource.parent,
+      commentable: authenticated_resource.parent,
       comment: authenticated_resource
     }
   end
@@ -52,7 +52,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
 
   def index_success_js
     @comment_edges = policy_scope(parent_resource!.filtered_threads(show_trashed?, params[:comments_page]))
-    render locals: {resource: parent_resource!}
+    render locals: {commentable: parent_resource!}
   end
 
   def redirect_location
@@ -92,8 +92,9 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   def default_form_view_locals(_action)
     {
       comment: authenticated_resource,
+      commentable: authenticated_resource.parent,
       parent_id: params[:comment].try(:[], :parent_id),
-      resource: authenticated_resource.parent,
+      resource: authenticated_resource,
       visible: true
     }
   end
@@ -112,7 +113,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   def update_failure_html
     render 'edit',
            locals: {
-             resource: authenticated_resource.parent,
+             commentable: authenticated_resource.parent,
              comment: authenticated_resource,
              parent_id: nil
            }

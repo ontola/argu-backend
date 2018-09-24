@@ -20,5 +20,5 @@
             li
               ul= dropdown_menu(argument, :share, item_opts: {isMobile: browser.device.mobile?, renderLeft: true})
       - if policy(argument).index_children?(:comments)
-        =render template: 'comments/show', locals: {resource: argument, comment: comment, modal: true}
+        =render template: 'comments/show', locals: {commentable: argument, comment: comment, modal: true}
     .overlay.overlay-bottom

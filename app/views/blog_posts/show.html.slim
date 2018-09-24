@@ -34,4 +34,4 @@
   - unless blog_post.is_published?
     =render partial: 'application/publish', locals: {resource: blog_post}
   - if policy(blog_post).index_children?(:comments)
-    =render template: 'comments/show', locals: {resource: blog_post, comment: comment}
+    =render template: 'comments/show', locals: {commentable: blog_post, comment: comment}

@@ -4,8 +4,8 @@
     .modal-scroll-box
       .box
         section
-          h1.motion-t= resource.display_name
+          h1.motion-t= commentable.display_name
           .markdown[itemprop="text"]
-            =markdown_to_html(resource.content)
-      =render template: 'comments/show', locals: {resource: resource, comment: Comment.new, modal: true}
+            =markdown_to_html(commentable.content)
+      =render template: 'comments/show', locals: {commentable: commentable, comment: Comment.new, modal: true}
     .overlay.overlay-bottom

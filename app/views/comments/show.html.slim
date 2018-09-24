@@ -1,19 +1,19 @@
 / Because Javascript
 .comments-container
-  - if policy(resource).show?
+  - if policy(commentable).show?
     - if @comment_edges.present?
       header
         h2#comments= t('comments.plural')
     .comments.box
-      span.hidden[itemprop="commentCount"]= resource.children_count(:comments)
+      span.hidden[itemprop="commentCount"]= commentable.children_count(:comments)
       - @comment_edges.reject { |edge| edge.owner_type == 'Comment'  && edge.abandoned? }.each do |edge|
         - if edge.owner_type == 'Comment'
-          =render 'comments/comment', c: edge, resource: resource
+          =render 'comments/comment', c: edge, commentable: commentable
         - else
           =render 'votes/vote', model: edge
       =paginate @comment_edges, remote: local_assigns[:modal], params: {anchor: 'comments'}, param_name: :comments_page
-  - if local_assigns[:comment] && policy(resource).create_child?(:comments)
+  - if local_assigns[:comment] && policy(commentable).create_child?(:comments)
     header
       h2= t('comments.reply')
     .box[data-intro= t('intro.comments.form')]
-      =render partial: 'comments/form', locals: { resource: resource, parent_id: comment.parent_comment&.uuid, visible: true, comment: comment, modal: local_assigns[:modal] }
+      =render partial: 'comments/form', locals: { commentable: commentable, parent_id: comment.parent_comment&.uuid, visible: true, comment: comment, modal: local_assigns[:modal] }

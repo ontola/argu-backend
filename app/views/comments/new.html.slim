@@ -1,15 +1,15 @@
 .col-1
   header
     h1= t('comments.confirm.headline')
-  =render partial: "#{resource.class.name.tableize}/show",
-          locals: {model: resource,
+  =render partial: "#{commentable.class.name.tableize}/show",
+          locals: {model: commentable,
                    comment: local_assigns[:comment]}
   .box
     =render partial: 'comments/form',
-            locals: {resource: resource,
+            locals: {commentable: commentable,
                      parent_id: local_assigns[:parent_id],
                      visible: true,
                      comment: local_assigns[:comment]}
-  .float-right=link_to resource.iri.to_s, class: 'btn-subtle' do
+  .float-right=link_to commentable.iri.to_s, class: 'btn-subtle' do
     span.fa.fa-arrow-right
-    span.icon-left= t('comments.confirm.skip', skip_type: type_for(resource))
+    span.icon-left= t('comments.confirm.skip', skip_type: type_for(commentable))
