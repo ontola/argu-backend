@@ -41,7 +41,7 @@ export const DiscussionInvite = React.createClass({
     },
 
     createTokens () {
-        const { createTokenUrl } = this.props;
+        const { createTokenUrl, pageEdge } = this.props;
         const emails = this.state.values.map(email => { return email.value; });
         this.setState({ submitting: true });
         fetch(createTokenUrl,
@@ -56,6 +56,7 @@ export const DiscussionInvite = React.createClass({
                             group_id: this.state.currentGroup,
                             message: this.state.message,
                             redirect_url: this.props.resource,
+                            root_id: pageEdge,
                             send_mail: true
                         }
                     }
