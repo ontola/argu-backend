@@ -142,8 +142,32 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
+    assert_equal(
+      motion.followings.reactions.pluck(:follower_id).sort,
+      Notification.order(created_at: :desc).limit(2).pluck(:user_id).sort
+    )
 
     assert_difference('Comment.trashed.count' => 1, create_notification_count => -2) do
+      delete Comment.last
+    end
+  end
+
+  test 'staff should create and trash nested comment for motion with notifications' do
+    sign_in staff
+    comment
+
+    # Notification for creator and follower of Argument and of parent comment
+    assert_difference('Comment.count' => 1, 'Notification.count' => 3) do
+      post collection_iri_path(argument, :comments),
+           params: {comment: attributes_for(:comment).merge(in_reply_to_id: comment.uuid)}
+    end
+    assert_equal Notification.last.notification_type, 'reaction'
+    assert_equal(
+      (comment.followings.reactions.pluck(:follower_id) + argument.followings.reactions.pluck(:follower_id)).uniq.sort,
+      Notification.order(created_at: :desc).limit(3).pluck(:user_id).sort
+    )
+
+    assert_difference('Comment.trashed.count' => 1, create_notification_count => -3) do
       delete Comment.last
     end
   end
