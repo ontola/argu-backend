@@ -177,7 +177,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/create_vote"),
       NS::LL[:remove]
     ]
-    data
   end
 
   def destroy_meta
@@ -192,7 +191,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       data.push [
         authenticated_resource.parent_iri,
         NS::ARGU[:votesProCount],
-        authenticated_resource.parent.children_counts['votes_pro'].to_i - 1,
+        authenticated_resource.parent.reload.children_counts['votes_pro'].to_i,
         NS::LL[:replace]
       ]
     end

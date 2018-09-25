@@ -120,6 +120,34 @@ class VotesTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test 'guest should post create for motion with new fe' do
+    expect(vote_event.votes.length).to be 1
+    assert_difference('Vote.count' => 0,
+                      'Edge.count' => 0,
+                      'vote_event.reload.children_count(:votes_con)' => 0) do
+      Sidekiq::Testing.inline! do
+        post collection_iri_path(vote_event, :votes, 'filter%5B%5D' => 'option=no', type: :paginated),
+             headers: argu_headers(accept: :nq)
+      end
+    end
+
+    expect_triple(vote_event.vote_collection(user_context: context).iri, NS::AS[:totalItems], 1, NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :yes}).iri,
+                  NS::AS[:totalItems],
+                  1,
+                  NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :other}).iri,
+                  NS::AS[:totalItems],
+                  0,
+                  NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :no}).iri,
+                  NS::AS[:totalItems],
+                  0,
+                  NS::LL[:replace])
+
+    assert_response 201
+  end
+
   test 'guest should post not create vote for closed motion' do
     get root_path
     post collection_iri_path(closed_question_motion.default_vote_event, :votes, canonical: true),
