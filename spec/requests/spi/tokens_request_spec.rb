@@ -64,7 +64,7 @@ RSpec.describe 'Tokens', type: :request do
       end.to change { Doorkeeper::AccessToken.count }.by(1)
 
       expect(response.status).to eq 201
-      expect(parsed_body[:token_type]).to eq 'bearer'
+      expect(parsed_body[:token_type]).to eq 'Bearer'
       expect(parsed_body[:scope]).to eq 'guest afe'
 
       token = decode_token(parsed_body[:access_token])
@@ -82,7 +82,7 @@ RSpec.describe 'Tokens', type: :request do
       end.to change { Doorkeeper::AccessToken.count }.by(1)
 
       expect(response.status).to eq 201
-      expect(parsed_body[:token_type]).to eq 'bearer'
+      expect(parsed_body[:token_type]).to eq 'Bearer'
       expect(parsed_body[:scope]).to eq 'user afe'
 
       token = decode_token(parsed_body[:access_token])

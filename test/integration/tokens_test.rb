@@ -57,7 +57,7 @@ class TokensTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal 'user', parsed_body['scope']
-    assert_equal 'bearer', parsed_body['token_type']
+    assert_equal 'Bearer', parsed_body['token_type']
     assert_equal 1_209_600, parsed_body['expires_in']
     token = JWT.decode(parsed_body['access_token'], nil, false)[0]
     token_user = token['user']

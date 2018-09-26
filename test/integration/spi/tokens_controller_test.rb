@@ -40,7 +40,7 @@ module SPI
 
       body = JSON.parse(response.body)
       assert_equal 'guest', body['scope']
-      assert_equal 'bearer', body['token_type']
+      assert_equal 'Bearer', body['token_type']
       assert_not_nil body['access_token']
 
       token = JWT.decode(parsed_body['access_token'], nil, false)[0]
@@ -139,7 +139,7 @@ module SPI
     def validate_user_token(user)
       b = parsed_body
       assert_equal 'user', b['scope']
-      assert_equal 'bearer', b['token_type']
+      assert_equal 'Bearer', b['token_type']
       assert_not_nil b['access_token']
 
       token = JWT.decode(b['access_token'], nil, false)[0]

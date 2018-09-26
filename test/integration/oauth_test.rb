@@ -131,7 +131,7 @@ class OauthTest < ActionDispatch::IntegrationTest
 
     assert_equal 1_209_600, parsed_body['expires_in']
     assert_equal 'user', parsed_body['scope']
-    assert_equal 'bearer', parsed_body['token_type']
+    assert_equal 'Bearer', parsed_body['token_type']
   end
 
   private
