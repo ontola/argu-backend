@@ -244,8 +244,10 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
         }
     assert_redirected_to settings_iri_path(holland.reload, tab: :general)
-    assert_equal 'new_url', Forum.find_by(uuid: holland.uuid).url
-    assert_equal "#{holland.parent.iri}/new_url", Forum.find_by(uuid: holland.uuid).iri
+    updated_holland = Forum.find_by(uuid: holland.uuid)
+    assert_equal 'new_url', updated_holland.url
+    assert updated_holland.widgets.first.resource_iri.end_with?('/new_url/discussions')
+    assert_equal "#{updated_holland.parent.iri}/new_url", updated_holland.iri
   end
 
   test 'administrator should update locale affecting placement' do
