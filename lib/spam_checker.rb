@@ -9,4 +9,18 @@ class SpamChecker
     self.email = opts[:email]
     self.content = opts[:content]
   end
+
+  def spam?
+    super
+    SpamVerdict.create!(
+      verdict: @_spam,
+      content: content,
+      email: email,
+      http_headers: Rakismet.request.http_headers,
+      ip: Rakismet.request.user_ip,
+      referrer: Rakismet.request.referrer,
+      user_agent: Rakismet.request.user_agent
+    )
+    @_spam
+  end
 end

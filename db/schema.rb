@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_14_113610) do
+ActiveRecord::Schema.define(version: 2018_09_26_113055) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "btree_gist"
   enable_extension "hstore"
   enable_extension "ltree"
+  enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
   create_table "activities", id: :serial, force: :cascade do |t|
@@ -507,6 +507,16 @@ ActiveRecord::Schema.define(version: 2018_09_14_113610) do
     t.datetime "updated_at", null: false
     t.index ["iri_base"], name: "index_sources_on_iri_base", unique: true
     t.index ["page_id", "shortname"], name: "index_sources_on_page_id_and_shortname", unique: true
+  end
+
+  create_table "spam_verdicts", force: :cascade do |t|
+    t.boolean "verdict", null: false
+    t.text "content"
+    t.string "email"
+    t.hstore "http_headers"
+    t.string "ip"
+    t.string "referrer"
+    t.string "user_agent"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
