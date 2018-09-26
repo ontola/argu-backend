@@ -23,7 +23,10 @@ ActiveRecord::Migration.maintain_test_schema!
 
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: "https://#{Rails.application.config.rakismet[:key]}.rest.akismet.com"
+)
 
 Capybara.server_port = 42_000
 Capybara.always_include_port = true

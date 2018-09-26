@@ -17,6 +17,7 @@ en:
   sign_in_facebook_failure: "We couldn't log you in with Facebook. Please try something else."
   sign_in_twitter: "Log in with twitter"
   sign_in_existing: "Log in with an existing argu account:"
+  spam_notice: "It seems like you're trying to post a comment containing advertising or illegal content. If this is not true, please try to reformulate your response or contact us at info@argu.co."
   forgot_password: "Forgot password?"
   settings: "Settings"
   sign_up: "Sign up"

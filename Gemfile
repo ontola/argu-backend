@@ -5,6 +5,7 @@ ruby '2.4.1'
 ruby = '2.4.1'
 
 gem 'active_response', git: 'https://github.com/ontola/active_response', branch: :master
+gem 'rakismet'
 gem 'bootsnap', require: false
 gem 'bunny', '~> 2.6.1'
 gem 'dotenv-rails', require: 'dotenv/rails-now'

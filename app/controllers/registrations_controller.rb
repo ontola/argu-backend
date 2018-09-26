@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RegistrationsController < Devise::RegistrationsController
+class RegistrationsController < Devise::RegistrationsController # rubocop:disable Metrics/ClassLength
   skip_before_action :authenticate_scope!, only: :destroy
   include Destroyable::Controller
   include RedisResourcesHelper
@@ -10,6 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   skip_before_action :verify_authenticity_token,
                      if: :api_request?
+  before_action :handle_spammer, if: :is_spam?, only: :create
 
   def create
     super
@@ -96,6 +97,10 @@ class RegistrationsController < Devise::RegistrationsController
     root_path
   end
 
+  def handle_spammer
+    render 'application/spam', content: @content_checked_for_spam
+  end
+
   def send_confirmation_mail(user, guest_votes)
     if guest_votes&.count&.positive?
       SendEmailWorker.perform_async(
@@ -110,5 +115,13 @@ class RegistrationsController < Devise::RegistrationsController
     elsif resource.password.present?
       SendEmailWorker.perform_async(:confirmation, user.id, confirmationToken: user.confirmation_token)
     end
+  end
+
+  def is_spam?
+    r = sign_up_params[:r] || params[:r]
+    body = Rack::Utils.parse_nested_query(r&.split('?')&.second).with_indifferent_access
+    @content_checked_for_spam = body[:comment].try(:[], :body)
+    return false if @content_checked_for_spam.blank?
+    SpamChecker.new(content: @content_checked_for_spam, email: sign_up_params[:email]).spam?
   end
 end

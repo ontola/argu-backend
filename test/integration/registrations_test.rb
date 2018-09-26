@@ -63,6 +63,38 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response 422
   end
 
+  test 'should block spammer' do
+    r = '/freetown/con/846/c/new?comment%5Bbody%5D=online+casino&confirm=true'
+    attrs = attributes_for(:user)
+    attrs[:r] = r
+
+    assert_difference('User.count' => 0,
+                      'Favorite.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 0) do
+      post user_registration_path,
+           params: {user: attrs, accept_terms: true, r: r}
+      assert_response 200
+    end
+    assert_includes(
+      response.body,
+      'It seems like you&#39;re trying to post a comment containing advertising or illegal content'
+    )
+  end
+
+  test 'should not block valid content' do
+    r = '/freetown/con/846/c/new?comment%5Bbody%5D=valid+comment&confirm=true'
+    attrs = attributes_for(:user)
+    attrs[:r] = r
+
+    assert_difference('User.count' => 1,
+                      'Favorite.count' => 0,
+                      'Sidekiq::Worker.jobs.count' => 2) do
+      post user_registration_path,
+           params: {user: attrs, accept_terms: true, r: r}
+      assert_response 302
+    end
+  end
+
   test 'should post create en' do
     locale = :en
     cookies[:locale] = locale.to_s
