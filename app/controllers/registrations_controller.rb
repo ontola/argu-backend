@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spam_checker'
+
 class RegistrationsController < Devise::RegistrationsController # rubocop:disable Metrics/ClassLength
   skip_before_action :authenticate_scope!, only: :destroy
   include Destroyable::Controller
