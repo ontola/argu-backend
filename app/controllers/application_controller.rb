@@ -258,10 +258,4 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
       'application'
     end
   end
-
-  # @private
-  # For Devise
-  def after_sending_reset_password_instructions_path_for(_resource_name)
-    password_reset_confirm_path
-  end
 end
