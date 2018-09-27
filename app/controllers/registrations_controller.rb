@@ -2,7 +2,7 @@
 
 require 'spam_checker'
 
-class RegistrationsController < Devise::RegistrationsController # rubocop:disable Metrics/ClassLength
+class RegistrationsController < Devise::RegistrationsController
   skip_before_action :authenticate_scope!, only: :destroy
   include Destroyable::Controller
   include RedisResourcesHelper
@@ -16,12 +16,7 @@ class RegistrationsController < Devise::RegistrationsController # rubocop:disabl
 
   def create
     super
-    if afe_request?
-      t = Doorkeeper::AccessToken.where(resource_owner_id: resource.id).last
-      response.headers['New-Authorization'] = t.token
-    else
-      session[:omniauth] = nil unless @user.new_record?
-    end
+    session[:omniauth] = nil unless @user.new_record? || afe_request?
   end
 
   protected

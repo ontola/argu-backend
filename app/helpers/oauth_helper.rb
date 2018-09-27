@@ -34,7 +34,7 @@ module OauthHelper
       Doorkeeper.configuration.access_token_expires_in,
       false
     )
-    set_argu_client_token_cookie(t.token) unless afe_request?
+    afe_request? ? response.headers['New-Authorization'] = t.token : set_argu_client_token_cookie(t.token)
     current_actor.user = resource
     set_layout
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource

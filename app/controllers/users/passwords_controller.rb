@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
+  include OauthHelper
+
   skip_before_action :require_no_authentication, only: :create, if: :no_password_required?
   active_response :new, :edit
 
