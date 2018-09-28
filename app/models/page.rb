@@ -19,7 +19,7 @@ class Page < Edge
 
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
-  accepts_nested_attributes_for :profile
+  accepts_nested_attributes_for :profile, update_only: true
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
 
   scope :discover, lambda {

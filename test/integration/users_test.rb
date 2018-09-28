@@ -420,6 +420,19 @@ class UsersTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'user should put settings' do
+    sign_in user
+    profile_id = user.profile.id
+    put user_path(user), params: {
+      user: {
+        profile_attributes: {
+          name: 'new name'
+        }
+      }
+    }
+    assert_equal profile_id, user.reload.profile.id
+  end
+
   test 'user should update profile_photo and cover_photo' do
     nominatim_postal_code_valid
     sign_in user

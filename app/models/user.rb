@@ -39,7 +39,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
-  accepts_nested_attributes_for :profile
+  accepts_nested_attributes_for :profile, update_only: true
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
 
