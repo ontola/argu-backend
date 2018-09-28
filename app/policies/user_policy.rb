@@ -6,6 +6,7 @@ class UserPolicy < RestrictivePolicy
       scope
     end
   end
+  include ChildOperations
 
   def permitted_attribute_names(password = false)
     attrs = super()
@@ -36,7 +37,7 @@ class UserPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i[general profile authentication notifications privacy advanced]
+    tabs.concat %i[general profile authentication emails notifications privacy advanced]
     tabs.append :delete if vnext?
     tabs
   end

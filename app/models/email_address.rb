@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EmailAddress < ApplicationRecord
+  include Parentable
   include RedisResourcesHelper
   include Ldable
   TEMP_EMAIL_REGEX = /\Achange@me/
@@ -12,6 +13,8 @@ class EmailAddress < ApplicationRecord
   before_save { |user| user.email = email.downcase if email.present? }
   before_update :send_confirmation_instructions, if: :email_changed?
   after_commit :publish_data_event
+  parentable :user
+  self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]
 
   validate :dont_update_confirmed_email
   validates :email,

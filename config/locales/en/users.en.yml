@@ -14,6 +14,7 @@ en:
         notifications: "Notifications"
         privacy: "Privacy"
         advanced: "Advanced"
+        emails: "Email addresses"
     edit:
       analytics_helper: "We use Bugsnag to get notified of and help fix errors in your browser. We use Google Analytics to improve the user experience."
     privacy:

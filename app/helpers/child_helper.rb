@@ -36,6 +36,8 @@ module ChildHelper
       {state: 'forwarded', parent: parent}
     when 'Shortname'
       {owner: parent}
+    when 'EmailAddress'
+      {user: parent}
     else
       raw_klass <= Edge ? {parent: parent} : {}
     end

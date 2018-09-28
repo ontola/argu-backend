@@ -2,8 +2,8 @@
 
 class EmailAddressSerializer < BaseSerializer
   attribute :email, predicate: NS::SCHEMA[:email]
-  attribute :primary
-  attribute :confirmed_at
+  attribute :primary, predicate: NS::ARGU[:primaryEmail]
+  attribute :confirmed_at, predicate: NS::ARGU[:confirmedAt]
 
   has_one :user, predicate: NS::SCHEMA[:creator]
 end

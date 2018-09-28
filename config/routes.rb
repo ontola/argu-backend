@@ -102,6 +102,7 @@ Rails.application.routes.draw do
             path: 'u',
             only: %i[show edit] do
     resources :identities, only: :destroy, controller: 'users/identities'
+    resources :email_addresses, only: :index, controller: 'users/email_addresses'
 
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member

@@ -8,6 +8,7 @@ module SettingsHelper
       delete: 'trash',
       grants: 'suitcase',
       groups: 'group',
+      emails: 'envelope',
       forums: 'comments',
       privacy: 'lock',
       shortnames: 'external-link',
