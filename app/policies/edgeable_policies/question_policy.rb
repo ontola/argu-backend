@@ -9,7 +9,7 @@ class QuestionPolicy < EdgePolicy
     end
     attributes.concat %i[f_convert] if staff?
     if moderator? || administrator? || staff?
-      attributes.concat %i[pinned require_location default_sorting reset_create_motion]
+      attributes.concat %i[pinned require_location default_motion_sorting reset_create_motion]
       attributes.concat [create_motion_group_ids: []]
     end
     attributes.concat %i[trash_activity untrash_activity]

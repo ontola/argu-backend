@@ -15,7 +15,7 @@ class QuestionForm < FormsBase
                  properties: %i[
                    require_location
                    pinned
-                   default_sorting
+                   default_motion_sorting
                    expires_at
                  ]
 

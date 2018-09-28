@@ -30,7 +30,7 @@
             =link_to_add_association f, :attachments, class: 'btn-subtle' do
               span.fa.fa-plus
               span.icon-left= t('attachments.add')
-          - if policy(question).permitted_attributes.include?(:require_location) || policy(question).permitted_attributes.include?(:pinned) || policy(question).permitted_attributes.include?(:expires_at) || (question.persisted? && policy(question).move?) || policy(question).permitted_attributes.include?(:default_sorting) || policy(question).permitted_attributes.include?(:reset_create_motion)
+          - if policy(question).permitted_attributes.include?(:require_location) || policy(question).permitted_attributes.include?(:pinned) || policy(question).permitted_attributes.include?(:expires_at) || (question.persisted? && policy(question).move?) || policy(question).permitted_attributes.include?(:default_motion_sorting) || policy(question).permitted_attributes.include?(:reset_create_motion)
             =f.inputs name: t('forms.advanced')
               - if policy(question).permitted_attributes.include?(:require_location)
                 =f.input :require_location, as: :reverse_boolean
@@ -45,9 +45,9 @@
               /TODO Add Checkbox for using expires_at.
               /TODO Hide expires_at input unless checkbox is checked.
               /TODO Use current datetime as default input.
-              - if policy(question).permitted_attributes.include?(:default_sorting)
+              - if policy(question).permitted_attributes.include?(:default_motion_sorting)
                 label= t('questions.form.default_sorting')
-                =f.input :default_sorting, as: :radio, label: false, wrapper_html: {class: 'radio-inline'}
+                =f.input :default_motion_sorting, as: :radio, label: false, wrapper_html: {class: 'radio-inline'}
               - if policy(question).permitted_attributes.include?(:expires_at)
                 =f.input :expires_at, as: :datetime_picker
               - if question.persisted? && policy(question).convert?

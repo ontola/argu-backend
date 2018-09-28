@@ -37,7 +37,7 @@ class Question < Edge
   custom_grants_for :motions, :create
 
   property :require_location, :boolean, NS::ARGU[:requireLocation], default: false
-  property :default_sorting,
+  property :default_motion_sorting,
            :integer,
            NS::ARGU[:defaultSorting],
            default: 0,

@@ -134,7 +134,7 @@ module ApplicationHelper
   end
 
   def sort_param_or_default
-    params[:sort] || authenticated_resource.default_sorting
+    params[:sort] || authenticated_resource.default_motion_sorting
   end
 
   def status_classes_for(resource)
