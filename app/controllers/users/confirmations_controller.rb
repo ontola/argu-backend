@@ -2,6 +2,7 @@
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
   include OauthHelper
+  before_action :head_200, only: :show
   active_response :new
 
   def create
@@ -99,6 +100,10 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     return EmailAddress.find_by!(email: email) if current_user.guest?
     current_user.email_addresses.find_by(email: email) ||
       raise(ActiveRecord::RecordNotFound.new(I18n.t('devise.confirmations.invalid_email', email: email)))
+  end
+
+  def head_200
+    head 200 if request.head?
   end
 
   def new_execute
