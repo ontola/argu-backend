@@ -131,7 +131,11 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     end
 
     def fields(arr, group_iri = nil)
-      arr.each { |f| field(f, group: group_iri) }
+      arr.each do |f|
+        key = f.is_a?(Hash) ? f.keys.first : f
+        opts = f.is_a?(Hash) ? f.values.first : {}
+        field(key, opts.merge(group: group_iri))
+      end
     end
 
     def field(key, opts = {})

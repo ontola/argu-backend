@@ -34,6 +34,7 @@ module SHACL
                   :order,
                   :path,
                   :validators
+    attr_writer :description
 
     validations [:min_count, ActiveRecord::Validations::PresenceValidator, :min_count],
                 [:min_length, ActiveRecord::Validations::LengthValidator, :minimum],
@@ -42,19 +43,8 @@ module SHACL
                 [:sh_in, ActiveModel::Validations::InclusionValidator, :in]
 
     # The placeholder of the property.
-    # Translations are currently all-over-the-place, so we need some nesting, though
-    # doesn't include a generic fallback mechanism yet.
     def description
-      return if model_attribute.blank?
-      description =
-        I18n.t("formtastic.placeholders.#{model_name}.#{model_attribute}",
-               default: [
-                 :"formtastic.placeholders.#{model_attribute}",
-                 :"formtastic.hints.#{model_name}.#{model_attribute}",
-                 :"formtastic.hints.#{model_attribute}",
-                 ''
-               ]).presence
-      description unless description.is_a?(Hash)
+      description_from_attribute || description_from_translation
     end
 
     def model_name
@@ -71,6 +61,28 @@ module SHACL
                  ''
                ])
       name unless name.is_a?(Hash)
+    end
+
+    private
+
+    def description_from_attribute
+      return if @description.blank?
+      @description.respond_to?(:call) ? @description.call(form.target) : @description
+    end
+
+    # Translations are currently all-over-the-place, so we need some nesting, though
+    # doesn't include a generic fallback mechanism yet.
+    def description_from_translation
+      return if model_attribute.blank?
+      description =
+        I18n.t("formtastic.placeholders.#{model_name}.#{model_attribute}",
+               default: [
+                 :"formtastic.placeholders.#{model_attribute}",
+                 :"formtastic.hints.#{model_name}.#{model_attribute}",
+                 :"formtastic.hints.#{model_attribute}",
+                 ''
+               ]).presence
+      description unless description.is_a?(Hash)
     end
 
     def validator_option(klass, option_key)

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class MotionForm < FormsBase
-  fields %i[
-    display_name
-    description
-    mark_as_important
-    attachments
-    advanced
-    footer
+  fields [
+    :display_name,
+    :description,
+    {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
+    :attachments,
+    :advanced,
+    :footer
   ]
 
   property_group :advanced,
@@ -23,4 +23,16 @@ class MotionForm < FormsBase
                  properties: %i[
                    creator
                  ]
+
+  class << self
+    private
+
+    def mark_as_important_label(resource)
+      I18n.t(
+        'publications.follow_type.helper',
+        news_audience: resource.parent.potential_audience(:news),
+        reactions_audience: resource.parent.potential_audience(:reactions)
+      )
+    end
+  end
 end
