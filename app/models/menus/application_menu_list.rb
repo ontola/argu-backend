@@ -41,6 +41,10 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
 
   private
 
+  def edit_profile_link
+    afe_request? ? "#{settings_user_url}#profile" : settings_user_url(tab: :profile)
+  end
+
   def discover_link
     menu_item(
       :discover,
@@ -131,7 +135,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
             :show, label: I18n.t('show_type', type: I18n.t('users.type')), href: user_url(user), image: 'fa-user'
           ),
           menu_item(
-            :profile, label: I18n.t('profiles.edit.title'), href: settings_user_url(tab: :profile), image: 'fa-pencil'
+            :profile, label: I18n.t('profiles.edit.title'), href: edit_profile_link, image: 'fa-pencil'
           )
         ]
       else
