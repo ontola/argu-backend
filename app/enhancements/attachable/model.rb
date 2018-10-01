@@ -24,6 +24,7 @@ module Attachable
       with_collection :attachments,
                       association: :attachments,
                       association_class: MediaObject,
+                      default_sortings: [{key: NS::SCHEMA[:uploadDate], direction: :desc}],
                       parent_uri_template: :attachments_collection_iri,
                       parent_uri_template_canonical: :attachments_collection_canonical
     end

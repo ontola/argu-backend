@@ -69,6 +69,11 @@ class Motion < Edge
       .last
   end
 
+  def self.order_by_predicate(predicate, direction)
+    return super unless predicate == NS::ARGU[:votesPro]
+    Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
+  end
+
   def previous(show_trashed = false)
     sister_node(show_trashed)
       .find_by('edges.updated_at > :date', date: updated_at)
