@@ -36,7 +36,6 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
 
   with_collection :grants
-  with_collection :motions
 
   self.default_widgets = %i[discussions]
 
