@@ -3,7 +3,7 @@
 class NotificationPolicy < RestrictivePolicy
   class Scope < Scope
     def resolve
-      if user
+      if user && !user.guest?
         scope.where(user_id: user.id)
       else
         scope.where(false)
