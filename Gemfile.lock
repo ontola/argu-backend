@@ -50,8 +50,7 @@ GIT
 
 GIT
   remote: https://github.com/ontola/rdf-serializers
-  revision: 71b62229e9afcd47042217428e01672b5f8632c9
-  ref: 71b6222
+  revision: d1eb4202613c942bfdc2a5d88d38b98d14758ca3
   specs:
     rdf-serializers (0.0.6)
       active_model_serializers (~> 0.10)
@@ -517,7 +516,7 @@ GEM
     raindrops (0.19.0)
     rake (12.3.1)
     rakismet (1.5.4)
-    rdf (3.0.2)
+    rdf (3.0.4)
       hamster (~> 3.0)
       link_header (~> 0.0, >= 0.0.8)
     rdf-aggregate-repo (2.2.1)
