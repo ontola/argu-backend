@@ -8,12 +8,14 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   self.inc_nested_collection = [
     default_view: {member_sequence: {members: :default_profile_photo}},
     filters: [],
+    sortings: [],
     operation: ACTION_FORM_INCLUDES
   ].freeze
 
   self.inc_nested_collection = [
     default_view: {member_sequence: :members},
     filters: [],
+    sortings: [],
     operation: ACTION_FORM_INCLUDES
   ].freeze
 

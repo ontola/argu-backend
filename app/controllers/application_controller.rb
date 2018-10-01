@@ -50,11 +50,13 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   self.inc_nested_collection = [
     default_view: {member_sequence: :members},
     filters: [],
+    sortings: [],
     operation: ACTION_FORM_INCLUDES
   ].freeze
   class_attribute :inc_shallow_collection
   self.inc_shallow_collection = [
     filters: [],
+    sortings: [],
     operation: ACTION_FORM_INCLUDES
   ].freeze
 
