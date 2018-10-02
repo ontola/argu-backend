@@ -29,6 +29,20 @@ RSpec.describe 'Comments', type: :request do
   let(:authorized_user_trash) { staff }
   let(:update_failed_path) { redirect_url }
 
+  context 'with comment parent' do
+    subject { nested_comment }
+    let(:index_path) { collection_iri_path(subject.parent_comment, table_sym) }
+    let(:expect_post_create_failed_html) do
+      expect(response).to(
+        redirect_to("#{subject.parent.iri_path}?#{{comment: {body: '1', parent_id: comment.uuid}}.to_param}")
+      )
+    end
+    let(:expect_get_index_guest_html) { expect_get_index_html }
+    let(:expect_get_index_html) { expect(response).to(redirect_to(collection_iri_path(argument, :comments))) }
+
+    it_behaves_like 'requests'
+  end
+
   context 'with argument parent' do
     subject { comment }
     it_behaves_like 'requests'

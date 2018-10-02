@@ -31,6 +31,12 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     redirect_to url, notice: c.errors.full_messages.first
   end
 
+  def create_service_parent
+    parent = super
+    parent = parent.parent if parent.is_a?(Comment)
+    parent
+  end
+
   def create_success_html
     respond_with_redirect(location: redirect_location)
   end
@@ -45,9 +51,20 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     render
   end
 
+  def index_collection_name
+    return super unless parent_resource.is_a?(Comment)
+    :comment_child_collection
+  end
+
   def index_success_html
-    @comment_edges = policy_scope(parent_resource!.filtered_threads(show_trashed?, params[:comments_page]))
-    render locals: {comment: Comment.new}
+    parent = parent_resource!
+    if parent.is_a?(Comment)
+      skip_verify_policy_scoped(true)
+      redirect_to collection_iri_path(parent.parent, :comments)
+    else
+      @comment_edges = policy_scope(parent.filtered_threads(show_trashed?, params[:comments_page]))
+      render locals: {comment: Comment.new}
+    end
   end
 
   def index_success_js
@@ -72,8 +89,10 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   end
 
   def resource_new_params
-    return super if afe_request?
-    super.merge(body: comment_body)
+    params = super
+    params[:in_reply_to_id] = parent_resource.uuid if parent_resource.is_a?(Comment)
+    return params if afe_request?
+    params.merge(body: comment_body)
   end
 
   def query_payload(opts = {})
@@ -102,7 +121,7 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
   def show_includes
     [
       creator: :default_profile_photo,
-      comment_collection: inc_shallow_collection
+      comment_child_collection: inc_shallow_collection
     ]
   end
 

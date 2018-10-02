@@ -37,8 +37,12 @@ module ChildOperations
   end
 
   def valid_child?(klass)
-    return false unless klass.respond_to?(:parent_classes)
-    klass.parent_classes.include?(record.class.name.underscore.to_sym) ||
-      record.is_a?(Edge) && klass.parent_classes.include?(:edge)
+    valid_parents = valid_parents_for(klass)
+    valid_parents.include?(record.class.name.underscore.to_sym) ||
+      record.is_a?(Edge) && valid_parents.include?(:edge)
+  end
+
+  def valid_parents_for(klass)
+    klass.try(:parent_classes) || []
   end
 end

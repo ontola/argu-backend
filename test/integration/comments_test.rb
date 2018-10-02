@@ -37,6 +37,21 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_equal vote.reload.comment, Comment.last
   end
 
+  test 'user should post create comment for comment' do
+    sign_in user
+    subject
+    assert_difference('Comment.count' => 1,
+                      'Property.where(predicate: "https://argu.co/ns/core#inReplyTo").count' => 1) do
+      post collection_iri(subject, :comments),
+           params: {comment: {body: 'My opinion'}},
+           headers: argu_headers(accept: :json)
+    end
+
+    assert_response 201
+
+    assert_equal Comment.last.parent_comment, subject
+  end
+
   ####################################
   # As creator
   ####################################

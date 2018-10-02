@@ -280,6 +280,7 @@ Rails.application.routes.draw do
       end
       resources :comments, only: %i[show], path: 'c' do
         include_route_concerns
+        resources :comments, only: %i[index new create], path: 'c'
       end
       resources :comments, only: %i[show]
       resources :direct_messages, path: :dm, only: [:create]

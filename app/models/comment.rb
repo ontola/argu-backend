@@ -11,13 +11,17 @@ class Comment < Edge
   has_one :vote, foreign_key_property: :comment_id, dependent: false
   belongs_to :parent_comment, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
   has_many :comment_children, foreign_key_property: :in_reply_to_id, class_name: 'Comment', dependent: false
-
+  has_many :active_comment_children,
+           -> { active },
+           foreign_key_property: :in_reply_to_id,
+           class_name: 'Comment',
+           dependent: false
   belongs_to :commentable, polymorphic: true
 
   after_commit :set_vote, on: :create
 
   counter_cache comments: {}, threads: {in_reply_to_id: nil}
-
+  with_collection :comment_children, association_class: Comment
   paginates_per 30
   parentable :pro_argument, :con_argument, :blog_post, :motion, :question, :linked_record
 

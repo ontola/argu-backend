@@ -34,4 +34,8 @@ class CommentPolicy < EdgePolicy
     return super unless record.parent.is_a?(BlogPost)
     has_grant?(:create)
   end
+
+  def valid_parents_for(klass)
+    super + [:comment]
+  end
 end

@@ -13,8 +13,7 @@ module ChildHelper
     child
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
-  def child_attrs(parent, raw_klass)
+  def child_attrs(parent, raw_klass) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     case raw_klass.to_s
     when 'Discussion'
       {forum: parent}
@@ -38,9 +37,10 @@ module ChildHelper
       {owner: parent}
     when 'EmailAddress'
       {user: parent}
+    when 'Comment'
+      parent.is_a?(Comment) ? {parent: parent.parent} : {parent: parent}
     else
       raw_klass <= Edge ? {parent: parent} : {}
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 end
