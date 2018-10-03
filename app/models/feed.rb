@@ -9,7 +9,10 @@ class Feed
   include Iriable
   attr_accessor :parent, :relevant_only, :root_id
 
-  with_collection :activities, part_of: :parent, default_type: :infinite
+  with_collection :activities,
+                  part_of: :parent,
+                  default_type: :infinite,
+                  parent_uri_template_opts: ->(r) { r.relevant_only ? {} : {complete: true} }
 
   def activities
     @activities ||=

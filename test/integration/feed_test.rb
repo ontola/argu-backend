@@ -204,7 +204,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     when :html
       assert_select '.activity-feed .activity', count
     when :nt
-      collection = RDF::URI("#{feed(subject).iri}/feed")
+      collection = RDF::URI("#{feed(subject).iri}/feed#{complete ? '?complete=true' : ''}")
       view = rdf_body.query([collection, NS::AS[:pages]]).first.object
       expect_triple(view, NS::AS[:totalItems], count)
     else
