@@ -138,7 +138,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     index_meta + super
   end
 
-  def update_success_serializer
+  def update_success_rdf
     respond_with_resource(resource: authenticated_resource, include: show_includes, meta: index_meta)
   end
 

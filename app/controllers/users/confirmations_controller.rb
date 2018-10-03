@@ -114,4 +114,6 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     params.fetch(resource_name, nil) ||
       params.fetch("#{resource_name.to_s.pluralize}/#{controller_name.singularize}", {})
   end
+
+  alias show_failure_options show_success_options
 end
