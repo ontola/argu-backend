@@ -75,8 +75,11 @@ class UserPolicy < RestrictivePolicy
   end
 
   def destroy?
-    return if record.profile.grants.administrator.count.positive?
-    current_user? || staff?
+    if record.profile.grants.administrator.count.positive?
+      forbid_with_message(I18n.t('users_cancel_super_admin'))
+    else
+      current_user? || staff?
+    end
   end
 
   def current_user?

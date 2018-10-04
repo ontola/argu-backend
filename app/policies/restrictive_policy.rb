@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RestrictivePolicy
+class RestrictivePolicy # rubocop:disable Metrics/ClassLength
   include TuplesHelper
 
   class Scope
@@ -148,6 +148,11 @@ class RestrictivePolicy
   def check_action(action)
     return nil if record.try(:id).blank?
     user_context.check_key(record.identifier, action)
+  end
+
+  def forbid_with_message(message)
+    @message = message
+    false
   end
 
   def new_record?
