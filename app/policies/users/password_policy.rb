@@ -11,11 +11,11 @@ module Users
     end
 
     def create?
-      user.guest?
+      true
     end
 
     def update?
-      user.guest?
+      true
     end
   end
 end
