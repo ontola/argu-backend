@@ -3,6 +3,8 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
+raise 'NOMINATIM_KEY is empty, please edit your .env' if ENV['NOMINATIM_KEY'].nil?
+
 ActiveRecord::Base.transaction do
   load(Dir[Rails.root.join('db', 'seeds', 'grant_sets.seeds.rb')][0])
 
@@ -57,7 +59,8 @@ ActiveRecord::Base.transaction do
               password_confirmation: 'arguargu',
               first_name: 'Douglas',
               last_name: 'Engelbart',
-              profile: Profile.new
+              profile: Profile.new,
+              last_accepted: Time.current
             )
 
   argu =
@@ -132,13 +135,26 @@ ActiveRecord::Base.transaction do
     redirect_uri: 'https://argu.co/',
     scopes: 'user guest'
   )
-
+  Doorkeeper::AccessToken.create!(
+    Doorkeeper::Application.argu,
+    User::COMMUNITY_ID,
+    'service',
+    Doorkeeper.configuration.access_token_expires_in,
+    false
+  )
   Doorkeeper::Application.create!(
     id: Doorkeeper::Application::AFE_ID,
     name: 'Argu Front End',
     owner: community_profile,
     redirect_uri: 'https://argu.co/',
     scopes: 'user guest afe'
+  )
+  Doorkeeper::AccessToken.create!(
+    Doorkeeper::Application.argu_front_end,
+    User::COMMUNITY_ID,
+    'service',
+    Doorkeeper.configuration.access_token_expires_in,
+    false
   )
 
   Doorkeeper::Application.create!(
