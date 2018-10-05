@@ -97,6 +97,7 @@ nl:
         reactions_email: "Bij nieuwe items"
         news_email: "Bij belangrijke items"
         decisions_email: "Bij officiele besluiten"
+        url: "Gebruikersnaam"
     hints:
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
       cover_photo_attribution: "Als jij niet de auteursrechten van de afbeelding bezit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"

@@ -16,15 +16,19 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/setup
   def setup
-    @resource = user_or_redirect
-    @resource.build_home_placement if @resource.home_placement.nil?
-    @profile = @resource.profile
-    authorize @profile, :edit?
+    active_response_block do
+      @resource = user_or_redirect
+      @profile = @resource.profile
+      if active_response_type == :html
+        @resource.build_home_placement if @resource.home_placement.nil?
+        authorize @profile, :edit?
 
-    respond_to do |format|
-      format.html do
-        render 'users/profiles/setup',
-               locals: {profile: @profile, resource: @resource}
+        respond_with_form(
+          locals: {profile: @profile, resource: @resource},
+          view: 'users/profiles/setup'
+        )
+      else
+        respond_with_redirect location: redirect_url || dual_profile_url(@profile)
       end
     end
   end

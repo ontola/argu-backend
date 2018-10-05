@@ -19,7 +19,7 @@ class UserPolicy < RestrictivePolicy
         PlacementPolicy.new(context, record.home_placement || Placement.new(placeable: record)).permitted_attributes
     )
     attrs.append(email_addresses_attributes: %i[email _destroy id])
-    attrs.append(shortname_attributes: %i[shortname]) if record.url.nil?
+    attrs.append(:url, shortname_attributes: %i[shortname]) if record.url.nil?
     attrs.concat %i[first_name middle_name last_name]
     if update?
       attrs.concat(

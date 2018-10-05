@@ -7,28 +7,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
   helper_method :authenticated_resource
   skip_before_action :check_if_registered, only: :language
 
-  # When shortname isn't set yet
-  def setup
-    authenticated_resource.build_shortname if authenticated_resource.shortname.blank?
-
-    render 'setup_shortname'
-  end
-
-  def setup!
-    if current_user.url.blank?
-      current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
-
-      if current_user.update_without_password(permit_params)
-        redirect_to setup_profiles_path
-      else
-        render 'setup_shortname'
-      end
-    else
-      flash[:success] = t('users.shortname.not_changeable')
-      redirect_to root_path
-    end
-  end
-
   def wrong_email
     render locals: {email: params[:email], r: r_param}
   end

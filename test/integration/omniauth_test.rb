@@ -150,7 +150,6 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_response 200
-    assert assigns(:user)
 
     put setup_users_path,
         params: {

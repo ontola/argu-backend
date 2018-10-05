@@ -35,3 +35,6 @@ en:
     users:
       notifications:
         description: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."
+      setup:
+        label: "Welcome!"
+        description: "Set how you will be visible to others on Argu. Most people use their real first and last name. You can change these later on, but your username is fixed and must be unique."

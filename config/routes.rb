@@ -107,8 +107,8 @@ Rails.application.routes.draw do
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member
 
-    get :setup, to: 'users#setup', on: :collection
-    put :setup, to: 'users#setup!', on: :collection
+    get :setup, to: 'users/setup#edit', on: :collection
+    put :setup, to: 'users/setup#update', on: :collection
 
     get :pages, to: 'users/pages#index', on: :member, path: :o
     get :forums, to: 'users/forums#index', on: :member
