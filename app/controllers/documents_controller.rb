@@ -6,9 +6,12 @@ class DocumentsController < SimpleText::DocumentsController
   after_action :make_authorized, except: :index
   after_action :make_scoped, only: :index
   layout :set_layout
+  active_response :show
 
-  def show
-    super
+  private
+
+  def current_resource
+    @document = Document.find_by!(name: params[:name])
   end
 
   def make_authorized
