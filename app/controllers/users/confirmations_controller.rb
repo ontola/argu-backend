@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Users::ConfirmationsController < Devise::ConfirmationsController
+class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop:disable Metrics/ClassLength
   include OauthHelper
   before_action :head_200, only: :show
   active_response :new
@@ -24,7 +24,21 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     email_by_token.confirm
     sign_in resource
     set_flash_message :notice, :confirmed
-    render 'show'
+    active_response_block do
+      if active_response_type == :html
+        render 'show'
+      else
+        token = resource.send(:set_reset_password_token)
+        respond_with_redirect(
+          location:
+            expand_uri_template(
+              :user_set_password,
+              reset_password_token: token
+            ),
+          notice: flash[:notice]
+        )
+      end
+    end
   end
 
   def confirm
