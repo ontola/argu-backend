@@ -6,6 +6,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   private
 
+  def active_response_success_message
+    return super unless action_name == 'create'
+    I18n.t('votes.alerts.success')
+  end
+
   def authorize_action
     return super unless action_name == 'create'
     method = authenticated_resource.persisted? ? :update? : :create?
