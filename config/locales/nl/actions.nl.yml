@@ -2,36 +2,45 @@
 nl:
   actions:
     default:
+      submit: "Opslaan"
       create_comment:
         label: "Reageer"
       destroy:
         label: "Vernietigen"
         description: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+        submit: "Verwijder"
       move:
         label: "Verplaatsen"
         description: "Alle onderliggende items zullen mee verplaatst worden."
+        submit: "Verplaats"
       read:
         label: "Markeer als gelezen"
       trash:
         label: "Verwijderen"
         description: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
+        submit: "Verwijder"
       untrash:
         label: "Terugplaatsen"
         description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
+        submit: "Plaats terug"
+    terms:
+      create:
+        submit: "Accepteer"
     conversions:
       create:
         label: "Omzetten"
         description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
+        submit: "Zet om"
     pro_arguments:
       create_vote:
-        label: "Upvote"
+        submit: "Upvote"
       destroy_vote:
-        label: "Upvote"
+        submit: "Upvote"
     con_arguments:
       create_vote:
-        label: "Upvote"
+        submit: "Upvote"
       destroy_vote:
-        label: "Upvote"
+        submit: "Upvote"
     users:
       notifications:
         description: "Wanneer wil je een email ontvangen over items die je volgt? Beheerders van een organisatie kunnen items als 'belangrijk' markeren. Denk bijvoorbeeld aan een besluit over een discussie die je volgt."

@@ -2,36 +2,45 @@
 en:
   actions:
     default:
+      submit: "Save"
       create_comment:
         label: "Comment"
       destroy:
         label: "Destroy"
         description: "This object and all related data will be permanently removed. This cannot be undone."
+        submit: "Delete"
       move:
         label: "Move"
         description: "All children will be moved along."
+        submit: "Move"
       read:
         label: "Mark as read"
       trash:
         label: "Trash"
         description: "This item will no longer be visible in public discussion. This can be undone."
+        submit: "Trash"
       untrash:
         label: "Restore"
         description: "This item will be visible again in public discussion."
+        submit: "Restore"
+    terms:
+      create:
+        submit: "Accept"
     conversions:
       convert:
         label: "Convert"
         description: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
+        sbumit: "Convert"
     pro_arguments:
       create_vote:
-        label: "Upvote"
+        submit: "Upvote"
       destroy_vote:
-        label: "Upvote"
+        submit: "Upvote"
     con_arguments:
       create_vote:
-        label: "Upvote"
+        submit: "Upvote"
       destroy_vote:
-        label: "Upvote"
+        submit: "Upvote"
     users:
       notifications:
         description: "When would you like to receive an email for items you follow?</br>Moderators of an organisation can mark items as 'important'. For example a decison on a discussion you are following."

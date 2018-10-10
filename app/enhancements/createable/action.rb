@@ -19,7 +19,8 @@ module Createable
         http_method: :post,
         collection: -> { create_on_collection? },
         form: -> { "#{result_class}Form".safe_constantize },
-        iri_template: :new_iri
+        iri_template: :new_iri,
+        submit_label: -> { submit_label }
       )
     end
 
@@ -54,5 +55,7 @@ module Createable
     def result_class
       create_on_collection? ? resource.association_class : self.class.name.gsub('Actions', '').constantize
     end
+
+    def submit_label; end
   end
 end

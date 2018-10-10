@@ -19,5 +19,9 @@ module Actions
       return I18n.t("#{association}.type_new") unless filtered_resource?
       I18n.t("#{association}.instance_type.#{resource.filter['option']}")
     end
+
+    def submit_label
+      new_label
+    end
   end
 end
