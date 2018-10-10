@@ -144,6 +144,8 @@ Rails.application.routes.draw do
 
   resources :menus, only: %i[show index]
 
+  resources :terms, only: %i[new create]
+
   resources :media_objects, only: :show
 
   resources :announcements, only: %i[show] do

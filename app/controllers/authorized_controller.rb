@@ -136,15 +136,22 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     if accept_terms_param
       current_user.accept_terms!
     else
-      respond_to do |format|
-        format.html { render 'accept_terms' }
-        format.js { render 'accept_terms' }
-        format.json do
+      active_response_block do
+        case active_response_type
+        when :html, :js
+          render 'accept_terms'
+        when :json
           render status: 403,
                  json: {
                    body: render_to_string('accept_terms.html', layout: false),
                    code: 'TERMS_NOT_ACCEPTED'
                  }
+        else
+          action = new_iri(
+            expand_uri_template(:terms_iri), nil, query: {referrer: request.headers['Request-Referrer']}.to_param
+          )
+          add_exec_action_header(response.headers, ontola_dialog_action(action))
+          head 200
         end
       end
     end
