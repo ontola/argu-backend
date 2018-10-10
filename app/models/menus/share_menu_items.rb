@@ -2,6 +2,8 @@
 
 module Menus
   module ShareMenuItems
+    include RailsLD::Helpers::OntolaActions
+
     def share_menu_items(opts = {})
       return menu_item(:share, menus: -> { [] }) unless resource.is_published?
 
@@ -27,7 +29,7 @@ module Menus
     def copy_share_link(url)
       menu_item(
         :copy,
-        action: NS::ONTOLA["actions/copyToClipboard?value=#{url}"],
+        action: ontola_copy_action(url),
         item_type: 'copy',
         image: 'fa-clipboard',
         href: url

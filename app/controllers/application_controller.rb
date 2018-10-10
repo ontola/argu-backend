@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   include ActiveResponse::Controller
   include ActiveResponseHelper
   include FrontendTransitionHelper
+  include RailsLD::Helpers::OntolaActions
   include RedirectHelper
   include JsonApiHelper
   include NestedAttributesHelper
