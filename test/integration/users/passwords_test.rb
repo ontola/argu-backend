@@ -77,7 +77,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to root_path
+      assert_redirected_to new_user_session_path
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
     end
 
@@ -174,7 +174,7 @@ module Users
               password_confirmation: 'new_password'
             }
           }
-      assert_redirected_to root_path
+      assert_redirected_to new_user_session_path
       assert_not_equal user.encrypted_password, user.reload.encrypted_password
     end
 

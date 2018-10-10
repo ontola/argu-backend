@@ -116,6 +116,8 @@ RSpec.feature 'User Password', type: :feature do
                          uid: '111907595807605')
     create_email_mock('reset_password_instructions', user_omni_only.email, token: /.+/)
 
+    expect(user_omni_only.has_password?).to be_falsey
+
     visit new_user_session_path
 
     click_link 'Log in with Facebook'
@@ -142,6 +144,7 @@ RSpec.feature 'User Password', type: :feature do
       click_button 'Edit'
     end
 
-    expect(page).to have_content('Your password has been updated successfully. You are now logged in.')
+    expect(page).to have_content('You are already authenticated.')
+    expect(user_omni_only.reload.has_password?).to be_truthy
   end
 end

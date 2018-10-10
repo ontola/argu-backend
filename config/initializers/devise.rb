@@ -271,4 +271,6 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = "/my_engine/users/auth"
 
   config.secret_key = Rails.application.secrets.devise_secret
+
+  config.sign_in_after_reset_password = false
 end
