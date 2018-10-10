@@ -50,6 +50,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     }
   end
 
+  def create_success_location_rdf; end
+
+  def destroy_success_location_rdf; end
+
   def execute_action
     return super unless action_name == 'create'
     return super unless unmodified?
