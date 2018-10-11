@@ -32,7 +32,7 @@ class StaticPagesControllerTest < ActionController::TestCase
 
   test 'guest n3 should redirect on home' do
     get :home, format: :n3
-    assert_redirected_to freetown.iri_path
+    expect_ontola_action(redirect: freetown.iri_path)
   end
 
   ####################################
@@ -69,7 +69,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   test 'user n3 should redirect on home' do
     sign_in user
     get :home, format: :n3
-    assert_redirected_to freetown.iri_path
+    expect_ontola_action(redirect: freetown.iri_path)
   end
 
   ####################################
@@ -92,7 +92,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   test 'staff n3 should redirect on home' do
     sign_in staff
     get :home, format: :n3
-    assert_redirected_to '/feed'
+    expect_ontola_action(redirect: '/feed')
   end
 
   private

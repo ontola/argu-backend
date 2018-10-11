@@ -38,16 +38,15 @@ class StaticPagesController < ApplicationController
 
   def home
     authorize :static_page
-    respond_to do |format|
-      format.html do
+    active_response_block do
+      if active_response_type == :html
         if current_user.is_staff?
           render # stream: true
         else
           current_user.guest? ? about : redirect_to(preferred_forum.iri_path)
         end
-      end
-      RDF_CONTENT_TYPES.each do |type|
-        format.send(type) { redirect_to(current_user.is_staff? ? feeds_iri_path(nil) : preferred_forum.iri_path) }
+      else
+        respond_with_redirect location: current_user.is_staff? ? feeds_iri_path(nil) : preferred_forum.iri_path
       end
     end
   end

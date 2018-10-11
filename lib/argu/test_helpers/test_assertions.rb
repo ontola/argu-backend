@@ -28,6 +28,11 @@ module Argu
         last_match
       end
 
+      def expect_ontola_action(redirect:)
+        action = "actions/redirect?#{{location: redirect}.to_param}" if redirect
+        expect(response.headers['Exec-Action']).to(include(action))
+      end
+
       def expect_triple(subject, predicate, object, graph = nil)
         statement = RDF::Statement(subject, predicate, object, graph_name: graph)
         match = rdf_body.query(statement)
