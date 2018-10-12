@@ -22,7 +22,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
   filterable used_as: {values: MediaObject.used_as}
   counter_culture :about,
                   column_name: proc { |model|
-                    !model.attachment? ? 'attachments_count' : nil
+                    model.attachment? ? 'attachments_count' : nil
                   },
                   column_names: {['media_objects.used_as = ?', MediaObject.used_as[:attachment]] => 'attachments_count'}
 
