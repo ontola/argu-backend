@@ -67,6 +67,22 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     assert_response 422
   end
 
+  test 'should not post create existing new fe' do
+    sign_in :service
+    user
+    assert_difference('User.count' => 0,
+                      'Favorite.count' => 0,
+                      'Notification.confirmation_reminder.count' => 0) do
+      post user_registration_path,
+           params: {
+             user: {
+               email: user.email
+             }
+           }, headers: argu_headers(accept: :nq)
+    end
+    assert_response 422
+  end
+
   test 'should block spammer' do
     r = '/freetown/con/846/c/new?comment%5Bbody%5D=online+casino&confirm=true'
     attrs = attributes_for(:user)
