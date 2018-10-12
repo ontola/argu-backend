@@ -150,7 +150,7 @@ freetown = FactorySeeder.create_forum(
   url: 'freetown',
   name: 'Freetown',
   parent: page,
-  public_grant: 'participator'
+  public_grant: 'initiator'
 )
 holland = FactorySeeder.create_forum(
   :populated_forum,
