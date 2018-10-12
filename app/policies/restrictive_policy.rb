@@ -41,7 +41,7 @@ class RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   delegate :user, to: :context
   delegate :actor, to: :context
-  attr_reader :context, :record
+  attr_reader :context, :record, :message
 
   def initialize(context, record)
     @context = context

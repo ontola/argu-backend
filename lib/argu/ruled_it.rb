@@ -15,7 +15,8 @@ module Argu
           raise Argu::Errors::Forbidden.new(
             query: query,
             record: record,
-            policy: policy
+            policy: policy,
+            message: policy.try(:message)
           )
         end
 
@@ -34,7 +35,8 @@ module Argu
         raise Argu::Errors::Forbidden.new(
           query: query,
           record: record,
-          policy: policy
+          policy: policy,
+          message: policy.try(:message)
         )
       end
 
