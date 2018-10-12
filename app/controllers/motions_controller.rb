@@ -69,7 +69,7 @@ class MotionsController < EdgeableController
   end
 
   def redirect_location
-    return super unless action_name == 'create' && authenticated_resource.persisted?
+    return super unless action_name == 'create' && authenticated_resource.persisted? && !afe_request?
     first = current_profile.motions.count == 1 || nil
     authenticated_resource.iri_path(start_motion_tour: first)
   end

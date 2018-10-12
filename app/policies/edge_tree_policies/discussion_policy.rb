@@ -7,6 +7,7 @@ class DiscussionPolicy < EdgeTreePolicy
   end
 
   def create?
+    edgeable_policy.list?
     motion_policy.create? || question_policy.create?
   end
 
