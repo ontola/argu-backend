@@ -10,7 +10,6 @@ class UserTest < ActiveSupport::TestCase
            user: user,
            activity: create(
              :activity,
-             forum: freetown,
              recipient: freetown,
              recipient_type: 'Forum',
              trackable: create(:motion, parent: freetown),

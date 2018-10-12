@@ -24,7 +24,6 @@ module Moveable
       activities
         .lock(true)
         .update_all(
-          forum_id: new_parent.ancestor(:forum).uuid,
           recipient_id: new_parent.id,
           recipient_type: new_parent.owner_type
         )

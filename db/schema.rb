@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_26_113055) do
+ActiveRecord::Schema.define(version: 2018_10_12_083246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -34,11 +34,7 @@ ActiveRecord::Schema.define(version: 2018_09_26_113055) do
     t.string "comment"
     t.uuid "trackable_edge_id"
     t.uuid "recipient_edge_id"
-    t.uuid "forum_id"
     t.uuid "root_id", null: false
-    t.index ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type"
-    t.index ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable"
-    t.index ["forum_id"], name: "index_activities_on_forum_id"
     t.index ["key"], name: "index_activities_on_key", using: :gist
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["recipient_edge_id"], name: "index_activities_on_recipient_edge_id"
@@ -595,7 +591,6 @@ ActiveRecord::Schema.define(version: 2018_09_26_113055) do
     t.index ["owner_id", "owner_type"], name: "index_widgets_on_owner_id_and_owner_type"
   end
 
-  add_foreign_key "activities", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "trackable_edge_id", primary_key: "uuid"
   add_foreign_key "banners", "edges", column: "forum_id", primary_key: "uuid"

@@ -13,7 +13,7 @@ module Argu
         base.define_spec_objects
       end
 
-      module ClassMethods # rubocop:disable Metrics/ModuleLength
+      module ClassMethods
         def expectations_for(action)
           %i[json_api].concat(RDF_CONTENT_TYPES) .each do |format|
             let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
@@ -143,9 +143,6 @@ module Argu
               assert subject.motions.count.positive?
             end
             assert subject.activities.count.positive?
-            subject.activities.pluck(:forum_id).each do |id|
-              assert_equal other_page_forum.uuid, id
-            end
             subject.activities.pluck(:recipient_id).each do |id|
               assert_equal other_page_forum.id, id
             end

@@ -7,7 +7,6 @@ class ActivityTest < ActiveSupport::TestCase
   subject do
     create(
       :activity,
-      forum: freetown,
       trackable: create(:motion, parent: freetown),
       trackable_type: 'Motion',
       recipient: freetown,
