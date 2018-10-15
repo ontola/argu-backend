@@ -45,7 +45,7 @@ module ForumsHelper
     items << link_item(
       t('forums.show_open'),
       discover_forums_path,
-      data: {turbolinks: false_unless_iframe},
+      data: {turbolinks: false},
       fa: 'compass'
     )
   end

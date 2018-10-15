@@ -79,7 +79,7 @@ module HeaderHelper
       items << link_item(
         forum.display_name,
         forum.iri_path,
-        data: {turbolinks: false_unless_iframe},
+        data: {turbolinks: false},
         image: forum.default_profile_photo.url(:icon)
       )
     end
@@ -95,7 +95,7 @@ module HeaderHelper
         link_item(
           forum.display_name,
           forum.iri_path,
-          data: {turbolinks: false_unless_iframe},
+          data: {turbolinks: false},
           image: forum.default_profile_photo.url(:icon)
         )
       end

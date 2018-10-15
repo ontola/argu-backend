@@ -10,7 +10,7 @@ h3= t('forums.plural')
     - resource.forums.reorder(follows_count: :desc).each do |forum|
       tr
         td
-          =link_to forum.display_name, settings_iri_path(forum), data: {turbolinks: false_unless_iframe}
+          =link_to forum.display_name, settings_iri_path(forum), data: {turbolinks: false}
         td
           =forum.url
         td
@@ -18,7 +18,7 @@ h3= t('forums.plural')
         td
           =forum.granted_groups.count
 - if policy(resource).create_child?(:forums)
-  =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom', data: {turbolinks: false_unless_iframe} do
+  =link_to new_portal_forum_path(page: resource), class: 'btn margin-bottom', data: {turbolinks: false} do
       span.fa.fa-plus
       span.icon-left= t('forums.type_new')
 - else
