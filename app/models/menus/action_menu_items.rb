@@ -3,6 +3,7 @@
 module Menus
   module ActionMenuItems
     def comments_link
+      return if afe_request?
       menu_item(
         :comments,
         label_params: {count: resource.children_count(:comments)},
