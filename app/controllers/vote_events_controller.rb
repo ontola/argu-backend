@@ -14,7 +14,7 @@ class VoteEventsController < EdgeableController
     parent_resource.default_vote_event
   end
 
-  def show_success_html(resource)
+  def show_success_html
     redirect_to resource.parent
   end
 end
