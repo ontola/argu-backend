@@ -97,11 +97,13 @@ class Argument < Edge
   def self.ordered(pro_coll, con_coll, page = {})
     HashWithIndifferentAccess.new(
       pro: {
-        collection: pro_coll.page(page[:pro] || 1) || [],
+        collection:
+          pro_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:pro] || 1) || [],
         page_param: :page_arg_pro
       },
       con: {
-        collection: con_coll.page(page[:con] || 1) || [],
+        collection:
+          con_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:con] || 1) || [],
         page_param: :page_arg_con
       }
     )
