@@ -31,10 +31,6 @@ class Argument < Edge
   attr_reader :pro
   alias pro? pro
 
-  def con?
-    !pro?
-  end
-
   def default_vote_event
     self
   end
@@ -56,20 +52,6 @@ class Argument < Edge
   def pro=(value)
     value = false if %w[con false].include?(value)
     @pro = value.to_s == 'pro' || value
-  end
-
-  def remove_upvote(user, profile)
-    service = DestroyVote.new(
-      upvote_for(self, profile),
-      options: {
-        creator: profile,
-        publisher: user
-      }
-    )
-    service.on(:destroy_vote_failed) do
-      raise 'Failed to remove upvote'
-    end
-    service.commit
   end
 
   def upvote(user, profile)
