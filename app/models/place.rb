@@ -33,6 +33,10 @@ class Place < ApplicationRecord
       find_or_fetch_by(country_code: country_code, postal_code: nil, street: nil, city: nil, town: nil, state: nil)
     end
 
+    def iri
+      NS::SCHEMA[:GeoCoordinates]
+    end
+
     private
 
     def create_or_fetch(opts)

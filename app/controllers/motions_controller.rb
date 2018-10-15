@@ -26,6 +26,7 @@ class MotionsController < EdgeableController
 
   def show_includes
     super + [
+      custom_placements: :place,
       operation: {},
       last_published_decision: {},
       partOf: [widget_sequence: :members],

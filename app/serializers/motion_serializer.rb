@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class MotionSerializer < ContentEdgeSerializer
+  has_many :custom_placements, predicate: NS::SCHEMA[:location]
   attribute :current_vote, predicate: NS::ARGU[:currentVote], unless: :system_scope?
   count_attribute :votes_pro, if: :export_scope?
   count_attribute :votes_con, if: :export_scope?
