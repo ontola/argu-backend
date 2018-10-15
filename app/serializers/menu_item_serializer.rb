@@ -20,6 +20,10 @@ class MenuItemSerializer < BaseSerializer
     object.parent.is_a?(MenuItem)
   end
 
+  def href
+    object.href && RDF::URI(object.href)
+  end
+
   def image
     serialize_image(object.image)
   end
