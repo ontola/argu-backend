@@ -33,11 +33,7 @@ module Argu
 
       def handle_unauthorized_html(e)
         @_not_a_user_caught = true
-        if iframe?
-          error_response_html(e, view: 'status/403', opts: {locals: {resource: user_with_r(e.r)}})
-        else
-          redirect_to new_user_session_path(r: e.r), alert: e.message
-        end
+        redirect_to new_user_session_path(r: e.r), alert: e.message
       end
     end
   end

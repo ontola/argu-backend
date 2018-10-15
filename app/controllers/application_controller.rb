@@ -251,9 +251,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # @private
   # Determines what layout the {User} should see.
   def set_layout
-    if iframe?
-      'iframe'
-    elsif current_user.guest?
+    if current_user.guest?
       'guest'
     else
       'application'

@@ -221,8 +221,6 @@ Rails.application.routes.draw do
 
   get '/beta', to: 'beta#show'
 
-  get '/csrf', to: 'csrf#show'
-
   get '/ns/core/:model', to: 'static_pages#context'
 
   get '/d/modern', to: 'static_pages#modern'

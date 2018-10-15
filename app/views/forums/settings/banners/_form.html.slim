@@ -1,4 +1,4 @@
-=semantic_form_for(banner, url: banner.persisted? ? banner.iri_path : collection_iri_path(resource, :banners), remote: iframe?, authenticity_token: true) do |f|
+=semantic_form_for(banner, url: banner.persisted? ? banner.iri_path : collection_iri_path(resource, :banners), remote: false, authenticity_token: true) do |f|
   - banner.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('forums.settings.banner')) do

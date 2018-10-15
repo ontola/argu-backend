@@ -6,12 +6,11 @@ import activityFeed from './application/activity_feed';
 import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';
-import transition from './application/transition';
 
 
 function init () {
     // All init functions can rest assured that the document is ready.
-    [transition, alert, ui, n, activityFeed].forEach(module => {
+    [alert, ui, n, activityFeed].forEach(module => {
         window.setTimeout(() => {
             try {
                 module.init();
