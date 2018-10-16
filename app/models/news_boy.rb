@@ -8,20 +8,15 @@ class NewsBoy < ApplicationRecord
   alias_attribute :display_name, :title
 
   def self.published
-    where('published_at <= ? AND (ends_at IS NULL OR ends_at > ?)',
-          Time.current,
-          Time.current)
+    where('published_at <= statement_timestamp() AND (ends_at IS NULL OR ends_at > statement_timestamp())')
   end
 
   def self.unpublished
-    where('published_at IS NULL OR published_at > ? OR ends_at < ?',
-          Time.current,
-          Time.current)
+    where('published_at IS NULL OR published_at > statement_timestamp() OR ends_at < statement_timestamp()')
   end
 
   def self.ended
-    where('published_at IS NOT NULL AND ends_at IS NOT NULL AND ends_at < ?',
-          Time.current)
+    where('published_at IS NOT NULL AND ends_at IS NOT NULL AND ends_at < statement_timestamp()')
   end
 
   def is_draft?

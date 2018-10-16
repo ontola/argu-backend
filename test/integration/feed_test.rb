@@ -214,7 +214,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   def init_content
     subject
-    travel_to 1.minute.from_now
+    Activity.update_all(created_at: 1.second.ago)
   end
 
   def feed(parent)

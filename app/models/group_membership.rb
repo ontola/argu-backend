@@ -23,11 +23,7 @@ class GroupMembership < ApplicationRecord
   has_many :grants, through: :group
 
   scope :active, lambda {
-    where(
-      'start_date <= ? AND (end_date IS NULL OR end_date > ?)',
-      Time.current,
-      Time.current
-    )
+    where('start_date <= statement_timestamp() AND (end_date IS NULL OR end_date > statement_timestamp())')
   }
 
   validates :member, presence: true

@@ -102,7 +102,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :unpublished, -> { where('edges.is_published = false') }
   scope :trashed, -> { where('edges.trashed_at IS NOT NULL') }
   scope :untrashed, -> { where('edges.trashed_at IS NULL') }
-  scope :expired, -> { where('edges.expires_at <= ?', Time.current) }
+  scope :expired, -> { where('edges.expires_at <= statement_timestamp()') }
   scope :active, -> { published.untrashed }
   scope :draft, -> { unpublished.untrashed }
 
