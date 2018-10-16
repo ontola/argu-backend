@@ -21,7 +21,7 @@ class MenuItemSerializer < BaseSerializer
   end
 
   def href
-    object.href && RDF::URI(object.href)
+    object.href.is_a?(String) ? RDF::DynamicURI(object.href) : object.href
   end
 
   def image

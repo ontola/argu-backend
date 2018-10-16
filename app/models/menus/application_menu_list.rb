@@ -10,15 +10,15 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
       :info,
       label: I18n.t('about.info'),
       image: 'fa-info',
-      link_opts: {triggerClass: 'navbar-item', defaultAction: i_about_url},
+      link_opts: {triggerClass: 'navbar-item', defaultAction: RDF::URI(i_about_url)},
       menus: lambda {
         [
-          menu_item(:about, label: I18n.t('about.about'), href: i_about_url),
-          menu_item(:team, label: I18n.t('about.team'), href: info_url(:team)),
-          menu_item(:governments, label: I18n.t('about.governments'), href: info_url(:governments)),
-          menu_item(:press_media, label: I18n.t('press_media'), href: 'https://argu.pr.co'),
-          menu_item(:support, label: I18n.t('help_support'), href: 'https://argu.freshdesk.com/support/home'),
-          menu_item(:contact, label: I18n.t('about.contact'), href: info_url(:contact))
+          menu_item(:about, label: I18n.t('about.about'), href: RDF::URI(i_about_url)),
+          menu_item(:team, label: I18n.t('about.team'), href: RDF::URI(info_url(:team))),
+          menu_item(:governments, label: I18n.t('about.governments'), href: RDF::URI(info_url(:governments))),
+          menu_item(:press_media, label: I18n.t('press_media'), href: RDF::URI('https://argu.pr.co')),
+          menu_item(:support, label: I18n.t('help_support'), href: RDF::URI('https://argu.freshdesk.com/support/home')),
+          menu_item(:contact, label: I18n.t('about.contact'), href: RDF::URI(info_url(:contact)))
         ]
       }
     )
