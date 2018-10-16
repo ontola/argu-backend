@@ -11,6 +11,11 @@ class DraftsTest < ActionDispatch::IntegrationTest
            publisher: user,
            argu_publication_attributes: {draft: true})
   end
+  let!(:other_motion) do
+    create(:motion,
+           parent: freetown,
+           argu_publication_attributes: {draft: true})
+  end
   let!(:page_motion) do
     create(:motion,
            parent: freetown,
@@ -23,9 +28,8 @@ class DraftsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should not get index' do
     get drafts_user_path(user)
-    assert_not_authorized
-    assert_response 403
-    assert_select '.draft', 0
+    assert_not_a_user
+    assert_response 302
   end
 
   ####################################
@@ -48,6 +52,13 @@ class DraftsTest < ActionDispatch::IntegrationTest
     assert_select '.draft', 1
   end
 
+  test 'user should get index nq' do
+    sign_in user
+    get drafts_user_path(user), headers: argu_headers(accept: :nq)
+    assert 200
+    expect_triple(RDF::URI(drafts_user_url(user)), NS::AS[:totalItems], 1, NS::LL[:replace])
+  end
+
   ####################################
   # As administrator
   ####################################
@@ -61,6 +72,16 @@ class DraftsTest < ActionDispatch::IntegrationTest
     assert_select '.draft', 2
   end
 
+  test 'administrator should get index nq' do
+    group = create(:group, parent: argu)
+    create(:group_membership, parent: group, shortname: user.url)
+    create(:grant, edge: argu, group: group, grant_set: GrantSet.administrator)
+    sign_in user
+    get drafts_user_path(user), headers: argu_headers(accept: :nq)
+    assert 200
+    expect_triple(RDF::URI(drafts_user_url(user)), NS::AS[:totalItems], 2, NS::LL[:replace])
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -71,5 +92,12 @@ class DraftsTest < ActionDispatch::IntegrationTest
     get drafts_user_path(user)
     assert 200
     assert_select '.draft', 1
+  end
+
+  test 'staff should get index nq' do
+    sign_in staff
+    get drafts_user_path(user), headers: argu_headers(accept: :nq)
+    assert 200
+    expect_triple(RDF::URI(drafts_user_url(user)), NS::AS[:totalItems], 1, NS::LL[:replace])
   end
 end

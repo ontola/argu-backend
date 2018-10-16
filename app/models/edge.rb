@@ -104,6 +104,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   scope :untrashed, -> { where('edges.trashed_at IS NULL') }
   scope :expired, -> { where('edges.expires_at <= ?', Time.current) }
   scope :active, -> { published.untrashed }
+  scope :draft, -> { unpublished.untrashed }
 
   validates :parent, presence: true, unless: :root_object?
 
