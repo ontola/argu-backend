@@ -267,9 +267,9 @@ module Argu
           let(:blog_post) { question.blog_posts.first }
           let(:blog_post_comment) { blog_post.comments.first }
           let(:motion_blog_post) { motion.blog_posts.first }
-          let(:trashed_motion) { question.motions.trashed.first }
-          let(:unpublished_motion) { question.motions.unpublished.first }
-          let(:argument_unpublished_child) { unpublished_motion.arguments.first }
+          let(:trashed_question) { freetown.questions.trashed.first }
+          let(:unpublished_question) { freetown.questions.unpublished.first }
+          let(:argument_unpublished_child) { unpublished_question.motions.first.arguments.first }
           let(:forum_export) { freetown.exports.first }
           let(:motion_export) { motion.exports.first }
         end

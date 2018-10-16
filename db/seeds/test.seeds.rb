@@ -234,21 +234,44 @@ FactorySeeder.create(:comment, parent: motion)
 hidden_question = FactorySeeder.create(:question, parent: holland)
 FactorySeeder.create(:motion, parent: hidden_question)
 
+trashed_question =
+  FactorySeeder.create(
+    :question,
+    parent: freetown,
+    trashed_at: Time.current
+  )
 trashed_motion =
   FactorySeeder.create(
     :motion,
-    parent: question,
-    trashed_at: Time.current
+    parent: trashed_question
   )
 FactorySeeder.create(:argument, parent: trashed_motion)
 
+unpublished_question =
+  FactorySeeder.create(
+    :question,
+    parent: freetown,
+    argu_publication_attributes: {draft: true}
+  )
 unpublished_motion =
   FactorySeeder.create(
     :motion,
-    parent: question,
-    argu_publication_attributes: {draft: true}
+    parent: unpublished_question
   )
 FactorySeeder.create(:argument, parent: unpublished_motion)
+
+expired_question =
+  FactorySeeder.create(
+    :question,
+    parent: freetown,
+    expires_at: Time.current
+  )
+expired_motion =
+  FactorySeeder.create(
+    :motion,
+    parent: expired_question
+  )
+FactorySeeder.create(:argument, parent: expired_motion)
 
 FactorySeeder.create(:export, parent: freetown, user: FactorySeeder.create(:user))
 FactorySeeder.create(:export, parent: motion, user: FactorySeeder.create(:user))

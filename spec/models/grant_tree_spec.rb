@@ -79,7 +79,7 @@ RSpec.describe GrantTree, type: :model do
     let(:method_args) { edge }
 
     context 'with trashed self' do
-      let(:edge) { trashed_motion }
+      let(:edge) { trashed_question }
 
       it { is_expected.to eq true }
     end
@@ -121,7 +121,7 @@ RSpec.describe GrantTree, type: :model do
 
   describe '#unpublished?' do
     context 'with unpublished self' do
-      let(:method_args) { unpublished_motion }
+      let(:method_args) { unpublished_question }
 
       it { is_expected.to be true }
     end
