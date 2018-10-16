@@ -2,6 +2,7 @@ en:
   pages:
     resource_name: "Organizations"
     type: "Organization"
+    type_new: "New organization"
     plural: "Organizations"
     show: "Show organization"
     discover: "Discover organizations"
