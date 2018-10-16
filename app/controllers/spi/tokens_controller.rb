@@ -4,6 +4,8 @@ require 'argu'
 
 module SPI
   class TokensController < Doorkeeper::TokensController
+    include RedisResourcesHelper
+    include JWTHelper
     include Doorkeeper::Rails::Helpers
     include ActionController::Head
     include AbstractController::Logger
@@ -18,6 +20,7 @@ module SPI
       return if token.nil?
 
       res = Doorkeeper::OAuth::TokenResponse.new(token)
+      process_previous_token(res)
       render json: res.body.to_json, status: 201
     end
 
@@ -48,6 +51,21 @@ module SPI
     def handle(e)
       render status: error_status(e), json: json_error_hash(e).to_json
       nil
+    end
+
+    def previous_token
+      @previous_token ||=
+        params[:userToken] &&
+        Doorkeeper::AccessToken.find_by(token: params[:userToken])
+    end
+
+    def process_previous_token(res)
+      return unless previous_token
+      schedule_redis_resource_worker(
+        GuestUser.new(id: previous_token.resource_owner_id),
+        User.find(res.token.resource_owner_id),
+        params[:r]
+      )
     end
 
     def user_token
