@@ -227,7 +227,8 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   # @param [Symbol] level The lowest type of follower to include
   # @return [Integer] The number of followers
   def potential_audience(level = :reactions)
-    FollowersCollector.new(resource: self, follow_type: level).count
+    @potential_audience ||= {}
+    @potential_audience[level] ||= FollowersCollector.new(resource: self, follow_type: level).count
   end
 
   def publish!
