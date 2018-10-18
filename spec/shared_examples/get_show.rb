@@ -5,7 +5,7 @@ RSpec.shared_examples_for 'get show' do |opts = {skip: []}|
     context "as #{format}" do
       unless opts[:skip].include?(:show_guest) || opts[:skip].include?(:guest)
         it 'as guest' do
-          sign_out
+          sign_in(:guest, doorkeeper_application)
           get show_path, params: {format: format}
           send("expect_get_show_guest_#{format}")
         end
@@ -13,7 +13,7 @@ RSpec.shared_examples_for 'get show' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:show_unauthorized) || opts[:skip].include?(:unauthorized)
         it 'as unauthorized' do
-          sign_in(unauthorized_user)
+          sign_in(unauthorized_user, doorkeeper_application)
           get show_path, params: {format: format}
           send("expect_get_show_unauthorized_#{format}")
         end
@@ -21,7 +21,7 @@ RSpec.shared_examples_for 'get show' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:show_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
-          sign_in(authorized_user_update)
+          sign_in(authorized_user_update, doorkeeper_application)
           get show_path, params: {format: format}
           send("expect_get_show_#{format}")
         end
@@ -29,7 +29,7 @@ RSpec.shared_examples_for 'get show' do |opts = {skip: []}|
 
       unless opts[:skip].include?(:show_non_existing) || opts[:skip].include?(:non_existing)
         it 'non existing' do
-          sign_in(authorized_user_update)
+          sign_in(authorized_user_update, doorkeeper_application)
           get non_existing_show_path, params: {format: format}
           expect_not_found
         end

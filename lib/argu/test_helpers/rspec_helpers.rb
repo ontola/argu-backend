@@ -33,10 +33,12 @@ module Argu
       end
 
       def sign_in(user, app = Doorkeeper::Application.argu)
+        scopes = user == :guest ? 'guest' : 'user'
+        scopes += ' afe' if app.id == Doorkeeper::Application::AFE_ID
         t = Doorkeeper::AccessToken.find_or_create_for(
           app,
-          user.id,
-          app.id == Doorkeeper::Application::AFE_ID ? 'user afe' : 'user',
+          user == :guest ? SecureRandom.hex : user.id,
+          scopes,
           10.minutes,
           false
         )
@@ -46,11 +48,6 @@ module Argu
           allow(Doorkeeper::OAuth::Token)
             .to receive(:cookie_token_extractor).and_return(t.token)
         end
-      end
-
-      def sign_out
-        allow(Doorkeeper::OAuth::Token)
-          .to receive(:cookie_token_extractor).and_return(nil)
       end
 
       def sign_in_manually(user = create(:user), navigate = true, redirect_to: freetown.iri_path)

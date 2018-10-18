@@ -13,7 +13,7 @@ module Argu
         base.define_spec_objects
       end
 
-      module ClassMethods
+      module ClassMethods # rubocop:disable Metrics/ModuleLength
         def expectations_for(action)
           %i[json_api].concat(RDF_CONTENT_TYPES) .each do |format|
             let("expect_#{action}_#{format}") { send("expect_#{action}_serializer") }
@@ -25,6 +25,13 @@ module Argu
 
         def define_spec_variables
           let(:request_format) { :html }
+          let(:doorkeeper_application) do
+            if %i[html json].include?(request_format)
+              Doorkeeper::Application.argu
+            else
+              Doorkeeper::Application.argu_front_end
+            end
+          end
 
           # Differences
           let(:create_differences) { {"#{subject.class}.count" => 1, 'Activity.count' => 1} }
