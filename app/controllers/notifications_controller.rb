@@ -60,7 +60,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
       .page params[:page]
   end
 
-  def show_includes
+  def preview_includes
     [operation: :target]
   end
 

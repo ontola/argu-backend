@@ -26,7 +26,7 @@ class GroupsController < ServiceController
   end
 
   def show_includes
-    %i[organization]
+    super + %i[organization]
   end
 
   def new_resource_from_params

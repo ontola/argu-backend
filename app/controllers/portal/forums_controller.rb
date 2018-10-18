@@ -5,6 +5,10 @@ class Portal::ForumsController < EdgeableController
 
   private
 
+  def create_includes
+    [widget_sequence: :members]
+  end
+
   def form_view_locals
     {
       resource: resource,

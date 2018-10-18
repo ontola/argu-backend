@@ -19,7 +19,7 @@ class DiscussionsController < ParentableController
     )
   end
 
-  def show_includes
+  def preview_includes
     {default_cover_photo: {}, creator: :default_profile_photo}
   end
 

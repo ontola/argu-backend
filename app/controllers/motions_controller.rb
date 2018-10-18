@@ -15,19 +15,24 @@ class MotionsController < EdgeableController
     redirect_to parent_resource.iri_path
   end
 
-  def show_includes
+  def preview_includes
     [
-      :vote_event_collection,
       :default_cover_photo,
+      default_vote_event: vote_event_without_votes,
       creator: :default_profile_photo,
+      top_comment: :creator
+    ]
+  end
+
+  def show_includes
+    super + [
       operation: action_form_includes,
       partOf: [widget_sequence: :members],
       blog_post_collection: inc_shallow_collection,
       comment_collection: inc_shallow_collection,
       con_argument_collection: inc_shallow_collection,
       pro_argument_collection: inc_shallow_collection,
-      attachment_collection: inc_nested_collection,
-      default_vote_event: vote_event_without_votes
+      attachment_collection: inc_nested_collection
     ]
   end
 
@@ -79,6 +84,8 @@ class MotionsController < EdgeableController
       :current_vote,
       vote_collection: {
         operation: action_form_includes,
+        filters: [],
+        sortings: [],
         default_filtered_collections: inc_shallow_collection
       }.freeze
     ].freeze

@@ -54,14 +54,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     end
   end
 
-  def show_includes
-    [
-      :default_profile_photo,
-      :email_addresses,
-      vote_match_collection: inc_nested_collection
-    ]
-  end
-
   def permit_locale_params
     params.require(:locale)
   end
@@ -73,6 +65,13 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     merge_placement_params(pp, User)
     pp['email_addresses_attributes'][pp[:primary_email][1..-2]][:primary] = true if pp[:primary_email].present?
     pp.except(:primary_email)
+  end
+
+  def preview_includes
+    %i[
+      default_profile_photo
+      email_addresses
+    ]
   end
 
   def redirect_location

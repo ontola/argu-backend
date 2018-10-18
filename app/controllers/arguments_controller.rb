@@ -54,9 +54,15 @@ class ArgumentsController < EdgeableController
                          current_actor.actor == current_user.profile))
   end
 
-  def show_includes
+  def preview_includes
     [
       creator: :default_profile_photo,
+      top_comment: :creator
+    ]
+  end
+
+  def show_includes
+    super + [
       operation: action_form_includes,
       comment_collection: inc_shallow_collection
     ]

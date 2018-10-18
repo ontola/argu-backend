@@ -5,7 +5,7 @@ class VoteEventsController < EdgeableController
 
   private
 
-  def show_includes
+  def preview_includes
     [:current_vote, vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]]
   end
 

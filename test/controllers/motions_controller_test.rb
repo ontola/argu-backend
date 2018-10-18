@@ -30,7 +30,6 @@ class MotionsControllerTest < ActionController::TestCase
     expect_included(motion.attachments.map(&:iri))
 
     expect_relationship('voteEventCollection')
-    expect_included(collection_iri(motion, :vote_events))
     expect_included(vote_event.iri)
     expect_included(collection_iri(vote_event, :votes))
     %w[yes other no].each do |side|

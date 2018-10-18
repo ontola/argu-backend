@@ -89,7 +89,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def show_includes
+  def preview_includes
     [
       :default_profile_photo
     ]
