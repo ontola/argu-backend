@@ -136,11 +136,9 @@ ActiveRecord::Base.transaction do
     scopes: 'user guest'
   )
   Doorkeeper::AccessToken.create!(
-    Doorkeeper::Application.argu,
-    User::COMMUNITY_ID,
-    'service',
-    Doorkeeper.configuration.access_token_expires_in,
-    false
+    application: Doorkeeper::Application.argu,
+    resource_owner_id: User::COMMUNITY_ID,
+    scopes: 'service'
   )
   Doorkeeper::Application.create!(
     id: Doorkeeper::Application::AFE_ID,
@@ -150,11 +148,9 @@ ActiveRecord::Base.transaction do
     scopes: 'user guest afe'
   )
   Doorkeeper::AccessToken.create!(
-    Doorkeeper::Application.argu_front_end,
-    User::COMMUNITY_ID,
-    'service',
-    Doorkeeper.configuration.access_token_expires_in,
-    false
+    application: Doorkeeper::Application.argu_front_end,
+    resource_owner_id: User::COMMUNITY_ID,
+    scopes: 'service'
   )
 
   Doorkeeper::Application.create!(
