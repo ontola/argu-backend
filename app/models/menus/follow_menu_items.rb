@@ -27,6 +27,8 @@ module Menus
       follow_types = opts.delete(:follow_types) || %i[news reactions never]
       menu_item(
         :follow,
+        policy: :follow_items?,
+        policy_resource: user,
         description: I18n.t('notifications.receive.title'),
         image: -> { follow_menu_icon(follow_type) },
         link_opts: opts,

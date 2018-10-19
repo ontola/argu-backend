@@ -12,8 +12,7 @@ module Menuable
       end
 
       def menu(user_context, tag)
-        menus(user_context).find { |menu| menu.tag == tag } ||
-          raise("Menu '#{tag}' not avadilable for #{self.class.name}")
+        menus(user_context).find { |menu| menu&.tag == tag }
       end
     end
 

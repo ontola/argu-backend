@@ -50,6 +50,10 @@ class UserPolicy < RestrictivePolicy
     true
   end
 
+  def follow_items?
+    true
+  end
+
   def max_allowed_pages
     if staff?
       Float::INFINITY
