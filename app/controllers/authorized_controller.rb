@@ -70,7 +70,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
       filter: parse_filter(params[:filter], controller_class.try(:filter_options)),
       user_context: user_context,
       include_map: JSONAPI::IncludeDirective::Parser.parse_include_args([:root] + [show_includes])
-    }.merge(collection_view_params.except(:page, :before))
+    }.merge(collection_type_params)
   end
 
   def current_forum; end

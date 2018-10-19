@@ -5,7 +5,7 @@ module BlogPostable
     extend ActiveSupport::Concern
 
     included do
-      with_collection :blog_posts, predicate: NS::ARGU[:blogPosts]
+      with_collection :blog_posts, predicate: NS::ARGU[:blogPosts], page_size: 1
     end
   end
 end

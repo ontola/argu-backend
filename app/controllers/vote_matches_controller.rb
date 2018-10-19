@@ -20,7 +20,8 @@ class VoteMatchesController < ServiceController
     else
       @collection ||= ::Collection.new(
         association_class: VoteMatch,
-        user_context: user_context
+        user_context: user_context,
+        type: :paginated
       )
     end
   end
