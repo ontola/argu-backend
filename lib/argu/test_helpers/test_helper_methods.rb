@@ -69,6 +69,19 @@ module Argu
           resource
         end
 
+        def create_guest_user(id: nil, app: Doorkeeper::Application.argu_front_end)
+          scopes = 'guest'
+          scopes += ' afe' if app.id == Doorkeeper::Application::AFE_ID
+          token =
+            Doorkeeper::AccessToken
+              .create!(
+                application: app,
+                resource_owner_id: id || session.id,
+                scopes: scopes
+              )
+          GuestUser.new(session: token)
+        end
+
         def create_moderator(record, user = nil)
           user ||= create(:user)
           page = record.is_a?(Page) ? record : record.root
@@ -170,8 +183,8 @@ module Argu
             case resource
             when :service
               [0, 'service', Doorkeeper::Application.argu_service]
-            when :guest
-              [SecureRandom.hex, ['guest', additional_scope].join(' '), requested_app]
+            when GuestUser
+              [resource.id, ['guest', additional_scope].join(' '), requested_app]
             else
               [resource.id, ['user', additional_scope].join(' '), requested_app]
             end

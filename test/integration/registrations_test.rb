@@ -8,8 +8,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   define_freetown
   let(:user) { create(:user) }
   let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
-  let(:guest_user) { GuestUser.new(session: session) }
-  let(:other_guest_user) { GuestUser.new(id: 'other_id') }
+  let(:guest_user) { create_guest_user }
+  let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:place) { create(:place) }
   let(:argu) { create(:page) }
   let(:motion) { create(:motion, parent: freetown) }

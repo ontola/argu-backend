@@ -4,8 +4,8 @@ require 'test_helper'
 
 class TokensTest < ActionDispatch::IntegrationTest
   define_freetown
-  let(:guest_user) { GuestUser.new(session: session) }
-  let(:other_guest_user) { GuestUser.new(id: 'other_id') }
+  let(:guest_user) { create_guest_user }
+  let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:motion) { create(:motion, parent: freetown) }
   let(:motion2) { create(:motion, parent: freetown) }
   let(:vote) { create(:vote, parent: motion2.default_vote_event, publisher: user) }

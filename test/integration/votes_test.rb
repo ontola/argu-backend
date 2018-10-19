@@ -5,8 +5,8 @@ require 'test_helper'
 class VotesTest < ActionDispatch::IntegrationTest
   define_freetown
   define_cairo
-  let(:guest_user) { GuestUser.new(session: session) }
-  let(:other_guest_user) { GuestUser.new(id: 'other_id') }
+  let(:guest_user) { create_guest_user }
+  let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:closed_question) { create(:question, expires_at: 1.day.ago, parent: freetown) }
   let(:closed_question_motion) { create(:motion, parent: closed_question) }
   let(:closed_question_argument) { create(:argument, parent: closed_question_motion) }

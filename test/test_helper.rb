@@ -246,8 +246,8 @@ module ActionDispatch
         case resource
         when :service
           [User::SERVICE_ID, 'afe service', Doorkeeper::Application.argu_service]
-        when :guest
-          [SecureRandom.hex, ['guest', additional_scope].join(' '), requested_app]
+        when GuestUser
+          [resource.id, ['guest', additional_scope].join(' '), requested_app]
         else
           [resource.id, ['user', additional_scope].join(' '), requested_app]
         end
