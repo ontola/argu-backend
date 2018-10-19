@@ -35,6 +35,6 @@ class VoteCache
   end
 
   def preload_from_redis(parent)
-    RedisResource::EdgeRelation.where(owner_type: 'Vote', root_id: parent.root_id)
+    RedisResource::EdgeRelation.where(owner_type: 'Vote', root_id: parent.root_id, creator: @profile)
   end
 end

@@ -49,6 +49,40 @@ class MotionsTest < ActionDispatch::IntegrationTest
            publisher: creator,
            parent: question)
   end
+  let(:guest_user) { create_guest_user }
+  let(:other_guest_user) { create_guest_user(id: 'other_id') }
+  let(:guest_vote) do
+    create(:vote,
+           parent: subject.default_vote_event,
+           creator: guest_user.profile,
+           publisher: guest_user)
+  end
+
+  test 'guest should get guest_vote included' do
+    get root_path
+
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+    guest_vote
+    get subject, headers: argu_headers(accept: :nq)
+    expect(response.body).to(
+      include(
+        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri_path, with_hostname: true)}>"
+      )
+    )
+  end
+
+  test 'guest should not get other guest_vote included' do
+    get root_path
+
+    sign_in other_guest_user, Doorkeeper::Application.argu_front_end
+    guest_vote
+    get subject, headers: argu_headers(accept: :nq)
+    expect(response.body).not_to(
+      include(
+        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri_path, with_hostname: true)}>"
+      )
+    )
+  end
 
   test 'initiator should show tutorial only on first post create' do
     sign_in initiator
