@@ -11,7 +11,7 @@ module Moveable
     private
 
     def move_execute
-      @edge = Edge.find_by(uuid: params[:edge_id])
+      @edge = Edge.find_by!(uuid: params[:edge_id])
       user_context.with_root_id(@edge.root_id) do
         authorize @edge, :update?
       end
