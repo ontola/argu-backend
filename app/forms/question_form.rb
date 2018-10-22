@@ -4,6 +4,7 @@ class QuestionForm < FormsBase
   fields %i[
     display_name
     description
+    default_cover_photo
     mark_as_important
     attachments
     advanced

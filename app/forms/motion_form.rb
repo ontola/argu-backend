@@ -4,6 +4,7 @@ class MotionForm < FormsBase
   fields [
     :display_name,
     :description,
+    :default_cover_photo,
     {mark_as_important: {description: ->(resource) { mark_as_important_label(resource) }}},
     :attachments,
     :advanced,
