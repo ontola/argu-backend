@@ -74,12 +74,30 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
+  test 'user should get show by id user without shortname nq' do
+    sign_in user
+
+    get user_path(user_no_shortname.id), headers: argu_headers(accept: :nq)
+
+    assert_response 200
+    assert_not_includes(response.body, user_no_shortname.email)
+  end
+
   test 'user should get show non public' do
     sign_in user
 
     get user_path(user_non_public)
 
     assert_response 200
+  end
+
+  test 'user should get show non public nq' do
+    sign_in user
+
+    get user_path(user_non_public), headers: argu_headers(accept: :nq)
+
+    assert_response 200
+    assert_not_includes(response.body, user_non_public.email)
   end
 
   test 'user should get show without feed' do
@@ -102,12 +120,30 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_select '.activity-feed'
   end
 
+  test 'user should show public nq' do
+    sign_in user
+
+    get user_path(user_public), headers: argu_headers(accept: :nq)
+
+    assert_response 200
+    assert_not_includes(response.body, user_public.email)
+  end
+
   test 'user should show votes own profile' do
     sign_in user_hidden_votes
 
     get user_path(user_hidden_votes)
 
     assert_response 200
+  end
+
+  test 'user should show votes own profile nq' do
+    sign_in user_hidden_votes
+
+    get user_path(user_hidden_votes), headers: argu_headers(accept: :nq)
+
+    assert_response 200
+    assert_includes(response.body, user_hidden_votes.email)
   end
 
   ####################################
