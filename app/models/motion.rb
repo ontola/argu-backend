@@ -70,7 +70,7 @@ class Motion < Edge
   end
 
   def self.order_by_predicate(predicate, direction)
-    return super unless predicate == NS::ARGU[:votesPro]
+    return super unless predicate == NS::ARGU[:votesProCount]
     Edge.order_child_count_sql(:votes_pro, as: 'default_vote_events_edges', direction: direction)
   end
 

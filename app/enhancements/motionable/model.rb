@@ -23,7 +23,7 @@ module Motionable
         return {key: NS::ARGU[:lastActivityAt], direction: :desc} unless parent.try(:default_motion_sorting)
         case parent.default_motion_sorting
         when 'popular'
-          {key: NS::ARGU[:votesPro], direction: :desc}
+          {key: NS::ARGU[:votesProCount], direction: :desc}
         when 'created_at'
           {key: NS::ARGU[:createdAt], direction: :desc}
         when 'updated_at'
