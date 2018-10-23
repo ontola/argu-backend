@@ -7,7 +7,8 @@ module ChildHelper
     child
   end
 
-  def child_attrs(parent, raw_klass) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  def child_attrs(parent, raw_klass)
     case raw_klass.to_s
     when 'Discussion'
       {forum: parent}
@@ -35,10 +36,13 @@ module ChildHelper
       {publishable: parent}
     when 'Comment'
       parent.is_a?(Comment) ? {parent: parent.parent} : {parent: parent}
+    when 'Placement'
+      {placeable: parent}
     else
       raw_klass <= Edge ? {parent: parent} : {}
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
   def prepare_edge_child(parent, child)
     child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)

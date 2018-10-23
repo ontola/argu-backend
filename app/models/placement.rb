@@ -2,6 +2,7 @@
 
 class Placement < ApplicationRecord
   include DelegatedAttributes
+  include Parentable
 
   belongs_to :forum, primary_key: :uuid
   belongs_to :place
@@ -18,6 +19,8 @@ class Placement < ApplicationRecord
   delegated_attribute :postal_code, :string, to: :place
   delegated_attribute :zoom_level, :integer, to: :place, default: 13
   alias_attribute :display_name, :title
+
+  parentable :user, :edge
 
   # Returns a {Placement} in a #path
   # Sorted first ascending on the order of the #title given in #sort
