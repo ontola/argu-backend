@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CommentSerializer < ContentEdgeSerializer
+  has_one :vote, predicate: NS::ARGU[:opinion]
   with_collection :comment_children, predicate: NS::SCHEMA[:comments]
 
   def description
