@@ -83,7 +83,7 @@ class FeedController < AuthorizedController
       )
   end
 
-  def show_includes
-    [:trackable, :recipient, owner: [:default_profile_photo]]
+  def preview_includes
+    [:trackable, recipient: [widget_sequence: :members], owner: [:default_profile_photo]]
   end
 end
