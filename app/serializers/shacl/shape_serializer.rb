@@ -2,6 +2,8 @@
 
 module SHACL
   class ShapeSerializer < BaseSerializer
+    include ChildHelper
+
     attribute :deactivated, predicate: NS::SH[:deactivated]
     attribute :label, predicate: NS::RDFS[:label]
     attribute :message, predicate: NS::SH[:message]
@@ -18,7 +20,7 @@ module SHACL
     def referred_shapes
       object.referred_shapes&.map do |shape|
         if shape.is_a?(Class) && shape < FormsBase
-          shape.new(user_context, shape.model_class.new).shape
+          shape.new(user_context, child_instance(object.form.target, shape.model_class)).shape
         else
           shape
         end

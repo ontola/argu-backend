@@ -14,6 +14,7 @@ class QuestionForm < FormsBase
   property_group :advanced,
                  label: I18n.t('forms.advanced'),
                  properties: %i[
+                   argu_publication
                    require_location
                    pinned
                    default_motion_sorting

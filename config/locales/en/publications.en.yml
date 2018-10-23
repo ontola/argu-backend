@@ -13,3 +13,8 @@ en:
     is_scheduled: "Publication is scheduled for %{date}."
     is_draft: "Draft version, not yet published."
     confirm_publication: 'Notifications will be send after publishing this. Continue?'
+  formtastic:
+    labels:
+      publication:
+        draft: 'Save as draft'
+        published_at: 'Publish at'

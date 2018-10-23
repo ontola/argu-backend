@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
+  include Ldable
   include Wisper::Publisher
   belongs_to :publishable, class_name: 'Edge', primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'
@@ -14,6 +15,8 @@ class Publication < ApplicationRecord
 
   attribute :draft, :boolean, default: false
   enum follow_type: {news: 2, reactions: 3}
+
+  alias edgeable_record publishable
 
   # @TODO: wrap in transaction
   def commit

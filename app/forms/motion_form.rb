@@ -14,6 +14,7 @@ class MotionForm < FormsBase
   property_group :advanced,
                  label: I18n.t('forms.advanced'),
                  properties: %i[
+                   argu_publication
                    pinned
                    expires_at
                    invert_arguments

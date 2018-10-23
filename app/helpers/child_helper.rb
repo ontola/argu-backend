@@ -37,6 +37,8 @@ module ChildHelper
       {owner: parent}
     when 'EmailAddress'
       {user: parent}
+    when 'Publication'
+      {publishable: parent}
     when 'Comment'
       parent.is_a?(Comment) ? {parent: parent.parent} : {parent: parent}
     else
