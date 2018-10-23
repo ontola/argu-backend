@@ -4,7 +4,6 @@ module VirtualAttributes
   extend ActiveSupport::Concern
 
   included do
-    after_initialize :initialize_virtual_attributes, unless: :new_record?
     class_attribute :virtual_attributes
 
     private

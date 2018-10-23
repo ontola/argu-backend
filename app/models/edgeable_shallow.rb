@@ -9,7 +9,7 @@ module EdgeableShallow
       false
     end
 
-    def respond_to?(method)
+    def respond_to?(method, _include_private = false)
       return false if method == :edge
       super
     end

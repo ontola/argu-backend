@@ -131,6 +131,9 @@ module ActiveRecord
     def load(&block)
       exec_queries(&block) unless loaded?
       @records.select { |record| record.is_a?(Edge) }.each(&:preload_properties)
+      @records
+        .select { |record| record.respond_to?(:initialize_virtual_attributes, true) }
+        .each { |record| record.send(:initialize_virtual_attributes) }
       self
     end
 
