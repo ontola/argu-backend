@@ -20,7 +20,8 @@ module Createable
         collection: -> { create_on_collection? },
         form: -> { "#{result_class}Form".safe_constantize },
         iri_template: :new_iri,
-        submit_label: -> { submit_label }
+        submit_label: -> { submit_label },
+        favorite: -> { favorite_action }
       )
     end
 
@@ -42,6 +43,10 @@ module Createable
 
     def create_url(resource)
       resource.iri
+    end
+
+    def favorite_action
+      association.to_sym == :votes
     end
 
     def new_image
