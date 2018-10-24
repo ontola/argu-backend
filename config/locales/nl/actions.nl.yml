@@ -15,6 +15,10 @@ nl:
         submit: "Verplaats"
       read:
         label: "Markeer als gelezen"
+      publish:
+        label: "Publiceer"
+        submit: "Publiceer"
+        description: "Concept versie, nog niet gepubliceerd."
       trash:
         label: "Verwijderen"
         description: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."

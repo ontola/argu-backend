@@ -4,10 +4,17 @@ module ActiveResponseHelper
   include RailsLD::ActiveResponse::Controller::CrudDefaults
 
   def active_response_success_message
-    if action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?
-      t('type_publish_success', type: type_for(current_resource)).capitalize
+    if (action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?) ||
+        resource_was_published?
+      t('type_publish_success', type: type_for(current_resource).capitalize)
     else
-      t("type_#{action_name}_success", type: type_for(current_resource)).capitalize
+      t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
+    end
+  end
+
+  def changes_triples
+    current_resource.previous_changes_by_predicate.map do |predicate, (_old_value, new_value)|
+      [current_resource.iri, predicate, new_value, NS::LL[:replace]]
     end
   end
 
@@ -76,10 +83,14 @@ module ActiveResponseHelper
 
   def redirect_message
     if action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?
-      t('type_publish_success', type: type_for(current_resource)).capitalize
+      t('type_publish_success', type: type_for(current_resource).capitalize)
     else
-      t("type_#{action_name}_success", type: type_for(current_resource)).capitalize
+      t("type_#{action_name}_success", type: type_for(current_resource).capitalize)
     end
+  end
+
+  def resource_was_published?
+    current_resource.try(:argu_publication)&.previous_changes&.key?(:published_at)
   end
 
   def respond_with(*resources, &_block)
@@ -133,9 +144,15 @@ module ActiveResponseHelper
   end
 
   def update_meta
-    current_resource.previous_changes_by_predicate.map do |predicate, changes|
-      [current_resource.iri, predicate, changes[1], NS::LL[:replace]]
+    meta = changes_triples
+    if resource_was_published?
+      meta << [
+        current_resource.actions(user_context).detect { |a| a.tag == :publish }.iri,
+        NS::SCHEMA[:target], nil,
+        NS::LL[:remove]
+      ]
     end
+    meta
   end
 
   def update_success_location

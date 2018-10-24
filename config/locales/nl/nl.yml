@@ -230,7 +230,7 @@ nl:
   type_save_success: "%{type} succesvol opgeslagen"
   type_update_success: "%{type} succesvol opgeslagen"
   type_create_success: "%{type} succesvol aangemaakt"
-  type_publish_success: "%{type} succesvol aangemaakt. Het kan even duren voordat het zichtbaar is op andere pagina's."
+  type_publish_success: "%{type} succesvol gepubliceerd. Het kan even duren voordat het zichtbaar is op andere pagina's."
   type_convert_success: "Succesvol geconverteerd naar {type}"
   type_destroy_success: "%{type} succesvol verwijderd"
   type_trash_success: "%{type} succesvol verborgen"
