@@ -40,7 +40,7 @@ module DefaultPolicyResults
   end
 
   def show_unpublished_results
-    update_results
+    moderator_plus_results.merge(creator: true)
   end
 
   def show_expired_results

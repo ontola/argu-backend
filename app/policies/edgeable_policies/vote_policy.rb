@@ -17,7 +17,7 @@ class VotePolicy < EdgePolicy
   end
 
   def show?
-    return show_unpublished? if has_unpublished_ancestors?
+    return if has_unpublished_ancestors? && !show_unpublished?
     (record.creator.are_votes_public && has_grant?(:show)) || is_creator? || staff? || service?
   end
 

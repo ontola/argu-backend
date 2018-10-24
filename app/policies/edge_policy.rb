@@ -89,7 +89,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def show?
-    return show_unpublished? if has_unpublished_ancestors?
+    return if has_unpublished_ancestors? && !show_unpublished?
     has_grant?(:show)
   end
 
@@ -193,6 +193,6 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def show_unpublished?
-    update?
+    update? || (record.is_published? && parent_policy.show?)
   end
 end
