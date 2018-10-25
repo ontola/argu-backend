@@ -21,9 +21,23 @@ class FollowsController < AuthorizedController
     render 'destroy', locals: {unsubscribed: false}
   end
 
+  def destroy_failure_rdf
+    respond_with_redirect(
+      location: authenticated_resource.followable.iri_path,
+      notice: t('notifications.unsubscribe.failed', item: authenticated_resource.followable.display_name)
+    )
+  end
+
   def destroy_success_html
     return destroy_success unless request.method == 'GET'
     render 'destroy', locals: {unsubscribed: true}
+  end
+
+  def destroy_success_rdf
+    respond_with_redirect(
+      location: authenticated_resource.followable.iri_path,
+      notice: t('notifications.unsubscribe.success', item: authenticated_resource.followable.display_name)
+    )
   end
 
   def destroy_execute
