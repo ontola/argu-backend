@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MenuItemSerializer < BaseSerializer
-  attribute :action, predicate: NS::ARGU[:action]
+  has_one :action, predicate: NS::ARGU[:action]
   attribute :label, predicate: NS::SCHEMA[:name]
   attribute :href, predicate: NS::ARGU[:href]
   attribute :data
@@ -26,6 +26,14 @@ class MenuItemSerializer < BaseSerializer
 
   def image
     serialize_image(object.image)
+  end
+
+  def action
+    if object.action.is_a?(ActionItem)
+      object.action
+    else
+      {id: object.action}
+    end
   end
 
   def menus_present?

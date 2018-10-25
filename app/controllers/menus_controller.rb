@@ -22,7 +22,13 @@ class MenusController < ParentableController
   end
 
   def show_includes
-    [menu_sequence: [members: [:image, menu_sequence: [members: [:image, menu_sequence: [members: :image]]]]]]
+    [
+      menu_sequence: [
+        members: menu_item_includes + [
+          menu_sequence: [members: [menu_item_includes, menu_sequence: [members: menu_item_includes]]]
+        ]
+      ]
+    ]
   end
 
   def index_association
@@ -43,6 +49,10 @@ class MenusController < ParentableController
   end
 
   def resource_by_id_parent; end
+
+  def menu_item_includes
+    [:image, action: :target]
+  end
 
   def tree_root_id
     parent_resource&.root_id

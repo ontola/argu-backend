@@ -29,7 +29,10 @@ module SHACL
     end
 
     def sh_in
-      object.sh_in && RDF::List[*object.sh_in]
+      options = object.sh_in
+      return if options.blank?
+      options = options.call(object) if options.respond_to?(:call)
+      options.is_a?(Array) ? RDF::List[*options] : options
     end
   end
 end

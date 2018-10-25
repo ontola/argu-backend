@@ -11,6 +11,7 @@ module Edgeable
       enhance Trashable
       enhance Updateable
       enhance Actionable
+      enhance Followable
 
       property :display_name, :string, NS::SCHEMA[:name]
       property :description, :text, NS::SCHEMA[:text]

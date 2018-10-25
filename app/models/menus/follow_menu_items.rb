@@ -45,7 +45,8 @@ module Menus
         href = follows_url(gid: resource.uuid, follow_type: type)
       end
       image = follow_type == type.to_s ? 'fa-circle' : 'fa-circle-o'
-      menu_item(type, href: href, image: image, link_opts: {data: {remote: true, method: method}})
+      action = resource.action(user_context, :"follow_#{type}")
+      menu_item(type, action: action, href: href, image: image, link_opts: {data: {remote: true, method: method}})
     end
   end
 end

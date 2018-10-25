@@ -7,6 +7,15 @@ class FollowsController < AuthorizedController
 
   private
 
+  def create_meta
+    authenticated_resource
+      .followable
+      .menu(user_context, :follow)
+      .menu_sequence
+      .members
+      .map(&method(:menu_item_image_triple))
+  end
+
   def destroy_failure_html
     return destroy_failure unless request.method == 'GET'
     render 'destroy', locals: {unsubscribed: false}
@@ -25,6 +34,14 @@ class FollowsController < AuthorizedController
 
   def active_response_success_message
     t('notifications.changed_successfully')
+  end
+
+  def menu_item_image_triple(menu_item)
+    [
+      menu_item.iri,
+      NS::SCHEMA[:image],
+      RDF::URI("http://fontawesome.io/icon/#{menu_item.image.gsub('fa-', '')}"), NS::LL[:replace]
+    ]
   end
 
   def new_resource_from_params
