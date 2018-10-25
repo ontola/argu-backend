@@ -2,6 +2,7 @@
 
 class FormsBase # rubocop:disable Metrics/ClassLength
   include Iriable
+  extend UriTemplateHelper
 
   class_attribute :_fields, :_property_groups, :_referred_resources
   attr_accessor :user_context, :target
@@ -71,6 +72,15 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       target._fields = {}
       target._property_groups = {}
       target._referred_resources = []
+    end
+
+    def actor_selector
+      {
+        custom: true,
+        datatype: NS::XSD[:string],
+        max_count: 1,
+        sh_in: ->(resource) { actors_iri(resource.form.target.root) }
+      }
     end
 
     def model_class
@@ -198,7 +208,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       group
     end
 
-    def property_shape_attrs(attr_key, attrs = {})
+    def property_shape_attrs(attr_key, attrs = {}) # rubocop:disable Metrics/PerceivedComplexity
       return if _property_groups.key?(attr_key)
       serializer_attr = serializer_attribute(attr_key)
       attrs[:path] ||= predicate_from_serializer(serializer_attr)
@@ -206,7 +216,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
 
       attrs[:model_attribute] ||= model_attribute(attr_key)
       attrs[:validators] ||= validators(attrs[:model_attribute])
-      return attrs if serializer_attr.blank?
+      return attrs if attrs.delete(:custom) || serializer_attr.blank?
 
       if serializer_attr.is_a?(ActiveModel::Serializer::Attribute)
         literal_property_attrs(serializer_attr, attrs)

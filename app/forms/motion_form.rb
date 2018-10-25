@@ -22,8 +22,8 @@ class MotionForm < FormsBase
 
   property_group :footer,
                  iri: NS::ONTOLA[:footerGroup],
-                 properties: %i[
-                   creator
+                 properties: [
+                   creator: actor_selector
                  ]
 
   class << self

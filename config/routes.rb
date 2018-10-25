@@ -180,7 +180,7 @@ Rails.application.routes.draw do
 
   get '/settings', to: 'users#settings', as: 'settings_user'
   put '/settings', to: 'users#update'
-  get '/c_a', to: 'current_actors#show', as: 'current_actor'
+  get '/c_a', to: 'actors#show', as: 'current_actor'
   put 'persist_cookie', to: 'static_pages#persist_cookie'
 
   # @deprecated Please use info_controller. Kept for cached searches etc. do
@@ -259,6 +259,7 @@ Rails.application.routes.draw do
     end
 
     scope ':root_id' do
+      resources :actors, only: :index
       resources :arguments, only: %i[show], path: 'a'
       %i[pro_arguments con_arguments].each do |model|
         resources model,
