@@ -63,7 +63,7 @@ class ArgumentsController < EdgeableController
 
   def show_includes
     super + [
-      operation: action_form_includes,
+      operation: {},
       comment_collection: inc_shallow_collection
     ]
   end

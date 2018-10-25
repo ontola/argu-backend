@@ -31,7 +31,7 @@ class BlogPostsController < EdgeableController
 
   def show_includes
     super + [
-      operation: action_form_includes,
+      operation: {},
       attachment_collection: inc_nested_collection,
       comment_collection: inc_shallow_collection
     ]

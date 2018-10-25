@@ -17,7 +17,7 @@ class QuestionsController < EdgeableController
   def show_includes
     super + [
       partOf: [widget_sequence: :members],
-      operation: action_form_includes,
+      operation: {},
       attachment_collection: inc_nested_collection,
       motion_collection: inc_shallow_collection,
       comment_collection: inc_shallow_collection,
