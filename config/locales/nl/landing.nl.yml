@@ -1,24 +1,46 @@
 nl:
   landing:
     header:
-      title: "Betrek mensen bij het nemen van beslissingen"
-      body: "Creëer draagvlak en voorkom teleurstellingen. Benut de kennis en creativiteit van uw doelgroep om samen betere besluiten te nemen."
+      title: Beslis samen beter
+    triad:
+      header: Betrokken bij de gehele beleidscyclus
+      identify:
+        name: Identificeren
+        header: Ontdek belangrijke problemen
+        body: Stel vragen om te leren welke problemen mensen ervaren. Zet belangrijke problemen om in uitdagingen.
+      cocreate:
+        name: Co-creëeren
+        header: Verzamel goede ideeën
+        body: Leg de uitdagingen voor aan je doelgroep. Zo voelen zij zich betrokken, en zo kan jij goed geïnformeerd beslissen.
+      decide:
+        name: Beslissen
+        header: Beslis beter
+        body: Houdt de discussie overzichtelijk en inhoudelijk met argumenten. Laat mensen stemmen en neem een goed onderbouwd besluit.
+      next: Volgende
+      back: Opnieuw
     concept:
+      surveys:
+        header: "Ontdek belangrijke problemen"
+        custom_title: "Op maat gemaakte enquêtes"
+        custom_body: "We maken vragenlijsten in de huisstijl van jouw organisatie."
+        guidance_title: "Persoonlijke begeleiding"
+        guidance_body: "Onze experts denken van begin tot eind met je mee voor het beste resultaat."
+        challenge_title: "Van probleem naar uitdaging"
+        challenge_body: "Ga van gesloten vragen naar co-creatie."
+        example: "Hoe tevreden bent u met X?"
       challenges:
         header: "Verzamel goede ideeën"
-        body: "Laat mensen van binnen of van buiten uw organisatie meedenken over uitdagingen."
-        crowdsource_innovation_title: "Crowdsource innovatie"
-        crowdsource_innovation_body: "Benut de creativiteit van uw doelgroep en geef ze de kans om hun eigen ideeën te delen."
-        invite_title: "Oplossingsgerichte discussies"
-        invite_body: "Onze discussiestructuur is ontworpen om van vragen toe te werken naar uitvoerbare oplossingen."
-        reward_title: "Prijsvragen"
-        reward_body: "Haal nog meer en betere ideeën op door een beloning uit te keren."
-        example: "Hoe lossen we probleem X op?"
+        crowdsource_innovation_title: "Verzamel ideeën"
+        crowdsource_innovation_body: "Benut de creativiteit van je doelgroep."
+        structure_title: "Oplossingsgerichte discussies"
+        structure_body: "Onze discussiestructuur is ontworpen om van vragen toe te werken naar uitvoerbare oplossingen."
+        reward_title: "Laagdrempelig"
+        reward_body: "Meedoen kan anoniem en zonder ingewikkeld registratieproces."
+        example: "Hoe lossen we probleem Y op?"
       ideas:
         header: "Beargumenteerd besluiten"
-        body: "Bespreek de voor- en nadelen van voorstellen en krijg inzicht in draagvlak. Neem digitaal uw besluit, zodat iedereen weet wat er besloten is."
         arguments_title: "Argumenten"
-        arguments_body: "Krijg een helder overzicht van de belangrijkste voor- en tegenargumenten."
+        arguments_body: "Krijg per idee een helder overzicht van de belangrijkste voor- en tegenargumenten."
         voting_title: "Stemmen"
         voting_body: "Deelnemers kunnen stemmen op ideeën en argumenten."
         decide_title: "Transparant beslissen"
@@ -55,7 +77,7 @@ nl:
         case_preview: "Denk mee over de nieuwe Maliebaan!"
     features:
       header: "Functionaliteiten"
-      body: "Wij hosten Argu en blijven het ontwikkelen, zodat u altijd over de nieuwste mogelijkheden beschikt."
+      body: "Wij hosten Argu en blijven het ontwikkelen, zodat je altijd over de nieuwste mogelijkheden beschikt."
       soon: "Binnenkort"
       locations:
         title: "Kaarten"

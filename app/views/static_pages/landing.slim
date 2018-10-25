@@ -8,43 +8,134 @@
     .landing__hero__overlay
     .landing__hero__content
       h1.landing__hero__header= t('landing.header.title')
-      a.landing__button[href="mailto:info@argu.co"]= t('landing.c2a.ask_demo')
-      / ul.landing__hero__list
-      /   li.landing__hero__item
-      /     a[href='#product'] product
-      /   li.landing__hero__item
-      /     a[href='#werkwijze'] werkwijze
-      /   li.landing__hero__item
-      /     a[href='#features'] functionaliteiten
-      /   li.landing__hero__item
-      /     a[href='#projecten'] projecten
-      /   li.landing__hero__item
-      /     a[href='#vragen'] veelgestelde vragen
+      .landing__hero-carousel#hero-carousel
+        img.landing__hero-carousel--current[src=asset_path("landing/screenshot1.jpg")]
+        img[src=asset_path("landing/screenshot2.jpg")]
+        img[src=asset_path("landing/screenshot3.jpg")]
+        img[src=asset_path("landing/screenshot4.jpg")]
+  .landing__block.landing__block--grey#triad
+    .landing__block__container
+      .landing__column.landing__column--narrower
+        h2.landing__block__header= t('landing.triad.header')
+        .landing__triad
+          .landing__triad-button.landing__triad-item.landing__triad-item--identify[data-triad="identify"]
+            .landing__triad-icon.fa.fa-search
+            .landing__triad-text= t('landing.triad.identify.name')
+            .landing__triad-arrow.landing__triad-arrow-right
+          .landing__triad-button.landing__triad-item.landing__triad-item--cocreate[data-triad="cocreate"]
+            .landing__triad-arrow.landing__triad-arrow--left
+            .landing__triad-icon.fa.fa-lightbulb-o
+            .landing__triad-text= t('landing.triad.cocreate.name')
+            .landing__triad-arrow.landing__triad-arrow-right
+          .landing__triad-button.landing__triad-item.landing__triad-item--decide[data-triad="decide"]
+            .landing__triad-arrow.landing__triad-arrow--left
+            .landing__triad-icon.fa.fa-balance-scale
+            .landing__triad-text= t('landing.triad.decide.name')
+            .landing__triad-arrow.landing__triad-arrow-right
+        .landing__current-triad.landing__show-identify#triad-block
+          .landing__triad-sharkfin
+          .landing__select.landing__select--identify
+            .landing__triad-background.fa.fa-search
+            h2.landing__current-triad-header= t('landing.triad.identify.header')
+            p.landing__current-triad-body= t('landing.triad.identify.body')
+            button.landing__triad-button.landing__button[data-triad="cocreate"]=t('landing.triad.next')
+          .landing__select.landing__select--cocreate
+            .landing__triad-background.fa.fa-lightbulb-o
+            h2.landing__current-triad-header= t('landing.triad.cocreate.header')
+            p.landing__current-triad-body= t('landing.triad.cocreate.body')
+            button.landing__triad-button.landing__button[data-triad="decide"]=t('landing.triad.next')
+          .landing__select.landing__select--decide
+            .landing__triad-background.fa.fa-balance-scale
+            h2.landing__current-triad-header= t('landing.triad.decide.header')
+            p.landing__current-triad-body= t('landing.triad.decide.body')
+            button.landing__triad-button.landing__button[data-triad="identify"]=t('landing.triad.back')
+          .landing__current-triad-animation
+            .landanim-bar.landanim-bar-2.landanim-challenge
+            .landanim-identify
+              .landanim-circle.landanim-circle-1
+              .landanim-circle.landanim-circle-2
+              .landanim-circle.landanim-circle-3
+              .landanim-circle.landanim-circle-4
+              .landanim-bar.landanim-bar-1
+              .landanim-bar.landanim-bar-3
+              .landanim-bar.landanim-bar-4
+            .landanim-motionbox.landanim-motionbox-2.landanim-motion
+            .landanim-cocreate
+              .landanim-motionbox.landanim-motionbox-1
+              .landanim-motionbox.landanim-motionbox-2.landanim-motion
+              .landanim-motionbox.landanim-motionbox-3
+            .landanim-decide
+              .landanim-pro.landanim-pro-1
+              .landanim-pro.landanim-pro-2
+              .landanim-pro.landanim-pro-3
+              .landanim-con.landanim-con-1
+              .landanim-con.landanim-con-2
   .landing__block#product
     .landing__block__container
       .landing__column
-          h2.landing__block__header= t('landing.concept.challenges.header')
-          p.landing__block-description= t('landing.concept.challenges.body')
-          ul.landing__feature-list
-            li.landing__feature
-              h3.landing__feature-heading
-                span.fa.fa-lightbulb-o
-                span= t('landing.concept.challenges.crowdsource_innovation_title')
-              p.landing__feature-body= t('landing.concept.challenges.crowdsource_innovation_body')
-            li.landing__feature
-              h3.landing__feature-heading
-                span.fa.fa-comments-o
-                span= t('landing.concept.challenges.invite_title')
-              p.landing__feature-body= t('landing.concept.challenges.invite_body')
-            li.landing__feature
-              h3.landing__feature-heading
-                span.fa.fa-trophy
-                span= t('landing.concept.challenges.reward_title')
-              p.landing__feature-body= t('landing.concept.challenges.reward_body')
+        .landing__triad-item.landing__triad-item--identify[data-triad="identify"]
+          .landing__triad-icon.fa.fa-search
+          .landing__triad-text= t('landing.triad.identify.name')
+          .landing__triad-arrow.landing__triad-arrow-right
+        ul.landing__feature-list
+          li.landing__feature
+            h3.landing__feature-heading
+              span.fa.fa-pencil-square-o
+              span= t('landing.concept.surveys.custom_title')
+            p.landing__feature-body= t('landing.concept.surveys.custom_body')
+          li.landing__feature
+            h3.landing__feature-heading
+              span.fa.fa-handshake-o
+              span= t('landing.concept.surveys.guidance_title')
+            p.landing__feature-body= t('landing.concept.surveys.guidance_body')
+          li.landing__feature
+            h3.landing__feature-heading
+              span.fa.fa-puzzle-piece
+              span= t('landing.concept.surveys.challenge_title')
+            p.landing__feature-body= t('landing.concept.surveys.challenge_body')
       .landing__column.landing__column--fixed-height
         .box.landing-box
-          .box-image--container
-            .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
+          section
+            h3= t('landing.concept.surveys.example')
+            ul.box-list.box-list--icons[data-scroll data-scroll-class="landing__visible"]
+              li
+                h3
+                  span.fa.fa-circle-o
+                  span.landing-filler-bar.li-survey-1.icon-left[style="width:20%;"]
+              li
+                h3
+                  span.fa.fa-circle-o
+                  span.landing-filler-bar.li-survey-2.icon-left[style="width:15%;"]
+              li
+                h3
+                  span.fa.fa-circle-o
+                  span.landing-filler-bar.li-survey-3.icon-left[style="width:25%;"]
+  .landing__block
+    .landing__block__container
+      .landing__column
+        .landing__triad-item.landing__triad-item--cocreate[data-triad="cocreate"]
+          .landing__triad-arrow.landing__triad-arrow--left
+          .landing__triad-icon.fa.fa-lightbulb-o
+          .landing__triad-text= t('landing.triad.cocreate.name')
+          .landing__triad-arrow.landing__triad-arrow-right
+        ul.landing__feature-list
+          li.landing__feature
+            h3.landing__feature-heading
+              span.fa.fa-lightbulb-o
+              span= t('landing.concept.challenges.crowdsource_innovation_title')
+            p.landing__feature-body= t('landing.concept.challenges.crowdsource_innovation_body')
+          li.landing__feature
+            h3.landing__feature-heading
+              span.fa.fa-rocket
+              span= t('landing.concept.challenges.reward_title')
+            p.landing__feature-body= t('landing.concept.challenges.reward_body')
+          li.landing__feature
+            h3.landing__feature-heading
+              span.fa.fa-comments-o
+              span= t('landing.concept.challenges.structure_title')
+            p.landing__feature-body= t('landing.concept.challenges.structure_body')
+      .landing__column.landing__column--fixed-height
+        .box.landing-box
           section
             h3.question-t= t('landing.concept.challenges.example')
             span.landing-filler-bar
@@ -52,22 +143,25 @@
             span.landing-filler-bar[style="width:30%;"]
             ul.box-list.box-list--icons[data-scroll data-scroll-class="landing__visible"]
               li.li-question-1.animate
-                h3.motion-t
+                h3.landing-motion-t
                   span.fa.fa-lightbulb-o
-                  span.landing-filler-bar.motion-bg.icon-left[style="width:50%;"]
+                  span.landing-filler-bar.landing-motion-bg.icon-left[style="width:50%;"]
               li.li-question-2.animate
-                h3.motion-t
+                h3.landing-motion-t
                   span.fa.fa-lightbulb-o
-                  span.landing-filler-bar.motion-bg.icon-left[style="width:60%;"]
+                  span.landing-filler-bar.landing-motion-bg.icon-left[style="width:60%;"]
               li.li-question-3.animate
-                h3.motion-t
+                h3.landing-motion-t
                   span.fa.fa-lightbulb-o
-                  span.landing-filler-bar.motion-bg.icon-left[style="width:65%;"]
+                  span.landing-filler-bar.landing-motion-bg.icon-left[style="width:65%;"]
   .landing__block
     .landing__block__container
       .landing__column
-        h2.landing__block__header= t('landing.concept.ideas.header')
-        p.landing__block-description= t('landing.concept.ideas.body')
+        .landing__triad-item.landing__triad-item--decide[data-triad="decide"]
+          .landing__triad-arrow.landing__triad-arrow--left
+          .landing__triad-icon.fa.fa-balance-scale
+          .landing__triad-text= t('landing.triad.decide.name')
+          .landing__triad-arrow.landing__triad-arrow-right
         ul.landing__feature-list
           li.landing__feature
             h3.landing__feature-heading
@@ -88,10 +182,8 @@
             p.landing__feature-body= t('landing.concept.ideas.decide_body')
       .landing__column.landing__column--fixed-height
         .box.landing-box
-          .box-image--container
-            .box-image.bg-img.b-lazy[data-src=asset_path('new-discussion-motion-cover.jpg')]
           section[data-scroll data-scroll-class="landing__visible"]
-            h3.motion-t= t('landing.concept.ideas.example')
+            h3.landing-motion-t= t('landing.concept.ideas.example')
             .detailsBar.li-motion-4.animate.landing__detail-decision
               .detail.detail--decision--approved
                 .detail__icon
@@ -101,28 +193,28 @@
             span.landing-filler-bar[style="width:60%;"]
             ul.box-list.box-list--arguments.box-list--icons
               li.li-motion-1.animate
-                h3.pro-t
+                h3.landing-pro-t
                   span.fa.fa-plus
-                  span.landing-filler-bar.pro-bg.icon-left[style="width:50%;"]
+                  span.landing-filler-bar.landing-pro-bg.icon-left[style="width:50%;"]
               li.li-motion-2.animate
-                h3.pro-t
+                h3.landing-pro-t
                   span.fa.fa-plus
-                  span.landing-filler-bar.pro-bg.icon-left[style="width:60%;"]
+                  span.landing-filler-bar.landing-pro-bg.icon-left[style="width:60%;"]
             ul.box-list.box-list--arguments.box-list--icons
               li.li-motion-3.animate
-                h3.con-t
+                h3.landing-con-t
                   span.fa.fa-minus
-                  span.landing-filler-bar.con-bg.icon-left[style="width:45%;"]
+                  span.landing-filler-bar.landing-con-bg.icon-left[style="width:45%;"]
   .landing__block.landing__block--grey
     .landing__block__container
       .landing__column.landing__column--header
         .landing__block__just-text
           h2.landing__block__header= t('landing.cases.header')
           p= t('landing.cases.body')
-      =render partial: 'static_pages/components/case', locals: {id: 'hollandskroon', link: "https://argu.co/q/619"}
-      =render partial: 'static_pages/components/case', locals: {id: 'utrecht', link: "https://argu.co/q/675"}
-      =render partial: 'static_pages/components/case', locals: {id: 'heerenveen', link: "https://argu.co/m/2152"}
-      =render partial: 'static_pages/components/case', locals: {id: 'rochdale', link: "https://argu.co/q/638"}
+      =render partial: 'static_pages/components/case', locals: {id: 'hollandskroon'}
+      =render partial: 'static_pages/components/case', locals: {id: 'utrecht'}
+      =render partial: 'static_pages/components/case', locals: {id: 'heerenveen'}
+      =render partial: 'static_pages/components/case', locals: {id: 'rochdale'}
   .landing__block
     .landing__block__container
       .landing__column
@@ -141,7 +233,7 @@
           =render partial: 'static_pages/components/feature', locals: {type: 'deadlines'}
           =render partial: 'static_pages/components/feature', locals: {type: 'data'}
           / =render partial: 'static_pages/components/feature', locals: {type: 'auditing'}
-          =render partial: 'static_pages/components/feature', locals: {type: 'branding', soon: true}
+          =render partial: 'static_pages/components/feature', locals: {type: 'branding'}
           =render partial: 'static_pages/components/feature', locals: {type: 'opendata', soon: true}
           =render partial: 'static_pages/components/feature', locals: {type: 'blockchain', soon: true}
           =render partial: 'static_pages/components/feature', locals: {type: 'blogging', soon: true}
@@ -170,28 +262,6 @@
             li
               h3= t('landing.method.step5.title')
               p= t('landing.method.step5.body')
-  / .landing__block.landing__block--grey
-  /   .landing__column#voorbeelden
-  /     h2.landing__block__header Voorbeelden
-  /     .landing__projects
-  /       .box.landing__project
-  /         .box-image--container
-  /           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-  /         section
-  /           h3.landing__project__title Locatie voor AZC
-  /           p.landing__project__description De gemeente Hollands Kroon vroeg haar inwoners om mee te denken over een geschikte locatie voor het AZC. Meer dan 2000 inwoners van de gemeente hebben via Argu inspraak gehad.
-  /       .box.landing__project
-  /         .box-image--container
-  /           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-  /         section
-  /           h3.landing__project__title Verbouwing kerkplein
-  /           p.landing__project__description De gemeente Hollands Kroon vroeg haar inwoners om mee te denken over een geschikte locatie voor het AZC. Meer dan 2000 inwoners van de gemeente hebben via Argu inspraak gehad.
-  /       .box.landing__project
-  /         .box-image--container
-  /           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-  /         section
-  /           h3.landing__project__title Bouw Hotel
-  /           p.landing__project__description De gemeente Hollands Kroon vroeg haar inwoners om mee te denken over een geschikte locatie voor het AZC. Meer dan 2000 inwoners van de gemeente hebben via Argu inspraak gehad.
   .landing__block
     .landing__block__container
       .landing__column#vragen

@@ -1,21 +1,44 @@
 en:
   landing:
     header:
-      title: "Involve people in decision making"
+      title: Make better decisions
+    triad:
+      header: Engaged throughout your entire decision making process
+      identify:
+        name: Identify
+        header: Discover important problems
+        body: Ask questions to learn which issues people experience. Turn problems into challenges.
+      cocreate:
+        name: Co-create
+        header: Gather great ideas
+        body: Present your challenges to your target group. They will feel more engaged, and you can make more informed decisions.
+      decide:
+        name: Decide
+        header: Make better decisions
+        body: Keep your discussions civil and structured with pros and cons. Let people vote and make an informed decision.
+      next: Next
+      back: Again
     concept:
+      surveys:
+        header: "Discover important problems"
+        custom_title: "Custom made surveys"
+        custom_body: "We make surveys that fit your corporate identity."
+        guidance_title: "Consulting"
+        guidance_body: "Our experts stick with you for the best possible result."
+        challenge_title: "From problem to challenge"
+        challenge_body: "Turn closed questions into inspiring competitions."
+        example: "How satisfied are you with X?"
       challenges:
         header: "Gather great ideas"
-        body: "Allow people from inside or outside of your organisation to help solve the challenges that you face."
         crowdsource_innovation_title: "Crowdsource innovation"
         crowdsource_innovation_body: "Use the creativity of your audience and let them share their own ideas."
-        invite_title: "Solution-oriented discussions"
-        invite_body: "Our discussion struture is designed to work from questions to practical proposals."
-        reward_title: "Contests"
-        reward_body: "Collect even more and better ideas by setting rewards."
-        example: "How do we solve problem X?"
+        structure_title: "Solution-oriented discussions"
+        structure_body: "Our discussion structure is designed to convert questions to actionable suggestions."
+        reward_title: "Easy to use"
+        reward_body: "Engaging is simple and does not require a complicated registration process."
+        example: "How do we solve problem Y?"
       ideas:
         header: "Argued decision making"
-        body: "Discuss the pros and cons of proposals and gain insight in support."
         arguments_title: "Arguments"
         arguments_body: "Get a clear overview of the most important advantages and problems of ideas."
         voting_title: "Voting"

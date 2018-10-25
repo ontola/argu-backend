@@ -1,5 +1,5 @@
 .landing__case__wrapper
-  a.landing__case__text[href="#{link}"]
+  a.landing__case__text
     .landing__column.landing__case.landing__case__box
       .box.landing-box
         .box-image--container
@@ -11,7 +11,6 @@
     p.landing__case__body
       =t("landing.cases.#{id}.body")
       span= ' '
-      a[href="#{link}"]= t('landing.cases.read_more')
     p.landing__case__metric= t("landing.cases.#{id}.metric1_html")
     p.landing__case__metric
       =t("landing.cases.#{id}.metric2_html")

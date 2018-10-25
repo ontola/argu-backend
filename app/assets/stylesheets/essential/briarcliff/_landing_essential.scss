@@ -1,47 +1,94 @@
 @import "variables";
 
+$identify: $blu;
+$cocreate: #3D80A7;
+$decide: #60a9bf;
+
+$newpro: #7cc07e;
+$newcon: #c66060;
+
+.landing-motion-t {
+  color: $cocreate !important;
+}
+
+.landing-motion-bg {
+  background-color: $cocreate !important;
+}
+
+.landing-pro-t {
+  color: $newpro !important;
+}
+
+.landing-pro-bg {
+  background-color: $newpro !important;
+}
+
+.landing-con-t {
+  color: $newcon !important;
+}
+
+.landing-con-bg {
+  background-color: $newcon !important;
+}
+
+$grey-background: #f7f7f7;
+
 .landing__wrapper {
   background-color: white;
   margin-bottom: -3em;
 }
 
-.landing__hero__list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 1.5em;
-  margin-top: 5vh;
-}
-
-.landing__hero__item {
-  margin-left: 1em;
-  margin-right: 1em;
-  margin-bottom: 0.6em;
-
-  a {
-    opacity: .8;
-    color: white;
-  }
-}
-
 .landing__hero {
-  align-items: center;
   background-position: center;
-  background-size: cover;
   display: block;
   display: flex;
   height: 40em;
   height: 80vh;
   margin-top: -2em;
-  max-height: 900px;
+  max-height: 500px;
   min-height: 20em;
   position: relative;
-  text-align: center;
   width: 100%;
+
+  &__header {
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 30rem;
+    font-weight: 200;
+  }
+
+  .landing__button {
+    margin-left: 2rem;
+  }
+
+  &-carousel {
+    border: solid 10px #333333;
+    border-radius: 15px;
+    align-self: center;
+    justify-self: flex-end;
+    margin-right: 2rem;
+    margin-left: auto;
+    overflow: hidden;
+    width: 24rem;
+    height: 15rem;
+    position: relative;
+
+    img {
+      opacity: 0;
+      width: 100%;
+      position: absolute;
+      transition: 1s opacity;
+
+      &.landing__hero-carousel--current {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .landing__hero__overlay {
-  background-color: rgba(71,86,104,.5);
+  background-image: linear-gradient(120deg, $identify 5%, $cocreate 60%, $decide 105%);
   bottom: 0;
   left: 0;
   position: absolute;
@@ -52,7 +99,12 @@
 .landing__hero__content {
   z-index: 1;
   flex: 1;
-  padding-top: 20%;
+  display: flex;
+  max-width: 60rem;
+  margin: auto;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .landing__button-wrapper {
@@ -60,22 +112,35 @@
   display: flex;
 }
 
+$button-color: #d96833;
+
 .landing__button {
-  background-color: #d61f7c;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  line-height: normal;
+  -webkit-appearance: none;
+  background-color: $button-color;
   border-radius: 5px;
   color: white;
   padding: .5em 1em;
-}
+  font-size: 1rem;
+  cursor: pointer;
 
-.landing__hero__header {
-  color: white;
-  margin-bottom: 5%;
-  padding-left: 1em;
-  padding-right: 1em;
+  &:hover {
+    background-color: darken($button-color, 7);
+  }
+
+  &:active {
+    background-color: darken($button-color, 15);
+  }
 }
 
 .landing__block--grey {
-  background-color: #f7f7f7;
+  background-color: $grey-background;
   border-top: solid 1px #e2e2e2;
   border-bottom: solid 1px #e2e2e2;
 }
@@ -86,7 +151,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin: auto;
-  max-width: 60em;
+  max-width: 60rem;
 }
 
 .landing__block__image-bg {
@@ -131,6 +196,10 @@
   padding-top: 4em;
   min-width: 23em;
   max-width: 100%;
+}
+
+.landing__column--narrower {
+  max-width: 50rem;
 }
 
 .landing__column--header {
@@ -212,4 +281,566 @@
   position: relative;
   bottom: 0.3em;
   left: -0.1em;
+}
+
+.landing__triad {
+  display: flex;
+  margin-top: 2rem;
+  margin-right: 1.5rem;
+
+  &-sharkfin {
+    position: absolute;
+    top: -.7rem;
+    width: 0;
+    height: 0;
+    border-left: 1rem solid transparent;
+    border-right: 1rem solid transparent;
+    border-bottom: 1rem solid $identify;
+    left: 15%;
+    transition: .5s all;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    margin-right: .5rem;
+    height: 3rem;
+    flex: 1;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &--identify {
+      background-color: $identify;
+      z-index: 3;
+
+      .landing__triad-arrow {
+        border-left-color: $identify;
+      }
+
+      &:hover {
+        background-color: darken($identify, 5);
+
+        .landing__triad-arrow-right {
+          border-left-color: darken($identify, 5);
+        }
+      }
+
+      &:active {
+        background-color: darken($identify, 15);
+
+        .landing__triad-arrow-right {
+          border-left-color: darken($identify, 15);
+        }
+      }
+    }
+
+    &--cocreate {
+      background-color: $cocreate;
+      z-index: 2;
+
+      .landing__triad-arrow-right {
+        border-left-color: $cocreate;
+      }
+
+      &:hover {
+        background-color: darken($cocreate, 5);
+
+        .landing__triad-arrow-right {
+          border-left-color: darken($cocreate, 5);
+        }
+      }
+
+      &:active {
+        background-color: darken($cocreate, 15);
+
+        .landing__triad-arrow-right {
+          border-left-color: darken($cocreate, 15);
+        }
+      }
+    }
+
+    &--decide {
+      background-color: $decide;
+      z-index: 1;
+
+      .landing__triad-arrow-right{
+        border-left-color: $decide;
+      }
+
+      &:hover {
+        background-color: darken($decide, 5);
+
+        .landing__triad-arrow-right{
+          border-left-color: darken($decide, 5);
+        }
+      }
+
+      &:active {
+        background-color: darken($decide, 15);
+
+        .landing__triad-arrow-right{
+          border-left-color: darken($decide, 15);
+        }
+      }
+
+    }
+  }
+
+  &-background.fa {
+    position: absolute;
+    font-size: 7rem;
+    color: rgba(256,256,256,.2);
+    right: 13rem;
+    bottom: 1rem;
+  }
+
+  &-text {
+    font-weight: bold;
+  }
+
+  &-icon.fa {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    width: 2rem;
+  }
+
+  &-arrow {
+    position: absolute;
+    left: 99%;
+    width: 0;
+    height: 0;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+    border-left-width: 2rem;
+    border-left-style: solid;
+    z-index: 1;
+  }
+
+  .landing__triad-arrow--left {
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+    border-left-width: 2rem;
+    border-left-style: solid;
+    border-left-color: $grey-background;
+  }
+}
+
+.landing__current-triad {
+  margin-top: 1rem;
+  border-radius: 5px;
+  padding: 1rem;
+  display: flex;
+  transition: .5s background-color;
+  position: relative;
+
+  h2, p {
+    color: white;
+  }
+
+  p {
+    margin-bottom: 3rem;
+    font-size: 1.1em;
+  }
+
+  .landing__select {
+    display: none;
+    margin-right: 1rem;
+    flex-shrink: 1;
+  }
+
+  .landing__button {
+    position: absolute;
+    bottom: 1rem;
+  }
+
+  &.landing__show-identify {
+    background-color: $identify;
+    animation: animation-identify;
+
+    .landing__triad-sharkfin {
+      left: 15%;
+      border-bottom-color: $identify;
+    }
+
+    .landing__select--identify {
+      display: block;
+    }
+
+    .landanim-identify {
+      opacity: 1;
+    }
+
+    .landanim-bar-1 {
+      animation: 2s 1.4s both animation-bar-1;
+    }
+
+    .landanim-bar-2 {
+      top: 4rem;
+      transition: .5s opacity;
+      animation: 1s 3s both animation-challengecolor, 2.7s 1.8s both animation-bar-2;
+    }
+
+    .landanim-circle-2 {
+      animation: 1s 3s both animation-challengecolor;
+    }
+
+    .landanim-bar-3 {
+      animation: 2.2s 1s both animation-bar-3;
+    }
+
+    .landanim-bar-4 {
+      animation: 1.8s 2s both animation-bar-4;
+    }
+  }
+
+  &.landing__show-cocreate {
+    background-color: $cocreate;
+
+    .landing__triad-sharkfin {
+      left: 50%;
+      border-bottom-color: $cocreate;
+    }
+
+    .landing__select--cocreate {
+      display: block;
+    }
+
+    .landanim-cocreate {
+      opacity: 1;
+    }
+
+    .landanim-challenge {
+      background-color: $identify;
+      top: 1rem;
+      left: 2rem;
+      height: 2rem;
+      right: 2rem;
+      width: auto;
+      border-radius: 5px;
+    }
+
+    .landanim-motionbox-1 {
+      animation: .4s 1.4s both animation-appear;
+    }
+
+    .landanim-motionbox-2 {
+      animation: .4s 2s both animation-appear;
+    }
+
+    .landanim-motionbox-3 {
+      animation: .4s 2.6s both animation-appear;
+    }
+  }
+
+  &.landing__show-decide {
+    background-color: $decide;
+
+    .landing__triad-sharkfin {
+      left: 80%;
+      border-bottom-color: $decide;
+    }
+
+    .landanim-motion {
+      opacity: 1;
+      top: 1rem;
+      left: 2rem;
+      height: 2rem;
+      right: 2rem;
+      width: auto;
+      border-radius: 5px;
+    }
+
+    .landanim-challenge {
+      top: 0rem;
+      left: 2rem;
+      right: 2rem;
+      height: 0rem;
+      right: 2rem;
+      width: auto;
+      border-radius: 5px;
+    }
+
+    .landing__select--decide {
+      display: block;
+    }
+
+    .landanim-challenge {
+      opacity: 0;
+    }
+
+    .landanim-decide {
+      opacity: 1;
+    }
+
+    .landanim-pro-1 {
+      animation: .4s 1.4s both animation-appear;
+    }
+
+    .landanim-pro-2 {
+      animation: .4s 2.3s both animation-appear;
+    }
+
+    .landanim-pro-3 {
+      animation: .4s 3.2s both animation-appear;
+    }
+
+    .landanim-con-1 {
+      animation: .4s 1.8s both animation-appear;
+    }
+
+    .landanim-con-2 {
+      animation: .4s 2s both animation-appear;
+    }
+  }
+
+  &-animation {
+    border-radius: 5px;
+    margin-left: auto;
+    align-self: flex-start;
+    justify-self: flex-end;
+    position: relative;
+    height: 11rem;
+    width: 11rem;
+    background-color: white;
+    flex-shrink: 0;
+  }
+}
+
+.landanim {
+  position: relative;
+  transition: .5s opacity;
+
+  div {
+    position: absolute !important;
+  }
+
+  &-identify {
+    opacity: 0;
+    transition: .5s opacity;
+  }
+
+  &-cocreate {
+    transition: .5s opacity;
+    opacity: 0;
+  }
+
+  &-decide {
+    transition: .5s opacity;
+    opacity: 0;
+  }
+
+  &-circle, &-bar {
+    position: absolute;
+    height: 1rem;
+    background: #dddddd;
+    border-radius: 10px;
+  }
+
+  &-circle {
+    width: 1rem;
+    left: 2rem;
+  }
+
+  &-circle-1 {
+    top: 2rem;
+  }
+
+  &-circle-2 {
+    top: 4rem;
+  }
+
+  &-circle-3 {
+    top: 6rem;
+  }
+
+  &-circle-4 {
+    top: 8rem;
+  }
+
+  &-challenge {
+    transition: .5s all;
+    z-index: 1;
+  }
+
+  &-bar {
+    left: 4rem;
+    width: 1rem;
+  }
+
+  &-bar-1 {
+    top: 2rem;
+  }
+
+  &-bar-2 {
+    top: 4rem;
+  }
+
+  &-bar-3 {
+    top: 6rem;
+  }
+
+  &-bar-4 {
+    top: 8rem;
+  }
+
+  &-motionbox {
+    opacity: 0;
+    left: 2rem;
+    height: 1.5rem;
+    right: 2rem;
+    width: auto;
+    border-radius: 5px;
+    position: absolute;
+    background: $cocreate;
+  }
+
+  &-motionbox-1 {
+    top: 4rem;
+  }
+
+  &-motion {
+    transition: .5s all;
+    top: 6rem;
+  }
+
+  &-motionbox-3 {
+    top: 8rem;
+  }
+
+  &-pro, &-con {
+    opacity: 0;
+    height: 1.5rem;
+    width: auto;
+    border-radius: 5px;
+    position: absolute;
+  }
+
+  &-pro {
+    background: $newpro;
+    right: 6rem;
+    left: 1rem;
+  }
+
+  &-con {
+    right: 1rem;
+    left: 6rem;
+    background: $newcon;
+  }
+
+  &-pro-1 {
+    top: 4rem;
+  }
+
+  &-pro-2 {
+    top: 6rem;
+  }
+
+  &-pro-3 {
+    top: 8rem;
+  }
+
+  &-con-1 {
+    top: 4rem;
+  }
+
+  &-con-2 {
+    top: 6rem;
+  }
+}
+
+@keyframes animation-appear {
+  0%   {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes animation-bar-1 {
+  0%   {
+    width: 1rem;
+  }
+  100% {
+    width: 3.2rem;
+  }
+}
+
+
+@keyframes animation-bar-2 {
+  0%   {
+    width: 1rem;
+  }
+  100% {
+    width: 5rem;
+  }
+}
+
+
+@keyframes animation-bar-3 {
+  0%   {
+    width: 1rem;
+  }
+  100% {
+    width: 2rem;
+  }
+}
+
+@keyframes animation-bar-4 {
+  0%   {
+    width: 1rem;
+  }
+  100% {
+    width: 3rem;
+  }
+}
+
+@keyframes animation-challengecolor {
+  0%   {
+    background-color: #dddddd;
+  }
+  100% {
+    background-color: $identify;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .landing__hero__content {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .landing__hero-carousel {
+    margin-right: auto;
+  }
+
+  .landing__triad {
+    flex-direction: column;
+  }
+
+  .landing__triad-arrow--left {
+    display: none;
+  }
+
+  .landing__triad-sharkfin {
+    display: none;
+  }
+
+  .landing__current-triad {
+    flex-direction: column;
+  }
+
+  .landing__triad-background.fa {
+    bottom: 4rem;
+  }
 }

@@ -9,20 +9,6 @@
   }
 }
 
-.landing__hero {
-  background-image: image-url("landing/TweedeKamer.jpg");
-}
-
-.landing__button {
-  &:hover {
-    background-color: #e2398f;
-  }
-}
-
-.landing__block__image-bg {
-  background-image: image-url("landing/Motion.png");
-}
-
 @keyframes appear {
     0% {
       height: 0;
@@ -34,8 +20,50 @@
     }
 }
 
-.landing__visible .animate{
-  animation: appear .8s ease-out 0s 1 forwards;
+@keyframes grow-1 {
+  0% {
+    width: 20%;
+  }
+  100% {
+    width: 60%;
+  }
+}
+
+@keyframes grow-2 {
+  0% {
+    width: 15%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+@keyframes grow-3 {
+  0% {
+    width: 25%;
+  }
+  100% {
+    width: 30%;
+  }
+}
+
+// Animate when user element is in screen.
+.landing__visible {
+  .animate{
+    animation: appear .8s ease-out 0s 1 forwards;
+  }
+
+  .li-survey-1 {
+    animation: grow-1 1.8s ease-out 1.8s 1 both;
+  }
+
+  .li-survey-2 {
+    animation: grow-2 2.8s ease-out 1.5s 1 both;
+  }
+
+  .li-survey-3 {
+    animation: grow-3 2.2s ease-out 1s 1 both;
+  }
 }
 
 .landing-box {
