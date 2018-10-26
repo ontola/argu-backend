@@ -3,13 +3,7 @@
 module ChildHelper
   def child_instance(parent, klass)
     child = klass.new(child_attrs(parent, klass))
-    if child.is_a?(Edge)
-      child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
-      child.persisted_edge = parent.persisted_edge
-      grant_tree.cache_node(parent.persisted_edge) if respond_to?(:grant_tree)
-    else
-      child = klass.new(child_attrs(parent, klass))
-    end
+    prepare_edge_child(parent, child) if child.is_a?(Edge)
     child
   end
 
@@ -44,5 +38,12 @@ module ChildHelper
     else
       raw_klass <= Edge ? {parent: parent} : {}
     end
+  end
+
+  def prepare_edge_child(parent, child)
+    child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
+    child.persisted_edge = parent.persisted_edge
+    child.is_published = true
+    grant_tree.cache_node(parent.persisted_edge) if respond_to?(:grant_tree)
   end
 end
