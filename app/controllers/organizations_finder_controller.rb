@@ -32,7 +32,7 @@ class OrganizationsFinderController < AuthorizedController
   end
 
   def parent_from_linked_record(iri)
-    match = iri&.match(%r{#{Regexp.new argu_url}\/(.*)\/(.*)\/(lr|od)\/(.*)})
+    match = iri&.match(%r{#{Regexp.new Rails.application.config.frontend_url}\/(.*)\/(.*)\/(lr|od)\/(.*)})
     return if match.nil?
     Page
       .joins(shortname: {}, children: :shortname)

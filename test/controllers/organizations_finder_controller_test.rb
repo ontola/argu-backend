@@ -72,21 +72,21 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   end
 
   test 'guest should get show organization of deku iri' do
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/od/123"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/od/123", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
   end
 
   test 'guest should get show organization of linked_record' do
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
   end
 
   test 'guest should get show organization of linked_record collection' do
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123/votes"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123/votes", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
@@ -131,7 +131,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'user should get show organization of deku iri' do
     sign_in user
 
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/od/123"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/od/123", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
@@ -140,7 +140,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'user should get show organization of linked_record' do
     sign_in user
 
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
@@ -149,7 +149,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'user should get show organization of linked_record collection' do
     sign_in user
 
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123/votes"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/lr/123/votes", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
@@ -184,7 +184,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'administrator should get show organization of motion form' do
     sign_in administrator
 
-    get :show, params: {iri: argu_url("/#{argu.url}/m/#{motion.fragment}/edit"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/m/#{motion.fragment}/edit", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
@@ -193,7 +193,7 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
   test 'administrator should get show organization of forum settings' do
     sign_in administrator
 
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/settings"), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/settings", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)
