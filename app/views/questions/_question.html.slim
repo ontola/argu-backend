@@ -1,4 +1,4 @@
-.box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class=status_classes_for(question) data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
+.box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class=status_classes_for(question) data-created-at=question.published_at  data-updated-at=question.updated_at data-vote-count=0]
   - if question.default_cover_photo&.url.present?
     =link_to question, 'aria-hidden': true, tabindex: '-1'  do
       =render partial: 'application/box_image', locals: {media_object: question.default_cover_photo}
