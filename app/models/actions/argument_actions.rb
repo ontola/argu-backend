@@ -11,7 +11,8 @@ module Actions
       image: 'fa-arrow-up',
       url: -> { RDF::DynamicURI(vote_iri(resource, vote_action == :create ? current_vote : Vote.new)) },
       action_tag: -> { :"#{vote_action}_vote" },
-      http_method: -> { vote_action == :create ? :post : :delete }
+      http_method: -> { vote_action == :create ? :post : :delete },
+      favorite: true
     )
 
     private
