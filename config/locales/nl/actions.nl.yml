@@ -35,6 +35,11 @@ nl:
         label: "Omzetten"
         description: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
         submit: "Zet om"
+    direct_messages:
+      create:
+        label: "Verstuur bericht"
+        description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten Argu verder voeren."
+        submit: "Verstuur"
     pro_arguments:
       create_vote:
         submit: "Upvote"

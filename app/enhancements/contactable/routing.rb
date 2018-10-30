@@ -9,7 +9,7 @@ module Contactable
 
       def route_concerns(mapper)
         mapper.concern :contactable do
-          mapper.resources :direct_messages, path: :dm, only: [:new]
+          mapper.resources :direct_messages, path: :dm, only: %i[new create]
         end
       end
     end

@@ -4,13 +4,16 @@ require 'argu/api'
 
 class DirectMessage
   include ActiveModel::Model
+  include Ldable
+  include Iriable
   include ApplicationModel
-
-  enhance Createable
-
   include IRIHelper
 
-  attr_accessor :actor, :body, :email, :subject
+  enhance Actionable
+  enhance Createable
+
+  attr_accessor :actor, :body, :subject
+  attr_reader :email
   attr_writer :resource, :resource_iri
   validates :actor, presence: true
   validates :body, presence: true
@@ -19,8 +22,24 @@ class DirectMessage
   validates :resource_iri, presence: true
   validates :subject, presence: true
 
+  alias read_attribute_for_serialization send
+  delegate :root, to: :resource
+
   def edgeable_record
     resource
+  end
+
+  def identifier
+    "#{resource.identifier}_dm"
+  end
+
+  def iri_opts
+    {parent_iri: resource.iri_path}
+  end
+
+  def email=(value)
+    value = EmailAddress.find(URI(value).path.gsub('/email/', '')).email if value.include?('/email/')
+    @email = value
   end
 
   def new_record?

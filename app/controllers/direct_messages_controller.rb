@@ -3,6 +3,10 @@
 class DirectMessagesController < ParentableController
   private
 
+  def active_response_action(opts = {})
+    opts[:resource].action(user_context, :create)
+  end
+
   def create_execute
     authenticated_resource.assign_attributes(permit_params)
     authenticated_resource.actor = current_actor.actor

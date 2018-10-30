@@ -30,14 +30,15 @@ module SHACL
     end
 
     def sh_in
-      options = object.sh_in
-      return if options.blank?
-      options = options.call(object) if options.respond_to?(:call)
-      options.is_a?(Array) ? RDF::List[*options.map { |option| option.try(:iri) || option }] : options
+      options = sh_in_options
+      return options unless [Array, ActiveRecord::Relation].any? { |klass| options.is_a?(klass) }
+      RDF::List[*options.map { |option| option.try(:iri) || option }]
     end
 
     def sh_in_options
-      object.sh_in
+      options = object.sh_in
+      return if options.blank?
+      options.respond_to?(:call) ? options.call(object) : options
     end
   end
 end

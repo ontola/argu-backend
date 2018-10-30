@@ -176,7 +176,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     end
 
     def model_attribute(attr)
-      (model_class.attribute_alias(attr) || attr).to_sym
+      (model_class.try(:attribute_alias, attr) || attr).to_sym
     end
 
     def node_property_attrs(attr, attrs)
