@@ -10,6 +10,10 @@ module Actionable
                unless: :system_scope?,
                predicate: NS::SCHEMA[:potentialAction],
                graph: NS::LL[:add]
+      has_many :favorite_actions,
+               unless: :system_scope?,
+               predicate: NS::ARGU[:favoriteAction],
+               graph: NS::LL[:add]
 
       triples :action_methods
 
@@ -21,6 +25,10 @@ module Actionable
         triples = []
         actions&.each { |action| triples.append(action_triples(action)) } unless system_scope?
         triples
+      end
+
+      def favorite_actions
+        actions&.select(&:favorite)
       end
 
       private

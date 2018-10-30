@@ -6,6 +6,19 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   private
 
+  def action_delta(data, delta, iri, action, favorite)
+    [NS::SCHEMA[:potentialAction], favorite ? NS::ARGU[:favoriteAction] : nil].compact.each do |predicate|
+      data.push(
+        [
+          iri,
+          predicate,
+          ::RDF::DynamicURI("#{iri}/actions/#{action}"),
+          NS::LL[delta]
+        ]
+      )
+    end
+  end
+
   def active_response_success_message
     return super unless action_name == 'create'
     I18n.t('votes.alerts.success')
@@ -176,12 +189,8 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     else
       data = super
     end
-    data.push [
-      authenticated_resource.parent_iri,
-      NS::SCHEMA[:potentialAction],
-      ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/create_vote"),
-      NS::LL[:remove]
-    ]
+    action_delta(data, :remove, authenticated_resource.parent_iri, :create_vote, true)
+    data
   end
 
   def destroy_meta
@@ -200,17 +209,8 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         NS::LL[:replace]
       ]
     end
-    data.push [
-      authenticated_resource.parent_iri,
-      NS::SCHEMA[:potentialAction],
-      ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/destroy_vote"),
-      NS::LL[:remove]
-    ]
-    data.push [
-      authenticated_resource.parent_iri,
-      NS::SCHEMA[:potentialAction],
-      ::RDF::DynamicURI("#{authenticated_resource.parent_iri}/actions/create_vote"),
-      NS::LL[:add]
-    ]
+    action_delta(data, :remove, authenticated_resource.parent_iri, :destroy_vote, true)
+    action_delta(data, :add, authenticated_resource.parent_iri, :create_vote, true)
+    data
   end
 end
