@@ -27,6 +27,7 @@ class MotionsController < EdgeableController
   def show_includes
     super + [
       operation: {},
+      last_published_decision: {},
       partOf: [widget_sequence: :members],
       blog_post_collection: inc_shallow_collection,
       comment_collection: inc_shallow_collection,

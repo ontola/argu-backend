@@ -19,7 +19,7 @@ class MotionPolicy < EdgePolicy
   end
 
   def decide?
-    Pundit.policy(context, record.last_or_new_decision(true)).update?
+    record.state == 'pending' && Pundit.policy(context, record.last_or_new_decision(true)).update?
   end
 
   def invite?

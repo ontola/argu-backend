@@ -35,7 +35,7 @@ class MotionMenuList < MenuList
     menu_item(
       :take_decision,
       image: 'fa-gavel',
-      href: collection_iri(resource, :decisions),
+      href: afe_request? ? new_iri(resource, :decisions) : collection_iri(resource, :decisions),
       policy: :decide?
     )
   end

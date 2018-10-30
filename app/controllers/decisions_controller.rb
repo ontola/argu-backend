@@ -20,6 +20,16 @@ class DecisionsController < EdgeableController
            locals: {decision: authenticated_resource, decisionable: authenticated_resource.parent}
   end
 
+  def create_meta
+    data = super
+    data << [
+      authenticated_resource.parent.iri,
+      NS::ARGU[:decision],
+      authenticated_resource.iri
+    ]
+    data
+  end
+
   def edit_success_html
     authenticated_resource.argu_publication.draft! if authenticated_resource.argu_publication.blank?
 
@@ -82,6 +92,12 @@ class DecisionsController < EdgeableController
     super.merge(
       state: params[:state]
     )
+  end
+
+  def show_includes
+    super + [
+      operation: {}
+    ]
   end
 
   def show_success_html

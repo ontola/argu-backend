@@ -30,8 +30,11 @@ module NestedResourceHelper
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord, nil] A resource model if found
   def parent_from_params(opts = params)
-    return if parent_id_from_params(opts).blank?
-    resource_from_opts(id: parent_id_from_params(opts), class: parent_resource_class(opts), root_id: opts[:root_id])
+    return if parent_resource_param(opts).blank?
+    opts = opts.dup
+    opts[:class] = parent_resource_class(opts)
+    opts[:id] = opts.delete(parent_resource_param(opts))
+    resource_from_opts(opts)
   end
 
   # Extracts the resource id from a params hash

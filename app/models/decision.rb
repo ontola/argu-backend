@@ -26,6 +26,7 @@ class Decision < Edge
           inverse_of: :trackable,
           primary_key: :uuid
 
+  validates :description, length: {maximum: 5000}
   validate :correctly_forwarded, if: :forwarded?
   validates :state, presence: true
   parentable :motion

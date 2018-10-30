@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
 class DecisionSerializer < EdgeSerializer
-  attribute :content, predicate: NS::SCHEMA[:text]
+  attribute :description, predicate: NS::SCHEMA[:text]
+  attribute :state, predicate: NS::ARGU[:decisionState]
 end
