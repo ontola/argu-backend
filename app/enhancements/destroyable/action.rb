@@ -12,8 +12,15 @@ module Destroyable
         image: 'fa-close',
         url: -> { resource.iri(destroy: true) },
         http_method: :delete,
-        iri_template: :delete_iri
+        iri_template: :delete_iri,
+        favorite: -> { destroy_action_favorite }
       )
+    end
+
+    private
+
+    def destroy_action_favorite
+      resource.is_a?(Vote)
     end
   end
 end

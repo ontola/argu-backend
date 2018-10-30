@@ -21,7 +21,7 @@ module Createable
         form: -> { "#{result_class}Form".safe_constantize },
         iri_template: :new_iri,
         submit_label: -> { submit_label },
-        favorite: -> { favorite_action }
+        favorite: -> { create_action_favorite }
       )
     end
 
@@ -45,7 +45,7 @@ module Createable
       resource.iri
     end
 
-    def favorite_action
+    def create_action_favorite
       association.to_sym == :votes
     end
 
