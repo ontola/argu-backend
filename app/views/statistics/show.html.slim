@@ -1,6 +1,6 @@
-=set_title resource
+=set_title parent_resource
 .col-1
-  div= to_parent(resource)
+  div= to_parent(parent_resource)
 .col-1
   =header(header: t('statistics.header'))
   .col--motion
@@ -9,11 +9,12 @@
         .markdown[itemprop="text"]
           table
             tbody
-              - @statistics.each do |key, value|
-                - if value.positive?
-                  tr
-                    td[data-title=t("statistics.#{key}.tooltip")]= t("statistics.#{key}.label")
-                    td= value
+              - resource.observations.each do |observation|
+                - observation.measures.each do |measure, value|
+                  - if value.positive?
+                    tr
+                      td[data-title=measure.description]= measure.label
+                      td= value
           - additional_stats.each do |stats|
             h3= stats[:title]
             p= stats[:description]

@@ -53,6 +53,19 @@ class StatisticsTest < ActionDispatch::IntegrationTest
     assert_response 200
   end
 
+  test 'administrator should not get statistics of forum n3' do
+    sign_in administrator
+    get expand_uri_template(:statistics_iri, parent_iri: freetown.canonical_iri_path),
+        headers: argu_headers(accept: :n3)
+    assert_response 200
+  end
+
+  test 'administrator should not get statistics of motion n3' do
+    sign_in administrator
+    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri_path), headers: argu_headers(accept: :n3)
+    assert_response 200
+  end
+
   ####################################
   # As staff
   ####################################

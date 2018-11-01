@@ -17,16 +17,12 @@ module SHACL
     attribute :pattern, predicate: NS::SH[:pattern]
     attribute :sh_class, predicate: NS::SH[:class]
     attribute :sh_in, predicate: NS::SH[:in]
+    attribute :path, predicate: NS::SH[:path]
 
-    has_many :path, predicate: NS::SH[:path]
     has_many :sh_in_options
 
     def type
       NS::SH[:PropertyShape]
-    end
-
-    def path
-      object.path.respond_to?(:each) ? object.path : [Resource.for(object.path)]
     end
 
     def sh_in

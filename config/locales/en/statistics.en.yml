@@ -1,30 +1,30 @@
 en:
   statistics:
     header: "Statistics"
-    users:
+    users_count:
       label: "Involved users"
       tooltip: "The amount of users that voted or made a contribution."
-    votes:
+    votes_count:
       label: "Confirmed votes"
       tooltip: "The amount of votes for or against an idea."
-    unconfirmed_votes:
+    unconfirmed_votes_count:
       label: "Unconfirmed votes"
       tooltip: "The amount of votes for or against an idea that are unconfirmed."
-    questions:
+    questions_count:
       label: "Challenges"
       tooltip: "The amount of submitted challenges."
-    motions:
+    motions_count:
       label: "Ideas"
       tooltip: "The amount of submitted ideas."
-    arguments:
+    arguments_count:
       label: "Arguments"
       tooltip: "The amount arguments for or against an idea."
-    opinions:
+    opinions_count:
       label: "Opinions"
       tooltip: "The amount of opinions attached to votes."
-    comments:
+    comments_count:
       label: "Comments"
       tooltip: "The amount comments on arguments, ideas and challenges."
-    contributions:
+    contributions_count:
       label: "Contributions"
       tooltip: "All items with text. These are comments, ideas and arguments combined."
