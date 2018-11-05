@@ -1,6 +1,9 @@
 # Dutch argument translations
 
 nl:
+  ori_forums:
+    type: "Open data forum"
+    plural: "Open data forums"
   forums:
     resource_name: "Forum"
     type: "Forum"
