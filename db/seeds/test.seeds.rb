@@ -103,7 +103,7 @@ Doorkeeper::Application.create!(
 
 token = Doorkeeper::AccessToken.find_or_create_for(
   Doorkeeper::Application.argu,
-  User::COMMUNITY_ID,
+  User::SERVICE_ID,
   'service',
   Doorkeeper.configuration.access_token_expires_in,
   false
