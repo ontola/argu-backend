@@ -7,11 +7,29 @@ class LDParamsTest < ActionDispatch::IntegrationTest
   let!(:motion) { create(:motion, parent: freetown, creator: administrator.profile) }
   let(:administrator) { create_administrator(freetown) }
 
+  test 'post create draft motion' do
+    create_with_ld_params(
+      collection_iri_path(freetown, :motions),
+      Motion,
+      {'Motion.count' => 1, 'Publication.where("published_at IS NOT NULL").count' => 0},
+      'draft_motion.n3'
+    )
+  end
+
+  test 'post create motion with expiry' do
+    create_with_ld_params(
+      collection_iri_path(freetown, :motions),
+      Motion,
+      {'Motion.where(expires_at: DateTime.parse("2050-01-01T23:01:00.000Z")).count' => 1},
+      'motion_with_expiry.n3'
+    )
+  end
+
   test 'post create motion with cover photo as nquads' do
     create_with_ld_params(
       collection_iri_path(freetown, :motions),
       Motion,
-      {'Motion.count' => 1, 'MediaObject.count' => 1},
+      {'Motion.count' => 1, 'Publication.where("published_at IS NOT NULL").count' => 1, 'MediaObject.count' => 1},
       'motion_with_cover.n3',
       "<#{NS::LL['blobs/randomString']}>" => fixture_file_upload('cover_photo.jpg', 'image/jpg')
     )

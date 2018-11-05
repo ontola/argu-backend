@@ -1,0 +1,4 @@
+<http://purl.org/link-lib/targetResource> <http://schema.org/name> "Wat een motie" .
+<http://purl.org/link-lib/targetResource> <http://schema.org/text> "Zowaar een heus idee" .
+<http://purl.org/link-lib/targetResource> <https://argu.co/ns/core#arguPublication> _:n46 .
+_:n46 <https://argu.co/ns/core#draft> "1"^^<http://www.w3.org/2001/XMLSchema#boolean> .
