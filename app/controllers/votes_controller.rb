@@ -87,8 +87,16 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
+  def collection_includes(_member_includes = {})
+    super.merge(default_filtered_collections: inc_shallow_collection)
+  end
+
   def create_includes
     [:partOf, voteable: :actions]
+  end
+
+  def default_vote_event_id?
+    params[:vote_event_id] == VoteEvent::DEFAULT_ID
   end
 
   def index_success_html
@@ -127,12 +135,12 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def parent_from_params(opts = params)
-    return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
+    return super unless default_vote_event_id?
     super(opts.except(:vote_event_id))&.default_vote_event if parent_resource_key(opts.except(:vote_event_id))
   end
 
   def linked_record_parent(opts = params)
-    return super unless params[:vote_event_id] == VoteEvent::DEFAULT_ID
+    return super unless default_vote_event_id?
     super(opts.except(:vote_event_id))&.default_vote_event
   end
 
@@ -181,10 +189,14 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def create_meta
     data = []
     if authenticated_resource.parent.is_a?(VoteEvent)
-      parent_collection = index_collection.unfiltered
-      meta_replace_collection_count(data, index_collection.unfiltered)
-      parent_collection.default_filtered_collections.each do |filtered_collection|
-        meta_replace_collection_count(data, filtered_collection)
+      if default_vote_event_id?
+        replace_vote_event_meta(data)
+      else
+        parent_collection = index_collection.unfiltered
+        meta_replace_collection_count(data, index_collection.unfiltered)
+        parent_collection.default_filtered_collections.each do |filtered_collection|
+          meta_replace_collection_count(data, filtered_collection)
+        end
       end
     else
       data = super
@@ -212,5 +224,22 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     action_delta(data, :remove, authenticated_resource.parent_iri, :destroy_vote, true)
     action_delta(data, :add, authenticated_resource.parent_iri, :create_vote, true)
     data
+  end
+
+  def replace_vote_event_meta(data)
+    iri =
+      if parent_resource.parent.is_a?(LinkedRecord)
+        RDF::DynamicURI(parent_resource.iri.to_s.gsub('/lr/', '/od/').split('/vote_events/')[0])
+      else
+        parent_resource.iri
+      end
+    data.push(
+      [
+        iri,
+        NS::ARGU[:voteableVoteEvent],
+        parent_resource.iri,
+        NS::LL[:replace]
+      ]
+    )
   end
 end
