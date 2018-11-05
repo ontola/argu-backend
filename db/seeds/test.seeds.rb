@@ -58,13 +58,15 @@ public_group = FactorySeeder.create(
   name: 'Public group',
   name_singular: 'User'
 )
-public_membership =
-  CreateGroupMembership.new(
-    public_group,
-    attributes: {member: Profile.community},
-    options: {publisher: User.community, creator: Profile.community}
-  ).resource
-public_membership.save(validate: false)
+%i[community service anonymous].each do |user_type|
+  public_membership =
+    CreateGroupMembership.new(
+      public_group,
+      attributes: {member: Profile.send(user_type)},
+      options: {publisher: User.send(user_type), creator: Profile.send(user_type)}
+    ).resource
+  public_membership.save(validate: false)
+end
 FactorySeeder.create(:group_membership, parent: public_group, member: staff.profile)
 
 staff_group = FactorySeeder.create(
