@@ -76,7 +76,16 @@ class Place < ApplicationRecord
       result = JSON.parse(HTTParty.get(url).body).first
       return nil if result.nil?
       return find_by(nominatim_id: result['place_id']) if exists?(nominatim_id: result['place_id'])
-      new(
+      new(fetched_opts(result))
+    rescue JSON::ParserError
+      raise StandardError.new(error_message(error)) if Rails.env.production? || Rails.env.staging?
+      new
+    rescue OpenURI::HTTPError
+      raise StandardError.new(error_message(error))
+    end
+
+    def fetched_opts(result)
+      {
         nominatim_id: result['place_id'],
         licence: result['licence'],
         osm_type: result['osm_type'],
@@ -93,9 +102,7 @@ class Place < ApplicationRecord
         extratags: result['extratags'],
         namedetails: result['namedetails'],
         zoom_level: (result['importance'].to_f * 10 + 3).round || DEFAULT_ZOOM_LEVEL
-      )
-    rescue OpenURI::HTTPError => error
-      raise StandardError.new(error_message(error))
+      }
     end
 
     # Converts the provided params to an OSM url to fetch a {Place}
