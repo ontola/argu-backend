@@ -25,4 +25,12 @@ class Portal::ForumsController < EdgeableController
       parent: parent_resource!
     )
   end
+
+  def signals_failure
+    super + [:"#{action_name}_ori_forum_failed"]
+  end
+
+  def signals_success
+    super + [:"#{action_name}_ori_forum_successful"]
+  end
 end

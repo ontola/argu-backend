@@ -372,6 +372,24 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_equal 1, Forum.last.placements.first.lon
   end
 
+  test 'staff should post create forum json_api' do
+    sign_in :service
+
+    assert_difference('Forum.count' => 1) do
+      post portal_forums_path, params: {
+        forum: {
+          name: 'New forum',
+          locale: 'en-GB',
+          url: 'new_forum',
+          public_grant: :participator,
+          owner_type: :ORIForum
+        },
+        page_id: argu.url
+      }, headers: argu_headers(accept: :json_api)
+    end
+    assert_response 201
+  end
+
   test 'creator should put update forum change latlon' do
     sign_in staff
     forum_with_placement
