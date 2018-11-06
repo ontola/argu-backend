@@ -38,7 +38,6 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
       @actions[service_action] = resource.public_send(service_method)
       after_save if @actions[service_action]
       publish_success_signals
-      broadcast_event if @actions[service_action]
     end
   rescue ActiveRecord::ActiveRecordError => e
     raise(e) if e.is_a?(ActiveRecord::StatementInvalid)
@@ -77,10 +76,6 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   def assign_attributes
     resource.assign_attributes(@attributes)
-  end
-
-  def broadcast_event
-    DataEvent.publish(resource)
   end
 
   def placements_attributes

@@ -8,6 +8,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance Menuable
   enhance Actionable
 
+  include Broadcastable
   include RedirectHelper
   include Iriable
   include Ldable
@@ -67,7 +68,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   before_save :adjust_birthday, if: :birthday_changed?
   before_create :skip_confirmation_notification!
   before_create :build_public_group_membership
-  after_commit :publish_data_event, if: :should_broadcast_changes
 
   attr_accessor :current_password
 
@@ -296,10 +296,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       ]
     end
     changes
-  end
-
-  def publish_data_event
-    DataEvent.publish(self)
   end
 
   def has_password?

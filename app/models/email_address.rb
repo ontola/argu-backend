@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class EmailAddress < ApplicationRecord
+  include Broadcastable
   include Parentable
   include RedisResourcesHelper
   include Ldable
@@ -12,7 +13,6 @@ class EmailAddress < ApplicationRecord
   before_save :remove_other_primaries
   before_save { |user| user.email = email.downcase if email.present? }
   before_update :send_confirmation_instructions, if: :email_changed?
-  after_commit :publish_data_event
   parentable :user
   self.default_sortings = [{key: NS::SCHEMA[:email], direction: :asc}]
 
@@ -60,10 +60,6 @@ class EmailAddress < ApplicationRecord
 
   def postpone_email_change?
     false
-  end
-
-  def publish_data_event
-    DataEvent.publish(self)
   end
 
   # Sends a mail with confirmation instructions for secondary emails

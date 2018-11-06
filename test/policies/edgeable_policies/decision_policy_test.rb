@@ -22,7 +22,7 @@ class DecisionPolicyTest < PolicyTest
            forwarded_group_id: group.id)
   end
   let(:approve_forwarded_subject) do
-    Decision.approved.new(parent: motion, publisher: creator)
+    Decision.approved.new(parent: motion.reload, publisher: creator)
   end
 
   generate_edgeable_tests

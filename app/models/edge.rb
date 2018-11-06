@@ -7,6 +7,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   define_model_callbacks :untrash, only: :after
   define_model_callbacks :convert
 
+  include Broadcastable
   include Ldable
   include Edgeable::ClassMethods
   include Edgeable::CounterCache

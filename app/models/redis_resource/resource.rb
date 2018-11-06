@@ -49,7 +49,6 @@ module RedisResource
       store_in_redis
       resource.parent.save! if resource.parent.new_record?
       resource.persisted? ? resource.save!(skip_redis: true) : resource.run_callbacks(:redis_save)
-      DataEvent.publish(resource)
     end
 
     private
