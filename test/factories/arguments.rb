@@ -12,6 +12,7 @@ FactoryBot.define do
 
     factory :con_argument do
       owner_type 'ConArgument'
+      pro false
     end
   end
 end
