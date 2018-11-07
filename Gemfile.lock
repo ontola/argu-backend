@@ -469,7 +469,7 @@ GEM
     puma (3.11.0)
     pundit (1.0.1)
       activesupport (>= 3.0.0)
-    rack (2.0.5)
+    rack (2.0.6)
     rack-attack (4.3.1)
       rack
     rack-contrib (2.0.1)
@@ -591,7 +591,7 @@ GEM
     ruby-ole (1.2.12.1)
     ruby-progressbar (1.9.0)
     ruby-vips (0.3.14)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     safe_yaml (1.0.4)
     sass (3.4.18)
     sass-rails (5.0.7)
