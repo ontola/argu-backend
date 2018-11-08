@@ -8,14 +8,6 @@ GIT
       rails (~> 5.0)
 
 GIT
-  remote: https://github.com/ArthurWD/omniauth-facebook
-  revision: 90671b291679b37a0560463521d8694308af859b
-  ref: 90671
-  specs:
-    omniauth-facebook (4.0.0)
-      omniauth-oauth2 (~> 1.2)
-
-GIT
   remote: https://github.com/allenwq/devise-multi_email
   revision: c38230c02f5b8e8e4f07bb2bcff7ef16f79bf480
   ref: c3823
@@ -441,6 +433,8 @@ GEM
     omniauth (1.6.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
+    omniauth-facebook (5.0.0)
+      omniauth-oauth2 (~> 1.2)
     omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
@@ -803,7 +797,7 @@ DEPENDENCIES
   nokogiri (~> 1.8.3)
   oauth2 (~> 1.2.0)
   omniauth (~> 1.6.1)
-  omniauth-facebook (~> 4.0.0)!
+  omniauth-facebook (~> 5.0.0)
   omniauth-oauth2 (~> 1.4.0)
   omniauth-twitter (~> 1.2.0)
   pg

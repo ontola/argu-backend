@@ -8,8 +8,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            secure_image_url: true,
            image_size: 'large',
            client_options: {
-             site: 'https://graph.facebook.com/v2.8',
-             authorize_url: 'https://www.facebook.com/v2.8/dialog/oauth',
+             site: 'https://graph.facebook.com/v3.2',
+             authorize_url: 'https://www.facebook.com/v3.2/dialog/oauth',
              ssl: {
                ca_file: Rails.root.join('config', 'ca-bundle.crt').to_s
              }
@@ -22,6 +22,4 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            Rails.application.secrets.twitter_key,
            Rails.application.secrets.twitter_secret,
            x_auth_access_type: 'write'
-
-  # provider :openid, :store => OpenID::Store::Filesystem.new('/tmp'), name: 'openid'
 end
