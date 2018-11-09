@@ -61,6 +61,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     operation: ACTION_FORM_INCLUDES
   ].freeze
 
+  def self.controller_class
+    @controller_class ||= controller_name.classify.safe_constantize
+  end
+
   # The params, deserialized when format is json_api or LD and method is not safe
   # @example Resource params from json_api request
   #   params = {
@@ -142,7 +146,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   def controller_class
-    controller_name.classify.safe_constantize
+    self.class.controller_class
   end
 
   def current_forum; end

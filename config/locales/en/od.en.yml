@@ -1,5 +1,1 @@
-en:
-  od:
-    meetings:
-      type: "Meeting"
-      plural: "Meetings"
+../../../service_module/config/locales/en/od.en.yml
