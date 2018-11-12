@@ -11,7 +11,7 @@ module Updateable
         type: NS::SCHEMA[:UpdateAction],
         policy: :update?,
         label: -> { update_label },
-        image: 'fa-update',
+        image: 'fa-pencil-square-o',
         url: -> { update_url },
         http_method: :put,
         form: -> { "#{resource.class}Form".safe_constantize },
