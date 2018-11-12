@@ -27,6 +27,10 @@ nl:
         label: "Terugplaatsen"
         description: "Dit object zal weer zichtbaar zijn in de publieke discussie."
         submit: "Plaats terug"
+      send_confirmation:
+        submit: "Verzend bevestigingslink opnieuw"
+      make_primary:
+        submit: "Maak primair e-mail adres"
     terms:
       create:
         submit: "Accepteer"
@@ -40,6 +44,9 @@ nl:
         label: "Verstuur bericht"
         description: "Verstuur een e-mail naar %{creator}, de plaatser van dit item. Als hij of zij reageert op de e-mail, dan komt het antwoord direct in jouw mailbox en kan je het gesprek buiten Argu verder voeren."
         submit: "Verstuur"
+    email_addresses:
+      create:
+        submit: "Voeg toe"
     pro_arguments:
       create_vote:
         submit: "Upvote"

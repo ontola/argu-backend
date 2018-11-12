@@ -102,7 +102,7 @@ Rails.application.routes.draw do
             path: 'u',
             only: %i[show edit] do
     resources :identities, only: :destroy, controller: 'users/identities'
-    resources :email_addresses, only: :index, controller: 'users/email_addresses'
+    resources :email_addresses, only: %i[index new create]
 
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member
@@ -164,6 +164,10 @@ Rails.application.routes.draw do
 
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
+
+  resources :email_addresses, only: [] do
+    include_route_concerns
+  end
 
   resources :follows, only: :create do
     include_route_concerns

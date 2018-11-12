@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class EmailAddress < ApplicationRecord
+  enhance Createable
+  enhance Destroyable
+  enhance Updateable, except: %i[Action]
+  enhance Actionable
+
   include Broadcastable
   include Parentable
   include RedisResourcesHelper

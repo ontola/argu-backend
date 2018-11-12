@@ -6,4 +6,10 @@ class EmailAddressSerializer < BaseSerializer
   attribute :confirmed_at, predicate: NS::ARGU[:confirmedAt]
 
   has_one :user, predicate: NS::SCHEMA[:creator]
+
+  def updated_at; end
+
+  def primary
+    object.primary if object.primary
+  end
 end

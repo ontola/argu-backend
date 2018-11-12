@@ -27,6 +27,10 @@ en:
         label: "Restore"
         description: "This item will be visible again in public discussion."
         submit: "Restore"
+      send_confirmation:
+        submit: "Send confirmation link again"
+      make_primary:
+        submit: "Make primary email address"
     terms:
       create:
         submit: "Accept"
@@ -40,6 +44,9 @@ en:
         label: "Send message"
         description: "Send an e-mail to %{creator}, the poster of this item. If he replies to the e-mail, the reply will be send to your mailbox directly so you can continue the conversation outside of Argu."
         submit: "Send"
+    email_addresses:
+      create:
+        submit: "Add"
     pro_arguments:
       create_vote:
         submit: "Upvote"

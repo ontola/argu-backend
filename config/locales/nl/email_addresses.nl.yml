@@ -1,0 +1,5 @@
+nl:
+  email_addresses:
+    type: "E-mail adres"
+    type_new: "Nieuw e-mail adres"
+    plural: "E-mail adressen"
