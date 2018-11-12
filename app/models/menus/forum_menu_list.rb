@@ -98,7 +98,7 @@ class ForumMenuList < MenuList # rubocop:disable Metrics/ClassLength
           setting_item(
             :grants,
             label: I18n.t('forums.settings.menu.grants'),
-            href: collection_iri(resource, :grants)
+            href: collection_iri(resource, :grants, display: :settingsTable)
           ),
           setting_item(
             :move,

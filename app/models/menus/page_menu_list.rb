@@ -62,13 +62,21 @@ class PageMenuList < MenuList
       menus: lambda {
         [
           setting_item(:profile, label: I18n.t('pages.settings.menu.general'), href: edit_iri(resource.profile)),
-          setting_item(:forums, label: I18n.t('pages.settings.menu.forums'), href: collection_iri(resource, :forums)),
-          setting_item(:groups, label: I18n.t('pages.settings.menu.groups'), href: collection_iri(resource, :groups)),
+          setting_item(
+            :forums,
+            label: I18n.t('pages.settings.menu.forums'),
+            href: collection_iri(resource, :forums, display: :settingsTable)
+          ),
+          setting_item(
+            :groups,
+            label: I18n.t('pages.settings.menu.groups'),
+            href: collection_iri(resource, :groups, display: :settingsTable)
+          ),
           setting_item(:advanced, label: I18n.t('pages.settings.menu.advanced'), href: edit_iri(resource)),
           setting_item(
             :shortnames,
             label: I18n.t('pages.settings.menu.shortnames'),
-            href: collection_iri(resource, :shortnames)
+            href: collection_iri(resource, :shortnames, display: :settingsTable)
           )
         ]
       }
