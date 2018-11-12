@@ -27,7 +27,7 @@ class Widget < ApplicationRecord
       discussions
         .create(
           owner: owner,
-          resource_iri: collection_iri(owner, :discussions, type: :infinite),
+          resource_iri: collection_iri(owner, :discussions, display: :grid, type: :infinite),
           label: 'discussions.plural',
           label_translation: true,
           body: '',
