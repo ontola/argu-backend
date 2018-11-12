@@ -17,9 +17,9 @@ class PlacementSerializer < RecordSerializer
   def image
     image =
       if object.placement_type == 'custom'
-        "fa-#{icon_for(object.placeable)}"
+        :"fa-#{icon_for(object.placeable)}"
       elsif object.placement_type == 'home'
-        :home
+        :'fa-home'
       end
 
     serialize_image(image)
