@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Shortname < ApplicationRecord
+  enhance Actionable
   enhance Createable
   enhance Destroyable
-  enhance Updateable
 
   include Parentable
 
@@ -37,9 +37,10 @@ class Shortname < ApplicationRecord
 
   after_create :destroy_finish_intro_notification
   attr_reader :destination
-  alias_attribute :display_name, :shortname
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
+
+  def display_name; end
 
   def edgeable_record
     owner.is_a?(Edge) ? owner.root : owner

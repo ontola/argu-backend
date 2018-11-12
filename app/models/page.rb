@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Page < Edge
+class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
   enhance BlogPostable
@@ -21,6 +21,11 @@ class Page < Edge
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   accepts_nested_attributes_for :profile, update_only: true
   has_many :profile_vote_matches, through: :profile, source: :vote_matches
+  has_many :descendant_shortnames,
+           -> { where(primary: false) },
+           class_name: 'Shortname',
+           foreign_key: :root_id,
+           primary_key: :uuid
 
   scope :discover, lambda {
     joins(children: %i[properties grants])
@@ -41,7 +46,7 @@ class Page < Edge
                   association: :profile_vote_matches
   with_collection :forums
   with_collection :groups
-  with_collection :shortnames
+  with_collection :shortnames, association: :descendant_shortnames
 
   parentable
   property :visibility, :integer, NS::ARGU[:visibility], default: 1, enum: {visible: 1, hidden: 3}

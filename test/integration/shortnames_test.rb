@@ -53,11 +53,6 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
-  test 'initiator should not put update' do
-    sign_in initiator
-    general_update(403)
-  end
-
   test 'initiator should not delete destroy' do
     subject
     sign_in initiator
@@ -75,11 +70,6 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     assert_not_authorized
   end
 
-  test 'moderator should not put update' do
-    sign_in moderator
-    general_update(403)
-  end
-
   test 'moderator should not delete destroy' do
     subject
     sign_in moderator
@@ -94,11 +84,6 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
   test 'administrator should post create' do
     sign_in administrator
     general_create
-  end
-
-  test 'administrator should put update' do
-    sign_in administrator
-    general_update 302, true
   end
 
   test 'administrator should delete destroy' do
@@ -127,23 +112,9 @@ class ShortnamesTest < ActionDispatch::IntegrationTest
     end
   end
 
-  def general_update(response = 302, changed = false)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-    put shortname_path(subject, shortname_attributes)
-    assert_response response
-    ch_method.call subject
-                     .updated_at
-                     .utc
-                     .iso8601(6),
-                   assigns(:resource)
-                     .updated_at
-                     .utc
-                     .iso8601(6)
-  end
-
   def general_destroy(response = 302, difference = 0)
     assert_difference('Shortname.count', difference) do
-      delete shortname_path(subject)
+      delete destroy_shortname_path(subject)
       assert_response response
     end
   end

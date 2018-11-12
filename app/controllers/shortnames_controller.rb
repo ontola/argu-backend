@@ -5,6 +5,10 @@ class ShortnamesController < ParentableController
 
   private
 
+  def active_response_action_name(_view)
+    ACTION_MAP[action_name.to_sym] || action_name.to_sym
+  end
+
   def destination_param
     return @destination_param if instance_variable_defined?(:@destination_param)
     return if params[:shortname].try(:[], :destination).blank?

@@ -29,7 +29,7 @@ module ChildHelper
     when 'Decision'
       {state: 'forwarded', parent: parent}
     when 'Shortname'
-      {owner: parent}
+      {owner: parent, primary: false}
     when 'EmailAddress'
       {user: parent}
     when 'Publication'

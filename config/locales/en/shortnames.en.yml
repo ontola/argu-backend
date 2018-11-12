@@ -1,6 +1,7 @@
 en:
   shortnames:
     type: 'Redirect'
+    type_new: 'New redirect'
     info: 'When changing a url, a redirect for the old url is automatically created. You can also ass redirects manually. On this page you can find all active redirects.'
     contact_argu: 'Even shorter urls? Contact Argu for more information'
     labels:
