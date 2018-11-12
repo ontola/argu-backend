@@ -74,8 +74,9 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
     super
     if shortname && shortname&.shortname_was != url && url.present?
       widgets.update_all(
-        "resource_iri = replace(resource_iri, '#{ApplicationRecord.connection.quote_string(shortname.shortname_was)}',"\
-        " '#{ApplicationRecord.connection.quote_string(url)}')"
+        'resource_iri = replace(resource_iri, '\
+        "'/#{ApplicationRecord.connection.quote_string(shortname.shortname_was)}/', "\
+        "'/#{ApplicationRecord.connection.quote_string(url)}/')"
       )
     end
     iri_cache
