@@ -31,7 +31,7 @@ class GroupMembershipPolicy < EdgeTreePolicy
   end
 
   def create?
-    valid_token? || edgeable_policy.update?
+    valid_token? || !vnext? && edgeable_policy.update?
   end
 
   def destroy?

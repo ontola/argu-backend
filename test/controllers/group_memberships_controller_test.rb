@@ -256,8 +256,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            }
     end
 
-    assert_response 304
-    assert_equal response.headers['Location'], member.profile.group_memberships.second.iri
+    assert_response 403
   end
 
   test 'administrator should post create other' do
@@ -276,26 +275,10 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     assert_redirected_to settings_iri_path(freetown, tab: :groups)
   end
 
-  test 'administrator should not post create for staff group' do
+  test 'administrator should not post create other json' do
     sign_in administator
     user
     assert_difference 'GroupMembership.count', 0 do
-      post :create,
-           params: {
-             group_id: Group::STAFF_ID,
-             shortname: user.url,
-             r: settings_iri_path(freetown, tab: :groups),
-             root_id: Group.staff.page.url
-           }
-    end
-
-    assert_not_authorized
-  end
-
-  test 'administrator should post create other json' do
-    sign_in administator
-    user
-    assert_difference 'GroupMembership.count', 1 do
       post :create,
            format: :json,
            params: {
@@ -306,9 +289,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
            }
     end
 
-    assert_response 201
-    expect_included(group.iri)
-    assert_equal response.headers['Location'], GroupMembership.last.iri
+    assert_response 403
   end
 
   test 'administrator should delete expire' do

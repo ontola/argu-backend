@@ -5,6 +5,8 @@ class GroupSerializer < RecordSerializer
   attribute :display_name, predicate: NS::SCHEMA[:name], datatype: NS::XSD[:string]
   attribute :name_singular, predicate: NS::ARGU[:nameSingular]
 
+  with_collection :group_membership, predicate: NS::ORG[:hasMember]
+
   has_one :organization do
     object.parent
   end
