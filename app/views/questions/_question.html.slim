@@ -5,7 +5,7 @@
   section
     =link_to question do
       h2.question-t[itemprop="headline"]= question.display_name
-  =render partial: 'questions/info_bar', locals: {question: question, show_parent: true}
+  =render partial: 'questions/info_bar', locals: {question: question, show_parent: true, show_placement: true}
   section
     - if question.active_motions.present?
       =render partial: 'questions/motions_list', locals: {question: question}

@@ -5,7 +5,7 @@
   section
     =link_to model do
       h3.question-t[itemprop="headline"]= model.display_name
-  =render partial: 'questions/info_bar', locals: {question: model}
+  =render partial: 'questions/info_bar', locals: {question: model, show_placement: true}
   section
     .markdown[itemprop="text"]
       =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}

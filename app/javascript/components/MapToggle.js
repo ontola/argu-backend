@@ -33,14 +33,17 @@ export const MapToggle = React.createClass({
             modal = <Modal onClose={this.handleModalClose}><MapViewer {...this.props}/></Modal>
         }
         return (
-            <div className="detail">
-                <div className="detail__icon">
-                    <a href="">
-                        <span className="fa fa-map-marker" onClick={this.handleClick}/>
-                    </a>
+            <a href="#" onClick={this.handleClick}>
+                <div className="detail">
+                    <div className="detail__icon">
+                        <span className="fa fa-map-marker"/>
+                    </div>
+                    <div className="detail__text">
+                        {this.props.tooltip}
+                    </div>
+                    {modal}
                 </div>
-                {modal}
-            </div>
+            </a>
         );
     }
 });

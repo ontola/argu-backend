@@ -31,7 +31,7 @@ section.section--details
       .detail[data-title=t('edges.pinned_at', datetime: motion.pinned_at.to_formatted_s(:short))]
         .detail__icon
           span.fa.fa-map-pin
-    - if motion.custom_placements.present?
+    - if local_assigns[:show_placement] && motion.custom_placements.present?
       =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_viewer_props(map_marker_props(motion.custom_placements.first), zoom: motion.custom_placements.first.zoom_level))
     - if local_assigns[:show_decision] && !motion.state == 'pending'
       div class="detail detail--decision--#{motion.state}"
