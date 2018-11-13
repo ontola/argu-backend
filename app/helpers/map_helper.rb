@@ -81,6 +81,11 @@ module MapHelper
     )
   end
 
+  def map_resource_props(resource)
+    placement = resource.custom_placements.first
+    map_viewer_props(map_marker_props(placement), zoom: placement.zoom_level)
+  end
+
   def map_viewer_props(markers, opts = {})
     markers = [markers] unless markers.is_a?(Array)
     center_lat = opts[:center_lat] || markers.map { |marker| marker[:lat] }.sum / markers.size.to_f

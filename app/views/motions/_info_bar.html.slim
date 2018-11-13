@@ -32,7 +32,7 @@ section.section--details
         .detail__icon
           span.fa.fa-map-pin
     - if local_assigns[:show_placement] && motion.custom_placements.present?
-      =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_viewer_props(map_marker_props(motion.custom_placements.first), zoom: motion.custom_placements.first.zoom_level))
+      =react_component_store 'MapToggle', props: {tooltip: t('edges.show_placement')}.merge(map_resource_props(motion))
     - if local_assigns[:show_decision] && !motion.state == 'pending'
       div class="detail detail--decision--#{motion.state}"
         .detail__icon

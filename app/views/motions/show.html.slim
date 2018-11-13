@@ -17,6 +17,9 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
       = render partial: 'application/publish', locals: {resource: motion}
 =render partial: 'happenings/timeline',
         locals: { resource: motion, happenings: policy_scope(motion.happenings).includes(trackable: :published_publications) }
+- if motion.custom_placements.present?
+  .col-1
+    =react_component_store 'MapViewer', props: map_resource_props(motion)
 - if policy(motion).index_children?(:pro_arguments).present?
   .col-2
     .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
