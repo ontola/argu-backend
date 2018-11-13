@@ -11,6 +11,9 @@ class PlacementSerializer < RecordSerializer
   attribute :placement_type, predicate: NS::ARGU[:placementType]
   attribute :postal_code, predicate: NS::SCHEMA[:postalCode]
 
+  attribute :lat, if: :export_scope?
+  attribute :lon, if: :export_scope?
+
   def image
     image =
       if object.placement_type == 'custom'
