@@ -247,7 +247,7 @@ Rails.application.routes.draw do
               path: '',
               only: %i[show edit] do
       include_route_concerns
-      resources :forums, only: %i[index]
+      resources :forums, only: %i[index new create]
       resources :discussions, only: %i[index]
       resources :grants, path: 'grants', only: %i[new create]
       resources :group_memberships, only: :index do

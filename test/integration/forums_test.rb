@@ -351,7 +351,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1) do
-      post portal_forums_path, params: {
+      post page_forums_path(argu), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
@@ -363,8 +363,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
               placement_type: 'custom'
             }
           }
-        },
-        page_id: argu.url
+        }
       }
     end
 
@@ -376,15 +375,14 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('Forum.count' => 1) do
-      post portal_forums_path, params: {
+      post page_forums_path(argu), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum',
           public_grant: :participator,
           owner_type: :ORIForum
-        },
-        page_id: argu.url
+        }
       }, headers: argu_headers(accept: :json_api)
     end
     assert_response 201
@@ -460,13 +458,12 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('Forum.count' => 1, 'Widget.discussions.count' => 1) do
-      post portal_forums_path, params: {
+      post page_forums_path(argu), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum'
-        },
-        page_id: argu.url
+        }
       }
     end
     assert_equal Forum.last.widgets.first.resource_iri, "#{Forum.last.iri}/discussions?display=grid&type=infinite"
@@ -476,14 +473,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('ORIForum.count' => 1, 'Widget.discussions.count' => 0) do
-      post portal_forums_path, params: {
+      post page_forums_path(argu), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum',
           owner_type: 'ORIForum'
-        },
-        page_id: argu.url
+        }
       }
     end
   end

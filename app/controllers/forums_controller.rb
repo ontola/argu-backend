@@ -49,8 +49,15 @@ class ForumsController < EdgeableController
     resource_by_id
   end
 
+  def form_view_locals
+    {
+      resource: resource,
+      controller_name.singularize.to_sym => resource
+    }
+  end
+
   def permit_params
-    attrs = policy(resource_by_id).permitted_attributes
+    attrs = policy(resource_by_id || new_resource_from_params).permitted_attributes
     pm = params.require(:forum).permit(*attrs).to_h
     merge_photo_params(pm, @resource.class)
     pm
@@ -73,7 +80,7 @@ class ForumsController < EdgeableController
 
   def redirect_location
     return super unless authenticated_resource.persisted?
-    settings_iri_path(authenticated_resource, tab: tab)
+    settings_iri_path(authenticated_resource, afe_request? ? {} : {tab: tab})
   end
 
   def settings_view
@@ -96,6 +103,14 @@ class ForumsController < EdgeableController
       @children = collect_children(authenticated_resource)
       respond_with_resource(show_success_options)
     end
+  end
+
+  def signals_failure
+    super + [:"#{action_name}_ori_forum_failed"]
+  end
+
+  def signals_success
+    super + [:"#{action_name}_ori_forum_successful"]
   end
 
   def tab!
