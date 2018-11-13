@@ -7,7 +7,7 @@ module Argumentable
     included do
       with_collection :pro_arguments, predicate: NS::ARGU[:proArguments]
       with_collection :con_arguments, predicate: NS::ARGU[:conArguments]
-      attribute :invert_arguments, predicate: NS::ARGU[:invertArguments]
+      attribute :invert_arguments, predicate: NS::ARGU[:invertArguments], unless: :export_scope?
 
       count_attribute :pro_arguments
       count_attribute :con_arguments

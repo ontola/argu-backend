@@ -16,7 +16,9 @@ class EdgeSerializer < RecordSerializer
   delegate :is_publishable?, to: :object
 
   def self.count_attribute(type, opts = {})
-    attribute "#{type}_count", {predicate: NS::ARGU["#{type.to_s.camelcase(:lower)}Count".to_sym]}.merge(opts) do
+    attribute "#{type}_count", {predicate: NS::ARGU["#{type.to_s.camelcase(:lower)}Count".to_sym]}.merge(opts)
+
+    define_method "#{type}_count" do
       object.children_count(type)
     end
   end
