@@ -25,7 +25,7 @@ class Follow < ApplicationRecord
   end
 
   def unsubscribe_iri
-    RDF::DynamicURI(expand_uri_template('follows_unsubscribe_iri', id: id, with_hostname: true))
+    iri_from_template(:follows_unsubscribe_iri, id: id)
   end
 
   private

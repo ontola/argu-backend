@@ -10,7 +10,7 @@ module Actions
       def create_policy; end
 
       def create_url(_resource)
-        RDF::DynamicURI(expand_uri_template(:confirmations_iri, with_hostname: true))
+        iri_from_template(:confirmations_iri)
       end
 
       def new_label

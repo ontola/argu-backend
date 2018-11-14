@@ -14,7 +14,7 @@ module Actions
       def create_policy; end
 
       def create_url(_resource)
-        RDF::DynamicURI(expand_uri_template(:passwords_iri, with_hostname: true))
+        iri_from_template(:passwords_iri)
       end
 
       def new_label
@@ -32,7 +32,7 @@ module Actions
       end
 
       def update_url
-        RDF::DynamicURI(expand_uri_template(:passwords_iri, with_hostname: true))
+        iri_from_template(:passwords_iri)
       end
     end
   end

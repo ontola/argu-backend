@@ -43,7 +43,7 @@ module Actions
       type: NS::SCHEMA[:UpdateAction],
       policy: :update?,
       image: 'fa-update',
-      url: -> { RDF::DynamicURI(expand_uri_template(:setup_iri, with_hostname: true)) },
+      url: -> { iri_from_template(:setup_iri) },
       http_method: :put,
       form: ::Users::SetupForm,
       iri_template: :setup_iri
