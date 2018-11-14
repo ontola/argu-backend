@@ -39,15 +39,15 @@ module ChildHelper
     when 'Placement'
       {placeable: parent}
     else
-      raw_klass <= Edge ? {parent: parent} : {}
+      raw_klass <= Edge && parent.is_a?(Edge) ? {parent: parent} : {}
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
   def prepare_edge_child(parent, child)
     child.creator = Profile.new(are_votes_public: true) if child.respond_to?(:creator=)
-    child.persisted_edge = parent.persisted_edge
+    child.persisted_edge = parent.try(:persisted_edge)
     child.is_published = true
-    grant_tree.cache_node(parent.persisted_edge) if respond_to?(:grant_tree)
+    grant_tree.cache_node(parent.try(:persisted_edge)) if respond_to?(:grant_tree)
   end
 end
