@@ -10,6 +10,7 @@ class VoteSerializer < EdgeSerializer
     object.parent.voteable
   end
 
+  attribute :primary, predicate: NS::ARGU[:primaryVote]
   attribute :option, predicate: NS::SCHEMA[:option]
   attribute :display_name, predicate: NS::SCHEMA[:name], unless: :export_scope?
 
