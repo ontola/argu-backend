@@ -4,6 +4,7 @@ class FollowsController < AuthorizedController
   PERMITTED_CLASSES = %w[Forum Question Motion Argument Comment BlogPost].freeze
   skip_before_action :check_if_registered, if: :unsubscribe?
   skip_before_action :authorize_action, if: :unsubscribe?
+  skip_before_action :verify_authenticity_token, if: :unsubscribe?
 
   private
 
@@ -17,7 +18,7 @@ class FollowsController < AuthorizedController
   end
 
   def destroy_failure_html
-    return destroy_failure unless request.method == 'GET'
+    return destroy_failure if request.method == 'DELETE'
     render 'destroy', locals: {unsubscribed: false}
   end
 
@@ -29,7 +30,7 @@ class FollowsController < AuthorizedController
   end
 
   def destroy_success_html
-    return destroy_success unless request.method == 'GET'
+    return destroy_success if request.method == 'DELETE'
     render 'destroy', locals: {unsubscribed: true}
   end
 
@@ -79,7 +80,7 @@ class FollowsController < AuthorizedController
   end
 
   def unsubscribe?
-    action_name == 'destroy' && request.method == 'GET'
+    action_name == 'destroy' && request.method != 'DELETE'
   end
 
   def tree_root_id
