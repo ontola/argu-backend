@@ -42,6 +42,7 @@ class FollowsController < AuthorizedController
   end
 
   def destroy_execute
+    return true if request.head?
     @unsubscribed = !authenticated_resource.never? && authenticated_resource.never!
   end
 
