@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StaticPagesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :not_found
+
   include VotesHelper
 
   # geocode_ip_address
