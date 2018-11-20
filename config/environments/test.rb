@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.configure do
+  ENV['NOMINATIM_URL'] = 'http://open.mapquestapi.com/nominatim/v1/search'
+
   Minitest::Rails::TestUnit = Rails::TestUnit
 
   config.host_name = '127.0.0.1:42000'

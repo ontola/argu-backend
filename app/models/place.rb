@@ -42,7 +42,7 @@ class Place < ApplicationRecord
     def create_or_fetch(opts)
       place =
         if opts[:country_code].present? || opts[:postcode].present?
-          fetch(url_for_osm_query(opts))
+          ENV['NOMINATIM_URL'].present? ? fetch(url_for_osm_query(opts)) : new
         else
           new(opts.slice(:lat, :lon))
         end
@@ -77,11 +77,6 @@ class Place < ApplicationRecord
       return nil if result.nil?
       return find_by(nominatim_id: result['place_id']) if exists?(nominatim_id: result['place_id'])
       new(fetched_opts(result))
-    rescue JSON::ParserError
-      raise StandardError.new(error_message(error)) if Rails.env.production? || Rails.env.staging?
-      new
-    rescue OpenURI::HTTPError
-      raise StandardError.new(error_message(error))
     end
 
     def fetched_opts(result)
@@ -116,7 +111,7 @@ class Place < ApplicationRecord
       params[:country] = params.delete :country_code
       params[:key] = ENV['NOMINATIM_KEY'] if ENV['NOMINATIM_KEY'].present?
 
-      url = URI(ENV['NOMINATIM_URL'] || 'http://open.mapquestapi.com/nominatim/v1/search')
+      url = URI(ENV['NOMINATIM_URL'])
       url.query = params.to_query
       url.to_s
     end
