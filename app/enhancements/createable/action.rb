@@ -11,7 +11,7 @@ module Createable
         :create,
         description: -> { create_description },
         result: -> { result_class },
-        type: -> { [NS::ARGU["Create#{result_class}"], NS::SCHEMA[:CreateAction]] },
+        type: -> { [NS::ARGU["Create::#{result_class}"], NS::SCHEMA[:CreateAction]] },
         policy: -> { create_policy },
         label: -> { new_label },
         image: -> { new_image },
