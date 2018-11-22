@@ -5,11 +5,14 @@ module SPI
     include IRIHelper
 
     def show
-      authorize resource!, "#{params[:authorize_action]}?"
       head 200
     end
 
     private
+
+    def authorize_action
+      authorize resource!, "#{params[:authorize_action]}?"
+    end
 
     def resource
       return resource_from_iri(params[:resource_iri]) if params[:resource_iri].present?

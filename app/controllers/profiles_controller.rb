@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProfilesController < ApplicationController
+class ProfilesController < AuthorizedController
   include SettingsHelper
   include UriTemplateHelper
   active_response :edit, :show
@@ -21,7 +21,6 @@ class ProfilesController < ApplicationController
       @profile = @resource.profile
       if active_response_type == :html
         @resource.build_home_placement if @resource.home_placement.nil?
-        authorize @profile, :edit?
 
         respond_with_form(
           locals: {profile: @profile, resource: @resource},
@@ -37,7 +36,6 @@ class ProfilesController < ApplicationController
   def setup!
     @resource = user_or_redirect
     @profile = @resource.profile
-    authorize @profile, :update?
 
     respond_to do |format|
       if @resource.update(setup_permit_params)
@@ -56,8 +54,10 @@ class ProfilesController < ApplicationController
   private
 
   def current_resource
-    @current_resource ||= Shortname.find_resource(params[:id])&.profile || Profile.find_by(id: params[:id])
+    @current_resource ||=
+      Shortname.find_resource(params[:id])&.profile || Profile.find_by(id: params[:id]) || current_user.profile
   end
+  alias authenticated_resource current_resource
 
   def edit_success_html
     if current_resource.profileable.is_a? User

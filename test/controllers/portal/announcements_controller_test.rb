@@ -73,11 +73,11 @@ module Portal
     # As Guest
     ####################################
     test 'guest should not post create' do
-      general_create 403
+      general_create 302
     end
 
     test 'guest should not delete destroy' do
-      general_destroy 403
+      general_destroy 302
     end
 
     ####################################

@@ -2,7 +2,7 @@
 
 module NotificationsHelper
   def unread_notification_count
-    policy_scope(Notification)
+    Pundit.policy_scope(user_context, Notification)
       .where('read_at is NULL')
       .count
   end

@@ -5,8 +5,6 @@ module Portal
     before_action :set_settings_view_path
 
     def new
-      authorize authenticated_resource!, :new?
-
       render settings_location,
              locals: {
                announcement: authenticated_resource!,
@@ -16,12 +14,7 @@ module Portal
     end
 
     def create
-      @cb = CreateAnnouncement
-              .new(current_user.profile,
-                   attributes: announcement_params,
-                   options: service_options)
-      authorize @cb.resource, :create?
-      @cb.on(:create_announcement_successful) do
+      create_service.on(:create_announcement_successful) do
         respond_to do |format|
           format.html do
             redirect_to announcements_settings_path,
@@ -30,7 +23,7 @@ module Portal
           end
         end
       end
-      @cb.on(:create_announcement_failed) do |announcement|
+      create_service.on(:create_announcement_failed) do |announcement|
         respond_to do |format|
           format.html do
             render settings_location,
@@ -42,7 +35,7 @@ module Portal
           end
         end
       end
-      @cb.commit
+      create_service.commit
     end
 
     def edit
@@ -101,24 +94,34 @@ module Portal
     private
 
     def authenticated_resource!
-      if params[:action] == 'new' || params[:action] == 'create'
-        controller_name
-          .classify
-          .constantize
-          .new
-      else
-        Announcement.find(params[:id])
-      end
+      @authenticated_resource ||=
+        if params[:action] == 'new' || params[:action] == 'create'
+          create_service.resource
+        else
+          Announcement.find(params[:id])
+        end
     end
 
     def announcement_params
       params
         .require(:announcement)
-        .permit(*policy(authenticated_resource! || Announcement).permitted_attributes)
+        .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
     end
 
     def announcements_settings_path
       portal_settings_path(tab: :announcements)
+    end
+
+    def create_service
+      @create_service ||=
+        CreateAnnouncement
+          .new(current_user.profile,
+               attributes: announcement_params,
+               options: service_options)
+    end
+
+    def new_resource_from_params
+      controller_class.new
     end
 
     def service_options

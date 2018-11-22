@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Portal::PortalController < Portal::PortalBaseController
+  skip_before_action :authorize_action, only: :home
+  skip_after_action :verify_authorized, only: :home
   prepend_view_path 'app/views/portal/portal'
 
   def home

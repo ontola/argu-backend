@@ -3,15 +3,17 @@
 require 'spam_checker'
 
 class RegistrationsController < Devise::RegistrationsController
-  skip_before_action :authenticate_scope!, only: :destroy
+  include Argu::Controller::Authorization
   include Destroyable::Controller
   include RedisResourcesHelper
   include OauthHelper
   include NestedResourceHelper
   respond_to :json
 
-  skip_before_action :verify_authenticity_token,
-                     if: :api_request?
+  alias new_resource build_resource
+
+  skip_before_action :authenticate_scope!, only: :destroy
+  skip_before_action :verify_authenticity_token, if: :api_request?
   before_action :handle_spammer, if: :is_spam?, only: :create
 
   def create
@@ -65,7 +67,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def current_resource
-    @user
+    @user || current_user
   end
 
   def delete_execute
@@ -80,7 +82,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def destroy_execute
     @user = User.find current_user.id
-    authorize @user, :destroy?
     unless params[:user].try(:[], :confirmation_string) == t('users_cancel_string')
       @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
     end

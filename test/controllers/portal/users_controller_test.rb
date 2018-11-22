@@ -14,12 +14,12 @@ module Portal
     ####################################
     test 'guest should not get delete' do
       get :delete, params: {id: user.url}
-      assert_not_authorized
+      assert_not_a_user
     end
 
     test 'guest should not delete destroy' do
       delete :destroy, params: {id: user.url}
-      assert_not_authorized
+      assert_not_a_user
     end
 
     ####################################

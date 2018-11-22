@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class DocumentsController < SimpleText::DocumentsController
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
-  after_action :make_authorized, except: :index
+  include Argu::Controller::Authorization
+
   after_action :make_scoped, only: :index
   layout :set_layout
   active_response :show
@@ -14,11 +13,7 @@ class DocumentsController < SimpleText::DocumentsController
     @document = Document.find_by!(name: params[:name])
   end
 
-  def make_authorized
-    authorize @document
-  end
-
   def make_scoped
-    policy_scope @documents
+    @documents = policy_scope(@documents)
   end
 end

@@ -69,7 +69,7 @@ class ProfilesControllerTest < ActionController::TestCase
 
     get :edit, params: {id: user2.url}
 
-    assert_redirected_to settings_user_path(tab: :profile)
+    assert_not_authorized
   end
 
   ####################################

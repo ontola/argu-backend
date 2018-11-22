@@ -3,12 +3,12 @@
 module SPI
   class EmailAddressesController < SPI::SPIController
     def show
-      head 200 if email_by_param
+      head 200
     end
 
     private
 
-    def email_by_param
+    def current_resource
       @email_by_param ||= EmailAddress.find_by!(email: params[:email])
     end
   end

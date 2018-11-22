@@ -3,17 +3,17 @@
     {
       "warning_type": "Dangerous Send",
       "warning_code": 23,
-      "fingerprint": "9483deb3be0ad06e9585662f2d7417c06790420b1de3576b292ebcc879534337",
+      "fingerprint": "20868a477baf2a3f9b02c906e285ac08a75564b20bddcb3b9745205b9c708b5a",
       "check_name": "Send",
       "message": "User controlled method execution",
-      "file": "lib/argu/ruled_it.rb",
-      "line": 33,
+      "file": "lib/argu/controller/authorization.rb",
+      "line": 29,
       "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
       "code": "policy(record).public_send((params[:action].to_s + \"?\"), *opts)",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "Argu::RuledIt",
+        "class": "Argu::Controller::Authorization",
         "method": "authorize"
       },
       "user_input": "(params[:action].to_s + \"?\")",
@@ -21,6 +21,6 @@
       "note": ""
     }
   ],
-  "updated": "2018-06-19 14:52:15 +0200",
+  "updated": "2018-11-30 15:43:58 +0100",
   "brakeman_version": "4.1.1"
 }

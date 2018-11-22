@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Portal::PortalBaseController < ApplicationController
+class Portal::PortalBaseController < AuthorizedController
   before_action :authorize_staff
 
   private

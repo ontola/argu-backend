@@ -9,9 +9,8 @@ module SPI
     include Argu::Controller::ErrorHandling
     include Argu::Controller::ErrorHandling::BadCredentials
     include JsonApiHelper
-    include Argu::RuledIt
+    include Argu::Controller::Authorization
     include OauthHelper
-    alias_attribute :pundit_user, :user_context
 
     serialization_scope :user_context
 

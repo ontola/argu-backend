@@ -19,7 +19,7 @@ class EmailAddressPolicy < RestrictivePolicy
   end
 
   def show?
-    record.user == user
+    record.user == user || service?
   end
 
   def update?

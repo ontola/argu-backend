@@ -84,10 +84,6 @@ module ApplicationHelper
     "organization-#{tree_root.url}"
   end
 
-  def policy(resource)
-    user_context.tree_root_id.nil? && resource.is_a?(Edge) ? NoRootPolicy.new(user_context, resource) : super
-  end
-
   def remote_if_modern
     {remote: browser.modern?, turbolinks: false}
   end

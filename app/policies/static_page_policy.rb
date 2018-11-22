@@ -38,6 +38,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def token?
+    true
+  end
+
   def governments?
     true
   end

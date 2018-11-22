@@ -15,7 +15,7 @@ module Argu
 
       notices = stubborn_hgetall('announcements') || {}
       notices = JSON.parse(notices) if notices.present? && notices.is_a?(String)
-      @_messages = pundit_policy_scope(Announcement)
+      @_messages = Pundit.policy_scope(user_context, Announcement)
                      .reject { |a| notices[a.identifier] == 'hidden' }
     end
   end

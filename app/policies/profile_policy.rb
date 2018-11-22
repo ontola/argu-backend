@@ -27,4 +27,8 @@ class ProfilePolicy < RestrictivePolicy
   def feed?
     record.are_votes_public? || Pundit.policy(context, record.profileable).update?
   end
+
+  def setup?
+    update?
+  end
 end

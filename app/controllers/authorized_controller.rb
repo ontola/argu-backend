@@ -2,10 +2,13 @@
 
 class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :check_if_registered, except: %i[show]
-  before_action :authorize_action
+  before_action :current_actor
+  include Argu::Controller::Authorization
+
   before_action :verify_terms_accepted, only: %i[update create]
+  before_action :authorize_current_actor
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_resource, :collect_banners, :user_context, :tree_root_id, :tree_root
+  helper_method :authenticated_resource, :collect_banners, :policy, :user_context, :tree_root_id, :tree_root
 
   active_response :index, :show
 
@@ -23,6 +26,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def authorize_action
     authorize authenticated_resource, "#{params[:action].chomp('!')}?" unless action_name == 'index'
+  end
+
+  def authorize_current_actor
+    authorize current_actor, :show?
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found
@@ -90,6 +97,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
     params
       .require(model_name)
       .permit(*policy(resource_by_id || new_resource_from_params).permitted_attributes)
+  end
+
+  def policy(resource)
+    user_context.tree_root_id.nil? && resource.is_a?(Edge) ? NoRootPolicy.new(user_context, resource) : super
   end
 
   def resource_from_params

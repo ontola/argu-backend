@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
-class StaticPagesController < ApplicationController
+class StaticPagesController < AuthorizedController
+  skip_before_action :authorize_action, only: :not_found
   skip_before_action :verify_authenticity_token, only: :not_found
+  skip_before_action :check_if_registered
+  skip_after_action :verify_authorized, only: :not_found
 
   include VotesHelper
 
@@ -23,12 +26,10 @@ class StaticPagesController < ApplicationController
   ).freeze
 
   def about
-    authorize :static_page
     render('landing')
   end
 
   def context
-    skip_authorization
     model_context = C_MODELS[params['model']]
                       .contextualizer
                       .definitions_for_terms
@@ -39,7 +40,6 @@ class StaticPagesController < ApplicationController
   end
 
   def home
-    authorize :static_page
     active_response_block do
       if active_response_type == :html
         if current_user.is_staff?
@@ -53,12 +53,9 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  def developers
-    authorize :static_page
-  end
+  def developers; end
 
   def dismiss_announcement
-    authorize :static_page
     announcement = Announcement.find(params[:announcement_id])
     BannerDismissal.new(banner_class: Announcement,
                         banner: announcement)
@@ -73,12 +70,9 @@ class StaticPagesController < ApplicationController
     end
   end
 
-  def how_argu_works
-    authorize :static_page
-  end
+  def how_argu_works; end
 
   def modern
-    authorize :static_page, :about?
     render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, "\
                  "safari: #{browser.safari?}, mobile: #{browser.device.mobile?}, "\
                  "tablet: #{browser.device.tablet?}, ua: #{browser.ua}"
@@ -90,7 +84,6 @@ class StaticPagesController < ApplicationController
 
   # Used for persistent redis-backed cookies
   def persist_cookie
-    authorize :static_page
     respond_to do |format|
       if stubborn_set_from_params
         format.json { head 200 }
@@ -106,6 +99,10 @@ class StaticPagesController < ApplicationController
   end
 
   private
+
+  def authorize_action
+    authorize :static_page
+  end
 
   def default_forum_path
     preferred_forum

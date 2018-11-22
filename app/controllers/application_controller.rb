@@ -4,9 +4,8 @@ require 'argu'
 require 'argu/api'
 
 class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
-  include Argu::RuledIt
-  include Argu::Authorization
   include Argu::Announcements
+  include Argu::Controller::Authentication
   include Argu::Controller::ErrorHandling
 
   include ActiveResponse::Controller
@@ -29,11 +28,9 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   force_ssl unless: :internal_request?, host: Rails.application.config.frontend_url
   protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
-  setup_authorization
   before_bugsnag_notify :add_user_info_to_bugsnag
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
-  before_action :authorize_current_actor
   before_action :set_vary
   after_action :set_profile_forum, if: :format_html?
   around_action :time_zone
@@ -134,14 +131,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
       !request.format.html?
   end
 
-  def authorize_current_actor
-    authorize current_actor, :show?
-  end
-
   def authorize_forum(forum)
     return if forum.nil?
     return unless user_context.with_root_id(forum.root_id) do
-      policy(forum).show?
+      Pundit.policy(user_context, forum).show?
     end
     forum
   end
@@ -167,11 +160,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def internal_request?
     Argu::WhitelistConstraint.matches?(request)
-  end
-
-  def parse_filter(array, whitelist)
-    return {} if array.blank? || whitelist.blank?
-    Hash[array&.map { |f| f.split('=') }].slice(*whitelist.keys)
   end
 
   def parse_graph_params?
