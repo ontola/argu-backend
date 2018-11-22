@@ -62,7 +62,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   ].freeze
 
   def self.controller_class
-    @controller_class ||= controller_name.classify.safe_constantize
+    @controller_class ||=
+      name.sub(/Controller$/, '').classify.safe_constantize || controller_name.classify.safe_constantize
   end
 
   # The params, deserialized when format is json_api or LD and method is not safe
