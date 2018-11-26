@@ -18,5 +18,9 @@ FactoryBot.define do
     factory :news_follow do
       follow_type :news
     end
+
+    factory :never_follow do
+      follow_type :never
+    end
   end
 end

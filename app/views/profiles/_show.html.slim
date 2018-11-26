@@ -12,3 +12,5 @@
         p= resource.about
         - if current_user.is_staff? && resource.profileable.is_a?(User)
           =link_to t('destroy'), delete_portal_user_path(resource.profileable), remote: true
+          =semantic_form_for '', url: user_follows_path(resource.profileable), method: :delete do |f|
+            =f.action :submit, as: :button, label: t('destroy_type', type: "#{resource.profileable.follows.where('follow_type != ?', Follow.follow_types[:never]).count} #{t('notifications.type').downcase}"), button_html: {class: 'btn--as-text', data: {confirm: t('retract_confirmation')}}

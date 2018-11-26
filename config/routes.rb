@@ -103,6 +103,7 @@ Rails.application.routes.draw do
             only: %i[show edit] do
     resources :identities, only: :destroy, controller: 'users/identities'
     resources :email_addresses, only: %i[index new create]
+    resource :follows, only: :destroy, controller: 'users/follows'
 
     get :connect, to: 'users/identities#connect', on: :member
     post :connect, to: 'users/identities#connect!', on: :member
