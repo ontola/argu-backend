@@ -8,6 +8,7 @@ class ProfilesControllerTest < ActionController::TestCase
   define_freetown
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
+  let(:user_no_shortname) { create(:user, :no_shortname, first_name: nil, last_name: nil) }
 
   ####################################
   # As User
@@ -69,5 +70,93 @@ class ProfilesControllerTest < ActionController::TestCase
     get :edit, params: {id: user2.url}
 
     assert_redirected_to settings_user_path(tab: :profile)
+  end
+
+  ####################################
+  # As Administrator
+  ####################################
+  let(:administator) { create_administrator(freetown) }
+
+  test 'administrator should search by shortname' do
+    sign_in administator
+
+    post :index,
+         params: {
+           q: user.url,
+           format: :json
+         }
+
+    assert_response 200
+    assert_equal parsed_body[:profiles].size, 1
+  end
+
+  test 'administrator should search by first name' do
+    sign_in administator
+
+    post :index,
+         params: {
+           q: user.first_name,
+           format: :json
+         }
+
+    assert_response 200
+    assert_equal parsed_body[:profiles].size, 1
+  end
+
+  test 'administrator should not search by email' do
+    sign_in administator
+
+    post :index,
+         params: {
+           q: user.email,
+           format: :json
+         }
+
+    assert_response 200
+    assert_equal parsed_body[:profiles].size, 0
+  end
+
+  test 'administrator should get index non found' do
+    sign_in administator
+
+    post :index,
+         params: {
+           q: 'wrong',
+           format: :json
+         }
+
+    assert_response 200
+    assert_equal parsed_body[:profiles].size, 0
+  end
+
+  ####################################
+  # As Staff
+  ####################################
+  let(:staff) { create(:user, :staff) }
+
+  test 'staff should not search by email' do
+    sign_in staff
+
+    post :index,
+         params: {
+           q: user.email,
+           format: :json
+         }
+
+    assert_response 200
+    assert_equal parsed_body[:profiles].size, 1
+  end
+
+  test 'staff should search user without shortname by email' do
+    sign_in staff
+
+    post :index,
+         params: {
+           q: user_no_shortname.email,
+           format: :json
+         }
+
+    assert_response 200
+    assert_equal parsed_body[:profiles].size, 1
   end
 end

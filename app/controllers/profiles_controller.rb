@@ -86,7 +86,7 @@ class ProfilesController < ApplicationController
       policy_scope(Profile)
         .where(profileable_type: 'User')
         .joins("INNER JOIN users ON profiles.profileable_id = users.uuid AND profiles.profileable_type = 'User'")
-        .joins("INNER JOIN shortnames ON shortnames.owner_id = users.uuid AND shortnames.owner_type = 'User'")
+        .joins("LEFT JOIN shortnames ON shortnames.owner_id = users.uuid AND shortnames.owner_type = 'User'")
     wheres = [
       'lower(shortname) SIMILAR TO lower(?)',
       'lower(first_name) SIMILAR TO lower(?)',
