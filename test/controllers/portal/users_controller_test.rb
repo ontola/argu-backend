@@ -5,7 +5,9 @@ require 'test_helper'
 module Portal
   class UsersControllerTest < ActionController::TestCase
     define_freetown
-    let!(:user) { create(:motion, parent: freetown).publisher }
+    let!(:motion) { create(:motion, parent: freetown, publisher: user) }
+    let!(:vote) { create(:vote, parent: motion.default_vote_event, publisher: user) }
+    let!(:user) { create(:user) }
 
     ####################################
     # As Guest
@@ -57,7 +59,9 @@ module Portal
         "Motion.where(publisher_id: #{User::COMMUNITY_ID}).count" => 1,
         'VoteEvent.count' => 0,
         "VoteEvent.where(publisher_id: #{User::COMMUNITY_ID}).count" => 1,
-        'Edge.count' => 0,
+        'Vote.count' => -1,
+        "Vote.where(publisher_id: #{User::COMMUNITY_ID}).count" => 0,
+        'Edge.count' => -1,
         "Edge.where(publisher_id: #{User::COMMUNITY_ID}).count" => 2
       }
       assert_difference(differences) do
@@ -75,7 +79,9 @@ module Portal
         "Motion.where(publisher_id: #{User::COMMUNITY_ID}).count" => 0,
         'VoteEvent.count' => -1,
         "VoteEvent.where(publisher_id: #{User::COMMUNITY_ID}).count" => 0,
-        'Edge.count' => -2,
+        'Vote.count' => -1,
+        "Vote.where(publisher_id: #{User::COMMUNITY_ID}).count" => 0,
+        'Edge.count' => -3,
         "Edge.where(publisher_id: #{User::COMMUNITY_ID}).count" => 0
       }
       assert_difference(differences) do

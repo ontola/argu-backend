@@ -92,7 +92,7 @@ class Vote < Edge
     !opts[:skip_redis] && publisher.guest?
   end
 
-  delegate :is_trashed?, :trashed_at, to: :parent
+  delegate :is_trashed?, :trashed_at, to: :parent, allow_nil: true
 
   # #########Class methods###########
   def self.ordered(votes)
