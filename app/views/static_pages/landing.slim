@@ -219,6 +219,26 @@
     .landing__block__container
       .landing__column
         .landing__block__just-text
+          h2.landing__block__header= t('landing.customers.header')
+          p= t('landing.customers.body')
+        .landing__customers
+          =render partial: 'static_pages/components/customer', locals: {id: 'amsterdam', alt: "Gemeente Amsterdam"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'kvk', alt: "Kamer van Koophandel"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'utrecht', alt: "Gemeente Utrecht"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'alliander', alt: "Alliander"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'tweedekamer', alt: "Tweede Kamer"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'rochdale', alt: "Rochdale"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'vng', alt: "Vereniging van Nederlandse Gemeenten"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'alkmaar', alt: "Gemeente Alkmaar"}
+          / =render partial: 'static_pages/components/customer', locals: {id: 'vaals', alt: "Gemeente Vaals"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'lelystad', alt: "Gemeente Lelystad"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'heerenveen', alt: "Gemeente Heerenveen"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'knwu', alt: "Koninklijke Nederlandsche Wielren Unie"}
+          =render partial: 'static_pages/components/customer', locals: {id: 'hollandskroon', alt: "Gemeente Hollands Kroon"}
+  .landing__block.landing__block--grey
+    .landing__block__container
+      .landing__column
+        .landing__block__just-text
           h2.landing__block__header= t('landing.features.header')
           p= t('landing.features.body')
         .landing__circles
@@ -234,13 +254,13 @@
           =render partial: 'static_pages/components/feature', locals: {type: 'data'}
           / =render partial: 'static_pages/components/feature', locals: {type: 'auditing'}
           =render partial: 'static_pages/components/feature', locals: {type: 'branding'}
+          =render partial: 'static_pages/components/feature', locals: {type: 'blogging'}
           =render partial: 'static_pages/components/feature', locals: {type: 'opendata', soon: true}
           =render partial: 'static_pages/components/feature', locals: {type: 'blockchain', soon: true}
-          =render partial: 'static_pages/components/feature', locals: {type: 'blogging', soon: true}
           =render partial: 'static_pages/components/feature', locals: {type: 'sso', soon: true}
         .landing__button-wrapper
           a.landing__button[href="mailto:info@argu.co"]= t('landing.c2a.ask_demo')
-  .landing__block.landing__block--grey
+  .landing__block
     .landing__block__container
       .landing__column
         h2.landing__block__header= t('landing.method.header')
@@ -262,7 +282,7 @@
             li
               h3= t('landing.method.step5.title')
               p= t('landing.method.step5.body')
-  .landing__block
+  .landing__block.landing__block--grey
     .landing__block__container
       .landing__column#vragen
         h2.landing__block__header= t('landing.faq.header')
@@ -273,6 +293,8 @@
           p= t('landing.faq.moderation.answer')
           h3.landing__question= t('landing.faq.voting.question')
           p= t('landing.faq.voting.answer')
+          h3.landing__question= t('landing.faq.open_source.question')
+          p= t('landing.faq.open_source.answer_html')
           h3.landing__question= t('landing.faq.other.question')
           p= t('landing.faq.other.answer_html')
         .landing__button-wrapper

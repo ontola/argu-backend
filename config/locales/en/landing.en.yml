@@ -75,6 +75,9 @@ en:
         metric1_html: "<b>797</b> votes"
         metric2_html: "<b>172</b> comments and arguments"
         case_preview: "Denk mee over de nieuwe Maliebaan!"
+    customers:
+      header: "Some of our customers"
+      body: "We have experience with many municipalities, semi-governments, associations and corporations."
     features:
       header: "Features"
       body: "We host Argu and will continue to develop it, so you can always use the latest features."
@@ -174,6 +177,9 @@ en:
       voting:
         question: "How does voting work?"
         answer: "You can allow everyone with a valid email address to vote, you can whitelist a set of emailaddresses, share a uniqute URL or you can generate single-use tokens."
+      open_source:
+        question: "Is Argu Open Source?"
+        answer_html: "Although not all our source code is available at <a href=\"https://github.com/argu-co\">our Github</a>, we'll allow anyone who asks to look at our code. Our data is (wherever possible) Open Data, so it can easily be reused."
       other:
         question: "I have a different question."
         answer_html: 'Send us an email at <a href="mailto:info@argu.co">info@argu.co</a> or dial <a href="tel:0031653962242">0031653962242</a>.'

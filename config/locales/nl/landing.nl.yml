@@ -75,6 +75,9 @@ nl:
         metric1_html: "<b>797</b> stemmen geplaatst"
         metric2_html: "<b>172</b> reacties en argumenten"
         case_preview: "Denk mee over de nieuwe Maliebaan!"
+    customers:
+      header: "Een paar van onze klanten"
+      body: "We hebben onder andere ervaring met vele gemeenten, semi-overheden, verenigingen en bedrijven."
     features:
       header: "Functionaliteiten"
       body: "Wij hosten Argu en blijven het ontwikkelen, zodat je altijd over de nieuwste mogelijkheden beschikt."
@@ -174,6 +177,9 @@ nl:
       voting:
         question: "Hoe werkt stemmen op Argu?"
         answer: "U kunt ervoor kiezen dat iedere bezoeker met een bevestigd e-mailadres kan stemmen. Als u strengere controle op stemmen wilt, kunt u er voor kiezen om bijvoorbeeld specifieke e-mailadressen uit te nodigen of om zelf stemcodes te verstrekken aan uw doelgroep."
+      open_source:
+        question: "In hoeverre is Argu Open Source?"
+        answer_html: "Hoewel we op <a href=\"https://github.com/argu-co\">onze Github</a> (nog) niet alle broncode hebben staan, is al onze code voor iedereen die dat vraagt in te zien. De data op Argu is (waar mogelijk) Open Data, zodat het eenvoudig te herbruiken is via onze API."
       other:
         question: "Ik heb een andere vraag."
         answer_html: 'Stuur een mail naar <a href="mailto:info@argu.co">info@argu.co</a> of bel <a href="tel:0031653962242">0653962242</a>.'

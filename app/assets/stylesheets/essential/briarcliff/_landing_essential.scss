@@ -211,6 +211,26 @@ $button-color: #d96833;
   height: 490px;
 }
 
+
+.landing__customers {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+}
+
+.landing__customer {
+  width: 9rem;
+  height: 5rem;
+  margin-bottom: 4rem;
+  margin-right: 5rem;
+  display: inline-block;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .landing__feature-list {
   margin-top: 1.5em;
 }
@@ -300,7 +320,7 @@ $button-color: #d96833;
     transition: .5s all;
   }
 
-  &-item {
+    &-item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -312,7 +332,7 @@ $button-color: #d96833;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 
-    &:hover {
+    .landing__triad  &:hover {
       cursor: pointer;
     }
 
@@ -324,7 +344,7 @@ $button-color: #d96833;
         border-left-color: $identify;
       }
 
-      &:hover {
+      .landing__triad &:hover {
         background-color: darken($identify, 5);
 
         .landing__triad-arrow-right {
@@ -332,7 +352,7 @@ $button-color: #d96833;
         }
       }
 
-      &:active {
+      .landing__triad &:active {
         background-color: darken($identify, 15);
 
         .landing__triad-arrow-right {
@@ -349,7 +369,7 @@ $button-color: #d96833;
         border-left-color: $cocreate;
       }
 
-      &:hover {
+      .landing__triad &:hover {
         background-color: darken($cocreate, 5);
 
         .landing__triad-arrow-right {
@@ -357,7 +377,7 @@ $button-color: #d96833;
         }
       }
 
-      &:active {
+      .landing__triad &:active {
         background-color: darken($cocreate, 15);
 
         .landing__triad-arrow-right {
@@ -374,7 +394,7 @@ $button-color: #d96833;
         border-left-color: $decide;
       }
 
-      &:hover {
+      .landing__triad &:hover {
         background-color: darken($decide, 5);
 
         .landing__triad-arrow-right{
@@ -382,7 +402,7 @@ $button-color: #d96833;
         }
       }
 
-      &:active {
+      .landing__triad &:active {
         background-color: darken($decide, 15);
 
         .landing__triad-arrow-right{
