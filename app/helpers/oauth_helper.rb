@@ -60,7 +60,7 @@ module OauthHelper
     cookies.encrypted['argu_client_token'] = {
       expires: expires,
       value: token,
-      secure: Rails.env.production?,
+      secure: request.ssl? && (Rails.env.staging? || Rails.env.production?),
       httponly: true,
       domain: :all
     }
