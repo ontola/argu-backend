@@ -3,7 +3,6 @@
 class ForumsController < EdgeableController
   prepend_before_action :redirect_generic_shortnames, only: :show
   prepend_before_action :set_layout
-  prepend_before_action :write_client_access_token, unless: :afe_request?
   skip_before_action :authorize_action, only: %i[discover index]
   skip_before_action :check_if_registered, only: %i[discover index]
   skip_after_action :verify_authorized, only: :discover

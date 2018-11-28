@@ -41,10 +41,15 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    if doorkeeper_token&.acceptable?('user')
+    if doorkeeper_token.acceptable?('user')
       User.find_by(id: doorkeeper_token.resource_owner_id)
-    elsif doorkeeper_token&.acceptable?('service') && doorkeeper_token.resource_owner_id.to_i == User::SERVICE_ID
+    elsif doorkeeper_token.acceptable?('service') && doorkeeper_token.resource_owner_id.to_i == User::SERVICE_ID
       User.service
+    elsif doorkeeper_token.acceptable?('guest')
+      GuestUser.new(
+        id: doorkeeper_token.resource_owner_id,
+        language: doorkeeper_token_payload['user']['language']
+      )
     end
   end
 
@@ -172,27 +177,26 @@ Doorkeeper::JWT.configure do
   # Defaults to a randomly generated token in a hash
   # { token: "RANDOM-TOKEN" }
   token_payload do |opts|
-    if opts[:scopes].include?('guest')
-      {
-        iat: Time.current.iso8601(5),
-        user: {
-          type: 'guest',
-          '@id': GuestUser.new(id: opts[:resource_owner_id]).iri
-        }
-      }
-    else
-      user = User.find(opts[:resource_owner_id])
+    user =
+      if opts[:scopes].include?('guest')
+        GuestUser.new(
+          id: opts[:resource_owner_id],
+          language: Argu::Redis.get("guest_user.#{opts[:resource_owner_id]}.language")
+        )
+      else
+        User.find(opts[:resource_owner_id])
+      end
 
-      {
-        iat: Time.current.iso8601(5),
-        user: {
-          type: 'user',
-          '@id': user.iri,
-          id: user.id,
-          email: user.email
-        }
+    {
+      iat: Time.current.iso8601(5),
+      user: {
+        type: user.guest? ? 'guest' : 'user',
+        '@id': user.iri,
+        id: user.id,
+        email: user.email,
+        language: user.language
       }
-    end
+    }
   end
 
   # Use the application secret specified in the Access Grant token

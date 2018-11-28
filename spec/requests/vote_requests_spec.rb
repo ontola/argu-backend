@@ -18,7 +18,7 @@ RSpec.describe 'Votes', type: :request do
   let(:expect_delete_destroy_guest_serializer) { expect(response.code).to eq('403') }
   let(:expect_post_create_guest_serializer) { expect_created }
   let(:expect_get_show_guest_html) { expect_get_show_html }
-  let(:guest_user) { GuestUser.new(session: session) }
+  let(:guest_user) { GuestUser.new(id: session.id) }
   let(:authorized_user_update) { subject.publisher }
   let(:authorized_user_destroy) { subject.publisher }
 

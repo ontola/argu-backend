@@ -4,12 +4,16 @@ require 'test_helper'
 
 module SPI
   class TokensControllerTest < ActionDispatch::IntegrationTest
+    let(:guest_user) { create_guest_user }
+
     ####################################
     # As Guest
     ####################################
     test 'guest should not post create' do
+      sign_in guest_user
+
       post spi_token_path
-      assert_response 401
+      assert_response 403
     end
 
     ####################################
@@ -50,7 +54,6 @@ module SPI
       assert token['user']['@id'].starts_with?(id_base)
       assert_equal SecureRandom.hex.length, token['user']['@id'].split(id_base).last.length
 
-      assert_nil token['user']['id']
       assert_nil token['user']['email']
     end
 

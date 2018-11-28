@@ -39,6 +39,8 @@ module SPI
       doorkeeper_token.application
     end
 
+    def current_user; end
+
     def guest_token
       generate_guest_token(SecureRandom.hex, application: current_application)
     end

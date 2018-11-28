@@ -76,10 +76,10 @@ module Argu
             Doorkeeper::AccessToken
               .create!(
                 application: app,
-                resource_owner_id: id || session.id,
+                resource_owner_id: id || @request&.session&.id || SecureRandom.hex,
                 scopes: scopes
               )
-          GuestUser.new(session: token)
+          GuestUser.new(id: token.resource_owner_id)
         end
 
         def create_moderator(record, user = nil)

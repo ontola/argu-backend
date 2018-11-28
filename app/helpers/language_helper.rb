@@ -54,7 +54,11 @@ module LanguageHelper
       end
   end
 
-  def set_guest_language
-    cookies['locale'] ||= language_from_edge_tree || language_from_r || language_from_header || I18n.locale.to_s
+  def store_guest_language(guest_id)
+    key = "guest_user.#{guest_id}.language"
+    language = Argu::Redis.get(key)
+    return language if language
+    language = language_from_edge_tree || language_from_r || language_from_header || I18n.locale.to_s
+    Argu::Redis.set(key, language)
   end
 end

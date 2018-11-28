@@ -6,7 +6,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
   define_freetown
-  let(:guest_user) { GuestUser.new(session: session) }
+  let(:guest_user) { GuestUser.new(id: session.id) }
   let(:other_guest_user) { GuestUser.new(id: 'other_id') }
   let(:user) { create(:user, password: 'useruser', password_confirmation: 'useruser') }
   let(:secondary_email) { create(:email_address, user: user, email: 'secondary@argu.co') }
@@ -269,7 +269,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
   end
 
   def visit_facebook_oauth_path(opts)
-    cookies[:locale] = 'en'
+    put language_users_path(locale: :en)
     get user_facebook_omniauth_authorize_path(r: opts[:r])
     assert_redirected_to user_facebook_omniauth_callback_path(r: opts[:r])
 

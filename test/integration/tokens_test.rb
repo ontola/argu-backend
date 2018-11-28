@@ -97,6 +97,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with username email for other domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -111,6 +112,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with username username for other domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -125,6 +127,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with username email for Argu domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -139,6 +142,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with caps for other domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -153,6 +157,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with caps for Argu domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -167,6 +172,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with username username for Argu domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -181,6 +187,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should post create token with r for Argu domain' do
+    sign_in guest_user
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -199,6 +206,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   # EMPTY PASSWORD
   ####################################
   test 'User should not post create token with credentials and empty password for other domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -213,6 +221,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with credentials and empty password for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: Rails.application.config.host_name),
@@ -227,6 +236,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with credentials and empty password for Argu domain JSON' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(accept: :json, host: Rails.application.config.host_name),
@@ -244,6 +254,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   # WRONG PASSWORD
   ####################################
   test 'User should not post create token with wrong password for other domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -258,6 +269,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with wrong password for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -272,6 +284,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with wrong password and r for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -287,6 +300,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown email for Argu domain JSON' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(accept: :json, host: 'argu.co'),
@@ -305,6 +319,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   # UNKOWN EMAIL
   ####################################
   test 'User should not post create token with unknown email for other domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -319,6 +334,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown email for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -333,6 +349,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown email and r for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -348,6 +365,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown email and r for Argu domain JSON' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(accept: :json, host: 'argu.co'),
@@ -366,6 +384,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   # UNKOWN USERNAME
   ####################################
   test 'User should not post create token with unknown username for other domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -380,6 +399,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown username for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -394,6 +414,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown username and r for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -409,6 +430,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with unknown username for Argu domain JSON' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(accept: :json, host: 'argu.co'),
@@ -427,6 +449,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   # WITH SERVICE_SCOPE
   ####################################
   test 'User should not post create token with service scope for other domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -441,6 +464,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with service scope for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -455,6 +479,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with user and service scope for other domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'other.example'),
@@ -469,6 +494,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   end
 
   test 'User should not post create token with user and service scope for Argu domain' do
+    sign_in guest_user
     assert_no_difference('Doorkeeper::AccessToken.count') do
       post oauth_token_path,
            headers: argu_headers(host: 'argu.co'),
@@ -537,6 +563,7 @@ class TokensTest < ActionDispatch::IntegrationTest
   # Locking
   ####################################
   test 'User should lock after exceeding failed_attempts limit' do
+    sign_in guest_user
     create_email_mock('unlock_instructions', user.email, token: /.+/)
 
     user.update!(failed_attempts: 19)

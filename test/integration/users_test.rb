@@ -3,6 +3,8 @@
 require 'test_helper'
 
 class UsersTest < ActionDispatch::IntegrationTest
+  include JWTHelper
+
   define_freetown
   define_cairo
 
@@ -407,21 +409,21 @@ class UsersTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should get language cookie' do
     get freetown
-    assert_equal 'en', cookies['locale']
+    assert_equal 'en', token_payload['user']['language']
     assert_nil flash[:error]
   end
 
   test 'guest should get language cookie when visiting dutch forum' do
     get dutch_forum
-    assert_equal 'nl', cookies['locale']
+    assert_equal 'nl', token_payload['user']['language']
     assert_nil flash[:error]
   end
 
   test 'guest should put language' do
     get freetown
-    assert_equal 'en', cookies['locale']
+    assert_equal 'en', token_payload['user']['language']
     put language_users_path(:nl)
-    assert_equal 'nl', cookies['locale']
+    assert_equal 'nl', token_payload['user']['language']
     assert_nil flash[:error]
   end
 
@@ -438,7 +440,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal 'en', user.language
     put language_users_path(:fake_language)
     assert_equal 'en', user.reload.language
-    assert flash[:error].present?
+    assert flash[:notice].present?
   end
 
   ####################################
@@ -629,5 +631,9 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_have_tag response.body,
                     '.settings-tabs .tab--current .icon-left',
                     tab.to_s.capitalize
+  end
+
+  def token_payload
+    decode_token(Doorkeeper::AccessToken.last.token)
   end
 end

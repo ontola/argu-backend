@@ -2,6 +2,7 @@
 
 module OauthHelper
   include LanguageHelper
+  include JWTHelper
   include FrontendTransitionHelper
   include Doorkeeper::Rails::Helpers
   include Doorkeeper::Helpers::Controller
@@ -12,12 +13,8 @@ module OauthHelper
 
   def current_actor
     return @current_actor if @current_actor.present?
-    user = current_resource_owner || GuestUser.new(
-      cookies: afe_request? ? nil : request.cookie_jar,
-      headers: request.headers,
-      language: set_guest_language,
-      session: session
-    )
+    refresh_guest_token if needs_new_guest_token?
+    user = current_resource_owner
     actor = if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
               resource_from_iri!(request.parameters[:actor_iri]).profile
             else
@@ -31,10 +28,6 @@ module OauthHelper
     current_actor.user = resource
     set_layout
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
-  end
-
-  def write_client_access_token
-    refresh_guest_token if needs_new_guest_token
   end
 
   def doorkeeper_guest_token?
@@ -65,6 +58,10 @@ module OauthHelper
     @_raw_doorkeeper_token || super
   end
 
+  def doorkeeper_token_payload
+    @doorkeeper_token_payload ||= decode_token(doorkeeper_token.token)
+  end
+
   def generate_user_token(resource, application: Doorkeeper::Application.argu)
     Doorkeeper::AccessToken.find_or_create_for(
       application,
@@ -76,6 +73,8 @@ module OauthHelper
   end
 
   def generate_guest_token(guest_id, application: Doorkeeper::Application.argu)
+    store_guest_language(guest_id)
+
     Doorkeeper::AccessToken.find_or_create_for(
       application,
       guest_id,
@@ -90,12 +89,14 @@ module OauthHelper
     [requested_scope, :afe].join(' ')
   end
 
-  def needs_new_guest_token
+  def needs_new_guest_token?
+    return false if afe_request?
+
     if Rails.env.production?
       # Ensure that the host ends with 'argu.co' to unmatch e.g. argu.co.malicious.net
       return false unless request.env['HTTP_HOST']&.match?(/argu\.co$/)
     end
-    raw_doorkeeper_token.blank? || raw_doorkeeper_token&.expired?
+    raw_doorkeeper_token.blank? || raw_doorkeeper_token&.expired? || current_resource_owner.blank?
   end
 
   def raw_doorkeeper_token

@@ -117,7 +117,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'should post create en' do
     locale = :en
-    cookies[:locale] = locale.to_s
+    put language_users_path(locale: locale)
     create_email_mock('confirmation', 'test@example.com', confirmationToken: /.+/)
 
     Sidekiq::Testing.inline! do
@@ -154,7 +154,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'should post create nl' do
     locale = :nl
-    cookies[:locale] = locale.to_s
+    put language_users_path(locale: locale)
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
 
@@ -170,7 +170,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
 
   test 'should post create after visiting freetown' do
     locale = :nl
-    cookies[:locale] = locale.to_s
+    put language_users_path(locale: locale)
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
     get freetown.iri_path
@@ -219,7 +219,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     )
 
     locale = :en
-    cookies[:locale] = locale.to_s
+    put language_users_path(locale: locale)
 
     Sidekiq::Testing.inline! do
       assert_difference('User.count' => 1,

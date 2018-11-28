@@ -5,36 +5,47 @@ require 'test_helper'
 module SPI
   class AuthorizeControllerTest < ActionDispatch::IntegrationTest
     define_freetown
+    let(:guest_user) { create_guest_user }
     let(:motion) { create(:motion, publisher: creator, parent: freetown) }
 
     ####################################
     # As Guest
     ####################################
     test 'guest should show motion' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_type: 'Motion', resource_id: motion.id, authorize_action: 'show')
 
       assert_response 200
     end
 
     test 'guest should show motion as iri' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_iri: motion.iri, authorize_action: 'show')
 
       assert_response 200
     end
 
     test 'guest should show motion as canonical' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_iri: motion.canonical_iri, authorize_action: 'show')
 
       assert_response 200
     end
 
     test 'guest should not show non-existing motion' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_type: 'Motion', resource_id: 'non-existing', authorize_action: 'show')
 
       assert_response 404
     end
 
     test 'guest should not show non-existing motion as iri' do
+      sign_in guest_user
+
       get spi_authorize_path(
         resource_iri: expand_uri_template(:motions_iri, id: 'non-existing'),
         authorize_action: 'show'
@@ -44,6 +55,8 @@ module SPI
     end
 
     test 'guest should not show non-existing motion as canonical' do
+      sign_in guest_user
+
       get spi_authorize_path(
         resource_iri: expand_uri_template(:edges_iri, id: SecureRandom.uuid),
         authorize_action: 'show'
@@ -53,24 +66,32 @@ module SPI
     end
 
     test 'guest should not update motion' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_type: 'Motion', resource_id: motion.id, authorize_action: 'update')
 
       assert_response 403
     end
 
     test 'guest should not update motion as iri' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_iri: motion.iri, authorize_action: 'update')
 
       assert_response 403
     end
 
     test 'guest should not update motion as canonical' do
+      sign_in guest_user
+
       get spi_authorize_path(resource_iri: motion.canonical_iri, authorize_action: 'update')
 
       assert_response 403
     end
 
     test 'guest should not show page actor' do
+      sign_in guest_user
+
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: argu.profile.id, authorize_action: 'show'
       )
@@ -79,6 +100,8 @@ module SPI
     end
 
     test 'guest should not show page actor as iri' do
+      sign_in guest_user
+
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
       )
@@ -87,6 +110,8 @@ module SPI
     end
 
     test 'guest should not show user actor' do
+      sign_in guest_user
+
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: user.profile.id, authorize_action: 'show'
       )
@@ -95,6 +120,8 @@ module SPI
     end
 
     test 'guest should not show user actor as iri' do
+      sign_in guest_user
+
       get spi_authorize_path(
         resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show'
       )

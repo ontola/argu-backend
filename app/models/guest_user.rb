@@ -2,8 +2,7 @@
 
 class GuestUser < User
   include NoPersistence
-  attr_accessor :cookies, :headers, :session
-  attr_writer :id
+  attr_accessor :id, :session
 
   def access_tokens
     []
@@ -17,10 +16,6 @@ class GuestUser < User
 
   def follow_for(_followable)
     nil
-  end
-
-  def id
-    @id ||= session.try(:resource_owner_id) || session.id
   end
 
   def iri_opts
@@ -42,8 +37,6 @@ class GuestUser < User
   end
 
   def initialize(attributes = {})
-    @cookies ||= {}
-    @headers ||= {}
     attributes[:time_zone] ||= 'Amsterdam'
     super
   end

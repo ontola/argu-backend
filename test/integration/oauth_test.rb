@@ -43,6 +43,8 @@ class OauthTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'user should login with password grant' do
+    get root_path
+
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            params: {
@@ -64,6 +66,8 @@ class OauthTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should login with password grant with remember me' do
+    get root_path
+
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            params: {
@@ -86,6 +90,8 @@ class OauthTest < ActionDispatch::IntegrationTest
   end
 
   test 'should login with r' do
+    get root_path
+
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            params: {
@@ -109,6 +115,8 @@ class OauthTest < ActionDispatch::IntegrationTest
   end
 
   test 'user should get access token when not from argu' do
+    get root_path
+
     assert_difference('Doorkeeper::AccessToken.count', 1) do
       post oauth_token_path,
            params: {

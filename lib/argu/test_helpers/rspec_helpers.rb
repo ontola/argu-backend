@@ -32,12 +32,12 @@ module Argu
         end
       end
 
-      def sign_in(user, app = Doorkeeper::Application.argu)
+      def sign_in(user, app = Doorkeeper::Application.argu) # rubocop:disable Metrics/PerceivedComplexity
         scopes = user == :guest ? 'guest' : 'user'
         scopes += ' afe' if app.id == Doorkeeper::Application::AFE_ID
         t = Doorkeeper::AccessToken.find_or_create_for(
           app,
-          user == :guest ? SecureRandom.hex : user.id,
+          user == :guest ? (@request&.session&.id || SecureRandom.hex) : user.id,
           scopes,
           10.minutes,
           false

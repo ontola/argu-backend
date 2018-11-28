@@ -13,16 +13,14 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
 
   def language
     locale = permit_locale_params
-    if I18n.available_locales.include?(locale.to_sym)
-      success = current_user.guest? ? cookies['locale'] = locale : current_user.update(language: locale)
-      respond_to do |format|
-        flash[:error] = t('errors.general') if success.blank?
-        format.html { redirect_back(fallback_location: root_path) }
+    active_response_block do
+      if I18n.available_locales.include?(locale.to_sym)
+        message = t('errors.general') unless update_language(locale)
+      else
+        Bugsnag.notify(RuntimeError.new("Invalid locale #{params[:locale]} (#{locale})"))
+        message = t('errors.general')
       end
-    else
-      Bugsnag.notify(RuntimeError.new("Invalid locale #{params[:locale]} (#{locale})"))
-      flash[:error] = t('errors.general')
-      redirect_back(fallback_location: root_path)
+      respond_with_redirect(location: request.headers['Referer'] || root_path, notice: message)
     end
   end
 
@@ -134,6 +132,21 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     else
       authenticated_resource.update_without_password(permit_params)
     end
+  end
+
+  def update_language(locale)
+    if current_user.guest?
+      Argu::Redis.set("guest_user.#{current_user.id}.language", locale)
+    else
+      return false unless current_user.update(language: locale)
+    end
+    new_token =
+      if current_user.guest?
+        generate_guest_token(current_user.id, application: doorkeeper_token.application)
+      else
+        generate_user_token(current_user, application: doorkeeper_token.application)
+      end
+    update_oauth_token(new_token.token)
   end
 
   def password_required

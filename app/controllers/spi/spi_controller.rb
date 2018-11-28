@@ -32,8 +32,6 @@ module SPI
       error_response_json_api(e)
     end
 
-    def set_guest_language; end
-
     def tree_root_id; end
   end
 end
