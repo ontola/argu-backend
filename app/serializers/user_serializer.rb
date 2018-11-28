@@ -2,6 +2,7 @@
 
 class UserSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
+  extend LanguageHelper
 
   def service_or_self?
     service_scope? || self?
@@ -64,11 +65,7 @@ class UserSerializer < RecordSerializer
        }
   enum :language,
        type: NS::SCHEMA[:Thing],
-       options: Hash[
-         I18n
-           .available_locales
-           .map { |l| [l.to_sym, {iri: NS::ARGU["locale/#{l}"], label: I18n.t(:language, locale: l)}] }
-       ]
+       options: available_locales
   enum :time_zone,
        type: NS::SCHEMA[:Thing],
        options: Hash[

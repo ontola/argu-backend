@@ -2,8 +2,9 @@
 
 class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   include SettingsHelper
+  include LanguageHelper
   cattr_accessor :defined_menus
-  has_menus %i[organizations info user]
+  has_menus %i[organizations info user language]
 
   def info_menu
     menu_item(
@@ -27,6 +28,23 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
 
   def iri_path(opts = {})
     expand_uri_template('menus_iri', opts)
+  end
+
+  def language_menu
+    menu_item(
+      :language,
+      label: 'Language',
+      image: 'fa-language',
+      menus: lambda {
+        available_locales.map do |tag, opts|
+          menu_item(
+            tag,
+            label: opts[:label],
+            action: resource.action(user_context, :"set_language_#{tag}")
+          )
+        end
+      }
+    )
   end
 
   def user_menu

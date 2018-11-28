@@ -2,6 +2,8 @@
 
 module Actions
   class UserActions < Base
+    extend LanguageHelper
+
     define_action(
       :privacy,
       type: NS::SCHEMA[:UpdateAction],
@@ -48,5 +50,16 @@ module Actions
       form: ::Users::SetupForm,
       iri_template: :setup_iri
     )
+
+    available_locales.each_key do |tag|
+      define_action(
+        :"set_language_#{tag}",
+        type: NS::SCHEMA[:UpdateAction],
+        policy: :update?,
+        image: 'fa-update',
+        url: -> { iri_from_template(:set_language, language: tag) },
+        http_method: :put
+      )
+    end
   end
 end
