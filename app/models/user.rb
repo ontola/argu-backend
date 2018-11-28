@@ -141,6 +141,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def build_public_group_membership
     return if Group.public.nil?
+    return if profile.group_memberships.any? { |m| m.group_id == Group::PUBLIC_ID }
     profile.group_memberships.build(
       member: profile,
       group_id: Group::PUBLIC_ID,
