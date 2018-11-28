@@ -21,6 +21,10 @@ module SHACL
 
     has_many :sh_in_options
 
+    def default_value
+      object.default_value.respond_to?(:call) ? object.default_value.call(object) : object.default_value
+    end
+
     def type
       NS::SH[:PropertyShape]
     end
