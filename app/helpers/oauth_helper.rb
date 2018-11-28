@@ -27,14 +27,7 @@ module OauthHelper
   end
 
   def sign_in(resource, *_args)
-    t = Doorkeeper::AccessToken.find_or_create_for(
-      Doorkeeper::Application.argu,
-      resource.id,
-      'user',
-      Doorkeeper.configuration.access_token_expires_in,
-      false
-    )
-    afe_request? ? response.headers['New-Authorization'] = t.token : set_argu_client_token_cookie(t.token)
+    update_oauth_token(generate_user_token(resource).token)
     current_actor.user = resource
     set_layout
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
@@ -72,15 +65,29 @@ module OauthHelper
     @_raw_doorkeeper_token || super
   end
 
-  def generate_guest_token
-    session[:load] = true unless session.loaded?
+  def generate_user_token(resource, application: Doorkeeper::Application.argu)
     Doorkeeper::AccessToken.find_or_create_for(
-      Doorkeeper::Application.argu,
-      session_id.to_s,
-      'guest',
+      application,
+      resource.id,
+      new_token_scopes(:user, application.id),
+      Doorkeeper.configuration.access_token_expires_in,
+      false
+    )
+  end
+
+  def generate_guest_token(guest_id, application: Doorkeeper::Application.argu)
+    Doorkeeper::AccessToken.find_or_create_for(
+      application,
+      guest_id,
+      new_token_scopes(:guest, application.id),
       2.days,
       false
     )
+  end
+
+  def new_token_scopes(requested_scope, application_id)
+    return requested_scope unless application_id == Doorkeeper::Application::AFE_ID
+    [requested_scope, :afe].join(' ')
   end
 
   def needs_new_guest_token
@@ -100,8 +107,13 @@ module OauthHelper
 
   def refresh_guest_token
     raw_doorkeeper_token.destroy! if raw_doorkeeper_token&.expired?
-    @_raw_doorkeeper_token = generate_guest_token
+    session[:load] = true unless session.loaded?
+    @_raw_doorkeeper_token = generate_guest_token(session_id.to_s)
     set_argu_client_token_cookie(raw_doorkeeper_token.token)
     true
+  end
+
+  def update_oauth_token(token)
+    afe_request? ? response.headers['New-Authorization'] = token : set_argu_client_token_cookie(token)
   end
 end
