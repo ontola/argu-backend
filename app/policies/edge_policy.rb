@@ -67,7 +67,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def permitted_attribute_names
     attributes = super
     attributes.append(:mark_as_important) if mark_as_important?
-    attributes.append(:creator) if new_record?
+    attributes.append(:creator) if new_record? && !user.guest?
     attributes.concat %i[id expires_at] if expires_at?
     attributes.concat([:url, shortname_attributes: %i[shortname id]]) if shortname?
     attributes
