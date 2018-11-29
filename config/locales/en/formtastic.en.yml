@@ -24,6 +24,7 @@ en:
       cover_photo: "Cover photo"
       cover_photo_add: "Add image"
       created_at: "Created at"
+      creator: "Post as"
       default_cover_photo: "Cover photo"
       default_profile_photo: "Profile photo"
       description: "Content"
