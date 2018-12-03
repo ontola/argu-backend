@@ -17,7 +17,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
     respond_with({}, location: after_resending_confirmation_instructions_path_for(resource))
   end
 
-  def show
+  def show # rubocop:disable Metrics/AbcSize
     @original_token = params[:confirmation_token]
     self.resource = email_by_token&.user
     return super if resource.nil? || resource.encrypted_password.present?
@@ -41,7 +41,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
     end
   end
 
-  def confirm
+  def confirm # rubocop:disable Metrics/AbcSize
     respond_to do |format|
       format.html do
         @original_token = params[resource_name].try(:[], :confirmation_token)

@@ -32,7 +32,7 @@ class Notification < ApplicationRecord
     user.try :sync_notification_count
   end
 
-  def title
+  def title # rubocop:disable Metrics/AbcSize
     if activity.present?
       activity_string_for(activity, user)
     elsif confirmation_reminder?

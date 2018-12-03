@@ -63,7 +63,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     }
   end
 
-  def execute_action
+  def execute_action # rubocop:disable Metrics/AbcSize
     return super unless action_name == 'create'
     return super unless unmodified?
     respond_to do |format|
@@ -123,7 +123,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     redirect_to authenticated_resource.voteable.iri_path
   end
 
-  def for_param
+  def for_param # rubocop:disable Metrics/AbcSize
     if params[:for].is_a?(String) && params[:for].present?
       # Still used for upvoting arguments
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
@@ -186,7 +186,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
-  def create_meta
+  def create_meta # rubocop:disable Metrics/AbcSize
     data = []
     if authenticated_resource.parent.is_a?(VoteEvent)
       if default_vote_event_id?
@@ -205,7 +205,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def destroy_meta
+  def destroy_meta # rubocop:disable Metrics/AbcSize
     data = super
     data.push [
       authenticated_resource.parent_iri,
@@ -226,7 +226,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     data
   end
 
-  def replace_vote_event_meta(data)
+  def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize
     iri =
       if parent_resource.parent.is_a?(LinkedRecord)
         RDF::DynamicURI(parent_resource.iri.to_s.gsub('/lr/', '/od/').split('/vote_events/')[0])

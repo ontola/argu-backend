@@ -5,7 +5,7 @@ class ProfilesController < AuthorizedController
   include UriTemplateHelper
   active_response :edit, :show
 
-  def index
+  def index # rubocop:disable Metrics/AbcSize
     return if current_user.guest? || params[:q].blank?
     q = params[:q].tr(' ', '|')
     @profiles = search_scope(q).includes(:default_profile_photo, profileable: %i[shortname email_addresses])

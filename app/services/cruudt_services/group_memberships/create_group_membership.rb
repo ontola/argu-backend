@@ -15,7 +15,7 @@ class CreateGroupMembership < CreateService
 
   private
 
-  def after_save
+  def after_save # rubocop:disable Metrics/AbcSize
     if resource.member.profileable.is_a?(User)
       forum_edge_ids = resource.grants.joins(:edge).where(edges: {owner_type: 'Forum'}).pluck('edges.uuid').uniq
       if forum_edge_ids.empty? && resource.grants.joins(:edge).where(edge: resource.page).present?

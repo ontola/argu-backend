@@ -31,7 +31,7 @@ class VoteEvent < Edge
     children_count(:votes_pro)
   end
 
-  def stats
+  def stats # rubocop:disable Metrics/AbcSize
     return @stats if @stats.present?
     totals = Vote
                .where(parent_id: id)

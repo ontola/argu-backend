@@ -110,7 +110,7 @@ RSpec.feature 'Comments', type: :feature do
     end
   end
 
-  def sign_up_and_confirm_comment
+  def sign_up_and_confirm_comment # rubocop:disable Metrics/AbcSize
     click_link 'Sign up with email'
     user_attr = attributes_for(:user)
 

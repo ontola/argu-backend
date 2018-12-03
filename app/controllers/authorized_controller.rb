@@ -142,7 +142,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   # @return [uuid] The uuid of the root edge.
   def tree_root_id; end
 
-  def verify_terms_accepted
+  def verify_terms_accepted # rubocop:disable Metrics/AbcSize
     return if current_user.guest? || current_user.accepted_terms?
     if accept_terms_param
       current_user.accept_terms!

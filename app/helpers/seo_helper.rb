@@ -32,7 +32,7 @@ module SeoHelper
 
   private
 
-  def options_hash_to_meta_tags(options)
+  def options_hash_to_meta_tags(options) # rubocop:disable Metrics/AbcSize
     META_ITEMS.map do |k, v|
       if v.is_a?(Hash)
         tag_name = v.delete(:tag_name).presence || :meta

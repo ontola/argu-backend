@@ -39,7 +39,7 @@ class StaticPagesController < AuthorizedController
     }
   end
 
-  def home
+  def home # rubocop:disable Metrics/AbcSize
     active_response_block do
       if active_response_type == :html
         if current_user.is_staff?

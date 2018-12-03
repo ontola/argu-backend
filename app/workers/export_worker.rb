@@ -7,7 +7,7 @@ class ExportWorker
 
   attr_accessor :export
 
-  def perform(export_id)
+  def perform(export_id) # rubocop:disable Metrics/AbcSize
     self.export = Export.find_by(id: export_id)
     return if export.blank?
     export.processing!
@@ -34,7 +34,7 @@ class ExportWorker
     end
   end
 
-  def add_xls(zip)
+  def add_xls(zip) # rubocop:disable Metrics/AbcSize
     book = Spreadsheet::Workbook.new
     data.each do |type, records|
       sheet = book.create_worksheet(name: I18n.t("#{type.tableize}.plural"))

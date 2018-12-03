@@ -6,7 +6,7 @@ class Users::PasswordsController < Devise::PasswordsController
   skip_before_action :require_no_authentication, only: :create, if: :no_password_required?
   active_response :new, :edit
 
-  def create
+  def create # rubocop:disable Metrics/AbcSize
     if no_password_required?
       params[:user] ||= {}
       params[:user][:email] = current_user.email

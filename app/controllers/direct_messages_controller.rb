@@ -7,7 +7,7 @@ class DirectMessagesController < ParentableController
     opts[:resource].action(user_context, :create)
   end
 
-  def create_execute
+  def create_execute # rubocop:disable Metrics/AbcSize
     authenticated_resource.assign_attributes(permit_params)
     authenticated_resource.actor = current_actor.actor
     return false unless authenticated_resource.valid?

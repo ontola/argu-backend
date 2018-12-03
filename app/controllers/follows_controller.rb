@@ -60,7 +60,7 @@ class FollowsController < AuthorizedController
     ]
   end
 
-  def new_resource_from_params
+  def new_resource_from_params # rubocop:disable Metrics/AbcSize
     return @resource if instance_variable_defined?(:@resource)
     followable = Edge.where(owner_type: PERMITTED_CLASSES).find_by(uuid: permit_params[:gid])
     return @resource = nil if followable.nil?

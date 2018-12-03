@@ -11,7 +11,7 @@ module OauthHelper
     current_actor.user
   end
 
-  def current_actor
+  def current_actor # rubocop:disable Metrics/AbcSize
     return @current_actor if @current_actor.present?
     refresh_guest_token if needs_new_guest_token?
     user = current_resource_owner

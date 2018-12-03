@@ -32,6 +32,7 @@ module Argu
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def sign_in(user, app = Doorkeeper::Application.argu) # rubocop:disable Metrics/PerceivedComplexity
         scopes = user == :guest ? 'guest' : 'user'
         scopes += ' afe' if app.id == Doorkeeper::Application::AFE_ID
@@ -65,6 +66,7 @@ module Argu
           expect(page).to have_current_path redirect_to
         end.to change { Doorkeeper::AccessToken.last.id }.by(1)
       end
+      # rubocop:enable Metrics/AbcSize
 
       def visit(url)
         super url.try(:iri_path) || url

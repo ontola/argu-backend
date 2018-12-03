@@ -8,7 +8,7 @@ module CustomGrants
 
     cattr_accessor :custom_grants
 
-    def self.custom_grants_for(child_type, action)
+    def self.custom_grants_for(child_type, action) # rubocop:disable Metrics/AbcSize
       singular = child_type.to_s.singularize
       child_class = child_type.to_s.classify.constantize
       unless child_class.parent_classes.include?(class_name.singularize.to_sym)

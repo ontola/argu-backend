@@ -2,7 +2,7 @@
 
 module Omniauth
   class OmniauthFacebook
-    def self.create_user_without_shortname(auth, identity, r = nil)
+    def self.create_user_without_shortname(auth, identity, r = nil) # rubocop:disable Metrics/AbcSize
       info = auth['info']
       raw = auth['extra']['raw_info']
       user = nil

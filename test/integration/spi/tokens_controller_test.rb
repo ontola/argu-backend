@@ -139,7 +139,7 @@ module SPI
       assert_equal Argu::Errors::TYPES[error.to_s][:id], parsed_body['code']
     end
 
-    def validate_user_token(user)
+    def validate_user_token(user) # rubocop:disable Metrics/AbcSize
       b = parsed_body
       assert_equal 'user', b['scope']
       assert_equal 'Bearer', b['token_type']

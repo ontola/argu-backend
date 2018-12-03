@@ -221,7 +221,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
     assert_equal parsed_body, 'errors' => errors
   end
 
-  def test_error_n3(method, path, params, status, opts)
+  def test_error_n3(method, path, params, status, opts) # rubocop:disable Metrics/AbcSize
     send(method, path, params: params, headers: argu_headers(accept: :n3))
 
     assert_response status

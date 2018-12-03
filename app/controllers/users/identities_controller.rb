@@ -14,7 +14,7 @@ class Users::IdentitiesController < AuthorizedController
     }
   end
 
-  def connect!
+  def connect! # rubocop:disable Metrics/AbcSize
     user = User.find_via_shortname_or_id! params[:id].presence || params[:user][:id]
     user.r = r_param
     schedule_redis_resource_worker(GuestUser.new(id: session_id), user, r_param)

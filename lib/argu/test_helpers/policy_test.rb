@@ -78,7 +78,7 @@ class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
                            user: user), subject)
   end
 
-  def reset_grants(subject, user_type)
+  def reset_grants(subject, user_type) # rubocop:disable Metrics/AbcSize
     subject.visible! if subject.is_a?(Page)
     case user_type
     when :spectator
@@ -100,7 +100,7 @@ class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def test_policy(subject, action, test_cases)
+  def test_policy(subject, action, test_cases) # rubocop:disable Metrics/AbcSize
     failures = []
     class_name = self.class.name.gsub('PolicyTest', '')
     test_cases.each do |user, expected|

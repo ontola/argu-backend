@@ -5,7 +5,7 @@ class Portal::PortalController < Portal::PortalBaseController
   skip_after_action :verify_authorized, only: :home
   prepend_view_path 'app/views/portal/portal'
 
-  def home
+  def home # rubocop:disable Metrics/AbcSize
     authorize :portal, :home?
     @forums = Forum.order(display_name: :asc).page(params[:forums_page]).per(500)
     @pages = Page

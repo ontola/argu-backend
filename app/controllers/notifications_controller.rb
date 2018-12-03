@@ -87,7 +87,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     )
   end
 
-  def index_meta
+  def index_meta # rubocop:disable Metrics/AbcSize
     m = []
     m <<
       if index_collection.is_a?(CollectionView)

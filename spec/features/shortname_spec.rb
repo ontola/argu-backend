@@ -20,7 +20,7 @@ RSpec.feature 'Shortname', type: :feature do
 
   private
 
-  def general_create(_response = 200)
+  def general_create(_response = 200) # rubocop:disable Metrics/AbcSize
     motion
     visit shortname_settings_path
 
@@ -39,7 +39,7 @@ RSpec.feature 'Shortname', type: :feature do
     end.to change { Shortname.count }.by(1)
   end
 
-  def general_destroy(_response = 200)
+  def general_destroy(_response = 200) # rubocop:disable Metrics/AbcSize
     expect do
       visit shortname_settings_path
       page.accept_alert do

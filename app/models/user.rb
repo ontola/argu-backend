@@ -184,7 +184,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
   # Follows the ancestors if #ancestor_type is given.
-  def follow(followable, type = :reactions, ancestor_type = nil)
+  def follow(followable, type = :reactions, ancestor_type = nil) # rubocop:disable Metrics/AbcSize
     return if self == followable || !accepted_terms?
     if type.present?
       follow = follows.find_or_initialize_by(followable_id: followable.uuid,
@@ -307,7 +307,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     id <= 0
   end
 
-  def salt
+  def salt # rubocop:disable Metrics/AbcSize
     if encrypted_password.presence
       ::BCrypt::Password.new(encrypted_password).salt
     else

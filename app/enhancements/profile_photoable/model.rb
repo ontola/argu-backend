@@ -32,7 +32,7 @@ module ProfilePhotoable
       build_default_profile_photo(photo_params) if default_profile_photo.blank?
     end
 
-    def photo_params
+    def photo_params # rubocop:disable Metrics/AbcSize
       case self
       when Profile
         if profileable.is_a?(Page)

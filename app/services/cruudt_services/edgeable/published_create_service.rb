@@ -3,7 +3,7 @@
 class PublishedCreateService < EdgeableCreateService
   private
 
-  def after_save
+  def after_save # rubocop:disable Metrics/AbcSize
     super
     return if resource.store_in_redis?
     resource.publisher.follow(resource, :reactions, :news)

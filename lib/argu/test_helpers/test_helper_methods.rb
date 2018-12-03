@@ -30,7 +30,7 @@ module Argu
           end
         end
 
-        def create_with_service(model_type, args, attributes)
+        def create_with_service(model_type, args, attributes) # rubocop:disable Metrics/AbcSize
           traits_with_args = attributes.delete(:traits_with_args) || {}
           klass = model_type.to_s.classify.constantize
 
@@ -128,7 +128,7 @@ module Argu
           user
         end
 
-        def create_resource(klass, attributes = {}, options = {})
+        def create_resource(klass, attributes = {}, options = {}) # rubocop:disable Metrics/AbcSize
           if klass < Edge || klass < NewsBoy || klass == VoteMatch
             options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
             options[:creator] = options[:publisher].profile if options[:creator].nil?
@@ -235,7 +235,7 @@ module Argu
                                 :manager, :owner, :staff, :page)
         end
 
-        def define_common_objects(*let)
+        def define_common_objects(*let) # rubocop:disable Metrics/AbcSize
           define_freetown
           let(:spectator) { user } if mdig?(:spectator, let)
           let(:user) { create(:user) } if mdig?(:user, let)
@@ -257,7 +257,7 @@ module Argu
           define_hidden_spec_objects
         end
 
-        def define_freetown_spec_objects
+        def define_freetown_spec_objects # rubocop:disable Metrics/AbcSize
           let(:freetown) { Forum.find_via_shortname('freetown', argu.uuid) }
           let(:group) { Group.find_by(name: 'custom') }
           let(:group_membership) { group.group_memberships.first }
@@ -292,7 +292,7 @@ module Argu
           let(:hidden_motion) { holland.descendants.at_depth(4).where(owner_type: 'Motion').first }
         end
 
-        def define_model_spec_objects
+        def define_model_spec_objects # rubocop:disable Metrics/AbcSize
           let(:described_method) do |example|
             desc =
               if example.example_group.description.starts_with?('#')

@@ -200,7 +200,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
     association(:parent).reader(*args)
   end
 
-  def ancestor(type)
+  def ancestor(type) # rubocop:disable Metrics/AbcSize
     return parent if type.nil?
     return self if owner_type == type.to_s.classify
     return parent.ancestor(type) if !root_object? && association_cached?(:parent)

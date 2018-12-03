@@ -5,7 +5,7 @@ module GroupsHelper
     [[t('grants.all_forums'), page.uuid]].concat(page.forums.map { |f| [f.display_name, f.uuid] })
   end
 
-  def custom_grant_props(resource, resource_type, action)
+  def custom_grant_props(resource, resource_type, action) # rubocop:disable Metrics/AbcSize
     {
       action: action,
       defaultGroupIds:

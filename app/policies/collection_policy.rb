@@ -19,7 +19,7 @@ class CollectionPolicy < RestrictivePolicy
 
   private
 
-  def parent_policy
+  def parent_policy # rubocop:disable Metrics/AbcSize
     return if record.parent.blank?
     if record.parent.is_a?(Edge) && user_context.tree_root_id.nil?
       @parent_policy ||= NoRootPolicy.new(user_context, record.parent)

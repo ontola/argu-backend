@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
-  def to_html
+  def to_html # rubocop:disable Metrics/AbcSize
     input_wrapping do
       choices_wrapping do
         hidden_field_for_all <<

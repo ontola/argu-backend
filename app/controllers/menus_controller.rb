@@ -39,7 +39,7 @@ class MenusController < ParentableController
     end
   end
 
-  def resource_by_id
+  def resource_by_id # rubocop:disable Metrics/AbcSize
     @_resource_by_id ||=
       if parent_resource.present?
         parent_resource.menu(user_context, params[:id].to_sym)

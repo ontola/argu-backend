@@ -33,7 +33,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
 
   private
 
-  def accept_terms_before_posting_motion(user)
+  def accept_terms_before_posting_motion(user) # rubocop:disable Metrics/AbcSize
     motion_attr = attributes_for(:motion)
     sign_in user
 
@@ -53,7 +53,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
     expect(user.reload.accepted_terms?).to be_truthy
   end
 
-  def accept_terms_before_voting(user)
+  def accept_terms_before_voting(user) # rubocop:disable Metrics/AbcSize
     sign_in user
 
     visit motion

@@ -27,14 +27,14 @@ class GrantTree
       Node.new(edge, self, grant_tree)
     end
 
-    def expired?
+    def expired? # rubocop:disable Metrics/AbcSize
       @expired ||=
         parent&.expired? ||
         edge.expires_at && edge.expires_at < Time.current ||
         (edge.owner_type == 'VoteEvent' && edge.starts_at > Time.current)
     end
 
-    def granted_group_ids(action: nil, resource_type: nil, parent_type: nil)
+    def granted_group_ids(action: nil, resource_type: nil, parent_type: nil) # rubocop:disable Metrics/AbcSize
       if action.nil? && resource_type.nil? && parent_type.nil?
         return permitted_actions.values.map(&:values).flatten.map(&:values).flatten.uniq
       end
@@ -65,7 +65,7 @@ class GrantTree
 
     private
 
-    def calculate_permitted_actions(grant_tree)
+    def calculate_permitted_actions(grant_tree) # rubocop:disable Metrics/AbcSize
       grant_tree.grant_resets_in_scope.select { |grant| grant.edge.path == edge.path }.each do |grant_reset|
         permitted_actions[grant_reset.resource_type][grant_reset.action] = {}
       end

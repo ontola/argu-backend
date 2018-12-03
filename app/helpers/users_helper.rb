@@ -60,7 +60,7 @@ module UsersHelper
   #   either an 'r' action
   #   or preferred_forum
   #   if the user hasn't got any favorites yet
-  def setup_favorites(user)
+  def setup_favorites(user) # rubocop:disable Metrics/AbcSize
     # changed? so we can safely write back to the DB
     return unless user.valid? && user.persisted?
     return if user.favorites.present?
@@ -72,7 +72,7 @@ module UsersHelper
     end
   end
 
-  def suggested_shortname(resource)
+  def suggested_shortname(resource) # rubocop:disable Metrics/AbcSize
     shortname = resource.email[/[^@]+/].tr('.', '_').downcase
     existing = Shortname.where('shortname ~* ?', "^#{shortname}\\d*$").pluck(:shortname).map(&:downcase)
     return shortname unless existing.include?(shortname)

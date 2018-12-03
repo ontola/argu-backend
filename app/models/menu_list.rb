@@ -47,7 +47,7 @@ class MenuList
 
   private
 
-  def menu_item(tag, options)
+  def menu_item(tag, options) # rubocop:disable Metrics/AbcSize
     if options[:policy].present?
       return unless resource_policy(options[:policy_resource]).send(options[:policy], *options[:policy_arguments])
     end

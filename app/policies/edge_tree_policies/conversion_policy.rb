@@ -13,7 +13,7 @@ class ConversionPolicy < EdgeTreePolicy
     attributes
   end
 
-  def create?
+  def create? # rubocop:disable Metrics/AbcSize
     klass = record.klass.is_a?(String) ? record.klass : record.klass.class_name
     assert! record.edge.try(:convertible_classes)&.include?(klass.to_sym), :convert_class?
     assert! Pundit.policy(context, edgeable_record).convert?, :convert?

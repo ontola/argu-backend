@@ -22,7 +22,7 @@ class DraftsController < AuthorizedController
 
   def index_collection_name; end
 
-  def index_success_html
+  def index_success_html # rubocop:disable Metrics/AbcSize
     skip_verify_policy_scoped(true)
 
     blog_posts = BlogPost.where(creator_id: user_by_id.managed_profile_ids).unpublished.untrashed

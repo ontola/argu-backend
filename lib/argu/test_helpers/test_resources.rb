@@ -3,7 +3,7 @@
 module Argu
   module TestResources
     module InstanceMethods
-      def create_forum(*args)
+      def create_forum(*args) # rubocop:disable Metrics/AbcSize
         attributes = (args.pop if args.last.is_a?(Hash)) || {}
         page = attributes[:parent] || create(:page)
         attributes = {

@@ -3,7 +3,7 @@
 module React
   module ServerRendering
     class WebpackerManifestContainer
-      def find_asset(logical_path)
+      def find_asset(logical_path) # rubocop:disable Metrics/AbcSize
         path = ::Rails.root.join(File.join(Webpacker::Configuration.output_path, '/pre-render/manifest.json'))
         full_path = ::Rails.root.join(JSON.parse(File.read(path))[logical_path.to_s])
 

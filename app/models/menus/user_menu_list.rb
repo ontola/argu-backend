@@ -9,7 +9,7 @@ class UserMenuList < MenuList
 
   private
 
-  def settings_menu
+  def settings_menu # rubocop:disable Metrics/AbcSize
     menu_item(
       :settings,
       iri_base: -> { '' },

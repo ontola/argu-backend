@@ -11,7 +11,7 @@ module Argu
         assert_equal true, assigns(:_not_authorized_caught)
       end
 
-      def assert_email_sent(count: 1, skip_sidekiq: false)
+      def assert_email_sent(count: 1, skip_sidekiq: false) # rubocop:disable Metrics/AbcSize
         unless skip_sidekiq
           assert_equal count, Sidekiq::Worker.jobs.select { |j| j['class'] == 'SendEmailWorker' }.count
           SendEmailWorker.drain

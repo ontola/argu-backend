@@ -3,7 +3,7 @@
 class Users::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token, only: :destroy
 
-  def new
+  def new # rubocop:disable Metrics/AbcSize
     request.flash[:notice] = I18n.t('devise.failure.invalid') if params[:show_error]
     self.resource = resource_class.new({remember_me: true, r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
@@ -81,7 +81,7 @@ class Users::SessionsController < Devise::SessionsController
     uri.to_s
   end
 
-  def respond_to_on_destroy
+  def respond_to_on_destroy # rubocop:disable Metrics/AbcSize
     respond_to do |format|
       format.all { head :no_content }
       format.any(*navigational_formats) do

@@ -25,7 +25,7 @@ module HeaderHelper
     }
   end
 
-  def profile_dropdown_sections
+  def profile_dropdown_sections # rubocop:disable Metrics/AbcSize
     items =
       if current_user.url.present?
         [

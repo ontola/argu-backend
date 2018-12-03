@@ -29,7 +29,7 @@ class QuestionsController < EdgeableController
     params.permit(:page)
   end
 
-  def show_success_html
+  def show_success_html # rubocop:disable Metrics/AbcSize
     @all_motion_edges = policy_scope(
       authenticated_resource
         .children

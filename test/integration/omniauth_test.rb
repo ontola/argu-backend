@@ -268,7 +268,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     facebook_me(fields: {name: 'My Name'})
   end
 
-  def visit_facebook_oauth_path(opts)
+  def visit_facebook_oauth_path(opts) # rubocop:disable Metrics/AbcSize
     put language_users_path(locale: :en)
     get user_facebook_omniauth_authorize_path(r: opts[:r])
     assert_redirected_to user_facebook_omniauth_callback_path(r: opts[:r])

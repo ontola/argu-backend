@@ -20,7 +20,7 @@ class ShortnameInput
 
   private
 
-  def base_url
+  def base_url # rubocop:disable Metrics/AbcSize
     return Rails.application.config.origin if options[:root] == false || object.is_a?(Page)
     return object.root.iri if object.is_a?(Shortname)
     object.root.iri

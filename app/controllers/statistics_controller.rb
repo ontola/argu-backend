@@ -28,7 +28,7 @@ class StatisticsController < ParentableController
     authorize parent_resource!, :statistics?
   end
 
-  def city_count(forum)
+  def city_count(forum) # rubocop:disable Metrics/AbcSize
     cities = Hash.new(0)
     User
       .joins(:follows)
@@ -51,7 +51,7 @@ class StatisticsController < ParentableController
     @observation_dimensions ||= {NS::SCHEMA[:about] => parent_resource.iri}
   end
 
-  def observation_measures
+  def observation_measures # rubocop:disable Metrics/AbcSize
     return @observation_measures if @observation_measures
     counts = descendants.group(:owner_type).count
     votes = descendants.joins(:parent).where(owner_type: 'Vote', parents_edges: {owner_type: 'VoteEvent'})

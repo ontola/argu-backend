@@ -10,7 +10,7 @@ module RedisResource
       remove_from_redis
     end
 
-    def key
+    def key # rubocop:disable Metrics/AbcSize
       @key ||= RedisResource::Key.new(
         root_id: resource.root_id,
         user_type: resource.publisher.class.name,
@@ -21,7 +21,7 @@ module RedisResource
       )
     end
 
-    def persist(user)
+    def persist(user) # rubocop:disable Metrics/AbcSize
       if Edge.where(publisher: user, owner_type: resource.class.name, parent_id: resource.parent_id).any?
         Argu::Redis.delete(key.key)
         return
@@ -44,7 +44,7 @@ module RedisResource
       service.commit
     end
 
-    def save
+    def save # rubocop:disable Metrics/AbcSize
       resource.created_at ||= Time.current
       store_in_redis
       resource.parent.save! if resource.parent.new_record?
@@ -73,7 +73,7 @@ module RedisResource
       # @param [User] user The user of the record
       # @param [Edge] parent The parent of the record
       # @return [RedisResource::Resource] The found record wrapped in a RedisResource::Persistence
-      def find(key, user: nil, parent: nil)
+      def find(key, user: nil, parent: nil) # rubocop:disable Metrics/AbcSize
         key = RedisResource::Key.parse(key) if key.is_a?(String)
         attributes = key.attributes&.except('publisher_id', 'creator_id')
         return if attributes.nil?

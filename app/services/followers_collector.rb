@@ -19,7 +19,7 @@ class FollowersCollector
 
   private
 
-  def followers
+  def followers # rubocop:disable Metrics/AbcSize
     User
       .joins(follows: :followable, profile: {grants: :edge})
       .where(edges: {id: @resource.id})

@@ -25,14 +25,14 @@ class EdgeTreePolicy < RestrictivePolicy
       end
     end
 
-    def filtered_edge_table
+    def filtered_edge_table # rubocop:disable Metrics/AbcSize
       table = joined_edge_table.where(grants_table[:group_id].in(user.profile.group_ids))
       return table if grant_tree.tree_root_id.nil?
       table
         .where(edges_table[:root_id].eq(grant_tree.tree_root_id))
     end
 
-    def granted_path_type_filter(parent_alias = :parents_edges, parent_type: nil)
+    def granted_path_type_filter(parent_alias = :parents_edges, parent_type: nil) # rubocop:disable Metrics/AbcSize
       filter =
         granted_paths_table
           .where(granted_paths_table[:resource_type].eq(edges_table[:owner_type]))
@@ -55,7 +55,7 @@ class EdgeTreePolicy < RestrictivePolicy
         )
     end
 
-    def joined_edge_table
+    def joined_edge_table # rubocop:disable Metrics/AbcSize
       edges_table
         .join(grants_table).on(edges_table[:uuid].eq(grants_table[:edge_id]))
         .join(grant_sets_table).on(grant_sets_table[:id].eq(grants_table[:grant_set_id]))

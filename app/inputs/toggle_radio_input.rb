@@ -3,7 +3,7 @@
 class ToggleRadioInput < Formtastic::Inputs::RadioInput
   include ActionView::Helpers::TranslationHelper
 
-  def choice_html(choice)
+  def choice_html(choice) # rubocop:disable Metrics/AbcSize
     template.content_tag(
       :label,
       builder.radio_button(input_name,

@@ -3,7 +3,7 @@
 module ActiveResponseHelper
   include RailsLD::ActiveResponse::Controller::CrudDefaults
 
-  def active_response_success_message
+  def active_response_success_message # rubocop:disable Metrics/AbcSize
     if (action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?) ||
         resource_was_published?
       t('type_publish_success', type: type_for(current_resource).capitalize)

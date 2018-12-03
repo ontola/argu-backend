@@ -23,7 +23,7 @@ module RedisResource
     # @option opts [Uuid] root_id
     # @option opts [Edge] parent
     # @option opts [Integer] parent_id
-    def initialize(opts = {})
+    def initialize(opts = {}) # rubocop:disable Metrics/AbcSize
       opts.compact!
       self.user_type ||= opts[:user]&.class&.to_s&.underscore || opts.fetch(:user_type, '*')
       self.user_id ||= opts[:user]&.id || opts.fetch(:user_id, '*')
@@ -44,7 +44,7 @@ module RedisResource
       key.include?('*')
     end
 
-    def matched_keys
+    def matched_keys # rubocop:disable Metrics/AbcSize
       @matched_keys ||=
         if has_wildcards?
           keys = Argu::Redis.keys(key).map { |key| RedisResource::Key.parse(key, user) }.compact

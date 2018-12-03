@@ -11,7 +11,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     render locals: {email: params[:email], r: r_param}
   end
 
-  def language
+  def language # rubocop:disable Metrics/AbcSize
     locale = permit_locale_params
     active_response_block do
       if I18n.available_locales.include?(locale.to_sym)
@@ -26,7 +26,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
 
   private
 
-  def authenticated_resource!
+  def authenticated_resource! # rubocop:disable Metrics/AbcSize
     @user ||= case action_name
               when 'show'
                 User.preload(:profile).find_via_shortname_or_id(params[:id])
@@ -43,7 +43,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
               end
   end
 
-  def email_changed?
+  def email_changed? # rubocop:disable Metrics/AbcSize
     return if permit_params[:email_addresses_attributes].blank?
     permit_params[:email_addresses_attributes].any? do |email|
       email.second['id'].nil? ||
@@ -56,7 +56,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     params.require(:locale)
   end
 
-  def permit_params(password = false)
+  def permit_params(password = false) # rubocop:disable Metrics/AbcSize
     attrs = policy(authenticated_resource || User).permitted_attribute_names(password)
     pp = params.require(:user).permit(*attrs).to_h
     merge_photo_params(pp, authenticated_resource.class)
@@ -86,7 +86,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     super.merge(profile: authenticated_resource.profile)
   end
 
-  def show_success_html
+  def show_success_html # rubocop:disable Metrics/AbcSize
     if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
       redirect_to authenticated_resource.iri_path, status: 307
     else
@@ -103,7 +103,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     end
   end
 
-  def update_failure_html
+  def update_failure_html # rubocop:disable Metrics/AbcSize
     if params[:user][:form] == 'wrong_email'
       email = params[:user][:email_addresses_attributes]['99999'][:email]
       if current_user.email_addresses.any? { |e| e.email == email }
@@ -134,7 +134,7 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     end
   end
 
-  def update_language(locale)
+  def update_language(locale) # rubocop:disable Metrics/AbcSize
     if current_user.guest?
       Argu::Redis.set("guest_user.#{current_user.id}.language", locale)
     else

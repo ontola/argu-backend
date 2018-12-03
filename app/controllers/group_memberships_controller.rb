@@ -3,7 +3,7 @@
 class GroupMembershipsController < ServiceController
   skip_before_action :verify_terms_accepted
 
-  def index
+  def index # rubocop:disable Metrics/AbcSize
     return super if params[:group_id].present?
     return if params[:q].nil?
     q = params[:q].tr(' ', '|')
@@ -52,7 +52,7 @@ class GroupMembershipsController < ServiceController
 
   alias create_service_parent parent_resource!
 
-  def existing_record
+  def existing_record # rubocop:disable Metrics/AbcSize
     return @existing_record if @existing_record.present?
     return if authenticated_resource.valid?
     duplicate_values = authenticated_resource
@@ -90,7 +90,7 @@ class GroupMembershipsController < ServiceController
     params.permit(:r)[:r]
   end
 
-  def redirect_location
+  def redirect_location # rubocop:disable Metrics/AbcSize
     return redirect_param if redirect_param.present?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
     return forum_grants.first.edge.iri_path if forum_grants.count == 1

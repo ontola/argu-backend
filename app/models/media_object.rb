@@ -112,7 +112,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def set_publisher_and_creator
+  def set_publisher_and_creator # rubocop:disable Metrics/AbcSize
     if creator.nil? && creator_id.nil? && about.present?
       self.creator = about.is_a?(Edge) ? about.creator : about
     end
@@ -120,7 +120,7 @@ class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.publisher = about.is_a?(Edge) ? about.publisher : creator.profileable
   end
 
-  def url_for_environment(type)
+  def url_for_environment(type) # rubocop:disable Metrics/AbcSize
     url = content.url(type)
     return url && RDF::DynamicURI(url) if ENV['AWS_ID'].present? || url&.to_s&.include?('gravatar.com')
     return if content.file.blank?

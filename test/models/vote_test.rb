@@ -12,7 +12,7 @@ class VoteTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
-  def test_duplicate_constraint
+  def test_duplicate_constraint # rubocop:disable Metrics/AbcSize
     first = create_vote
     second = create_vote
     assert motion.save, motion.errors.full_messages

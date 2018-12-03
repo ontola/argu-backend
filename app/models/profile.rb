@@ -105,7 +105,7 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
     granted_edges('Forum')
   end
 
-  def granted_edges(root_id: nil, owner_type: nil, grant_set: nil)
+  def granted_edges(root_id: nil, owner_type: nil, grant_set: nil) # rubocop:disable Metrics/AbcSize
     grant_set ||= %w[spectator participator initiator moderator administrator]
     @granted_edges ||= {}
     @granted_edges[root_id] ||= {}

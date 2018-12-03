@@ -34,7 +34,7 @@ module MapHelper
     }
   end
 
-  def map_picker_props(resource)
+  def map_picker_props(resource) # rubocop:disable Metrics/AbcSize
     marker = resource.custom_placements.first
     if marker.nil?
       center = Placement.find_by_path(resource.persisted_edge&.path, %w[custom country]) ||
@@ -58,7 +58,7 @@ module MapHelper
     }
   end
 
-  def map_question_props(resource)
+  def map_question_props(resource) # rubocop:disable Metrics/AbcSize
     popup_link = new_iri(resource, :motions)
     popup_link.query = 'lat={lat}&lon={lon}&zoom_level={zoom}'.encode(Encoding::UTF_8)
     map_viewer_props(
@@ -86,7 +86,7 @@ module MapHelper
     map_viewer_props(map_marker_props(placement), zoom: placement.zoom_level)
   end
 
-  def map_viewer_props(markers, opts = {})
+  def map_viewer_props(markers, opts = {}) # rubocop:disable Metrics/AbcSize
     markers = [markers] unless markers.is_a?(Array)
     center_lat = opts[:center_lat] || markers.map { |marker| marker[:lat] }.sum / markers.size.to_f
     center_lon = opts[:center_lon] || markers.map { |marker| marker[:lon] }.sum / markers.size.to_f

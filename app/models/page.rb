@@ -97,7 +97,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   private
 
-  def create_default_groups
+  def create_default_groups # rubocop:disable Metrics/AbcSize
     group = Group.new(
       name: 'Admins',
       name_singular: 'Admin',

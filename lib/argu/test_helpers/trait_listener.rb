@@ -10,7 +10,7 @@ module Argu
         @resource = resource
       end
 
-      def populated_forum
+      def populated_forum # rubocop:disable Metrics/AbcSize
         3.times do
           service = CreateMotion
                       .new(@resource,
@@ -126,7 +126,7 @@ module Argu
       end
 
       # Adds 2 published and 2 trashed motions to the resource
-      def with_motions
+      def with_motions # rubocop:disable Metrics/AbcSize
         2.times do
           service = CreateMotion
                       .new(

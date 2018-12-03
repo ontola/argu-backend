@@ -84,7 +84,7 @@ class ForumMenuList < MenuList # rubocop:disable Metrics/ClassLength
     share_menu_items(triggerClass: 'btn--transparant')
   end
 
-  def settings_menu
+  def settings_menu # rubocop:disable Metrics/AbcSize
     menu_item(
       :settings,
       iri_base: -> { resource.iri_path },

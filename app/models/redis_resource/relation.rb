@@ -48,7 +48,7 @@ module RedisResource
 
     private
 
-    def apply_filters(opts)
+    def apply_filters(opts) # rubocop:disable Metrics/AbcSize
       clear_key if (opts.keys & %i[publisher creator parent parent_id owner_type root_id]).any?
       self.user = user_from_opts(opts)
       %i[parent parent_id owner_type].each do |attr|
@@ -71,7 +71,7 @@ module RedisResource
       @redis_resources&.clear
     end
 
-    def filtered_keys
+    def filtered_keys # rubocop:disable Metrics/AbcSize
       return key.matched_keys if where_clause.blank?
       @filtered_keys ||= key.matched_keys.select do |key|
         resource = key.redis_resource.resource

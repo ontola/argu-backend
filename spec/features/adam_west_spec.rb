@@ -190,7 +190,7 @@ RSpec.feature 'Adam west', type: :feature do
 
   private
 
-  def create_motion_for_question
+  def create_motion_for_question # rubocop:disable Metrics/AbcSize
     visit question
     click_on 'Share your idea'
 
@@ -211,7 +211,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(question.content)
   end
 
-  def setup_profile(user_attr)
+  def setup_profile(user_attr) # rubocop:disable Metrics/AbcSize
     nominatim_netherlands
 
     expect(page).to have_current_path setup_users_path
@@ -229,7 +229,7 @@ RSpec.feature 'Adam west', type: :feature do
     end
   end
 
-  def walk_up_to_forum(role = nil)
+  def walk_up_to_forum(role = nil) # rubocop:disable Metrics/AbcSize
     visit argument.iri_path
     expect(page).to have_css("img[src*='#{role.profile.default_profile_photo.url(:icon)}']") if role.present?
     expect(page).to have_content(argument.title)

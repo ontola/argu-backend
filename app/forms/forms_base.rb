@@ -18,7 +18,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
     iri.to_s
   end
 
-  def shape
+  def shape # rubocop:disable Metrics/AbcSize
     klass =
       if target.is_a?(Class)
         target
@@ -104,7 +104,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
 
     private
 
-    def attr_to_datatype(attr)
+    def attr_to_datatype(attr) # rubocop:disable Metrics/AbcSize
       return nil if method_defined?(attr.name)
 
       name = attr.name.to_s
@@ -149,7 +149,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       end
     end
 
-    def field(key, opts = {})
+    def field(key, opts = {}) # rubocop:disable Metrics/AbcSize
       if key.is_a?(Hash)
         opts.merge!(key.values.first)
         key = key.keys.first
@@ -165,7 +165,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       end
     end
 
-    def literal_property_attrs(attr, attrs)
+    def literal_property_attrs(attr, attrs) # rubocop:disable Metrics/AbcSize
       enum = serializer_enum(attr.name.to_sym)
       attrs[:datatype] ||=
         attr.dig(:options, :datatype) ||
@@ -180,7 +180,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       (model_class.try(:attribute_alias, attr) || attr).to_sym
     end
 
-    def node_property_attrs(attr, attrs)
+    def node_property_attrs(attr, attrs) # rubocop:disable Metrics/AbcSize
       name = attr.dig(:options, :association) || attr.name
       _referred_resources << name
       collection = model_class.try(:collections)&.find { |c| c[:name] == name }
@@ -196,7 +196,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       serializer_attr&.dig(:options, :predicate)
     end
 
-    def property_group(name, opts = {})
+    def property_group(name, opts = {}) # rubocop:disable Metrics/AbcSize
       raise "Property group '#{name}' defined twice" if _property_groups[name].present?
       raise "Property group '#{name}' not available in fields" if _fields[name].nil?
       group = SHACL::PropertyGroup.new(
@@ -209,7 +209,7 @@ class FormsBase # rubocop:disable Metrics/ClassLength
       group
     end
 
-    def property_shape_attrs(attr_key, attrs = {}) # rubocop:disable Metrics/PerceivedComplexity
+    def property_shape_attrs(attr_key, attrs = {}) # rubocop:disable Metrics/PerceivedComplexity, Metrics/AbcSize
       return if _property_groups.key?(attr_key)
       serializer_attr = serializer_attribute(attr_key)
       attrs[:path] ||= predicate_from_serializer(serializer_attr)

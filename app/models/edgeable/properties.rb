@@ -13,7 +13,7 @@ module Edgeable
       class_attribute :defined_properties
     end
 
-    def preload_properties(force = false)
+    def preload_properties(force = false) # rubocop:disable Metrics/AbcSize
       return if !force && (properties_preloaded || !association_cached?(:properties))
       defined_properties&.each do |p|
         property = properties.detect { |prop| prop.predicate == p[:predicate] }
@@ -137,7 +137,7 @@ module ActiveRecord
       self
     end
 
-    def where(opts = :chain, *rest)
+    def where(opts = :chain, *rest) # rubocop:disable Metrics/AbcSize
       unless klass <= Edge && opts.is_a?(Hash) && opts.present? && (properties = properties_from_opts(opts)).presence
         return super
       end

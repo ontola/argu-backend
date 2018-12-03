@@ -23,7 +23,7 @@ module DiscussionsHelper
     %i[questions motions].any? { |model| policy(record).create_child?(model) }
   end
 
-  def discussion_invite_groups(resource)
+  def discussion_invite_groups(resource) # rubocop:disable Metrics/AbcSize
     group_ids =
       user_context
         .grant_tree
@@ -43,7 +43,7 @@ module DiscussionsHelper
       .append(label: "+ #{t('groups.new')}", value: -1)
   end
 
-  def discussion_invite_props(resource)
+  def discussion_invite_props(resource) # rubocop:disable Metrics/AbcSize
     {
       createTokenUrl: '/tokens',
       createGroupUrl: collection_iri(resource.root, :groups),
@@ -64,7 +64,7 @@ module DiscussionsHelper
     }
   end
 
-  def move_options(resource)
+  def move_options(resource) # rubocop:disable Metrics/AbcSize
     case resource
     when Motion
       resource.root.forums.flat_map do |forum|

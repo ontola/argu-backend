@@ -15,7 +15,7 @@ class PageMenuList < MenuList
         .includes(:default_profile_photo, :shortname)
   end
 
-  def navigations_menu
+  def navigations_menu # rubocop:disable Metrics/AbcSize
     menu_item(
       :navigations,
       menus: lambda {
@@ -55,7 +55,7 @@ class PageMenuList < MenuList
     )
   end
 
-  def settings_menu
+  def settings_menu # rubocop:disable Metrics/AbcSize
     menu_item(
       :settings,
       iri_base: -> { resource.iri_path },

@@ -37,7 +37,7 @@ module Portal
       assert_response response
     end
 
-    def general_update(response = 302, changed = false)
+    def general_update(response = 302, changed = false) # rubocop:disable Metrics/AbcSize
       ch_method = method(changed ? :assert_not_equal : :assert_equal)
 
       patch :update,

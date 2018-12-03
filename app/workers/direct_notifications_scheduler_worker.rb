@@ -16,7 +16,7 @@ class DirectNotificationsSchedulerWorker < NotificationsSchedulerWorker
 
   # Send mails for Notifications with a send_mail_after value later than the current date
   # if the NotificationsMailer has a method for it.
-  def send_individual_notifications
+  def send_individual_notifications # rubocop:disable Metrics/AbcSize
     t_notifications = Notification.arel_table
     Notification
       .where(t_notifications[:read_at].eq(nil))

@@ -18,27 +18,6 @@ Lint/UselessAssignment:
   Exclude:
     - 'Gemfile'
 
-# Offense count: 211
-# defaultMax: 15
-Metrics/AbcSize:
-  Max: 35
-  Exclude:
-    - 'app/controllers/registrations_controller.rb'
-    - 'app/controllers/votes_controller.rb'
-    - 'app/helpers/header_helper.rb'
-    - 'app/helpers/motions_helper.rb'
-    - 'app/models/grant_tree/node.rb'
-    - 'app/models/menus/application_menu_list.rb'
-    - 'app/models/redis_resource/resource.rb'
-    - 'app/models/vote_event.rb'
-    - 'app/services/activity_notifications_receivers_collector.rb'
-    - 'lib/argu/test_helpers/automated_requests.rb'
-    - 'lib/argu/test_helpers/default_policy_tests.rb'
-    - 'lib/argu/test_helpers/test_helper_methods.rb'
-    - 'lib/argu/test_helpers/trait_listener.rb'
-    - 'spec/features/adam_west_spec.rb'
-    - 'test/integration/decisions_test.rb'
-
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
   Exclude:

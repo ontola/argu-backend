@@ -51,7 +51,7 @@ class Decision < Edge
 
   private
 
-  def correctly_forwarded
+  def correctly_forwarded # rubocop:disable Metrics/AbcSize
     if forwarded_group_id.nil? && forwarded_group.nil?
       errors.add(:forwarded_to, I18n.t('decisions.forward_group_missing'))
       return

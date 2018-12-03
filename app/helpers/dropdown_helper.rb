@@ -9,7 +9,7 @@ module DropdownHelper
     options.merge opts
   end
 
-  def dropdown_menu(resource, menu_tag, trigger_opts: {}, item_opts: {})
+  def dropdown_menu(resource, menu_tag, trigger_opts: {}, item_opts: {}) # rubocop:disable Metrics/AbcSize
     menu = if resource.nil?
              ApplicationMenuList.new(resource: current_user, user_context: user_context).send("#{menu_tag}_menu")
            else

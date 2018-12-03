@@ -56,7 +56,7 @@ class RegistrationsController < Devise::RegistrationsController
     t('type_destroy_success', type: 'Account')
   end
 
-  def build_resource(*args)
+  def build_resource(*args) # rubocop:disable Metrics/AbcSize
     super
     resource.shortname = nil if resource.shortname&.shortname&.blank?
     resource.build_profile
@@ -80,7 +80,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def destroy_execute
+  def destroy_execute # rubocop:disable Metrics/AbcSize
     @user = User.find current_user.id
     unless params[:user].try(:[], :confirmation_string) == t('users_cancel_string')
       @user.errors.add(:confirmation_string, t('errors.messages.should_match'))
@@ -99,7 +99,7 @@ class RegistrationsController < Devise::RegistrationsController
     render 'application/spam', content: @content_checked_for_spam
   end
 
-  def send_confirmation_mail(user, guest_votes)
+  def send_confirmation_mail(user, guest_votes) # rubocop:disable Metrics/AbcSize
     if guest_votes&.count&.positive?
       SendEmailWorker.perform_async(
         :confirm_votes,
@@ -115,7 +115,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def is_spam?
+  def is_spam? # rubocop:disable Metrics/AbcSize
     r = sign_up_params[:r] || params[:r]
     body = Rack::Utils.parse_nested_query(r&.split('?')&.second).with_indifferent_access
     @content_checked_for_spam = body[:comment].try(:[], :body)

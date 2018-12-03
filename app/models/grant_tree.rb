@@ -18,7 +18,7 @@ class GrantTree
     {}
   end
 
-  def cache_node(node)
+  def cache_node(node) # rubocop:disable Metrics/AbcSize
     return cached_node(node) if cached?(node)
     edge = node.is_a?(Edge) ? node : Edge.find_by!(id: node)
     ancestor_ids = edge.path.split('.').map(&:to_i) - cached_nodes.keys - [edge.id]
@@ -134,7 +134,7 @@ class GrantTree
     cached_node(edge) || cache_node(edge) || raise('Edge not found')
   end
 
-  def root_node(node = nil)
+  def root_node(node = nil) # rubocop:disable Metrics/AbcSize
     return cached_node(tree_root.id) if cached?(tree_root.id)
     raise SecurityError.new('Node with different root given') if node.root_id != tree_root_id
     @tree_root ||= node if node.present?

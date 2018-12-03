@@ -23,7 +23,7 @@ module Argu
           end
         end
 
-        def define_spec_variables
+        def define_spec_variables # rubocop:disable Metrics/AbcSize
           let(:request_format) { :html }
           let(:doorkeeper_application) do
             if %i[html json].include?(request_format)

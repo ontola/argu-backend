@@ -14,7 +14,7 @@ module SPI
       authorize resource!, "#{params[:authorize_action]}?"
     end
 
-    def resource
+    def resource # rubocop:disable Metrics/AbcSize
       return resource_from_iri(params[:resource_iri]) if params[:resource_iri].present?
       case params[:resource_type]
       when 'CurrentActor'

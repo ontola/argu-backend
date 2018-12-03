@@ -6,7 +6,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   cattr_accessor :defined_menus
   has_menus %i[organizations info user language]
 
-  def info_menu
+  def info_menu # rubocop:disable Metrics/AbcSize
     menu_item(
       :info,
       label: I18n.t('about.info'),
@@ -115,7 +115,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
       Page.where(uuid: page_ids).includes(:shortname, profile: :default_profile_photo)
   end
 
-  def public_page_links
+  def public_page_links # rubocop:disable Metrics/AbcSize
     return if favorite_pages.count > 20 || public_pages.blank?
     menu_items = lambda {
       (policy_scope(public_pages) - favorite_pages)
@@ -146,7 +146,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
               image: 'fa-sign-out')
   end
 
-  def user_links
+  def user_links # rubocop:disable Metrics/AbcSize
     items =
       if resource.url.present?
         [

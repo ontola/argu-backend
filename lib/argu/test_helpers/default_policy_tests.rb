@@ -18,7 +18,7 @@ module DefaultPolicyTests
       end
     end
 
-    def generate_edgeable_tests
+    def generate_edgeable_tests # rubocop:disable Metrics/AbcSize
       generate_crud_tests
 
       %i[trash follow log invite move convert feed].each do |method|

@@ -13,7 +13,7 @@ module Convertible
 
     # Converts an item to another item
     # Children of models that are not whitelisted will be converted to comments
-    def convert_to(klass, validate: true)
+    def convert_to(klass, validate: true) # rubocop:disable Metrics/AbcSize
       raise ArgumentError.new("Conversion to #{klass.class_name} not allowed") unless convert_to?(klass)
 
       ActiveRecord::Base.transaction do
@@ -33,7 +33,7 @@ module Convertible
       end
     end
 
-    def convert_or_destroy_children(new_model)
+    def convert_or_destroy_children(new_model) # rubocop:disable Metrics/AbcSize
       new_model.displaced_children.each do |child|
         if new_model.is_a?(Comment) && child.is_a?(Comment)
           child.parent_comment ||= new_model

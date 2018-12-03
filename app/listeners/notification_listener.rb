@@ -21,7 +21,7 @@ class NotificationListener
     activity.new_content? || activity.action == 'trash'
   end
 
-  def create_notifications_for(activity)
+  def create_notifications_for(activity) # rubocop:disable Metrics/AbcSize
     recipients = FollowersCollector.new(activity: activity).call.to_a
     if activity.trackable_type == 'Comment' && activity.trackable.in_reply_to_id
       recipients.concat(

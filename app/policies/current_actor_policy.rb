@@ -21,7 +21,7 @@ class CurrentActorPolicy < RestrictivePolicy
     record.user == user
   end
 
-  def moderator?
+  def moderator? # rubocop:disable Metrics/AbcSize
     owner = record.actor.profileable
     if owner.class == User || owner.class == GuestUser
       owner == user

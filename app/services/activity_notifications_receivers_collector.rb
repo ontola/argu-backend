@@ -5,7 +5,7 @@ class ActivityNotificationsReceiversCollector
     @email_frequency = email_frequency
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize
     t_notifications = Notification.arel_table
     t_users = User.arel_table
     User

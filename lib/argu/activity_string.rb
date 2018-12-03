@@ -19,7 +19,7 @@ module Argu
       @render = render
     end
 
-    def to_s
+    def to_s # rubocop:disable Metrics/AbcSize
       default = I18n.t(translation_key('activities.default'),
                        owner: owner_string,
                        type: type_string,
@@ -97,7 +97,7 @@ module Argu
       end
     end
 
-    def sub_action_key
+    def sub_action_key # rubocop:disable Metrics/AbcSize
       return unless @activity.trackable_type == 'Decision' && @activity.action == 'forwarded'
       if @activity.trackable.forwarded_user == @user
         :to_you

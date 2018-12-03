@@ -17,7 +17,7 @@ module ArgumentsHelper
   end
 
   # Note: only used in widget view and opinions view
-  def print_references(argument)
+  def print_references(argument) # rubocop:disable Metrics/AbcSize
     return if argument.references.blank?
     concat content_tag :p, t('arguments.references') + ':', class: 'references-title'
     content_tag :ol, class: 'references-list' do

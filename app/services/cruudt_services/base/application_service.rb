@@ -7,7 +7,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   include Wisper::Publisher
 
   # @note Call super when overriding.
-  def initialize(_orig_resource, attributes: {}, options: {})
+  def initialize(_orig_resource, attributes: {}, options: {}) # rubocop:disable Metrics/AbcSize
     @attributes = attributes
     @actions = {}
     @options = options
@@ -31,7 +31,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
 
   # Executes the action, so generally message broadcasts begin here.
   # @see {after_save}
-  def commit
+  def commit # rubocop:disable Metrics/AbcSize
     ActiveRecord::Base.transaction do
       persist_parents
       raise(ActiveRecord::RecordInvalid) if resource.errors.present?
@@ -54,7 +54,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     # Stub
   end
 
-  def argu_publication_attributes
+  def argu_publication_attributes # rubocop:disable Metrics/AbcSize
     pub_attrs = @attributes[:argu_publication_attributes] || {}
     pub_attrs[:id] = resource.argu_publication.id if resource.argu_publication.present?
     unless resource.is_published?
@@ -85,7 +85,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def publish_success_signals
+  def publish_success_signals # rubocop:disable Metrics/AbcSize
     publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
     publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
     publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]

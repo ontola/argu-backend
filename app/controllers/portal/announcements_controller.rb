@@ -13,7 +13,7 @@ module Portal
              }
     end
 
-    def create
+    def create # rubocop:disable Metrics/AbcSize
       create_service.on(:create_announcement_successful) do
         respond_to do |format|
           format.html do
@@ -70,7 +70,7 @@ module Portal
       end
     end
 
-    def destroy
+    def destroy # rubocop:disable Metrics/AbcSize
       announcement = Announcement.find params[:id]
       authorize announcement, :destroy?
 

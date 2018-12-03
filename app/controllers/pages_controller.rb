@@ -65,7 +65,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     end
   end
 
-  def handle_forbidden_html(_exception)
+  def handle_forbidden_html(_exception) # rubocop:disable Metrics/AbcSize
     us_po = policy(current_user) unless current_user.guest?
     return super unless us_po&.max_pages_reached? && request.format.html?
     errors = {}
@@ -141,7 +141,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     settings_iri_path(authenticated_resource, tab: tab)
   end
 
-  def show_success_html
+  def show_success_html # rubocop:disable Metrics/AbcSize
     @forums = policy_scope(authenticated_resource.forums)
                 .includes(:default_cover_photo, :default_profile_photo, :shortname)
                 .order('edges.follows_count DESC')

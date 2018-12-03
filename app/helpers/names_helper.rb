@@ -119,7 +119,7 @@ module NamesHelper
   private
 
   # @private
-  def icon_for(item)
+  def icon_for(item) # rubocop:disable Metrics/AbcSize
     if item.class == BlogPost
       blog_post_icon
     elsif item.class == Decision

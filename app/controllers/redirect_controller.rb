@@ -7,7 +7,7 @@ class RedirectController < ApplicationController
 
   private
 
-  def resource
+  def resource # rubocop:disable Metrics/AbcSize
     case params[:resource]
     when 'Decision'
       Edge

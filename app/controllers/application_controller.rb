@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   #   params # => {motion: {body: 'body', relation_type: 'motions', relation_id: 1}}
   # @example Resource params from LD request
   # @return [Hash] The params
-  def params
+  def params # rubocop:disable Metrics/AbcSize
     return @__params if instance_variable_defined?(:@__params)
 
     if UNSAFE_METHODS.include?(request.method)
@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     }
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(resource) # rubocop:disable Metrics/AbcSize
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
       freshdesk_redirect_url
     elsif params[:r] && argu_iri_or_relative?(params[:r])
@@ -193,7 +193,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     response.headers['Argu-Version'] = ::VERSION
   end
 
-  def set_profile_forum
+  def set_profile_forum # rubocop:disable Metrics/AbcSize
     return if current_forum.blank?
     if current_user.guest?
       Argu::Redis.setex("session:#{session_id}:last_forum", 1.day.seconds.to_i, current_forum.uuid)

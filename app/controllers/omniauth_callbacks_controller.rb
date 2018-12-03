@@ -34,7 +34,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     end
   end
 
-  def create_identity_for_current_user
+  def create_identity_for_current_user # rubocop:disable Metrics/AbcSize
     identity_from_response.user = current_user
     raise NotImplementedError unless identity_from_response.save
     set_flash_message(:notice, :success, kind: @provider.to_s.capitalize) if is_navigational_format?
@@ -42,7 +42,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
   end
 
   # We have a new user! so show the 'need some details' form
-  def create_new_user
+  def create_new_user # rubocop:disable Metrics/AbcSize
     user = connector.create_user_without_shortname(
       request.env['omniauth.auth'],
       identity_from_response,
@@ -54,7 +54,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     sign_in_and_redirect_with_r user
   end
 
-  def identity_from_response
+  def identity_from_response # rubocop:disable Metrics/AbcSize
     return @identity if @identity.present?
     @identity ||= Identity.find_or_initialize_by(uid: request.env['omniauth.auth']['uid'], provider: @provider)
     set_facebook_fields(@identity, request.env['omniauth.auth']) if @provider == :facebook
@@ -63,7 +63,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
   end
 
   # Email already taken, but no connected Identity present yet
-  def process_existing_email(email)
+  def process_existing_email(email) # rubocop:disable Metrics/AbcSize
     return if (user = User.joins(:email_addresses).find_by(email_addresses: {email: email})).blank?
     if current_user.guest?
       raise NotImplementedError unless identity_from_response.save
@@ -77,7 +77,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     end
   end
 
-  def process_existing_identity
+  def process_existing_identity # rubocop:disable Metrics/AbcSize
     return if (user = User.find_for_oauth(request.env['omniauth.auth'])).blank?
     if current_user.guest?
       user.update r: r_param(request.env) if r_param(request.env).present?
@@ -91,7 +91,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     end
   end
 
-  def process_new_identity(email)
+  def process_new_identity(email) # rubocop:disable Metrics/AbcSize
     if email.blank?
       # No connection, no current_user and no email..
       session["devise.#{@provider}_data"] = request.env['omniauth.auth']

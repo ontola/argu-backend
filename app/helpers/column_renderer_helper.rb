@@ -51,7 +51,7 @@ module ColumnRendererHelper
     end
   end
 
-  def show_new_buttons(options, key)
+  def show_new_buttons(options, key) # rubocop:disable Metrics/AbcSize
     if options[:buttons_form_on_empty] && options[:collection].blank?
       render partial: "#{options[:collection_model].name.tableize}/form",
              locals: options.merge(pro: key, resource: options[:collection_model].new(pro: key, motion: @motion))

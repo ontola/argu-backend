@@ -21,7 +21,7 @@ module Oauth
     ARGU_HOST_MATCH = /^([a-zA-Z0-9|-]+\.{1})*(#{Regexp.quote(Rails.configuration.host_name)}|argu.co)(:[0-9]{0,5})?$/
     FRONTEND_HOST = URI(Rails.configuration.frontend_url).host.freeze
 
-    def create
+    def create # rubocop:disable Metrics/AbcSize
       return super unless argu_classic_frontend_request?
       r = r_with_authenticity_token
       guest_session_id = session_id
@@ -53,7 +53,7 @@ module Oauth
       r.match(%r{\/v(\?|\/)|\/c(\?|\/)})
     end
 
-    def r_with_authenticity_token
+    def r_with_authenticity_token # rubocop:disable Metrics/AbcSize
       r = params.dig(:user, :r) || params[:r]
       return '' if r.blank?
 
@@ -68,7 +68,7 @@ module Oauth
       %w[1 true].include?(params[:user].try(:[], :remember_me) || params[:remember_me])
     end
 
-    def sign_in_user_from_token(response)
+    def sign_in_user_from_token(response) # rubocop:disable Metrics/AbcSize
       raise Doorkeeper::Errors::DoorkeeperError.new(response.name) if response.is_a?(Doorkeeper::OAuth::ErrorResponse)
       set_argu_client_token_cookie(
         response.token.token,

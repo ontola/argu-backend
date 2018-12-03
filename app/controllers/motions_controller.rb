@@ -50,7 +50,7 @@ class MotionsController < EdgeableController
     authenticated_resource.current_vote = @vote
   end
 
-  def show_success_html
+  def show_success_html # rubocop:disable Metrics/AbcSize
     @arguments = Argument.ordered(
       policy_scope(
         authenticated_resource

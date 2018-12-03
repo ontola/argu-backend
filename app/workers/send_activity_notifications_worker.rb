@@ -7,7 +7,7 @@ class SendActivityNotificationsWorker
 
   COOLDOWN_PERIOD = 4.minutes
 
-  def perform(user_id, delivery_type)
+  def perform(user_id, delivery_type) # rubocop:disable Metrics/AbcSize
     @user = User.find(user_id)
 
     return if wrong_delivery_type?(delivery_type)
@@ -30,7 +30,7 @@ class SendActivityNotificationsWorker
 
   private
 
-  def add_prepared_notification(result, notification)
+  def add_prepared_notification(result, notification) # rubocop:disable Metrics/AbcSize
     activity = notification.activity
     trackable = activity.trackable
     followable = activity.new_content? ? activity.recipient : trackable

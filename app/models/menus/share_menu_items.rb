@@ -96,7 +96,7 @@ module Menus
         .include?(Group::PUBLIC_ID)
     end
 
-    def share_menu_links(url)
+    def share_menu_links(url) # rubocop:disable Metrics/AbcSize
       items = [invite_link]
       if is_public?
         items.concat([

@@ -21,7 +21,7 @@ module StubbornCookie
     STORE_CLASS.get("#{MODEL_NAME}:#{stubborn_identifier}:#{key}")
   end
 
-  def permeate_key(key, value = nil)
+  def permeate_key(key, value = nil) # rubocop:disable Metrics/AbcSize
     if value.present? # && cookies.permanent[key].blank?
       if cookies.permanent[key].present? && value.is_a?(Hash)
         json = JSON.parse(cookies.permanent[key])

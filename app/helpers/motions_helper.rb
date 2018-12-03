@@ -24,7 +24,7 @@ module MotionsHelper
     }
   end
 
-  def motion_vote_props(actor, motion, vote, opts = {})
+  def motion_vote_props(actor, motion, vote, opts = {}) # rubocop:disable Metrics/AbcSize
     disabled_message = motion_vote_disabled_message(motion, vote)
     localized_react_component({
       actor: actor_props(actor),

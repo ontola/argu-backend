@@ -70,7 +70,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
       .order('edges.follows_count DESC')
   }
 
-  def cache_iri_path!
+  def cache_iri_path! # rubocop:disable Metrics/AbcSize
     super
     if shortname && shortname&.shortname_was != url && url.present?
       widgets.update_all(
@@ -128,7 +128,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
 
   private
 
-  def reset_country
+  def reset_country # rubocop:disable Metrics/AbcSize
     country_code = locale.split('-').second
     return if country_placement&.country_code == country_code
     place = Place.find_or_fetch_country(country_code)
@@ -143,7 +143,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
     placement.update!(place: place) unless placement.place == place
   end
 
-  def reset_public_grant
+  def reset_public_grant # rubocop:disable Metrics/AbcSize
     if public_grant == 'none'
       grants.where(group_id: Group::PUBLIC_ID).destroy_all
     else

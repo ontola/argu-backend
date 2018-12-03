@@ -93,7 +93,7 @@ class Argument < Edge
 
   private
 
-  def adjacent(direction, _show_trashed = nil)
+  def adjacent(direction, _show_trashed = nil) # rubocop:disable Metrics/AbcSize
     return if is_trashed?
     ids = parent
             .arguments

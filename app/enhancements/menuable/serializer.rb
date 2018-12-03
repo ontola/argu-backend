@@ -9,7 +9,7 @@ module Menuable
     end
 
     module ClassMethods
-      def include_menus
+      def include_menus # rubocop:disable Metrics/AbcSize
         "#{name.gsub('Serializer', '')}MenuList".constantize.defined_menus.each do |menu|
           method_name = "#{menu}_menu"
           define_method method_name do
