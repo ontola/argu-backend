@@ -11,6 +11,7 @@ module Argu
     module ClassMethods
       def setup_authorization
         skip_before_action :verify_authenticity_token, unless: :verify_authenticity_token?
+        before_action :current_actor
         before_action { doorkeeper_authorize!(*allowed_scopes) }
         after_action :verify_authorized, except: :index, unless: :devise_controller?
         after_action :verify_policy_scoped, only: :index
