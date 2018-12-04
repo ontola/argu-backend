@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MotionForm < FormsBase
+class MotionForm < RailsLD::Form
   fields [
     :display_name,
     :description,

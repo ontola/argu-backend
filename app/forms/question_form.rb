@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class QuestionForm < FormsBase
+class QuestionForm < RailsLD::Form
   fields %i[
     display_name
     description

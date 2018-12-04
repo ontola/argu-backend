@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProfileForm < FormsBase
+class ProfileForm < RailsLD::Form
   fields %i[
     name
     about

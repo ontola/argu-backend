@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class EmailAddressForm < FormsBase
+class EmailAddressForm < RailsLD::Form
   fields %i[
     email
   ]

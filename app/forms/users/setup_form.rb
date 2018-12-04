@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class SetupForm < FormsBase
+  class SetupForm < RailsLD::Form
     fields %i[
       url
       first_name

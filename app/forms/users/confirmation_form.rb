@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Users
-  class ConfirmationForm < FormsBase
+  class ConfirmationForm < RailsLD::Form
     fields %i[email]
   end
 end

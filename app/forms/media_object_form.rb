@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MediaObjectForm < FormsBase
+class MediaObjectForm < RailsLD::Form
   fields %i[
     content
   ]

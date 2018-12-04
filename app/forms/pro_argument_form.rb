@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProArgumentForm < FormsBase
+class ProArgumentForm < RailsLD::Form
   fields %i[
     display_name
     description
