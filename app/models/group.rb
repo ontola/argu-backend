@@ -11,7 +11,6 @@ class Group < ApplicationRecord
   enhance Settingable
   enhance Updateable
 
-  include Ldable
   include Parentable
   include Edgeable::PropertyAssociations
 

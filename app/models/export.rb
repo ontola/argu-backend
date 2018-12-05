@@ -5,7 +5,6 @@ class Export < ApplicationRecord
   enhance Destroyable
   enhance Actionable
   include Parentable
-  include Ldable
 
   belongs_to :user
   belongs_to :edge, primary_key: :uuid

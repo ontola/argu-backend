@@ -6,7 +6,6 @@ class Notification < ApplicationRecord
   enhance Actionable
 
   include BlogPostsHelper
-  include Ldable
   include ActivityHelper
   include ActionView::Helpers
 

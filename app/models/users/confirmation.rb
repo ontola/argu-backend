@@ -2,8 +2,7 @@
 
 module Users
   class Confirmation < VirtualResource
-    include Ldable
-    include Iriable
+    include RailsLD::Model
     enhance Actionable
     enhance Createable, except: %i[Controller]
     attr_accessor :email, :user

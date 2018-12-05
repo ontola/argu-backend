@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class Term < VirtualResource
-  include Ldable
-  include Iriable
+  include RailsLD::Model
   enhance Actionable
   enhance Createable
   attr_accessor :referrer

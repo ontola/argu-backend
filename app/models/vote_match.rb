@@ -6,7 +6,6 @@ class VoteMatch < ApplicationRecord
   enhance Updateable
 
   include Listable
-  include Ldable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'

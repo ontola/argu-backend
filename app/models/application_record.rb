@@ -2,7 +2,7 @@
 
 class ApplicationRecord < ActiveRecord::Base
   include ApplicationModel
-  include Iriable
+  include RailsLD::Model
   include VirtualAttributes
 
   self.abstract_class = true

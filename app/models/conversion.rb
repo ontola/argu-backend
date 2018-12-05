@@ -6,7 +6,7 @@ class Conversion
   include ActiveModel::AttributeMethods
   include ActiveRecord::AttributeAssignment
   include ApplicationModel
-  include Iriable
+  include RailsLD::Model
   include Parentable
 
   parentable :edge

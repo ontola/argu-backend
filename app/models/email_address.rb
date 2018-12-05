@@ -9,7 +9,6 @@ class EmailAddress < ApplicationRecord
   include Broadcastable
   include Parentable
   include RedisResourcesHelper
-  include Ldable
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   belongs_to :user, inverse_of: :email_addresses

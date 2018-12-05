@@ -4,8 +4,7 @@ require 'argu/api'
 
 class DirectMessage
   include ActiveModel::Model
-  include Ldable
-  include Iriable
+  include RailsLD::Model
   include ApplicationModel
   include IRIHelper
 

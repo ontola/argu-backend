@@ -2,8 +2,7 @@
 
 class CurrentActor
   include ProfilesHelper
-  include Iriable
-  include Ldable
+  include RailsLD::Model
   include ActiveModel::Serialization
   include ActiveModel::Model
   include Rails.application.routes.url_helpers

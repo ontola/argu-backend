@@ -5,8 +5,7 @@ class Feed
                      blog_post.publish decision.approved decision.rejected comment.create].freeze
 
   include ActiveModel::Model
-  include Ldable
-  include Iriable
+  include RailsLD::Model
   attr_accessor :parent, :relevant_only, :root_id
 
   with_collection :activities,

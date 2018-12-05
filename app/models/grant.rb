@@ -5,7 +5,6 @@ class Grant < ApplicationRecord
   enhance Destroyable
   enhance Actionable
 
-  include Ldable
   include Parentable
 
   # The Edge this Grant is providing rules for

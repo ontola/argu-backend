@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Publication < ApplicationRecord
-  include Ldable
   include Wisper::Publisher
   belongs_to :publishable, class_name: 'Edge', primary_key: :uuid
   belongs_to :creator, class_name: 'Profile'

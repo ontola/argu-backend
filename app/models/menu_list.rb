@@ -2,8 +2,7 @@
 
 class MenuList
   include ActiveModel::Model
-  include Ldable
-  include Iriable
+  include RailsLD::Model
   include ActionDispatch::Routing
   include Rails.application.routes.url_helpers
   include Pundit

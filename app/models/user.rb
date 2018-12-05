@@ -10,8 +10,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   include Broadcastable
   include RedirectHelper
-  include Iriable
-  include Ldable
   include Shortnameable
   include Uuidable
 

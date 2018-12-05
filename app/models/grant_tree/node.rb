@@ -3,7 +3,7 @@
 class GrantTree
   class Node
     include ActiveModel::Model
-    include Iriable
+    include RailsLD::Model
 
     attr_accessor :edge, :id, :children, :grant_tree, :parent, :permitted_actions, :grant_sets
     alias read_attribute_for_serialization send

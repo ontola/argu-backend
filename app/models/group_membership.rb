@@ -7,7 +7,6 @@ class GroupMembership < ApplicationRecord
   enhance Createable
   enhance Destroyable
 
-  include Ldable
   include Parentable
 
   belongs_to :member,

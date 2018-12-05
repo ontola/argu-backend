@@ -3,7 +3,6 @@
 require 'types/file_type'
 
 class MediaObject < ApplicationRecord # rubocop:disable Metrics/ClassLength
-  include Ldable
   include Parentable
   belongs_to :about, polymorphic: true, inverse_of: :media_objects, primary_key: :uuid
   belongs_to :forum, primary_key: :uuid

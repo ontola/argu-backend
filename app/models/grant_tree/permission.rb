@@ -3,7 +3,7 @@
 class GrantTree
   class Permission
     include ActiveModel::Model
-    include Iriable
+    include RailsLD::Model
 
     attr_accessor :node, :permission_group, :resource_type
     alias read_attribute_for_serialization send

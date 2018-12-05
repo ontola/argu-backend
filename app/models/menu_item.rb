@@ -3,8 +3,7 @@
 class MenuItem
   include ActiveModel::Model
   include ActiveModel::Serialization
-  include Ldable
-  include Iriable
+  include RailsLD::Model
 
   attr_accessor :action, :label, :parent, :tag, :menus, :href, :item_type,
                 :type, :description, :link_opts, :resource

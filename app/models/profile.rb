@@ -6,7 +6,6 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   enhance Updateable
   enhance Actionable
 
-  include Ldable
   include Uuidable
 
   # Currently hardcoded to User (whilst it can also be a Profile)

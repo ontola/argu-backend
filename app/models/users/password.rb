@@ -2,8 +2,7 @@
 
 module Users
   class Password < VirtualResource
-    include Ldable
-    include Iriable
+    include RailsLD::Model
     enhance Actionable
     enhance Createable, except: %i[Controller]
     enhance Updateable, except: %i[Controller Serializer]
