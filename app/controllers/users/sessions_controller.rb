@@ -82,13 +82,13 @@ class Users::SessionsController < Devise::SessionsController
     uri.to_s
   end
 
-  def respond_to_on_destroy # rubocop:disable Metrics/AbcSize
+  def respond_to_on_destroy
     respond_to do |format|
       format.all { head :no_content }
       format.any(*navigational_formats) do
         r = params.dig(:user, :r) || params[:r]
         if r.present? && argu_iri_or_relative?(r)
-          redirect_to URI.parse(r).path
+          redirect_to r
         else
           redirect_back(fallback_location: root_path)
         end
