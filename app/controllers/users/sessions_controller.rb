@@ -5,6 +5,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def new # rubocop:disable Metrics/AbcSize
     request.flash[:notice] = I18n.t('devise.failure.invalid') if params[:show_error]
+    request.flash[:notice] = params[:notice] if params[:notice]
     self.resource = resource_class.new({remember_me: true, r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
     active_response_block do
