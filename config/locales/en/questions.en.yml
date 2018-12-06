@@ -17,13 +17,15 @@ en:
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your challenge"
     form:
-      title_heading: "Give your challenge a fitting title"
-      title_body_html: "<ul class='bullets'>
+      title:
+        label: "Give your challenge a fitting title"
+        body_html: "<ul class='bullets'>
                          <li>A challenge should invite people to submit their own ideas and solutions.</li>
                          <li>Open questions tend to be great titles for challenges.</li>
                        </ul>"
-      content_heading: "Explain your challenge"
-      content_body_html: "<ul class='bullets'>
+      content:
+        label: "Explain your challenge"
+        body_html: "<ul class='bullets'>
                             <li>Explain the <b>current situation</b>. Give background information about the problem and why it hasn't been solved yet.</li>
                             <li>Explain what constitutes a good solution.</li>
                             <li>End by <b>repeating the question</b> to encourage readers to submit their ideas.</li>

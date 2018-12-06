@@ -40,13 +40,15 @@ en:
     tooltips:
       info: "An argument is a single reason in favor or against an idea."
     form:
-      title_heading: "Core of your argument"
-      title_body_html: "<ul class='bullets'>
+      title:
+        label: "Core of your argument"
+        body_html: "<ul class='bullets'>
                      <li>An argument is a <b>single reason</b> <b class='pro-t'>in favour</b> or <b class='con-t'>against</b> an <b class='motion-t'>idea</b>.</li>
                      <li>Use a <b>short and concise</b> title.</li>
                    </ul>"
-      content_heading: "Argument details (optional)"
-      content_body_html: "<ul class='bullets'>
+      content:
+        label: "Argument details (optional)"
+        body_html: "<ul class='bullets'>
                       <li>Give <b>background information</b> to support your argument.</li>
                       <li>Use <b>references</b> and add links.</li>
                       <li>The <b>first sentences</b> will be read most often, so make sure they are convincing!</li>

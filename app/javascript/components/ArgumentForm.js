@@ -34,13 +34,13 @@ export const ArgumentForm = props => {
                         data-field="title"
                         maxLength="75"
                         minLength="5"
-                        placeholder={I18n.t('arguments.form.title_heading')}
+                        placeholder={I18n.t('arguments.form.title.label')}
                         name="argument-title"
                         onChange={props.onArgumentChange}
                         required={true}
                         value={props.createArgument.title}/>
                     <textarea
-                        placeholder={I18n.t('arguments.form.content_heading')}
+                        placeholder={I18n.t('arguments.form.content.label')}
                         className="form-input-content"
                         data-field="body"
                         name="argument-body"

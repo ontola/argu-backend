@@ -17,13 +17,15 @@ nl:
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
       action: "Deel jouw uitdaging."
     form:
-      title_heading: "Geef jouw uitdaging een titel"
-      title_body_html: "<ul class='bullets'>
+      title:
+        label: "Geef jouw uitdaging een titel"
+        body_html: "<ul class='bullets'>
                      <li>Open vragen zijn vaak geschikte titels voor uitdagingen.</li>
                      <li>Een uitdaging moet mensen aanzetten tot het indienen van ideeën.</li>
                    </ul>"
-      content_heading: "Licht je uitdaging toe"
-      content_body_html: "<ul class='bullets'>
+      content:
+        label: "Licht je uitdaging toe"
+        body_html: "<ul class='bullets'>
                             <li>Leg de <b>huidige situatie</b> uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is.</li>
                             <li>Geef aan waar een mogelijke oplossing (een idee) aan zouden moeten voldoen.</li>
                             <li>Eindig door gebruikers nog eens aan te zetten tot het <b>het indienen van een idee</b>, zodat je meer reacties krijgt.</li>
