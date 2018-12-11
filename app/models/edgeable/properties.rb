@@ -112,16 +112,18 @@ end
 module ActiveRecord
   module Associations
     class Preloader
-      class CollectionAssociation < Association #:nodoc:
+      class Association #:nodoc:
         private
 
-        def preload(preloader)
-          associated_records_by_owner(preloader).each do |owner, records|
-            association = owner.association(reflection.name)
-            association.loaded!
+        def associate_records_to_owner(owner, records) # rubocop:disable Metrics/AbcSize
+          association = owner.association(reflection.name)
+          association.loaded!
+          if reflection.collection?
             association.target.concat(records)
-            owner.preload_properties if reflection.name.to_sym == :properties
+          else
+            association.target = records.first unless records.empty?
           end
+          owner.preload_properties if reflection.name.to_sym == :properties
         end
       end
     end
