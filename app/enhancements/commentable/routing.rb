@@ -9,7 +9,11 @@ module Commentable
 
       def route_concerns(mapper)
         mapper.concern :commentable do
-          mapper.resources :comments, path: 'c', only: %i[new index show create]
+          mapper.resources :comments, path: 'c', only: %i[new index show create] do
+            mapper.collection do
+              mapper.resources :action_items, path: 'actions', only: %i[index show], collection: :comments
+            end
+          end
           mapper.patch 'comments' => 'comments#create'
         end
       end

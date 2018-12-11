@@ -34,7 +34,7 @@ module NestedResourceHelper
     opts = opts.dup
     opts[:class] = parent_resource_class(opts)
     opts[:id] = opts.delete(parent_resource_param(opts))
-    resource_from_opts(opts)
+    parent_resource_or_collection(opts)
   end
 
   # Extracts the resource id from a params hash
@@ -68,6 +68,11 @@ module NestedResourceHelper
   # @note Whether the given parent is allowed for the requested resource is not validated here.
   def parent_resource_klass(opts = params)
     ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts).classify }
+  end
+
+  def parent_resource_or_collection(opts)
+    resource = resource_from_opts(opts)
+    opts[:collection].present? ? resource.send("#{opts[:collection].to_s.singularize}_collection") : resource
   end
 
   # Extracts the parent resource param from the url to get to its value

@@ -9,7 +9,11 @@ module Widgetable
 
       def route_concerns(mapper)
         mapper.concern :widgetable do
-          mapper.resources :widgets, only: %i[index new create]
+          mapper.resources :widgets, only: %i[index new create] do
+            mapper.collection do
+              mapper.resources :action_items, path: 'actions', only: %i[index show], collection: :widgets
+            end
+          end
         end
       end
     end
