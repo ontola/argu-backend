@@ -2,6 +2,7 @@
 
 class CommentSerializer < ContentEdgeSerializer
   has_one :vote, predicate: NS::ARGU[:opinion]
+  attribute :is_opinion, predicate: NS::ARGU[:isOpinion], datatype: NS::XSD[:boolean], if: :never
   with_collection :comment_children, predicate: NS::SCHEMA[:comments]
 
   def description

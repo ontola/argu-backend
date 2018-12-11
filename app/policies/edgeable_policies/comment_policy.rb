@@ -4,6 +4,7 @@ class CommentPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[description in_reply_to_id vote_id]
+    attributes.append(:is_opinion) if new_record?
     attributes
   end
 

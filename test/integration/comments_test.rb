@@ -37,6 +37,21 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert_equal vote.reload.comment, Comment.last
   end
 
+  test 'user should post create comment for vote as json with boolean' do
+    sign_in vote.publisher
+    assert_difference('Comment.count' => 1,
+                      'Property.where(predicate: "https://argu.co/ns/core#explanation").count' => 1) do
+      post collection_iri(motion, :comments),
+           params: {comment: {body: 'My opinion', is_opinion: true}},
+           headers: argu_headers(accept: :json)
+    end
+
+    assert_response 201
+
+    assert_equal Comment.last, vote.reload.comment
+    assert_equal vote.reload.comment, Comment.last
+  end
+
   test 'user should post create comment for comment' do
     sign_in user
     subject

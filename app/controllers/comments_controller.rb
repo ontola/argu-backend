@@ -31,6 +31,16 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     redirect_to url, notice: c.errors.full_messages.first
   end
 
+  def create_meta
+    data = super
+    if authenticated_resource.parent.enhanced_with?(Opinionable) && authenticated_resource.vote_id.present?
+      voteable = authenticated_resource.parent
+      action_delta(data, :remove, voteable.comment_collection, :create_opinion, include_parent: true)
+      action_delta(data, :add, voteable, :update_opinion)
+    end
+    data
+  end
+
   def create_service_parent
     parent = super
     parent = parent.parent if parent.is_a?(Comment)

@@ -185,6 +185,10 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
           meta_replace_collection_count(data, filtered_collection)
         end
       end
+      voteable = authenticated_resource.parent.parent
+      action_delta(data, :remove, voteable, :update_opinion)
+      action_delta(data, :add, voteable.comment_collection, :create_opinion, include_parent: true)
+      opinion_delta(data, voteable)
     else
       data = super
     end
@@ -211,6 +215,20 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     action_delta(data, :remove, authenticated_resource.parent, :destroy_vote, include_favorite: true)
     action_delta(data, :add, authenticated_resource.parent, :create_vote, include_favorite: true)
     data
+  end
+
+  def opinion_delta(data, voteable)
+    [
+      voteable.action(user_context, :update_opinion),
+      voteable.comment_collection.action(user_context, :create_opinion)
+    ].each do |object|
+      data << [
+        object.iri,
+        NS::SCHEMA[:result],
+        "#{authenticated_resource.for.classify}Opinion".constantize.iri,
+        NS::ARGU[:replace]
+      ]
+    end
   end
 
   def replace_vote_event_meta(data) # rubocop:disable Metrics/AbcSize

@@ -5,6 +5,12 @@ class CollectionPolicy < RestrictivePolicy
     parent_policy&.create_child?(record.association_class.name.tableize.to_sym)
   end
 
+  def create_opinion?
+    return false unless record.parent.try(:enhanced_with?, Opinionable)
+    vote = record.parent.vote_for(user_context.user)
+    vote.present? && vote.comment.nil?
+  end
+
   def has_expired_ancestors?
     parent_policy.try(:has_expired_ancestors?)
   end

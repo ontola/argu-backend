@@ -121,6 +121,8 @@ class VotesTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should post create for motion with new fe' do
+    sign_in guest_user, Doorkeeper::Application.argu_front_end
+
     expect(vote_event.votes.length).to be 1
     assert_difference('Vote.count' => 0,
                       'Edge.count' => 0,

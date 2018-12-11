@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class LinkedRecord < Edge
-  enhance Commentable
   enhance Argumentable
   enhance Commentable
+  enhance Opinionable
   enhance VoteEventable
+  enhance Actionable
 
   extend UriTemplateHelper
   extend UUIDHelper

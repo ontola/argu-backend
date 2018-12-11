@@ -9,18 +9,22 @@ module VoteEventable
 
       after_create :create_default_vote_event
       after_convert :create_default_vote_event
+    end
 
-      def create_default_vote_event
-        @default_vote_event ||=
-          VoteEvent.create!(
-            parent: self,
-            creator: creator,
-            publisher: publisher,
-            is_published: true,
-            starts_at: Time.current,
-            root_id: root.uuid
-          )
-      end
+    def create_default_vote_event
+      @default_vote_event ||=
+        VoteEvent.create!(
+          parent: self,
+          creator: creator,
+          publisher: publisher,
+          is_published: true,
+          starts_at: Time.current,
+          root_id: root.uuid
+        )
+    end
+
+    def vote_for(user)
+      user.profile.vote_cache.by_parent(default_vote_event)
     end
 
     module ClassMethods

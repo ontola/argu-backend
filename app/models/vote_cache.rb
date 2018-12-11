@@ -7,7 +7,7 @@ class VoteCache
   end
 
   def by_parent(parent)
-    cache!(parent).detect { |vote| vote.parent_id == parent.id } if parent.persisted?
+    cache!(parent).detect { |vote| vote.parent_id == parent.id } if parent&.persisted?
   end
 
   def cache!(parent) # rubocop:disable Metrics/AbcSize

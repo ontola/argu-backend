@@ -14,6 +14,7 @@ class Motion < Edge
   enhance Exportable
   enhance Feedable
   enhance Inviteable
+  enhance Opinionable
   enhance MarkAsImportant
   enhance Moveable
   enhance Placeable

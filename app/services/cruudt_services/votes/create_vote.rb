@@ -14,7 +14,7 @@ class CreateVote < PublishedCreateService
       .where_owner(
         'Vote',
         root_id: parent.root_id,
-        for: attributes[:for],
+        for: attributes[:for] || Vote.filter_options[:option][:values][attributes[:option]],
         creator: options[:creator],
         primary: true
       ).find_by(parent: parent)
