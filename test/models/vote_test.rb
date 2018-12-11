@@ -7,6 +7,8 @@ class VoteTest < ActiveSupport::TestCase
   let(:motion) { create(:motion, parent: freetown) }
   let(:user) { create(:user) }
   subject { create(:vote, parent: motion.default_vote_event) }
+  let(:vote_with_comment) { create(:vote, parent: motion.default_vote_event) }
+  let(:comment) { create(:comment, parent: motion.default_vote_event, vote: vote_with_comment, description: 'Opinion') }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s
@@ -21,6 +23,14 @@ class VoteTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordNotUnique do
       Vote.where(id: [first.id, second.id]).update_all(primary: true)
     end
+  end
+
+  test 'preloaded comment has description' do
+    assert_equal comment.description, vote_with_comment.comment.description
+    assert_equal(
+      comment.description,
+      Vote.where(id: vote_with_comment.id).includes(Vote.includes_for_serializer).first.comment.description
+    )
   end
 
   private

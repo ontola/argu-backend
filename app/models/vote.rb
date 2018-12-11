@@ -64,7 +64,7 @@ class Vote < Edge
   end
 
   def self.includes_for_serializer
-    super.merge(publisher: {}, comment: {})
+    super.merge(publisher: {}, comment: :properties)
   end
 
   def iri_opts
