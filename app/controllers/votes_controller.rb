@@ -6,19 +6,6 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   private
 
-  def action_delta(data, delta, iri, action, favorite)
-    [NS::SCHEMA[:potentialAction], favorite ? NS::ARGU[:favoriteAction] : nil].compact.each do |predicate|
-      data.push(
-        [
-          iri,
-          predicate,
-          ::RDF::DynamicURI("#{iri}/actions/#{action}"),
-          NS::LL[delta]
-        ]
-      )
-    end
-  end
-
   def active_response_success_message
     return super unless action_name == 'create'
     I18n.t('votes.alerts.success')
@@ -201,7 +188,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     else
       data = super
     end
-    action_delta(data, :remove, authenticated_resource.parent_iri, :create_vote, true)
+    action_delta(data, :remove, authenticated_resource.parent, :create_vote, include_favorite: true)
     data
   end
 
@@ -211,18 +198,18 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
       authenticated_resource.parent_iri,
       NS::ARGU[:currentVote],
       authenticated_resource.iri,
-      NS::LL[:remove]
+      NS::ARGU[:remove]
     ]
     if authenticated_resource.parent.is_a?(Argument)
       data.push [
         authenticated_resource.parent_iri,
         NS::ARGU[:votesProCount],
         authenticated_resource.parent.reload.children_counts['votes_pro'].to_i,
-        NS::LL[:replace]
+        NS::ARGU[:replace]
       ]
     end
-    action_delta(data, :remove, authenticated_resource.parent_iri, :destroy_vote, true)
-    action_delta(data, :add, authenticated_resource.parent_iri, :create_vote, true)
+    action_delta(data, :remove, authenticated_resource.parent, :destroy_vote, include_favorite: true)
+    action_delta(data, :add, authenticated_resource.parent, :create_vote, include_favorite: true)
     data
   end
 
@@ -238,7 +225,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         iri,
         NS::ARGU[:voteableVoteEvent],
         parent_resource.iri,
-        NS::LL[:replace]
+        NS::ARGU[:replace]
       ]
     )
   end

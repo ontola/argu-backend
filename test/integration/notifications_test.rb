@@ -67,8 +67,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     assert_response 200
     notification.reload
     expect_triple(RDF::URI(argu_url('/n')), NS::ARGU[:unreadCount], 0)
-    expect_triple(notification.iri, NS::SCHEMA[:dateRead], notification.read_at.to_datetime, NS::LL[:replace])
-    expect_triple(notification.iri, NS::ARGU[:unread], false, NS::LL[:replace])
+    expect_triple(notification.iri, NS::SCHEMA[:dateRead], notification.read_at.to_datetime, NS::ARGU[:replace])
+    expect_triple(notification.iri, NS::ARGU[:unread], false, NS::ARGU[:replace])
   end
 
   test 'follower should mark as read' do

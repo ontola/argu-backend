@@ -3,6 +3,21 @@
 module ActiveResponseHelper
   include RailsLD::ActiveResponse::Controller::CrudDefaults
 
+  private
+
+  def action_delta(data, delta, object, action, opts = {})
+    [NS::SCHEMA[:potentialAction], opts[:include_favorite] ? NS::ARGU[:favoriteAction] : nil].compact.each do |pred|
+      [object, opts[:include_parent] ? object.parent : nil].compact.each do |obj|
+        data << [
+          obj.iri,
+          pred,
+          ::RDF::DynamicURI("#{object.iri}/actions/#{action}"),
+          delta_iri(delta)
+        ]
+      end
+    end
+  end
+
   def active_response_success_message # rubocop:disable Metrics/AbcSize
     if (action_name == 'create' && current_resource.try(:argu_publication)&.publish_time_lapsed?) ||
         resource_was_published?
@@ -14,7 +29,7 @@ module ActiveResponseHelper
 
   def changes_triples
     current_resource.previous_changes_by_predicate.map do |predicate, (_old_value, new_value)|
-      [current_resource.iri, predicate, new_value, NS::LL[:replace]]
+      [current_resource.iri, predicate, new_value, NS::ARGU[:replace]]
     end
   end
 
@@ -47,6 +62,10 @@ module ActiveResponseHelper
       model_name => current_resource,
       resource: current_resource
     }
+  end
+
+  def delta_iri(delta)
+    delta == :remove ? NS::ARGU[delta] : NS::LL[delta]
   end
 
   def destroy_meta
@@ -148,7 +167,8 @@ module ActiveResponseHelper
     if resource_was_published?
       meta << [
         current_resource.actions(user_context).detect { |a| a.tag == :publish }.iri,
-        NS::SCHEMA[:target], nil,
+        NS::SCHEMA[:target],
+        nil,
         NS::LL[:remove]
       ]
     end
@@ -162,6 +182,6 @@ module ActiveResponseHelper
   def meta_replace_collection_count(data, collection)
     collection.clear_total_count
     data.push [collection.iri, NS::AS[:pages], nil, NS::LL[:remove]]
-    data.push [collection.iri, NS::AS[:totalItems], collection.total_count, NS::LL[:replace]]
+    data.push [collection.iri, NS::AS[:totalItems], collection.total_count, NS::ARGU[:replace]]
   end
 end

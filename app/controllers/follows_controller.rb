@@ -56,7 +56,7 @@ class FollowsController < AuthorizedController
     [
       menu_item.iri,
       NS::SCHEMA[:image],
-      RDF::URI("http://fontawesome.io/icon/#{menu_item.image.gsub('fa-', '')}"), NS::LL[:replace]
+      RDF::URI("http://fontawesome.io/icon/#{menu_item.image.gsub('fa-', '')}"), NS::ARGU[:replace]
     ]
   end
 

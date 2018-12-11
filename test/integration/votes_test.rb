@@ -131,19 +131,19 @@ class VotesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    expect_triple(vote_event.vote_collection(user_context: context).iri, NS::AS[:totalItems], 1, NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(user_context: context).iri, NS::AS[:totalItems], 1, NS::ARGU[:replace])
     expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :yes}).iri,
                   NS::AS[:totalItems],
                   1,
-                  NS::LL[:replace])
+                  NS::ARGU[:replace])
     expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :other}).iri,
                   NS::AS[:totalItems],
                   0,
-                  NS::LL[:replace])
+                  NS::ARGU[:replace])
     expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :no}).iri,
                   NS::AS[:totalItems],
                   0,
-                  NS::LL[:replace])
+                  NS::ARGU[:replace])
 
     assert_response 201
   end
@@ -560,10 +560,10 @@ class VotesTest < ActionDispatch::IntegrationTest
       delete argument_vote.iri_path, headers: argu_headers(accept: :nq)
     end
 
-    expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::LL[:remove])
-    expect_triple(collection_iri(argument, :votes), NS::AS[:totalItems], 0, NS::LL[:replace])
+    expect_triple(argument.iri, NS::ARGU[:currentVote], vote_iri, NS::ARGU[:remove])
+    expect_triple(collection_iri(argument, :votes), NS::AS[:totalItems], 0, NS::ARGU[:replace])
     expect_triple(
-      collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::AS[:totalItems], 0, NS::LL[:replace]
+      collection_iri(argument, :votes, 'filter%5B%5D' => 'option=yes'), NS::AS[:totalItems], 0, NS::ARGU[:replace]
     )
     assert_response 200
   end
@@ -593,19 +593,19 @@ class VotesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    expect_triple(vote_event.vote_collection(user_context: context).iri, NS::AS[:totalItems], 2, NS::LL[:replace])
+    expect_triple(vote_event.vote_collection(user_context: context).iri, NS::AS[:totalItems], 2, NS::ARGU[:replace])
     expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :yes}).iri,
                   NS::AS[:totalItems],
                   1,
-                  NS::LL[:replace])
+                  NS::ARGU[:replace])
     expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :other}).iri,
                   NS::AS[:totalItems],
                   0,
-                  NS::LL[:replace])
+                  NS::ARGU[:replace])
     expect_triple(vote_event.vote_collection(user_context: context, filter: {option: :no}).iri,
                   NS::AS[:totalItems],
                   1,
-                  NS::LL[:replace])
+                  NS::ARGU[:replace])
 
     assert_response 201
   end
