@@ -218,7 +218,7 @@ Rails.application.routes.draw do
       resources :announcements, only: %i[show new create] do
         include_route_concerns
       end
-      resources :forums, only: %i[new create]
+      resources :forums, only: %i[new] # @todo remove after FE2.0
       resources :users, only: [], concerns: %i[destroyable]
       mount Sidekiq::Web => '/sidekiq'
     end
