@@ -15,6 +15,10 @@ class OrganizationsFinderController < AuthorizedController
 
   private
 
+  def add_error_snackbar?(error)
+    !error.error.is_a?(ActiveRecord::RecordNotFound)
+  end
+
   def authenticated_resource!
     @resource ||= resource_from_param if resource_from_param.respond_to?(:parent)
   end
