@@ -5,6 +5,16 @@ class MotionsController < EdgeableController
 
   private
 
+  def create_includes
+    {
+      blog_post_collection: inc_nested_collection,
+      comment_collection: inc_nested_collection,
+      con_argument_collection: inc_nested_collection,
+      pro_argument_collection: inc_nested_collection,
+      attachment_collection: inc_nested_collection
+    }
+  end
+
   def index_includes_collection
     current_profile.vote_cache.cache!(parent_resource)
     super
