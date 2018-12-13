@@ -106,7 +106,7 @@ Rails.application.routes.draw do
     resource :follows, only: :destroy, controller: 'users/follows'
 
     get :connect, to: 'users/identities#connect', on: :member
-    post :connect, to: 'users/identities#connect!', on: :member
+    post :connect, to: 'users/identities#attach', on: :member
 
     get :setup, to: 'users/setup#edit', on: :collection
     put :setup, to: 'users/setup#update', on: :collection

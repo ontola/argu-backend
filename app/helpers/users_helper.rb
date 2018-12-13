@@ -48,14 +48,6 @@ module UsersHelper
     r if argu_iri_or_relative?(r)
   end
 
-  def redirect_with_r(user)
-    if user.r.present?
-      r = user.r
-      user.update r: ''
-    end
-    redirect_to r.presence || root_path
-  end
-
   # Assigns certain favorites based on
   #   either an 'r' action
   #   or preferred_forum

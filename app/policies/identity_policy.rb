@@ -8,7 +8,7 @@ class IdentityPolicy < RestrictivePolicy
   end
 
   def permitted_attribute_names
-    super
+    super + [:password]
   end
 
   def destroy?
@@ -18,4 +18,5 @@ class IdentityPolicy < RestrictivePolicy
   def connect?
     true
   end
+  alias attach? connect?
 end

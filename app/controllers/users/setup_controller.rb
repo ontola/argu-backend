@@ -47,5 +47,11 @@ module Users
     def update_success_location
       setup_profiles_path
     end
+
+    class << self
+      def controller_class
+        User
+      end
+    end
   end
 end

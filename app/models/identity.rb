@@ -3,6 +3,10 @@
 require 'publishable'
 
 class Identity < ApplicationRecord
+  enhance Actionable
+
+  attr_accessor :connecting_user, :jwt_token
+
   belongs_to :user
   after_destroy :clear_token_connection
   validates :uid, :provider, presence: true
