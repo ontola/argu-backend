@@ -23,6 +23,10 @@ class CollectionPolicy < RestrictivePolicy
     parent_policy.try(:has_unpublished_ancestors?)
   end
 
+  def show?
+    parent_policy.show? || super
+  end
+
   private
 
   def parent_policy # rubocop:disable Metrics/AbcSize
