@@ -19,6 +19,16 @@ module Shortnameable
              inverse_of: :owner,
              primary_key: :uuid
     accepts_nested_attributes_for :shortname, :shortnames
+    validates :url,
+              allow_nil: true,
+              format: {
+                with: Shortname
+                        .validators
+                        .detect { |validator| validator.is_a?(ActiveModel::Validations::FormatValidator) }
+                        .options[:with],
+                message: I18n.t('profiles.should_start_with_capital')
+              }
+
     validate :validate_no_duplicate_shortname
 
     # Useful to test whether a model is shortnameable
