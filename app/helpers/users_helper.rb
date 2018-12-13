@@ -64,12 +64,18 @@ module UsersHelper
     end
   end
 
-  def suggested_shortname(resource) # rubocop:disable Metrics/AbcSize
-    shortname = resource.email[/[^@]+/].tr('.', '_').downcase
+  def suggested_shortname(resource)
+    shortname = shortname_from_email(resource.email)
     existing = Shortname.where('shortname ~* ?', "^#{shortname}\\d*$").pluck(:shortname).map(&:downcase)
     return shortname unless existing.include?(shortname)
-    integers = existing.map { |s| s[/\d+/].to_i }.sort
-    gap = (integers + [integers.last + 1]).inject { |a, e| e == a.next ? e : (break a.next) }
-    "#{shortname}#{gap}"
+    "#{shortname}#{shortname_gap(existing.map { |s| s[/\d+/].to_i }.sort)}"
+  end
+
+  def shortname_from_email(email)
+    email[/[^@]+/].tr('.', '_').downcase
+  end
+
+  def shortname_gap(integers)
+    (integers + [integers.last + 1]).inject { |a, e| e == a.next ? e : (break a.next) }
   end
 end

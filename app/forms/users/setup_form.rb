@@ -2,10 +2,12 @@
 
 module Users
   class SetupForm < RailsLD::Form
-    fields %i[
-      url
-      first_name
-      last_name
+    extend UsersHelper
+
+    fields [
+      {url: {default_value: ->(resource) { resource.form.target.url || suggested_shortname(resource.form.target) }}},
+      :first_name,
+      :last_name
     ]
   end
 end
