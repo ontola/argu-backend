@@ -13,7 +13,7 @@ module Actions
           to_name: resource.connecting_user.display_name
         )
       },
-      label: I18n.t('users.connect.title'),
+      label: -> { I18n.t('users.connect.title') },
       http_method: :post,
       form: Users::ConnectForm,
       url: lambda {
@@ -27,7 +27,7 @@ module Actions
         )
       },
       iri_template: :user_connect,
-      iri_template_opts: -> { {id: resource.connecting_user.id, token: resource.jwt_token} }
+      iri_template_opts: -> { {id: resource.connecting_user.to_param, token: resource.jwt_token} }
     )
   end
 end
