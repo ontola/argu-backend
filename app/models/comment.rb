@@ -35,10 +35,6 @@ class Comment < Edge
     is_trashed? && !has_children?
   end
 
-  def self.includes_for_serializer
-    super.merge(comment_children: {})
-  end
-
   def joined_body
     [title, body].map(&:presence).compact.join("\n\n")
   end
@@ -81,5 +77,17 @@ class Comment < Edge
     vote = Edge.where_owner('Vote', creator: creator, uuid: vote_id, root_id: root_id).first ||
       raise(ActiveRecord::RecordNotFound)
     vote.update!(comment_id: uuid)
+  end
+
+  class << self
+    def includes_for_serializer
+      super.merge(comment_children: {})
+    end
+
+    def show_includes
+      super + [
+        comment_child_collection: inc_shallow_collection
+      ]
+    end
   end
 end

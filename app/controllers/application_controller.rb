@@ -44,20 +44,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   layout :set_layout
   serialization_scope :user_context
 
-  class_attribute :inc_nested_collection
-  self.inc_nested_collection = [
-    default_view: {member_sequence: :members},
-    filters: [],
-    sortings: [],
-    operation: ACTION_FORM_INCLUDES
-  ].freeze
-  class_attribute :inc_shallow_collection
-  self.inc_shallow_collection = [
-    filters: [],
-    sortings: [],
-    operation: ACTION_FORM_INCLUDES
-  ].freeze
-
   def self.controller_class
     @controller_class ||=
       name.sub(/Controller$/, '').classify.safe_constantize || controller_name.classify.safe_constantize

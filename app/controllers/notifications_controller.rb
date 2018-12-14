@@ -60,10 +60,6 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
       .page params[:page]
   end
 
-  def preview_includes
-    [operation: :target]
-  end
-
   def index_success_html
     head 204
   end

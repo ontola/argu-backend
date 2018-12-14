@@ -6,25 +6,6 @@ class QuestionsController < EdgeableController
 
   private
 
-  def preview_includes
-    [
-      :default_cover_photo,
-      creator: :default_profile_photo,
-      top_comment: :creator
-    ]
-  end
-
-  def show_includes
-    super + [
-      partOf: [widget_sequence: :members],
-      operation: {},
-      attachment_collection: inc_nested_collection,
-      motion_collection: inc_shallow_collection,
-      comment_collection: inc_shallow_collection,
-      blog_post_collection: inc_shallow_collection
-    ]
-  end
-
   def show_params
     params.permit(:page)
   end

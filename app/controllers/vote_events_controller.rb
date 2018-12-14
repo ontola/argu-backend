@@ -5,10 +5,6 @@ class VoteEventsController < EdgeableController
 
   private
 
-  def preview_includes
-    [:current_vote, vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]]
-  end
-
   def resource_by_id
     return super unless resource_id == VoteEvent::DEFAULT_ID
     parent_resource.default_vote_event

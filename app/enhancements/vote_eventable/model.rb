@@ -31,6 +31,20 @@ module VoteEventable
       def includes_for_serializer
         super.merge(default_vote_event: {creator: :profileable})
       end
+
+      def preview_includes
+        [
+          default_vote_event: [
+            :current_vote,
+            vote_collection: {
+              operation: RailsLD::Model::ACTION_FORM_INCLUDES,
+              filters: [],
+              sortings: [],
+              default_filtered_collections: inc_shallow_collection
+            }.freeze
+          ].freeze
+        ]
+      end
     end
   end
 end

@@ -128,18 +128,6 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
     }
   end
 
-  def preview_includes
-    [
-      creator: :default_profile_photo
-    ]
-  end
-
-  def show_includes
-    super + [
-      comment_child_collection: inc_shallow_collection
-    ]
-  end
-
   def show_success_html
     redirect_to redirect_location
   end

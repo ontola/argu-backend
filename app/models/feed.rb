@@ -78,4 +78,10 @@ class Feed
   def root
     @root ||= Page.find_by(uuid: root_id)
   end
+
+  class << self
+    def preview_includes
+      [:trackable, recipient: [widget_sequence: :members], owner: [:default_profile_photo]]
+    end
+  end
 end

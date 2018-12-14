@@ -40,10 +40,6 @@ class ForumsController < EdgeableController
       .per(30)
   end
 
-  def create_includes
-    [widget_sequence: :members]
-  end
-
   def current_forum
     resource_by_id
   end
@@ -64,10 +60,6 @@ class ForumsController < EdgeableController
 
   def photo_params_nesting_path
     []
-  end
-
-  def preview_includes
-    [:default_cover_photo, widget_sequence: :members]
   end
 
   def redirect_generic_shortnames

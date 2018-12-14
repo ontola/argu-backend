@@ -31,11 +31,6 @@ class Decision < Edge
   validates :state, presence: true
   parentable :motion
 
-  # @return [Array<Symbol>] States that indicate an action was taken on this decision
-  def self.actioned_keys
-    states.keys[1..-1]
-  end
-
   def display_name
     return self[:display_name] if destroyed?
     self[:display_name] = I18n.t("decisions.#{parent.model_name.i18n_key}.#{state}")
@@ -64,5 +59,12 @@ class Decision < Edge
                 .where(profiles: {profileable_type: 'User', profileable_id: user_id}, group_id: group_id)
                 .any?
     errors.add(:forwarded_to, I18n.t('decisions.forward_failed', user_id: user_id, group_id: group_id))
+  end
+
+  class << self
+    # @return [Array<Symbol>] States that indicate an action was taken on this decision
+    def actioned_keys
+      states.keys[1..-1]
+    end
   end
 end

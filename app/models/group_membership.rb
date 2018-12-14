@@ -43,10 +43,6 @@ class GroupMembership < ApplicationRecord
     collection.update_all(member_id: Profile::COMMUNITY_ID, end_date: Time.current)
   end
 
-  def self.includes_for_serializer
-    [user: {}, group: {}]
-  end
-
   def self.iri
     [super, NS::ORG['Membership']]
   end
@@ -77,5 +73,15 @@ class GroupMembership < ApplicationRecord
     existing.delete(id)
     return if existing.empty?
     errors.add(:group_id, :taken, value: group_id)
+  end
+
+  class << self
+    def includes_for_serializer
+      [user: {}, group: {}]
+    end
+
+    def show_includes
+      super + %i[organization]
+    end
   end
 end

@@ -39,6 +39,10 @@ module Edgeable
         Arel::Nodes::NamedFunction.new('COALESCE', [casted, Arel::Nodes::SqlLiteral.new('0')]).send(direction)
       end
 
+      def preview_includes
+        super + [creator: :default_cover_photo]
+      end
+
       # Selects edges of a certain type over persisted and transient models.
       # @param [String] type The (child) edges' #owner_type value
       # @param [Hash] where_clause Filter options for the owners of the edge akin to activerecords' `where`.

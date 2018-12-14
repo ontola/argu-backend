@@ -62,15 +62,21 @@ class Group < ApplicationRecord
     id == Group::PUBLIC_ID ? I18n.t('groups.public.name_singular') : super
   end
 
-  def self.iri
-    [super, NS::ORG['Organization']]
-  end
+  class << self
+    def iri
+      [super, NS::ORG['Organization']]
+    end
 
-  def self.public
-    @public ||= Group.find_by(id: Group::PUBLIC_ID)
-  end
+    def public
+      @public ||= Group.find_by(id: Group::PUBLIC_ID)
+    end
 
-  def self.staff
-    @staff ||= Group.find_by(id: Group::STAFF_ID)
+    def show_includes
+      super + %i[organization]
+    end
+
+    def staff
+      @staff ||= Group.find_by(id: Group::STAFF_ID)
+    end
   end
 end

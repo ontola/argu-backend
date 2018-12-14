@@ -35,10 +35,6 @@ class Argument < Edge
     self
   end
 
-  def self.includes_for_serializer
-    super.merge(votes: {})
-  end
-
   # @return [Argument, nil] The id of the next item or nil.
   def next(show_trashed = false)
     adjacent(false, show_trashed)
@@ -76,21 +72,6 @@ class Argument < Edge
     self
   end
 
-  def self.ordered(pro_coll, con_coll, page = {})
-    HashWithIndifferentAccess.new(
-      pro: {
-        collection:
-          pro_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:pro] || 1) || [],
-        page_param: :page_arg_pro
-      },
-      con: {
-        collection:
-          con_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:con] || 1) || [],
-        page_param: :page_arg_con
-      }
-    )
-  end
-
   private
 
   def adjacent(direction, _show_trashed = nil) # rubocop:disable Metrics/AbcSize
@@ -104,5 +85,26 @@ class Argument < Edge
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
     parent.arguments.find_by(uuid: p_id)
+  end
+
+  class << self
+    def includes_for_serializer
+      super.merge(votes: {})
+    end
+
+    def ordered(pro_coll, con_coll, page = {})
+      HashWithIndifferentAccess.new(
+        pro: {
+          collection:
+            pro_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:pro] || 1) || [],
+          page_param: :page_arg_pro
+        },
+        con: {
+          collection:
+            con_coll.reorder(order_child_count_sql(:votes_pro)).order(:last_activity_at).page(page[:con] || 1) || [],
+          page_param: :page_arg_con
+        }
+      )
+    end
   end
 end

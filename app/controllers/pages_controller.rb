@@ -5,20 +5,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   skip_before_action :authorize_action, only: %i[index]
   skip_before_action :check_if_registered, only: :index
 
-  self.inc_nested_collection = [
-    default_view: {member_sequence: {members: :default_profile_photo}},
-    filters: [],
-    sortings: [],
-    operation: ACTION_FORM_INCLUDES
-  ].freeze
-
-  self.inc_nested_collection = [
-    default_view: {member_sequence: :members},
-    filters: [],
-    sortings: [],
-    operation: ACTION_FORM_INCLUDES
-  ].freeze
-
   protected
 
   def authenticated_resource!
@@ -88,12 +74,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
       association_scope: :discover,
       type: :paginated
     )
-  end
-
-  def preview_includes
-    [
-      :default_profile_photo
-    ]
   end
 
   def new_execute

@@ -65,13 +65,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     pp.except(:primary_email)
   end
 
-  def preview_includes
-    %i[
-      default_profile_photo
-      email_addresses
-    ]
-  end
-
   def redirect_location
     r_param || settings_user_path(tab: tab)
   end

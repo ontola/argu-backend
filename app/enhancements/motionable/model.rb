@@ -30,6 +30,12 @@ module Motionable
           {key: NS::ARGU[:lastActivityAt], direction: :desc}
         end
       end
+
+      def show_includes
+        super + [
+          motion_collection: inc_shallow_collection
+        ]
+      end
     end
   end
 end

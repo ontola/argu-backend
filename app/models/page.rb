@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Page < Edge # rubocop:disable Metrics/ClassLength
+class Page < Edge
   has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
   enhance BlogPostable
@@ -71,10 +71,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
 
   def email
     'anonymous'
-  end
-
-  def self.includes_for_serializer
-    super.merge(profile: :default_profile_photo)
   end
 
   def iri_opts

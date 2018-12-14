@@ -31,6 +31,10 @@ module Widgetable
           widgets
         end
       end
+
+      def preview_includes
+        super + [widget_sequence: :members]
+      end
     end
   end
 end

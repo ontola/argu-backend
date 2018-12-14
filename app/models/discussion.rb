@@ -14,16 +14,17 @@ class Discussion < Edge
   end
   alias edgeable_record parent
 
-  def self.includes_for_serializer
-    [
-      :parent,
-      :default_vote_event,
-      :default_cover_photo,
-      creator: :profileable,
-      trash_activity: {},
-      untrash_activity: {},
-      argu_publication: {},
-      published_publications: {}
-    ]
+  class << self
+    def includes_for_serializer
+      Motion.includes_for_serializer.merge(Question.includes_for_serializer)
+    end
+
+    def preview_includes
+      Motion.preview_includes + Question.preview_includes
+    end
+
+    def show_includes
+      Motion.show_includes + Question.show_includes
+    end
   end
 end

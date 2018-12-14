@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VoteEvent < Edge
+class VoteEvent < Edge # rubocop:disable Metrics/ClassLength
   DEFAULT_ID = 'default'
 
   enhance Actionable
@@ -112,6 +112,15 @@ class VoteEvent < Edge
       end
     else
       (vote_count.to_f / total_vote_count * 100).round.abs
+    end
+  end
+
+  class << self
+    def preview_includes
+      [
+        :current_vote,
+        vote_collection: inc_nested_collection + [default_filtered_collections: inc_shallow_collection]
+      ]
     end
   end
 end

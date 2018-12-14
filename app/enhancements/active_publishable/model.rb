@@ -42,6 +42,12 @@ module ActivePublishable
       def is_publishable?
         true
       end
+
+      def show_includes
+        super + [
+          last_published_decision: {}
+        ]
+      end
     end
   end
 

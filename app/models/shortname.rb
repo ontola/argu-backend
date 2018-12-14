@@ -50,10 +50,6 @@ class Shortname < ApplicationRecord
     Shortname.where(root_id: root_id).find_by('lower(shortname) = lower(?)', shortname).try(:owner)
   end
 
-  def self.includes_for_serializer
-    [owner: {}]
-  end
-
   def parent
     owner
   end
@@ -88,5 +84,11 @@ class Shortname < ApplicationRecord
 
   def cache_iri_path!
     owner.cache_iri_path!
+  end
+
+  class << self
+    def includes_for_serializer
+      [owner: {}]
+    end
   end
 end

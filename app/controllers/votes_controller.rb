@@ -75,11 +75,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def collection_includes(_member_includes = {})
-    super.merge(default_filtered_collections: inc_shallow_collection)
-  end
-
-  def create_includes
-    [:partOf, voteable: :actions]
+    super.merge(default_filtered_collections: Vote.inc_shallow_collection)
   end
 
   def default_vote_event_id?

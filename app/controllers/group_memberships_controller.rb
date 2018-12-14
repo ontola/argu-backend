@@ -64,10 +64,6 @@ class GroupMembershipsController < ServiceController
                          .find_by(Hash[duplicate_values].merge(member_id: authenticated_resource.member_id))
   end
 
-  def show_includes
-    %i[organization]
-  end
-
   def new_success_html
     respond_with_redirect location: settings_iri_path(authenticated_resource.group, tab: :invite)
   end

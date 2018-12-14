@@ -25,10 +25,6 @@ class GroupsController < ServiceController
     }
   end
 
-  def show_includes
-    super + %i[organization]
-  end
-
   def new_resource_from_params
     resource = super
     resource.grants.build(

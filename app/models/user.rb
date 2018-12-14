@@ -377,6 +377,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   class << self
+    def preview_includes
+      %i[
+        default_profile_photo
+        email_addresses
+      ]
+    end
+
     def serialize_from_session(key, salt)
       record = to_adapter.get(key[0].to_param)
       record if record && record.authenticatable_salt == salt

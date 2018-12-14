@@ -94,12 +94,6 @@ class DecisionsController < EdgeableController
     )
   end
 
-  def show_includes
-    super + [
-      operation: {}
-    ]
-  end
-
   def show_success_html
     render action: 'index', locals: {decisionable: authenticated_resource.parent}
   end

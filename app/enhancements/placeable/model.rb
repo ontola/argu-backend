@@ -33,5 +33,17 @@ module Placeable
     def requires_location?
       is_a?(Edge) && owner_type == 'Motion' && parent.owner_type == 'Question' && parent.require_location
     end
+
+    module ClassMethods
+      def includes_for_serializer
+        super.merge(custom_placements: :place)
+      end
+
+      def show_includes
+        super + [
+          custom_placements: :place
+        ]
+      end
+    end
   end
 end

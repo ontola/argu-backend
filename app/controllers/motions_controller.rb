@@ -5,16 +5,6 @@ class MotionsController < EdgeableController
 
   private
 
-  def create_includes
-    {
-      blog_post_collection: inc_nested_collection,
-      comment_collection: inc_nested_collection,
-      con_argument_collection: inc_nested_collection,
-      pro_argument_collection: inc_nested_collection,
-      attachment_collection: inc_nested_collection
-    }
-  end
-
   def index_includes_collection
     current_profile.vote_cache.cache!(parent_resource)
     super
@@ -23,29 +13,6 @@ class MotionsController < EdgeableController
   def index_success_html
     skip_verify_policy_scoped(true)
     redirect_to parent_resource.iri_path
-  end
-
-  def preview_includes
-    [
-      :default_cover_photo,
-      default_vote_event: vote_event_without_votes,
-      creator: :default_profile_photo,
-      top_comment: :creator
-    ]
-  end
-
-  def show_includes
-    super + [
-      custom_placements: :place,
-      operation: {},
-      last_published_decision: {},
-      partOf: [widget_sequence: :members],
-      blog_post_collection: inc_shallow_collection,
-      comment_collection: inc_shallow_collection,
-      con_argument_collection: inc_shallow_collection,
-      pro_argument_collection: inc_shallow_collection,
-      attachment_collection: inc_nested_collection
-    ]
   end
 
   def show_execute
@@ -89,17 +56,5 @@ class MotionsController < EdgeableController
     return super unless action_name == 'create' && authenticated_resource.persisted? && !afe_request?
     first = current_profile.motions.count == 1 || nil
     authenticated_resource.iri_path(start_motion_tour: first)
-  end
-
-  def vote_event_without_votes
-    [
-      :current_vote,
-      vote_collection: {
-        operation: action_form_includes,
-        filters: [],
-        sortings: [],
-        default_filtered_collections: inc_shallow_collection
-      }.freeze
-    ].freeze
   end
 end

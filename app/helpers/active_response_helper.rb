@@ -33,6 +33,10 @@ module ActiveResponseHelper
     end
   end
 
+  def create_includes
+    show_includes
+  end
+
   def create_meta
     data = []
     return data if index_collection.blank?

@@ -63,10 +63,6 @@ class Vote < Edge
     self.for.to_s == item.to_s
   end
 
-  def self.includes_for_serializer
-    super.merge(publisher: {}, comment: :properties)
-  end
-
   def iri_opts
     super.merge(parent_iri: parent_iri_path)
   end
@@ -94,16 +90,6 @@ class Vote < Edge
 
   delegate :is_trashed?, :trashed_at, to: :parent, allow_nil: true
 
-  # #########Class methods###########
-  def self.ordered(votes)
-    grouped = votes.to_a.group_by(&:for)
-    HashWithIndifferentAccess.new(
-      pro: {collection: grouped['pro'] || []},
-      neutral: {collection: grouped['neutral'] || []},
-      con: {collection: grouped['con'] || []}
-    )
-  end
-
   private
 
   def remove_other_temporary_votes
@@ -122,5 +108,24 @@ class Vote < Edge
       .where(parent_id: parent_id)
       .where('? IS NULL OR uuid != ?', uuid, uuid)
       .find_each(&:trash)
+  end
+
+  class << self
+    def includes_for_serializer
+      super.merge(publisher: {}, comment: :properties)
+    end
+
+    def ordered(votes)
+      grouped = votes.to_a.group_by(&:for)
+      HashWithIndifferentAccess.new(
+        pro: {collection: grouped['pro'] || []},
+        neutral: {collection: grouped['neutral'] || []},
+        con: {collection: grouped['con'] || []}
+      )
+    end
+
+    def show_includes
+      [:partOf, voteable: :actions]
+    end
   end
 end

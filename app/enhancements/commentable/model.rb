@@ -18,5 +18,15 @@ module Commentable
         i
       end
     end
+
+    module ClassMethods
+      def preview_includes
+        super + [top_comment: :creator]
+      end
+
+      def show_includes
+        super + [comment_collection: inc_shallow_collection]
+      end
+    end
   end
 end
