@@ -188,6 +188,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     end
   end
 
+  def stored_location_for(resource)
+    return super unless session.is_a?(Doorkeeper::AccessToken)
+  end
+
   def time_zone(&block)
     time_zone = current_user.time_zone
     Time.use_zone(time_zone, &block)
