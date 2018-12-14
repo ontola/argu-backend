@@ -46,7 +46,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController # ruboco
     user = connector.create_user_without_shortname(
       request.env['omniauth.auth'],
       identity_from_response,
-      r_param(request.env)
+      r_param(request.env),
+      doorkeeper_token && decode_token(doorkeeper_token.token)['user']['language']
     )
     schedule_redis_resource_worker(GuestUser.new(id: session_id), user, r_param(request.env))
     setup_favorites(user)
