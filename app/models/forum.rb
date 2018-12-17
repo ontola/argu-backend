@@ -70,18 +70,6 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
       .order('edges.follows_count DESC')
   }
 
-  def cache_iri_path! # rubocop:disable Metrics/AbcSize
-    super
-    if shortname && shortname&.shortname_was != url && url.present?
-      widgets.update_all(
-        'resource_iri = replace(resource_iri, '\
-        "'/#{ApplicationRecord.connection.quote_string(shortname.shortname_was)}/', "\
-        "'/#{ApplicationRecord.connection.quote_string(url)}/')"
-      )
-    end
-    iri_cache
-  end
-
   def children_count(association)
     return super unless association == :motions
     descendants.active.where(owner_type: 'Motion').count
