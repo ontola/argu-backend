@@ -119,7 +119,7 @@ class ApplicationService # rubocop:disable Metrics/ClassLength
   # @author Fletcher91 <thom@argu.co>
   # @note Requires `object_attributes=` to be overridden in the child class.
   def set_nested_associations
-    return unless resource.nested_attributes_options?
+    return unless resource.try(:nested_attributes_options?)
     resource.nested_attributes_options.each_key do |association|
       next if association == :edge
       association_instance = resource.public_send(association)

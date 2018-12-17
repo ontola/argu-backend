@@ -4,14 +4,18 @@ module Moveable
   module Model
     extend ActiveSupport::Concern
 
-    def move_to(new_parent)
+    def move_to(new_parent) # rubocop:disable Metrics/AbcSize
       self.class.transaction do
         yield if block_given?
         update_activities_on_move(new_parent)
-        descendants.update_all(root_id: new_parent.root_id)
+        if root_id != new_parent.root_id
+          self.fragment = nil
+          self.root_id = new_parent.root_id
+          @root = new_parent.root
+          descendants.update_all(root_id: new_parent.root_id)
+          shortnameable? && shortname.update(root_id: new_parent.root_id)
+        end
         self.parent = new_parent
-        self.root_id = new_parent.root_id
-        @root = new_parent.root
         save!
       end
       true

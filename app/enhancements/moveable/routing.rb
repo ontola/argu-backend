@@ -5,10 +5,7 @@ module Moveable
     class << self
       def route_concerns(mapper)
         mapper.concern :moveable do
-          mapper.member do
-            mapper.get :move, action: :shift
-            mapper.put :move, action: :move
-          end
+          resources :move, only: %i[new create]
         end
       end
     end

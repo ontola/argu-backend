@@ -56,7 +56,7 @@
     =f.inputs name: t('forms.staff_only'), class: 'danger-zone' do
       =f.input :discoverable, as: :boolean
       =link_to t('forums.settings.banners.title'), settings_iri_path(resource, tab: :banners), class: 'btn btn--light'
-      =link_to t('formtastic.labels.f_move'), move_iri_path(resource), class: 'btn btn--light', remote: true
+      =link_to t('formtastic.labels.f_move'), new_iri_path(Move.new(edge: resource).iri_path), class: 'btn btn--light', remote: true
       =link_to t('formtastic.labels.f_delete'), delete_iri_path(resource), class: 'btn btn--warning', remote: true
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do

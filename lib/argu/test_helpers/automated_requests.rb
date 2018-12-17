@@ -135,12 +135,12 @@ module Argu
           let(:expect_put_update_failed_serializer) { expect(response.code).to eq('422') }
 
           # Move
-          expectations_for(:put_move)
-          let(:expect_put_move_guest_html) { expect_redirect_to_login }
-          let(:expect_put_move_guest_serializer) { expect(response.code).to eq('401') }
-          let(:expect_put_move_unauthorized_html) { expect_unauthorized }
-          let(:expect_put_move_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_put_move) do
+          expectations_for(:post_move)
+          let(:expect_post_move_guest_html) { expect_redirect_to_login }
+          let(:expect_post_move_guest_serializer) { expect(response.code).to eq('401') }
+          let(:expect_post_move_unauthorized_html) { expect_unauthorized }
+          let(:expect_post_move_unauthorized_serializer) { expect_unauthorized }
+          let(:expect_post_move) do
             subject.reload
             assert_equal other_page_forum, subject.parent
             case subject
@@ -193,7 +193,7 @@ module Argu
           let(:invalid_create_params) { {class_sym => Hash[required_keys.map { |k| [k, '1'] }]} }
           let(:update_params) { {class_sym => Hash[required_keys.map { |k| [k, '12345'] }]} }
           let(:invalid_update_params) { invalid_create_params }
-          let(:move_params) { {edge_id: other_page_forum.uuid} }
+          let(:move_params) { {move: {new_parent_id: other_page_forum.uuid}} }
           let(:destroy_params) { {} }
 
           # Paths
@@ -203,8 +203,8 @@ module Argu
           let(:show_path) { subject.iri_path }
           let(:destroy_path) { subject.iri_path(destroy: true) }
           let(:edit_path) { edit_iri_path(show_path) }
-          let(:shift_path) { move_iri_path(show_path) }
-          let(:move_path) { shift_path }
+          let(:shift_path) { new_iri_path(move_path) }
+          let(:move_path) { Move.new(edge: subject).iri_path }
           let(:update_path) { show_path }
           let(:delete_path) { delete_iri_path(show_path) }
           let(:trash_path) { show_path }
@@ -225,8 +225,8 @@ module Argu
             expand_uri_template("#{table_sym}_iri", id: -99, destroy: true)
           end
           let(:non_existing_edit_path) { edit_iri_path(non_existing_show_path) }
-          let(:non_existing_shift_path) { move_iri_path(non_existing_show_path) }
-          let(:non_existing_move_path) { non_existing_shift_path }
+          let(:non_existing_shift_path) { new_iri_path(non_existing_move_path) }
+          let(:non_existing_move_path) { expand_uri_template(:moves_iri, parent_iri: non_existing_show_path) }
           let(:non_existing_update_path) { non_existing_show_path }
           let(:non_existing_delete_path) { delete_iri_path(non_existing_show_path) }
           let(:non_existing_trash_path) { non_existing_show_path }

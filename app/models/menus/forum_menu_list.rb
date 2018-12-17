@@ -103,7 +103,7 @@ class ForumMenuList < MenuList # rubocop:disable Metrics/ClassLength
           setting_item(
             :move,
             image: 'fa-sitemap',
-            href: move_iri(resource)
+            href: new_iri(Move.new(edge: resource).iri_path)
           ),
           setting_item(
             :delete,

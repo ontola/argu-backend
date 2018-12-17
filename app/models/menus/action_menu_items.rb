@@ -67,7 +67,7 @@ module Menus
       menu_item(
         :move,
         image: 'fa-sitemap',
-        href: move_iri(resource),
+        href: new_iri(Move.new(edge: resource).iri_path),
         policy: :move?,
         link_opts: {
           data: {remote: 'true'}

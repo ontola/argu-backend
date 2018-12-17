@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples_for 'put move' do |opts = {skip: []}|
+RSpec.shared_examples_for 'post move' do |opts = {skip: []}|
   let(:r_param) { move_failed_path }
   let(:authorized_user) { staff }
 
@@ -9,8 +9,8 @@ RSpec.shared_examples_for 'put move' do |opts = {skip: []}|
       unless opts[:skip].include?(:move_guest) || opts[:skip].include?(:guest)
         it 'as guest' do
           sign_in(:guest, doorkeeper_application)
-          put move_path, params: move_params.merge(format: format)
-          send("expect_put_move_guest_#{format}")
+          post move_path, params: move_params.merge(format: format)
+          send("expect_post_move_guest_#{format}")
         end
       end
 
@@ -18,24 +18,24 @@ RSpec.shared_examples_for 'put move' do |opts = {skip: []}|
         it 'as unauthorized' do
           sign_in(unauthorized_user, doorkeeper_application)
           assert_difference(no_differences) do
-            put move_path, params: move_params.merge(format: format)
+            post move_path, params: move_params.merge(format: format)
           end
-          send("expect_put_move_unauthorized_#{format}")
+          send("expect_post_move_unauthorized_#{format}")
         end
       end
 
       unless opts[:skip].include?(:move_authorized) || opts[:skip].include?(:authorized)
         it 'as authorized' do
           sign_in(authorized_user_update, doorkeeper_application)
-          put move_path, params: move_params.merge(format: format)
-          expect_put_move
+          post move_path, params: move_params.merge(format: format)
+          expect_post_move
         end
       end
 
       unless opts[:skip].include?(:move_non_existing) || opts[:skip].include?(:non_existing)
         it 'non existing' do
           sign_in(authorized_user_update, doorkeeper_application)
-          put non_existing_move_path, params: move_params.merge(format: format)
+          post non_existing_move_path, params: move_params.merge(format: format)
           expect_not_found
         end
       end

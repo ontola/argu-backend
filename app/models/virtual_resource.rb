@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
 class VirtualResource
-  extend ActiveRecord::Enum
+  include ActiveModel::Serialization
   include ActiveModel::Model
-  include ActiveModel::Attributes
-  include ActiveModel::AttributeMethods
+
+  include RailsLD::Model
   include ApplicationModel
   include Enhanceable
 
   alias read_attribute_for_serialization send
+
+  def new_record?
+    true
+  end
+
+  def persisted?
+    false
+  end
 end

@@ -7,9 +7,9 @@
       section
         .form
           p= t('move.body')
-          =semantic_form_for resource, url: move_iri_path(resource), method: :put do |f|
+          =semantic_form_for resource, url: resource.iri_path, method: :post do |f|
             p= t('move.parent')
-            =select_tag :edge_id, options_for_select(move_options(resource), resource.parent.uuid)
+            =f.select :new_parent_id, options_for_select(move_options(resource.edge), resource.edge.parent.uuid)
             =f.actions do
               =f.action :submit, as: :button, label: t('move.button_label')
     .overlay.overlay-bottom

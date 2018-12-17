@@ -14,5 +14,5 @@ RSpec.shared_examples_for 'requests' do |opts = {skip: []}|
   it_behaves_like 'delete trash', opts.merge(formats: trash_formats) unless opts[:skip].include?(:trash)
   it_behaves_like 'put untrash', opts.merge(formats: untrash_formats) unless opts[:skip].include?(:untrash)
   it_behaves_like 'put update', opts.merge(formats: update_formats) unless opts[:skip].include?(:update)
-  it_behaves_like 'put move', opts.merge(formats: move_formats) if opts[:move]
+  it_behaves_like 'post move', opts.merge(formats: move_formats) if opts[:move]
 end
