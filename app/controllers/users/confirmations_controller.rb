@@ -22,7 +22,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
     self.resource = email_by_token&.user
     return super if resource.nil? || resource.encrypted_password.present?
     email_by_token.confirm
-    sign_in resource
+    sign_in resource unless current_user == resource
     set_flash_message :notice, :confirmed
     active_response_block do
       if active_response_type == :html
