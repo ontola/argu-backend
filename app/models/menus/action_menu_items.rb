@@ -63,6 +63,18 @@ module Menus
       )
     end
 
+    def convert_link
+      menu_item(
+        :convert,
+        image: 'fa-retweet',
+        href: new_iri(resource, :conversions),
+        policy: :convert?,
+        link_opts: {
+          data: {remote: 'true'}
+        }
+      )
+    end
+
     def move_link
       menu_item(
         :move,

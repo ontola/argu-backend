@@ -21,6 +21,7 @@ class MotionMenuList < MenuList
           activity_link,
           new_update_link,
           edit_link,
+          convert_link,
           move_link,
           statistics_link,
           export_link,

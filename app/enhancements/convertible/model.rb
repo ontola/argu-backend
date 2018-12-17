@@ -22,7 +22,7 @@ module Convertible
 
         parent = new_model.parent
         parent = parent.parent until new_model.parent_classes.include?(parent.owner_type.underscore.to_sym)
-        update!(parent: parent)
+        update!(parent: parent, iri_cache: nil)
 
         new_model.run_callbacks :convert do
           new_model.save!(validate: validate)

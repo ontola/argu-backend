@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-class Conversion
-  extend ActiveModel::Naming
-  include ActiveModel::Validations
-  include ActiveModel::AttributeMethods
-  include ActiveRecord::AttributeAssignment
-  include ApplicationModel
-  include RailsLD::Model
+class Conversion < VirtualResource
   include Parentable
 
   parentable :edge
@@ -34,36 +28,12 @@ class Conversion
     "conversion_#{edge.id}_#{klass}"
   end
 
-  def is_publishable?
-    false
-  end
-
-  def iri_path(opts = {})
-    conversions_iri_path(edge.canonical_iri_path, opts)
-  end
-
-  def nested_attributes_options?
-    false
-  end
-
-  def new_record?
-    true
-  end
-
-  def persisted?
-    false
+  def iri_opts
+    {parent_iri: edge&.iri_path}
   end
 
   def save
     edge.convert_to(klass)
   end
   alias save! save
-
-  def to_key
-    []
-  end
-
-  def to_model
-    self
-  end
 end
