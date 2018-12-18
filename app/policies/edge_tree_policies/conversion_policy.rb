@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class ConversionPolicy < EdgeTreePolicy
-  class Scope < RestrictivePolicy::Scope
-    def resolve
-      scope
-    end
-  end
-
   def permitted_attribute_names
     attributes = super
     attributes.concat %i[klass]
