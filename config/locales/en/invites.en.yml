@@ -1,0 +1,13 @@
+en:
+  invites:
+    type: "Invite"
+    plural: "Invites"
+    form:
+      message:
+        label: "Message"
+        description: "Enter a message for in the email"
+      addresses:
+        label: "Email addresses"
+        description: "Enter one or multiple email addresses"
+      group_id:
+        label: "To which group do you want to add these people?"

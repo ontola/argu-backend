@@ -5,7 +5,7 @@ module Inviteable
     class << self
       def route_concerns(mapper)
         mapper.concern :inviteable do
-          mapper.get :invite, controller: :invites, action: :new
+          resources :invites, only: %i[new]
         end
       end
     end

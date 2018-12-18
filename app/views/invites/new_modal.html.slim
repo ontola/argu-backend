@@ -6,5 +6,5 @@
     .box
       section
         p= t('tokens.discussion.description')
-        =react_component_store 'tokens/DiscussionInvite', props: discussion_invite_props(authenticated_resource), prerender: false
+        =react_component_store 'tokens/DiscussionInvite', props: discussion_invite_props(authenticated_resource.edge), prerender: false
     .overlay.overlay-bottom

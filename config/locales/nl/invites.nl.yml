@@ -1,0 +1,13 @@
+nl:
+  invites:
+    type: "Uitnodiging"
+    plural: "Uitnodigingen"
+    form:
+      message:
+        label: "Toelichting"
+        description: "Schrijf een bericht voor in de email"
+      addresses:
+        label: "Email adressen"
+        description: "Voer een of meerdere email adressen in"
+      group_id:
+        label: "Aan welke groep wil je deze mensen toevoegen?"

@@ -21,7 +21,7 @@ module Menus
         :invite,
         image: 'fa-share',
         link_opts: {data: {remote: 'true'}},
-        href: invites_iri(resource),
+        href: new_iri(invites_iri_path(resource)),
         policy: :invite?
       )
     end
