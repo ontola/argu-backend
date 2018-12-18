@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Page < Edge
+class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :groups, -> { custom }, dependent: :destroy, inverse_of: :page, primary_key: :uuid, foreign_key: :root_id
 
   enhance BlogPostable
@@ -81,10 +81,6 @@ class Page < Edge
     true
   end
 
-  def self.shortnameable?
-    true
-  end
-
   def cache_iri_path!
     super
     clear_children_iri_cache
@@ -120,5 +116,15 @@ class Page < Edge
     return if staff_group.nil?
     grant = Grant.new(grant_set: GrantSet.staff, edge: self, group: staff_group)
     grant.save!(validate: false)
+  end
+
+  class << self
+    def preview_includes
+      super + %i[default_profile_photo]
+    end
+
+    def shortnameable?
+      true
+    end
   end
 end
