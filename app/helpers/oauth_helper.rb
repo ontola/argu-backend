@@ -92,10 +92,6 @@ module OauthHelper
   def needs_new_guest_token?
     return false if afe_request?
 
-    if Rails.env.production?
-      # Ensure that the host ends with 'argu.co' to unmatch e.g. argu.co.malicious.net
-      return false unless request.env['HTTP_HOST']&.match?(/argu\.co$/)
-    end
     raw_doorkeeper_token.blank? || raw_doorkeeper_token&.expired? || current_resource_owner.blank?
   end
 
