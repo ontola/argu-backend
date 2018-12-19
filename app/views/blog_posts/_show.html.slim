@@ -5,7 +5,8 @@
   section[itemscope="itemscope" itemtype="http://www.schema.org/Event"]
     =link_to model
       h3.blog-post-t[itemprop="headline"]= model.display_name
-  =render partial: 'blog_posts/info_bar', locals: {blog_post: model}
+  - unless local_assigns[:hide_details]
+    =render partial: 'blog_posts/info_bar', locals: {blog_post: model}
   section
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
   =link_to model, class: 'btn-subtle sticky--bottom-right sticky--on-top'

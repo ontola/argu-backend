@@ -5,6 +5,13 @@
                image: authenticated_resource.default_cover_photo&.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   =render partial: 'cover', locals: {resource: authenticated_resource}
+  - if authenticated_resource.url == 'youngbelegen'
+    div[style="height: 1rem"]
+    .col-2
+      .col-2-1[style="margin-bottom: 0"]
+        =render partial: 'blog_posts/show', locals: {model: authenticated_resource.blog_posts.first, hide_details: true}
+      .col-2-1[style="margin-bottom: 0"]
+        =render partial: 'blog_posts/show', locals: {model: authenticated_resource.blog_posts.second, hide_details: true}
   - if authenticated_resource.children_count(:blog_posts) > 0
     .col-1
       h3= t('blog_posts.latest')
