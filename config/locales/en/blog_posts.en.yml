@@ -10,3 +10,5 @@ en:
       info: "An update is a message in which the progress of a project is shared."
       count: "Amount of updates"
     header: "Blog"
+    latest: "Latest news"
+    see_all: "Read all news"

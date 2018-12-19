@@ -7,7 +7,9 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   =render partial: 'cover', locals: {resource: authenticated_resource}
   - if authenticated_resource.children_count(:blog_posts) > 0
     .col-1
-      =render partial: 'blog_posts/show', locals: {model: authenticated_resource.blog_posts.last}
+      h3= t('blog_posts.latest')
+      =link_to t('blog_posts.see_all'), forum_blog_posts_path(authenticated_resource.root, authenticated_resource), class: 'btn-subtle', style: 'top: 0; right: 1em; position: absolute;'
+      =render partial: 'blog_posts/show', locals: {model: policy_scope(authenticated_resource.blog_posts).last}
   - if policy(authenticated_resource).show?
     .btns-center-container
       -if can_start_discussion?(authenticated_resource)
