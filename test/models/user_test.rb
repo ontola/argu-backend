@@ -68,6 +68,12 @@ class UserTest < ActiveSupport::TestCase
     assert_not subject.valid?
   end
 
+  test 'hide last_name' do
+    assert_equal subject.display_name, "#{subject.first_name} #{subject.last_name}"
+    subject.update(hide_last_name: true)
+    assert_equal subject.display_name, subject.first_name
+  end
+
   def notification_count(user)
     Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end

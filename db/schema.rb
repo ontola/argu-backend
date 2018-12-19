@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_12_133134) do
+ActiveRecord::Schema.define(version: 2018_12_19_134457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -562,6 +562,7 @@ ActiveRecord::Schema.define(version: 2018_11_12_133134) do
     t.integer "reactions_email", default: 3, null: false
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.string "iri_cache"
+    t.boolean "hide_last_name", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uuid"], name: "index_users_on_uuid", unique: true

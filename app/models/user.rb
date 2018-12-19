@@ -175,7 +175,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def display_name
-    [first_name, middle_name, last_name].compact.join(' ').presence ||
+    [first_name, middle_name, (!hide_last_name && last_name).presence].compact.join(' ').presence ||
       url ||
       [I18n.t('groups.public.name_singular'), id].join(' ')
   end

@@ -13,6 +13,7 @@ class UsersTest < ActionDispatch::IntegrationTest
   let(:unconfirmed_email) { create(:email_address, user: user, email: 'unconfirmed@argu.co') }
   let(:administrator) { create_administrator(freetown) }
   let(:user_public) { create(:user, profile: create(:profile)) }
+  let(:user_hidden_last_name) { create(:user, hide_last_name: true) }
   let(:user_no_shortname) do
     u = create(:user, profile: create(:profile))
     u.shortname.destroy
@@ -83,6 +84,24 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_not_includes(response.body, user_no_shortname.email)
+  end
+
+  test 'user should get show user with hidden last name nq' do
+    sign_in user
+
+    get user_path(user_hidden_last_name.id), headers: argu_headers(accept: :nq)
+
+    assert_response 200
+    expect_no_triple user_hidden_last_name.iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
+  end
+
+  test 'user should get show self with hidden last name nq' do
+    sign_in user_hidden_last_name
+
+    get user_path(user_hidden_last_name.id), headers: argu_headers(accept: :nq)
+
+    assert_response 200
+    expect_triple user_hidden_last_name.iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
   end
 
   test 'user should get show non public' do
