@@ -9,7 +9,7 @@ module Trashable
 
       define_action(
         :trash,
-        type: NS::ARGU[:TrashAction],
+        type: [NS::ARGU[:TrashAction], NS::SCHEMA[:Action]],
         policy: :trash?,
         image: 'fa-trash',
         url: -> { resource.iri },
@@ -20,7 +20,7 @@ module Trashable
 
       define_action(
         :untrash,
-        type: NS::ARGU[:UntrashAction],
+        type: [NS::ARGU[:UntrashAction], NS::SCHEMA[:Action]],
         policy: :untrash?,
         image: 'fa-eye',
         url: -> { untrash_iri(resource) },
