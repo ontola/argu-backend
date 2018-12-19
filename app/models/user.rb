@@ -180,6 +180,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       [I18n.t('groups.public.name_singular'), id].join(' ')
   end
 
+  def enforce_hidden_last_name!
+    update!(hide_last_name: true)
+  end
+
   # Creates a new {Follow} or updates an existing one, except when a higher follow or a never follow is present.
   # Follows the ancestors if #ancestor_type is given.
   def follow(followable, type = :reactions, ancestor_type = nil) # rubocop:disable Metrics/AbcSize
@@ -355,7 +359,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   private
 
   def adjust_birthday
-    self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
+    return if birthday.blank?
+
+    self.birthday = Date.new(birthday.year, 7, 1)
+    self.hide_last_name = true if minor?
   end
 
   # Sets the dependent foreign relations to the Community profile
@@ -368,6 +375,10 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     end
     email_addresses.update_all(primary: false)
     edges.update_all publisher_id: User::COMMUNITY_ID, creator_id: Profile::COMMUNITY_ID
+  end
+
+  def minor?
+    birthday && (Date.current.year - birthday.year) <= 18
   end
 
   def should_broadcast_changes

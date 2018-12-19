@@ -74,6 +74,16 @@ class UserTest < ActiveSupport::TestCase
     assert_equal subject.display_name, subject.first_name
   end
 
+  test 'minor should hide first_name' do
+    assert_equal subject.hide_last_name, false
+    subject.update!(birthday: 19.years.ago)
+    assert_equal subject.reload.hide_last_name, false
+    subject.update!(birthday: 18.years.ago)
+    assert_equal subject.reload.hide_last_name, true
+  end
+
+  private
+
   def notification_count(user)
     Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end

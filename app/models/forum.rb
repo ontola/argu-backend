@@ -79,6 +79,10 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
     nil
   end
 
+  def enforce_hidden_last_name?
+    url == 'youngbelegen'
+  end
+
   def iri_opts
     {root_id: root.url, id: url}
   end

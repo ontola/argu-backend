@@ -114,6 +114,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   after_initialize :set_root_id, if: :new_record?
   before_create :set_confirmed
   before_save :set_publisher_id
+  after_save :enforce_hidden_last_name
 
   alias_attribute :body, :description
   alias_attribute :content, :description
@@ -303,6 +304,12 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   def destroy_redis_children
     keys = RedisResource::Key.new(parent: self, root_id: root_id).matched_keys.map(&:key)
     Argu::Redis.redis_instance.del(*keys) if keys.present?
+  end
+
+  def enforce_hidden_last_name
+    return unless ancestor(:forum)&.enforce_hidden_last_name?
+
+    publisher.enforce_hidden_last_name!
   end
 
   def reset_persisted_edge
