@@ -4,7 +4,7 @@
     =to_parent
     .box
       =semantic_form_for(blog_post, url: blog_post.new_record? ? collection_iri_path(parent_resource, :blog_posts) : blog_post.iri_path, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
-        - if blog_post.parent.is_a?(Page)
+        - if blog_post.parent.is_a?(Page) || blog_post.parent.is_a?(Forum)
           =f.input :default_cover_photo, as: :react_cover, label: false
         section.smallpadded.form-filled
           =f.inputs
