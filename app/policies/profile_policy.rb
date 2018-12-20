@@ -11,7 +11,8 @@ class ProfilePolicy < RestrictivePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[id name about are_votes_public is_public]
+    attributes.concat %i[id about are_votes_public is_public]
+    attributes.concat %i[name] if record.profileable.is_a?(Page)
     attributes
   end
 

@@ -20,7 +20,7 @@ class PagePolicy < EdgePolicy
     attributes.concat %i[display_name about last_accepted visibility]
     attributes.append(shortname_attributes: %i[shortname]) if new_record?
     attributes.append(profile_attributes: ProfilePolicy
-                                            .new(context, record.try(:profile) || Profile.new)
+                                            .new(context, record.try(:profile) || Profile.new(profileable: record))
                                             .permitted_attributes)
     attributes.flatten
   end

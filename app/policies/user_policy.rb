@@ -20,7 +20,7 @@ class UserPolicy < RestrictivePolicy
     )
     attrs.append(email_addresses_attributes: %i[email _destroy id])
     attrs.append(:url, shortname_attributes: %i[shortname]) if record.url.nil?
-    attrs.concat %i[first_name middle_name last_name]
+    attrs.concat %i[first_name middle_name last_name hide_last_name]
     if update?
       attrs.concat(
         %i[reactions_email news_email decisions_email memberships_email

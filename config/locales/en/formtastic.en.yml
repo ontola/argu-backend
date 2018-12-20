@@ -99,6 +99,7 @@ en:
         news_email: "For important items"
         decisions_email: "For official decisions"
         url: "Username"
+        hide_last_name: 'Hide my last name'
     hints:
       username: "At least 4 characters. Numbers, letters and '_'. only."
       cover_photo_attribution: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"

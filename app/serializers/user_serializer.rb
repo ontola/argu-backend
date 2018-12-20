@@ -2,6 +2,7 @@
 
 class UserSerializer < RecordSerializer
   include ProfilePhotoable::Serializer
+  include CoverPhotoable::Serializer
   extend LanguageHelper
 
   def service_or_self?
@@ -17,6 +18,9 @@ class UserSerializer < RecordSerializer
   attribute :url, predicate: NS::ARGU[:shortname], datatype: NS::XSD[:string], if: :service_or_self?
   attribute :first_name, predicate: NS::SCHEMA[:givenName], datatype: NS::XSD[:string], if: :service_or_self?
   attribute :last_name, predicate: NS::SCHEMA[:familyName], datatype: NS::XSD[:string], if: :service_or_self?
+  attribute :hide_last_name, predicate: NS::ARGU[:hideLastName], if: :service_or_self?
+  attribute :are_votes_public, predicate: NS::ARGU[:votesPublic]
+  attribute :is_public, predicate: NS::ARGU[:public]
 
   has_many :email_addresses, predicate: NS::ARGU[:emails], if: :service_or_self?
   attribute :language, predicate: NS::SCHEMA[:language], if: :service_or_self?
@@ -80,12 +84,24 @@ class UserSerializer < RecordSerializer
     object.profile.about
   end
 
+  def are_votes_public
+    object.profile.are_votes_public
+  end
+
   def birth_year
     object.birthday&.year
   end
 
+  def default_cover_photo
+    object.profile.default_cover_photo
+  end
+
   def default_profile_photo
     object.profile.default_profile_photo
+  end
+
+  def is_public
+    object.profile.is_public
   end
 
   def object
