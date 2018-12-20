@@ -33,7 +33,7 @@ module VoteEventable
       end
 
       def preview_includes
-        [
+        super + [
           default_vote_event: [
             :current_vote,
             vote_collection: {
