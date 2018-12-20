@@ -21,7 +21,8 @@ module ActivePublishable
               }.to_param
             ].join('?')
           )
-        }
+        },
+        condition: -> { !resource.is_published? }
       )
     end
   end
