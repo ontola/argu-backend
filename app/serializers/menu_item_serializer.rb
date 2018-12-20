@@ -37,7 +37,7 @@ class MenuItemSerializer < BaseSerializer
   end
 
   def menus_present?
-    object.menu_sequence.members.present?
+    object.menu_sequence.present?
   end
 
   def type

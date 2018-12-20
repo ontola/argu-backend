@@ -24,8 +24,8 @@ class MenusController < ParentableController
   def show_includes
     [
       menu_sequence: [
-        members: menu_item_includes + [
-          menu_sequence: [members: [menu_item_includes, menu_sequence: [members: menu_item_includes]]]
+        members: MenuItem.preview_includes + [
+          menu_sequence: [members: [MenuItem.preview_includes, menu_sequence: [members: MenuItem.preview_includes]]]
         ]
       ]
     ]
@@ -49,10 +49,6 @@ class MenusController < ParentableController
   end
 
   def resource_by_id_parent; end
-
-  def menu_item_includes
-    [:image, action: :target]
-  end
 
   def tree_root_id
     parent_resource&.root_id

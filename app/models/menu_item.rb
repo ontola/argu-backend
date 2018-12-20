@@ -39,7 +39,16 @@ class MenuItem
   alias id iri
 
   def menu_sequence
-    @menu_sequence ||= RDF::Sequence.new(menus&.call&.compact&.each { |menu| menu.parent = self })
+    return if menus.blank?
+    @menu_sequence ||=
+      RDF::LazySequence.new(
+        -> { menus&.call&.compact&.each { |menu| menu.parent = self } },
+        id: menu_sequence_iri
+      )
+  end
+
+  def menu_sequence_iri
+    RDF::DynamicURI("#{iri}/menus")
   end
 
   private
@@ -50,5 +59,11 @@ class MenuItem
 
   def iri_tag
     @iri_tag || tag
+  end
+
+  class << self
+    def preview_includes
+      [:image, action: :target]
+    end
   end
 end

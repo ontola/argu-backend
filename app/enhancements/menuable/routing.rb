@@ -5,7 +5,9 @@ module Menuable
     class << self
       def route_concerns(mapper)
         mapper.concern :menuable do
-          mapper.resources :menus, only: %i[index show]
+          mapper.resources :menus, only: %i[index show] do
+            mapper.resources :sub_menus, only: :index, path: 'menus'
+          end
         end
       end
     end
