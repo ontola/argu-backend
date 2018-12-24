@@ -7,7 +7,7 @@ class Widget < ApplicationRecord
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
 
-  enum widget_type: {custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4}
+  enum widget_type: {custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5}
 
   acts_as_list scope: :owner
 
@@ -84,6 +84,17 @@ class Widget < ApplicationRecord
         .create(
           owner: owner,
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :questions), nil]]
+        )
+    end
+
+    def create_overview(owner)
+      overview
+        .create(
+          owner: owner.parent,
+          resource_iri: [
+            [owner.iri, NS::SCHEMA[:name]],
+            [collection_iri(owner, :discussions, display: :card, page_size: 5), nil]
+          ]
         )
     end
 

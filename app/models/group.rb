@@ -72,7 +72,7 @@ class Group < ApplicationRecord
     end
 
     def show_includes
-      super + %i[organization]
+      super + [organization: [widget_sequence: {members: %i[resource_sequence property_shapes]}]]
     end
 
     def staff

@@ -37,7 +37,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
 
   with_collection :grants
 
-  self.default_widgets = %i[new_motion new_question discussions]
+  self.default_widgets = %i[new_motion new_question discussions overview]
 
   # @private
   attr_writer :public_grant
