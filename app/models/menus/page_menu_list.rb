@@ -2,7 +2,7 @@
 
 class PageMenuList < MenuList
   include SettingsHelper
-  include RailsLD::Model
+  include Menus::ActionMenuItems
   cattr_accessor :defined_menus
   has_menus %i[navigations settings]
 
@@ -15,28 +15,24 @@ class PageMenuList < MenuList
         .includes(:default_profile_photo, :shortname)
   end
 
-  def navigations_menu # rubocop:disable Metrics/AbcSize
+  def navigations_menu
     menu_item(
       :navigations,
       menus: lambda {
         [
           menu_item(
+            :overview,
+            image: 'fa-th-large',
+            href: resource.iri
+          ),
+          *forums.map { |child| navigation_item(child) },
+          *custom_menu_items(:navigations, resource),
+          activity_link,
+          menu_item(
             :settings,
             image: 'fa-gear',
             href: settings_page_url(resource),
             policy: :update?
-          ),
-          *custom_menu_items(:navigations, resource),
-          menu_item(
-            :forums,
-            label: forums.count == 1 ? I18n.t('forums.type') : I18n.t('forums.plural'),
-            type: NS::ARGU[:MenuSection],
-            menus:
-              if forums.count == 1
-                forums.first.menu(user_context, :navigations).menus
-              else
-                -> { forums.map { |child| navigation_item(child) } }
-              end
           )
         ]
       }
@@ -48,7 +44,6 @@ class PageMenuList < MenuList
       record.url.to_sym,
       href: record.iri,
       label: record.display_name,
-      menus: record.menu(user_context, :navigations).menus,
       image: record.try(:default_profile_photo),
       policy: :show?,
       policy_resource: record

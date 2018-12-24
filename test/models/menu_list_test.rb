@@ -57,15 +57,11 @@ class MenuListTest < ActiveSupport::TestCase
   end
 
   test 'Page menu for administrator should include hidden forum' do
-    forums =
-      argu.menu(administrator_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
-    assert forums.menus.call.compact.map(&:tag).include?(:second)
+    assert argu.menu(administrator_context, :navigations).menus.call.compact.map(&:tag).include?(:second)
   end
 
   test 'Page menu for user should not include hidden forum' do
-    forums =
-      argu.menu(user_context, :navigations).menus.call.compact.find { |f| f.tag == :forums }
-    assert_not forums.menus.call.compact.map(&:tag).include?(:second)
+    assert_not argu.menu(user_context, :navigations).menus.call.compact.map(&:tag).include?(:second)
   end
 
   test 'Include custom menu items' do

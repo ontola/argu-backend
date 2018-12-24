@@ -42,12 +42,10 @@ class MenusTest < ActionDispatch::IntegrationTest
     assert_response 200
     expect_triple(argu.menu(user_context, :navigations).iri, RDF[:type], NS::ARGU[:MenuItem])
     sequence = expect_sequence(argu.menu(user_context, :navigations).iri, NS::ARGU[:menuItems])
-    expect_sequence_member(sequence, 0, custom_menu_item.iri)
-    forums = expect_sequence_member(sequence, 1, argu.menu(user_context, :navigations).iri(fragment: 'forums'))
-    items = expect_sequence(forums, NS::ARGU[:menuItems])
-    expect_sequence_member(items, 0, argu.menu(user_context, :navigations).iri(fragment: 'forums.overview'))
-    expect_sequence_member(items, 1, argu.menu(user_context, :navigations).iri(fragment: 'forums.new_discussion'))
-    expect_sequence_member(items, 2, argu.menu(user_context, :navigations).iri(fragment: 'forums.activity'))
+    expect_sequence_member(sequence, 0, argu.menu(user_context, :navigations).iri(fragment: 'overview'))
+    expect_sequence_member(sequence, 1, argu.menu(user_context, :navigations).iri(fragment: 'freetown'))
+    expect_sequence_member(sequence, 2, custom_menu_item.iri)
+    expect_sequence_member(sequence, 3, argu.menu(user_context, :navigations).iri(fragment: 'activity'))
   end
 
   ####################################
