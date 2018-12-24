@@ -184,6 +184,7 @@ Rails.application.routes.draw do
   resources :grant_sets, only: :show
 
   get '/settings', to: 'users#settings', as: 'settings_user'
+  get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
   put '/settings', to: 'users#update'
   get '/c_a', to: 'actors#show', as: 'current_actor'
   put 'persist_cookie', to: 'static_pages#persist_cookie'
@@ -258,6 +259,7 @@ Rails.application.routes.draw do
       resources :shortnames, only: %i[new create index]
       resources :vote_matches, only: %i[index show]
       get :settings, on: :member
+      get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
       resources :users, path: 'u', only: %i[] do
         get :feed, controller: 'users/feed', action: :index
       end
@@ -306,6 +308,7 @@ Rails.application.routes.draw do
         resources :group_memberships, only: %i[new create index]
         include_route_concerns
         get :settings, on: :member
+        get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
         resources :grants, only: %i[index]
       end
       resources :motions,
@@ -331,6 +334,7 @@ Rails.application.routes.draw do
         end
         resources :grants, only: :index
         get :settings, on: :member
+        get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
         resources :banners, only: %i[new create]
         resources :linked_records,
                   only: %i[show],
