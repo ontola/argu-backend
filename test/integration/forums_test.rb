@@ -246,7 +246,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_iri_path(holland.reload, tab: :general)
     updated_holland = Forum.find_by(uuid: holland.uuid)
     assert_equal 'new_url', updated_holland.url
-    assert updated_holland.widgets.first.resource_iri.end_with?('/new_url/discussions?display=grid&type=infinite')
+    assert(
+      updated_holland
+        .widgets
+        .last
+        .resource_iri
+        .all? { |iri, _predicate| iri.end_with?('/new_url/discussions?display=grid&type=infinite') }
+    )
     assert_equal "#{updated_holland.parent.iri}/new_url", updated_holland.iri
   end
 
@@ -481,7 +487,8 @@ class ForumsTest < ActionDispatch::IntegrationTest
         }
       }
     end
-    assert_equal Forum.last.widgets.first.resource_iri, "#{Forum.last.iri}/discussions?display=grid&type=infinite"
+    iri = "#{Forum.last.iri}/discussions?display=grid&type=infinite"
+    assert_equal Forum.last.widgets.last.resource_iri, [[iri, NS::AS[:name]], [iri, nil]]
   end
 
   test 'service should post create ori forum' do

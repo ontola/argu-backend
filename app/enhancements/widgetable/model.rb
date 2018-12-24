@@ -15,13 +15,7 @@ module Widgetable
     def cache_iri_path!
       previous = iri_cache || iri_path_from_template
       super
-      if previous != iri_cache
-        widgets.update_all(
-          'resource_iri = replace(resource_iri, '\
-        "'#{ApplicationRecord.connection.quote_string(previous)}/', "\
-        "'#{ApplicationRecord.connection.quote_string(iri_path)}/')"
-        )
-      end
+      widgets.find_each { |w| w.replace_path(previous, iri_path) } if previous != iri_cache
       iri_cache
     end
 
@@ -46,7 +40,7 @@ module Widgetable
       end
 
       def preview_includes
-        super + [widget_sequence: :members]
+        super + [widget_sequence: {members: %i[resource_sequence property_shapes]}]
       end
     end
   end

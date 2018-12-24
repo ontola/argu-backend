@@ -81,7 +81,11 @@ class Feed
 
   class << self
     def preview_includes
-      [:trackable, recipient: [widget_sequence: :members], owner: [:default_profile_photo]]
+      [
+        :trackable,
+        recipient: [widget_sequence: {members: %i[resource_sequence property_shapes]}],
+        owner: [:default_profile_photo]
+      ]
     end
   end
 end

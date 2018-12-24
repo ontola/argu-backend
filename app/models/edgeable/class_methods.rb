@@ -40,7 +40,7 @@ module Edgeable
       end
 
       def preview_includes
-        super + [creator: :default_profile_photo]
+        super + [creator: Profile.preview_includes]
       end
 
       # Selects edges of a certain type over persisted and transient models.

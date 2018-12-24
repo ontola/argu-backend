@@ -51,5 +51,11 @@ module ProfilePhotoable
     def remove_marked_profile_photo
       default_profile_photo.save if default_profile_photo&.remove_content
     end
+
+    class << self
+      def preview_includes
+        super + [:default_profile_photo]
+      end
+    end
   end
 end

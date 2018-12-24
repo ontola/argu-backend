@@ -21,7 +21,7 @@ module Commentable
 
     module ClassMethods
       def preview_includes
-        super + [top_comment: :creator]
+        super + [top_comment: [creator: Profile.preview_includes]]
       end
 
       def show_includes

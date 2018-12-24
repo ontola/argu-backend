@@ -7,7 +7,7 @@ class ShortnameForm < RailsLD::Form
 
   class << self
     def referred_resources
-      super + [owner: {widget_sequence: :members}]
+      super + [owner: {widget_sequence: {members: %i[resource_sequence property_shapes]}}]
     end
   end
 end

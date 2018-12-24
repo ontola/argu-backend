@@ -197,4 +197,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
         .anonymize(send(association))
     end
   end
+
+  class << self
+    def preview_includes
+      super + [widget_sequence: {members: %i[resource_sequence property_shapes]}]
+    end
+  end
 end
