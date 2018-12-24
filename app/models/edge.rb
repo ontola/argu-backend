@@ -62,6 +62,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many_children :con_arguments
   has_many_children :blog_posts
   has_many_children :comments
+  has_many_children :creative_works
   has_many_children :decisions
   has_many_children :forums, dependent: :restrict_with_exception
   has_many_children :motions
