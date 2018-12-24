@@ -26,7 +26,7 @@ class MediaObjectsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_default_view
-    expect_included(collection_iri(motion, :attachments, page: 1, type: 'paginated'))
+    expect_included(collection_iri(motion, :attachments, page: 1))
     expect_included(motion.media_objects.where(used_as: :attachment).map(&:iri))
   end
 

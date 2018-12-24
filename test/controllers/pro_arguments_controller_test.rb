@@ -40,7 +40,7 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_default_view
-    expect_included(collection_iri(motion, :pro_arguments, page: 1, type: 'paginated'))
+    expect_included(collection_iri(motion, :pro_arguments, page: 1))
     expect_included(motion.pro_arguments.untrashed.map(&:iri))
     expect_not_included(motion.pro_arguments.trashed.map(&:iri))
     expect_not_included(motion.con_arguments.trashed.map(&:iri))
@@ -70,8 +70,8 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_view_members(expect_default_view, 1)
-    expect_included(collection_iri(linked_record, :pro_arguments, page: 1, type: :paginated))
-    expect_not_included(collection_iri(linked_record, :con_arguments, page: 1, type: :paginated))
+    expect_included(collection_iri(linked_record, :pro_arguments, page: 1))
+    expect_not_included(collection_iri(linked_record, :con_arguments, page: 1))
     expect_included(linked_record.pro_arguments.untrashed.map(&:iri))
     expect_not_included(linked_record.pro_arguments.trashed.map(&:iri))
     expect_not_included(linked_record.con_arguments.map(&:iri))
@@ -99,7 +99,7 @@ class ProArgumentsControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_view_members(expect_default_view, 0)
-    expect_included(collection_iri(non_persisted_linked_record, :pro_arguments, page: 1, type: :paginated))
-    expect_not_included(collection_iri(non_persisted_linked_record, :con_arguments, page: 1, type: :paginated))
+    expect_included(collection_iri(non_persisted_linked_record, :pro_arguments, page: 1))
+    expect_not_included(collection_iri(non_persisted_linked_record, :con_arguments, page: 1))
   end
 end

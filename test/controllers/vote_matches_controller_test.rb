@@ -31,7 +31,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     expect_no_relationship('partOf')
 
     expect_default_view
-    expect_included(argu_url('/vote_matches', page: 1, type: 'paginated'))
+    expect_included(argu_url('/vote_matches', page: 1))
     expect_included(VoteMatch.all.map(&:iri))
   end
 
@@ -52,7 +52,7 @@ class VoteMatchesControllerTest < ActionController::TestCase
     expect_relationship('partOf')
 
     expect_default_view
-    expect_included(argu_url("/#{page.url}/vote_matches", page: 1, type: 'paginated'))
+    expect_included(argu_url("/#{page.url}/vote_matches", page: 1))
     expect_included(VoteMatch.where(creator: page.profile).map(&:iri))
     expect_not_included(VoteMatch.where('creator_id != ?', page.profile.id).map(&:iri))
   end
