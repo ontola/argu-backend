@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_134457) do
+ActiveRecord::Schema.define(version: 2018_12_20_151118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -582,10 +582,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_134457) do
   create_table "widgets", force: :cascade do |t|
     t.integer "widget_type", null: false
     t.string "owner_type", null: false
-    t.string "resource_iri", null: false
-    t.string "label"
-    t.boolean "label_translation", default: false, null: false
-    t.text "body"
+    t.text "resource_iri", null: false, array: true
     t.integer "size", default: 1, null: false
     t.integer "position", null: false
     t.uuid "owner_id", null: false
