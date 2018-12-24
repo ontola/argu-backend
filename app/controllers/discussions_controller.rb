@@ -11,14 +11,6 @@ class DiscussionsController < ParentableController
     authorize parent_resource!, :index_children?, controller_name
   end
 
-  def new_success
-    return respond_with_form(default_form_options(:new)) if %i[html js].include?(active_response_type)
-    respond_with_resource(
-      resource: parent_resource!.menu(user_context, :discussions),
-      include: [menu_sequence: [members: [:image, menu_sequence: [members: [:image]]]]]
-    )
-  end
-
   def resource_by_id; end
 
   def resource_new_params

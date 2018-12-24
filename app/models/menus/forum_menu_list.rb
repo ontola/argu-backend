@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class ForumMenuList < MenuList # rubocop:disable Metrics/ClassLength
+class ForumMenuList < MenuList
   include SettingsHelper
   include Menus::ActionMenuItems
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
   cattr_accessor :defined_menus
-  has_menus %i[actions follow navigations share settings discussions]
+  has_menus %i[actions follow navigations share settings]
 
   private
 
@@ -16,32 +16,6 @@ class ForumMenuList < MenuList # rubocop:disable Metrics/ClassLength
       image: 'fa-ellipsis-v',
       menus: -> { [activity_link, statistics_link, export_link, settings_link] },
       link_opts: {triggerClass: 'btn--transparant'}
-    )
-  end
-
-  def discussions_menu
-    menu_item(
-      :discussions,
-      iri_base: -> { collection_iri_path(resource, :discussions) },
-      iri_tag: :new,
-      menus: lambda {
-        [
-          menu_item(
-            :new_question,
-            image: 'fa-question',
-            href: new_iri(resource, :questions),
-            policy: :create_child?,
-            policy_arguments: %i[questions]
-          ),
-          menu_item(
-            :new_motion,
-            image: 'fa-lightbulb-o',
-            href: new_iri(resource, :motions),
-            policy: :create_child?,
-            policy_arguments: %i[motions]
-          )
-        ]
-      }
     )
   end
 
@@ -55,13 +29,6 @@ class ForumMenuList < MenuList # rubocop:disable Metrics/ClassLength
       menus: lambda {
         [
           menu_item(:overview, image: 'fa-th-large', href: resource.iri),
-          menu_item(
-            :new_discussion,
-            image: 'fa-plus',
-            href: new_iri(resource, :discussions),
-            policy: :create_child?,
-            policy_arguments: %i[discussions]
-          ),
           activity_link,
           statistics_link,
           settings_link
