@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
-  before_action :check_if_registered, except: %i[show]
+  before_action :check_if_registered, if: :check_if_registered?
   before_action :current_actor
   include Argu::Controller::Authorization
 
@@ -58,6 +58,10 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   def check_if_registered
     return unless current_user.guest?
     raise Argu::Errors::Unauthorized.new(r: after_login_location)
+  end
+
+  def check_if_registered?
+    !(action_name == 'show' || (afe_request? && action_name == 'new'))
   end
 
   def collect_banners
