@@ -41,7 +41,7 @@ RSpec.feature 'Account deletion', type: :feature do
       resource.update(created_at: 1.day.ago)
     end
 
-    sign_in(user)
+    sign_in_manually(user)
     visit settings_user_path(tab: :advanced)
     click_link 'Delete Argu account'
     expect do

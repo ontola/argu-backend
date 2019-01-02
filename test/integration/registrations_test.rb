@@ -116,6 +116,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should post create en' do
+    sign_in guest_user
     locale = :en
     put language_users_path(locale: locale)
     create_email_mock('confirmation', 'test@example.com', confirmationToken: /.+/)
@@ -217,9 +218,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
         {display_name: motion2.display_name, option: 'pro', url: motion2.iri}
       ]
     )
-
-    locale = :en
-    put language_users_path(locale: locale)
 
     Sidekiq::Testing.inline! do
       assert_difference('User.count' => 1,

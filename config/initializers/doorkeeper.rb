@@ -188,7 +188,9 @@ Doorkeeper::JWT.configure do
       end
 
     {
-      iat: Time.current.iso8601(5),
+      exp: opts[:expires_in] && (opts[:created_at] + opts[:expires_in].seconds).to_i,
+      iat: Time.current.to_i,
+      scopes: opts[:scopes].entries,
       user: {
         type: user.guest? ? 'guest' : 'user',
         '@id': user.iri,
