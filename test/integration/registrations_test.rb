@@ -200,6 +200,8 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
       assert_response 201
     end
     assert_not User.last.accepted_terms?
+    assert_equal parsed_body['data']['attributes']['email'], 'test@example.com'
+    assert_equal parsed_body['data']['relationships']['emailAddresses']['data'].count, 1
   end
 
   test 'should post create without password and transfer and persist guest votes' do

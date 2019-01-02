@@ -26,6 +26,7 @@ module OauthHelper
   def sign_in(resource, *_args)
     update_oauth_token(generate_user_token(resource, application: doorkeeper_token.application).token)
     current_actor.user = resource
+    user_context.user = resource
     set_layout
     warden.set_user(resource, scope: :user, store: false) unless warden.user(:user) == resource
   end
