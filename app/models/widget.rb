@@ -6,6 +6,8 @@ class Widget < ApplicationRecord
   enhance Createable
 
   belongs_to :owner, polymorphic: true, primary_key: :uuid
+  belongs_to :primary_resource, class_name: 'Edge', primary_key: :uuid
+  belongs_to :permitted_action
 
   enum widget_type: {custom: 0, discussions: 1, deku: 2, new_motion: 3, new_question: 4, overview: 5}
 
@@ -31,6 +33,10 @@ class Widget < ApplicationRecord
       )
   end
 
+  def permitted_action_title=(title)
+    self.permitted_action = PermittedAction.find_by(title: title)
+  end
+
   private
 
   def property_shape(iri, predicate)
@@ -48,6 +54,8 @@ class Widget < ApplicationRecord
       discussions
         .create(
           owner: owner,
+          permitted_action: PermittedAction.find_by(title: 'motion_show'),
+          primary_resource: owner,
           resource_iri: [[discussions_iri, NS::AS[:name]], [discussions_iri, nil]],
           size: 3
         )
@@ -66,6 +74,8 @@ class Widget < ApplicationRecord
       new_motion
         .create(
           owner: owner,
+          permitted_action: PermittedAction.find_by(title: 'motion_create'),
+          primary_resource: owner,
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :motions), nil]]
         )
     end
@@ -83,6 +93,8 @@ class Widget < ApplicationRecord
       new_question
         .create(
           owner: owner,
+          primary_resource: owner,
+          permitted_action: PermittedAction.find_by(title: 'question_create'),
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :questions), nil]]
         )
     end
@@ -91,6 +103,8 @@ class Widget < ApplicationRecord
       overview
         .create(
           owner: owner.parent,
+          permitted_action: PermittedAction.find_by(title: 'forum_show'),
+          primary_resource: owner,
           resource_iri: [
             [owner.iri, NS::SCHEMA[:name]],
             [collection_iri(owner, :discussions, display: :card, page_size: 5), nil]

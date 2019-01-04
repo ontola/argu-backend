@@ -19,10 +19,6 @@ module Widgetable
       iri_cache
     end
 
-    def widget_sequence
-      @widget_sequence ||= RDF::Sequence.new(widgets)
-    end
-
     private
 
     def create_default_widgets

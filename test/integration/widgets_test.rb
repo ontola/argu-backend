@@ -15,6 +15,8 @@ class WidgetsTest < ActionDispatch::IntegrationTest
       post collection_iri_path(freetown, :widgets), params: {
         widget: {
           resource_iri: argu_url,
+          primary_resource_id: freetown.uuid,
+          permitted_action_title: 'forum_show',
           size: 3,
           widget_type: :deku
         }
