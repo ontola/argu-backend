@@ -446,6 +446,14 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_nil flash[:error]
   end
 
+  test 'guest should put language with nested param' do
+    get freetown
+    assert_equal 'en', token_payload['user']['language']
+    put '/u/language', params: {user: {language: :nl}}
+    assert_equal 'nl', token_payload['user']['language']
+    assert_nil flash[:error]
+  end
+
   test 'user should put language' do
     sign_in user
     assert_equal 'en', user.language

@@ -51,15 +51,16 @@ module Actions
       iri_template: :setup_iri
     )
 
-    available_locales.each_key do |tag|
-      define_action(
-        :"set_language_#{tag}",
-        type: NS::SCHEMA[:UpdateAction],
-        policy: :update?,
-        image: 'fa-update',
-        url: -> { iri_from_template(:set_language, language: tag) },
-        http_method: :put
-      )
-    end
+    define_action(
+      :language,
+      type: NS::SCHEMA[:UpdateAction],
+      policy: :update?,
+      image: 'fa-update',
+      label: -> { I18n.t('set_language') },
+      url: -> { iri_from_template(:languages_iri) },
+      http_method: :put,
+      form: ::Users::LanguageForm,
+      iri_template: :languages_iri
+    )
   end
 end

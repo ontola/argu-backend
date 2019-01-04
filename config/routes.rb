@@ -115,7 +115,9 @@ Rails.application.routes.draw do
     get :forums, to: 'users/forums#index', on: :member
     get :drafts, to: 'drafts#index', on: :member
 
-    put 'language/:locale', to: 'users#language', on: :collection, as: :language
+    get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
+    put 'language/:locale', to: 'users/languages#update', on: :collection, as: :language
+    put 'language', to: 'users/languages#update', on: :collection
     include_route_concerns
   end
 

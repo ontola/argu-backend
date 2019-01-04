@@ -1,27 +1,13 @@
 # frozen_string_literal: true
 
-class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLength
+class UsersController < AuthorizedController
   include VotesHelper
   include UrlHelper
   include NestedResourceHelper
   helper_method :authenticated_resource
-  skip_before_action :check_if_registered, only: :language
 
   def wrong_email
     render locals: {email: params[:email], r: r_param}
-  end
-
-  def language # rubocop:disable Metrics/AbcSize
-    locale = permit_locale_params
-    active_response_block do
-      if I18n.available_locales.include?(locale.to_sym)
-        message = t('errors.general') unless update_language(locale)
-      else
-        Bugsnag.notify(RuntimeError.new("Invalid locale #{params[:locale]} (#{locale})"))
-        message = t('errors.general')
-      end
-      respond_with_redirect(location: request.headers['Referer'] || root_path, notice: message)
-    end
   end
 
   private
@@ -32,8 +18,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
                 User.preload(:profile).find_via_shortname_or_id(params[:id])
               when 'update'
                 User.find_by(id: current_user.id)
-              when 'language'
-                current_user
               else
                 if current_user.guest?
                   flash[:error] = t('devise.failure.unauthenticated')
@@ -50,10 +34,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
         email.second['email'].present? &&
           authenticated_resource.email_addresses.find(email.second['id']).email != email.second['email']
     end
-  end
-
-  def permit_locale_params
-    params.require(:locale)
   end
 
   def permit_params(password = false) # rubocop:disable Metrics/AbcSize
@@ -125,21 +105,6 @@ class UsersController < AuthorizedController # rubocop:disable Metrics/ClassLeng
     else
       authenticated_resource.update_without_password(permit_params)
     end
-  end
-
-  def update_language(locale) # rubocop:disable Metrics/AbcSize
-    if current_user.guest?
-      Argu::Redis.set("guest_user.#{current_user.id}.language", locale)
-    else
-      return false unless current_user.update(language: locale)
-    end
-    new_token =
-      if current_user.guest?
-        generate_guest_token(current_user.id, application: doorkeeper_token.application)
-      else
-        generate_user_token(current_user, application: doorkeeper_token.application)
-      end
-    update_oauth_token(new_token.token)
   end
 
   def password_required

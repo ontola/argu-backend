@@ -63,7 +63,8 @@ module OauthHelper
     @doorkeeper_token_payload ||= decode_token(doorkeeper_token.token)
   end
 
-  def generate_user_token(resource, application: Doorkeeper::Application.argu)
+  def generate_user_token(resource, application: nil)
+    application ||= Doorkeeper::Application.argu
     Doorkeeper::AccessToken.find_or_create_for(
       application,
       resource.id,
@@ -73,7 +74,8 @@ module OauthHelper
     )
   end
 
-  def generate_guest_token(guest_id, application: Doorkeeper::Application.argu)
+  def generate_guest_token(guest_id, application: nil)
+    application ||= Doorkeeper::Application.argu
     store_guest_language(guest_id)
 
     Doorkeeper::AccessToken.find_or_create_for(

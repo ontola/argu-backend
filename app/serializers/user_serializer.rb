@@ -68,7 +68,7 @@ class UserSerializer < RecordSerializer
          direct_decisions_email: {iri: NS::ARGU[:direct]}
        }
   enum :language,
-       type: NS::SCHEMA[:Thing],
+       type: NS::SCHEMA[:Language],
        options: available_locales
   enum :time_zone,
        type: NS::SCHEMA[:Thing],
