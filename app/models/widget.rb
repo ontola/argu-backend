@@ -41,7 +41,7 @@ class Widget < ApplicationRecord
 
   def property_shape(iri, predicate)
     @property_shapes ||= {}
-    @property_shapes[iri] ||=
+    @property_shapes[[iri, predicate]] ||=
       RailsLD::PropertyQuery.new(
         target_node: RDF::DynamicURI(iri),
         path: RDF::DynamicURI(predicate)
