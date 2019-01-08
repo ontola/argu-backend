@@ -19,7 +19,6 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   enhance Updateable
   enhance Widgetable
   enhance Actionable
-  enhance Settingable
   enhance Statable
 
   include Attribution

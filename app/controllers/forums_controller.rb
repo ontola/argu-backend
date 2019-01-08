@@ -6,6 +6,7 @@ class ForumsController < EdgeableController
   skip_before_action :authorize_action, only: %i[discover index]
   skip_before_action :check_if_registered, only: %i[discover index]
   skip_after_action :verify_authorized, only: :discover
+  helper_method :forum_grants
 
   def discover
     @forums = Forum
@@ -51,6 +52,14 @@ class ForumsController < EdgeableController
     }
   end
 
+  def forum_grants
+    @forum_grants ||=
+      Grant
+        .custom
+        .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
+        .includes(group: {group_memberships: {member: :profileable}})
+  end
+
   def permit_params
     attrs = policy(resource_by_id || new_resource_from_params).permitted_attributes
     pm = params.require(:forum).permit(*attrs).to_h
@@ -67,20 +76,6 @@ class ForumsController < EdgeableController
     resource = Shortname.find_resource(params[:id], root_from_params&.uuid) || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(Forum)
     redirect_to resource.iri_path
-  end
-
-  def redirect_location
-    return super unless authenticated_resource.persisted?
-    settings_iri_path(authenticated_resource, afe_request? ? {} : {tab: tab})
-  end
-
-  def settings_view
-    @grants =
-      Grant
-        .custom
-        .where(edge_id: [resource_by_id.uuid, resource_by_id.parent.uuid])
-        .includes(group: {group_memberships: {member: :profileable}})
-    'forums/settings'
   end
 
   def show_params

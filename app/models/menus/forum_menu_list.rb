@@ -6,7 +6,7 @@ class ForumMenuList < MenuList
   include Menus::FollowMenuItems
   include Menus::ShareMenuItems
   cattr_accessor :defined_menus
-  has_menus %i[actions follow navigations share settings]
+  has_menus %i[actions follow navigations share]
 
   private
 
@@ -14,7 +14,7 @@ class ForumMenuList < MenuList
     menu_item(
       :actions,
       image: 'fa-ellipsis-v',
-      menus: -> { [activity_link, statistics_link, export_link, settings_link] },
+      menus: -> { [activity_link, statistics_link, export_link, move_link, destroy_link, edit_link] },
       link_opts: {triggerClass: 'btn--transparant'}
     )
   end
@@ -49,36 +49,5 @@ class ForumMenuList < MenuList
 
   def share_menu
     share_menu_items(triggerClass: 'btn--transparant')
-  end
-
-  def settings_menu # rubocop:disable Metrics/AbcSize
-    menu_item(
-      :settings,
-      iri_base: -> { resource.iri_path },
-      menus: lambda {
-        [
-          setting_item(
-            :general,
-            label: I18n.t('forums.settings.menu.general'),
-            href: edit_iri(resource)
-          ),
-          setting_item(
-            :grants,
-            label: I18n.t('forums.settings.menu.grants'),
-            href: collection_iri(resource, :grants, display: :settingsTable)
-          ),
-          setting_item(
-            :move,
-            image: 'fa-sitemap',
-            href: new_iri(Move.new(edge: resource).iri_path)
-          ),
-          setting_item(
-            :delete,
-            image: 'fa-trash',
-            href: delete_iri(resource)
-          )
-        ]
-      }
-    )
   end
 end

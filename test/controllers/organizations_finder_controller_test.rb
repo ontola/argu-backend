@@ -190,10 +190,10 @@ class OrganizationsFinderControllerTest < ActionController::TestCase
     assert_equal argu, assigns(:organization)
   end
 
-  test 'administrator should get show organization of forum settings' do
+  test 'administrator should get show organization of forum form' do
     sign_in administrator
 
-    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/settings", frontend: true), format: :nt}
+    get :show, params: {iri: argu_url("/#{argu.url}/#{freetown.url}/edit", frontend: true), format: :nt}
 
     assert_response 200
     assert_equal argu, assigns(:organization)

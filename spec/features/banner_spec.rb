@@ -144,47 +144,4 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to_not have_content(banner_users.title)
     expect(page).to have_content(banner_everyone.title)
   end
-
-  ####################################
-  # As Staff
-  ####################################
-  let(:staff) { create(:user, :staff) }
-
-  scenario 'Staff creates a banner' do
-    sign_in(staff)
-
-    new_banner = attributes_for(:banner, :everyone)
-
-    visit settings_iri_path(spain, tab: :banners)
-    click_link 'New banner'
-
-    expect(page).to have_content('New Banner')
-    within('#new_banner') do
-      fill_in :banner_title, with: new_banner[:title]
-      fill_in :banner_content, with: new_banner[:content]
-      select 'Everyone', from: :banner_audience
-      click_button 'Create Banner'
-    end
-    expect(page).to have_content 'Banner created successfully'
-    within('#banners-drafts') do
-      expect(page).to have_content(new_banner[:title])
-    end
-  end
-
-  scenario 'Staff views banner settings' do
-    sign_in(staff)
-
-    visit settings_iri_path(spain, tab: :banners)
-    within('#banners-published') do
-      %i[guests users everyone].each do |level|
-        expect(page).to have_content(send("banner_#{level}").title)
-      end
-    end
-    within('#banners-drafts') do
-      expect(page).to have_content(unpublished_banner.title)
-    end
-    within('#banners-ended') do
-      expect(page).to have_content(ended_banner.title)
-    end
-  end
 end

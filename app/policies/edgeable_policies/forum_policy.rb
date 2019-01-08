@@ -19,14 +19,6 @@ class ForumPolicy < EdgePolicy
     attributes
   end
 
-  def permitted_tabs
-    tabs = []
-    tabs.concat %i[general]
-    tabs.concat %i[banners] if staff?
-    tabs.concat %i[grants move delete] if vnext?
-    tabs
-  end
-
   def create?
     super || service?
   end

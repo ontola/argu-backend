@@ -195,19 +195,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
                     holland.display_name
   end
 
-  test 'administrator should only show general settings' do
-    sign_in holland_administrator
-
-    get settings_iri_path(holland)
-    assert_forum_settings_shown holland
-
-    %i[shortnames banners].each do |tab|
-      get settings_iri_path(holland), params: {tab: tab}
-      assert_not_authorized
-    end
-  end
-
-  test 'administrator should update settings' do
+  test 'administrator should put update' do
     sign_in holland_administrator
     put holland,
         params: {
@@ -226,7 +214,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assert_redirected_to settings_iri_path(holland, tab: :general)
+    assert_redirected_to holland.iri_path
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal 'new name', holland.name
     assert_equal 'new bio', holland.bio
@@ -243,7 +231,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
             url: 'new_url'
           }
         }
-    assert_redirected_to settings_iri_path(holland.reload, tab: :general)
+    assert_redirected_to holland.reload.iri_path
     updated_holland = Forum.find_by(uuid: holland.uuid)
     assert_equal 'new_url', updated_holland.url
     assert(
@@ -305,18 +293,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
     get discover_forums_path
     assert_response 200
     assert_select '.box.box-grid', 4
-  end
-
-  test 'staff should show settings and all tabs' do
-    sign_in staff
-
-    get settings_iri_path(holland)
-    assert_forum_settings_shown holland
-
-    %i[general banners].each do |tab|
-      get settings_iri_path(holland), params: {tab: tab}
-      assert_forum_settings_shown holland
-    end
   end
 
   test 'staff should show statistics' do
@@ -510,21 +486,6 @@ class ForumsTest < ActionDispatch::IntegrationTest
 
   def included_in_items?(item)
     assigns(:children).map(&:identifier).include?(item.identifier)
-  end
-
-  # Asserts that the forum is shown on a specific tab
-  # @param [Forum] forum The forum to be shown
-  def assert_forum_settings_shown(forum)
-    assert_response 200
-    assert_have_tag response.body,
-                    '.tabs-container li:first-child span.icon-left',
-                    forum.root.display_name
-    assert_have_tag response.body,
-                    '.tabs-container li:nth-child(2) span.icon-left',
-                    I18n.t('pages.settings.title')
-    assert_have_tag response.body,
-                    'header h1',
-                    forum.display_name
   end
 
   def assert_forum_shown(forum)

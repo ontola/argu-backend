@@ -336,8 +336,6 @@ Rails.application.routes.draw do
           get :search, to: 'motions#search', on: :collection
         end
         resources :grants, only: :index
-        get :settings, on: :member
-        get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
         resources :banners, only: %i[new create]
         resources :linked_records,
                   only: %i[show],
