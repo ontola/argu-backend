@@ -278,9 +278,6 @@ Rails.application.routes.draw do
           include_route_concerns
         end
       end
-      resources :banners, only: %i[] do
-        include_route_concerns
-      end
       resources :blog_posts,
                 path: 'posts',
                 only: %i[show] do
@@ -336,7 +333,6 @@ Rails.application.routes.draw do
           get :search, to: 'motions#search', on: :collection
         end
         resources :grants, only: :index
-        resources :banners, only: %i[new create]
         resources :linked_records,
                   only: %i[show],
                   path: :lr do

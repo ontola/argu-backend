@@ -16,7 +16,7 @@ class BannerDismissal
   validates :banner, :user, presence: true
 
   def initialize(options = {})
-    @banner_class = options[:banner_class] || Banner
+    @banner_class = options[:banner_class] || Announcement
     @user = options[:user]
     self.banner_id = options[:banner_id] if options[:banner_id].present?
     self.banner = options[:banner] if options[:banner].present?
@@ -31,10 +31,6 @@ class BannerDismissal
   def banner_id=(value)
     banner_will_change!
     @banner = @banner_class.find(value)
-  end
-
-  def edgeable_record
-    @edgeable_record ||= banner.parent
   end
 
   def persisted?

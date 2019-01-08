@@ -26,8 +26,6 @@ class FeedController < AuthorizedController
     @tree_root_id ||= feed_resource&.root_id
   end
 
-  def collect_banners; end
-
   def feed_resource
     parent_resource
   end

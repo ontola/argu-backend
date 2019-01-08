@@ -32,7 +32,7 @@ module ProfilePhotoable
       build_default_profile_photo(photo_params) if default_profile_photo.blank?
     end
 
-    def photo_params # rubocop:disable Metrics/AbcSize
+    def photo_params
       case self
       when Profile
         if profileable.is_a?(Page)
@@ -42,9 +42,6 @@ module ProfilePhotoable
         end
       when Forum
         {publisher: publisher, creator: creator, forum: self}
-      when Banner
-        creator = publisher.is_a?(Page) ? publisher.creator : publisher.profile
-        {publisher: publisher, creator: creator, forum: forum}
       end
     end
 

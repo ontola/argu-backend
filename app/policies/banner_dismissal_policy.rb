@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class BannerDismissalPolicy < EdgeTreePolicy
-  class Scope < EdgeTreePolicy::Scope; end
+class BannerDismissalPolicy < RestrictivePolicy
+  class Scope < Scope; end
 
   def permitted_attribute_names
     attributes = super

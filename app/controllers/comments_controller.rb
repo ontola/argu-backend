@@ -15,8 +15,6 @@ class CommentsController < EdgeableController # rubocop:disable Metrics/ClassLen
 
   private
 
-  def collect_banners; end
-
   def comment_body
     if params[:comment].is_a?(String)
       Bugsnag.notify('comment_body should always be a hash')

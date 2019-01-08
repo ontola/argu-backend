@@ -1,8 +1,0 @@
-en:
-  banners:
-    type: 'banner'
-    audiences:
-      guests: 'Guests'
-      users: 'Users'
-      members: 'Members'
-      everyone: 'Everyone'

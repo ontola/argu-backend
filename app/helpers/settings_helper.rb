@@ -12,7 +12,6 @@ module SettingsHelper
       forums: 'comments',
       privacy: 'lock',
       shortnames: 'external-link',
-      banners: 'sticky-note',
       setting: 'sliders',
       sources: 'database',
       announcements: 'bullhorn',

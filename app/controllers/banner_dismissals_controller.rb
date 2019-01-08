@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class BannerDismissalsController < AuthorizedController
+  active_response :create
+
   skip_before_action :check_if_registered
 
   private
@@ -29,7 +31,5 @@ class BannerDismissalsController < AuthorizedController
 
   def resource_by_id; end
 
-  def tree_root_id
-    authenticated_resource&.banner&.forum&.root_id
-  end
+  def tree_root_id; end
 end

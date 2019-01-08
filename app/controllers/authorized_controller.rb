@@ -8,7 +8,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   before_action :verify_terms_accepted, only: %i[update create]
   before_action :authorize_current_actor
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_resource, :collect_banners, :policy, :user_context, :tree_root_id, :tree_root
+  helper_method :authenticated_resource, :policy, :user_context, :tree_root_id, :tree_root
 
   active_response :index, :show
 
@@ -62,18 +62,6 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def check_if_registered?
     !(action_name == 'show' || (afe_request? && action_name == 'new'))
-  end
-
-  def collect_banners
-    return @banners if @banners
-    @banners = []
-
-    banners = stubborn_hgetall('banners') || {}
-    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
-    forum = current_forum
-    return if forum.blank?
-    @banners = pundit_policy_scope(forum.banners.published)
-                 .reject { |b| banners[b.identifier] == 'hidden' }
   end
 
   def collection_options

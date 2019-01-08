@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_20_151118) do
+ActiveRecord::Schema.define(version: 2019_01_08_131921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -69,31 +69,6 @@ ActiveRecord::Schema.define(version: 2018_12_20_151118) do
     t.datetime "updated_at", null: false
     t.index ["user_id", "uid"], name: "user_id_and_uid", unique: true
     t.index ["user_id"], name: "user_id"
-  end
-
-  create_table "banners", id: :serial, force: :cascade do |t|
-    t.string "type"
-    t.integer "publisher_id"
-    t.string "title"
-    t.text "content"
-    t.integer "cited_profile_id"
-    t.string "cited_avatar"
-    t.string "cited_name"
-    t.string "cited_function"
-    t.integer "audience", default: 0, null: false
-    t.integer "sample_size", default: 100, null: false
-    t.boolean "dismissable", default: true, null: false
-    t.datetime "published_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "trashed_at"
-    t.datetime "ends_at"
-    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
-    t.uuid "forum_id"
-    t.integer "attachments_count", default: 0, null: false
-    t.index ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at"
-    t.index ["forum_id"], name: "index_banners_on_forum_id"
-    t.index ["uuid"], name: "index_banners_on_uuid", unique: true
   end
 
   create_table "custom_menu_items", force: :cascade do |t|
@@ -593,7 +568,6 @@ ActiveRecord::Schema.define(version: 2018_12_20_151118) do
 
   add_foreign_key "activities", "edges", column: "recipient_edge_id", primary_key: "uuid"
   add_foreign_key "activities", "edges", column: "trackable_edge_id", primary_key: "uuid"
-  add_foreign_key "banners", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "profiles", column: "creator_id"
   add_foreign_key "edges", "users", column: "publisher_id"

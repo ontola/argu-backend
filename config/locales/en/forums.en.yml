@@ -30,7 +30,6 @@ en:
         privacy: 'Privacy'
         grants: 'Grants'
         shortnames: 'Argu URLs'
-        banners: 'Banners'
       advanced:
         delete:
           confirm:
@@ -41,10 +40,6 @@ en:
       privacy: "Privacy"
       manager: "Manager"
       shortnames: 'Argu URLs'
-      banner: "Banner"
-      banners:
-        title: "Banners"
-        about_banners: "Banners are still in beta"
       grants:
         title: "Groups"
         administrator: "Administrator"

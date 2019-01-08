@@ -31,7 +31,6 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   property :locale, :string, NS::ARGU[:locale], default: 'nl-NL'
   property :default_decision_group_id, :boolean, NS::ARGU[:defaultDecisionGroupId]
 
-  has_many :banners, inverse_of: :forum, dependent: :destroy, primary_key: :uuid
   belongs_to :default_decision_group, class_name: 'Group', foreign_key_property: :default_decision_group_id
 
   with_collection :grants

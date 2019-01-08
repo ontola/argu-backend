@@ -27,8 +27,6 @@ class ConversionsController < ServiceController
     authorize authenticated_resource, :new?
   end
 
-  def collect_banners; end
-
   def create_service_parent
     Conversion.new(edge: parent_resource!)
   end
