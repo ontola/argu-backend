@@ -21,6 +21,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
           menu_item(:press_media, label: I18n.t('press_media'), href: RDF::URI('https://argu.pr.co')),
           menu_item(:support, label: I18n.t('help_support'), href: RDF::URI('https://argu.freshdesk.com/support/home')),
           menu_item(:contact, label: I18n.t('about.contact'), href: RDF::URI(info_url(:contact))),
+          menu_item(:discover, label: I18n.t('pages.discover'), href: collection_iri(nil, :pages)),
           menu_item(
             :language,
             label: I18n.t('set_language'),
