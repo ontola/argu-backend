@@ -2,6 +2,7 @@
 
 class GrantSet < ApplicationRecord
   RESERVED_TITLES = %w[spectator participator initiator moderator administrator staff].freeze
+  SELECTABLE_TITLES = %w[spectator participator initiator administrator].freeze
   has_many :grant_sets_permitted_actions, dependent: :destroy
   has_many :permitted_actions, through: :grant_sets_permitted_actions
   has_many :grants, dependent: :restrict_with_exception
@@ -12,7 +13,7 @@ class GrantSet < ApplicationRecord
 
   alias_attribute :display_name, :title
 
-  scope :selectable, -> { where(title: %w[spectator participator initiator administrator]) }
+  scope :selectable, -> { where(title: SELECTABLE_TITLES) }
 
   RESERVED_TITLES.each do |title|
     define_singleton_method title do

@@ -104,7 +104,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def public_grant
-    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title || 'none'
+    @public_grant ||= grants.find_by(group_id: Group::PUBLIC_ID)&.grant_set&.title&.to_sym || :none
   end
 
   def self.shortnameable?
@@ -135,7 +135,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def reset_public_grant # rubocop:disable Metrics/AbcSize
-    if public_grant == 'none'
+    if public_grant&.to_sym == :none
       grants.where(group_id: Group::PUBLIC_ID).destroy_all
     else
       grants.joins(:grant_set).where('group_id = ? AND title != ?', Group::PUBLIC_ID, public_grant).destroy_all

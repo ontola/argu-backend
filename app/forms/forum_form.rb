@@ -9,5 +9,6 @@ class ForumForm < RailsLD::Form
     language
     default_profile_photo
     default_cover_photo
+    public_grant
   ]
 end
