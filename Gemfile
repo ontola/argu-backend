@@ -66,7 +66,7 @@ gem 'acts_as_follower',
 gem 'rollout'
 gem 'html_truncator', '~>0.2'
 gem 'jwt'
-gem 'doorkeeper', '~> 5.0.0'
+gem 'doorkeeper', '~> 5.0.2'
 gem 'doorkeeper-jwt', '~> 0.1.6'
 gem 'rack-attack', '~> 4.3.1'
 gem 'country_select'
