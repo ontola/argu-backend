@@ -55,10 +55,6 @@ module OauthHelper
 
   private
 
-  def doorkeeper_token
-    @_raw_doorkeeper_token || super
-  end
-
   def doorkeeper_token_payload
     @doorkeeper_token_payload ||= decode_token(doorkeeper_token.token)
   end
@@ -95,21 +91,14 @@ module OauthHelper
   def needs_new_guest_token?
     return false if afe_request?
 
-    raw_doorkeeper_token.blank? || raw_doorkeeper_token&.expired? || current_resource_owner.blank?
-  end
-
-  def raw_doorkeeper_token
-    @_raw_doorkeeper_token ||= Doorkeeper::OAuth::Token.authenticate(
-      request,
-      *Doorkeeper.configuration.access_token_methods
-    )
+    doorkeeper_token.blank? || doorkeeper_token&.expired? || current_resource_owner.blank?
   end
 
   def refresh_guest_token
-    raw_doorkeeper_token.destroy! if raw_doorkeeper_token&.expired?
+    doorkeeper_token.destroy! if doorkeeper_token&.expired?
     session[:load] = true unless session.loaded?
-    @_raw_doorkeeper_token = generate_guest_token(session_id.to_s)
-    set_argu_client_token_cookie(raw_doorkeeper_token.token)
+    @doorkeeper_token = generate_guest_token(session_id.to_s)
+    set_argu_client_token_cookie(doorkeeper_token.token)
     true
   end
 
