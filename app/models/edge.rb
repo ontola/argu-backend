@@ -16,6 +16,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   include Shortnameable
   include Uuidable
 
+  def self.inherited(subclass)
+    super
+    subclass.enhance Grantable
+  end
+
   acts_as_followable
   has_ltree_hierarchy
   belongs_to :parent,

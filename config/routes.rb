@@ -124,27 +124,17 @@ Rails.application.routes.draw do
   get :feed, controller: :favorites_feed, action: :index
 
 
+  # @todo canonical urls of edges should redirect
   resources :edges, only: [:show] do
-    get :statistics, to: 'statistics#show'
-    resources :exports, only: %i[index create]
-    resources :conversions, path: 'conversion', only: %i[new create]
-    resource :grant_tree, only: %i[show], path: 'permissions'
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
        motions pages questions votes vote_events].map do |edgeable|
       resources edgeable, only: :index
     end
   end
-  resources :groups, path: 'g', only: %i[show] do
-    resources :group_memberships, path: 'memberships', only: %i[create]
-  end
-
-  get '/o/find', to: 'organizations_finder#show'
 
   resources :menus, only: %i[show index]
 
   resources :terms, only: %i[new create]
-
-  resources :media_objects, only: :show
 
   resources :announcements, only: %i[show] do
     post '/dismissals',
@@ -153,11 +143,9 @@ Rails.application.routes.draw do
         to: 'static_pages#dismiss_announcement'
   end
 
-  resources :profiles, only: %i[index update show edit] do
-    post :index, action: :index, on: :collection
-    # This is to make requests POST if the user has an 'r' (which nearly all use POST)
-    get :setup, to: 'profiles#setup', on: :collection
-    put :setup, to: 'profiles#setup!', on: :collection
+  scope :profiles do
+    get :setup, to: 'profiles#setup'
+    put :setup, to: 'profiles#setup!'
   end
 
   resources :banner_dismissals, only: :create
@@ -201,8 +189,6 @@ Rails.application.routes.draw do
 
   get '/i/about', to: 'static_pages#about'
   resources :info, path: 'i', only: [:show]
-
-  get '/quawonen_feedback', to: redirect('/quawonen')
 
   get :discover, to: 'forums#discover', as: :discover_forums
 
@@ -305,16 +291,22 @@ Rails.application.routes.draw do
         get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
         resources :grants, only: %i[index]
       end
+      resources :media_objects, only: :show
       resources :motions,
                 path: 'm',
                 only: %i[show] do
         include_route_concerns
+      end
+      resources :profiles, only: %i[index update show edit] do
+        # This is to make requests POST if the user has an 'r' (which nearly all use POST)
+        post :index, action: :index, on: :collection
       end
       resources :questions,
                 path: 'q' do
         include_route_concerns
         resources :placements, only: %i[index]
       end
+      resources :users, path: 'u', only: %i[show]
       resources :votes, only: %i[show], as: :vote do
         include_route_concerns
       end
