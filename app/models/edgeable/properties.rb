@@ -63,16 +63,8 @@ module Edgeable
       end
 
       def property_filter_string(key, value)
-        sanitized_value = property_filter_value(key, value)
         column = "#{key}_filter.value"
-        case sanitized_value
-        when nil
-          "(#{column} IS NULL)"
-        when Integer
-          "#{column} = #{sanitized_value}"
-        else
-          "#{column} = '#{sanitized_value}'"
-        end
+        predicate_builder.build_from_hash(column => value)[0].to_sql.gsub(/\$\d+/, '?')
       end
 
       private
@@ -89,12 +81,6 @@ module Edgeable
           property_instance(predicate)&.value = value
           super(value)
         end
-      end
-
-      def property_filter_value(key, value)
-        property = property_options(name: key)
-        return value if property[:enum].blank? || value.is_a?(Integer)
-        property[:enum][value&.to_sym]
       end
 
       def property_type(type)
@@ -145,8 +131,8 @@ module ActiveRecord
       end
       properties.reduce(where(opts.except(*properties.keys), *rest)) do |q, condition|
         key = condition.first.to_sym
-        value = condition.second
-        q.joins(target_class.property_join_string(key)).where(target_class.property_filter_string(key, value))
+        value = property_filter_value(key, condition.second)
+        q.joins(target_class.property_join_string(key)).where(target_class.property_filter_string(key, value), *value)
       end
     end
 
@@ -191,6 +177,12 @@ module ActiveRecord
 
     def properties_from_opts(opts)
       opts.select { |key, _value| target_class.property?(key) }
+    end
+
+    def property_filter_value(key, value)
+      property = property_options(name: key)
+      return value if property[:enum].blank? || value.is_a?(Integer)
+      property[:enum][value&.to_sym]
     end
 
     def target_class
