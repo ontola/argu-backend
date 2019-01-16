@@ -32,7 +32,6 @@ module Argu
           UserContext.new(
             doorkeeper_scopes: doorkeeper_scopes,
             profile: current_profile,
-            tree_root_id: @_error_mode ? nil : tree_root_id,
             user: current_user,
             vnext: vnext_request?
           )

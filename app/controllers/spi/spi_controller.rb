@@ -19,7 +19,6 @@ module SPI
         UserContext.new(
           doorkeeper_scopes: doorkeeper_scopes,
           profile: current_user.profile,
-          tree_root_id: tree_root_id,
           user: current_user
         )
     end

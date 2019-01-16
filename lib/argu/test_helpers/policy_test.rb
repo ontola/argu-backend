@@ -74,7 +74,7 @@ class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
       .constantize
       .new(UserContext.new(doorkeeper_scopes: {},
                            profile: user.profile,
-                           tree_root_id: argu.uuid,
+                           tree_root: argu,
                            user: user), subject)
   end
 

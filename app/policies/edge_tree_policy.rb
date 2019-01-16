@@ -5,8 +5,7 @@ class EdgeTreePolicy < RestrictivePolicy
     include UUIDHelper
 
     def grant_tree
-      return unless uuid?(context.tree_root_id)
-      @grant_tree ||= context.grant_tree_for_id(context.tree_root_id)
+      @grant_tree ||= context.grant_tree_for(context.tree_root)
     end
 
     def staff?

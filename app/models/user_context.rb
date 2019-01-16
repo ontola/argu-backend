@@ -3,17 +3,15 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  include UUIDHelper
-
-  attr_accessor :tree_root_id, :user
+  attr_accessor :tree_root, :user
   attr_reader :actor, :doorkeeper_scopes, :vnext
 
-  def initialize(doorkeeper_scopes:, profile: nil, tree_root_id: nil, user: nil, vnext: nil)
-    raise "tree_root_id should be a uuid but is #{tree_root_id}" unless tree_root_id.nil? || uuid?(tree_root_id)
+  def initialize(doorkeeper_scopes:, profile: nil, tree_root: nil, user: nil, vnext: nil)
+    raise "tree_root should be a Page but is #{tree_root}" unless tree_root.nil? || tree_root.is_a?(Page)
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
-    @tree_root_id = tree_root_id
+    @tree_root = tree_root || ActsAsTenant.current_tenant
     @vnext = vnext
     @lookup_map = {}
     @grant_trees = {}
@@ -36,23 +34,16 @@ class UserContext
   end
 
   def grant_tree
-    grant_tree_for_id(tree_root_id)
+    grant_tree_for(tree_root)
   end
 
   def grant_tree_for(edge) # rubocop:disable Metrics/AbcSize
     return unless edge&.persisted_edge&.present?
-    raise 'No root is present' if tree_root_id.nil?
-    unless edge.persisted_edge.root_id == tree_root_id
-      raise "#{edge.owner_type} #{edge.owner_id} lies outside the tree of root #{tree_root_id}"
+    raise 'No root is present' if tree_root.nil?
+    unless edge.persisted_edge.root_id == tree_root.uuid
+      raise "#{edge.owner_type} #{edge.owner_id} lies outside the tree of root #{tree_root.url}"
     end
     @grant_trees[edge.persisted_edge.root_id] ||= GrantTree.new(edge.persisted_edge.root)
-  end
-
-  def grant_tree_for_id(edge_id)
-    return unless edge_id&.present?
-    raise 'No root is present' if tree_root_id.nil?
-    raise "Edge #{edge_id} lies outside the tree of root #{tree_root_id}" unless edge_id == tree_root_id
-    @grant_trees[edge_id] ||= GrantTree.new(edge_id)
   end
 
   def export_scope?
@@ -67,11 +58,15 @@ class UserContext
     service_scope? || export_scope?
   end
 
-  def with_root_id(root_id)
-    original_root_id = tree_root_id
-    @tree_root_id = root_id
+  def tree_root_id
+    tree_root&.uuid
+  end
+
+  def with_root(root)
+    original_root = tree_root
+    @tree_root = root
     result = yield
-    @tree_root_id = original_root_id
+    @tree_root = original_root
     result
   end
 end

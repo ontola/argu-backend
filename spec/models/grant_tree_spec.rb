@@ -6,7 +6,7 @@ RSpec.describe GrantTree, type: :model do
   define_spec_objects
   define_model_spec_objects
 
-  let(:constructor_args) { root.uuid }
+  let(:constructor_args) { root }
   let(:described_instance) { described_class.new(constructor_args) }
   let(:root) { argu }
 
@@ -34,7 +34,6 @@ RSpec.describe GrantTree, type: :model do
     end
 
     context 'with root edge' do
-      let(:constructor_args) { root }
       it { is_expected.to be_a(described_class) }
     end
 
@@ -96,26 +95,6 @@ RSpec.describe GrantTree, type: :model do
       let(:constructor_args) { root }
 
       it { is_expected.to eq root }
-    end
-
-    context 'with id' do
-      let(:constructor_args) { root.uuid }
-
-      it { is_expected.to eq root }
-    end
-  end
-
-  describe '#tree_root_id' do
-    context 'with edge' do
-      let(:constructor_args) { root }
-
-      it { is_expected.to eq root.uuid }
-    end
-
-    context 'with id' do
-      let(:constructor_args) { root.uuid }
-
-      it { is_expected.to eq root.uuid }
     end
   end
 

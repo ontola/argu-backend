@@ -120,7 +120,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def authorize_forum(forum)
     return if forum.nil?
-    return unless user_context.with_root_id(forum.root_id) do
+    return unless user_context.with_root(forum.root) do
       Pundit.policy(user_context, forum).show?
     end
     forum

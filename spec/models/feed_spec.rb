@@ -9,7 +9,7 @@ RSpec.describe Feed, type: :model do
   let(:argu_feed) { Feed.new(parent: argu, relevant_only: relevant_only, root_id: argu.uuid) }
   let(:scoped_activities) do
     ActivityPolicy::Scope.new(
-      UserContext.new(doorkeeper_scopes: {}, profile: user.profile, tree_root_id: argu.uuid, user: user),
+      UserContext.new(doorkeeper_scopes: {}, profile: user.profile, tree_root: argu, user: user),
       subject.activities
     ).resolve
   end

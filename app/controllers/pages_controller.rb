@@ -27,7 +27,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def create_success
-    user_context.tree_root_id = authenticated_resource.uuid
+    user_context.tree_root = authenticated_resource
     super
   end
 

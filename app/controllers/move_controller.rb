@@ -7,7 +7,7 @@ class MoveController < ServiceController
 
   def authorize_action
     authorize parent_resource!, :move?
-    user_context.with_root_id(parent_resource!.root_id) do
+    user_context.with_root(parent_resource!.root) do
       authorize parent_resource!, :update?
     end
   end

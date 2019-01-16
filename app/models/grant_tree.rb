@@ -5,12 +5,11 @@ class GrantTree
 
   ANY_ROOT = :any
 
-  attr_reader :cached_nodes
+  attr_reader :cached_nodes, :tree_root
 
   def initialize(root)
-    @tree_root_id = root if uuid?(root)
-    @tree_root = root if root.is_a?(Edge)
-    raise ArgumentError.new("Edge expected as root, but got: #{root}") unless @tree_root_id || @tree_root
+    raise ArgumentError.new("Edge expected as root, but got: #{root}") unless root.is_a?(Edge)
+    @tree_root = root
     @cached_nodes = {}
   end
 
@@ -101,12 +100,8 @@ class GrantTree
     find_or_cache_node(edge).trashed?
   end
 
-  def tree_root
-    @tree_root ||= Edge.find_by!(uuid: tree_root_id)
-  end
-
   def tree_root_id
-    @tree_root_id ||= @tree_root.uuid
+    tree_root.uuid
   end
 
   # Checks whether the edge or any of its ancestors is unpublished
