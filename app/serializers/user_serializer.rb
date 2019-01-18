@@ -78,8 +78,6 @@ class UserSerializer < RecordSerializer
          end
        ]
 
-  with_collection :vote_matches, predicate: NS::ARGU[:voteMatches]
-
   def about
     object.profile.about
   end

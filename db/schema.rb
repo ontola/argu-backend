@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_08_131921) do
+ActiveRecord::Schema.define(version: 2019_01_18_153356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -243,15 +243,6 @@ ActiveRecord::Schema.define(version: 2019_01_08_131921) do
     t.index ["uid", "provider"], name: "index_identities_on_uid_and_provider"
     t.index ["uid"], name: "index_identities_on_uid"
     t.index ["user_id"], name: "index_identities_on_user_id"
-  end
-
-  create_table "list_items", id: :serial, force: :cascade do |t|
-    t.uuid "listable_id", null: false
-    t.string "listable_type", null: false
-    t.string "relationship", null: false
-    t.integer "order", null: false
-    t.string "item_iri", null: false
-    t.string "item_type", null: false
   end
 
   create_table "media_objects", id: :serial, force: :cascade do |t|
@@ -543,17 +534,6 @@ ActiveRecord::Schema.define(version: 2019_01_08_131921) do
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
-  create_table "vote_matches", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
-    t.string "shortname"
-    t.string "name", null: false
-    t.text "text"
-    t.integer "publisher_id", null: false
-    t.integer "creator_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["creator_id", "shortname"], name: "index_vote_matches_on_creator_id_and_shortname", unique: true
-  end
-
   create_table "widgets", force: :cascade do |t|
     t.integer "widget_type", null: false
     t.string "owner_type", null: false
@@ -602,6 +582,4 @@ ActiveRecord::Schema.define(version: 2019_01_08_131921) do
   add_foreign_key "rules", "edges", column: "branch_id"
   add_foreign_key "sources", "profiles", column: "creator_id"
   add_foreign_key "sources", "users", column: "publisher_id"
-  add_foreign_key "vote_matches", "profiles", column: "creator_id"
-  add_foreign_key "vote_matches", "users", column: "publisher_id"
 end

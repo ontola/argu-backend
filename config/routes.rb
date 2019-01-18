@@ -123,11 +123,6 @@ Rails.application.routes.draw do
 
   get :feed, controller: :favorites_feed, action: :index
 
-  resources :vote_matches, only: %i[index show create] do
-    include_route_concerns
-    get :voteables, to: 'list_items#index', relationship: :voteables
-    get :vote_comparables, to: 'list_items#index', relationship: :vote_comparables
-  end
 
   resources :edges, only: [:show] do
     get :statistics, to: 'statistics#show'
@@ -135,7 +130,7 @@ Rails.application.routes.draw do
     resources :conversions, path: 'conversion', only: %i[new create]
     resource :grant_tree, only: %i[show], path: 'permissions'
     %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
-       motions pages questions votes vote_events vote_matches].map do |edgeable|
+       motions pages questions votes vote_events].map do |edgeable|
       resources edgeable, only: :index
     end
   end
@@ -259,7 +254,6 @@ Rails.application.routes.draw do
       end
       resources :groups, path: 'g', only: %i[create new index]
       resources :shortnames, only: %i[new create index]
-      resources :vote_matches, only: %i[index show]
       get :settings, on: :member
       get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
       resources :users, path: 'u', only: %i[] do

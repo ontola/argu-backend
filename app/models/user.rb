@@ -31,13 +31,11 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :votes, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :vote_events, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
-  has_many :vote_matches, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :restrict_with_exception
   has_many :uploaded_media_objects,
            class_name: 'MediaObject',
            inverse_of: :publisher,
            foreign_key: 'publisher_id',
            dependent: :restrict_with_exception
-  has_many :profile_vote_matches, through: :profile, source: :vote_matches
   accepts_nested_attributes_for :profile, update_only: true
   accepts_nested_attributes_for :home_placement, reject_if: :all_blank
   accepts_nested_attributes_for :email_addresses, reject_if: :all_blank, allow_destroy: true
@@ -50,8 +48,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
          :omniauthable, omniauth_providers: [:facebook].freeze
   acts_as_follower
 
-  with_collection :vote_matches,
-                  association: :profile_vote_matches
   with_collection :managed_pages, association_class: Page
   with_collection :email_addresses
 
@@ -367,7 +363,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Sets the dependent foreign relations to the Community profile
   def expropriate_dependencies
-    %w[comments motions arguments questions blog_posts votes vote_events vote_matches uploaded_media_objects]
+    %w[comments motions arguments questions blog_posts votes vote_events uploaded_media_objects]
       .each do |association|
       send(association)
         .model

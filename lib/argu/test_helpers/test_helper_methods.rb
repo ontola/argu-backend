@@ -14,7 +14,7 @@ module Argu
       module InstanceMethods
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[argument pro_argument con_argument blog_post comment forum group_membership motion export
-                            group question vote decision grant vote_event vote_match].freeze
+                            group question vote decision grant vote_event].freeze
 
         def cascaded_forum(key, opts)
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)
@@ -129,7 +129,7 @@ module Argu
         end
 
         def create_resource(klass, attributes = {}, options = {}) # rubocop:disable Metrics/AbcSize
-          if klass < Edge || klass < NewsBoy || klass == VoteMatch
+          if klass < Edge || klass < NewsBoy
             options[:publisher] = create(:user, confirmed_at: Time.current) if options[:publisher].nil?
             options[:creator] = options[:publisher].profile if options[:creator].nil?
           end

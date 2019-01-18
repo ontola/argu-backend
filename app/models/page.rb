@@ -21,7 +21,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   has_many :discussions, through: :forums
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable, primary_key: :uuid
   accepts_nested_attributes_for :profile, update_only: true
-  has_many :profile_vote_matches, through: :profile, source: :vote_matches
   has_many :descendant_shortnames,
            -> { where(primary: false) },
            class_name: 'Shortname',
@@ -43,8 +42,6 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   after_create :create_default_groups
   after_create :create_staff_grant
 
-  with_collection :vote_matches,
-                  association: :profile_vote_matches
   with_collection :forums
   with_collection :groups
   with_collection :shortnames, association: :descendant_shortnames
