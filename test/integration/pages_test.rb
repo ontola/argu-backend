@@ -3,8 +3,8 @@
 require 'test_helper'
 
 class PagesTest < ActionDispatch::IntegrationTest
-  let!(:page) { create(:page) }
-  let(:hidden_page) { create(:page, visibility: Page.visibilities[:hidden]) }
+  let!(:page) { create_page }
+  let(:hidden_page) { create_page(visibility: Page.visibilities[:hidden]) }
   let(:freetown) { create_forum(name: 'freetown', parent: page) }
   let(:second_freetown) { create_forum(name: 'second_freetown', parent: page) }
   let(:helsinki) { create_forum(name: 'second_freetown', parent: page, discoverable: false) }

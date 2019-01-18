@@ -4,6 +4,7 @@ require 'test_helper'
 
 module SPI
   class TokensControllerTest < ActionDispatch::IntegrationTest
+    define_page
     let(:guest_user) { create_guest_user }
 
     ####################################

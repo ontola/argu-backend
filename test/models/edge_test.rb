@@ -5,7 +5,7 @@ require 'test_helper'
 class EdgeTest < ActiveSupport::TestCase
   define_freetown
   define_freetown('second')
-  let(:second_page) { create(:page) }
+  let(:second_page) { create_page }
   let(:motion) { create(:motion, parent: freetown) }
 
   test 'iri' do

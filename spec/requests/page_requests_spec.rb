@@ -59,7 +59,7 @@ RSpec.describe 'Pages', type: :request do
   end
 
   context 'public page' do
-    subject { create(:page) }
+    subject { create_page }
     it_behaves_like 'requests', skip: %i[
       trash untrash new_unauthorized new_non_existing create_non_existing
       create_unauthorized index_non_existing index_unauthorized

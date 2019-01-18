@@ -11,7 +11,6 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
   let(:guest_user) { create_guest_user }
   let(:other_guest_user) { create_guest_user(id: 'other_id') }
   let(:place) { create(:place) }
-  let(:argu) { create(:page) }
   let(:motion) { create(:motion, parent: freetown) }
   let(:argument) { create(:argument, parent: motion) }
   let(:motion2) { create(:motion, parent: freetown) }

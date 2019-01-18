@@ -3,11 +3,12 @@
 require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
-  let!(:page1) { create(:page) }
+  define_page
+  let!(:page1) { create_page }
   let!(:forum1) { create_forum(parent: page1, public_grant: 'initiator') }
-  let!(:page2) { create(:page) }
+  let!(:page2) { create_page }
   let!(:forum2) { create_forum(parent: page2) }
-  let!(:hidden_page) { create(:page, visibility: Page.visibilities[:hidden]) }
+  let!(:hidden_page) { create_page(visibility: Page.visibilities[:hidden]) }
 
   ####################################
   # Index

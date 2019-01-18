@@ -10,7 +10,7 @@ class ForumTest < ActiveSupport::TestCase
   define_cairo('cairo2')
   define_cairo('youngbelegen')
 
-  let(:page) { create(:page) }
+  let(:page) { create_page }
   let(:group) { create(:group, parent: page) }
   let(:user) { create(:user) }
   let(:forum) do

@@ -5,7 +5,7 @@ require 'test_helper'
 class MenuListTest < ActiveSupport::TestCase
   define_freetown
   define_freetown('second', attributes: {public_grant: 'none'})
-  let(:other_page) { create(:page) }
+  let(:other_page) { create_page }
 
   let(:user) { create(:user) }
   let(:user_context) do
