@@ -3,7 +3,7 @@
 class Users::IdentitiesController < AuthorizedController
   include RedisResourcesHelper
   skip_before_action :check_if_registered, only: %i[connect attach]
-  active_response :connect, :attach
+  active_response :connect, :attach, :destroy
 
   private
 
