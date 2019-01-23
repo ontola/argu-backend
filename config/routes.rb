@@ -2,7 +2,7 @@
 
 require 'argu/destroy_constraint'
 require 'argu/staff_constraint'
-require 'argu/pages_constraint'
+require 'argu/no_tenant_constraint'
 require 'argu/whitelist_constraint'
 ####
 # Routes
@@ -46,18 +46,9 @@ Rails.application.routes.draw do
     health_check_routes
   end
 
-  root to: 'static_pages#home'
-
   use_doorkeeper do
     controllers applications: 'oauth/applications',
                 tokens: 'oauth/tokens'
-  end
-
-  resources :notifications,
-            only: %i[index show],
-            path: 'n' do
-    patch :read, on: :collection
-    include_route_concerns
   end
 
   require 'sidekiq/web'
@@ -85,19 +76,6 @@ Rails.application.routes.draw do
     put 'users/confirm', to: 'users/confirmations#confirm'
   end
 
-  {
-    q: 'Question',
-    m: 'Motion',
-    a: 'Argument',
-    pro: 'Argument',
-    con: 'Argument',
-    posts: 'BlogPost',
-    c: 'Comment'
-  }.each do |path, resource|
-    get "#{path}/:id", to: 'redirect#show', defaults: {resource: resource.to_s}
-  end
-  get 'm/:id/decision/:step', to: 'redirect#show', defaults: {resource: 'Decision'}
-
   resources :users,
             path: 'u',
             only: %i[show edit] do
@@ -118,21 +96,20 @@ Rails.application.routes.draw do
     get 'language', to: 'users/languages#edit', on: :collection, as: :edit_language
     put 'language/:locale', to: 'users/languages#update', on: :collection, as: :language
     put 'language', to: 'users/languages#update', on: :collection
+    get 'settings', to: 'users#settings', as: 'settings_user', on: :collection
+    put 'settings', to: 'users#update', on: :collection
+    get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings', on: :collection
+
     include_route_concerns
   end
 
-  get :feed, controller: :favorites_feed, action: :index
-
-
-  # @todo canonical urls of edges should redirect
-  resources :edges, only: [:show] do
-    %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
-       motions pages questions votes vote_events].map do |edgeable|
-      resources edgeable, only: :index
-    end
+  scope :profiles do
+    get :setup, to: 'profiles#setup'
+    put :setup, to: 'profiles#setup!'
   end
 
-  resources :menus, only: %i[show index]
+  get :feed, controller: :feed, action: :index
+  get 'staff/feed', controller: :favorites_feed, action: :index
 
   resources :terms, only: %i[new create]
 
@@ -143,34 +120,8 @@ Rails.application.routes.draw do
         to: 'static_pages#dismiss_announcement'
   end
 
-  scope :profiles do
-    get :setup, to: 'profiles#setup'
-    put :setup, to: 'profiles#setup!'
-  end
-
   resources :banner_dismissals, only: :create
   get '/banner_dismissals', to: 'banner_dismissals#create'
-
-  resources :email_addresses, only: [] do
-    include_route_concerns
-  end
-
-  resources :follows, only: :create do
-    include_route_concerns
-    delete :destroy, on: :member
-    get :unsubscribe, action: :destroy, on: :member
-    post :unsubscribe, action: :destroy, on: :member
-  end
-
-  resources :shortnames, only: [] do
-    include_route_concerns
-  end
-
-  resources :grant_sets, only: :show
-
-  get '/settings', to: 'users#settings', as: 'settings_user'
-  get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
-  put '/settings', to: 'users#update'
   get '/c_a', to: 'actors#show', as: 'current_actor'
   put 'persist_cookie', to: 'static_pages#persist_cookie'
 
@@ -192,9 +143,66 @@ Rails.application.routes.draw do
 
   get :discover, to: 'forums#discover', as: :discover_forums
 
+  resources :notifications,
+            only: %i[index show],
+            path: 'n' do
+    patch :read, on: :collection
+    include_route_concerns
+  end
+
+  constraints(Argu::NoTenantConstraint) do
+    root to: 'static_pages#home'
+
+    {
+      q: 'Question',
+      m: 'Motion',
+      a: 'Argument',
+      pro: 'Argument',
+      con: 'Argument',
+      posts: 'BlogPost',
+      c: 'Comment'
+    }.each do |path, resource|
+      get "#{path}/:id", to: 'redirect#show', defaults: {resource: resource.to_s}
+    end
+    get 'm/:id/decision/:step', to: 'redirect#show', defaults: {resource: 'Decision'}
+    get ':shortname', to: 'redirect#show'
+  end
+  root to: 'pages#show'
+
+  scope :apex do
+    resources :menus, only: %i[show index] do
+      resources :sub_menus, only: :index, path: 'menus'
+    end
+  end
+
+  # @todo canonical urls of edges should redirect
+  resources :edges, only: [:show] do
+    %i[pro_arguments con_arguments blog_posts comments decisions discussions forums media_objects
+       motions pages questions votes vote_events].map do |edgeable|
+      resources edgeable, only: :index
+    end
+  end
+
+  resources :email_addresses, only: [] do
+    include_route_concerns
+  end
+
+  resources :follows, only: :create do
+    include_route_concerns
+    delete :destroy, on: :member
+    get :unsubscribe, action: :destroy, on: :member
+    post :unsubscribe, action: :destroy, on: :member
+  end
+
+  resources :shortnames, only: [] do
+    include_route_concerns
+  end
+
+  resources :grant_sets, only: :show
+
   constraints(Argu::StaffConstraint) do
     resources :documents, only: %i[edit update index new create]
-    resources :notifications, only: :create
+    resources :notifications, only: :create, path: 'n'
     namespace :portal do
       get '/', to: 'portal#home'
       get :settings, to: 'portal#home'
@@ -208,12 +216,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/beta', to: 'beta#show'
-
-  get '/ns/core/:model', to: 'static_pages#context'
-
-  get '/d/modern', to: 'static_pages#modern'
-
   constraints(Argu::WhitelistConstraint) do
     namespace :spi do
       get 'authorize', to: 'authorize#show'
@@ -225,108 +227,105 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pages, path: 'o', only: %i[new create index]
+  resources :pages, path: 'o', only: %i[new create index show]
+  get :settings, to: 'pages#settings'
+  get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
+  get :delete, to: 'pages#delete', as: :delete
+  delete '', to: 'pages#destroy', as: :destroy
+  get :edit, to: 'pages#edit'
+  put '', to: 'pages#update'
+  patch '', to: 'pages#update'
 
-  constraints(Argu::PagesConstraint) do
-    resources :pages,
-              path: '',
-              only: %i[show edit] do
+  resources :actors, only: :index
+  resources :arguments, only: %i[show], path: 'a'
+  %i[pro_arguments con_arguments].each do |model|
+    resources model,
+              path: model == :pro_arguments ? 'pro' : 'con',
+              only: %i[show],
+              concerns: %i[votable] do
       include_route_concerns
-      resources :forums, only: %i[index new create]
-      resources :discussions, only: %i[index]
-      resources :grants, path: 'grants', only: %i[new create]
-      resources :group_memberships, only: :index do
-        post :index, action: :index, on: :collection
-      end
-      resources :groups, path: 'g', only: %i[create new index]
-      resources :shortnames, only: %i[new create index]
-      get :settings, on: :member
-      get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
-      resources :users, path: 'u', only: %i[] do
-        get :feed, controller: 'users/feed', action: :index
-      end
-    end
-
-    scope ':root_id' do
-      resources :actors, only: :index
-      resources :arguments, only: %i[show], path: 'a'
-      %i[pro_arguments con_arguments].each do |model|
-        resources model,
-                  path: model == :pro_arguments ? 'pro' : 'con',
-                  only: %i[show],
-                  concerns: %i[votable] do
-          include_route_concerns
-        end
-      end
-      resources :blog_posts,
-                path: 'posts',
-                only: %i[show] do
-        include_route_concerns
-      end
-      resources :creative_works, only: %i[show]
-      resources :comments, only: %i[show], path: 'c' do
-        include_route_concerns
-        resources :comments, only: %i[index new create], path: 'c'
-      end
-      resources :comments, only: %i[show]
-      resources :direct_messages, path: :dm, only: [:create]
-      resources :exports, only: [] do
-        include_route_concerns
-      end
-      resources :favorites, only: [:create] do
-        include_route_concerns
-      end
-      resources :grants, path: 'grants', only: %i[show] do
-        include_route_concerns
-      end
-      resources :group_memberships, only: %i[show] do
-        include_route_concerns
-      end
-      resources :groups,
-                path: 'g',
-                only: %i[show] do
-        resources :group_memberships, only: %i[new create index]
-        include_route_concerns
-        get :settings, on: :member
-        get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
-        resources :grants, only: %i[index]
-      end
-      resources :media_objects, only: :show
-      resources :motions,
-                path: 'm',
-                only: %i[show] do
-        include_route_concerns
-      end
-      resources :profiles, only: %i[index update show edit] do
-        # This is to make requests POST if the user has an 'r' (which nearly all use POST)
-        post :index, action: :index, on: :collection
-      end
-      resources :questions,
-                path: 'q' do
-        include_route_concerns
-        resources :placements, only: %i[index]
-      end
-      resources :users, path: 'u', only: %i[show]
-      resources :votes, only: %i[show], as: :vote do
-        include_route_concerns
-      end
-
-      resources :forums,
-                only: %i[show],
-                path: '' do
-        include_route_concerns
-        resources :motions, path: :m, only: [] do
-          get :search, to: 'motions#search', on: :collection
-        end
-        resources :grants, only: :index
-        resources :linked_records,
-                  only: %i[show],
-                  path: :lr do
-          include_route_concerns
-        end
-      end
     end
   end
+  resources :blog_posts,
+            path: 'posts',
+            only: %i[show] do
+    include_route_concerns
+  end
+  resources :creative_works, only: %i[show]
+  resources :comments, only: %i[show], path: 'c' do
+    include_route_concerns
+    resources :comments, only: %i[index new create], path: 'c'
+  end
+  resources :comments, only: %i[show]
+  resources :direct_messages, path: :dm, only: [:create]
+  resources :discussions, only: %i[index]
+  resources :exports, only: [] do
+    include_route_concerns
+  end
+  resources :favorites, only: [:create] do
+    include_route_concerns
+  end
+  resources :grants, path: 'grants', only: %i[show new create] do
+    include_route_concerns
+  end
+  resources :group_memberships, only: %i[show index] do
+    include_route_concerns
+    post :index, action: :index, on: :collection
+  end
+  resources :groups, path: 'g', only: %i[show create new index] do
+    resources :group_memberships, only: %i[new create index]
+    include_route_concerns
+    get :settings, on: :member
+    get 'settings/menus', to: 'sub_menus#index', menu_id: 'settings'
+    resources :grants, only: %i[index]
+  end
+  resources :media_objects, only: :show
+  resources :menus, only: %i[show index] do
+    resources :sub_menus, only: :index, path: 'menus'
+  end
+  resources :motions,
+            path: 'm',
+            only: %i[show] do
+    include_route_concerns
+  end
+  resources :profiles, only: %i[index update show edit] do
+    # This is to make requests POST if the user has an 'r' (which nearly all use POST)
+    post :index, action: :index, on: :collection
+  end
+  resources :questions,
+            path: 'q' do
+    include_route_concerns
+    resources :placements, only: %i[index]
+  end
+  resources :shortnames, only: %i[new create index]
+  resources :users, path: 'u', only: %i[] do
+    get :feed, controller: 'users/feed', action: :index
+  end
+  resources :votes, only: %i[show], as: :vote do
+    include_route_concerns
+  end
+
+  resources :forums, only: %i[index new create]
+  resources :forums,
+            only: %i[show],
+            path: '' do
+    include_route_concerns
+    resources :motions, path: :m, only: [] do
+      get :search, to: 'motions#search', on: :collection
+    end
+    resources :grants, only: :index
+    resources :linked_records,
+              only: %i[show],
+              path: :lr do
+      include_route_concerns
+    end
+  end
+
+  get '/beta', to: 'beta#show'
+
+  get '/ns/core/:model', to: 'static_pages#context'
+
+  get '/d/modern', to: 'static_pages#modern'
 
   # Mocks for calls to argu services during spec calls
   # @todo remove when front-end is detached
