@@ -5,7 +5,8 @@ module Argu
     module InstanceMethods
       def create_forum(*args) # rubocop:disable Metrics/AbcSize
         attributes = (args.pop if args.last.is_a?(Hash)) || {}
-        page = attributes[:parent] || create(:page)
+        page = attributes[:parent] || ActsAsTenant.current_tenant || create_page
+
         attributes = {
           url: attributes_for(:shortname)[:shortname],
           parent: page,
@@ -17,12 +18,13 @@ module Argu
         unless Place.where("address->>'country_code' = ?", country_code).any?
           Place.create!(address: {country_code: country_code})
         end
-        forum = create(
-          :forum,
-          *args,
-          attributes
-        )
-        forum
+        ActsAsTenant.with_tenant(page) do
+          create(
+            :forum,
+            *args,
+            attributes
+          )
+        end
       end
 
       def create_page(opts = {})
@@ -54,10 +56,12 @@ module Argu
       def define_cairo(name = 'cairo', attributes: {})
         let(name) do
           forum = create_forum({url: name}.merge(attributes))
-          create(:grant,
-                 edge: forum,
-                 group: create(:group, parent: forum.root),
-                 grant_set: GrantSet.initiator)
+          ActsAsTenant.with_tenant(forum.parent) do
+            create(:grant,
+                   edge: forum,
+                   group: create(:group, parent: ActsAsTenant.current_tenant),
+                   grant_set: GrantSet.initiator)
+          end
           forum
         end
       end
@@ -65,10 +69,12 @@ module Argu
       def define_cologne(name = 'cologne', attributes: {})
         let(name) do
           forum = create_forum(:populated_forum, {url: name}.merge(attributes))
-          create(:grant,
-                 edge: forum,
-                 group: create(:group, parent: forum.root),
-                 grant_set: GrantSet.initiator)
+          ActsAsTenant.with_tenant(forum.parent) do
+            create(:grant,
+                   edge: forum,
+                   group: create(:group, parent: forum.root),
+                   grant_set: GrantSet.initiator)
+          end
           forum
         end
       end
@@ -81,10 +87,12 @@ module Argu
               discoverable: false
             }.merge(attributes)
           )
-          create(:grant,
-                 edge: forum,
-                 group: create(:group, parent: forum.root),
-                 grant_set: GrantSet.initiator)
+          ActsAsTenant.with_tenant(forum.parent) do
+            create(:grant,
+                   edge: forum,
+                   group: create(:group, parent: forum.root),
+                   grant_set: GrantSet.initiator)
+          end
           forum
         end
       end

@@ -178,7 +178,7 @@ module Argu
           let(:unauthorized_user) do
             holland.grants.destroy_all
             freetown.grants.destroy_all
-            create_forum(public_grant: 'participator')
+            create_forum(public_grant: 'participator', parent: create(:page))
             create(:user)
           end
 
