@@ -78,6 +78,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   def redirect_to(*args)
+    args[0] = args[0].to_s if args[0].is_a?(RDF::URI)
     args[0] = path_with_hostname(args[0]) if args[0].is_a?(String) && args[0].starts_with?('/')
     super
   end
@@ -224,6 +225,12 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   def tree_root_id
     tree_root&.uuid
+  end
+
+  def url_for(obj)
+    return super unless obj.is_a?(RDF::URI)
+
+    obj.to_s
   end
 
   def vnext_request?
