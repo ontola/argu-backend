@@ -13,7 +13,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def create_success
-    user_context.tree_root = authenticated_resource
+    ActsAsTenant.current_tenant = authenticated_resource
     super
   end
 

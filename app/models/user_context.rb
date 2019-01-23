@@ -3,15 +3,13 @@
 # @private
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
-  attr_accessor :tree_root, :user
+  attr_accessor :user
   attr_reader :actor, :doorkeeper_scopes, :vnext
 
-  def initialize(doorkeeper_scopes:, profile: nil, tree_root: nil, user: nil, vnext: nil)
-    raise "tree_root should be a Page but is #{tree_root}" unless tree_root.nil? || tree_root.is_a?(Page)
+  def initialize(doorkeeper_scopes:, profile: nil, user: nil, vnext: nil)
     @user = user
     @actor = profile
     @doorkeeper_scopes = doorkeeper_scopes
-    @tree_root = tree_root || ActsAsTenant.current_tenant
     @vnext = vnext
     @lookup_map = {}
     @grant_trees = {}
@@ -58,15 +56,16 @@ class UserContext
     service_scope? || export_scope?
   end
 
+  def tree_root
+    ActsAsTenant.current_tenant
+  end
+
   def tree_root_id
     tree_root&.uuid
   end
 
   def with_root(root)
-    original_root = tree_root
-    @tree_root = root
-    result = yield
-    @tree_root = original_root
-    result
+    raise 'no root given' if root.nil?
+    ActsAsTenant.with_tenant(root) { yield }
   end
 end

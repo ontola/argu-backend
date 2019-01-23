@@ -12,7 +12,6 @@ class MenuListTest < ActiveSupport::TestCase
     UserContext.new(
       doorkeeper_scopes: {},
       profile: user.profile,
-      tree_root: argu.root,
       user: user
     )
   end
@@ -20,7 +19,6 @@ class MenuListTest < ActiveSupport::TestCase
     UserContext.new(
       doorkeeper_scopes: {},
       profile: user.profile,
-      tree_root: other_page.root,
       user: user
     )
   end
@@ -30,7 +28,6 @@ class MenuListTest < ActiveSupport::TestCase
     UserContext.new(
       doorkeeper_scopes: {},
       profile: administrator.profile,
-      tree_root: argu.root,
       user: administrator
     )
   end
