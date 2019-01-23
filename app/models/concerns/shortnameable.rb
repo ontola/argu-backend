@@ -76,32 +76,28 @@ module Shortnameable
   module ClassMethods
     # Finds an object via its shortname, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname!(url, root_id = nil)
-      find_via_shortname(url, root_id) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname!(url)
+      find_via_shortname(url) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Finds an object via its shortname, returns nil when not found
-    def find_via_shortname(url, root_id = nil)
-      if root_id && !uuid?(root_id)
-        root_id = Page.find_via_shortname(root_id)&.uuid
-        return if root_id.blank?
-      end
-      joins(:shortnames).where(shortnames: {root_id: root_id}).find_by('lower(shortname) = lower(?)', url)
+    def find_via_shortname(url)
+      joins(:shortnames).find_by('lower(shortname) = lower(?)', url)
     end
 
     # Finds an object via its shortname or id
-    def find_via_shortname_or_id(url, root_id = nil)
+    def find_via_shortname_or_id(url)
       if (/[a-zA-Z]/i =~ url.to_s).nil?
         find_by(id: url)
       else
-        find_via_shortname(url, root_id)
+        find_via_shortname(url)
       end
     end
 
     # Finds an object via its shortname or id, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
-    def find_via_shortname_or_id!(url, root_id = nil)
-      find_via_shortname_or_id(url, root_id) || raise(ActiveRecord::RecordNotFound)
+    def find_via_shortname_or_id!(url)
+      find_via_shortname_or_id(url) || raise(ActiveRecord::RecordNotFound)
     end
 
     # Useful to test whether a model is shortnameable

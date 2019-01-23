@@ -41,7 +41,7 @@ module LanguageHelper
   end
 
   def language_from_r # rubocop:disable Metrics/AbcSize
-    resource = resource_from_iri(params[:r]) if params[:r].present?
+    resource = resource_from_iri(path_to_url(params[:r])) if params[:r].present?
     return if resource.nil? || !resource.is_a?(Edge) || resource.ancestor(:forum).nil?
     language = resource.ancestor(:forum).language
     I18n.available_locales.include?(language) ? language : :en

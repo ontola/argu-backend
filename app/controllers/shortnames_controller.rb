@@ -19,10 +19,6 @@ class ShortnamesController < ParentableController
     update_execute
   end
 
-  def find_resource_by_root?(_opts)
-    false
-  end
-
   def handle_record_not_unique_html
     authenticated_resource
       .errors

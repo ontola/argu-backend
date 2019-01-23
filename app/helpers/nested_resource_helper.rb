@@ -8,7 +8,7 @@ module NestedResourceHelper
   include IRIHelper
 
   def parent_resource
-    @parent_resource ||= parent_from_params(params)
+    @parent_resource ||= parent_from_params(tree_root, params)
   end
 
   def parent_resource!
@@ -18,9 +18,10 @@ module NestedResourceHelper
   # Extracts a parent resource from an Argu URI
   # @return [ApplicationRecord, nil] The parent resource corresponding to the iri, or nil if no parent is found
   def parent_from_iri(iri)
-    return nil unless argu_iri_or_relative?(iri)
-    route = Rails.application.routes.recognize_path(iri)
-    parent_from_params(route) if parent_resource_key(route)
+    root = TenantFinder.from_url(iri)
+    return nil if root.blank?
+    route_opts = Rails.application.routes.recognize_path(DynamicUriHelper.rewrite(iri, root))
+    parent_from_params(root, route_opts) if parent_resource_key(route_opts)
   rescue ActionController::RoutingError
     nil
   end
@@ -29,12 +30,12 @@ module NestedResourceHelper
   # @note This method knows {Shortnameable}
   # @param opts [Hash, nil] The parameters, {ActionController::StrongParameters#params} is used when not given.
   # @return [ApplicationRecord, nil] A resource model if found
-  def parent_from_params(opts = params)
-    return if parent_resource_param(opts).blank?
+  def parent_from_params(root = tree_root, opts = params)
+    return root if parent_resource_param(opts).blank?
     opts = opts.dup
     opts[:class] = parent_resource_class(opts)
     opts[:id] = opts.delete(parent_resource_param(opts))
-    parent_resource_or_collection(opts)
+    parent_resource_or_collection(root, opts)
   end
 
   # Extracts the resource id from a params hash
@@ -70,8 +71,8 @@ module NestedResourceHelper
     ApplicationRecord.descendants.detect { |m| m.to_s == parent_resource_type(opts).classify }
   end
 
-  def parent_resource_or_collection(opts)
-    resource = resource_from_opts(opts)
+  def parent_resource_or_collection(root, opts)
+    resource = resource_from_opts(root, opts.merge(type: controller_name))
     opts[:collection].present? ? resource.send("#{opts[:collection].to_s.singularize}_collection") : resource
   end
 
