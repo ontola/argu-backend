@@ -89,7 +89,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     expect_relationship('partOf')
     creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "http://127.0.0.1:42000/sessions/#{session.id}"
+    assert_equal creator.dig('data', 'id'), "#{Rails.application.config.origin}/#{argu.url}/sessions/#{session.id}"
   end
 
   test 'guest should not get show non-existent vote' do
@@ -218,7 +218,7 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     expect_relationship('partOf')
     creator = expect_relationship('creator')
-    assert_equal creator.dig('data', 'id'), "http://127.0.0.1:42000/u/#{unconfirmed.url}"
+    assert_equal creator.dig('data', 'id'), "#{Rails.application.config.origin}/#{argu.url}/u/#{unconfirmed.url}"
   end
 
   test 'unconfirmed should not get show non-existent vote' do

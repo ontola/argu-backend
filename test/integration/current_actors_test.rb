@@ -10,9 +10,9 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data'],
-                 'id' => "http://127.0.0.1:42000/sessions/#{session.id}", 'type' => 'guestUsers'
+                 'id' => "#{Rails.application.config.origin}/public_page/sessions/#{session.id}", 'type' => 'guestUsers'
     assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data'],
-                 'id' => "http://127.0.0.1:42000/sessions/#{session.id}", 'type' => 'guestUsers'
+                 'id' => "#{Rails.application.config.origin}/public_page/sessions/#{session.id}", 'type' => 'guestUsers'
   end
 
   test 'user should get show current actor' do
@@ -22,8 +22,8 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],
-                 "http://#{Rails.application.config.host_name}/u/#{user.url}"
+                 "http://#{Rails.application.config.host_name}/public_page/u/#{user.url}"
     assert_equal JSON.parse(response.body)['data']['relationships']['actor']['data']['id'],
-                 "http://#{Rails.application.config.host_name}/u/#{user.url}"
+                 "http://#{Rails.application.config.host_name}/public_page/u/#{user.url}"
   end
 end

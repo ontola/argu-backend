@@ -76,6 +76,15 @@ RSpec.configure do |config|
     reset_tenant
   end
 
+  config.before(:all, type: :request) do
+    host! 'app.argu.localtest'
+  end
+
+  config.before(:all, type: :feature) do
+    Rails.application.config.host_name = '127.0.0.1:42000'
+    Rails.application.config.origin = 'http://127.0.0.1:42000'
+  end
+
   Capybara.register_driver :selenium_firefox do |app|
     client = Selenium::WebDriver::Remote::Http::Default.new
     client.timeout = 200
