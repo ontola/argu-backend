@@ -41,6 +41,6 @@ class NotificationListener
   def prepare_recipients(activity, recipients)
     recipients
       .uniq
-      .map { |f| {user: f, activity: activity} }
+      .map { |f| {user: f, activity: activity, root_id: activity.root_id} }
   end
 end

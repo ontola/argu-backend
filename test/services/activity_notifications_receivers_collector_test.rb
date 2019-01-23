@@ -67,11 +67,13 @@ class ActivityNotificationsReceiversCollectorTest < ActiveSupport::TestCase
 
     create(:notification,
            activity: trackable.activities.first,
+           root_id: trackable.root_id,
            user: user,
            created_at: 30.minutes.ago)
 
     create(:notification,
            activity: trackable.activities.first,
+           root_id: trackable.root_id,
            user: user,
            created_at: 1.day.ago)
 

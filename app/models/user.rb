@@ -151,12 +151,13 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     @confirmed ||= email_addresses.where('confirmed_at IS NOT NULL').any?
   end
 
-  def create_confirmation_reminder_notification
+  def create_confirmation_reminder_notification(root_id)
     return if guest? || confirmed? || notifications.confirmation_reminder.any?
     Notification.confirmation_reminder.create(
       user: self,
       url: settings_iri('/u', tab: :authentication),
       permanent: true,
+      root_id: root_id,
       send_mail_after: 24.hours.from_now
     )
   end

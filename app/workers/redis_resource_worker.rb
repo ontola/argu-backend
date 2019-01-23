@@ -10,7 +10,9 @@ class RedisResourceWorker
     redis_relation = RedisResource::Relation.where(publisher: old_user)
     return if redis_relation.empty?
 
-    new_user.create_confirmation_reminder_notification
+    redis_relation.map { |r| r.resource.root_id }.uniq.each do |root_id|
+      new_user.create_confirmation_reminder_notification(root_id)
+    end
     redis_relation.persist(new_user)
   end
 

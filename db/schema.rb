@@ -277,7 +277,9 @@ ActiveRecord::Schema.define(version: 2019_01_18_153356) do
     t.integer "notification_type", null: false
     t.boolean "permanent", default: false, null: false
     t.datetime "send_mail_after"
+    t.uuid "root_id", null: false
     t.index ["activity_id"], name: "index_notifications_on_activity_id"
+    t.index ["root_id"], name: "index_notifications_on_root_id"
     t.index ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
@@ -541,6 +543,7 @@ ActiveRecord::Schema.define(version: 2019_01_18_153356) do
   add_foreign_key "media_objects", "profiles", column: "creator_id"
   add_foreign_key "media_objects", "users", column: "publisher_id"
   add_foreign_key "notifications", "activities"
+  add_foreign_key "notifications", "edges", column: "root_id", primary_key: "uuid"
   add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "placements", "edges", column: "forum_id", primary_key: "uuid"
   add_foreign_key "placements", "places"

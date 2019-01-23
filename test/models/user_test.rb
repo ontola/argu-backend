@@ -8,6 +8,7 @@ class UserTest < ActiveSupport::TestCase
     user = create(:user)
     create(:notification,
            user: user,
+           root_id: argu.uuid,
            activity: create(
              :activity,
              recipient: freetown,

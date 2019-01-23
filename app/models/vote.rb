@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Vote < Edge
+class Vote < Edge # rubocop:disable Metrics/ClassLength
   enhance Createable
   enhance Destroyable
   enhance Loggable
@@ -35,7 +35,6 @@ class Vote < Edge
                 votes_con: {confirmed: true, for: Vote.fors[:con]},
                 votes_neutral: {confirmed: true, for: Vote.fors[:neutral]},
                 votes: {confirmed: true}
-  delegate :create_confirmation_reminder_notification, to: :publisher
   delegate :voteable, to: :parent
 
   validates :creator, :for, presence: true
@@ -91,6 +90,10 @@ class Vote < Edge
   delegate :is_trashed?, :trashed_at, to: :parent, allow_nil: true
 
   private
+
+  def create_confirmation_reminder_notification
+    publisher.create_confirmation_reminder_notification(root_id)
+  end
 
   def remove_other_temporary_votes
     key = RedisResource::Resource.new(resource: self).send(:key).key
