@@ -82,6 +82,7 @@ RSpec.feature 'Signup', type: :feature do
       confirmationToken: /.+/
     )
 
+    expect(page).not_to have_content('Sign up with email')
     within('#new_user') do
       fill_in 'user_email', with: user_attrs[:email]
       fill_in 'user_password', with: user_attrs[:password]

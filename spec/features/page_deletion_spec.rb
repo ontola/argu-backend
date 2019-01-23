@@ -48,7 +48,9 @@ RSpec.feature 'Page deletion', type: :feature do
     sign_in(user)
     visit settings_iri(forum_page)
     click_link 'Advanced'
-    click_link 'Delete'
+    within '.danger-zone' do
+      click_link 'Delete'
+    end
     expect do
       within(".confirm.page#edit_page_#{forum_page.id}") do
         fill_in 'page_confirmation_string', with: 'remove'
@@ -72,7 +74,9 @@ RSpec.feature 'Page deletion', type: :feature do
     sign_in(user)
     visit settings_iri(argu)
     click_link 'Advanced'
-    click_link 'Delete'
+    within '.danger-zone' do
+      click_link 'Delete'
+    end
 
     expect(page).to have_content 'This page owns one or multiple forums. '\
                                  'Transfer these forum to another page or contact Argu before proceeding.'

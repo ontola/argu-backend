@@ -120,6 +120,7 @@ RSpec.feature 'Comments', type: :feature do
       confirmationToken: /.+/
     )
 
+    expect(page).not_to have_content('Sign up with email')
     within('#new_user') do
       fill_in 'user[email]', with: user_attr[:email]
       fill_in 'user[password]', with: user_attr[:password]
