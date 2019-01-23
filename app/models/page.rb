@@ -73,7 +73,7 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def iri_opts
-    {id: url, root_id: url}
+    {id: url}
   end
 
   def iri_path(opts = {})

@@ -178,7 +178,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def iri_opts
-    {id: fragment, root_id: root.url}
+    {id: fragment}
   end
 
   def is_child_of?(edge)

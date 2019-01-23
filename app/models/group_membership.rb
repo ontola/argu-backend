@@ -47,10 +47,6 @@ class GroupMembership < ApplicationRecord
     [super, NS::ORG['Membership']]
   end
 
-  def iri_opts
-    super.merge(root_id: page.url)
-  end
-
   def publisher
     profile.profileable
   end

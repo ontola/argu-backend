@@ -21,10 +21,6 @@ class Export < ApplicationRecord
     @edgeable_record ||= edge
   end
 
-  def iri_opts
-    super.merge(root_id: parent.root.url)
-  end
-
   private
 
   def schedule_export_job

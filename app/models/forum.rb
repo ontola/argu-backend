@@ -82,7 +82,7 @@ class Forum < Edge # rubocop:disable Metrics/ClassLength
   end
 
   def iri_opts
-    {root_id: root.url, id: url}
+    {id: url}
   end
 
   def language
