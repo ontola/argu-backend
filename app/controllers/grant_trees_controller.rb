@@ -16,8 +16,4 @@ class GrantTreesController < AuthorizedController
   def authenticated_resource
     user_context.grant_tree.cache_node(parent_resource)
   end
-
-  def tree_root_id
-    @tree_root_id ||= parent_resource&.root_id
-  end
 end

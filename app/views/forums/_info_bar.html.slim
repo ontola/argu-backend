@@ -12,6 +12,6 @@ section.section-info
     .details-part[data-title=t('motions.tooltips.count')]
       span.fa.fa-lightbulb-o
       span.icon-left= forum.children_count(:motions)
-    - if tree_root_id
+    - if tree_root
       .details-part[data-title=visible_for_string(forum)]
         span[class="fa fa-#{visibility_icon(forum)}"]

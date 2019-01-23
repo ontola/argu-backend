@@ -29,7 +29,5 @@ module SPI
       error_mode(e)
       error_response_json_api(e)
     end
-
-    def tree_root_id; end
   end
 end

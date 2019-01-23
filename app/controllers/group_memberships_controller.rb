@@ -98,16 +98,4 @@ class GroupMembershipsController < ServiceController
     flash.keep
     respond_with_redirect(location: redirect_location)
   end
-
-  def tree_root_id
-    @tree_root_id ||=
-      case action_name
-      when 'new', 'create'
-        parent_resource&.page&.uuid
-      when 'index'
-        parent_resource.is_a?(Page) ? parent_resource.uuid : parent_resource&.page&.uuid
-      else
-        resource_by_id&.page&.uuid
-      end
-  end
 end

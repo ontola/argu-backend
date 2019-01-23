@@ -61,14 +61,4 @@ class GroupsController < ServiceController
   def tab!
     @verified_tab ||= policy(resource_by_id || Group).verify_tab(tab)
   end
-
-  def tree_root_id
-    @tree_root_id ||=
-      case action_name
-      when 'new', 'create', 'index'
-        parent_resource&.root_id
-      else
-        resource_by_id&.page&.root_id
-      end
-  end
 end

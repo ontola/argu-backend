@@ -83,8 +83,4 @@ class FollowsController < AuthorizedController
   def unsubscribe?
     action_name == 'destroy' && request.method != 'DELETE'
   end
-
-  def tree_root_id
-    @tree_root_id ||= authenticated_resource!&.followable&.root_id
-  end
 end

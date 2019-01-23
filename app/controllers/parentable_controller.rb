@@ -50,20 +50,4 @@ class ParentableController < AuthorizedController
       publisher: current_user
     )
   end
-
-  def root_from_params
-    @root_from_params ||= Page.find_via_shortname_or_id(params[:root_id] || params[:page_id])
-  end
-
-  # The scope of the item used for authorization
-  # @return [number] The id of the root edge.
-  def tree_root_id
-    @tree_root_id ||=
-      case action_name
-      when 'new', 'create', 'index'
-        parent_resource&.root_id
-      else
-        (resource_by_id.is_a?(Edge) ? resource_by_id : resource_by_id.try(:edge))&.root_id
-      end
-  end
 end

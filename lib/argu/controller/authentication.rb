@@ -13,8 +13,6 @@ module Argu
         %i[user guest service]
       end
 
-      def tree_root_id; end
-
       def skip_verify_policy_authorized(sure = false)
         @_pundit_policy_authorized = true if sure
       end

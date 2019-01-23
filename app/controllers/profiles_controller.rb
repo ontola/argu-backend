@@ -114,8 +114,4 @@ class ProfilesController < AuthorizedController
     raise Argu::Errors::Unauthorized.new(r: redirect) if current_user.guest?
     current_user
   end
-
-  def tree_root_id
-    current_resource.profileable.root_id if current_resource&.profileable&.is_a?(Edge)
-  end
 end

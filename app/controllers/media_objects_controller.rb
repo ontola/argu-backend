@@ -18,14 +18,4 @@ class MediaObjectsController < ParentableController
     return super if params[:used_as].blank?
     "#{params[:used_as]}_collection"
   end
-
-  def tree_root_id
-    @tree_root_id ||=
-      case action_name
-      when 'new', 'create', 'index'
-        parent_resource&.root_id
-      else
-        resource_by_id&.about&.try(:root_id)
-      end
-  end
 end

@@ -72,14 +72,4 @@ class ShortnamesController < ParentableController
   def unscoped_param
     params[:shortname].try(:[], :unscoped) if current_user.is_staff?
   end
-
-  def tree_root_id
-    @tree_root_id ||=
-      case action_name
-      when 'new', 'create', 'index'
-        parent_resource&.root_id
-      else
-        resource_by_id&.owner&.root_id
-      end
-  end
 end

@@ -92,8 +92,4 @@ class StatisticsController < ParentableController
   def show_success_html
     render 'show', locals: {resource: authenticated_resource}
   end
-
-  def tree_root_id
-    @tree_root_id ||= parent_resource&.root_id
-  end
 end

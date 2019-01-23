@@ -11,16 +11,21 @@ module OauthHelper
     current_actor.user
   end
 
-  def current_actor # rubocop:disable Metrics/AbcSize
+  def current_actor
     return @current_actor if @current_actor.present?
     refresh_guest_token if needs_new_guest_token?
     user = current_resource_owner || GuestUser.new({})
-    actor = if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
-              resource_from_iri!(request.parameters[:actor_iri]).profile
-            else
-              user.profile
-            end
-    @current_actor = CurrentActor.new(user: user, actor: actor)
+    @current_actor =
+      CurrentActor.new(user: user, actor: current_actor_profile(user))
+    @current_actor
+  end
+
+  def current_actor_profile(user)
+    if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
+      resource_from_iri!(request.parameters[:actor_iri]).profile
+    else
+      user.profile
+    end
   end
 
   def sign_in(resource, *_args)
@@ -44,6 +49,8 @@ module OauthHelper
   end
 
   def set_argu_client_token_cookie(token, expires = nil)
+    return unless respond_to?(:cookies, true)
+
     cookies.encrypted['argu_client_token'] = {
       expires: expires,
       value: token,

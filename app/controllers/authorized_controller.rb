@@ -8,7 +8,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   before_action :verify_terms_accepted, only: %i[update create]
   before_action :authorize_current_actor
   before_bugsnag_notify :add_errors_tab
-  helper_method :authenticated_resource, :policy, :user_context, :tree_root_id, :tree_root
+  helper_method :authenticated_resource, :policy, :user_context
 
   active_response :index, :show
 
@@ -125,14 +125,6 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
   def _route?
     !%i[new create].include? params[:action]
   end
-
-  def tree_root
-    @tree_root ||= Edge.find_by!(uuid: tree_root_id) if tree_root_id.present?
-  end
-
-  # The scope of the item used for authorization
-  # @return [uuid] The uuid of the root edge.
-  def tree_root_id; end
 
   def verify_terms_accepted # rubocop:disable Metrics/AbcSize
     return if current_user.guest? || current_user.accepted_terms?

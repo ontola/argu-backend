@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   include ApplicationHelper
   include AnalyticsHelper
   include ActorsHelper
-  helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context
+  helper_method :current_profile, :show_trashed?, :preferred_forum, :user_context, :tree_root
 
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
@@ -30,6 +30,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   force_ssl unless: :internal_request?, host: Rails.application.config.frontend_url
   protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
   before_bugsnag_notify :add_user_info_to_bugsnag
+
+  prepend_before_action :set_tenant_header
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :set_vary
@@ -169,6 +171,12 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     I18n.locale = current_user.language
   end
 
+  def set_tenant_header
+    ActsAsTenant.current_tenant ||=
+      tree_root_fallback || raise(ActiveRecord::RecordNotFound.new("No tenant found for #{request.url}"))
+    response.headers['Tenant-IRI'] = "https://#{tree_root.iri_prefix}" if tree_root
+  end
+
   def set_vary
     response.set_header('Vary', 'Accept')
     response.set_header('Vary', 'Content-Type')
@@ -205,6 +213,18 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     else
       false
     end
+  end
+
+  def tree_root
+    @tree_root ||= ActsAsTenant.current_tenant
+  end
+
+  def tree_root_fallback
+    (preferred_forum_for(current_resource_owner&.profile) || Forum.first_public).try(:root)
+  end
+
+  def tree_root_id
+    tree_root&.uuid
   end
 
   def vnext_request?

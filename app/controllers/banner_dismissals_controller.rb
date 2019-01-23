@@ -30,6 +30,4 @@ class BannerDismissalsController < AuthorizedController
   end
 
   def resource_by_id; end
-
-  def tree_root_id; end
 end

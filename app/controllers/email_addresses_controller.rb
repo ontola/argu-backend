@@ -19,8 +19,6 @@ class EmailAddressesController < ParentableController
     }
   end
 
-  def tree_root_id; end
-
   def update_meta
     meta = super
     meta.concat(primary_change_meta) if current_resource.previous_changes.key?(:primary)

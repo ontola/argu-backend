@@ -98,7 +98,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     return super unless %w[show destroy].include?(params[:action]) && params[:id].nil?
     @_resource_by_id ||=
       Edge
-        .where_owner('Vote', creator: current_profile, root_id: root_from_params&.uuid)
+        .where_owner('Vote', creator: current_profile, root_id: tree_root_id)
         .find_by(parent: parent_resource)
   end
 

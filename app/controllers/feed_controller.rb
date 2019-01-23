@@ -22,10 +22,6 @@ class FeedController < AuthorizedController
     authorize feed_resource!, :feed?
   end
 
-  def tree_root_id
-    @tree_root_id ||= feed_resource&.root_id
-  end
-
   def feed_resource
     parent_resource
   end

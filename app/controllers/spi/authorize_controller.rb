@@ -33,8 +33,6 @@ module SPI
       resource || raise(ActiveRecord::RecordNotFound)
     end
 
-    def tree_root_id
-      (resource.is_a?(Edge) ? resource : resource.try(:edgeable_record))&.root_id
-    end
+    def tree_root; end
   end
 end

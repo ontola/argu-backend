@@ -5,7 +5,7 @@
         =image_tag profile.default_profile_photo.url(:avatar).to_s, class: 'profile-picture profile-picture--medium'
         h3= profile.display_name
       .cover-overlay
-      - if tree_root_id.present? && policy(profile).update?
+      - if tree_root.present? && policy(profile).update?
         .sticky--top-right
           /=link_to profile_edit_path(profile), class: ('btn-subtle') do
           =link_to settings_iri_path(profile), class: ('btn-subtle') do
