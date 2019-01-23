@@ -25,7 +25,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for follower of Forum
     assert_difference('Motion.count' => 1, 'Notification.count' => 0) do
-      post collection_iri_path(freetown, :motions),
+      post collection_iri(freetown, :motions),
            params: {motion: attributes_for(:motion)}
     end
 
@@ -42,7 +42,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     motion
 
     assert_difference('Motion.count' => -1, create_notification_count => -2) do
-      delete motion.iri_path(destroy: true)
+      delete motion.iri(destroy: true)
     end
   end
 
@@ -51,7 +51,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for follower of Forum
     assert_difference('Question.count' => 1, 'Notification.count' => 0) do
-      post collection_iri_path(freetown, :questions),
+      post collection_iri(freetown, :questions),
            params: {question: attributes_for(:question)}
     end
 
@@ -68,7 +68,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     question
 
     assert_difference('Question.count' => -1, create_notification_count => -1) do
-      delete question.iri_path(destroy: true)
+      delete question.iri(destroy: true)
     end
   end
 
@@ -78,7 +78,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Motion
     assert_difference('Argument.count' => 1, 'Notification.count' => 2) do
-      post collection_iri_path(motion, :pro_arguments),
+      post collection_iri(motion, :pro_arguments),
            params: {
              pro_argument: attributes_for(:argument)
            }
@@ -96,7 +96,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     argument
 
     assert_difference('Argument.count' => -1, create_notification_count => -2) do
-      delete argument.iri_path(destroy: true)
+      delete argument.iri(destroy: true)
     end
   end
 
@@ -106,7 +106,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Argument
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
-      post collection_iri_path(argument, :comments),
+      post collection_iri(argument, :comments),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
@@ -122,7 +122,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of BlogPost
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
-      post collection_iri_path(blog_post, :comments),
+      post collection_iri(blog_post, :comments),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
@@ -138,7 +138,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Motion
     assert_difference('Comment.count' => 1, 'Notification.count' => 2) do
-      post collection_iri_path(motion, :comments),
+      post collection_iri(motion, :comments),
            params: {comment: attributes_for(:comment)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
@@ -158,7 +158,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
 
     # Notification for creator and follower of Argument and of parent comment
     assert_difference('Comment.count' => 1, 'Notification.count' => 3) do
-      post collection_iri_path(argument, :comments),
+      post collection_iri(argument, :comments),
            params: {comment: attributes_for(:comment).merge(in_reply_to_id: comment.uuid)}
     end
     assert_equal Notification.last.notification_type, 'reaction'
@@ -176,7 +176,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('BlogPost.count' => 1) do
-      post collection_iri_path(question, :blog_posts),
+      post collection_iri(question, :blog_posts),
            params: {
              blog_post: attributes_for(:blog_post)
            }
@@ -196,7 +196,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     group_membership
 
     assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
-      post collection_iri_path(motion, :decisions),
+      post collection_iri(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
                                       state: 'forwarded',
@@ -214,7 +214,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     motion
     create(:group_membership, parent: group, member: staff.profile)
     assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
-      post collection_iri_path(motion, :decisions),
+      post collection_iri(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
                                       state: 'forwarded',
@@ -227,7 +227,7 @@ class NotificationListeningTest < ActionDispatch::IntegrationTest
     assert_notifications(2, 'reaction')
 
     assert_difference('Decision.count' => 1, 'Notification.count' => 0) do
-      post collection_iri_path(motion, :decisions),
+      post collection_iri(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
                                       state: 'approved',

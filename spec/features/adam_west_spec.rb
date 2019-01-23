@@ -35,14 +35,14 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'guest should visit forum show' do
-    visit freetown.iri_path
+    visit resource_iri(freetown)
 
     expect(page).to have_content(freetown.bio)
     expect(page).to have_content(question.display_name)
   end
 
   scenario 'guest should not see comment section' do
-    visit argument.iri_path
+    visit resource_iri(argument)
 
     expect(page.body).not_to have_content('Reply')
     expect(page.body).not_to have_content('Comments')
@@ -70,7 +70,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'guest should post a new motion' do
-    redirect_url = new_iri_path(question, :motions)
+    redirect_url = new_iri(question, :motions)
     create_motion_for_question do
       expect(page).to have_content 'Sign up'
 
@@ -113,7 +113,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should visit forum show' do
     sign_in(user)
 
-    visit freetown.iri_path
+    visit resource_iri(freetown)
 
     expect(page).to have_content(freetown.bio)
     expect(page).to have_content(question.display_name)
@@ -122,7 +122,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should not see comment section' do
     sign_in(user)
 
-    visit argument.iri_path
+    visit resource_iri(argument)
 
     expect(page).not_to have_content('Reply')
     expect(page).not_to have_content('Comments')
@@ -165,17 +165,17 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'moderator should visit forum show' do
     sign_in(moderator)
 
-    visit freetown.iri_path
+    visit resource_iri(freetown)
 
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
-    expect(page).to have_current_path(freetown.iri_path)
+    expect(page).to have_current_path(resource_iri(freetown).path)
   end
 
   scenario 'moderator should see comment section' do
     sign_in(moderator)
 
-    visit argument.iri_path
+    visit resource_iri(argument)
 
     expect(page.body).to have_content('Reply')
   end
@@ -204,10 +204,10 @@ RSpec.feature 'Adam west', type: :feature do
     end
 
     expect(page).to have_content(motion_attr[:title].capitalize)
-    expect(page).to have_current_path(Motion.last.iri_path(start_motion_tour: true))
+    expect(page).to have_current_path("#{Motion.last.iri.path}?start_motion_tour=true")
     press_key :escape
     click_on question.title
-    expect(page).to have_current_path(question.iri_path)
+    expect(page).to have_current_path(resource_iri(question))
     expect(page).to have_content(question.content)
   end
 
@@ -230,25 +230,25 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   def walk_up_to_forum(role = nil) # rubocop:disable Metrics/AbcSize
-    visit argument.iri_path
+    visit resource_iri(argument)
     expect(page).to have_css("img[src*='#{role.profile.default_profile_photo.url(:icon)}']") if role.present?
     expect(page).to have_content(argument.title)
     expect(page).to have_content(argument.content)
 
     click_link motion.title
-    expect(page).to have_current_path motion.iri_path
+    expect(page).to have_current_path resource_iri(motion).path
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
 
     click_link question.title
-    expect(page).to have_current_path question.iri_path
+    expect(page).to have_current_path resource_iri(question).path
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
     within('.wrapper') do
       click_link freetown.display_name
     end
-    expect(page).to have_current_path freetown.iri_path
+    expect(page).to have_current_path resource_iri(freetown).path
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(question.display_name)
   end

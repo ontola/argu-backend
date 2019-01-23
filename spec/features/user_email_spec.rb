@@ -17,7 +17,7 @@ RSpec.feature 'User email' do
       email: new_email
     )
 
-    visit settings_user_path(tab: :authentication)
+    visit settings_iri('/u', tab: :authentication)
     expect(page).to have_content('Email confirmed')
     expect(page).not_to have_link('Send confirmation mail')
 
@@ -37,7 +37,7 @@ RSpec.feature 'User email' do
       expect(page).to have_content(confirm_msg)
     end
 
-    expect(page).to have_current_path(settings_user_path(tab: :authentication))
+    expect(page).to have_current_path("#{settings_iri("/#{argu.url}/u").path}?tab=authentication")
     expect(page).to have_link('Send confirmation mail')
     assert_email_sent
   end

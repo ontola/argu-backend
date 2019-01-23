@@ -48,7 +48,7 @@ class MenuItem
   end
 
   def menu_sequence_iri
-    RDF::DynamicURI("#{iri}/menus")
+    RDF::DynamicURI(path_with_hostname("#{iri_path}/menus"))
   end
 
   private

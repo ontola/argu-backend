@@ -40,12 +40,16 @@ class Feed
   def iri_path(opts = {})
     case parent
     when User
-      ''
+      '/argu/staff'
     when Profile
       parent&.profileable&.iri_path(opts.merge(root: root.url))
     else
       parent&.iri_path(opts)
     end
+  end
+
+  def root
+    @root ||= Page.find_by(uuid: root_id)
   end
 
   private
@@ -72,10 +76,6 @@ class Feed
 
   def profile_activities
     activity_base.where(owner_id: parent.id)
-  end
-
-  def root
-    @root ||= Page.find_by(uuid: root_id)
   end
 
   class << self

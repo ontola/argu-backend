@@ -10,12 +10,12 @@ RSpec.describe 'Follows', type: :request do
     default_formats
   end
 
-  let(:create_path) { follows_path(gid: freetown.uuid) }
-  let(:non_existing_create_path) { follows_path(gid: non_existing_id) }
+  let(:create_path) { "#{collection_iri(argu, :follows)}?gid=#{freetown.uuid}" }
+  let(:non_existing_create_path) { "#{collection_iri(argu, :follows)}?gid=#{non_existing_id}" }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }
   let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }
-  let(:parent_path) { subject.followable.iri_path }
+  let(:parent_path) { subject.followable.iri.path }
   let(:create_differences) { {'Follow.reactions.count' => 1} }
   let(:created_resource_path) { parent_path }
   let(:destroy_differences) { {'Follow.reactions.count' => -1, 'Follow.never.count' => 1} }
@@ -24,8 +24,12 @@ RSpec.describe 'Follows', type: :request do
     expect(response.code).to eq('303')
     expect(response).to redirect_to(parent_path)
   end
-  let(:unsubscribe_path) { unsubscribe_follow_path(subject) }
-  let(:non_existing_unsubscribe_path) { unsubscribe_follow_path(non_existing_id) }
+  let(:unsubscribe_path) do
+    ActsAsTenant.with_tenant(argu) { iri_from_template(:follows_unsubscribe_iri, id: subject) }
+  end
+  let(:non_existing_unsubscribe_path) do
+    ActsAsTenant.with_tenant(argu) { iri_from_template(:follows_unsubscribe_iri, id: non_existing_id) }
+  end
 
   subject { create(:follow, follower: staff, followable: freetown) }
 

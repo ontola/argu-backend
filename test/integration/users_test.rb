@@ -101,7 +101,8 @@ class UsersTest < ActionDispatch::IntegrationTest
     get user_path(user_hidden_last_name.id), headers: argu_headers(accept: :nq)
 
     assert_response 200
-    expect_triple user_hidden_last_name.iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
+    user_iri = resource_iri(user_hidden_last_name, root: argu)
+    expect_triple user_iri, NS::SCHEMA[:familyName], user_hidden_last_name.last_name
   end
 
   test 'user should get show non public' do
@@ -180,8 +181,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should sign out with r' do
     sign_in user
 
-    get destroy_user_session_path(r: freetown.iri_path)
-    assert_redirected_to freetown.iri_path
+    get destroy_user_session_path(r: freetown.iri.path)
+    assert_redirected_to freetown.iri.path
   end
 
   test 'user should sign out with invalid r' do
@@ -221,7 +222,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal user.email_addresses.last.email, 'secondary@argu.co'
     assert_not_equal user.primary_email_record.email, 'secondary@argu.co'
 
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
     assert_email_sent
   end
 
@@ -250,7 +251,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_not_equal user.email_addresses.last.email, second_email.email
     assert_equal user.primary_email_record.email, second_email.email
 
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
   test 'user should delete secondary email' do
@@ -271,7 +272,7 @@ class UsersTest < ActionDispatch::IntegrationTest
           }
     end
 
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
   test 'user should not delete primary email' do
@@ -326,7 +327,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     unconfirmed_email.reload
     assert_equal unconfirmed_email.email, 'changed@argu.co'
 
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
     assert_email_sent
   end
 
@@ -476,11 +477,11 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'user should show settings and all tabs' do
     sign_in user
 
-    get settings_user_path
+    get settings_iri('/u')
     assert_user_settings_shown
 
     %i[general profile authentication notifications privacy advanced].each do |tab|
-      get settings_user_path(tab: tab)
+      get settings_iri('/u', tab: tab)
       assert_user_settings_shown tab
     end
   end
@@ -523,7 +524,7 @@ class UsersTest < ActionDispatch::IntegrationTest
     assert_equal('profile_photo.png', user.profile.default_profile_photo.content_identifier)
     assert_equal('cover_photo.jpg', user.profile.default_cover_photo.content_identifier)
 
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
 
     put user_path(user),
         params: {
@@ -561,7 +562,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
   test 'user should create place and placement on update with only country code' do
@@ -581,7 +582,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
   test 'user should not create place and placement on update with only postal code' do
@@ -640,7 +641,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
   test 'user should destroy placement on update with blank postal code and country code' do
@@ -663,7 +664,7 @@ class UsersTest < ActionDispatch::IntegrationTest
             }
           }
     end
-    assert_redirected_to settings_user_path(tab: :general)
+    assert_redirected_to settings_iri("/#{argu.url}/u", tab: :general).to_s
   end
 
   private

@@ -11,6 +11,6 @@ class EdgesControllerTest < ActionController::TestCase
   ####################################
   test 'should redirect to owner with uuid' do
     get :show, params: {format: :json_api, id: motion.uuid}
-    assert_redirected_to motion.iri_path
+    assert_redirected_to motion.iri.path
   end
 end

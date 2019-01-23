@@ -65,7 +65,7 @@ class GroupMembershipsController < ServiceController
   end
 
   def new_success_html
-    respond_with_redirect location: settings_iri_path(authenticated_resource.group, tab: :invite)
+    respond_with_redirect location: settings_iri(authenticated_resource.group, tab: :invite)
   end
 
   def parent_resource_key(opts)
@@ -89,8 +89,8 @@ class GroupMembershipsController < ServiceController
   def redirect_location # rubocop:disable Metrics/AbcSize
     return redirect_param if redirect_param.present?
     forum_grants = authenticated_resource!.grants.joins(:edge).where(edges: {owner_type: 'Forum'})
-    return forum_grants.first.edge.iri_path if forum_grants.count == 1
-    authenticated_resource!.page.iri_path
+    return forum_grants.first.edge.iri if forum_grants.count == 1
+    authenticated_resource!.page.iri
   end
   alias destroy_success_location redirect_location
 

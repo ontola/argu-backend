@@ -66,7 +66,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     get subject, headers: argu_headers(accept: :nq)
     expect(response.body).to(
       include(
-        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri_path, with_hostname: true)}>"
+        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri.path, with_hostname: true)}>"
       )
     )
   end
@@ -79,7 +79,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     get subject, headers: argu_headers(accept: :nq)
     expect(response.body).not_to(
       include(
-        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri_path, with_hostname: true)}>"
+        "<#{expand_uri_template(:vote_iri, parent_iri: subject.default_vote_event.iri.path, with_hostname: true)}>"
       )
     )
   end
@@ -95,7 +95,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
       }
     )
     assert_not_nil assigns(:create_service).resource
-    assert_redirected_to assigns(:create_service).resource.iri_path(start_motion_tour: true)
+    assert_redirected_to assigns(:create_service).resource.iri(start_motion_tour: true)
     WebMock.reset!
 
     general_create(
@@ -107,7 +107,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
     )
     assert_not_nil assigns(:create_service).resource
 
-    assert_redirected_to assigns(:create_service).resource.iri_path
+    assert_redirected_to assigns(:create_service).resource.iri
   end
 
   test 'initiator should post create motion with latlon' do

@@ -11,7 +11,7 @@
     .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.joined_body) || I18n.t('deleted')
       =markdown_to_html(motion.content)
     - if !c.is_trashed? && policy(c.parent).create_child?(:comments)
-      =link_to commentable.iri_path(parent_id: c.uuid), {data: { comment_id: c.uuid, turbolinks: 'false' }, class: 'sticky--bottom-right btn-subtle btn--mini btn-reply'} do
+      =link_to commentable.iri(parent_id: c.uuid), {data: { comment_id: c.uuid, turbolinks: 'false' }, class: 'sticky--bottom-right btn-subtle btn--mini btn-reply'} do
         span.fa.fa-reply
         span.icon-left= t('reply')
   =render partial: 'comments/form', locals: { commentable: commentable, parent_id: c.uuid, visible: false, comment: Comment.new, modal: local_assigns[:modal] }

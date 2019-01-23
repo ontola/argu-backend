@@ -1,4 +1,4 @@
-=semantic_form_for(authenticated_resource, url: collection_iri_path(authenticated_resource.page, :grants), html: {class: 'formtastic--full-width'}, remote: true, authenticity_token: true) do |f|
+=semantic_form_for(authenticated_resource, url: collection_iri(authenticated_resource.page, :grants).to_s, html: {class: 'formtastic--full-width'}, remote: true, authenticity_token: true) do |f|
   =f.inputs name: t('new_type', type: t('grants.type')) do
     =f.input :grant_set_id, as: :react_select, collection: GrantSet.selectable.pluck(:title, :id).map { |title, id| [t("roles.types.#{title}").capitalize, id] }, label: t('grants.labels.role')
     =f.input :group_id, as: :react_select, collection: Group.where('id != ? AND root_id = ?', Group::PUBLIC_ID, authenticated_resource.page.uuid), required: false, include_blank: false, label: t('grants.labels.group')

@@ -13,8 +13,8 @@ table
         td= shortname.path
         td
           .fa.fa-arrow-right
-        td= link_to shortname.owner.iri_path, shortname.owner.iri_path
+        td= link_to shortname.owner.iri.path, shortname.owner
         td
-          =link_to t('delete'), destroy_shortname_url(shortname), class: 'btn btn-subtle', data: {remote: true, method: :delete, confirm: t('destroy_confirmation')}
+          =link_to t('delete'), shortname.iri, class: 'btn btn-subtle', data: {remote: true, method: :delete, confirm: t('destroy_confirmation')}
 - if policy(resource.shortnames.new(root_id: resource.root_id, primary: false)).create?
-  =link_to t('newe_type', type: t('shortnames.type')), new_iri_path(resource, :shortnames), class: 'btn'
+  =link_to t('newe_type', type: t('shortnames.type')), new_iri(resource, :shortnames), class: 'btn'

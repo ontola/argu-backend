@@ -9,7 +9,7 @@ RSpec.feature 'Grant resets', type: :feature do
 
   scenario 'set and revert grant reset' do
     sign_in staff
-    visit edit_iri_path(question)
+    visit edit_iri(question)
     expect(find_field('question[reset_create_motion]', with: 'false')).to be_checked
     expect(find_field('question[reset_create_motion]', with: 'true')).not_to be_checked
 
@@ -27,8 +27,8 @@ RSpec.feature 'Grant resets', type: :feature do
       expect(page).to have_content 'Challenge saved successfully'
     end
 
-    visit edit_iri_path(question)
-    expect(page).to have_current_path edit_iri_path(question)
+    visit edit_iri(question)
+    expect(page).to have_current_path edit_iri(question)
     expect(find_field('question[reset_create_motion]', with: 'false')).not_to be_checked
     expect(find_field('question[reset_create_motion]', with: 'true')).to be_checked
 

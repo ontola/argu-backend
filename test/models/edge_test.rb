@@ -10,7 +10,7 @@ class EdgeTest < ActiveSupport::TestCase
 
   test 'iri' do
     assert_equal motion.canonical_iri_path, "/edges/#{motion.uuid}"
-    assert_equal motion.iri_path, "/#{argu.url}/m/#{motion.fragment}"
+    assert_equal motion.iri.path, "/#{argu.url}/m/#{motion.fragment}"
   end
 
   test 'property destruction' do

@@ -174,7 +174,7 @@ class RegistrationsTest < ActionDispatch::IntegrationTest
     put language_users_path(locale: locale)
     attrs = attributes_for(:user)
     create_email_mock('confirmation', attrs[:email], confirmationToken: /.+/)
-    get freetown.iri_path
+    get freetown.iri.path
 
     assert_difference('User.count' => 1,
                       'Favorite.count' => 1,

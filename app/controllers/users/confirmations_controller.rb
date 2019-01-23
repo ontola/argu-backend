@@ -74,7 +74,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController # rubocop
     if correct_mail && !current_user.guest?
       settings_path(tab: :authentication)
     else
-      afe_request? ? '/u/sign_in' : new_user_session_path
+      afe_request? ? RDF::DynamicURI(path_with_hostname('/u/sign_in')).path : new_user_session_path
     end
   end
 

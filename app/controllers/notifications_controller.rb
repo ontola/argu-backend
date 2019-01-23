@@ -13,7 +13,7 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
       RDF_CONTENT_TYPES.each do |type|
         format.send(type) { render type => authenticated_resource, include: :operation }
       end
-      format.all { redirect_to authenticated_resource.activity.trackable.iri_path }
+      format.all { redirect_to authenticated_resource.activity.trackable.iri }
     end
   end
 
@@ -83,18 +83,18 @@ class NotificationsController < AuthorizedController # rubocop:disable Metrics/C
     )
   end
 
-  def index_meta # rubocop:disable Metrics/AbcSize
+  def index_meta
     m = []
     m <<
       if index_collection.is_a?(CollectionView)
         [
-          ::RDF::DynamicURI(index_collection.collection.iri),
+          index_collection.collection.iri,
           NS::AS[:page],
-          ::RDF::DynamicURI(index_collection.iri)
+          index_collection.iri
         ]
       else
         [
-          ::RDF::DynamicURI(index_collection.iri),
+          index_collection.iri,
           NS::ARGU[:unreadCount],
           unread_notification_count
         ]

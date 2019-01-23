@@ -30,7 +30,7 @@ class DirectMessagesController < ParentableController
   def resource_by_id; end
 
   def redirect_location
-    authenticated_resource.resource.iri_path
+    authenticated_resource.resource.iri
   end
 
   def resource_new_params

@@ -32,20 +32,20 @@ module HeaderHelper
           link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")),
                     dual_profile_url(current_profile),
                     fa: 'user'),
-          link_item(t('profiles.edit.title'), settings_user_url(tab: :profile), fa: 'pencil')
+          link_item(t('profiles.edit.title'), settings_iri('/u', tab: :profile), fa: 'pencil')
         ]
       else
         [link_item(t('profiles.setup.link'), setup_users_url, fa: 'user')]
       end
-    items << link_item(t('users.settings.title'), settings_user_url, fa: 'gear')
-    items << link_item(t('users.drafts.title'), drafts_user_url(current_user), fa: 'pencil-square-o')
+    items << link_item(t('users.settings.title'), settings_iri('/u'), fa: 'gear')
+    items << link_item(t('users.drafts.title'), collection_iri(current_user, :drafts), fa: 'pencil-square-o')
     items << if current_user.page_management?
-               link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building')
+               link_item(t('pages.management.title').capitalize, collection_iri(current_user, :pages), fa: 'building')
              else
-               link_item(t('pages.create'), new_page_path, fa: 'building')
+               link_item(t('pages.create'), new_iri(nil, :pages), fa: 'building')
              end
     if current_user.forum_management?
-      items << link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group')
+      items << link_item(t('forums.management.title'), collection_iri(current_user, :forums), fa: 'group')
     end
     items << link_item(t('sign_out'),
                        destroy_user_session_url,

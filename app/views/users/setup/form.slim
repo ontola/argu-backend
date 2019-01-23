@@ -31,5 +31,5 @@
                             preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
         =f.actions do
           .sticky-submit
-            =link_to t('intro.skip').capitalize, setup_profiles_path, class: 'close-trigger margin-right'
+            =link_to t('intro.skip').capitalize, setup_path, class: 'close-trigger margin-right'
             =f.action :submit, as: :button, label: t('next'), wrapper_html: {class: 'inline-button-form'}

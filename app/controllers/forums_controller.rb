@@ -75,7 +75,7 @@ class ForumsController < EdgeableController
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id], tree_root_id) || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(Forum)
-    redirect_to resource.iri_path
+    redirect_to resource.iri
   end
 
   def show_params
@@ -84,7 +84,7 @@ class ForumsController < EdgeableController
 
   def show_success_html
     if (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to resource.iri_path, status: 307
+      redirect_to resource.iri, status: 307
     else
       @children = collect_children(authenticated_resource)
       respond_with_resource(show_success_options)

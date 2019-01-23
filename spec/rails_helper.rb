@@ -41,13 +41,13 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Capybara::DSL
   config.include Argu::TestHelpers::Fixes
+  config.include Argu::TestHelpers::IriHelpers
   config.include Argu::TestHelpers::TestHelperMethods
   config.include Argu::TestHelpers::RspecHelpers
   config.include Argu::TestHelpers::TestMocks
   config.include Argu::TestHelpers::TestAssertions
   config.include Argu::TestHelpers::RequestHelpers
   config.include BrowserWrapper
-  config.include UriTemplateHelper
   config.include UrlHelper
   config.include ActiveSupport::Testing::Assertions
 

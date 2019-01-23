@@ -76,7 +76,7 @@ module ForumsHelper
     return unless current_user.has_favorite?(resource)
     items = []
     items << link_item(t('forums.leave'),
-                       collection_iri_path(resource, :favorites),
+                       collection_iri(resource, :favorites),
                        fa: 'sign-out',
                        data: {method: :delete, remote: true, confirm: t('forums.leave_confirmation')})
   end

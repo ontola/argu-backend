@@ -18,7 +18,7 @@ RSpec.feature 'Signup', type: :feature do
     expect(page).to have_content 'Make better decisions'
     expect(page).to have_current_path root_path
 
-    visit freetown.iri_path
+    visit resource_iri(freetown)
     expect(page).to have_content 'freetown'
 
     click_link motion.title
@@ -31,7 +31,7 @@ RSpec.feature 'Signup', type: :feature do
         within('.opinion-form') do
           click_link 'Log in with Facebook'
         end
-        expect(page).to have_current_path motion.iri_path
+        expect(page).to have_current_path resource_iri(motion).path
         expect(page).to have_content motion.title
         expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
       end
@@ -99,7 +99,7 @@ RSpec.feature 'Signup', type: :feature do
                    selector: /Netherlands$/
     click_button 'Save'
 
-    expect(page).to have_current_path(user_path(User.last))
+    expect(page).to have_current_path(resource_iri(User.last, root: argu))
     expect(User.last.country).to eq('NL')
     assert_email_sent
   end

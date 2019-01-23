@@ -70,7 +70,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_difference('Motion.count' => -1, 'Question.count' => 1, 'VoteEvent.count' => -1, 'Argument.count' => -6,
                       'Vote.count' => -6, 'Activity.count' => 1, 'BlogPost.count' => 0,
                       'MediaObject.count' => 0, 'Comment.count' => 6, 'Edge.count' => -7) do
-      post conversions_iri_path(record),
+      post conversions_iri(record),
            params: {
              conversion: {
                klass: 'questions'
@@ -83,7 +83,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     argument_comment.reload
     argument_nested_comment.reload
 
-    assert_redirected_to record.iri_path
+    assert_redirected_to record.iri.path
 
     assert Motion.where(id: record.id).empty?
     assert_equal Question, record.class
@@ -110,7 +110,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     assert_difference('Motion.count' => -1, 'VoteEvent.count' => -1, 'Question.count' => 1, 'Argument.count' => -6,
                       'Vote.count' => -6, 'Activity.count' => 1, 'BlogPost.count' => 0,
                       'Comment.count' => 6, 'Edge.count' => -7) do
-      post conversions_iri_path(record),
+      post conversions_iri(record),
            params: {
              conversion: {
                klass: 'questions'
@@ -119,7 +119,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
     end
 
     record = Edge.find_by!(uuid: record.uuid)
-    assert_redirected_to record.iri_path
+    assert_redirected_to record.iri.path
 
     assert Motion.where(id: question_motion.id).empty?
     assert_equal Question, record.class
@@ -134,7 +134,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     assert_difference('Question.count' => -1, 'Motion.count' => -3, 'VoteEvent.count' => -3,
                       'Activity.count' => 1, 'BlogPost.count' => 0, 'Comment.count' => 4, 'Edge.count' => -3) do
-      post conversions_iri_path(record),
+      post conversions_iri(record),
            params: {
              conversion: {
                klass: 'motions'
@@ -144,7 +144,7 @@ class ConversionsTest < ActionDispatch::IntegrationTest
 
     record = Edge.find_by!(uuid: record.uuid)
 
-    assert_redirected_to record.iri_path
+    assert_redirected_to record.iri.path
 
     assert Question.where(id: record.id).empty?
     assert_equal Motion, record.class

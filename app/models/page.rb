@@ -75,6 +75,10 @@ class Page < Edge # rubocop:disable Metrics/ClassLength
     {id: url, root_id: url}
   end
 
+  def iri_path(opts = {})
+    ActsAsTenant.current_tenant == self ? '' : super
+  end
+
   def root_object?
     true
   end

@@ -30,7 +30,7 @@ class InviteForm < RailsLD::Form
           default_value: ->(r) { r.form.target.edge.root_id }
         }
       },
-      {redirect_url: {default_value: ->(r) { r.form.target.edge.iri.rewrite_value!.to_s }}}
+      {redirect_url: {default_value: ->(r) { r.form.target.edge.iri }}}
     ]
   )
 

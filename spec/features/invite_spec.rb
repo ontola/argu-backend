@@ -10,7 +10,7 @@ RSpec.feature 'Invite', type: :feature do
 
   scenario 'Administrator invites user for existing group' do
     sign_in administrator
-    visit(freetown.iri_path)
+    visit(resource_iri(freetown))
     page.find('.cover-buttons-container .share-menu a').click
     click_link('Invite')
     within '.modal' do
@@ -28,7 +28,7 @@ RSpec.feature 'Invite', type: :feature do
 
   scenario 'Administrator invites user for new group' do
     sign_in administrator
-    visit(freetown.iri_path)
+    visit(resource_iri(freetown))
     page.find('.cover-buttons-container .share-menu a').click
     click_link('Invite')
     within '.modal' do

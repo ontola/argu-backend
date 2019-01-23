@@ -15,7 +15,7 @@ module SPI
     end
 
     def resource # rubocop:disable Metrics/AbcSize
-      return resource_from_iri(params[:resource_iri]) if params[:resource_iri].present?
+      return resource_from_iri_param if resource_iri_param.present?
       case params[:resource_type]
       when 'CurrentActor'
         profile = if (/[a-zA-Z]/i =~ params[:resource_id].to_s).present?
@@ -31,6 +31,16 @@ module SPI
 
     def resource!
       resource || raise(ActiveRecord::RecordNotFound)
+    end
+
+    def resource_iri_param
+      params[:resource_iri]
+    end
+
+    def resource_from_iri_param
+      ActsAsTenant.with_tenant(TenantFinder.from_url(params[:resource_iri].to_s)) do
+        resource_from_iri(path_to_url(resource_iri_param))
+      end
     end
 
     def tree_root; end

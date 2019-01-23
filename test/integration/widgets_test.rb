@@ -12,7 +12,7 @@ class WidgetsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('Widget.count' => 1) do
-      post collection_iri_path(freetown, :widgets), params: {
+      post collection_iri(freetown, :widgets), params: {
         widget: {
           resource_iri: argu_url,
           primary_resource_id: freetown.uuid,

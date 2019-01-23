@@ -45,7 +45,7 @@ module Users
     end
 
     def update_success_location
-      setup_profiles_path
+      setup_path
     end
 
     class << self

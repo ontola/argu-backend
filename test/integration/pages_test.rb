@@ -77,7 +77,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get page
 
-    assert_redirected_to freetown.iri_path
+    assert_redirected_to freetown.iri.path
   end
 
   test 'guest should not get show when not public' do
@@ -119,7 +119,7 @@ class PagesTest < ActionDispatch::IntegrationTest
              }
            }
     end
-    assert_redirected_to settings_iri_path(Page.last, tab: :profile)
+    assert_redirected_to settings_iri(Page.last, tab: :profile).to_s
   end
 
   test 'user should not post create invalid' do
@@ -200,7 +200,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get page
 
-    assert_redirected_to freetown.iri_path
+    assert_redirected_to freetown.iri.path
     assert_not_nil assigns(:profile)
   end
 
@@ -209,7 +209,7 @@ class PagesTest < ActionDispatch::IntegrationTest
 
     get hidden_page
 
-    assert_redirected_to cairo.iri_path
+    assert_redirected_to cairo.iri.path
     assert_not_nil assigns(:profile)
   end
 
@@ -281,11 +281,11 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
         }
 
+    assert_redirected_to settings_iri(page, tab: :profile)
     page.reload
     assert_equal 2, page.profile.media_objects.count
     assert_equal 'profile_photo.png', page.profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', page.profile.default_cover_photo.content_identifier
-    assert_redirected_to settings_iri_path(page, tab: :profile)
     assert_equal 'new_about', page.profile.about
   end
 
@@ -309,6 +309,7 @@ class PagesTest < ActionDispatch::IntegrationTest
           }
     end
 
+    assert_redirected_to settings_iri(page, tab: :profile)
     page.reload
     assert_equal 2, page.custom_placements.first.lat
     assert_equal 2, page.custom_placements.first.lon

@@ -100,8 +100,8 @@ module ActiveResponseHelper
   end
 
   def redirect_location
-    return current_resource.iri_path if current_resource.persisted? || !current_resource.respond_to?(:parent)
-    current_resource.parent.iri_path
+    return current_resource.iri if current_resource.persisted? || !current_resource.respond_to?(:parent)
+    current_resource.parent.iri
   end
 
   def redirect_message

@@ -1,4 +1,4 @@
-=semantic_form_for authenticated_resource, url: authenticated_resource.iri_path, remote: true, authenticity_token: true do |f|
+=semantic_form_for authenticated_resource, url: authenticated_resource, remote: true, authenticity_token: true do |f|
   - authenticated_resource.errors.full_messages.each do |message|
     =message
   =f.inputs do
@@ -12,7 +12,7 @@
         li.form-helper
           span= t('pages.shortname.warning')
       - if policy(authenticated_resource).delete?
-        =f.input :f_delete, as: :link, url: delete_iri_path(authenticated_resource), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
+        =f.input :f_delete, as: :link, url: delete_iri(authenticated_resource), input_html: {data: {remote: true}, class: 'btn--warning'}, label: false
   =f.input :tab, input_html: {value: local_assigns[:tab]}, as: :hidden
   =f.actions do
     =f.action :submit, as: :button

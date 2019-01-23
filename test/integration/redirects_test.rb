@@ -27,41 +27,41 @@ class RedirectssTest < ActionDispatch::IntegrationTest
 
   test 'redirect unscoped question route' do
     get argu_url("/q/#{question.owner_id}")
-    assert_redirected_to question.iri_path
+    assert_redirected_to resource_iri(question)
   end
 
   test 'redirect unscoped motion route' do
     get argu_url("/m/#{motion.owner_id}")
-    assert_redirected_to motion.iri_path
+    assert_redirected_to resource_iri(motion)
   end
 
   test 'redirect unscoped argument route' do
     get argu_url("/a/#{pro_argument.owner_id}")
-    assert_redirected_to pro_argument.iri_path
+    assert_redirected_to resource_iri(pro_argument)
   end
 
   test 'redirect unscoped pro_argument route' do
     get argu_url("/pro/#{pro_argument.owner_id}")
-    assert_redirected_to pro_argument.iri_path
+    assert_redirected_to resource_iri(pro_argument)
   end
 
   test 'redirect unscoped con_argument route' do
     get argu_url("/con/#{con_argument.owner_id}")
-    assert_redirected_to con_argument.iri_path
+    assert_redirected_to resource_iri(con_argument)
   end
 
   test 'redirect unscoped blog_post route' do
     get argu_url("/posts/#{blog_post.owner_id}")
-    assert_redirected_to blog_post.iri_path
+    assert_redirected_to resource_iri(blog_post)
   end
 
   test 'redirect unscoped comment route' do
     get argu_url("/c/#{comment.owner_id}")
-    assert_redirected_to comment.iri_path
+    assert_redirected_to resource_iri(comment)
   end
 
   test 'redirect unscoped decision route' do
     get argu_url("/m/#{motion.owner_id}/decision/#{decision.step}")
-    assert_redirected_to decision.iri_path
+    assert_redirected_to resource_iri(decision)
   end
 end

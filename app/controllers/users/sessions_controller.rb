@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
                layout: 'guest',
                locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]}
       else
-        respond_with_redirect location: '/u/sign_in'
+        respond_with_redirect location: RDF::DynamicURI(path_with_hostname('/u/sign_in')).path
       end
     end
   end

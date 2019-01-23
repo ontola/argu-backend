@@ -6,17 +6,17 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .col-1
     div.align-right
       span.btn.btn-subtle
-        =link_to feeds_iri_path(authenticated_resource) do
+        =link_to feeds_iri(authenticated_resource) do
           span.fa.fa-bars
           span.icon-left
             = t('feed_filter.relevant')
       span.btn.btn-subtle
-        =link_to feeds_iri_path(authenticated_resource, complete: true) do
+        =link_to feeds_iri(authenticated_resource, complete: true) do
           span.fa.fa-align-justify
           span.icon-left
             = t('feed_filter.complete')
       span.btn.btn-subtle.btn--border
-        =link_to logs_iri_path(authenticated_resource) do
+        =link_to logs_iri(authenticated_resource) do
           span.fa.fa-history
           span.icon-left
             =t('log')
@@ -31,7 +31,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                   td= t(activity.action)
                   td
                     - if activity.owner.present?
-                      =link_to activity.owner.display_name, user_url(activity.owner.profileable)
+                      =link_to activity.owner.display_name, activity.owner.profileable
                   td= activity.created_at
                 - if activity.comment.present?
                   tr

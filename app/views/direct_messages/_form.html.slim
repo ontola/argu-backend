@@ -1,6 +1,6 @@
 .col-1
   .box
-    =semantic_form_for(authenticated_resource, html: {autocomplete: 'off'}, remote: false, authenticity_token: true) do |f|
+    =semantic_form_for(authenticated_resource, url: collection_iri(authenticated_resource.root, :direct_messages).to_s, html: {autocomplete: 'off'}, remote: false, authenticity_token: true) do |f|
       section
         legend
           span= t('direct_messages.header')

@@ -94,7 +94,7 @@ RSpec.feature 'Announcements', type: :feature do
 
   scenario 'announcement dismissal is persisted across logins' do
     user = FactoryBot.create(:user)
-    sign_in_manually(user, redirect_to: holland.iri_path)
+    sign_in_manually(user, redirect_to: resource_iri(holland))
     question = holland.questions.first
     visit question
 
@@ -115,7 +115,7 @@ RSpec.feature 'Announcements', type: :feature do
     expect(page).to have_content(announcement_guests.content)
     expect(page).to have_content(announcement_everyone.content)
 
-    sign_in_manually(user, redirect_to: holland.iri_path)
+    sign_in_manually(user, redirect_to: resource_iri(holland))
     visit question
     expect(page).to_not have_content('Log in')
     expect(page).to_not have_content(announcement_users.content)

@@ -99,7 +99,7 @@ class OauthTest < ActionDispatch::IntegrationTest
              password: user.password,
              grant_type: 'password',
              user: {
-               r: freetown.iri_path
+               r: freetown.iri.path
              },
              scope: 'user'
            },
@@ -111,7 +111,7 @@ class OauthTest < ActionDispatch::IntegrationTest
     assert_equal user.id, at.resource_owner_id.to_i
     assert response.cookies['argu_client_token'].present?
 
-    assert_redirected_to freetown.iri_path
+    assert_redirected_to freetown.iri.path
   end
 
   test 'user should get access token when not from argu' do

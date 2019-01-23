@@ -21,7 +21,7 @@
     .cover-buttons-container
       ul.btns-horizontal
         - if !current_user.has_favorite?(resource) && policy(resource).create_child?(:favorites)
-          li= link_to collection_iri_path(resource, :favorites), data: {remote: true, method: :post, turbolinks: 'false'}, rel: :nofollow, class: 'btn--transparant'
+          li= link_to collection_iri(resource, :favorites), data: {remote: true, method: :post, turbolinks: 'false'}, rel: :nofollow, class: 'btn--transparant'
             span.fa.fa-plus
             span.icon-left= t('forums.join.title')
   .cover-buttons
@@ -34,11 +34,11 @@
             ul= dropdown_menu(resource, :actions)
         - else
           - if controller_name == 'feed'
-            li.float-right= link_to resource.iri_path, class: 'btn--transparant'
+            li.float-right= link_to resource, class: 'btn--transparant'
               span.fa.fa-th-large
               span.icon-left= t('overview')
           - elsif policy(resource).feed?
-            li.float-right= link_to feeds_iri_path(resource), class: 'btn--transparant'
+            li.float-right= link_to feeds_iri(resource), class: 'btn--transparant'
               span.fa.fa-feed
               span.icon-left= t('feed')
         - unless current_user.guest?

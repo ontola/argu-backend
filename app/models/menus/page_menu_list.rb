@@ -31,7 +31,7 @@ class PageMenuList < MenuList
           menu_item(
             :settings,
             image: 'fa-gear',
-            href: settings_page_url(resource),
+            href: settings_iri(resource),
             policy: :update?
           )
         ]

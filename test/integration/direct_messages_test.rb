@@ -12,7 +12,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'guest should not post create direct_message' do
     post direct_messages_path(root_id: argu.url),
          params: {direct_message: valid_params}
-    assert_redirected_to new_user_session_path(r: motion.iri_path)
+    assert_redirected_to new_user_session_path(r: motion.iri)
   end
 
   ####################################
@@ -23,7 +23,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'user should not post create direct_message' do
     sign_in user
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params, actor_iri: administrator.iri}
+         params: {direct_message: valid_params, actor_iri: resource_iri(administrator, root: argu)}
     assert_not_authorized
   end
 
@@ -39,7 +39,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
       motion.publisher.email,
       actor: {
         display_name: administrator.display_name,
-        iri: administrator.iri,
+        iri: resource_iri(administrator, root: argu),
         thumbnail: administrator.profile.default_profile_photo.thumbnail
       },
       body: 'body',
@@ -50,8 +50,8 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
 
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params, actor_iri: administrator.iri}
-    assert_redirected_to motion.iri_path
+         params: {direct_message: valid_params, actor_iri: resource_iri(administrator, root: argu)}
+    assert_redirected_to motion.iri.path
     assert_email_sent(skip_sidekiq: true)
   end
 
@@ -60,7 +60,7 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     post direct_messages_path(root_id: argu.url),
          params: {
            direct_message: valid_params.merge(email: unconfirmed_email.email),
-           actor_iri: administrator.iri
+           actor_iri: resource_iri(administrator, root: argu)
          }
     assert_not_authorized
   end
@@ -68,7 +68,10 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
   test 'administrator should not post create direct_message with other email' do
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params.merge(email: user.email), actor_iri: administrator.iri}
+         params: {
+           direct_message: valid_params.merge(email: user.email),
+           actor_iri: resource_iri(administrator, root: argu)
+         }
     assert_not_authorized
   end
 
@@ -76,21 +79,21 @@ class DirectMessagesTest < ActionDispatch::IntegrationTest
     sign_in administrator
 
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params.except(:body), actor_iri: administrator.iri}
+         params: {direct_message: valid_params.except(:body), actor_iri: resource_iri(administrator, root: argu)}
     assert_response :success
   end
 
   test 'administrator should not post create direct_message with missing subject' do
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params.except(:subject), actor_iri: administrator.iri}
+         params: {direct_message: valid_params.except(:subject), actor_iri: resource_iri(administrator, root: argu)}
     assert_response :success
   end
 
   test 'administrator should not post create direct_message with unpermitted actor' do
     sign_in administrator
     post direct_messages_path(root_id: argu.url),
-         params: {direct_message: valid_params, actor_iri: user.iri}
+         params: {direct_message: valid_params, actor_iri: resource_iri(user, root: argu)}
     assert_not_authorized
   end
 

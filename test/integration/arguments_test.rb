@@ -123,7 +123,7 @@ class ArgumentsTest < ActionDispatch::IntegrationTest
   private
 
   def general_create_json(parent, pro = true)
-    post collection_iri_path(parent, "#{pro ? 'pro' : 'con'}_arguments"),
+    post collection_iri(parent, "#{pro ? 'pro' : 'con'}_arguments"),
          params: {
            data: {
              type: "#{pro ? 'pro' : 'con'}Arguments",

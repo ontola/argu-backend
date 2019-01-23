@@ -46,7 +46,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   private
 
   def edit_profile_link
-    afe_request? ? "#{settings_user_url}#profile" : settings_user_url(tab: :profile)
+    afe_request? ? "#{settings_user_users_url}#profile" : settings_user_users_url(tab: :profile)
   end
 
   def discover_link
@@ -139,7 +139,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
               image: 'fa-sign-out')
   end
 
-  def user_links # rubocop:disable Metrics/AbcSize
+  def user_links # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     items =
       if resource.url.present?
         [
@@ -153,7 +153,12 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
       else
         [menu_item(:setup, label: I18n.t('profiles.setup.link'), href: setup_users_url, image: 'fa-user')]
       end
-    items << menu_item(:settings, label: I18n.t('users.settings.title'), href: settings_user_url, image: 'fa-gear')
+    items << menu_item(
+      :settings,
+      label: I18n.t('users.settings.title'),
+      href: settings_user_users_url,
+      image: 'fa-gear'
+    )
     items << menu_item(
       :drafts, label: I18n.t('users.drafts.title'), href: drafts_user_url(resource), image: 'fa-pencil-square-o'
     )

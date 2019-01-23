@@ -9,7 +9,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'guest should get 401' do
-    post collection_iri_path(motion, :pro_arguments),
+    post collection_iri(motion, :pro_arguments),
          params: {
            data: {
              type: 'proArguments',
@@ -32,7 +32,8 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 404 when not allowed' do
     sign_in user
-    post collection_iri_path(cairo, :motions),
+    tenant_from(cairo)
+    post collection_iri(cairo, :motions),
          params: {
            data: {
              type: 'motions',
@@ -55,7 +56,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with empty body' do
     sign_in user
-    post collection_iri_path(motion, :pro_arguments),
+    post collection_iri(motion, :pro_arguments),
          headers: argu_headers(accept: :json_api)
 
     assert_response 422
@@ -69,7 +70,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with empty data' do
     sign_in user
-    post collection_iri_path(motion, :pro_arguments),
+    post collection_iri(motion, :pro_arguments),
          params: {
            data: {}
          },
@@ -86,7 +87,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with missing type' do
     sign_in user
-    post collection_iri_path(motion, :pro_arguments),
+    post collection_iri(motion, :pro_arguments),
          params: {
            data: {
              attributes: {
@@ -108,7 +109,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with wrong type' do
     sign_in user
-    post collection_iri_path(motion, :pro_arguments),
+    post collection_iri(motion, :pro_arguments),
          params: {
            data: {
              type: 'motions',
@@ -131,7 +132,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 400 with missing attributes' do
     sign_in user
-    post collection_iri_path(motion, :pro_arguments),
+    post collection_iri(motion, :pro_arguments),
          params: {
            data: {
              type: 'proArguments'
@@ -150,7 +151,7 @@ class ErrorResponsesTest < ActionDispatch::IntegrationTest
 
   test 'user should get 422 with multiple wrong fields' do
     sign_in user
-    post collection_iri_path(freetown, :questions),
+    post collection_iri(freetown, :questions),
          params: {
            data: {
              type: 'questions',

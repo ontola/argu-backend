@@ -170,13 +170,13 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   def general_show(response = 200, record = motion)
     approval
 
-    get collection_iri_path(record, :decisions)
+    get collection_iri(record, :decisions)
     assert_response response
   end
 
   def general_decide(response = 302, changed = false, state = 'approved') # rubocop:disable Metrics/AbcSize
     assert_difference('Activity.count' => changed ? 1 : 0) do
-      post  collection_iri_path(motion, :decisions),
+      post  collection_iri(motion, :decisions),
             params: {
               decision: attributes_for(:decision,
                                        state: state,
@@ -199,7 +199,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
   def general_forward(response = 302, changed = false, group_id = nil, user_id = nil)
     assert_difference('Activity.count' => changed ? 1 : 0,
                       'Decision.count' => changed ? 1 : 0) do
-      post collection_iri_path(motion, :decisions),
+      post collection_iri(motion, :decisions),
            params: {
              decision: attributes_for(:decision,
                                       decisionable: motion,
@@ -219,7 +219,7 @@ class DecisionsTest < ActionDispatch::IntegrationTest
     approval
     decision = motion.reload.last_decision
     assert_difference('Decision.count' => 0, 'Activity.count' => changed ? 1 : 0) do
-      put decision.iri_path,
+      put decision.iri.path,
           params: {
             decision: attributes_for(:decision,
                                      decisionable: motion,

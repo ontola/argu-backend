@@ -44,7 +44,7 @@ class ShortnamesController < ParentableController
   end
 
   def redirect_location
-    settings_iri_path(authenticated_resource.root, tab: 'shortnames')
+    settings_iri(authenticated_resource.root, tab: 'shortnames')
   end
 
   def default_form_view(_action)

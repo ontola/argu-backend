@@ -44,7 +44,7 @@ module VotesHelper
     data[:remote] = true
     data[:method] = vote_method(vote)
     data[:title] = vote.present? ? t('tooltips.argument.vote_up_undo') : t('tooltips.argument.vote_up')
-    link_to vote_iri_path(model, vote), rel: :nofollow, class: classes, data: data do
+    link_to vote_iri(model, vote), rel: :nofollow, class: classes, data: data do
       yield
     end
   end

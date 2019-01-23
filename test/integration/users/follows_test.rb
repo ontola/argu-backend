@@ -42,7 +42,7 @@ module Users
       assert_difference(unsubscribe_differences) do
         delete user_follows_path(user)
       end
-      assert_redirected_to user.iri_path
+      assert_redirected_to resource_iri(user, root: argu).to_s
     end
 
     private

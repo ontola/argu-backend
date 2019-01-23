@@ -8,7 +8,7 @@
   - if blog_post.parent.is_a?(Page)
     .context.context--vertical[itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList"]
       div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
-        =link_to collection_iri_path(blog_post.parent, :blog_posts), itemprop: 'item'
+        =link_to collection_iri(blog_post.parent, :blog_posts), itemprop: 'item'
           .box.box-link
             section
               h3

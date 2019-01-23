@@ -5,10 +5,9 @@ module ProfilesHelper
 
   # Generates a link to the Profile's profileable
   # Either a Page or a User
-  def dual_profile_url(profile, only_path: true, canonical: false) # rubocop:disable Metrics/AbcSize
+  def dual_profile_url(profile, only_path: true, canonical: false)
     profile = Profile.community if profile.profileable.blank?
-    path = canonical ? URI(profile.profileable.canonical_iri_path) : URI(profile.profileable.iri_path)
-    path.query = "page_id=#{tree_root.url}" if respond_to?(:tree_root_id) && tree_root_id.present?
-    only_path ? path.to_s : RDF::DynamicURI(path_with_hostname(path))
+    iri = canonical ? profile.profileable.canonical_iri : profile.profileable.iri
+    only_path ? iri.path : iri
   end
 end

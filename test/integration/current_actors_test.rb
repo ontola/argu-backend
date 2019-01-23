@@ -6,7 +6,7 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'guest should get show current actor' do
-    get current_actor_path, headers: argu_headers(accept: :json_api)
+    get "/#{Page.first.url}#{current_actor_path}", headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data'],
@@ -18,7 +18,7 @@ class CurrentActorsTest < ActionDispatch::IntegrationTest
   test 'user should get show current actor' do
     sign_in user
 
-    get current_actor_path, headers: argu_headers(accept: :json_api)
+    get "/#{Page.first.url}#{current_actor_path}", headers: argu_headers(accept: :json_api)
 
     assert_response 200
     assert_equal JSON.parse(response.body)['data']['relationships']['user']['data']['id'],

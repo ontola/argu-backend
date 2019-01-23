@@ -42,7 +42,9 @@ RSpec.feature 'Account deletion', type: :feature do
     end
 
     sign_in_manually(user)
-    visit settings_user_path(tab: :advanced)
+    ActsAsTenant.with_tenant(argu) do
+      visit settings_iri('/u', tab: :advanced)
+    end
     click_link 'Delete Argu account'
     expect do
       within("#edit_user_#{user.id}") do
@@ -62,7 +64,9 @@ RSpec.feature 'Account deletion', type: :feature do
 
   scenario 'administrator should not delete destroy' do
     sign_in(create_administrator(freetown))
-    visit settings_user_path(tab: :advanced)
+    ActsAsTenant.with_tenant(argu) do
+      visit settings_iri('/u', tab: :advanced)
+    end
     click_link 'Delete Argu account'
 
     expect(page).to have_content 'You are the administrator in one or more places. '\

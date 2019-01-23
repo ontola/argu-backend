@@ -20,7 +20,7 @@ RSpec.describe 'Tokens', type: :request do
         }
       end
 
-    post spi_token_path,
+    post expand_uri_template(:spi_oauth_token),
          params: params.merge(scope: scope),
          headers: headers
   end
@@ -38,7 +38,7 @@ RSpec.describe 'Tokens', type: :request do
     let!(:request_token) { create(:access_token, application_id: third_party_app.id) }
 
     it 'does not create a guest token' do
-      post spi_token_path,
+      post expand_uri_template(:spi_oauth_token),
            params: {
              scopes: 'guest'
            },

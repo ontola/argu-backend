@@ -21,7 +21,7 @@ module Users
     end
 
     def redirect_location
-      parent_resource.iri_path
+      parent_resource.iri
     end
   end
 end

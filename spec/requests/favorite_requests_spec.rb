@@ -9,7 +9,7 @@ RSpec.describe 'Favorites', type: :request do
   let(:non_existing_destroy_path) { non_existing_index_path }
   let(:destroy_path) { index_path }
   let(:update_failed_path) { index_path }
-  let(:created_resource_path) { holland.iri_path }
+  let(:created_resource_path) { holland.iri.path }
   let(:create_differences) { {'Favorite.count' => 1} }
   let(:destroy_differences) { {'Favorite.count' => -1} }
   let(:create_params) { {} }
@@ -22,25 +22,27 @@ RSpec.describe 'Favorites', type: :request do
   it_behaves_like 'post create', skip: %i[create_invalid]
   it_behaves_like 'delete destroy'
 
-  context 'for motion iri' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.motions.first.iri, root_id: root_id]) }
-    it_behaves_like 'post create', skip: %i[create_invalid]
-  end
+  context 'with iri' do
+    let(:create_path) { "#{collection_iri(argu, :favorites)}?iri=#{favorable_iri}" }
 
-  context 'for motion canonical' do
-    let(:create_path) do
-      url_for([:favorites, only_path: true, iri: holland.motions.first.canonical_iri, root_id: root_id])
+    context 'for motion iri' do
+      let(:favorable_iri) { holland.motions.first.iri }
+      it_behaves_like 'post create', skip: %i[create_invalid]
     end
-    it_behaves_like 'post create', skip: %i[create_invalid]
-  end
 
-  context 'for forum iri' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.iri, root_id: root_id]) }
-    it_behaves_like 'post create', skip: %i[create_invalid]
-  end
+    context 'for motion canonical' do
+      let(:favorable_iri) { holland.motions.first.canonical_iri }
+      it_behaves_like 'post create', skip: %i[create_invalid]
+    end
 
-  context 'for forum canonical' do
-    let(:create_path) { url_for([:favorites, only_path: true, iri: holland.canonical_iri, root_id: root_id]) }
-    it_behaves_like 'post create', skip: %i[create_invalid]
+    context 'for forum iri' do
+      let(:favorable_iri) { holland.iri }
+      it_behaves_like 'post create', skip: %i[create_invalid]
+    end
+
+    context 'for forum canonical' do
+      let(:favorable_iri) { holland.canonical_iri }
+      it_behaves_like 'post create', skip: %i[create_invalid]
+    end
   end
 end

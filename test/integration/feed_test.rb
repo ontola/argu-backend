@@ -21,7 +21,7 @@ class FeedTest < ActionDispatch::IntegrationTest
 
   test 'guest should get motion/feed nt' do
     init_content
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         headers: argu_headers(accept: :nt)
 
     assert_response 200
@@ -30,7 +30,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should get motion/feed html' do
-    get feeds_iri_path(subject)
+    get feeds_iri(subject)
 
     assert_response 200
 
@@ -47,7 +47,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     unpublished_motion
     trashed_motion
 
-    get feeds_iri_path(freetown)
+    get feeds_iri(freetown)
 
     assert_response 200
 
@@ -61,7 +61,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     init_content
     sign_in user
 
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         headers: argu_headers(accept: :nt)
 
     assert_response 200
@@ -72,7 +72,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get motion/feed html' do
     sign_in user
 
-    get feeds_iri_path(subject)
+    get feeds_iri(subject)
 
     assert_response 200
 
@@ -83,7 +83,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     init_content
     sign_in user
 
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         params: {complete: true},
         headers: argu_headers(accept: :nt)
 
@@ -95,7 +95,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'user should get complete motion/feed html' do
     sign_in user
 
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         params: {complete: true}
 
     assert_response 200
@@ -107,7 +107,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in user
     subject
 
-    get page_user_feed_path(argu, publisher), params: {format: :js, from_time: 1.hour.from_now, complete: false}
+    get feeds_iri(publisher), params: {format: :js, from_time: 1.hour.from_now, complete: false}
 
     assert_response 200
   end
@@ -121,7 +121,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     init_content
     sign_in staff
 
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         headers: argu_headers(accept: :nt)
 
     assert_response 200
@@ -132,7 +132,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get motion/feed html' do
     sign_in staff
 
-    get feeds_iri_path(subject)
+    get feeds_iri(subject)
 
     assert_response 200
 
@@ -143,7 +143,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     init_content
     sign_in staff
 
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         params: {complete: true},
         headers: argu_headers(accept: :nt)
 
@@ -155,7 +155,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get complete motion/feed html' do
     sign_in staff
 
-    get feeds_iri_path(subject), params: {complete: true}
+    get feeds_iri(subject), params: {complete: true}
 
     assert_response 200
 
@@ -165,7 +165,7 @@ class FeedTest < ActionDispatch::IntegrationTest
   test 'staff should get additional activities for motion/feed js' do
     sign_in staff
 
-    get feeds_iri_path(subject),
+    get feeds_iri(subject),
         params: {from_time: 1.hour.from_now, complete: false},
         headers: argu_headers(accept: :js)
 
@@ -176,7 +176,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     sign_in staff
     subject
 
-    get page_user_feed_path(argu, publisher),
+    get feeds_iri(publisher),
         params: {from_time: 1.hour.from_now, complete: false},
         headers: argu_headers(accept: :js)
 
@@ -204,7 +204,7 @@ class FeedTest < ActionDispatch::IntegrationTest
     when :html
       assert_select '.activity-feed .activity', count
     when :nt
-      collection = RDF::URI("#{feed(subject).iri}/feed#{complete ? '?complete=true' : ''}")
+      collection = RDF::URI("#{resource_iri(feed(subject))}/feed#{complete ? '?complete=true' : ''}")
       view = rdf_body.query([collection, NS::AS[:pages]]).first.object
       expect_triple(view, NS::AS[:totalItems], count)
     else
@@ -218,6 +218,6 @@ class FeedTest < ActionDispatch::IntegrationTest
   end
 
   def feed(parent)
-    Feed.new(parent: parent)
+    Feed.new(parent: parent, root_id: parent.try(:root_id))
   end
 end

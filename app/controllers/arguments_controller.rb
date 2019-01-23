@@ -45,7 +45,7 @@ class ArgumentsController < EdgeableController
 
   def redirect_location
     return super unless action_name == 'create' && authenticated_resource.persisted?
-    authenticated_resource.parent.iri_path
+    authenticated_resource.parent.iri
   end
 
   def service_options(opts = {})

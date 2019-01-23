@@ -12,7 +12,7 @@ module DecisionsHelper
     if user.present?
       user =
         if create_link
-          link_to(user.profile.display_name, user_path(user))
+          link_to(user.profile.display_name, user.iri)
         else
           user.profile.display_name
         end

@@ -33,11 +33,7 @@ class GrantsController < ServiceController
   end
 
   def redirect_location
-    if authenticated_resource.edge.owner_type == 'Forum'
-      settings_iri_path(authenticated_resource.edge)
-    else
-      settings_iri_path(authenticated_resource.edge, tab: :groups)
-    end
+    settings_iri(authenticated_resource.root, tab: :groups)
   end
 
   def resource_new_params

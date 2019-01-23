@@ -45,10 +45,10 @@ class StaticPagesController < AuthorizedController
         if current_user.is_staff?
           render # stream: true
         else
-          current_user.guest? ? about : redirect_to(preferred_forum.iri_path)
+          current_user.guest? ? about : redirect_to(preferred_forum.iri)
         end
       else
-        respond_with_redirect location: current_user.is_staff? ? feeds_iri_path(nil) : preferred_forum.iri_path
+        respond_with_redirect location: current_user.is_staff? ? feeds_iri(nil).path : preferred_forum.iri.path
       end
     end
   end

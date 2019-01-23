@@ -10,7 +10,7 @@ h3= t('forums.plural')
     - resource.forums.reorder(follows_count: :desc).each do |forum|
       tr
         td
-          =link_to forum.display_name, edit_iri_path(forum), data: {turbolinks: false}
+          =link_to forum.display_name, edit_iri(forum), data: {turbolinks: false}
         td
           =forum.url
         td

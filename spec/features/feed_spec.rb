@@ -17,7 +17,7 @@ RSpec.feature 'Feed', type: :feature do
     Activity.order(:created_at).each_with_index do |activity, i|
       activity.update(created_at: i.minutes.ago)
     end
-    visit(feeds_iri_path(freetown))
+    visit(feeds_iri(freetown))
     page.find('.btn.load-more').click
     expect(page).to have_selector('.activity-feed .activity', count: 13)
   end

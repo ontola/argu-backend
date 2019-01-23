@@ -37,7 +37,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
     motion_attr = attributes_for(:motion)
     sign_in user
 
-    visit new_iri_path(freetown, :motions)
+    visit new_iri(freetown, :motions)
 
     within('#new_motion') do
       fill_in 'motion[display_name]', with: motion_attr[:title]
@@ -49,7 +49,7 @@ RSpec.feature 'Accept terms spec', type: :feature do
     click_button 'Accept'
 
     expect(page).to have_content(motion_attr[:title].capitalize)
-    expect(page).to have_current_path(Motion.last.iri_path(start_motion_tour: true))
+    expect(page).to have_current_path("#{Motion.last.iri.path}?start_motion_tour=true")
     expect(user.reload.accepted_terms?).to be_truthy
   end
 

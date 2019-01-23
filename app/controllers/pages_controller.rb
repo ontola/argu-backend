@@ -37,7 +37,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def destroy_failure_html
     flash[:error] = t('errors.general')
-    redirect_to(delete_page_path(authenticated_resource))
+    redirect_to(delete_iri(authenticated_resource))
   end
 
   def execute_action
@@ -108,7 +108,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
     resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(Page)
-    redirect_to resource.iri_path
+    redirect_to resource.iri
   end
 
   def policy(resource)
@@ -117,8 +117,8 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def redirect_location
-    return new_page_path unless authenticated_resource.persisted?
-    settings_iri_path(authenticated_resource, tab: tab)
+    return new_iri(nil, :pages) unless authenticated_resource.persisted?
+    settings_iri(authenticated_resource, tab: tab)
   end
 
   def show_success_html # rubocop:disable Metrics/AbcSize
@@ -128,7 +128,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     @profile = authenticated_resource.profile
 
     if @forums.count == 1 && !policy(authenticated_resource).update?
-      redirect_to @forums.first.iri_path
+      redirect_to @forums.first.iri
     elsif (/[a-zA-Z]/i =~ params[:id]).nil?
       redirect_to authenticated_resource.iri_path, status: 307
     else

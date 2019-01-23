@@ -5,11 +5,11 @@
   .box
     section
       p= raw t('intro.initial.body.header')
-      =form_for resource, url: setup_profiles_path, method: :put, authenticity_token: true  do |f|
+      =form_for resource, url: setup_path, method: :put, authenticity_token: true  do |f|
         =f.hidden_field :id
         p= f.button t('intro.skip').capitalize, class: 'btn--as-text', type: 'submit'
   .box
-    =semantic_form_for resource, url: setup_profiles_path, method: :put, authenticity_token: true do |f|
+    =semantic_form_for resource, url: setup_path, method: :put, authenticity_token: true do |f|
       section
         =render partial: 'users/settings/general', locals: {f: f, profile: profile, resource: resource, setup: true}
         =render partial: 'users/profiles/form', locals: {f: f, profile: profile, resource: resource, setup: true}

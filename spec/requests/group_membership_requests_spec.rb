@@ -11,8 +11,8 @@ RSpec.describe 'GroupMemberships', type: :request do
   let(:destroy_differences) { {'group.reload.group_memberships.count' => -1} }
   let(:no_differences) { {'group.reload.group_memberships.count' => 0} }
 
-  let(:created_resource_path) { argu.iri_path }
-  let(:parent_path) { argu.iri_path }
+  let(:created_resource_path) { argu.iri.path }
+  let(:parent_path) { argu.iri.path }
   let(:expect_get_index_guest_serializer) { expect_not_a_user }
   let(:expect_get_show_guest_serializer) { expect_unauthorized }
 

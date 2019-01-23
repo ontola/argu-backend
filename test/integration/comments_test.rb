@@ -81,11 +81,11 @@ class CommentsTest < ActionDispatch::IntegrationTest
         delete subject
       end
       assert_difference('Comment.trashed.count' => 1, 'Comment.where(description: "").count' => 1) do
-        delete subject.iri_path(destroy: 'true')
+        delete subject.iri(destroy: 'true')
       end
     end
 
-    assert_redirected_to argument.iri_path
+    assert_redirected_to argument.iri.path
   end
 
   ####################################
@@ -102,10 +102,10 @@ class CommentsTest < ActionDispatch::IntegrationTest
         delete subject
       end
       assert_difference 'Comment.where(description: "").count', 1 do
-        delete subject.iri_path(destroy: 'true')
+        delete subject.iri(destroy: 'true')
       end
     end
 
-    assert_redirected_to argument.iri_path
+    assert_redirected_to argument.iri.path
   end
 end

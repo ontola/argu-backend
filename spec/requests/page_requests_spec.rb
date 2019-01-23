@@ -12,15 +12,16 @@ RSpec.describe 'Pages', type: :request do
   let(:authorized_user) { create_administrator(subject, create(:user)) }
   let(:edit_path) do
     nominatim_netherlands
-    settings_iri_path(subject)
+    settings_iri(subject).path
   end
+  let(:index_path) { collection_iri(argu, table_sym).path }
   let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", root_id: 'non_existing') }
   let(:non_existing_destroy_path) { non_existing_show_path }
-  let(:non_existing_edit_path) { settings_iri_path(non_existing_show_path) }
-  let(:parent_path) { subject }
-  let(:updated_resource_path) { settings_iri_path(subject, tab: :profile) }
-  let(:created_resource_path) { settings_iri_path(Page.last, tab: :profile) }
-  let(:create_failed_path) { new_page_path }
+  let(:non_existing_edit_path) { settings_iri(non_existing_show_path).path }
+  let(:parent_path) { subject.iri.path }
+  let(:updated_resource_path) { "#{settings_iri(subject).path}?tab=profile" }
+  let(:created_resource_path) { "#{settings_iri(Page.last).path}?tab=profile" }
+  let(:create_failed_path) { new_iri(argu, :pages).path }
   let(:create_differences) { {'Page.count' => 1} }
   let(:update_differences) { {'Page.count' => 0} }
   let(:destroy_differences) { {'Page.count' => -1} }

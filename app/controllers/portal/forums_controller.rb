@@ -4,7 +4,7 @@
 
 class Portal::ForumsController < EdgeableController
   def new
-    redirect_to new_page_forum_path(parent_resource)
+    redirect_to new_iri(parent_resource, :forums)
   end
 
   private

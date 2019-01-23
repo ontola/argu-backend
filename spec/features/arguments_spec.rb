@@ -26,7 +26,7 @@ RSpec.feature 'Voting', type: :feature do
       click_button 'Save'
     end
 
-    expect(page).to have_current_path(motion.iri_path)
+    expect(page).to have_current_path(resource_iri(motion).path)
     expect(page).to have_css('.btn-con')
     expect(page).not_to have_content argument_attributes[:title]
   end

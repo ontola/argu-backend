@@ -24,7 +24,7 @@ class FollowsController < AuthorizedController
 
   def destroy_failure_rdf
     respond_with_redirect(
-      location: authenticated_resource.followable.iri_path,
+      location: authenticated_resource.followable.iri,
       notice: t('notifications.unsubscribe.failed', item: authenticated_resource.followable.display_name)
     )
   end
@@ -36,7 +36,7 @@ class FollowsController < AuthorizedController
 
   def destroy_success_rdf
     respond_with_redirect(
-      location: authenticated_resource.followable.iri_path,
+      location: authenticated_resource.followable.iri,
       notice: t('notifications.unsubscribe.success', item: authenticated_resource.followable.display_name)
     )
   end
@@ -77,7 +77,7 @@ class FollowsController < AuthorizedController
   end
 
   def redirect_location
-    authenticated_resource.followable.iri_path
+    authenticated_resource.followable.iri
   end
 
   def unsubscribe?

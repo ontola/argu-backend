@@ -61,9 +61,9 @@ class ProfilesController < AuthorizedController
 
   def edit_success_html
     if current_resource.profileable.is_a? User
-      redirect_to url_for([:settings, tab: :profile])
+      redirect_to settings_iri('/u', tab: :profile)
     else
-      redirect_to settings_iri_path(current_resource.profileable, tab: :profile)
+      redirect_to settings_iri(current_resource.profileable, tab: :profile)
     end
   end
 

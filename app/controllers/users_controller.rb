@@ -46,7 +46,7 @@ class UsersController < AuthorizedController
   end
 
   def redirect_location
-    r_param || settings_user_path(tab: tab)
+    r_param || settings_iri('/u', tab: tab)
   end
 
   def settings_success_html
@@ -61,17 +61,12 @@ class UsersController < AuthorizedController
 
   def show_success_html # rubocop:disable Metrics/AbcSize
     if (/[a-zA-Z]/i =~ params[:id]).nil? && authenticated_resource.url.present?
-      redirect_to authenticated_resource.iri_path, status: 307
+      redirect_to authenticated_resource.iri, status: 307
     else
       available_pages = authenticated_resource.profile.active_pages(current_profile.granted_root_ids(nil))
-      organization =
-        Page.find_via_shortname(params[:page_id]) ||
-        available_pages.first ||
-        Forum.first_public.parent
       render 'show', locals: {
         available_pages: available_pages,
-        organization_feed:
-          page_user_feed_url(organization.url, authenticated_resource, format: :js)
+        organization_feed: "#{feeds_iri(authenticated_resource)}.js"
       }
     end
   end

@@ -9,12 +9,12 @@ table.styled
   - page.groups.custom.includes(:grants, group_memberships: {member: {profileable: {}}}).each do |group|
     tr
       td
-        =link_to group.display_name, settings_iri_path(group)
+        =link_to group.display_name, settings_iri(group)
       td
-        =link_to group.group_memberships.count, settings_iri_path(group)
+        =link_to group.group_memberships.count, settings_iri(group)
       td
         - if policy(group).create_child?(:group_memberships)
-          =link_to new_iri_path(group, :group_memberships), class: 'btn--light btn--smaller' do
+          =link_to new_iri(group, :group_memberships), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
       td
         - if group.grants.empty?
@@ -25,16 +25,16 @@ table.styled
               li
                 =>"#{grant.display_name}:"
                 =t("roles.types.#{grant.grant_set.title}")
-                = t('roles.list.remove_html', url: grant.iri_path)
+                = t('roles.list.remove_html', url: grant.iri)
       td
         - if policy(resource).create_child?(:grants)
-          =link_to new_iri_path(page, :grants, query: {edge_id: resource.uuid, group_id: group.id}), class: 'btn--light btn--smaller' do
+          =link_to new_iri(page, :grants, query: {edge_id: resource.uuid, group_id: group.id}), class: 'btn--light btn--smaller' do
             span.fa.fa-plus
 - if policy(page).create_child?(:groups)
-  =link_to new_iri_path(page, :groups), class: 'btn margin-bottom margin-right' do
+  =link_to new_iri(page, :groups), class: 'btn margin-bottom margin-right' do
     span.fa.fa-plus
     span.icon-left= t('groups.new')
 - if policy(resource).create_child?(:grants)
-  =link_to new_iri_path(page, :grants, query: {edge_id: resource.uuid}), class: 'btn margin-bottom' do
+  =link_to new_iri(page, :grants, query: {edge_id: resource.uuid}), class: 'btn margin-bottom' do
     span.fa.fa-plus
     span.icon-left= t('grants.new')

@@ -155,7 +155,7 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     return if guest? || confirmed? || notifications.confirmation_reminder.any?
     Notification.confirmation_reminder.create(
       user: self,
-      url: Rails.application.routes.url_helpers.settings_user_path(tab: :authentication),
+      url: settings_iri('/u', tab: :authentication),
       permanent: true,
       send_mail_after: 24.hours.from_now
     )

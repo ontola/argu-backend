@@ -17,5 +17,5 @@
       -else
         span.fa.fa-globe
         span.icon-left= t('profiles.feed_is_public')
-      =link_to t('edit'), settings_user_path(tab: :privacy)
+      =link_to t('edit'), settings_iri('/u', tab: :privacy)
     =render partial: 'activities/index', locals: {activities: [], complete_feed: false, feed_iri: organization_feed}

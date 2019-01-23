@@ -52,7 +52,7 @@ class EdgeableController < ServiceController
   def resource_from_params
     return @resource_from_params if instance_variable_defined?('@resource_from_params')
     resource = super
-    redirect_to resource.iri_path if redirect_current_resource?(resource)
+    redirect_to resource.iri if redirect_current_resource?(resource)
     resource
   end
 

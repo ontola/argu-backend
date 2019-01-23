@@ -14,7 +14,7 @@ class LocalesTest < ActionDispatch::IntegrationTest
   end
 
   test 'set language from edge_tree english' do
-    get freetown.iri_path
+    get freetown.iri.path
     assert_locale 'en'
   end
 
@@ -24,12 +24,12 @@ class LocalesTest < ActionDispatch::IntegrationTest
   end
 
   test 'set language from r english' do
-    get new_user_session_path(r: freetown.iri_path)
+    get new_user_session_path(r: freetown.iri.path)
     assert_locale 'en'
   end
 
   test 'set language from r dutch' do
-    get new_user_session_path(r: dutch_forum.iri_path)
+    get new_user_session_path(r: dutch_forum.iri.path)
     assert_locale 'nl'
   end
 

@@ -48,7 +48,9 @@ module Argu
           let(:expect_not_a_user) { expect(response.code).to eq('401') }
           let(:expect_unauthorized) { expect(response.code).to eq('403') }
           let(:expect_not_found) { expect(response.code).to eq('404') }
-          let(:expect_redirect_to_login) { expect(response).to redirect_to(new_user_session_path(r: r_param)) }
+          let(:expect_redirect_to_login) do
+            expect(response).to redirect_to(new_user_session_path(r: path_with_hostname(r_param)))
+          end
 
           # Show
           expectations_for(:get_show)
@@ -111,7 +113,7 @@ module Argu
           let(:expect_put_untrash_guest_serializer) { expect(response.code).to eq('401') }
           let(:expect_put_untrash_unauthorized_html) { expect_unauthorized }
           let(:expect_put_untrash_unauthorized_serializer) { expect_unauthorized }
-          let(:expect_put_untrash_html) { expect(response).to redirect_to(subject.iri_path) }
+          let(:expect_put_untrash_html) { expect(response).to redirect_to(subject.iri.path) }
           let(:expect_put_untrash_json_api) { expect(response.code).to eq('204') }
           let(:expect_put_untrash_serializer) { expect(response.code).to eq('200') }
 
@@ -197,44 +199,46 @@ module Argu
           let(:destroy_params) { {} }
 
           # Paths
-          let(:index_path) { collection_iri_path(subject.parent, table_sym) }
+          let(:index_path) { collection_iri(subject.parent, table_sym).path }
           let(:create_path) { index_path }
-          let(:new_path) { new_iri_path(create_path) }
-          let(:show_path) { subject.iri_path }
-          let(:destroy_path) { subject.iri_path(destroy: true) }
-          let(:edit_path) { edit_iri_path(show_path) }
-          let(:shift_path) { new_iri_path(move_path) }
-          let(:move_path) { Move.new(edge: subject).iri_path }
+          let(:new_path) { new_iri(create_path).path }
+          let(:show_path) { resource_iri(subject).path }
+          let(:destroy_path) { "#{resource_iri(subject).path}?destroy=true" }
+          let(:edit_path) { edit_iri(show_path).path }
+          let(:shift_path) { new_iri(move_path).path }
+          let(:move_path) { resource_iri(Move.new(edge: subject)).path }
           let(:update_path) { show_path }
-          let(:delete_path) { delete_iri_path(show_path) }
+          let(:delete_path) { delete_iri(show_path).path }
           let(:trash_path) { show_path }
-          let(:untrash_path) { untrash_iri_path(show_path) }
+          let(:untrash_path) { untrash_iri(show_path).path }
 
           # Non existing paths
           let(:non_existing_id) { -99 }
           let(:non_existing_index_path) do
-            collection_iri_path(
-              expand_uri_template("#{parent_table_sym}_iri", id: non_existing_id),
+            collection_iri(
+              expand_uri_template("#{parent_table_sym}_iri", id: non_existing_id, root_id: argu.url),
               table_sym
-            )
+            ).path
           end
           let(:non_existing_create_path) { non_existing_index_path }
-          let(:non_existing_new_path) { new_iri_path(non_existing_create_path) }
-          let(:non_existing_show_path) { expand_uri_template("#{table_sym}_iri", id: non_existing_id) }
-          let(:non_existing_destroy_path) do
-            expand_uri_template("#{table_sym}_iri", id: -99, destroy: true)
+          let(:non_existing_new_path) { new_iri(non_existing_create_path).path }
+          let(:non_existing_show_path) do
+            expand_uri_template("#{table_sym}_iri", id: non_existing_id, root_id: argu.url)
           end
-          let(:non_existing_edit_path) { edit_iri_path(non_existing_show_path) }
-          let(:non_existing_shift_path) { new_iri_path(non_existing_move_path) }
+          let(:non_existing_destroy_path) do
+            expand_uri_template("#{table_sym}_iri", id: -99, root_id: argu.url, destroy: true)
+          end
+          let(:non_existing_edit_path) { edit_iri(non_existing_show_path).path }
+          let(:non_existing_shift_path) { new_iri(non_existing_move_path).path }
           let(:non_existing_move_path) { expand_uri_template(:moves_iri, parent_iri: non_existing_show_path) }
           let(:non_existing_update_path) { non_existing_show_path }
-          let(:non_existing_delete_path) { delete_iri_path(non_existing_show_path) }
+          let(:non_existing_delete_path) { delete_iri(non_existing_show_path).path }
           let(:non_existing_trash_path) { non_existing_show_path }
-          let(:non_existing_untrash_path) { untrash_iri_path(non_existing_show_path) }
+          let(:non_existing_untrash_path) { untrash_iri(non_existing_show_path).path }
 
           # Result paths
-          let(:parent_path) { subject.parent.iri_path }
-          let(:created_resource_path) { subject.class.last.iri_path }
+          let(:parent_path) { subject.parent.iri.path }
+          let(:created_resource_path) { subject.class.last.iri.path }
           let(:updated_resource_path) { show_path }
           let(:create_failed_path) { parent_path }
           let(:update_failed_path) { updated_resource_path }

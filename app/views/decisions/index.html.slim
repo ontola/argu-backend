@@ -24,25 +24,25 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
               - if decisionable.assigned_to_user?(current_user)
                 - Decision.actioned_keys.each do |state|
                   =link_to(t("decisions.action.#{state}"),
-                          new_iri_path(decisionable, :decisions, query: {state: state}),
+                          new_iri(decisionable, :decisions, query: {state: state}),
                           class: 'btn btn--smaller btn--neutral')
                   span &nbsp;
               - else
                 =link_to(t('decisions.action.forwarded'),
-                        new_iri_path(decisionable, :decisions, query: {state: 'forwarded'}),
+                        new_iri(decisionable, :decisions, query: {state: 'forwarded'}),
                         class: 'btn btn--smaller btn--neutral')
     - if local_assigns[:new_decision]
       .box
-        =semantic_form_for(new_decision, url: collection_iri_path(decisionable, :decisions), class: 'decision_form', remote: true, authenticity_token: true) do |f|
+        =semantic_form_for(new_decision, url: collection_iri(decisionable, :decisions).to_s, class: 'decision_form', remote: true, authenticity_token: true) do |f|
           =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: new_decision}
     - if local_assigns[:edit_decision].present? && !local_assigns[:edit_decision].is_published?
       .box
-        =semantic_form_for(local_assigns[:edit_decision], url: local_assigns[:edit_decision].iri_path, class: 'decision_form', remote: true, authenticity_token: true) do |f|
+        =semantic_form_for(local_assigns[:edit_decision], url: local_assigns[:edit_decision], class: 'decision_form', remote: true, authenticity_token: true) do |f|
           =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
     - policy_scope(decisionable.decisions).reverse.each do |d|
       .box
         - if d == local_assigns[:edit_decision]
-          =semantic_form_for(local_assigns[:edit_decision], url: local_assigns[:edit_decision].iri_path, class: 'decision_form', remote: true, authenticity_token: true) do |f|
+          =semantic_form_for(local_assigns[:edit_decision], url: local_assigns[:edit_decision], class: 'decision_form', remote: true, authenticity_token: true) do |f|
             =render partial: 'decisions/form', locals: {f:f, decisionable: decisionable, decision: local_assigns[:edit_decision]}
         - elsif !d.pending?
           =render partial: d

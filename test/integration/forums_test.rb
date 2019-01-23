@@ -84,7 +84,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'should not show statistics' do
     sign_in
 
-    get statistics_iri_path(freetown)
+    get statistics_iri(freetown)
     assert_response 403
     assert_not_authorized
   end
@@ -214,7 +214,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
           }
         }
 
-    assert_redirected_to holland.iri_path
+    assert_redirected_to holland.iri.path
     assert_not_equal holland.updated_at.iso8601(6), holland.reload.updated_at.iso8601(6)
     assert_equal 'new name', holland.name
     assert_equal 'new bio', holland.bio
@@ -231,7 +231,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
             url: 'new_url'
           }
         }
-    assert_redirected_to holland.reload.iri_path
+    assert_redirected_to holland.reload.iri.path
     updated_holland = Forum.find_by(uuid: holland.uuid)
     assert_equal 'new_url', updated_holland.url
     assert(
@@ -264,7 +264,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
   test 'administrator should show statistics' do
     sign_in holland_administrator
 
-    get statistics_iri_path(holland)
+    get statistics_iri(holland)
     assert_response 200
   end
 
@@ -299,7 +299,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     inhabitants # Trigger
-    get statistics_iri_path(inhabited)
+    get statistics_iri(inhabited)
     assert_response 200
 
     counts = [['Den Haag', '2'], %w[Utrecht 1], %w[Unknown 1]]
@@ -321,7 +321,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland,
            grant_set: GrantSet.participator)
     assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
-      post Move.new(edge: holland), params: {move: {new_parent_id: transfer_to.uuid}}
+      post resource_iri(Move.new(edge: holland)), params: {move: {new_parent_id: transfer_to.uuid}}
     end
     assert_equal holland.parent, transfer_to
     holland.instance_variable_set('@root', nil)
@@ -336,7 +336,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
            edge: holland,
            grant_set: GrantSet.participator)
     assert_difference('transfer_to.forums.reload.count' => 1, 'holland.reload.grants.size' => -1) do
-      post Move.new(edge: holland), params: {move: {new_parent_id: transfer_to.iri}}
+      post resource_iri(Move.new(edge: holland)), params: {move: {new_parent_id: transfer_to.iri}}
     end
     assert_equal holland.parent, transfer_to
     holland.instance_variable_set('@root', nil)
@@ -348,7 +348,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count' => 1, 'Placement.count' => 2, 'Place.count' => 1) do
-      post page_forums_path(argu), params: {
+      post collection_iri(argu, :forums), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
@@ -372,7 +372,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('Forum.count' => 1) do
-      post page_forums_path(argu), params: {
+      post collection_iri(argu, :forums), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
@@ -432,7 +432,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count', -1) do
-      delete freetown.iri_path,
+      delete freetown.iri.path,
              params: {forum: {confirmation_string: 'remove'}}
     end
   end
@@ -441,7 +441,7 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in staff
 
     assert_difference('Forum.count', 0) do
-      delete freetown.iri_path,
+      delete freetown.iri.path,
              params: {
                forum: {}
              }
@@ -455,13 +455,13 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('Forum.count' => 1, 'Widget.discussions.count' => 1) do
-      post page_forums_path(argu), params: {
+      post collection_iri(argu, :forums), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum'
         }
-      }
+      }, headers: argu_headers(accept: :json)
     end
     iri = "#{Forum.last.iri}/discussions?display=grid&type=infinite"
     assert_equal Forum.last.widgets.last.resource_iri, [[iri, NS::AS[:name]], [iri, nil]]
@@ -471,14 +471,14 @@ class ForumsTest < ActionDispatch::IntegrationTest
     sign_in :service
 
     assert_difference('ORIForum.count' => 1, 'Widget.discussions.count' => 0) do
-      post page_forums_path(argu), params: {
+      post collection_iri(argu, :forums), params: {
         forum: {
           name: 'New forum',
           locale: 'en-GB',
           url: 'new_forum',
           owner_type: 'ORIForum'
         }
-      }
+      }, headers: argu_headers(accept: :json)
     end
   end
 

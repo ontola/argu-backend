@@ -51,7 +51,7 @@ module Argu
         end
       end
 
-      def sign_in_manually(user = create(:user), navigate = true, redirect_to: freetown.iri_path)
+      def sign_in_manually(user = create(:user), navigate = true, redirect_to: freetown.iri.path)
         if navigate
           visit new_user_session_path
         else
@@ -69,7 +69,7 @@ module Argu
       # rubocop:enable Metrics/AbcSize
 
       def visit(url)
-        super url.try(:iri_path) || url
+        super (url.try(:iri)&.path || url).to_s.sub('app.', '')
       end
     end
   end

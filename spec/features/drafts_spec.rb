@@ -41,7 +41,7 @@ RSpec.feature 'Show drafts', type: :feature do
   scenario 'User with drafts shows drafts' do
     sign_in(user)
 
-    visit(drafts_user_path(user))
+    visit(collection_iri(user, :drafts))
 
     expect(user.blog_posts.count).to eq(2)
     expect(user.motions.count).to eq(2)
@@ -55,7 +55,7 @@ RSpec.feature 'Show drafts', type: :feature do
   scenario 'User without drafts shows no drafts' do
     sign_in(user2)
 
-    visit(drafts_user_path(user2))
+    visit(collection_iri(user2, :drafts))
 
     expect(page).to have_content 'You currently have no drafts'
   end

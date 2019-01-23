@@ -12,7 +12,7 @@ module Settingable
 
     def edit_success
       if %i[html js].include?(active_response_type)
-        return respond_with_redirect location: settings_iri_path(authenticated_resource)
+        return respond_with_redirect location: settings_iri(authenticated_resource).to_s
       end
       respond_with_form(default_form_options(:edit))
     end

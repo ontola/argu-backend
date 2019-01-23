@@ -20,7 +20,7 @@ class FavoritesController < ParentableController
   end
 
   def redirect_location
-    authenticated_resource.is_a?(Edge) ? authenticated_resource.iri_path : authenticated_resource.edge.iri_path
+    authenticated_resource.is_a?(Edge) ? authenticated_resource.iri : authenticated_resource.edge.iri
   end
 
   def active_response_success_message

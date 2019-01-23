@@ -13,7 +13,7 @@ class MoveController < ServiceController
   end
 
   def create_success
-    add_exec_action_header(headers, ontola_redirect_action(authenticated_resource.edge.iri_path, reload: true))
+    add_exec_action_header(headers, ontola_redirect_action(authenticated_resource.edge.iri, reload: true))
     super
   end
 

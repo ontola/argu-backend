@@ -128,19 +128,19 @@ module Argu
 
       # Paths
       def new_path(parent)
-        new_iri_path(parent, model_name.tableize)
+        new_iri(parent, model_name.tableize).path
       end
 
       def create_path(parent)
-        collection_iri_path(parent, model_name.tableize)
+        collection_iri(parent, model_name.tableize).path
       end
 
       def record_path(record)
-        record.iri_path
+        resource_iri(record).path
       end
 
       def edit_path(record)
-        edit_iri_path(record)
+        edit_iri(record).path
       end
 
       def update_path(record)
@@ -152,11 +152,11 @@ module Argu
       end
 
       def destroy_path(record)
-        record.iri_path(destroy: true)
+        record.iri(destroy: true).to_s
       end
 
       def move_path(record)
-        move_iri_path(record)
+        move_iri(record).path
       end
 
       def request_format

@@ -22,34 +22,30 @@ RSpec.feature 'Shortname', type: :feature do
 
   def general_create(_response = 200) # rubocop:disable Metrics/AbcSize
     motion
-    visit shortname_settings_path
+    visit settings_iri(argu, tab: 'shortnames')
 
     click_link 'New Redirect'
-    expect(page).to have_current_path new_iri_path(argu, :shortnames)
+    expect(page).to have_current_path new_iri(argu, :shortnames)
 
     shortname_attrs = attributes_for(:shortname)
 
     expect do
       within('#new_shortname') do
         fill_in 'shortname_shortname', with: shortname_attrs[:shortname]
-        fill_in 'shortname_destination', with: "/m/#{motion.fragment}"
+        fill_in 'shortname_destination', with: "m/#{motion.fragment}"
         click_on 'Save'
       end
-      expect(page).to have_current_path shortname_settings_path
+      expect(page).to have_current_path "#{settings_iri(argu).path}?tab=shortnames"
     end.to change { Shortname.count }.by(1)
   end
 
   def general_destroy(_response = 200) # rubocop:disable Metrics/AbcSize
     expect do
-      visit shortname_settings_path
+      visit settings_iri(argu, tab: 'shortnames')
       page.accept_alert do
         click_link 'Delete'
       end
       expect(page).not_to have_content(shortname.shortname)
     end.to change { Shortname.count }.by(-1)
-  end
-
-  def shortname_settings_path
-    settings_iri_path(argu, tab: 'shortnames')
   end
 end

@@ -10,12 +10,12 @@ class StatisticsTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
   test 'guest should not get statistics of forum' do
-    get expand_uri_template(:statistics_iri, parent_iri: freetown.canonical_iri_path)
+    get statistics_iri(freetown)
     assert_not_authorized
   end
 
   test 'guest should not get statistics of motion' do
-    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri_path)
+    get statistics_iri(motion)
     assert_not_authorized
   end
 
@@ -26,13 +26,13 @@ class StatisticsTest < ActionDispatch::IntegrationTest
 
   test 'user should not get statistics of forum' do
     sign_in user
-    get expand_uri_template(:statistics_iri, parent_iri: freetown.canonical_iri_path)
+    get statistics_iri(freetown)
     assert_not_authorized
   end
 
   test 'user should not get statistics of motion' do
     sign_in user
-    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri_path)
+    get statistics_iri(motion)
     assert_not_authorized
   end
 
@@ -43,26 +43,26 @@ class StatisticsTest < ActionDispatch::IntegrationTest
 
   test 'administrator should not get statistics of forum' do
     sign_in administrator
-    get expand_uri_template(:statistics_iri, parent_iri: freetown.canonical_iri_path)
+    get statistics_iri(freetown)
     assert_response 200
   end
 
   test 'administrator should not get statistics of motion' do
     sign_in administrator
-    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri_path)
+    get statistics_iri(motion)
     assert_response 200
   end
 
   test 'administrator should not get statistics of forum n3' do
     sign_in administrator
-    get expand_uri_template(:statistics_iri, parent_iri: freetown.canonical_iri_path),
+    get statistics_iri(freetown),
         headers: argu_headers(accept: :n3)
     assert_response 200
   end
 
   test 'administrator should not get statistics of motion n3' do
     sign_in administrator
-    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri_path), headers: argu_headers(accept: :n3)
+    get statistics_iri(motion)
     assert_response 200
   end
 
@@ -73,13 +73,13 @@ class StatisticsTest < ActionDispatch::IntegrationTest
 
   test 'staff should not get statistics of forum' do
     sign_in staff
-    get expand_uri_template(:statistics_iri, parent_iri: freetown.canonical_iri_path)
+    get statistics_iri(freetown)
     assert_response 200
   end
 
   test 'staff should not get statistics of motion' do
     sign_in staff
-    get expand_uri_template(:statistics_iri, parent_iri: motion.canonical_iri_path)
+    get statistics_iri(motion)
     assert_response 200
   end
 end

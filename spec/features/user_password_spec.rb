@@ -36,8 +36,8 @@ RSpec.feature 'User Password', type: :feature do
   scenario 'user no omni should change their password' do
     sign_in_manually user
 
-    visit settings_user_path(tab: :authentication)
-    expect(page).to have_current_path settings_user_path(tab: :authentication)
+    visit "#{settings_iri('/u').path}?tab=authentication"
+    expect(page).to have_current_path "#{settings_iri('/u').path}?tab=authentication"
 
     expect(page).to have_content('Edit password')
     expect(page).to have_content('Confirm password')
@@ -51,7 +51,7 @@ RSpec.feature 'User Password', type: :feature do
       click_button 'Save'
     end
     expect(page).to have_content('Changes saved successfully')
-    expect(page).to have_current_path settings_user_path(tab: :authentication)
+    expect(page).to have_current_path "#{settings_iri("/#{argu.url}/u").path}?tab=authentication"
 
     visit destroy_user_session_path
     expect(page).to have_current_path(root_path)
@@ -64,15 +64,15 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_password', with: new_password
         click_button 'Log in'
       end
-      expect(page).to have_current_path freetown.iri_path
+      expect(page).to have_current_path resource_iri(freetown).path
     end.to change { Doorkeeper::AccessToken.count }.by(1)
   end
 
   scenario 'user both omni should change their password' do
     sign_in user_omni_both
 
-    visit settings_user_path(tab: :authentication)
-    expect(page).to have_current_path settings_user_path(tab: :authentication)
+    visit "#{settings_iri('/u').path}?tab=authentication"
+    expect(page).to have_current_path "#{settings_iri('/u').path}?tab=authentication"
 
     expect(page).to have_content('Edit password')
     expect(page).to have_content('Confirm password')
@@ -85,7 +85,7 @@ RSpec.feature 'User Password', type: :feature do
       fill_in 'user_current_password', with: user_omni_both.password
       click_button 'Save'
     end
-    expect(page).to have_current_path settings_user_path(tab: :authentication)
+    expect(page).to have_current_path "#{settings_iri('/u').path}?tab=authentication"
 
     expect(page).to have_content('User settings')
   end
@@ -93,7 +93,7 @@ RSpec.feature 'User Password', type: :feature do
   scenario 'user omni both should not request a password reset email' do
     sign_in user_omni_both
 
-    visit settings_user_path(tab: :authentication)
+    visit "#{settings_iri('/u').path}?tab=authentication"
     expect(page).not_to have_content("You don't have a password yet, because you signed up "\
                                        'using a linked account. Do you want to set a password?')
   end
@@ -101,7 +101,7 @@ RSpec.feature 'User Password', type: :feature do
   scenario 'user only omni should not change their password' do
     sign_in user_omni_only
 
-    visit settings_user_path(tab: :authentication)
+    visit "#{settings_iri('/u').path}?tab=authentication"
     expect(page).not_to have_content('Password')
     expect(page).not_to have_content('Confirm password')
     expect(page).not_to have_content('Current password')
@@ -123,7 +123,7 @@ RSpec.feature 'User Password', type: :feature do
     click_link 'Log in with Facebook'
 
     expect(page).to have_selector('.navbar-item.navbar-profile')
-    visit settings_user_path(tab: :authentication)
+    visit "#{settings_iri('/u').path}?tab=authentication"
     expect(page).to have_content('User settings')
     expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. "\
                                    'Do you want to set a password?')

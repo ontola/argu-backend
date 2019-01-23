@@ -26,7 +26,7 @@ RSpec.feature 'Partial Voting', type: :feature do
       'confirm_votes',
       user_attr[:email],
       confirmationToken: /.+/,
-      motions: [{display_name: subject.display_name, option: 'con', url: subject.iri}]
+      motions: [{display_name: subject.display_name, option: 'con', url: resource_iri(subject)}]
     )
 
     Sidekiq::Testing.inline! do
@@ -42,7 +42,7 @@ RSpec.feature 'Partial Voting', type: :feature do
       end
     end
 
-    expect(page).to have_current_path(question.iri_path)
+    expect(page).to have_current_path(resource_iri(question).path.to_s)
     expect(page).to have_css('.btn-con[data-voted-on=true]')
     expect(page).to have_content('Please confirm your vote by clicking the link we\'ve send to ')
     assert_email_sent(skip_sidekiq: true)

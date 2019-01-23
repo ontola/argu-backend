@@ -29,7 +29,7 @@ class MenuList
   end
 
   def iri_path(opts = {})
-    expand_uri_template('menu_lists_iri', opts.merge(parent_iri: resource.iri_path))
+    expand_uri_template('menu_lists_iri', opts.merge(parent_iri: resource.iri_path.presence))
   end
 
   def self.has_menus(menus)

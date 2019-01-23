@@ -7,7 +7,7 @@
       section
         .form
           p= t('forums.settings.advanced.delete.confirm.body_html')
-        =semantic_form_for resource, url: resource.iri_path, method: :delete, html: {class: 'confirm'} do |f|
+        =semantic_form_for resource, url: resource, method: :delete, html: {class: 'confirm'} do |f|
           p= t('forums.settings.advanced.delete.confirm.howto')
           =f.inputs do
             =f.input :confirmation_string, input_html: {class: 'confirm-text', :'confirm-text' => t('destroy_confirm_string')}

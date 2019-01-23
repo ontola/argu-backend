@@ -9,7 +9,7 @@ RSpec.describe 'Motions', type: :request do
     super - %i[html]
   end
 
-  let(:created_resource_path) { subject.class.last.iri_path(start_motion_tour: true) }
+  let(:created_resource_path) { "#{subject.class.last.iri.path}?start_motion_tour=true" }
 
   context 'with question parent' do
     subject { motion }

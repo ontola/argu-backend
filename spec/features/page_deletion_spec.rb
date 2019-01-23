@@ -46,7 +46,7 @@ RSpec.feature 'Page deletion', type: :feature do
     end
 
     sign_in(user)
-    visit settings_page_path(forum_page)
+    visit settings_iri(forum_page)
     click_link 'Advanced'
     click_link 'Delete'
     expect do
@@ -70,7 +70,7 @@ RSpec.feature 'Page deletion', type: :feature do
     freetown.move_to(forum_page)
 
     sign_in(user)
-    visit settings_page_path(forum_page)
+    visit settings_iri(argu)
     click_link 'Advanced'
     click_link 'Delete'
 

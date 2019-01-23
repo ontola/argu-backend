@@ -24,14 +24,14 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   test 'guest should get index' do
     argument
-    get notifications_path, headers: argu_headers(accept: :json)
+    get collection_iri(argu, :notifications), headers: argu_headers(accept: :json)
     assert_response 401
   end
 
   test 'guest should not mark as read' do
     argument
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => 0) do
-      patch read_notifications_path
+      patch "#{collection_iri(argu, :notifications)}/read"
       assert_response 302
     end
   end
@@ -44,7 +44,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should get index' do
     argument
     sign_in follower
-    get notifications_path, headers: argu_headers(accept: :json)
+    get collection_iri(argu, :notifications), headers: argu_headers(accept: :json)
     assert_response 200
     assert_equal parsed_body['notifications']['unread'], 1
   end
@@ -52,9 +52,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   test 'follower should get index as nt' do
     argument
     sign_in follower
-    get notifications_path, headers: argu_headers(accept: :nt)
+    get collection_iri(argu, :notifications), headers: argu_headers(accept: :nt)
     assert_response 200
-    expect_triple(RDF::URI(argu_url('/n')), NS::ARGU[:unreadCount], 1)
+    expect_triple(RDF::URI(argu_url("/#{argu.url}/n")), NS::ARGU[:unreadCount], 1)
   end
 
   test 'follower should put update as nt' do
@@ -62,20 +62,25 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     sign_in follower
     notification = follower.notifications.where(read_at: nil).first
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
-      put notification_path(notification), headers: argu_headers(accept: :nq)
+      put resource_iri(notification), headers: argu_headers(accept: :nq)
     end
     assert_response 200
     notification.reload
-    expect_triple(RDF::URI(argu_url('/n')), NS::ARGU[:unreadCount], 0)
-    expect_triple(notification.iri, NS::SCHEMA[:dateRead], notification.read_at.to_datetime, NS::ARGU[:replace])
-    expect_triple(notification.iri, NS::ARGU[:unread], false, NS::ARGU[:replace])
+    expect_triple(RDF::URI(argu_url("/#{argu.url}/n")), NS::ARGU[:unreadCount], 0)
+    expect_triple(
+      resource_iri(notification),
+      NS::SCHEMA[:dateRead],
+      notification.read_at.to_datetime,
+      NS::ARGU[:replace]
+    )
+    expect_triple(resource_iri(notification), NS::ARGU[:unread], false, NS::ARGU[:replace])
   end
 
   test 'follower should mark as read' do
     argument
     sign_in follower
     assert_difference('Notification.count' => 0, 'Notification.where(read_at: nil).count' => -1) do
-      patch read_notifications_path, headers: argu_headers(accept: :json)
+      patch "#{collection_iri(argu, :notifications)}/read", headers: argu_headers(accept: :json)
       assert_response 200
     end
   end

@@ -22,6 +22,7 @@ RSpec.describe "Iri's", type: :model do
 
   context 'Page' do
     subject { argu }
+    let(:url) { root_url[0...-1] }
     it_behaves_like 'iri matches route'
   end
 
@@ -45,7 +46,7 @@ RSpec.describe "Iri's", type: :model do
   context 'Page profile' do
     subject { argu.profile }
     let(:iri_owner) { subject.profileable }
-    let(:url) { url_for([subject.profileable, protocol: :http]) }
+    let(:url) { root_url[0...-1] }
     it_behaves_like 'iri matches route'
   end
 
@@ -56,8 +57,7 @@ RSpec.describe "Iri's", type: :model do
 
   context 'with root' do
     let(:id) { subject.fragment }
-    let(:url) { url_for([subject.class_name.singularize, id: id, root_id: root_id, protocol: :http]) }
-    let(:root_id) { argu.url }
+    let(:url) { url_for([subject.class_name.singularize, id: id, protocol: :http]) }
 
     context 'Forum' do
       subject { freetown }
@@ -72,7 +72,6 @@ RSpec.describe "Iri's", type: :model do
           [
             subject.ancestor(:forum),
             subject,
-            root_id: subject.root.url,
             protocol: :http
           ]
         )
@@ -93,7 +92,7 @@ RSpec.describe "Iri's", type: :model do
     context 'Decision' do
       subject { decision }
       let(:url) do
-        motion_decision_url(subject.parent.fragment, subject.step, root_id: root_id, protocol: :http)
+        motion_decision_url(subject.parent.fragment, subject.step, protocol: :http)
       end
       it_behaves_like 'iri matches route'
     end
@@ -101,7 +100,7 @@ RSpec.describe "Iri's", type: :model do
     context 'VoteEvent' do
       subject { vote_event }
       let(:url) do
-        motion_vote_event_url(subject.voteable.fragment, subject.fragment, root_id: root_id, protocol: :http)
+        motion_vote_event_url(subject.voteable.fragment, subject.fragment, protocol: :http)
       end
       it_behaves_like 'iri matches route'
     end
@@ -127,7 +126,7 @@ RSpec.describe "Iri's", type: :model do
     end
 
     context 'Group' do
-      let(:url) { destroy_group_url(argu.url, subject, protocol: :http) }
+      let(:url) { destroy_group_url(subject, protocol: :http) }
       subject { Group.first }
       let(:id) { subject.id }
       it_behaves_like 'iri matches route'

@@ -1,4 +1,4 @@
-=semantic_form_for(group, url: collection_iri_path(group.page, :groups), remote: true, authenticity_token: true) do |f|
+=semantic_form_for(group, url: collection_iri(group.page, :groups).to_s, remote: true, authenticity_token: true) do |f|
   - group.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('groups.type')) do

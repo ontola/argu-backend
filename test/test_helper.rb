@@ -142,13 +142,13 @@ module ActiveSupport
     include TestHelper
     include FactoryBot::Syntax::Methods
     include SidekiqMinitestSupport
+    include Argu::TestHelpers::IriHelpers
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
     include Argu::TestHelpers::TestDefinitions
     include Argu::TestHelpers::TestAssertions
     include Argu::TestHelpers::RequestHelpers
     include UrlHelper
-    include UriTemplateHelper
     ActiveRecord::Migration.check_pending!
 
     setup do
@@ -174,10 +174,10 @@ module ActionDispatch
   class IntegrationTest
     # Make the Capybara DSL available in all integration tests
     include Capybara::DSL
+    include Argu::TestHelpers::IriHelpers
     include Argu::TestHelpers::TestHelperMethods
     include Argu::TestHelpers::TestMocks
     include SidekiqMinitestSupport
-    include UriTemplateHelper
 
     setup do
       I18n.locale = :en
@@ -202,7 +202,7 @@ module ActionDispatch
 
     def get(path, *args, **opts)
       super(
-        path.try(:iri_path) || path,
+        path.try(:iri)&.path || path,
         *args,
         merge_req_opts(opts)
         )
@@ -210,7 +210,7 @@ module ActionDispatch
 
     def post(path, *args, **opts)
       super(
-        path.try(:iri_path) || path,
+        path.try(:iri)&.path || path,
         *args,
         merge_req_opts(opts)
         )
@@ -218,7 +218,7 @@ module ActionDispatch
 
     def delete(path, *args, **opts)
       super(
-        path.try(:iri_path) || path,
+        path.try(:iri)&.path || path,
         *args,
         merge_req_opts(opts)
         )
@@ -226,7 +226,7 @@ module ActionDispatch
 
     def patch(path, *args, **opts)
       super(
-        path.try(:iri_path) || path,
+        path.try(:iri)&.path || path,
         *args,
         merge_req_opts(opts)
         )
@@ -234,7 +234,7 @@ module ActionDispatch
 
     def put(path, *args, **opts)
       super(
-        path.try(:iri_path) || path,
+        path.try(:iri)&.path || path,
         *args,
         merge_req_opts(opts)
         )

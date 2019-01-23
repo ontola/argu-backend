@@ -5,16 +5,16 @@ require 'argu/test_helpers/automated_requests'
 
 RSpec.describe 'Conversions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
-  let(:new_path) { new_iri_path(conversions_iri_path(subject.canonical_iri_path)) }
+  let(:new_path) { new_iri(conversions_iri(subject).path).path }
   let(:non_existing_new_path) do
-    new_iri_path(conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid)))
+    new_iri(conversions_iri(expand_uri_template('edges_iri', id: SecureRandom.uuid)).path).path
   end
-  let(:create_path) { collection_iri_path(subject.canonical_iri_path, :conversions) }
+  let(:create_path) { collection_iri(subject, :conversions).path }
   let(:non_existing_create_path) do
-    conversions_iri_path(expand_uri_template('edges_iri', id: SecureRandom.uuid))
+    conversions_iri(expand_uri_template('edges_iri', id: SecureRandom.uuid)).path
   end
   let(:invalid_create_params) { {conversion: {klass: 'arguments'}} }
-  let(:created_resource_path) { Edge.find_by(uuid: subject.uuid).iri_path }
+  let(:created_resource_path) { Edge.find_by(uuid: subject.uuid).iri.path }
   let(:expect_post_create_failed_html) { expect_post_create_unauthorized_html }
   let(:expect_post_create_failed_serializer) { expect_post_create_unauthorized_serializer }
   let(:authorized_user) { staff }

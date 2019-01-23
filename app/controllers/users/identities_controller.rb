@@ -69,7 +69,7 @@ class Users::IdentitiesController < AuthorizedController
   end
 
   def redirect_location
-    settings_user_path(tab: :authentication)
+    settings_iri('/u', tab: :authentication)
   end
 
   def redirect_with_r(user)

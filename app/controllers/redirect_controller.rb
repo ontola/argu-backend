@@ -2,7 +2,7 @@
 
 class RedirectController < ApplicationController
   def show
-    redirect_to resource.iri_path
+    redirect_to((resource_by_shortname || resource).iri)
   end
 
   private

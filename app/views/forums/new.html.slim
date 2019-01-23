@@ -3,7 +3,7 @@
   .box
     section
       h1= "_Create forum for #{forum.parent.profile.name}_"
-      =semantic_form_for [forum.parent, forum], remote: false, authenticity_token: true do |f|
+      =semantic_form_for forum, url: collection_iri(forum.parent, :forums).to_s, remote: false, authenticity_token: true do |f|
         =f.inputs do
           =f.input :name
           =f.input :url, as: :shortname

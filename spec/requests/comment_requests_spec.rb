@@ -6,7 +6,7 @@ require 'argu/test_helpers/automated_requests'
 RSpec.describe 'Comments', type: :request do
   include Argu::TestHelpers::AutomatedRequests
 
-  let(:redirect_url) { subject.parent.iri_path(fragment: "comments_#{subject.id}") }
+  let(:redirect_url) { "#{subject.parent.iri.path}#comments_#{subject.id}" }
   let(:expect_get_show_html) do
     expect(response).to redirect_to(redirect_url)
     follow_redirect!
@@ -14,15 +14,15 @@ RSpec.describe 'Comments', type: :request do
   end
   let(:expect_post_create_failed_html) do
     expect(response).to(
-      redirect_to("#{subject.parent.iri_path}?#{{comment: {body: '1', parent_id: nil}}.to_param}")
+      redirect_to("#{subject.parent.iri.path}?#{{comment: {body: '1', parent_id: nil}}.to_param}")
     )
   end
   let(:expect_delete_trash_html) { expect(response).to redirect_to(redirect_url) }
   let(:expect_put_untrash_html) { expect(response).to redirect_to(redirect_url) }
   let(:create_failed_path) do
-    "#{new_iri_path(index_path)}?#{{comment: {body: create_params[:comment][:body]}, confirm: true}.to_query}"
+    "#{new_iri(index_path).path}?#{{comment: {body: create_params[:comment][:body]}, confirm: true}.to_query}"
   end
-  let(:created_resource_path) { Comment.last.parent.iri_path(fragment: "comments_#{Comment.last.id}") }
+  let(:created_resource_path) { "#{Comment.last.parent.iri.path}#comments_#{Comment.last.id}" }
   let(:destroy_differences) { {'Comment.where(description: "").count' => 1, 'Activity.count' => 1} }
   let(:required_keys) { %w[body] }
   let(:authorized_user_update) { subject.publisher }
@@ -31,14 +31,14 @@ RSpec.describe 'Comments', type: :request do
 
   context 'with comment parent' do
     subject { nested_comment }
-    let(:index_path) { collection_iri_path(subject.parent_comment, table_sym) }
+    let(:index_path) { collection_iri(subject.parent_comment, table_sym).path }
     let(:expect_post_create_failed_html) do
       expect(response).to(
-        redirect_to("#{subject.parent.iri_path}?#{{comment: {body: '1', parent_id: comment.uuid}}.to_param}")
+        redirect_to("#{subject.parent.iri.path}?#{{comment: {body: '1', parent_id: comment.uuid}}.to_param}")
       )
     end
     let(:expect_get_index_guest_html) { expect_get_index_html }
-    let(:expect_get_index_html) { expect(response).to(redirect_to(collection_iri_path(argument, :comments))) }
+    let(:expect_get_index_html) { expect(response).to(redirect_to(collection_iri(argument, :comments))) }
 
     it_behaves_like 'requests'
   end

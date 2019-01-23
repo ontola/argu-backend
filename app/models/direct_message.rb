@@ -38,7 +38,7 @@ class DirectMessage
 
   def email=(value)
     if value.include?('/email_addresses/')
-      value = EmailAddress.find(URI(value).path.gsub('/email_addresses/', '')).email
+      value = EmailAddress.find(URI(value).path.split('/email_addresses/').last).email
     end
     @email = value
   end

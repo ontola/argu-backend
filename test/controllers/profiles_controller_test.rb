@@ -37,7 +37,7 @@ class ProfilesControllerTest < ActionController::TestCase
     user.profile.reload
     assert_equal 'profile_photo.png', user.profile.default_profile_photo.content_identifier
     assert_equal 'cover_photo.jpg', user.profile.default_cover_photo.content_identifier
-    assert_redirected_to user_path(user)
+    assert_redirected_to resource_iri(user, root: argu).to_s
   end
 
   test 'user should put setup and redirect to token from cookie' do
@@ -61,7 +61,7 @@ class ProfilesControllerTest < ActionController::TestCase
 
     get :edit, params: {id: user.url}
 
-    assert_redirected_to settings_user_path(tab: :profile)
+    assert_redirected_to "#{settings_iri('/u')}?tab=profile"
   end
 
   test 'user should not get edit profile with other profile' do

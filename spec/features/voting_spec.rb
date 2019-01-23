@@ -17,7 +17,7 @@ RSpec.feature 'Voting', type: :feature do
       'confirm_votes',
       user_attr[:email],
       confirmationToken: /.+/,
-      motions: [{display_name: motion.display_name, option: 'con', url: motion.iri}]
+      motions: [{display_name: motion.display_name, option: 'con', url: resource_iri(motion)}]
     )
 
     visit motion
@@ -37,7 +37,7 @@ RSpec.feature 'Voting', type: :feature do
 
         click_button 'Confirm'
 
-        expect(page).to have_current_path motion.iri_path
+        expect(page).to have_current_path resource_iri(motion).path
 
         expect(page).not_to have_content('By creating an Argu account you agree to our')
       end
@@ -115,7 +115,7 @@ RSpec.feature 'Voting', type: :feature do
 
       fill_in 'user[password]', with: user.password
       click_button 'Login'
-      expect(page).to have_current_path motion.iri_path
+      expect(page).to have_current_path resource_iri(motion).path
     end
 
     expect(page).to have_css('.btn-con[data-voted-on=true]')

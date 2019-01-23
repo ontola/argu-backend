@@ -22,7 +22,7 @@ module SPI
     test 'guest should show motion as iri' do
       sign_in guest_user
 
-      get spi_authorize_path(resource_iri: motion.iri, authorize_action: 'show')
+      get spi_authorize_path(resource_iri: resource_iri(motion), authorize_action: 'show')
 
       assert_response 200
     end
@@ -47,7 +47,7 @@ module SPI
       sign_in guest_user
 
       get spi_authorize_path(
-        resource_iri: expand_uri_template(:motions_iri, id: 'non-existing'),
+        resource_iri: expand_uri_template(:motions_iri, id: 'non-existing', with_hostname: true),
         authorize_action: 'show'
       )
 
@@ -58,7 +58,7 @@ module SPI
       sign_in guest_user
 
       get spi_authorize_path(
-        resource_iri: expand_uri_template(:edges_iri, id: SecureRandom.uuid),
+        resource_iri: expand_uri_template(:edges_iri, id: SecureRandom.uuid, with_hostname: true),
         authorize_action: 'show'
       )
 
@@ -76,7 +76,7 @@ module SPI
     test 'guest should not update motion as iri' do
       sign_in guest_user
 
-      get spi_authorize_path(resource_iri: motion.iri, authorize_action: 'update')
+      get spi_authorize_path(resource_iri: resource_iri(motion), authorize_action: 'update')
 
       assert_response 403
     end
@@ -103,7 +103,7 @@ module SPI
       sign_in guest_user
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: resource_iri(argu), authorize_action: 'show'
       )
 
       assert_response 403
@@ -123,7 +123,9 @@ module SPI
       sign_in guest_user
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor',
+        resource_id: resource_iri(user, root: argu),
+        authorize_action: 'show'
       )
 
       assert_response 403
@@ -164,7 +166,7 @@ module SPI
       sign_in user
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: resource_iri(argu), authorize_action: 'show'
       )
 
       assert_response 403
@@ -181,7 +183,11 @@ module SPI
     test 'user should show user actor as iri' do
       sign_in user
 
-      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show')
+      get spi_authorize_path(
+        resource_type: 'CurrentActor',
+        resource_id: resource_iri(user, root: argu),
+        authorize_action: 'show'
+      )
 
       assert_response 200
     end
@@ -238,7 +244,7 @@ module SPI
       sign_in administrator
 
       get spi_authorize_path(
-        resource_type: 'CurrentActor', resource_id: argu.iri, authorize_action: 'show'
+        resource_type: 'CurrentActor', resource_id: resource_iri(argu), authorize_action: 'show'
       )
 
       assert_response 200
@@ -255,7 +261,11 @@ module SPI
     test 'administrator should not show user actor as iri' do
       sign_in administrator
 
-      get spi_authorize_path(resource_type: 'CurrentActor', resource_id: user.iri, authorize_action: 'show')
+      get spi_authorize_path(
+        resource_type: 'CurrentActor',
+        resource_id: resource_iri(user, root: argu),
+        authorize_action: 'show'
+      )
 
       assert_response 403
     end

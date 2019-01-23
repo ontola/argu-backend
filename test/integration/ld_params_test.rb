@@ -9,7 +9,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   test 'post create draft motion' do
     create_with_ld_params(
-      collection_iri_path(freetown, :motions),
+      collection_iri(freetown, :motions),
       Motion,
       {'Motion.count' => 1, 'Publication.where("published_at IS NOT NULL").count' => 0},
       'draft_motion.n3'
@@ -18,7 +18,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   test 'post create motion with expiry' do
     create_with_ld_params(
-      collection_iri_path(freetown, :motions),
+      collection_iri(freetown, :motions),
       Motion,
       {'Motion.where(expires_at: DateTime.parse("2050-01-01T23:01:00.000Z")).count' => 1},
       'motion_with_expiry.n3'
@@ -27,7 +27,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   test 'post create motion with cover photo as nquads' do
     create_with_ld_params(
-      collection_iri_path(freetown, :motions),
+      collection_iri(freetown, :motions),
       Motion,
       {'Motion.count' => 1, 'Publication.where("published_at IS NOT NULL").count' => 1, 'MediaObject.count' => 1},
       'motion_with_cover.n3',
@@ -37,7 +37,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   test 'post create motion with attachments as nquads' do
     create_with_ld_params(
-      collection_iri_path(freetown, :motions),
+      collection_iri(freetown, :motions),
       Motion,
       {'Motion.count' => 1, 'MediaObject.count' => 2},
       'motion_with_attachments.n3',
@@ -48,7 +48,7 @@ class LDParamsTest < ActionDispatch::IntegrationTest
 
   test 'post create motion with arguments as nquads' do
     create_with_ld_params(
-      collection_iri_path(freetown, :motions),
+      collection_iri(freetown, :motions),
       Motion,
       {'Motion.count' => 1, 'Argument.count' => 3},
       'motion_with_arguments.n3'
@@ -67,6 +67,6 @@ class LDParamsTest < ActionDispatch::IntegrationTest
            headers: argu_headers(accept: :nq)
     end
     assert_response 201
-    assert_equal response.headers['Location'], klass.last.iri_path
+    assert_equal response.headers['Location'], klass.last.iri
   end
 end

@@ -35,7 +35,7 @@ class GroupsController < ServiceController
   end
 
   def redirect_location
-    settings_iri_path(authenticated_resource.page, tab: :groups)
+    settings_iri(authenticated_resource.page, tab: :groups)
   end
 
   def resource_new_params

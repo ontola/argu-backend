@@ -20,11 +20,11 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def create_success_json
     render locals: {model: authenticated_resource.parent, vote: authenticated_resource},
            status: :created,
-           location: authenticated_resource.iri_path
+           location: authenticated_resource.iri
   end
 
   def create_failure_html
-    redirect_to authenticated_resource.parent.voteable.iri_path,
+    redirect_to authenticated_resource.parent.voteable.iri,
                 notice: t('votes.alerts.failed')
   end
 
@@ -32,7 +32,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
     if params[:vote].try(:[], :r).present?
       redirect_to redirect_param
     else
-      redirect_to authenticated_resource.parent.voteable.iri_path,
+      redirect_to authenticated_resource.parent.voteable.iri,
                   notice: t('votes.alerts.success')
     end
   end
@@ -58,7 +58,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
         if params[:vote].try(:[], :r).present?
           redirect_to redirect_param
         else
-          redirect_to create_service.resource.parent.voteable.iri_path,
+          redirect_to create_service.resource.parent.voteable.iri,
                       notice: t('votes.alerts.not_modified')
         end
       end
@@ -84,7 +84,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def index_success_html
     skip_verify_policy_scoped(true)
-    redirect_to parent_resource!.iri_path
+    redirect_to parent_resource!.iri
   end
 
   def new_form_locals
@@ -103,7 +103,7 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
   end
 
   def show_success_html
-    redirect_to authenticated_resource.voteable.iri_path
+    redirect_to authenticated_resource.voteable.iri
   end
 
   def for_param # rubocop:disable Metrics/AbcSize
@@ -146,19 +146,20 @@ class VotesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def redirect_location
     if authenticated_resource.persisted?
-      authenticated_resource.iri_path
+      authenticated_resource.iri
     else
-      authenticated_resource.voteable.iri_path
+      authenticated_resource.voteable.iri
     end
   end
 
   def after_login_location
     expand_uri_template(
       :new_vote,
-      voteable_path: parent_resource!.iri_path.split('/').select(&:present?),
+      voteable_path: parent_resource!.iri.path.split('/').select(&:present?),
       confirm: true,
       r: params[:r],
-      'vote%5Bfor%5D' => for_param
+      'vote%5Bfor%5D' => for_param,
+      with_hostname: true
     )
   end
 

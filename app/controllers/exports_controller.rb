@@ -35,7 +35,7 @@ class ExportsController < ServiceController
   end
 
   def redirect_location
-    export_iri_path(authenticated_resource.edge)
+    export_iri(authenticated_resource.edge)
   end
 
   def resource_new_params

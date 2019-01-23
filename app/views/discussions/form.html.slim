@@ -8,9 +8,9 @@
         section
           p
             span= t('questions.call_to_action.body') + ' '
-            =link_to new_iri_path(parent_resource, :questions)
+            =link_to new_iri(parent_resource, :questions)
               b.question-t= t('questions.call_to_action.action')
-      =link_to new_iri_path(parent_resource, :questions)
+      =link_to new_iri(parent_resource, :questions)
         .box.question
           .box-image--container
             .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
@@ -33,7 +33,7 @@
                 h3.motion-t
                   span.fa.fa-lightbulb-o
                   span.icon-left= t('discussions.new.question_motion2')
-      =link_to new_iri_path(parent_resource, :questions)
+      =link_to new_iri(parent_resource, :questions)
         .btn--question.btn--huge[collection_model="Question"]
           h3
             span[class="fa fa-#{question_icon}"]
@@ -44,9 +44,9 @@
         section
           p
             span= t('motions.call_to_action.body') + ' '
-            =link_to new_iri_path(parent_resource, :motions)
+            =link_to new_iri(parent_resource, :motions)
               b.motion-t= t('motions.call_to_action.action')
-      =link_to new_iri_path(parent_resource, :motions)
+      =link_to new_iri(parent_resource, :motions)
         .box.motion
           .box-image--container
             .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
@@ -77,7 +77,7 @@
                 h3[class="con-t tooltip--wider"]
                   span.fa.fa-minus
                   span.icon-left= t('discussions.new.motion_argument3')
-      =link_to new_iri_path(parent_resource, :motions)
+      =link_to new_iri(parent_resource, :motions)
         .btn--motion.btn--huge[collection_model="Motion"]
           h3
             span[class="fa fa-#{motion_icon}"]

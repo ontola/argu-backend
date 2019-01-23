@@ -106,7 +106,7 @@ module Users
     test 'user should not post create password for non-existing email' do
       sign_in user
       post user_password_path, params: {user: {email: 'wrong@email.com'}}
-      assert_redirected_to settings_user_path
+      assert_redirected_to settings_iri("#{argu.url}/u").to_s
     end
 
     test 'user should post create password for existing email' do
@@ -115,7 +115,7 @@ module Users
       sign_in user
       post user_password_path, params: {user: {email: user.email}}
       assert_equal flash[:notice], 'You will receive an email shortly with instructions to reset your password.'
-      assert_redirected_to settings_user_path
+      assert_redirected_to settings_iri("#{argu.url}/u").to_s
 
       assert_email_sent
     end
