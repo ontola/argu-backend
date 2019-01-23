@@ -57,8 +57,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Pages the profile has activities in
   def active_pages(filter = nil)
-    page_ids = filter.nil? ? active_pages_ids : filter & active_pages_ids
-    Page.where(edges: {uuid: page_ids}).includes(:shortname)
+    ActsAsTenant.without_tenant do
+      page_ids = filter.nil? ? active_pages_ids : filter & active_pages_ids
+      Page.where(edges: {uuid: page_ids}).includes(:shortname)
+    end
   end
 
   def active_pages_ids
@@ -147,6 +149,14 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
   deprecate :owner
 
+  # @todo remove when pages are no longer profileable
+  def profileable
+    ActsAsTenant.without_tenant do
+      profileable = super
+      profileable.nil? ? association(:profileable).reload&.reader : profileable
+    end
+  end
+
   def self.service
     Profile.find(Profile::SERVICE_ID)
   end
@@ -164,8 +174,10 @@ class Profile < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   # Returns the preferred forum, based the first favorite or the first public forum
   def preferred_forum
-    profileable.try(:favorites)&.joins(:edge)&.where(edges: {owner_type: 'Forum'})&.first&.edge ||
-      Forum.first_public
+    ActsAsTenant.without_tenant do
+      profileable.try(:favorites)&.joins(:edge)&.where(edges: {owner_type: 'Forum'})&.first&.edge ||
+        Forum.first_public
+    end
   end
 
   def requires_name?

@@ -217,7 +217,8 @@ module Argu
           let(:non_existing_index_path) do
             collection_iri(
               expand_uri_template("#{parent_table_sym}_iri", id: non_existing_id, root_id: argu.url),
-              table_sym
+              table_sym,
+              root: argu
             ).path
           end
           let(:non_existing_create_path) { non_existing_index_path }
@@ -228,13 +229,13 @@ module Argu
           let(:non_existing_destroy_path) do
             expand_uri_template("#{table_sym}_iri", id: -99, root_id: argu.url, destroy: true)
           end
-          let(:non_existing_edit_path) { edit_iri(non_existing_show_path).path }
-          let(:non_existing_shift_path) { new_iri(non_existing_move_path).path }
+          let(:non_existing_edit_path) { edit_iri(non_existing_show_path, root: argu).path }
+          let(:non_existing_shift_path) { new_iri(non_existing_move_path, root: argu).path }
           let(:non_existing_move_path) { expand_uri_template(:moves_iri, parent_iri: non_existing_show_path) }
           let(:non_existing_update_path) { non_existing_show_path }
-          let(:non_existing_delete_path) { delete_iri(non_existing_show_path).path }
+          let(:non_existing_delete_path) { delete_iri(non_existing_show_path, root: argu).path }
           let(:non_existing_trash_path) { non_existing_show_path }
-          let(:non_existing_untrash_path) { untrash_iri(non_existing_show_path).path }
+          let(:non_existing_untrash_path) { untrash_iri(non_existing_show_path, root: argu).path }
 
           # Result paths
           let(:parent_path) { subject.parent.iri.path }

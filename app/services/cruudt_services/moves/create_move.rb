@@ -7,4 +7,8 @@ class CreateMove < CreateService
   end
 
   def broadcast_event; end
+
+  def commit
+    ActsAsTenant.without_tenant { super }
+  end
 end

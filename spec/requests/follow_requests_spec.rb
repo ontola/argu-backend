@@ -11,7 +11,7 @@ RSpec.describe 'Follows', type: :request do
   end
 
   let(:create_path) { "#{collection_iri(argu, :follows)}?gid=#{freetown.uuid}" }
-  let(:non_existing_create_path) { "#{collection_iri(argu, :follows)}?gid=#{non_existing_id}" }
+  let(:non_existing_create_path) { "#{collection_iri(argu, :follows, root: argu)}?gid=#{non_existing_id}" }
   let(:create_params) { {follow_type: 'reactions'} }
   let(:expect_post_create_failed_html) { expect(response).to redirect_to(root_path) }
   let(:expect_delete_destroy_json_api) { expect(response.code).to eq('204') }

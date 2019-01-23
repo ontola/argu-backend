@@ -8,19 +8,21 @@ RSpec.feature 'Direct message', type: :feature do
   let(:administrator) { create_administrator(freetown) }
 
   scenario 'Administrator send direct message' do
-    create_email_mock(
-      'direct_message',
-      motion.publisher.email,
-      actor: {
-        display_name: administrator.display_name,
-        iri: administrator.iri,
-        thumbnail: administrator.profile.default_profile_photo.thumbnail
-      },
-      body: 'Body of email',
-      email: administrator.email,
-      resource: {iri: motion.iri, display_name: motion.display_name},
-      subject: 'Subject of email'
-    )
+    ActsAsTenant.with_tenant(motion.root) do
+      create_email_mock(
+        'direct_message',
+        motion.publisher.email,
+        actor: {
+          display_name: administrator.display_name,
+          iri: administrator.iri,
+          thumbnail: administrator.profile.default_profile_photo.thumbnail
+        },
+        body: 'Body of email',
+        email: administrator.email,
+        resource: {iri: resource_iri(motion), display_name: motion.display_name},
+        subject: 'Subject of email'
+      )
+    end
 
     sign_in administrator
     visit(motion)

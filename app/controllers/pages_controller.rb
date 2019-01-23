@@ -51,6 +51,10 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     )
   end
 
+  def index_success
+    ActsAsTenant.without_tenant { super }
+  end
+
   def new_execute
     authenticated_resource.build_shortname
     authenticated_resource.build_profile
@@ -81,7 +85,8 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
   def redirect_generic_shortnames
     return if (/[a-zA-Z]/i =~ params[:id]).nil?
-    resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
+    resource = ActsAsTenant.without_tenant { Shortname.find_resource(params[:id]) }
+    resource || raise(ActiveRecord::RecordNotFound)
     return if resource.is_a?(Page)
     redirect_to resource.iri
   end
@@ -98,6 +103,10 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def redirect_location
     return new_iri(nil, :pages) unless authenticated_resource.persisted?
     settings_iri(authenticated_resource, tab: tab)
+  end
+
+  def resource_by_id
+    @resource_by_id ||= ActsAsTenant.without_tenant { super } || ActsAsTenant.current_tenant
   end
 
   def show_success_html # rubocop:disable Metrics/AbcSize

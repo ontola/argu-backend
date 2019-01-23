@@ -15,15 +15,17 @@ module Users
     end
 
     def index_association
-      @pages =
-        policy_scope(Page)
-          .includes(:shortname, profile: %i[default_profile_photo default_cover_photo])
-          .where(
-            uuid: user
-                  .profile
-                  .granted_root_ids(%w[moderator administrator])
-                  .concat(user.edges.where(owner_type: 'Page').pluck(:uuid))
-          ).distinct
+      ActsAsTenant.without_tenant do
+        @pages =
+          policy_scope(Page)
+            .includes(:shortname, profile: %i[default_profile_photo default_cover_photo])
+            .where(
+              uuid: user
+                    .profile
+                    .granted_root_ids(%w[moderator administrator])
+                    .concat(user.page_ids)
+            ).distinct
+      end
     end
 
     def index_collection

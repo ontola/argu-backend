@@ -4,6 +4,8 @@ module Users
   class ForumsController < EdgeableController
     skip_before_action :authorize_action, only: %i[index]
 
+    private
+
     def index_success_html
       edge_ids =
         current_user

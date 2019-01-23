@@ -275,8 +275,9 @@ class VotesTest < ActionDispatch::IntegrationTest
     motion
     default_iri = motion.default_vote_event.iri_path(id: 'default')
     assert default_iri.include?('default')
+    iri = ActsAsTenant.with_tenant(argu) { collection_iri(default_iri, :votes, canonical: true) }
     assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
-      post collection_iri(default_iri, :votes, canonical: true),
+      post iri,
            params: {
              vote: {
                for: :pro
@@ -379,9 +380,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     default_iri = linked_record.default_vote_event.iri_path(id: 'default')
     assert default_iri.include?('default')
+    iri = ActsAsTenant.with_tenant(argu) { collection_iri(default_iri, :votes, canonical: true) }
 
     assert_difference('Vote.count' => 1, 'Edge.count' => 1) do
-      post collection_iri(default_iri, :votes, canonical: true),
+      post iri,
            params: {
              data: {
                type: 'votes',
@@ -403,9 +405,10 @@ class VotesTest < ActionDispatch::IntegrationTest
 
     default_iri = non_persisted_linked_record.default_vote_event.iri_path(id: 'default')
     assert default_iri.include?('default')
+    iri = ActsAsTenant.with_tenant(argu) { collection_iri(default_iri, :votes, canonical: true) }
 
     assert_difference('Vote.count' => 1, 'LinkedRecord.count' => 1, 'VoteEvent.count' => 1, 'Edge.count' => 3) do
-      post collection_iri(default_iri, :votes, canonical: true),
+      post iri,
            params: {
              data: {
                type: 'votes',

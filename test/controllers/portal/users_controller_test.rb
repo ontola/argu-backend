@@ -9,6 +9,10 @@ module Portal
     let!(:vote) { create(:vote, parent: motion.default_vote_event, publisher: user) }
     let!(:user) { create(:user) }
 
+    before do
+      reset_tenant
+    end
+
     ####################################
     # As Guest
     ####################################

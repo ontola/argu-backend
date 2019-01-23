@@ -8,6 +8,17 @@ module HeaderHelper
     @suggested_forums ||= Setting.get('suggested_forums')&.split(',')&.map(&:strip) || []
   end
 
+  def forum_item(forum)
+    user_context.with_root(forum.parent) do
+      link_item(
+        forum.display_name,
+        forum.iri,
+        data: {turbolinks: false},
+        image: forum.default_profile_photo.url(:icon)
+      )
+    end
+  end
+
   def profile_dropdown_items
     {
       defaultAction: dual_profile_url(current_profile),
@@ -69,21 +80,12 @@ module HeaderHelper
   end
 
   def public_forum_items(limit = 10)
-    items = []
     Forum
       .public_forums
       .includes(:default_profile_photo, :shortname, root: :shortname)
       .where(edges: {uuid: suggested_forums})
       .first(limit)
-      .each do |forum|
-      items << link_item(
-        forum.display_name,
-        forum.iri_path,
-        data: {turbolinks: false},
-        image: forum.default_profile_photo.url(:icon)
-      )
-    end
-    items
+      .map(&method(:forum_item))
   end
 
   def profile_favorite_items
@@ -91,14 +93,7 @@ module HeaderHelper
     current_user
       .favorite_forums
       .includes(:default_profile_photo, :shortname, root: :shortname)
-      .map do |forum|
-        link_item(
-          forum.display_name,
-          forum.iri_path,
-          data: {turbolinks: false},
-          image: forum.default_profile_photo.url(:icon)
-        )
-      end
+      .map(&method(:forum_item))
   end
 
   def actor_item(title, url, opts = {})

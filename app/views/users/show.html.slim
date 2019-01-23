@@ -9,7 +9,7 @@
   .col-1
     p
       = "Bekijk activiteit in "
-      =select_tag :feed_page_id, options_for_select(available_pages.map { |page| [page.display_name, page_user_feed_url(page.url, authenticated_resource, format: :js)] }, organization_feed)
+      =select_tag :feed_page_id, options_for_select(available_pages.map { |page| user_context.with_root(page) { [page.display_name, "#{feeds_iri(authenticated_resource)}.js"] }}, organization_feed)
     - if current_user == authenticated_resource
       -if !authenticated_resource.profile.are_votes_public?
         span.fa.fa-lock

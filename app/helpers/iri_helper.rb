@@ -55,7 +55,9 @@ module IRIHelper
   #   iri = nil
   #   opts_from_iri # => {}
   def opts_from_iri(iri, root = tree_root)
-    opts = Rails.application.routes.recognize_path(DynamicUriHelper.revert(iri, root))
+    opts = ActsAsTenant.with_tenant(root) do
+      Rails.application.routes.recognize_path(DynamicUriHelper.revert(iri, root))
+    end
     return {} unless opts[:id].present? && opts[:controller].present?
     opts[:type] = opts[:controller].singularize
     opts

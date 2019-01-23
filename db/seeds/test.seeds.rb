@@ -140,21 +140,25 @@ Doorkeeper::Application.create!(
   uid: 'service_uid'
 )
 
-freetown = FactorySeeder.create_forum(
-  :with_follower,
-  url: 'freetown',
-  name: 'Freetown',
-  parent: page,
-  public_grant: 'initiator'
-)
-holland = FactorySeeder.create_forum(
-  :populated_forum,
-  parent: page,
-  url: 'holland',
-  name: 'Holland',
-  discoverable: false,
-  public_grant: 'none'
-)
+freetown = ActsAsTenant.with_tenant(page) do
+  FactorySeeder.create_forum(
+    :with_follower,
+    url: 'freetown',
+    name: 'Freetown',
+    parent: page,
+    public_grant: 'initiator'
+  )
+end
+holland = ActsAsTenant.with_tenant(page) do
+  FactorySeeder.create_forum(
+    :populated_forum,
+    parent: page,
+    url: 'holland',
+    name: 'Holland',
+    discoverable: false,
+    public_grant: 'none'
+  )
+end
 
 other_page = FactorySeeder.create(
   :page,
@@ -166,18 +170,22 @@ other_page = FactorySeeder.create(
   url: 'other_page',
   iri_prefix: 'app.argu.localtest/other_page'
 )
-other_page_forum = FactorySeeder.create_forum(
-  parent: other_page,
-  url: 'other_page_forum',
-  name: 'Other page forum',
-  public_grant: 'participator'
-)
-FactorySeeder.create_forum(
-  parent: other_page,
-  url: 'other_page_forum2',
-  name: 'Other page forum2',
-  public_grant: 'spectator'
-)
+other_page_forum = ActsAsTenant.with_tenant(other_page) do
+  FactorySeeder.create_forum(
+    parent: other_page,
+    url: 'other_page_forum',
+    name: 'Other page forum',
+    public_grant: 'participator'
+  )
+end
+ActsAsTenant.with_tenant(other_page) do
+  FactorySeeder.create_forum(
+    parent: other_page,
+    url: 'other_page_forum2',
+    name: 'Other page forum2',
+    public_grant: 'spectator'
+  )
+end
 
 members_group =
   FactorySeeder

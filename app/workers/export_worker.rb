@@ -11,7 +11,9 @@ class ExportWorker
     self.export = Export.find_by(id: export_id)
     return if export.blank?
     export.processing!
-    generate_zip
+    ActsAsTenant.with_tenant(export.edge.root) do
+      generate_zip
+    end
     export.done!
   rescue StandardError => e
     Bugsnag.notify(e)

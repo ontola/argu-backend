@@ -12,19 +12,18 @@ class UsersController < AuthorizedController
 
   private
 
-  def authenticated_resource! # rubocop:disable Metrics/AbcSize
-    @user ||= case action_name
-              when 'show'
-                User.preload(:profile).find_via_shortname_or_id(params[:id])
-              when 'update'
-                User.find_by(id: current_user.id)
-              else
-                if current_user.guest?
-                  flash[:error] = t('devise.failure.unauthenticated')
-                  raise Argu::Errors::Unauthorized.new
-                end
-                current_user
-              end
+  def resource_by_id
+    @resource_by_id ||=
+      case action_name
+      when 'show'
+        User.preload(:profile).find_via_shortname_or_id(params[:id])
+      else
+        if current_resource_owner.guest?
+          flash[:error] = t('devise.failure.unauthenticated')
+          raise Argu::Errors::Unauthorized.new
+        end
+        current_resource_owner
+      end
   end
 
   def email_changed? # rubocop:disable Metrics/AbcSize
@@ -71,6 +70,12 @@ class UsersController < AuthorizedController
     end
   end
 
+  def tree_root_fallback
+    return super if params[:id].blank? || resource_by_id == current_resource_owner
+
+    user_root_fallback || super
+  end
+
   def update_failure_html # rubocop:disable Metrics/AbcSize
     if params[:user][:form] == 'wrong_email'
       email = params[:user][:email_addresses_attributes]['99999'][:email]
@@ -105,5 +110,9 @@ class UsersController < AuthorizedController
   def password_required
     permit_params[:password].present? ||
       params[:user][:primary_email].present? && params[:user][:primary_email] != '[0]'
+  end
+
+  def user_root_fallback
+    resource_by_id&.edges&.last&.root || Page.find_via_shortname('argu')
   end
 end

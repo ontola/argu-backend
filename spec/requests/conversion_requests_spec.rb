@@ -7,7 +7,7 @@ RSpec.describe 'Conversions', type: :request do
   include Argu::TestHelpers::AutomatedRequests
   let(:new_path) { new_iri(conversions_iri(subject).path).path }
   let(:non_existing_new_path) do
-    new_iri(conversions_iri(expand_uri_template('edges_iri', id: SecureRandom.uuid)).path).path
+    new_iri(conversions_iri(expand_uri_template('edges_iri', id: SecureRandom.uuid)).path, root: argu).path
   end
   let(:create_path) { collection_iri(subject, :conversions).path }
   let(:non_existing_create_path) do

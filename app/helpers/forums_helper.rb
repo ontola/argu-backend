@@ -10,8 +10,10 @@ module ForumsHelper
   def forum_selector_items(_guest = false)
     sections = []
 
-    sections << forum_membership_section unless current_user.guest?
-    sections << forum_discover_section
+    ActsAsTenant.without_tenant do
+      sections << forum_membership_section unless current_user.guest?
+      sections << forum_discover_section
+    end
 
     {
       fa: 'fa-chevron-down',
@@ -53,9 +55,11 @@ module ForumsHelper
   def forum_title_dropdown_items(resource)
     sections = []
 
-    sections << forum_membership_section unless current_user.guest?
-    sections << forum_discover_section
-    sections << forum_current_section(resource) if current_user.has_favorite?(resource)
+    ActsAsTenant.without_tenant do
+      sections << forum_membership_section unless current_user.guest?
+      sections << forum_discover_section
+      sections << forum_current_section(resource) if current_user.has_favorite?(resource)
+    end
 
     {
       title: resource.name,

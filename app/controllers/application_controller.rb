@@ -159,11 +159,17 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # {Forum.first_public}.
   def preferred_forum(profile = nil)
     profile ||= current_profile
-    @_preferred_forum ||=
-      authorize_forum(current_forum) ||
-      authorize_forum(profile.last_forum) ||
-      authorize_forum(profile.preferred_forum) ||
-      authorize_forum(Forum.first_public)
+    ActsAsTenant.without_tenant do
+      preferred_forum = authorize_forum(current_forum) || preferred_forum_for(profile) || Forum.first_public
+      preferred_forum.parent
+      preferred_forum
+    end
+  end
+
+  def preferred_forum_for(profile)
+    return if profile.nil?
+
+    profile.last_forum || profile.preferred_forum
   end
 
   # @private

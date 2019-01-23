@@ -9,12 +9,15 @@ class ForumsController < EdgeableController
   helper_method :forum_grants
 
   def discover
-    @forums = Forum
-                .public_forums
-                .includes(:default_cover_photo, :default_profile_photo)
-                .page show_params[:page]
-    skip_verify_policy_scoped(true)
-    render
+    ActsAsTenant.without_tenant do
+      @forums =
+        Forum
+          .public_forums
+          .includes(:default_cover_photo, :default_profile_photo, root: :shortname, parent: :shortname)
+          .page(show_params[:page])
+      skip_verify_policy_scoped(true)
+      render
+    end
   end
 
   def show

@@ -11,7 +11,11 @@ module SPI
     private
 
     def authorize_action
-      authorize resource!, "#{params[:authorize_action]}?"
+      if resource!.try(:root)
+        user_context.with_root(resource!.root) { authorize resource!, "#{params[:authorize_action]}?" }
+      else
+        authorize resource!, "#{params[:authorize_action]}?"
+      end
     end
 
     def resource # rubocop:disable Metrics/AbcSize

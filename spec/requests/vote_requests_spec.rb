@@ -86,7 +86,7 @@ RSpec.describe 'Votes', type: :request do
         collection_iri(subject.parent.iri(id: 'default').path, :votes)
       end
       let(:non_existing_index_path) do
-        collection_iri(subject.parent.iri(id: non_existing_id).path, :votes).path
+        collection_iri(subject.parent.iri(id: non_existing_id).path, :votes, root: argu).path
       end
       let(:created_resource_path) { linked_record.iri.path }
       it_behaves_like 'requests', skip: %i[trash untrash edit delete update new create_invalid html]
@@ -121,7 +121,8 @@ RSpec.describe 'Votes', type: :request do
             ),
             id: 'default'
           ),
-          :votes
+          :votes,
+          root: argu
         ).path
       end
       it_behaves_like 'post create', skip: %i[html]
