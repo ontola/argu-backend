@@ -12,7 +12,7 @@ class ShortnamesController < ParentableController
   def destination_param
     return @destination_param if instance_variable_defined?(:@destination_param)
     return if params[:shortname].try(:[], :destination).blank?
-    @destination_param = "#{parent_from_params.iri_path}/#{params[:shortname][:destination]}"
+    @destination_param = "#{tree_root.iri}/#{params[:shortname][:destination]}"
   end
 
   def create_execute
@@ -27,7 +27,7 @@ class ShortnamesController < ParentableController
   end
 
   def parent_resource
-    return super if destination_param.blank?
+    return tree_root if destination_param.blank?
     @parent_resource ||= resource_from_iri(destination_param)
   end
 

@@ -23,7 +23,7 @@ class FeedController < AuthorizedController
   end
 
   def feed_resource
-    parent_resource
+    parent_resource || tree_root
   end
 
   def feed_resource!
