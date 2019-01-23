@@ -9,18 +9,11 @@ FactoryBot.define do
     last_accepted Time.current
     visibility Page.visibilities[:visible]
     is_published true
-
-    before(:create) do |page|
-      page.publisher ||= build(:user)
-      page.creator ||= page.publisher.profile
-      page.profile ||= build(:profile, profileable: page)
-      page.profile.name = generate(:page_name) if page.profile.name.blank?
-      page.shortname = build(:shortname) if page.shortname&.shortname&.nil?
-      page.is_published = true
+    sequence :url do |n|
+      "page_#{n}"
     end
-
-    after(:build) do |page|
-      page.url ||= build(:shortname).shortname
+    sequence :profile_attributes do |n|
+      {name: "page_#{n}"}
     end
   end
 end

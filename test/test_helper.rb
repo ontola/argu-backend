@@ -83,6 +83,7 @@ module TestHelper
     page.url = 'public_page'
     page.last_accepted = Time.current
     page.profile = Profile.new(name: 'public page profile')
+    page.iri_prefix = "app.#{Rails.application.config.host_name}/public_page"
   end
 
   public_group = Group.find_or_create_by!(id: Group::PUBLIC_ID) do |group|

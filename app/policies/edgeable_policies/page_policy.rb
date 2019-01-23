@@ -17,7 +17,7 @@ class PagePolicy < EdgePolicy
 
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[display_name about last_accepted visibility]
+    attributes.concat %i[display_name about last_accepted visibility url]
     attributes.append(shortname_attributes: %i[shortname]) if new_record?
     attributes.append(profile_attributes: ProfilePolicy
                                             .new(context, record.try(:profile) || Profile.new(profileable: record))
@@ -54,6 +54,13 @@ class PagePolicy < EdgePolicy
 
   def group_member?
     user.profile.group_memberships.joins(:group).where(groups: {root_id: record.uuid}).present?
+  end
+
+  # @todo remove if pages are no longer profileable
+  def init_grant_tree
+    context.with_root(record.root) do
+      context.grant_tree_for(record)
+    end
   end
 
   def pages_left?

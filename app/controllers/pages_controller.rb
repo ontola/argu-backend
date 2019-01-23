@@ -5,20 +5,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   skip_before_action :authorize_action, only: %i[index]
   skip_before_action :check_if_registered, only: :index
 
-  protected
-
-  def authenticated_resource!
-    @resource ||=
-      case action_name
-      when 'create', 'new'
-        new_resource_from_params
-      when 'trash', 'untrash', 'index'
-        nil
-      else
-        resource_by_id
-      end
-  end
-
   private
 
   def authorize_action
@@ -38,17 +24,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
   def destroy_failure_html
     flash[:error] = t('errors.general')
     redirect_to(delete_iri(authenticated_resource))
-  end
-
-  def execute_action
-    return super unless action_name == 'create'
-    authenticated_resource.assign_attributes(permit_params)
-
-    if authenticated_resource.save
-      active_response_handle_success
-    else
-      active_response_handle_failure
-    end
   end
 
   def handle_forbidden_html(_exception) # rubocop:disable Metrics/AbcSize
@@ -116,12 +91,21 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     Pundit.policy(user_context, resource)
   end
 
+  def redirect_current_resource?(_resource)
+    false
+  end
+
   def redirect_location
     return new_iri(nil, :pages) unless authenticated_resource.persisted?
     settings_iri(authenticated_resource, tab: tab)
   end
 
   def show_success_html # rubocop:disable Metrics/AbcSize
+    if resource_by_id != ActsAsTenant.current_tenant
+      redirect_to "#{request.protocol}#{DynamicUriHelper.tenant_prefix(resource_by_id)}"
+      return
+    end
+
     @forums = policy_scope(authenticated_resource.forums)
                 .includes(:default_cover_photo, :default_profile_photo, :shortname)
                 .order('edges.follows_count DESC')
@@ -129,8 +113,6 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
 
     if @forums.count == 1 && !policy(authenticated_resource).update?
       redirect_to @forums.first.iri
-    elsif (/[a-zA-Z]/i =~ params[:id]).nil?
-      redirect_to authenticated_resource.iri_path, status: 307
     else
       render 'show'
     end

@@ -410,24 +410,6 @@ ActiveRecord::Schema.define(version: 2019_01_18_153356) do
     t.index ["publishable_id"], name: "index_publications_on_publishable_id"
   end
 
-  create_table "rules", id: :serial, force: :cascade do |t|
-    t.string "model_type"
-    t.integer "model_id"
-    t.string "action"
-    t.string "role"
-    t.boolean "permit"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "context_type"
-    t.integer "context_id"
-    t.integer "trickles", default: 0, null: false
-    t.string "message"
-    t.integer "branch_id", null: false
-    t.index ["branch_id"], name: "index_rules_on_branch_id"
-    t.index ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type"
-    t.index ["model_id", "model_type"], name: "index_rules_on_model_id_and_model_type"
-  end
-
   create_table "sessions", id: :serial, force: :cascade do |t|
     t.string "session_id", limit: 255, null: false
     t.text "data"
@@ -455,20 +437,6 @@ ActiveRecord::Schema.define(version: 2019_01_18_153356) do
     t.index "lower((shortname)::text), root_id", name: "index_shortnames_on_scoped_shortname", unique: true
     t.index ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, where: "(\"primary\" IS TRUE)"
     t.index ["root_id"], name: "index_shortnames_on_root_id"
-  end
-
-  create_table "sources", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "page_id", null: false
-    t.string "iri_base", null: false
-    t.integer "creator_id", null: false
-    t.integer "publisher_id", null: false
-    t.integer "visibility", default: 2
-    t.string "shortname", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["iri_base"], name: "index_sources_on_iri_base", unique: true
-    t.index ["page_id", "shortname"], name: "index_sources_on_page_id_and_shortname", unique: true
   end
 
   create_table "spam_verdicts", force: :cascade do |t|
@@ -579,7 +547,4 @@ ActiveRecord::Schema.define(version: 2019_01_18_153356) do
   add_foreign_key "placements", "profiles", column: "creator_id"
   add_foreign_key "placements", "users", column: "publisher_id"
   add_foreign_key "publications", "edges", column: "publishable_id", primary_key: "uuid"
-  add_foreign_key "rules", "edges", column: "branch_id"
-  add_foreign_key "sources", "profiles", column: "creator_id"
-  add_foreign_key "sources", "users", column: "publisher_id"
 end

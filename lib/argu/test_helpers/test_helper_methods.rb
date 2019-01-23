@@ -14,7 +14,7 @@ module Argu
       module InstanceMethods
         include TestResources::InstanceMethods
         SERVICE_MODELS = %i[argument pro_argument con_argument blog_post comment forum group_membership motion export
-                            group question vote decision grant vote_event].freeze
+                            group question vote decision grant vote_event page].freeze
 
         def cascaded_forum(key, opts)
           key && opts.dig(key, :forum) || opts.dig(:forum) || try(:freetown)

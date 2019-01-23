@@ -44,6 +44,7 @@ page = FactorySeeder.create(
   last_accepted: Time.current,
   profile_attributes: {name: 'Argu page'},
   url: 'argu',
+  iri_prefix: 'app.argu.localtest/argu',
   publisher: staff,
   creator: staff.profile,
   is_published: true,
@@ -162,7 +163,8 @@ other_page = FactorySeeder.create(
   is_published: true,
   profile_attributes: {name: 'Other page'},
   base_color: '#800000',
-  url: 'other_page'
+  url: 'other_page',
+  iri_prefix: 'app.argu.localtest/other_page'
 )
 other_page_forum = FactorySeeder.create_forum(
   parent: other_page,

@@ -23,7 +23,7 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   def initialize(context, record)
     super
     raise('No edge available in policy') unless record
-    @grant_tree = context.grant_tree_for(record)
+    @grant_tree = init_grant_tree
   end
 
   %i[spectator participator moderator administrator staff].each do |role|
@@ -177,6 +177,10 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
 
   def has_content_children?
     record.children_counts.except('votes_con', 'votes_neutral', 'votes_pro').values.map(&:to_i).sum.positive?
+  end
+
+  def init_grant_tree
+    context.grant_tree_for(record)
   end
 
   def is_creator?
