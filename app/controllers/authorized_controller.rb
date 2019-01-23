@@ -21,7 +21,7 @@ class AuthorizedController < ApplicationController # rubocop:disable Metrics/Cla
 
   def after_login_location
     return redirect_location if authenticated_resource!.present? && request.method != 'GET'
-    [request.path, request.query_string].reject(&:blank?).join('?')
+    request.original_url
   end
 
   def authorize_action

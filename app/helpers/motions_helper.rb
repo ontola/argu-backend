@@ -37,7 +37,7 @@ module MotionsHelper
       disabled: disabled_message.present?,
       disabledMessage: disabled_message,
       distribution: motion_vote_counts(motion),
-      facebookUrl: omniauth_authorize_path(:user, :facebook, r: request.env['PATH_INFO']),
+      facebookUrl: omniauth_authorize_path(:user, :facebook, r: request.original_fullpath),
       forgotPassword: {
         href: new_user_password_path,
         text: t('forgot_password')
@@ -48,7 +48,7 @@ module MotionsHelper
       objectType: 'motion',
       percent: motion.default_vote_event.votes_pro_percentages,
       policyPath: policy_path,
-      userRegistrationUrl: user_registration_url(r: request.env['PATH_INFO']),
+      userRegistrationUrl: user_registration_url(r: request.original_fullpath),
       selectedArguments: vote&.argument_ids || [],
       totalVotes: motion.default_vote_event.total_vote_count,
       vote_path: collection_iri(motion.default_vote_event, :votes)
