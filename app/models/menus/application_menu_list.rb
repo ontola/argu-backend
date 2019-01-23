@@ -29,7 +29,7 @@ class ApplicationMenuList < MenuList # rubocop:disable Metrics/ClassLength
   end
 
   def iri_path(opts = {})
-    expand_uri_template('menus_iri', opts)
+    expand_uri_template('menu_lists_iri', opts.merge(parent_iri: '/apex'))
   end
 
   def user_menu

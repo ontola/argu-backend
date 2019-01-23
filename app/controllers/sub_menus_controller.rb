@@ -8,12 +8,15 @@ class SubMenusController < ParentableController
 
   def authorize_action
     skip_verify_policy_scoped(true)
-    authorize parent_resource, :show?
+    if parent_resource.present?
+      authorize parent_resource, :show?
+    else
+      skip_verify_policy_authorized(true)
+    end
   end
 
   def index_association
-    menu = parent_resource.menu(user_context, params[:menu_id].to_sym) || raise(ActiveRecord::RecordNotFound)
-    menu.menu_sequence
+    menu&.menu_sequence || raise(ActiveRecord::RecordNotFound)
   end
 
   def index_includes
@@ -27,7 +30,20 @@ class SubMenusController < ParentableController
     ]
   end
 
+  def menu
+    if parent_resource.present?
+      parent_resource.menu(user_context, menu_id)
+    else
+      ApplicationMenuList.new(resource: current_user, user_context: user_context).menu[menu_id]
+    end
+  end
+
+  def menu_id
+    params[:menu_id].to_sym
+  end
+
   def parent_resource
-    parent_from_params(params.except(:menu_id))
+    @parent_resource ||=
+      parent_from_params(tree_root, params.except(:menu_id)) || !request.path.start_with?('/apex/') && tree_root || nil
   end
 end

@@ -6,6 +6,10 @@ class MenusController < ParentableController
 
   private
 
+  def application_menu?
+    request.path.start_with?('/apex/')
+  end
+
   def authorize_action
     skip_verify_policy_scoped(true)
     if parent_resource.present?
@@ -37,6 +41,10 @@ class MenusController < ParentableController
     else
       ApplicationMenuList.new(resource: current_user, user_context: user_context).menus
     end
+  end
+
+  def parent_resource
+    @parent_resource ||= super unless application_menu?
   end
 
   def resource_by_id # rubocop:disable Metrics/AbcSize
