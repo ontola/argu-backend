@@ -14,6 +14,7 @@ export const InvitedSelection = React.createClass({
     propTypes: {
         handleInvitedChange: React.PropTypes.func,
         handleRemoveInvited: React.PropTypes.func,
+        iriPrefix: React.PropTypes.string,
         values: React.PropTypes.array
     },
 
@@ -25,7 +26,7 @@ export const InvitedSelection = React.createClass({
     },
 
     fetchUsers (input) {
-        return fetch('/profiles.json', safeCredentials({
+        return fetch(`/${this.props.iriPrefix}/profiles.json`, safeCredentials({
             method: 'POST',
             body: JSON.stringify({
                 q: input,

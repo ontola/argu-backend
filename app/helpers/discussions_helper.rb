@@ -54,6 +54,7 @@ module DiscussionsHelper
       forumName: resource.ancestor(:forum).display_name,
       forumNames: resource.root.forums.map(&:name).join(', '),
       groups: discussion_invite_groups(resource),
+      iriPrefix: tree_root.url,
       managedProfiles: managed_profiles_list,
       message: t('tokens.discussion.default_message', resource: resource.display_name),
       pageEdge: resource.root_id,

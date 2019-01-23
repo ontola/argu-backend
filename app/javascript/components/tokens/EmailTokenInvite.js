@@ -13,6 +13,7 @@ export const EmailTokenInvite = React.createClass({
         currentActor: React.PropTypes.number,
         groupId: React.PropTypes.number,
         indexTokenUrl: React.PropTypes.string,
+        iriPrefix: React.PropTypes.string,
         managedProfiles: React.PropTypes.array,
         message: React.PropTypes.string,
         rootId: React.PropTypes.number
@@ -111,6 +112,7 @@ export const EmailTokenInvite = React.createClass({
                 <InvitedSelection
                     handleInvitedChange={this.handleInvitedChange}
                     handleRemoveInvited={this.handleRemoveInvited}
+                    iriPrefix={this.props.iriPrefix}
                     values={this.state.values}/>
                 <label>{I18n.t('tokens.labels.message')}</label>
                 <textarea
