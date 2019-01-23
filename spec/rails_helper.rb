@@ -72,6 +72,10 @@ RSpec.configure do |config|
     mapbox_mock
   end
 
+  config.after(:each) do
+    reset_tenant
+  end
+
   Capybara.register_driver :selenium_firefox do |app|
     client = Selenium::WebDriver::Remote::Http::Default.new
     client.timeout = 200

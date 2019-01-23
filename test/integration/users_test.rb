@@ -29,7 +29,8 @@ class UsersTest < ActionDispatch::IntegrationTest
   test 'guest should get show by id' do
     get user_path(user_public.id)
 
-    assert_redirected_to user_public
+    ActsAsTenant.current_tenant = argu
+    assert_redirected_to user_public.reload.iri.to_s
   end
 
   test 'guest should get show by id user without shortname' do
@@ -66,7 +67,8 @@ class UsersTest < ActionDispatch::IntegrationTest
 
     get user_path(user_public.id)
 
-    assert_redirected_to user_public
+    ActsAsTenant.current_tenant = argu
+    assert_redirected_to user_public.reload.iri.to_s
   end
 
   test 'user should get show by id user without shortname' do

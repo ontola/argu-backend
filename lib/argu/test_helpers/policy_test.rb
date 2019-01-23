@@ -37,6 +37,10 @@ class PolicyTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
   let(:linked_record) { LinkedRecord.create_for_forum(argu.url, freetown.url, SecureRandom.uuid) }
   let(:linked_record_argument) { create(:argument, parent: linked_record, publisher: creator) }
 
+  before do
+    ActsAsTenant.current_tenant = argu
+  end
+
   ['', 'expired_', 'trashed_', 'unpublished_'].each do |prefix|
     let("#{prefix}question") { create(:question, parent: send("#{prefix}freetown"), publisher: creator) }
     let("#{prefix}forum_motion") { create(:motion, parent: send("#{prefix}freetown"), publisher: creator) }

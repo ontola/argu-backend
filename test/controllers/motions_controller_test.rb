@@ -42,7 +42,9 @@ class MotionsControllerTest < ActionController::TestCase
   # Index for Forum
   ####################################
   test 'should get index motions of forum' do
-    get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
+    ActsAsTenant.with_tenant(holland.parent) do
+      get :index, params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url}
+    end
     assert_response 200
 
     expect_relationship('partOf')
@@ -55,8 +57,10 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'should get index motions of forum page 1' do
-    get :index,
-        params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, type: 'paginated', page: 1}
+    ActsAsTenant.with_tenant(holland.parent) do
+      get :index,
+          params: {format: :json_api, root_id: holland.parent.url, forum_id: holland.url, type: 'paginated', page: 1}
+    end
     assert_response 200
 
     expect_relationship('collection')

@@ -158,6 +158,7 @@ module ActiveSupport
     teardown do
       keys = Argu::Redis.keys('temporary*')
       Argu::Redis.redis_instance.del(*keys) if keys.present?
+      reset_tenant
     end
 
     # FactoryBot.lint
@@ -182,6 +183,10 @@ module ActionDispatch
     setup do
       I18n.locale = :en
       self.host = Rails.application.config.host_name
+    end
+
+    teardown do
+      reset_tenant
     end
 
     def argu_headers(accept: nil, bearer: nil, host: nil)
@@ -276,6 +281,14 @@ module ActionController
     setup do
       I18n.locale = :en
       request.host = Rails.application.config.host_name
+    end
+
+    before do
+      ActsAsTenant.current_tenant = argu
+    end
+
+    teardown do
+      reset_tenant
     end
   end
 end

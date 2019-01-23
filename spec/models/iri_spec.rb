@@ -20,6 +20,10 @@ RSpec.describe "Iri's", type: :model do
     end
   end
 
+  before do
+    ActsAsTenant.current_tenant = argu
+  end
+
   context 'Page' do
     subject { argu }
     let(:url) { root_url[0...-1] }

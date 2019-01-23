@@ -66,6 +66,7 @@ module Portal
       }
       assert_difference(differences) do
         delete :destroy, params: {id: user.url, user: {confirmation_string: 'remove'}}
+        reset_tenant
         assert_response 303
       end
     end
@@ -86,6 +87,7 @@ module Portal
       }
       assert_difference(differences) do
         delete :destroy, params: {id: user.url, user: {confirmation_string: 'remove', destroy_content: 'true'}}
+        reset_tenant
         assert_response 303
       end
     end

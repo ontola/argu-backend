@@ -28,7 +28,9 @@ module Argu
 
     module ClassMethods
       def define_page
-        let!(:argu) { create(:page) }
+        let!(:argu) do
+          create(:page, profile_attributes: {name: 'Argu'})
+        end
       end
 
       def define_freetown(name = 'freetown', attributes: {})

@@ -9,7 +9,8 @@ class ForumsControllerTest < ActionController::TestCase
   # Show
   ####################################
   test 'should get show forum' do
-    get :show, params: {format: :json_api, root_id: holland.parent.url, id: holland.url}
+    tenant_from(holland)
+    get :show, params: {format: :json_api, id: holland.url}
     assert_response 200
 
     expect_relationship('motionCollection')

@@ -48,6 +48,10 @@ class MenuListTest < ActiveSupport::TestCase
     )
   end
 
+  before do
+    ActsAsTenant.current_tenant = argu
+  end
+
   test 'Menu for administrator should include update' do
     assert freetown.menu(administrator_context, :actions).menus.call.compact.map(&:tag).include?(:edit)
   end

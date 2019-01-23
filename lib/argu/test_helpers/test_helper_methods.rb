@@ -161,6 +161,10 @@ module Argu
           File.open("test/files/#{filename}")
         end
 
+        def reset_tenant
+          ActsAsTenant.current_tenant = nil
+        end
+
         def reset_publication(publication)
           return if publication.nil?
           publication.update(published_at: publication.published_at - 10.seconds) if publication.published_at.present?
@@ -196,6 +200,10 @@ module Argu
             false
           )
           @request.headers['Authorization'] = "Bearer #{t.token}"
+        end
+
+        def tenant_from(resource)
+          ActsAsTenant.current_tenant = resource.root
         end
 
         def trash_resource(resource, user = nil, profile = nil)

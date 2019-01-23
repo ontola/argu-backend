@@ -23,6 +23,10 @@ class DraftsTest < ActionDispatch::IntegrationTest
            argu_publication_attributes: {draft: true})
   end
 
+  before do
+    ActsAsTenant.current_tenant = argu
+  end
+
   ####################################
   # As Guest
   ####################################
