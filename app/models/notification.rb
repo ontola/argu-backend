@@ -20,6 +20,7 @@ class Notification < ApplicationRecord
 
   scope :for_activity, -> { where.not(activity_id: nil) }
 
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
   enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3, confirmation_reminder: 4, finish_intro: 5}
   virtual_attribute :unread, :boolean, default: false, dependent_on: :read_at, value: ->(r) { r.read_at.blank? }
 

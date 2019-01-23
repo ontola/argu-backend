@@ -23,14 +23,11 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   acts_as_followable
   has_ltree_hierarchy
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
+
   belongs_to :parent,
              class_name: 'Edge',
              inverse_of: :children
-  belongs_to :root,
-             -> { where(parent_id: nil) },
-             class_name: 'Edge',
-             foreign_key: :root_id,
-             primary_key: :root_id
   belongs_to :publisher, class_name: 'User', required: true, foreign_key: :publisher_id
   belongs_to :creator, class_name: 'Profile', required: true, foreign_key: :creator_id
   has_many :activities,
@@ -250,6 +247,7 @@ class Edge < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def root(*args)
     return self if parent_id.nil? && parent.nil?
+    return super if association_cached?(:root)
     @root ||= association_cached?(:parent) ? parent.root : association(:root).reader(*args)
   end
 

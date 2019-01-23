@@ -11,7 +11,6 @@ class Activity < PublicActivity::Activity
   # @example Update
   #   Moderator updates Alice's argument
   #   activity.owner # => Moderator
-  belongs_to :root, class_name: 'Edge', primary_key: :uuid
   belongs_to :owner, class_name: 'Profile'
   belongs_to :trackable,
              class_name: 'Edge',
@@ -23,6 +22,7 @@ class Activity < PublicActivity::Activity
              inverse_of: :recipient_activities,
              primary_key: :uuid,
              foreign_key: :recipient_edge_id
+  acts_as_tenant :root, class_name: 'Edge', primary_key: :uuid
 
   attr_accessor :silent
 

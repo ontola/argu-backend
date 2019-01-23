@@ -7,6 +7,7 @@ require_relative './initializers/build'
 
 require_relative '../lib/ns'
 require_relative '../lib/rails_ld/middleware/linked_data_params'
+require_relative '../lib/tenant_middleware'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -83,6 +84,7 @@ module Argu
     end
     # config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
+    config.middleware.use TenantMiddleware
     config.middleware.use RailsLD::Middleware::LinkedDataParams
 
     ############################
