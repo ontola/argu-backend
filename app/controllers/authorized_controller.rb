@@ -2,7 +2,6 @@
 
 class AuthorizedController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :check_if_registered, if: :check_if_registered?
-  before_action :current_actor
   include Argu::Controller::Authorization
 
   before_action :verify_terms_accepted, only: %i[update create]

@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   before_bugsnag_notify :add_user_info_to_bugsnag
 
   prepend_before_action :set_tenant_header
+  prepend_before_action :current_actor
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :set_vary
