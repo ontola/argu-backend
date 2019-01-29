@@ -5,10 +5,8 @@ class BannerDismissalPolicy < RestrictivePolicy
 
   def permitted_attribute_names
     attributes = super
-    if create?
-      attributes.concat %i[title forum cited_profile content profile_photo
-                           cited_name cited_function published_at]
-    end
+    attributes.concat %i[title forum cited_profile content profile_photo
+                         cited_name cited_function published_at]
     attributes.append :id if staff?
     attributes
   end

@@ -3,7 +3,7 @@
 class BlogPostPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
-    attributes.concat %i[display_name description trashed_at] if create?
+    attributes.concat %i[display_name description trashed_at]
     attributes
   end
 

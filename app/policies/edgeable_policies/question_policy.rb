@@ -3,10 +3,8 @@
 class QuestionPolicy < EdgePolicy
   def permitted_attribute_names
     attributes = super
-    if create?
-      attributes.concat %i[id display_name description forum_id cover_photo
-                           remove_cover_photo cover_photo_attribution]
-    end
+    attributes.concat %i[id display_name description forum_id cover_photo
+                         remove_cover_photo cover_photo_attribution]
     attributes.concat %i[f_convert] if staff?
     if moderator? || administrator? || staff?
       attributes.concat %i[pinned require_location default_motion_sorting reset_create_motion]
