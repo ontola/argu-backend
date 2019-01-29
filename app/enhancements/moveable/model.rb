@@ -10,7 +10,7 @@ module Moveable
         update_activities_on_move(new_parent)
         if root_id != new_parent.root_id
           self.fragment = nil
-          self.root_id = new_parent.root_id
+          update_root_id(new_parent.root_id)
           @root = new_parent.root
           descendants.update_all(root_id: new_parent.root_id)
           shortnameable? && shortname.update(root_id: new_parent.root_id)
@@ -31,6 +31,12 @@ module Moveable
           recipient_id: new_parent.id,
           recipient_type: new_parent.owner_type
         )
+    end
+
+    def update_root_id(new_root_id)
+      self.root_id = new_root_id
+    rescue ActsAsTenant::Errors::TenantIsImmutable
+      nil
     end
   end
 end
