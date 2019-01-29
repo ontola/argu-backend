@@ -221,6 +221,7 @@ Rails.application.routes.draw do
       get 'authorize', to: 'authorize#show'
       get 'current_user', to: 'users#current'
       get 'email_addresses', to: 'email_addresses#show'
+      get 'find_tenant', to: 'tenant_finder#show'
       scope :oauth do
         post :token, to: 'tokens#create'
       end
