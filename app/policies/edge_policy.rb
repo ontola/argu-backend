@@ -46,6 +46,8 @@ class EdgePolicy < RestrictivePolicy # rubocop:disable Metrics/ClassLength
   end
 
   def has_grant?(action)
+    return true if service?
+
     group_ids =
       grant_tree
         .granted_group_ids(

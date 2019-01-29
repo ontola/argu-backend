@@ -19,10 +19,6 @@ class ForumPolicy < EdgePolicy
     attributes
   end
 
-  def create?
-    super || service?
-  end
-
   def invite?
     parent_policy(:page).update?
   end
