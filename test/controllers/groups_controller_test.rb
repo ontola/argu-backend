@@ -12,21 +12,8 @@ class GroupsControllerTest < ActionController::TestCase
   ####################################
   test 'should get show' do
     sign_in administrator
-    get :show, params: {format: :json_api, root_id: argu.url, id: group.id}
-    assert_response 200
-  end
-
-  # Required for tokens
-  test 'should get without root' do
-    sign_in administrator
     get :show, params: {format: :json_api, id: group.id}
     assert_response 200
-  end
-
-  test 'should get 404 with wrong root' do
-    sign_in administrator
-    get :show, params: {format: :json_api, root_id: 'wrong', id: group.id}
-    assert_response 404
   end
 
   ####################################
