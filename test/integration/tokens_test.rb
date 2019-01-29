@@ -25,6 +25,21 @@ class TokensTest < ActionDispatch::IntegrationTest
   let!(:user_without_password) { create(:user, :no_password) }
 
   ####################################
+  # GENERATE GUEST TOKEN
+  # ##################################
+  test 'Guest should get guest token if none is present' do
+    assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 1) do
+      get motion.iri.path
+    end
+  end
+
+  test 'Guest should not get guest token if none is present on HEAD' do
+    assert_difference("Doorkeeper::AccessToken.where(scopes: 'guest').count", 0) do
+      head motion.iri.path
+    end
+  end
+
+  ####################################
   # WITHOUT CREDENTIALS
   ####################################
   test 'Guest should not post create token without credentials' do

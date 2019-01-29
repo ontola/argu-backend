@@ -14,7 +14,7 @@ module OauthHelper
   def current_actor # rubocop:disable Metrics/AbcSize
     return @current_actor if @current_actor.present?
     refresh_guest_token if needs_new_guest_token?
-    user = current_resource_owner
+    user = current_resource_owner || GuestUser.new({})
     actor = if request.parameters[:actor_iri].present? && request.parameters[:actor_iri] != '-1'
               resource_from_iri!(request.parameters[:actor_iri]).profile
             else
@@ -36,7 +36,7 @@ module OauthHelper
   end
 
   def doorkeeper_scopes
-    doorkeeper_token&.scopes
+    doorkeeper_token&.scopes || []
   end
 
   def doorkeeper_oauth_header?
@@ -89,7 +89,7 @@ module OauthHelper
   end
 
   def needs_new_guest_token?
-    return false if afe_request?
+    return false if afe_request? || request.head?
 
     doorkeeper_token.blank? || doorkeeper_token&.expired? || current_resource_owner.blank?
   end
