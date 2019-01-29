@@ -69,9 +69,8 @@ RSpec.feature 'Page deletion', type: :feature do
     [argument, motion, question, blog_post, comment].each do |resource|
       resource.update(created_at: 1.day.ago)
     end
-    freetown.move_to(forum_page)
 
-    sign_in(user)
+    sign_in(argu.publisher)
     visit settings_iri(argu)
     click_link 'Advanced'
     within '.danger-zone' do
