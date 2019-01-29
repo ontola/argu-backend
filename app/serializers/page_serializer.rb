@@ -31,4 +31,8 @@ class PageSerializer < RecordSerializer
   def default_profile_photo
     object.profile.default_profile_photo
   end
+
+  def widget_sequence
+    super if ActsAsTenant.current_tenant == object
+  end
 end
