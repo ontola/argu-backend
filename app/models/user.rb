@@ -239,10 +239,6 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
     page_management? || profile.grants.moderator.presence
   end
 
-  def page_management?
-    edges.where(owner_type: 'Page').any?
-  end
-
   def has_favorite?(edge)
     favorites.where(edge: edge).any?
   end
@@ -281,6 +277,18 @@ class User < ApplicationRecord # rubocop:disable Metrics/ClassLength
       else
         managed_pages.joins(:profile).pluck('profiles.id').uniq.append(profile.id)
       end
+  end
+
+  def page_count
+    @page_count ||= ActsAsTenant.without_tenant { edges.where(owner_type: 'Page').length }
+  end
+
+  def page_ids
+    @page_ids ||= ActsAsTenant.without_tenant { edges.where(owner_type: 'Page').pluck(:uuid) }
+  end
+
+  def page_management?
+    page_count.positive?
   end
 
   def password_required?

@@ -4,7 +4,7 @@ class PagePolicy < EdgePolicy
   class Scope < Scope
     def resolve
       page_ids = user.profile.granted_root_ids(nil)
-                   .concat(user.edges.where(owner_type: 'Page').pluck(:uuid))
+                   .concat(user.page_ids)
       scope
         .property_join(:visibility)
         .where(
@@ -65,7 +65,7 @@ class PagePolicy < EdgePolicy
 
   def pages_left?
     return if user.guest?
-    user.edges.where(owner_type: 'Page').length < UserPolicy.new(context, user).max_allowed_pages
+    user.page_count < UserPolicy.new(context, user).max_allowed_pages
   end
 
   def valid_child?(klass)

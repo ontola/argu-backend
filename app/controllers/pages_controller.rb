@@ -32,7 +32,7 @@ class PagesController < EdgeableController # rubocop:disable Metrics/ClassLength
     errors = {}
     errors[:max_allowed_pages] = {
       max: us_po.max_allowed_pages,
-      current: current_user.edges.where(owner_type: 'Page').length,
+      current: current_user.page_count,
       pages_url: pages_user_url(current_user)
     }
     render 'new', locals: {

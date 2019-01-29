@@ -9,7 +9,7 @@ module Users
     def index_locals
       {
         pages: index_association,
-        current: current_user.edges.where(owner_type: 'Page').length,
+        current: current_user.page_count,
         max: policy(current_user).max_allowed_pages
       }
     end
