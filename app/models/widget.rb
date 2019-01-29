@@ -61,7 +61,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       discussions
         .create(
           owner: owner,
-          permitted_action: PermittedAction.find_by(title: 'motion_show'),
+          permitted_action: PermittedAction.find_by!(title: 'motion_show'),
           primary_resource: owner,
           resource_iri: [[discussions_iri, NS::AS[:name]], [discussions_iri, nil]],
           size: 3
@@ -81,7 +81,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       new_motion
         .create(
           owner: owner,
-          permitted_action: PermittedAction.find_by(title: 'motion_create'),
+          permitted_action: PermittedAction.find_by!(title: 'motion_create'),
           primary_resource: owner,
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :motions), nil]]
         )
@@ -101,7 +101,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
         .create(
           owner: owner,
           primary_resource: owner,
-          permitted_action: PermittedAction.find_by(title: 'question_create'),
+          permitted_action: PermittedAction.find_by!(title: 'question_create'),
           resource_iri: [[creative_work.iri, nil], [new_iri(owner, :questions), nil]]
         )
     end
@@ -110,7 +110,7 @@ class Widget < ApplicationRecord # rubocop:disable Metrics/ClassLength
       overview
         .create(
           owner: owner.parent,
-          permitted_action: PermittedAction.find_by(title: 'forum_show'),
+          permitted_action: PermittedAction.find_by!(title: 'forum_show'),
           primary_resource: owner,
           resource_iri: [
             [owner.iri, NS::SCHEMA[:name]],
