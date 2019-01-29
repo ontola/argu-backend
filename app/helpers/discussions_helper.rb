@@ -36,7 +36,8 @@ module DiscussionsHelper
           user_context
             .grant_tree
             .grant_sets(resource, group_ids: [group.id])
-            .map { |grant_set| t("roles.types.#{grant_set}") }
+            .map { |grant_set| t("roles.types.#{grant_set}", default: nil) }
+            .compact
             .join(', ')
         {label: "#{group.name} (#{t('roles.may')} #{grant_sets_string})", value: group.id}
       end
