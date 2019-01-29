@@ -18,7 +18,7 @@ class FavoritesController < ParentableController
   end
 
   def resource_by_id
-    current_user.favorites.find_by(edge: parent_resource)
+    @resource_by_id ||= current_user.favorites.find_by(edge: parent_resource)
   end
 
   def redirect_location
