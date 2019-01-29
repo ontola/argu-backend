@@ -102,6 +102,10 @@ module OauthHelper
     true
   end
 
+  def service_token?
+    doorkeeper_scopes.include?('service')
+  end
+
   def update_oauth_token(token)
     afe_request? ? response.headers['New-Authorization'] = token : set_argu_client_token_cookie(token)
   end

@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   SAFE_METHODS = %w[GET HEAD OPTIONS CONNECT TRACE].freeze
   UNSAFE_METHODS = %w[POST PUT PATCH DELETE].freeze
 
+  before_action :verify_internal_ip, if: :service_token?
   force_ssl unless: :internal_request?, host: Rails.application.config.frontend_url
   protect_from_forgery with: :exception, prepend: true, unless: :vnext_request?
   before_bugsnag_notify :add_user_info_to_bugsnag
@@ -229,6 +230,12 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # resource-specific view variable names.
   def model_name
     controller_name.singularize.to_sym
+  end
+
+  def verify_internal_ip
+    return true if internal_request?
+
+    raise "IP #{request.remote_ip} is not allowed to make requests with a service token"
   end
 
   # @private
