@@ -187,8 +187,7 @@ Doorkeeper::JWT.configure do
         User.find(opts[:resource_owner_id])
       end
 
-    {
-      exp: opts[:expires_in] && (opts[:created_at] + opts[:expires_in].seconds).to_i,
+    payload = {
       iat: Time.current.to_i,
       scopes: opts[:scopes].entries,
       user: {
@@ -199,6 +198,8 @@ Doorkeeper::JWT.configure do
         language: user.language
       }
     }
+    payload[:exp] = (opts[:created_at] + opts[:expires_in].seconds).to_i if opts[:expires_in].present?
+    payload
   end
 
   # Use the application secret specified in the Access Grant token
